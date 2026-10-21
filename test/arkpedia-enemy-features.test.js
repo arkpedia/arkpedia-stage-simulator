@@ -345,6 +345,12 @@ test('Volleyball cart: attack stacks raise ATK and a negative status clears them
   h.b.applyStatus(e, 'cold', { duration: 5, source: null }); h.run(0.1);
   assert.equal(e.findBuff('ab:atkUpStacks'), null); assert.equal(e.s.atk, base);
 });
+test('Sarkaz Grudgebearer: standby until injured, then combat-ready with two targets', () => {
+  const key = 'enemy_1074_dbskar', h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
+  assert.ok(e.s.flags.stun, 'standby stun'); assert.ok(e.findBuff('ab:standby'));
+  h.b.dealDamage(null, e, { amount: e.s.maxHp * 0.01, type: 'true', sourceless: true }); h.run(0.1);
+  assert.ok(!e.s.flags.stun, 'standby ends'); assert.ok(e.findBuff('ab:standbySpeed')); assert.equal(e.profile.maxTargets, 2);
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

@@ -344,6 +344,24 @@ export const featureAbilities = Object.freeze({
       b.addBuff(e, { key: 'ab:enhance', refresh: 'stack', stacks: 1, maxStacks: max, persist: true, visible: true, mods: { atkPct: atk, aspd } });
     },
   }),
+  // Standby revive: a stun-flag standby buff until the first injury (or the unmove timer), then a move-speed buff.
+  standbyRevive: ({ ratio, speed, unmove, targets }) => {
+    const awake = (b, e, a) => {
+      if (a.done) return;
+      a.done = true;
+      b.removeBuff(e, 'ab:standby');
+      b.addBuff(e, { key: 'ab:standbySpeed', persist: true, visible: true, mods: { moveMul: speed } });
+    };
+    return {
+      spawn(b, e, a) {
+        a.done = false; a.t0 = b.time;
+        if (targets > 1) e.profile.maxTargets = targets;
+        b.addBuff(e, { key: 'ab:standby', persist: true, visible: true, flags: { stun: true } });
+      },
+      taken(c, b, e, a) { if (!a.done && e.hpRatio < ratio) awake(b, e, a); },
+      tick(b, e, a) { if (!a.done && unmove > 0 && b.time - a.t0 >= unmove) awake(b, e, a); },
+    };
+  },
   // Volleyball cart: keep an ATK-stack buff; each attack adds one stack up to max, negative statuses clear it.
   atkUpStacks: ({ atk, max }) => ({
     spawn(b, e, a) {

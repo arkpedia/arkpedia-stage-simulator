@@ -5338,3 +5338,7 @@ Seven stages that passed the headless QA pass have been promoted out of `testOnl
 ### Volleyball cart ATK stacks (E24, 2026-10-21)
 
 The Volleyball Serving/Spiking Cart gains `AtkUp.atk` per attack up to `max_stack_cnt`, and any of cold, freeze, stun, fear, bind or silence clears the stack buff. Support rises to **298 of 1,552** enemies. The test checks three stacks (+30%) and the cold reset.
+
+### Sarkaz standby revive (E25, 2026-10-21)
+
+The Grudgebearer/Worldcurser/Bladeweaver family starts in a stun-flag standby until the first injury drops HP below `revive.hp_ratio` (0.999) or `revive.unmove_duration` elapses. It then removes standby, gains the `revive.move_speed` multiplier, and the two-target long-ranged form sets `maxTargets` 2. Support rises to **302 of 1,552** enemies. The test checks the standby, the awakening and the two targets.

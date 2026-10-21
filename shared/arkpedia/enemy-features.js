@@ -264,6 +264,13 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Sarkaz Grudgebearer/Bladeweaver: standby until the first injury (or unmove_duration), then combat-ready.
+  'talent:revive': { covers: r => sig(r, 'revive', ['hp_ratio', 'move_speed', 'unmove_duration'])
+      && r.abilities.some(a => /^Starts battle in Standby and will not attack; upon being injured, becomes Combat-Ready/.test(a.text)),
+    ability: { kind: 'standbyRevive', params: r => ({ ratio: r.talents.bb['revive.hp_ratio'], speed: r.talents.bb['revive.move_speed'],
+      unmove: r.talents.bb['revive.unmove_duration'], targets: /attacks two targets/.test(r.abilities.map(a => a.text).join(' ')) ? 2 : 1 }) },
+    note: 'standby until injured or unmove_duration, then combat-ready',
+    explains: text => /^Starts battle in Standby and will not attack; upon being injured, becomes Combat-Ready/.test(text) },
   // Volleyball cart: ATK stacks per attack, lost on a negative status.
   'talent:AtkUp': { covers: r => sig(r, 'AtkUp', ['atk', 'max_stack_cnt'])
       && r.abilities.some(a => a.text === 'Gains increased ATK with each attack (up to a limit); when affected by certain <$ba.debuff>Negative Statuses</>, these stacks will be lost'),
