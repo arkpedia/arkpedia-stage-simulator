@@ -345,6 +345,18 @@ export const featureAbilities = Object.freeze({
     },
   }),
   moveSpeedBonus: ({ mul }) => ({ spawn(b, e) { b.addBuff(e, { key: 'ab:moveSpeed', persist: true, visible: true, mods: { moveMul: mul } }); } }),
+  // Sarkaz Royal Court Caster: lock a target, tick Arts damage, then burst Necrosis in the area.
+  deathEye: ({ cooldown, init, duration, scale, ep }) => ({
+    spawn(b, e, a) { a.next = b.time + init; a.target = null; },
+    tick(b, e, a) {
+      if (b.time < a.next) return;
+      const target = e.target ?? b.alliesInRadius(e.x, e.y, 8).sort((p, q) => Math.hypot(p.x - e.x, p.y - e.y) - Math.hypot(q.x - e.x, q.y - e.y))[0];
+      if (!target) return;
+      a.next = b.time + cooldown; a.target = target;
+      for (let t = 1; t <= duration; t++) b.every(t, () => { if (target.alive) hurt(b, e, target, e.s.atk * scale, 'arts', { tags: ['deathEye'] }); });
+      b.every(duration, () => { for (const u of b.alliesInRadius(target.x, target.y, 1.5)) elem(b, e, u, 'apoptosis', e.s.atk * ep); });
+    },
+  }),
   // Dublinn Phalanx: refresh a DEF buff equal to def times the other Phalanx units.
   phalanxAura: ({ def }) => ({
     tick(b, e) {

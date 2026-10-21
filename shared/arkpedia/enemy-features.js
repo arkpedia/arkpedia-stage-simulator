@@ -286,6 +286,16 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Sarkaz Royal Court Caster: Necrosis on normal attacks, plus the DeathEye lock-on cast.
+  'talent:empty': { covers: r => sig(r, 'empty', ['attack@ep_damage_ratio']),
+    ability: { kind: 'elementOnHit', params: r => ({ element: 'apoptosis', ratio: r.talents.bb['empty.attack@ep_damage_ratio'] }) },
+    note: 'Necrosis on every normal attack', explains: /^Attacks deal additional <\$ba\.dt\.apoptosis>Necrosis damage<\/>$/ },
+  'skill:DeathEye': { covers: r => r.skills.some(s => s.prefabKey === 'DeathEye')
+      && r.abilities.some(a => a.text === 'Locks on to your units, dealing continuous Arts damage, and causing area <$ba.dt.apoptosis>Necrosis damage</> when casting is complete'),
+    ability: { kind: 'deathEye', params: r => ({ cooldown: r.skills[0].cooldown, init: r.skills[0].initCooldown, duration: r.skills[0].bb.hit_duration,
+      scale: r.skills[0].bb.atk_scale, ep: r.skills[0].bb.ep_damage_ratio }) },
+    nativeClaim: () => ({ wrappers: 1 }), note: 'lock-on Arts ticks then an area Necrosis burst',
+    explains: /^Locks on to your units, dealing continuous Arts damage, and causing area <\$ba\.dt\.apoptosis>Necrosis damage<\/> when casting is complete$/ },
   // Dublinn Phalanx: DEF scales with the number of other Phalanx units on the field.
   'talent:auraDefup': { covers: r => sig(r, 'auraDefup', ['def'])
       && r.abilities.some(a => /^When other Phalanx (Infantry|Commanders) are nearby, DEF increases \(stacks\)$/.test(a.text)),

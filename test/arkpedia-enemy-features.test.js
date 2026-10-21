@@ -596,6 +596,11 @@ test('Dublinn Phalanx: each unit gains DEF from the other', () => {
   assert.equal(units.length, 2); for (const u of units) assert.equal(u.s.def, base + 200);
   h.b.kill(units[0], null); h.run(1); assert.equal(units[1].s.def, base);
 });
+test('DeathEye: the lock-on cast ticks Arts damage on the guard', () => {
+  const key = 'enemy_1275_dwlock', h = spawnAny(key, { seconds: 0.1 }), guard = h.b.units.find(u => u.side === 'ally');
+  let hit = false; h.b.on('damaged', c => { if (c.source?.defId === key && c.target === guard && c.dmg.type === 'arts') hit = true; });
+  h.runUntil(() => hit, 15); assert.ok(hit);
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

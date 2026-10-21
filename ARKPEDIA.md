@@ -5666,3 +5666,7 @@ Each Phalanx unit refreshes DEF +200 per other living Phalanx unit (Infantry and
 ### 9-5 and 9-6 (S82, 2026-10-21)
 
 With the Phalanx aura supported, **9-5** and **9-6** build (8×11/8×12, 44–46 spawns). Coverage is **175 public stages** (0-1 plus 174 files).
+
+### Sarkaz Royal Court Caster DeathEye (E57, 2026-10-21)
+
+Normal attacks add Necrosis (`empty.attack@ep_damage_ratio` 0.25). Every 24 s (first at 10 s) DeathEye locks a target, ticks 0.4x Arts damage for 8 s, then bursts 2.2x ATK Necrosis in a 1.5 radius. The reviewed wrapper is claimed. Support rises to **370 of 1,552** enemies. The test observes the Arts lock-on tick.
