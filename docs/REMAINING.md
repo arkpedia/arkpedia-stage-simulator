@@ -1,0 +1,48 @@
+# Remaining content
+
+Snapshot: 2026-10-21. Regenerate the numbers with `npm run coverage:arkpedia-stages`.
+
+| Area | Done | Total |
+|---|---|---|
+| Operators / operator forms | 431 | 431 |
+| Enemies supported | 319 | 1,552 |
+| Main source stages with committed files | 115 | 709 |
+| Public catalogue (includes embedded 0-1) | 116 | 116 built |
+
+The public catalogue is the committed `data/arkpedia-stage-*.json` set plus the embedded 0-1 stage; `testOnly` remains the gate for future stages.
+
+## Why the other 594 main stages are not built
+
+| First blocker | Stages |
+|---|---|
+| No stage geometry in the source export | 311 |
+| Unsupported enemy family | 159 |
+| Conditional spawns | 63 |
+| Deployable tokens | 60 |
+| Other | 1 |
+
+The unsupported-enemy group is ranked by stage count. The current top families:
+
+| Stages | Enemy | Missing mechanic |
+|---|---|---|
+| 24 | `enemy_1313_wdfmr` Norport Civilian | friendly-unit identity / DP reward |
+| 13 | `enemy_1107_uoffcr` Infected Patrol Captain | Ursus Civilian target priority |
+| 13 | `enemy_1078_sotisc` Guerrilla Fighter | Inspired movement bonus |
+| 11 | `enemy_1223_dmech` Sarkaz Heirbearer Artificer | Londinium artillery charge |
+| 11 | `enemy_1315_wdyjd_2` Sentry Spymaster | spy identity / invisibility |
+| 11 | `enemy_1421_lrchld` Beacon | beacon pickup/drop |
+| 10 | `enemy_1080_sotidp` Guerrilla Herald | Inspired ATK/DEF aura |
+| 10 | `enemy_1079_sotisp` Guerrilla Sniper | Inspired extra target |
+
+## Next useful steps
+
+1. Finish a stage family end-to-end (geometry, enemies, build, public review) before starting another. `docs/ADDING-CONTENT.md` has the workflow.
+2. Prefer enemy families that unblock several stages at once; the coverage report is the ordering tool.
+3. Deployable tokens and conditional spawns are engine features, not per-stage data. Model them once in `server/sim/arkpedia.js` and the stage adapter, with a focused test, before enabling the affected stages.
+4. Every public promotion needs a `reviewed` date; the catalogue test enforces it.
+
+## Verification
+
+- Full Arkpedia subset: 18,772 tests, 18,770 passed, 0 failed, 2 skipped.
+- `npm run check:arkpedia-enemies` and `npm run check:arkpedia-stages` are the registry gates.
+- GitHub-hosted matrix only; `test/arkpedia-ci-runners.test.js` guards the runner labels.
