@@ -5083,3 +5083,7 @@ Senior Caster was the only unsupported enemy in ten stages and Defender-4 in thr
 | S2-12 | 7×9 | 1 | 48 | Soldier, Monster, Dual Swordsman Leader, Light-Armored Soldier, Caster, Senior Caster, Monster Mk II |
 
 Coverage is **0-1 plus 57 test-only files**; every one is loaded through the catalogue and fought for ten seconds by the generic stage test.
+
+### CI pushes stay off feature branches (S11, 2026-10-21)
+
+The CI workflow now runs on `push` only to `master`; feature branches run when they have a pull request (plus `workflow_dispatch`). This removes the duplicate push+PR pair that previously started eight jobs per branch and left a cancelled duplicate check on the PR. The runner guard still enforces GitHub-hosted images for every job.

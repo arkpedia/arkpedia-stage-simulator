@@ -5,6 +5,7 @@ run-name: "${{ inputs.scope == 'atomic-json' && 'Atomic JSON verification' || in
 
 on:
   push:
+    branches: [master]
   pull_request:
   workflow_dispatch:
     inputs:
