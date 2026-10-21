@@ -666,6 +666,10 @@ test('Dublinn Companion Guard: the field slows a nearby ally', () => {
   h.run(1); const ally = h.b.units.find(u => u.side === 'ally');
   assert.ok(ally.buffs.some(x => String(x.key).startsWith('ab:guardField')), JSON.stringify(ally.buffs.map(x => x.key)));
 });
+test('Dublinn Flying Soldier: hovering sets the flying flag', () => {
+  const key = 'enemy_1171_durokt', h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
+  assert.equal(e.flying, true);
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

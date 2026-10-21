@@ -345,6 +345,8 @@ export const featureAbilities = Object.freeze({
     },
   }),
   moveSpeedBonus: ({ mul }) => ({ spawn(b, e) { b.addBuff(e, { key: 'ab:moveSpeed', persist: true, visible: true, mods: { moveMul: mul } }); } }),
+  // Dublinn Flying Soldier: airborne.
+  hover: () => ({ spawn(b, e) { e.flying = true; } }),
   // Higher-priority enemy target.
   tauntEnemy: ({ taunt }) => ({ spawn(b, e) { e.s.taunt = Math.max(e.s.taunt ?? 0, taunt); } }),
   // Dublinn Companion pair: the Guard's ASPD field and the Shadowblade's haste.

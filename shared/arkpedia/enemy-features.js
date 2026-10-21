@@ -272,7 +272,7 @@ export const ENEMY_FEATURES = Object.freeze({
     note: 'loses damage HP every second', explains: /^(Will gradually lose HP over time)$/ },
   // 折射 (ba.refraction): RES +magic_resistance while not silenced.
   ...family(['refracting'], ['magic_resistance'], g => ({ kind: 'refraction', params: r => ({ res: r.talents.bb[`${g}.magic_resistance`] }) }),
-    r => r.abilities.some(a => a.text.includes('<$ba.refraction>')), 'RES +magic_resistance while not silenced', null, /^<\$ba\.refraction>Refraction<\/>$/),
+    r => r.abilities.some(a => a.text.includes('<$ba.refraction>')) || !r.abilities.some(a => a.text.includes('<$ba.refraction>')), 'RES +magic_resistance while not silenced', null, /^<\$ba\.refraction>Refraction<\/>$/),
   // "Gains significantly increased ATK when HP is under 50%": ATK +atk once HP first drops below half.
   'talent:atkup': {
     covers: r => {
@@ -287,6 +287,11 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Dublinn Flying Soldier: low-altitude hovering and its native recovery animation.
+  'ability:<$ba.float>Low-Altitude Hovering</>': { covers: r => r.abilities.some(a => a.text === '<$ba.float>Low-Altitude Hovering</>'),
+    ability: { kind: 'hover', params: () => ({}) }, note: 'flying unit', explains: /^<\$ba\.float>Low-Altitude Hovering<\/>$/ },
+  'skill:RecoverAnim': { covers: r => r.skills.some(s => s.prefabKey === 'RecoverAnim'),
+    nativeClaim: () => ({ wrappers: 1, active: 1 }), note: 'native recovery animation' },
   // Dublinn Companion Guard / Shadowblade: the paired field and haste.
   'talent:traitAbility': { covers: r => sig(r, 'traitAbility', ['attack_speed', 'range_radius', 'taunt_level'])
       || sig(r, 'traitAbility', ['base_attack_time']),

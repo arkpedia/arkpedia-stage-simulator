@@ -5778,3 +5778,7 @@ The current support also unlocks **9-9** (8×11, 45 spawns, 4 enemies). The stac
 ### Stacked full-suite verification (S101, 2026-10-21)
 
 The stacked branch (E62–E65) passes **22,776 tests, 22,765 passed, 0 failed, 11 skipped**, including 191 data-backed stage smoke runs. `docs/REMAINING.md` records 390 enemies, 191 built source stages and 192 public entries.
+
+### Dublinn Flying Soldier (E66, 2026-10-21)
+
+Low-Altitude Hovering sets the flying flag; RecoverAnim claims its native wrapper/active; the passive refracting group now covers records without the separate Refraction line. Support rises to **392 of 1,552** enemies. The test pins the flying flag.
