@@ -194,6 +194,12 @@ export const ENEMY_FEATURES = Object.freeze({
   ...familyAny(['atkup'], [['atk'], ['atk', 'hp_ratio']], g => ({ kind: 'lowHpBuff', params: r => ({ ratio: r.talents.bb[`${g}.hp_ratio`] ?? 0.5, mods: { atkPct: r.talents.bb[`${g}.atk`] } }) }),
     r => r.abilities.some(a => /under 50%/.test(a.text) && /ATK/.test(a.text)), 'ATK +atk below the hp_ratio threshold (50% when the record omits it)', null,
     /^Gains significantly increased ATK when HP is under 50%$/),
+  // Hatedrinker: ATK increases for each Reborn Creation on the battlefield (the bloodsucker marker), capped by the
+  // talent's max_valid_stack_cnt. The aura tag is the group name; the effect is a self-buff.
+  'talent:aura': { covers: r => sig(r, 'aura', ['atk', 'max_valid_stack_cnt'])
+      && r.abilities.some(a => a.text === 'Gains increased ATK for each Reborn Creation on the battlefield'),
+    ability: { kind: 'rebornAtkAura', params: r => ({ atk: r.talents.bb['aura.atk'], max: r.talents.bb['aura.max_valid_stack_cnt'] }) },
+    note: 'ATK +atk per Reborn Creation on the field, capped', explains: /^Gains increased ATK for each Reborn Creation on the battlefield$/ },
   // 吸血 (vampire): attacks up to max_target and heals heal_scale × the damage actually dealt. The single-target
   // signature omits max_target; the record then keeps the engine's one target.
   ...familyAny(['vampire'], [['attack@max_target', 'heal_scale'], ['heal_scale']], g => ({ kind: 'vampireOnHit', params: r => ({

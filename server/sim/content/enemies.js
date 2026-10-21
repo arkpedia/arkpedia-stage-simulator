@@ -310,6 +310,17 @@ export const featureAbilities = Object.freeze({
       b.addBuff(e, { key: 'ab:enhance', refresh: 'stack', stacks: 1, maxStacks: max, persist: true, visible: true, mods: { atkPct: atk, aspd } });
     },
   }),
+  // Hatedrinker: count living Reborn Creations (the bloodsucker marker) every half second and keep one ATK buff.
+  rebornAtkAura: ({ atk, max }) => ({
+    spawn(b, e, a) { a.n = -1; },
+    tick(b, e, a) {
+      const n = Math.min(max, b.units.filter(u => u.side === 'enemy' && u.alive && u.findBuff?.('ab:bloodsuckerMark')).length);
+      if (n === a.n) return;
+      a.n = n;
+      if (n > 0) b.addBuff(e, { key: 'ab:rebornAtkAura', persist: true, visible: true, mods: { atkPct: atk * n } });
+      else b.removeBuff(e, 'ab:rebornAtkAura');
+    },
+  }),
   // Vampire: up to maxTargets ordinary targets; every accepted ordinary hit heals the enemy for healScale × its
   // post-mitigation damage.
   vampireOnHit: ({ maxTargets, healScale }) => ({

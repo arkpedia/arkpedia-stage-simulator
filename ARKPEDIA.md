@@ -5179,3 +5179,9 @@ Support rises to **262 of 1,552** enemies. The test checks the three-target prof
 | M8-7 | 8×11 | 1 | 48 | the same host family |
 
 Coverage is **0-1 plus 71 test-only files**.
+
+### Hatedrinker's Reborn-Creation aura (E12, 2026-10-21)
+
+The Hatedrinker's `aura` talent is a self-buff: ATK +`aura.atk` for each living Reborn Creation on the field, capped by `aura.max_valid_stack_cnt` (six). The marker from E10 identifies those creations, so the aura counts them every half second and keeps one visible ATK buff. A creation entering or dying updates the count; zero removes the buff.
+
+Support rises to **264 of 1,552** enemies. The test spawns the Hatedrinker, adds a creation, and checks the exact +15% ATK.

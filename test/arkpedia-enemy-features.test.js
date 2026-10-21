@@ -211,6 +211,16 @@ test('vampire: up to three targets and healing from the damage actually dealt', 
   h.run(12);
   assert.ok(e.hp > before, `${before} -> ${e.hp}`);
 });
+test('Hatedrinker: ATK rises per living Reborn Creation, up to the talent cap', () => {
+  const key = 'enemy_1226_dklord', creation = 'enemy_1220_dzoms';
+  const defs = { [key]: ENEMY_RECORDS.enemies[key].levels[0], [creation]: ENEMY_RECORDS.enemies[creation].levels[0] };
+  const h = makeBattle({ defs: { enemies: defs, chess: {} }, units: [], enemies: [{ key, time: 0, route: 0 }],
+    content: 'none', autoFinish: false, timeLimit: 30, setup: battle => installEnemyFeatures(battle) });
+  h.run(0.2); const e = h.b.units.find(u => u.side === 'enemy' && u.defId === key), base = e.s.atk;
+  const c = h.b.spawnEnemy(creation, { pos: [e.y, Math.max(0, e.x - 1)] });
+  assert.ok(c); h.run(0.6);
+  assert.ok(Math.abs(e.s.atk - base * 1.15) < 1, `${e.s.atk} vs ${base * 1.15}`);
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');
