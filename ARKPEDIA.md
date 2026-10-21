@@ -5534,3 +5534,7 @@ With the Splitcaster Virtual Image supported, **12-12** and **12-12 adverse envi
 ### 1320 first-attack splash (E42, 2026-10-21)
 
 The `1320` family requires a 3-Block blocker and its first attack is 1.5x and splashes the target's box; later attacks are single-target. The reviewed `AOEAttack` wrapper is claimed. Support rises to **341 of 1,552** enemies. The test uses 3-Block guards and checks both the splash and the single-target follow-up.
+
+### 12-6 and 12-7 (S64, 2026-10-21)
+
+With the `1320` family supported, **12-6** and **12-7** build (7×10/8×11, 34–41 spawns). Coverage is **132 public stages** (0-1 plus 131 files). 12-18 still needs the `1321` Seed summoner.
