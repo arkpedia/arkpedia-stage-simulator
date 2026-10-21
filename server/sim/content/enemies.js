@@ -282,7 +282,41 @@ export function installFeatureDispatch(b) {
 export function rebornAbility(params) { return reborn(params); }
 /** Shared ability builders for data-driven features (each documented at its definition below). */
 export const featureAbilities = Object.freeze({
-  elementOnHit: ({ element, ratio }) => ep(element, ratio),
+  // Punisher: every Nth attack stuns every ally in the 3×3 area around each target for the reviewed duration.
+  stunAttack: ({ every, duration }) => ({
+    sil: true,
+    spawn(b, e, a) { a.n = 0; },
+    attack(c, b, e, a) {
+      a.n++;
+      if (a.n % every) return;
+      for (const t of c.targets ?? [c.target]) for (const u of areaAlliesInTiles(b, e, t.tileR, t.tileC, 'box', 1))
+        b.applyStatus(u, 'stun', { duration, source: e });
+    },
+  }),
+  // Yeti Caster: every Nth attack applies the reviewed Cold status to every target of that attack.
+  coldAttack: ({ every, duration }) => nthAttackStatus(every, 'cold', duration),
+  // atkup: a flat ATK percentage below the hp_ratio threshold, or a damage multiplier against Frozen targets.
+  atkup: ({ scale, ratio, atkPct }) => scale != null
+    ? { hitOut(c, b, e) { if (c.dmg.isAttack && c.target?.s.flags.freeze) c.dmg.amount *= scale; } }
+    : lowHpBuff(ratio ?? 0.5, { atkPct: atkPct ?? 0 }),
+  elementOnHit: ({ element, ratio, chain = false, maxTargets = 1, chainScale = 1, range = 0 }) => chain ? ({
+    dealt(c, b, e) {
+      if (!c.dmg?.isAttack || c.dmg.tags?.includes('chain') || !c.target) return;
+      let source = c.target, hit = new Set([c.target]);
+      if (ratio > 0) elem(b, e, source, element, e.s.atk * ratio);
+      for (let i = 1; i < maxTargets; i++) {
+        const next = b.alliesInRadius(source.x, source.y, range)
+          .filter(o => o.alive && o !== e && !hit.has(o))
+          .sort((p, q) => Math.hypot(p.x - source.x, p.y - source.y) - Math.hypot(q.x - source.x, q.y - source.y))[0];
+        if (!next) break;
+        hit.add(next);
+        const scale = Math.pow(chainScale, i);
+        hurt(b, e, next, e.s.atk * scale, 'arts', { tags: ['chain'] });
+        if (ratio > 0) elem(b, e, next, element, e.s.atk * ratio * scale);
+        source = next;
+      }
+    },
+  }) : ep(element, ratio),
   lowHpBuff: ({ ratio, mods }) => lowHpBuff(ratio, mods),
   deathSpawn: ({ key, cnt }) => deathSpawn(key, cnt),
   deathSpawnDelayed: ({ key, cnt, delay }) => deathSpawnDelayed({ key, cnt, delay }),
@@ -308,6 +342,42 @@ export const featureAbilities = Object.freeze({
       const u = c.unit;
       if (!u || u === e || u.side !== 'enemy' || c.reason !== 'killed') return;
       b.addBuff(e, { key: 'ab:enhance', refresh: 'stack', stacks: 1, maxStacks: max, persist: true, visible: true, mods: { atkPct: atk, aspd } });
+    },
+  }),
+  // Technical Scout: its ranged selection may target camouflaged/stealthed allies inside the reviewed radius.
+  revealCamouflage: ({ range }) => ({ spawn(b, e) { e.profile.revealRange = range; } }),
+  // Reborn-Creation auras: Hatedrinker counts marked creations and buffs itself; the ASV buffs every marked creation
+  // and adds Necrosis to their ordinary attacks (one battle listener, sources tracked by the live ASVs).
+  aura: ({ mode, atk, max, ep }) => mode === 'asv' ? ({
+    spawn(b, e) {
+      b.asvAura ??= { sources: new Map(), bound: false };
+      b.asvAura.sources.set(e, ep);
+      if (!b.asvAura.bound) {
+        b.asvAura.bound = true;
+        b.on('damaged', c => {
+          const sources = b.asvAura?.sources;
+          if (!sources?.size || !c.source?.findBuff?.('ab:bloodsuckerMark') || c.target?.side !== 'ally'
+            || !c.dmg?.isAttack || !(c.hpLoss > 0)) return;
+          elem(b, c.source, c.target, 'apoptosis', c.source.s.atk * Math.max(...sources.values()));
+        });
+      }
+    },
+    tick(b, e) {
+      for (const u of b.units) if (u.side === 'enemy' && u.alive && u.findBuff?.('ab:bloodsuckerMark'))
+        b.addBuff(u, { key: `ab:asvAtk:${e.id}`, persist: true, visible: true, mods: { atkPct: atk } });
+    },
+    death(c, b, e) {
+      b.asvAura?.sources.delete(e);
+      for (const u of b.units) b.removeBuff(u, `ab:asvAtk:${e.id}`);
+    },
+  }) : ({
+    spawn(b, e, a) { a.n = -1; },
+    tick(b, e, a) {
+      const n = Math.min(max, b.units.filter(u => u.side === 'enemy' && u.alive && u.findBuff?.('ab:bloodsuckerMark')).length);
+      if (n === a.n) return;
+      a.n = n;
+      if (n > 0) b.addBuff(e, { key: 'ab:rebornAtkAura', persist: true, visible: true, mods: { atkPct: atk * n } });
+      else b.removeBuff(e, 'ab:rebornAtkAura');
     },
   }),
   // Vampire: up to maxTargets ordinary targets; every accepted ordinary hit heals the enemy for healScale × its
@@ -361,6 +431,18 @@ export const featureAbilities = Object.freeze({
   }),
   // Defender-4: a silence-aware DEF aura on every other enemy in range, refreshed each half-second.
   enemyDefAura: ({ def, r }) => enemyAura(r, 'ab:defup', { defFlat: def }),
+  // ASPD-down: either the Frost ally aura (`mode: aura`) or the blocker-owned delta (`mode: blocker`).
+  aspdDown: ({ mode, aspd, range }) => mode === 'aura' ? allyAura(range, 'ab:frost', { aspd }) : ({
+    spawn(b, e, a) { a.target = null; },
+    tick(b, e, a) {
+      const target = e.blockedBy ?? null;
+      if (target === a.target) return;
+      if (a.target) b.removeBuff(a.target, 'ab:blockerAspdDown');
+      a.target = target;
+      if (target && aspd) b.addBuff(target, { key: 'ab:blockerAspdDown', persist: true, mods: { aspd }, visible: true });
+    },
+    death(c, b, e, a) { if (a.target) b.removeBuff(a.target, 'ab:blockerAspdDown'); },
+  }),
   // "When blocked, significantly reduces the blocker's ASPD": keep one owned flat-ASPD buff on the current blocker.
   blockerAspdDown: ({ aspd }) => ({
     spawn(b, e, a) { a.target = null; },

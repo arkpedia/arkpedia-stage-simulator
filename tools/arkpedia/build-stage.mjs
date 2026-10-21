@@ -46,9 +46,11 @@ const stage = {
   },
   art: null,
   gates: null,
+  fixedSquad: null,
 };
 // The battle compiler and the supported-enemy gate are the same ones used by 0-1.
 const adapter = stageAdapter(stage);
+stage.fixedSquad = adapter.fixedSquad;
 // The level file owns each enemy's database level and any attribute overrides
 // (stage geometry `enemyConfigurations`); the catalogue is the source record.
 const OVERRIDE = Object.freeze({ hp: 'maxHp', atk: 'atk', def: 'def', res: 'res', move_speed: 'moveSpeed',

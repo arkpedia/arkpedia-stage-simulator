@@ -3,7 +3,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import support from '../data/arkpedia-enemy-support.json' with { type: 'json' };
 import { ENEMY_FEATURES, recordFeatureIds } from '../shared/arkpedia/enemy-features.js';
-import { enemyStealthed } from '../server/sim/targeting.js';
+import { enemyStealthed, canTargetAlly } from '../server/sim/targeting.js';
 import { spawnAny, ENEMY_RECORDS } from './helpers/enemyHarness.js';
 import { makeBattle, chessRec } from './helpers/battleHarness.js';
 import { installEnemyFeatures } from '../server/sim/content/arkpedia-enemy-features.js';
@@ -210,6 +210,84 @@ test('vampire: up to three targets and healing from the damage actually dealt', 
   e.hp = e.s.maxHp * 0.5; const before = e.hp;
   h.run(12);
   assert.ok(e.hp > before, `${before} -> ${e.hp}`);
+});
+test('Hatedrinker: ATK rises per living Reborn Creation, up to the talent cap', () => {
+  const key = 'enemy_1226_dklord', creation = 'enemy_1220_dzoms';
+  const defs = { [key]: ENEMY_RECORDS.enemies[key].levels[0], [creation]: ENEMY_RECORDS.enemies[creation].levels[0] };
+  const h = makeBattle({ defs: { enemies: defs, chess: {} }, units: [], enemies: [{ key, time: 0, route: 0 }],
+    content: 'none', autoFinish: false, timeLimit: 30, setup: battle => installEnemyFeatures(battle) });
+  h.run(0.2); const e = h.b.units.find(u => u.side === 'enemy' && u.defId === key), base = e.s.atk;
+  const c = h.b.spawnEnemy(creation, { pos: [e.y, Math.max(0, e.x - 1)] });
+  assert.ok(c); h.run(0.6);
+  assert.ok(Math.abs(e.s.atk - base * 1.15) < 1, `${e.s.atk} vs ${base * 1.15}`);
+});
+test('Yeti Caster: every third attack applies the reviewed 10 s Cold', () => {
+  const key = 'enemy_1068_snmage', rec = ENEMY_RECORDS.enemies[key].levels[0];
+  const guardRec = chessRec({ id: 'cold_guard', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 300 } });
+  const h = makeBattle({ defs: { enemies: { [key]: rec }, chess: { [guardRec.chessId]: guardRec } },
+    units: [{ chessId: guardRec.chessId, row: 9, col: 6 }], enemies: [{ key, time: 0, route: 0 }],
+    content: 'none', autoFinish: false, timeLimit: 40, setup: battle => installEnemyFeatures(battle) });
+  let attacks = 0; h.b.on('attack', c => { if (c.attacker?.defId === key) attacks++; });
+  h.runUntil(() => attacks >= 3, 30); h.run(0.1);
+  assert.ok(attacks >= 3);
+  const guard = h.b.units.find(u => u.side === 'ally');
+  const cold = guard.buffs.find(b => b.status === 'cold');
+  assert.ok(cold, 'the third attack applied Cold'); assert.equal(cold.duration, 10);
+});
+test('Chain Caster: Necrosis jumps to nearby targets with falloff', () => {
+  const key = 'enemy_1225_dkmage', rec = ENEMY_RECORDS.enemies[key].levels[0];
+  const a = chessRec({ id: 'chain_a', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 0 } });
+  const b = chessRec({ id: 'chain_b', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 0 } });
+  const h = makeBattle({ defs: { enemies: { [key]: rec }, chess: { [a.chessId]: a, [b.chessId]: b } },
+    units: [{ chessId: a.chessId, row: 9, col: 6 }, { chessId: b.chessId, row: 9, col: 7 }],
+    enemies: [{ key, time: 0, route: 0 }], content: 'none', autoFinish: false, timeLimit: 40,
+    setup: battle => installEnemyFeatures(battle) });
+  const hits = { [a.chessId]: 0, [b.chessId]: 0 }, elements = new Set();
+  h.b.on('damaged', c => { if (c.source?.defId !== key) return; if (c.target.defId in hits) hits[c.target.defId]++; if (c.dmg.type === 'element') elements.add(c.target.defId); });
+  h.runUntil(() => hits[a.chessId] > 0 && hits[b.chessId] > 0, 30);
+  assert.ok(hits[a.chessId] > 0 && hits[b.chessId] > 0, JSON.stringify(hits));
+  assert.ok(elements.has(a.chessId) && elements.has(b.chessId), 'both targets received Necrosis');
+});
+test('Frost: the ally aura reduces ASPD by the reviewed amount', () => {
+  const key = 'enemy_1042_frostd', h = spawnAny(key, { seconds: 0.1 });
+  const guard = h.b.units.find(u => u.side === 'ally'), base = guard.s.aspd;
+  h.runUntil(() => guard.findBuff('ab:frost') || !h.b.units.some(u => u.side === 'enemy' && u.alive), 30);
+  assert.ok(guard.findBuff('ab:frost'), 'the aura reached the guard');
+  assert.equal(guard.s.aspd, base - 50);
+});
+test('ASV: Reborn Creations gain the ATK aura and their attacks add Necrosis', () => {
+  const asv = 'enemy_1224_dsuply', creation = 'enemy_1220_dzoms';
+  const guard = chessRec({ id: 'asv_guard', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 0 } });
+  const h = makeBattle({ defs: { enemies: { [asv]: ENEMY_RECORDS.enemies[asv].levels[0], [creation]: ENEMY_RECORDS.enemies[creation].levels[0] },
+      chess: { [guard.chessId]: guard } }, units: [{ chessId: guard.chessId, row: 9, col: 6 }],
+    enemies: [{ key: asv, time: 0, route: 0 }, { key: creation, time: 0, route: 0 }],
+    content: 'none', autoFinish: false, timeLimit: 40, setup: battle => installEnemyFeatures(battle) });
+  const c = () => h.b.units.find(u => u.side === 'enemy' && u.defId === creation);
+  h.run(0.8); const base = ENEMY_RECORDS.enemies[creation].levels[0].stats.atk;
+  assert.ok(Math.abs(c().s.atk - base * 1.1) < 1, `${c().s.atk} vs ${base * 1.1}`);
+  let element = false; h.b.on('damaged', e => { if (e.source === c() && e.dmg.type === 'element') element = true; });
+  h.runUntil(() => element, 30);
+  assert.ok(element, 'the creation attack applied Necrosis');
+});
+test('Punisher: every third attack stuns the target area for four seconds', () => {
+  const key = 'enemy_1362_dfat', rec = ENEMY_RECORDS.enemies[key].levels[0];
+  const guard = chessRec({ id: 'punish_guard', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 300 } });
+  const h = makeBattle({ defs: { enemies: { [key]: rec }, chess: { [guard.chessId]: guard } },
+    units: [{ chessId: guard.chessId, row: 9, col: 6 }], enemies: [{ key, time: 0, route: 0 }],
+    content: 'none', autoFinish: false, timeLimit: 40, setup: battle => installEnemyFeatures(battle) });
+  let attacks = 0; h.b.on('attack', c => { if (c.attacker?.defId === key) attacks++; });
+  h.runUntil(() => attacks >= 3, 30); h.run(0.1);
+  const g = h.b.units.find(u => u.side === 'ally'), stun = g.buffs.find(b => b.status === 'stun');
+  assert.ok(stun, 'the third attack stunned the area'); assert.equal(stun.duration, 4);
+});
+test('Technical Scout: camouflage is ignored only inside the reviewed reveal range', () => {
+  const key = 'enemy_1020_obsv', h = spawnAny(key, { seconds: 0.1 });
+  const e = h.b.units.find(u => u.side === 'enemy' && u.defId === key), guard = h.b.units.find(u => u.side === 'ally');
+  h.b.addBuff(guard, { key: 'test:camou', flags: { camou: true }, persist: true });
+  e.x = guard.x + 1; e.y = guard.y;
+  assert.equal(canTargetAlly(e, guard, true), true, 'revealed inside 3.3');
+  e.x = guard.x + 5;
+  assert.equal(canTargetAlly(e, guard, true), false, 'hidden outside the aura');
 });
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';

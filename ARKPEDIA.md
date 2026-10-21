@@ -5179,3 +5179,124 @@ Support rises to **262 of 1,552** enemies. The test checks the three-target prof
 | M8-7 | 8×11 | 1 | 48 | the same host family |
 
 Coverage is **0-1 plus 71 test-only files**.
+
+### Hatedrinker's Reborn-Creation aura (E12, 2026-10-21)
+
+The Hatedrinker's `aura` talent is a self-buff: ATK +`aura.atk` for each living Reborn Creation on the field, capped by `aura.max_valid_stack_cnt` (six). The marker from E10 identifies those creations, so the aura counts them every half second and keeps one visible ATK buff. A creation entering or dying updates the count; zero removes the buff.
+
+Support rises to **264 of 1,552** enemies. The test spawns the Hatedrinker, adds a creation, and checks the exact +15% ATK.
+
+### Hatedrinker stages (S17, 2026-10-21, test-only)
+
+| Stage | Grid | Waves | Spawns | Notes |
+|---|---|---|---|---|
+| 13-2 | 7×9 | 1 | 39 | Hatedrinker plus its Reborn Creations |
+| 13-2 adverse environment | 7×9 | 1 | 39 | the same stage under its adverse-environment variant |
+
+Coverage is **0-1 plus 73 test-only files**.
+
+### Yeti Caster Cold attacks (E13, 2026-10-21)
+
+The reviewed `coldattack` skill is every third attack applying the `e2c_cold` DB buff from the skill's 10-second freeze value. The feature matches the familyMask-3 ColdAttack wrapper, the snow-magic projectile ability and the 10-second blackboard, claims one native wrapper, and is silence-aware. Support rises to **273 of 1,552** enemies. The test counts three attacks and checks the 10-second Cold on the target.
+
+### Yeti Caster stages (S18, 2026-10-21, test-only)
+
+| Stage | Grid | Waves | Spawns |
+|---|---|---|---|
+| 6-9 | 8×11 | 1 | 48 |
+| 6-10 | 8×11 | 1 | 41 |
+| 6-12 | 7×11 | 1 | 76 |
+| S6-1 | 8×11 | 1 | 52 |
+| S6-2 | 8×11 | 1 | 53 |
+| S6-4 | 8×12 | 1 | 30 |
+
+Coverage is **0-1 plus 79 test-only files**.
+
+### Chain Necrosis (E14, 2026-10-21)
+
+The `epdamage` talent now covers both its simple and chain signatures. The chain form (4 targets, `attack@chain.atk_scale` 0.85, `attack@projectile_range` 1.6) applies the normal Arts attack to the primary target, then jumps to the nearest living allies within range, dealing `atk × 0.85^n` Arts and applying Necrosis (`attack@ep_damage_ratio`) to every victim. Chain hits are tagged so they cannot re-enter the ability. Support rises to **275 of 1,552** enemies. The test checks that both adjacent guards are hit and both receive the Necrosis element.
+
+### Chain Caster stages (S19, 2026-10-21, test-only)
+
+| Stage | Grid | Waves | Spawns |
+|---|---|---|---|
+| 10-10 | 8×11 | 1 | 48 |
+| 10-10 adverse environment | 8×11 | 1 | 48 |
+| 10-11 adverse environment | 8×12 | 1 | 30 |
+
+10-8 and 10-8 adverse still contain a viewer break without a matching tunnel hold and remain refused. Coverage is **0-1 plus 82 test-only files**.
+
+### Frost's ally ASPD aura (E15, 2026-10-21)
+
+`talent:atkSpeedDown` now has two reviewed branches: the existing blocker-owned delta and Frost's silence-aware aura on allied units within `defup.range_radius` (2.5). Frost's `defup` group holds only the range, so the DEF-aura feature accepts that signature with a zero DEF contribution and shares the covered group. Support rises to **276 of 1,552** enemies. The test waits for the aura to reach the guard and checks the exact −50 ASPD.
+
+### Frost stage (S20, 2026-10-21, test-only)
+
+**6-11** (7×11, 79 spawns) is built now that Frost's aura is supported. Coverage is **0-1 plus 83 test-only files**.
+
+### The ASV's Reborn-Creation support aura (E16, 2026-10-21)
+
+`talent:aura` now has a second reviewed branch. The Sarkaz Heirbearer ASV grants every bloodsucker-marked Reborn Creation +10% ATK (one contribution per living ASV, up to the reviewed five-stack cap) and adds Necrosis (`aura.ep_damage_ratio`, 0.1 × the creation's ATK) to their ordinary attacks. One battle listener tracks the living ASV sources; the ATK buff and element stop when the last ASV leaves. The Hatedrinker self-buff branch is unchanged. Support rises to **278 of 1,552** enemies. The test checks the +10% creation ATK and the Necrosis event from the creation's own attack.
+
+### ASV stages (S21, 2026-10-21, test-only)
+
+| Stage | Grid | Waves | Spawns |
+|---|---|---|---|
+| 10-9 | 8×12 | 1 | 27 |
+| 10-9 adverse environment | 8×12 | 1 | 27 |
+| 13-3 | 8×11 | 1 | 25 |
+| 13-3 adverse environment | 8×11 | 1 | 25 |
+| 10-16 | 9×13 | 1 | 32 |
+| 10-16 adverse environment | 9×13 | 1 | 32 |
+
+Coverage is **0-1 plus 89 test-only files**.
+
+### Punisher stun and reborn (E17, 2026-10-21)
+
+- **`skill:StunAttack`**: every third attack stuns every ally in the 3×3 area around each target for the skill's 4-second `stun` blackboard. The reviewed familyMask-3 wrapper (with a real trigger) and DB stun buff are claimed as one native wrapper; the skill is silence-aware.
+- **`talent:Attack`**: the `enemy_key` form is the first-death reborn, not an attack summon: on death the reviewed child spawns and is a support dependency.
+- Support rises to **280 of 1,552** enemies. Tests check the 4-second area stun and the child spawn.
+
+### Punisher stages (S22, 2026-10-21, test-only)
+
+| Stage | Grid | Waves | Spawns |
+|---|---|---|---|
+| 13-4 | 8×11 | 1 | 28 |
+| 13-4 adverse environment | 8×11 | 1 | 28 |
+
+Coverage is **0-1 plus 91 test-only files**.
+
+### Technical Scout reveal (E18, 2026-10-21)
+
+The Technical Scout's `antiinvi.range_radius` (3.3) becomes `profile.revealRange`. `canTargetAlly` now treats a camouflaged/stealthed ally inside that radius as targetable, and still hides it outside. This is the enemy's own ranged targeting only; area effects already ignore camouflage. Support rises to **281 of 1,552** enemies. The test places a camouflaged guard inside and outside the radius and checks both decisions.
+
+### Technical Scout stage (S23, 2026-10-21, test-only)
+
+**3-3** (8×11, 50 spawns) is built now that the Technical Scout's reveal range is supported. Coverage is **0-1 plus 92 test-only files**.
+
+### Fixed-squad stages (S24, 2026-10-21, test-only)
+
+The stage adapter now accepts a level file's `fixed_squad` (while still refusing `deployable_tokens`). The squad's `unit_id`, elite, level, potential, skill index and skill rank are compiled by `fixedSquadBuilds`; `StandardBattle` uses those builds instead of the caller's selection, and the prep page marks the squad as fixed. This is the squad the stage file owns, so the battle is reproducible and the UI no longer pretends a different selection matters.
+
+Sixteen fixed-squad stages are buildable with supported enemies:
+
+| Stages | Grid | Waves / spawns |
+|---|---|---|
+| 1-2 | 8×10 | 1 / 41 |
+| TR-1 | 6×7 | 4 / 5 |
+| TR-2 | 6×8 | 1 / 10 |
+| TR-3 | 6×7 | 1 / 11 |
+| TR-5 | 6×7 | 3 / 4 |
+| TR-6 | 7×9 | 1 / 25 |
+| TR-7 | 7×9 | 1 / 1 |
+| TR-9 | 7×9 | 2 / 12 |
+| TR-10 | 7×9 | 2 / 4 |
+| TR-11 | 7×8 | 1 / 14 |
+| TR-12 | 7×9 | 1 / 1 |
+| TR-13 | 7×10 | 1 / 16 |
+| TR-14 | 7×9 | 1 / 7 |
+| TR-15 | 7×9 | 1 / 7 |
+| TR-16 | 6×9 | 1 / 2 |
+| TR-23 | 6×9 | 1 / 24 |
+
+`test/arkpedia-fixed-squad.test.js` checks the exact builds and that an empty caller selection still produces the fixed bench. Coverage is **0-1 plus 108 test-only files**.

@@ -1,0 +1,1166 @@
+{
+ "code": "S6-1",
+ "name": "Condensation-1",
+ "description": "The Yeti Squadron is utilizing Infused Glacial Originium Slugs in their assault upon us. Please be careful of these aberrant creatures.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "s6-1",
+  "rows": 8,
+  "cols": 11,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    2,
+    0,
+    0,
+    3,
+    0,
+    4,
+    2,
+    4,
+    2,
+    5
+   ],
+   [
+    0,
+    2,
+    2,
+    3,
+    0,
+    4,
+    4,
+    3,
+    4,
+    4,
+    5
+   ],
+   [
+    0,
+    2,
+    2,
+    2,
+    4,
+    4,
+    3,
+    0,
+    2,
+    3,
+    0
+   ],
+   [
+    0,
+    0,
+    2,
+    2,
+    4,
+    4,
+    2,
+    3,
+    4,
+    3,
+    0
+   ],
+   [
+    0,
+    0,
+    3,
+    2,
+    4,
+    3,
+    4,
+    4,
+    4,
+    3,
+    0
+   ],
+   [
+    0,
+    0,
+    2,
+    2,
+    0,
+    0,
+    3,
+    2,
+    2,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 2
+    },
+    "end": {
+     "row": 2,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 8
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 1
+    },
+    "end": {
+     "row": 1,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 6
+      }
+     }
+    ],
+    "waits": []
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 172,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Yeti Operative",
+      "enemy_id": "enemy_1064_snsbr",
+      "count": 1,
+      "time": 8,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Yeti Operative",
+      "enemy_id": "enemy_1064_snsbr",
+      "count": 1,
+      "time": 13,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Yeti Operative",
+      "enemy_id": "enemy_1064_snsbr",
+      "count": 2,
+      "time": 24,
+      "interval": 6,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Yeti Operative",
+      "enemy_id": "enemy_1064_snsbr",
+      "count": 2,
+      "time": 24,
+      "interval": 6,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Infused Glacial Originium Slug",
+      "enemy_id": "enemy_1067_snslime",
+      "count": 2,
+      "time": 45,
+      "interval": 5,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "Infused Glacial Originium Slug",
+      "enemy_id": "enemy_1067_snslime",
+      "count": 2,
+      "time": 45,
+      "interval": 5,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Yeti Operative",
+      "enemy_id": "enemy_1064_snsbr",
+      "count": 2,
+      "time": 59,
+      "interval": 6,
+      "route": 1,
+      "fragment": 3
+     },
+     {
+      "enemy": "Yeti Operative",
+      "enemy_id": "enemy_1064_snsbr",
+      "count": 2,
+      "time": 59,
+      "interval": 6,
+      "route": 0,
+      "fragment": 3
+     },
+     {
+      "enemy": "Yeti Sniper",
+      "enemy_id": "enemy_1066_snbow",
+      "count": 1,
+      "time": 81,
+      "route": 0,
+      "fragment": 4
+     },
+     {
+      "enemy": "Yeti Operative",
+      "enemy_id": "enemy_1064_snsbr",
+      "count": 2,
+      "time": 78,
+      "interval": 5,
+      "route": 1,
+      "fragment": 4
+     },
+     {
+      "enemy": "Yeti Sniper",
+      "enemy_id": "enemy_1066_snbow",
+      "count": 1,
+      "time": 99,
+      "route": 1,
+      "fragment": 5
+     },
+     {
+      "enemy": "Yeti Operative",
+      "enemy_id": "enemy_1064_snsbr",
+      "count": 2,
+      "time": 96,
+      "interval": 5,
+      "route": 0,
+      "fragment": 5
+     },
+     {
+      "enemy": "Infused Glacial Originium Slug",
+      "enemy_id": "enemy_1067_snslime",
+      "count": 2,
+      "time": 115,
+      "interval": 5,
+      "route": 1,
+      "fragment": 6
+     },
+     {
+      "enemy": "Yeti Operative",
+      "enemy_id": "enemy_1064_snsbr",
+      "count": 2,
+      "time": 114,
+      "interval": 5,
+      "route": 0,
+      "fragment": 6
+     },
+     {
+      "enemy": "Infused Glacial Originium Slug",
+      "enemy_id": "enemy_1067_snslime",
+      "count": 2,
+      "time": 115,
+      "interval": 5,
+      "route": 0,
+      "fragment": 6
+     },
+     {
+      "enemy": "Yeti Operative",
+      "enemy_id": "enemy_1064_snsbr",
+      "count": 2,
+      "time": 114,
+      "interval": 5,
+      "route": 1,
+      "fragment": 6
+     },
+     {
+      "enemy": "Yeti Caster",
+      "enemy_id": "enemy_1068_snmage",
+      "count": 2,
+      "time": 134,
+      "interval": 8,
+      "route": 1,
+      "fragment": 7
+     },
+     {
+      "enemy": "Yeti Sniper",
+      "enemy_id": "enemy_1066_snbow",
+      "count": 2,
+      "time": 133,
+      "interval": 8,
+      "route": 0,
+      "fragment": 7
+     },
+     {
+      "enemy": "Yeti Caster",
+      "enemy_id": "enemy_1068_snmage",
+      "count": 2,
+      "time": 134,
+      "interval": 8,
+      "route": 0,
+      "fragment": 7
+     },
+     {
+      "enemy": "Yeti Sniper",
+      "enemy_id": "enemy_1066_snbow",
+      "count": 2,
+      "time": 133,
+      "interval": 8,
+      "route": 1,
+      "fragment": 7
+     },
+     {
+      "enemy": "Yeti Operative",
+      "enemy_id": "enemy_1064_snsbr",
+      "count": 1,
+      "time": 151,
+      "route": 1,
+      "fragment": 8
+     },
+     {
+      "enemy": "Yeti Operative",
+      "enemy_id": "enemy_1064_snsbr",
+      "count": 3,
+      "time": 164,
+      "interval": 4,
+      "route": 1,
+      "fragment": 8
+     },
+     {
+      "enemy": "Yeti Operative",
+      "enemy_id": "enemy_1064_snsbr",
+      "count": 1,
+      "time": 151,
+      "route": 0,
+      "fragment": 8
+     },
+     {
+      "enemy": "Yeti Operative",
+      "enemy_id": "enemy_1064_snsbr",
+      "count": 3,
+      "time": 164,
+      "interval": 4,
+      "route": 0,
+      "fragment": 8
+     },
+     {
+      "enemy": "Yeti Caster",
+      "enemy_id": "enemy_1068_snmage",
+      "count": 2,
+      "time": 158,
+      "interval": 14,
+      "route": 1,
+      "fragment": 8
+     },
+     {
+      "enemy": "Yeti Caster",
+      "enemy_id": "enemy_1068_snmage",
+      "count": 2,
+      "time": 158,
+      "interval": 14,
+      "route": 0,
+      "fragment": 8
+     },
+     {
+      "enemy": "Infused Glacial Originium Slug",
+      "enemy_id": "enemy_1067_snslime",
+      "count": 2,
+      "time": 155,
+      "interval": 14,
+      "route": 1,
+      "fragment": 8
+     },
+     {
+      "enemy": "Infused Glacial Originium Slug",
+      "enemy_id": "enemy_1067_snslime",
+      "count": 2,
+      "time": 155,
+      "interval": 14,
+      "route": 0,
+      "fragment": 8
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 0,
+    "col": 1,
+    "routes": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 7,
+    "col": 2,
+    "routes": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 1,
+    "col": 10,
+    "routes": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 2,
+    "col": 10,
+    "routes": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1064_snsbr",
+    "slug": "yeti_operative",
+    "name": "Yeti Operative",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1066_snbow",
+    "slug": "yeti_sniper",
+    "name": "Yeti Sniper",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1067_snslime",
+    "slug": "infused_glacial_originium_slug_enemy_1067_snslime",
+    "name": "Infused Glacial Originium Slug",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1068_snmage",
+    "slug": "yeti_caster",
+    "name": "Yeti Caster",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "pathing": {
+  "schemaVersion": 1,
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "S6-1",
+  "geometryHash": "ad01ababa051e4da486a25ac6e9e7140a35ccc918dfb56f9de39f5aace1280b2",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      2,
+      7
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4.414213562373095,
+     5.414213562373095,
+     6.414213562373095,
+     7.414213562373095,
+     8.414213562373096,
+     9.414213562373096,
+     10.414213562373096,
+     11.414213562373096,
+     12.414213562373096,
+     13.414213562373096,
+     14.414213562373096
+    ],
+    "length": 14.414213562373096,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      2,
+      7
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ]
+   },
+   "1": {
+    "points": [
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3.414213562373095,
+     4.414213562373095,
+     5.414213562373095,
+     6.414213562373095,
+     7.414213562373095,
+     8.414213562373096,
+     9.414213562373096,
+     10.414213562373096,
+     11.414213562373096,
+     12.414213562373096,
+     13.414213562373096
+    ],
+    "length": 13.414213562373096,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "enemies": {
+  "enemy_1064_snsbr": {
+   "key": "enemy_1064_snsbr",
+   "prefabKey": "enemy_1064_snsbr",
+   "name": "Yeti Operative",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3400,
+    "atk": 360,
+    "def": 100,
+    "res": 0,
+    "moveSpeed": 1.1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Attack power increases when attacking <$ba.frozen>Frozen</> targets",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "atkup.atk_scale": 1.5
+    },
+    "bbStr": {},
+    "groups": {
+     "atkup": [
+      "atk_scale"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1067_snslime": {
+   "key": "enemy_1067_snslime",
+   "prefabKey": "enemy_1067_snslime",
+   "name": "Infused Glacial Originium Slug",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3250,
+    "atk": 300,
+    "def": 0,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 1.7,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 1.75,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Upon death, deals Physical damage in an area and applies <$ba.cold>Cold</> to affected targets",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "boom.atk_scale": 2,
+     "boom.freeze": 10
+    },
+    "bbStr": {},
+    "groups": {
+     "boom": [
+      "atk_scale",
+      "freeze"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1066_snbow": {
+   "key": "enemy_1066_snbow",
+   "prefabKey": "enemy_1066_snbow",
+   "name": "Yeti Sniper",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 2500,
+    "atk": 290,
+    "def": 80,
+    "res": 0,
+    "moveSpeed": 0.9,
+    "bat": 2.4,
+    "aspd": 100,
+    "rangeRadius": 1.9,
+    "rawRangeRadius": 1.9,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Attack power increases when attacking <$ba.frozen>Frozen</> targets",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "atkup.atk_scale": 1.5
+    },
+    "bbStr": {},
+    "groups": {
+     "atkup": [
+      "atk_scale"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1068_snmage": {
+   "key": "enemy_1068_snmage",
+   "prefabKey": "enemy_1068_snmage",
+   "name": "Yeti Caster",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 5000,
+    "atk": 320,
+    "def": 200,
+    "res": 50,
+    "moveSpeed": 0.8,
+    "bat": 4.5,
+    "aspd": 100,
+    "rangeRadius": 2.2,
+    "rawRangeRadius": 2.2,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "After two attacks, the next attack applies the <$ba.cold>Cold</> effect",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [
+    {
+     "prefabKey": "coldattack",
+     "priority": 0,
+     "cooldown": 0,
+     "initCooldown": 0,
+     "spCost": 2,
+     "bb": {
+      "freeze": 10
+     },
+     "bbStr": {}
+    }
+   ],
+   "sp": {
+    "type": "INCREASE_WHEN_ATTACK",
+    "maxSp": 2,
+    "initSp": 0,
+    "increment": 1
+   },
+   "notCountInTotal": false,
+   "tags": []
+  }
+ }
+}

@@ -51,9 +51,10 @@ missing fact in its `reasons`; do not guess.
    The builder validates the route/geometry hash, the sequential wave
    schedule, the supported enemies, and each level file's enemy database level
    and attribute overrides. A viewer break plus its matching tunnel hold becomes
-   DISAPPEAR/WAIT/APPEAR legs; an unmatched break is refused. Fixed squads,
-   deployable tokens, conditional spawns and oversized grids are also refused
-   rather than approximated.
+   DISAPPEAR/WAIT/APPEAR legs; an unmatched break is refused. A stage's
+   `fixed_squad` is used instead of the caller's selection (the prep page shows
+   a notice); deployable tokens, conditional spawns and oversized grids are
+   refused rather than approximated.
 2. Regenerate the catalogue:
    ```sh
    node tools/arkpedia/stage-index.mjs

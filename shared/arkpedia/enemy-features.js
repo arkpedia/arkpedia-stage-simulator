@@ -128,6 +128,35 @@ function isRebornCreation(nat) {
     && mark._buffs.length === 1 && mark._buffs[0].lifeTimeType === 2 && mark._selector.m_PathID === '0';
 }
 
+// The reviewed Punisher StunAttack pair: a familyMask-3 wrapper with a real trigger plus the area Stun ability
+// (DB stun buff, 4 s from the skill blackboard). The skill is every third attack.
+function isPunisherStunAttack(r, nat) {
+  const rows = nat.StunAttack ?? [], wrapper = rows.find(c => '_familyMask' in c), ability = rows.find(c => '_activeBuffs' in c);
+  if (!wrapper || !ability || r.skills.length !== 1) return false;
+  const skill = r.skills[0], buff = ability._activeBuffs?.[0];
+  return skill.prefabKey === 'StunAttack' && skill.bb.stun === 4 && skill.spCost === 3
+    && r.abilities.some(a => a.text === 'After several attacks, <$ba.stun>Stuns</> friendly units in an area.')
+    && wrapper._familyMask === 3 && wrapper._castLikeAttack === 0 && wrapper._ignoreSilence === 0
+    && wrapper._overwriteInitCooldown === -1 && wrapper._trigger?.m_PathID !== '0'
+    && ability._waitForAttackEvent === 1 && ability._damageType === 1 && ability._selector?.m_PathID !== '0'
+    && buff?.buffKey === 'stun' && buff.loadFromDB === 1 && buff.lifeTimeType === 1;
+}
+
+// The reviewed Yeti Caster ColdAttack pair: a familyMask-3 wrapper plus the snow-magic ability that applies the
+// e2c_cold DB buff from the skill's reviewed freeze duration. The handbook names every third attack.
+function isYetiColdAttack(r, nat) {
+  const rows = nat.ColdAttack ?? [], wrapper = rows.find(c => '_familyMask' in c), ability = rows.find(c => '_waitForAttackEvent' in c);
+  if (!wrapper || !ability || r.skills.length !== 1) return false;
+  const skill = r.skills[0], buff = ability._activeBuffs?.[0];
+  return skill.prefabKey === 'coldattack' && skill.bb.freeze === 10
+    && r.abilities.some(a => a.text === 'After two attacks, the next attack applies the <$ba.cold>Cold</> effect')
+    && wrapper._familyMask === 3 && wrapper._trigger?.m_PathID === '0' && wrapper._castLikeAttack === 0
+    && wrapper._ignoreSilence === 0 && wrapper._overwriteInitCooldown === -1 && wrapper._checkParentActive === 0
+    && wrapper._maxTriggerTime === -1 && wrapper._resetCdWaitFirstPeriod === 1 && wrapper._resetMainAbilityCdWhenCastEnd === 0
+    && ability._waitForAttackEvent === 1 && ability._selector?.m_PathID === '0' && ability._projectileKey === 'projectile_enemy_snow_magic_ball'
+    && ability._damageType === 2 && buff?.buffKey === 'e2c_cold' && buff.loadFromDB === 1;
+}
+
 // The reviewed enhance component (enemy_1103_wdkght family): a whole-field passive (no selector, no interval) marking
 // every unit of the owner's own side (validator targetSide 1, all motions, ignoring isolation) with template
 // enemy_wdkght_t, whose only event ON_OWNER_KILLED gives the mark's source one INFINITY stack of ATK MULTIPLIER and
@@ -143,6 +172,16 @@ function isAllyDeathEnhance(r, nat) {
     && mods.map(m => `${m.attributeType}:${m.formulaItem}:${m.loadFromBlackboard}`).join() === 'ATK:MULTIPLIER:true,ATTACK_SPEED:ADDITION:true'
     && make.overrideType === 'STACK' && make.lifeTimeType === 'INFINITY' && make.maxStackCnt === r.talents.bb['enhance.max_stack_cnt'];
 }
+
+/** The ASV's dynamic aura keys: aura.<template>[attr_buff].atk + max_valid_stack_cnt + aura.ep_damage_ratio. */
+function asvAura(r) {
+  const bb = r.talents.bb, maxKey = Object.keys(bb).find(k => /^aura\..*max_valid_stack_cnt$/.test(k));
+  if (!maxKey) return null;
+  const prefix = maxKey.slice(0, -'max_valid_stack_cnt'.length);
+  return { atk: bb[`${prefix}atk`], max: bb[maxKey], ep: bb['aura.ep_damage_ratio'] };
+}
+const ASV_TEXT = 'While in battle, Reborn Creations have increased ATK, and their attacks will additionally deal <$ba.dt.apoptosis>Necrosis damage</>';
+const HATEDRINKER_TEXT = 'Gains increased ATK for each Reborn Creation on the battlefield';
 
 export const ENEMY_FEATURES = Object.freeze({
   // Handbook lines restating what the record's stats already model.
@@ -172,6 +211,27 @@ export const ENEMY_FEATURES = Object.freeze({
     ability: { kind: 'blinkWhenBlocked', params: r => ({ dist: r.skills[0].bb.dist ?? 1.5, cooldown: r.skills[0].cooldown, initCooldown: r.skills[0].initCooldown }) },
     note: 'blink past the blocker on the reviewed cooldown', nativeClaim: () => ({ wrappers: 1 }),
     explains: /^When blocked, can quickly move behind the unit$/ },
+  // Yeti Caster: every third attack applies the reviewed 10 s Cold.
+  'skill:coldattack': { covers: (r, nat) => isYetiColdAttack(r, nat),
+    ability: { kind: 'coldAttack', params: r => ({ every: 3, duration: r.skills[0].bb.freeze }) },
+    note: 'every third attack applies Cold', nativeClaim: () => ({ wrappers: 1 }),
+    explains: /^After two attacks, the next attack applies the <\$ba\.cold>Cold<\/> effect$/ },
+  // Punisher: every third attack stuns allies in the target's area; on death it is reborn as its reviewed child.
+  'skill:StunAttack': { covers: (r, nat) => isPunisherStunAttack(r, nat),
+    ability: { kind: 'stunAttack', params: r => ({ every: 3, duration: r.skills[0].bb.stun }) },
+    note: 'every third attack stuns the target area', nativeClaim: () => ({ wrappers: 1 }),
+    explains: /^After several attacks, <\$ba\.stun>Stuns<\/> friendly units in an area\.$/ },
+  'talent:Attack': { covers: r => sig(r, 'Attack', ['enemy_key'])
+      && r.abilities.some(a => /^Will be reborn as a <[^>]+> after falling in battle for the first time$/.test(a.text)),
+    ability: { kind: 'deathSpawn', params: r => ({ key: r.talents.bbStr['Attack.enemy_key'], cnt: 1 }) },
+    note: 'reborn as its reviewed child on death', dependsOn: r => [r.talents.bbStr['Attack.enemy_key']].filter(Boolean),
+    explains: /^Will be reborn as a <[^>]+> after falling in battle for the first time$/ },
+  // Technical Scout: reveals camouflaged/stealthed allies within range to its own targeting.
+  'talent:antiinvi': { covers: r => sig(r, 'antiinvi', ['range_radius'])
+      && r.abilities.some(a => a.text === 'Reveals <$ba.invisible>invisible</> allied units in its surroundings'),
+    ability: { kind: 'revealCamouflage', params: r => ({ range: r.talents.bb['antiinvi.range_radius'] }) },
+    note: 'ranged targeting ignores camouflage/stealth within range',
+    explains: /^Reveals <\$ba\.invisible>invisible<\/> allied units in its surroundings$/ },
   // Senior Caster: the normal ranged attack also splashes the primary target's four cardinal neighbours.
   'ability:Deals area damage to Operators on the four cardinal tiles next to the primary target.': {
     covers: r => r.applyWay === 'RANGED' && r.stats.rangeRadius > 0
@@ -191,9 +251,28 @@ export const ENEMY_FEATURES = Object.freeze({
   ...family(['refracting'], ['magic_resistance'], g => ({ kind: 'refraction', params: r => ({ res: r.talents.bb[`${g}.magic_resistance`] }) }),
     r => r.abilities.some(a => a.text.includes('<$ba.refraction>')), 'RES +magic_resistance while not silenced', null, /^<\$ba\.refraction>Refraction<\/>$/),
   // "Gains significantly increased ATK when HP is under 50%": ATK +atk once HP first drops below half.
-  ...familyAny(['atkup'], [['atk'], ['atk', 'hp_ratio']], g => ({ kind: 'lowHpBuff', params: r => ({ ratio: r.talents.bb[`${g}.hp_ratio`] ?? 0.5, mods: { atkPct: r.talents.bb[`${g}.atk`] } }) }),
-    r => r.abilities.some(a => /under 50%/.test(a.text) && /ATK/.test(a.text)), 'ATK +atk below the hp_ratio threshold (50% when the record omits it)', null,
-    /^Gains significantly increased ATK when HP is under 50%$/),
+  'talent:atkup': {
+    covers: r => {
+      if (sig(r, 'atkup', ['atk_scale'])) return r.abilities.some(a => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(a.text));
+      if (sig(r, 'atkup', ['atk']) || sig(r, 'atkup', ['atk', 'hp_ratio'])) return r.abilities.some(a => /under 50%/.test(a.text) && /ATK/.test(a.text));
+      return false;
+    },
+    ability: { kind: 'atkup', params: r => sig(r, 'atkup', ['atk_scale'])
+      ? { scale: r.talents.bb['atkup.atk_scale'] }
+      : { ratio: r.talents.bb['atkup.hp_ratio'] ?? 0.5, atkPct: r.talents.bb['atkup.atk'] } },
+    note: 'ATK ×atk_scale against Frozen, or +atk below the hp_ratio threshold',
+    explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
+      || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
+
+  // Reborn-Creation auras. Hatedrinker buffs itself per creation; the ASV buffs the creations and makes their
+  // attacks add Necrosis. Both read the bloodsucker marker from E10.
+  'talent:aura': {
+    covers: r => r.abilities.some(a => a.text === ASV_TEXT) ? !!asvAura(r)
+      : sig(r, 'aura', ['atk', 'max_valid_stack_cnt']) && r.abilities.some(a => a.text === HATEDRINKER_TEXT),
+    ability: { kind: 'aura', params: r => r.abilities.some(a => a.text === ASV_TEXT)
+      ? { mode: 'asv', ...asvAura(r) }
+      : { mode: 'rebornAtk', atk: r.talents.bb['aura.atk'], max: r.talents.bb['aura.max_valid_stack_cnt'] } },
+    note: 'Hatedrinker self ATK per creation, or ASV creation ATK + Necrosis', explains: text => text === HATEDRINKER_TEXT || text === ASV_TEXT },
   // 吸血 (vampire): attacks up to max_target and heals heal_scale × the damage actually dealt. The single-target
   // signature omits max_target; the record then keeps the engine's one target.
   ...familyAny(['vampire'], [['attack@max_target', 'heal_scale'], ['heal_scale']], g => ({ kind: 'vampireOnHit', params: r => ({
@@ -204,9 +283,24 @@ export const ENEMY_FEATURES = Object.freeze({
       || /^Restores a certain amount of HP after each attack, based upon damage dealt$/.test(text)
       || text === `Attacks ${record.talents.bb['vampire.attack@max_target'] ?? 1} enemies simultaneously`),
   // Element damage on every attack hit: ATK x attack@ep_damage_ratio of the element its handbook line names.
-  ...family(['epdamage', 'EpDamage'], ['attack@ep_damage_ratio'], g => ({ kind: 'elementOnHit', params: r => ({ element: elementOf(r), ratio: r.talents.bb[`${g}.attack@ep_damage_ratio`] }) }),
+  ...family(['EpDamage'], ['attack@ep_damage_ratio'], g => ({ kind: 'elementOnHit', params: r => ({ element: elementOf(r), ratio: r.talents.bb[`${g}.attack@ep_damage_ratio`] }) }),
     r => !!elementOf(r), 'element damage on every attack hit', null,
     /^(Every attack deals|Attacks inflict additional|Attacks deal) <\$ba\.dt\.(erosion|neural|apoptosis|burning)>[^<]*<\/>\.?$/),
+  'talent:epdamage': { covers: r =>
+      (sig(r, 'epdamage', ['attack@ep_damage_ratio']) && !!elementOf(r)
+        && r.abilities.some(a => /^(Every attack deals|Attacks inflict additional|Attacks deal) <\$ba\.dt\.(erosion|neural|apoptosis|burning)>[^<]*<\/>\.?$/.test(a.text)))
+      || (sig(r, 'epdamage', ['attack@chain.atk_scale', 'attack@ep_damage_ratio', 'attack@max_target', 'attack@projectile_range'])
+        && r.abilities.some(a => /^Attacks deal <\$ba\.dt\.apoptosis>Necrosis damage<\/> and jump between \d+ targets, with each jump dealing reduced damage$/.test(a.text))),
+    ability: { kind: 'elementOnHit', params: r => {
+      if (sig(r, 'epdamage', ['attack@chain.atk_scale', 'attack@ep_damage_ratio', 'attack@max_target', 'attack@projectile_range']))
+        return { chain: true, element: elementOf(r), ratio: r.talents.bb['epdamage.attack@ep_damage_ratio'],
+          maxTargets: r.talents.bb['epdamage.attack@max_target'], chainScale: r.talents.bb['epdamage.attack@chain.atk_scale'],
+          range: r.talents.bb['epdamage.attack@projectile_range'] };
+      return { element: elementOf(r), ratio: r.talents.bb['epdamage.attack@ep_damage_ratio'] };
+    } },
+    note: 'element damage on every attack hit, or a chain that jumps with falloff', explains: text =>
+      /^(Every attack deals|Attacks inflict additional|Attacks deal) <\$ba\.dt\.(erosion|neural|apoptosis|burning)>[^<]*<\/>\.?$/.test(text)
+      || /^Attacks deal <\$ba\.dt\.apoptosis>Necrosis damage<\/> and jump between \d+ targets, with each jump dealing reduced damage$/.test(text) },
   // "Spawns N <X> when defeated": cnt enemy_key on death; supported only when the spawned enemy is.
   ...family(['DeadSpawn'], ['cnt', 'enemy_key'], g => ({ kind: 'deathSpawn', params: r => ({ key: r.talents.bbStr[`${g}.enemy_key`], cnt: r.talents.bb[`${g}.cnt`] }) }),
     r => true, 'spawns cnt enemy_key when killed', r => Object.entries(r.talents.bbStr).filter(([k]) => /^deadspawn\.enemy_key$/i.test(k)).map(([, v]) => v),
@@ -232,14 +326,19 @@ export const ENEMY_FEATURES = Object.freeze({
     ability: { kind: 'blockerBlockUp', params: r => ({ n: r.talents.bb['buff_to_blocker.block_cnt'], max: r.talents.bb['buff_to_blocker.max_valid_stack_cnt'] }) },
     note: 'the current blocker gains +block_cnt Block', explains: /^Units blocking it gain \+1 Block \(up to a maximum of \+6\)$/ },
   // "When blocked, significantly reduces the blocker's ASPD": a flat ASPD delta while this enemy is the blocker's.
-  'talent:atkSpeedDown': { covers: r => sig(r, 'atkSpeedDown', ['attack_speed'])
-      && r.abilities.some(a => a.text === "When blocked, significantly reduces the blocker's ASPD"),
-    ability: { kind: 'blockerAspdDown', params: r => ({ aspd: r.talents.bb['atkSpeedDown.attack_speed'] * 100 }) },
-    note: "flat ASPD delta on the current blocker", explains: /^When blocked, significantly reduces the blocker's ASPD$/ },
-  // Defender-4: a DEF aura on other enemies within range_radius (silence-aware, refreshed like the other auras).
-  ...family(['defup'], ['def', 'range_radius'], g => ({ kind: 'enemyDefAura', params: r => ({ def: r.talents.bb[`${g}.def`], r: r.talents.bb[`${g}.range_radius`] }) }),
-    r => r.abilities.some(a => a.text === 'Increases the DEF of surrounding enemy units'),
-    'other enemies within range_radius gain DEF +def', null, /^Increases the DEF of surrounding enemy units$/),
+  'talent:atkSpeedDown': {
+    covers: r => sig(r, 'atkSpeedDown', ['attack_speed']) && (r.abilities.some(a => a.text === "When blocked, significantly reduces the blocker's ASPD")
+      || (r.abilities.some(a => a.text === 'All friendly units within range have reduced ASPD') && sig(r, 'defup', ['range_radius']))),
+    ability: { kind: 'aspdDown', params: r => r.abilities.some(a => a.text === 'All friendly units within range have reduced ASPD')
+      ? { mode: 'aura', aspd: r.talents.bb['atkSpeedDown.attack_speed'] * 100, range: r.talents.bb['defup.range_radius'] }
+      : { mode: 'blocker', aspd: r.talents.bb['atkSpeedDown.attack_speed'] * 100 } },
+    note: "blocker's flat ASPD delta, or Frost's ally aura", explains: text => text === "When blocked, significantly reduces the blocker's ASPD"
+      || text === 'All friendly units within range have reduced ASPD' },
+  // Defender-4: a DEF aura on other enemies within range_radius (silence-aware). Frost shares the range group but has no DEF.
+  'talent:defup': { covers: r => (sig(r, 'defup', ['def', 'range_radius']) && r.abilities.some(a => a.text === 'Increases the DEF of surrounding enemy units'))
+      || (sig(r, 'defup', ['range_radius']) && r.abilities.some(a => a.text === 'All friendly units within range have reduced ASPD')),
+    ability: { kind: 'enemyDefAura', params: r => ({ def: r.talents.bb['defup.def'] ?? 0, r: r.talents.bb['defup.range_radius'] }) },
+    note: 'other enemies within range_radius gain DEF +def (zero for Frost)', explains: /^Increases the DEF of surrounding enemy units$/ },
   // Death blast (boom): atk_scale × ATK around the corpse; the cold/elemental variants add their reviewed status or
   // element. Records whose line names anything else (ignite Reeds, seize Gramophones, grant Energy) are not covered.
   'talent:boom': { covers: r => coversDeathBlast(r, 'boom'),

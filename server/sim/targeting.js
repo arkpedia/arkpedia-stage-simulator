@@ -106,7 +106,11 @@ export function canTargetAlly(e, a, ranged) {
   if (!a.alive || !a.deployed || a.hidden || a.kind === 'device') return false;
   const f = a.s.flags;
   if (f.untargetable || f.sleep) return false;
-  if (ranged && (f.stealth || f.camou) && e.blockedBy !== a) return false;
+  // A revealed unit (Technical Scout's anti-invisibility aura) is targetable even while camouflaged/stealthed.
+  if (ranged && (f.stealth || f.camou) && e.blockedBy !== a) {
+    const reveal = e.profile?.revealRange;
+    if (!(reveal > 0) || Math.hypot(a.x - e.x, a.y - e.y) > reveal) return false;
+  }
   if (f.liftoff && evadesGround(e, a)) return false;
   return true;
 }

@@ -66,6 +66,22 @@ export function catalogueFor(data) {
     }),
   );
 }
+/** Builds for a stage's fixed squad (`suppliedUnits.fixed_squad`), or null when the stage has none. */
+export function fixedSquadBuilds(data) {
+  const squad = data.stage?.fixedSquad;
+  if (!Array.isArray(squad) || !squad.length) return null;
+  return squad.map(entry => {
+    const op = data.operators[entry.unit_id];
+    if (!op) throw Error(`Unknown fixed-squad operator: ${entry.unit_id}`);
+    const fallback = defaultBuild(op), elite = Math.max(0, Math.min(op.phases.length - 1, Number(entry.elite) || 0));
+    const level = Math.max(1, Math.min(op.phases[elite].maxLevel, Number(entry.level) || op.phases[elite].maxLevel));
+    const skill = op.skills[Number(entry.skill_index) || 0] ?? op.skills[0] ?? null;
+    return { ...fallback, id: op.id, elite, level, potential: Math.max(1, Math.min(6, Number(entry.potential) || 1)), trust: 0,
+      skillId: skill?.id ?? fallback.skillId,
+      skillRank: skill ? Math.max(1, Math.min(skillRankCap(op, skill.id, elite), Number(entry.skill_level) || 1)) : null };
+  });
+}
+
 export function defaultBuild(op) {
   const elite = op.phases.length - 1;
   const level = op.phases.at(-1).maxLevel;

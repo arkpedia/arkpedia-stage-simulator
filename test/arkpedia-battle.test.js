@@ -38,9 +38,9 @@ test("waves run in sequence with each wave's own delay, duration and interval", 
     ["enemy_1007_slime", 1], ["enemy_1002_nsabr", 16], ["enemy_1002_nsabr", 18],
   ]);
 });
-test("fixed squads and conditional spawns remain refused", () => {
+test("deployable tokens and conditional spawns remain refused", () => {
   for (const patch of [
-    { suppliedUnits: { fixed_squad: [{}], deployable_tokens: [] } },
+    { suppliedUnits: { fixed_squad: [], deployable_tokens: [{}] } },
     { hasConditionalSpawns: true },
     { rows: 20 },
   ]) {
