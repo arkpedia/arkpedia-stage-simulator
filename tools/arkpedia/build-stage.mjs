@@ -49,17 +49,36 @@ const stage = {
 };
 // The battle compiler and the supported-enemy gate are the same ones used by 0-1.
 const adapter = stageAdapter(stage);
+// The level file owns each enemy's database level and any attribute overrides
+// (stage geometry `enemyConfigurations`); the catalogue is the source record.
+const OVERRIDE = Object.freeze({ hp: 'maxHp', atk: 'atk', def: 'def', res: 'res', move_speed: 'moveSpeed',
+  attack_interval: 'bat', attack_speed: 'aspd', weight: 'massLevel', range: 'rawRangeRadius', life_cost: 'lpr',
+  taunt: 'tauntLevel', elemental_res: 'elementRes', elemental_damage_res: 'elementDmgRes' });
+const configs = new Map((geometry.enemyConfigurations ?? []).map(config => [config.enemy_id, config]));
+const configured = id => {
+  const entry = records.enemies[id], config = configs.get(id), level = config?.database_level ?? 0;
+  const base = entry?.levels[level];
+  if (!base) throw Error(`Missing enemy record: ${id}@${level}`);
+  if (!config?.overrides || !Object.keys(config.overrides).length) return base;
+  const record = structuredClone(base), stats = record.stats;
+  for (const [key, value] of Object.entries(config.overrides)) {
+    if (!(key in OVERRIDE) || typeof value !== 'number') continue;
+    const field = OVERRIDE[key];
+    stats[field] = value;
+    if (field === 'rawRangeRadius') stats.rangeRadius = record.applyWay === 'MELEE' ? 0 : Math.max(0, value);
+  }
+  return record;
+};
 const enemyIds = new Set();
 const addEnemy = id => {
   if (enemyIds.has(id)) return;
-  const entry = records.enemies[id];
-  if (!entry) throw Error(`Missing enemy record: ${id}`);
+  if (!records.enemies[id]) throw Error(`Missing enemy record: ${id}`);
   if (!support.enemies[id]?.policy) throw Error(`Unsupported regular-stage enemy: ${id} (${support.enemies[id]?.reasons.join(', ')})`);
   enemyIds.add(id);
   for (const child of support.enemies[id].spawns ?? []) addEnemy(child);
 };
 for (const spawn of adapter.spawns) addEnemy(spawn.enemyKey);
-stage.enemies = Object.fromEntries([...enemyIds].map(id => [id, records.enemies[id].levels[0]]));
+stage.enemies = Object.fromEntries([...enemyIds].map(id => [id, configured(id)]));
 assertRegularEnemies({ ...mvp, enemies: stage.enemies, stage });
 await writeFile(args.out, JSON.stringify(stage, null, 1) + '\n');
 console.log(`Built ${stage.code}: ${stage.geometry.rows}x${stage.geometry.cols}, ${stage.geometry.waves.length} waves, ${adapter.spawns.length} spawns, ${enemyIds.size} enemies -> ${args.out}`);

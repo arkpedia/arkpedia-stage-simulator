@@ -5023,3 +5023,12 @@ The builder also accepts the Chapter 1 stages whose enemies are already supporte
 | 4-7 | 7×11 | 1 | 59 | Infused Originium Slug, Soldier, Monster Mk II, Caster Leader, Butcher, Sarkaz Greatswordsman, Sarkaz Crossbowman |
 
 Refused here for unsupported content: 3-3/4-4 (Crownslayer), 3-5 (Senior Caster), 3-7 (Mortar Gunner), 3-8 (Skullshatterer), 4-8/4-9 (Sarkaz Caster), 4-10 (FrostNova). Coverage is 0-1 plus 30 test-only files across Chapters 0–4.
+
+### Stage-owned enemy levels and overrides (S8, 2026-10-21)
+
+A stage file must not reuse the database level-0 stats when its level file says otherwise. `build-stage.mjs` now reads each stage's `enemyConfigurations`:
+
+- `database_level` selects the compiled catalogue level (4-1, 4-6 and 4-7 use level 1 for Soldier, Monster and the Caster variant).
+- `overrides` applies the level file's owned attributes (`hp`, `atk`, `def`, `res`, `move_speed`, `attack_interval`, `attack_speed`, `weight`, `range`, `life_cost`, `taunt`, elemental resistances) to the record's stats. This restores, for example, 0-2/0-3's Soldier DEF 30 instead of the database's 100.
+
+The generic stage test now asserts the level and every applied override, so a rebuilt stage cannot silently drift back to the database defaults. All 30 test-only files were regenerated with this rule.

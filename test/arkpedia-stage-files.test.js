@@ -29,6 +29,14 @@ test('every file-backed stage is supported, catalogue-loadable and fightable', a
     const adapter = stageAdapter(stage);
     assert.ok(adapter.spawns.length, `${id} has spawns`);
     for (const spawn of adapter.spawns) assert.ok(stage.enemies[spawn.enemyKey], `${id} ships ${spawn.enemyKey}`);
+    // The source level file owns each enemy's database level and attribute overrides.
+    for (const config of stage.geometry.enemyConfigurations ?? []) {
+      const record = stage.enemies[config.enemy_id];
+      if (!record) continue;
+      if (typeof config.database_level === 'number') assert.equal(record.level, config.database_level, `${id} ${config.enemy_id} level`);
+      for (const [key, field] of Object.entries({ def: 'def', atk: 'atk', hp: 'maxHp', res: 'res' }))
+        if (typeof config.overrides?.[key] === 'number') assert.equal(record.stats[field], config.overrides[key], `${id} ${config.enemy_id} ${key}`);
+    }
 
     const data = structuredClone(mvp);
     const index = { schemaVersion: 1, defaultStage: id, stages: [{ id, code: stage.code, name: stage.name, data: file }] };
