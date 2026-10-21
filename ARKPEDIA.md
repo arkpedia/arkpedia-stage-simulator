@@ -5614,3 +5614,7 @@ On polluted or stormed tiles the Profane Chimera emits its own pollution aura an
 ### 14-6 stages (S73, 2026-10-21)
 
 With the Profane Chimera supported, **14-6** and **14-6 adverse environment** build (7×10, 32 spawns, 5 enemies). Coverage is **156 public stages** (0-1 plus 155 files).
+
+### 14-7 and 14-9 (S74, 2026-10-21)
+
+**14-7**, **14-7 adverse environment**, **14-9** and **14-9 adverse environment** build with the Chimera/Beacon/storm support (8×11, 25–29 spawns, 5–6 enemies). Coverage is **160 public stages** (0-1 plus 159 files).
