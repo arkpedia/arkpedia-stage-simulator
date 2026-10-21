@@ -5774,3 +5774,7 @@ With the Companion pair supported, **9-17** builds (8×12, 32 spawns, 6 enemies)
 ### 9-9 (S100, 2026-10-21)
 
 The current support also unlocks **9-9** (8×11, 45 spawns, 4 enemies). The stacked branch now has **192 public stages** (0-1 plus 191 files).
+
+### Stacked full-suite verification (S101, 2026-10-21)
+
+The stacked branch (E62–E65) passes **22,776 tests, 22,765 passed, 0 failed, 11 skipped**, including 191 data-backed stage smoke runs. `docs/REMAINING.md` records 390 enemies, 191 built source stages and 192 public entries.
