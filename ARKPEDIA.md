@@ -5061,3 +5061,25 @@ Refused for mechanics rather than enemies: 6-4, 7-3, 9-4 and 10-2 use route tunn
 - **Senior Caster**: its normal ranged attack also deals its normal damage type at ATK to the primary target's four cardinal neighbours (the target tile itself is excluded). The new `cardinalSplash` uses the shared area selection, so stealth/air/targetability rules stay the documented ones.
 - **Defender-4**: "Increases the DEF of surrounding enemy units" is a silence-aware DEF aura within `defup.range_radius`, refreshed like the other enemy auras. The record's `defup.def` is the flat value.
 - **Coverage.** Support rises to 250 of 1,552 enemies: Senior Caster, Shielded Senior Caster and Defender-4. The Senior Caster test places two adjacent guards and proves the second was hit by the splash; the Defender-4 test proves both nearby enemies gained the exact DEF.
+
+### Stages unlocked by E7 (S10, 2026-10-21, test-only)
+
+Senior Caster was the only unsupported enemy in ten stages and Defender-4 in three more:
+
+| Stage | Grid | Waves | Spawns | Enemies |
+|---|---|---|---|---|
+| 2-4 | 7×9 | 1 | 26 | Senior Caster, Soldier, Crossbowman, Dual Swordsman, Shielded Soldier, Caster |
+| 2-5 | 8×10 | 1 | 40 | Senior Caster, Hound Pro, Soldier, Crossbowman, Dual Swordsman, Dual Swordsman Leader, Logger |
+| 2-7 | 8×11 | 1 | 58 | Rioter, Airborne Soldier, Dual Swordsman, Defender-4, Junkman, Crossbowman, Caster, Monster |
+| 2-8 | 7×11 | 2 | 54 | Soldier, Rioter Leader, Defender-4, Metal Crab, Firebomb Thrower, Monster, Logger, Airborne Soldier |
+| 2-9 | 7×11 | 1 | 52 | Monster, Airborne Soldier, Defender-4, Monster Mk II, Airborne Soldier Leader |
+| 3-5 | 8×11 | 1 | 64 | Invisible Caster, Lurker, Hound Pro, Invisible Crossbowman, Dual Swordsman Leader, Monster Mk II, Butcher, Logger, Senior Caster, Monster |
+| S2-5 | 7×9 | 1 | 31 | Senior Caster, Rioter, Crossbowman, Dual Swordsman, Caster, Logger |
+| S2-6 | 7×11 | 1 | 40 | Rioter, Hound Pro, Logger, Caster, Senior Caster, Junkman |
+| S2-7 | 7×11 | 1 | 32 | Senior Caster, Hound, Rioter, Junkman, Caster |
+| S2-9 | 7×9 | 1 | 32 | Rioter Leader, Metal Crab, Hound Pro, Caster Leader, Monster, Dual Swordsman Leader, Senior Caster |
+| S2-10 | 8×11 | 1 | 41 | Rioter, Senior Caster, Shielded Soldier, Junkman, Caster, Dual Swordsman |
+| S2-11 | 8×11 | 1 | 48 | Rioter, Shielded Soldier, Cocktail Thrower, Senior Caster, Junkman, Firebomb Thrower, Rioter Leader, Caster |
+| S2-12 | 7×9 | 1 | 48 | Soldier, Monster, Dual Swordsman Leader, Light-Armored Soldier, Caster, Senior Caster, Monster Mk II |
+
+Coverage is **0-1 plus 57 test-only files**; every one is loaded through the catalogue and fought for ten seconds by the generic stage test.
