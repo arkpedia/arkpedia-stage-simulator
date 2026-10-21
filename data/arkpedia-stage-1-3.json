@@ -1,0 +1,1571 @@
+{
+ "code": "1-3",
+ "name": "Running Wild",
+ "description": "This battlefield is wider and enemies will attack from two paths.\nPlease note that enemies coming from the southern path have higher defense. Think carefully about where to deploy your Operators.",
+ "battle": {
+  "max_life": 10,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "1-3",
+  "rows": 7,
+  "cols": 11,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_fence",
+    "height": "low",
+    "walkable": false,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    0
+   ],
+   [
+    0,
+    2,
+    3,
+    3,
+    4,
+    2,
+    2,
+    2,
+    2,
+    2,
+    5
+   ],
+   [
+    0,
+    2,
+    3,
+    3,
+    3,
+    2,
+    2,
+    2,
+    2,
+    2,
+    0
+   ],
+   [
+    0,
+    2,
+    3,
+    3,
+    3,
+    2,
+    2,
+    2,
+    2,
+    2,
+    5
+   ],
+   [
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": null,
+    "placeholder": true,
+    "start": null,
+    "end": null,
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 10
+    },
+    "end": {
+     "row": 5,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 7
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 80
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 10
+    },
+    "end": {
+     "row": 5,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 7
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 10
+    },
+    "end": {
+     "row": 1,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 7
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 90
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 10
+    },
+    "end": {
+     "row": 1,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 7
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 10
+    },
+    "end": {
+     "row": 5,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 12
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 12
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 10
+    },
+    "end": {
+     "row": 1,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 12
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 12
+     }
+    ]
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 112,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Junkman",
+      "enemy_id": "enemy_1030_wteeth",
+      "count": 1,
+      "time": 3,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Originium Slug",
+      "enemy_id": "enemy_1007_slime",
+      "count": 1,
+      "time": 6,
+      "route": 2,
+      "fragment": 2
+     },
+     {
+      "enemy": "Originium Slug",
+      "enemy_id": "enemy_1007_slime",
+      "count": 2,
+      "time": 10,
+      "interval": 1,
+      "route": 2,
+      "fragment": 2
+     },
+     {
+      "enemy": "Originium Slug",
+      "enemy_id": "enemy_1007_slime",
+      "count": 2,
+      "time": 14,
+      "interval": 1,
+      "route": 2,
+      "fragment": 2
+     },
+     {
+      "enemy": "Shielded Soldier",
+      "enemy_id": "enemy_1029_shdsbr",
+      "count": 1,
+      "time": 19,
+      "route": 3,
+      "fragment": 3
+     },
+     {
+      "enemy": "Soldier",
+      "enemy_id": "enemy_1002_nsabr",
+      "count": 3,
+      "time": 30,
+      "interval": 6,
+      "route": 4,
+      "fragment": 4
+     },
+     {
+      "enemy": "Hound",
+      "enemy_id": "enemy_1000_gopro",
+      "count": 3,
+      "time": 33,
+      "interval": 6,
+      "route": 2,
+      "fragment": 4
+     },
+     {
+      "enemy": "Originium Slug",
+      "enemy_id": "enemy_1007_slime",
+      "count": 2,
+      "time": 50,
+      "interval": 1,
+      "route": 2,
+      "fragment": 5
+     },
+     {
+      "enemy": "Originium Slug",
+      "enemy_id": "enemy_1007_slime",
+      "count": 4,
+      "time": 57,
+      "interval": 1,
+      "route": 2,
+      "fragment": 5
+     },
+     {
+      "enemy": "Hound",
+      "enemy_id": "enemy_1000_gopro",
+      "count": 1,
+      "time": 61,
+      "route": 4,
+      "fragment": 5
+     },
+     {
+      "enemy": "Soldier",
+      "enemy_id": "enemy_1002_nsabr",
+      "count": 2,
+      "time": 51,
+      "interval": 4,
+      "route": 4,
+      "fragment": 5
+     },
+     {
+      "enemy": "Hound",
+      "enemy_id": "enemy_1000_gopro",
+      "count": 2,
+      "time": 78,
+      "interval": 1,
+      "route": 2,
+      "fragment": 6
+     },
+     {
+      "enemy": "Soldier",
+      "enemy_id": "enemy_1002_nsabr",
+      "count": 2,
+      "time": 77,
+      "interval": 1,
+      "route": 4,
+      "fragment": 6
+     },
+     {
+      "enemy": "Cocktail Thrower",
+      "enemy_id": "enemy_1028_mocock",
+      "count": 1,
+      "time": 88,
+      "route": 2,
+      "fragment": 6
+     },
+     {
+      "enemy": "Hound",
+      "enemy_id": "enemy_1000_gopro",
+      "count": 1,
+      "time": 86,
+      "route": 4,
+      "fragment": 6
+     },
+     {
+      "enemy": "Cocktail Thrower",
+      "enemy_id": "enemy_1028_mocock",
+      "count": 1,
+      "time": 77,
+      "route": 5,
+      "fragment": 6
+     },
+     {
+      "enemy": "Soldier",
+      "enemy_id": "enemy_1002_nsabr",
+      "count": 1,
+      "time": 78,
+      "route": 5,
+      "fragment": 6
+     },
+     {
+      "enemy": "Shielded Soldier",
+      "enemy_id": "enemy_1029_shdsbr",
+      "count": 1,
+      "time": 78,
+      "route": 6,
+      "fragment": 6
+     },
+     {
+      "enemy": "Originium Slug",
+      "enemy_id": "enemy_1007_slime",
+      "count": 2,
+      "time": 95,
+      "interval": 1,
+      "route": 2,
+      "fragment": 6
+     },
+     {
+      "enemy": "Originium Slug",
+      "enemy_id": "enemy_1007_slime",
+      "count": 2,
+      "time": 111,
+      "interval": 1,
+      "route": 2,
+      "fragment": 6
+     },
+     {
+      "enemy": "Soldier",
+      "enemy_id": "enemy_1002_nsabr",
+      "count": 1,
+      "time": 112,
+      "route": 4,
+      "fragment": 6
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 2,
+    "col": 10,
+    "routes": [
+     3,
+     4,
+     4,
+     4,
+     4,
+     4,
+     6,
+     4
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 4,
+    "col": 10,
+    "routes": [
+     1,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     5,
+     5,
+     2,
+     2
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 1,
+    "col": 0,
+    "routes": [
+     3,
+     4,
+     4,
+     4,
+     4,
+     4,
+     6,
+     4
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 5,
+    "col": 0,
+    "routes": [
+     1,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     5,
+     5,
+     2,
+     2
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1000_gopro",
+    "slug": "hound",
+    "name": "Hound",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1002_nsabr",
+    "slug": "soldier",
+    "name": "Soldier",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1007_slime",
+    "slug": "originium_slug_enemy_1007_slime",
+    "name": "Originium Slug",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1028_mocock",
+    "slug": "cocktail_thrower",
+    "name": "Cocktail Thrower",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1029_shdsbr",
+    "slug": "shielded_soldier",
+    "name": "Shielded Soldier",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1030_wteeth",
+    "slug": "junkman",
+    "name": "Junkman",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "pathing": {
+  "schemaVersion": 1,
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "1-3",
+  "geometryHash": "630448aeefe823a463ff891130421410d22baa35909ab234aa591bc008edafd7",
+  "moveScale": 0.65,
+  "paths": {
+   "1": {
+    "points": [
+     [
+      10,
+      4
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      0,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3.414213562373095,
+     4.414213562373095,
+     5.414213562373095,
+     6.414213562373095,
+     7.414213562373095,
+     8.414213562373096,
+     9.414213562373096,
+     10.414213562373096
+    ],
+    "length": 10.414213562373096,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 2,
+      "seconds": 80,
+      "point": [
+       8,
+       4
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      10,
+      4
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      0,
+      5
+     ]
+    ]
+   },
+   "2": {
+    "points": [
+     [
+      10,
+      4
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      0,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3.414213562373095,
+     4.414213562373095,
+     5.414213562373095,
+     6.414213562373095,
+     7.414213562373095,
+     8.414213562373096,
+     9.414213562373096,
+     10.414213562373096
+    ],
+    "length": 10.414213562373096,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      10,
+      4
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      0,
+      5
+     ]
+    ]
+   },
+   "3": {
+    "points": [
+     [
+      10,
+      2
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      0,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3.414213562373095,
+     4.414213562373095,
+     5.414213562373095,
+     6.414213562373095,
+     7.414213562373095,
+     8.414213562373096,
+     9.414213562373096,
+     10.414213562373096
+    ],
+    "length": 10.414213562373096,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 2,
+      "seconds": 90,
+      "point": [
+       8,
+       2
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      10,
+      2
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "4": {
+    "points": [
+     [
+      10,
+      2
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      0,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3.414213562373095,
+     4.414213562373095,
+     5.414213562373095,
+     6.414213562373095,
+     7.414213562373095,
+     8.414213562373096,
+     9.414213562373096,
+     10.414213562373096
+    ],
+    "length": 10.414213562373096,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      10,
+      2
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "5": {
+    "points": [
+     [
+      10,
+      4
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      0,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5.414213562373095,
+     6.414213562373095,
+     7.414213562373095,
+     8.414213562373096,
+     9.414213562373096,
+     10.414213562373096
+    ],
+    "length": 10.414213562373096,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 3,
+      "seconds": 12,
+      "point": [
+       7,
+       4
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 4,
+      "seconds": 12,
+      "point": [
+       6,
+       4
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      10,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      0,
+      5
+     ]
+    ]
+   },
+   "6": {
+    "points": [
+     [
+      10,
+      2
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      0,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5.414213562373095,
+     6.414213562373095,
+     7.414213562373095,
+     8.414213562373096,
+     9.414213562373096,
+     10.414213562373096
+    ],
+    "length": 10.414213562373096,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 3,
+      "seconds": 12,
+      "point": [
+       7,
+       2
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 4,
+      "seconds": 12,
+      "point": [
+       6,
+       2
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      10,
+      2
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      0,
+      1
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "enemies": {
+  "enemy_1030_wteeth": {
+   "key": "enemy_1030_wteeth",
+   "prefabKey": "enemy_1030_wteeth",
+   "name": "Junkman",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 5000,
+    "atk": 500,
+    "def": 50,
+    "res": 20,
+    "moveSpeed": 0.8,
+    "bat": 3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1007_slime": {
+   "key": "enemy_1007_slime",
+   "prefabKey": "enemy_1007_slime",
+   "name": "Originium Slug",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 550,
+    "atk": 130,
+    "def": 0,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 1.7,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1029_shdsbr": {
+   "key": "enemy_1029_shdsbr",
+   "prefabKey": "enemy_1029_shdsbr",
+   "name": "Shielded Soldier",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2050,
+    "atk": 240,
+    "def": 250,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1002_nsabr": {
+   "key": "enemy_1002_nsabr",
+   "prefabKey": "enemy_1002_nsabr",
+   "name": "Soldier",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 1650,
+    "atk": 200,
+    "def": 100,
+    "res": 0,
+    "moveSpeed": 1.1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1000_gopro": {
+   "key": "enemy_1000_gopro",
+   "prefabKey": "enemy_1000_gopro",
+   "name": "Hound",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 820,
+    "atk": 190,
+    "def": 0,
+    "res": 20,
+    "moveSpeed": 1.9,
+    "bat": 1.4,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1028_mocock": {
+   "key": "enemy_1028_mocock",
+   "prefabKey": "enemy_1028_mocock",
+   "name": "Cocktail Thrower",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 1550,
+    "atk": 180,
+    "def": 50,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 2.7,
+    "aspd": 100,
+    "rangeRadius": 1.75,
+    "rawRangeRadius": 1.75,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ }
+}

@@ -4979,3 +4979,20 @@ The same builder produced the rest of the Prologue, so all twelve 0-x stages now
 | 0-11 | 8×10 | 3 | 37 | Originium Slug, Hound, Soldier, Originium Slug α, Shielded Soldier, Junkman |
 
 None is in `data/arkpedia-stages.json` yet: they remain test-only until the simplified-art build and battle are reviewed. `test/arkpedia-stage-files.test.js` discovers every `data/arkpedia-stage-*.json`, checks the code, the supported-enemy records, the sequential schedule, catalogue loading and a real 10-second battle. Adding a reviewed stage to the public simulator is one catalogue entry; adding a new stage file is one builder command.
+
+### Chapter 1 subset (S5, 2026-10-21, test-only)
+
+The builder also accepts the Chapter 1 stages whose enemies are already supported and whose mechanics the regular-stage adapter models:
+
+| Stage | Grid | Waves | Spawns | Enemies |
+|---|---|---|---|---|
+| 1-1 | 7×9 | 1 | 33 | Hound Pro, Hound, Originium Slug α, Rioter, Cocktail Thrower, Junkman |
+| 1-3 | 7×11 | 1 | 36 | Junkman, Originium Slug, Shielded Soldier, Soldier, Hound, Cocktail Thrower |
+| 1-4 | 7×11 | 1 | 39 | Originium Slug α, Rioter, Monster, Soldier, Shielded Soldier, Cocktail Thrower, Junkman |
+| 1-5 | 8×11 | 2 | 57 | Rioter, Originium Slug α, Hound, Monster, Soldier, Cocktail Thrower |
+| 1-7 | 7×11 | 1 | 41 | Originium Slug α, Rioter, Soldier, Cocktail Thrower, Shielded Soldier, Junkman |
+| 1-9 | 8×10 | 1 | 35 | Soldier, Hound, Cocktail Thrower, Junkman |
+| 1-10 | 8×10 | 1 | 49 | Soldier, Originium Slug, Originium Slug α, Cocktail Thrower, Hound, Shielded Soldier, Junkman |
+
+- **Refused, correctly.** 1-2 and 1-6 carry a fixed squad or deployable tokens; 1-8, 1-11 and 1-12 use Crownslayer, W, Dual Swordsman or Firebomb Thrower, which are not supported enemies. They are not silently approximated.
+- **Coverage.** 0-1 plus 17 test-only files: the complete Prologue and seven Chapter 1 stages. All are exercised by the generic stage test; none is in the public catalogue yet.
