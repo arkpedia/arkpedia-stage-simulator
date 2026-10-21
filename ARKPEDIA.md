@@ -4948,3 +4948,9 @@ The client no longer hard-codes 0-1 as the only selectable stage.
 - **Selection.** `shared/arkpedia/stages.js` validates the catalogue, resolves `?stage=` (defaulting to the catalogue default), fetches a file-backed stage, and installs it as `data.stage`. The battle and renderer still consume the same `data.stage` contract, so no stage consumer needs a branch.
 - **UI.** The prep header and title read the installed stage, and a picker appears when the catalogue has more than one stage. An unknown `?stage=` lists the available stages instead of guessing.
 - **Guardrails.** A file-backed stage must contain `geometry`; an embedded entry must match the global stage's code; every named data file must be committed. Tests cover default/explicit selection, the unknown-stage path, file replacement and the embedded mismatch.
+
+### Sequential stage waves (S2, 2026-10-21)
+
+`stageAdapter` no longer refuses a stage with more than one wave and no longer reads only `waves[0]`. It applies the public stage-playback rule: a wave's `pre_delay` is measured from the end of the previous wave, `duration + post_delay` advance the cursor, each spawn time is relative to its own wave, and `interval` spaces the count. Spawns are sorted by absolute time.
+
+The fixed-squad guard was also ineffective: `suppliedUnits` is an object (`{fixed_squad, deployable_tokens}`), so the old `.length` check was always undefined. It now counts both lists, and the new test refuses a fixed squad, conditional spawns and an oversized grid. A second test pins the exact absolute times of a two-wave schedule.

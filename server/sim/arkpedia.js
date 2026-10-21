@@ -264,13 +264,9 @@ import {
 
 export function stageAdapter(source) {
   const g = source.geometry;
-  if (
-    g.rows > 19 ||
-    g.cols > 21 ||
-    g.hasConditionalSpawns ||
-    g.waves.length !== 1 ||
-    g.suppliedUnits.length
-  )
+  const supplied = Array.isArray(g.suppliedUnits) ? g.suppliedUnits.length
+    : (g.suppliedUnits?.fixed_squad?.length || 0) + (g.suppliedUnits?.deployable_tokens?.length || 0);
+  if (g.rows > 19 || g.cols > 21 || g.hasConditionalSpawns || supplied)
     throw new Error("Unsupported stage mechanics");
   const chars = ["#", "h", "r", "S", "E"];
   const legend = Object.fromEntries(
@@ -313,14 +309,22 @@ export function stageAdapter(source) {
     }
     throw new Error("Missing stage viewer path for route " + index);
   });
-  const spawns = g.waves[0].spawns.flatMap((s) =>
-    Array.from({ length: s.count }, (_, i) => ({
-      enemyKey: s.enemy_id,
-      time: s.time + i * (s.interval ?? 0),
-      routeIndex: s.route,
-      ownerPlayerId: "arkpedia",
-    })),
-  );
+  // Waves run in sequence: a wave's pre_delay is measured from the END of the previous wave, and
+  // each spawn's time is measured from the start of its own wave (Arkpedia stage playback).
+  let cursor = 0;
+  const spawns = g.waves.flatMap((wave) => {
+    const waveStart = cursor + (wave.pre_delay || 0);
+    const out = (wave.spawns || []).flatMap((s) =>
+      Array.from({ length: Math.max(1, s.count || 1) }, (_, i) => ({
+        enemyKey: s.enemy_id,
+        time: waveStart + (s.time || 0) + i * (s.interval || 0),
+        routeIndex: s.route,
+        ownerPlayerId: "arkpedia",
+      })),
+    );
+    cursor = waveStart + (wave.duration || 0) + (wave.post_delay || 0);
+    return out;
+  }).sort((a, b) => a.time - b.time);
   return {
     stage: {
       id: source.code,

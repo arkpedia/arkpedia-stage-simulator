@@ -27,6 +27,26 @@ test("source geometry preserves all 11 spawns, overrides, and the soldier route 
   assert.equal(a.routes[2].checkpoints[1].time, 3);
   assert.equal(data.enemies.enemy_1002_nsabr.stats.def, 30);
 });
+test("waves run in sequence with each wave's own delay, duration and interval", () => {
+  const stage = structuredClone(data.stage);
+  stage.geometry.waves = [
+    { index: 0, duration: 10, pre_delay: 0, post_delay: 2, spawns: [{ enemy_id: "enemy_1007_slime", count: 1, time: 1, route: 1 }] },
+    { index: 1, duration: 5, pre_delay: 3, post_delay: 0, spawns: [{ enemy_id: "enemy_1002_nsabr", count: 2, time: 1, interval: 2, route: 2 }] },
+  ];
+  const a = stageAdapter(stage);
+  assert.deepEqual(a.spawns.map(spawn => [spawn.enemyKey, spawn.time]), [
+    ["enemy_1007_slime", 1], ["enemy_1002_nsabr", 16], ["enemy_1002_nsabr", 18],
+  ]);
+});
+test("fixed squads and conditional spawns remain refused", () => {
+  for (const patch of [
+    { suppliedUnits: { fixed_squad: [{}], deployable_tokens: [] } },
+    { hasConditionalSpawns: true },
+    { rows: 20 },
+  ]) {
+    assert.throws(() => stageAdapter({ ...data.stage, geometry: { ...data.stage.geometry, ...patch } }), /Unsupported stage mechanics/);
+  }
+});
 test("loadouts use real promotion/trust/potential caps and talents", () => {
   const op = data.operators.char_208_melan;
   let b = defaultBuild(op);
