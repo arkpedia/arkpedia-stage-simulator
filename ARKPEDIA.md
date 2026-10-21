@@ -5478,3 +5478,7 @@ After a stage loads, the tab title becomes `<code> <name> · Arkpedia stage simu
 ### Stage search result count (S53, 2026-10-21)
 
 The stage search now shows an aria-live "N matches" count while filtering and clears it when the query is empty. Static client tests remain at 217.
+
+### Per-chapter coverage (S54, 2026-10-21)
+
+The coverage report now also prints built/total per chapter. The snapshot shows where the remaining work concentrates: Chapters 11 and 12 are 0/50 and 0/55 (civilian/spy identity), 15–17 are 0/34–35 (mostly no geometry), while Chapter 10 is already 15/49. The test checks that the chapter totals sum to the overall total.

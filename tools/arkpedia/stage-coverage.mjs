@@ -18,14 +18,17 @@ const support = JSON.parse(readFileSync(new URL('arkpedia-enemy-support.json', D
 
 export function buildStageCoverage() {
   const stagesDir = new URL('stages/', SOURCE), geometryDir = new URL('stage-geometry/', SOURCE);
-  const byReason = {}, blockers = new Map();
+  const byReason = {}, blockers = new Map(), byChapter = new Map();
   let total = 0, built = 0;
   for (const file of readdirSync(stagesDir).filter(name => name.endsWith('.json'))) {
     let stage;
     try { stage = JSON.parse(readFileSync(new URL(file, stagesDir), 'utf8')); } catch { continue; }
     if (stage.stage_type !== 'main') continue;
     total++;
-    if (existsSync(new URL(`arkpedia-stage-${stage.slug}.json`, DATA))) { built++; continue; }
+    const chapter = /^S\d/i.test(stage.code) ? 'Side stories' : /^\d+-/.test(stage.code) ? `Chapter ${stage.code.split('-')[0]}` : 'Other';
+    const bucket = byChapter.get(chapter) ?? { total: 0, built: 0 };
+    bucket.total++; byChapter.set(chapter, bucket);
+    if (existsSync(new URL(`arkpedia-stage-${stage.slug}.json`, DATA))) { built++; bucket.built++; continue; }
     const geometryUrl = new URL(`${stage.slug}.json`, geometryDir);
     if (!existsSync(geometryUrl)) { byReason['no-geometry'] = (byReason['no-geometry'] ?? 0) + 1; continue; }
     let geometry;
@@ -42,13 +45,16 @@ export function buildStageCoverage() {
     }
     byReason.other = (byReason.other ?? 0) + 1;
   }
-  return { total, built, byReason, blockers: [...blockers].sort((a, b) => b[1] - a[1]) };
+  return { total, built, byReason, byChapter: [...byChapter].sort((a, b) => a[0].localeCompare(b[0], undefined, { numeric: true })),
+    blockers: [...blockers].sort((a, b) => b[1] - a[1]) };
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
   const report = buildStageCoverage(), rest = report.total - report.built;
   console.log(`${report.built} built / ${report.total} main stages (${rest} remaining)`);
   console.log(Object.entries(report.byReason).sort((a, b) => b[1] - a[1]).map(([k, n]) => `  ${k}: ${n}`).join('\n'));
+  console.log('by chapter:');
+  for (const [chapter, counts] of report.byChapter) console.log(`  ${chapter}: ${counts.built}/${counts.total}`);
   console.log(`unsupported enemy blockers: ${report.blockers.length}`);
   for (const [id, n] of report.blockers.slice(0, 15)) console.log(`  ${n}  ${id}`);
 }

@@ -11,6 +11,8 @@ test('every main stage is built or classified by its first blocker', () => {
   assert.ok(report.total > report.built);
   assert.equal(report.built, readdirSync(new URL('../data/', import.meta.url)).filter(name => /^arkpedia-stage-.+\.json$/.test(name)).length);
   assert.equal(Object.values(report.byReason).reduce((sum, n) => sum + n, 0), report.total - report.built);
+  assert.equal(report.byChapter.reduce((sum, [, counts]) => sum + counts.total, 0), report.total);
+  assert.equal(report.byChapter.reduce((sum, [, counts]) => sum + counts.built, 0), report.built);
   assert.ok(report.blockers.length, 'unsupported enemies are ranked');
   assert.ok(report.blockers.some(([id, n]) => id === 'enemy_1313_wdfmr' && n >= 20), 'the top civilian blocker is reported');
 });
