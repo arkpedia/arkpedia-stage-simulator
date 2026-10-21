@@ -5622,3 +5622,7 @@ With the Profane Chimera supported, **14-6** and **14-6 adverse environment** bu
 ### TR-25 (S75, 2026-10-21)
 
 The fixed-squad tutorial **TR-25** builds (6×9, 10 spawns, 3 enemies). Coverage is **161 public stages** (0-1 plus 160 files).
+
+### Rot Eater (E53, 2026-10-21)
+
+The Rot Eater scales HP/ATK/DEF by `1 + min(max_percentage, defeated * guaranteed_percentage)` and emits its 1.1-radius pollution aura every tick. Support rises to **362 of 1,552** enemies. The test checks the aura damage.

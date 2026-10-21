@@ -565,6 +565,10 @@ test('Profane Chimera: attacks become Arts while polluted or stormed', () => {
   ability.hitOut.call(ability, clean, { grid: { tile: () => ({ key: 'tile_road' }) } }, e);
   assert.equal(clean.dmg.type, 'phys');
 });
+test('Rot Eater: the pollution aura damages a nearby guard', () => {
+  const key = 'enemy_1266_nhapos', h = spawnAny(key, { seconds: 0.1 }), e = enemy(h, key), guard = h.b.units.find(u => u.side === 'ally');
+  e.x = guard.x + 1; e.y = guard.y; const hp = guard.hp; h.run(2); assert.ok(guard.hp < hp);
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

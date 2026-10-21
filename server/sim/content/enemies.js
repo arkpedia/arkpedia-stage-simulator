@@ -345,6 +345,14 @@ export const featureAbilities = Object.freeze({
     },
   }),
   moveSpeedBonus: ({ mul }) => ({ spawn(b, e) { b.addBuff(e, { key: 'ab:moveSpeed', persist: true, visible: true, mods: { moveMul: mul } }); } }),
+  // Rot Eater: scale with the defeated count, then emit its pollution aura.
+  rotEater: ({ low, high, radius, guaranteed, max }) => ({
+    spawn(b, e) {
+      const n = b._pp?.(e.ownerId)?.killed ?? 0, mul = 1 + Math.min(max, n * guaranteed);
+      e.base.maxHp *= mul; e.s.maxHp *= mul; e.hp = e.s.maxHp; e.s.atk *= mul; e.s.def *= mul;
+    },
+    tick(b, e) { pollution(b, e, e.x, e.y, radius, 1.2, low, high); },
+  }),
   // Profane Chimera: on polluted/stormed tiles it pollutes around itself and attacks Arts.
   profaneChimera: ({ damage, spRatio }) => ({
     polluted(b, e) { return ((b.grid.tile(e.tileR, e.tileC)?.key ?? '').includes('toxic') || !!e.findBuff?.('ab:storm')); },

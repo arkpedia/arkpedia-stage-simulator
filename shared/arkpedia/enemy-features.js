@@ -286,6 +286,14 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Rot Eater: scales with the defeated count and emits a pollution aura.
+  'talent:PollutedArea': { covers: r => sig(r, 'PollutedArea', ['Polluted_damage_high', 'Polluted_damage_low', 'guaranteed_percentage', 'max_percentage', 'range_Radius'])
+      && r.abilities.some(a => a.text === 'Releases Corruption, causing your nearby units to continuously lose HP'),
+    ability: { kind: 'rotEater', params: r => ({ low: r.talents.bb['PollutedArea.Polluted_damage_low'], high: r.talents.bb['PollutedArea.Polluted_damage_high'],
+      radius: r.talents.bb['PollutedArea.range_Radius'], guaranteed: r.talents.bb['PollutedArea.guaranteed_percentage'], max: r.talents.bb['PollutedArea.max_percentage'] }) },
+    note: 'defeated-count stat scaling and a pollution aura',
+    explains: text => text === 'The more enemies defeated, the higher its HP, ATK, and DEF when spawned from the Twigs That Crave'
+      || text === 'Releases Corruption, causing your nearby units to continuously lose HP' },
   // Profane Chimera: pollution aura and Arts attacks while polluted/stormed.
   'talent:OrigAura': { covers: r => sig(r, 'OrigAura', ['damage', 'sp_recover_ratio'])
       && r.abilities.some(a => a.text.startsWith('Continuously causes an area of Originium pollution around itself')),
