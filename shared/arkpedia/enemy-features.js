@@ -287,6 +287,16 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Dublinn Flamerazer: a 10.6 s burning aura every 6 s, and a death blast that also kills other Flamerazers.
+  'skill:DeadBoom': { covers: r => r.skills.some(s => s.prefabKey === 'DeadBoom'),
+    note: 'death blast driven by the Flamerazer skill', explains: /^Upon death, explodes and deals Arts damage, knocking down nearby Tattered Pillars and instantly defeating other <Dublinn Flamerazers>$/ },
+  'skill:Flame': { covers: r => r.skills.some(s => s.prefabKey === 'Flame')
+      && r.abilities.some(a => a.text === 'Continuously deals Arts damage and <$ba.dt.burning>Burn damage</> for the skill duration'),
+    ability: { kind: 'flamerazer', params: r => ({ duration: r.skills[0].bb['duspfr_flame[cd].duration'], interval: r.skills[0].bb['duspfr_flame[cd].interval'],
+      hitInterval: r.skills[0].bb.hit_interval, scale: r.skills[0].bb.atk_scale, ep: r.skills[0].bb.ep_damage_ratio, deathScale: r.skills[1]?.bb.atk_scale ?? 1 }) },
+    nativeClaim: () => ({ wrappers: 2 }), note: 'burning aura and death blast',
+    explains: text => text === 'Continuously deals Arts damage and <$ba.dt.burning>Burn damage</> for the skill duration'
+      || text === 'Upon death, explodes and deals Arts damage, knocking down nearby Tattered Pillars and instantly defeating other <Dublinn Flamerazers>' },
   // Prototype Auto Meal Distributor: summons one maintenance helper every few seconds.
   'ability:Periodically summons 1 <Rampaging Maintenance Helper>': { covers: r => r.abilities.some(a => a.text === 'Periodically summons 1 <Rampaging Maintenance Helper>'),
     ability: { kind: 'periodicSpawn', params: r => ({ key: r.skills[0]?.bbStr?.enemy_key ?? 'enemy_10073_mpcar_2', count: 1, cooldown: r.skills[0]?.cooldown ?? 5, init: r.skills[0]?.initCooldown ?? 3 }) },

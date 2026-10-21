@@ -345,6 +345,21 @@ export const featureAbilities = Object.freeze({
     },
   }),
   moveSpeedBonus: ({ mul }) => ({ spawn(b, e) { b.addBuff(e, { key: 'ab:moveSpeed', persist: true, visible: true, mods: { moveMul: mul } }); } }),
+  // Dublinn Flamerazer: periodic burning aura and a death blast that kills other Flamerazers.
+  flamerazer: ({ duration, interval, hitInterval, scale, ep, deathScale }) => ({
+    spawn(b, e, a) { a.next = b.time; },
+    tick(b, e, a) {
+      if (b.time < a.next) return;
+      a.next = b.time + interval;
+      for (let t = 1; t * hitInterval <= duration; t++) b.every(t * hitInterval, () => {
+        for (const u of b.alliesInRadius(e.x, e.y, 1.5)) { hurt(b, e, u, e.s.atk * scale, 'arts', { tags: ['flame'] }); elem(b, e, u, 'burn', e.s.atk * ep); }
+      });
+    },
+    death(c, b, e, a) {
+      for (const u of b.alliesInRadius(e.x, e.y, 1.5)) hurt(b, e, u, e.s.atk * (a.deathScale ?? deathScale), 'arts', { tags: ['deadBoom'] });
+      for (const other of b.enemies) if (other !== e && other.alive && String(other.defId).includes('duspfr')) { other.noBoom = true; b.kill(other, e); }
+    },
+  }),
   // Prototype distributor: periodic helper spawn.
   periodicSpawn: ({ key, count, cooldown, init }) => ({
     spawn(b, e, a) { a.next = b.time + init; },

@@ -626,6 +626,18 @@ test('Bloodborn Spawn: dying leaves the Blood Amber child', () => {
   h.b.autoFinish = false; h.b.kill(e, null); h.run(0.2);
   assert.equal(h.b.enemies.filter(u => u.defId === 'enemy_1367_dseed').length, 1);
 });
+test('Dublinn Flamerazer: the burning aura hits the guard', () => {
+  const key = 'enemy_1173_duspfr', h = spawnAny(key, { seconds: 0.1 }), guard = h.b.units.find(u => u.side === 'ally'), hp = guard.hp;
+  h.b.autoFinish = false; h.run(7); assert.ok(guard.hp < hp);
+});
+test('Dublinn Flamerazer: the death blast defeats another Flamerazer', () => {
+  const key = 'enemy_1173_duspfr';
+  const h = makeBattle({ defs: { enemies: { [key]: ENEMY_RECORDS.enemies[key].levels[0] } }, units: [],
+    enemies: [{ key, time: 0, route: 0 }, { key, time: 0, route: 0 }], content: 'none', autoFinish: false, timeLimit: 30,
+    setup: battle => installEnemyFeatures(battle) });
+  h.run(0.1); const [a, b] = h.b.enemies; h.b.kill(a, null); h.run(0.1);
+  assert.equal(b.alive, false);
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

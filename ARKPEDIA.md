@@ -5730,3 +5730,7 @@ Added `docs/HARD-MECHANICS.md`: deployable tokens, conditional spawns, Inspired/
 ### Every-public-stage smoke test (S93, 2026-10-21)
 
 Added `test/arkpedia-stage-smoke.test.js`: each of the 185 data-backed public stages starts with the default 12-operator squad and runs two simulated seconds, asserting no engine errors. This catches stage files that load but throw in play; the embedded 0-1 entry is covered by its own tests.
+
+### Dublinn Flamerazer (E62, 2026-10-21)
+
+Every 6 s the Flamerazer opens a 10.6 s burning aura (0.12x Arts plus Burn every 0.5 s in 1.5 radius); death blasts 1.0x Arts and instantly defeats other Flamerazers without chaining their blasts. The two reviewed wrappers are claimed. Support rises to **380 of 1,552** enemies. Tests cover the aura and the mutual defeat.
