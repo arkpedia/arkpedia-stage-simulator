@@ -528,6 +528,11 @@ test('Witherer: the death corruption zone damages nearby allies', () => {
   e.x = guard.x + 1; e.y = guard.y; h.b.autoFinish = false; const hp = guard.hp; h.b.kill(e, null); h.run(2);
   assert.ok(guard.hp < hp, `${guard.hp} vs ${hp}`);
 });
+test('named priority: the Ursus civilian/Talulah target sorts first', () => {
+  const a = { def: { raw: { name: 'Ursus Civilian' } }, s: { taunt: 0 }, aggroSeq: 1 };
+  const b = { def: { raw: { name: 'Guard' } }, s: { taunt: 0 }, aggroSeq: 2 };
+  assert.equal(sortAllyTargets({ blockedBy: null, profile: { targetPriority: 'named', priorityNames: ['Ursus Civilian'] } }, [b, a])[0], a);
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

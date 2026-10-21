@@ -345,6 +345,8 @@ export const featureAbilities = Object.freeze({
     },
   }),
   moveSpeedBonus: ({ mul }) => ({ spawn(b, e) { b.addBuff(e, { key: 'ab:moveSpeed', persist: true, visible: true, mods: { moveMul: mul } }); } }),
+  // Ursus patrol: prioritize allies whose record name matches the reviewed names.
+  namedPriority: ({ names }) => ({ spawn(b, e) { e.profile.targetPriority = 'named'; e.profile.priorityNames = names; } }),
   // Witherer: leave the reviewed pollution zone on death.
   pollutedDie: ({ range, life, low, high }) => ({
     death(c, b, e) { pollution(b, e, e.x, e.y, range, life, low, high); },

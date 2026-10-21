@@ -279,6 +279,11 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Ursus patrol: prioritize the named civilian/Talulah targets.
+  'ability:Can use long-ranged weapons to attack <Ursus Civilians> and <Talulah, the Fighter>': {
+    covers: r => r.abilities.some(a => a.text === 'Can use long-ranged weapons to attack <Ursus Civilians> and <Talulah, the Fighter>'),
+    ability: { kind: 'namedPriority', params: () => ({ names: ['Ursus Civilian', 'Talulah'] }) }, note: 'named-target priority; otherwise normal targeting',
+    explains: /^Can use long-ranged weapons to attack <Ursus Civilians> and <Talulah, the Fighter>$/ },
   // Witherer: a lingering corruption zone on death.
   'talent:PollutedDie': { covers: r => sig(r, 'PollutedDie', ['polluted_damage_high', 'polluted_damage_low', 'projectile_life_time', 'projectile_range'])
       && r.abilities.some(a => a.text === 'Releases Corruption when defeated, causing your nearby units to continuously lose HP'),

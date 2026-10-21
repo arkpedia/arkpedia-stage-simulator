@@ -5570,3 +5570,7 @@ The Rotchaser reuses the legacy `ab:bleed` ability: each hit applies its 100/s A
 ### Witherer death corruption (E46, 2026-10-21)
 
 The Witherer leaves the reviewed pollution zone on death (radius 2, 8 s, 50/25 true damage). Support rises to **348 of 1,552** enemies. The test kills one next to the guard and checks the damage tick.
+
+### Ursus named-target priority (E47, 2026-10-21)
+
+The Infected Patrol Captain family prioritizes allies whose record name contains "Ursus Civilian" or "Talulah"; with no such unit it keeps the normal blocker→aggro order. Support rises to **352 of 1,552** enemies. The test pins the named sort.
