@@ -5606,3 +5606,7 @@ The Caustic Originium Slug leaves a 3.5x Physical death blast and a short pollut
 ### 14-10 (S72, 2026-10-21)
 
 With the Caustic Slug supported, **14-10** builds (9×12, 106 spawns, 5 enemies). Coverage is **154 public stages** (0-1 plus 153 files). The adverse variant still needs the `1424_2`/`1425` combination.
+
+### Profane Chimera (E52, 2026-10-21)
+
+On polluted or stormed tiles the Profane Chimera emits its own pollution aura and its attacks become Arts; elsewhere it keeps normal attacks. The reviewed `OrigAura` wrapper is claimed. Support rises to **361 of 1,552** enemies. The test checks both tile states.

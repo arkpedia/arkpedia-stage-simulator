@@ -345,6 +345,12 @@ export const featureAbilities = Object.freeze({
     },
   }),
   moveSpeedBonus: ({ mul }) => ({ spawn(b, e) { b.addBuff(e, { key: 'ab:moveSpeed', persist: true, visible: true, mods: { moveMul: mul } }); } }),
+  // Profane Chimera: on polluted/stormed tiles it pollutes around itself and attacks Arts.
+  profaneChimera: ({ damage, spRatio }) => ({
+    polluted(b, e) { return ((b.grid.tile(e.tileR, e.tileC)?.key ?? '').includes('toxic') || !!e.findBuff?.('ab:storm')); },
+    hitOut(c, b, e) { if (c.dmg.isAttack && this.polluted(b, e)) c.dmg.type = 'arts'; },
+    tick(b, e, a) { if (this.polluted(b, e)) pollution(b, e, e.x, e.y, 1.1, 1.2, damage, damage); },
+  }),
   // Caustic Slug: physical death blast, pollution and a storm damage boost when consumed.
   causticSlug: ({ scale }) => ({
     death(c, b, e) {

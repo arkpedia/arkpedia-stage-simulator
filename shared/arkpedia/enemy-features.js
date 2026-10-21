@@ -286,6 +286,14 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Profane Chimera: pollution aura and Arts attacks while polluted/stormed.
+  'talent:OrigAura': { covers: r => sig(r, 'OrigAura', ['damage', 'sp_recover_ratio'])
+      && r.abilities.some(a => a.text.startsWith('Continuously causes an area of Originium pollution around itself')),
+    ability: { kind: 'profaneChimera', params: r => ({ damage: r.talents.bb['OrigAura.damage'], spRatio: r.talents.bb['OrigAura.sp_recover_ratio'] }) },
+    nativeClaim: () => ({ wrappers: 1 }), note: 'pollution aura and Arts attacks while polluted/stormed',
+    explains: /^Continuously causes an area of Originium pollution around itself when affected by Originium pollution or an Active Originium Storm, and attacks deal Arts damage instead\.$/ },
+  'talent:AtkBoost': { covers: r => sig(r, 'AtkBoost', ['atk']), note: 'the chimera AtkBoost value is 0' },
+  'skill:triggerAnim': { covers: r => r.skills.some(s => s.prefabKey === 'triggerAnim'), note: 'native trigger animation skill' },
   // Caustic Originium Slug: death blast + pollution, and a storm-strength boost when consumed.
   'talent:Boom': { covers: r => sig(r, 'Boom', ['atk_scale'])
       && r.abilities.some(a => a.text === 'Upon death, deals Physical damage in an area and causes Originium pollution.'),

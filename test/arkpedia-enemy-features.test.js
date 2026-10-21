@@ -556,6 +556,15 @@ test('Caustic Slug: the death blast hits a nearby guard', () => {
   h.b.autoFinish = false; e.x = guard.x + 1; e.y = guard.y; const hp = guard.hp;
   h.b.kill(e, null); h.run(0.1); assert.ok(guard.hp < hp, `${guard.hp} vs ${hp}`);
 });
+test('Profane Chimera: attacks become Arts while polluted or stormed', () => {
+  const key = 'enemy_1425_lrcmra', h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key), ability = e.mem.ab.list.find(a => a.hitOut);
+  const toxic = { dmg: { isAttack: true, type: 'phys' } };
+  ability.hitOut.call(ability, toxic, { grid: { tile: () => ({ key: 'tile_toxicroad' }) } }, e);
+  assert.equal(toxic.dmg.type, 'arts');
+  const clean = { dmg: { isAttack: true, type: 'phys' } };
+  ability.hitOut.call(ability, clean, { grid: { tile: () => ({ key: 'tile_road' }) } }, e);
+  assert.equal(clean.dmg.type, 'phys');
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');
