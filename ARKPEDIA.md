@@ -5426,3 +5426,7 @@ The Theater Golem requires a blocker with at least 4 Block (`profile.requiredBlo
 ### The whole built catalogue is public (S44, 2026-10-21)
 
 The remaining fifty test-only stages passed the same supported-enemy, geometry, catalogue-load and 10-second battle review and are now public with `reviewed: 2026-10-21`. **All 114 built stages are public** (0-1 plus 113 file-backed). Test-only remains the gate for future stages: the catalogue test now uses a synthetic test-only entry so it still checks the `?experimental=1` rule.
+
+### Stage coverage report (S45, 2026-10-21)
+
+`npm run coverage:arkpedia-stages` classifies all **709** main source stages: **113** have committed files (plus the embedded 0-1), and the remaining **596** are grouped by their first blocker — **311** have no geometry, **161** unsupported enemies, **63** conditional spawns, **60** deployable tokens and **1** other. The report ranks the unsupported enemy ids by stage count (the Norport Civilian heads the list at 24). `test/arkpedia-stage-coverage.test.js` pins the classification totals and the top blocker.
