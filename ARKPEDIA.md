@@ -5542,3 +5542,7 @@ With the `1320` family supported, **12-6** and **12-7** build (7×10/8×11, 34�
 ### 1321 Seed summoner (E43, 2026-10-21)
 
 The `1321` family drops three Seeds of Withering every 10 seconds, starting 10 seconds after spawn. The reviewed `BornBugs` wrapper is claimed. Support rises to **342 of 1,552** enemies. The test observes the seed spawns.
+
+### 12-17, 12-18 and 12-19 (S65, 2026-10-21)
+
+With the `1321` Seed summoner supported, **12-17**, **12-18** and **12-19** build (7×12–8×12, 15–31 spawns). Coverage is **135 public stages** (0-1 plus 134 files).
