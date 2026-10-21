@@ -5494,3 +5494,7 @@ Added `docs/IDENTITY.md`: the civilian/spy data, the profile flags and blocking 
 ### Norport Civilian base (E36, 2026-10-21)
 
 First slice of the identity layer: `ability:Friendly Unit` marks `profile.friendly`, `canTargetEnemy` never selects a friendly unit, and `leak` for a friendly civilian raises `flags.dpMax` by `civilianTalent.max_cost` (2) instead of recording a life loss. Support rises to **325 of 1,552** enemies. The test checks the marker, the targeting veto and the max-DP reward.
+
+### Spy reveal layer (E37, 2026-10-21)
+
+`Battle.revealIdentity(e)` is idempotent: it marks `profile.revealed`, emits `identityRevealed` and runs each ability's `reveal` hook. The Sentry Spy gains stealth, the Pathfinder Spy arms one `EnhancedAttack` hit (`atk_scale` 2), `talent:moveSpeed` contributes its passive multiplier, and the Spy feature claims the reviewed native active. Support rises to **331 of 1,552** enemies. The test checks the one-shot reveal, stealth, movement buff and the 2× armed hit.

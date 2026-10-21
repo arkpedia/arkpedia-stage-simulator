@@ -1129,7 +1129,16 @@ export class Battle {
     }
   }
 
-  /** Leak: an enemy reached its goal. */
+  /** Reveal a spy's identity once; the spy's reveal abilities attach their consequence. */
+  revealIdentity(e) {
+    if (!e || !e.alive || !e.profile?.spy || e.profile.revealed) return false;
+    e.profile.revealed = true;
+    this.emit('identityRevealed', { enemy: e });
+    for (const a of e.mem?.ab?.list ?? []) if (a.reveal) a.reveal(this, e, a);
+    return true;
+  }
+
+  /** Leak: an enemy reached its goal. */  /** Leak: an enemy reached its goal. */
   leak(e) {
     if (!e || !e.alive || e.side !== 'enemy') return;
     if (e.profile?.friendly) {

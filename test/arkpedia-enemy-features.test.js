@@ -449,6 +449,17 @@ test('Norport Civilian: friendly, untargetable, and grants max DP on the objecti
   const before = h.b.flags.dpMax, leaked = h.b.leakedCount; h.b.leak(e);
   assert.equal(h.b.flags.dpMax, before + 2); assert.equal(h.b.leakedCount, leaked); assert.ok(!e.alive);
 });
+test('Spies: reveal is one-shot and applies the reviewed consequence', () => {
+  const stealthKey = 'enemy_1315_wdyjd', h1 = spawnAny(stealthKey, { seconds: 0.1 }), e1 = enemy(h1, stealthKey);
+  assert.equal(e1.profile.spy, true); assert.ok(e1.findBuff('ab:moveSpeed'));
+  assert.equal(h1.b.revealIdentity(e1), true); assert.equal(e1.s.flags.stealth, true); assert.equal(h1.b.revealIdentity(e1), false);
+
+  const attackKey = 'enemy_1314_wdnjd', h2 = spawnAny(attackKey, { seconds: 0.1 }), e2 = enemy(h2, attackKey);
+  h2.b.revealIdentity(e2);
+  const arm = e2.mem.ab.list.find(a => a.reveal); assert.ok(arm.armed);
+  const c = { dmg: { isAttack: true, amount: 100 } }; arm.hitOut(c, h2.b, e2, arm);
+  assert.equal(c.dmg.amount, 200); assert.equal(arm.armed, false);
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

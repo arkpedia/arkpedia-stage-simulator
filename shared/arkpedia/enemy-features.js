@@ -264,6 +264,22 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Spy support talents: the movement bonus and the EnhancedAttack scale.
+  'talent:moveSpeed': { covers: r => sig(r, 'moveSpeed', ['move_speed']),
+    ability: { kind: 'moveSpeedBonus', params: r => ({ mul: 1 + r.talents.bb['moveSpeed.move_speed'] }) },
+    note: 'passive movement multiplier' },
+  'talent:EnhancedAttack': { covers: r => sig(r, 'EnhancedAttack', ['atk_scale']),
+    note: 'the reveal ability consumes EnhancedAttack.atk_scale' },
+  // Spies: profile marker plus the two reviewed reveal consequences.
+  'ability:Spy': { covers: r => r.abilities.some(a => a.text === 'Spy'),
+    ability: { kind: 'spyProfile', params: () => ({}) }, note: 'spy profile; reveal via Battle.revealIdentity',
+    nativeClaim: () => ({ active: 1 }), explains: /^Spy$/ },
+  'ability:When their identity is revealed, becomes <$ba.invisible>Invisible</>': { covers: r => r.abilities.some(a => a.text === 'When their identity is revealed, becomes <$ba.invisible>Invisible</>'),
+    ability: { kind: 'revealedStealth', params: () => ({}) }, note: 'revealed Sentry Spy becomes stealthy',
+    explains: /^When their identity is revealed, becomes <\$ba\.invisible>Invisible<\/>$/ },
+  "ability:When their identity is revealed, the next attack's ATK is greatly increased": { covers: r => r.abilities.some(a => a.text === "When their identity is revealed, the next attack's ATK is greatly increased"),
+    ability: { kind: 'revealedAttack', params: r => ({ scale: r.talents.bb['EnhancedAttack.atk_scale'] ?? 2 }) },
+    note: 'revealed Pathfinder Spy arms one scaled attack', explains: /^When their identity is revealed, the next attack's ATK is greatly increased$/ },
   // Norport Civilian: a friendly unit that is not targetable and grants max DP on reaching the objective.
   'ability:Friendly Unit': { covers: r => r.abilities.some(a => a.text === 'Friendly Unit'),
     ability: { kind: 'friendlyUnit', params: () => ({}) }, note: 'friendly, untargetable, objective reward',

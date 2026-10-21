@@ -344,6 +344,14 @@ export const featureAbilities = Object.freeze({
       b.addBuff(e, { key: 'ab:enhance', refresh: 'stack', stacks: 1, maxStacks: max, persist: true, visible: true, mods: { atkPct: atk, aspd } });
     },
   }),
+  moveSpeedBonus: ({ mul }) => ({ spawn(b, e) { b.addBuff(e, { key: 'ab:moveSpeed', persist: true, visible: true, mods: { moveMul: mul } }); } }),
+  // Spies: mark the profile and attach the reveal consequence.
+  spyProfile: () => ({ spawn(b, e) { e.profile.spy = true; } }),
+  revealedStealth: () => ({ reveal(b, e) { b.addBuff(e, { key: 'ab:spyStealth', persist: true, visible: true, flags: { stealth: true } }); } }),
+  revealedAttack: ({ scale }) => ({
+    reveal(b, e, a) { a.armed = true; },
+    hitOut(c, b, e, a) { if (a.armed && c.dmg.isAttack) { a.armed = false; c.dmg.amount *= scale; } },
+  }),
   // Norport Civilian: friendly marker plus the reviewed max-DP reward on leak.
   friendlyUnit: () => ({ spawn(b, e) { e.profile.friendly = true; } }),
   civilianReward: ({ dp }) => ({ spawn(b, e) { e.profile.civilianDp = dp; } }),
