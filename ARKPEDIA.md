@@ -5390,3 +5390,7 @@ Three more early stages have passed the data review (supported enemies, valid ge
 ### Stage selector (S36, 2026-10-21)
 
 With thirty-one public stages, the prep page's row of links became unwieldy. It is now a labelled `<select>` that preserves the current stage, the stage code/name and the `· test` marker; changing it navigates to `stageHref`. The static client tests still pass (217).
+
+### Chapter 4/5 public expansion (S37, 2026-10-21)
+
+**4-3, 4-5, 4-6, 5-1, 5-2 and 5-3** join the public catalogue after the data review. The public simulator now offers **0-1 plus thirty-six reviewed stages**; **77** file-backed stages remain test-only. The catalogue test pins the full public set.
