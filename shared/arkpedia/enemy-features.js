@@ -286,6 +286,11 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Prototype Auto Meal Distributor: summons one maintenance helper every few seconds.
+  'ability:Periodically summons 1 <Rampaging Maintenance Helper>': { covers: r => r.abilities.some(a => a.text === 'Periodically summons 1 <Rampaging Maintenance Helper>'),
+    ability: { kind: 'periodicSpawn', params: r => ({ key: r.skills[0]?.bbStr?.enemy_key ?? 'enemy_10073_mpcar_2', count: 1, cooldown: r.skills[0]?.cooldown ?? 5, init: r.skills[0]?.initCooldown ?? 3 }) },
+    nativeClaim: () => ({ wrappers: 1 }), note: 'one helper every cooldown', explains: /^Periodically summons 1 <Rampaging Maintenance Helper>$/ },
+  'skill:Spawn': { covers: r => r.skills.some(s => s.prefabKey === 'Spawn'), note: 'native Spawn skill consumed by periodicSpawn' },
   // Ursus Civilian: spared at the objective, but costs a life when killed; not counted as defeated.
   'ability:Does not deplete Life Points when spared, but will deplete a Life Point upon dying': {
     covers: r => r.abilities.some(a => a.text === 'Does not deplete Life Points when spared, but will deplete a Life Point upon dying'),

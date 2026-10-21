@@ -345,6 +345,11 @@ export const featureAbilities = Object.freeze({
     },
   }),
   moveSpeedBonus: ({ mul }) => ({ spawn(b, e) { b.addBuff(e, { key: 'ab:moveSpeed', persist: true, visible: true, mods: { moveMul: mul } }); } }),
+  // Prototype distributor: periodic helper spawn.
+  periodicSpawn: ({ key, count, cooldown, init }) => ({
+    spawn(b, e, a) { a.next = b.time + init; },
+    tick(b, e, a) { if (b.time >= a.next) { a.next = b.time + cooldown; spawnChildren(b, e, key, count); } },
+  }),
   // Ursus Civilian: spared at the objective, one life lost if killed.
   sparedCivilian: ({ value }) => ({
     spawn(b, e) { e.lpr = 0; e.counted = false; },

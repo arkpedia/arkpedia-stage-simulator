@@ -5694,3 +5694,7 @@ The Ursus Civilian sets `lpr = 0` (spared at the objective costs no life) and `c
 ### Civilian stages (S86, 2026-10-21)
 
 With the Ursus Civilian supported, **R8-2**, **R8-4**, **R8-9** and **TR-18** build (6×9–8×12, 7–64 spawns). Coverage is **184 public stages** (0-1 plus 183 files).
+
+### Prototype Auto Meal Distributor (E60, 2026-10-21)
+
+The distributor summons one Rampaging Maintenance Helper every 5 s (first after 3 s) using the reviewed `Spawn.enemy_key`. The wrapper is claimed. Support rises to **374 of 1,552** enemies. The test observes the helper spawn.

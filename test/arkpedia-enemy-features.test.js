@@ -612,6 +612,11 @@ test('Ursus Civilian: spared costs no life, killed costs one', () => {
   const h2 = spawnAny(key, { seconds: 0.1, units: [] }), e2 = enemy(h2, key); h2.b.life = 3; h2.b.kill(e2, null);
   assert.equal(h2.b.life, 2); assert.equal(e2.counted, false);
 });
+test('Prototype distributor: summons a maintenance helper', () => {
+  const key = 'enemy_10077_mpbarr_2', h = spawnAny(key, { seconds: 0.1, units: [] }), helpers = [];
+  h.b.on('enemySpawn', ({ enemy }) => { if (enemy.defId === 'enemy_10073_mpcar_2') helpers.push(enemy); });
+  h.run(4); assert.ok(helpers.length >= 1);
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');
