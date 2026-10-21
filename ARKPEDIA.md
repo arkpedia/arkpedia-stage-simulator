@@ -5850,3 +5850,7 @@ Flies and explodes for 1.0x Arts in 1.5 radius when an operator comes within 1.0
 ### Zero-count tokens and 15-4 (S117, 2026-10-21)
 
 A `deployable_tokens` entry with `count: 0` is a hidden stage device, not a usable token; the adapter now counts only positive counts (and coverage does the same). This unblocked **15-4** (7×10, 33 spawns, 3 enemies) after the Cargo Helper support. Coverage is **198 public stages**. 15-5 and the rest still hit `enemy_10072_mpprhd`.
+
+### 15-3 (S118, 2026-10-21)
+
+The coverage buildable bucket now reports **15-3**, which builds (7×11, 26 spawns, 2 enemies) after the Cargo Helper/zero-token fixes. Coverage is **199 public stages**.
