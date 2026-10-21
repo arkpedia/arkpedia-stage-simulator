@@ -286,6 +286,13 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Infused Soul Husk: pick up Soul Maelstroms, then spend one on an orbiting damaging orb.
+  'skill:summonFireball': { covers: r => r.skills.some(s => s.prefabKey === 'summonFireball')
+      && r.abilities.some(a => a.text === 'Can pick up and retain up to 3 Soul Maelstroms.'),
+    ability: { kind: 'soulHusk', params: r => ({ cooldown: r.skills[0].cooldown, scale: r.skills[0].bb.atk_scale }) },
+    nativeClaim: () => ({ wrappers: 1, active: 1 }), note: 'soul pickup and a five-tick orbiting orb',
+    explains: text => text === 'Can pick up and retain up to 3 Soul Maelstroms.'
+      || text === 'When carrying a Soul Maelstrom, expends Soul Maelstrom to summon an orbiting soul orb that deals heavy Arts damage to your units that collide into it.' },
   // Focused Soul Remnant: pick up Soul Maelstroms, then fire a line of Arts damage.
   'skill:Laser': { covers: r => r.skills.some(s => s.prefabKey === 'Laser')
       && r.abilities.some(a => a.text === 'Attacks deal Arts damage. Can pick up and retain up to 3 Soul Maelstroms.'),

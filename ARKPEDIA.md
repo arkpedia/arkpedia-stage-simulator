@@ -5646,3 +5646,7 @@ The Remnant picks up up to three Soul Maelstroms, then every 15 s expends them f
 ### 14-14, 14-15 and 14-17 (S79, 2026-10-21)
 
 With the Focused Soul Remnant supported, **14-14**, **14-15** and **14-17** build (7×12–8×12, 32–57 spawns). Coverage is **166 public stages** (0-1 plus 165 files).
+
+### Infused Soul Husk (E55, 2026-10-21)
+
+The Husk picks up up to three Soul Maelstroms and spends one every 15 s on a short orbiting Arts aura (five half-second ticks, 1.4 radius, `atk_scale` 1). The reviewed wrapper and active are claimed. Support rises to **366 of 1,552** enemies. The test casts manually and checks the aura damage.

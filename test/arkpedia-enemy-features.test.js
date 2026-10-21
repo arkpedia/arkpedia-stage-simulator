@@ -582,6 +582,11 @@ test('Focused Soul Remnant: a soul-powered cast damages the line', () => {
   ability.souls = 1; ability.cast.call(ability, h.b, e, ability); h.run(1.6);
   assert.ok(hits[a.chessId] > 0 && hits[b.chessId] > 0, JSON.stringify(hits));
 });
+test('Infused Soul Husk: spending a soul damages the nearby guard', () => {
+  const key = 'enemy_1431_lrmzrd', h = spawnAny(key, { seconds: 0.1 }), e = enemy(h, key), guard = h.b.units.find(u => u.side === 'ally');
+  const ability = e.mem.ab.list.find(x => x.cast); e.x = guard.x + 1; e.y = guard.y; const hp = guard.hp;
+  ability.cast.call(ability, h.b, e, ability); h.run(1.2); assert.ok(guard.hp < hp, `${guard.hp} vs ${hp}`);
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

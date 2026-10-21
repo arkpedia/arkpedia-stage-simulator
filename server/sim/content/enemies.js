@@ -345,6 +345,22 @@ export const featureAbilities = Object.freeze({
     },
   }),
   moveSpeedBonus: ({ mul }) => ({ spawn(b, e) { b.addBuff(e, { key: 'ab:moveSpeed', persist: true, visible: true, mods: { moveMul: mul } }); } }),
+  // Infused Soul Husk: pick up souls, then spend one on a short orbiting damage aura.
+  soulHusk: ({ cooldown, scale }) => ({
+    spawn(b, e, a) { a.souls = 0; a.next = b.time + (cooldown || 15); },
+    tick(b, e, a) {
+      for (const soul of b.enemies) if (soul.alive && soul.defId === 'enemy_1428_lrsoul' && a.souls < 3 && Math.hypot(soul.x - e.x, soul.y - e.y) <= 1.5) {
+        b._remove(soul, 'pickup'); a.souls++;
+      }
+      if (a.souls <= 0 || b.time < a.next) return;
+      a.souls--; a.next = b.time + (cooldown || 15); this.cast(b, e, a);
+    },
+    cast(b, e, a) {
+      for (let t = 1; t <= 5; t++) b.every(0.5 * t, () => {
+        for (const u of b.alliesInRadius(e.x, e.y, 1.4)) hurt(b, e, u, e.s.atk * scale, 'arts', { tags: ['orb'] });
+      });
+    },
+  }),
   // Focused Soul Remnant: pick up Soul Maelstroms and fire a three-tick line.
   soulRemnant: ({ cooldown, scale, ladder }) => ({
     spawn(b, e, a) { a.souls = 0; a.next = b.time + (cooldown || 15); },
