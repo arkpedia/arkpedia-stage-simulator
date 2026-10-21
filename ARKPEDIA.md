@@ -5682,3 +5682,7 @@ At half HP the Steam Tank gains +100 ASPD, +100% movement and stun/freeze/sleep 
 ### 11-3 (S84, 2026-10-21)
 
 With the Steam Tank supported, **11-3** builds (8×11, 19 spawns, 4 enemies). Coverage is **178 public stages** (0-1 plus 177 files).
+
+### 11-2 and 11-3 adverse variants (S85, 2026-10-21)
+
+The adverse variants of **11-2** and **11-3** build as well (7×9/8×11, 21–37 spawns). Coverage is **180 public stages** (0-1 plus 179 files).
