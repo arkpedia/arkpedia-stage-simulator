@@ -27,6 +27,26 @@ test("source geometry preserves all 11 spawns, overrides, and the soldier route 
   assert.equal(a.routes[2].checkpoints[1].time, 3);
   assert.equal(data.enemies.enemy_1002_nsabr.stats.def, 30);
 });
+test("waves run in sequence with each wave's own delay, duration and interval", () => {
+  const stage = structuredClone(data.stage);
+  stage.geometry.waves = [
+    { index: 0, duration: 10, pre_delay: 0, post_delay: 2, spawns: [{ enemy_id: "enemy_1007_slime", count: 1, time: 1, route: 1 }] },
+    { index: 1, duration: 5, pre_delay: 3, post_delay: 0, spawns: [{ enemy_id: "enemy_1002_nsabr", count: 2, time: 1, interval: 2, route: 2 }] },
+  ];
+  const a = stageAdapter(stage);
+  assert.deepEqual(a.spawns.map(spawn => [spawn.enemyKey, spawn.time]), [
+    ["enemy_1007_slime", 1], ["enemy_1002_nsabr", 16], ["enemy_1002_nsabr", 18],
+  ]);
+});
+test("fixed squads and conditional spawns remain refused", () => {
+  for (const patch of [
+    { suppliedUnits: { fixed_squad: [{}], deployable_tokens: [] } },
+    { hasConditionalSpawns: true },
+    { rows: 20 },
+  ]) {
+    assert.throws(() => stageAdapter({ ...data.stage, geometry: { ...data.stage.geometry, ...patch } }), /Unsupported stage mechanics/);
+  }
+});
 test("loadouts use real promotion/trust/potential caps and talents", () => {
   const op = data.operators.char_208_melan;
   let b = defaultBuild(op);
@@ -139,6 +159,29 @@ test("every spawn names a route index, never an explicit numeric route", () => {
     assert.equal(spawn.route, undefined);
     assert.deepEqual(a.routes[spawn.routeIndex].start, [2, 8]);
   }
+});
+test("an unused route may lack a viewer path, but a used one may not", () => {
+  const stage = structuredClone(data.stage);
+  stage.geometry.waves[0].spawns = [{ enemy_id: "enemy_1007_slime", count: 1, time: 0, route: 1 }];
+  delete stage.pathing.paths[2];
+  const a = stageAdapter(stage);
+  assert.equal(a.spawns.length, 1); assert.deepEqual(a.routes[2].checkpoints, []);
+  delete stage.pathing.paths[1];
+  assert.throws(() => stageAdapter(stage), /Missing stage viewer path for route 1/);
+});
+test("a viewer tunnel break becomes disappear, wait and appear legs", () => {
+  const stage = JSON.parse(fs.readFileSync(new URL("../data/arkpedia-stage-6-4.json", import.meta.url)));
+  const a = stageAdapter(stage);
+  const route = a.routes.find(r => r.checkpoints.some(c => c.type === "DISAPPEAR"));
+  assert.ok(route, "a tunnel route exists");
+  const at = route.checkpoints.findIndex(c => c.type === "DISAPPEAR");
+  assert.equal(route.checkpoints[at + 1].type, "WAIT");
+  assert.equal(route.checkpoints[at + 1].time, 5);
+  assert.equal(route.checkpoints[at + 2].type, "APPEAR");
+  const source = { ...structuredClone(data), stage, enemies: { ...data.enemies, ...stage.enemies } };
+  const b = new StandardBattle(source, selection); b.setViewport("fullscreen-workspace");
+  for (let i = 0; i < Math.round(40 / b.dt) && !b.finished; i++) b.step();
+  assert.deepEqual(b.errors, []);
 });
 test("missing viewer routes fail rather than switching to a different path", () => {
   assert.throws(

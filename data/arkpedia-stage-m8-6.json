@@ -1,0 +1,2165 @@
+{
+ "code": "M8-6",
+ "name": "Farewell, to Reunite Once More",
+ "description": "07:29:28 Though some friends may be willing to share your pain, you should perhaps reach out to them. And some may never have been your friends in the first place.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 9,
+  "initial_dp": 5,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "m8-6",
+  "rows": 8,
+  "cols": 12,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    1,
+    2,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    4,
+    4,
+    5
+   ],
+   [
+    0,
+    1,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    0,
+    0
+   ],
+   [
+    2,
+    3,
+    3,
+    3,
+    4,
+    4,
+    4,
+    4,
+    3,
+    3,
+    4,
+    5
+   ],
+   [
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    4,
+    0,
+    4,
+    0,
+    0,
+    0
+   ],
+   [
+    2,
+    3,
+    4,
+    4,
+    4,
+    4,
+    4,
+    0,
+    3,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    4,
+    3,
+    4,
+    4,
+    4,
+    5
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": null,
+    "placeholder": true,
+    "start": null,
+    "end": null,
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 11
+    },
+    "end": {
+     "row": 1,
+     "col": 2
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 10
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 3
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 11
+    },
+    "end": {
+     "row": 1,
+     "col": 2
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 11
+    },
+    "end": {
+     "row": 5,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 6
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 2
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 11
+    },
+    "end": {
+     "row": 5,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 6
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 11
+    },
+    "end": {
+     "row": 5,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 6
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 3
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 11
+    },
+    "end": {
+     "row": 1,
+     "col": 2
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 10
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 11
+    },
+    "end": {
+     "row": 3,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 10
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 3
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 11
+    },
+    "end": {
+     "row": 5,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 6
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 3
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 11
+    },
+    "end": {
+     "row": 3,
+     "col": 0
+    },
+    "checkpoints": [],
+    "waits": []
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 220,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 1,
+      "time": 3,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 2,
+      "time": 13,
+      "interval": 4,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Enraged Possessed Soldier",
+      "enemy_id": "enemy_1062_rager",
+      "count": 1,
+      "time": 23,
+      "route": 3,
+      "fragment": 2
+     },
+     {
+      "enemy": "Enraged Possessed Soldier",
+      "enemy_id": "enemy_1062_rager",
+      "count": 2,
+      "time": 27,
+      "interval": 2,
+      "route": 4,
+      "fragment": 2
+     },
+     {
+      "enemy": "Enraged Possessed Soldier",
+      "enemy_id": "enemy_1062_rager",
+      "count": 3,
+      "time": 33,
+      "interval": 2,
+      "route": 4,
+      "fragment": 2
+     },
+     {
+      "enemy": "Enraged Possessed Soldier",
+      "enemy_id": "enemy_1062_rager",
+      "count": 3,
+      "time": 41,
+      "interval": 2,
+      "route": 4,
+      "fragment": 2
+     },
+     {
+      "enemy": "Enraged Possessed Soldier",
+      "enemy_id": "enemy_1062_rager",
+      "count": 3,
+      "time": 50,
+      "interval": 2,
+      "route": 4,
+      "fragment": 2
+     },
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 3,
+      "time": 30,
+      "interval": 4,
+      "route": 2,
+      "fragment": 2
+     },
+     {
+      "enemy": "Possessed Junkman",
+      "enemy_id": "enemy_1044_zomstr",
+      "count": 1,
+      "time": 42,
+      "route": 2,
+      "fragment": 2
+     },
+     {
+      "enemy": "Enraged Possessed Soldier",
+      "enemy_id": "enemy_1062_rager",
+      "count": 3,
+      "time": 74,
+      "interval": 2,
+      "route": 4,
+      "fragment": 3
+     },
+     {
+      "enemy": "Enraged Possessed Soldier",
+      "enemy_id": "enemy_1062_rager",
+      "count": 3,
+      "time": 83,
+      "interval": 2,
+      "route": 4,
+      "fragment": 3
+     },
+     {
+      "enemy": "Enraged Possessed Soldier",
+      "enemy_id": "enemy_1062_rager",
+      "count": 5,
+      "time": 92,
+      "interval": 2,
+      "route": 4,
+      "fragment": 3
+     },
+     {
+      "enemy": "Enraged Possessed Bonethrower",
+      "enemy_id": "enemy_1063_rageth_2",
+      "count": 1,
+      "time": 90,
+      "route": 5,
+      "fragment": 3
+     },
+     {
+      "enemy": "Possessed Junkman",
+      "enemy_id": "enemy_1044_zomstr",
+      "count": 3,
+      "time": 69,
+      "interval": 7,
+      "route": 6,
+      "fragment": 3
+     },
+     {
+      "enemy": "Possessed Heavy Defender",
+      "enemy_id": "enemy_1061_zomshd",
+      "count": 1,
+      "time": 97,
+      "route": 6,
+      "fragment": 3
+     },
+     {
+      "enemy": "Sarkaz Centurion Host",
+      "enemy_id": "enemy_1114_rgrdmn",
+      "count": 1,
+      "time": 125,
+      "route": 7,
+      "fragment": 4
+     },
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 2,
+      "time": 115,
+      "interval": 5,
+      "route": 2,
+      "fragment": 4
+     },
+     {
+      "enemy": "Possessed Junkman",
+      "enemy_id": "enemy_1044_zomstr",
+      "count": 2,
+      "time": 124,
+      "interval": 8,
+      "route": 2,
+      "fragment": 4
+     },
+     {
+      "enemy": "Enraged Possessed Soldier",
+      "enemy_id": "enemy_1062_rager",
+      "count": 3,
+      "time": 127,
+      "interval": 2,
+      "route": 4,
+      "fragment": 4
+     },
+     {
+      "enemy": "Enraged Possessed Soldier",
+      "enemy_id": "enemy_1062_rager",
+      "count": 3,
+      "time": 136,
+      "interval": 2,
+      "route": 4,
+      "fragment": 4
+     },
+     {
+      "enemy": "Enraged Possessed Soldier",
+      "enemy_id": "enemy_1062_rager",
+      "count": 3,
+      "time": 145,
+      "interval": 2,
+      "route": 4,
+      "fragment": 4
+     },
+     {
+      "enemy": "Enraged Possessed Bonethrower",
+      "enemy_id": "enemy_1063_rageth_2",
+      "count": 1,
+      "time": 120,
+      "route": 8,
+      "fragment": 4
+     },
+     {
+      "enemy": "Enraged Possessed Soldier",
+      "enemy_id": "enemy_1062_rager",
+      "count": 3,
+      "time": 155,
+      "interval": 2,
+      "route": 4,
+      "fragment": 4
+     },
+     {
+      "enemy": "Enraged Possessed Bonethrower",
+      "enemy_id": "enemy_1063_rageth_2",
+      "count": 1,
+      "time": 140,
+      "route": 8,
+      "fragment": 4
+     },
+     {
+      "enemy": "Enraged Possessed Leader",
+      "enemy_id": "enemy_1062_rager_2",
+      "count": 1,
+      "time": 181,
+      "route": 8,
+      "fragment": 5
+     },
+     {
+      "enemy": "Enraged Possessed Bonethrower",
+      "enemy_id": "enemy_1063_rageth_2",
+      "count": 1,
+      "time": 169,
+      "route": 4,
+      "fragment": 5
+     },
+     {
+      "enemy": "Enraged Possessed Soldier",
+      "enemy_id": "enemy_1062_rager",
+      "count": 3,
+      "time": 186,
+      "interval": 2,
+      "route": 4,
+      "fragment": 5
+     },
+     {
+      "enemy": "Enraged Possessed Soldier",
+      "enemy_id": "enemy_1062_rager",
+      "count": 1,
+      "time": 195,
+      "route": 4,
+      "fragment": 5
+     },
+     {
+      "enemy": "Enraged Possessed Bonethrower",
+      "enemy_id": "enemy_1063_rageth_2",
+      "count": 1,
+      "time": 204,
+      "route": 4,
+      "fragment": 5
+     },
+     {
+      "enemy": "Enraged Possessed Soldier",
+      "enemy_id": "enemy_1062_rager",
+      "count": 2,
+      "time": 197,
+      "interval": 2,
+      "route": 4,
+      "fragment": 5
+     },
+     {
+      "enemy": "Enraged Possessed Leader",
+      "enemy_id": "enemy_1062_rager_2",
+      "count": 2,
+      "time": 200,
+      "interval": 8,
+      "route": 8,
+      "fragment": 5
+     },
+     {
+      "enemy": "Enraged Possessed Soldier",
+      "enemy_id": "enemy_1062_rager",
+      "count": 4,
+      "time": 214,
+      "interval": 2,
+      "route": 4,
+      "fragment": 5
+     },
+     {
+      "enemy": "Enraged Possessed Leader",
+      "enemy_id": "enemy_1062_rager_2",
+      "count": 1,
+      "time": 220,
+      "route": 8,
+      "fragment": 5
+     },
+     {
+      "enemy": "Sarkaz Centurion Host",
+      "enemy_id": "enemy_1114_rgrdmn",
+      "count": 2,
+      "time": 189,
+      "interval": 27,
+      "route": 9,
+      "fragment": 5
+     },
+     {
+      "enemy": "Possessed Heavy Defender",
+      "enemy_id": "enemy_1061_zomshd",
+      "count": 2,
+      "time": 177,
+      "interval": 18,
+      "route": 2,
+      "fragment": 5
+     },
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 3,
+      "time": 192,
+      "interval": 7,
+      "route": 2,
+      "fragment": 5
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 11,
+    "routes": [
+     1,
+     2,
+     2,
+     2,
+     6,
+     6,
+     2,
+     2,
+     2,
+     2
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 3,
+    "col": 11,
+    "routes": [
+     7,
+     9
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 6,
+    "col": 11,
+    "routes": [
+     3,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     5,
+     4,
+     4,
+     4,
+     8,
+     4,
+     8,
+     8,
+     4,
+     4,
+     4,
+     4,
+     4,
+     8,
+     4,
+     8
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 1,
+    "col": 2,
+    "routes": [
+     1,
+     2,
+     2,
+     2,
+     6,
+     6,
+     2,
+     2,
+     2,
+     2
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 3,
+    "col": 0,
+    "routes": [
+     7,
+     9
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 5,
+    "col": 0,
+    "routes": [
+     3,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     5,
+     4,
+     4,
+     4,
+     8,
+     4,
+     8,
+     8,
+     4,
+     4,
+     4,
+     4,
+     4,
+     8,
+     4,
+     8
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1043_zomsbr",
+    "slug": "possessed_soldier",
+    "name": "Possessed Soldier",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1044_zomstr",
+    "slug": "possessed_junkman",
+    "name": "Possessed Junkman",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1061_zomshd",
+    "slug": "possessed_heavy_defender",
+    "name": "Possessed Heavy Defender",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1062_rager",
+    "slug": "enraged_possessed_soldier",
+    "name": "Enraged Possessed Soldier",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1062_rager_2",
+    "slug": "enraged_possessed_leader",
+    "name": "Enraged Possessed Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1063_rageth_2",
+    "slug": "enraged_possessed_bonethrower",
+    "name": "Enraged Possessed Bonethrower",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1114_rgrdmn",
+    "slug": "sarkaz_centurion_host",
+    "name": "Sarkaz Centurion Host",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "pathing": {
+  "schemaVersion": 1,
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "M8-6",
+  "geometryHash": "f44c9f891865d43cb8828f21b56f5d54c0efb908ce533a4926e825811210a568",
+  "moveScale": 0.65,
+  "paths": {
+   "1": {
+    "points": [
+     [
+      11,
+      1
+     ],
+     [
+      10,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      2,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "length": 9,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 3,
+      "point": [
+       10,
+       1
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      11,
+      1
+     ],
+     [
+      10,
+      1
+     ],
+     [
+      2,
+      1
+     ]
+    ]
+   },
+   "2": {
+    "points": [
+     [
+      11,
+      1
+     ],
+     [
+      10,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      2,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "length": 9,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      11,
+      1
+     ],
+     [
+      2,
+      1
+     ]
+    ]
+   },
+   "3": {
+    "points": [
+     [
+      11,
+      6
+     ],
+     [
+      10,
+      6
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      7,
+      6
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      0,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "length": 12,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 2,
+      "point": [
+       10,
+       6
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      11,
+      6
+     ],
+     [
+      10,
+      6
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      0,
+      5
+     ]
+    ]
+   },
+   "4": {
+    "points": [
+     [
+      11,
+      6
+     ],
+     [
+      10,
+      6
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      7,
+      6
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      0,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "length": 12,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      11,
+      6
+     ],
+     [
+      10,
+      6
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      0,
+      5
+     ]
+    ]
+   },
+   "5": {
+    "points": [
+     [
+      11,
+      6
+     ],
+     [
+      10,
+      6
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      7,
+      6
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      0,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "length": 12,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 3,
+      "point": [
+       10,
+       6
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      11,
+      6
+     ],
+     [
+      10,
+      6
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      0,
+      5
+     ]
+    ]
+   },
+   "6": {
+    "points": [
+     [
+      11,
+      1
+     ],
+     [
+      10,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      2,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "length": 9,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      11,
+      1
+     ],
+     [
+      10,
+      1
+     ],
+     [
+      2,
+      1
+     ]
+    ]
+   },
+   "7": {
+    "points": [
+     [
+      11,
+      3
+     ],
+     [
+      10,
+      3
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "length": 11,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 3,
+      "point": [
+       10,
+       3
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      11,
+      3
+     ],
+     [
+      10,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ]
+   },
+   "8": {
+    "points": [
+     [
+      11,
+      6
+     ],
+     [
+      10,
+      6
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      7,
+      6
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      0,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "length": 12,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 3,
+      "point": [
+       10,
+       6
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      11,
+      6
+     ],
+     [
+      10,
+      6
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      0,
+      5
+     ]
+    ]
+   },
+   "9": {
+    "points": [
+     [
+      11,
+      3
+     ],
+     [
+      10,
+      3
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "length": 11,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      11,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "enemies": {
+  "enemy_1043_zomsbr": {
+   "key": "enemy_1043_zomsbr",
+   "prefabKey": "enemy_1043_zomsbr",
+   "name": "Possessed Soldier",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2500,
+    "atk": 250,
+    "def": 100,
+    "res": 30,
+    "moveSpeed": 0.9,
+    "bat": 1.8,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 2.5,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 80,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Regenerates HP over time.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "mutant"
+   ]
+  },
+  "enemy_1062_rager": {
+   "key": "enemy_1062_rager",
+   "prefabKey": "enemy_1062_rager",
+   "name": "Enraged Possessed Soldier",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 20000,
+    "atk": 1000,
+    "def": 200,
+    "res": 30,
+    "moveSpeed": 1.2,
+    "bat": 1.3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Will gradually lose HP over time",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "periodic_damage.damage": 330
+    },
+    "bbStr": {},
+    "groups": {
+     "periodic_damage": [
+      "damage"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "mutant"
+   ]
+  },
+  "enemy_1044_zomstr": {
+   "key": "enemy_1044_zomstr",
+   "prefabKey": "enemy_1044_zomstr",
+   "name": "Possessed Junkman",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 6000,
+    "atk": 500,
+    "def": 130,
+    "res": 30,
+    "moveSpeed": 0.65,
+    "bat": 3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 2.5,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 200,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Regenerates HP over time.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "mutant"
+   ]
+  },
+  "enemy_1063_rageth_2": {
+   "key": "enemy_1063_rageth_2",
+   "prefabKey": "enemy_1063_rageth_2",
+   "name": "Enraged Possessed Bonethrower",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 22000,
+    "atk": 1050,
+    "def": 220,
+    "res": 30,
+    "moveSpeed": 0.7,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 2.6,
+    "rawRangeRadius": 2.6,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Will gradually lose HP over time",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "periodic_damage.damage": 350
+    },
+    "bbStr": {},
+    "groups": {
+     "periodic_damage": [
+      "damage"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "mutant"
+   ]
+  },
+  "enemy_1061_zomshd": {
+   "key": "enemy_1061_zomshd",
+   "prefabKey": "enemy_1061_zomshd",
+   "name": "Possessed Heavy Defender",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 10000,
+    "atk": 600,
+    "def": 800,
+    "res": 0,
+    "moveSpeed": 0.75,
+    "bat": 2.6,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 200,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Regenerates HP over time.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "mutant"
+   ]
+  },
+  "enemy_1114_rgrdmn": {
+   "key": "enemy_1114_rgrdmn",
+   "prefabKey": "enemy_1114_rgrdmn",
+   "name": "Sarkaz Centurion Host",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 10000,
+    "atk": 600,
+    "def": 200,
+    "res": 50,
+    "moveSpeed": 0.8,
+    "bat": 5,
+    "aspd": 100,
+    "rangeRadius": 1.6,
+    "rawRangeRadius": 1.6,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Attacks 3 enemies simultaneously",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Restores a certain amount of HP after each attack, based upon damage dealt",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "vampire.heal_scale": 1.5,
+     "vampire.attack@max_target": 3
+    },
+    "bbStr": {},
+    "groups": {
+     "vampire": [
+      "attack@max_target",
+      "heal_scale"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "mutant"
+   ]
+  },
+  "enemy_1062_rager_2": {
+   "key": "enemy_1062_rager_2",
+   "prefabKey": "enemy_1062_rager_2",
+   "name": "Enraged Possessed Leader",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 30000,
+    "atk": 1750,
+    "def": 230,
+    "res": 30,
+    "moveSpeed": 1.2,
+    "bat": 1.3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Will gradually lose HP over time",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "periodic_damage.damage": 500
+    },
+    "bbStr": {},
+    "groups": {
+     "periodic_damage": [
+      "damage"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "mutant"
+   ]
+  }
+ }
+}

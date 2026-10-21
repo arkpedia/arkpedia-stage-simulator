@@ -25,8 +25,37 @@ function family(groups, params, ability, extra, note, dependsOn = null, explains
   return Object.fromEntries(groups.map(g => [`talent:${g}`, { covers: r => sig(r, g, params) && extra(r), ability: ability(g), note,
     ...(dependsOn ? { dependsOn } : {}), ...(explains ? { explains } : {}) }]));
 }
+/** One feature per group, accepting any of several exact parameter signatures. */
+function familyAny(groups, signatures, ability, extra, note, dependsOn = null, explains = null) {
+  return Object.fromEntries(groups.map(g => [`talent:${g}`, { covers: r => signatures.some(signature => sig(r, g, signature)) && extra(r), ability: ability(g), note,
+    ...(dependsOn ? { dependsOn } : {}), ...(explains ? { explains } : {}) }]));
+}
 const CONFINEMENT_SIGS = [['attack_speed', 'max_stack_cnt', 'max_valid_stack_cnt', 'times']], LIBERTY_SIGS = [['atk'], ['atk', 'def_penetrate'], ['atk', 'hp_recovery_per_sec', 'magic_resistance']];
 const REBORN_PARAMS = new Set(['duration', 'hp_ratio', 'invincible']);
+
+// The reviewed death-blast handbook lines. Each names the damage its explosion deals; the talent blackboard carries
+// the multiplier (and, for the cold/elemental variants, the status duration and elemental ratio).
+const DEATH_BLAST_PHYSICAL = /^(?:Death deals a large amount of Physical damage to surrounding units|Deals Physical damage to surrounding units upon death)$/;
+const DEATH_BLAST_COLD = /^Upon death, deals Physical damage in an area and applies <\$ba\.cold>Cold<\/> to affected targets$/;
+const DEATH_BLAST_NEURAL = /^Upon death, deals Arts damage to all surrounding units and inflicts <\$ba\.dt\.neural>Nervous Impairment<\/>$/;
+const deathBlastText = text => DEATH_BLAST_PHYSICAL.test(text) || DEATH_BLAST_COLD.test(text) || DEATH_BLAST_NEURAL.test(text);
+/** Explosion parameters of one `boom`-family record; the handbook line picks the damage type and element. */
+function deathBlastParams(r, group) {
+  const bb = r.talents.bb, text = r.abilities.map(a => a.text).join('\n');
+  const params = { scale: bb[`${group}.atk_scale`] ?? 0, type: /Arts damage/.test(text) ? 'arts' : 'phys' };
+  const freeze = bb[`${group}.freeze`] ?? 0, ep = bb[`${group}.ep_damage_ratio`] ?? 0;
+  if (freeze > 0) params.status = { key: 'cold', dur: freeze };
+  if (ep > 0) { params.element = elementOf(r); params.epRatio = ep; }
+  return params;
+}
+/** The death-blast feature covers exactly the reviewed signatures and handbook lines, never an unreviewed record. */
+function coversDeathBlast(r, group) {
+  if (!r.abilities.length) return sig(r, group, ['atk_scale']) || sig(r, group, ['atk_scale', 'freeze']);
+  if (sig(r, group, ['atk_scale'])) return r.abilities.length === 1 && DEATH_BLAST_PHYSICAL.test(r.abilities[0].text);
+  if (sig(r, group, ['atk_scale', 'freeze'])) return r.abilities.length === 1 && DEATH_BLAST_COLD.test(r.abilities[0].text);
+  if (sig(r, group, ['atk_scale', 'ep_damage_ratio'])) return r.abilities.every(a => a.text === 'Flying unit.' || DEATH_BLAST_NEURAL.test(a.text));
+  return false;
+}
 function rebornFamily(group) {
   return { [`talent:${group}`]: {
     covers: r => r.talents.groups[group].includes('duration') && r.talents.groups[group].every(p => REBORN_PARAMS.has(p)),
@@ -49,6 +78,56 @@ function isStackingDefDown(nat) {
     && b.durationKey === '' && b.triggerLifeType === 0 && b.blackboard.length === 0;
 }
 
+// The reviewed Skullshatterer grenade component: a 5 s, one-stack active buff on the target family that multiplies DEF
+// by the record's defdown.def (-0.5) and has no selector of its own (the attack supplies the target area).
+function isGrenadeDefDown(r, nat) {
+  if (nat.DefDown?.length !== 1) return false;
+  const c = nat.DefDown[0], b = c._additiveActiveBuffs?.[0], a = b?.attributes;
+  return c._buffs.length === 0 && c._additiveActiveBuffs.length === 1 && c._probKey === '' && c._selector.m_PathID === '0'
+    && c._targetValidator.m_PathID === '0' && c._targetFamilyMask === 1
+    && a.attributeModifiers.length === 1 && Object.entries({ attributeType: 2, formulaItem: 1, value: r.talents.bb['defdown.def'],
+      loadFromBlackboard: 0, fetchBaseValueFromSourceEntity: 0 }).every(([k, v]) => a.attributeModifiers[0][k] === v)
+    && Object.keys(a.attributeModifiers[0]).length === 5
+    && ['abnormalFlags', 'abnormalImmunes', 'abnormalAntis', 'abnormalCombos', 'abnormalComboImmunes'].every(k => a[k].length === 0)
+    && b.lifeTimeType === 1 && b.lifeTime === 5 && b.maxStackCnt === 1 && b.maxValidStackCnt === -1 && b.buffKey === 'skulsr_attack'
+    && b.templateKey === 'empty' && b.loadFromDB === 0 && b.durationKey === '' && b.triggerLifeType === 0 && b.blackboard.length === 0;
+}
+
+// The reviewed Crownslayer Blink pair: one EnemyAbility wrapper (familyMask 2, castLikeAttack 0, default init cooldown)
+// and its Blink ability (waitForAttackEvent, no selector, one 1 s buff with abnormalFlags [3]). It is the only shape the
+// skill:blink feature claims, and it claims exactly one native wrapper for the support gate.
+function isCrownslayerBlink(r, nat) {
+  const rows = nat.Blink ?? [], wrapper = rows.find(c => '_familyMask' in c), ability = rows.find(c => '_waitForAttackEvent' in c);
+  if (!wrapper || !ability || r.skills.length !== 1) return false;
+  const skill = r.skills[0], b = ability._buffs?.[0];
+  return skill.prefabKey === 'blink' && skill.bb.dist === 1.5 && skill.cooldown === 15 && skill.initCooldown === 15
+    && r.abilities.some(a => a.text === 'When blocked, can quickly move behind the unit')
+    && wrapper._familyMask === 2 && wrapper._trigger?.m_PathID === '0' && wrapper._castLikeAttack === 0
+    && wrapper._ignoreSilence === 0 && wrapper._overwriteInitCooldown === -1 && wrapper._checkParentActive === 0
+    && wrapper._maxTriggerTime === -1 && wrapper._resetCdWaitFirstPeriod === 1 && wrapper._resetMainAbilityCdWhenCastEnd === 0
+    && ability._waitForAttackEvent === 1 && ability._selector?.m_PathID === '0' && ability._resetCdStrategy === 1
+    && ability._preDelay === 0 && ability._escapeTime === 0 && ability._waitForCasting === 0 && ability._checkBuffEarlyFinish === 0
+    && ability._buffs?.length === 1 && b.lifeTime === 1 && b.lifeTimeType === 1 && b.buffKey === '' && b.durationKey === '_'
+    && b.templateKey === 'empty' && JSON.stringify(b.attributes?.abnormalFlags) === '[3]';
+}
+
+// The reviewed Reborn Creation components: the damage-reduction template, the blocker block-count template and the
+// bloodsucker marker that the active common ability attaches. The three together identify the Sarkaz Heirbearer family.
+function isRebornCreation(nat) {
+  const dmg = nat.dmg_res?.find(c => c._buffs?.[0]?.templateKey === 'damage_resistance');
+  const toggle = nat.buff_to_blocker?.find(c => c._checker);
+  const block = toggle?._checker ? nat.$ref?.(toggle._checker) : null;
+  const host = Object.values(nat).flat().find(c => Array.isArray(c._commonAbilities));
+  const mark = host?._commonAbilities?.[0] ? nat.$ref?.(host._commonAbilities[0]) : null;
+  if (!dmg || !block || !mark) return false;
+  return true
+    && dmg._buffs.length === 1 && dmg._buffs[0].lifeTimeType === 2 && dmg._selector.m_PathID === '0'
+    && (block._buffs ?? []).length === 0 && Array.isArray(block._buffsToBlockee) && block._buffsToBlockee.length === 1
+    && block._blockMinCnt === 1 && block._blockMaxCnt === -1
+    && block._useBlockAsMin === 1
+    && mark._buffs.length === 1 && mark._buffs[0].lifeTimeType === 2 && mark._selector.m_PathID === '0';
+}
+
 // The reviewed enhance component (enemy_1103_wdkght family): a whole-field passive (no selector, no interval) marking
 // every unit of the owner's own side (validator targetSide 1, all motions, ignoring isolation) with template
 // enemy_wdkght_t, whose only event ON_OWNER_KILLED gives the mark's source one INFINITY stack of ATK MULTIPLIER and
@@ -69,6 +148,8 @@ export const ENEMY_FEATURES = Object.freeze({
   // Handbook lines restating what the record's stats already model.
   'ability:Flying unit.': { covers: r => r.stats.motion === 'FLY', note: 'motion FLY' },
   'ability:Regenerates HP over time.': { covers: r => r.stats.hpRecoveryPerSec > 0, note: 'hpRecoveryPerSec' },
+  // The engine's normal leak already removes `lpr` Life Points; this line only restates the record's stat.
+  'ability:Drains 1 Life Point when entering the Objective Point': { covers: r => r.stats.lpr === 1, note: 'the engine drains lpr Life Points on a leak' },
   // Spawn traits.
   'ability:Cannot be blocked.': { covers: () => true, trait: { flags: { unblockable: true } }, note: 'unblockable for life' },
   'ability:<$ba.invisible>Invisible</>': { covers: () => true, trait: { flags: { stealth: true } },
@@ -86,6 +167,16 @@ export const ENEMY_FEATURES = Object.freeze({
   // 嘲讽: "More likely to be targeted by attacks" — taunt level +taunt_level.
   'talent:taunt': { covers: r => sig(r, 'taunt', ['taunt_level']), ability: { kind: 'taunt', params: r => ({ n: r.talents.bb['taunt.taunt_level'] }) },
     note: 'taunt level', explains: /^More likely to be targeted by attacks\.$/ },
+  // Crownslayer: a cooldown blink past the blocker, proven against the reviewed Blink wrapper/ability pair.
+  'skill:blink': { covers: (r, nat) => isCrownslayerBlink(r, nat),
+    ability: { kind: 'blinkWhenBlocked', params: r => ({ dist: r.skills[0].bb.dist ?? 1.5, cooldown: r.skills[0].cooldown, initCooldown: r.skills[0].initCooldown }) },
+    note: 'blink past the blocker on the reviewed cooldown', nativeClaim: () => ({ wrappers: 1 }),
+    explains: /^When blocked, can quickly move behind the unit$/ },
+  // Senior Caster: the normal ranged attack also splashes the primary target's four cardinal neighbours.
+  'ability:Deals area damage to Operators on the four cardinal tiles next to the primary target.': {
+    covers: r => r.applyWay === 'RANGED' && r.stats.rangeRadius > 0
+      && r.abilities.some(a => a.text === 'Deals area damage to Operators on the four cardinal tiles next to the primary target.'),
+    ability: { kind: 'cardinalSplash', params: () => ({}) }, note: 'normal attack splashes the four cardinal neighbours of its target' },
   // The level's route places these enemies on the field; the record needs nothing more.
   'ability:Able to land directly onto the battlefield.': { covers: () => true, note: 'the stage route starts at its landing tile' },
   'ability:Can appear in the battlefield': { covers: () => true, note: 'the stage route starts on the field' },
@@ -100,9 +191,18 @@ export const ENEMY_FEATURES = Object.freeze({
   ...family(['refracting'], ['magic_resistance'], g => ({ kind: 'refraction', params: r => ({ res: r.talents.bb[`${g}.magic_resistance`] }) }),
     r => r.abilities.some(a => a.text.includes('<$ba.refraction>')), 'RES +magic_resistance while not silenced', null, /^<\$ba\.refraction>Refraction<\/>$/),
   // "Gains significantly increased ATK when HP is under 50%": ATK +atk once HP first drops below half.
-  ...family(['atkup'], ['atk'], g => ({ kind: 'lowHpBuff', params: r => ({ ratio: 0.5, mods: { atkPct: r.talents.bb[`${g}.atk`] } }) }),
-    r => r.abilities.some(a => /under 50%/.test(a.text) && /ATK/.test(a.text)), 'ATK +atk below 50% HP (ratio from the handbook line)', null,
+  ...familyAny(['atkup'], [['atk'], ['atk', 'hp_ratio']], g => ({ kind: 'lowHpBuff', params: r => ({ ratio: r.talents.bb[`${g}.hp_ratio`] ?? 0.5, mods: { atkPct: r.talents.bb[`${g}.atk`] } }) }),
+    r => r.abilities.some(a => /under 50%/.test(a.text) && /ATK/.test(a.text)), 'ATK +atk below the hp_ratio threshold (50% when the record omits it)', null,
     /^Gains significantly increased ATK when HP is under 50%$/),
+  // 吸血 (vampire): attacks up to max_target and heals heal_scale × the damage actually dealt. The single-target
+  // signature omits max_target; the record then keeps the engine's one target.
+  ...familyAny(['vampire'], [['attack@max_target', 'heal_scale'], ['heal_scale']], g => ({ kind: 'vampireOnHit', params: r => ({
+    maxTargets: r.talents.bb[`${g}.attack@max_target`] ?? 1, healScale: r.talents.bb[`${g}.heal_scale`] }) }),
+    r => r.abilities.some(a => /restore HP proportional to damage dealt/i.test(a.text) || /Restores a certain amount of HP after each attack/.test(a.text)),
+    'attacks up to max_target and heals heal_scale × damage dealt', null,
+    (text, record) => /^Attacks restore HP proportional to damage dealt$/.test(text)
+      || /^Restores a certain amount of HP after each attack, based upon damage dealt$/.test(text)
+      || text === `Attacks ${record.talents.bb['vampire.attack@max_target'] ?? 1} enemies simultaneously`),
   // Element damage on every attack hit: ATK x attack@ep_damage_ratio of the element its handbook line names.
   ...family(['epdamage', 'EpDamage'], ['attack@ep_damage_ratio'], g => ({ kind: 'elementOnHit', params: r => ({ element: elementOf(r), ratio: r.talents.bb[`${g}.attack@ep_damage_ratio`] }) }),
     r => !!elementOf(r), 'element damage on every attack hit', null,
@@ -111,11 +211,49 @@ export const ENEMY_FEATURES = Object.freeze({
   ...family(['DeadSpawn'], ['cnt', 'enemy_key'], g => ({ kind: 'deathSpawn', params: r => ({ key: r.talents.bbStr[`${g}.enemy_key`], cnt: r.talents.bb[`${g}.cnt`] }) }),
     r => true, 'spawns cnt enemy_key when killed', r => Object.entries(r.talents.bbStr).filter(([k]) => /^deadspawn\.enemy_key$/i.test(k)).map(([, v]) => v),
     /^Spawns \d+ <[^>]+> when defeated$/),
+  // "Splits into N <X> upon death" (deathrattle): cnt children after `delay` s, spread around the parent's tile.
+  'talent:deathrattle': { covers: r => r.skills.length === 0 && (
+      (sig(r, 'deathrattle', ['cnt', 'delay', 'enemy_key', 'offset_bound'])
+        && r.abilities.some(a => /^Splits into \d+ <[^>]+> upon death$/.test(a.text)))
+      || (sig(r, 'deathrattle', ['delay', 'enemy_key'])
+        && r.abilities.some(a => /^Will be reborn as a <[^>]+> after falling in battle for the first time$/.test(a.text)))),
+    ability: { kind: 'deathSpawnDelayed', params: r => ({ key: r.talents.bbStr['deathrattle.enemy_key'],
+      cnt: r.talents.bb['deathrattle.cnt'] ?? 1, delay: r.talents.bb['deathrattle.delay'] ?? 0 }) },
+    note: 'splits/reborn as cnt child(ren) after delay s', dependsOn: r => [r.talents.bbStr['deathrattle.enemy_key']].filter(Boolean),
+    explains: text => /^Splits into \d+ <[^>]+> upon death$/.test(text)
+      || /^Will be reborn as a <[^>]+> after falling in battle for the first time$/.test(text) },
+  // Reborn Creation (Sarkaz Heirbearer family): damage reduction from the reviewed template plus the blocker's
+  // +block-count buff. The active bloodsucker marker is the native common ability both features claim.
+  'talent:dmg_res': { covers: (r, nat) => sig(r, 'dmg_res', ['damage_resistance']) && isRebornCreation(nat),
+    ability: { kind: 'rebornDamageRes', params: r => ({ pct: r.talents.bb['dmg_res.damage_resistance'] }) },
+    note: 'Physical/Arts damage ×(1-pct) and the bloodsucker marker', nativeClaim: () => ({ active: 1 }),
+    explains: /^Reborn Creation \(takes greatly reduced Physical and Arts damage\)$/ },
+  'talent:buff_to_blocker': { covers: (r, nat) => sig(r, 'buff_to_blocker', ['block_cnt', 'max_valid_stack_cnt']) && isRebornCreation(nat),
+    ability: { kind: 'blockerBlockUp', params: r => ({ n: r.talents.bb['buff_to_blocker.block_cnt'], max: r.talents.bb['buff_to_blocker.max_valid_stack_cnt'] }) },
+    note: 'the current blocker gains +block_cnt Block', explains: /^Units blocking it gain \+1 Block \(up to a maximum of \+6\)$/ },
+  // "When blocked, significantly reduces the blocker's ASPD": a flat ASPD delta while this enemy is the blocker's.
+  'talent:atkSpeedDown': { covers: r => sig(r, 'atkSpeedDown', ['attack_speed'])
+      && r.abilities.some(a => a.text === "When blocked, significantly reduces the blocker's ASPD"),
+    ability: { kind: 'blockerAspdDown', params: r => ({ aspd: r.talents.bb['atkSpeedDown.attack_speed'] * 100 }) },
+    note: "flat ASPD delta on the current blocker", explains: /^When blocked, significantly reduces the blocker's ASPD$/ },
+  // Defender-4: a DEF aura on other enemies within range_radius (silence-aware, refreshed like the other auras).
+  ...family(['defup'], ['def', 'range_radius'], g => ({ kind: 'enemyDefAura', params: r => ({ def: r.talents.bb[`${g}.def`], r: r.talents.bb[`${g}.range_radius`] }) }),
+    r => r.abilities.some(a => a.text === 'Increases the DEF of surrounding enemy units'),
+    'other enemies within range_radius gain DEF +def', null, /^Increases the DEF of surrounding enemy units$/),
+  // Death blast (boom): atk_scale × ATK around the corpse; the cold/elemental variants add their reviewed status or
+  // element. Records whose line names anything else (ignite Reeds, seize Gramophones, grant Energy) are not covered.
+  'talent:boom': { covers: r => coversDeathBlast(r, 'boom'),
+    ability: { kind: 'deathBoom', params: r => deathBlastParams(r, 'boom') },
+    note: 'death blast: atk_scale × ATK, with the reviewed cold/elemental rider', explains: deathBlastText },
   // DefDown: every attack hit adds a permanent, uncapped stack of DEF +defdown.def (flat) to the operator hit
   // (PRTS 酸液源石虫 天赋 corroborates: 防御力-10, 可无限叠加, linear in stacks).
-  'talent:defdown': { covers: (r, nat) => sig(r, 'defdown', ['def']) && r.talents.bb['defdown.def'] < 0 && isStackingDefDown(nat),
-    ability: { kind: 'defDownOnHit', params: r => ({ def: r.talents.bb['defdown.def'] }) },
-    note: 'each hit: permanent stacking DEF +def on the target', explains: /^Every attack reduces the enemy's DEF$/ },
+  'talent:defdown': { covers: (r, nat) => sig(r, 'defdown', ['def']) && r.talents.bb['defdown.def'] < 0
+      && (isStackingDefDown(nat) || isGrenadeDefDown(r, nat)),
+    ability: { kind: 'defDownOnHit', params: r => r.abilities.some(a => a.text.startsWith('Launches grenades'))
+      ? { pct: r.talents.bb['defdown.def'], duration: 5, area: true }
+      : { def: r.talents.bb['defdown.def'] } },
+    note: 'acid: permanent stacking DEF; Skullshatterer grenade: 5 s DEF ×defdown.def in the target area',
+    explains: text => text === "Every attack reduces the enemy's DEF" || text.startsWith('Launches grenades when not being blocked') },
   // enhance (沸血骑士团): each enemy-side unit killed anywhere on the field (isolation ignored) gives one permanent stack of
   // ATK +atk (×) and ASPD +attack_speed, up to max_stack_cnt (PRTS 沸血骑士团学徒 天赋 corroborates: 场上每有一名敌方单位
   // 死亡时 攻击力+10%，攻击速度+5，最多叠加10次).

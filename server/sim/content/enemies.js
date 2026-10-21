@@ -285,14 +285,21 @@ export const featureAbilities = Object.freeze({
   elementOnHit: ({ element, ratio }) => ep(element, ratio),
   lowHpBuff: ({ ratio, mods }) => lowHpBuff(ratio, mods),
   deathSpawn: ({ key, cnt }) => deathSpawn(key, cnt),
+  deathSpawnDelayed: ({ key, cnt, delay }) => deathSpawnDelayed({ key, cnt, delay }),
+  deathBoom: params => deathBoom(params),
   refraction: ({ res }) => refraction(res),
   times: ({ artsOnly }) => times(artsOnly),
   blockWeight: ({ n }) => blockWeight(n),
   prisoner: (params, ab) => prisoner(ab, params),
   taunt: ({ n }) => taunt(n),
-  // Every attack hit: one more permanent stack of DEF +def on the target (no cap; additive mods scale with stacks).
-  defDownOnHit: ({ def }) => ({ dealt(c, b) {
-    b.addBuff(c.target, { key: 'ab:defdown', refresh: 'stack', stacks: 1, maxStacks: 1e6, mods: { defFlat: def }, visible: true });
+  // Acid: every attack hit adds one more permanent stack of DEF +def on the target (no cap).
+  // Skullshatterer: a grenade (only while unblocked) applies a refreshing 5 s DEF ×pct to the target and its four
+  // cardinal neighbours; the supported shape is the retained `skulsr_attack` native component.
+  defDownOnHit: ({ def, pct, duration = 5, area = false }) => ({ dealt(c, b, e) {
+    if (pct == null) { b.addBuff(c.target, { key: 'ab:defdown', refresh: 'stack', stacks: 1, maxStacks: 1e6, mods: { defFlat: def }, visible: true }); return; }
+    if (area && e.blockedBy) return;
+    const targets = area ? areaAlliesInTiles(b, e, c.target.tileR, c.target.tileC, 'plus', 1) : [c.target];
+    for (const u of targets) if (u.alive) b.addBuff(u, { key: 'ab:defdownGrenade', duration, refresh: 'replace', mods: { defPct: pct }, visible: true });
   } }),
   // Every other enemy-side unit killed anywhere: one more permanent stack of ATK +atk (×) and ASPD +aspd, up to max.
   allyDeathStacks: ({ atk, aspd, max }) => ({
@@ -302,6 +309,69 @@ export const featureAbilities = Object.freeze({
       if (!u || u === e || u.side !== 'enemy' || c.reason !== 'killed') return;
       b.addBuff(e, { key: 'ab:enhance', refresh: 'stack', stacks: 1, maxStacks: max, persist: true, visible: true, mods: { atkPct: atk, aspd } });
     },
+  }),
+  // Vampire: up to maxTargets ordinary targets; every accepted ordinary hit heals the enemy for healScale × its
+  // post-mitigation damage.
+  vampireOnHit: ({ maxTargets, healScale }) => ({
+    spawn(b, e, a) {
+      if (maxTargets > 1) e.profile.maxTargets = Math.max(e.profile.maxTargets ?? 1, maxTargets);
+      b.on('damaged', c => {
+        if (c.source !== e || c.target?.side !== 'ally' || !c.dmg?.isAttack || !(c.hpLoss > 0)) return;
+        b.heal(e, e, c.hpLoss * healScale);
+      }, { owner: e });
+    },
+  }),
+  // Reborn Creation: the reviewed damage_resistance template is a Physical/Arts multiplier; the bloodsucker mark is a
+  // persistent identity buff (it has no attributes of its own).
+  rebornDamageRes: ({ pct }) => ({
+    spawn(b, e) {
+      b.addBuff(e, { key: 'ab:rebornDmgRes', persist: true, visible: true, mods: { physTakenMul: 1 - pct, artsTakenMul: 1 - pct } });
+      b.addBuff(e, { key: 'ab:bloodsuckerMark', persist: true });
+    },
+  }),
+  // Reborn Creation: its current blocker gains +n Block while this creation blocks it; each source owns its buff.
+  blockerBlockUp: ({ n, max }) => ({
+    spawn(b, e, a) { a.target = null; },
+    tick(b, e, a) {
+      const target = e.blockedBy ?? null;
+      if (target === a.target) return;
+      if (a.target) b.removeBuff(a.target, `ab:blockUp:${e.id}`);
+      a.target = target;
+      if (target && n > 0) b.addBuff(target, { key: `ab:blockUp:${e.id}`, persist: true, visible: true, mods: { blockCnt: Math.min(n, max) } });
+    },
+    death(c, b, e, a) { if (a.target) b.removeBuff(a.target, `ab:blockUp:${e.id}`); },
+  }),
+  // Crownslayer: when blocked and off cooldown, blink along the route past the blocker (the reviewed helper also grants
+  // the 1 s invulnerable/unblockable window carried by the Blink ability buff). Silence stops it.
+  blinkWhenBlocked: ({ dist, cooldown, initCooldown }) => ({
+    spawn(b, e, a) { a.readyAt = b.time + (initCooldown ?? 0); },
+    tick(b, e, a) {
+      if (!e.alive || e.s.flags.silence || !e.blockedBy || b.time < a.readyAt) return;
+      if (blinkForward(b, e, dist)) a.readyAt = b.time + (cooldown ?? 0);
+    },
+  }),
+  // Senior Caster: the normal attack also hurts the primary target's four cardinal neighbours (the target tile is
+  // excluded; the normal hit remains the primary target's own damage event).
+  cardinalSplash: () => ({
+    hitOut(c, b, e) {
+      const t = c.target;
+      if (!c.dmg.isAttack || !t) return;
+      for (const u of areaAlliesInTiles(b, e, t.tileR, t.tileC, 'plus', 1)) if (u !== t) hurt(b, e, u, e.s.atk, c.dmg.type, { tags: ['splash'] });
+    },
+  }),
+  // Defender-4: a silence-aware DEF aura on every other enemy in range, refreshed each half-second.
+  enemyDefAura: ({ def, r }) => enemyAura(r, 'ab:defup', { defFlat: def }),
+  // "When blocked, significantly reduces the blocker's ASPD": keep one owned flat-ASPD buff on the current blocker.
+  blockerAspdDown: ({ aspd }) => ({
+    spawn(b, e, a) { a.target = null; },
+    tick(b, e, a) {
+      const target = e.blockedBy ?? null;
+      if (target === a.target) return;
+      if (a.target) b.removeBuff(a.target, 'ab:blockerAspdDown');
+      a.target = target;
+      if (target && aspd) b.addBuff(target, { key: 'ab:blockerAspdDown', persist: true, mods: { aspd }, visible: true });
+    },
+    death(c, b, e, a) { if (a.target) b.removeBuff(a.target, 'ab:blockerAspdDown'); },
   }),
   // Physical dodge `prob` while not blocked (the engine's dodgePhys, toggled each tick).
   dodgeUnblocked: ({ prob }) => ({ tick(b, e, a) {
@@ -893,7 +963,7 @@ const deathSpawn = (key, cnt, extra = {}) => ({
  * Death explosion on the allies within r it can select (areaAllies — PRTS 高能源石虫 / 冰爆源石虫 / 卷心籽 死亡爆炸 "…无视迷彩，
  * 不可对空", no 无视无法选择: a 隐匿 ally is spared; the dead enemy blocks nobody).
  */
-const deathBoom = ({ scale, type = 'phys', r = BOOM_RADIUS, status = null, sil = true, cond = null }) => ({
+const deathBoom = ({ scale, type = 'phys', r = BOOM_RADIUS, status = null, element = null, epRatio = 0, sil = true, cond = null }) => ({
   sil,
   death(c, b, e, a) {
     if (c.reason !== 'killed' || (cond && !cond(e, a))) return;
@@ -901,8 +971,19 @@ const deathBoom = ({ scale, type = 'phys', r = BOOM_RADIUS, status = null, sil =
     b.fx('explode', { x: e.x, y: e.y, r, kind: 'deathBoom', id: e.id });
     for (const u of areaAllies(b, e, e.x, e.y, r)) {
       if (scale > 0) hurt(b, e, u, atk * scale, type);
+      if (element && epRatio > 0 && u.alive) elem(b, e, u, element, atk * epRatio);
       if (status && u.alive) b.applyStatus(u, status.key, { duration: status.dur, source: e, value: status.value });
     }
+  },
+});
+
+/** A delayed split ("Splits into N <X> upon death"): the children follow the dead parent's remaining route. */
+const deathSpawnDelayed = ({ key, cnt, delay = 0 }) => ({
+  death(c, b, e) {
+    if (c.reason !== 'killed' || !key || !(cnt > 0)) return;
+    const route = remainingRoute(e);
+    const spawn = () => spawnChildren(b, e, key, cnt, { route });
+    if (delay > 0) b.after(delay, spawn); else spawn();
   },
 });
 

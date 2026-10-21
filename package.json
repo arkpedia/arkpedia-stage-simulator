@@ -37,7 +37,9 @@
     "build:arkpedia-data": "node tools/arkpedia/build-mvp.mjs --refresh",
     "coverage:arkpedia": "node tools/arkpedia/coverage.mjs",
     "audit:arkpedia-behaviors": "node tools/arkpedia/behavior-audit.mjs",
-    "test:arkpedia": "node --test test/arkpedia-*.test.js"
+    "test:arkpedia": "node --test test/arkpedia-*.test.js",
+    "check:arkpedia-enemies": "node tools/arkpedia/enemy-support.mjs --check",
+    "check:arkpedia-stages": "node tools/arkpedia/stage-index.mjs --check"
   },
   "engines": {
     "node": ">=22"

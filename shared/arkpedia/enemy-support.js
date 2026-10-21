@@ -41,8 +41,8 @@ export function enemySupport(entry, prefabs, evidence = {}) {
     const f = enemyFeature(id), using = levels.filter(r => recordFeatureIds(r).includes(id));
     // A handbook line with no feature of its own is explained by a cleared talent feature of the same record.
     const explained = !f && id.startsWith('ability:') && using.every(r => recordFeatureIds(r).some(t => {
-      const tf = t.startsWith('talent:') && enemyFeature(t);
-      return tf?.explains?.test(id.slice('ability:'.length)) && covers(tf, r);
+      const tf = enemyFeature(t), explains = tf?.explains, text = id.slice('ability:'.length);
+      return explains && (typeof explains === 'function' ? explains(text, r) : explains.test(text)) && covers(tf, r);
     }));
     if ((f && using.every(r => covers(f, r))) || explained) features.push(id); else reasons.push(id);
     if (f?.dependsOn) for (const r of using) for (const key of f.dependsOn(r)) deps.add(key);
@@ -51,9 +51,16 @@ export function enemySupport(entry, prefabs, evidence = {}) {
   for (const key of new Set(levels.map(r => r.prefabKey))) {
     const p = prefabs[prefabPath(key)];
     if (!p) { reasons.push(`prefab-missing:${key}`); continue; }
-    const counts = prefabAbilityCounts(p); native[key] = { hierarchySha256: p.hierarchySha256, ...counts };
-    if (counts.enemyAbilityWrappers) reasons.push(`native-ability-wrappers:${key}`);
-    if (counts.activeGeneralOrCommonAbilities) reasons.push(`native-abilities:${key}`);
+    const counts = prefabAbilityCounts(p), nat = nativeComponents(evidence, key);
+    // A reviewed feature may claim the exact native wrapper/ability component(s) it implements.
+    let claimedWrappers = 0, claimedActive = 0;
+    for (const id of features) {
+      const claim = enemyFeature(id)?.nativeClaim?.(p, nat);
+      claimedWrappers += claim?.wrappers ?? 0; claimedActive += claim?.active ?? 0;
+    }
+    native[key] = { hierarchySha256: p.hierarchySha256, ...counts, claimedWrappers, claimedActive };
+    if (counts.enemyAbilityWrappers > claimedWrappers) reasons.push(`native-ability-wrappers:${key}`);
+    if (counts.activeGeneralOrCommonAbilities > claimedActive) reasons.push(`native-abilities:${key}`);
   }
   return { policy: reasons.length ? null : features.length ? 'stats-attacks-and-features' : 'basic-stats-and-attacks', reasons, features, spawns: [...deps].sort(), native, levels: levels.map(r => r.level) };
 }

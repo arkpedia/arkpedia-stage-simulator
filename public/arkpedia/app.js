@@ -21,6 +21,7 @@ import { flowingShapeDeck, FlowingShapeCopyInteraction } from './muelsyse-copy.j
 import { summonUnitId } from "/shared/arkpedia/summons.js";
 import { regularSummonCards, selectedRegularSummon, summonPlacementError,
   deployRegularSummon, retreatRegularSummon } from "/sim/content/arkpedia-summons.js";
+import { applyStage } from "/shared/arkpedia/stages.js";
 const escape = (s) =>
   String(s).replace(
     /[&<>"']/g,
@@ -50,9 +51,29 @@ let loading = false,
   landscapeRequired = false;
 let operatorTab = "skill";
 let copyFlow = null;
-const response = await fetch("/data/arkpedia-mvp.json");
-if (!response.ok) throw Error("Stage data unavailable");
+const [response, stageResponse] = await Promise.all([
+  fetch("/data/arkpedia-mvp.json"),
+  fetch("/data/arkpedia-stages.json"),
+]);
+if (!response.ok || !stageResponse.ok) throw Error("Stage data unavailable");
 const data = await response.json();
+const stageIndex = await stageResponse.json();
+const query = new URLSearchParams(location.search);
+const experimental = query.get("experimental") === "1";
+const requested = query.get("stage");
+const stageHref = stage => `/arkpedia/?stage=${encodeURIComponent(stage.id)}${experimental ? '&experimental=1' : ''}`;
+let activeStage;
+try {
+  ({ entry: activeStage } = await applyStage(data, stageIndex, requested, fetch, { experimental }));
+} catch (error) {
+  const available = (error.stages ?? stageIndex.stages.filter(stage => !stage.testOnly) ?? []).map(stage =>
+    `<a href="${stageHref(stage)}">${escape(stage.code)} ${escape(stage.name)}</a>`).join(', ');
+  const hint = error.code === 'STAGE_TEST_ONLY'
+    ? `This stage is test-only. <a href="/arkpedia/?experimental=1&stage=${encodeURIComponent(error.stage.id)}">Open it in the developer QA view</a>. `
+    : '';
+  app.innerHTML = `<div class="frame"><h1>Stage not supported yet</h1><p class="notice">${hint}Available stages: ${available || 'none'}.</p><a href="/arkpedia/">Open ${escape(stageIndex.defaultStage)}</a></div>`;
+  throw error;
+}
 const catalogue = catalogueFor(data);
 const ops = Object.values(data.operators);
 const rarityFolder = (op) => ["one", "two", "three", "four", "five", "six"][op.rarity - 1];
@@ -120,17 +141,15 @@ const chosen = new Set(ops.slice(0, 5).map((o) => o.id));
 let editing = ops[0].id,
   supportId = "",
   rosterQuery = "";
-const requested = new URLSearchParams(location.search).get("stage");
-if (requested && requested !== "0-1") {
-  app.innerHTML =
-    '<div class="frame"><h1>Stage not supported yet</h1><p class="notice">This MVP supports 0-1 Collapse. Additional stages need validated combat mechanics before they can be simulated.</p><a href="/arkpedia/">Open 0-1</a></div>';
-  throw Error("Unsupported stage selection");
-}
 function prep() {
-  app.innerHTML = `<div class="frame"><header class="topline"><div><p class="eyebrow">Arkpedia · prototype</p><h1>Stage simulator</h1></div><span class="muted">0-1 Collapse</span></header>
- <div class="prep"><section class="preview"><div class="stage-title"><span class="stage-code">0-1</span><h2>Collapse</h2></div><p class="help">${escape(data.stage.description)}</p><div class="board" id="board"></div><div class="legend"><span class="spawn">Enemy entry</span><span class="goal">Defence objective</span><span>Raised tiles: ranged operators</span></div>
+  const stages = stageIndex.stages.filter(stage => !stage.testOnly || experimental);
+  const stagePicker = stages.length > 1
+    ? `<nav class="stage-picker" aria-label="Stages">${stages.map(stage => `<a href="${stageHref(stage)}"${stage.id === activeStage.id ? ' aria-current="page"' : ''}>${escape(stage.code)} ${escape(stage.name)}${stage.testOnly ? ' · test' : ''}</a>`).join('')}</nav>`
+    : '';
+  app.innerHTML = `<div class="frame"><header class="topline"><div><p class="eyebrow">Arkpedia · prototype</p><h1>Stage simulator</h1></div><span class="muted">${escape(data.stage.code)} ${escape(data.stage.name)}</span></header>
+ <div class="prep">${stagePicker}<section class="preview"><div class="stage-title"><span class="stage-code">${escape(data.stage.code)}</span><h2>${escape(data.stage.name)}</h2></div><p class="help">${escape(data.stage.description)}</p><div class="board" id="board"></div><div class="legend"><span class="spawn">Enemy entry</span><span class="goal">Defence objective</span><span>Raised tiles: ranged operators</span></div>
  <div class="panel help"><h3>How to play</h3><p>Choose your squad, then open the battle workspace. On mobile, rotate to landscape for battle. Drag an operator onto a tile, then choose its facing on the map. You can also select the operator and click a tile. Select a deployed operator to activate a ready skill or retreat.</p></div>
- <p class="notice">This first slice supports 0-1 and the ${ops.length} operators shown. Squad capacity is 12 + one distinct maxed support. Modules, other stages and the rest of the roster are still being built.</p></section>
+ <p class="notice">This first slice supports ${escape(data.stage.code)} and the ${ops.length} operators shown. Squad capacity is 12 + one distinct maxed support. Modules, other stages and the rest of the roster are still being built.</p></section>
  <section class="panel"><h2>Prepare your squad</h2><p class="help">Select an operator to adjust their build.</p><label class="roster-search">Find an operator<input id="roster-search" type="search" placeholder="Name or class" value="${escape(rosterQuery)}" autocomplete="off" aria-controls="roster"></label><div class="roster" id="roster" aria-label="Available operators"><p class="roster-empty" hidden>No operators match this search.</p></div><div id="build"></div><label class="support">Support · optional, fully maxed<select id="support"><option value="">No support</option></select></label><div id="support-build"></div><div class="prepare-actions"><button class="primary" id="start">Open battle workspace</button></div><p class="error" id="prep-error" role="status" aria-live="polite"></p></section></div>
  <footer>Built on Stronghold Protocol · GPL-3.0-or-later. Unofficial fan simulator; timings are not yet verified frame-for-frame against the game.<div class="links"><a href="https://github.com/arkpedia/arkpedia-stage-simulator" target="_blank" rel="noreferrer">Simulator source</a><a href="https://github.com/arkpedia/arkpedia-sd-assets" target="_blank" rel="noreferrer">Chibi assets & credits</a></div></footer></div>`;
   renderer = new StageRenderer(

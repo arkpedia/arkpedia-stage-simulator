@@ -5,6 +5,8 @@ import support from '../data/arkpedia-enemy-support.json' with { type: 'json' };
 import { ENEMY_FEATURES, recordFeatureIds } from '../shared/arkpedia/enemy-features.js';
 import { enemyStealthed } from '../server/sim/targeting.js';
 import { spawnAny, ENEMY_RECORDS } from './helpers/enemyHarness.js';
+import { makeBattle, chessRec } from './helpers/battleHarness.js';
+import { installEnemyFeatures } from '../server/sim/content/arkpedia-enemy-features.js';
 
 const enemy = (h, key) => h.b.units.find(u => u.side === 'enemy' && u.defId === key);
 const usedBy = id => Object.entries(support.enemies).filter(([, e]) => e.features?.includes(id)).map(([k]) => k);
@@ -84,6 +86,138 @@ test('DeadSpawn: killed, it spawns its supported children', () => {
   for (let i = 0; i < 400 && e.alive; i++) { h.b.dealDamage(null, e, { amount: 1e9, type: 'true', sourceless: true }); h.step(); }
   h.run(0.5); assert.equal(h.b.units.filter(u => u.side === 'enemy' && u.defId === child).length, r.talents.bb[`${g}.cnt`]);
 });
+test('death blast: its reviewed physical explosion hits nearby allies', () => {
+  const key = 'enemy_1021_bslime', r = ENEMY_RECORDS.enemies[key].levels[0];
+  assert.ok(support.enemies[key].features.includes('talent:boom'));
+  const h = spawnAny(key, { seconds: 0.1 }), e = enemy(h, key), guard = h.b.units.find(u => u.side === 'ally');
+  e.x = guard.x; e.y = guard.y;
+  let hit = null; h.b.on('damaged', c => { if (c.source === e && c.target === guard) hit = c; });
+  const hp = guard.hp; h.b.dealDamage(null, e, { amount: 1e9, type: 'true', sourceless: true }); h.run(0.05);
+  assert.equal(e.alive, false); assert.ok(hit, 'the explosion dealt damage'); assert.equal(hit.dmg.type, 'phys');
+  assert.equal(hit.dmg.amount, e.s.atk * r.talents.bb['boom.atk_scale']); assert.ok(guard.hp < hp);
+});
+test('cold death blast: it applies the reviewed Cold duration', () => {
+  const key = 'enemy_1067_snslime', r = ENEMY_RECORDS.enemies[key].levels[0];
+  const h = spawnAny(key, { seconds: 0.1 }), e = enemy(h, key), guard = h.b.units.find(u => u.side === 'ally');
+  e.x = guard.x; e.y = guard.y;
+  h.b.dealDamage(null, e, { amount: 1e9, type: 'true', sourceless: true }); h.run(0.05);
+  const cold = guard.buffs.find(b => b.status === 'cold');
+  assert.ok(cold, 'Cold applied'); assert.equal(cold.duration, r.talents.bb['boom.freeze']);
+});
+test('elemental death blast: it deals the named element at the reviewed ratio', () => {
+  const key = 'enemy_2012_csbln', r = ENEMY_RECORDS.enemies[key].levels[0];
+  const h = spawnAny(key, { seconds: 0.1 }), e = enemy(h, key), guard = h.b.units.find(u => u.side === 'ally');
+  e.x = guard.x; e.y = guard.y;
+  const elements = []; h.b.on('damaged', c => { if (c.source === e && c.target === guard && c.dmg.type === 'element') elements.push(c.dmg); });
+  h.b.dealDamage(null, e, { amount: 1e9, type: 'true', sourceless: true }); h.run(0.05);
+  assert.equal(elements.length, 1); assert.equal(elements[0].element, 'neural');
+  assert.equal(elements[0].amount, e.s.atk * r.talents.bb['boom.ep_damage_ratio']);
+});
+test('split on death: the children spawn after the reviewed delay on the parent route', () => {
+  const key = 'enemy_1130_infstr', r = ENEMY_RECORDS.enemies[key].levels[0], child = r.talents.bbStr['deathrattle.enemy_key'];
+  assert.ok(support.enemies[child].policy, 'the child is supported');
+  const h = spawnAny(key, { seconds: 0.1 }), e = enemy(h, key); h.b.autoFinish = false;
+  h.b.dealDamage(null, e, { amount: 1e9, type: 'true', sourceless: true }); h.run(0.05);
+  assert.equal(h.b.units.filter(u => u.side === 'enemy' && u.defId === child).length, 0, 'nothing before the delay');
+  h.run(r.talents.bb['deathrattle.delay'] + 0.2);
+  assert.equal(h.b.units.filter(u => u.side === 'enemy' && u.defId === child).length, r.talents.bb['deathrattle.cnt']);
+});
+test('atkSpeedDown: the blocker loses the reviewed ASPD while it stays blocked, and gets it back', () => {
+  const key = 'enemy_1138_tumor', r = ENEMY_RECORDS.enemies[key].levels[0], h = spawnAny(key, { seconds: 0.1 }), e = enemy(h, key);
+  const guard = h.b.units.find(u => u.side === 'ally'), base = guard.s.aspd;
+  h.runUntil(() => !e.alive || e.blockedBy, 120); h.run(0.1);
+  assert.ok(e.blockedBy, 'the guard blocks it'); assert.equal(guard.s.aspd, base + r.talents.bb['atkSpeedDown.attack_speed'] * 100);
+  h.b.dealDamage(null, e, { amount: 1e9, type: 'true', sourceless: true }); h.run(0.1);
+  assert.equal(guard.s.aspd, base, 'the debuff ends with its source');
+});
+test('Senior Caster: the normal attack splashes the four cardinal neighbours of its target', () => {
+  const key = 'enemy_1018_aoemag', rec = ENEMY_RECORDS.enemies[key].levels[0];
+  const a = chessRec({ id: 'splash_a', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 0 } });
+  const b = chessRec({ id: 'splash_b', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 0 } });
+  const h = makeBattle({ defs: { enemies: { [key]: rec }, chess: { [a.chessId]: a, [b.chessId]: b } },
+    units: [{ chessId: a.chessId, row: 9, col: 6 }, { chessId: b.chessId, row: 9, col: 7 }],
+    enemies: [{ key, time: 0, route: 0 }], content: 'none', autoFinish: false, timeLimit: 30,
+    setup: battle => installEnemyFeatures(battle) });
+  const hits = { [a.chessId]: 0, [b.chessId]: 0 }; let splash = 0;
+  h.b.on('damaged', c => { if (c.source?.defId !== key || c.target.side !== 'ally') return; hits[c.target.defId]++; if (c.dmg.tags?.includes('splash')) splash++; });
+  h.runUntil(() => hits[a.chessId] > 0 && hits[b.chessId] > 0, 20);
+  assert.ok(hits[a.chessId] > 0 && hits[b.chessId] > 0, 'both adjacent guards took damage');
+  assert.ok(splash > 0, 'the second guard was hit by the cardinal splash');
+});
+test('Defender-4: other enemies in range gain the reviewed DEF aura', () => {
+  const key = 'enemy_1017_defdrn', base = ENEMY_RECORDS.enemies[key].levels[0].stats.def, h = spawnAny(key, { seconds: 0.1, units: [] });
+  h.b.autoFinish = false;
+  const first = enemy(h, key), second = h.b.spawnEnemy(key, { pos: [first.y, Math.max(0, first.x - 1)] });
+  h.run(0.8);
+  assert.ok(first.s.def >= base + 300, `${first.s.def}`); assert.ok(second.s.def >= base + 300, `${second.s.def}`);
+});
+test('Skullshatterer grenade: a 5 s DEF multiplier on the target and its cardinal neighbours', () => {
+  const key = 'enemy_1500_skulsr', rec = ENEMY_RECORDS.enemies[key].levels[0], pct = rec.talents.bb['defdown.def'];
+  const a = chessRec({ id: 'grenade_a', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 300 } });
+  const b = chessRec({ id: 'grenade_b', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 300 } });
+  const h = makeBattle({ defs: { enemies: { [key]: rec }, chess: { [a.chessId]: a, [b.chessId]: b } },
+    units: [{ chessId: a.chessId, row: 9, col: 6 }, { chessId: b.chessId, row: 9, col: 7 }],
+    enemies: [{ key, time: 0, route: 0 }], content: 'none', autoFinish: false, timeLimit: 40,
+    setup: battle => installEnemyFeatures(battle) });
+  const guards = h.b.units.filter(u => u.side === 'ally'), base = guards.map(g => g.s.def);
+  h.runUntil(() => guards.every(g => g.findBuff('ab:defdownGrenade')), 25);
+  for (let i = 0; i < guards.length; i++) {
+    assert.ok(guards[i].findBuff('ab:defdownGrenade'), `${guards[i].defId} has the grenade debuff`);
+    assert.ok(Math.abs(guards[i].s.def - base[i] * (1 + pct)) < 1, `${guards[i].defId}: ${guards[i].s.def} vs ${base[i] * (1 + pct)}`);
+  }
+  const enemy = h.b.units.find(u => u.side === 'enemy' && u.defId === key);
+  h.b.dealDamage(null, enemy, { amount: 1e9, type: 'true', sourceless: true }); h.run(5.5);
+  for (let i = 0; i < guards.length; i++) { assert.equal(guards[i].findBuff('ab:defdownGrenade'), null); assert.equal(guards[i].s.def, base[i]); }
+});
+test('Crownslayer: the reviewed Blink wrapper is claimed and blinks past its blocker', () => {
+  const key = 'enemy_1502_crowns', rec = ENEMY_RECORDS.enemies[key].levels[0];
+  const evidence = support.enemies[key].native[rec.prefabKey];
+  assert.ok(support.enemies[key].policy, 'supported'); assert.equal(evidence.claimedWrappers, 1);
+  assert.ok(support.enemies[key].features.includes('skill:blink'));
+  const guard = chessRec({ id: 'crown_guard', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 300 } });
+  const h = makeBattle({ defs: { enemies: { [key]: rec }, chess: { [guard.chessId]: guard } },
+    units: [{ chessId: guard.chessId, row: 9, col: 6 }], enemies: [{ key, time: 0, route: 0 }],
+    content: 'none', autoFinish: false, timeLimit: 40, setup: battle => installEnemyFeatures(battle) });
+  h.run(20);
+  assert.ok(h.eventsOf('fx').some(event => event[1] === 'blink'), 'the blink fired');
+  assert.deepEqual(h.b.errors, []);
+});
+test('Reborn Creation: 90% Physical/Arts reduction and +1 Block for its blocker', () => {
+  const key = 'enemy_1220_dzoms', h = spawnAny(key, { seconds: 0.1 }), e = enemy(h, key);
+  const guard = h.b.units.find(u => u.side === 'ally'), baseBlock = guard.s.blockCnt;
+  h.runUntil(() => !e.alive || e.blockedBy, 20); h.run(0.3);
+  assert.ok(e.blockedBy, 'the creation is blocked'); assert.equal(guard.s.blockCnt, baseBlock + 1);
+  const hp = e.hp; h.b.dealDamage(null, e, { amount: 1000, type: 'phys', sourceless: true }); h.run(0.05);
+  assert.ok(hp - e.hp <= 100, `1000 physical was reduced to ${hp - e.hp}`);
+});
+test('Reborn Creation: a first death spawns the reviewed child after the delay', () => {
+  const key = 'enemy_1222_dpvt', child = 'enemy_1220_dzoms', h = spawnAny(key, { seconds: 0.1 });
+  assert.ok(support.enemies[child].policy, 'the child is supported');
+  h.b.autoFinish = false;
+  const e = enemy(h, key), delay = ENEMY_RECORDS.enemies[key].levels[0].talents.bb['deathrattle.delay'];
+  h.b.dealDamage(null, e, { amount: 1e9, type: 'true', sourceless: true }); h.run(delay + 0.3);
+  assert.equal(h.b.units.filter(u => u.side === 'enemy' && u.defId === child).length, 1);
+});
+test('vampire: up to three targets and healing from the damage actually dealt', () => {
+  const key = 'enemy_1114_rgrdmn', rec = ENEMY_RECORDS.enemies[key].levels[0];
+  const guard = chessRec({ id: 'vampire_guard', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 300 } });
+  const h = makeBattle({ defs: { enemies: { [key]: rec }, chess: { [guard.chessId]: guard } },
+    units: [{ chessId: guard.chessId, row: 9, col: 6 }], enemies: [{ key, time: 0, route: 0 }],
+    content: 'none', autoFinish: false, timeLimit: 30, setup: battle => installEnemyFeatures(battle) });
+  h.run(0.05);
+  const e = h.b.units.find(u => u.side === 'enemy' && u.defId === key);
+  assert.equal(e.profile.maxTargets, 3);
+  e.hp = e.s.maxHp * 0.5; const before = e.hp;
+  h.run(12);
+  assert.ok(e.hp > before, `${before} -> ${e.hp}`);
+});
+test('Drains 1 Life Point: the engine leak drains the record stat', () => {
+  const key = 'enemy_1137_plasm';
+  assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');
+  const h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
+  let leaked = null; h.b.on('enemyLeak', c => { leaked = c.enemy; });
+  h.b.leak(e); assert.equal(leaked, e); assert.equal(e.lpr, e.def.raw.stats.lpr);
+});
 test('Must be damaged N times: it takes exactly N hits', () => {
   const key = 'enemy_1196_msfyin', n = ENEMY_RECORDS.enemies[key].levels[0].stats.maxHp, h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
   for (let i = 0; i < n - 1; i++) h.b.dealDamage(null, e, { amount: 1e6, type: 'phys', sourceless: true });
@@ -116,7 +250,8 @@ test('taunt: the talent taunt level makes it more likely to be targeted', () => 
 test('defdown: every attack hit adds one permanent, uncapped stack of the talent DEF to the operator hit', () => {
   const key = 'enemy_1004_mslime', r = ENEMY_RECORDS.enemies[key].levels[0], def = r.talents.bb['defdown.def'];
   assert.ok(support.enemies[key].features.includes('talent:defdown'));
-  assert.equal(support.enemies.enemy_1500_skulsr.policy, null, 'the grenade DEF-down component is a different feature');
+  assert.ok(support.enemies.enemy_1500_skulsr.policy, 'the grenade component has its own reviewed branch');
+  assert.ok(support.enemies.enemy_1500_skulsr.features.includes('talent:defdown'));
   const h = spawnAny(key, { seconds: 0.1 }), guard = h.b.units.find(u => u.side === 'ally'), base = guard.s.def;
   let hits = 0; h.b.on('damaged', c => { if (c.source?.defId === key && c.target === guard && c.dmg.type !== 'element') hits++; });
   h.runUntil(() => hits >= 3, 120); assert.ok(hits >= 3, `${hits} hits`);

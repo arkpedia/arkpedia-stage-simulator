@@ -11,6 +11,9 @@ npm run start:arkpedia
 npm run test:arkpedia
 ```
 
+The maintainer workflow for adding an enemy, a stage or an operator is in
+[docs/ADDING-CONTENT.md](docs/ADDING-CONTENT.md).
+
 This entry needs no upstream release archive or full game-art download. `npm ci` copies the bundled Three.js, Pixi and Spine browser dependencies. The browser downloads 0-1's original stage art, the chosen squad's Front/Back models and this stage's enemies from a pinned `arkpedia-sd-assets` commit. The inherited `npm start` still opens the original Stronghold application.
 
 Full source-identity tests read original skeleton bytes from the sibling SD directory. `node tools/arkpedia/test-assets.mjs` prepares every snapshot-referenced skeleton from its immutable SD commit and verifies its size/hash, including existing files; changed files fail rather than being overwritten. This small test dependency is separate from full texture/scenery/browser validation. CI runs the preparation before the complete suite and allows 90 minutes per Linux/Windows and Node 22/24 matrix entry. Snapshot replacement retries bounded transient Windows rename locks while preserving atomic visibility; it never deletes the old target to work around a lock.
@@ -4916,3 +4919,263 @@ The feature runtime (`server/sim/content/arkpedia-enemy-features.js`) applies th
 - **Explained handbook lines.** A talent family declares the handbook lines it explains (for example "Will gradually lose HP over time"). A line with no feature of its own counts as covered only when a cleared talent of the same record explains it.
 - **Spawn dependencies.** An enemy that spawns another is supported only when the child is too. `REGULAR_ENEMY_SPAWNS` makes a stage ship the children's records, and the harness supplies them.
 - **Coverage.** Support rises to 207 of 1,552 enemies. Each family and pattern has a harness test on a real enemy.
+
+### Retained native evidence and reviewed components (E4, 2026-10-21)
+
+The native timing index is no longer the only retained evidence: `tools/arkpedia/extract-enemy-native-abilities.py` writes `data/arkpedia-enemy-native-abilities.json` with the original component JSON, object names, referenced components and buff templates that a reviewed feature reads. `shared/arkpedia/enemy-support.js` only accepts it when the source index hash and every component digest match (`verifiedNative`), so a changed prefab cannot silently keep an approval.
+
+- **DefDown**: every attack hit adds one permanent, uncapped stack of `defdown.def` to the operator hit, proven against the original active-buff component (DEF addition, no duration, no stack cap).
+- **Enhance**: each enemy-side death anywhere on the field grants one permanent stack of ATK and ASPD up to `enhance.max_stack_cnt`, proven against the original whole-field target validator and `ON_OWNER_KILLED` template.
+- **Coverage.** Support rises to 231 of 1,552 enemies. The native-evidence hash checks are part of the support test.
+
+### Death blasts, splits and the leak line (E5, 2026-10-21)
+
+Three more regular-stage families attach through the same registry; no new per-enemy id list is involved.
+
+- **`boom` death blast**: the reviewed handbook lines name Physical, Cold or Nervous-Impairment damage. `atk_scale` is the explosion multiplier, `freeze` the Cold duration and `ep_damage_ratio` the elemental rider. `deathBoom` now also applies the named element, and the battle selection rules stay the documented area/stealth/air rules.
+- **`deathrattle` split**: "Splits into N <X> upon death" spawns `cnt` children after `delay` s on the parent's remaining route (`deathSpawnDelayed`), spread across the parent tile. The child is a normal spawn dependency, so the parent is supported only when the child is.
+- **Leak line**: "Drains 1 Life Point when entering the Objective Point" only restates `lpr`, which the engine already applies on a leak.
+- **Explained lines.** A feature may now explain a handbook line with a predicate as well as a regular expression, so variants such as "Death deals…" and "Deals … upon death" share one family.
+- **Coverage.** Support rises to 243 of 1,552 enemies. The 12 new admits are both Infused Originium Slugs, both Infused Glacial Originium Slugs, both slug variants (their records use the same reviewed group and match the base slugs' stats), the Surprise Sponsor Drone, the neural 'Small Surprise' and the Originiutant split family. Tests exercise the physical, Cold and elemental blasts, the delayed split and the leak line on real enemies.
+
+### Blocker ASPD and the tumor split (E6, 2026-10-21)
+
+- **`atkSpeedDown`**: "When blocked, significantly reduces the blocker's ASPD" is a flat ASPD delta on the current blocker (the reviewed value is scaled by 100, matching the existing frost aura). The buff is owned by the enemy, moves with a new blocker and ends with its source.
+- **Coverage.** Support rises to 246 of 1,552 enemies: the Originiutant Tumor and the two split variants that produce it. The test blocks a real tumor, checks the exact ASPD delta and verifies the debuff ends when the source dies.
+
+### Stage catalogue (S1, 2026-10-21)
+
+The client no longer hard-codes 0-1 as the only selectable stage.
+
+- **Catalogue.** `data/arkpedia-stages.json` names the default and every stage: id, display code/name/description, and either an embedded stage (`data: null`, the current 0-1 slice) or a separate JSON file. The global 25 MB payload keeps the shared operator/enemy/effect data; a new stage should use the file-backed shape so it stays small.
+- **Selection.** `shared/arkpedia/stages.js` validates the catalogue, resolves `?stage=` (defaulting to the catalogue default), fetches a file-backed stage, and installs it as `data.stage`. The battle and renderer still consume the same `data.stage` contract, so no stage consumer needs a branch.
+- **UI.** The prep header and title read the installed stage, and a picker appears when the catalogue has more than one stage. An unknown `?stage=` lists the available stages instead of guessing.
+- **Guardrails.** A file-backed stage must contain `geometry`; an embedded entry must match the global stage's code; every named data file must be committed. Tests cover default/explicit selection, the unknown-stage path, file replacement and the embedded mismatch.
+
+### Sequential stage waves (S2, 2026-10-21)
+
+`stageAdapter` no longer refuses a stage with more than one wave and no longer reads only `waves[0]`. It applies the public stage-playback rule: a wave's `pre_delay` is measured from the end of the previous wave, `duration + post_delay` advance the cursor, each spawn time is relative to its own wave, and `interval` spaces the count. Spawns are sorted by absolute time.
+
+The fixed-squad guard was also ineffective: `suppliedUnits` is an object (`{fixed_squad, deployable_tokens}`), so the old `.length` check was always undefined. It now counts both lists, and the new test refuses a fixed squad, conditional spawns and an oversized grid. A second test pins the exact absolute times of a two-wave schedule.
+
+### First file-backed stage data, 0-2 (S3, 2026-10-21, test-only)
+
+`tools/arkpedia/build-stage.mjs` builds one stage file from the public stage/geometry sources and a stage-browser route export. It refuses a route export that does not match the geometry, runs the same `stageAdapter` and supported-enemy gate as 0-1, and records `art: null` / `gates: null` so the renderer falls back to its labelled simplified map.
+
+`data/arkpedia-stage-0-2.json` is the first output: 6×10, three sequential waves, 14 spawns, the same two supported enemies as 0-1. It is **not in `data/arkpedia-stages.json`** yet: the owner's rule is that a new playable stage stays test-only until its simplified-art build and battle are reviewed. Tests pin its wave times and step a real `StandardBattle` through the first 30 seconds with no engine errors. When 0-2 is reviewed, adding it to the public simulator is one catalogue entry.
+
+### Early main-stage data, 0-2 through 0-11 (S4, 2026-10-21, test-only)
+
+The same builder produced the rest of the Prologue, so all twelve 0-x stages now have data (0-1 stays embedded). Each file carries its own source geometry, route export, waves and the exact compiled enemy records it spawns:
+
+| Stage | Grid | Waves | Spawns | Enemies |
+|---|---|---|---|---|
+| 0-2 Protection | 6×10 | 3 | 14 | Originium Slug, Soldier |
+| 0-3 | 6×10 | 1 | 23 | Originium Slug, Soldier, Monster |
+| 0-4 | 7×10 | 2 | 24 | Originium Slug, Monster, Rioter |
+| 0-5 | 7×10 | 1 | 24 | Originium Slug, Hound, Monster, Rioter |
+| 0-6 | 7×10 | 1 | 31 | Hound, Originium Slug, Rioter, Monster |
+| 0-7 | 7×10 | 1 | 20 | Originium Slug, Shielded Soldier, Soldier |
+| 0-8 | 7×8 | 1 | 40 | Originium Slug, Soldier |
+| 0-9 | 7×8 | 1 | 64 | Originium Slug, Shielded Soldier, Soldier |
+| 0-10 | 9×13 | 1 | 35 | Hound, Junkman, Rioter, Originium Slug, Monster |
+| 0-11 | 8×10 | 3 | 37 | Originium Slug, Hound, Soldier, Originium Slug α, Shielded Soldier, Junkman |
+
+None is in `data/arkpedia-stages.json` yet: they remain test-only until the simplified-art build and battle are reviewed. `test/arkpedia-stage-files.test.js` discovers every `data/arkpedia-stage-*.json`, checks the code, the supported-enemy records, the sequential schedule, catalogue loading and a real 10-second battle. Adding a reviewed stage to the public simulator is one catalogue entry; adding a new stage file is one builder command.
+
+### Chapter 1 subset (S5, 2026-10-21, test-only)
+
+The builder also accepts the Chapter 1 stages whose enemies are already supported and whose mechanics the regular-stage adapter models:
+
+| Stage | Grid | Waves | Spawns | Enemies |
+|---|---|---|---|---|
+| 1-1 | 7×9 | 1 | 33 | Hound Pro, Hound, Originium Slug α, Rioter, Cocktail Thrower, Junkman |
+| 1-3 | 7×11 | 1 | 36 | Junkman, Originium Slug, Shielded Soldier, Soldier, Hound, Cocktail Thrower |
+| 1-4 | 7×11 | 1 | 39 | Originium Slug α, Rioter, Monster, Soldier, Shielded Soldier, Cocktail Thrower, Junkman |
+| 1-5 | 8×11 | 2 | 57 | Rioter, Originium Slug α, Hound, Monster, Soldier, Cocktail Thrower |
+| 1-7 | 7×11 | 1 | 41 | Originium Slug α, Rioter, Soldier, Cocktail Thrower, Shielded Soldier, Junkman |
+| 1-9 | 8×10 | 1 | 35 | Soldier, Hound, Cocktail Thrower, Junkman |
+| 1-10 | 8×10 | 1 | 49 | Soldier, Originium Slug, Originium Slug α, Cocktail Thrower, Hound, Shielded Soldier, Junkman |
+
+- **Refused, correctly.** 1-2 and 1-6 carry a fixed squad or deployable tokens; 1-8, 1-11 and 1-12 use Crownslayer, W, Dual Swordsman or Firebomb Thrower, which are not supported enemies. They are not silently approximated.
+- **Coverage.** 0-1 plus 17 test-only files: the complete Prologue and seven Chapter 1 stages. All are exercised by the generic stage test; none is in the public catalogue yet.
+
+### Chapter 2 subset (S6, 2026-10-21, test-only)
+
+| Stage | Grid | Waves | Spawns | Enemies |
+|---|---|---|---|---|
+| 2-1 | 7×11 | 1 | 50 | Heavy Defender, Hound, Originium Slug α, Rioter, Soldier, Shielded Soldier, Cocktail Thrower |
+| 2-2 | 7×11 | 1 | 51 | Heavy Defender, Hound, Originium Slug α, Rioter, Rioter Leader, Cocktail Thrower, Shielded Soldier, Crossbowman |
+| 2-6 | 8×11 | 1 | 54 | Rioter, Crossbowman, Crossbowman Leader, Hound, Caster, Junkman, Airborne Soldier |
+
+2-3 is refused for its deployable Roadblocks, 2-4/2-5 for Senior Caster and Dual Swordsman, 2-7/2-8 for Defender-4/Metal Crab, and 2-9/2-10 for their bosses and mode units. Coverage is now 0-1 plus 20 test-only files across Chapters 0–2.
+
+### Chapters 3–4 subset (S7, 2026-10-21, test-only)
+
+| Stage | Grid | Waves | Spawns | Enemies |
+|---|---|---|---|---|
+| 3-1 | 7×11 | 2 | 83 | Originium Slug α, Hound Pro, Crossbowman, Crossbowman Leader, Lurker, Rabid Hound Pro, Caster, Originium Slug β, Monster Mk II, Logger |
+| 3-2 | 8×11 | 1 | 67 | Hound Pro, Originium Slug α, Originium Slug β, Rioter Leader, Lurker, Crossbowman Leader, Junkman, Shielded Soldier |
+| 3-4 | 8×10 | 2 | 75 | Dual Swordsman, Originium Slug α, Invisible Crossbowman, Monster Mk II, Originium Slug β, Butcher, Logger, Sarkaz Centurion |
+| 3-6 | 7×9 | 3 | 39 | Invisible Caster, Lurker, Butcher, Rabid Hound Pro, Veteran Butcher |
+| 4-1 | 7×10 | 1 | 64 | Soldier, Hound Pro, Monster, Rabid Hound Pro, Sarkaz Greatswordsman, Crossbowman Leader, Caster Leader |
+| 4-2 | 7×10 | 1 | 35 | Soldier, Sarkaz Greatswordsman, Caster Leader, Rabid Hound Pro, Crossbowman Leader |
+| 4-3 | 7×11 | 2 | 53 | Sarkaz Greatswordsman, Rabid Hound Pro, Soldier, Light-Armored Soldier Leader, Sarkaz Crossbowman, Armed Militant, Butcher |
+| 4-5 | 8×11 | 1 | 40 | Rabid Hound Pro, Dual Swordsman Leader, Sarkaz Greatswordsman, Arts Guard, Butcher, Sarkaz Crossbowman |
+| 4-6 | 7×10 | 2 | 55 | Soldier, Rioter Leader, Firebomb Thrower, Monster Mk II, Arts Guard, Sarkaz Crossbowman, Sarkaz Greatswordsman, Infused Originium Slug |
+| 4-7 | 7×11 | 1 | 59 | Infused Originium Slug, Soldier, Monster Mk II, Caster Leader, Butcher, Sarkaz Greatswordsman, Sarkaz Crossbowman |
+
+Refused here for unsupported content: 3-3/4-4 (Crownslayer), 3-5 (Senior Caster), 3-7 (Mortar Gunner), 3-8 (Skullshatterer), 4-8/4-9 (Sarkaz Caster), 4-10 (FrostNova). Coverage is 0-1 plus 30 test-only files across Chapters 0–4.
+
+### Stage-owned enemy levels and overrides (S8, 2026-10-21)
+
+A stage file must not reuse the database level-0 stats when its level file says otherwise. `build-stage.mjs` now reads each stage's `enemyConfigurations`:
+
+- `database_level` selects the compiled catalogue level (4-1, 4-6 and 4-7 use level 1 for Soldier, Monster and the Caster variant).
+- `overrides` applies the level file's owned attributes (`hp`, `atk`, `def`, `res`, `move_speed`, `attack_interval`, `attack_speed`, `weight`, `range`, `life_cost`, `taunt`, elemental resistances) to the record's stats. This restores, for example, 0-2/0-3's Soldier DEF 30 instead of the database's 100.
+
+The generic stage test now asserts the level and every applied override, so a rebuilt stage cannot silently drift back to the database defaults. All 30 test-only files were regenerated with this rule.
+
+### Chapters 5–10 and S2 (S9, 2026-10-21, test-only)
+
+The supported-enemy scan found 51 main stages; 20 more are buildable after the Prologue–4 set:
+
+| Stage | Grid | Waves | Spawns | Enemies |
+|---|---|---|---|---|
+| 5-1 | 7×11 | 1 | 43 | Spec Ops Caster, Spec Ops Soldier, Logger, Breaker |
+| 5-2 | 8×12 | 1 | 51 | Spec Ops Soldier, Breaker, Spec Ops Caster, Rabid Hound Pro, Veteran Logger |
+| 5-3 | 7×12 | 1 | 52 | Spec Ops Caster Leader, Breaker, Breaker Leader, Spec Ops Caster, Veteran Logger |
+| 5-8 | 8×12 | 1 | 53 | Spec Ops Soldier, Breaker, Possessed Soldier, Junkman, Veteran Butcher |
+| 5-9 | 8×11 | 1 | 51 | Spec Ops Soldier, Junkman, Spec Ops Caster, Possessed Junkman |
+| 6-1 | 7×11 | 1 | 46 | Spec Ops Soldier, Spec Ops Caster, Possessed Soldier Leader, Possessed Junkman, Possessed Heavy Defender, Possessed Soldier |
+| 6-2 | 8×11 | 1 | 55 | Spec Ops Soldier, Spec Ops Caster, Possessed Soldier, Enraged Possessed Soldier, Possessed Soldier Leader |
+| 6-3 | 7×11 | 1 | 26 | Possessed Soldier, Spec Ops Caster, Enraged Possessed Soldier |
+| 6-5 | 7×10 | 1 | 42 | Enraged Possessed Thrower, Possessed Soldier, Possessed Heavy Defender, Enraged Possessed Soldier, Enraged Possessed Bonethrower, Enraged Possessed Leader |
+| 9-2 | 8×11 | 1 | 43 | Dublinn Sniper, Dublinn Sniffer Hound, Dublinn Scout |
+| 9-3 | 8×10 | 1 | 45 | Dublinn Sniper, Dublinn Sniffer Hound, Dublinn Scout, Dublinn Heavy Defender |
+| S2-1 | 7×11 | 1 | 25 | Heavy Defender, Soldier, Cocktail Thrower, Rioter Leader, Logger |
+| S2-2 | 7×11 | 1 | 45 | Monster, Junkman, Hound Pro, Dual Swordsman, Logger |
+| S2-8 | 7×9 | 1 | 36 | Hound Pro, Monster, Rioter Leader, Shielded Soldier, Firebomb Thrower, Dual Swordsman Leader, Metal Crab |
+
+Refused for mechanics rather than enemies: 6-4, 7-3, 9-4 and 10-2 use route tunnels; 7-2 is missing a viewer path for route 3; 1-2, 1-6, 2-3 and other fixed-squad/token stages still need those stage mechanics. Coverage is **0-1 plus 44 test-only files** across Chapters 0–10 and S2.
+
+### Cardinal splash and a DEF aura (E7, 2026-10-21)
+
+- **Senior Caster**: its normal ranged attack also deals its normal damage type at ATK to the primary target's four cardinal neighbours (the target tile itself is excluded). The new `cardinalSplash` uses the shared area selection, so stealth/air/targetability rules stay the documented ones.
+- **Defender-4**: "Increases the DEF of surrounding enemy units" is a silence-aware DEF aura within `defup.range_radius`, refreshed like the other enemy auras. The record's `defup.def` is the flat value.
+- **Coverage.** Support rises to 250 of 1,552 enemies: Senior Caster, Shielded Senior Caster and Defender-4. The Senior Caster test places two adjacent guards and proves the second was hit by the splash; the Defender-4 test proves both nearby enemies gained the exact DEF.
+
+### Stages unlocked by E7 (S10, 2026-10-21, test-only)
+
+Senior Caster was the only unsupported enemy in ten stages and Defender-4 in three more:
+
+| Stage | Grid | Waves | Spawns | Enemies |
+|---|---|---|---|---|
+| 2-4 | 7×9 | 1 | 26 | Senior Caster, Soldier, Crossbowman, Dual Swordsman, Shielded Soldier, Caster |
+| 2-5 | 8×10 | 1 | 40 | Senior Caster, Hound Pro, Soldier, Crossbowman, Dual Swordsman, Dual Swordsman Leader, Logger |
+| 2-7 | 8×11 | 1 | 58 | Rioter, Airborne Soldier, Dual Swordsman, Defender-4, Junkman, Crossbowman, Caster, Monster |
+| 2-8 | 7×11 | 2 | 54 | Soldier, Rioter Leader, Defender-4, Metal Crab, Firebomb Thrower, Monster, Logger, Airborne Soldier |
+| 2-9 | 7×11 | 1 | 52 | Monster, Airborne Soldier, Defender-4, Monster Mk II, Airborne Soldier Leader |
+| 3-5 | 8×11 | 1 | 64 | Invisible Caster, Lurker, Hound Pro, Invisible Crossbowman, Dual Swordsman Leader, Monster Mk II, Butcher, Logger, Senior Caster, Monster |
+| S2-5 | 7×9 | 1 | 31 | Senior Caster, Rioter, Crossbowman, Dual Swordsman, Caster, Logger |
+| S2-6 | 7×11 | 1 | 40 | Rioter, Hound Pro, Logger, Caster, Senior Caster, Junkman |
+| S2-7 | 7×11 | 1 | 32 | Senior Caster, Hound, Rioter, Junkman, Caster |
+| S2-9 | 7×9 | 1 | 32 | Rioter Leader, Metal Crab, Hound Pro, Caster Leader, Monster, Dual Swordsman Leader, Senior Caster |
+| S2-10 | 8×11 | 1 | 41 | Rioter, Senior Caster, Shielded Soldier, Junkman, Caster, Dual Swordsman |
+| S2-11 | 8×11 | 1 | 48 | Rioter, Shielded Soldier, Cocktail Thrower, Senior Caster, Junkman, Firebomb Thrower, Rioter Leader, Caster |
+| S2-12 | 7×9 | 1 | 48 | Soldier, Monster, Dual Swordsman Leader, Light-Armored Soldier, Caster, Senior Caster, Monster Mk II |
+
+Coverage is **0-1 plus 57 test-only files**; every one is loaded through the catalogue and fought for ten seconds by the generic stage test.
+
+### CI pushes stay off feature branches (S11, 2026-10-21)
+
+The CI workflow now runs on `push` only to `master`; feature branches run when they have a pull request (plus `workflow_dispatch`). This removes the duplicate push+PR pair that previously started eight jobs per branch and left a cancelled duplicate check on the PR. The runner guard still enforces GitHub-hosted images for every job.
+
+### Skullshatterer's grenade and the hp_ratio ATK buff (E8, 2026-10-21)
+
+- **Grenade DEF-down**: the retained `skulsr_attack` native component is a one-stack, 5-second DEF multiplier (`defdown.def`, −0.5) on the target family. The reviewed branch applies it to the target and its four cardinal neighbours only while the caster is unblocked; the acid-slime branch keeps its permanent stacking flat DEF.
+- **`atkup` with `hp_ratio`**: the low-HP ATK family now accepts both `['atk']` and `['atk','hp_ratio']`, reading the threshold from the record instead of assuming 50%.
+- **Coverage.** Support rises to 251 of 1,552 enemies. The grenade test checks both adjacent guards, the exact DEF multiplier, and expiry five seconds after the source dies. 3-8 itself still cannot be built because its viewer export is missing route 0; the enemy is supported independently of that stage file.
+
+### Developer QA view and the generated stage catalogue (S12, 2026-10-21)
+
+`tools/arkpedia/stage-index.mjs` keeps `data/arkpedia-stages.json` in step with the stage files. Curated entries (the embedded 0-1, and any reviewed file-backed stage with no `testOnly`) are preserved; every other `data/arkpedia-stage-*.json` becomes a `testOnly` entry. `--check` fails when the catalogue is stale, and the stage-catalogue test runs the generator against the committed file.
+
+`?experimental=1` opens the developer QA view: the stage picker lists all 58 entries (test-only ones marked “· test”), and an explicit test-only `?stage=` is accepted. Without the flag the public picker still shows only 0-1, and a test-only selection fails with a link to the QA view. The data and the loader remain the same; this is a review surface, not a public release. A headless Chrome pass opened 0-2 (three waves), 0-11, 3-1, 4-7 (stage-level enemy override), 5-8, 9-3 and S2-12 through the QA view: each rendered its code/name, the picker listed all 58 entries, and no page errors were reported.
+
+### Claimed native wrappers and Crownslayer (E9, 2026-10-21)
+
+The support gate can now distinguish an unreviewed native ability wrapper from one a feature has explicitly implemented. A feature may declare `nativeClaim(prefab, components)` returning the number of wrappers/active general-or-common abilities it covers; `enemySupport` subtracts those claims and records them as `claimedWrappers` / `claimedActive` in the native evidence. An unclaimed wrapper still refuses the enemy.
+
+Crownslayer is the first user. The retained `Blink` pair is one EnemyAbility wrapper (familyMask 2, default init cooldown, no cast-like attack) plus its Blink ability (wait-for-attack event, no selector, one 1-second buff with abnormalFlags [3]). The `skill:blink` feature matches that exact shape, claims exactly one wrapper, and runs the reviewed `blinkForward` on the skill's 15-second cooldown when blocked. Silence stops it. Support rises to **252 of 1,552** enemies; the harness proves the blink fires and the wrapper claim is recorded.
+
+### Unused viewer routes and the first boss stage (S13, 2026-10-21, test-only)
+
+`stageAdapter` no longer demands a viewer path for a route that no wave spawns on. The stage browser legitimately omits an unused route, and the battle never walks it; a missing path for a used route is still refused. The new test pins both sides.
+
+This unlocked three more test-only files:
+
+| Stage | Grid | Waves | Spawns | Notes |
+|---|---|---|---|---|
+| 1-8 | 7×11 | 1 | 46 | Crownslayer, the first boss admitted through the E9 wrapper claim |
+| 3-8 | 8×11 | 1 | 63 | Skullshatterer; its unused route 0 had no viewer path |
+| 7-2 | 8×10 | 1 | 51 | its unused route 3 had no viewer path |
+
+Coverage is **0-1 plus 60 test-only files** across Chapters 0–10 and S2.
+
+### Reborn Creations (E10, 2026-10-21)
+
+The Sarkaz Heirbearer family now has its reviewed creation mechanics:
+
+- **`talent:dmg_res`**: the retained `damage_resistance` template is a Physical/Arts multiplier (`1 - dmg_res.damage_resistance`), applied with the persistent `enemy_bloodsucker_mark` identity buff from the active common ability.
+- **`talent:buff_to_blocker`**: the current blocker gains `buff_to_blocker.block_cnt` Block (up to `max_valid_stack_cnt`) through the reviewed `enemy_bloodsucker_block_cnt[control]` template; each creation owns and removes its buff.
+- **`talent:deathrattle`** now also covers "Will be reborn as … after falling in battle for the first time": one child after the review delay, with the same spawn dependency.
+- **Native claim.** The active bloodsucker marker is claimed (`claimedActive: 1`) only when the complete `dmg_res` + block template + marker shape matches.
+
+Support rises to **258 of 1,552** enemies. Tests cover the 90% reduction, the blocker's +1 Block, and the delayed reborn child.
+
+### Reborn-Creation stages (S14, 2026-10-21, test-only)
+
+The Reborn Creation and first-death reborn work unlocked the two 10-4 variants:
+
+| Stage | Grid | Waves | Spawns | Notes |
+|---|---|---|---|---|
+| 10-4 | 8×11 | 1 | 59 | Sarkaz Heirbearer Warrior and its Reborn Creation |
+| 10-4 adverse environment | 8×11 | 1 | 59 | the same stage under its adverse-environment variant |
+
+10-3 and 10-3 adverse still use a route tunnel and stay refused. The stage-file test now accepts an id/code difference for adverse-environment variants, which share the base stage code.
+
+Coverage is **0-1 plus 62 test-only files**.
+
+### Viewer tunnels (S15, 2026-10-21, test-only)
+
+A stage-browser route break is a tunnel, not a wall: the enemy disappears at the entrance point, waits the reviewed tunnel hold and appears at the first point after the break. `stageAdapter` now converts each break plus its matching `tunnel` hold into the engine's existing `DISAPPEAR` → `WAIT` → `APPEAR` legs instead of refusing the stage. A break without its hold, or a tunnel hold without its break, is still refused.
+
+Seven more files are buildable:
+
+| Stage | Grid | Waves | Spawns |
+|---|---|---|---|
+| 6-4 | 8×10 | 1 | 55 |
+| 7-3 | 8×11 | 1 | 47 |
+| 9-4 | 8×11 | 1 | 49 |
+| 10-2 | 7×11 | 1 | 53 |
+| 10-2 adverse environment | 7×11 | 1 | 53 |
+| 10-3 | 7×11 | 1 | 39 |
+| 10-3 adverse environment | 7×11 | 1 | 39 |
+
+The test pins the DISAPPEAR/WAIT/APPEAR order and runs 6-4 through the tunnel for 40 seconds without engine errors. Coverage is **0-1 plus 69 test-only files**.
+
+### Vampire attacks (E11, 2026-10-21)
+
+The reviewed `vampire` talent comes in two signatures: `attack@max_target + heal_scale` (Sarkaz Centurion Host, three targets) and `heal_scale` alone (Bloodthirsty Heir, one target). Both now attack up to the recorded target count and heal `heal_scale ×` the post-mitigation damage of every accepted ordinary hit. A handbook line naming the same target count is explained by the same feature, so the multi-target line and the heal line share one approval.
+
+Support rises to **262 of 1,552** enemies. The test checks the three-target profile and an actual HP gain after the enemy deals damage.
+
+### Vampire-stage files (S16, 2026-10-21, test-only)
+
+| Stage | Grid | Waves | Spawns | Notes |
+|---|---|---|---|---|
+| M8-6 | 8×12 | 1 | 77 | Sarkaz Centurion Host and its three-target lifesteal |
+| M8-7 | 8×11 | 1 | 48 | the same host family |
+
+Coverage is **0-1 plus 71 test-only files**.

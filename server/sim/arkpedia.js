@@ -264,13 +264,9 @@ import {
 
 export function stageAdapter(source) {
   const g = source.geometry;
-  if (
-    g.rows > 19 ||
-    g.cols > 21 ||
-    g.hasConditionalSpawns ||
-    g.waves.length !== 1 ||
-    g.suppliedUnits.length
-  )
+  const supplied = Array.isArray(g.suppliedUnits) ? g.suppliedUnits.length
+    : (g.suppliedUnits?.fixed_squad?.length || 0) + (g.suppliedUnits?.deployable_tokens?.length || 0);
+  if (g.rows > 19 || g.cols > 21 || g.hasConditionalSpawns || supplied)
     throw new Error("Unsupported stage mechanics");
   const chars = ["#", "h", "r", "S", "E"];
   const legend = Object.fromEntries(
@@ -285,24 +281,44 @@ export function stageAdapter(source) {
     ]),
   );
   const pair = (p) => [p.row, p.col];
+  // A route no wave spawns on never has to walk, so a viewer export may omit it. Only refuse a missing path
+  // for a route the stage actually uses.
+  const usedRoutes = new Set(g.waves.flatMap(wave => (wave.spawns || []).map(spawn => spawn.route)));
   const routes = g.routes.map((route, index) => {
     if (route.placeholder)
       return { start: [0, 0], end: [0, 0], checkpoints: [] };
     const path = source.pathing?.paths?.[index];
+    if (!path && !usedRoutes.has(index))
+      return { motion: route.motion, start: pair(route.start), end: pair(route.end), checkpoints: [] };
     if (path) {
-      if (path.breaks.length || path.holds.some((h) => h.tunnel))
-        throw new Error("Unsupported route tunnel");
+      // A viewer break is a tunnel: disappear at the entrance point, wait the reviewed tunnel hold, then
+      // appear at the first point after the break. The engine's DISAPPEAR/APPEAR legs already hide and teleport.
+      const tunnels = new Map();
+      for (const at of path.breaks) {
+        const hold = path.holds.find((h) => h.tunnel && h.at === path.distances[at - 1]);
+        if (!hold) throw new Error("Unsupported route tunnel");
+        tunnels.set(at, hold);
+      }
+      for (const hold of path.holds.filter((h) => h.tunnel)) {
+        const at = path.distances.findIndex((distance) => distance === hold.at) + 1;
+        if (!tunnels.has(at)) throw new Error("Unsupported route tunnel");
+      }
       const checkpoints = [];
       path.points.forEach(([col, row], at) => {
-        if (at > 0) checkpoints.push({ type: "MOVE", pos: [row, col] });
+        if (at > 0) checkpoints.push(tunnels.has(at) ? { type: "APPEAR", pos: [row, col] } : { type: "MOVE", pos: [row, col] });
         for (const hold of path.holds.filter(
-          (h) => h.at === path.distances[at],
+          (h) => h.at === path.distances[at] && !h.tunnel,
         ))
           checkpoints.push({
             type: "WAIT",
             pos: [row, col],
             time: hold.seconds,
           });
+        const tunnel = path.holds.find((h) => h.tunnel && h.at === path.distances[at]);
+        if (tunnel && tunnels.get(at + 1) === tunnel) {
+          checkpoints.push({ type: "DISAPPEAR" });
+          checkpoints.push({ type: "WAIT", pos: [row, col], time: tunnel.seconds });
+        }
       });
       return {
         motion: route.motion,
@@ -313,14 +329,22 @@ export function stageAdapter(source) {
     }
     throw new Error("Missing stage viewer path for route " + index);
   });
-  const spawns = g.waves[0].spawns.flatMap((s) =>
-    Array.from({ length: s.count }, (_, i) => ({
-      enemyKey: s.enemy_id,
-      time: s.time + i * (s.interval ?? 0),
-      routeIndex: s.route,
-      ownerPlayerId: "arkpedia",
-    })),
-  );
+  // Waves run in sequence: a wave's pre_delay is measured from the END of the previous wave, and
+  // each spawn's time is measured from the start of its own wave (Arkpedia stage playback).
+  let cursor = 0;
+  const spawns = g.waves.flatMap((wave) => {
+    const waveStart = cursor + (wave.pre_delay || 0);
+    const out = (wave.spawns || []).flatMap((s) =>
+      Array.from({ length: Math.max(1, s.count || 1) }, (_, i) => ({
+        enemyKey: s.enemy_id,
+        time: waveStart + (s.time || 0) + i * (s.interval || 0),
+        routeIndex: s.route,
+        ownerPlayerId: "arkpedia",
+      })),
+    );
+    cursor = waveStart + (wave.duration || 0) + (wave.post_delay || 0);
+    return out;
+  }).sort((a, b) => a.time - b.time);
   return {
     stage: {
       id: source.code,
