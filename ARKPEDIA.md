@@ -5438,3 +5438,7 @@ The Sarkaz Wither Vanguard's ordinary attack changes to Arts while its tile key 
 ### Active Originium Storm (E33, 2026-10-21)
 
 The stale `StormAura` native component is now retained. Its record drives a one-second storm tick: radius grows by `radius_step` to `max_radius`, damage grows by `damage_step` to `max_damage`, allies inside take Arts damage and receive a short `spRecoveryMul = 1 + sp_recover_ratio` buff. The reviewed passive claims one native active ability. Support rises to **319 of 1,552** enemies. The test waits for a storm hit on the guard.
+
+### 14-2 stages (S46, 2026-10-21)
+
+With the Wither Vanguard pollution Arts and the Active Originium Storm both supported, **14-2** and **14-2 adverse environment** build (8×11, 46 spawns, 6 enemies) and join the public catalogue. Coverage is **116 public stages** (0-1 plus 115 files). The coverage report now classifies the built total automatically.
