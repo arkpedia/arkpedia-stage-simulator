@@ -5233,3 +5233,7 @@ The `epdamage` talent now covers both its simple and chain signatures. The chain
 ### Frost stage (S20, 2026-10-21, test-only)
 
 **6-11** (7×11, 79 spawns) is built now that Frost's aura is supported. Coverage is **0-1 plus 83 test-only files**.
+
+### The ASV's Reborn-Creation support aura (E16, 2026-10-21)
+
+`talent:aura` now has a second reviewed branch. The Sarkaz Heirbearer ASV grants every bloodsucker-marked Reborn Creation +10% ATK (one contribution per living ASV, up to the reviewed five-stack cap) and adds Necrosis (`aura.ep_damage_ratio`, 0.1 × the creation's ATK) to their ordinary attacks. One battle listener tracks the living ASV sources; the ATK buff and element stop when the last ASV leaves. The Hatedrinker self-buff branch is unchanged. Support rises to **278 of 1,552** enemies. The test checks the +10% creation ATK and the Necrosis event from the creation's own attack.

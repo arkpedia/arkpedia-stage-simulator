@@ -333,8 +333,31 @@ export const featureAbilities = Object.freeze({
       b.addBuff(e, { key: 'ab:enhance', refresh: 'stack', stacks: 1, maxStacks: max, persist: true, visible: true, mods: { atkPct: atk, aspd } });
     },
   }),
-  // Hatedrinker: count living Reborn Creations (the bloodsucker marker) every half second and keep one ATK buff.
-  rebornAtkAura: ({ atk, max }) => ({
+  // Reborn-Creation auras: Hatedrinker counts marked creations and buffs itself; the ASV buffs every marked creation
+  // and adds Necrosis to their ordinary attacks (one battle listener, sources tracked by the live ASVs).
+  aura: ({ mode, atk, max, ep }) => mode === 'asv' ? ({
+    spawn(b, e) {
+      b.asvAura ??= { sources: new Map(), bound: false };
+      b.asvAura.sources.set(e, ep);
+      if (!b.asvAura.bound) {
+        b.asvAura.bound = true;
+        b.on('damaged', c => {
+          const sources = b.asvAura?.sources;
+          if (!sources?.size || !c.source?.findBuff?.('ab:bloodsuckerMark') || c.target?.side !== 'ally'
+            || !c.dmg?.isAttack || !(c.hpLoss > 0)) return;
+          elem(b, c.source, c.target, 'apoptosis', c.source.s.atk * Math.max(...sources.values()));
+        });
+      }
+    },
+    tick(b, e) {
+      for (const u of b.units) if (u.side === 'enemy' && u.alive && u.findBuff?.('ab:bloodsuckerMark'))
+        b.addBuff(u, { key: `ab:asvAtk:${e.id}`, persist: true, visible: true, mods: { atkPct: atk } });
+    },
+    death(c, b, e) {
+      b.asvAura?.sources.delete(e);
+      for (const u of b.units) b.removeBuff(u, `ab:asvAtk:${e.id}`);
+    },
+  }) : ({
     spawn(b, e, a) { a.n = -1; },
     tick(b, e, a) {
       const n = Math.min(max, b.units.filter(u => u.side === 'enemy' && u.alive && u.findBuff?.('ab:bloodsuckerMark')).length);

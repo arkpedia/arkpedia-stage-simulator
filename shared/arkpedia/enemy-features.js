@@ -159,6 +159,16 @@ function isAllyDeathEnhance(r, nat) {
     && make.overrideType === 'STACK' && make.lifeTimeType === 'INFINITY' && make.maxStackCnt === r.talents.bb['enhance.max_stack_cnt'];
 }
 
+/** The ASV's dynamic aura keys: aura.<template>[attr_buff].atk + max_valid_stack_cnt + aura.ep_damage_ratio. */
+function asvAura(r) {
+  const bb = r.talents.bb, maxKey = Object.keys(bb).find(k => /^aura\..*max_valid_stack_cnt$/.test(k));
+  if (!maxKey) return null;
+  const prefix = maxKey.slice(0, -'max_valid_stack_cnt'.length);
+  return { atk: bb[`${prefix}atk`], max: bb[maxKey], ep: bb['aura.ep_damage_ratio'] };
+}
+const ASV_TEXT = 'While in battle, Reborn Creations have increased ATK, and their attacks will additionally deal <$ba.dt.apoptosis>Necrosis damage</>';
+const HATEDRINKER_TEXT = 'Gains increased ATK for each Reborn Creation on the battlefield';
+
 export const ENEMY_FEATURES = Object.freeze({
   // Handbook lines restating what the record's stats already model.
   'ability:Flying unit.': { covers: r => r.stats.motion === 'FLY', note: 'motion FLY' },
@@ -224,12 +234,15 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
-  // Hatedrinker: ATK increases for each Reborn Creation on the battlefield (the bloodsucker marker), capped by the
-  // talent's max_valid_stack_cnt. The aura tag is the group name; the effect is a self-buff.
-  'talent:aura': { covers: r => sig(r, 'aura', ['atk', 'max_valid_stack_cnt'])
-      && r.abilities.some(a => a.text === 'Gains increased ATK for each Reborn Creation on the battlefield'),
-    ability: { kind: 'rebornAtkAura', params: r => ({ atk: r.talents.bb['aura.atk'], max: r.talents.bb['aura.max_valid_stack_cnt'] }) },
-    note: 'ATK +atk per Reborn Creation on the field, capped', explains: /^Gains increased ATK for each Reborn Creation on the battlefield$/ },
+  // Reborn-Creation auras. Hatedrinker buffs itself per creation; the ASV buffs the creations and makes their
+  // attacks add Necrosis. Both read the bloodsucker marker from E10.
+  'talent:aura': {
+    covers: r => r.abilities.some(a => a.text === ASV_TEXT) ? !!asvAura(r)
+      : sig(r, 'aura', ['atk', 'max_valid_stack_cnt']) && r.abilities.some(a => a.text === HATEDRINKER_TEXT),
+    ability: { kind: 'aura', params: r => r.abilities.some(a => a.text === ASV_TEXT)
+      ? { mode: 'asv', ...asvAura(r) }
+      : { mode: 'rebornAtk', atk: r.talents.bb['aura.atk'], max: r.talents.bb['aura.max_valid_stack_cnt'] } },
+    note: 'Hatedrinker self ATK per creation, or ASV creation ATK + Necrosis', explains: text => text === HATEDRINKER_TEXT || text === ASV_TEXT },
   // 吸血 (vampire): attacks up to max_target and heals heal_scale × the damage actually dealt. The single-target
   // signature omits max_target; the record then keeps the engine's one target.
   ...familyAny(['vampire'], [['attack@max_target', 'heal_scale'], ['heal_scale']], g => ({ kind: 'vampireOnHit', params: r => ({

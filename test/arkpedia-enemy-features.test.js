@@ -255,6 +255,20 @@ test('Frost: the ally aura reduces ASPD by the reviewed amount', () => {
   assert.ok(guard.findBuff('ab:frost'), 'the aura reached the guard');
   assert.equal(guard.s.aspd, base - 50);
 });
+test('ASV: Reborn Creations gain the ATK aura and their attacks add Necrosis', () => {
+  const asv = 'enemy_1224_dsuply', creation = 'enemy_1220_dzoms';
+  const guard = chessRec({ id: 'asv_guard', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 0 } });
+  const h = makeBattle({ defs: { enemies: { [asv]: ENEMY_RECORDS.enemies[asv].levels[0], [creation]: ENEMY_RECORDS.enemies[creation].levels[0] },
+      chess: { [guard.chessId]: guard } }, units: [{ chessId: guard.chessId, row: 9, col: 6 }],
+    enemies: [{ key: asv, time: 0, route: 0 }, { key: creation, time: 0, route: 0 }],
+    content: 'none', autoFinish: false, timeLimit: 40, setup: battle => installEnemyFeatures(battle) });
+  const c = () => h.b.units.find(u => u.side === 'enemy' && u.defId === creation);
+  h.run(0.8); const base = ENEMY_RECORDS.enemies[creation].levels[0].stats.atk;
+  assert.ok(Math.abs(c().s.atk - base * 1.1) < 1, `${c().s.atk} vs ${base * 1.1}`);
+  let element = false; h.b.on('damaged', e => { if (e.source === c() && e.dmg.type === 'element') element = true; });
+  h.runUntil(() => element, 30);
+  assert.ok(element, 'the creation attack applied Necrosis');
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');
