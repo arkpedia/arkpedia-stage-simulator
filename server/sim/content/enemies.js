@@ -345,6 +345,11 @@ export const featureAbilities = Object.freeze({
     },
   }),
   moveSpeedBonus: ({ mul }) => ({ spawn(b, e) { b.addBuff(e, { key: 'ab:moveSpeed', persist: true, visible: true, mods: { moveMul: mul } }); } }),
+  // Sarkaz Caster: every attack is a 0.35x Arts lasso that stuns for 20 s.
+  lasso: ({ scale, duration }) => ({
+    hitOut(c, b, e) { if (c.dmg.isAttack) { c.dmg.amount = e.s.atk * scale; c.dmg.type = 'arts'; } },
+    dealt(c, b, e) { if (c.dmg?.isAttack && c.target) b.applyStatus(c.target, 'stun', { duration, source: e }); },
+  }),
   // 1321: drop three Seeds of Withering every cooldown seconds, starting after init.
   seedSummoner: ({ key, count, cooldown, init }) => ({
     spawn(b, e, a) { a.next = b.time + init; },

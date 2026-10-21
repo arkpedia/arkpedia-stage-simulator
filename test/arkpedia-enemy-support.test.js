@@ -15,10 +15,11 @@ test('enemy support is derived from the committed catalogue and native timing in
 test('retained native ability components must hash to the timing index entries they name', () => {
   const sha = nativeEvidence.source.sha256, pin = mvp.behaviors.source, ok = verifiedNative(nativeEvidence, clockIndex.prefabs, sha, pin);
   assert.ok(Object.values(ok.prefabs).flat().length > 0);
-  const [path, [first]] = Object.entries(nativeEvidence.prefabs)[0];
+  const [path, rows0] = Object.entries(nativeEvidence.prefabs).find(([, rows]) => rows.some(c => c.originalJson.includes('"maxStackCnt":-1')));
+  const first = rows0.find(c => c.originalJson.includes('"maxStackCnt":-1'));
   const tampered = { ...nativeEvidence, prefabs: { [path]: [{ ...first, originalJson: first.originalJson.replace('"maxStackCnt":-1', '"maxStackCnt":5') }] } };
   assert.throws(() => verifiedNative(tampered, clockIndex.prefabs, sha, pin), /does not match the timing index/);
-  const [rpath, rows] = Object.entries(nativeEvidence.prefabs).find(([, v]) => v.some(c => c.referenced)), ref = rows.find(c => c.referenced);
+  const [rpath, rows] = Object.entries(nativeEvidence.prefabs).find(([, v]) => v.some(c => c.referenced && c.originalJson.includes('"targetSide":1'))), ref = rows.find(c => c.referenced && c.originalJson.includes('"targetSide":1'));
   const refTampered = { ...nativeEvidence, prefabs: { [rpath]: [{ ...ref, originalJson: ref.originalJson.replace('"targetSide":1', '"targetSide":2') }] } };
   assert.throws(() => verifiedNative(refTampered, clockIndex.prefabs, sha, pin), /does not match the timing index/);
   assert.throws(() => verifiedNative(nativeEvidence, clockIndex.prefabs, '0'.repeat(64), pin), /another timing index/);

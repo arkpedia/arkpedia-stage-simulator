@@ -5546,3 +5546,7 @@ The `1321` family drops three Seeds of Withering every 10 seconds, starting 10 s
 ### 12-17, 12-18 and 12-19 (S65, 2026-10-21)
 
 With the `1321` Seed summoner supported, **12-17**, **12-18** and **12-19** build (7×12–8×12, 15–31 spawns). Coverage is **135 public stages** (0-1 plus 134 files).
+
+### Sarkaz Caster lasso (E44, 2026-10-21)
+
+The reviewed Lasso wrapper/ability is retained. Every attack is a 0.35x Arts lasso that stuns its target for the skill's 20-second `hit_duration`; the wrapper is claimed. Support rises to **344 of 1,552** enemies. The evidence-tamper test now selects components that actually contain its tamper strings, so adding new retained components cannot make it vacuous.

@@ -509,6 +509,13 @@ test('1321: the BornBugs summoner drops Seeds of Withering', () => {
   h.b.on('enemySpawn', ({ enemy }) => { if (enemy.defId === 'enemy_1269_nhfly') seeds.push(enemy); });
   h.run(11); assert.ok(seeds.length >= 1, 'at least one seed spawned');
 });
+test('Sarkaz Caster lasso: the attack is 0.35x Arts and stuns for 20 s', () => {
+  const key = 'enemy_1022_dmage', h = spawnAny(key, { seconds: 0.1 }), e = enemy(h, key), guard = h.b.units.find(u => u.side === 'ally');
+  let hit = null; h.b.on('damaged', c => { if (c.source?.defId === key && c.target === guard) hit = c; });
+  h.runUntil(() => hit, 25);
+  assert.ok(hit); assert.equal(hit.dmg.type, 'arts'); assert.equal(hit.dmg.amount, e.s.atk * 0.35);
+  const stun = guard.buffs.find(b => b.status === 'stun'); assert.ok(stun); assert.equal(stun.duration, 20);
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

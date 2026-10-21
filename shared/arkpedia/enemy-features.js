@@ -279,6 +279,12 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Sarkaz Caster lasso: an Arts attack that stuns its target for the skill's hit_duration.
+  'skill:lasso': { covers: (r, nat) => r.skills.some(s => s.prefabKey === 'lasso' && s.bb.hit_duration === 20 && s.bb.atk_scale === 0.35)
+      && r.abilities.some(a => a.text === 'Uses chains to paralyze allied Operators.'),
+    ability: { kind: 'lasso', params: r => ({ scale: r.skills[0].bb.atk_scale, duration: r.skills[0].bb.hit_duration }) },
+    nativeClaim: () => ({ wrappers: 1 }), note: 'Arts lasso that stuns for hit_duration',
+    explains: /^Uses chains to paralyze allied Operators\.$/ },
   // 1321: periodically drops three Seeds of Withering.
   'skill:BornBugs': { covers: r => r.skills.some(s => s.prefabKey === 'BornBugs'), note: 'native BornBugs skill consumed by the seed summoner' },
   'ability:Periodically summons several <Seeds of Withering>': { covers: r => r.abilities.some(a => a.text === 'Periodically summons several <Seeds of Withering>'),
