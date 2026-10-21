@@ -5434,3 +5434,7 @@ The remaining fifty test-only stages passed the same supported-enemy, geometry, 
 ### Wither Vanguard pollution Arts (E32, 2026-10-21)
 
 The Sarkaz Wither Vanguard's ordinary attack changes to Arts while its tile key contains `toxic` (`tile_toxic`/`tile_toxicroad`). Support rises to **318 of 1,552** enemies. The test calls the attack hook on a toxic and a normal tile.
+
+### Active Originium Storm (E33, 2026-10-21)
+
+The stale `StormAura` native component is now retained. Its record drives a one-second storm tick: radius grows by `radius_step` to `max_radius`, damage grows by `damage_step` to `max_damage`, allies inside take Arts damage and receive a short `spRecoveryMul = 1 + sp_recover_ratio` buff. The reviewed passive claims one native active ability. Support rises to **319 of 1,552** enemies. The test waits for a storm hit on the guard.

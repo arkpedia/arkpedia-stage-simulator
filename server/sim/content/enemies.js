@@ -344,6 +344,21 @@ export const featureAbilities = Object.freeze({
       b.addBuff(e, { key: 'ab:enhance', refresh: 'stack', stacks: 1, maxStacks: max, persist: true, visible: true, mods: { atkPct: atk, aspd } });
     },
   }),
+  // Active Originium Storm: every second the storm grows and damages the allies inside it.
+  stormAura: ({ damage, damageStep, maxDamage, radius, radiusStep, maxRadius, spRatio }) => ({
+    spawn(b, e, a) { a.t = 0; a.r = radius; a.d = damage; },
+    tick(b, e, a, dt) {
+      a.t += dt;
+      if (a.t < 1) return;
+      a.t -= 1;
+      a.r = Math.min(maxRadius, a.r + radiusStep);
+      a.d = Math.min(maxDamage, a.d + damageStep);
+      for (const u of b.alliesInRadius(e.x, e.y, a.r)) {
+        hurt(b, e, u, a.d, 'arts', { tags: ['storm'] });
+        b.addBuff(u, { key: 'ab:storm', duration: 1.2, visible: true, mods: { spRecoveryMul: 1 + spRatio } });
+      }
+    },
+  }),
   // Wither Vanguard: on a toxic tile its ordinary attack becomes Arts.
   pollutionArts: () => ({
     hitOut(c, b, e) {

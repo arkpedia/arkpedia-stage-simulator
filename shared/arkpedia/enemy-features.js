@@ -264,6 +264,12 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Active Originium Storm: a growing storm aura that damages and slows SP recovery.
+  'talent:StormAura': { covers: r => sig(r, 'StormAura', ['damage', 'damage_step', 'max_damage', 'max_radius', 'radius_step', 'range_radius', 'sp_recover_ratio']),
+    ability: { kind: 'stormAura', params: r => ({ damage: r.talents.bb['StormAura.damage'], damageStep: r.talents.bb['StormAura.damage_step'],
+      maxDamage: r.talents.bb['StormAura.max_damage'], radius: r.talents.bb['StormAura.range_radius'], radiusStep: r.talents.bb['StormAura.radius_step'],
+      maxRadius: r.talents.bb['StormAura.max_radius'], spRatio: r.talents.bb['StormAura.sp_recover_ratio'] }) },
+    note: 'growing storm: damage and SP-recovery debuff', nativeClaim: () => ({ active: 1 }) },
   // Wither Vanguard: ordinary attacks become Arts while standing on an Originium-pollution tile.
   'ability:Attacks deal Arts damage when inside Originium pollution.': { covers: r => r.abilities.some(a => a.text === 'Attacks deal Arts damage when inside Originium pollution.'),
     ability: { kind: 'pollutionArts', params: () => ({}) }, note: 'Arts attacks on toxic tiles',

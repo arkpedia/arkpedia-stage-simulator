@@ -413,6 +413,12 @@ test('Wither Vanguard: attacks become Arts only on toxic tiles', () => {
   ability.hitOut(road, { grid: { tile: () => ({ key: 'tile_road' }) } }, e);
   assert.equal(road.dmg.type, 'phys');
 });
+test('Active Originium Storm: the growing aura damages the guard', () => {
+  const key = 'enemy_1420_lrmm', h = spawnAny(key, { seconds: 0.1 }), guard = h.b.units.find(u => u.side === 'ally'), hp = guard.hp;
+  let storm = false; h.b.on('damaged', c => { if (c.source?.defId === key && c.dmg?.tags?.includes('storm')) storm = true; });
+  h.runUntil(() => storm, 25);
+  assert.ok(storm, 'the storm hit the guard'); assert.ok(guard.hp < hp);
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');
