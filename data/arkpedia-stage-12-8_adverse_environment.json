@@ -1,0 +1,1251 @@
+{
+ "code": "12-8",
+ "name": "Reunion Under Fire",
+ "description": "Reunions are not always accompanied by flowers.\nAllies have greatly reduced cost limit.\n<Roadside Emergency Reserves> When destroyed, grants a certain amount of DP and cost limit.\nEnvironmental Conditions:\nAllied Ranged Operators have greatly reduced Max HP; some enemies are different.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 20,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "12-8_adverse_environment",
+  "rows": 8,
+  "cols": 10,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    1,
+    2,
+    0,
+    0,
+    3,
+    4,
+    5,
+    3,
+    3,
+    0
+   ],
+   [
+    0,
+    4,
+    0,
+    3,
+    4,
+    4,
+    4,
+    4,
+    4,
+    0
+   ],
+   [
+    0,
+    4,
+    0,
+    3,
+    4,
+    4,
+    3,
+    3,
+    4,
+    0
+   ],
+   [
+    0,
+    4,
+    4,
+    4,
+    4,
+    4,
+    3,
+    3,
+    4,
+    0
+   ],
+   [
+    0,
+    0,
+    3,
+    4,
+    3,
+    4,
+    4,
+    4,
+    4,
+    0
+   ],
+   [
+    0,
+    3,
+    4,
+    3,
+    4,
+    0,
+    4,
+    4,
+    2,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 8
+    },
+    "end": {
+     "row": 1,
+     "col": 6
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 1,
+     "col": 6
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 8
+    },
+    "end": {
+     "row": 1,
+     "col": 6
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 6
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 1,
+     "col": 6
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 3
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 8
+    },
+    "end": {
+     "row": 1,
+     "col": 6
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 6
+      }
+     }
+    ],
+    "waits": []
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 199,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Sarkaz Blademaster",
+      "enemy_id": "enemy_1071_dftman_2",
+      "count": 3,
+      "time": 3,
+      "interval": 7,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sarkaz Blademaster",
+      "enemy_id": "enemy_1071_dftman_2",
+      "count": 2,
+      "time": 25,
+      "interval": 11,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sarkaz Blademaster",
+      "enemy_id": "enemy_1071_dftman_2",
+      "count": 2,
+      "time": 44,
+      "interval": 7,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Sarkaz Blademaster",
+      "enemy_id": "enemy_1071_dftman_2",
+      "count": 3,
+      "time": 53,
+      "interval": 11,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Sarkaz Blademaster",
+      "enemy_id": "enemy_1071_dftman_2",
+      "count": 3,
+      "time": 44,
+      "interval": 11,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Sarkaz Absurdist Operative Leader",
+      "enemy_id": "enemy_1317_wdexg_2",
+      "count": 1,
+      "time": 88,
+      "route": 3,
+      "fragment": 2
+     },
+     {
+      "enemy": "Sarkaz Absurdist Operative Leader",
+      "enemy_id": "enemy_1317_wdexg_2",
+      "count": 1,
+      "time": 111,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Sarkaz Blademaster",
+      "enemy_id": "enemy_1071_dftman_2",
+      "count": 3,
+      "time": 96,
+      "interval": 11,
+      "route": 2,
+      "fragment": 2
+     },
+     {
+      "enemy": "Sarkaz Blademaster",
+      "enemy_id": "enemy_1071_dftman_2",
+      "count": 3,
+      "time": 97,
+      "interval": 11,
+      "route": 4,
+      "fragment": 2
+     },
+     {
+      "enemy": "Sarkaz Blademaster",
+      "enemy_id": "enemy_1071_dftman_2",
+      "count": 3,
+      "time": 98,
+      "interval": 7,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "Sarkaz Absurdist Operative Leader",
+      "enemy_id": "enemy_1317_wdexg_2",
+      "count": 1,
+      "time": 132,
+      "route": 1,
+      "fragment": 3
+     },
+     {
+      "enemy": "Sarkaz Greatswordsman Leader",
+      "enemy_id": "enemy_1010_demon_2",
+      "count": 2,
+      "time": 149,
+      "interval": 12,
+      "route": 0,
+      "fragment": 3
+     },
+     {
+      "enemy": "Sarkaz Absurdist Operative Leader",
+      "enemy_id": "enemy_1317_wdexg_2",
+      "count": 2,
+      "time": 142,
+      "interval": 20,
+      "route": 4,
+      "fragment": 3
+     },
+     {
+      "enemy": "Sarkaz Absurdist Operative Leader",
+      "enemy_id": "enemy_1317_wdexg_2",
+      "count": 1,
+      "time": 173,
+      "route": 1,
+      "fragment": 4
+     },
+     {
+      "enemy": "Sarkaz Absurdist Operative Leader",
+      "enemy_id": "enemy_1317_wdexg_2",
+      "count": 2,
+      "time": 187,
+      "interval": 12,
+      "route": 1,
+      "fragment": 4
+     },
+     {
+      "enemy": "Sarkaz Absurdist Operative Leader",
+      "enemy_id": "enemy_1317_wdexg_2",
+      "count": 2,
+      "time": 179,
+      "interval": 11,
+      "route": 4,
+      "fragment": 4
+     },
+     {
+      "enemy": "Sarkaz Blademaster",
+      "enemy_id": "enemy_1071_dftman_2",
+      "count": 4,
+      "time": 170,
+      "interval": 8,
+      "route": 0,
+      "fragment": 4
+     },
+     {
+      "enemy": "Sarkaz Blademaster",
+      "enemy_id": "enemy_1071_dftman_2",
+      "count": 4,
+      "time": 171,
+      "interval": 8,
+      "route": 0,
+      "fragment": 4
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 0,
+    "routes": [
+     1,
+     1,
+     3,
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 7,
+    "col": 8,
+    "routes": [
+     0,
+     0,
+     2,
+     2,
+     4,
+     0,
+     0,
+     4,
+     4,
+     0,
+     0
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 1,
+    "col": 6,
+    "routes": [
+     0,
+     1,
+     1,
+     0,
+     2,
+     3,
+     1,
+     2,
+     4,
+     0,
+     1,
+     0,
+     4,
+     1,
+     1,
+     4,
+     0,
+     0
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1010_demon_2",
+    "slug": "sarkaz_greatswordsman_leader",
+    "name": "Sarkaz Greatswordsman Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1071_dftman_2",
+    "slug": "sarkaz_blademaster",
+    "name": "Sarkaz Blademaster",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1317_wdexg_2",
+    "slug": "sarkaz_absurdist_operative_leader",
+    "name": "Sarkaz Absurdist Operative Leader",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "pathing": {
+  "schemaVersion": 1,
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "12-8",
+  "geometryHash": "7c8659f1fb21dce5a63cdfcba94979695480f5f1e8805b36eb8c5cefedb1df92",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      8,
+      7
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      7,
+      6
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      6,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3.414213562373095,
+     4.414213562373095,
+     5.414213562373095,
+     6.414213562373095,
+     7.414213562373095,
+     8.414213562373096,
+     9.414213562373096
+    ],
+    "length": 9.414213562373096,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      8,
+      7
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      6,
+      1
+     ]
+    ]
+   },
+   "1": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      6,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "length": 12,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      6,
+      1
+     ]
+    ]
+   },
+   "2": {
+    "points": [
+     [
+      8,
+      7
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      6,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "length": 8,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      8,
+      7
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      6,
+      1
+     ]
+    ]
+   },
+   "3": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      6,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "length": 12,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 3,
+      "point": [
+       1,
+       1
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      6,
+      1
+     ]
+    ]
+   },
+   "4": {
+    "points": [
+     [
+      8,
+      7
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      6,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "length": 8,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      8,
+      7
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      6,
+      1
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1071_dftman_2": {
+   "key": "enemy_1071_dftman_2",
+   "prefabKey": "enemy_1071_dftman_2",
+   "name": "Sarkaz Blademaster",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 4000,
+    "atk": 370,
+    "def": 100,
+    "res": 50,
+    "moveSpeed": 1,
+    "bat": 2.5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "sarkaz"
+   ]
+  },
+  "enemy_1317_wdexg_2": {
+   "key": "enemy_1317_wdexg_2",
+   "prefabKey": "enemy_1317_wdexg_2",
+   "name": "Sarkaz Absurdist Operative Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "ALL",
+   "stats": {
+    "maxHp": 7500,
+    "atk": 650,
+    "def": 350,
+    "res": 35,
+    "moveSpeed": 0.8,
+    "bat": 3.5,
+    "aspd": 100,
+    "rangeRadius": 2,
+    "rawRangeRadius": 2,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": true,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Attacks reduce DP when carrying ammo. Ammo capacity: 3",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "1.attack@cost": -3,
+     "1.attack@sp": -1
+    },
+    "bbStr": {},
+    "groups": {
+     "1": [
+      "attack@cost",
+      "attack@sp"
+     ]
+    }
+   },
+   "skills": [],
+   "sp": {
+    "type": "INCREASE_WITH_TIME",
+    "maxSp": 3,
+    "initSp": 3,
+    "increment": 0
+   },
+   "notCountInTotal": false,
+   "tags": [
+    "sarkaz"
+   ]
+  },
+  "enemy_1010_demon_2": {
+   "key": "enemy_1010_demon_2",
+   "prefabKey": "enemy_1010_demon_2",
+   "name": "Sarkaz Greatswordsman Leader",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 15000,
+    "atk": 750,
+    "def": 250,
+    "res": 50,
+    "moveSpeed": 0.85,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "sarkaz"
+   ]
+  }
+ }
+}

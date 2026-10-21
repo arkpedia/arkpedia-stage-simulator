@@ -5510,3 +5510,7 @@ The `1322` family's lowercase `blink` wrapper/action graph is now retained and m
 ### Absurdist Operative DP drain (E40, 2026-10-21)
 
 The `1317` family carries three ammo and each attack drains `1.attack@cost` DP (2/3) and reduces the target's SP by 1; the fourth attack has no ammo. Support rises to **337 of 1,552** enemies. The test calls the ability three times and checks the DP and ammo counters.
+
+### 12-8 stages (S60, 2026-10-21)
+
+With the `1317` DP-drain family supported, **12-8** and **12-8 adverse environment** build (8×10, 42 spawns, 3 enemies) and join the public catalogue. Coverage is **118 public stages** (0-1 plus 117 files). The coverage test no longer pins the now-supported Norport Civilian as the top blocker.
