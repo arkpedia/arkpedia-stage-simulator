@@ -25,6 +25,11 @@ function family(groups, params, ability, extra, note, dependsOn = null, explains
   return Object.fromEntries(groups.map(g => [`talent:${g}`, { covers: r => sig(r, g, params) && extra(r), ability: ability(g), note,
     ...(dependsOn ? { dependsOn } : {}), ...(explains ? { explains } : {}) }]));
 }
+/** One feature per group, accepting any of several exact parameter signatures. */
+function familyAny(groups, signatures, ability, extra, note, dependsOn = null, explains = null) {
+  return Object.fromEntries(groups.map(g => [`talent:${g}`, { covers: r => signatures.some(signature => sig(r, g, signature)) && extra(r), ability: ability(g), note,
+    ...(dependsOn ? { dependsOn } : {}), ...(explains ? { explains } : {}) }]));
+}
 const CONFINEMENT_SIGS = [['attack_speed', 'max_stack_cnt', 'max_valid_stack_cnt', 'times']], LIBERTY_SIGS = [['atk'], ['atk', 'def_penetrate'], ['atk', 'hp_recovery_per_sec', 'magic_resistance']];
 const REBORN_PARAMS = new Set(['duration', 'hp_ratio', 'invincible']);
 
@@ -71,6 +76,21 @@ function isStackingDefDown(nat) {
     && ['abnormalFlags', 'abnormalImmunes', 'abnormalAntis', 'abnormalCombos', 'abnormalComboImmunes'].every(k => a[k].length === 0)
     && b.lifeTimeType === 2 && b.maxStackCnt === -1 && b.maxValidStackCnt === -1 && b.templateKey === 'empty' && b.loadFromDB === 0
     && b.durationKey === '' && b.triggerLifeType === 0 && b.blackboard.length === 0;
+}
+
+// The reviewed Skullshatterer grenade component: a 5 s, one-stack active buff on the target family that multiplies DEF
+// by the record's defdown.def (-0.5) and has no selector of its own (the attack supplies the target area).
+function isGrenadeDefDown(r, nat) {
+  if (nat.DefDown?.length !== 1) return false;
+  const c = nat.DefDown[0], b = c._additiveActiveBuffs?.[0], a = b?.attributes;
+  return c._buffs.length === 0 && c._additiveActiveBuffs.length === 1 && c._probKey === '' && c._selector.m_PathID === '0'
+    && c._targetValidator.m_PathID === '0' && c._targetFamilyMask === 1
+    && a.attributeModifiers.length === 1 && Object.entries({ attributeType: 2, formulaItem: 1, value: r.talents.bb['defdown.def'],
+      loadFromBlackboard: 0, fetchBaseValueFromSourceEntity: 0 }).every(([k, v]) => a.attributeModifiers[0][k] === v)
+    && Object.keys(a.attributeModifiers[0]).length === 5
+    && ['abnormalFlags', 'abnormalImmunes', 'abnormalAntis', 'abnormalCombos', 'abnormalComboImmunes'].every(k => a[k].length === 0)
+    && b.lifeTimeType === 1 && b.lifeTime === 5 && b.maxStackCnt === 1 && b.maxValidStackCnt === -1 && b.buffKey === 'skulsr_attack'
+    && b.templateKey === 'empty' && b.loadFromDB === 0 && b.durationKey === '' && b.triggerLifeType === 0 && b.blackboard.length === 0;
 }
 
 // The reviewed enhance component (enemy_1103_wdkght family): a whole-field passive (no selector, no interval) marking
@@ -131,8 +151,8 @@ export const ENEMY_FEATURES = Object.freeze({
   ...family(['refracting'], ['magic_resistance'], g => ({ kind: 'refraction', params: r => ({ res: r.talents.bb[`${g}.magic_resistance`] }) }),
     r => r.abilities.some(a => a.text.includes('<$ba.refraction>')), 'RES +magic_resistance while not silenced', null, /^<\$ba\.refraction>Refraction<\/>$/),
   // "Gains significantly increased ATK when HP is under 50%": ATK +atk once HP first drops below half.
-  ...family(['atkup'], ['atk'], g => ({ kind: 'lowHpBuff', params: r => ({ ratio: 0.5, mods: { atkPct: r.talents.bb[`${g}.atk`] } }) }),
-    r => r.abilities.some(a => /under 50%/.test(a.text) && /ATK/.test(a.text)), 'ATK +atk below 50% HP (ratio from the handbook line)', null,
+  ...familyAny(['atkup'], [['atk'], ['atk', 'hp_ratio']], g => ({ kind: 'lowHpBuff', params: r => ({ ratio: r.talents.bb[`${g}.hp_ratio`] ?? 0.5, mods: { atkPct: r.talents.bb[`${g}.atk`] } }) }),
+    r => r.abilities.some(a => /under 50%/.test(a.text) && /ATK/.test(a.text)), 'ATK +atk below the hp_ratio threshold (50% when the record omits it)', null,
     /^Gains significantly increased ATK when HP is under 50%$/),
   // Element damage on every attack hit: ATK x attack@ep_damage_ratio of the element its handbook line names.
   ...family(['epdamage', 'EpDamage'], ['attack@ep_damage_ratio'], g => ({ kind: 'elementOnHit', params: r => ({ element: elementOf(r), ratio: r.talents.bb[`${g}.attack@ep_damage_ratio`] }) }),
@@ -165,9 +185,13 @@ export const ENEMY_FEATURES = Object.freeze({
     note: 'death blast: atk_scale × ATK, with the reviewed cold/elemental rider', explains: deathBlastText },
   // DefDown: every attack hit adds a permanent, uncapped stack of DEF +defdown.def (flat) to the operator hit
   // (PRTS 酸液源石虫 天赋 corroborates: 防御力-10, 可无限叠加, linear in stacks).
-  'talent:defdown': { covers: (r, nat) => sig(r, 'defdown', ['def']) && r.talents.bb['defdown.def'] < 0 && isStackingDefDown(nat),
-    ability: { kind: 'defDownOnHit', params: r => ({ def: r.talents.bb['defdown.def'] }) },
-    note: 'each hit: permanent stacking DEF +def on the target', explains: /^Every attack reduces the enemy's DEF$/ },
+  'talent:defdown': { covers: (r, nat) => sig(r, 'defdown', ['def']) && r.talents.bb['defdown.def'] < 0
+      && (isStackingDefDown(nat) || isGrenadeDefDown(r, nat)),
+    ability: { kind: 'defDownOnHit', params: r => r.abilities.some(a => a.text.startsWith('Launches grenades'))
+      ? { pct: r.talents.bb['defdown.def'], duration: 5, area: true }
+      : { def: r.talents.bb['defdown.def'] } },
+    note: 'acid: permanent stacking DEF; Skullshatterer grenade: 5 s DEF ×defdown.def in the target area',
+    explains: text => text === "Every attack reduces the enemy's DEF" || text.startsWith('Launches grenades when not being blocked') },
   // enhance (沸血骑士团): each enemy-side unit killed anywhere on the field (isolation ignored) gives one permanent stack of
   // ATK +atk (×) and ASPD +attack_speed, up to max_stack_cnt (PRTS 沸血骑士团学徒 天赋 corroborates: 场上每有一名敌方单位
   // 死亡时 攻击力+10%，攻击速度+5，最多叠加10次).

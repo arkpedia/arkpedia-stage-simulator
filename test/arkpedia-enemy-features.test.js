@@ -151,6 +151,24 @@ test('Defender-4: other enemies in range gain the reviewed DEF aura', () => {
   h.run(0.8);
   assert.ok(first.s.def >= base + 300, `${first.s.def}`); assert.ok(second.s.def >= base + 300, `${second.s.def}`);
 });
+test('Skullshatterer grenade: a 5 s DEF multiplier on the target and its cardinal neighbours', () => {
+  const key = 'enemy_1500_skulsr', rec = ENEMY_RECORDS.enemies[key].levels[0], pct = rec.talents.bb['defdown.def'];
+  const a = chessRec({ id: 'grenade_a', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 300 } });
+  const b = chessRec({ id: 'grenade_b', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 300 } });
+  const h = makeBattle({ defs: { enemies: { [key]: rec }, chess: { [a.chessId]: a, [b.chessId]: b } },
+    units: [{ chessId: a.chessId, row: 9, col: 6 }, { chessId: b.chessId, row: 9, col: 7 }],
+    enemies: [{ key, time: 0, route: 0 }], content: 'none', autoFinish: false, timeLimit: 40,
+    setup: battle => installEnemyFeatures(battle) });
+  const guards = h.b.units.filter(u => u.side === 'ally'), base = guards.map(g => g.s.def);
+  h.runUntil(() => guards.every(g => g.findBuff('ab:defdownGrenade')), 25);
+  for (let i = 0; i < guards.length; i++) {
+    assert.ok(guards[i].findBuff('ab:defdownGrenade'), `${guards[i].defId} has the grenade debuff`);
+    assert.ok(Math.abs(guards[i].s.def - base[i] * (1 + pct)) < 1, `${guards[i].defId}: ${guards[i].s.def} vs ${base[i] * (1 + pct)}`);
+  }
+  const enemy = h.b.units.find(u => u.side === 'enemy' && u.defId === key);
+  h.b.dealDamage(null, enemy, { amount: 1e9, type: 'true', sourceless: true }); h.run(5.5);
+  for (let i = 0; i < guards.length; i++) { assert.equal(guards[i].findBuff('ab:defdownGrenade'), null); assert.equal(guards[i].s.def, base[i]); }
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');
@@ -190,7 +208,8 @@ test('taunt: the talent taunt level makes it more likely to be targeted', () => 
 test('defdown: every attack hit adds one permanent, uncapped stack of the talent DEF to the operator hit', () => {
   const key = 'enemy_1004_mslime', r = ENEMY_RECORDS.enemies[key].levels[0], def = r.talents.bb['defdown.def'];
   assert.ok(support.enemies[key].features.includes('talent:defdown'));
-  assert.equal(support.enemies.enemy_1500_skulsr.policy, null, 'the grenade DEF-down component is a different feature');
+  assert.ok(support.enemies.enemy_1500_skulsr.policy, 'the grenade component has its own reviewed branch');
+  assert.ok(support.enemies.enemy_1500_skulsr.features.includes('talent:defdown'));
   const h = spawnAny(key, { seconds: 0.1 }), guard = h.b.units.find(u => u.side === 'ally'), base = guard.s.def;
   let hits = 0; h.b.on('damaged', c => { if (c.source?.defId === key && c.target === guard && c.dmg.type !== 'element') hits++; });
   h.runUntil(() => hits >= 3, 120); assert.ok(hits >= 3, `${hits} hits`);

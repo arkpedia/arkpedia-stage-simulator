@@ -292,9 +292,14 @@ export const featureAbilities = Object.freeze({
   blockWeight: ({ n }) => blockWeight(n),
   prisoner: (params, ab) => prisoner(ab, params),
   taunt: ({ n }) => taunt(n),
-  // Every attack hit: one more permanent stack of DEF +def on the target (no cap; additive mods scale with stacks).
-  defDownOnHit: ({ def }) => ({ dealt(c, b) {
-    b.addBuff(c.target, { key: 'ab:defdown', refresh: 'stack', stacks: 1, maxStacks: 1e6, mods: { defFlat: def }, visible: true });
+  // Acid: every attack hit adds one more permanent stack of DEF +def on the target (no cap).
+  // Skullshatterer: a grenade (only while unblocked) applies a refreshing 5 s DEF ×pct to the target and its four
+  // cardinal neighbours; the supported shape is the retained `skulsr_attack` native component.
+  defDownOnHit: ({ def, pct, duration = 5, area = false }) => ({ dealt(c, b, e) {
+    if (pct == null) { b.addBuff(c.target, { key: 'ab:defdown', refresh: 'stack', stacks: 1, maxStacks: 1e6, mods: { defFlat: def }, visible: true }); return; }
+    if (area && e.blockedBy) return;
+    const targets = area ? areaAlliesInTiles(b, e, c.target.tileR, c.target.tileC, 'plus', 1) : [c.target];
+    for (const u of targets) if (u.alive) b.addBuff(u, { key: 'ab:defdownGrenade', duration, refresh: 'replace', mods: { defPct: pct }, visible: true });
   } }),
   // Every other enemy-side unit killed anywhere: one more permanent stack of ATK +atk (×) and ASPD +aspd, up to max.
   allyDeathStacks: ({ atk, aspd, max }) => ({

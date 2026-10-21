@@ -5087,3 +5087,9 @@ Coverage is **0-1 plus 57 test-only files**; every one is loaded through the cat
 ### CI pushes stay off feature branches (S11, 2026-10-21)
 
 The CI workflow now runs on `push` only to `master`; feature branches run when they have a pull request (plus `workflow_dispatch`). This removes the duplicate push+PR pair that previously started eight jobs per branch and left a cancelled duplicate check on the PR. The runner guard still enforces GitHub-hosted images for every job.
+
+### Skullshatterer's grenade and the hp_ratio ATK buff (E8, 2026-10-21)
+
+- **Grenade DEF-down**: the retained `skulsr_attack` native component is a one-stack, 5-second DEF multiplier (`defdown.def`, −0.5) on the target family. The reviewed branch applies it to the target and its four cardinal neighbours only while the caster is unblocked; the acid-slime branch keeps its permanent stacking flat DEF.
+- **`atkup` with `hp_ratio`**: the low-HP ATK family now accepts both `['atk']` and `['atk','hp_ratio']`, reading the threshold from the record instead of assuming 50%.
+- **Coverage.** Support rises to 251 of 1,552 enemies. The grenade test checks both adjacent guards, the exact DEF multiplier, and expiry five seconds after the source dies. 3-8 itself still cannot be built because its viewer export is missing route 0; the enemy is supported independently of that stage file.
