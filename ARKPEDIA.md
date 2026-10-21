@@ -4954,3 +4954,9 @@ The client no longer hard-codes 0-1 as the only selectable stage.
 `stageAdapter` no longer refuses a stage with more than one wave and no longer reads only `waves[0]`. It applies the public stage-playback rule: a wave's `pre_delay` is measured from the end of the previous wave, `duration + post_delay` advance the cursor, each spawn time is relative to its own wave, and `interval` spaces the count. Spawns are sorted by absolute time.
 
 The fixed-squad guard was also ineffective: `suppliedUnits` is an object (`{fixed_squad, deployable_tokens}`), so the old `.length` check was always undefined. It now counts both lists, and the new test refuses a fixed squad, conditional spawns and an oversized grid. A second test pins the exact absolute times of a two-wave schedule.
+
+### First file-backed stage data, 0-2 (S3, 2026-10-21, test-only)
+
+`tools/arkpedia/build-stage.mjs` builds one stage file from the public stage/geometry sources and a stage-browser route export. It refuses a route export that does not match the geometry, runs the same `stageAdapter` and supported-enemy gate as 0-1, and records `art: null` / `gates: null` so the renderer falls back to its labelled simplified map.
+
+`data/arkpedia-stage-0-2.json` is the first output: 6×10, three sequential waves, 14 spawns, the same two supported enemies as 0-1. It is **not in `data/arkpedia-stages.json`** yet: the owner's rule is that a new playable stage stays test-only until its simplified-art build and battle are reviewed. Tests pin its wave times and step a real `StandardBattle` through the first 30 seconds with no engine errors. When 0-2 is reviewed, adding it to the public simulator is one catalogue entry.
