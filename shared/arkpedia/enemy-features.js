@@ -194,6 +194,15 @@ export const ENEMY_FEATURES = Object.freeze({
   ...familyAny(['atkup'], [['atk'], ['atk', 'hp_ratio']], g => ({ kind: 'lowHpBuff', params: r => ({ ratio: r.talents.bb[`${g}.hp_ratio`] ?? 0.5, mods: { atkPct: r.talents.bb[`${g}.atk`] } }) }),
     r => r.abilities.some(a => /under 50%/.test(a.text) && /ATK/.test(a.text)), 'ATK +atk below the hp_ratio threshold (50% when the record omits it)', null,
     /^Gains significantly increased ATK when HP is under 50%$/),
+  // 吸血 (vampire): attacks up to max_target and heals heal_scale × the damage actually dealt. The single-target
+  // signature omits max_target; the record then keeps the engine's one target.
+  ...familyAny(['vampire'], [['attack@max_target', 'heal_scale'], ['heal_scale']], g => ({ kind: 'vampireOnHit', params: r => ({
+    maxTargets: r.talents.bb[`${g}.attack@max_target`] ?? 1, healScale: r.talents.bb[`${g}.heal_scale`] }) }),
+    r => r.abilities.some(a => /restore HP proportional to damage dealt/i.test(a.text) || /Restores a certain amount of HP after each attack/.test(a.text)),
+    'attacks up to max_target and heals heal_scale × damage dealt', null,
+    (text, record) => /^Attacks restore HP proportional to damage dealt$/.test(text)
+      || /^Restores a certain amount of HP after each attack, based upon damage dealt$/.test(text)
+      || text === `Attacks ${record.talents.bb['vampire.attack@max_target'] ?? 1} enemies simultaneously`),
   // Element damage on every attack hit: ATK x attack@ep_damage_ratio of the element its handbook line names.
   ...family(['epdamage', 'EpDamage'], ['attack@ep_damage_ratio'], g => ({ kind: 'elementOnHit', params: r => ({ element: elementOf(r), ratio: r.talents.bb[`${g}.attack@ep_damage_ratio`] }) }),
     r => !!elementOf(r), 'element damage on every attack hit', null,

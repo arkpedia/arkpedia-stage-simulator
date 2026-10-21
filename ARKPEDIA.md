@@ -5164,3 +5164,9 @@ Seven more files are buildable:
 | 10-3 adverse environment | 7×11 | 1 | 39 |
 
 The test pins the DISAPPEAR/WAIT/APPEAR order and runs 6-4 through the tunnel for 40 seconds without engine errors. Coverage is **0-1 plus 69 test-only files**.
+
+### Vampire attacks (E11, 2026-10-21)
+
+The reviewed `vampire` talent comes in two signatures: `attack@max_target + heal_scale` (Sarkaz Centurion Host, three targets) and `heal_scale` alone (Bloodthirsty Heir, one target). Both now attack up to the recorded target count and heal `heal_scale ×` the post-mitigation damage of every accepted ordinary hit. A handbook line naming the same target count is explained by the same feature, so the multi-target line and the heal line share one approval.
+
+Support rises to **262 of 1,552** enemies. The test checks the three-target profile and an actual HP gain after the enemy deals damage.

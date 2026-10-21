@@ -310,6 +310,17 @@ export const featureAbilities = Object.freeze({
       b.addBuff(e, { key: 'ab:enhance', refresh: 'stack', stacks: 1, maxStacks: max, persist: true, visible: true, mods: { atkPct: atk, aspd } });
     },
   }),
+  // Vampire: up to maxTargets ordinary targets; every accepted ordinary hit heals the enemy for healScale × its
+  // post-mitigation damage.
+  vampireOnHit: ({ maxTargets, healScale }) => ({
+    spawn(b, e, a) {
+      if (maxTargets > 1) e.profile.maxTargets = Math.max(e.profile.maxTargets ?? 1, maxTargets);
+      b.on('damaged', c => {
+        if (c.source !== e || c.target?.side !== 'ally' || !c.dmg?.isAttack || !(c.hpLoss > 0)) return;
+        b.heal(e, e, c.hpLoss * healScale);
+      }, { owner: e });
+    },
+  }),
   // Reborn Creation: the reviewed damage_resistance template is a Physical/Arts multiplier; the bloodsucker mark is a
   // persistent identity buff (it has no attributes of its own).
   rebornDamageRes: ({ pct }) => ({

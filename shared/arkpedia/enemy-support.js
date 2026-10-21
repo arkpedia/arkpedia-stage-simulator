@@ -42,7 +42,7 @@ export function enemySupport(entry, prefabs, evidence = {}) {
     // A handbook line with no feature of its own is explained by a cleared talent feature of the same record.
     const explained = !f && id.startsWith('ability:') && using.every(r => recordFeatureIds(r).some(t => {
       const tf = enemyFeature(t), explains = tf?.explains, text = id.slice('ability:'.length);
-      return explains && (typeof explains === 'function' ? explains(text) : explains.test(text)) && covers(tf, r);
+      return explains && (typeof explains === 'function' ? explains(text, r) : explains.test(text)) && covers(tf, r);
     }));
     if ((f && using.every(r => covers(f, r))) || explained) features.push(id); else reasons.push(id);
     if (f?.dependsOn) for (const r of using) for (const key of f.dependsOn(r)) deps.add(key);

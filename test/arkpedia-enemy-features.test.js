@@ -198,6 +198,19 @@ test('Reborn Creation: a first death spawns the reviewed child after the delay',
   h.b.dealDamage(null, e, { amount: 1e9, type: 'true', sourceless: true }); h.run(delay + 0.3);
   assert.equal(h.b.units.filter(u => u.side === 'enemy' && u.defId === child).length, 1);
 });
+test('vampire: up to three targets and healing from the damage actually dealt', () => {
+  const key = 'enemy_1114_rgrdmn', rec = ENEMY_RECORDS.enemies[key].levels[0];
+  const guard = chessRec({ id: 'vampire_guard', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 300 } });
+  const h = makeBattle({ defs: { enemies: { [key]: rec }, chess: { [guard.chessId]: guard } },
+    units: [{ chessId: guard.chessId, row: 9, col: 6 }], enemies: [{ key, time: 0, route: 0 }],
+    content: 'none', autoFinish: false, timeLimit: 30, setup: battle => installEnemyFeatures(battle) });
+  h.run(0.05);
+  const e = h.b.units.find(u => u.side === 'enemy' && u.defId === key);
+  assert.equal(e.profile.maxTargets, 3);
+  e.hp = e.s.maxHp * 0.5; const before = e.hp;
+  h.run(12);
+  assert.ok(e.hp > before, `${before} -> ${e.hp}`);
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');
