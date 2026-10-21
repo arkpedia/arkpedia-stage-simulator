@@ -371,6 +371,17 @@ test('target priority: lowest DEF and lowest HP fraction sort after the blocker'
   assert.equal(sortAllyTargets({ blockedBy: null, profile: { targetPriority: 'lowestHp' } }, [a, b])[0], b);
   assert.equal(sortAllyTargets({ blockedBy: a, profile: { targetPriority: 'lowestDef' } }, [a, b])[0], a);
 });
+test('Big Snowball Thrower: only the first attack is scaled', () => {
+  const key = 'enemy_15002_dqwing', rec = ENEMY_RECORDS.enemies[key].levels[0];
+  const guard = chessRec({ id: 'first_guard', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 0 } });
+  const h = makeBattle({ defs: { enemies: { [key]: rec }, chess: { [guard.chessId]: guard } },
+    units: [{ chessId: guard.chessId, row: 9, col: 6 }], enemies: [{ key, time: 0, route: 0 }],
+    content: 'none', autoFinish: false, timeLimit: 30, setup: battle => installEnemyFeatures(battle) });
+  const hits = []; h.b.on('damaged', c => { if (c.source?.defId === key && c.dmg?.isAttack) hits.push(c.dmg.amount); });
+  h.runUntil(() => hits.length >= 2, 25);
+  const atk = h.b.units.find(u => u.defId === key).s.atk;
+  assert.equal(hits[0], atk * 1.5); assert.equal(hits[1], atk);
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

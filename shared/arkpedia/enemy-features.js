@@ -264,6 +264,10 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Snowball thrower: the first attack uses first_atk_scale.
+  'talent:FirstAttack': { covers: r => sig(r, 'FirstAttack', ['attack@first_atk_scale']),
+    ability: { kind: 'firstAttack', params: r => ({ scale: r.talents.bb['FirstAttack.attack@first_atk_scale'] }) },
+    note: 'first attack ×scale' },
   // Ability-only melee splash (Originium Colossus): the record carries no talent group, only the sentence.
   'ability:Attacks deal splash damage': { covers: r => r.abilities.some(a => a.text === 'Attacks deal splash damage'),
     ability: { kind: 'splashMelee', params: () => ({}) }, note: 'melee attack splashes around its target',

@@ -5358,3 +5358,7 @@ Two ability-only enemies now set `profile.targetPriority`: the Icefield Hunter s
 ### Prisoner liberty regex fix (E28, 2026-10-21)
 
 The existing `talent:confinement`/`talent:liberty` feature explained only a truncated "Freed after a few attacks, gaining increased ATK" line, so the full Pugilist/Strongman sentences stayed unsupported. The matcher now accepts the longer lines, which supports the Pugilist/Strongman prisoners (**+4**, total **312 of 1,552**). The existing confinement/liberty test now covers the new records.
+
+### Big Snowball Thrower first attack (E29, 2026-10-21)
+
+The `FirstAttack.attack@first_atk_scale` record now multiplies only the first ordinary attack (1.5× for 15002). Support rises to **313 of 1,552** enemies. The test checks the first and second hit amounts.
