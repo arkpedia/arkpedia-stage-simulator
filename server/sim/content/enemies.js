@@ -344,6 +344,16 @@ export const featureAbilities = Object.freeze({
       b.addBuff(e, { key: 'ab:enhance', refresh: 'stack', stacks: 1, maxStacks: max, persist: true, visible: true, mods: { atkPct: atk, aspd } });
     },
   }),
+  // Seed of Withering: once any ally is inside the unit's attack range, blast the one-tile area and die.
+  selfDestruct: ({ radius }) => ({
+    tick(b, e, a) {
+      if (a.done || !e.alive || !b.alliesInRadius(e.x, e.y, e.base.rangeRadius || 1).length) return;
+      a.done = true;
+      for (const u of b.alliesInRadius(e.x, e.y, radius)) hurt(b, e, u, e.s.atk, 'phys', { tags: ['selfDestruct'] });
+      b.fx('boom', { x: e.x, y: e.y, r: radius });
+      b.kill(e, null);
+    },
+  }),
   // Big Snowball Thrower: multiply only the first ordinary attack.
   firstAttack: ({ scale }) => ({
     spawn(b, e, a) { a.first = true; },

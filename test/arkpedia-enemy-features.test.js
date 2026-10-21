@@ -382,6 +382,12 @@ test('Big Snowball Thrower: only the first attack is scaled', () => {
   const atk = h.b.units.find(u => u.defId === key).s.atk;
   assert.equal(hits[0], atk * 1.5); assert.equal(hits[1], atk);
 });
+test('Seed of Withering: detonates near a guard and dies', () => {
+  const key = 'enemy_1269_nhfly', h = spawnAny(key, { seconds: 0.1 }), e = enemy(h, key);
+  const guard = h.b.units.find(u => u.side === 'ally'), hp = guard.hp;
+  h.runUntil(() => !e.alive, 20);
+  assert.ok(!e.alive, 'it self-destructed'); assert.ok(guard.hp < hp, 'the guard took the blast');
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

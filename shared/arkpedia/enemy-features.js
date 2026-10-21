@@ -264,6 +264,10 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Seed of Withering/Decay: detonates when an ally enters its attack range.
+  'ability:Self-destructs when near an Operator, dealing Physical damage': { covers: r => r.abilities.some(a => a.text === 'Self-destructs when near an Operator, dealing Physical damage'),
+    ability: { kind: 'selfDestruct', params: () => ({ radius: 2 }) }, note: 'physical blast then dies when an ally is near',
+    explains: /^Self-destructs when near an Operator, dealing Physical damage$/ },
   // Snowball thrower: the first attack uses first_atk_scale.
   'talent:FirstAttack': { covers: r => sig(r, 'FirstAttack', ['attack@first_atk_scale']),
     ability: { kind: 'firstAttack', params: r => ({ scale: r.talents.bb['FirstAttack.attack@first_atk_scale'] }) },

@@ -5362,3 +5362,7 @@ The existing `talent:confinement`/`talent:liberty` feature explained only a trun
 ### Big Snowball Thrower first attack (E29, 2026-10-21)
 
 The `FirstAttack.attack@first_atk_scale` record now multiplies only the first ordinary attack (1.5× for 15002). Support rises to **313 of 1,552** enemies. The test checks the first and second hit amounts.
+
+### Seed of Withering self-destruct (E30, 2026-10-21)
+
+The Seed of Withering/Decay detonates once an ally is inside its attack radius, dealing its ATK as Physical damage in a 2-unit blast and then dying. Support rises to **315 of 1,552** enemies. The test checks the self-destruct and the guard damage.
