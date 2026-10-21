@@ -5866,3 +5866,7 @@ Only an explicit `count: 0` is a hidden stage device. A token entry with no coun
 ### Snapshot to 394 enemies / 199 stages (S121, 2026-10-21)
 
 `docs/REMAINING.md` records **394** supported enemies, **198** built source stages, **199** public entries and the 22,793-test full suite.
+
+### Remaining-report count test (S122, 2026-10-21)
+
+`test/arkpedia-remaining-doc.test.js` keeps `docs/REMAINING.md` honest: the enemy, built-source-stage and public-catalogue counts must match the support JSON and the stage index.
