@@ -5406,3 +5406,7 @@ With thirty-one public stages, the prep page's row of links became unwieldy. It 
 ### Public review dates (S40, 2026-10-21)
 
 Every public entry now carries a `reviewed` date (`2026-10-21` for the current fifty). The catalogue test requires a public entry to have a valid date, so future promotions must record their review instead of silently dropping `testOnly`. The generator preserves the field as part of the curated entry.
+
+### Grouped stage selector (S41, 2026-10-21)
+
+The stage selector now groups options into Chapter N, Side stories, Mini events, Tutorial and Events via `<optgroup>`, using the stage code prefix. The current stage remains selected. Static client tests still pass (217).

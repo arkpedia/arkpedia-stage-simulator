@@ -143,8 +143,23 @@ let editing = ops[0].id,
   rosterQuery = "";
 function prep() {
   const stages = stageIndex.stages.filter(stage => !stage.testOnly || experimental);
+  const chapterLabel = (stage) => {
+    const code = stage.code;
+    if (/^TR-/i.test(code)) return 'Tutorial';
+    if (/^S\d/i.test(code)) return 'Side stories';
+    if (/^M\d/i.test(code)) return 'Mini events';
+    if (/^\d+-/.test(code)) return `Chapter ${code.split('-')[0]}`;
+    return 'Events';
+  };
+  const groupedStages = new Map();
+  for (const stage of stages) {
+    const label = chapterLabel(stage);
+    if (!groupedStages.has(label)) groupedStages.set(label, []);
+    groupedStages.get(label).push(stage);
+  }
+  const stageOptions = [...groupedStages].map(([label, list]) => `<optgroup label="${escape(label)}">${list.map(stage => `<option value="${escape(stageHref(stage))}"${stage.id === activeStage.id ? ' selected' : ''}>${escape(stage.code)} ${escape(stage.name)}${stage.testOnly ? ' · test' : ''}</option>`).join('')}</optgroup>`).join('');
   const stagePicker = stages.length > 1
-    ? `<label class="stage-picker">Stage <select id="stage-select" aria-label="Stages">${stages.map(stage => `<option value="${escape(stageHref(stage))}"${stage.id === activeStage.id ? ' selected' : ''}>${escape(stage.code)} ${escape(stage.name)}${stage.testOnly ? ' · test' : ''}</option>`).join('')}</select></label>`
+    ? `<label class="stage-picker">Stage <select id="stage-select" aria-label="Stages">${stageOptions}</select></label>`
     : '';
   app.innerHTML = `<div class="frame"><header class="topline"><div><p class="eyebrow">Arkpedia · prototype</p><h1>Stage simulator</h1></div><span class="muted">${escape(data.stage.code)} ${escape(data.stage.name)}</span></header>
  <div class="prep">${stagePicker}<section class="preview"><div class="stage-title"><span class="stage-code">${escape(data.stage.code)}</span><h2>${escape(data.stage.name)}</h2></div><p class="help">${escape(data.stage.description)}</p><div class="board" id="board"></div><div class="legend"><span class="spawn">Enemy entry</span><span class="goal">Defence objective</span><span>Raised tiles: ranged operators</span></div>
