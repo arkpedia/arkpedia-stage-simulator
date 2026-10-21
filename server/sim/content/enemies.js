@@ -345,6 +345,22 @@ export const featureAbilities = Object.freeze({
     },
   }),
   moveSpeedBonus: ({ mul }) => ({ spawn(b, e) { b.addBuff(e, { key: 'ab:moveSpeed', persist: true, visible: true, mods: { moveMul: mul } }); } }),
+  // Purifying Flame: explodes on contact with a melee ally, Burning and weakening the area.
+  purifyingFlame: ({ atk, duration, ratio }) => ({
+    spawn(b, e, a) { a.done = false; },
+    tick(b, e, a) {
+      if (a.done) return;
+      const near = b.alliesInRadius(e.x, e.y, 1.0).find(u => u.alive);
+      if (!near) return;
+      a.done = true;
+      for (const u of b.alliesInRadius(e.x, e.y, 1.2)) {
+        hurt(b, e, u, e.s.atk, 'arts', { tags: ['purifyingFlame'] });
+        elem(b, e, u, 'burn', e.s.atk * ratio);
+        b.addBuff(u, { key: 'ab:weaken', duration, visible: true, mods: { atkMul: 1 + atk } });
+      }
+      b._remove(e, 'explode');
+    },
+  }),
   // Tombkeeper Grotesque: prevent the first lethal hit, petrify, then revive airborne.
   stoneRevive: ({ def, res, duration }) => ({
     spawn(b, e, a) { a.done = false; },

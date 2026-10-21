@@ -287,6 +287,17 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Purifying Flame: Arts hit that adds Burn and Weakens the target.
+  'talent:Weaken': { covers: r => sig(r, 'Weaken', ['atk', 'duration']),
+    ability: { kind: 'purifyingFlame', params: r => ({ atk: r.talents.bb['Weaken.atk'], duration: r.talents.bb['Weaken.duration'],
+      ratio: r.talents.bb['epdamage.attack@ep_damage_ratio'] ?? 1 }) },
+    note: 'Burn and ATK weakening on hit', explains: /^Controls <Purifying Flames>/ },
+  // Dublinn Evocator: summons the Purifying Flames.
+  'skill:SummonFireBall': { covers: r => r.skills.some(s => s.prefabKey === 'SummonFireBall'),
+    ability: { kind: 'periodicSpawn', params: r => ({ key: r.skills[0].bbStr.enemy_key, count: r.skills[0].bb.cnt, cooldown: r.skills[0].cooldown, init: r.skills[0].initCooldown }) },
+    nativeClaim: () => ({ wrappers: 2 }), dependsOn: r => [r.skills[0].bbStr.enemy_key], note: 'summons one Purifying Flame at a time',
+    explains: /^Controls <Purifying Flames> that move along the ground/ },
+  'skill:SummonFireBall2': { covers: r => r.skills.some(s => s.prefabKey === 'SummonFireBall2'), note: 'second reviewed summon timer' },
   // Tombkeeper Grotesque: the first lethal hit turns it into a stone statue, then it revives airborne.
   'talent:stone': { covers: r => sig(r, 'stone', ['def', 'duration', 'magic_resistance'])
       && r.abilities.some(a => a.text === 'After first defeat, temporarily transforms into a stone statue with extremely high DEF, then revives as an aerial unit'),
@@ -611,8 +622,8 @@ export const ENEMY_FEATURES = Object.freeze({
     r => !!elementOf(r), 'element damage on every attack hit', null,
     /^(Every attack deals|Attacks inflict additional|Attacks deal) <\$ba\.dt\.(erosion|neural|apoptosis|burning)>[^<]*<\/>\.?$/),
   'talent:epdamage': { covers: r =>
-      (sig(r, 'epdamage', ['attack@ep_damage_ratio']) && !!elementOf(r)
-        && r.abilities.some(a => /^(Every attack deals|Attacks inflict additional|Attacks deal) <\$ba\.dt\.(erosion|neural|apoptosis|burning)>[^<]*<\/>\.?$/.test(a.text)))
+      (sig(r, 'epdamage', ['attack@ep_damage_ratio']) && (!r.abilities.length || (!!elementOf(r)
+        && r.abilities.some(a => /^(Every attack deals|Attacks inflict additional|Attacks deal) <\$ba\.dt\.(erosion|neural|apoptosis|burning)>[^<]*<\/>\.?$/.test(a.text)))))
       || (sig(r, 'epdamage', ['attack@chain.atk_scale', 'attack@ep_damage_ratio', 'attack@max_target', 'attack@projectile_range'])
         && r.abilities.some(a => /^Attacks deal <\$ba\.dt\.apoptosis>Necrosis damage<\/> and jump between \d+ targets, with each jump dealing reduced damage$/.test(a.text))),
     ability: { kind: 'elementOnHit', params: r => {
@@ -620,6 +631,7 @@ export const ENEMY_FEATURES = Object.freeze({
         return { chain: true, element: elementOf(r), ratio: r.talents.bb['epdamage.attack@ep_damage_ratio'],
           maxTargets: r.talents.bb['epdamage.attack@max_target'], chainScale: r.talents.bb['epdamage.attack@chain.atk_scale'],
           range: r.talents.bb['epdamage.attack@projectile_range'] };
+      if (!r.abilities.length) return { element: 'burn', ratio: r.talents.bb['epdamage.attack@ep_damage_ratio'] };
       return { element: elementOf(r), ratio: r.talents.bb['epdamage.attack@ep_damage_ratio'] };
     } },
     note: 'element damage on every attack hit, or a chain that jumps with falloff', explains: text =>

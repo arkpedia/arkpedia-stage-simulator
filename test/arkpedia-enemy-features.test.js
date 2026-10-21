@@ -644,6 +644,15 @@ test('Tombkeeper Grotesque: first lethal hit petrifies, then revives airborne', 
   assert.ok(e.alive && e.hp > 0); assert.ok(e.findBuff('ab:stone'));
   h.run(10.2); assert.equal(e.findBuff('ab:stone'), null); assert.equal(e.flying, true);
 });
+test('Dublinn Evocator: summons a Purifying Flame', () => {
+  const key = 'enemy_1176_dusocr', h = spawnAny(key, { seconds: 0.1, units: [] }), flames = [];
+  h.b.on('enemySpawn', ({ enemy }) => { if (enemy.defId === 'enemy_1177_dufrbl') flames.push(enemy); });
+  h.run(4); assert.ok(flames.length >= 1);
+});
+test('Purifying Flame: the hit applies the ATK weaken', () => {
+  const key = 'enemy_1177_dufrbl', h = spawnAny(key, { seconds: 0.1 }), guard = h.b.units.find(u => u.side === 'ally'), flame = enemy(h, key);
+  flame.x = guard.x + 1; flame.y = guard.y; const ability = flame.mem.ab.list.find(a => a.tick); ability.tick(h.b, flame, ability); assert.ok(guard.findBuff('ab:weaken'));
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

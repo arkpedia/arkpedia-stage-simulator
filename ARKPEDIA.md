@@ -5750,3 +5750,7 @@ With the Tombkeeper supported, **9-14** builds (9×11, 58 spawns, 6 enemies). Th
 ### Stacked snapshot to 382 enemies (S96, 2026-10-21)
 
 `docs/REMAINING.md` now records the stacked Flamerazer/Tombkeeper state: **382** supported enemies, **187** built source stages and **188** public entries. All 187 data-backed stages pass the two-second smoke test.
+
+### Purifying Flame and Dublinn Evocator (E64, 2026-10-21)
+
+The Evocator summons one Purifying Flame every 6 s (first after 3 s). The Flame moves along the ground and, on contact with a melee ally, explodes for 1.0x Arts plus Burn and a 10 s -70% ATK weaken. The reviewed wrappers are claimed; the Flame's no-ability `epdamage` is interpreted as Burn. Support rises to **386 of 1,552** enemies. Tests cover the summon and the contact burst.
