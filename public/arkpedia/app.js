@@ -65,6 +65,7 @@ const stageHref = stage => `/arkpedia/?stage=${encodeURIComponent(stage.id)}${ex
 let activeStage;
 try {
   ({ entry: activeStage } = await applyStage(data, stageIndex, requested, fetch, { experimental }));
+  document.title = `${data.stage.code} ${data.stage.name} · Arkpedia stage simulator`;
 } catch (error) {
   const available = (error.stages ?? stageIndex.stages.filter(stage => !stage.testOnly) ?? []).map(stage =>
     `<a href="${stageHref(stage)}">${escape(stage.code)} ${escape(stage.name)}</a>`).join(', ');
