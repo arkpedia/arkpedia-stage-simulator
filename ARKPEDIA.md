@@ -5133,3 +5133,16 @@ The Sarkaz Heirbearer family now has its reviewed creation mechanics:
 - **Native claim.** The active bloodsucker marker is claimed (`claimedActive: 1`) only when the complete `dmg_res` + block template + marker shape matches.
 
 Support rises to **258 of 1,552** enemies. Tests cover the 90% reduction, the blocker's +1 Block, and the delayed reborn child.
+
+### Reborn-Creation stages (S14, 2026-10-21, test-only)
+
+The Reborn Creation and first-death reborn work unlocked the two 10-4 variants:
+
+| Stage | Grid | Waves | Spawns | Notes |
+|---|---|---|---|---|
+| 10-4 | 8×11 | 1 | 59 | Sarkaz Heirbearer Warrior and its Reborn Creation |
+| 10-4 adverse environment | 8×11 | 1 | 59 | the same stage under its adverse-environment variant |
+
+10-3 and 10-3 adverse still use a route tunnel and stay refused. The stage-file test now accepts an id/code difference for adverse-environment variants, which share the base stage code.
+
+Coverage is **0-1 plus 62 test-only files**.
