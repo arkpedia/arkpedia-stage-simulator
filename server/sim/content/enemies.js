@@ -285,6 +285,8 @@ export const featureAbilities = Object.freeze({
   elementOnHit: ({ element, ratio }) => ep(element, ratio),
   lowHpBuff: ({ ratio, mods }) => lowHpBuff(ratio, mods),
   deathSpawn: ({ key, cnt }) => deathSpawn(key, cnt),
+  deathSpawnDelayed: ({ key, cnt, delay }) => deathSpawnDelayed({ key, cnt, delay }),
+  deathBoom: params => deathBoom(params),
   refraction: ({ res }) => refraction(res),
   times: ({ artsOnly }) => times(artsOnly),
   blockWeight: ({ n }) => blockWeight(n),
@@ -893,7 +895,7 @@ const deathSpawn = (key, cnt, extra = {}) => ({
  * Death explosion on the allies within r it can select (areaAllies — PRTS 高能源石虫 / 冰爆源石虫 / 卷心籽 死亡爆炸 "…无视迷彩，
  * 不可对空", no 无视无法选择: a 隐匿 ally is spared; the dead enemy blocks nobody).
  */
-const deathBoom = ({ scale, type = 'phys', r = BOOM_RADIUS, status = null, sil = true, cond = null }) => ({
+const deathBoom = ({ scale, type = 'phys', r = BOOM_RADIUS, status = null, element = null, epRatio = 0, sil = true, cond = null }) => ({
   sil,
   death(c, b, e, a) {
     if (c.reason !== 'killed' || (cond && !cond(e, a))) return;
@@ -901,8 +903,19 @@ const deathBoom = ({ scale, type = 'phys', r = BOOM_RADIUS, status = null, sil =
     b.fx('explode', { x: e.x, y: e.y, r, kind: 'deathBoom', id: e.id });
     for (const u of areaAllies(b, e, e.x, e.y, r)) {
       if (scale > 0) hurt(b, e, u, atk * scale, type);
+      if (element && epRatio > 0 && u.alive) elem(b, e, u, element, atk * epRatio);
       if (status && u.alive) b.applyStatus(u, status.key, { duration: status.dur, source: e, value: status.value });
     }
+  },
+});
+
+/** A delayed split ("Splits into N <X> upon death"): the children follow the dead parent's remaining route. */
+const deathSpawnDelayed = ({ key, cnt, delay = 0 }) => ({
+  death(c, b, e) {
+    if (c.reason !== 'killed' || !key || !(cnt > 0)) return;
+    const route = remainingRoute(e);
+    const spawn = () => spawnChildren(b, e, key, cnt, { route });
+    if (delay > 0) b.after(delay, spawn); else spawn();
   },
 });
 

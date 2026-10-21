@@ -4916,3 +4916,21 @@ The feature runtime (`server/sim/content/arkpedia-enemy-features.js`) applies th
 - **Explained handbook lines.** A talent family declares the handbook lines it explains (for example "Will gradually lose HP over time"). A line with no feature of its own counts as covered only when a cleared talent of the same record explains it.
 - **Spawn dependencies.** An enemy that spawns another is supported only when the child is too. `REGULAR_ENEMY_SPAWNS` makes a stage ship the children's records, and the harness supplies them.
 - **Coverage.** Support rises to 207 of 1,552 enemies. Each family and pattern has a harness test on a real enemy.
+
+### Retained native evidence and reviewed components (E4, 2026-10-21)
+
+The native timing index is no longer the only retained evidence: `tools/arkpedia/extract-enemy-native-abilities.py` writes `data/arkpedia-enemy-native-abilities.json` with the original component JSON, object names, referenced components and buff templates that a reviewed feature reads. `shared/arkpedia/enemy-support.js` only accepts it when the source index hash and every component digest match (`verifiedNative`), so a changed prefab cannot silently keep an approval.
+
+- **DefDown**: every attack hit adds one permanent, uncapped stack of `defdown.def` to the operator hit, proven against the original active-buff component (DEF addition, no duration, no stack cap).
+- **Enhance**: each enemy-side death anywhere on the field grants one permanent stack of ATK and ASPD up to `enhance.max_stack_cnt`, proven against the original whole-field target validator and `ON_OWNER_KILLED` template.
+- **Coverage.** Support rises to 231 of 1,552 enemies. The native-evidence hash checks are part of the support test.
+
+### Death blasts, splits and the leak line (E5, 2026-10-21)
+
+Three more regular-stage families attach through the same registry; no new per-enemy id list is involved.
+
+- **`boom` death blast**: the reviewed handbook lines name Physical, Cold or Nervous-Impairment damage. `atk_scale` is the explosion multiplier, `freeze` the Cold duration and `ep_damage_ratio` the elemental rider. `deathBoom` now also applies the named element, and the battle selection rules stay the documented area/stealth/air rules.
+- **`deathrattle` split**: "Splits into N <X> upon death" spawns `cnt` children after `delay` s on the parent's remaining route (`deathSpawnDelayed`), spread across the parent tile. The child is a normal spawn dependency, so the parent is supported only when the child is.
+- **Leak line**: "Drains 1 Life Point when entering the Objective Point" only restates `lpr`, which the engine already applies on a leak.
+- **Explained lines.** A feature may now explain a handbook line with a predicate as well as a regular expression, so variants such as "Death deals…" and "Deals … upon death" share one family.
+- **Coverage.** Support rises to 243 of 1,552 enemies. The 12 new admits are both Infused Originium Slugs, both Infused Glacial Originium Slugs, both slug variants (their records use the same reviewed group and match the base slugs' stats), the Surprise Sponsor Drone, the neural 'Small Surprise' and the Originiutant split family. Tests exercise the physical, Cold and elemental blasts, the delayed split and the leak line on real enemies.

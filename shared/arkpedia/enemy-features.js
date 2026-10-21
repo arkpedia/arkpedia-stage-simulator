@@ -27,6 +27,30 @@ function family(groups, params, ability, extra, note, dependsOn = null, explains
 }
 const CONFINEMENT_SIGS = [['attack_speed', 'max_stack_cnt', 'max_valid_stack_cnt', 'times']], LIBERTY_SIGS = [['atk'], ['atk', 'def_penetrate'], ['atk', 'hp_recovery_per_sec', 'magic_resistance']];
 const REBORN_PARAMS = new Set(['duration', 'hp_ratio', 'invincible']);
+
+// The reviewed death-blast handbook lines. Each names the damage its explosion deals; the talent blackboard carries
+// the multiplier (and, for the cold/elemental variants, the status duration and elemental ratio).
+const DEATH_BLAST_PHYSICAL = /^(?:Death deals a large amount of Physical damage to surrounding units|Deals Physical damage to surrounding units upon death)$/;
+const DEATH_BLAST_COLD = /^Upon death, deals Physical damage in an area and applies <\$ba\.cold>Cold<\/> to affected targets$/;
+const DEATH_BLAST_NEURAL = /^Upon death, deals Arts damage to all surrounding units and inflicts <\$ba\.dt\.neural>Nervous Impairment<\/>$/;
+const deathBlastText = text => DEATH_BLAST_PHYSICAL.test(text) || DEATH_BLAST_COLD.test(text) || DEATH_BLAST_NEURAL.test(text);
+/** Explosion parameters of one `boom`-family record; the handbook line picks the damage type and element. */
+function deathBlastParams(r, group) {
+  const bb = r.talents.bb, text = r.abilities.map(a => a.text).join('\n');
+  const params = { scale: bb[`${group}.atk_scale`] ?? 0, type: /Arts damage/.test(text) ? 'arts' : 'phys' };
+  const freeze = bb[`${group}.freeze`] ?? 0, ep = bb[`${group}.ep_damage_ratio`] ?? 0;
+  if (freeze > 0) params.status = { key: 'cold', dur: freeze };
+  if (ep > 0) { params.element = elementOf(r); params.epRatio = ep; }
+  return params;
+}
+/** The death-blast feature covers exactly the reviewed signatures and handbook lines, never an unreviewed record. */
+function coversDeathBlast(r, group) {
+  if (!r.abilities.length) return sig(r, group, ['atk_scale']) || sig(r, group, ['atk_scale', 'freeze']);
+  if (sig(r, group, ['atk_scale'])) return r.abilities.length === 1 && DEATH_BLAST_PHYSICAL.test(r.abilities[0].text);
+  if (sig(r, group, ['atk_scale', 'freeze'])) return r.abilities.length === 1 && DEATH_BLAST_COLD.test(r.abilities[0].text);
+  if (sig(r, group, ['atk_scale', 'ep_damage_ratio'])) return r.abilities.every(a => a.text === 'Flying unit.' || DEATH_BLAST_NEURAL.test(a.text));
+  return false;
+}
 function rebornFamily(group) {
   return { [`talent:${group}`]: {
     covers: r => r.talents.groups[group].includes('duration') && r.talents.groups[group].every(p => REBORN_PARAMS.has(p)),
@@ -69,6 +93,8 @@ export const ENEMY_FEATURES = Object.freeze({
   // Handbook lines restating what the record's stats already model.
   'ability:Flying unit.': { covers: r => r.stats.motion === 'FLY', note: 'motion FLY' },
   'ability:Regenerates HP over time.': { covers: r => r.stats.hpRecoveryPerSec > 0, note: 'hpRecoveryPerSec' },
+  // The engine's normal leak already removes `lpr` Life Points; this line only restates the record's stat.
+  'ability:Drains 1 Life Point when entering the Objective Point': { covers: r => r.stats.lpr === 1, note: 'the engine drains lpr Life Points on a leak' },
   // Spawn traits.
   'ability:Cannot be blocked.': { covers: () => true, trait: { flags: { unblockable: true } }, note: 'unblockable for life' },
   'ability:<$ba.invisible>Invisible</>': { covers: () => true, trait: { flags: { stealth: true } },
@@ -111,6 +137,18 @@ export const ENEMY_FEATURES = Object.freeze({
   ...family(['DeadSpawn'], ['cnt', 'enemy_key'], g => ({ kind: 'deathSpawn', params: r => ({ key: r.talents.bbStr[`${g}.enemy_key`], cnt: r.talents.bb[`${g}.cnt`] }) }),
     r => true, 'spawns cnt enemy_key when killed', r => Object.entries(r.talents.bbStr).filter(([k]) => /^deadspawn\.enemy_key$/i.test(k)).map(([, v]) => v),
     /^Spawns \d+ <[^>]+> when defeated$/),
+  // "Splits into N <X> upon death" (deathrattle): cnt children after `delay` s, spread around the parent's tile.
+  'talent:deathrattle': { covers: r => sig(r, 'deathrattle', ['cnt', 'delay', 'enemy_key', 'offset_bound']) && r.skills.length === 0
+      && r.abilities.some(a => /^Splits into \d+ <[^>]+> upon death$/.test(a.text)),
+    ability: { kind: 'deathSpawnDelayed', params: r => ({ key: r.talents.bbStr['deathrattle.enemy_key'], cnt: r.talents.bb['deathrattle.cnt'],
+      delay: r.talents.bb['deathrattle.delay'] ?? 0 }) },
+    note: 'splits into cnt children after delay s', dependsOn: r => [r.talents.bbStr['deathrattle.enemy_key']].filter(Boolean),
+    explains: /^Splits into \d+ <[^>]+> upon death$/ },
+  // Death blast (boom): atk_scale × ATK around the corpse; the cold/elemental variants add their reviewed status or
+  // element. Records whose line names anything else (ignite Reeds, seize Gramophones, grant Energy) are not covered.
+  'talent:boom': { covers: r => coversDeathBlast(r, 'boom'),
+    ability: { kind: 'deathBoom', params: r => deathBlastParams(r, 'boom') },
+    note: 'death blast: atk_scale × ATK, with the reviewed cold/elemental rider', explains: deathBlastText },
   // DefDown: every attack hit adds a permanent, uncapped stack of DEF +defdown.def (flat) to the operator hit
   // (PRTS 酸液源石虫 天赋 corroborates: 防御力-10, 可无限叠加, linear in stacks).
   'talent:defdown': { covers: (r, nat) => sig(r, 'defdown', ['def']) && r.talents.bb['defdown.def'] < 0 && isStackingDefDown(nat),

@@ -84,6 +84,49 @@ test('DeadSpawn: killed, it spawns its supported children', () => {
   for (let i = 0; i < 400 && e.alive; i++) { h.b.dealDamage(null, e, { amount: 1e9, type: 'true', sourceless: true }); h.step(); }
   h.run(0.5); assert.equal(h.b.units.filter(u => u.side === 'enemy' && u.defId === child).length, r.talents.bb[`${g}.cnt`]);
 });
+test('death blast: its reviewed physical explosion hits nearby allies', () => {
+  const key = 'enemy_1021_bslime', r = ENEMY_RECORDS.enemies[key].levels[0];
+  assert.ok(support.enemies[key].features.includes('talent:boom'));
+  const h = spawnAny(key, { seconds: 0.1 }), e = enemy(h, key), guard = h.b.units.find(u => u.side === 'ally');
+  e.x = guard.x; e.y = guard.y;
+  let hit = null; h.b.on('damaged', c => { if (c.source === e && c.target === guard) hit = c; });
+  const hp = guard.hp; h.b.dealDamage(null, e, { amount: 1e9, type: 'true', sourceless: true }); h.run(0.05);
+  assert.equal(e.alive, false); assert.ok(hit, 'the explosion dealt damage'); assert.equal(hit.dmg.type, 'phys');
+  assert.equal(hit.dmg.amount, e.s.atk * r.talents.bb['boom.atk_scale']); assert.ok(guard.hp < hp);
+});
+test('cold death blast: it applies the reviewed Cold duration', () => {
+  const key = 'enemy_1067_snslime', r = ENEMY_RECORDS.enemies[key].levels[0];
+  const h = spawnAny(key, { seconds: 0.1 }), e = enemy(h, key), guard = h.b.units.find(u => u.side === 'ally');
+  e.x = guard.x; e.y = guard.y;
+  h.b.dealDamage(null, e, { amount: 1e9, type: 'true', sourceless: true }); h.run(0.05);
+  const cold = guard.buffs.find(b => b.status === 'cold');
+  assert.ok(cold, 'Cold applied'); assert.equal(cold.duration, r.talents.bb['boom.freeze']);
+});
+test('elemental death blast: it deals the named element at the reviewed ratio', () => {
+  const key = 'enemy_2012_csbln', r = ENEMY_RECORDS.enemies[key].levels[0];
+  const h = spawnAny(key, { seconds: 0.1 }), e = enemy(h, key), guard = h.b.units.find(u => u.side === 'ally');
+  e.x = guard.x; e.y = guard.y;
+  const elements = []; h.b.on('damaged', c => { if (c.source === e && c.target === guard && c.dmg.type === 'element') elements.push(c.dmg); });
+  h.b.dealDamage(null, e, { amount: 1e9, type: 'true', sourceless: true }); h.run(0.05);
+  assert.equal(elements.length, 1); assert.equal(elements[0].element, 'neural');
+  assert.equal(elements[0].amount, e.s.atk * r.talents.bb['boom.ep_damage_ratio']);
+});
+test('split on death: the children spawn after the reviewed delay on the parent route', () => {
+  const key = 'enemy_1130_infstr', r = ENEMY_RECORDS.enemies[key].levels[0], child = r.talents.bbStr['deathrattle.enemy_key'];
+  assert.ok(support.enemies[child].policy, 'the child is supported');
+  const h = spawnAny(key, { seconds: 0.1 }), e = enemy(h, key); h.b.autoFinish = false;
+  h.b.dealDamage(null, e, { amount: 1e9, type: 'true', sourceless: true }); h.run(0.05);
+  assert.equal(h.b.units.filter(u => u.side === 'enemy' && u.defId === child).length, 0, 'nothing before the delay');
+  h.run(r.talents.bb['deathrattle.delay'] + 0.2);
+  assert.equal(h.b.units.filter(u => u.side === 'enemy' && u.defId === child).length, r.talents.bb['deathrattle.cnt']);
+});
+test('Drains 1 Life Point: the engine leak drains the record stat', () => {
+  const key = 'enemy_1137_plasm';
+  assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');
+  const h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
+  let leaked = null; h.b.on('enemyLeak', c => { leaked = c.enemy; });
+  h.b.leak(e); assert.equal(leaked, e); assert.equal(e.lpr, e.def.raw.stats.lpr);
+});
 test('Must be damaged N times: it takes exactly N hits', () => {
   const key = 'enemy_1196_msfyin', n = ENEMY_RECORDS.enemies[key].levels[0].stats.maxHp, h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
   for (let i = 0; i < n - 1; i++) h.b.dealDamage(null, e, { amount: 1e6, type: 'phys', sourceless: true });
