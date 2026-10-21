@@ -5326,3 +5326,7 @@ The `buff[def,duration,magic_resistance]` record is a timed flat DEF/RES buff (3
 ### Rhine Defense shield (E22, 2026-10-21)
 
 The `Shield[max_block_damage_cnt]` record is a one-hit Physical/Arts shield; the feature sets the engine's `hitShield` at spawn so the first matching instance is cancelled. Support rises to **292 of 1,552** enemies. The test lands a blocked hit and a second damaging hit.
+
+### Public catalogue review (S26, 2026-10-21)
+
+Seven stages that passed the headless QA pass have been promoted out of `testOnly`: **0-2, 0-11, 3-1, 4-7, 5-8, 9-3 and S2-12**. The public simulator now offers **0-1 plus those seven**; the remaining **104** file-backed stages stay test-only until reviewed and are still reachable with `?experimental=1`. A catalogue test now pins the promoted set and checks that an unreviewed stage is still rejected.

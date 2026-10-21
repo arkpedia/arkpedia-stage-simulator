@@ -24,7 +24,7 @@ test('an explicit stage wins over the default and an unknown stage lists the alt
   assert.equal(resolveStage(catalogued, 'test-2').id, 'test-2');
   assert.throws(() => resolveStage(catalogued, 'missing'), error => {
     assert.equal(error.code, 'STAGE_NOT_FOUND');
-    assert.deepEqual(error.stages.map(stage => stage.id), ['0-1', 'test-2']);
+    assert.deepEqual(error.stages.map(stage => stage.id), [...index.stages.filter(stage => !stage.testOnly).map(stage => stage.id), 'test-2']);
     return true;
   });
 });
@@ -51,6 +51,10 @@ test('an embedded catalogue entry can never silently load a different stage', as
 });
 test('the committed catalogue is generated from the stage files', async () => {
   assert.deepEqual(await buildStageIndex(), index);
+});
+test('reviewed stages are public while the rest stay test-only', () => {
+  for (const id of ['0-2', '0-11', '3-1', '4-7', '5-8', '9-3', 's2-12']) assert.equal(resolveStage(index, id).id, id);
+  assert.throws(() => resolveStage(index, '1-2'), error => error.code === 'STAGE_TEST_ONLY');
 });
 test('test-only stages require the experimental flag', () => {
   const entry = index.stages.find(stage => stage.testOnly);
