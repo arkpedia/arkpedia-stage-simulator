@@ -21,8 +21,10 @@ const args = Object.fromEntries(process.argv.slice(2).flatMap((arg, i, all) =>
   arg.startsWith('--') ? [[arg.slice(2), all[i + 1]]] : []));
 for (const key of ['stage', 'geometry', 'playback', 'out']) if (!args[key]) throw Error(`Missing --${key}`);
 const read = async file => JSON.parse(await readFile(file, 'utf8'));
-const [source, geometry, playbackFile, mvp] = await Promise.all([
+const [source, geometry, playbackFile, mvp, records, support] = await Promise.all([
   read(args.stage), read(args.geometry), read(args.playback), read(new URL('../../data/arkpedia-mvp.json', import.meta.url)),
+  read(new URL('../../data/arkpedia-enemy-records.json', import.meta.url)),
+  read(new URL('../../data/arkpedia-enemy-support.json', import.meta.url)),
 ]);
 const paths = playbackFile.playbackPaths ?? playbackFile.paths;
 if (!paths || !Object.keys(paths).length) throw Error('Playback export has no paths');
@@ -46,7 +48,18 @@ const stage = {
   gates: null,
 };
 // The battle compiler and the supported-enemy gate are the same ones used by 0-1.
-stageAdapter(stage);
+const adapter = stageAdapter(stage);
+const enemyIds = new Set();
+const addEnemy = id => {
+  if (enemyIds.has(id)) return;
+  const entry = records.enemies[id];
+  if (!entry) throw Error(`Missing enemy record: ${id}`);
+  if (!support.enemies[id]?.policy) throw Error(`Unsupported regular-stage enemy: ${id} (${support.enemies[id]?.reasons.join(', ')})`);
+  enemyIds.add(id);
+  for (const child of support.enemies[id].spawns ?? []) addEnemy(child);
+};
+for (const spawn of adapter.spawns) addEnemy(spawn.enemyKey);
+stage.enemies = Object.fromEntries([...enemyIds].map(id => [id, records.enemies[id].levels[0]]));
 assertRegularEnemies({ ...mvp, stage });
 await writeFile(args.out, JSON.stringify(stage, null, 1) + '\n');
-console.log(`Built ${stage.code}: ${stage.geometry.rows}x${stage.geometry.cols}, ${stage.geometry.waves.length} waves, ${stageAdapter(stage).spawns.length} spawns -> ${args.out}`);
+console.log(`Built ${stage.code}: ${stage.geometry.rows}x${stage.geometry.cols}, ${stage.geometry.waves.length} waves, ${adapter.spawns.length} spawns, ${enemyIds.size} enemies -> ${args.out}`);

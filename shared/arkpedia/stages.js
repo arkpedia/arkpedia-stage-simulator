@@ -58,6 +58,7 @@ export async function applyStage(data, index, requested = null, fetchImpl = fetc
     const stage = await response.json();
     if (!stage || typeof stage !== 'object' || !stage.geometry) throw Error(`Stage data is not a stage: ${entry.id}`);
     data.stage = { ...stage, code: entry.code, name: entry.name, description: entry.description ?? stage.description ?? '' };
+    if (stage.enemies && typeof stage.enemies === 'object') data.enemies = { ...(data.enemies ?? {}), ...stage.enemies };
   } else {
     if (!data.stage || data.stage.code !== entry.code) throw Error(`Embedded stage is missing: ${entry.id}`);
   }
