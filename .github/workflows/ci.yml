@@ -64,7 +64,7 @@ jobs:
 
       - name: Unit & integration tests
         if: ${{ inputs.scope != 'atomic-json' }}
-        run: node --test
+        run: node --test --test-timeout=180000
 
       - name: Atomic replacement tests including real Windows sharing locks
         if: ${{ inputs.scope == 'atomic-json' }}

@@ -5806,3 +5806,7 @@ The buildable bucket exposed two ready stages: **9-11** (8×12, 47 spawns, 4 ene
 ### Snapshot to 194 public stages (S107, 2026-10-21)
 
 `docs/REMAINING.md` records **392** supported enemies, **193** built source stages and **194** public entries. The buildable bucket is empty except the embedded 0-1; the next unlocks need tokens, conditional spawns or the hard bosses.
+
+### CI per-test timeout (S108, 2026-10-21)
+
+The GitHub-hosted unit/integration step now runs `node --test --test-timeout=180000`: a single hung test fails in three minutes instead of occupying the runner until the workflow limit. The longest local test is under three seconds, so the budget only catches a hang.
