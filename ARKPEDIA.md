@@ -5722,3 +5722,7 @@ Added `test/arkpedia-performance.test.js`: 10 seconds of the 150-spawn 14-11 bat
 ### Round-100 snapshot (S91, 2026-10-21)
 
 `docs/REMAINING.md` records the round-100 state: **378** supported enemies, **185** built source stages, **186** public entries, and the 22,578-test full suite. The remaining stages are dominated by conditional spawns, deployable tokens, Inspired/identity bosses and source entries without geometry.
+
+### Hard-mechanics roadmap (S92, 2026-10-21)
+
+Added `docs/HARD-MECHANICS.md`: deployable tokens, conditional spawns, Inspired/altar, Londinium artillery, Talulah, Decode Basis and the Damazti bosses, with the concrete data/engine pieces each needs and the implementation order.
