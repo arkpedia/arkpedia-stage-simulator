@@ -5814,3 +5814,7 @@ The GitHub-hosted unit/integration step now runs `node --test --test-timeout=180
 ### CI test sharding (S109, 2026-10-21)
 
 The unit/integration step now runs through `tools/run-tests.mjs` with `SHARD_INDEX`/`SHARD_TOTAL` over a stable sort of `test/*.test.js`. The matrix has two shards per OS/Node lane, so each file runs once and the 70-minute wall time should roughly halve. Server smoke and atomic-write jobs run on shard 0 only; enemy-clock jobs are unchanged.
+
+### Conditional-spawn breakdown (S110, 2026-10-21)
+
+The coverage report now reads `stage-conditional/<slug>.json` and breaks the 63 conditional stages down by trigger: **205 branch** spawns and **86 hidden-group** spawns. This makes the conditional bucket actionable instead of a single count.
