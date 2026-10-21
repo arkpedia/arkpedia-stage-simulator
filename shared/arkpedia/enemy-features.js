@@ -264,6 +264,11 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Roar Knightclub: a timed flat DEF/RES buff declared by the record.
+  'talent:buff': { covers: r => sig(r, 'buff', ['def', 'duration', 'magic_resistance'])
+      && r.abilities.some(a => /^(Has significantly increased DEF and RES for a period of time|Starts with significantly increased DEF and RES, persists for a long period\.)$/.test(a.text)),
+    ability: { kind: 'timedStatBuff', params: r => ({ def: r.talents.bb['buff.def'], res: r.talents.bb['buff.magic_resistance'], duration: r.talents.bb['buff.duration'] }) },
+    note: 'timed DEF +def and RES +res', explains: text => /^(Has significantly increased DEF and RES for a period of time|Starts with significantly increased DEF and RES, persists for a long period\.)$/.test(text) },
   // Sankta: first HP drop below half applies self-fear and a temporary movement multiplier.
   'talent:SelfFear': { covers: r => sig(r, 'SelfFear', ['fear', 'move_speed', 'speed_duration'])
       && r.abilities.some(a => a.text === 'Gains <$ba.fear>Fear</> for several seconds when its HP drops below 50% for the first time'),

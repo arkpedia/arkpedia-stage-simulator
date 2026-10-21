@@ -5318,3 +5318,7 @@ The Tiacauh family gains `Def.def` while blocked; the Ritualist/Shaman also has 
 ### Sankta SelfFear (E20, 2026-10-21)
 
 The Sankta's first HP drop below half applies its reviewed self-fear (`SelfFear.fear`) and the final movement multiplier (`SelfFear.move_speed` for `speed_duration`), reusing the existing fear movement. Support rises to **287 of 1,552** enemies. The test drops the HP below half once and checks both the fear status and the speed buff.
+
+### Roar Knightclub's timed stat buff (E21, 2026-10-21)
+
+The `buff[def,duration,magic_resistance]` record is a timed flat DEF/RES buff (30 s for the trainees/elite, 60 s for Szewczyk). The new feature applies it at spawn and lets the engine expire it. Support rises to **290 of 1,552** enemies. The test checks the exact DEF/RES and the 30-second expiry.

@@ -311,6 +311,13 @@ test('Sankta SelfFear: first HP drop below half applies fear and the speed buff'
   h.b.dealDamage(null, e, { amount: e.s.maxHp * 0.6, type: 'true', sourceless: true }); h.run(0.05);
   assert.ok(e.buffs.some(b => b.status === 'fear'), 'fear applied'); assert.ok(e.findBuff('ab:fearRun'), 'speed buff applied');
 });
+test('Roar Knightclub: the timed DEF/RES buff applies and expires', () => {
+  const key = 'enemy_1101_plkght', base = ENEMY_RECORDS.enemies[key].levels[0].stats.def, h = spawnAny(key, { seconds: 0.1 });
+  const e = enemy(h, key); h.run(0.5);
+  assert.equal(e.s.def, base + 3000); assert.equal(e.s.res, 95); assert.equal(e.findBuff('ab:timedStat').duration, 30);
+  h.run(31);
+  assert.equal(e.findBuff('ab:timedStat'), null); assert.equal(e.s.def, base);
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');
