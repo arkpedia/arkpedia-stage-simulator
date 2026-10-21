@@ -1,0 +1,1783 @@
+{
+ "code": "12-9",
+ "name": "Years of Passion",
+ "description": "No matter how I look at them, something about these old clothes seems off. Did someone wash them for me?\nAllies have greatly reduced cost limit.\n<Roadside Emergency Reserves> When destroyed, grants a certain amount of DP and cost limit.\nEnvironmental Conditions:\nFewer <Roadside Emergency Reserves>; some enemies are different.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 20,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "12-9_adverse_environment",
+  "rows": 7,
+  "cols": 12,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    1,
+    2,
+    2,
+    2,
+    2,
+    3,
+    4,
+    4,
+    2,
+    2,
+    2,
+    0
+   ],
+   [
+    0,
+    2,
+    0,
+    4,
+    5,
+    0,
+    2,
+    5,
+    5,
+    2,
+    0,
+    0
+   ],
+   [
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    4,
+    4,
+    3
+   ],
+   [
+    0,
+    5,
+    5,
+    2,
+    0,
+    4,
+    5,
+    2,
+    5,
+    5,
+    2,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    2,
+    2,
+    2,
+    2,
+    4,
+    4,
+    2,
+    2,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    3,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 5
+    },
+    "end": {
+     "row": 6,
+     "col": 3
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 3
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 120
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 20
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 3
+    },
+    "end": {
+     "row": 1,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 3
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 120
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 20
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 11
+    },
+    "end": {
+     "row": 3,
+     "col": 0
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 11
+    },
+    "end": {
+     "row": 3,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 10
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 11
+    },
+    "end": {
+     "row": 3,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 10
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 5
+    },
+    "end": {
+     "row": 1,
+     "col": 0
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 7
+    },
+    "end": {
+     "row": 6,
+     "col": 3
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 5
+    },
+    "end": {
+     "row": 1,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 35
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 35
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 7
+    },
+    "end": {
+     "row": 6,
+     "col": 3
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 3
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 35
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 35
+     }
+    ]
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 210,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Sentry Spymaster",
+      "enemy_id": "enemy_1315_wdyjd_2",
+      "count": 1,
+      "time": 0,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sentry Spymaster",
+      "enemy_id": "enemy_1315_wdyjd_2",
+      "count": 1,
+      "time": 0,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Armed Spymaster",
+      "enemy_id": "enemy_1316_wdpjd_2",
+      "count": 2,
+      "time": 7,
+      "interval": 35,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sarkaz Absurdist Operative Leader",
+      "enemy_id": "enemy_1317_wdexg_2",
+      "count": 1,
+      "time": 40,
+      "route": 3,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sarkaz Absurdist Operative Leader",
+      "enemy_id": "enemy_1317_wdexg_2",
+      "count": 1,
+      "time": 95,
+      "route": 4,
+      "fragment": 0
+     },
+     {
+      "enemy": "Armed Spymaster",
+      "enemy_id": "enemy_1316_wdpjd_2",
+      "count": 1,
+      "time": 80,
+      "route": 4,
+      "fragment": 0
+     },
+     {
+      "enemy": "Pathfinder Spymaster",
+      "enemy_id": "enemy_1314_wdnjd_2",
+      "count": 1,
+      "time": 75,
+      "route": 5,
+      "fragment": 0
+     },
+     {
+      "enemy": "Pathfinder Spymaster",
+      "enemy_id": "enemy_1314_wdnjd_2",
+      "count": 1,
+      "time": 85,
+      "route": 6,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sentry Spymaster",
+      "enemy_id": "enemy_1315_wdyjd_2",
+      "count": 1,
+      "time": 120,
+      "route": 7,
+      "fragment": 1
+     },
+     {
+      "enemy": "Sentry Spymaster",
+      "enemy_id": "enemy_1315_wdyjd_2",
+      "count": 1,
+      "time": 120,
+      "route": 8,
+      "fragment": 1
+     },
+     {
+      "enemy": "Sarkaz Absurdist Operative Leader",
+      "enemy_id": "enemy_1317_wdexg_2",
+      "count": 1,
+      "time": 123,
+      "route": 4,
+      "fragment": 2
+     },
+     {
+      "enemy": "Pathfinder Spymaster",
+      "enemy_id": "enemy_1314_wdnjd_2",
+      "count": 1,
+      "time": 135,
+      "route": 5,
+      "fragment": 2
+     },
+     {
+      "enemy": "Pathfinder Spymaster",
+      "enemy_id": "enemy_1314_wdnjd_2",
+      "count": 1,
+      "time": 135,
+      "route": 6,
+      "fragment": 2
+     },
+     {
+      "enemy": "Armed Spymaster",
+      "enemy_id": "enemy_1316_wdpjd_2",
+      "count": 1,
+      "time": 150,
+      "route": 4,
+      "fragment": 2
+     },
+     {
+      "enemy": "Sarkaz Greatswordsman",
+      "enemy_id": "enemy_1010_demon",
+      "count": 2,
+      "time": 175,
+      "interval": 20,
+      "route": 5,
+      "fragment": 3
+     },
+     {
+      "enemy": "Sarkaz Absurdist Operative Leader",
+      "enemy_id": "enemy_1317_wdexg_2",
+      "count": 2,
+      "time": 185,
+      "interval": 25,
+      "route": 4,
+      "fragment": 3
+     },
+     {
+      "enemy": "Pathfinder Spymaster",
+      "enemy_id": "enemy_1314_wdnjd_2",
+      "count": 2,
+      "time": 195,
+      "interval": 15,
+      "route": 6,
+      "fragment": 3
+     },
+     {
+      "enemy": "Armed Spymaster",
+      "enemy_id": "enemy_1316_wdpjd_2",
+      "count": 1,
+      "time": 200,
+      "route": 4,
+      "fragment": 3
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 5,
+    "routes": [
+     5,
+     7,
+     5,
+     5
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 3,
+    "col": 11,
+    "routes": [
+     2,
+     3,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 6,
+    "col": 7,
+    "routes": [
+     6,
+     8,
+     6,
+     6
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 1,
+    "col": 0,
+    "routes": [
+     1,
+     1,
+     5,
+     7,
+     5,
+     5
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 3,
+    "col": 0,
+    "routes": [
+     2,
+     3,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 6,
+    "col": 3,
+    "routes": [
+     0,
+     0,
+     6,
+     8,
+     6,
+     6
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1010_demon",
+    "slug": "sarkaz_greatswordsman",
+    "name": "Sarkaz Greatswordsman",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1314_wdnjd_2",
+    "slug": "pathfinder_spymaster",
+    "name": "Pathfinder Spymaster",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1315_wdyjd_2",
+    "slug": "sentry_spymaster",
+    "name": "Sentry Spymaster",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1316_wdpjd_2",
+    "slug": "armed_spymaster",
+    "name": "Armed Spymaster",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1317_wdexg_2",
+    "slug": "sarkaz_absurdist_operative_leader",
+    "name": "Sarkaz Absurdist Operative Leader",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "pathing": {
+  "schemaVersion": 1,
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "12-9",
+  "geometryHash": "da9587e375bf92bf702949b7779efc541cebf613d0c8e4d50b2bedc9750bed0f",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      3,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "length": 9,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 0,
+      "seconds": 120,
+      "point": [
+       5,
+       5
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 5,
+      "seconds": 20,
+      "point": [
+       3,
+       2
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      5,
+      5
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      6
+     ]
+    ]
+   },
+   "1": {
+    "points": [
+     [
+      3,
+      1
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      0,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "length": 9,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 0,
+      "seconds": 120,
+      "point": [
+       3,
+       1
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 3,
+      "seconds": 20,
+      "point": [
+       3,
+       4
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      3,
+      1
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "2": {
+    "points": [
+     [
+      11,
+      3
+     ],
+     [
+      10,
+      3
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "length": 11,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      11,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ]
+   },
+   "3": {
+    "points": [
+     [
+      11,
+      3
+     ],
+     [
+      10,
+      3
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "length": 11,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 5,
+      "point": [
+       10,
+       3
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      11,
+      3
+     ],
+     [
+      10,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ]
+   },
+   "4": {
+    "points": [
+     [
+      11,
+      3
+     ],
+     [
+      10,
+      3
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "length": 11,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      11,
+      3
+     ],
+     [
+      10,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ]
+   },
+   "5": {
+    "points": [
+     [
+      5,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      0,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "length": 5,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      5,
+      1
+     ],
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "6": {
+    "points": [
+     [
+      7,
+      6
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      3,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "length": 6,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      7,
+      6
+     ],
+     [
+      3,
+      6
+     ]
+    ]
+   },
+   "7": {
+    "points": [
+     [
+      5,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      0,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ],
+    "length": 13,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 35,
+      "point": [
+       6,
+       1
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 5,
+      "seconds": 35,
+      "point": [
+       5,
+       4
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      5,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "8": {
+    "points": [
+     [
+      7,
+      6
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      3,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "length": 12,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 35,
+      "point": [
+       7,
+       5
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 8,
+      "seconds": 35,
+      "point": [
+       3,
+       2
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      7,
+      6
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      6
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1315_wdyjd_2": {
+   "key": "enemy_1315_wdyjd_2",
+   "prefabKey": "enemy_1315_wdyjd_2",
+   "name": "Sentry Spymaster",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 6500,
+    "atk": 800,
+    "def": 200,
+    "res": 35,
+    "moveSpeed": 0.65,
+    "bat": 3.3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": true,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Spy",
+     "format": "NORMAL"
+    },
+    {
+     "text": "When their identity is revealed, becomes <$ba.invisible>Invisible</>",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "moveSpeed.move_speed": 0.2
+    },
+    "bbStr": {},
+    "groups": {
+     "moveSpeed": [
+      "move_speed"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1316_wdpjd_2": {
+   "key": "enemy_1316_wdpjd_2",
+   "prefabKey": "enemy_1316_wdpjd_2",
+   "name": "Armed Spymaster",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 15000,
+    "atk": 1200,
+    "def": 1500,
+    "res": 0,
+    "moveSpeed": 0.35,
+    "bat": 3.5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 5,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": true,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Spy",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "moveSpeed.move_speed": 0
+    },
+    "bbStr": {},
+    "groups": {
+     "moveSpeed": [
+      "move_speed"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1317_wdexg_2": {
+   "key": "enemy_1317_wdexg_2",
+   "prefabKey": "enemy_1317_wdexg_2",
+   "name": "Sarkaz Absurdist Operative Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "ALL",
+   "stats": {
+    "maxHp": 7500,
+    "atk": 650,
+    "def": 350,
+    "res": 35,
+    "moveSpeed": 0.8,
+    "bat": 3.5,
+    "aspd": 100,
+    "rangeRadius": 2,
+    "rawRangeRadius": 2,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": true,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Attacks reduce DP when carrying ammo. Ammo capacity: 3",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "1.attack@cost": -3,
+     "1.attack@sp": -1
+    },
+    "bbStr": {},
+    "groups": {
+     "1": [
+      "attack@cost",
+      "attack@sp"
+     ]
+    }
+   },
+   "skills": [],
+   "sp": {
+    "type": "INCREASE_WITH_TIME",
+    "maxSp": 3,
+    "initSp": 3,
+    "increment": 0
+   },
+   "notCountInTotal": false,
+   "tags": [
+    "sarkaz"
+   ]
+  },
+  "enemy_1314_wdnjd_2": {
+   "key": "enemy_1314_wdnjd_2",
+   "prefabKey": "enemy_1314_wdnjd_2",
+   "name": "Pathfinder Spymaster",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 8000,
+    "atk": 600,
+    "def": 350,
+    "res": 20,
+    "moveSpeed": 0.65,
+    "bat": 2.3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": true,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Spy",
+     "format": "NORMAL"
+    },
+    {
+     "text": "When their identity is revealed, the next attack's ATK is greatly increased",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "moveSpeed.move_speed": 0.05,
+     "EnhancedAttack.atk_scale": 2
+    },
+    "bbStr": {},
+    "groups": {
+     "moveSpeed": [
+      "move_speed"
+     ],
+     "EnhancedAttack": [
+      "atk_scale"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1010_demon": {
+   "key": "enemy_1010_demon",
+   "prefabKey": "enemy_1010_demon",
+   "name": "Sarkaz Greatswordsman",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 7500,
+    "atk": 600,
+    "def": 230,
+    "res": 50,
+    "moveSpeed": 0.85,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "sarkaz"
+   ]
+  }
+ }
+}
