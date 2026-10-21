@@ -5414,3 +5414,7 @@ The stage selector now groups options into Chapter N, Side stories, Mini events,
 ### Theater Golem block/splash (E31, 2026-10-21)
 
 The Theater Golem requires a blocker with at least 4 Block (`profile.requiredBlock` is enforced by `_blockerFor`) and splashes its own ATK around its body on every attack. Support rises to **316 of 1,552** enemies. The test checks both the 4-Block gate and the self-centred splash.
+
+### Chapter 9 and S2 public expansion (S42, 2026-10-21)
+
+**9-2, 9-3, 9-4, S2-1, S2-2, S2-5, S2-6, S2-7 and S2-8** join the public catalogue after the data review. The public simulator now offers **0-1 plus fifty-seven reviewed stages**; **56** file-backed stages remain test-only. The catalogue test pins the full public set.
