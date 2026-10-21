@@ -1,3 +1,5 @@
+# GitHub-hosted runners only. Do not add self-hosted/NAS labels here: the owner runs these checks on
+# GitHub-owned Ubuntu and Windows images, and test/arkpedia-ci-runners.test.js fails the suite if one appears.
 name: CI
 run-name: "${{ inputs.scope == 'atomic-json' && 'Atomic JSON verification' || inputs.scope == 'enemy-clocks' && 'Enemy clock source verification' || 'Full simulator verification' }} (${{ github.ref_name }})"
 
