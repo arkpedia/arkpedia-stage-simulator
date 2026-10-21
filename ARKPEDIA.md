@@ -5670,3 +5670,7 @@ With the Phalanx aura supported, **9-5** and **9-6** build (8×11/8×12, 44–46
 ### Sarkaz Royal Court Caster DeathEye (E57, 2026-10-21)
 
 Normal attacks add Necrosis (`empty.attack@ep_damage_ratio` 0.25). Every 24 s (first at 10 s) DeathEye locks a target, ticks 0.4x Arts damage for 8 s, then bursts 2.2x ATK Necrosis in a 1.5 radius. The reviewed wrapper is claimed. Support rises to **370 of 1,552** enemies. The test observes the Arts lock-on tick.
+
+### 11-1 adverse and 11-2 (S83, 2026-10-21)
+
+With the DeathEye caster supported, **11-1 adverse environment** and **11-2** build (7×11/7×9, 16–37 spawns). Coverage is **177 public stages** (0-1 plus 176 files).
