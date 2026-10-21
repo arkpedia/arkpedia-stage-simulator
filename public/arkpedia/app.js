@@ -65,6 +65,7 @@ const stageHref = stage => `/arkpedia/?stage=${encodeURIComponent(stage.id)}${ex
 let activeStage;
 try {
   ({ entry: activeStage } = await applyStage(data, stageIndex, requested, fetch, { experimental }));
+  document.title = `${data.stage.code} ${data.stage.name} · Arkpedia stage simulator`;
 } catch (error) {
   const available = (error.stages ?? stageIndex.stages.filter(stage => !stage.testOnly) ?? []).map(stage =>
     `<a href="${stageHref(stage)}">${escape(stage.code)} ${escape(stage.name)}</a>`).join(', ');
@@ -143,11 +144,26 @@ let editing = ops[0].id,
   rosterQuery = "";
 function prep() {
   const stages = stageIndex.stages.filter(stage => !stage.testOnly || experimental);
+  const chapterLabel = (stage) => {
+    const code = stage.code;
+    if (/^TR-/i.test(code)) return 'Tutorial';
+    if (/^S\d/i.test(code)) return 'Side stories';
+    if (/^M\d/i.test(code)) return 'Mini events';
+    if (/^\d+-/.test(code)) return `Chapter ${code.split('-')[0]}`;
+    return 'Events';
+  };
+  const groupedStages = new Map();
+  for (const stage of stages) {
+    const label = chapterLabel(stage);
+    if (!groupedStages.has(label)) groupedStages.set(label, []);
+    groupedStages.get(label).push(stage);
+  }
+  const stageOptions = [...groupedStages].map(([label, list]) => `<optgroup label="${escape(label)}">${list.map(stage => `<option value="${escape(stageHref(stage))}"${stage.id === activeStage.id ? ' selected' : ''}>${escape(stage.code)} ${escape(stage.name)}${stage.testOnly ? ' · test' : ''}</option>`).join('')}</optgroup>`).join('');
   const stagePicker = stages.length > 1
-    ? `<nav class="stage-picker" aria-label="Stages">${stages.map(stage => `<a href="${stageHref(stage)}"${stage.id === activeStage.id ? ' aria-current="page"' : ''}>${escape(stage.code)} ${escape(stage.name)}${stage.testOnly ? ' · test' : ''}</a>`).join('')}</nav>`
+    ? `<label class="stage-picker">Stage <button type="button" id="stage-prev" aria-label="Previous stage">‹</button><input id="stage-search" type="search" placeholder="Find a stage" autocomplete="off" aria-label="Find a stage"><span id="stage-search-count" class="stage-search-count" role="status" aria-live="polite"></span><select id="stage-select" aria-label="Stages">${stageOptions}</select><button type="button" id="stage-next" aria-label="Next stage">›</button></label>`
     : '';
   app.innerHTML = `<div class="frame"><header class="topline"><div><p class="eyebrow">Arkpedia · prototype</p><h1>Stage simulator</h1></div><span class="muted">${escape(data.stage.code)} ${escape(data.stage.name)}</span></header>
- <div class="prep">${stagePicker}<section class="preview"><div class="stage-title"><span class="stage-code">${escape(data.stage.code)}</span><h2>${escape(data.stage.name)}</h2></div><p class="help">${escape(data.stage.description)}</p><div class="board" id="board"></div><div class="legend"><span class="spawn">Enemy entry</span><span class="goal">Defence objective</span><span>Raised tiles: ranged operators</span></div>
+ <div class="prep">${stagePicker}<section class="preview"><div class="stage-title"><span class="stage-code">${escape(data.stage.code)}</span><h2>${escape(data.stage.name)}</h2></div><p class="help">${escape(data.stage.description)}</p><p class="stage-meta">${Object.keys(data.stage.enemies ?? {}).length} enemy types · ${data.stage.geometry?.waves?.length ?? 0} waves · ${data.stage.battle?.max_life ?? '–'} life</p><div class="board" id="board"></div><div class="legend"><span class="spawn">Enemy entry</span><span class="goal">Defence objective</span><span>Raised tiles: ranged operators</span></div>
  ${data.stage.fixedSquad ? `<p class="notice">This stage uses a fixed squad (${data.stage.fixedSquad.length} operators); the squad choices below are ignored in battle.</p>` : ''}<div class="panel help"><h3>How to play</h3><p>Choose your squad, then open the battle workspace. On mobile, rotate to landscape for battle. Drag an operator onto a tile, then choose its facing on the map. You can also select the operator and click a tile. Select a deployed operator to activate a ready skill or retreat.</p></div>
  <p class="notice">This first slice supports ${escape(data.stage.code)} and the ${ops.length} operators shown. Squad capacity is 12 + one distinct maxed support. Modules, other stages and the rest of the roster are still being built.</p></section>
  <section class="panel"><h2>Prepare your squad</h2><p class="help">Select an operator to adjust their build.</p><label class="roster-search">Find an operator<input id="roster-search" type="search" placeholder="Name or class" value="${escape(rosterQuery)}" autocomplete="off" aria-controls="roster"></label><div class="roster" id="roster" aria-label="Available operators"><p class="roster-empty" hidden>No operators match this search.</p></div><div id="build"></div><label class="support">Support · optional, fully maxed<select id="support"><option value="">No support</option></select></label><div id="support-build"></div><div class="prepare-actions"><button class="primary" id="start">Open battle workspace</button></div><p class="error" id="prep-error" role="status" aria-live="polite"></p></section></div>
@@ -160,6 +176,24 @@ function prep() {
   document
     .querySelector("#support")
     .addEventListener("change", (e) => { supportId = e.target.value; renderPrep(); });
+  document.querySelector("#stage-search")?.addEventListener("input", (e) => {
+    const query = e.target.value.trim().toLowerCase(), options = [...document.querySelectorAll("#stage-select option")];
+    for (const option of options) option.hidden = !!query && !option.textContent.toLowerCase().includes(query);
+    const count = options.filter(option => !option.hidden).length;
+    const counter = document.querySelector("#stage-search-count");
+    if (counter) counter.textContent = query ? `${count} match${count === 1 ? "" : "es"}` : "";
+  });
+  const activeIndex = stages.findIndex(stage => stage.id === activeStage.id);
+  document.querySelector("#stage-prev")?.addEventListener("click", () => { if (activeIndex > 0) location.href = stageHref(stages[activeIndex - 1]); });
+  document.querySelector("#stage-next")?.addEventListener("click", () => { if (activeIndex >= 0 && activeIndex < stages.length - 1) location.href = stageHref(stages[activeIndex + 1]); });
+  document.querySelector("#stage-search")?.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") { e.target.value = ""; e.target.dispatchEvent(new Event("input", { bubbles: true })); }
+    if (e.key === "Enter") {
+      const first = [...document.querySelectorAll("#stage-select option")].find(option => !option.hidden);
+      if (first) location.href = first.value;
+    }
+  });
+  document.querySelector("#stage-select")?.addEventListener("change", (e) => { location.href = e.target.value; });
   document.querySelector("#start").addEventListener("click", start);
   document.querySelector("#roster-search").addEventListener("input", (e) => {
     rosterQuery = e.target.value;
@@ -1119,6 +1153,11 @@ document.addEventListener("visibilitychange", () => {
   }
 });
 document.addEventListener("keydown", (e) => {
+  if (e.key === "/" && !/^(INPUT|TEXTAREA|SELECT)$/.test(e.target?.tagName || "")) {
+    const search = document.querySelector("#stage-search");
+    if (search) { e.preventDefault(); search.focus(); }
+  }
+
   if (
     !workspace ||
     landscapeRequired ||

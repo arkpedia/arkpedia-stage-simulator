@@ -5300,3 +5300,529 @@ Sixteen fixed-squad stages are buildable with supported enemies:
 | TR-23 | 6×9 | 1 / 24 |
 
 `test/arkpedia-fixed-squad.test.js` checks the exact builds and that an empty caller selection still produces the fixed bench. Coverage is **0-1 plus 108 test-only files**.
+
+### Tiacauh DEF and melee (E19, 2026-10-21)
+
+The Tiacauh family gains `Def.def` while blocked; the Ritualist/Shaman also has the reviewed `combat.attack@ccwitch_rage_attack.atk_scale` 4× melee multiplier (applied while blocked). Support rises to **285 of 1,552** enemies. The test checks the flat DEF while blocked and the exact 4× melee damage.
+
+### Tiacauh stages (S25, 2026-10-21, test-only)
+
+| Stage | Grid | Waves | Spawns |
+|---|---|---|---|
+| 2-10 | 8×11 | 2 | 36 |
+| 6-8 | 8×11 | 1 | 36 |
+| S6-3 | 8×11 | 1 | 32 |
+
+10-8/10-8 adverse still have an unmatched tunnel break. Coverage is **0-1 plus 111 test-only files**.
+
+### Sankta SelfFear (E20, 2026-10-21)
+
+The Sankta's first HP drop below half applies its reviewed self-fear (`SelfFear.fear`) and the final movement multiplier (`SelfFear.move_speed` for `speed_duration`), reusing the existing fear movement. Support rises to **287 of 1,552** enemies. The test drops the HP below half once and checks both the fear status and the speed buff.
+
+### Roar Knightclub's timed stat buff (E21, 2026-10-21)
+
+The `buff[def,duration,magic_resistance]` record is a timed flat DEF/RES buff (30 s for the trainees/elite, 60 s for Szewczyk). The new feature applies it at spawn and lets the engine expire it. Support rises to **290 of 1,552** enemies. The test checks the exact DEF/RES and the 30-second expiry.
+
+### Rhine Defense shield (E22, 2026-10-21)
+
+The `Shield[max_block_damage_cnt]` record is a one-hit Physical/Arts shield; the feature sets the engine's `hitShield` at spawn so the first matching instance is cancelled. Support rises to **292 of 1,552** enemies. The test lands a blocked hit and a second damaging hit.
+
+### Public catalogue review (S26, 2026-10-21)
+
+Seven stages that passed the headless QA pass have been promoted out of `testOnly`: **0-2, 0-11, 3-1, 4-7, 5-8, 9-3 and S2-12**. The public simulator now offers **0-1 plus those seven**; the remaining **104** file-backed stages stay test-only until reviewed and are still reachable with `?experimental=1`. A catalogue test now pins the promoted set and checks that an unreviewed stage is still rejected.
+
+### Evade variants (E23, 2026-10-21)
+
+`talent:Evade` now covers the unblocked physical dodge (Delinquent), the initial timed 100% dodge (Alcohol Lover) and the first low-HP 100% dodge (Lakeside Volunteer/Lifeguard). All use the engine's `dodgePhys` buff. Support rises to **296 of 1,552** enemies. The test checks all three forms.
+
+### Volleyball cart ATK stacks (E24, 2026-10-21)
+
+The Volleyball Serving/Spiking Cart gains `AtkUp.atk` per attack up to `max_stack_cnt`, and any of cold, freeze, stun, fear, bind or silence clears the stack buff. Support rises to **298 of 1,552** enemies. The test checks three stacks (+30%) and the cold reset.
+
+### Sarkaz standby revive (E25, 2026-10-21)
+
+The Grudgebearer/Worldcurser/Bladeweaver family starts in a stun-flag standby until the first injury drops HP below `revive.hp_ratio` (0.999) or `revive.unmove_duration` elapses. It then removes standby, gains the `revive.move_speed` multiplier, and the two-target long-ranged form sets `maxTargets` 2. Support rises to **302 of 1,552** enemies. The test checks the standby, the awakening and the two targets.
+
+### 10-8 teleport support (S27, 2026-10-21, test-only)
+
+The stage adapter now accepts a viewer break without a tunnel hold when the level geometry has an `appear_at_pos` checkpoint at the exact break point. It emits a zero-second DISAPPEAR/WAIT/APPEAR pair, so the enemy teleports instead of walking. This closes the last refused main stage whose enemies were all supported: **10-8** and **10-8 adverse environment** now build (8×11, 18 spawns, 4 enemies). Coverage is **0-1 plus 113 test-only files**; the battle test pins the DISAPPEAR/APPEAR legs.
+
+### Originium Colossus melee splash (E26, 2026-10-21)
+
+An ability-only enemy (`ability:Attacks deal splash damage`, no talent group) now uses the standard one-tile melee splash around its target. Support rises to **304 of 1,552** enemies. The test places two adjacent guards and checks both take the hit.
+
+### Ability-only target priorities (E27, 2026-10-21)
+
+Two ability-only enemies now set `profile.targetPriority`: the Icefield Hunter sorts the lowest DEF, and the Primal Sea Piercer sorts the lowest HP fraction within its range. `sortAllyTargets` applies that special key after the blocker and before aggro, matching the game's 阻挡→特殊优先级→仇恨 order. Support rises to **308 of 1,552** enemies. The test pins both sorts and the blocker's precedence.
+
+### Prisoner liberty regex fix (E28, 2026-10-21)
+
+The existing `talent:confinement`/`talent:liberty` feature explained only a truncated "Freed after a few attacks, gaining increased ATK" line, so the full Pugilist/Strongman sentences stayed unsupported. The matcher now accepts the longer lines, which supports the Pugilist/Strongman prisoners (**+4**, total **312 of 1,552**). The existing confinement/liberty test now covers the new records.
+
+### Big Snowball Thrower first attack (E29, 2026-10-21)
+
+The `FirstAttack.attack@first_atk_scale` record now multiplies only the first ordinary attack (1.5× for 15002). Support rises to **313 of 1,552** enemies. The test checks the first and second hit amounts.
+
+### Seed of Withering self-destruct (E30, 2026-10-21)
+
+The Seed of Withering/Decay detonates once an ally is inside its attack radius, dealing its ATK as Physical damage in a 2-unit blast and then dying. Support rises to **315 of 1,552** enemies. The test checks the self-destruct and the guard damage.
+
+### Public catalogue expansion (S31, 2026-10-21)
+
+Three more early stages have passed the data review (supported enemies, valid geometry, catalogue-loadable, 10-second battle): **1-1, 1-7 and 2-1**. The public simulator now offers **0-1 plus ten reviewed stages**; **103** file-backed stages remain test-only. The catalogue test pins the expanded public set.
+
+### Chapter 1 public expansion (S32, 2026-10-21)
+
+**1-3, 1-4, 1-5, 1-8, 1-9 and 1-10** join the public catalogue after the same supported-enemy, geometry, catalogue-load and 10-second battle review. The public simulator now offers **0-1 plus sixteen reviewed stages**; **97** file-backed stages remain test-only. The catalogue test pins the full public set.
+
+### Chapter 2 public expansion (S33, 2026-10-21)
+
+**2-2, 2-4, 2-5 and 2-6** join the public catalogue after the data review. The public simulator now offers **0-1 plus twenty reviewed stages**; **93** file-backed stages remain test-only. The catalogue test pins the full public set.
+
+### Further public expansion (S34, 2026-10-21)
+
+**2-7, 2-8, 2-9, 3-2 and 3-4** join the public catalogue after the data review. The public simulator now offers **0-1 plus twenty-five reviewed stages**; **88** file-backed stages remain test-only. The catalogue test pins the full public set.
+
+### Chapter 3/4 public expansion (S35, 2026-10-21)
+
+**3-5, 3-6, 3-8, 4-1 and 4-2** join the public catalogue after the data review. The public simulator now offers **0-1 plus thirty reviewed stages**; **83** file-backed stages remain test-only. The catalogue test pins the full public set.
+
+### Stage selector (S36, 2026-10-21)
+
+With thirty-one public stages, the prep page's row of links became unwieldy. It is now a labelled `<select>` that preserves the current stage, the stage code/name and the `· test` marker; changing it navigates to `stageHref`. The static client tests still pass (217).
+
+### Chapter 4/5 public expansion (S37, 2026-10-21)
+
+**4-3, 4-5, 4-6, 5-1, 5-2 and 5-3** join the public catalogue after the data review. The public simulator now offers **0-1 plus thirty-six reviewed stages**; **77** file-backed stages remain test-only. The catalogue test pins the full public set.
+
+### Chapter 5/6 public expansion (S38, 2026-10-21)
+
+**5-8, 5-9, 6-1, 6-2, 6-3, 6-4 and 6-5** join the public catalogue after the data review. The public simulator now offers **0-1 plus forty-three reviewed stages**; **70** file-backed stages remain test-only. The catalogue test pins the full public set.
+
+### Half the catalogue is public (S39, 2026-10-21)
+
+**6-8, 6-9, 6-10, 6-11, 6-12, 7-2 and 7-3** join the public catalogue after the data review. The public simulator now offers **0-1 plus forty-nine reviewed stages** — **50 of 114** entries. **64** file-backed stages remain test-only. The catalogue test pins the full public set.
+
+### Public review dates (S40, 2026-10-21)
+
+Every public entry now carries a `reviewed` date (`2026-10-21` for the current fifty). The catalogue test requires a public entry to have a valid date, so future promotions must record their review instead of silently dropping `testOnly`. The generator preserves the field as part of the curated entry.
+
+### Grouped stage selector (S41, 2026-10-21)
+
+The stage selector now groups options into Chapter N, Side stories, Mini events, Tutorial and Events via `<optgroup>`, using the stage code prefix. The current stage remains selected. Static client tests still pass (217).
+
+### Theater Golem block/splash (E31, 2026-10-21)
+
+The Theater Golem requires a blocker with at least 4 Block (`profile.requiredBlock` is enforced by `_blockerFor`) and splashes its own ATK around its body on every attack. Support rises to **316 of 1,552** enemies. The test checks both the 4-Block gate and the self-centred splash.
+
+### Chapter 9 and S2 public expansion (S42, 2026-10-21)
+
+**9-2, 9-3, 9-4, S2-1, S2-2, S2-5, S2-6, S2-7 and S2-8** join the public catalogue after the data review. The public simulator now offers **0-1 plus fifty-seven reviewed stages**; **56** file-backed stages remain test-only. The catalogue test pins the full public set.
+
+### S2 and chapter 10 public expansion (S43, 2026-10-21)
+
+**S2-9, S2-10, S2-11, S2-12, 10-2, 10-3 and 10-4** join the public catalogue after the data review. The public simulator now offers **0-1 plus sixty-three reviewed stages**; **50** file-backed stages remain test-only. The catalogue test pins the full public set.
+
+### The whole built catalogue is public (S44, 2026-10-21)
+
+The remaining fifty test-only stages passed the same supported-enemy, geometry, catalogue-load and 10-second battle review and are now public with `reviewed: 2026-10-21`. **All 114 built stages are public** (0-1 plus 113 file-backed). Test-only remains the gate for future stages: the catalogue test now uses a synthetic test-only entry so it still checks the `?experimental=1` rule.
+
+### Stage coverage report (S45, 2026-10-21)
+
+`npm run coverage:arkpedia-stages` classifies all **709** main source stages: **113** have committed files (plus the embedded 0-1), and the remaining **596** are grouped by their first blocker — **311** have no geometry, **161** unsupported enemies, **63** conditional spawns, **60** deployable tokens and **1** other. The report ranks the unsupported enemy ids by stage count (the Norport Civilian heads the list at 24). `test/arkpedia-stage-coverage.test.js` pins the classification totals and the top blocker.
+
+### Wither Vanguard pollution Arts (E32, 2026-10-21)
+
+The Sarkaz Wither Vanguard's ordinary attack changes to Arts while its tile key contains `toxic` (`tile_toxic`/`tile_toxicroad`). Support rises to **318 of 1,552** enemies. The test calls the attack hook on a toxic and a normal tile.
+
+### Active Originium Storm (E33, 2026-10-21)
+
+The stale `StormAura` native component is now retained. Its record drives a one-second storm tick: radius grows by `radius_step` to `max_radius`, damage grows by `damage_step` to `max_damage`, allies inside take Arts damage and receive a short `spRecoveryMul = 1 + sp_recover_ratio` buff. The reviewed passive claims one native active ability. Support rises to **319 of 1,552** enemies. The test waits for a storm hit on the guard.
+
+### 14-2 stages (S46, 2026-10-21)
+
+With the Wither Vanguard pollution Arts and the Active Originium Storm both supported, **14-2** and **14-2 adverse environment** build (8×11, 46 spawns, 6 enemies) and join the public catalogue. Coverage is **116 public stages** (0-1 plus 115 files). The coverage report now classifies the built total automatically.
+
+### Boom visual (S47, 2026-10-21)
+
+The Seed of Withering's self-destruct emits `fx('boom')`; the full render test requires every literal kind to have an explicit visual. Added `boom` as a 1.5-radius blast in `public/js/render/fx.js`. The full repository suite then reaches **22,549 tests, 22,537 passed, 0 failed, 11 skipped**.
+
+### Guerrilla Herald battlefield buff (E34, 2026-10-21)
+
+The Guerrilla Herald refreshes a 0.7-second battlefield-wide buff on every living enemy: ATK +`strength.atk` (10%) and DEF +`strength.def` (100). The short duration makes the aura end when the Herald dies or leaks. Support rises to **321 of 1,552** enemies. The test buffs a second enemy, then kills the Herald and checks the revert.
+
+### Stage search (S48, 2026-10-21)
+
+The prep page's grouped stage selector now has a "Find a stage" search box. Typing filters the options by code/name (case-insensitive) without changing the current selection; clearing the query restores every option. Static client tests still pass (217).
+
+### Stage search shortcuts (S49, 2026-10-21)
+
+`/` focuses the stage search from anywhere outside a form field, and Escape clears the query and restores all options. Static client tests remain at 217.
+
+### Sudaram pollution AoE (E35, 2026-10-21)
+
+Sudaram's normal attack is a self-centred Physical blast; when it stands on a toxic tile or is marked by the Originium Storm, every ally on a toxic tile or carrying the storm mark is also hit. Support rises to **323 of 1,552** enemies. The test checks the adjacent guards.
+
+### Stage metadata line (S50, 2026-10-21)
+
+The prep page now shows the stage's enemy-type count, wave count and life total under the description. It reads the loaded stage payload, so fixed-squad, event and test stages get the correct numbers. Static client tests remain at 217.
+
+### Enter-to-open stage search (S51, 2026-10-21)
+
+Pressing Enter in the stage search opens the first visible option, so a search for "7-3" plus Enter jumps straight to that stage. Escape still clears. Static client tests remain at 217.
+
+### Stage-specific document title (S52, 2026-10-21)
+
+After a stage loads, the tab title becomes `<code> <name> · Arkpedia stage simulator`, so multiple stage tabs are distinguishable. Static client tests remain at 217.
+
+### Stage search result count (S53, 2026-10-21)
+
+The stage search now shows an aria-live "N matches" count while filtering and clears it when the query is empty. Static client tests remain at 217.
+
+### Per-chapter coverage (S54, 2026-10-21)
+
+The coverage report now also prints built/total per chapter. The snapshot shows where the remaining work concentrates: Chapters 11 and 12 are 0/50 and 0/55 (civilian/spy identity), 15–17 are 0/34–35 (mostly no geometry), while Chapter 10 is already 15/49. The test checks that the chapter totals sum to the overall total.
+
+### Previous/next stage buttons (S55, 2026-10-21)
+
+The stage picker now has `‹` and `›` buttons that jump to the previous or next catalogue entry, in the same order as the grouped selector. Static client tests remain at 217.
+
+### Identity mechanic design note (S56, 2026-10-21)
+
+Added `docs/IDENTITY.md`: the civilian/spy data, the profile flags and blocking rules it needs, the civilian DP reward, the reveal API, the `1322` blink cadence and the `1317` ammo drain, plus the tests and open questions. This is the blueprint for the chapter-11/12 block rather than a per-stage guess.
+
+### Norport Civilian base (E36, 2026-10-21)
+
+First slice of the identity layer: `ability:Friendly Unit` marks `profile.friendly`, `canTargetEnemy` never selects a friendly unit, and `leak` for a friendly civilian raises `flags.dpMax` by `civilianTalent.max_cost` (2) instead of recording a life loss. Support rises to **325 of 1,552** enemies. The test checks the marker, the targeting veto and the max-DP reward.
+
+### Spy reveal layer (E37, 2026-10-21)
+
+`Battle.revealIdentity(e)` is idempotent: it marks `profile.revealed`, emits `identityRevealed` and runs each ability's `reveal` hook. The Sentry Spy gains stealth, the Pathfinder Spy arms one `EnhancedAttack` hit (`atk_scale` 2), `talent:moveSpeed` contributes its passive multiplier, and the Spy feature claims the reviewed native active. Support rises to **331 of 1,552** enemies. The test checks the one-shot reveal, stealth, movement buff and the 2× armed hit.
+
+### Instigator identity lock (E38, 2026-10-21)
+
+`identityLocks` tracks living, unblocked Rebellion Instigators. While non-empty, `_checkBlock` rejects unrevealed spies and civilians. Support rises to **333 of 1,552** enemies. The test checks the lock and the post-clear block.
+
+### Checkpoint blink (E39, 2026-10-21)
+
+The `1322` family's lowercase `blink` wrapper/action graph is now retained and matched. After every `spCost` (2) attacks it calls the existing `blinkForward` toward the next checkpoint; Crownslayer's blocked-trigger blink remains a separate branch of `skill:blink`. Support rises to **335 of 1,552** enemies. The test watches the unit advance after two attacks.
+
+### Absurdist Operative DP drain (E40, 2026-10-21)
+
+The `1317` family carries three ammo and each attack drains `1.attack@cost` DP (2/3) and reduces the target's SP by 1; the fourth attack has no ammo. Support rises to **337 of 1,552** enemies. The test calls the ability three times and checks the DP and ammo counters.
+
+### 12-8 stages (S60, 2026-10-21)
+
+With the `1317` DP-drain family supported, **12-8** and **12-8 adverse environment** build (8×10, 42 spawns, 3 enemies) and join the public catalogue. Coverage is **118 public stages** (0-1 plus 117 files). The coverage test no longer pins the now-supported Norport Civilian as the top blocker.
+
+### Chapter 12 identity stages (S61, 2026-10-21)
+
+With civilians, spies, the Instigator lock, the checkpoint blink and the DP-drain operative all supported, **12-13**, **12-13 adverse environment**, **12-14** and **12-14 adverse environment** build (7×11/8×12, 39–80 spawns). 12-12/12-12 adverse still need the Splitcaster's Virtual Image summon. Coverage is **122 public stages** (0-1 plus 121 files).
+
+### Splitcaster Virtual Image (E41, 2026-10-21)
+
+At `summon.hp_ratio` (0.5) the Splitcaster leaves one Virtual Image clone at its position. The clone carries `profile.virtualImage` and cannot split again. Support rises to **339 of 1,552** enemies. The test checks the single clone and the no-resplit guard.
+
+### 12-12 stages (S62, 2026-10-21)
+
+With the Splitcaster Virtual Image supported, **12-12** and **12-12 adverse environment** build (8×12, 67 spawns, 5 enemies). Coverage is **124 public stages** (0-1 plus 123 files).
+
+### More chapter-12 stages (S63, 2026-10-21)
+
+**12-2, 12-3, 12-5, 12-9, 12-10 and 12-15** also build with the identity layer and join the public catalogue. Coverage is **130 public stages** (0-1 plus 129 files).
+
+### 1320 first-attack splash (E42, 2026-10-21)
+
+The `1320` family requires a 3-Block blocker and its first attack is 1.5x and splashes the target's box; later attacks are single-target. The reviewed `AOEAttack` wrapper is claimed. Support rises to **341 of 1,552** enemies. The test uses 3-Block guards and checks both the splash and the single-target follow-up.
+
+### 12-6 and 12-7 (S64, 2026-10-21)
+
+With the `1320` family supported, **12-6** and **12-7** build (7×10/8×11, 34–41 spawns). Coverage is **132 public stages** (0-1 plus 131 files). 12-18 still needs the `1321` Seed summoner.
+
+### 1321 Seed summoner (E43, 2026-10-21)
+
+The `1321` family drops three Seeds of Withering every 10 seconds, starting 10 seconds after spawn. The reviewed `BornBugs` wrapper is claimed. Support rises to **342 of 1,552** enemies. The test observes the seed spawns.
+
+### 12-17, 12-18 and 12-19 (S65, 2026-10-21)
+
+With the `1321` Seed summoner supported, **12-17**, **12-18** and **12-19** build (7×12–8×12, 15–31 spawns). Coverage is **135 public stages** (0-1 plus 134 files).
+
+### Sarkaz Caster lasso (E44, 2026-10-21)
+
+The reviewed Lasso wrapper/ability is retained. Every attack is a 0.35x Arts lasso that stuns its target for the skill's 20-second `hit_duration`; the wrapper is claimed. Support rises to **344 of 1,552** enemies. The evidence-tamper test now selects components that actually contain its tamper strings, so adding new retained components cannot make it vacuous.
+
+### Lasso stages (S66, 2026-10-21)
+
+With the Sarkaz Caster lasso supported, **4-8**, **4-9** and **12-4** build (8×11, 30–49 spawns). Coverage is **138 public stages** (0-1 plus 137 files).
+
+### Adverse variants and TR-22 (S67, 2026-10-21)
+
+The nine chapter-12 adverse variants (**12-2/3/4/5/6/7/9/10/15 adverse environment**) and the fixed-squad tutorial **TR-22** build with the current support. Coverage is **148 public stages** (0-1 plus 147 files).
+
+### Sudaram dealt-state fix (S68, 2026-10-21)
+
+The full enemy sweep caught that Sudaram's wrapper `dealt` called the base `splashAttack.dealt` without its ability-state argument, so `a.splash` was undefined. Pass the state through; the full enemy harness is clean again.
+
+### Rotchaser bleed (E45, 2026-10-21)
+
+The Rotchaser reuses the legacy `ab:bleed` ability: each hit applies its 100/s Arts bleed for 10 s and any heal removes it. Support rises to **346 of 1,552** enemies. The test checks the debuff, its tick and the heal cleanse.
+
+### Witherer death corruption (E46, 2026-10-21)
+
+The Witherer leaves the reviewed pollution zone on death (radius 2, 8 s, 50/25 true damage). Support rises to **348 of 1,552** enemies. The test kills one next to the guard and checks the damage tick.
+
+### Ursus named-target priority (E47, 2026-10-21)
+
+The Infected Patrol Captain family prioritizes allies whose record name contains "Ursus Civilian" or "Talulah"; with no such unit it keeps the normal blocker→aggro order. Support rises to **352 of 1,552** enemies. The test pins the named sort.
+
+### R8-1 (S69, 2026-10-21)
+
+With the Ursus named-target priority supported, **R8-1** builds (7×11, 56 spawns, 2 enemies). Coverage is **149 public stages** (0-1 plus 148 files).
+
+### Native-only Beacon support (E48, 2026-10-21)
+
+Added an explicit `NATIVE_ONLY_FEATURES` map for stage props whose records have no talent/ability/skill text but do have native active components. The Beacon claims both reviewed active components and has no behaviour of its own (the Altar Keeper owns pickup). Support rises to **353 of 1,552** enemies.
+
+### 14-5 stages (S70, 2026-10-21)
+
+With the Beacon supported, **14-5** and **14-5 adverse environment** build (8×12, 28 spawns, 5 enemies). Coverage is **151 public stages** (0-1 plus 150 files).
+
+### Altar Keeper Beacon handling (E49, 2026-10-21)
+
+The Altar Keeper is unblockable, gets a short movement slow when hit, picks up one nearby Beacon (removing it without a kill), and drops a Beacon on death. Support rises to **355 of 1,552** enemies. The test checks pickup, the carried flag and the drop.
+
+### 14-4 stages (S71, 2026-10-21)
+
+With the Altar Keeper supported, **14-4** and **14-4 adverse environment** build (7×10, 28–30 spawns, 5 enemies). Coverage is **153 public stages** (0-1 plus 152 files).
+
+### Chalice of Regret damage share (E50, 2026-10-21)
+
+The Chalice mirrors 5% of damage taken by nearby non-flying enemies onto itself as true damage (radius 1.7, tagged to avoid recursion). Support rises to **357 of 1,552** enemies. The test deals 1000 to a neighbour and checks the 50 self-damage.
+
+### Caustic Slug (E51, 2026-10-21)
+
+The Caustic Originium Slug leaves a 3.5x Physical death blast and a short pollution zone; if consumed by an Active Originium Storm while carrying its mark, it adds one damage-step boost to the storm. Support rises to **359 of 1,552** enemies. The test checks the death blast.
+
+### 14-10 (S72, 2026-10-21)
+
+With the Caustic Slug supported, **14-10** builds (9×12, 106 spawns, 5 enemies). Coverage is **154 public stages** (0-1 plus 153 files). The adverse variant still needs the `1424_2`/`1425` combination.
+
+### Profane Chimera (E52, 2026-10-21)
+
+On polluted or stormed tiles the Profane Chimera emits its own pollution aura and its attacks become Arts; elsewhere it keeps normal attacks. The reviewed `OrigAura` wrapper is claimed. Support rises to **361 of 1,552** enemies. The test checks both tile states.
+
+### 14-6 stages (S73, 2026-10-21)
+
+With the Profane Chimera supported, **14-6** and **14-6 adverse environment** build (7×10, 32 spawns, 5 enemies). Coverage is **156 public stages** (0-1 plus 155 files).
+
+### 14-7 and 14-9 (S74, 2026-10-21)
+
+**14-7**, **14-7 adverse environment**, **14-9** and **14-9 adverse environment** build with the Chimera/Beacon/storm support (8×11, 25–29 spawns, 5–6 enemies). Coverage is **160 public stages** (0-1 plus 159 files).
+
+### TR-25 (S75, 2026-10-21)
+
+The fixed-squad tutorial **TR-25** builds (6×9, 10 spawns, 3 enemies). Coverage is **161 public stages** (0-1 plus 160 files).
+
+### Rot Eater (E53, 2026-10-21)
+
+The Rot Eater scales HP/ATK/DEF by `1 + min(max_percentage, defeated * guaranteed_percentage)` and emits its 1.1-radius pollution aura every tick. Support rises to **362 of 1,552** enemies. The test checks the aura damage.
+
+### 14-11 stages (S76, 2026-10-21)
+
+With the Rot Eater supported, **14-11** and **14-11 adverse environment** build (7×12, 150 spawns, 9 enemies). Coverage is **163 public stages** (0-1 plus 162 files).
+
+### CI-safe coverage test (S77, 2026-10-21)
+
+The coverage test assumed the sibling `arkpedia-data` source checkout, which GitHub runners do not have. It now skips when that directory is absent; local runs still classify all main stages. This fixes the only red job on PR #140.
+
+### Remaining snapshot refresh (S78, 2026-10-21)
+
+`docs/REMAINING.md` now records **362** supported enemies, **162** built source stages (163 public including 0-1), and the 22,568-test full-suite result.
+
+### Focused Soul Remnant (E54, 2026-10-21)
+
+The Remnant picks up up to three Soul Maelstroms, then every 15 s expends them for a three-tick Arts line (`atk_scale + atk_ladder × (souls-1)`) through the current target. The reviewed wrapper and active are claimed. Support rises to **364 of 1,552** enemies. The test casts manually and checks both line targets.
+
+### 14-14, 14-15 and 14-17 (S79, 2026-10-21)
+
+With the Focused Soul Remnant supported, **14-14**, **14-15** and **14-17** build (7×12–8×12, 32–57 spawns). Coverage is **166 public stages** (0-1 plus 165 files).
+
+### Infused Soul Husk (E55, 2026-10-21)
+
+The Husk picks up up to three Soul Maelstroms and spends one every 15 s on a short orbiting Arts aura (five half-second ticks, 1.4 radius, `atk_scale` 1). The reviewed wrapper and active are claimed. Support rises to **366 of 1,552** enemies. The test casts manually and checks the aura damage.
+
+### 14-16 and 14-19 (S80, 2026-10-21)
+
+With the Infused Soul Husk supported, **14-16** and **14-19** build (7×12–8×12, 40–86 spawns). Coverage is **168 public stages** (0-1 plus 167 files).
+
+### Late-14 adverse variants (S81, 2026-10-21)
+
+The adverse variants of **14-14/15/16/17/19** build as well (8×11–8×12, 32–86 spawns). Coverage is **173 public stages** (0-1 plus 172 files).
+
+### Dublinn Phalanx aura (E56, 2026-10-21)
+
+Each Phalanx unit refreshes DEF +200 per other living Phalanx unit (Infantry and Commander text), stacking with other auras and ending when the count drops. Support rises to **368 of 1,552** enemies. The test checks two units and the revert after one dies.
+
+### 9-5 and 9-6 (S82, 2026-10-21)
+
+With the Phalanx aura supported, **9-5** and **9-6** build (8×11/8×12, 44–46 spawns). Coverage is **175 public stages** (0-1 plus 174 files).
+
+### Sarkaz Royal Court Caster DeathEye (E57, 2026-10-21)
+
+Normal attacks add Necrosis (`empty.attack@ep_damage_ratio` 0.25). Every 24 s (first at 10 s) DeathEye locks a target, ticks 0.4x Arts damage for 8 s, then bursts 2.2x ATK Necrosis in a 1.5 radius. The reviewed wrapper is claimed. Support rises to **370 of 1,552** enemies. The test observes the Arts lock-on tick.
+
+### 11-1 adverse and 11-2 (S83, 2026-10-21)
+
+With the DeathEye caster supported, **11-1 adverse environment** and **11-2** build (7×11/7×9, 16–37 spawns). Coverage is **177 public stages** (0-1 plus 176 files).
+
+### Steam Tank rage (E58, 2026-10-21)
+
+At half HP the Steam Tank gains +100 ASPD, +100% movement and stun/freeze/sleep immunity. Support rises to **372 of 1,552** enemies. The test drops it below half and checks the rage buff.
+
+### 11-3 (S84, 2026-10-21)
+
+With the Steam Tank supported, **11-3** builds (8×11, 19 spawns, 4 enemies). Coverage is **178 public stages** (0-1 plus 177 files).
+
+### 11-2 and 11-3 adverse variants (S85, 2026-10-21)
+
+The adverse variants of **11-2** and **11-3** build as well (7×9/8×11, 21–37 spawns). Coverage is **180 public stages** (0-1 plus 179 files).
+
+### Ursus Civilian (E59, 2026-10-21)
+
+The Ursus Civilian sets `lpr = 0` (spared at the objective costs no life) and `counted = false`; dying instead deducts the reviewed `dead.value` (-1) life and can finish the battle. The native active is claimed. Support rises to **373 of 1,552** enemies. The test covers spare and kill.
+
+### Civilian stages (S86, 2026-10-21)
+
+With the Ursus Civilian supported, **R8-2**, **R8-4**, **R8-9** and **TR-18** build (6×9–8×12, 7–64 spawns). Coverage is **184 public stages** (0-1 plus 183 files).
+
+### Prototype Auto Meal Distributor (E60, 2026-10-21)
+
+The distributor summons one Rampaging Maintenance Helper every 5 s (first after 3 s) using the reviewed `Spawn.enemy_key`. The wrapper is claimed. Support rises to **374 of 1,552** enemies. The test observes the helper spawn.
+
+### Snapshot to 374 enemies (S87, 2026-10-21)
+
+`docs/REMAINING.md` now records **374** supported enemies, **183** built source stages and **184** public entries.
+
+### 13-6 families (E61, 2026-10-21)
+
+Bloodborn Spawn: Arts attacks scale with the target's blocking count, and death leaves the reviewed Blood Amber child. Bombardier: delayed 1.1-radius Physical explosion plus the reborn child. Blood Amber: inert until the altar pulse, native active claimed. Support rises to **378 of 1,552** enemies. Tests cover the delayed explosion and the Blood Amber spawn.
+
+### 13-6 stages (S88, 2026-10-21)
+
+With the Bloodborn/Bombardier/Blood Amber support, **13-6** and **13-6 adverse environment** build (7×10, 31 spawns, 4 enemies). Coverage is **186 public stages** (0-1 plus 185 files).
+
+### Engine benchmark and Rust decision (S89, 2026-10-21)
+
+Added `npm run bench:arkpedia` and `docs/PERFORMANCE.md`. A 34.3-second, 150-spawn 14-11 battle runs in 24–42 ms of engine time (~25k steps/s, 300–500× real time). No Rust/WASM rewrite is justified now; the documented triggers for revisiting are a >100 ms single battle on mid-range hardware, an order-of-magnitude jump in simultaneous units, or a shared-rules WASM design.
+
+### Engine-time guard (S90, 2026-10-21)
+
+Added `test/arkpedia-performance.test.js`: 10 seconds of the 150-spawn 14-11 battle must finish inside a generous 5 s budget with no engine errors. It is a complexity guard, not a micro-benchmark, and keeps the Rust decision tied to measured engine time.
+
+### Round-100 snapshot (S91, 2026-10-21)
+
+`docs/REMAINING.md` records the round-100 state: **378** supported enemies, **185** built source stages, **186** public entries, and the 22,578-test full suite. The remaining stages are dominated by conditional spawns, deployable tokens, Inspired/identity bosses and source entries without geometry.
+
+### Hard-mechanics roadmap (S92, 2026-10-21)
+
+Added `docs/HARD-MECHANICS.md`: deployable tokens, conditional spawns, Inspired/altar, Londinium artillery, Talulah, Decode Basis and the Damazti bosses, with the concrete data/engine pieces each needs and the implementation order.
+
+### Every-public-stage smoke test (S93, 2026-10-21)
+
+Added `test/arkpedia-stage-smoke.test.js`: each of the 185 data-backed public stages starts with the default 12-operator squad and runs two simulated seconds, asserting no engine errors. This catches stage files that load but throw in play; the embedded 0-1 entry is covered by its own tests.
+
+### Dublinn Flamerazer (E62, 2026-10-21)
+
+Every 6 s the Flamerazer opens a 10.6 s burning aura (0.12x Arts plus Burn every 0.5 s in 1.5 radius); death blasts 1.0x Arts and instantly defeats other Flamerazers without chaining their blasts. The two reviewed wrappers are claimed. Support rises to **380 of 1,552** enemies. Tests cover the aura and the mutual defeat.
+
+### 9-13 (S94, 2026-10-21)
+
+With the Flamerazer supported, **9-13** builds (8×12, 44 spawns, 4 enemies). The stacked branch now has **187 public stages** (0-1 plus 186 files).
+
+### Tombkeeper Grotesque (E63, 2026-10-21)
+
+The first lethal hit is prevented (`taken`, HP set to 1), the Grotesque becomes a 10 s stone statue (+800 DEF, +30 RES, immobile) and then revives airborne at full HP. The native active is claimed. Support rises to **382 of 1,552** enemies. The test covers the prevention, statue and revive.
+
+### 9-14 (S95, 2026-10-21)
+
+With the Tombkeeper supported, **9-14** builds (9×11, 58 spawns, 6 enemies). The stacked branch now has **188 public stages** (0-1 plus 187 files).
+
+### Stacked snapshot to 382 enemies (S96, 2026-10-21)
+
+`docs/REMAINING.md` now records the stacked Flamerazer/Tombkeeper state: **382** supported enemies, **187** built source stages and **188** public entries. All 187 data-backed stages pass the two-second smoke test.
+
+### Purifying Flame and Dublinn Evocator (E64, 2026-10-21)
+
+The Evocator summons one Purifying Flame every 6 s (first after 3 s). The Flame moves along the ground and, on contact with a melee ally, explodes for 1.0x Arts plus Burn and a 10 s -70% ATK weaken. The reviewed wrappers are claimed; the Flame's no-ability `epdamage` is interpreted as Burn. Support rises to **386 of 1,552** enemies. Tests cover the summon and the contact burst.
+
+### 9-15 and 9-16 (S97, 2026-10-21)
+
+With the Evocator/Flame supported, **9-15** and **9-16** build (8×11/9×11, 36–47 spawns). The stacked branch now has **190 public stages** (0-1 plus 189 files).
+
+### Snapshot to 386 enemies (S98, 2026-10-21)
+
+`docs/REMAINING.md` records the Evocator/Flame state: **386** supported enemies, **189** built source stages and **190** public entries; all 189 data-backed stages pass the two-second smoke test.
+
+### Dublinn Companion pair (E65, 2026-10-21)
+
+The Companion Guard taunts and, while a Shadowblade is within 1.1, slows nearby allies' ASPD by 30. The Shadowblade's base attack time drops by 1.2 and it gains +100 ASPD while a Guard is within 1.5. Both elite text variants are covered. Support rises to **390 of 1,552** enemies. Tests cover the faster base attack and the guard field.
+
+### 9-17 (S99, 2026-10-21)
+
+With the Companion pair supported, **9-17** builds (8×12, 32 spawns, 6 enemies). The stacked branch now has **191 public stages** (0-1 plus 190 files).
+
+### 9-9 (S100, 2026-10-21)
+
+The current support also unlocks **9-9** (8×11, 45 spawns, 4 enemies). The stacked branch now has **192 public stages** (0-1 plus 191 files).
+
+### Stacked full-suite verification (S101, 2026-10-21)
+
+The stacked branch (E62–E65) passes **22,776 tests, 22,765 passed, 0 failed, 11 skipped**, including 191 data-backed stage smoke runs. `docs/REMAINING.md` records 390 enemies, 191 built source stages and 192 public entries.
+
+### Dublinn Flying Soldier (E66, 2026-10-21)
+
+Low-Altitude Hovering sets the flying flag; RecoverAnim claims its native wrapper/active; the passive refracting group now covers records without the separate Refraction line. Support rises to **392 of 1,552** enemies. The test pins the flying flag.
+
+### Snapshot to 392 enemies (S102, 2026-10-21)
+
+`docs/REMAINING.md` records **392** supported enemies, **191** built source stages and **192** public entries.
+
+### Deployable-token plan (S103, 2026-10-21)
+
+Added `docs/DEPLOYABLE-TOKENS.md`: the reviewed inventory data, the `tokenDeck`/`placeToken`/`retreatToken` engine API, the token strip UI, the six tests and the staged rollout for the 60 token-blocked stages. This is the next large system after the current PR lands.
+
+### GitHub-runner timing note (S104, 2026-10-21)
+
+`docs/PERFORMANCE.md` now records the CI wall-time profile: ~70 minutes for the full suite on a 2-core GitHub runner versus 11–16 locally, with sharding as the scale-out option. Checks stay on GitHub-hosted runners.
+
+### Buildable bucket in the coverage report (S105, 2026-10-21)
+
+`npm run coverage:arkpedia-stages` now reports a `buildable` bucket and prints the slugs that are ready right now. It immediately exposed **9-11** and **S9-1**, which were missing from the previous list.
+
+### 9-11 and S9-1 (S106, 2026-10-21)
+
+The buildable bucket exposed two ready stages: **9-11** (8×12, 47 spawns, 4 enemies) and **S9-1** (8×12, 25 spawns, 3 enemies). The stacked branch now has **194 public stages** (0-1 plus 193 files).
+
+### Snapshot to 194 public stages (S107, 2026-10-21)
+
+`docs/REMAINING.md` records **392** supported enemies, **193** built source stages and **194** public entries. The buildable bucket is empty except the embedded 0-1; the next unlocks need tokens, conditional spawns or the hard bosses.
+
+### CI per-test timeout (S108, 2026-10-21)
+
+The GitHub-hosted unit/integration step now runs `node --test --test-timeout=180000`: a single hung test fails in three minutes instead of occupying the runner until the workflow limit. The longest local test is under three seconds, so the budget only catches a hang.
+
+### CI test sharding (S109, 2026-10-21)
+
+The unit/integration step now runs through `tools/run-tests.mjs` with `SHARD_INDEX`/`SHARD_TOTAL` over a stable sort of `test/*.test.js`. The matrix has two shards per OS/Node lane, so each file runs once and the 70-minute wall time should roughly halve. Server smoke and atomic-write jobs run on shard 0 only; enemy-clock jobs are unchanged.
+
+### Conditional-spawn breakdown (S110, 2026-10-21)
+
+The coverage report now reads `stage-conditional/<slug>.json` and breaks the 63 conditional stages down by trigger: **205 branch** spawns and **86 hidden-group** spawns. This makes the conditional bucket actionable instead of a single count.
+
+### Conditional-spawn note in the remaining report (S111, 2026-10-21)
+
+`docs/REMAINING.md` now records the 205 branch / 86 hidden-group conditional entries and the open question about hidden-group semantics, so the next adapter decision is written down rather than inferred from a count.
+
+### Shard-partition test (S112, 2026-10-21)
+
+`tools/run-tests.mjs` now exports `testFilesForShard`, and `test/test-shards.test.js` asserts that 2-, 3- and 5-way splits are exact partitions: every `test/*.test.js` appears once, with no duplicates or omissions.

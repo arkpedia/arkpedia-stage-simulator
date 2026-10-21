@@ -131,6 +131,27 @@ small,
   border-color: var(--accent);
   color: var(--accent);
 }
+.stage-picker input,
+.stage-picker select {
+  min-width: min(100%, 320px);
+  padding: 6px 10px;
+  border: 1px solid #34464e;
+  border-radius: 8px;
+  color: var(--text);
+  background: var(--panel);
+  font: inherit;
+}
+.stage-picker input { min-width: 160px; }
+.stage-search-count { color: var(--muted); font-size: 0.78rem; }
+.stage-picker button {
+  padding: 5px 10px;
+  border: 1px solid #34464e;
+  border-radius: 8px;
+  color: var(--text);
+  background: var(--panel);
+  font: inherit;
+  cursor: pointer;
+}
 .prep {
   display: grid;
   grid-template-columns: minmax(0, 1.25fr) minmax(340px, 1fr);
@@ -159,6 +180,13 @@ small,
 }
 .preview .board {
   height: 330px;
+}
+.stage-meta {
+  margin: -4px 0 10px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 .stage-title {
   display: flex;

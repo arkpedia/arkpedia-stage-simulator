@@ -77,6 +77,7 @@ export function enemyStealthed(e) {
 
 /** Can `attacker` (ally) target enemy `e` at all (ignoring range)? */
 export function canTargetEnemy(attacker, e, profile) {
+  if (e.profile?.friendly) return false;
   if (!e.alive || e.hidden || !e.deployed) return false;
   const f = e.s.flags;
   // Reviewed native selectors may ignore TargetFree for an explicit recipient
@@ -228,9 +229,15 @@ export function sortEnemyTargets(battle, attacker, cands, priority) {
  */
 export function sortAllyTargets(enemy, cands) {
   if (cands.length <= 1) return cands;
+  const priority = enemy.profile?.targetPriority;
+  const named = enemy.profile?.priorityNames ?? [];
+  const namedScore = (u) => named.some(n => String(u.def?.raw?.name ?? '').includes(n)) ? 0 : 1;
+  const special = priority === 'lowestDef' ? (a, b) => a.s.def - b.s.def
+    : priority === 'lowestHp' ? (a, b) => a.hp / a.s.maxHp - b.hp / b.s.maxHp
+    : priority === 'named' ? (a, b) => namedScore(a) - namedScore(b) : null;
   cands.sort((a, b) => {
     const ba = enemy.blockedBy === a ? 0 : 1, bb = enemy.blockedBy === b ? 0 : 1;
-    return ba - bb || aggroCmp(a, b);
+    return ba - bb || (special ? special(a, b) : 0) || aggroCmp(a, b);
   });
   return cands;
 }

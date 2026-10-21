@@ -344,6 +344,429 @@ export const featureAbilities = Object.freeze({
       b.addBuff(e, { key: 'ab:enhance', refresh: 'stack', stacks: 1, maxStacks: max, persist: true, visible: true, mods: { atkPct: atk, aspd } });
     },
   }),
+  moveSpeedBonus: ({ mul }) => ({ spawn(b, e) { b.addBuff(e, { key: 'ab:moveSpeed', persist: true, visible: true, mods: { moveMul: mul } }); } }),
+  // Dublinn Flying Soldier: airborne.
+  hover: () => ({ spawn(b, e) { e.flying = true; } }),
+  // Higher-priority enemy target.
+  tauntEnemy: ({ taunt }) => ({ spawn(b, e) { e.s.taunt = Math.max(e.s.taunt ?? 0, taunt); } }),
+  // Dublinn Companion pair: the Guard's ASPD field and the Shadowblade's haste.
+  companion: ({ mode, aspd, range, bat }) => mode === 'guard' ? ({
+    tick(b, e) {
+      const near = b.enemies.some(u => u.alive && String(u.defId).includes('dushdo') && Math.hypot(u.x - e.x, u.y - e.y) <= range);
+      if (near) for (const u of b.alliesInRadius(e.x, e.y, range)) b.addBuff(u, { key: `ab:guardField:${e.id}`, duration: 0.6, visible: true, mods: { aspd } });
+    },
+  }) : ({
+    spawn(b, e) { e.s.bat = Math.max(0.2, e.s.bat + bat); },
+    tick(b, e) {
+      if (b.enemies.some(u => u.alive && String(u.defId).includes('duholy') && Math.hypot(u.x - e.x, u.y - e.y) <= 1.5))
+        b.addBuff(e, { key: 'ab:shadowHaste', duration: 0.6, visible: true, mods: { aspd: 100 } });
+    },
+  }),
+  purifyingFlame: ({ atk, duration, ratio }) => ({
+    spawn(b, e, a) { a.done = false; },
+    tick(b, e, a) {
+      if (a.done) return;
+      const near = b.alliesInRadius(e.x, e.y, 1.0).find(u => u.alive);
+      if (!near) return;
+      a.done = true;
+      for (const u of b.alliesInRadius(e.x, e.y, 1.2)) {
+        hurt(b, e, u, e.s.atk, 'arts', { tags: ['purifyingFlame'] });
+        elem(b, e, u, 'burn', e.s.atk * ratio);
+        b.addBuff(u, { key: 'ab:weaken', duration, visible: true, mods: { atkMul: 1 + atk } });
+      }
+      b._remove(e, 'explode');
+    },
+  }),
+  // Tombkeeper Grotesque: prevent the first lethal hit, petrify, then revive airborne.
+  stoneRevive: ({ def, res, duration }) => ({
+    spawn(b, e, a) { a.done = false; },
+    taken(c, b, e, a) {
+      if (a.done || c.prevented || e.hp > 0) return;
+      a.done = true; c.prevented = true; e.hp = 1;
+      b.addBuff(e, { key: 'ab:stone', duration, visible: true, mods: { defFlat: def, resFlat: res, moveMul: 0 }, flags: { stun: true } });
+      b.every(duration, () => {
+        b.removeBuff(e, 'ab:stone'); e.flying = true; e.moving = true; e.hp = e.s.maxHp;
+      });
+    },
+  }),
+  // Dublinn Flamerazer: periodic burning aura and a death blast that kills other Flamerazers.
+  flamerazer: ({ duration, interval, hitInterval, scale, ep, deathScale }) => ({
+    spawn(b, e, a) { a.next = b.time; },
+    tick(b, e, a) {
+      if (b.time < a.next) return;
+      a.next = b.time + interval;
+      for (let t = 1; t * hitInterval <= duration; t++) b.every(t * hitInterval, () => {
+        for (const u of b.alliesInRadius(e.x, e.y, 1.5)) { hurt(b, e, u, e.s.atk * scale, 'arts', { tags: ['flame'] }); elem(b, e, u, 'burn', e.s.atk * ep); }
+      });
+    },
+    death(c, b, e, a) {
+      for (const u of b.alliesInRadius(e.x, e.y, 1.5)) hurt(b, e, u, e.s.atk * (a.deathScale ?? deathScale), 'arts', { tags: ['deadBoom'] });
+      for (const other of b.enemies) if (other !== e && other.alive && String(other.defId).includes('duspfr')) { other.noBoom = true; b.kill(other, e); }
+    },
+  }),
+  // Prototype distributor: periodic helper spawn.
+  periodicSpawn: ({ key, count, cooldown, init }) => ({
+    spawn(b, e, a) { a.next = b.time + init; },
+    tick(b, e, a) { if (b.time >= a.next) { a.next = b.time + cooldown; spawnChildren(b, e, key, count); } },
+  }),
+  // Bloodborn Spawn: Arts damage scaled by the target's blocking count.
+  blockDamageUp: ({ ratio, addOn }) => ({
+    hitOut(c, b, e) {
+      if (!c.dmg.isAttack) return;
+      c.dmg.type = 'arts';
+      const n = c.target?.blocking?.length ?? 0;
+      c.dmg.amount *= 1 + (ratio ?? 0) * (n + (addOn ? 0 : 0));
+    },
+  }),
+  // Bombardier: delayed physical explosion at the target position.
+  bombard: ({ delay, radius }) => ({
+    attack(c, b, e) {
+      const t = c.target; if (!t) return;
+      b.every(delay ?? 1, () => { for (const u of b.alliesInRadius(t.x, t.y, radius ?? 1.1)) hurt(b, e, u, e.s.atk, 'phys', { tags: ['bombard'] }); });
+    },
+  }),
+  // Ursus Civilian: spared at the objective, one life lost if killed.
+  sparedCivilian: ({ value }) => ({
+    spawn(b, e) { e.lpr = 0; e.counted = false; },
+    death(c, b, e) { if (c.reason === 'killed') { b.life += value; if (b.life <= 0) b._finish?.('defeated'); } },
+  }),
+  // Steam Tank: one-time half-HP buff.
+  steamRage: ({ aspd, move }) => ({
+    taken(c, b, e, a) {
+      if (a.done || !(e.hpRatio < 0.5)) return;
+      a.done = true;
+      b.addBuff(e, { key: 'ab:steamRage', persist: true, visible: true, mods: { aspd, moveMul: 1 + (move ?? 0) },
+        flags: { stunImmune: true, frozenImmune: true, sleepImmune: true } });
+    },
+  }),
+  // Sarkaz Royal Court Caster: lock a target, tick Arts damage, then burst Necrosis in the area.
+  deathEye: ({ cooldown, init, duration, scale, ep }) => ({
+    spawn(b, e, a) { a.next = b.time + init; a.target = null; },
+    tick(b, e, a) {
+      if (b.time < a.next) return;
+      const target = e.target ?? b.alliesInRadius(e.x, e.y, 8).sort((p, q) => Math.hypot(p.x - e.x, p.y - e.y) - Math.hypot(q.x - e.x, q.y - e.y))[0];
+      if (!target) return;
+      a.next = b.time + cooldown; a.target = target;
+      for (let t = 1; t <= duration; t++) b.every(t, () => { if (target.alive) hurt(b, e, target, e.s.atk * scale, 'arts', { tags: ['deathEye'] }); });
+      b.every(duration, () => { for (const u of b.alliesInRadius(target.x, target.y, 1.5)) elem(b, e, u, 'apoptosis', e.s.atk * ep); });
+    },
+  }),
+  // Dublinn Phalanx: refresh a DEF buff equal to def times the other Phalanx units.
+  phalanxAura: ({ def }) => ({
+    tick(b, e) {
+      const n = b.enemies.filter(u => u.alive && String(u.defId).includes('duphlx')).length - 1;
+      if (n > 0) b.addBuff(e, { key: `ab:phalanx:${e.id}`, duration: 0.7, visible: true, mods: { defFlat: def * n } });
+    },
+  }),
+  // Infused Soul Husk: pick up souls, then spend one on a short orbiting damage aura.
+  soulHusk: ({ cooldown, scale }) => ({
+    spawn(b, e, a) { a.souls = 0; a.next = b.time + (cooldown || 15); },
+    tick(b, e, a) {
+      for (const soul of b.enemies) if (soul.alive && soul.defId === 'enemy_1428_lrsoul' && a.souls < 3 && Math.hypot(soul.x - e.x, soul.y - e.y) <= 1.5) {
+        b._remove(soul, 'pickup'); a.souls++;
+      }
+      if (a.souls <= 0 || b.time < a.next) return;
+      a.souls--; a.next = b.time + (cooldown || 15); this.cast(b, e, a);
+    },
+    cast(b, e, a) {
+      for (let t = 1; t <= 5; t++) b.every(0.5 * t, () => {
+        for (const u of b.alliesInRadius(e.x, e.y, 1.4)) hurt(b, e, u, e.s.atk * scale, 'arts', { tags: ['orb'] });
+      });
+    },
+  }),
+  // Focused Soul Remnant: pick up Soul Maelstroms and fire a three-tick line.
+  soulRemnant: ({ cooldown, scale, ladder }) => ({
+    spawn(b, e, a) { a.souls = 0; a.next = b.time + (cooldown || 15); },
+    tick(b, e, a) {
+      for (const soul of b.enemies) if (soul.alive && soul.defId === 'enemy_1428_lrsoul' && a.souls < 3 && Math.hypot(soul.x - e.x, soul.y - e.y) <= 1.5) {
+        b._remove(soul, 'pickup'); a.souls++;
+      }
+      if (a.souls <= 0 || b.time < a.next) return;
+      a.next = b.time + (cooldown || 15);
+      this.cast(b, e, a);
+    },
+    cast(b, e, a) {
+      const target = e.target ?? b.alliesInRadius(e.x, e.y, 8).sort((p, q) => Math.hypot(p.x - e.x, p.y - e.y) - Math.hypot(q.x - e.x, q.y - e.y))[0];
+      if (!target || a.souls <= 0) return;
+      const dx = target.x - e.x, dy = target.y - e.y, len = Math.hypot(dx, dy) || 1, ux = dx / len, uy = dy / len;
+      const dmg = e.s.atk * (scale + ladder * (a.souls - 1)); a.souls = 0;
+      for (let t = 1; t <= 3; t++) b.every(0.5 * t, () => {
+        for (const u of b.allyUnits) {
+          const px = u.x - e.x, py = u.y - e.y, proj = px * ux + py * uy, perp = Math.abs(px * uy - py * ux);
+          if (proj >= -0.2 && proj <= 7 && perp <= 0.8) hurt(b, e, u, dmg, 'arts', { tags: ['laser'] });
+        }
+      });
+    },
+  }),
+  // Rot Eater: scale with the defeated count, then emit its pollution aura.
+  rotEater: ({ low, high, radius, guaranteed, max }) => ({
+    spawn(b, e) {
+      const n = b._pp?.(e.ownerId)?.killed ?? 0, mul = 1 + Math.min(max, n * guaranteed);
+      e.base.maxHp *= mul; e.s.maxHp *= mul; e.hp = e.s.maxHp; e.s.atk *= mul; e.s.def *= mul;
+    },
+    tick(b, e) { pollution(b, e, e.x, e.y, radius, 1.2, low, high); },
+  }),
+  // Profane Chimera: on polluted/stormed tiles it pollutes around itself and attacks Arts.
+  profaneChimera: ({ damage, spRatio }) => ({
+    polluted(b, e) { return ((b.grid.tile(e.tileR, e.tileC)?.key ?? '').includes('toxic') || !!e.findBuff?.('ab:storm')); },
+    hitOut(c, b, e) { if (c.dmg.isAttack && this.polluted(b, e)) c.dmg.type = 'arts'; },
+    tick(b, e, a) { if (this.polluted(b, e)) pollution(b, e, e.x, e.y, 1.1, 1.2, damage, damage); },
+  }),
+  // Caustic Slug: physical death blast, pollution and a storm damage boost when consumed.
+  causticSlug: ({ scale }) => ({
+    death(c, b, e) {
+      for (const u of b.alliesInRadius(e.x, e.y, 1.5)) hurt(b, e, u, e.s.atk * scale, 'phys', { tags: ['boom'] });
+      pollution(b, e, e.x, e.y, 1.5, 8, 50, 25);
+      if (e.findBuff?.('ab:storm')) for (const o of b.enemies) for (const ab of o.mem?.ab?.list ?? []) if (ab.storm) ab.boost = (ab.boost ?? 0) + 1;
+    },
+  }),
+  // Chalice of Regret: mirror a fraction of nearby ground-enemy damage onto itself.
+  damageShare: ({ scale, range }) => ({
+    spawn(b, e) {
+      b.on('damaged', c => {
+        if (!e.alive || c.target === e || c.target?.side !== 'enemy' || c.target.isFlying || !(c.hpLoss > 0)) return;
+        if (Math.hypot(c.target.x - e.x, c.target.y - e.y) > range) return;
+        b.dealDamage(e, e, { amount: c.hpLoss * scale, type: 'true', sourceless: true, tags: ['share'] });
+      });
+    },
+  }),
+  // Altar Keeper: unblockable, slowed when hit, carries one Beacon and drops it on death.
+  altarKeeper: ({ slow, duration }) => ({
+    spawn(b, e, a) {
+      a.carrying = false; a.beacon = 'enemy_1421_lrchld';
+      b.addBuff(e, { key: 'ab:altarUnblockable', persist: true, flags: { unblockable: true } });
+    },
+    tick(b, e, a) {
+      if (a.carrying || !e.alive) return;
+      const beacon = b.enemies.find(u => u.alive && u.defId === a.beacon && Math.hypot(u.x - e.x, u.y - e.y) <= 1.5);
+      if (!beacon) return;
+      b._remove(beacon, 'pickup'); a.carrying = true; e.profile.carryingBeacon = true;
+    },
+    taken(c, b, e, a) { b.addBuff(e, { key: 'ab:beaconSlow', duration, mods: { moveMul: 1 + slow }, visible: true }); },
+    death(c, b, e, a) { if (a.carrying) spawnChildren(b, e, a.beacon, 1, { pos: [e.y, e.x] }); },
+  }),
+  // Ursus patrol: prioritize allies whose record name matches the reviewed names.
+  namedPriority: ({ names }) => ({ spawn(b, e) { e.profile.targetPriority = 'named'; e.profile.priorityNames = names; } }),
+  // Witherer: leave the reviewed pollution zone on death.
+  pollutedDie: ({ range, life, low, high }) => ({
+    death(c, b, e) { pollution(b, e, e.x, e.y, range, life, low, high); },
+  }),
+  // Rotchaser: reuse the legacy bleed ability.
+  bleedFeature: ({ bb }) => bleed({ t: bb }),
+  // Sarkaz Caster: every attack is a 0.35x Arts lasso that stuns for 20 s.
+  lasso: ({ scale, duration }) => ({
+    hitOut(c, b, e) { if (c.dmg.isAttack) { c.dmg.amount = e.s.atk * scale; c.dmg.type = 'arts'; } },
+    dealt(c, b, e) { if (c.dmg?.isAttack && c.target) b.applyStatus(c.target, 'stun', { duration, source: e }); },
+  }),
+  // 1321: drop three Seeds of Withering every cooldown seconds, starting after init.
+  seedSummoner: ({ key, count, cooldown, init }) => ({
+    spawn(b, e, a) { a.next = b.time + init; },
+    tick(b, e, a) {
+      if (!e.alive || b.time < a.next) return;
+      a.next = b.time + cooldown;
+      for (let i = 0; i < count; i++) spawnChildren(b, e, key, 1, { pos: [e.y, e.x + (i - (count - 1) / 2) * 0.4] });
+    },
+  }),
+  // 1320: the first hit is 1.5x and splashes the target's box; later hits are normal.
+  firstSplash: ({ scale }) => ({
+    spawn(b, e, a) { a.first = true; a.splash = false; },
+    hitOut(c, b, e, a) { if (a.first && c.dmg.isAttack) { a.first = false; a.splash = true; c.dmg.amount *= scale; } },
+    dealt(c, b, e, a) {
+      if (!a.splash) return;
+      a.splash = false;
+      const t = c.target;
+      if (!t) return;
+      for (const u of areaAlliesInTiles(b, e, t.tileR, t.tileC, 'box', 1)) if (u !== t) hurt(b, e, u, e.s.atk * scale, 'phys', { tags: ['splash'] });
+    },
+  }),
+  // Splitcaster: one Virtual Image clone at the HP threshold; clones are flagged so they cannot split.
+  virtualImage: ({ ratio, key }) => ({
+    taken(c, b, e, a) {
+      if (a.done || e.profile.virtualImage || e.hpRatio >= ratio) return;
+      a.done = true;
+      for (const child of spawnChildren(b, e, key, 1)) child.profile.virtualImage = true;
+    },
+  }),
+  // Absurdist Operative: three ammo, each attack drains DP and target SP.
+  dpDrain: ({ cost, sp }) => ({
+    spawn(b, e, a) { a.ammo = 3; },
+    attack(c, b, e, a) {
+      if (a.ammo <= 0) return;
+      a.ammo--;
+      if (cost) b.addDp(e.ownerId, cost);
+      if (sp) for (const t of c.targets ?? [c.target]) t.skill?.gainSp(sp);
+    },
+  }),
+  // Rebellion Instigator: a live, unblocked source prevents unrevealed civilians/spies from being blocked.
+  identityLock: () => ({
+    spawn(b) { b.identityLocks ??= new Set(); },
+    tick(b, e) { if (e.blockedBy) b.identityLocks.delete(e); else b.identityLocks.add(e); },
+    death(c, b, e) { b.identityLocks?.delete(e); },
+  }),
+  // Spies: mark the profile and attach the reveal consequence.
+  spyProfile: () => ({ spawn(b, e) { e.profile.spy = true; } }),
+  revealedStealth: () => ({ reveal(b, e) { b.addBuff(e, { key: 'ab:spyStealth', persist: true, visible: true, flags: { stealth: true } }); } }),
+  revealedAttack: ({ scale }) => ({
+    reveal(b, e, a) { a.armed = true; },
+    hitOut(c, b, e, a) { if (a.armed && c.dmg.isAttack) { a.armed = false; c.dmg.amount *= scale; } },
+  }),
+  // Norport Civilian: friendly marker plus the reviewed max-DP reward on leak.
+  friendlyUnit: () => ({ spawn(b, e) { e.profile.friendly = true; } }),
+  civilianReward: ({ dp }) => ({ spawn(b, e) { e.profile.civilianDp = dp; } }),
+  // Sudaram: a self-centred physical blast; while polluted/stormed it also hits every polluted/stormed ally.
+  sudaram: ({ radius }) => {
+    const base = splashAttack({ unblocked: false, radius, fxKind: 'splash' });
+    return {
+      ...base,
+      dealt(c, b, e, a) {
+        base.dealt?.(c, b, e, a);
+        if (!c.dmg?.isAttack) return;
+        const polluted = (u) => ((b.grid.tile(u.tileR, u.tileC)?.key ?? '').includes('toxic') || u.findBuff?.('ab:storm'));
+        if (!polluted(e)) return;
+        for (const u of b.allyUnits) if (polluted(u)) hurt(b, e, u, e.s.atk, 'phys', { tags: ['sudaram'] });
+      },
+    };
+  },
+  // Guerrilla Herald: refresh a short battlefield-wide ATK/DEF buff on every living enemy.
+  enemyGlobalStatAura: ({ atkPct, defFlat }) => ({
+    tick(b, e, a) {
+      for (const u of b.enemies) if (u.alive)
+        b.addBuff(u, { key: `ab:strength:${e.id}`, duration: 0.7, visible: true, mods: { atkPct, defFlat } });
+    },
+  }),
+  // Active Originium Storm: every second the storm grows and damages the allies inside it.
+  stormAura: ({ damage, damageStep, maxDamage, radius, radiusStep, maxRadius, spRatio }) => ({
+    storm: true,
+    spawn(b, e, a) { a.t = 0; a.r = radius; a.d = damage; a.boost = 0; },
+    tick(b, e, a, dt) {
+      a.t += dt;
+      if (a.t < 1) return;
+      a.t -= 1;
+      a.r = Math.min(maxRadius, a.r + radiusStep);
+      a.d = Math.min(maxDamage, a.d + damageStep + (a.boost ?? 0) * damageStep);
+      for (const u of b.alliesInRadius(e.x, e.y, a.r)) {
+        hurt(b, e, u, a.d, 'arts', { tags: ['storm'] });
+        b.addBuff(u, { key: 'ab:storm', duration: 1.2, visible: true, mods: { spRecoveryMul: 1 + spRatio } });
+      }
+    },
+  }),
+  // Wither Vanguard: on a toxic tile its ordinary attack becomes Arts.
+  pollutionArts: () => ({
+    hitOut(c, b, e) {
+      if (!c.dmg.isAttack) return;
+      const key = b.grid.tile(e.tileR, e.tileC)?.key ?? '';
+      if (key.includes('toxic')) c.dmg.type = 'arts';
+    },
+  }),
+  // Theater Golem: its required Block and the splash around its own body.
+  requiredBlock: ({ block }) => ({ spawn(b, e) { e.profile.requiredBlock = block; } }),
+  selfSplash: ({ radius }) => ({
+    dealt(c, b, e) {
+      if (!c.dmg?.isAttack) return;
+      for (const u of b.alliesInRadius(e.x, e.y, radius)) if (u !== c.target) hurt(b, e, u, e.s.atk, c.dmg.type, { tags: ['splash'] });
+    },
+  }),
+  // Seed of Withering: once any ally is inside the unit's attack range, blast the one-tile area and die.
+  selfDestruct: ({ radius }) => ({
+    tick(b, e, a) {
+      if (a.done || !e.alive || !b.alliesInRadius(e.x, e.y, e.base.rangeRadius || 1).length) return;
+      a.done = true;
+      for (const u of b.alliesInRadius(e.x, e.y, radius)) hurt(b, e, u, e.s.atk, 'phys', { tags: ['selfDestruct'] });
+      b.fx('boom', { x: e.x, y: e.y, r: radius });
+      b.kill(e, null);
+    },
+  }),
+  // Big Snowball Thrower: multiply only the first ordinary attack.
+  firstAttack: ({ scale }) => ({
+    spawn(b, e, a) { a.first = true; },
+    hitOut(c, b, e, a) { if (a.first && c.dmg.isAttack) { a.first = false; c.dmg.amount *= scale; } },
+  }),
+  // Ability-only target priority: sortAllyTargets reads profile.targetPriority after blocker/taunt.
+  targetPriority: ({ priority }) => ({ spawn(b, e) { e.profile.targetPriority = priority; } }),
+  // Originium Colossus: the normal melee attack also hits allies within the standard one-tile splash radius.
+  splashMelee: () => splashAttack({ unblocked: false, radius: 1, fxKind: 'splash' }),
+  // Standby revive: a stun-flag standby buff until the first injury (or the unmove timer), then a move-speed buff.
+  standbyRevive: ({ ratio, speed, unmove, targets }) => {
+    const awake = (b, e, a) => {
+      if (a.done) return;
+      a.done = true;
+      b.removeBuff(e, 'ab:standby');
+      b.addBuff(e, { key: 'ab:standbySpeed', persist: true, visible: true, mods: { moveMul: speed } });
+    };
+    return {
+      spawn(b, e, a) {
+        a.done = false; a.t0 = b.time;
+        if (targets > 1) e.profile.maxTargets = targets;
+        b.addBuff(e, { key: 'ab:standby', persist: true, visible: true, flags: { stun: true } });
+      },
+      taken(c, b, e, a) { if (!a.done && e.hpRatio < ratio) awake(b, e, a); },
+      tick(b, e, a) { if (!a.done && unmove > 0 && b.time - a.t0 >= unmove) awake(b, e, a); },
+    };
+  },
+  // Volleyball cart: keep an ATK-stack buff; each attack adds one stack up to max, negative statuses clear it.
+  atkUpStacks: ({ atk, max }) => ({
+    spawn(b, e, a) {
+      a.n = 0;
+      b.on('statusApplied', ({ target, status, entered }) => {
+        if (target !== e || !entered || !['cold', 'freeze', 'stun', 'fear', 'bind', 'silence'].includes(status)) return;
+        a.n = 0; b.removeBuff(e, 'ab:atkUpStacks');
+      });
+    },
+    attack(c, b, e, a) {
+      if (a.n >= max) return;
+      a.n++;
+      b.addBuff(e, { key: 'ab:atkUpStacks', persist: true, visible: true, mods: { atkPct: atk * a.n } });
+    },
+  }),
+  // Evade: the unblocked toggle, a timed initial dodge, or the first low-HP dodge.
+  evade: ({ mode, prob, duration, ratio, silent = false }) => mode === 'unblocked' ? ({
+    tick(b, e, a) {
+      const on = !e.blockedBy;
+      if (on === a.on) return;
+      a.on = on;
+      if (on) b.addBuff(e, { key: 'ab:evade', persist: true, mods: { dodgePhys: prob } });
+      else b.removeBuff(e, 'ab:evade');
+    },
+  }) : mode === 'timed' ? ({
+    sil: silent,
+    spawn(b, e) { b.addBuff(e, { key: 'ab:evade', duration, mods: { dodgePhys: prob }, visible: true }); },
+  }) : ({
+    sil: silent,
+    taken(c, b, e, a) {
+      if (a.done || !(e.hpRatio < ratio)) return;
+      a.done = true;
+      b.addBuff(e, { key: 'ab:evade', duration, mods: { dodgePhys: prob }, visible: true });
+    },
+  }),
+  // Rhine Defense: the engine's hitShield consumes one Physical/Arts hit.
+  hitShield: ({ count }) => ({ spawn(b, e, a, ab) { ab.hitShield = count; } }),
+  // Timed flat DEF/RES buff (Roar Knightclub); the engine removes it when the duration ends.
+  timedStatBuff: ({ def, res, duration }) => ({
+    spawn(b, e) { b.addBuff(e, { key: 'ab:timedStat', duration, refresh: 'replace', mods: { defFlat: def, resFlat: res }, visible: true }); },
+  }),
+  // Sankta SelfFear: the reviewed self-fear + movement multiplier, reused from the legacy helper's semantics.
+  selfFear: ({ fear, moveSpeed, duration }) => ({
+    taken(c, b, e, a) {
+      if (a.done || !(e.hpRatio < 0.5)) return;
+      a.done = true;
+      if (fear > 0) b.applyStatus(e, 'fear', { duration: fear, source: e });
+      if (moveSpeed > 0 && duration > 0) b.addBuff(e, { key: 'ab:fearRun', duration, mods: { moveMul: moveSpeed }, flags: { unblockable: true } });
+    },
+  }),
+  // Tiacauh: flat DEF while the enemy is blocked, and the reviewed melee multiplier.
+  blockedDef: ({ def }) => ({
+    spawn(b, e, a) { a.on = false; },
+    tick(b, e, a) {
+      const on = !!e.blockedBy;
+      if (on === a.on) return;
+      a.on = on;
+      if (on) b.addBuff(e, { key: 'ab:blockedDef', persist: true, visible: true, mods: { defFlat: def } });
+      else b.removeBuff(e, 'ab:blockedDef');
+    },
+  }),
+  meleeAttackScale: ({ scale }) => ({
+    hitOut(c, b, e) { if (c.dmg.isAttack && e.blockedBy && scale > 0) c.dmg.amount *= scale; },
+  }),
   // Technical Scout: its ranged selection may target camouflaged/stealthed allies inside the reviewed radius.
   revealCamouflage: ({ range }) => ({ spawn(b, e) { e.profile.revealRange = range; } }),
   // Reborn-Creation auras: Hatedrinker counts marked creations and buffs itself; the ASV buffs every marked creation
@@ -413,7 +836,10 @@ export const featureAbilities = Object.freeze({
   }),
   // Crownslayer: when blocked and off cooldown, blink along the route past the blocker (the reviewed helper also grants
   // the 1 s invulnerable/unblockable window carried by the Blink ability buff). Silence stops it.
-  blinkWhenBlocked: ({ dist, cooldown, initCooldown }) => ({
+  blink: ({ mode, dist, cooldown, initCooldown, every }) => mode === 'attacks' ? ({
+    spawn(b, e, a) { a.n = 0; },
+    attack(c, b, e, a) { if (++a.n % (every ?? 2) === 0) blinkForward(b, e, dist); },
+  }) : ({
     spawn(b, e, a) { a.readyAt = b.time + (initCooldown ?? 0); },
     tick(b, e, a) {
       if (!e.alive || e.s.flags.silence || !e.blockedBy || b.time < a.readyAt) return;

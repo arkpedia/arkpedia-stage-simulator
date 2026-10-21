@@ -1129,9 +1129,26 @@ export class Battle {
     }
   }
 
-  /** Leak: an enemy reached its goal. */
+  /** Reveal a spy's identity once; the spy's reveal abilities attach their consequence. */
+  revealIdentity(e) {
+    if (!e || !e.alive || !e.profile?.spy || e.profile.revealed) return false;
+    e.profile.revealed = true;
+    this.emit('identityRevealed', { enemy: e });
+    for (const a of e.mem?.ab?.list ?? []) if (a.reveal) a.reveal(this, e, a);
+    return true;
+  }
+
+  /** Leak: an enemy reached its goal. */  /** Leak: an enemy reached its goal. */
   leak(e) {
     if (!e || !e.alive || e.side !== 'enemy') return;
+    if (e.profile?.friendly) {
+      // A friendly civilian reaching the objective raises the reviewed max DP instead of costing life.
+      if (e.profile.civilianDp > 0) this.flags.dpMax += e.profile.civilianDp;
+      this._remove(e, 'leak');
+      this._ev(['leak', e.id]);
+      if (this._hooks.enemyLeak) this.emit('enemyLeak', { enemy: e });
+      return;
+    }
     this._recordLeak(e, false);
     this._remove(e, 'leak');
     this._ev(['leak', e.id]);
@@ -1163,6 +1180,7 @@ export class Battle {
    */
   _checkBlock(e) {
     if (e.blockedBy || e.hidden || !e.alive) return !!e.blockedBy;
+    if (this.identityLocks?.size && !e.profile?.revealed && (e.profile?.spy || e.profile?.friendly)) return false;
     const f = e.s.flags;
     if (f.unblockable || f.levitate || f.fear) return false;
     const r0 = Math.round(e.y), c0 = Math.round(e.x);
@@ -1227,6 +1245,7 @@ export class Battle {
     if (!e.isFlying && (!u.ground || mode === 'FLY' || mode !== 'WALK' && u.s.flags.liftoff || this.grid.tile(u.tileR, u.tileC).pass !== 'ALL')) return false;
     const cap = u.s.blockCnt;
     if (cap <= 0) return false;
+    if (e.profile?.requiredBlock && cap < e.profile.requiredBlock) return false;
     let used = 0;
     for (const x of u.blocking) used += x.blockWeight ?? 1;
     return used + w <= cap;

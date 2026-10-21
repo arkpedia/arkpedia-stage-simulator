@@ -24,7 +24,7 @@ test('an explicit stage wins over the default and an unknown stage lists the alt
   assert.equal(resolveStage(catalogued, 'test-2').id, 'test-2');
   assert.throws(() => resolveStage(catalogued, 'missing'), error => {
     assert.equal(error.code, 'STAGE_NOT_FOUND');
-    assert.deepEqual(error.stages.map(stage => stage.id), ['0-1', 'test-2']);
+    assert.deepEqual(error.stages.map(stage => stage.id), [...index.stages.filter(stage => !stage.testOnly).map(stage => stage.id), 'test-2']);
     return true;
   });
 });
@@ -52,16 +52,22 @@ test('an embedded catalogue entry can never silently load a different stage', as
 test('the committed catalogue is generated from the stage files', async () => {
   assert.deepEqual(await buildStageIndex(), index);
 });
-test('test-only stages require the experimental flag', () => {
-  const entry = index.stages.find(stage => stage.testOnly);
-  assert.ok(entry, 'a test-only stage exists');
-  assert.throws(() => resolveStage(index, entry.id), error => {
+test('the reviewed stages are public', () => {
+  for (const id of ['0-2', '0-11', '1-1', '1-3', '1-4', '1-5', '1-7', '1-8', '1-9', '1-10', '2-1', '2-2', '2-4', '2-5', '2-6', '2-7', '2-8', '2-9', '3-1', '3-2', '3-4', '3-5', '3-6', '3-8', '4-1', '4-2', '4-3', '4-5', '4-6', '5-1', '5-2', '5-3', '5-8', '5-9', '6-1', '6-2', '6-3', '6-4', '6-5', '6-8', '6-9', '6-10', '6-11', '6-12', '7-2', '7-3', '9-2', '9-3', '9-4', 's2-1', 's2-2', 's2-5', 's2-6', 's2-7', 's2-8', 's2-9', 's2-10', 's2-11', 's2-12', '10-2', '10-3', '10-4', '4-7', '5-8', '9-3', 's2-12']) assert.equal(resolveStage(index, id).id, id);
+});
+test('every public stage records its review date', () => {
+  for (const entry of index.stages.filter(stage => !stage.testOnly)) assert.match(entry.reviewed, /^\d{4}-\d{2}-\d{2}$/);
+});
+test('a test-only stage requires the experimental flag', () => {
+  const entry = { id: 'test-only', code: 'T-0', name: 'Test only', data: null, testOnly: true };
+  const withTestOnly = { ...index, stages: [...index.stages, entry] };
+  assert.throws(() => resolveStage(withTestOnly, entry.id), error => {
     assert.equal(error.code, 'STAGE_TEST_ONLY');
     assert.equal(error.stage.id, entry.id);
     assert.ok(error.stages.every(stage => !stage.testOnly), 'only public stages are offered');
     return true;
   });
-  assert.equal(resolveStage(index, entry.id, { experimental: true }).id, entry.id);
+  assert.equal(resolveStage(withTestOnly, entry.id, { experimental: true }).id, entry.id);
 });
 test('every data-backed stage names a committed file', async () => {
   for (const entry of index.stages) {

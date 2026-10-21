@@ -1,0 +1,1962 @@
+{
+ "code": "9-15",
+ "name": "Scalding Earth",
+ "description": "The enemy's flames push through the city ruins. Those of conviction tread the firelight and forge on.\n<Tattered Pillar> Can be knocked down by neighboring Operators, dealing True damage to the two tiles it falls on and forming rubble that blocks routes.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "9-15",
+  "rows": 8,
+  "cols": 11,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_fence",
+    "height": "low",
+    "walkable": false,
+    "deployable": "melee",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    1,
+    1,
+    1,
+    1,
+    1,
+    2,
+    1,
+    3,
+    0,
+    0
+   ],
+   [
+    0,
+    1,
+    4,
+    4,
+    1,
+    4,
+    1,
+    4,
+    0,
+    0,
+    0
+   ],
+   [
+    3,
+    2,
+    1,
+    1,
+    1,
+    1,
+    2,
+    1,
+    1,
+    2,
+    5
+   ],
+   [
+    0,
+    4,
+    1,
+    0,
+    2,
+    2,
+    2,
+    1,
+    4,
+    4,
+    0
+   ],
+   [
+    0,
+    4,
+    1,
+    4,
+    1,
+    4,
+    6,
+    4,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    1,
+    2,
+    1,
+    1,
+    2,
+    1,
+    2,
+    1,
+    3
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 10
+    },
+    "end": {
+     "row": 3,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 9
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 40
+     }
+    ]
+   },
+   {
+    "motion": null,
+    "placeholder": true,
+    "start": null,
+    "end": null,
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 1
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 10
+    },
+    "end": {
+     "row": 3,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 9
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 8
+    },
+    "end": {
+     "row": 3,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 7
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 8
+    },
+    "end": {
+     "row": 3,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 7
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 10
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 8
+    },
+    "end": {
+     "row": 3,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 7
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 15
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 2
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 4
+     }
+    ]
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 180,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Dublinn Evocator",
+      "enemy_id": "enemy_1176_dusocr",
+      "count": 1,
+      "time": 3,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Dublinn Sniffer Hound",
+      "enemy_id": "enemy_1165_duhond",
+      "count": 1,
+      "time": 13,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Sniffer Hound",
+      "enemy_id": "enemy_1165_duhond",
+      "count": 2,
+      "time": 23,
+      "interval": 1,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Sniffer Hound",
+      "enemy_id": "enemy_1165_duhond",
+      "count": 2,
+      "time": 36,
+      "interval": 1,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Sniffer Hound",
+      "enemy_id": "enemy_1165_duhond",
+      "count": 2,
+      "time": 44,
+      "interval": 1,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Phalanx Infantry",
+      "enemy_id": "enemy_1169_duphlx",
+      "count": 3,
+      "time": 57,
+      "interval": 16,
+      "route": 3,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Phalanx Infantry",
+      "enemy_id": "enemy_1169_duphlx",
+      "count": 3,
+      "time": 43,
+      "interval": 16,
+      "route": 4,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Heavy Defender",
+      "enemy_id": "enemy_1170_dushld",
+      "count": 1,
+      "time": 70,
+      "route": 5,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Phalanx Infantry",
+      "enemy_id": "enemy_1169_duphlx",
+      "count": 1,
+      "time": 104,
+      "route": 6,
+      "fragment": 2
+     },
+     {
+      "enemy": "Dublinn Phalanx Infantry",
+      "enemy_id": "enemy_1169_duphlx",
+      "count": 3,
+      "time": 127.5,
+      "interval": 15,
+      "route": 7,
+      "fragment": 2
+     },
+     {
+      "enemy": "Dublinn Phalanx Infantry",
+      "enemy_id": "enemy_1169_duphlx",
+      "count": 4,
+      "time": 111,
+      "interval": 15,
+      "route": 4,
+      "fragment": 2
+     },
+     {
+      "enemy": "Dublinn Phalanx Infantry",
+      "enemy_id": "enemy_1169_duphlx",
+      "count": 2,
+      "time": 176,
+      "interval": 1,
+      "route": 4,
+      "fragment": 2
+     },
+     {
+      "enemy": "Dublinn Shadowcaster",
+      "enemy_id": "enemy_1168_dumage",
+      "count": 2,
+      "time": 179,
+      "interval": 1,
+      "route": 8,
+      "fragment": 2
+     },
+     {
+      "enemy": "Dublinn Evocator",
+      "enemy_id": "enemy_1176_dusocr",
+      "count": 1,
+      "time": 144,
+      "route": 9,
+      "fragment": 2
+     },
+     {
+      "enemy": "Dublinn Phalanx Infantry",
+      "enemy_id": "enemy_1169_duphlx",
+      "count": 4,
+      "time": 106,
+      "interval": 15,
+      "route": 10,
+      "fragment": 2
+     },
+     {
+      "enemy": "Dublinn Heavy Defender",
+      "enemy_id": "enemy_1170_dushld",
+      "count": 1,
+      "time": 161,
+      "route": 5,
+      "fragment": 2
+     },
+     {
+      "enemy": "Dublinn Shadowcaster",
+      "enemy_id": "enemy_1168_dumage",
+      "count": 3,
+      "time": 115,
+      "interval": 21,
+      "route": 2,
+      "fragment": 2
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 8,
+    "routes": [
+     6,
+     7,
+     9
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 3,
+    "col": 0,
+    "routes": [
+     2,
+     2,
+     2,
+     2,
+     3,
+     5,
+     8,
+     10,
+     5,
+     2
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 6,
+    "col": 10,
+    "routes": [
+     0,
+     4,
+     4,
+     4
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 3,
+    "col": 10,
+    "routes": [
+     0,
+     2,
+     2,
+     2,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     4,
+     4,
+     8,
+     9,
+     10,
+     5,
+     2
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1165_duhond",
+    "slug": "dublinn_sniffer_hound",
+    "name": "Dublinn Sniffer Hound",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1168_dumage",
+    "slug": "dublinn_shadowcaster",
+    "name": "Dublinn Shadowcaster",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1169_duphlx",
+    "slug": "dublinn_phalanx_infantry",
+    "name": "Dublinn Phalanx Infantry",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1170_dushld",
+    "slug": "dublinn_heavy_defender",
+    "name": "Dublinn Heavy Defender",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1176_dusocr",
+    "slug": "dublinn_evocator",
+    "name": "Dublinn Evocator",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1177_dufrbl",
+    "slug": null,
+    "name": "Purifying Flames",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "pathing": {
+  "schemaVersion": 1,
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "9-15",
+  "geometryHash": "3ddb0a488a48fdef2323d20196e2f26015d9214e0457237fb83695a4d5c50f69",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      10,
+      6
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      7,
+      6
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      10,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11.414213562373096,
+     12.414213562373096,
+     13.414213562373096,
+     14.414213562373096
+    ],
+    "length": 14.414213562373096,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 40,
+      "point": [
+       9,
+       6
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      10,
+      6
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      10,
+      3
+     ]
+    ]
+   },
+   "2": {
+    "points": [
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      10,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      10,
+      3
+     ]
+    ]
+   },
+   "3": {
+    "points": [
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      10,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 5,
+      "point": [
+       1,
+       3
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      10,
+      3
+     ]
+    ]
+   },
+   "4": {
+    "points": [
+     [
+      10,
+      6
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      7,
+      6
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      10,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11.414213562373096,
+     12.414213562373096,
+     13.414213562373096,
+     14.414213562373096
+    ],
+    "length": 14.414213562373096,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      10,
+      6
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      10,
+      3
+     ]
+    ]
+   },
+   "5": {
+    "points": [
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      10,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 10,
+      "point": [
+       1,
+       3
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      10,
+      3
+     ]
+    ]
+   },
+   "6": {
+    "points": [
+     [
+      8,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      10,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "length": 8,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 10,
+      "point": [
+       7,
+       1
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      8,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      10,
+      3
+     ]
+    ]
+   },
+   "7": {
+    "points": [
+     [
+      8,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      10,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "length": 8,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      8,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      10,
+      3
+     ]
+    ]
+   },
+   "8": {
+    "points": [
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      10,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      3
+     ],
+     [
+      10,
+      3
+     ]
+    ]
+   },
+   "9": {
+    "points": [
+     [
+      8,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      10,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "length": 8,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 15,
+      "point": [
+       7,
+       1
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      8,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      10,
+      3
+     ]
+    ]
+   },
+   "10": {
+    "points": [
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      10,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 2,
+      "seconds": 4,
+      "point": [
+       2,
+       3
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      10,
+      3
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1176_dusocr": {
+   "key": "enemy_1176_dusocr",
+   "prefabKey": "enemy_1176_dusocr",
+   "name": "Dublinn Evocator",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "NONE",
+   "stats": {
+    "maxHp": 15000,
+    "atk": 0,
+    "def": 450,
+    "res": 40,
+    "moveSpeed": 0.3,
+    "bat": 5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": -1,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "none",
+    "dmgTypes": [
+     "none"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Controls <Purifying Flames> that move along the ground and explode after hitting a melee ally unit, dealing Arts damage and <$ba.dt.burning>Burn damage</>; damage dealt decreases with distance moved",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [
+    {
+     "prefabKey": "SummonFireBall",
+     "priority": 0,
+     "cooldown": 6,
+     "initCooldown": 3,
+     "spCost": 0,
+     "bb": {
+      "cnt": 1
+     },
+     "bbStr": {
+      "enemy_key": "enemy_1177_dufrbl"
+     }
+    },
+    {
+     "prefabKey": "SummonFireBall2",
+     "priority": 1,
+     "cooldown": 5,
+     "initCooldown": 5,
+     "spCost": 0,
+     "bb": {
+      "cnt": 1
+     },
+     "bbStr": {
+      "enemy_key": "enemy_1177_dufrbl"
+     }
+    }
+   ],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1177_dufrbl": {
+   "key": "enemy_1177_dufrbl",
+   "prefabKey": "enemy_1177_dufrbl",
+   "name": "Purifying Flames",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 100,
+    "atk": 500,
+    "def": 0,
+    "res": 0,
+    "moveSpeed": 2.5,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 1.8,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 0,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [],
+    "motion": "WALK",
+    "immunities": {
+     "stun": true,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {
+     "epdamage.attack@ep_damage_ratio": 1,
+     "Weaken.duration": 10,
+     "Weaken.atk": -0.7
+    },
+    "bbStr": {},
+    "groups": {
+     "epdamage": [
+      "attack@ep_damage_ratio"
+     ],
+     "Weaken": [
+      "atk",
+      "duration"
+     ]
+    }
+   },
+   "skills": [],
+   "sp": {
+    "type": "INCREASE_WITH_TIME",
+    "maxSp": 0,
+    "initSp": 0,
+    "increment": 1
+   },
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1165_duhond": {
+   "key": "enemy_1165_duhond",
+   "prefabKey": "enemy_1165_duhond",
+   "name": "Dublinn Sniffer Hound",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2800,
+    "atk": 300,
+    "def": 0,
+    "res": 0,
+    "moveSpeed": 1.7,
+    "bat": 1.4,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "<$ba.refraction>Refraction</>",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "refracting.magic_resistance": 70
+    },
+    "bbStr": {},
+    "groups": {
+     "refracting": [
+      "magic_resistance"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1169_duphlx": {
+   "key": "enemy_1169_duphlx",
+   "prefabKey": "enemy_1169_duphlx",
+   "name": "Dublinn Phalanx Infantry",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 4000,
+    "atk": 300,
+    "def": 300,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 2.5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 1.5,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "When other Phalanx Infantry are nearby, DEF increases (stacks)",
+     "format": "NORMAL"
+    },
+    {
+     "text": "<$ba.refraction>Refraction</>",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "refracting.magic_resistance": 70,
+     "auraDefup.def": 200
+    },
+    "bbStr": {},
+    "groups": {
+     "refracting": [
+      "magic_resistance"
+     ],
+     "auraDefup": [
+      "def"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1170_dushld": {
+   "key": "enemy_1170_dushld",
+   "prefabKey": "enemy_1170_dushld",
+   "name": "Dublinn Heavy Defender",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 7000,
+    "atk": 700,
+    "def": 750,
+    "res": 0,
+    "moveSpeed": 0.7,
+    "bat": 4,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 4,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "<$ba.refraction>Refraction</>",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "refracting.magic_resistance": 70
+    },
+    "bbStr": {},
+    "groups": {
+     "refracting": [
+      "magic_resistance"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1168_dumage": {
+   "key": "enemy_1168_dumage",
+   "prefabKey": "enemy_1168_dumage",
+   "name": "Dublinn Shadowcaster",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 4500,
+    "atk": 300,
+    "def": 150,
+    "res": 20,
+    "moveSpeed": 1.1,
+    "bat": 3,
+    "aspd": 100,
+    "rangeRadius": 2.5,
+    "rawRangeRadius": 2.5,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "<$ba.refraction>Refraction</>",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "refracting.magic_resistance": 70
+    },
+    "bbStr": {},
+    "groups": {
+     "refracting": [
+      "magic_resistance"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ }
+}

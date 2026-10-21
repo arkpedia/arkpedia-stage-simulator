@@ -1,0 +1,849 @@
+{
+ "code": "TR-25",
+ "name": "Special Environment Adaptive Ops",
+ "description": "Learn to fight in extreme Originium environments.\n<Originium Pollution> Continuously deals True damage to units on it and greatly reduces their SP recovery.\n<Active Originium Storm> Deals True Damage to units in its area every second and greatly reduces their SP recovery.",
+ "battle": {
+  "max_life": 10,
+  "unit_limit": 4,
+  "initial_dp": 3,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "tr-25",
+  "rows": 6,
+  "cols": 9,
+  "tileLegend": [
+   {
+    "key": "tile_toxichill",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_toxicroad",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_toxicroad",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true,
+    "blackboard": {
+     "dynamic": 1
+    }
+   },
+   {
+    "key": "tile_toxic",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true,
+    "blackboard": {
+     "dynamic": 1
+    }
+   },
+   {
+    "key": "tile_toxic",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_toxicwall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_toxicwall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true,
+    "blackboard": {
+     "dynamic": 1
+    }
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    1,
+    2,
+    3,
+    4,
+    4,
+    4,
+    5
+   ],
+   [
+    0,
+    6,
+    1,
+    7,
+    0,
+    0,
+    0,
+    4,
+    0
+   ],
+   [
+    0,
+    0,
+    4,
+    0,
+    0,
+    0,
+    0,
+    4,
+    0
+   ],
+   [
+    8,
+    4,
+    4,
+    0,
+    1,
+    1,
+    4,
+    4,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    5,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 8
+    },
+    "end": {
+     "row": 4,
+     "col": 0
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": null,
+    "placeholder": true,
+    "start": null,
+    "end": null,
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 7
+    },
+    "end": {
+     "row": 4,
+     "col": 0
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 2
+    },
+    "end": {
+     "row": 4,
+     "col": 0
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 4
+    },
+    "end": {
+     "row": 4,
+     "col": 0
+    },
+    "checkpoints": [],
+    "waits": []
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 65,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Sarkaz Wither Vanguard",
+      "enemy_id": "enemy_1422_lrsldr",
+      "count": 2,
+      "time": 3,
+      "interval": 10,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Active Originium Storm",
+      "enemy_id": "enemy_1420_lrmm",
+      "count": 1,
+      "time": 0,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Beacon",
+      "enemy_id": "enemy_1421_lrchld",
+      "count": 1,
+      "time": 0,
+      "route": 3,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sarkaz Wither Vanguard",
+      "enemy_id": "enemy_1422_lrsldr",
+      "count": 4,
+      "time": 35,
+      "interval": 10,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sarkaz Wither Vanguard",
+      "enemy_id": "enemy_1422_lrsldr",
+      "count": 2,
+      "time": 50,
+      "interval": 10,
+      "route": 4,
+      "fragment": 0
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 8,
+    "routes": [
+     0,
+     0
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 5,
+    "col": 4,
+    "routes": [
+     4
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 4,
+    "col": 0,
+    "routes": [
+     0,
+     2,
+     3,
+     0,
+     4
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1420_lrmm",
+    "slug": null,
+    "name": "Active Originium Storm",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1421_lrchld",
+    "slug": null,
+    "name": "Beacon",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1422_lrsldr",
+    "slug": "sarkaz_wither_vanguard",
+    "name": "Sarkaz Wither Vanguard",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "pathing": {
+  "schemaVersion": 1,
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "TR-25",
+  "geometryHash": "4b23205e5b58d659f8406dbbcff0bc36c2826cc212781e3fc14aa9102c73bb20",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      8,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      0,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "length": 11,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      8,
+      1
+     ],
+     [
+      0,
+      4
+     ]
+    ]
+   },
+   "2": {
+    "points": [
+     [
+      7,
+      4
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      0,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ],
+    "length": 13,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      7,
+      4
+     ],
+     [
+      0,
+      4
+     ]
+    ]
+   },
+   "3": {
+    "points": [
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      0,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "length": 4,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      2,
+      2
+     ],
+     [
+      0,
+      4
+     ]
+    ]
+   },
+   "4": {
+    "points": [
+     [
+      4,
+      5
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      0,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17
+    ],
+    "length": 17,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      4,
+      5
+     ],
+     [
+      0,
+      4
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1420_lrmm": {
+   "key": "enemy_1420_lrmm",
+   "prefabKey": "enemy_1420_lrmm",
+   "name": "Active Originium Storm",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 25000,
+    "atk": 900,
+    "def": 300,
+    "res": 20,
+    "moveSpeed": 0.4,
+    "bat": 3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": -1,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 0,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [],
+    "motion": "WALK",
+    "immunities": {
+     "stun": true,
+     "silence": true,
+     "sleep": true,
+     "frozen": true,
+     "levitate": true
+    },
+    "otherImmunities": [
+     "disarmedCombat"
+    ],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {
+     "StormAura.sp_recover_ratio": -0.8,
+     "StormAura.damage": 50,
+     "StormAura.damage_step": 25,
+     "StormAura.max_damage": 200,
+     "StormAura.radius_step": 0.2,
+     "StormAura.max_radius": 8,
+     "StormAura.range_radius": 0.8
+    },
+    "bbStr": {},
+    "groups": {
+     "StormAura": [
+      "damage",
+      "damage_step",
+      "max_damage",
+      "max_radius",
+      "radius_step",
+      "range_radius",
+      "sp_recover_ratio"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": true,
+   "tags": []
+  },
+  "enemy_1421_lrchld": {
+   "key": "enemy_1421_lrchld",
+   "prefabKey": "enemy_1421_lrchld",
+   "name": "Beacon",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 25000,
+    "atk": 900,
+    "def": 300,
+    "res": 20,
+    "moveSpeed": 0.3,
+    "bat": 3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": -1,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 0,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": -1
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": true,
+   "tags": []
+  },
+  "enemy_1422_lrsldr": {
+   "key": "enemy_1422_lrsldr",
+   "prefabKey": "enemy_1422_lrsldr",
+   "name": "Sarkaz Wither Vanguard",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 4700,
+    "atk": 300,
+    "def": 100,
+    "res": 40,
+    "moveSpeed": 0.8,
+    "bat": 3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": -1,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys",
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Attacks deal Arts damage when inside Originium pollution.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "sarkaz"
+   ]
+  }
+ }
+}

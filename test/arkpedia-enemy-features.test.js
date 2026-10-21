@@ -3,7 +3,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import support from '../data/arkpedia-enemy-support.json' with { type: 'json' };
 import { ENEMY_FEATURES, recordFeatureIds } from '../shared/arkpedia/enemy-features.js';
-import { enemyStealthed, canTargetAlly } from '../server/sim/targeting.js';
+import { enemyStealthed, canTargetAlly, canTargetEnemy, sortAllyTargets } from '../server/sim/targeting.js';
 import { spawnAny, ENEMY_RECORDS } from './helpers/enemyHarness.js';
 import { makeBattle, chessRec } from './helpers/battleHarness.js';
 import { installEnemyFeatures } from '../server/sim/content/arkpedia-enemy-features.js';
@@ -288,6 +288,387 @@ test('Technical Scout: camouflage is ignored only inside the reviewed reveal ran
   assert.equal(canTargetAlly(e, guard, true), true, 'revealed inside 3.3');
   e.x = guard.x + 5;
   assert.equal(canTargetAlly(e, guard, true), false, 'hidden outside the aura');
+});
+test('Tiacauh: flat DEF while blocked and the reviewed melee multiplier', () => {
+  const defKey = 'enemy_1093_ccsbr', h = spawnAny(defKey, { seconds: 0.1 });
+  const e = h.b.units.find(u => u.side === 'enemy' && u.defId === defKey), base = ENEMY_RECORDS.enemies[defKey].levels[0].stats.def;
+  h.runUntil(() => e.blockedBy, 20); h.run(0.2);
+  assert.ok(e.blockedBy); assert.equal(e.s.def, base + 130);
+
+  const key = 'enemy_1096_ccwitch', rec = ENEMY_RECORDS.enemies[key].levels[0];
+  const guard = chessRec({ id: 'tiacauh_guard', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 0 } });
+  const b = makeBattle({ defs: { enemies: { [key]: rec }, chess: { [guard.chessId]: guard } },
+    units: [{ chessId: guard.chessId, row: 9, col: 6 }], enemies: [{ key, time: 0, route: 0 }],
+    content: 'none', autoFinish: false, timeLimit: 30, setup: battle => installEnemyFeatures(battle) });
+  b.run(0.05); const unit = b.b.units.find(u => u.defId === key), g = b.b.units.find(u => u.side === 'ally');
+  unit.x = g.x; unit.y = g.y; b.step(); assert.ok(unit.blockedBy, 'the guard blocks it');
+  let hit = null; b.b.on('damaged', c => { if (c.source === unit && c.dmg?.isAttack) hit = c; });
+  b.runUntil(() => hit, 25);
+  assert.ok(hit); assert.equal(hit.dmg.amount, unit.s.atk * 4);
+});
+test('Sankta SelfFear: first HP drop below half applies fear and the speed buff', () => {
+  const key = 'enemy_10083_hlbird', h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
+  h.b.dealDamage(null, e, { amount: e.s.maxHp * 0.6, type: 'true', sourceless: true }); h.run(0.05);
+  assert.ok(e.buffs.some(b => b.status === 'fear'), 'fear applied'); assert.ok(e.findBuff('ab:fearRun'), 'speed buff applied');
+});
+test('Roar Knightclub: the timed DEF/RES buff applies and expires', () => {
+  const key = 'enemy_1101_plkght', base = ENEMY_RECORDS.enemies[key].levels[0].stats.def, h = spawnAny(key, { seconds: 0.1 });
+  const e = enemy(h, key); h.run(0.5);
+  assert.equal(e.s.def, base + 3000); assert.equal(e.s.res, 95); assert.equal(e.findBuff('ab:timedStat').duration, 30);
+  h.run(31);
+  assert.equal(e.findBuff('ab:timedStat'), null); assert.equal(e.s.def, base);
+});
+test('Rhine Defense: the first Physical hit is fully blocked', () => {
+  const key = 'enemy_1249_lysdb', h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
+  const guard = chessRec({ id: 'shield_guard', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 0 } });
+  const hp = e.hp;
+  h.b.dealDamage({ s: { atk: 1 } }, e, { amount: 100, type: 'phys', sourceless: true });
+  assert.equal(e.hp, hp, 'first hit blocked');
+  h.b.dealDamage({ s: { atk: 1 } }, e, { amount: 100, type: 'phys', sourceless: true });
+  assert.ok(e.hp < hp, 'second hit lands');
+});
+test('Evade: unblocked dodge, initial timed dodge and the first low-HP dodge', () => {
+  const unblocked = 'enemy_1159_swfmob', h1 = spawnAny(unblocked, { seconds: 0.1, units: [] }), e1 = enemy(h1, unblocked);
+  h1.run(0.2); assert.equal(e1.s.dodgePhys, 0.4);
+
+  const timed = 'enemy_1258_durman', h2 = spawnAny(timed, { seconds: 0.1 }), e2 = enemy(h2, timed);
+  h2.run(0.5); assert.equal(e2.s.dodgePhys, 1); h2.run(21); assert.equal(e2.s.dodgePhys, 0);
+
+  const low = 'enemy_1259_durwar', h3 = spawnAny(low, { seconds: 0.1, units: [] }), e3 = enemy(h3, low);
+  assert.equal(e3.s.dodgePhys, 0); h3.b.dealDamage(null, e3, { amount: e3.s.maxHp * 0.6, type: 'true', sourceless: true }); h3.run(0.1);
+  assert.equal(e3.s.dodgePhys, 1);
+});
+test('Volleyball cart: attack stacks raise ATK and a negative status clears them', () => {
+  const key = 'enemy_1261_dursho', base = ENEMY_RECORDS.enemies[key].levels[0].stats.atk, h = spawnAny(key, { seconds: 0.1 });
+  const e = enemy(h, key); h.runUntil(() => e.mem.ab?.list?.[0]?.n >= 3, 25); h.run(0.1);
+  assert.equal(e.s.atk, base * 1.3);
+  h.b.applyStatus(e, 'cold', { duration: 5, source: null }); h.run(0.1);
+  assert.equal(e.findBuff('ab:atkUpStacks'), null); assert.equal(e.s.atk, base);
+});
+test('Sarkaz Grudgebearer: standby until injured, then combat-ready with two targets', () => {
+  const key = 'enemy_1074_dbskar', h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
+  assert.ok(e.s.flags.stun, 'standby stun'); assert.ok(e.findBuff('ab:standby'));
+  h.b.dealDamage(null, e, { amount: e.s.maxHp * 0.01, type: 'true', sourceless: true }); h.run(0.1);
+  assert.ok(!e.s.flags.stun, 'standby ends'); assert.ok(e.findBuff('ab:standbySpeed')); assert.equal(e.profile.maxTargets, 2);
+});
+test('Originium Colossus: the melee attack splashes the adjacent guard', () => {
+  const key = 'enemy_10078_mprein', rec = ENEMY_RECORDS.enemies[key].levels[0];
+  const a = chessRec({ id: 'splash_a', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 0 } });
+  const b = chessRec({ id: 'splash_b', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 0 } });
+  const h = makeBattle({ defs: { enemies: { [key]: rec }, chess: { [a.chessId]: a, [b.chessId]: b } },
+    units: [{ chessId: a.chessId, row: 9, col: 6 }, { chessId: b.chessId, row: 9, col: 7 }],
+    enemies: [{ key, time: 0, route: 0 }], content: 'none', autoFinish: false, timeLimit: 30,
+    setup: battle => installEnemyFeatures(battle) });
+  const hits = { [a.chessId]: 0, [b.chessId]: 0 };
+  h.b.on('damaged', c => { if (c.source?.defId === key && c.target.defId in hits) hits[c.target.defId]++; });
+  h.runUntil(() => hits[a.chessId] > 0 && hits[b.chessId] > 0, 25);
+  assert.ok(hits[a.chessId] > 0 && hits[b.chessId] > 0, JSON.stringify(hits));
+});
+test('target priority: lowest DEF and lowest HP fraction sort after the blocker', () => {
+  const a = { s: { def: 500, maxHp: 1000, taunt: 0 }, aggroSeq: 1, hp: 800 };
+  const b = { s: { def: 100, maxHp: 1000, taunt: 0 }, aggroSeq: 2, hp: 200 };
+  assert.equal(sortAllyTargets({ blockedBy: null, profile: { targetPriority: 'lowestDef' } }, [a, b])[0], b);
+  assert.equal(sortAllyTargets({ blockedBy: null, profile: { targetPriority: 'lowestHp' } }, [a, b])[0], b);
+  assert.equal(sortAllyTargets({ blockedBy: a, profile: { targetPriority: 'lowestDef' } }, [a, b])[0], a);
+});
+test('Big Snowball Thrower: only the first attack is scaled', () => {
+  const key = 'enemy_15002_dqwing', rec = ENEMY_RECORDS.enemies[key].levels[0];
+  const guard = chessRec({ id: 'first_guard', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 0 } });
+  const h = makeBattle({ defs: { enemies: { [key]: rec }, chess: { [guard.chessId]: guard } },
+    units: [{ chessId: guard.chessId, row: 9, col: 6 }], enemies: [{ key, time: 0, route: 0 }],
+    content: 'none', autoFinish: false, timeLimit: 30, setup: battle => installEnemyFeatures(battle) });
+  const hits = []; h.b.on('damaged', c => { if (c.source?.defId === key && c.dmg?.isAttack) hits.push(c.dmg.amount); });
+  h.runUntil(() => hits.length >= 2, 25);
+  const atk = h.b.units.find(u => u.defId === key).s.atk;
+  assert.equal(hits[0], atk * 1.5); assert.equal(hits[1], atk);
+});
+test('Seed of Withering: detonates near a guard and dies', () => {
+  const key = 'enemy_1269_nhfly', h = spawnAny(key, { seconds: 0.1 }), e = enemy(h, key);
+  const guard = h.b.units.find(u => u.side === 'ally'), hp = guard.hp;
+  h.runUntil(() => !e.alive, 20);
+  assert.ok(!e.alive, 'it self-destructed'); assert.ok(guard.hp < hp, 'the guard took the blast');
+});
+test('Theater Golem: needs 4 Block and splashes allies around itself', () => {
+  const key = 'enemy_2011_csppt', rec = ENEMY_RECORDS.enemies[key].levels[0];
+  const a = chessRec({ id: 'golem_a', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 0 } });
+  const b = chessRec({ id: 'golem_b', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 0 } });
+  const h = makeBattle({ defs: { enemies: { [key]: rec }, chess: { [a.chessId]: a, [b.chessId]: b } },
+    units: [{ chessId: a.chessId, row: 9, col: 6 }, { chessId: b.chessId, row: 9, col: 7 }],
+    enemies: [{ key, time: 0, route: 0 }], content: 'none', autoFinish: false, timeLimit: 30,
+    setup: battle => installEnemyFeatures(battle) });
+  h.run(0.05); const e = h.b.units.find(u => u.side === 'enemy' && u.defId === key), guards = h.b.units.filter(u => u.side === 'ally');
+  e.profile.requiredBlock = 4;
+  guards[0].s.blockCnt = 3; assert.equal(h.b._blockerFor(guards[0], e, 1), false);
+  guards[0].s.blockCnt = 4; assert.equal(h.b._blockerFor(guards[0], e, 1), true);
+  const other = guards[1]; other.x = e.x + 0.5; other.y = e.y;
+  const hp = other.hp; const splash = e.mem.ab.list.find(a => a.dealt); splash.dealt({ dmg: { isAttack: true, type: 'phys' }, target: guards[0] }, h.b, e, splash);
+  assert.ok(other.hp < hp, 'the nearby ally took the self-splash');
+});
+test('Wither Vanguard: attacks become Arts only on toxic tiles', () => {
+  const key = 'enemy_1422_lrsldr', h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key), ability = e.mem.ab.list.find(a => a.hitOut);
+  const toxic = { dmg: { isAttack: true, type: 'phys' } };
+  ability.hitOut(toxic, { grid: { tile: () => ({ key: 'tile_toxicroad' }) } }, e);
+  assert.equal(toxic.dmg.type, 'arts');
+  const road = { dmg: { isAttack: true, type: 'phys' } };
+  ability.hitOut(road, { grid: { tile: () => ({ key: 'tile_road' }) } }, e);
+  assert.equal(road.dmg.type, 'phys');
+});
+test('Active Originium Storm: the growing aura damages the guard', () => {
+  const key = 'enemy_1420_lrmm', h = spawnAny(key, { seconds: 0.1 }), guard = h.b.units.find(u => u.side === 'ally'), hp = guard.hp;
+  let storm = false; h.b.on('damaged', c => { if (c.source?.defId === key && c.dmg?.tags?.includes('storm')) storm = true; });
+  h.runUntil(() => storm, 25);
+  assert.ok(storm, 'the storm hit the guard'); assert.ok(guard.hp < hp);
+});
+test('Guerrilla Herald: the battlefield aura buffs other enemies while it lives', () => {
+  const herald = 'enemy_1080_sotidp', other = 'enemy_1222_dpvt';
+  const h = makeBattle({ defs: { enemies: { [herald]: ENEMY_RECORDS.enemies[herald].levels[0], [other]: ENEMY_RECORDS.enemies[other].levels[0] } },
+    units: [], enemies: [{ key: herald, time: 0, route: 0 }, { key: other, time: 0, route: 0 }], content: 'none', autoFinish: false,
+    timeLimit: 30, setup: battle => installEnemyFeatures(battle) });
+  h.run(0.8); const hd = enemy(h, herald), o = enemy(h, other);
+  const baseAtk = ENEMY_RECORDS.enemies[other].levels[0].stats.atk, baseDef = ENEMY_RECORDS.enemies[other].levels[0].stats.def;
+  assert.ok(Math.abs(o.s.atk - baseAtk * 1.1) < 1, `${o.s.atk} vs ${baseAtk * 1.1}`); assert.equal(o.s.def, baseDef + 100);
+  h.b.kill(hd, null); h.run(1); assert.ok(Math.abs(o.s.atk - baseAtk) < 1); assert.equal(o.s.def, baseDef);
+});
+test('Sudaram: the attack hits both adjacent guards', () => {
+  const key = 'enemy_1427_lrnazg', rec = ENEMY_RECORDS.enemies[key].levels[0];
+  const a = chessRec({ id: 'sud_a', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 0 } });
+  const b = chessRec({ id: 'sud_b', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 0 } });
+  const h = makeBattle({ defs: { enemies: { [key]: rec }, chess: { [a.chessId]: a, [b.chessId]: b } },
+    units: [{ chessId: a.chessId, row: 9, col: 6 }, { chessId: b.chessId, row: 9, col: 7 }],
+    enemies: [{ key, time: 0, route: 0 }], content: 'none', autoFinish: false, timeLimit: 30,
+    setup: battle => installEnemyFeatures(battle) });
+  const hits = { [a.chessId]: 0, [b.chessId]: 0 };
+  h.b.on('damaged', c => { if (c.source?.defId === key && c.target.defId in hits) hits[c.target.defId]++; });
+  h.runUntil(() => hits[a.chessId] > 0 && hits[b.chessId] > 0, 25);
+  assert.ok(hits[a.chessId] > 0 && hits[b.chessId] > 0, JSON.stringify(hits));
+});
+test('Norport Civilian: friendly, untargetable, and grants max DP on the objective', () => {
+  const key = 'enemy_1313_wdfmr', h = spawnAny(key, { seconds: 0.1 }), e = enemy(h, key), guard = h.b.units.find(u => u.side === 'ally');
+  assert.equal(e.profile.friendly, true); assert.equal(e.profile.civilianDp, 2);
+  assert.equal(canTargetEnemy(guard, e, {}), false);
+  const before = h.b.flags.dpMax, leaked = h.b.leakedCount; h.b.leak(e);
+  assert.equal(h.b.flags.dpMax, before + 2); assert.equal(h.b.leakedCount, leaked); assert.ok(!e.alive);
+});
+test('Spies: reveal is one-shot and applies the reviewed consequence', () => {
+  const stealthKey = 'enemy_1315_wdyjd', h1 = spawnAny(stealthKey, { seconds: 0.1 }), e1 = enemy(h1, stealthKey);
+  assert.equal(e1.profile.spy, true); assert.ok(e1.findBuff('ab:moveSpeed'));
+  assert.equal(h1.b.revealIdentity(e1), true); assert.equal(e1.s.flags.stealth, true); assert.equal(h1.b.revealIdentity(e1), false);
+
+  const attackKey = 'enemy_1314_wdnjd', h2 = spawnAny(attackKey, { seconds: 0.1 }), e2 = enemy(h2, attackKey);
+  h2.b.revealIdentity(e2);
+  const arm = e2.mem.ab.list.find(a => a.reveal); assert.ok(arm.armed);
+  const c = { dmg: { isAttack: true, amount: 100 } }; arm.hitOut(c, h2.b, e2, arm);
+  assert.equal(c.dmg.amount, 200); assert.equal(arm.armed, false);
+});
+test('Instigator: unrevealed spies cannot be blocked while it is unblocked', () => {
+  const spy = 'enemy_1315_wdyjd', lock = 'enemy_1319_wdfmpm';
+  const guard = chessRec({ id: 'lock_guard', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 0 } });
+  const h = makeBattle({ defs: { enemies: { [spy]: ENEMY_RECORDS.enemies[spy].levels[0], [lock]: ENEMY_RECORDS.enemies[lock].levels[0] }, chess: { [guard.chessId]: guard } },
+    units: [{ chessId: guard.chessId, row: 9, col: 6 }], enemies: [{ key: spy, time: 0, route: 0 }, { key: lock, time: 0, route: 0 }],
+    content: 'none', autoFinish: false, timeLimit: 30, setup: battle => installEnemyFeatures(battle) });
+  h.run(0.5); const s = enemy(h, spy), g = h.b.units.find(u => u.side === 'ally');
+  s.x = g.x; s.y = g.y; assert.ok(h.b.identityLocks.size);
+  assert.equal(h.b._checkBlock(s), false); h.b.identityLocks.clear(); assert.equal(h.b._checkBlock(s), true);
+});
+test('Checkpoint blink: the 1322 family advances after two attacks', () => {
+  const key = 'enemy_1322_wdgyht', h = spawnAny(key, { seconds: 0.1 }), e = enemy(h, key), x0 = e.x;
+  h.runUntil(() => e.x < x0 - 0.5 || !e.alive, 30);
+  assert.ok(e.x < x0 - 0.5, `${e.x} vs ${x0}`);
+});
+test('Absurdist Operative: three attacks drain DP, then the ammo is gone', () => {
+  const key = 'enemy_1317_wdexg', h = spawnAny(key, { seconds: 0.1 }), e = enemy(h, key);
+  const owner = h.b.getPlayer(e.ownerId), ability = e.mem.ab.list.find(a => a.attack), c = { targets: [] };
+  owner.dp = 50; ability.attack(c, h.b, e, ability); assert.equal(owner.dp, 48); assert.equal(ability.ammo, 2);
+  ability.attack(c, h.b, e, ability); ability.attack(c, h.b, e, ability); assert.equal(owner.dp, 44); assert.equal(ability.ammo, 0);
+  ability.attack(c, h.b, e, ability); assert.equal(owner.dp, 44, 'no drain without ammo');
+});
+test('Splitcaster: one Virtual Image at half HP, and the clone cannot split', () => {
+  const key = 'enemy_1318_wdsmgc', h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
+  h.b.dealDamage(null, e, { amount: e.s.maxHp * 0.6, type: 'true', sourceless: true }); h.run(0.1);
+  const kids = h.b.enemies.filter(u => u.defId === key && u !== e); assert.equal(kids.length, 1); assert.equal(kids[0].profile.virtualImage, true);
+  h.b.dealDamage(null, kids[0], { amount: kids[0].s.maxHp * 0.6, type: 'true', sourceless: true }); h.run(0.1);
+  assert.equal(h.b.enemies.filter(u => u.defId === key && u !== e).length, 1, 'no second split');
+});
+test('1320: the first attack splashes, later attacks are single-target', () => {
+  const key = 'enemy_1320_wdrrl', rec = ENEMY_RECORDS.enemies[key].levels[0];
+  const a = chessRec({ id: 'aoa', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 0, blockCnt: 3 } });
+  const b = chessRec({ id: 'aob', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 0, blockCnt: 3 } });
+  const h = makeBattle({ defs: { enemies: { [key]: rec }, chess: { [a.chessId]: a, [b.chessId]: b } },
+    units: [{ chessId: a.chessId, row: 9, col: 6 }, { chessId: b.chessId, row: 9, col: 7 }],
+    enemies: [{ key, time: 0, route: 0 }], content: 'none', autoFinish: false, timeLimit: 30,
+    setup: battle => installEnemyFeatures(battle) });
+  const hits = { [a.chessId]: 0, [b.chessId]: 0 }; let attacks = 0;
+  h.b.on('attack', c => { if (c.attacker?.defId === key) attacks++; });
+  h.b.on('damaged', c => { if (c.source?.defId === key && c.target.defId in hits) hits[c.target.defId]++; });
+  h.runUntil(() => attacks >= 2, 25); h.run(0.1);
+  assert.ok(hits[a.chessId] + hits[b.chessId] >= 3, JSON.stringify(hits));
+  assert.ok(Math.min(hits[a.chessId], hits[b.chessId]) >= 1, 'the first hit splashed both');
+});
+test('1321: the BornBugs summoner drops Seeds of Withering', () => {
+  const key = 'enemy_1321_wdarft', h = spawnAny(key, { seconds: 0.1, units: [] }), seeds = [];
+  h.b.on('enemySpawn', ({ enemy }) => { if (enemy.defId === 'enemy_1269_nhfly') seeds.push(enemy); });
+  h.run(11); assert.ok(seeds.length >= 1, 'at least one seed spawned');
+});
+test('Sarkaz Caster lasso: the attack is 0.35x Arts and stuns for 20 s', () => {
+  const key = 'enemy_1022_dmage', h = spawnAny(key, { seconds: 0.1 }), e = enemy(h, key), guard = h.b.units.find(u => u.side === 'ally');
+  let hit = null; h.b.on('damaged', c => { if (c.source?.defId === key && c.target === guard) hit = c; });
+  h.runUntil(() => hit, 25);
+  assert.ok(hit); assert.equal(hit.dmg.type, 'arts'); assert.equal(hit.dmg.amount, e.s.atk * 0.35);
+  const stun = guard.buffs.find(b => b.status === 'stun'); assert.ok(stun); assert.equal(stun.duration, 20);
+});
+test('Rotchaser: the hit applies the Arts bleed, healing removes it', () => {
+  const key = 'enemy_1270_nhstlk', h = spawnAny(key, { seconds: 0.1 }), guard = h.b.units.find(u => u.side === 'ally');
+  h.runUntil(() => guard.findBuff('ab:bleed'), 25);
+  const bleed = guard.findBuff('ab:bleed'); assert.ok(bleed, 'bleed applied'); const hp = guard.hp;
+  h.run(1.1); assert.ok(guard.hp < hp, 'bleed ticked');
+  h.b.heal(guard, guard, 1, { self: true }); assert.equal(guard.findBuff('ab:bleed'), null);
+});
+test('Witherer: the death corruption zone damages nearby allies', () => {
+  const key = 'enemy_1267_nhpbr', h = spawnAny(key, { seconds: 0.1 }), e = enemy(h, key), guard = h.b.units.find(u => u.side === 'ally');
+  e.x = guard.x + 1; e.y = guard.y; h.b.autoFinish = false; const hp = guard.hp; h.b.kill(e, null); h.run(2);
+  assert.ok(guard.hp < hp, `${guard.hp} vs ${hp}`);
+});
+test('named priority: the Ursus civilian/Talulah target sorts first', () => {
+  const a = { def: { raw: { name: 'Ursus Civilian' } }, s: { taunt: 0 }, aggroSeq: 1 };
+  const b = { def: { raw: { name: 'Guard' } }, s: { taunt: 0 }, aggroSeq: 2 };
+  assert.equal(sortAllyTargets({ blockedBy: null, profile: { targetPriority: 'named', priorityNames: ['Ursus Civilian'] } }, [b, a])[0], a);
+});
+test('Altar Keeper: picks up a Beacon and drops it on death', () => {
+  const keeper = 'enemy_1426_lrthef', beacon = 'enemy_1421_lrchld';
+  const h = makeBattle({ defs: { enemies: { [keeper]: ENEMY_RECORDS.enemies[keeper].levels[0], [beacon]: ENEMY_RECORDS.enemies[beacon].levels[0] } },
+    units: [], enemies: [{ key: keeper, time: 0, route: 0 }, { key: beacon, time: 0, pos: [9, 9] }], content: 'none', autoFinish: false,
+    timeLimit: 30, setup: battle => installEnemyFeatures(battle) });
+  h.run(0.6); const k = enemy(h, keeper);
+  assert.equal(k.profile.carryingBeacon, true); assert.equal(h.b.enemies.filter(u => u.defId === beacon).length, 0);
+  h.b.kill(k, null); h.run(0.1); assert.equal(h.b.enemies.filter(u => u.defId === beacon).length, 1, 'the Beacon dropped');
+});
+test('Chalice of Regret: shares 5% of a nearby ground enemy damage', () => {
+  const chalice = 'enemy_1430_lrrook', other = 'enemy_1222_dpvt';
+  const h = makeBattle({ defs: { enemies: { [chalice]: ENEMY_RECORDS.enemies[chalice].levels[0], [other]: ENEMY_RECORDS.enemies[other].levels[0] } },
+    units: [], enemies: [{ key: chalice, time: 0, route: 0 }, { key: other, time: 0, pos: [9, 10] }], content: 'none', autoFinish: false,
+    timeLimit: 30, setup: battle => installEnemyFeatures(battle) });
+  h.run(0.1); const c = enemy(h, chalice), o = enemy(h, other), before = c.hp;
+  h.b.dealDamage(null, o, { amount: 1000, type: 'true', sourceless: true }); h.run(0.1);
+  assert.ok(Math.abs((before - c.hp) - 50) < 1, `${before - c.hp}`);
+});
+test('Caustic Slug: the death blast hits a nearby guard', () => {
+  const key = 'enemy_1424_lrboom', h = spawnAny(key, { seconds: 0.1 }), e = enemy(h, key), guard = h.b.units.find(u => u.side === 'ally');
+  h.b.autoFinish = false; e.x = guard.x + 1; e.y = guard.y; const hp = guard.hp;
+  h.b.kill(e, null); h.run(0.1); assert.ok(guard.hp < hp, `${guard.hp} vs ${hp}`);
+});
+test('Profane Chimera: attacks become Arts while polluted or stormed', () => {
+  const key = 'enemy_1425_lrcmra', h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key), ability = e.mem.ab.list.find(a => a.hitOut);
+  const toxic = { dmg: { isAttack: true, type: 'phys' } };
+  ability.hitOut.call(ability, toxic, { grid: { tile: () => ({ key: 'tile_toxicroad' }) } }, e);
+  assert.equal(toxic.dmg.type, 'arts');
+  const clean = { dmg: { isAttack: true, type: 'phys' } };
+  ability.hitOut.call(ability, clean, { grid: { tile: () => ({ key: 'tile_road' }) } }, e);
+  assert.equal(clean.dmg.type, 'phys');
+});
+test('Rot Eater: the pollution aura damages a nearby guard', () => {
+  const key = 'enemy_1266_nhapos', h = spawnAny(key, { seconds: 0.1 }), e = enemy(h, key), guard = h.b.units.find(u => u.side === 'ally');
+  e.x = guard.x + 1; e.y = guard.y; const hp = guard.hp; h.run(2); assert.ok(guard.hp < hp);
+});
+test('Focused Soul Remnant: a soul-powered cast damages the line', () => {
+  const key = 'enemy_1429_lrwzrd', rec = ENEMY_RECORDS.enemies[key].levels[0];
+  const a = chessRec({ id: 'line_a', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 0 } });
+  const b = chessRec({ id: 'line_b', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 0 } });
+  const h = makeBattle({ defs: { enemies: { [key]: rec }, chess: { [a.chessId]: a, [b.chessId]: b } },
+    units: [{ chessId: a.chessId, row: 9, col: 6 }, { chessId: b.chessId, row: 9, col: 7 }],
+    enemies: [{ key, time: 0, route: 0 }], content: 'none', autoFinish: false, timeLimit: 30,
+    setup: battle => installEnemyFeatures(battle) });
+  h.run(0.1); const e = enemy(h, key), ability = e.mem.ab.list.find(x => x.cast), hits = { [a.chessId]: 0, [b.chessId]: 0 };
+  h.b.on('damaged', c => { if (c.source?.defId === key && c.target.defId in hits) hits[c.target.defId]++; });
+  ability.souls = 1; ability.cast.call(ability, h.b, e, ability); h.run(1.6);
+  assert.ok(hits[a.chessId] > 0 && hits[b.chessId] > 0, JSON.stringify(hits));
+});
+test('Infused Soul Husk: spending a soul damages the nearby guard', () => {
+  const key = 'enemy_1431_lrmzrd', h = spawnAny(key, { seconds: 0.1 }), e = enemy(h, key), guard = h.b.units.find(u => u.side === 'ally');
+  const ability = e.mem.ab.list.find(x => x.cast); e.x = guard.x + 1; e.y = guard.y; const hp = guard.hp;
+  ability.cast.call(ability, h.b, e, ability); h.run(1.2); assert.ok(guard.hp < hp, `${guard.hp} vs ${hp}`);
+});
+test('Dublinn Phalanx: each unit gains DEF from the other', () => {
+  const key = 'enemy_1169_duphlx';
+  const h = makeBattle({ defs: { enemies: { [key]: ENEMY_RECORDS.enemies[key].levels[0] } },
+    units: [], enemies: [{ key, time: 0, route: 0 }, { key, time: 0, route: 0 }], content: 'none', autoFinish: false,
+    timeLimit: 30, setup: battle => installEnemyFeatures(battle) });
+  h.run(0.8); const units = h.b.enemies.filter(u => u.defId === key), base = ENEMY_RECORDS.enemies[key].levels[0].stats.def;
+  assert.equal(units.length, 2); for (const u of units) assert.equal(u.s.def, base + 200);
+  h.b.kill(units[0], null); h.run(1); assert.equal(units[1].s.def, base);
+});
+test('DeathEye: the lock-on cast ticks Arts damage on the guard', () => {
+  const key = 'enemy_1275_dwlock', h = spawnAny(key, { seconds: 0.1 }), guard = h.b.units.find(u => u.side === 'ally');
+  let hit = false; h.b.on('damaged', c => { if (c.source?.defId === key && c.target === guard && c.dmg.type === 'arts') hit = true; });
+  h.runUntil(() => hit, 15); assert.ok(hit);
+});
+test('Steam Tank: half HP grants the rage buff', () => {
+  const key = 'enemy_1274_stmram', h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
+  h.b.dealDamage(null, e, { amount: e.s.maxHp * 0.6, type: 'true', sourceless: true }); h.run(0.1);
+  assert.ok(e.findBuff('ab:steamRage')); assert.ok(e.s.aspd > 100);
+});
+test('Ursus Civilian: spared costs no life, killed costs one', () => {
+  const key = 'enemy_3001_upeopl', h1 = spawnAny(key, { seconds: 0.1, units: [] }), e1 = enemy(h1, key);
+  h1.b.life = 3; h1.b.leak(e1); assert.equal(h1.b.life, 3);
+  const h2 = spawnAny(key, { seconds: 0.1, units: [] }), e2 = enemy(h2, key); h2.b.life = 3; h2.b.kill(e2, null);
+  assert.equal(h2.b.life, 2); assert.equal(e2.counted, false);
+});
+test('Prototype distributor: summons a maintenance helper', () => {
+  const key = 'enemy_10077_mpbarr_2', h = spawnAny(key, { seconds: 0.1, units: [] }), helpers = [];
+  h.b.on('enemySpawn', ({ enemy }) => { if (enemy.defId === 'enemy_10073_mpcar_2') helpers.push(enemy); });
+  h.run(4); assert.ok(helpers.length >= 1);
+});
+test('Bombardier: the delayed explosion hits the guard', () => {
+  const key = 'enemy_1361_dthrow', h = spawnAny(key, { seconds: 0.1 }), guard = h.b.units.find(u => u.side === 'ally'), hp = guard.hp;
+  h.b.autoFinish = false; h.run(10); assert.ok(guard.hp < hp, `${guard.hp} vs ${hp}`);
+});
+test('Bloodborn Spawn: dying leaves the Blood Amber child', () => {
+  const key = 'enemy_1360_dfello', h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
+  h.b.autoFinish = false; h.b.kill(e, null); h.run(0.2);
+  assert.equal(h.b.enemies.filter(u => u.defId === 'enemy_1367_dseed').length, 1);
+});
+test('Dublinn Flamerazer: the burning aura hits the guard', () => {
+  const key = 'enemy_1173_duspfr', h = spawnAny(key, { seconds: 0.1 }), guard = h.b.units.find(u => u.side === 'ally'), hp = guard.hp;
+  h.b.autoFinish = false; h.run(7); assert.ok(guard.hp < hp);
+});
+test('Dublinn Flamerazer: the death blast defeats another Flamerazer', () => {
+  const key = 'enemy_1173_duspfr';
+  const h = makeBattle({ defs: { enemies: { [key]: ENEMY_RECORDS.enemies[key].levels[0] } }, units: [],
+    enemies: [{ key, time: 0, route: 0 }, { key, time: 0, route: 0 }], content: 'none', autoFinish: false, timeLimit: 30,
+    setup: battle => installEnemyFeatures(battle) });
+  h.run(0.1); const [a, b] = h.b.enemies; h.b.kill(a, null); h.run(0.1);
+  assert.equal(b.alive, false);
+});
+test('Tombkeeper Grotesque: first lethal hit petrifies, then revives airborne', () => {
+  const key = 'enemy_1172_dugago', h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
+  h.b.dealDamage(null, e, { amount: e.s.maxHp * 2, type: 'true', sourceless: true });
+  assert.ok(e.alive && e.hp > 0); assert.ok(e.findBuff('ab:stone'));
+  h.run(10.2); assert.equal(e.findBuff('ab:stone'), null); assert.equal(e.flying, true);
+});
+test('Dublinn Evocator: summons a Purifying Flame', () => {
+  const key = 'enemy_1176_dusocr', h = spawnAny(key, { seconds: 0.1, units: [] }), flames = [];
+  h.b.on('enemySpawn', ({ enemy }) => { if (enemy.defId === 'enemy_1177_dufrbl') flames.push(enemy); });
+  h.run(4); assert.ok(flames.length >= 1);
+});
+test('Purifying Flame: the hit applies the ATK weaken', () => {
+  const key = 'enemy_1177_dufrbl', h = spawnAny(key, { seconds: 0.1 }), guard = h.b.units.find(u => u.side === 'ally'), flame = enemy(h, key);
+  flame.x = guard.x + 1; flame.y = guard.y; const ability = flame.mem.ab.list.find(a => a.tick); ability.tick(h.b, flame, ability); assert.ok(guard.findBuff('ab:weaken'));
+});
+test('Dublinn Companion Shadowblade: faster base attack and Guard haste', () => {
+  const key = 'enemy_1175_dushdo', h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
+  assert.ok(e.s.bat < ENEMY_RECORDS.enemies[key].levels[0].stats.bat);
+});
+test('Dublinn Companion Guard: the field slows a nearby ally', () => {
+  const guardKey = 'enemy_1174_duholy', shadowKey = 'enemy_1175_dushdo';
+  const witness = chessRec({ id: 'guard_witness', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 0 } });
+  const h = makeBattle({ defs: { enemies: { [guardKey]: ENEMY_RECORDS.enemies[guardKey].levels[0], [shadowKey]: ENEMY_RECORDS.enemies[shadowKey].levels[0] }, chess: { [witness.chessId]: witness } },
+    units: [{ chessId: witness.chessId, row: 9, col: 9 }], enemies: [{ key: guardKey, time: 0, route: 0 }, { key: shadowKey, time: 0, pos: [9, 9] }], content: 'none', autoFinish: false,
+    timeLimit: 30, setup: battle => installEnemyFeatures(battle) });
+  h.run(1); const ally = h.b.units.find(u => u.side === 'ally');
+  assert.ok(ally.buffs.some(x => String(x.key).startsWith('ab:guardField')), JSON.stringify(ally.buffs.map(x => x.key)));
+});
+test('Dublinn Flying Soldier: hovering sets the flying flag', () => {
+  const key = 'enemy_1171_durokt', h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
+  assert.equal(e.flying, true);
 });
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
