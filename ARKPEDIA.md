@@ -5398,3 +5398,7 @@ With thirty-one public stages, the prep page's row of links became unwieldy. It 
 ### Chapter 5/6 public expansion (S38, 2026-10-21)
 
 **5-8, 5-9, 6-1, 6-2, 6-3, 6-4 and 6-5** join the public catalogue after the data review. The public simulator now offers **0-1 plus forty-three reviewed stages**; **70** file-backed stages remain test-only. The catalogue test pins the full public set.
+
+### Half the catalogue is public (S39, 2026-10-21)
+
+**6-8, 6-9, 6-10, 6-11, 6-12, 7-2 and 7-3** join the public catalogue after the data review. The public simulator now offers **0-1 plus forty-nine reviewed stages** — **50 of 114** entries. **64** file-backed stages remain test-only. The catalogue test pins the full public set.
