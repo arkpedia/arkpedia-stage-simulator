@@ -5794,3 +5794,7 @@ Added `docs/DEPLOYABLE-TOKENS.md`: the reviewed inventory data, the `tokenDeck`/
 ### GitHub-runner timing note (S104, 2026-10-21)
 
 `docs/PERFORMANCE.md` now records the CI wall-time profile: ~70 minutes for the full suite on a 2-core GitHub runner versus 11–16 locally, with sharding as the scale-out option. Checks stay on GitHub-hosted runners.
+
+### Buildable bucket in the coverage report (S105, 2026-10-21)
+
+`npm run coverage:arkpedia-stages` now reports a `buildable` bucket and prints the slugs that are ready right now. It immediately exposed **9-11** and **S9-1**, which were missing from the previous list.

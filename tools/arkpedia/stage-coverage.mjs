@@ -18,7 +18,7 @@ const support = JSON.parse(readFileSync(new URL('arkpedia-enemy-support.json', D
 
 export function buildStageCoverage() {
   const stagesDir = new URL('stages/', SOURCE), geometryDir = new URL('stage-geometry/', SOURCE);
-  const byReason = {}, blockers = new Map(), byChapter = new Map();
+  const byReason = {}, blockers = new Map(), byChapter = new Map(), buildable = [];
   let total = 0, built = 0;
   for (const file of readdirSync(stagesDir).filter(name => name.endsWith('.json'))) {
     let stage;
@@ -43,10 +43,10 @@ export function buildStageCoverage() {
       for (const id of missing) blockers.set(id, (blockers.get(id) ?? 0) + 1);
       continue;
     }
-    byReason.other = (byReason.other ?? 0) + 1;
+    byReason.buildable = (byReason.buildable ?? 0) + 1; buildable.push(stage.slug);
   }
   return { total, built, byReason, byChapter: [...byChapter].sort((a, b) => a[0].localeCompare(b[0], undefined, { numeric: true })),
-    blockers: [...blockers].sort((a, b) => b[1] - a[1]) };
+    blockers: [...blockers].sort((a, b) => b[1] - a[1]), buildable: buildable.sort() };
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
@@ -55,6 +55,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   console.log(Object.entries(report.byReason).sort((a, b) => b[1] - a[1]).map(([k, n]) => `  ${k}: ${n}`).join('\n'));
   console.log('by chapter:');
   for (const [chapter, counts] of report.byChapter) console.log(`  ${chapter}: ${counts.built}/${counts.total}`);
+  console.log(`buildable now: ${report.buildable.length}${report.buildable.length ? ` (${report.buildable.join(', ')})` : ''}`);
   console.log(`unsupported enemy blockers: ${report.blockers.length}`);
   for (const [id, n] of report.blockers.slice(0, 15)) console.log(`  ${n}  ${id}`);
 }
