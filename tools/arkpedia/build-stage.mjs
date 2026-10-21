@@ -18,6 +18,7 @@ import { basename, dirname, join } from 'node:path';
 import { createHash } from 'node:crypto';
 import { stageAdapter } from '../../server/sim/arkpedia.js';
 import { mergePristineHiddenGroups } from '../../shared/arkpedia/stage-conditional.js';
+import { syntheticRoutePath } from '../../shared/arkpedia/stage-path.js';
 import { assertRegularEnemies } from '../../shared/arkpedia/enemies.js';
 
 const args = Object.fromEntries(process.argv.slice(2).flatMap((arg, i, all) =>
@@ -40,11 +41,7 @@ if (!paths || !Object.keys(paths).length) throw Error('Playback export has no pa
 const syntheticRoutes = [];
 for (const [index, route] of geometry.routes.entries()) {
   if (paths[index] || route.placeholder) continue;
-  const points = [[route.start.col, route.start.row]];
-  for (const checkpoint of route.checkpoints ?? []) if (checkpoint.position) points.push([checkpoint.position.col, checkpoint.position.row]);
-  points.push([route.end.col, route.end.row]);
-  const unique = points.filter((point, at) => at === 0 || point[0] !== points[at - 1][0] || point[1] !== points[at - 1][1]);
-  paths[index] = { points: unique, distances: unique.map((_, at) => at), breaks: [], holds: [] };
+  paths[index] = syntheticRoutePath(route);
   syntheticRoutes.push(index);
 }
 const stage = {
