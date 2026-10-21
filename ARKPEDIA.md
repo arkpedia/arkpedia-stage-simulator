@@ -5366,3 +5366,7 @@ The `FirstAttack.attack@first_atk_scale` record now multiplies only the first or
 ### Seed of Withering self-destruct (E30, 2026-10-21)
 
 The Seed of Withering/Decay detonates once an ally is inside its attack radius, dealing its ATK as Physical damage in a 2-unit blast and then dying. Support rises to **315 of 1,552** enemies. The test checks the self-destruct and the guard damage.
+
+### Public catalogue expansion (S31, 2026-10-21)
+
+Three more early stages have passed the data review (supported enemies, valid geometry, catalogue-loadable, 10-second battle): **1-1, 1-7 and 2-1**. The public simulator now offers **0-1 plus ten reviewed stages**; **103** file-backed stages remain test-only. The catalogue test pins the expanded public set.
