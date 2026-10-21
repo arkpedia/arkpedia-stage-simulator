@@ -5442,3 +5442,7 @@ The stale `StormAura` native component is now retained. Its record drives a one-
 ### 14-2 stages (S46, 2026-10-21)
 
 With the Wither Vanguard pollution Arts and the Active Originium Storm both supported, **14-2** and **14-2 adverse environment** build (8×11, 46 spawns, 6 enemies) and join the public catalogue. Coverage is **116 public stages** (0-1 plus 115 files). The coverage report now classifies the built total automatically.
+
+### Boom visual (S47, 2026-10-21)
+
+The Seed of Withering's self-destruct emits `fx('boom')`; the full render test requires every literal kind to have an explicit visual. Added `boom` as a 1.5-radius blast in `public/js/render/fx.js`. The full repository suite then reaches **22,549 tests, 22,537 passed, 0 failed, 11 skipped**.
