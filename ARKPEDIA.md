@@ -5422,3 +5422,7 @@ The Theater Golem requires a blocker with at least 4 Block (`profile.requiredBlo
 ### S2 and chapter 10 public expansion (S43, 2026-10-21)
 
 **S2-9, S2-10, S2-11, S2-12, 10-2, 10-3 and 10-4** join the public catalogue after the data review. The public simulator now offers **0-1 plus sixty-three reviewed stages**; **50** file-backed stages remain test-only. The catalogue test pins the full public set.
+
+### The whole built catalogue is public (S44, 2026-10-21)
+
+The remaining fifty test-only stages passed the same supported-enemy, geometry, catalogue-load and 10-second battle review and are now public with `reviewed: 2026-10-21`. **All 114 built stages are public** (0-1 plus 113 file-backed). Test-only remains the gate for future stages: the catalogue test now uses a synthetic test-only entry so it still checks the `?experimental=1` rule.
