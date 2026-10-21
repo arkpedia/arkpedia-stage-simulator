@@ -1180,6 +1180,7 @@ export class Battle {
    */
   _checkBlock(e) {
     if (e.blockedBy || e.hidden || !e.alive) return !!e.blockedBy;
+    if (this.identityLocks?.size && !e.profile?.revealed && (e.profile?.spy || e.profile?.friendly)) return false;
     const f = e.s.flags;
     if (f.unblockable || f.levitate || f.fear) return false;
     const r0 = Math.round(e.y), c0 = Math.round(e.x);

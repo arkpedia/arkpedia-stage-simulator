@@ -345,6 +345,12 @@ export const featureAbilities = Object.freeze({
     },
   }),
   moveSpeedBonus: ({ mul }) => ({ spawn(b, e) { b.addBuff(e, { key: 'ab:moveSpeed', persist: true, visible: true, mods: { moveMul: mul } }); } }),
+  // Rebellion Instigator: a live, unblocked source prevents unrevealed civilians/spies from being blocked.
+  identityLock: () => ({
+    spawn(b) { b.identityLocks ??= new Set(); },
+    tick(b, e) { if (e.blockedBy) b.identityLocks.delete(e); else b.identityLocks.add(e); },
+    death(c, b, e) { b.identityLocks?.delete(e); },
+  }),
   // Spies: mark the profile and attach the reveal consequence.
   spyProfile: () => ({ spawn(b, e) { e.profile.spy = true; } }),
   revealedStealth: () => ({ reveal(b, e) { b.addBuff(e, { key: 'ab:spyStealth', persist: true, visible: true, flags: { stealth: true } }); } }),

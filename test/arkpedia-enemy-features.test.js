@@ -460,6 +460,16 @@ test('Spies: reveal is one-shot and applies the reviewed consequence', () => {
   const c = { dmg: { isAttack: true, amount: 100 } }; arm.hitOut(c, h2.b, e2, arm);
   assert.equal(c.dmg.amount, 200); assert.equal(arm.armed, false);
 });
+test('Instigator: unrevealed spies cannot be blocked while it is unblocked', () => {
+  const spy = 'enemy_1315_wdyjd', lock = 'enemy_1319_wdfmpm';
+  const guard = chessRec({ id: 'lock_guard', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 0 } });
+  const h = makeBattle({ defs: { enemies: { [spy]: ENEMY_RECORDS.enemies[spy].levels[0], [lock]: ENEMY_RECORDS.enemies[lock].levels[0] }, chess: { [guard.chessId]: guard } },
+    units: [{ chessId: guard.chessId, row: 9, col: 6 }], enemies: [{ key: spy, time: 0, route: 0 }, { key: lock, time: 0, route: 0 }],
+    content: 'none', autoFinish: false, timeLimit: 30, setup: battle => installEnemyFeatures(battle) });
+  h.run(0.5); const s = enemy(h, spy), g = h.b.units.find(u => u.side === 'ally');
+  s.x = g.x; s.y = g.y; assert.ok(h.b.identityLocks.size);
+  assert.equal(h.b._checkBlock(s), false); h.b.identityLocks.clear(); assert.equal(h.b._checkBlock(s), true);
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

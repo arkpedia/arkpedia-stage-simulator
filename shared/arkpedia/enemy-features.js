@@ -264,6 +264,10 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Instigator: while unblocked, unrevealed civilians/spies cannot be blocked.
+  'ability:When not blocked, all unrevealed Civilians or Spies cannot be blocked': { covers: r => r.abilities.some(a => a.text === 'When not blocked, all unrevealed Civilians or Spies cannot be blocked'),
+    ability: { kind: 'identityLock', params: () => ({}) }, note: 'locks unrevealed civilian/spy blocking while unblocked',
+    explains: /^When not blocked, all unrevealed Civilians or Spies cannot be blocked$/ },
   // Spy support talents: the movement bonus and the EnhancedAttack scale.
   'talent:moveSpeed': { covers: r => sig(r, 'moveSpeed', ['move_speed']),
     ability: { kind: 'moveSpeedBonus', params: r => ({ mul: 1 + r.talents.bb['moveSpeed.move_speed'] }) },

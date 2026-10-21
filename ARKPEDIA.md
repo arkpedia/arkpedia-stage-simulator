@@ -5498,3 +5498,7 @@ First slice of the identity layer: `ability:Friendly Unit` marks `profile.friend
 ### Spy reveal layer (E37, 2026-10-21)
 
 `Battle.revealIdentity(e)` is idempotent: it marks `profile.revealed`, emits `identityRevealed` and runs each ability's `reveal` hook. The Sentry Spy gains stealth, the Pathfinder Spy arms one `EnhancedAttack` hit (`atk_scale` 2), `talent:moveSpeed` contributes its passive multiplier, and the Spy feature claims the reviewed native active. Support rises to **331 of 1,552** enemies. The test checks the one-shot reveal, stealth, movement buff and the 2× armed hit.
+
+### Instigator identity lock (E38, 2026-10-21)
+
+`identityLocks` tracks living, unblocked Rebellion Instigators. While non-empty, `_checkBlock` rejects unrevealed spies and civilians. Support rises to **333 of 1,552** enemies. The test checks the lock and the post-clear block.
