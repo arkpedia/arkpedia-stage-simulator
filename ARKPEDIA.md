@@ -5566,3 +5566,7 @@ The full enemy sweep caught that Sudaram's wrapper `dealt` called the base `spla
 ### Rotchaser bleed (E45, 2026-10-21)
 
 The Rotchaser reuses the legacy `ab:bleed` ability: each hit applies its 100/s Arts bleed for 10 s and any heal removes it. Support rises to **346 of 1,552** enemies. The test checks the debuff, its tick and the heal cleanse.
+
+### Witherer death corruption (E46, 2026-10-21)
+
+The Witherer leaves the reviewed pollution zone on death (radius 2, 8 s, 50/25 true damage). Support rises to **348 of 1,552** enemies. The test kills one next to the guard and checks the damage tick.

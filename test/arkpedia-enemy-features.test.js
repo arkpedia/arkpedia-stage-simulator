@@ -523,6 +523,11 @@ test('Rotchaser: the hit applies the Arts bleed, healing removes it', () => {
   h.run(1.1); assert.ok(guard.hp < hp, 'bleed ticked');
   h.b.heal(guard, guard, 1, { self: true }); assert.equal(guard.findBuff('ab:bleed'), null);
 });
+test('Witherer: the death corruption zone damages nearby allies', () => {
+  const key = 'enemy_1267_nhpbr', h = spawnAny(key, { seconds: 0.1 }), e = enemy(h, key), guard = h.b.units.find(u => u.side === 'ally');
+  e.x = guard.x + 1; e.y = guard.y; h.b.autoFinish = false; const hp = guard.hp; h.b.kill(e, null); h.run(2);
+  assert.ok(guard.hp < hp, `${guard.hp} vs ${hp}`);
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

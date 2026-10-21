@@ -345,6 +345,10 @@ export const featureAbilities = Object.freeze({
     },
   }),
   moveSpeedBonus: ({ mul }) => ({ spawn(b, e) { b.addBuff(e, { key: 'ab:moveSpeed', persist: true, visible: true, mods: { moveMul: mul } }); } }),
+  // Witherer: leave the reviewed pollution zone on death.
+  pollutedDie: ({ range, life, low, high }) => ({
+    death(c, b, e) { pollution(b, e, e.x, e.y, range, life, low, high); },
+  }),
   // Rotchaser: reuse the legacy bleed ability.
   bleedFeature: ({ bb }) => bleed({ t: bb }),
   // Sarkaz Caster: every attack is a 0.35x Arts lasso that stuns for 20 s.

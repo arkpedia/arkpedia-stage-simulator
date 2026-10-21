@@ -279,6 +279,13 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Witherer: a lingering corruption zone on death.
+  'talent:PollutedDie': { covers: r => sig(r, 'PollutedDie', ['polluted_damage_high', 'polluted_damage_low', 'projectile_life_time', 'projectile_range'])
+      && r.abilities.some(a => a.text === 'Releases Corruption when defeated, causing your nearby units to continuously lose HP'),
+    ability: { kind: 'pollutedDie', params: r => ({ range: r.talents.bb['PollutedDie.projectile_range'], life: r.talents.bb['PollutedDie.projectile_life_time'],
+      low: r.talents.bb['PollutedDie.polluted_damage_low'], high: r.talents.bb['PollutedDie.polluted_damage_high'] }) },
+    note: 'leaves a pollution zone on death',
+    explains: /^Releases Corruption when defeated, causing your nearby units to continuously lose HP$/ },
   // Rotchaser: an Arts bleed on hit, removed by healing.
   'talent:Bleeding': { covers: r => sig(r, 'Bleeding', ['attack@bleeding_damage', 'attack@duration'])
       && r.abilities.some(a => a.text === 'Attacks cause the target to take Arts damage over time; effect removed when the target is healed'),
