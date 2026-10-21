@@ -345,6 +345,21 @@ export const featureAbilities = Object.freeze({
     },
   }),
   moveSpeedBonus: ({ mul }) => ({ spawn(b, e) { b.addBuff(e, { key: 'ab:moveSpeed', persist: true, visible: true, mods: { moveMul: mul } }); } }),
+  // Altar Keeper: unblockable, slowed when hit, carries one Beacon and drops it on death.
+  altarKeeper: ({ slow, duration }) => ({
+    spawn(b, e, a) {
+      a.carrying = false; a.beacon = 'enemy_1421_lrchld';
+      b.addBuff(e, { key: 'ab:altarUnblockable', persist: true, flags: { unblockable: true } });
+    },
+    tick(b, e, a) {
+      if (a.carrying || !e.alive) return;
+      const beacon = b.enemies.find(u => u.alive && u.defId === a.beacon && Math.hypot(u.x - e.x, u.y - e.y) <= 1.5);
+      if (!beacon) return;
+      b._remove(beacon, 'pickup'); a.carrying = true; e.profile.carryingBeacon = true;
+    },
+    taken(c, b, e, a) { b.addBuff(e, { key: 'ab:beaconSlow', duration, mods: { moveMul: 1 + slow }, visible: true }); },
+    death(c, b, e, a) { if (a.carrying) spawnChildren(b, e, a.beacon, 1, { pos: [e.y, e.x] }); },
+  }),
   // Ursus patrol: prioritize allies whose record name matches the reviewed names.
   namedPriority: ({ names }) => ({ spawn(b, e) { e.profile.targetPriority = 'named'; e.profile.priorityNames = names; } }),
   // Witherer: leave the reviewed pollution zone on death.

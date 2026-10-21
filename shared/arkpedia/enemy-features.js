@@ -286,6 +286,14 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Altar Keeper: unblockable, slowed when hit, picks up a Beacon and drops it on death.
+  'talent:ModeCtrl': { covers: r => sig(r, 'ModeCtrl', ['mode_1', 'move_speed', 'move_speed_duration'])
+      && r.abilities.some(a => a.text === 'Unblockable and has reduced movement speed when taking damage.')
+      && r.abilities.some(a => a.text === 'Picks up nearby Beacons if it is not carrying a Beacon, and drops them on death.'),
+    ability: { kind: 'altarKeeper', params: r => ({ slow: r.talents.bb['ModeCtrl.move_speed'], duration: r.talents.bb['ModeCtrl.move_speed_duration'] }) },
+    note: 'unblockable; slows when hit; carries one Beacon and drops it on death',
+    explains: text => text === 'Unblockable and has reduced movement speed when taking damage.'
+      || text === 'Picks up nearby Beacons if it is not carrying a Beacon, and drops them on death.' },
   // Native-only stage prop: the Beacon has no own behaviour in the supported stages.
   'native:beacon': { covers: r => (NATIVE_ONLY_FEATURES[r.key] ?? null) === 'native:beacon',
     note: 'passive stage beacon; pickup belongs to the Altar Keeper', nativeClaim: () => ({ active: 2 }) },

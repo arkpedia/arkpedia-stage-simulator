@@ -5586,3 +5586,7 @@ Added an explicit `NATIVE_ONLY_FEATURES` map for stage props whose records have 
 ### 14-5 stages (S70, 2026-10-21)
 
 With the Beacon supported, **14-5** and **14-5 adverse environment** build (8×12, 28 spawns, 5 enemies). Coverage is **151 public stages** (0-1 plus 150 files).
+
+### Altar Keeper Beacon handling (E49, 2026-10-21)
+
+The Altar Keeper is unblockable, gets a short movement slow when hit, picks up one nearby Beacon (removing it without a kill), and drops a Beacon on death. Support rises to **355 of 1,552** enemies. The test checks pickup, the carried flag and the drop.

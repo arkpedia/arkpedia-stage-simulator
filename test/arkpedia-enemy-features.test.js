@@ -533,6 +533,15 @@ test('named priority: the Ursus civilian/Talulah target sorts first', () => {
   const b = { def: { raw: { name: 'Guard' } }, s: { taunt: 0 }, aggroSeq: 2 };
   assert.equal(sortAllyTargets({ blockedBy: null, profile: { targetPriority: 'named', priorityNames: ['Ursus Civilian'] } }, [b, a])[0], a);
 });
+test('Altar Keeper: picks up a Beacon and drops it on death', () => {
+  const keeper = 'enemy_1426_lrthef', beacon = 'enemy_1421_lrchld';
+  const h = makeBattle({ defs: { enemies: { [keeper]: ENEMY_RECORDS.enemies[keeper].levels[0], [beacon]: ENEMY_RECORDS.enemies[beacon].levels[0] } },
+    units: [], enemies: [{ key: keeper, time: 0, route: 0 }, { key: beacon, time: 0, pos: [9, 9] }], content: 'none', autoFinish: false,
+    timeLimit: 30, setup: battle => installEnemyFeatures(battle) });
+  h.run(0.6); const k = enemy(h, keeper);
+  assert.equal(k.profile.carryingBeacon, true); assert.equal(h.b.enemies.filter(u => u.defId === beacon).length, 0);
+  h.b.kill(k, null); h.run(0.1); assert.equal(h.b.enemies.filter(u => u.defId === beacon).length, 1, 'the Beacon dropped');
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');
