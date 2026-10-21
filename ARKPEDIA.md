@@ -5786,3 +5786,7 @@ Low-Altitude Hovering sets the flying flag; RecoverAnim claims its native wrappe
 ### Snapshot to 392 enemies (S102, 2026-10-21)
 
 `docs/REMAINING.md` records **392** supported enemies, **191** built source stages and **192** public entries.
+
+### Deployable-token plan (S103, 2026-10-21)
+
+Added `docs/DEPLOYABLE-TOKENS.md`: the reviewed inventory data, the `tokenDeck`/`placeToken`/`retreatToken` engine API, the token strip UI, the six tests and the staged rollout for the 60 token-blocked stages. This is the next large system after the current PR lands.
