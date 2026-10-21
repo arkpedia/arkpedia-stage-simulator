@@ -60,6 +60,6 @@ const addEnemy = id => {
 };
 for (const spawn of adapter.spawns) addEnemy(spawn.enemyKey);
 stage.enemies = Object.fromEntries([...enemyIds].map(id => [id, records.enemies[id].levels[0]]));
-assertRegularEnemies({ ...mvp, stage });
+assertRegularEnemies({ ...mvp, enemies: stage.enemies, stage });
 await writeFile(args.out, JSON.stringify(stage, null, 1) + '\n');
 console.log(`Built ${stage.code}: ${stage.geometry.rows}x${stage.geometry.cols}, ${stage.geometry.waves.length} waves, ${adapter.spawns.length} spawns, ${enemyIds.size} enemies -> ${args.out}`);

@@ -4960,3 +4960,19 @@ The fixed-squad guard was also ineffective: `suppliedUnits` is an object (`{fixe
 `tools/arkpedia/build-stage.mjs` builds one stage file from the public stage/geometry sources and a stage-browser route export. It refuses a route export that does not match the geometry, runs the same `stageAdapter` and supported-enemy gate as 0-1, and records `art: null` / `gates: null` so the renderer falls back to its labelled simplified map.
 
 `data/arkpedia-stage-0-2.json` is the first output: 6×10, three sequential waves, 14 spawns, the same two supported enemies as 0-1. It is **not in `data/arkpedia-stages.json`** yet: the owner's rule is that a new playable stage stays test-only until its simplified-art build and battle are reviewed. Tests pin its wave times and step a real `StandardBattle` through the first 30 seconds with no engine errors. When 0-2 is reviewed, adding it to the public simulator is one catalogue entry.
+
+### Early main-stage data, 0-2 through 0-8 (S4, 2026-10-21, test-only)
+
+The same builder produced the next seven Prologue stages. Each file carries its own source geometry, route export, waves and the exact compiled enemy records it spawns:
+
+| Stage | Grid | Waves | Spawns | Enemies |
+|---|---|---|---|---|
+| 0-2 Protection | 6×10 | 3 | 14 | Originium Slug, Soldier |
+| 0-3 | 6×10 | 1 | 23 | Originium Slug, Soldier, Monster |
+| 0-4 | 7×10 | 2 | 24 | Originium Slug, Monster, Rioter |
+| 0-5 | 7×10 | 1 | 24 | Originium Slug, Hound, Monster, Rioter |
+| 0-6 | 7×10 | 1 | 31 | Hound, Originium Slug, Rioter, Monster |
+| 0-7 | 7×10 | 1 | 20 | Originium Slug, Shielded Soldier, Soldier |
+| 0-8 | 7×8 | 1 | 40 | Originium Slug, Soldier |
+
+None is in `data/arkpedia-stages.json` yet: they remain test-only until the simplified-art build and battle are reviewed. `test/arkpedia-stage-files.test.js` discovers every `data/arkpedia-stage-*.json`, checks the code, the supported-enemy records, the sequential schedule, catalogue loading and a real 10-second battle. Adding a reviewed stage to the public simulator is one catalogue entry; adding a new stage file is one builder command.
