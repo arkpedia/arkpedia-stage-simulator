@@ -5450,3 +5450,7 @@ The Seed of Withering's self-destruct emits `fx('boom')`; the full render test r
 ### Guerrilla Herald battlefield buff (E34, 2026-10-21)
 
 The Guerrilla Herald refreshes a 0.7-second battlefield-wide buff on every living enemy: ATK +`strength.atk` (10%) and DEF +`strength.def` (100). The short duration makes the aura end when the Herald dies or leaks. Support rises to **321 of 1,552** enemies. The test buffs a second enemy, then kills the Herald and checks the revert.
+
+### Stage search (S48, 2026-10-21)
+
+The prep page's grouped stage selector now has a "Find a stage" search box. Typing filters the options by code/name (case-insensitive) without changing the current selection; clearing the query restores every option. Static client tests still pass (217).

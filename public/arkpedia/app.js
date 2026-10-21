@@ -159,7 +159,7 @@ function prep() {
   }
   const stageOptions = [...groupedStages].map(([label, list]) => `<optgroup label="${escape(label)}">${list.map(stage => `<option value="${escape(stageHref(stage))}"${stage.id === activeStage.id ? ' selected' : ''}>${escape(stage.code)} ${escape(stage.name)}${stage.testOnly ? ' · test' : ''}</option>`).join('')}</optgroup>`).join('');
   const stagePicker = stages.length > 1
-    ? `<label class="stage-picker">Stage <select id="stage-select" aria-label="Stages">${stageOptions}</select></label>`
+    ? `<label class="stage-picker">Stage <input id="stage-search" type="search" placeholder="Find a stage" autocomplete="off" aria-label="Find a stage"><select id="stage-select" aria-label="Stages">${stageOptions}</select></label>`
     : '';
   app.innerHTML = `<div class="frame"><header class="topline"><div><p class="eyebrow">Arkpedia · prototype</p><h1>Stage simulator</h1></div><span class="muted">${escape(data.stage.code)} ${escape(data.stage.name)}</span></header>
  <div class="prep">${stagePicker}<section class="preview"><div class="stage-title"><span class="stage-code">${escape(data.stage.code)}</span><h2>${escape(data.stage.name)}</h2></div><p class="help">${escape(data.stage.description)}</p><div class="board" id="board"></div><div class="legend"><span class="spawn">Enemy entry</span><span class="goal">Defence objective</span><span>Raised tiles: ranged operators</span></div>
@@ -175,6 +175,11 @@ function prep() {
   document
     .querySelector("#support")
     .addEventListener("change", (e) => { supportId = e.target.value; renderPrep(); });
+  document.querySelector("#stage-search")?.addEventListener("input", (e) => {
+    const query = e.target.value.trim().toLowerCase();
+    for (const option of document.querySelectorAll("#stage-select option"))
+      option.hidden = !!query && !option.textContent.toLowerCase().includes(query);
+  });
   document.querySelector("#stage-select")?.addEventListener("change", (e) => { location.href = e.target.value; });
   document.querySelector("#start").addEventListener("click", start);
   document.querySelector("#roster-search").addEventListener("input", (e) => {
