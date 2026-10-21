@@ -5826,3 +5826,39 @@ The coverage report now reads `stage-conditional/<slug>.json` and breaks the 63 
 ### Shard-partition test (S112, 2026-10-21)
 
 `tools/run-tests.mjs` now exports `testFilesForShard`, and `test/test-shards.test.js` asserts that 2-, 3- and 5-way splits are exact partitions: every `test/*.test.js` appears once, with no duplicates or omissions.
+
+### Pristine hidden-group merge and 11-1 (S113, 2026-10-21)
+
+The builder now merges conditional entries only when every entry is a pristine `source: wave` + `hidden_group` (no branch, random pack or weight). Those are preview-hidden but still spawn. **11-1** builds this way (18 spawns, 2 enemies); entries with real random/branch conditions keep the stage refused. 10-5 remains refused because its merged routes have no viewer path, a separate geometry gap. Coverage is **195 public stages**.
+
+### Hidden-group merge tests (S114, 2026-10-21)
+
+Extracted `mergePristineHiddenGroups` into `shared/arkpedia/stage-conditional.js` and added three tests: pristine entries append and clear the flag; branch/random/weight entries refuse; mixed lists are not partially merged.
+
+### Pristine hidden-group report (S115, 2026-10-21)
+
+The coverage tool now lists the stages whose conditional entries are all pristine hidden-group: currently 14 (10-5/adverse, 15-4/5/6/7/9/10/17, 16-17, 17-4/5/6/7/9/10/15/17). Building them is still gated by missing playback paths (for example 15-4 has no route 0 path), not by hidden-group semantics.
+
+### Synthetic route paths and 10-5 (S116, 2026-10-21)
+
+When the viewer export omits a route, the builder now synthesizes the reviewed geometry start/checkpoint/end chain as a fallback path (`syntheticRoutes`). This unblocked **10-5** and **10-5 adverse environment** (8×11, 50 spawns, 6 enemies). The 15–17 candidates still fail on unsupported enemies such as `enemy_10075_mpwrj`, not on routing. Coverage is **197 public stages**.
+
+### Worry-Free Cargo Helper (E67, 2026-10-21)
+
+Flies and explodes for 1.0x Arts in 1.5 radius when an operator comes within 1.0, removing itself. Claims the Boom wrapper/active. Support rises to **394 of 1,552** enemies. The test checks the blast and removal.
+
+### Zero-count tokens and 15-4 (S117, 2026-10-21)
+
+A `deployable_tokens` entry with `count: 0` is a hidden stage device, not a usable token; the adapter now counts only positive counts (and coverage does the same). This unblocked **15-4** (7×10, 33 spawns, 3 enemies) after the Cargo Helper support. Coverage is **198 public stages**. 15-5 and the rest still hit `enemy_10072_mpprhd`.
+
+### 15-3 (S118, 2026-10-21)
+
+The coverage buildable bucket now reports **15-3**, which builds (7×11, 26 spawns, 2 enemies) after the Cargo Helper/zero-token fixes. Coverage is **199 public stages**.
+
+### Zero-count token adapter test (S119, 2026-10-21)
+
+`test/arkpedia-stage-adapter.test.js` pins the rule: a zero-count token does not block the adapter, while a positive count still throws `Unsupported stage mechanics`.
+
+### Explicit zero vs unknown token counts (S120, 2026-10-21)
+
+Only an explicit `count: 0` is a hidden stage device. A token entry with no count is unknown and still blocks the adapter; the full suite's existing refusal test caught the distinction.

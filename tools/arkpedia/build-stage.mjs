@@ -13,8 +13,11 @@
 // spawns only use supported enemy records. Original stage art and gates are
 // optional: the renderer labels the simplified fallback when they are absent.
 import { readFile, writeFile } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
+import { basename, dirname, join } from 'node:path';
 import { createHash } from 'node:crypto';
 import { stageAdapter } from '../../server/sim/arkpedia.js';
+import { mergePristineHiddenGroups } from '../../shared/arkpedia/stage-conditional.js';
 import { assertRegularEnemies } from '../../shared/arkpedia/enemies.js';
 
 const args = Object.fromEntries(process.argv.slice(2).flatMap((arg, i, all) =>
@@ -26,8 +29,24 @@ const [source, geometry, playbackFile, mvp, records, support] = await Promise.al
   read(new URL('../../data/arkpedia-enemy-records.json', import.meta.url)),
   read(new URL('../../data/arkpedia-enemy-support.json', import.meta.url)),
 ]);
+const conditionalPath = args.conditional ?? join(dirname(args.geometry), '..', 'stage-conditional', basename(args.geometry));
+if (geometry.hasConditionalSpawns && existsSync(conditionalPath)) {
+  mergePristineHiddenGroups(geometry, JSON.parse(await readFile(conditionalPath, 'utf8')));
+}
 const paths = playbackFile.playbackPaths ?? playbackFile.paths;
 if (!paths || !Object.keys(paths).length) throw Error('Playback export has no paths');
+// The geometry route is a reviewed start/checkpoint/end chain. When the viewer export omits a route,
+// synthesize the same chain so the stage can still be played; the original path is preferred.
+const syntheticRoutes = [];
+for (const [index, route] of geometry.routes.entries()) {
+  if (paths[index] || route.placeholder) continue;
+  const points = [[route.start.col, route.start.row]];
+  for (const checkpoint of route.checkpoints ?? []) if (checkpoint.position) points.push([checkpoint.position.col, checkpoint.position.row]);
+  points.push([route.end.col, route.end.row]);
+  const unique = points.filter((point, at) => at === 0 || point[0] !== points[at - 1][0] || point[1] !== points[at - 1][1]);
+  paths[index] = { points: unique, distances: unique.map((_, at) => at), breaks: [], holds: [] };
+  syntheticRoutes.push(index);
+}
 const stage = {
   code: source.code,
   name: source.name,
@@ -38,6 +57,7 @@ const stage = {
   geometry,
   pathing: {
     schemaVersion: 1,
+    syntheticRoutes,
     producer: 'Arkpedia stage browser / buildPlaybackPaths',
     stage: source.code,
     geometryHash: createHash('sha256').update(JSON.stringify(geometry)).digest('hex'),

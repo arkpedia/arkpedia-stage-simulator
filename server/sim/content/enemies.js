@@ -349,6 +349,16 @@ export const featureAbilities = Object.freeze({
   hover: () => ({ spawn(b, e) { e.flying = true; } }),
   // Higher-priority enemy target.
   tauntEnemy: ({ taunt }) => ({ spawn(b, e) { e.s.taunt = Math.max(e.s.taunt ?? 0, taunt); } }),
+  // Worry-Free Cargo Helper: airborne, explodes when an operator is close.
+  suicideBoom: () => ({
+    spawn(b, e, a) { e.flying = true; a.done = false; },
+    tick(b, e, a) {
+      if (a.done || !b.alliesInRadius(e.x, e.y, 1.0).some(u => u.alive)) return;
+      a.done = true;
+      for (const u of b.alliesInRadius(e.x, e.y, 1.5)) hurt(b, e, u, e.s.atk, 'arts', { tags: ['boom'] });
+      b._remove(e, 'explode');
+    },
+  }),
   // Dublinn Companion pair: the Guard's ASPD field and the Shadowblade's haste.
   companion: ({ mode, aspd, range, bat }) => mode === 'guard' ? ({
     tick(b, e) {

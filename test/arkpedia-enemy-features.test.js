@@ -670,6 +670,11 @@ test('Dublinn Flying Soldier: hovering sets the flying flag', () => {
   const key = 'enemy_1171_durokt', h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
   assert.equal(e.flying, true);
 });
+test('Worry-Free Cargo Helper: explodes next to the guard', () => {
+  const key = 'enemy_10075_mpwrj', h = spawnAny(key, { seconds: 0.1 }), e = enemy(h, key), guard = h.b.units.find(u => u.side === 'ally');
+  e.x = guard.x + 1; e.y = guard.y; const hp = guard.hp; h.run(0.2);
+  assert.ok(guard.hp < hp); assert.equal(e.alive, false);
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

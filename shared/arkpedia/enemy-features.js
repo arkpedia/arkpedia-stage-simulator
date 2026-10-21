@@ -292,6 +292,12 @@ export const ENEMY_FEATURES = Object.freeze({
     ability: { kind: 'hover', params: () => ({}) }, note: 'flying unit', explains: /^<\$ba\.float>Low-Altitude Hovering<\/>$/ },
   'skill:RecoverAnim': { covers: r => r.skills.some(s => s.prefabKey === 'RecoverAnim'),
     nativeClaim: () => ({ wrappers: 1, active: 1 }), note: 'native recovery animation' },
+  // Worry-Free Cargo Helper: flies and self-destructs on a nearby operator.
+  'skill:Boom': { covers: r => r.skills.some(s => s.prefabKey === 'Boom')
+      && r.abilities.some(a => a.text === 'Self-destructs immediately when there is an Operator nearby, dealing a large amount of Arts damage to surrounding units'),
+    ability: { kind: 'suicideBoom', params: () => ({}) }, nativeClaim: () => ({ wrappers: 1, active: 1 }),
+    note: 'flying suicide bomber', explains: text => text === 'Flying unit.'
+      || text === 'Self-destructs immediately when there is an Operator nearby, dealing a large amount of Arts damage to surrounding units' },
   // Dublinn Companion Guard / Shadowblade: the paired field and haste.
   'talent:traitAbility': { covers: r => sig(r, 'traitAbility', ['attack_speed', 'range_radius', 'taunt_level'])
       || sig(r, 'traitAbility', ['base_attack_time']),
