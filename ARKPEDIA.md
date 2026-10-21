@@ -5514,3 +5514,7 @@ The `1317` family carries three ammo and each attack drains `1.attack@cost` DP (
 ### 12-8 stages (S60, 2026-10-21)
 
 With the `1317` DP-drain family supported, **12-8** and **12-8 adverse environment** build (8×10, 42 spawns, 3 enemies) and join the public catalogue. Coverage is **118 public stages** (0-1 plus 117 files). The coverage test no longer pins the now-supported Norport Civilian as the top blocker.
+
+### Chapter 12 identity stages (S61, 2026-10-21)
+
+With civilians, spies, the Instigator lock, the checkpoint blink and the DP-drain operative all supported, **12-13**, **12-13 adverse environment**, **12-14** and **12-14 adverse environment** build (7×11/8×12, 39–80 spawns). 12-12/12-12 adverse still need the Splitcaster's Virtual Image summon. Coverage is **122 public stages** (0-1 plus 121 files).
