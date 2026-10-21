@@ -5630,3 +5630,7 @@ The Rot Eater scales HP/ATK/DEF by `1 + min(max_percentage, defeated * guarantee
 ### 14-11 stages (S76, 2026-10-21)
 
 With the Rot Eater supported, **14-11** and **14-11 adverse environment** build (7×12, 150 spawns, 9 enemies). Coverage is **163 public stages** (0-1 plus 162 files).
+
+### CI-safe coverage test (S77, 2026-10-21)
+
+The coverage test assumed the sibling `arkpedia-data` source checkout, which GitHub runners do not have. It now skips when that directory is absent; local runs still classify all main stages. This fixes the only red job on PR #140.
