@@ -5462,3 +5462,7 @@ The prep page's grouped stage selector now has a "Find a stage" search box. Typi
 ### Sudaram pollution AoE (E35, 2026-10-21)
 
 Sudaram's normal attack is a self-centred Physical blast; when it stands on a toxic tile or is marked by the Originium Storm, every ally on a toxic tile or carrying the storm mark is also hit. Support rises to **323 of 1,552** enemies. The test checks the adjacent guards.
+
+### Stage metadata line (S50, 2026-10-21)
+
+The prep page now shows the stage's enemy-type count, wave count and life total under the description. It reads the loaded stage payload, so fixed-squad, event and test stages get the correct numbers. Static client tests remain at 217.
