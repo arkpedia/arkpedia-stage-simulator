@@ -1,0 +1,2759 @@
+{
+ "code": "4-8",
+ "name": "Acute Stress Disorder",
+ "description": "A force of mixed enemy troops advances on us from the east. Prepare to engage.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "4-8",
+  "rows": 8,
+  "cols": 11,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    1,
+    2,
+    2,
+    2,
+    0,
+    2,
+    2,
+    2,
+    3
+   ],
+   [
+    0,
+    1,
+    1,
+    2,
+    1,
+    2,
+    0,
+    2,
+    1,
+    2,
+    0
+   ],
+   [
+    4,
+    2,
+    2,
+    2,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    3
+   ],
+   [
+    4,
+    2,
+    2,
+    2,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    3
+   ],
+   [
+    0,
+    1,
+    1,
+    2,
+    1,
+    2,
+    0,
+    2,
+    1,
+    2,
+    0
+   ],
+   [
+    0,
+    0,
+    1,
+    2,
+    2,
+    2,
+    0,
+    2,
+    2,
+    2,
+    3
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 10
+    },
+    "end": {
+     "row": 4,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 3
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 50
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 10
+    },
+    "end": {
+     "row": 3,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 3
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 50
+     }
+    ]
+   },
+   {
+    "motion": null,
+    "placeholder": true,
+    "start": null,
+    "end": null,
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 10
+    },
+    "end": {
+     "row": 4,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 3
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 10
+    },
+    "end": {
+     "row": 3,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 3
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 10
+    },
+    "end": {
+     "row": 3,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 3
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 10
+    },
+    "end": {
+     "row": 4,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 3
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 15
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 10
+    },
+    "end": {
+     "row": 3,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 3
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 25
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 10
+    },
+    "end": {
+     "row": 4,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 3
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 10
+    },
+    "end": {
+     "row": 3,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 3
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 15
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 10
+    },
+    "end": {
+     "row": 4,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 3
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 15
+     }
+    ]
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 166,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Armed Militant",
+      "enemy_id": "enemy_1035_haxe",
+      "count": 1,
+      "time": 6,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sarkaz Greatswordsman",
+      "enemy_id": "enemy_1010_demon",
+      "count": 1,
+      "time": 6,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Shielded Soldier Leader",
+      "enemy_id": "enemy_1029_shdsbr_2",
+      "count": 2,
+      "time": 15,
+      "interval": 14,
+      "route": 3,
+      "fragment": 0
+     },
+     {
+      "enemy": "Rioter Leader",
+      "enemy_id": "enemy_1027_mob_2",
+      "count": 3,
+      "time": 8,
+      "interval": 7,
+      "route": 4,
+      "fragment": 0
+     },
+     {
+      "enemy": "Arts Guard",
+      "enemy_id": "enemy_1031_mrogue",
+      "count": 1,
+      "time": 34,
+      "route": 5,
+      "fragment": 0
+     },
+     {
+      "enemy": "Light-Armored Soldier Leader",
+      "enemy_id": "enemy_1015_litamr_2",
+      "count": 3,
+      "time": 47,
+      "interval": 7,
+      "route": 3,
+      "fragment": 0
+     },
+     {
+      "enemy": "Rioter Leader",
+      "enemy_id": "enemy_1027_mob_2",
+      "count": 3,
+      "time": 50,
+      "interval": 6,
+      "route": 4,
+      "fragment": 0
+     },
+     {
+      "enemy": "Butcher",
+      "enemy_id": "enemy_1034_laxe",
+      "count": 1,
+      "time": 82,
+      "route": 6,
+      "fragment": 1
+     },
+     {
+      "enemy": "Sarkaz Caster",
+      "enemy_id": "enemy_1022_dmage",
+      "count": 1,
+      "time": 82,
+      "route": 4,
+      "fragment": 1
+     },
+     {
+      "enemy": "Sarkaz Caster",
+      "enemy_id": "enemy_1022_dmage",
+      "count": 1,
+      "time": 102,
+      "route": 7,
+      "fragment": 1
+     },
+     {
+      "enemy": "Butcher",
+      "enemy_id": "enemy_1034_laxe",
+      "count": 1,
+      "time": 122,
+      "route": 8,
+      "fragment": 2
+     },
+     {
+      "enemy": "Armed Militant",
+      "enemy_id": "enemy_1035_haxe",
+      "count": 1,
+      "time": 162,
+      "route": 8,
+      "fragment": 2
+     },
+     {
+      "enemy": "Light-Armored Soldier Leader",
+      "enemy_id": "enemy_1015_litamr_2",
+      "count": 2,
+      "time": 127,
+      "interval": 6,
+      "route": 3,
+      "fragment": 2
+     },
+     {
+      "enemy": "Arts Guard",
+      "enemy_id": "enemy_1031_mrogue",
+      "count": 1,
+      "time": 139,
+      "route": 3,
+      "fragment": 2
+     },
+     {
+      "enemy": "Arts Guard",
+      "enemy_id": "enemy_1031_mrogue",
+      "count": 2,
+      "time": 131,
+      "interval": 10,
+      "route": 4,
+      "fragment": 2
+     },
+     {
+      "enemy": "Light-Armored Soldier Leader",
+      "enemy_id": "enemy_1015_litamr_2",
+      "count": 3,
+      "time": 150,
+      "interval": 8,
+      "route": 3,
+      "fragment": 2
+     },
+     {
+      "enemy": "Sarkaz Greatswordsman",
+      "enemy_id": "enemy_1010_demon",
+      "count": 1,
+      "time": 153,
+      "route": 4,
+      "fragment": 2
+     },
+     {
+      "enemy": "Sarkaz Caster",
+      "enemy_id": "enemy_1022_dmage",
+      "count": 1,
+      "time": 153,
+      "route": 9,
+      "fragment": 2
+     },
+     {
+      "enemy": "Sarkaz Caster",
+      "enemy_id": "enemy_1022_dmage",
+      "count": 1,
+      "time": 158,
+      "route": 10,
+      "fragment": 2
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 10,
+    "routes": [
+     1,
+     4,
+     4,
+     4,
+     7,
+     4,
+     4
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 3,
+    "col": 10,
+    "routes": [
+     5,
+     9
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 4,
+    "col": 10,
+    "routes": [
+     8,
+     8,
+     10
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 6,
+    "col": 10,
+    "routes": [
+     0,
+     3,
+     3,
+     6,
+     3,
+     3,
+     3
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 3,
+    "col": 0,
+    "routes": [
+     1,
+     4,
+     5,
+     4,
+     4,
+     7,
+     4,
+     4,
+     9
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 4,
+    "col": 0,
+    "routes": [
+     0,
+     3,
+     3,
+     6,
+     8,
+     8,
+     3,
+     3,
+     3,
+     10
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1010_demon",
+    "slug": "sarkaz_greatswordsman",
+    "name": "Sarkaz Greatswordsman",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1015_litamr_2",
+    "slug": "light_armored_soldier_leader",
+    "name": "Light-Armored Soldier Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1022_dmage",
+    "slug": "sarkaz_caster",
+    "name": "Sarkaz Caster",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1027_mob_2",
+    "slug": "rioter_leader",
+    "name": "Rioter Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1029_shdsbr_2",
+    "slug": "shielded_soldier_leader",
+    "name": "Shielded Soldier Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1031_mrogue",
+    "slug": "arts_guard",
+    "name": "Arts Guard",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1034_laxe",
+    "slug": "butcher",
+    "name": "Butcher",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1035_haxe",
+    "slug": "armed_militant",
+    "name": "Armed Militant",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "pathing": {
+  "schemaVersion": 1,
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "4-8",
+  "geometryHash": "ecc8c02d00c9a204149c774adcf2bffdea851a9ae72f8d693d7770469275bd5e",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      10,
+      6
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      7,
+      6
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      0,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16
+    ],
+    "length": 16,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 3,
+      "seconds": 50,
+      "point": [
+       7,
+       6
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      10,
+      6
+     ],
+     [
+      7,
+      6
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      0,
+      4
+     ]
+    ]
+   },
+   "1": {
+    "points": [
+     [
+      10,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16
+    ],
+    "length": 16,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 3,
+      "seconds": 50,
+      "point": [
+       7,
+       1
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      10,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ]
+   },
+   "3": {
+    "points": [
+     [
+      10,
+      6
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      7,
+      6
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      0,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16
+    ],
+    "length": 16,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      10,
+      6
+     ],
+     [
+      7,
+      6
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      0,
+      4
+     ]
+    ]
+   },
+   "4": {
+    "points": [
+     [
+      10,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16
+    ],
+    "length": 16,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      10,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ]
+   },
+   "5": {
+    "points": [
+     [
+      10,
+      3
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14
+    ],
+    "length": 14,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      10,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ]
+   },
+   "6": {
+    "points": [
+     [
+      10,
+      6
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      7,
+      6
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      0,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16
+    ],
+    "length": 16,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 3,
+      "seconds": 15,
+      "point": [
+       7,
+       6
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      10,
+      6
+     ],
+     [
+      7,
+      6
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      0,
+      4
+     ]
+    ]
+   },
+   "7": {
+    "points": [
+     [
+      10,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16
+    ],
+    "length": 16,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 3,
+      "seconds": 25,
+      "point": [
+       7,
+       1
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      10,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ]
+   },
+   "8": {
+    "points": [
+     [
+      10,
+      4
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      0,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14
+    ],
+    "length": 14,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      10,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      0,
+      4
+     ]
+    ]
+   },
+   "9": {
+    "points": [
+     [
+      10,
+      3
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14
+    ],
+    "length": 14,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 2,
+      "seconds": 15,
+      "point": [
+       8,
+       3
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      10,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ]
+   },
+   "10": {
+    "points": [
+     [
+      10,
+      4
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      0,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14
+    ],
+    "length": 14,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 2,
+      "seconds": 15,
+      "point": [
+       8,
+       4
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      10,
+      4
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      0,
+      4
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1035_haxe": {
+   "key": "enemy_1035_haxe",
+   "prefabKey": "enemy_1035_haxe",
+   "name": "Armed Militant",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 12000,
+    "atk": 1050,
+    "def": 700,
+    "res": 30,
+    "moveSpeed": 0.65,
+    "bat": 3.5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1010_demon": {
+   "key": "enemy_1010_demon",
+   "prefabKey": "enemy_1010_demon",
+   "name": "Sarkaz Greatswordsman",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 7500,
+    "atk": 600,
+    "def": 230,
+    "res": 50,
+    "moveSpeed": 0.85,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "sarkaz"
+   ]
+  },
+  "enemy_1027_mob_2": {
+   "key": "enemy_1027_mob_2",
+   "prefabKey": "enemy_1027_mob_2",
+   "name": "Rioter Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2650,
+    "atk": 350,
+    "def": 85,
+    "res": 0,
+    "moveSpeed": 1.1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1029_shdsbr_2": {
+   "key": "enemy_1029_shdsbr_2",
+   "prefabKey": "enemy_1029_shdsbr_2",
+   "name": "Shielded Soldier Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3000,
+    "atk": 280,
+    "def": 300,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1031_mrogue": {
+   "key": "enemy_1031_mrogue",
+   "prefabKey": "enemy_1031_mrogue",
+   "name": "Arts Guard",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 4000,
+    "atk": 350,
+    "def": 200,
+    "res": 50,
+    "moveSpeed": 0.75,
+    "bat": 2.5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1015_litamr_2": {
+   "key": "enemy_1015_litamr_2",
+   "prefabKey": "enemy_1015_litamr_2",
+   "name": "Light-Armored Soldier Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3700,
+    "atk": 300,
+    "def": 500,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1034_laxe": {
+   "key": "enemy_1034_laxe",
+   "prefabKey": "enemy_1034_laxe",
+   "name": "Butcher",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 9000,
+    "atk": 850,
+    "def": 230,
+    "res": 30,
+    "moveSpeed": 0.7,
+    "bat": 3.5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1022_dmage": {
+   "key": "enemy_1022_dmage",
+   "prefabKey": "enemy_1022_dmage",
+   "name": "Sarkaz Caster",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 12000,
+    "atk": 500,
+    "def": 200,
+    "res": 50,
+    "moveSpeed": 0.8,
+    "bat": 4,
+    "aspd": 100,
+    "rangeRadius": 2.5,
+    "rawRangeRadius": 2.5,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Uses chains to paralyze allied Operators.",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [
+    {
+     "prefabKey": "lasso",
+     "priority": 1,
+     "cooldown": 0,
+     "initCooldown": 0,
+     "spCost": 0,
+     "bb": {
+      "hit_duration": 20,
+      "atk_scale": 0.35,
+      "range_radius": 3
+     },
+     "bbStr": {}
+    }
+   ],
+   "notCountInTotal": false,
+   "tags": [
+    "sarkaz"
+   ]
+  }
+ }
+}

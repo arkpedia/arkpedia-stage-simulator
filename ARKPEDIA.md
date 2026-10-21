@@ -5550,3 +5550,7 @@ With the `1321` Seed summoner supported, **12-17**, **12-18** and **12-19** buil
 ### Sarkaz Caster lasso (E44, 2026-10-21)
 
 The reviewed Lasso wrapper/ability is retained. Every attack is a 0.35x Arts lasso that stuns its target for the skill's 20-second `hit_duration`; the wrapper is claimed. Support rises to **344 of 1,552** enemies. The evidence-tamper test now selects components that actually contain its tamper strings, so adding new retained components cannot make it vacuous.
+
+### Lasso stages (S66, 2026-10-21)
+
+With the Sarkaz Caster lasso supported, **4-8**, **4-9** and **12-4** build (8×11, 30–49 spawns). Coverage is **138 public stages** (0-1 plus 137 files).
