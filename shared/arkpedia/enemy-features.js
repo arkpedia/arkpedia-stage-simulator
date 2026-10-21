@@ -264,6 +264,10 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Ability-only melee splash (Originium Colossus): the record carries no talent group, only the sentence.
+  'ability:Attacks deal splash damage': { covers: r => r.abilities.some(a => a.text === 'Attacks deal splash damage'),
+    ability: { kind: 'splashMelee', params: () => ({}) }, note: 'melee attack splashes around its target',
+    explains: /^Attacks deal splash damage$/ },
   // Sarkaz Grudgebearer/Bladeweaver: standby until the first injury (or unmove_duration), then combat-ready.
   'talent:revive': { covers: r => sig(r, 'revive', ['hp_ratio', 'move_speed', 'unmove_duration'])
       && r.abilities.some(a => /^Starts battle in Standby and will not attack; upon being injured, becomes Combat-Ready/.test(a.text)),

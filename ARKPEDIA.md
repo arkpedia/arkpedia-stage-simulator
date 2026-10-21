@@ -5346,3 +5346,7 @@ The Grudgebearer/Worldcurser/Bladeweaver family starts in a stun-flag standby un
 ### 10-8 teleport support (S27, 2026-10-21, test-only)
 
 The stage adapter now accepts a viewer break without a tunnel hold when the level geometry has an `appear_at_pos` checkpoint at the exact break point. It emits a zero-second DISAPPEAR/WAIT/APPEAR pair, so the enemy teleports instead of walking. This closes the last refused main stage whose enemies were all supported: **10-8** and **10-8 adverse environment** now build (8×11, 18 spawns, 4 enemies). Coverage is **0-1 plus 113 test-only files**; the battle test pins the DISAPPEAR/APPEAR legs.
+
+### Originium Colossus melee splash (E26, 2026-10-21)
+
+An ability-only enemy (`ability:Attacks deal splash damage`, no talent group) now uses the standard one-tile melee splash around its target. Support rises to **304 of 1,552** enemies. The test places two adjacent guards and checks both take the hit.
