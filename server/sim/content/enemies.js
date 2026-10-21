@@ -288,7 +288,24 @@ export const featureAbilities = Object.freeze({
   atkup: ({ scale, ratio, atkPct }) => scale != null
     ? { hitOut(c, b, e) { if (c.dmg.isAttack && c.target?.s.flags.freeze) c.dmg.amount *= scale; } }
     : lowHpBuff(ratio ?? 0.5, { atkPct: atkPct ?? 0 }),
-  elementOnHit: ({ element, ratio }) => ep(element, ratio),
+  elementOnHit: ({ element, ratio, chain = false, maxTargets = 1, chainScale = 1, range = 0 }) => chain ? ({
+    dealt(c, b, e) {
+      if (!c.dmg?.isAttack || c.dmg.tags?.includes('chain') || !c.target) return;
+      let source = c.target, hit = new Set([c.target]);
+      if (ratio > 0) elem(b, e, source, element, e.s.atk * ratio);
+      for (let i = 1; i < maxTargets; i++) {
+        const next = b.alliesInRadius(source.x, source.y, range)
+          .filter(o => o.alive && o !== e && !hit.has(o))
+          .sort((p, q) => Math.hypot(p.x - source.x, p.y - source.y) - Math.hypot(q.x - source.x, q.y - source.y))[0];
+        if (!next) break;
+        hit.add(next);
+        const scale = Math.pow(chainScale, i);
+        hurt(b, e, next, e.s.atk * scale, 'arts', { tags: ['chain'] });
+        if (ratio > 0) elem(b, e, next, element, e.s.atk * ratio * scale);
+        source = next;
+      }
+    },
+  }) : ep(element, ratio),
   lowHpBuff: ({ ratio, mods }) => lowHpBuff(ratio, mods),
   deathSpawn: ({ key, cnt }) => deathSpawn(key, cnt),
   deathSpawnDelayed: ({ key, cnt, delay }) => deathSpawnDelayed({ key, cnt, delay }),

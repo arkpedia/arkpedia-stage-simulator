@@ -240,9 +240,24 @@ export const ENEMY_FEATURES = Object.freeze({
       || /^Restores a certain amount of HP after each attack, based upon damage dealt$/.test(text)
       || text === `Attacks ${record.talents.bb['vampire.attack@max_target'] ?? 1} enemies simultaneously`),
   // Element damage on every attack hit: ATK x attack@ep_damage_ratio of the element its handbook line names.
-  ...family(['epdamage', 'EpDamage'], ['attack@ep_damage_ratio'], g => ({ kind: 'elementOnHit', params: r => ({ element: elementOf(r), ratio: r.talents.bb[`${g}.attack@ep_damage_ratio`] }) }),
+  ...family(['EpDamage'], ['attack@ep_damage_ratio'], g => ({ kind: 'elementOnHit', params: r => ({ element: elementOf(r), ratio: r.talents.bb[`${g}.attack@ep_damage_ratio`] }) }),
     r => !!elementOf(r), 'element damage on every attack hit', null,
     /^(Every attack deals|Attacks inflict additional|Attacks deal) <\$ba\.dt\.(erosion|neural|apoptosis|burning)>[^<]*<\/>\.?$/),
+  'talent:epdamage': { covers: r =>
+      (sig(r, 'epdamage', ['attack@ep_damage_ratio']) && !!elementOf(r)
+        && r.abilities.some(a => /^(Every attack deals|Attacks inflict additional|Attacks deal) <\$ba\.dt\.(erosion|neural|apoptosis|burning)>[^<]*<\/>\.?$/.test(a.text)))
+      || (sig(r, 'epdamage', ['attack@chain.atk_scale', 'attack@ep_damage_ratio', 'attack@max_target', 'attack@projectile_range'])
+        && r.abilities.some(a => /^Attacks deal <\$ba\.dt\.apoptosis>Necrosis damage<\/> and jump between \d+ targets, with each jump dealing reduced damage$/.test(a.text))),
+    ability: { kind: 'elementOnHit', params: r => {
+      if (sig(r, 'epdamage', ['attack@chain.atk_scale', 'attack@ep_damage_ratio', 'attack@max_target', 'attack@projectile_range']))
+        return { chain: true, element: elementOf(r), ratio: r.talents.bb['epdamage.attack@ep_damage_ratio'],
+          maxTargets: r.talents.bb['epdamage.attack@max_target'], chainScale: r.talents.bb['epdamage.attack@chain.atk_scale'],
+          range: r.talents.bb['epdamage.attack@projectile_range'] };
+      return { element: elementOf(r), ratio: r.talents.bb['epdamage.attack@ep_damage_ratio'] };
+    } },
+    note: 'element damage on every attack hit, or a chain that jumps with falloff', explains: text =>
+      /^(Every attack deals|Attacks inflict additional|Attacks deal) <\$ba\.dt\.(erosion|neural|apoptosis|burning)>[^<]*<\/>\.?$/.test(text)
+      || /^Attacks deal <\$ba\.dt\.apoptosis>Necrosis damage<\/> and jump between \d+ targets, with each jump dealing reduced damage$/.test(text) },
   // "Spawns N <X> when defeated": cnt enemy_key on death; supported only when the spawned enemy is.
   ...family(['DeadSpawn'], ['cnt', 'enemy_key'], g => ({ kind: 'deathSpawn', params: r => ({ key: r.talents.bbStr[`${g}.enemy_key`], cnt: r.talents.bb[`${g}.cnt`] }) }),
     r => true, 'spawns cnt enemy_key when killed', r => Object.entries(r.talents.bbStr).filter(([k]) => /^deadspawn\.enemy_key$/i.test(k)).map(([, v]) => v),

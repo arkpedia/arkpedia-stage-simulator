@@ -234,6 +234,20 @@ test('Yeti Caster: every third attack applies the reviewed 10 s Cold', () => {
   const cold = guard.buffs.find(b => b.status === 'cold');
   assert.ok(cold, 'the third attack applied Cold'); assert.equal(cold.duration, 10);
 });
+test('Chain Caster: Necrosis jumps to nearby targets with falloff', () => {
+  const key = 'enemy_1225_dkmage', rec = ENEMY_RECORDS.enemies[key].levels[0];
+  const a = chessRec({ id: 'chain_a', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 0 } });
+  const b = chessRec({ id: 'chain_b', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 0 } });
+  const h = makeBattle({ defs: { enemies: { [key]: rec }, chess: { [a.chessId]: a, [b.chessId]: b } },
+    units: [{ chessId: a.chessId, row: 9, col: 6 }, { chessId: b.chessId, row: 9, col: 7 }],
+    enemies: [{ key, time: 0, route: 0 }], content: 'none', autoFinish: false, timeLimit: 40,
+    setup: battle => installEnemyFeatures(battle) });
+  const hits = { [a.chessId]: 0, [b.chessId]: 0 }, elements = new Set();
+  h.b.on('damaged', c => { if (c.source?.defId !== key) return; if (c.target.defId in hits) hits[c.target.defId]++; if (c.dmg.type === 'element') elements.add(c.target.defId); });
+  h.runUntil(() => hits[a.chessId] > 0 && hits[b.chessId] > 0, 30);
+  assert.ok(hits[a.chessId] > 0 && hits[b.chessId] > 0, JSON.stringify(hits));
+  assert.ok(elements.has(a.chessId) && elements.has(b.chessId), 'both targets received Necrosis');
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');
