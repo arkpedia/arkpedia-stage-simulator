@@ -5842,3 +5842,7 @@ The coverage tool now lists the stages whose conditional entries are all pristin
 ### Synthetic route paths and 10-5 (S116, 2026-10-21)
 
 When the viewer export omits a route, the builder now synthesizes the reviewed geometry start/checkpoint/end chain as a fallback path (`syntheticRoutes`). This unblocked **10-5** and **10-5 adverse environment** (8×11, 50 spawns, 6 enemies). The 15–17 candidates still fail on unsupported enemies such as `enemy_10075_mpwrj`, not on routing. Coverage is **197 public stages**.
+
+### Worry-Free Cargo Helper (E67, 2026-10-21)
+
+Flies and explodes for 1.0x Arts in 1.5 radius when an operator comes within 1.0, removing itself. Claims the Boom wrapper/active. Support rises to **394 of 1,552** enemies. The test checks the blast and removal.
