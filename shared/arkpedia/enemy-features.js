@@ -279,6 +279,15 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // 1320: a three-Block gate and a first-attack splash.
+  'ability:Can only be blocked by Operators with 3 or more Block': { covers: r => r.abilities.some(a => a.text === 'Can only be blocked by Operators with 3 or more Block'),
+    ability: { kind: 'requiredBlock', params: () => ({ block: 3 }) }, note: 'needs a blocker with 3 Block',
+    explains: /^Can only be blocked by Operators with 3 or more Block$/ },
+  'ability:First attack deals Splash damage': { covers: r => r.abilities.some(a => a.text === 'First attack deals Splash damage') && r.skills.some(s => s.prefabKey === 'AOEAttack'),
+    ability: { kind: 'firstSplash', params: r => ({ scale: r.talents.bb['AOEAttack.atk_scale'] ?? 1.5 }) },
+    nativeClaim: () => ({ wrappers: 1 }), note: 'the first attack splashes around its target', explains: /^First attack deals Splash damage$/ },
+  'talent:AOEAttack': { covers: r => sig(r, 'AOEAttack', ['atk_scale']), note: 'firstSplash reads AOEAttack.atk_scale' },
+  'skill:AOEAttack': { covers: r => r.skills.some(s => s.prefabKey === 'AOEAttack'), note: 'native AOEAttack skill consumed by firstSplash' },
   // Splitcaster: at half HP it leaves a Virtual Image clone; the clone cannot split again.
   'talent:summon': { covers: r => sig(r, 'summon', ['hp_ratio'])
       && r.abilities.some(a => a.text === 'When HP is below half, creates a <Virtual Image> at their location'),

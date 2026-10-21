@@ -5530,3 +5530,7 @@ With the Splitcaster Virtual Image supported, **12-12** and **12-12 adverse envi
 ### More chapter-12 stages (S63, 2026-10-21)
 
 **12-2, 12-3, 12-5, 12-9, 12-10 and 12-15** also build with the identity layer and join the public catalogue. Coverage is **130 public stages** (0-1 plus 129 files).
+
+### 1320 first-attack splash (E42, 2026-10-21)
+
+The `1320` family requires a 3-Block blocker and its first attack is 1.5x and splashes the target's box; later attacks are single-target. The reviewed `AOEAttack` wrapper is claimed. Support rises to **341 of 1,552** enemies. The test uses 3-Block guards and checks both the splash and the single-target follow-up.

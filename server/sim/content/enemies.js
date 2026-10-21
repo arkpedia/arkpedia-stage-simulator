@@ -345,6 +345,18 @@ export const featureAbilities = Object.freeze({
     },
   }),
   moveSpeedBonus: ({ mul }) => ({ spawn(b, e) { b.addBuff(e, { key: 'ab:moveSpeed', persist: true, visible: true, mods: { moveMul: mul } }); } }),
+  // 1320: the first hit is 1.5x and splashes the target's box; later hits are normal.
+  firstSplash: ({ scale }) => ({
+    spawn(b, e, a) { a.first = true; a.splash = false; },
+    hitOut(c, b, e, a) { if (a.first && c.dmg.isAttack) { a.first = false; a.splash = true; c.dmg.amount *= scale; } },
+    dealt(c, b, e, a) {
+      if (!a.splash) return;
+      a.splash = false;
+      const t = c.target;
+      if (!t) return;
+      for (const u of areaAlliesInTiles(b, e, t.tileR, t.tileC, 'box', 1)) if (u !== t) hurt(b, e, u, e.s.atk * scale, 'phys', { tags: ['splash'] });
+    },
+  }),
   // Splitcaster: one Virtual Image clone at the HP threshold; clones are flagged so they cannot split.
   virtualImage: ({ ratio, key }) => ({
     taken(c, b, e, a) {

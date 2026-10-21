@@ -489,6 +489,21 @@ test('Splitcaster: one Virtual Image at half HP, and the clone cannot split', ()
   h.b.dealDamage(null, kids[0], { amount: kids[0].s.maxHp * 0.6, type: 'true', sourceless: true }); h.run(0.1);
   assert.equal(h.b.enemies.filter(u => u.defId === key && u !== e).length, 1, 'no second split');
 });
+test('1320: the first attack splashes, later attacks are single-target', () => {
+  const key = 'enemy_1320_wdrrl', rec = ENEMY_RECORDS.enemies[key].levels[0];
+  const a = chessRec({ id: 'aoa', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 0, blockCnt: 3 } });
+  const b = chessRec({ id: 'aob', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 0, blockCnt: 3 } });
+  const h = makeBattle({ defs: { enemies: { [key]: rec }, chess: { [a.chessId]: a, [b.chessId]: b } },
+    units: [{ chessId: a.chessId, row: 9, col: 6 }, { chessId: b.chessId, row: 9, col: 7 }],
+    enemies: [{ key, time: 0, route: 0 }], content: 'none', autoFinish: false, timeLimit: 30,
+    setup: battle => installEnemyFeatures(battle) });
+  const hits = { [a.chessId]: 0, [b.chessId]: 0 }; let attacks = 0;
+  h.b.on('attack', c => { if (c.attacker?.defId === key) attacks++; });
+  h.b.on('damaged', c => { if (c.source?.defId === key && c.target.defId in hits) hits[c.target.defId]++; });
+  h.runUntil(() => attacks >= 2, 25); h.run(0.1);
+  assert.ok(hits[a.chessId] + hits[b.chessId] >= 3, JSON.stringify(hits));
+  assert.ok(Math.min(hits[a.chessId], hits[b.chessId]) >= 1, 'the first hit splashed both');
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');
