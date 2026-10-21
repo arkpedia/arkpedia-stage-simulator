@@ -5642,3 +5642,7 @@ The coverage test assumed the sibling `arkpedia-data` source checkout, which Git
 ### Focused Soul Remnant (E54, 2026-10-21)
 
 The Remnant picks up up to three Soul Maelstroms, then every 15 s expends them for a three-tick Arts line (`atk_scale + atk_ladder × (souls-1)`) through the current target. The reviewed wrapper and active are claimed. Support rises to **364 of 1,552** enemies. The test casts manually and checks both line targets.
+
+### 14-14, 14-15 and 14-17 (S79, 2026-10-21)
+
+With the Focused Soul Remnant supported, **14-14**, **14-15** and **14-17** build (7×12–8×12, 32–57 spawns). Coverage is **166 public stages** (0-1 plus 165 files).
