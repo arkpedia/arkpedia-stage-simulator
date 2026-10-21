@@ -1,0 +1,3107 @@
+{
+ "code": "10-10",
+ "name": "Shadows of Days Past",
+ "description": "Memories cast their shadows at you. Fear, hatred, the insurmountable gap between life and death, and your old acquaintances.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "10-10",
+  "rows": 8,
+  "cols": 11,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_fence",
+    "height": "low",
+    "walkable": false,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    1,
+    2,
+    2,
+    2,
+    0,
+    2,
+    2,
+    2,
+    2,
+    2,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    2,
+    3,
+    2,
+    0,
+    3,
+    0,
+    4,
+    0
+   ],
+   [
+    1,
+    4,
+    4,
+    4,
+    5,
+    2,
+    3,
+    3,
+    3,
+    4,
+    0
+   ],
+   [
+    1,
+    4,
+    4,
+    4,
+    2,
+    2,
+    2,
+    6,
+    0,
+    4,
+    0
+   ],
+   [
+    1,
+    4,
+    4,
+    4,
+    2,
+    2,
+    2,
+    6,
+    0,
+    4,
+    0
+   ],
+   [
+    1,
+    4,
+    4,
+    4,
+    3,
+    3,
+    3,
+    0,
+    0,
+    4,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 0
+    },
+    "end": {
+     "row": 5,
+     "col": 7
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 1
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 0
+    },
+    "end": {
+     "row": 4,
+     "col": 7
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 0
+    },
+    "end": {
+     "row": 5,
+     "col": 7
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 1
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 0
+    },
+    "end": {
+     "row": 4,
+     "col": 7
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 1
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 0
+    },
+    "end": {
+     "row": 4,
+     "col": 7
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 1
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 9
+    },
+    "end": {
+     "row": 5,
+     "col": 7
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 8
+     }
+    ]
+   },
+   {
+    "motion": null,
+    "placeholder": true,
+    "start": null,
+    "end": null,
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 9
+    },
+    "end": {
+     "row": 5,
+     "col": 7
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 8
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 4,
+     "col": 7
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 3
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 25
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 0
+    },
+    "end": {
+     "row": 5,
+     "col": 7
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 0
+    },
+    "end": {
+     "row": 5,
+     "col": 7
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 0
+    },
+    "end": {
+     "row": 4,
+     "col": 7
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 9
+    },
+    "end": {
+     "row": 5,
+     "col": 7
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 4,
+     "col": 7
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 3
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 20
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 9
+    },
+    "end": {
+     "row": 4,
+     "col": 7
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 9
+    },
+    "end": {
+     "row": 5,
+     "col": 7
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 9
+    },
+    "end": {
+     "row": 5,
+     "col": 7
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 4,
+     "col": 7
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 3
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10
+     }
+    ]
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 188,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Sarkaz Heirbearer Warrior",
+      "enemy_id": "enemy_1222_dpvt",
+      "count": 1,
+      "time": 3,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Warrior",
+      "enemy_id": "enemy_1222_dpvt",
+      "count": 1,
+      "time": 5,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Warrior",
+      "enemy_id": "enemy_1222_dpvt",
+      "count": 1,
+      "time": 12,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Warrior",
+      "enemy_id": "enemy_1222_dpvt",
+      "count": 1,
+      "time": 15,
+      "route": 3,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Warrior",
+      "enemy_id": "enemy_1222_dpvt",
+      "count": 2,
+      "time": 28,
+      "interval": 4,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Warrior",
+      "enemy_id": "enemy_1222_dpvt",
+      "count": 2,
+      "time": 28,
+      "interval": 3,
+      "route": 4,
+      "fragment": 0
+     },
+     {
+      "enemy": "Bloodthirsty Heir",
+      "enemy_id": "enemy_1228_dslime",
+      "count": 1,
+      "time": 35,
+      "route": 5,
+      "fragment": 0
+     },
+     {
+      "enemy": "Bloodthirsty Heir",
+      "enemy_id": "enemy_1228_dslime",
+      "count": 1,
+      "time": 36,
+      "route": 7,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Warrior",
+      "enemy_id": "enemy_1222_dpvt",
+      "count": 2,
+      "time": 43,
+      "interval": 10,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Warrior",
+      "enemy_id": "enemy_1222_dpvt",
+      "count": 2,
+      "time": 44,
+      "interval": 10,
+      "route": 3,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Chain Caster",
+      "enemy_id": "enemy_1225_dkmage",
+      "count": 1,
+      "time": 50,
+      "route": 8,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Warrior",
+      "enemy_id": "enemy_1222_dpvt",
+      "count": 1,
+      "time": 67,
+      "route": 9,
+      "fragment": 1
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Warrior",
+      "enemy_id": "enemy_1222_dpvt",
+      "count": 1,
+      "time": 69,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Warrior",
+      "enemy_id": "enemy_1222_dpvt",
+      "count": 1,
+      "time": 72,
+      "route": 10,
+      "fragment": 1
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Warrior",
+      "enemy_id": "enemy_1222_dpvt",
+      "count": 1,
+      "time": 74,
+      "route": 11,
+      "fragment": 1
+     },
+     {
+      "enemy": "Bloodthirsty Heir",
+      "enemy_id": "enemy_1228_dslime",
+      "count": 2,
+      "time": 79,
+      "interval": 1,
+      "route": 12,
+      "fragment": 1
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Warrior",
+      "enemy_id": "enemy_1222_dpvt",
+      "count": 2,
+      "time": 86,
+      "interval": 8,
+      "route": 9,
+      "fragment": 1
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Warrior",
+      "enemy_id": "enemy_1222_dpvt",
+      "count": 2,
+      "time": 86,
+      "interval": 8,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Warrior",
+      "enemy_id": "enemy_1222_dpvt",
+      "count": 1,
+      "time": 107,
+      "route": 9,
+      "fragment": 2
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Warrior",
+      "enemy_id": "enemy_1222_dpvt",
+      "count": 1,
+      "time": 112,
+      "route": 10,
+      "fragment": 2
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Warrior",
+      "enemy_id": "enemy_1222_dpvt",
+      "count": 1,
+      "time": 114,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Warrior",
+      "enemy_id": "enemy_1222_dpvt",
+      "count": 1,
+      "time": 120,
+      "route": 11,
+      "fragment": 2
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Chain Caster",
+      "enemy_id": "enemy_1225_dkmage",
+      "count": 1,
+      "time": 122,
+      "route": 13,
+      "fragment": 2
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Warrior",
+      "enemy_id": "enemy_1222_dpvt",
+      "count": 1,
+      "time": 134,
+      "route": 10,
+      "fragment": 2
+     },
+     {
+      "enemy": "Bloodthirsty Heir",
+      "enemy_id": "enemy_1228_dslime",
+      "count": 3,
+      "time": 137,
+      "interval": 1,
+      "route": 14,
+      "fragment": 2
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Warrior",
+      "enemy_id": "enemy_1222_dpvt",
+      "count": 1,
+      "time": 140,
+      "route": 11,
+      "fragment": 2
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Warrior",
+      "enemy_id": "enemy_1222_dpvt",
+      "count": 1,
+      "time": 150,
+      "route": 10,
+      "fragment": 2
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Warrior",
+      "enemy_id": "enemy_1222_dpvt",
+      "count": 1,
+      "time": 160,
+      "route": 9,
+      "fragment": 2
+     },
+     {
+      "enemy": "Bloodthirsty Heir",
+      "enemy_id": "enemy_1228_dslime",
+      "count": 1,
+      "time": 168,
+      "route": 15,
+      "fragment": 3
+     },
+     {
+      "enemy": "Bloodthirsty Heir",
+      "enemy_id": "enemy_1228_dslime",
+      "count": 1,
+      "time": 168,
+      "route": 15,
+      "fragment": 3
+     },
+     {
+      "enemy": "Bloodthirsty Heir",
+      "enemy_id": "enemy_1228_dslime",
+      "count": 1,
+      "time": 168,
+      "route": 15,
+      "fragment": 3
+     },
+     {
+      "enemy": "Bloodthirsty Heir",
+      "enemy_id": "enemy_1228_dslime",
+      "count": 1,
+      "time": 169,
+      "route": 16,
+      "fragment": 3
+     },
+     {
+      "enemy": "Bloodthirsty Heir",
+      "enemy_id": "enemy_1228_dslime",
+      "count": 1,
+      "time": 169,
+      "route": 16,
+      "fragment": 3
+     },
+     {
+      "enemy": "Bloodthirsty Heir",
+      "enemy_id": "enemy_1228_dslime",
+      "count": 1,
+      "time": 169,
+      "route": 16,
+      "fragment": 3
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Chain Caster",
+      "enemy_id": "enemy_1225_dkmage",
+      "count": 1,
+      "time": 169,
+      "route": 17,
+      "fragment": 3
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Warrior",
+      "enemy_id": "enemy_1222_dpvt",
+      "count": 1,
+      "time": 175,
+      "route": 9,
+      "fragment": 4
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Warrior",
+      "enemy_id": "enemy_1222_dpvt",
+      "count": 2,
+      "time": 180,
+      "interval": 8,
+      "route": 1,
+      "fragment": 4
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Warrior",
+      "enemy_id": "enemy_1222_dpvt",
+      "count": 1,
+      "time": 187,
+      "route": 10,
+      "fragment": 4
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 0,
+    "routes": [
+     8,
+     13,
+     17
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 3,
+    "col": 0,
+    "routes": [
+     1,
+     4,
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 4,
+    "col": 0,
+    "routes": [
+     3,
+     3,
+     11,
+     11,
+     11
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 5,
+    "col": 0,
+    "routes": [
+     2,
+     2,
+     10,
+     10,
+     10,
+     10,
+     10
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 6,
+    "col": 0,
+    "routes": [
+     0,
+     0,
+     9,
+     9,
+     9,
+     9,
+     9
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 7,
+    "col": 9,
+    "routes": [
+     5,
+     7,
+     12,
+     14,
+     15,
+     15,
+     15,
+     16,
+     16,
+     16
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 4,
+    "col": 7,
+    "routes": [
+     1,
+     3,
+     4,
+     3,
+     8,
+     1,
+     11,
+     1,
+     1,
+     11,
+     13,
+     14,
+     11,
+     17,
+     1
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 5,
+    "col": 7,
+    "routes": [
+     0,
+     2,
+     0,
+     5,
+     7,
+     2,
+     9,
+     10,
+     12,
+     9,
+     9,
+     10,
+     10,
+     10,
+     9,
+     15,
+     15,
+     15,
+     16,
+     16,
+     16,
+     9,
+     10
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1220_dzoms",
+    "slug": "touch_of_the_sanguinarch",
+    "name": "Touch of the Sanguinarch",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1221_dzomg",
+    "slug": "gift_of_the_sanguinarch",
+    "name": "Gift of the Sanguinarch",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1222_dpvt",
+    "slug": "sarkaz_heirbearer_warrior",
+    "name": "Sarkaz Heirbearer Warrior",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1225_dkmage",
+    "slug": "sarkaz_heirbearer_chain_caster",
+    "name": "Sarkaz Heirbearer Chain Caster",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1228_dslime",
+    "slug": "bloodthirsty_heir",
+    "name": "Bloodthirsty Heir",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "pathing": {
+  "schemaVersion": 1,
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "10-10",
+  "geometryHash": "48f68021bb23c1100652feeb63b0cfc672fd6ff2c0a5ffe664f38c08a6c2f0c5",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      0,
+      6
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3.414213562373095,
+     4.414213562373095,
+     5.414213562373095,
+     6.414213562373095,
+     7.414213562373095
+    ],
+    "length": 7.414213562373095,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      6
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      7,
+      5
+     ]
+    ]
+   },
+   "1": {
+    "points": [
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      7,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3.414213562373095,
+     4.414213562373095,
+     5.414213562373095,
+     6.414213562373095,
+     7.414213562373095
+    ],
+    "length": 7.414213562373095,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      3
+     ],
+     [
+      7,
+      4
+     ]
+    ]
+   },
+   "2": {
+    "points": [
+     [
+      0,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      7,
+      5
+     ]
+    ]
+   },
+   "3": {
+    "points": [
+     [
+      0,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      7,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      7,
+      4
+     ]
+    ]
+   },
+   "4": {
+    "points": [
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      7,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3.414213562373095,
+     4.414213562373095,
+     5.414213562373095,
+     6.414213562373095,
+     7.414213562373095
+    ],
+    "length": 7.414213562373095,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      7,
+      4
+     ]
+    ]
+   },
+   "5": {
+    "points": [
+     [
+      9,
+      7
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16
+    ],
+    "length": 16,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 2,
+      "seconds": 8,
+      "point": [
+       9,
+       5
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      9,
+      7
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      7,
+      5
+     ]
+    ]
+   },
+   "7": {
+    "points": [
+     [
+      9,
+      7
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16
+    ],
+    "length": 16,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 8,
+      "point": [
+       9,
+       6
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      9,
+      7
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      7,
+      5
+     ]
+    ]
+   },
+   "8": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      7,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 25,
+      "point": [
+       1,
+       1
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      7,
+      4
+     ]
+    ]
+   },
+   "9": {
+    "points": [
+     [
+      0,
+      6
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3.414213562373095,
+     4.414213562373095,
+     5.414213562373095,
+     6.414213562373095,
+     7.414213562373095
+    ],
+    "length": 7.414213562373095,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      6
+     ],
+     [
+      7,
+      5
+     ]
+    ]
+   },
+   "10": {
+    "points": [
+     [
+      0,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      5
+     ],
+     [
+      7,
+      5
+     ]
+    ]
+   },
+   "11": {
+    "points": [
+     [
+      0,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      7,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      4
+     ],
+     [
+      7,
+      4
+     ]
+    ]
+   },
+   "12": {
+    "points": [
+     [
+      9,
+      7
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16
+    ],
+    "length": 16,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      9,
+      7
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      7,
+      5
+     ]
+    ]
+   },
+   "13": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      7,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 20,
+      "point": [
+       1,
+       1
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      7,
+      4
+     ]
+    ]
+   },
+   "14": {
+    "points": [
+     [
+      9,
+      7
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      7,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15
+    ],
+    "length": 15,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      9,
+      7
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      7,
+      4
+     ]
+    ]
+   },
+   "15": {
+    "points": [
+     [
+      9,
+      7
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16
+    ],
+    "length": 16,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 2,
+      "seconds": 10,
+      "point": [
+       9,
+       5
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      9,
+      7
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      7,
+      5
+     ]
+    ]
+   },
+   "16": {
+    "points": [
+     [
+      9,
+      7
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16
+    ],
+    "length": 16,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 10,
+      "point": [
+       9,
+       6
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      9,
+      7
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      7,
+      5
+     ]
+    ]
+   },
+   "17": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      7,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 10,
+      "point": [
+       1,
+       1
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      7,
+      4
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "enemies": {
+  "enemy_1222_dpvt": {
+   "key": "enemy_1222_dpvt",
+   "prefabKey": "enemy_1222_dpvt",
+   "name": "Sarkaz Heirbearer Warrior",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3600,
+    "atk": 340,
+    "def": 120,
+    "res": 30,
+    "moveSpeed": 1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": -1,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Will be reborn as a <Touch of the Sanguinarch> after falling in battle for the first time",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "deathrattle.delay": 1
+    },
+    "bbStr": {
+     "deathrattle.enemy_key": "enemy_1220_dzoms"
+    },
+    "groups": {
+     "deathrattle": [
+      "delay",
+      "enemy_key"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "sarkaz"
+   ]
+  },
+  "enemy_1220_dzoms": {
+   "key": "enemy_1220_dzoms",
+   "prefabKey": "enemy_1220_dzoms",
+   "name": "Touch of the Sanguinarch",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 1500,
+    "atk": 280,
+    "def": 100,
+    "res": 10,
+    "moveSpeed": 1,
+    "bat": 2.5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Reborn Creation (takes greatly reduced Physical and Arts damage)",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Units blocking it gain +1 Block (up to a maximum of +6)",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "dmg_res.damage_resistance": 0.9,
+     "buff_to_blocker.max_valid_stack_cnt": 6,
+     "buff_to_blocker.block_cnt": 1
+    },
+    "bbStr": {},
+    "groups": {
+     "dmg_res": [
+      "damage_resistance"
+     ],
+     "buff_to_blocker": [
+      "block_cnt",
+      "max_valid_stack_cnt"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1228_dslime": {
+   "key": "enemy_1228_dslime",
+   "prefabKey": "enemy_1228_dslime",
+   "name": "Bloodthirsty Heir",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 4000,
+    "atk": 90,
+    "def": 100,
+    "res": 0,
+    "moveSpeed": 1.7,
+    "bat": 0.6,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": -1,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Attacks restore HP proportional to damage dealt",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "vampire.heal_scale": 2.2
+    },
+    "bbStr": {},
+    "groups": {
+     "vampire": [
+      "heal_scale"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1225_dkmage": {
+   "key": "enemy_1225_dkmage",
+   "prefabKey": "enemy_1225_dkmage",
+   "name": "Sarkaz Heirbearer Chain Caster",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 12000,
+    "atk": 420,
+    "def": 450,
+    "res": 50,
+    "moveSpeed": 0.7,
+    "bat": 4,
+    "aspd": 100,
+    "rangeRadius": 2.2,
+    "rawRangeRadius": 2.2,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Attacks deal <$ba.dt.apoptosis>Necrosis damage</> and jump between 4 targets, with each jump dealing reduced damage",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Will be reborn as a <Gift of the Sanguinarch> after falling in battle for the first time",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "epdamage.attack@ep_damage_ratio": 0.3,
+     "epdamage.attack@max_target": 4,
+     "epdamage.attack@chain.atk_scale": 0.85,
+     "deathrattle.delay": 1,
+     "epdamage.attack@projectile_range": 1.6
+    },
+    "bbStr": {
+     "deathrattle.enemy_key": "enemy_1221_dzomg"
+    },
+    "groups": {
+     "epdamage": [
+      "attack@chain.atk_scale",
+      "attack@ep_damage_ratio",
+      "attack@max_target",
+      "attack@projectile_range"
+     ],
+     "deathrattle": [
+      "delay",
+      "enemy_key"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "sarkaz"
+   ]
+  },
+  "enemy_1221_dzomg": {
+   "key": "enemy_1221_dzomg",
+   "prefabKey": "enemy_1221_dzomg",
+   "name": "Gift of the Sanguinarch",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3000,
+    "atk": 680,
+    "def": 200,
+    "res": 20,
+    "moveSpeed": 0.7,
+    "bat": 4,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Reborn Creation (takes greatly reduced Physical and Arts damage)",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Units blocking it gain +1 Block (up to a maximum of +6)",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "dmg_res.damage_resistance": 0.9,
+     "buff_to_blocker.max_valid_stack_cnt": 6,
+     "buff_to_blocker.block_cnt": 1
+    },
+    "bbStr": {},
+    "groups": {
+     "dmg_res": [
+      "damage_resistance"
+     ],
+     "buff_to_blocker": [
+      "block_cnt",
+      "max_valid_stack_cnt"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ }
+}

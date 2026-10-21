@@ -5215,3 +5215,13 @@ Coverage is **0-1 plus 79 test-only files**.
 ### Chain Necrosis (E14, 2026-10-21)
 
 The `epdamage` talent now covers both its simple and chain signatures. The chain form (4 targets, `attack@chain.atk_scale` 0.85, `attack@projectile_range` 1.6) applies the normal Arts attack to the primary target, then jumps to the nearest living allies within range, dealing `atk × 0.85^n` Arts and applying Necrosis (`attack@ep_damage_ratio`) to every victim. Chain hits are tagged so they cannot re-enter the ability. Support rises to **275 of 1,552** enemies. The test checks that both adjacent guards are hit and both receive the Necrosis element.
+
+### Chain Caster stages (S19, 2026-10-21, test-only)
+
+| Stage | Grid | Waves | Spawns |
+|---|---|---|---|
+| 10-10 | 8×11 | 1 | 48 |
+| 10-10 adverse environment | 8×11 | 1 | 48 |
+| 10-11 adverse environment | 8×12 | 1 | 30 |
+
+10-8 and 10-8 adverse still contain a viewer break without a matching tunnel hold and remain refused. Coverage is **0-1 plus 82 test-only files**.
