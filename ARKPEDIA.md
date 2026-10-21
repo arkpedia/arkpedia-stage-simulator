@@ -5618,3 +5618,7 @@ With the Profane Chimera supported, **14-6** and **14-6 adverse environment** bu
 ### 14-7 and 14-9 (S74, 2026-10-21)
 
 **14-7**, **14-7 adverse environment**, **14-9** and **14-9 adverse environment** build with the Chimera/Beacon/storm support (8×11, 25–29 spawns, 5–6 enemies). Coverage is **160 public stages** (0-1 plus 159 files).
+
+### TR-25 (S75, 2026-10-21)
+
+The fixed-squad tutorial **TR-25** builds (6×9, 10 spawns, 3 enemies). Coverage is **161 public stages** (0-1 plus 160 files).
