@@ -5350,3 +5350,7 @@ The stage adapter now accepts a viewer break without a tunnel hold when the leve
 ### Originium Colossus melee splash (E26, 2026-10-21)
 
 An ability-only enemy (`ability:Attacks deal splash damage`, no talent group) now uses the standard one-tile melee splash around its target. Support rises to **304 of 1,552** enemies. The test places two adjacent guards and checks both take the hit.
+
+### Ability-only target priorities (E27, 2026-10-21)
+
+Two ability-only enemies now set `profile.targetPriority`: the Icefield Hunter sorts the lowest DEF, and the Primal Sea Piercer sorts the lowest HP fraction within its range. `sortAllyTargets` applies that special key after the blocker and before aggro, matching the game's 阻挡→特殊优先级→仇恨 order. Support rises to **308 of 1,552** enemies. The test pins both sorts and the blocker's precedence.

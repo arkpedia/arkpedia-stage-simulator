@@ -344,6 +344,8 @@ export const featureAbilities = Object.freeze({
       b.addBuff(e, { key: 'ab:enhance', refresh: 'stack', stacks: 1, maxStacks: max, persist: true, visible: true, mods: { atkPct: atk, aspd } });
     },
   }),
+  // Ability-only target priority: sortAllyTargets reads profile.targetPriority after blocker/taunt.
+  targetPriority: ({ priority }) => ({ spawn(b, e) { e.profile.targetPriority = priority; } }),
   // Originium Colossus: the normal melee attack also hits allies within the standard one-tile splash radius.
   splashMelee: () => splashAttack({ unblocked: false, radius: 1, fxKind: 'splash' }),
   // Standby revive: a stun-flag standby buff until the first injury (or the unmove timer), then a move-speed buff.

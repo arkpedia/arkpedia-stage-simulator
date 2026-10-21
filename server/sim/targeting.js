@@ -228,9 +228,12 @@ export function sortEnemyTargets(battle, attacker, cands, priority) {
  */
 export function sortAllyTargets(enemy, cands) {
   if (cands.length <= 1) return cands;
+  const priority = enemy.profile?.targetPriority;
+  const special = priority === 'lowestDef' ? (a, b) => a.s.def - b.s.def
+    : priority === 'lowestHp' ? (a, b) => a.hp / a.s.maxHp - b.hp / b.s.maxHp : null;
   cands.sort((a, b) => {
     const ba = enemy.blockedBy === a ? 0 : 1, bb = enemy.blockedBy === b ? 0 : 1;
-    return ba - bb || aggroCmp(a, b);
+    return ba - bb || (special ? special(a, b) : 0) || aggroCmp(a, b);
   });
   return cands;
 }

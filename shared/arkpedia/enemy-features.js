@@ -268,6 +268,12 @@ export const ENEMY_FEATURES = Object.freeze({
   'ability:Attacks deal splash damage': { covers: r => r.abilities.some(a => a.text === 'Attacks deal splash damage'),
     ability: { kind: 'splashMelee', params: () => ({}) }, note: 'melee attack splashes around its target',
     explains: /^Attacks deal splash damage$/ },
+  'ability:Prioritizes attacking the target with the lowest DEF': { covers: r => r.abilities.some(a => a.text === 'Prioritizes attacking the target with the lowest DEF'),
+    ability: { kind: 'targetPriority', params: () => ({ priority: 'lowestDef' }) }, note: 'targets the lowest-DEF ally',
+    explains: /^Prioritizes attacking the target with the lowest DEF$/ },
+  'ability:Prioritizes attacking the target with the current lowest HP percentage within a small area': { covers: r => r.abilities.some(a => a.text === 'Prioritizes attacking the target with the current lowest HP percentage within a small area'),
+    ability: { kind: 'targetPriority', params: () => ({ priority: 'lowestHp' }) }, note: 'targets the lowest-HP-fraction ally in range',
+    explains: /^Prioritizes attacking the target with the current lowest HP percentage within a small area$/ },
   // Sarkaz Grudgebearer/Bladeweaver: standby until the first injury (or unmove_duration), then combat-ready.
   'talent:revive': { covers: r => sig(r, 'revive', ['hp_ratio', 'move_speed', 'unmove_duration'])
       && r.abilities.some(a => /^Starts battle in Standby and will not attack; upon being injured, becomes Combat-Ready/.test(a.text)),

@@ -3,7 +3,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import support from '../data/arkpedia-enemy-support.json' with { type: 'json' };
 import { ENEMY_FEATURES, recordFeatureIds } from '../shared/arkpedia/enemy-features.js';
-import { enemyStealthed, canTargetAlly } from '../server/sim/targeting.js';
+import { enemyStealthed, canTargetAlly, sortAllyTargets } from '../server/sim/targeting.js';
 import { spawnAny, ENEMY_RECORDS } from './helpers/enemyHarness.js';
 import { makeBattle, chessRec } from './helpers/battleHarness.js';
 import { installEnemyFeatures } from '../server/sim/content/arkpedia-enemy-features.js';
@@ -363,6 +363,13 @@ test('Originium Colossus: the melee attack splashes the adjacent guard', () => {
   h.b.on('damaged', c => { if (c.source?.defId === key && c.target.defId in hits) hits[c.target.defId]++; });
   h.runUntil(() => hits[a.chessId] > 0 && hits[b.chessId] > 0, 25);
   assert.ok(hits[a.chessId] > 0 && hits[b.chessId] > 0, JSON.stringify(hits));
+});
+test('target priority: lowest DEF and lowest HP fraction sort after the blocker', () => {
+  const a = { s: { def: 500, maxHp: 1000, taunt: 0 }, aggroSeq: 1, hp: 800 };
+  const b = { s: { def: 100, maxHp: 1000, taunt: 0 }, aggroSeq: 2, hp: 200 };
+  assert.equal(sortAllyTargets({ blockedBy: null, profile: { targetPriority: 'lowestDef' } }, [a, b])[0], b);
+  assert.equal(sortAllyTargets({ blockedBy: null, profile: { targetPriority: 'lowestHp' } }, [a, b])[0], b);
+  assert.equal(sortAllyTargets({ blockedBy: a, profile: { targetPriority: 'lowestDef' } }, [a, b])[0], a);
 });
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
