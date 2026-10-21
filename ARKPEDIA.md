@@ -5874,3 +5874,7 @@ Only an explicit `count: 0` is a hidden stage device. A token entry with no coun
 ### Synthetic route-path helper and tests (S123, 2026-10-21)
 
 Extracted `syntheticRoutePath` into `shared/arkpedia/stage-path.js`; tests pin the [col,row] start/checkpoint/end shape, duplicate removal and the no-checkpoint case.
+
+### PRTS blocker note (S124, 2026-10-21)
+
+`docs/HARD-MECHANICS.md` now records the Intrusive Call/Weakening Node findings and the three pieces a reviewed 15-5+ implementation needs. No stage was approximated as an inert PRTS fight.
