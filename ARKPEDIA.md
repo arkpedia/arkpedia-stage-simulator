@@ -5726,3 +5726,7 @@ Added `test/arkpedia-performance.test.js`: 10 seconds of the 150-spawn 14-11 bat
 ### Hard-mechanics roadmap (S92, 2026-10-21)
 
 Added `docs/HARD-MECHANICS.md`: deployable tokens, conditional spawns, Inspired/altar, Londinium artillery, Talulah, Decode Basis and the Damazti bosses, with the concrete data/engine pieces each needs and the implementation order.
+
+### Every-public-stage smoke test (S93, 2026-10-21)
+
+Added `test/arkpedia-stage-smoke.test.js`: each of the 185 data-backed public stages starts with the default 12-operator squad and runs two simulated seconds, asserting no engine errors. This catches stage files that load but throw in play; the embedded 0-1 entry is covered by its own tests.
