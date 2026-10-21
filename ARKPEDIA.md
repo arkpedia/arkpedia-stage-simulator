@@ -5458,3 +5458,7 @@ The prep page's grouped stage selector now has a "Find a stage" search box. Typi
 ### Stage search shortcuts (S49, 2026-10-21)
 
 `/` focuses the stage search from anywhere outside a form field, and Escape clears the query and restores all options. Static client tests remain at 217.
+
+### Sudaram pollution AoE (E35, 2026-10-21)
+
+Sudaram's normal attack is a self-centred Physical blast; when it stands on a toxic tile or is marked by the Originium Storm, every ally on a toxic tile or carrying the storm mark is also hit. Support rises to **323 of 1,552** enemies. The test checks the adjacent guards.

@@ -429,6 +429,19 @@ test('Guerrilla Herald: the battlefield aura buffs other enemies while it lives'
   assert.ok(Math.abs(o.s.atk - baseAtk * 1.1) < 1, `${o.s.atk} vs ${baseAtk * 1.1}`); assert.equal(o.s.def, baseDef + 100);
   h.b.kill(hd, null); h.run(1); assert.ok(Math.abs(o.s.atk - baseAtk) < 1); assert.equal(o.s.def, baseDef);
 });
+test('Sudaram: the attack hits both adjacent guards', () => {
+  const key = 'enemy_1427_lrnazg', rec = ENEMY_RECORDS.enemies[key].levels[0];
+  const a = chessRec({ id: 'sud_a', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 0 } });
+  const b = chessRec({ id: 'sud_b', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 0 } });
+  const h = makeBattle({ defs: { enemies: { [key]: rec }, chess: { [a.chessId]: a, [b.chessId]: b } },
+    units: [{ chessId: a.chessId, row: 9, col: 6 }, { chessId: b.chessId, row: 9, col: 7 }],
+    enemies: [{ key, time: 0, route: 0 }], content: 'none', autoFinish: false, timeLimit: 30,
+    setup: battle => installEnemyFeatures(battle) });
+  const hits = { [a.chessId]: 0, [b.chessId]: 0 };
+  h.b.on('damaged', c => { if (c.source?.defId === key && c.target.defId in hits) hits[c.target.defId]++; });
+  h.runUntil(() => hits[a.chessId] > 0 && hits[b.chessId] > 0, 25);
+  assert.ok(hits[a.chessId] > 0 && hits[b.chessId] > 0, JSON.stringify(hits));
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

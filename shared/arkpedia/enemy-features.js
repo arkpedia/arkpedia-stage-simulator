@@ -264,6 +264,13 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Sudaram: its attack hits everything around it, and pollution/storm extends the hit to polluted allies.
+  'ability:Attacks deal Physical damage to all surrounding units.': {
+    covers: r => r.abilities.some(a => a.text === 'Attacks deal Physical damage to all surrounding units.')
+      && r.abilities.some(a => a.text === 'When inside Originium pollution or an Active Originium Storm, attacks deal Physical damage to all surrounding allied units and all your units inside Originium pollution or Active Originium Storms.'),
+    ability: { kind: 'sudaram', params: () => ({ radius: 1.5 }) }, note: 'self-centred physical AoE; pollution/storm widens the target set',
+    explains: text => text === 'Attacks deal Physical damage to all surrounding units.'
+      || text === 'When inside Originium pollution or an Active Originium Storm, attacks deal Physical damage to all surrounding allied units and all your units inside Originium pollution or Active Originium Storms.' },
   // Guerrilla Herald: a battlefield-wide ATK/DEF buff for every enemy.
   'talent:strength': { covers: r => sig(r, 'strength', ['atk', 'def'])
       && r.abilities.some(a => a.text === 'Increases the ATK and DEF of enemy units when on the battlefield.'),

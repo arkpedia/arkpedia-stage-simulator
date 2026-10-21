@@ -344,6 +344,20 @@ export const featureAbilities = Object.freeze({
       b.addBuff(e, { key: 'ab:enhance', refresh: 'stack', stacks: 1, maxStacks: max, persist: true, visible: true, mods: { atkPct: atk, aspd } });
     },
   }),
+  // Sudaram: a self-centred physical blast; while polluted/stormed it also hits every polluted/stormed ally.
+  sudaram: ({ radius }) => {
+    const base = splashAttack({ unblocked: false, radius, fxKind: 'splash' });
+    return {
+      ...base,
+      dealt(c, b, e) {
+        base.dealt?.(c, b, e);
+        if (!c.dmg?.isAttack) return;
+        const polluted = (u) => ((b.grid.tile(u.tileR, u.tileC)?.key ?? '').includes('toxic') || u.findBuff?.('ab:storm'));
+        if (!polluted(e)) return;
+        for (const u of b.allyUnits) if (polluted(u)) hurt(b, e, u, e.s.atk, 'phys', { tags: ['sudaram'] });
+      },
+    };
+  },
   // Guerrilla Herald: refresh a short battlefield-wide ATK/DEF buff on every living enemy.
   enemyGlobalStatAura: ({ atkPct, defFlat }) => ({
     tick(b, e, a) {
