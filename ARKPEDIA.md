@@ -5734,3 +5734,7 @@ Added `test/arkpedia-stage-smoke.test.js`: each of the 185 data-backed public st
 ### Dublinn Flamerazer (E62, 2026-10-21)
 
 Every 6 s the Flamerazer opens a 10.6 s burning aura (0.12x Arts plus Burn every 0.5 s in 1.5 radius); death blasts 1.0x Arts and instantly defeats other Flamerazers without chaining their blasts. The two reviewed wrappers are claimed. Support rises to **380 of 1,552** enemies. Tests cover the aura and the mutual defeat.
+
+### 9-13 (S94, 2026-10-21)
+
+With the Flamerazer supported, **9-13** builds (8×12, 44 spawns, 4 enemies). The stacked branch now has **187 public stages** (0-1 plus 186 files).
