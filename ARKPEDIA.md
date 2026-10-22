@@ -5994,3 +5994,7 @@ The Artificer exposes `battle.artilleryCharge` progress and uses the reviewed de
 ### Full suite after Artificer/coverage (S145, 2026-10-21)
 
 Full repository suite: **22,826 tests, 22,815 passed, 0 failed, 11 skipped** with 412 enemies and 99 device-blocked stages.
+
+### Coverage source guard (S146, 2026-10-21)
+
+The device-aware coverage tool read `stage-devices.json` at module load, which broke the coverage test on GitHub runners where the sibling `arkpedia-data` checkout is absent. The read is now conditional on the file existing, so the test skips cleanly.

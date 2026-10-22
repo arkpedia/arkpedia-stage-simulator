@@ -15,7 +15,8 @@ const ROOT = new URL('../../', import.meta.url);
 const SOURCE = new URL('../arkpedia-data/source/data/', ROOT);
 const DATA = new URL('data/', ROOT);
 const support = JSON.parse(readFileSync(new URL('arkpedia-enemy-support.json', DATA), 'utf8'));
-const devicesByStage = JSON.parse(readFileSync(new URL('stage-devices.json', SOURCE), 'utf8'));
+const devicesByStage = existsSync(new URL('stage-devices.json', SOURCE))
+  ? JSON.parse(readFileSync(new URL('stage-devices.json', SOURCE), 'utf8')) : {};
 
 export function buildStageCoverage() {
   const stagesDir = new URL('stages/', SOURCE), geometryDir = new URL('stage-geometry/', SOURCE), conditionalDir = new URL('stage-conditional/', SOURCE);
