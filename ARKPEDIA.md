@@ -6001,4 +6001,12 @@ The device-aware coverage tool read `stage-devices.json` at module load, which b
 
 ### 7-6 enemy artwork (S147, 2026-10-21)
 
-Imported the four original 7-6 Guerrilla enemy chibis into `arkpedia-sd-assets` (`c90415ec`) and pinned that commit in `data/arkpedia-mvp.json`. Imported models without animation-role tables now use an empty role map and fall back to the skeleton's own Idle clip, so 7-6 renders its real enemies instead of markers.
+Imported the four original 7-6 Guerrilla enemy chibis into `arkpedia-sd-assets` (merged as `6aefef7`) and pinned each model through its own `assetsCommit`. Imported models without animation-role tables use an empty role map and fall back to the skeleton's own Idle clip, so 7-6 renders its real enemies instead of markers.
+
+### Flying native claim (E76, 2026-10-21)
+
+The shared `Flying unit.` feature keeps the flying behaviour but no longer claims a native component: the native evidence does not expose the component for every flying-only record, so claiming one caused a negative claim on `enemy_1005_yokai`. Support is **413 of 1,552**; no stage count change.
+
+### W support and 1-11 (E77, 2026-10-21)
+
+Added the documented C4 features for W; the C4 kit already existed. The new support unlocked **1-11**, which builds from source geometry with synthetic routes and is kept `testOnly`. Support is **416 enemies**; catalogue is **220 entries** (203 public + 17 testOnly), 219 committed stage files.

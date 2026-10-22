@@ -459,6 +459,15 @@ export const ENEMY_FEATURES = Object.freeze({
   'skill:GrabEnd': { covers: r => r.skills.some(s => s.prefabKey === 'GrabEnd'), note: 'PRTS scripted action' },
   'skill:Click': { covers: r => r.skills.some(s => s.prefabKey === 'Click'), note: 'PRTS scripted action' },
   'skill:Angry': { covers: r => r.skills.some(s => s.prefabKey === 'Angry'), note: 'PRTS scripted action' },
+  // W: the C4 kit is already installed by KITS; the features document the two ability lines.
+  'ability:Can use explosives to deal heavy Physical damage to allied units': {
+    covers: r => r.abilities.some(a => a.text === 'Can use explosives to deal heavy Physical damage to allied units'),
+    nativeClaim: () => ({ wrappers: 2 }), note: 'C4 kit',
+    explains: /^Can use explosives to deal heavy Physical damage to allied units$/ },
+  'ability:Uses more explosives when HP is under 50%': {
+    covers: r => r.abilities.some(a => a.text === 'Uses more explosives when HP is under 50%'),
+    note: 'two C4s below half HP', explains: /^Uses more explosives when HP is under 50%$/ },
+  'skill:C4': { covers: r => r.skills.some(s => s.prefabKey === 'C4'), note: 'C4 skill' },
   // Artificer: charges the artillery, with the reviewed deathrattle child.
   'ability:Continuously charges up Londinium Secondary Defense Artillery; when interrupted, the Defense Artillery will lose a portion of its charge progress': {
     covers: r => r.abilities.some(a => a.text.startsWith('Continuously charges up Londinium Secondary Defense Artillery')),
