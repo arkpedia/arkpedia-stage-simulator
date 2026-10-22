@@ -5958,3 +5958,7 @@ The Inspired support unlocked two more public stages: **7-13** (8×11, 49 spawns
 ### Full suite after Inspired/7-x (S138, 2026-10-21)
 
 Full repository suite: **22,822 tests, 22,811 passed, 0 failed, 11 skipped** with 408 enemies and 219 catalogue entries.
+
+### 7-8/7-9 device audit (S139, 2026-10-21)
+
+Both stages contain functional Originium Altars in `stage-devices.json`, and the altar pulse is not modeled. They are moved back to `testOnly` pending a device/pulse implementation; 7-6 and 7-13 have no devices and stay public. Public is **203**, testOnly **16**, catalogue **219**.
