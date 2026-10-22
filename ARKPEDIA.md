@@ -5974,3 +5974,7 @@ New stage files carry `devices`; the adapter refuses functional devices with `Un
 ### Full suite after device safety (S142, 2026-10-21)
 
 Full repository suite: **22,823 tests, 22,812 passed, 0 failed, 11 skipped** with the device refusal and audit in place.
+
+### No-public-altar test (S143, 2026-10-21)
+
+`test/arkpedia-device-audit.test.js` asserts that no public stage carries an unmodeled Originium Altar, keeping the 7-8/7-9 review decision from regressing.
