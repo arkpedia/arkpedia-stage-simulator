@@ -23,10 +23,10 @@ import { assertRegularEnemies } from '../../shared/arkpedia/enemies.js';
 
 const args = Object.fromEntries(process.argv.slice(2).flatMap((arg, i, all) =>
   arg.startsWith('--') ? [[arg.slice(2), all[i + 1]]] : []));
-for (const key of ['stage', 'geometry', 'playback', 'out']) if (!args[key]) throw Error(`Missing --${key}`);
+for (const key of ['stage', 'geometry', 'out']) if (!args[key]) throw Error(`Missing --${key}`);
 const read = async file => JSON.parse(await readFile(file, 'utf8'));
 const [source, geometry, playbackFile, mvp, records, support] = await Promise.all([
-  read(args.stage), read(args.geometry), read(args.playback), read(new URL('../../data/arkpedia-mvp.json', import.meta.url)),
+  read(args.stage), read(args.geometry), args.playback ? read(args.playback) : { playbackPaths: {} }, read(new URL('../../data/arkpedia-mvp.json', import.meta.url)),
   read(new URL('../../data/arkpedia-enemy-records.json', import.meta.url)),
   read(new URL('../../data/arkpedia-enemy-support.json', import.meta.url)),
 ]);
@@ -34,8 +34,7 @@ const conditionalPath = args.conditional ?? join(dirname(args.geometry), '..', '
 if (geometry.hasConditionalSpawns && existsSync(conditionalPath)) {
   mergePristineHiddenGroups(geometry, JSON.parse(await readFile(conditionalPath, 'utf8')));
 }
-const paths = playbackFile.playbackPaths ?? playbackFile.paths;
-if (!paths || !Object.keys(paths).length) throw Error('Playback export has no paths');
+const paths = playbackFile.playbackPaths ?? playbackFile.paths ?? {};
 // The geometry route is a reviewed start/checkpoint/end chain. When the viewer export omits a route,
 // synthesize the same chain so the stage can still be played; the original path is preferred.
 const syntheticRoutes = [];
@@ -44,6 +43,7 @@ for (const [index, route] of geometry.routes.entries()) {
   paths[index] = syntheticRoutePath(route);
   syntheticRoutes.push(index);
 }
+if (!Object.keys(paths).length) throw Error('Playback export has no paths and no route to synthesize');
 const stage = {
   code: source.code,
   name: source.name,

@@ -347,6 +347,43 @@ export const featureAbilities = Object.freeze({
   moveSpeedBonus: ({ mul }) => ({ spawn(b, e) { b.addBuff(e, { key: 'ab:moveSpeed', persist: true, visible: true, mods: { moveMul: mul } }); } }),
   // Dublinn Flying Soldier: airborne.
   hover: () => ({ spawn(b, e) { e.flying = true; } }),
+  // Decode Basis: transforms after 4 physical, 4 Arts or a block.
+  decodeBasis: (modes) => {
+    const transform = (b, e, a, mode) => {
+      const m = modes[mode]; if (!m) return;
+      a.mode = mode; e.base.maxHp = m.hp; e.s.maxHp = m.hp; e.base.atk = m.atk; e.s.atk = m.atk;
+      e.base.def = m.def; e.s.def = m.def; e.base.res = m.res; e.s.res = m.res; e.s.moveSpeed = m.move; e.base.bat = m.bat; e.s.bat = m.bat;
+      e.hp = Math.min(e.hp, e.s.maxHp); e.profile.noAttack = mode === 'youling';
+      e.untargetable = mode === 'youling'; e.markDirty?.();
+    };
+    return {
+      spawn(b, e, a) { a.mode = 'base'; a.phys = 0; a.arts = 0; e.profile.noAttack = true; },
+      taken(c, b, e, a) {
+        if (a.mode !== 'base') return;
+        if (c.dmg?.type === 'phys') a.phys++; else if (c.dmg?.type === 'arts') a.arts++;
+        if (a.phys >= 4) transform(b, e, a, 'fuchou'); else if (a.arts >= 4) transform(b, e, a, 'youling');
+      },
+      blocked(c, b, e, a) { if (a.mode === 'base') transform(b, e, a, 'shushi'); },
+    };
+  },
+  // Tile denial: mark the death tile unavailable for deployment.
+  tileDenied: () => ({
+    death(c, b, e) { b.noDeployTiles ??= new Set(); b.noDeployTiles.add(`${e.tileR},${e.tileC}`); },
+  }),
+  // DP-lock caster: halt DP regeneration after a delay.
+  stopCost: ({ delay, duration }) => ({
+    spawn(b, e) { b.after(delay ?? 5, () => { b.flags.dpRegenHaltUntil = Math.max(b.flags.dpRegenHaltUntil ?? 0, b.time + (duration ?? 30)); }, { owner: e }); },
+  }),
+  // Flying ice bomb: airborne, waiting-zone disable not modeled.
+  cardBoom: () => ({ spawn(b, e) { e.flying = true; } }),
+  // PRTS controller/node: inert until the activation rules are reviewed.
+  prtsProp: () => ({
+    spawn(b, e) {
+      e.untargetable = true; e.unblockable = true; e.lpr = 0; e.s.moveSpeed = 0;
+      b.addBuff(e, { key: 'ab:prtsInert', persist: true, mods: { moveMul: 0 } });
+      if (String(e.defId).includes('10072')) e.flying = true;
+    },
+  }),
   // Higher-priority enemy target.
   tauntEnemy: ({ taunt }) => ({ spawn(b, e) { e.s.taunt = Math.max(e.s.taunt ?? 0, taunt); } }),
   // Worry-Free Cargo Helper: airborne, explodes when an operator is close.

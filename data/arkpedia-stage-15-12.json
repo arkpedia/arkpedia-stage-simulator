@@ -1,0 +1,1646 @@
+{
+ "code": "15-12",
+ "name": "Bear Witness, the Death of the Gods",
+ "description": "'An instant later, the constituent matter will still exist, but the intrinsic nature of truth shall die, drowned in the madness of darkness. Countless civilizations have vanished, and the ripples they leave behind continue to fall, crushing, burying, and destroying everything.'\n<Intrusive Call> PRTS deploys enemies and Weakening Nodes, and activates Weakening Nodes.\n<Weakening Node> Reduces opposing forces' DEF and RES after activation.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "15-12",
+  "rows": 7,
+  "cols": 11,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_telout",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_telin",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_mpprts_enemy_born",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    1,
+    2,
+    2,
+    2,
+    2,
+    3,
+    3,
+    3,
+    3,
+    3,
+    4
+   ],
+   [
+    0,
+    0,
+    0,
+    5,
+    5,
+    3,
+    5,
+    5,
+    0,
+    0,
+    0
+   ],
+   [
+    6,
+    2,
+    2,
+    2,
+    2,
+    3,
+    3,
+    3,
+    3,
+    3,
+    4
+   ],
+   [
+    0,
+    0,
+    0,
+    5,
+    5,
+    3,
+    5,
+    5,
+    0,
+    0,
+    0
+   ],
+   [
+    1,
+    2,
+    2,
+    7,
+    0,
+    2,
+    0,
+    0,
+    8,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "fly",
+    "start": {
+     "row": 6,
+     "col": 9
+    },
+    "end": {
+     "row": 1,
+     "col": 10
+    },
+    "checkpoints": [],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 999
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 1,
+     "col": 10
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 4
+    },
+    "end": {
+     "row": 3,
+     "col": 10
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 5
+    },
+    "end": {
+     "row": 1,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 20
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 2,
+      "seconds": 20
+     }
+    ]
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 4,
+     "col": 7
+    },
+    "end": {
+     "row": 3,
+     "col": 10
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 2,
+     "col": 7
+    },
+    "end": {
+     "row": 1,
+     "col": 10
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 3
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 3,
+       "col": 0
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 3
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 5
+    },
+    "end": {
+     "row": 1,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 3
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 3,
+       "col": 0
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 3
+     }
+    ]
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 4,
+     "col": 6
+    },
+    "end": {
+     "row": 1,
+     "col": 10
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 2,
+     "col": 6
+    },
+    "end": {
+     "row": 1,
+     "col": 10
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 4,
+     "col": 4
+    },
+    "end": {
+     "row": 1,
+     "col": 10
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 2,
+     "col": 4
+    },
+    "end": {
+     "row": 1,
+     "col": 10
+    },
+    "checkpoints": [],
+    "waits": []
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 174,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Intrusive Call",
+      "enemy_id": "enemy_10072_mpprhd",
+      "count": 1,
+      "time": 0,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Rampaging Maintenance Helper",
+      "enemy_id": "enemy_10073_mpcar_2",
+      "count": 1,
+      "time": 3,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Rampaging Maintenance Helper",
+      "enemy_id": "enemy_10073_mpcar_2",
+      "count": 1,
+      "time": 20,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Intrusive Call",
+      "enemy_id": "enemy_10072_mpprhd",
+      "count": 1,
+      "time": 0,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Weakening Node",
+      "enemy_id": "enemy_10082_mpweak",
+      "count": 1,
+      "time": 10,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "'Frozen Monstrosity's Echo'",
+      "enemy_id": "enemy_10076_mpgrou",
+      "count": 1,
+      "time": 45,
+      "route": 3,
+      "fragment": 1
+     },
+     {
+      "enemy": "Intrusive Call",
+      "enemy_id": "enemy_10072_mpprhd",
+      "count": 1,
+      "time": 0,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Hot Drink Machine",
+      "enemy_id": "enemy_10074_mpcata_2",
+      "count": 1,
+      "time": 15,
+      "route": 4,
+      "fragment": 1
+     },
+     {
+      "enemy": "Intrusive Call",
+      "enemy_id": "enemy_10072_mpprhd",
+      "count": 1,
+      "time": 0,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Hot Drink Machine",
+      "enemy_id": "enemy_10074_mpcata_2",
+      "count": 1,
+      "time": 25,
+      "route": 5,
+      "fragment": 1
+     },
+     {
+      "enemy": "Decode Basis α",
+      "enemy_id": "enemy_10081_mpplai",
+      "count": 1,
+      "time": 65,
+      "route": 6,
+      "fragment": 1
+     },
+     {
+      "enemy": "Rampaging Maintenance Helper",
+      "enemy_id": "enemy_10073_mpcar_2",
+      "count": 1,
+      "time": 55,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Rampaging Maintenance Helper",
+      "enemy_id": "enemy_10073_mpcar_2",
+      "count": 1,
+      "time": 57,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Rampaging Maintenance Helper",
+      "enemy_id": "enemy_10073_mpcar_2",
+      "count": 1,
+      "time": 67,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Rampaging Maintenance Helper",
+      "enemy_id": "enemy_10073_mpcar_2",
+      "count": 1,
+      "time": 69,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "'Frozen Monstrosity's Echo'",
+      "enemy_id": "enemy_10076_mpgrou",
+      "count": 1,
+      "time": 102,
+      "route": 7,
+      "fragment": 2
+     },
+     {
+      "enemy": "'Frozen Monstrosity's Echo'",
+      "enemy_id": "enemy_10076_mpgrou",
+      "count": 1,
+      "time": 124,
+      "route": 7,
+      "fragment": 2
+     },
+     {
+      "enemy": "Decode Basis α",
+      "enemy_id": "enemy_10081_mpplai",
+      "count": 1,
+      "time": 109,
+      "route": 8,
+      "fragment": 2
+     },
+     {
+      "enemy": "Decode Basis α",
+      "enemy_id": "enemy_10081_mpplai",
+      "count": 1,
+      "time": 129,
+      "route": 8,
+      "fragment": 2
+     },
+     {
+      "enemy": "Decode Basis α",
+      "enemy_id": "enemy_10081_mpplai",
+      "count": 1,
+      "time": 149,
+      "route": 8,
+      "fragment": 2
+     },
+     {
+      "enemy": "Decode Basis α",
+      "enemy_id": "enemy_10081_mpplai",
+      "count": 1,
+      "time": 159,
+      "route": 8,
+      "fragment": 2
+     },
+     {
+      "enemy": "Rampaging Maintenance Helper",
+      "enemy_id": "enemy_10073_mpcar_2",
+      "count": 7,
+      "time": 82,
+      "interval": 15,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Rampaging Maintenance Helper",
+      "enemy_id": "enemy_10073_mpcar_2",
+      "count": 7,
+      "time": 84,
+      "interval": 15,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Intrusive Call",
+      "enemy_id": "enemy_10072_mpprhd",
+      "count": 1,
+      "time": 79,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "'Frozen Monstrosity's Echo'",
+      "enemy_id": "enemy_10076_mpgrou",
+      "count": 1,
+      "time": 80,
+      "route": 9,
+      "fragment": 2
+     },
+     {
+      "enemy": "Intrusive Call",
+      "enemy_id": "enemy_10072_mpprhd",
+      "count": 1,
+      "time": 79,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "'Frozen Monstrosity's Echo'",
+      "enemy_id": "enemy_10076_mpgrou",
+      "count": 1,
+      "time": 81,
+      "route": 10,
+      "fragment": 2
+     },
+     {
+      "enemy": "Intrusive Call",
+      "enemy_id": "enemy_10072_mpprhd",
+      "count": 1,
+      "time": 79,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "'Frozen Monstrosity's Echo'",
+      "enemy_id": "enemy_10076_mpgrou",
+      "count": 1,
+      "time": 82,
+      "route": 11,
+      "fragment": 2
+     },
+     {
+      "enemy": "Intrusive Call",
+      "enemy_id": "enemy_10072_mpprhd",
+      "count": 1,
+      "time": 79,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "'Frozen Monstrosity's Echo'",
+      "enemy_id": "enemy_10076_mpgrou",
+      "count": 1,
+      "time": 83,
+      "route": 12,
+      "fragment": 2
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 0,
+    "routes": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 5,
+    "col": 0,
+    "routes": [
+     6,
+     8,
+     8,
+     8,
+     8
+    ]
+   },
+   {
+    "key": "tile_mpprts_enemy_born",
+    "row": 5,
+    "col": 8,
+    "routes": []
+   },
+   {
+    "key": "tile_start",
+    "row": 6,
+    "col": 5,
+    "routes": [
+     3,
+     7,
+     7
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 1,
+    "col": 10,
+    "routes": [
+     0,
+     1,
+     1,
+     0,
+     3,
+     0,
+     0,
+     5,
+     1,
+     1,
+     1,
+     1,
+     7,
+     7,
+     1,
+     1,
+     0,
+     9,
+     0,
+     10,
+     0,
+     11,
+     0,
+     12
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 3,
+    "col": 10,
+    "routes": [
+     2,
+     4,
+     6,
+     8,
+     8,
+     8,
+     8
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_10072_mpprhd",
+    "slug": "intrusive_call",
+    "name": "Intrusive Call",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_10073_mpcar_2",
+    "slug": "rampaging_maintenance_helper",
+    "name": "Rampaging Maintenance Helper",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_10074_mpcata_2",
+    "slug": "hot_drink_machine",
+    "name": "Hot Drink Machine",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_10076_mpgrou",
+    "slug": "frozen_monstrositys_echo",
+    "name": "'Frozen Monstrosity's Echo'",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_10081_mpplai",
+    "slug": "decode_basis_enemy_10081_mpplai",
+    "name": "Decode Basis α",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_10081_mpplai_2",
+    "slug": "decode_basis_enemy_10081_mpplai_2",
+    "name": "Decode Basis β",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_10082_mpweak",
+    "slug": "weakening_node",
+    "name": "Weakening Node",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": [
+    {
+     "unit": "'Frozen Monstrosity's Echo'",
+     "unit_id": "trap_231_mpgrou",
+     "count": 0,
+     "level": 1,
+     "elite": 0,
+     "potential": 0,
+     "skill_index": -1,
+     "skill_level": 1,
+     "hidden": true
+    },
+    {
+     "unit": "Hot Drink Machine",
+     "unit_id": "trap_230_mpcatab",
+     "count": 0,
+     "level": 1,
+     "elite": 0,
+     "potential": 0,
+     "skill_index": -1,
+     "skill_level": 1,
+     "hidden": true
+    }
+   ]
+  },
+  "hasConditionalSpawns": false
+ },
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12
+  ],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "15-12",
+  "geometryHash": "4ed5165f507269709edf1be7a731bf54cf76ff9dd183ccb7b75846173e2cc0b6",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      9,
+      6
+     ],
+     [
+      10,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "1": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "2": {
+    "points": [
+     [
+      4,
+      3
+     ],
+     [
+      10,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "3": {
+    "points": [
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "4": {
+    "points": [
+     [
+      7,
+      4
+     ],
+     [
+      10,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "5": {
+    "points": [
+     [
+      7,
+      2
+     ],
+     [
+      10,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "6": {
+    "points": [
+     [
+      0,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      0,
+      3
+     ],
+     [
+      10,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "7": {
+    "points": [
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "8": {
+    "points": [
+     [
+      0,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      0,
+      3
+     ],
+     [
+      10,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "9": {
+    "points": [
+     [
+      6,
+      4
+     ],
+     [
+      10,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "10": {
+    "points": [
+     [
+      6,
+      2
+     ],
+     [
+      10,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "11": {
+    "points": [
+     [
+      4,
+      4
+     ],
+     [
+      10,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "12": {
+    "points": [
+     [
+      4,
+      2
+     ],
+     [
+      10,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": [],
+ "enemies": {
+  "enemy_10072_mpprhd": {
+   "key": "enemy_10072_mpprhd",
+   "prefabKey": "enemy_10072_mpprhd",
+   "name": "Intrusive Call",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "NONE",
+   "stats": {
+    "maxHp": 10000,
+    "atk": 1000,
+    "def": 4000,
+    "res": 80,
+    "moveSpeed": 1.4,
+    "bat": 1,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "none",
+    "dmgTypes": [
+     "none"
+    ],
+    "motion": "FLY",
+    "immunities": {
+     "stun": true,
+     "silence": true,
+     "sleep": true,
+     "frozen": true,
+     "levitate": true
+    },
+    "otherImmunities": [
+     "disarmedCombat",
+     "feared",
+     "attract"
+    ],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [
+    {
+     "prefabKey": "GrabBegin",
+     "priority": 0,
+     "cooldown": 0,
+     "initCooldown": 0,
+     "spCost": 0,
+     "bb": {},
+     "bbStr": {}
+    },
+    {
+     "prefabKey": "GrabEnd",
+     "priority": 0,
+     "cooldown": 0,
+     "initCooldown": 0,
+     "spCost": 0,
+     "bb": {},
+     "bbStr": {}
+    },
+    {
+     "prefabKey": "Click",
+     "priority": 0,
+     "cooldown": 0,
+     "initCooldown": 0,
+     "spCost": 0,
+     "bb": {},
+     "bbStr": {}
+    },
+    {
+     "prefabKey": "Angry",
+     "priority": 0,
+     "cooldown": 0,
+     "initCooldown": 0,
+     "spCost": 0,
+     "bb": {},
+     "bbStr": {}
+    }
+   ],
+   "notCountInTotal": true,
+   "tags": []
+  },
+  "enemy_10073_mpcar_2": {
+   "key": "enemy_10073_mpcar_2",
+   "prefabKey": "enemy_10073_mpcar_2",
+   "name": "Rampaging Maintenance Helper",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2500,
+    "atk": 360,
+    "def": 200,
+    "res": 25,
+    "moveSpeed": 1.9,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": -1,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "origen"
+   ]
+  },
+  "enemy_10082_mpweak": {
+   "key": "enemy_10082_mpweak",
+   "prefabKey": "enemy_10082_mpweak",
+   "name": "Weakening Node",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "NONE",
+   "stats": {
+    "maxHp": 10000,
+    "atk": 100,
+    "def": 500,
+    "res": 50,
+    "moveSpeed": 1,
+    "bat": 1,
+    "aspd": 100,
+    "rangeRadius": 1,
+    "rawRangeRadius": 1,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "none",
+    "dmgTypes": [
+     "none"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": true,
+   "tags": []
+  },
+  "enemy_10074_mpcata_2": {
+   "key": "enemy_10074_mpcata_2",
+   "prefabKey": "enemy_10074_mpcata_2",
+   "name": "Hot Drink Machine",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 3800,
+    "atk": 400,
+    "def": 240,
+    "res": 35,
+    "moveSpeed": 1,
+    "bat": 4,
+    "aspd": 100,
+    "rangeRadius": 2.5,
+    "rawRangeRadius": 2.5,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "origen"
+   ]
+  },
+  "enemy_10076_mpgrou": {
+   "key": "enemy_10076_mpgrou",
+   "prefabKey": "enemy_10076_mpgrou",
+   "name": "'Frozen Monstrosity's Echo'",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 7000,
+    "atk": 450,
+    "def": 1100,
+    "res": 60,
+    "moveSpeed": 0.7,
+    "bat": 3,
+    "aspd": 100,
+    "rangeRadius": 2,
+    "rawRangeRadius": 2,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 10,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "When defeated, the tile underneath becomes unavailable for deployment",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "origen"
+   ]
+  },
+  "enemy_10081_mpplai": {
+   "key": "enemy_10081_mpplai",
+   "prefabKey": "enemy_10081_mpplai",
+   "name": "Decode Basis α",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "NONE",
+   "stats": {
+    "maxHp": 2500,
+    "atk": 100,
+    "def": 450,
+    "res": 40,
+    "moveSpeed": 1,
+    "bat": 1,
+    "aspd": 100,
+    "rangeRadius": 2.4,
+    "rawRangeRadius": 2.4,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 10,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "none",
+    "dmgTypes": [
+     "none"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Does not initially attack; transforms into different forms when certain conditions are met",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Transforms into different forms once it has taken 4 Physical attacks, 4 Arts attacks, or if it is blocked",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "Passive.phy_max_count": 4,
+     "Passive.magic_max_count": 4,
+     "Mode_Fuchou_Anger.atk": 1,
+     "Mode_Fuchou_Passive.max_hp": 4000,
+     "Mode_Fuchou_Passive.atk": 500,
+     "Mode_Fuchou_Passive.def": 250,
+     "Mode_Fuchou_Passive.magic_resistance": 20,
+     "Mode_Fuchou_Passive.move_speed": -0.55,
+     "Mode_Fuchou_Passive.base_attack_time": 1.3,
+     "Mode_Fuchou_Passive.mass_level": 1,
+     "Mode_Youling_Passive.max_hp": 0,
+     "Mode_Youling_Passive.atk": 0,
+     "Mode_Youling_Passive.def": 0,
+     "Mode_Youling_Passive.magic_resistance": 0,
+     "Mode_Youling_Passive.move_speed": 0,
+     "Mode_Youling_Passive.base_attack_time": 0,
+     "Mode_Youling_Passive.mass_level": 0,
+     "Mode_Shushi_Passive.max_hp": 2000,
+     "Mode_Shushi_Passive.atk": 300,
+     "Mode_Shushi_Passive.def": 200,
+     "Mode_Shushi_Passive.magic_resistance": 30,
+     "Mode_Shushi_Passive.move_speed": -0.4,
+     "Mode_Shushi_Passive.base_attack_time": 3,
+     "Mode_Shushi_Passive.mass_level": 1
+    },
+    "bbStr": {},
+    "groups": {
+     "Passive": [
+      "magic_max_count",
+      "phy_max_count"
+     ],
+     "Mode_Fuchou_Anger": [
+      "atk"
+     ],
+     "Mode_Fuchou_Passive": [
+      "atk",
+      "base_attack_time",
+      "def",
+      "magic_resistance",
+      "mass_level",
+      "max_hp",
+      "move_speed"
+     ],
+     "Mode_Youling_Passive": [
+      "atk",
+      "base_attack_time",
+      "def",
+      "magic_resistance",
+      "mass_level",
+      "max_hp",
+      "move_speed"
+     ],
+     "Mode_Shushi_Passive": [
+      "atk",
+      "base_attack_time",
+      "def",
+      "magic_resistance",
+      "mass_level",
+      "max_hp",
+      "move_speed"
+     ]
+    }
+   },
+   "skills": [
+    {
+     "prefabKey": "ChangeToB",
+     "priority": 0,
+     "cooldown": 0,
+     "initCooldown": 0,
+     "spCost": 0,
+     "bb": {},
+     "bbStr": {}
+    },
+    {
+     "prefabKey": "ChangeToC",
+     "priority": 0,
+     "cooldown": 0,
+     "initCooldown": 0,
+     "spCost": 0,
+     "bb": {},
+     "bbStr": {}
+    },
+    {
+     "prefabKey": "ChangeToD",
+     "priority": 0,
+     "cooldown": 0,
+     "initCooldown": 0,
+     "spCost": 0,
+     "bb": {},
+     "bbStr": {}
+    }
+   ],
+   "notCountInTotal": false,
+   "tags": [
+    "origen"
+   ]
+  }
+ }
+}

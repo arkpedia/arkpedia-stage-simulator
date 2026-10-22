@@ -675,6 +675,27 @@ test('Worry-Free Cargo Helper: explodes next to the guard', () => {
   e.x = guard.x + 1; e.y = guard.y; const hp = guard.hp; h.run(0.2);
   assert.ok(guard.hp < hp); assert.equal(e.alive, false);
 });
+test('PRTS props are inert: untargetable, immobile and non-leaking', () => {
+  for (const key of ['enemy_10072_mpprhd', 'enemy_10082_mpweak']) {
+    const h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key), x = e.x, y = e.y;
+    assert.equal(e.untargetable, true); assert.equal(e.lpr, 0); h.run(1); assert.equal(e.x, x); assert.equal(e.y, y);
+  }
+});
+test('DP-lock caster: DP regeneration is halted for the skill duration', () => {
+  const key = 'enemy_10079_mpmage', h = spawnAny(key, { seconds: 0.1, units: [] }); h.b.autoFinish = false;
+  h.run(6); assert.ok(h.b.flags.dpRegenHaltUntil > h.b.time);
+  h.run(36); assert.ok(h.b.flags.dpRegenHaltUntil <= h.b.time);
+});
+test('Decode Basis: four physical hits switch to the Fuchou table', () => {
+  const key = 'enemy_10081_mpplai_2', h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
+  assert.equal(e.profile.noAttack, true);
+  for (let i = 0; i < 4; i++) h.b.dealDamage(null, e, { amount: 10, type: 'phys', sourceless: true });
+  assert.equal(e.s.atk, 500); assert.equal(e.profile.noAttack, false);
+});
+test('Tile-denial enemy: dying marks its tile unavailable', () => {
+  const key = 'enemy_10076_mpgrou', h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
+  h.b.autoFinish = false; h.b.kill(e, null); assert.ok(h.b.noDeployTiles.has(`${e.tileR},${e.tileC}`));
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

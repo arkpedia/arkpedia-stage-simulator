@@ -5878,3 +5878,47 @@ Extracted `syntheticRoutePath` into `shared/arkpedia/stage-path.js`; tests pin t
 ### PRTS blocker note (S124, 2026-10-21)
 
 `docs/HARD-MECHANICS.md` now records the Intrusive Call/Weakening Node findings and the three pieces a reviewed 15-5+ implementation needs. No stage was approximated as an inert PRTS fight.
+
+### PRTS props and base distributor (E68, 2026-10-21)
+
+Intrusive Call and Weakening Node are hidden, no-damage story entities; until the PRTS activation rules are reviewed they are inert, untargetable, immobile and non-leaking. The base Prototype Auto Meal Distributor (Confused Maintenance Helper text) now uses the same periodic spawn as the `_2` variant. Support rises to **396 of 1,552** enemies. Stages containing the inert PRTS props stay `testOnly`.
+
+### 15-5/15-6/15-7 test-only (S125, 2026-10-21)
+
+Built as `testOnly` while the PRTS props are inert: **15-5** (67 spawns), **15-6** (55) and **15-7** (50). They are playable and smoke-tested but not public; the catalogue is 202 entries, **199 public + 3 testOnly**.
+
+### Ice bomb and DP-lock caster (E69, 2026-10-21)
+
+The flying ice bomb sets the flying flag; its waiting-zone disable is inert because the engine has no waiting zone. The DP-lock caster halts DP regeneration for 30 s after a 5 s delay via `dpRegenHaltUntil`. Both remain compatible with test-only stages. Support rises to **400 of 1,552** enemies.
+
+### 15-9 and 15-10 test-only (S126, 2026-10-21)
+
+Added **15-9** (131 spawns) and **15-10** (62 spawns) as `testOnly` after the ice-bomb and DP-lock support. Catalogue is **204 entries**, **199 public + 5 testOnly**; all 203 data-backed stages pass the smoke test.
+
+### Decode Basis modes (E70, 2026-10-21)
+
+Four Physical hits switch to the Fuchou table, four Arts hits to Youling (inert/untargetable), and a block to Shushi. The base form does not attack. The reviewed mode tables, wrappers and form-change skills are claimed. Support rises to **402 of 1,552** enemies. The test pins the four-Physical transform.
+
+### Tile-denial enemy (E71, 2026-10-21)
+
+A reviewed death effect now marks the tile unavailable for deployment (`noDeployTiles`), checked by `_placementError`. Support rises to **404 of 1,552** enemies; the test pins the death mark.
+
+### 15-17 test-only (S127, 2026-10-21)
+
+**15-17** builds behind `testOnly` (8×11, 59 spawns, 7 enemies). Catalogue is **205 entries**, **199 public + 6 testOnly**; 204 data-backed stages pass the smoke test. 16-17 remains blocked by the missing `enemy_3010_mcreep` record.
+
+### Geometry-only stage builds (S128, 2026-10-21)
+
+`build-stage.mjs` no longer requires `--playback`: without it, every non-placeholder route is synthesized from the reviewed start/checkpoint/end chain. 15-4 rebuilds this way. The chapter-17 candidates still fail earlier on missing enemy records (`enemy_10203_mumag`, `enemy_10211_murad`, …), so no new stage was added.
+
+### Snapshot to 404 enemies / 205 entries (S129, 2026-10-21)
+
+`docs/REMAINING.md` records the current branch: **404** supported enemies, **204** built source stages, **205** catalogue entries, and the 22,806-test full suite after the E70/E71 and test-only stage additions.
+
+### TR-26 test-only (S130, 2026-10-21)
+
+The geometry-only build produced **TR-26** (7×10, 24 spawns, 4 enemies) as a `testOnly` tutorial because it contains the inert PRTS props. Catalogue is **206 entries** (199 public + 7 testOnly); 205 data-backed stages pass the smoke test.
+
+### Geometry-only 15-x batch (S131, 2026-10-21)
+
+The geometry-only build added **15-8, 15-11, 15-12, 15-14, 15-15 and 15-18** as `testOnly` (no viewer playback; synthetic routes). **15-19** was rejected: its fixed squad uses support-only operators (`char_508_aguard`, `char_509_acast`, …) not in the regular catalogue. Catalogue is **212 entries** (199 public + 13 testOnly); 211 data-backed stages smoke-tested.

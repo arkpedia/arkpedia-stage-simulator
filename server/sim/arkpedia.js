@@ -469,6 +469,7 @@ export class StandardBattle extends Battle {
     return Number.isFinite(duration) && duration > 0 && this.time + 1e-9 < unit.deployedAt + duration;
   }
   dpRecoveryRateFor(ownerId = 'arkpedia') {
+    if ((this.flags.dpRegenHaltUntil ?? 0) > this.time) return 0;
     const scale = this.allyUnits.filter(u => u.ownerId === ownerId && u.alive && u.deployed && !u.hidden)
       .reduce((n, u) => n * (u.mem.regularDpRegenScale ?? 1), 1);
     return this.flags.dpPerSec * scale;
@@ -538,6 +539,7 @@ export class StandardBattle extends Battle {
     )
       return "Tile is occupied.";
     if (this.tileReservation(row, col)) return "Tile is reserved for an operator's return.";
+    if (this.noDeployTiles?.has(`${row},${col}`)) return "Tile is unavailable for deployment.";
     if (!fromSkill && !canSpendDp(this, 'arkpedia', this.cost(id))) return "Not enough DP.";
     return null;
   }

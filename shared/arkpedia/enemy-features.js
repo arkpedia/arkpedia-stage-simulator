@@ -201,6 +201,8 @@ const HATEDRINKER_TEXT = 'Gains increased ATK for each Reborn Creation on the ba
 // picked up by the Altar Keeper, not by its own code).
 const NATIVE_ONLY_FEATURES = Object.freeze({
   enemy_1421_lrchld: 'native:beacon', enemy_1421_lrchld_2: 'native:beacon',
+  enemy_10072_mpprhd: 'native:prtsProp', enemy_10072_mpprhd_2: 'native:prtsProp',
+  enemy_10082_mpweak: 'native:prtsProp', enemy_10082_mpweak_2: 'native:prtsProp',
 });
 
 export const ENEMY_FEATURES = Object.freeze({
@@ -319,6 +321,9 @@ export const ENEMY_FEATURES = Object.freeze({
     ability: { kind: 'periodicSpawn', params: r => ({ key: r.skills[0].bbStr.enemy_key, count: r.skills[0].bb.cnt, cooldown: r.skills[0].cooldown, init: r.skills[0].initCooldown }) },
     nativeClaim: () => ({ wrappers: 2 }), dependsOn: r => [r.skills[0].bbStr.enemy_key], note: 'summons one Purifying Flame at a time',
     explains: /^Controls <Purifying Flames> that move along the ground/ },
+  'ability:Periodically summons 1 <Confused Maintenance Helper>': { covers: r => r.abilities.some(a => a.text === 'Periodically summons 1 <Confused Maintenance Helper>'),
+    ability: { kind: 'periodicSpawn', params: r => ({ key: r.skills[0]?.bbStr?.enemy_key ?? 'enemy_10073_mpcar', count: 1, cooldown: r.skills[0]?.cooldown ?? 5, init: r.skills[0]?.initCooldown ?? 3 }) },
+    nativeClaim: () => ({ wrappers: 1 }), note: 'one confused helper every cooldown', explains: /^Periodically summons 1 <Confused Maintenance Helper>$/ },
   'skill:SummonFireBall2': { covers: r => r.skills.some(s => s.prefabKey === 'SummonFireBall2'), note: 'second reviewed summon timer' },
   // Tombkeeper Grotesque: the first lethal hit turns it into a stone statue, then it revives airborne.
   'talent:stone': { covers: r => sig(r, 'stone', ['def', 'duration', 'magic_resistance'])
@@ -336,9 +341,9 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => text === 'Continuously deals Arts damage and <$ba.dt.burning>Burn damage</> for the skill duration'
       || text === 'Upon death, explodes and deals Arts damage, knocking down nearby Tattered Pillars and instantly defeating other <Dublinn Flamerazers>' },
   // Prototype Auto Meal Distributor: summons one maintenance helper every few seconds.
-  'ability:Periodically summons 1 <Rampaging Maintenance Helper>': { covers: r => r.abilities.some(a => a.text === 'Periodically summons 1 <Rampaging Maintenance Helper>'),
+  'ability:Periodically summons 1 <Rampaging Maintenance Helper>': { covers: r => r.abilities.some(a => /^Periodically summons 1 <(Rampaging|Confused) Maintenance Helper>$/.test(a.text)),
     ability: { kind: 'periodicSpawn', params: r => ({ key: r.skills[0]?.bbStr?.enemy_key ?? 'enemy_10073_mpcar_2', count: 1, cooldown: r.skills[0]?.cooldown ?? 5, init: r.skills[0]?.initCooldown ?? 3 }) },
-    nativeClaim: () => ({ wrappers: 1 }), note: 'one helper every cooldown', explains: /^Periodically summons 1 <Rampaging Maintenance Helper>$/ },
+    nativeClaim: () => ({ wrappers: 1 }), note: 'one helper every cooldown', explains: /^Periodically summons 1 <(Rampaging|Confused) Maintenance Helper>$/ },
   'skill:Spawn': { covers: r => r.skills.some(s => s.prefabKey === 'Spawn'), note: 'native Spawn skill consumed by periodicSpawn' },
   // Bloodborn Spawn: Arts damage scaled by the target's blocking count, and a Blood Amber death spawn.
   'talent:DamageUp': { covers: r => sig(r, 'DamageUp', ['add_on', 'scale_ratio'])
@@ -350,10 +355,22 @@ export const ENEMY_FEATURES = Object.freeze({
     ability: { kind: 'deathSpawn', params: r => ({ key: r.talents.bbStr['Summon.enemy_key'], cnt: r.talents.bb['Summon.cnt'] }) },
     note: 'leaves the reviewed child on death', dependsOn: r => [r.talents.bbStr['Summon.enemy_key']].filter(Boolean),
     explains: /^Leaves behind <Blood Amber> when defeated\.$/ },
-  'talent:Passive': { covers: r => sig(r, 'Passive', ['damage_resistance', 'hp_ratio'])
-      && r.abilities.some(a => a.text === 'When affected by the pulse of a Bloodcalling Altar, will be reborn as a Bloodborn Spawn at the altar.'),
-    note: 'inert Blood Amber until the altar pulse', nativeClaim: () => ({ active: 1 }),
-    explains: /^When affected by the pulse of a Bloodcalling Altar, will be reborn as a Bloodborn Spawn at the altar\.$/ },
+  'talent:Passive': { covers: r => (sig(r, 'Passive', ['damage_resistance', 'hp_ratio'])
+      && r.abilities.some(a => a.text === 'When affected by the pulse of a Bloodcalling Altar, will be reborn as a Bloodborn Spawn at the altar.'))
+      || (sig(r, 'Passive', ['magic_max_count', 'phy_max_count'])
+        && r.abilities.some(a => a.text === 'Does not initially attack; transforms into different forms when certain conditions are met')),
+    ability: { kind: 'decodeBasis', params: r => sig(r, 'Passive', ['magic_max_count', 'phy_max_count']) ? {
+      fuchou: { hp: r.talents.bb['Mode_Fuchou_Passive.max_hp'], atk: r.talents.bb['Mode_Fuchou_Passive.atk'], def: r.talents.bb['Mode_Fuchou_Passive.def'],
+        res: r.talents.bb['Mode_Fuchou_Passive.magic_resistance'], move: r.talents.bb['Mode_Fuchou_Passive.move_speed'], bat: r.talents.bb['Mode_Fuchou_Passive.base_attack_time'] },
+      youling: { hp: r.talents.bb['Mode_Youling_Passive.max_hp'], atk: r.talents.bb['Mode_Youling_Passive.atk'], def: r.talents.bb['Mode_Youling_Passive.def'],
+        res: r.talents.bb['Mode_Youling_Passive.magic_resistance'], move: r.talents.bb['Mode_Youling_Passive.move_speed'], bat: r.talents.bb['Mode_Youling_Passive.base_attack_time'] },
+      shushi: { hp: r.talents.bb['Mode_Shushi_Passive.max_hp'], atk: r.talents.bb['Mode_Shushi_Passive.atk'], def: r.talents.bb['Mode_Shushi_Passive.def'],
+        res: r.talents.bb['Mode_Shushi_Passive.magic_resistance'], move: r.talents.bb['Mode_Shushi_Passive.move_speed'], bat: r.talents.bb['Mode_Shushi_Passive.base_attack_time'] },
+    } : {} },
+    note: 'inert Blood Amber until the altar pulse, or the Decode Basis mode table', nativeClaim: () => ({ active: 1 }),
+    explains: text => /^When affected by the pulse of a Bloodcalling Altar, will be reborn as a Bloodborn Spawn at the altar\.$/.test(text)
+      || text === 'Does not initially attack; transforms into different forms when certain conditions are met'
+      || text === 'Transforms into different forms once it has taken 4 Physical attacks, 4 Arts attacks, or if it is blocked' },
   'ability:Deals long-ranged attacks that explode after a delay, inflicting Physical damage in an area.': {
     covers: r => r.abilities.some(a => a.text === 'Deals long-ranged attacks that explode after a delay, inflicting Physical damage in an area.'),
     ability: { kind: 'bombard', params: r => ({ delay: r.talents.bb['Attack.delay'] ?? 1, radius: r.talents.bb['Attack.attack@projectile_radius'] ?? 1.1 }) },
@@ -438,6 +455,38 @@ export const ENEMY_FEATURES = Object.freeze({
     note: 'unblockable; slows when hit; carries one Beacon and drops it on death',
     explains: text => text === 'Unblockable and has reduced movement speed when taking damage.'
       || text === 'Picks up nearby Beacons if it is not carrying a Beacon, and drops them on death.' },
+  'skill:GrabBegin': { covers: r => r.skills.some(s => s.prefabKey === 'GrabBegin'), nativeClaim: () => ({ wrappers: 4 }), note: 'PRTS scripted action' },
+  'skill:GrabEnd': { covers: r => r.skills.some(s => s.prefabKey === 'GrabEnd'), note: 'PRTS scripted action' },
+  'skill:Click': { covers: r => r.skills.some(s => s.prefabKey === 'Click'), note: 'PRTS scripted action' },
+  'skill:Angry': { covers: r => r.skills.some(s => s.prefabKey === 'Angry'), note: 'PRTS scripted action' },
+  // Tile-denial on death.
+  'ability:When defeated, the tile underneath becomes unavailable for deployment': {
+    covers: r => r.abilities.some(a => a.text === 'When defeated, the tile underneath becomes unavailable for deployment'),
+    ability: { kind: 'tileDenied', params: () => ({}) }, nativeClaim: () => ({ active: 1 }),
+    note: 'denies deployment on the death tile', explains: /^When defeated, the tile underneath becomes unavailable for deployment$/ },
+  // DP-lock caster: halts DP regeneration for a reviewed duration.
+  'skill:StopCost': { covers: r => r.skills.some(s => s.prefabKey === 'StopCost'),
+    ability: { kind: 'stopCost', params: r => ({ delay: r.skills[0].initCooldown, duration: r.skills[0].bb.projectile_life_time }) },
+    nativeClaim: () => ({ wrappers: 1 }), note: 'halts DP regeneration after a delay',
+    explains: /^Temporarily halts your DP regeneration shortly after it enters the battlefield$/ },
+  'talent:Mode_Fuchou_Anger': { covers: r => sig(r, 'Mode_Fuchou_Anger', ['atk']), note: 'Decode Basis anger ATK value' },
+  'talent:Mode_Fuchou_Passive': { covers: r => sig(r, 'Mode_Fuchou_Passive', ['atk', 'base_attack_time', 'def', 'magic_resistance', 'mass_level', 'max_hp', 'move_speed']), note: 'Decode Basis Fuchou table' },
+  'talent:Mode_Youling_Passive': { covers: r => sig(r, 'Mode_Youling_Passive', ['atk', 'base_attack_time', 'def', 'magic_resistance', 'mass_level', 'max_hp', 'move_speed']), note: 'Decode Basis Youling table' },
+  'talent:Mode_Shushi_Passive': { covers: r => sig(r, 'Mode_Shushi_Passive', ['atk', 'base_attack_time', 'def', 'magic_resistance', 'mass_level', 'max_hp', 'move_speed']), note: 'Decode Basis Shushi table' },
+  'skill:ChangeToB': { covers: r => r.skills.some(s => s.prefabKey === 'ChangeToB'), nativeClaim: () => ({ wrappers: 3 }), note: 'Decode Basis form change' },
+  'skill:ChangeToC': { covers: r => r.skills.some(s => s.prefabKey === 'ChangeToC'), note: 'Decode Basis form change' },
+  'skill:ChangeToD': { covers: r => r.skills.some(s => s.prefabKey === 'ChangeToD'), note: 'Decode Basis form change' },
+  // Flying ice bomb: its only effect is disabling a waiting-zone operator; the engine has no waiting zone, so the
+  // bomb is inert and stages containing it stay testOnly.
+  'skill:CardBoom': { covers: r => r.skills.some(s => s.prefabKey === 'CardBoom'),
+    ability: { kind: 'cardBoom', params: () => ({}) }, nativeClaim: () => ({ wrappers: 1 }),
+    note: 'flying bomb; waiting-zone disable is not modeled', explains: text => text === 'Flying unit.'
+      || text === 'Shortly after it enters the battle, throws a bomb to temporarily disable the Operator with the highest DP cost in your Deployment Waiting Zone' },
+  // PRTS stage props: hidden, no-damage controller/node entities. Until the PRTS activation rules are reviewed they are inert,
+  // untargetable and do not move or leak; stages that contain them stay testOnly.
+  'native:prtsProp': { covers: r => (NATIVE_ONLY_FEATURES[r.key] ?? null) === 'native:prtsProp',
+    ability: { kind: 'prtsProp', params: () => ({}) }, nativeClaim: p => String(p.rootName ?? '').includes('10072') ? { active: 1 } : {},
+    note: 'inert PRTS controller/node; activation not yet modeled' },
   // Native-only stage prop: the Beacon has no own behaviour in the supported stages.
   'native:beacon': { covers: r => (NATIVE_ONLY_FEATURES[r.key] ?? null) === 'native:beacon',
     note: 'passive stage beacon; pickup belongs to the Altar Keeper', nativeClaim: () => ({ active: 2 }) },
