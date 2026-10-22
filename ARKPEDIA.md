@@ -6022,3 +6022,5 @@ Added `npm run coverage:arkpedia-assets` and `docs/ASSETS.md`: 1,187 mapped mode
 ### Originium Altar device (S150, 2026-10-22)
 
 Implemented the reviewed PRTS altar: auto-triggered pulse every 7 SP seconds, **500 True damage** to allied and enemy units in its `x-1` cross, including air and normally untargetable units, with pulse-immune units excluded. Unknown devices still fail closed. Rebuilt 7-8/7-9 with their altar data and promoted both back to public (205 public, 15 testOnly, 220 catalogue entries).
+
+Full suite after the altar promotion: **22,831 tests, 22,820 passed, 0 failed, 11 skipped**.
