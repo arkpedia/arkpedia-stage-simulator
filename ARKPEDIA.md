@@ -5906,3 +5906,7 @@ A reviewed death effect now marks the tile unavailable for deployment (`noDeploy
 ### 15-17 test-only (S127, 2026-10-21)
 
 **15-17** builds behind `testOnly` (8×11, 59 spawns, 7 enemies). Catalogue is **205 entries**, **199 public + 6 testOnly**; 204 data-backed stages pass the smoke test. 16-17 remains blocked by the missing `enemy_3010_mcreep` record.
+
+### Geometry-only stage builds (S128, 2026-10-21)
+
+`build-stage.mjs` no longer requires `--playback`: without it, every non-placeholder route is synthesized from the reviewed start/checkpoint/end chain. 15-4 rebuilds this way. The chapter-17 candidates still fail earlier on missing enemy records (`enemy_10203_mumag`, `enemy_10211_murad`, …), so no new stage was added.
