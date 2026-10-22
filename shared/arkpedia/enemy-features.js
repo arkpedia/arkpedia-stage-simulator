@@ -459,6 +459,12 @@ export const ENEMY_FEATURES = Object.freeze({
   'skill:GrabEnd': { covers: r => r.skills.some(s => s.prefabKey === 'GrabEnd'), note: 'PRTS scripted action' },
   'skill:Click': { covers: r => r.skills.some(s => s.prefabKey === 'Click'), note: 'PRTS scripted action' },
   'skill:Angry': { covers: r => r.skills.some(s => s.prefabKey === 'Angry'), note: 'PRTS scripted action' },
+  // Pulse-charged Sarkaz: immune to altar pulses, ordinary attacks become Arts.
+  'ability:When coming into contact with a Pulse Wave, this unit instead takes no damage and will deal Arts damage with normal attacks.': {
+    covers: r => r.abilities.some(a => a.text === 'When coming into contact with a Pulse Wave, this unit instead takes no damage and will deal Arts damage with normal attacks.'),
+    ability: { kind: 'pulseCharged', params: () => ({}) }, nativeClaim: () => ({ active: 3 }),
+    note: 'pulse immunity and Arts normal attacks',
+    explains: /^When coming into contact with a Pulse Wave, this unit instead takes no damage and will deal Arts damage with normal attacks\.$/ },
   // W: the C4 kit is already installed by KITS; the features document the two ability lines.
   'ability:Can use explosives to deal heavy Physical damage to allied units': {
     covers: r => r.abilities.some(a => a.text === 'Can use explosives to deal heavy Physical damage to allied units'),

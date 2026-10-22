@@ -372,6 +372,10 @@ export const featureAbilities = Object.freeze({
   }) : ({
     tick(b, e) { for (const u of b.enemies) if (u.alive) b.addBuff(u, { key: `ab:strength:${e.id}`, duration: 0.7, visible: true, mods: { atkPct: p.atkPct, defFlat: p.defFlat } }); },
   }),
+  // Pulse-charged Sarkaz: the altar pulse does nothing; its own normal attacks are Arts.
+  pulseCharged: () => ({
+    spawn(b, e) { e.profile.pulseImmune = true; e.profile.dmgType = 'arts'; },
+  }),
   // Artificer: expose artillery charge progress for a future device.
   artilleryCharge: () => ({
     spawn(b, e, a) { a.next = b.time + 1; },

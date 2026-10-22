@@ -55,3 +55,16 @@ test('the EP14 controller drains pollution tiles', () => {
   assert.ok(enemy.findBuff('device:pollution'));
   assert.ok(hp - enemy.hp >= 50 - 1e-6);
 });
+
+test('a pulse-charged enemy ignores the altar pulse', () => {
+  const stage = JSON.parse(readFileSync(new URL('../data/arkpedia-stage-7-10.json', import.meta.url)));
+  const data = { ...mvp, stage, enemies: { ...mvp.enemies, ...stage.enemies } };
+  const battle = new StandardBattle(data, { operators: Object.values(data.operators).slice(0, 5).map(defaultBuild) });
+  const charged = battle.spawnEnemy('enemy_1084_sotidm_3', { pos: [4, 6] });
+  const plain = battle.spawnEnemy('enemy_1077_sotihd', { pos: [4, 5] });
+  const chargedHp = charged.hp, plainHp = plain.hp;
+  battle._tickMvpStageDevices(7.01);
+  assert.equal(charged.hp, chargedHp);
+  assert.ok(plain.hp <= plainHp - 500 + 1e-6);
+  assert.equal(charged.profile.dmgType, 'arts');
+});
