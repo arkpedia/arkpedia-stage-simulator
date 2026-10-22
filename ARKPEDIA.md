@@ -5970,3 +5970,7 @@ Added `npm run audit:arkpedia-devices` and `docs/DEVICES.md`. **70 built stages*
 ### Device refusal safety net (S141, 2026-10-21)
 
 New stage files carry `devices`; the adapter refuses functional devices with `Unsupported stage devices: …`. Existing stages without the field are unchanged, so the device backlog stays visible while new device-bearing builds fail closed.
+
+### Full suite after device safety (S142, 2026-10-21)
+
+Full repository suite: **22,823 tests, 22,812 passed, 0 failed, 11 skipped** with the device refusal and audit in place.
