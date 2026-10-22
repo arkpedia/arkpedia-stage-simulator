@@ -22,7 +22,7 @@ function make(id) {
   const battle = new StandardBattle(source, { operators: [defaultBuild(source.operators[id])] });
   battle.autoFinish = false; battle.setViewport('fullscreen-workspace'); battle.addDp('arkpedia', 99);
   battle.deployOperator(id, id === 'char_484_robrta' ? 2 : 3, id === 'char_484_robrta' ? 7 : id === 'char_1034_jesca2' ? 5 : 2, 'RIGHT');
-  const context = createContext({ battle, data: source, selected: summonCardId(id), pending: null,
+  const context = createContext({ battle, data: source, selected: summonCardId(id), selectedToken: null, pending: null,
     battleError: '', landscapeRequired: false, copyFlow: null, flowingShapeDeck, drawHud: () => {},
     icon: () => '', artwork: () => '', summonIcon: () => '',
     summonUnitId, selectedRegularSummon, summonPlacementError, deployRegularSummon });

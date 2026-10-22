@@ -35,6 +35,7 @@ let renderer,
   battle,
   workspace,
   selected,
+  selectedToken,
   pending,
   paused = true,
   speed = 1,
@@ -319,6 +320,7 @@ async function start() {
       () => {},
     ).catch((error) => console.error('chibi preload failed', error));
     battle = new StandardBattle(data, selection, { seed: Date.now() });
+    selectedToken = null;
     speed = 1;
     showRoutes = false;
     workspace = document.createElement("section");
@@ -335,6 +337,7 @@ async function start() {
       <div class="field-command" id="field-command" aria-label="Operator actions" hidden></div>
       <button class="facing-cancel" id="facing-cancel" hidden><span aria-hidden="true">×</span>Cancel</button>
       <span class="aim-hint" id="aim-hint" hidden>Drag back to centre to cancel</span>
+      <div class="token-strip" id="token-strip" aria-label="Deployable tokens" hidden></div>
       <div class="deployment-wrap"><button id="shelf-left" aria-label="Scroll operators left">‹</button><div class="deployment" id="deployment"></div><button id="shelf-right" aria-label="Scroll operators right">›</button><div class="shelf-track" aria-hidden="true"><span></span></div></div>
       <p class="status-note" id="battle-message" role="status" aria-live="polite"></p>
       </div></div><div class="orientation-gate" id="orientation-gate" role="dialog" aria-modal="true" aria-labelledby="orientation-title" aria-describedby="orientation-description" hidden><svg class="rotate-device" aria-hidden="true" viewBox="0 0 100 100"><rect x="33" y="22" width="34" height="56" rx="5"/><path d="M18 55A34 34 0 0 1 60 17M60 17l-13-3M60 17l-7 12M82 45A34 34 0 0 1 40 83M40 83l13 3M40 83l7-12"/></svg><h2 id="orientation-title">Rotate to landscape</h2><p id="orientation-description">Turn your device sideways to deploy and play.<br>Your battle is paused and your squad is saved.</p><button id="portrait-exit">Back to squad</button></div>`;
@@ -531,6 +534,13 @@ async function exit() {
 function pick(row, col) {
   if (!battle || battle.finished || landscapeRequired) return;
   if (copyFlow?.active) return;
+  if (selectedToken) {
+    try { battle.deployToken(selectedToken, row, col); selectedToken = null; }
+    catch (e) { battleError = e.message; }
+    pending = null;
+    drawHud();
+    return;
+  }
   battleError = "";
   // Owned devices can deliberately use the enemy targeting side (Stainless).
   const selectable = battle.units.filter(u => u.side === 'ally' || u.mem.regularSummonCard);
@@ -714,6 +724,33 @@ function drawHud() {
   pause.title = pauseLabel;
   pause.querySelector('span').textContent = paused ? '▶' : 'Ⅱ';
   workspace.querySelector("#paused-label").hidden = !paused || battle.finished;
+  const tokenStrip = workspace.querySelector("#token-strip");
+  const tokenCards = battle.stage.raw?.tokens ?? [];
+  tokenStrip.hidden = tokenCards.length === 0;
+  if (tokenCards.length) {
+    const signature = tokenCards.map(card => card.unitId).join(",");
+    if (tokenStrip.dataset.signature !== signature) {
+      tokenStrip.dataset.signature = signature;
+      tokenStrip.replaceChildren(...tokenCards.map(card => {
+        const button = document.createElement("button");
+        button.type = "button"; button.dataset.token = card.unitId;
+        button.innerHTML = `<span>${escape(card.name)}</span><b></b>`;
+        button.onclick = () => {
+          selectedToken = selectedToken === card.unitId ? null : card.unitId;
+          selected = null; pending = null; battleError = "";
+          drawHud();
+        };
+        return button;
+      }));
+    }
+    for (const button of tokenStrip.querySelectorAll("button[data-token]")) {
+      const card = tokenCards.find(item => item.unitId === button.dataset.token);
+      const remaining = battle.mvpStageTokens.get(card.unitId) ?? 0;
+      button.querySelector("b").textContent = `×${remaining} · ${card.cost} DP`;
+      button.disabled = remaining <= 0 || battle.finished;
+      button.setAttribute("aria-pressed", String(selectedToken === card.unitId));
+    }
+  }
   const shelf = workspace.querySelector("#deployment");
   const cardIds = [...Object.keys(battle.bench), ...regularSummonCards(battle).map(card => card.key)];
   // Append new summon cards without rebuilding existing buttons or losing focus.
@@ -734,6 +771,7 @@ function drawHud() {
           drawHud(); return;
         }
         selected = button.dataset.id;
+        selectedToken = null;
         pending = null;
         battleError = "";
         drawHud();
@@ -751,6 +789,7 @@ function drawHud() {
           return;
         e.preventDefault();
         selected = button.dataset.id;
+        selectedToken = null;
         pending = null;
         battleError = "";
         dragging = {
@@ -1026,6 +1065,7 @@ function cancelPlacement() {
   if (aim && handle?.hasPointerCapture(aim.id))
     handle.releasePointerCapture(aim.id);
   selected = null;
+  selectedToken = null;
   pending = null;
   workspace?.querySelector(".drag-ghost")?.remove();
 }

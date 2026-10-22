@@ -6076,3 +6076,5 @@ Added `tools/arkpedia/import-traps.mjs` and generated `data/arkpedia-deployable-
 ### Token deployment engine and 1-6 (S163, 2026-10-23)
 
 Stages can now carry deployable tokens resolved from `arkpedia-deployable-tokens.json`. The engine validates count/cost/ground, spawns a crate obstacle with the upstream HP/block, deducts DP and decrements the deck. 1-6 builds with five Roadblocks and stays `testOnly` until the token-strip UI is reviewed.
+
+Token strip: stage tokens render as buttons above the deployment shelf, show remaining count and DP cost, select on click, and deploy on tile click. 1-6 remains testOnly pending visual review.

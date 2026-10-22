@@ -660,3 +660,11 @@ footer {
 /* Marcille's saved mana charges around her undeployed card from both sides. */
 .mana-charge { position: absolute; inset: 3px; width: calc(100% - 6px); height: calc(100% - 6px); pointer-events: none; }
 .mana-charge path { fill: none; stroke: #9bd958; stroke-width: 2px; vector-effect: non-scaling-stroke; stroke-dasharray: 100; }
+
+/* Deployable token strip (stage cards such as Roadblock). */
+.token-strip { position: absolute; z-index: 9; left: 50%; bottom: calc(max(6px, env(safe-area-inset-bottom)) + 92px); transform: translateX(-50%); display: flex; gap: 6px; max-width: calc(100vw - 24px); overflow-x: auto; }
+.token-strip[hidden] { display: none; }
+.token-strip button { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid #ffffff66; background: #181d25e6; color: #f4f1e8; font: inherit; font-size: 13px; white-space: nowrap; cursor: pointer; }
+.token-strip button[aria-pressed="true"] { border-color: #f3d27a; box-shadow: 0 0 0 1px #f3d27a inset; }
+.token-strip button:disabled { opacity: .45; cursor: not-allowed; }
+.token-strip b { font-weight: 500; color: #f3d27a; }
