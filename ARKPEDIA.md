@@ -5950,3 +5950,7 @@ While `ab:inspired` is present the Guerrilla Sniper attacks one additional targe
 ### 7-6, 7-8 and 7-9 public (S136, 2026-10-21)
 
 Three more chapter-7 stages build with their original playback and are reviewed public: **7-6** (8×11, 44 spawns), **7-8** (7×11, 51) and **7-9** (8×12, 54). Catalogue is **217 entries** (203 public + 14 testOnly); 216 data-backed stages smoke-tested.
+
+### 7-13 and TR-17 (S137, 2026-10-21)
+
+The Inspired support unlocked two more public stages: **7-13** (8×11, 49 spawns, 5 enemies) and **TR-17** (6×9, 6 spawns, 3 enemies). Catalogue is **219 entries** (205 public + 14 testOnly); 218 data-backed stages smoke-tested.
