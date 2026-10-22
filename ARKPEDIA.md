@@ -5938,3 +5938,7 @@ The Guerrilla Herald `strength` feature now also covers the Inspired movement va
 ### Inspired extra target (E73, 2026-10-21)
 
 While `ab:inspired` is present the Guerrilla Sniper attacks one additional target; without it the base count returns. Support rises to **408 of 1,552** enemies. The test pins the on/off switch.
+
+### 7-5 public (S134, 2026-10-21)
+
+**7-5** builds with its original playback and is reviewed public (8×11, 70 spawns, 6 enemies). Catalogue is **214 entries** (200 public + 14 testOnly); 213 data-backed stages smoke-tested.
