@@ -256,6 +256,7 @@ import { catalogueFor, recordFor, fixedSquadBuilds } from "../../shared/arkpedia
 import { REGULAR_OPERATORS } from "../../shared/arkpedia/operators.js";
 import { assertRegularEnemies } from "../../shared/arkpedia/enemies.js";
 import { installEnemyFeatures } from "./content/arkpedia-enemy-features.js";
+import { STAGE_DEVICES, pulseTiles, artilleryTiles } from "../../shared/arkpedia/stage-devices.js";
 import { compileBuffTemplate } from "../../shared/arkpedia/behavior.js";
 import {
   prepareSquad,
@@ -264,7 +265,8 @@ import {
 
 export function stageAdapter(source) {
   const devices = (source.devices ?? []).filter(d => d.kind === 'device' && !String(d.key).startsWith('char_'));
-  if (devices.length) throw new Error(`Unsupported stage devices: ${[...new Set(devices.map(d => d.name))].join(', ')}`);
+  const unsupported = devices.filter(d => !STAGE_DEVICES[d.name]);
+  if (unsupported.length) throw new Error(`Unsupported stage devices: ${[...new Set(unsupported.map(d => d.name))].join(', ')}`);
   const g = source.geometry;
   const supplied = Array.isArray(g.suppliedUnits) ? g.suppliedUnits.length
     : (g.suppliedUnits?.fixed_squad?.length || 0) + (g.suppliedUnits?.deployable_tokens?.length || 0);
@@ -284,6 +286,10 @@ export function stageAdapter(source) {
     ]),
   );
   const pair = (p) => [p.row, p.col];
+  const pollution = [];
+  g.tileGrid.forEach((row, r) => row.forEach((type, c) => {
+    if (String(g.tileLegend[type]?.key ?? '').includes('toxic')) pollution.push([r, c]);
+  }));
   // A route no wave spawns on never has to walk, so a viewer export may omit it. Only refuse a missing path
   // for a route the stage actually uses.
   const usedRoutes = new Set(g.waves.flatMap(wave => (wave.spawns || []).map(spawn => spawn.route)));
@@ -434,6 +440,15 @@ export class StandardBattle extends Battle {
     // The road talent scans initial terrain even when Thorns deploys much later.
     if (chess[THORNS_LODESTAR_ID]) captureThornsRoads(this);
     this.behaviors = behaviors;
+    this.mvpStageDevices = (data.stage.devices ?? [])
+      .filter(d => d.kind === 'device' && STAGE_DEVICES[d.name])
+      .map(d => ({ ...d, sp: 0, acc: 0 }));
+    const pollution = [];
+    data.stage.geometry.tileGrid.forEach((row, r) => row.forEach((type, c) => {
+      if (String(data.stage.geometry.tileLegend[type]?.key ?? '').includes('toxic')) pollution.push([r, c]);
+    }));
+    this.mvpStagePollution = new Set(pollution.map(([r, c]) => `${r},${c}`));
+    if (this.mvpStageDevices.length) this.on('tick', ({ dt }) => this._tickMvpStageDevices(dt));
     this.unitLimit = config.unit_limit;
     this.regularMapSize = Object.freeze({ rows: data.stage.geometry.rows, cols: data.stage.geometry.cols });
     this.mapTags = Object.freeze([...(data.stage.mapTags ?? [])]);
@@ -1191,4 +1206,57 @@ export class StandardBattle extends Battle {
     if (this.life <= 0) return this._finish("defeated");
     super._checkEnd();
   }
+  _tickMvpStageDevices(dt) {
+    for (const d of this.mvpStageDevices) {
+      const def = STAGE_DEVICES[d.name];
+      if (def.pulse) {
+        const spec = def.pulse;
+        d.sp += spec.spPerSecond * dt;
+        while (d.sp >= spec.spCost) {
+          d.sp -= spec.spCost;
+          const tiles = pulseTiles(d.row, d.col);
+          for (const u of this.units) {
+            if (!u.alive || !u.deployed || u.mem?.pulseImmune || u.profile?.pulseImmune) continue;
+            const r = Math.round(u.y), c = Math.round(u.x);
+            if (!tiles.some(([tr, tc]) => tr === r && tc === c)) continue;
+            this.dealDamage(null, u, { amount: spec.damage, type: 'true', sourceless: true, ignoreSelect: true, tags: ['device', 'pulse'] });
+          }
+          this.fx('explode', { x: d.col, y: d.row, r: 1.5, kind: 'pulse' });
+        }
+      } else if (def.environment) {
+        const spec = def.environment;
+        d.acc += dt;
+        for (const u of this.units) {
+          if (!u.alive || !u.deployed || !this.mvpStagePollution.has(`${Math.round(u.y)},${Math.round(u.x)}`)) continue;
+          this.addBuff(u, { key: 'device:pollution', persist: true, refresh: 'replace', duration: spec.interval * 1.1, mods: { spRecoveryMul: spec.spMul } });
+        }
+        while (d.acc >= spec.interval) {
+          d.acc -= spec.interval;
+          for (const u of this.units) {
+            if (!u.alive || !u.deployed || !this.mvpStagePollution.has(`${Math.round(u.y)},${Math.round(u.x)}`)) continue;
+            this.dealDamage(null, u, { amount: spec.damage, type: 'true', sourceless: true, ignoreSelect: true, tags: ['device', 'pollution'] });
+          }
+        }
+      } else if (def.artillery) {
+        const spec = def.artillery;
+        d.sp = Math.min(spec.spCost, d.sp + spec.spPerSecond * dt);
+        if (d.sp < spec.spCost) continue;
+        const target = this.allyUnits
+          .filter(a => a.alive && a.deployed && a.kind !== 'device' && !a.hidden
+            && !a.s.flags.stealth && !a.s.flags.camu && !a.s.flags.liftoff)
+          .sort((a, b) => (b.s.blockCnt ?? 0) - (a.s.blockCnt ?? 0) || b.deploySeq - a.deploySeq)[0];
+        if (!target) continue;
+        d.sp = 0;
+        const tiles = artilleryTiles(Math.round(target.y), Math.round(target.x));
+        const set = new Set(tiles.map(([r, c]) => `${r},${c}`));
+        for (const u of this.units) {
+          if (!u.alive || !u.deployed) continue;
+          if (!set.has(`${Math.round(u.y)},${Math.round(u.x)}`)) continue;
+          this.dealDamage(null, u, { amount: spec.damage, type: 'true', sourceless: true, ignoreSelect: true, tags: ['device', 'artillery'] });
+        }
+        this.fx('explode', { x: target.x, y: target.y, r: 2, kind: 'artillery' });
+      }
+    }
+  }
+
 }
