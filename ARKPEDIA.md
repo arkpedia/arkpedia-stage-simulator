@@ -5954,3 +5954,7 @@ Three more chapter-7 stages build with their original playback and are reviewed 
 ### 7-13 and TR-17 (S137, 2026-10-21)
 
 The Inspired support unlocked two more public stages: **7-13** (8×11, 49 spawns, 5 enemies) and **TR-17** (6×9, 6 spawns, 3 enemies). Catalogue is **219 entries** (205 public + 14 testOnly); 218 data-backed stages smoke-tested.
+
+### Full suite after Inspired/7-x (S138, 2026-10-21)
+
+Full repository suite: **22,822 tests, 22,811 passed, 0 failed, 11 skipped** with 408 enemies and 219 catalogue entries.
