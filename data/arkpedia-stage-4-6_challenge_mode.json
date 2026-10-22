@@ -1,0 +1,1741 @@
+{
+ "code": "4-6",
+ "name": "Ignorance",
+ "description": "Condition:\nDeployment limit is reduced by 3.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "4-6",
+  "rows": 7,
+  "cols": 10,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_fence",
+    "height": "low",
+    "walkable": false,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_flystart",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_volcano",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true,
+    "blackboard": {
+     "cd_max": 15,
+     "cd_min": 10,
+     "damage": 800
+    }
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    3,
+    3,
+    3,
+    0
+   ],
+   [
+    0,
+    4,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    3,
+    0
+   ],
+   [
+    5,
+    4,
+    2,
+    3,
+    2,
+    2,
+    2,
+    2,
+    6,
+    7
+   ],
+   [
+    1,
+    2,
+    2,
+    3,
+    0,
+    0,
+    2,
+    6,
+    6,
+    7
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    3,
+    3,
+    3,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": null,
+    "placeholder": true,
+    "start": null,
+    "end": null,
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 0
+    },
+    "end": {
+     "row": 4,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 6
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 7
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 3,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 9
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 7
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 7
+      }
+     }
+    ],
+    "waits": []
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 0,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": []
+   },
+   {
+    "index": 1,
+    "duration": 198,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Soldier",
+      "enemy_id": "enemy_1002_nsabr",
+      "count": 1,
+      "time": 3,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Soldier",
+      "enemy_id": "enemy_1002_nsabr",
+      "count": 1,
+      "time": 10,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Soldier",
+      "enemy_id": "enemy_1002_nsabr",
+      "count": 1,
+      "time": 16,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Soldier",
+      "enemy_id": "enemy_1002_nsabr",
+      "count": 1,
+      "time": 22,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Rioter Leader",
+      "enemy_id": "enemy_1027_mob_2",
+      "count": 3,
+      "time": 35,
+      "interval": 12,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Firebomb Thrower",
+      "enemy_id": "enemy_1028_mocock_2",
+      "count": 3,
+      "time": 36,
+      "interval": 12,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Soldier",
+      "enemy_id": "enemy_1002_nsabr",
+      "count": 1,
+      "time": 42,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Soldier",
+      "enemy_id": "enemy_1002_nsabr",
+      "count": 1,
+      "time": 48,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Soldier",
+      "enemy_id": "enemy_1002_nsabr",
+      "count": 1,
+      "time": 54,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Soldier",
+      "enemy_id": "enemy_1002_nsabr",
+      "count": 2,
+      "time": 62,
+      "interval": 1,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Monster Mk II",
+      "enemy_id": "enemy_1005_yokai_2",
+      "count": 1,
+      "time": 81,
+      "route": 3,
+      "fragment": 2
+     },
+     {
+      "enemy": "Monster Mk II",
+      "enemy_id": "enemy_1005_yokai_2",
+      "count": 1,
+      "time": 96,
+      "route": 3,
+      "fragment": 2
+     },
+     {
+      "enemy": "Monster Mk II",
+      "enemy_id": "enemy_1005_yokai_2",
+      "count": 1,
+      "time": 111,
+      "route": 3,
+      "fragment": 2
+     },
+     {
+      "enemy": "Arts Guard",
+      "enemy_id": "enemy_1031_mrogue",
+      "count": 1,
+      "time": 81,
+      "route": 4,
+      "fragment": 2
+     },
+     {
+      "enemy": "Arts Guard",
+      "enemy_id": "enemy_1031_mrogue",
+      "count": 1,
+      "time": 103,
+      "route": 2,
+      "fragment": 2
+     },
+     {
+      "enemy": "Sarkaz Crossbowman",
+      "enemy_id": "enemy_1012_dcross",
+      "count": 1,
+      "time": 87,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Rioter Leader",
+      "enemy_id": "enemy_1027_mob_2",
+      "count": 1,
+      "time": 91,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Rioter Leader",
+      "enemy_id": "enemy_1027_mob_2",
+      "count": 1,
+      "time": 95,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Rioter Leader",
+      "enemy_id": "enemy_1027_mob_2",
+      "count": 1,
+      "time": 99,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Rioter Leader",
+      "enemy_id": "enemy_1027_mob_2",
+      "count": 2,
+      "time": 103,
+      "interval": 1.5,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Sarkaz Crossbowman",
+      "enemy_id": "enemy_1012_dcross",
+      "count": 1,
+      "time": 108,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Monster Mk II",
+      "enemy_id": "enemy_1005_yokai_2",
+      "count": 4,
+      "time": 144,
+      "interval": 15,
+      "route": 3,
+      "fragment": 3
+     },
+     {
+      "enemy": "Sarkaz Greatswordsman",
+      "enemy_id": "enemy_1010_demon",
+      "count": 3,
+      "time": 137,
+      "interval": 22,
+      "route": 1,
+      "fragment": 3
+     },
+     {
+      "enemy": "Arts Guard",
+      "enemy_id": "enemy_1031_mrogue",
+      "count": 3,
+      "time": 138,
+      "interval": 22,
+      "route": 1,
+      "fragment": 3
+     },
+     {
+      "enemy": "Arts Guard",
+      "enemy_id": "enemy_1031_mrogue",
+      "count": 3,
+      "time": 139,
+      "interval": 22,
+      "route": 1,
+      "fragment": 3
+     },
+     {
+      "enemy": "Firebomb Thrower",
+      "enemy_id": "enemy_1028_mocock_2",
+      "count": 3,
+      "time": 194,
+      "interval": 1,
+      "route": 1,
+      "fragment": 3
+     },
+     {
+      "enemy": "Arts Guard",
+      "enemy_id": "enemy_1031_mrogue",
+      "count": 2,
+      "time": 139,
+      "interval": 1,
+      "route": 5,
+      "fragment": 3
+     },
+     {
+      "enemy": "Infused Originium Slug",
+      "enemy_id": "enemy_1021_bslime",
+      "count": 1,
+      "time": 150,
+      "route": 5,
+      "fragment": 3
+     },
+     {
+      "enemy": "Infused Originium Slug",
+      "enemy_id": "enemy_1021_bslime",
+      "count": 1,
+      "time": 161,
+      "route": 5,
+      "fragment": 3
+     },
+     {
+      "enemy": "Infused Originium Slug",
+      "enemy_id": "enemy_1021_bslime",
+      "count": 2,
+      "time": 172,
+      "interval": 1,
+      "route": 5,
+      "fragment": 3
+     },
+     {
+      "enemy": "Arts Guard",
+      "enemy_id": "enemy_1031_mrogue",
+      "count": 2,
+      "time": 184,
+      "interval": 1,
+      "route": 5,
+      "fragment": 3
+     },
+     {
+      "enemy": "Infused Originium Slug",
+      "enemy_id": "enemy_1021_bslime",
+      "count": 2,
+      "time": 189,
+      "interval": 1,
+      "route": 5,
+      "fragment": 3
+     },
+     {
+      "enemy": "Arts Guard",
+      "enemy_id": "enemy_1031_mrogue",
+      "count": 2,
+      "time": 197,
+      "interval": 1,
+      "route": 5,
+      "fragment": 3
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 0,
+    "routes": [
+     2,
+     2,
+     2,
+     2,
+     4,
+     2,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5
+    ]
+   },
+   {
+    "key": "tile_flystart",
+    "row": 3,
+    "col": 0,
+    "routes": [
+     3,
+     3,
+     3,
+     3
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 4,
+    "col": 0,
+    "routes": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 3,
+    "col": 9,
+    "routes": [
+     2,
+     2,
+     2,
+     2,
+     3,
+     3,
+     3,
+     4,
+     2,
+     3,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 4,
+    "col": 9,
+    "routes": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1002_nsabr",
+    "slug": "soldier",
+    "name": "Soldier",
+    "database_level": 1
+   },
+   {
+    "enemy_id": "enemy_1005_yokai_2",
+    "slug": "monster_mk_ii",
+    "name": "Monster Mk II",
+    "database_level": 1
+   },
+   {
+    "enemy_id": "enemy_1010_demon",
+    "slug": "sarkaz_greatswordsman",
+    "name": "Sarkaz Greatswordsman",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1012_dcross",
+    "slug": "sarkaz_crossbowman",
+    "name": "Sarkaz Crossbowman",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1021_bslime",
+    "slug": "infused_originium_slug_enemy_1021_bslime",
+    "name": "Infused Originium Slug",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1027_mob_2",
+    "slug": "rioter_leader",
+    "name": "Rioter Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1028_mocock_2",
+    "slug": "firebomb_thrower",
+    "name": "Firebomb Thrower",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1031_mrogue",
+    "slug": "arts_guard",
+    "name": "Arts Guard",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "devices": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "4-6",
+  "geometryHash": "ec819b53ca6098ac5eef68ff08be5bc1adfdb84180bb148d12fa59a974c4cedf",
+  "moveScale": 0.65,
+  "paths": {
+   "1": {
+    "points": [
+     [
+      0,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      9,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ],
+    "length": 13,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      4
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      9,
+      4
+     ]
+    ]
+   },
+   "2": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      9,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "length": 11,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      9,
+      3
+     ]
+    ]
+   },
+   "3": {
+    "points": [
+     [
+      0,
+      3
+     ],
+     [
+      9,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     9
+    ],
+    "length": 9,
+    "breaks": [],
+    "flying": true,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      3
+     ],
+     [
+      9,
+      3
+     ]
+    ]
+   },
+   "4": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      9,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "length": 11,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 2,
+      "seconds": 5,
+      "point": [
+       2,
+       1
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      9,
+      3
+     ]
+    ]
+   },
+   "5": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      9,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "length": 11,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      9,
+      3
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1002_nsabr": {
+   "key": "enemy_1002_nsabr",
+   "prefabKey": "enemy_1002_nsabr",
+   "name": "Soldier",
+   "level": 1,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2750,
+    "atk": 300,
+    "def": 130,
+    "res": 0,
+    "moveSpeed": 1.1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1027_mob_2": {
+   "key": "enemy_1027_mob_2",
+   "prefabKey": "enemy_1027_mob_2",
+   "name": "Rioter Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2650,
+    "atk": 350,
+    "def": 85,
+    "res": 0,
+    "moveSpeed": 1.1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1028_mocock_2": {
+   "key": "enemy_1028_mocock_2",
+   "prefabKey": "enemy_1028_mocock_2",
+   "name": "Firebomb Thrower",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 2000,
+    "atk": 250,
+    "def": 85,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 2.2,
+    "aspd": 100,
+    "rangeRadius": 1.75,
+    "rawRangeRadius": 1.75,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1005_yokai_2": {
+   "key": "enemy_1005_yokai_2",
+   "prefabKey": "enemy_1005_yokai_2",
+   "name": "Monster Mk II",
+   "level": 1,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 2500,
+    "atk": 330,
+    "def": 125,
+    "res": 0,
+    "moveSpeed": 0.9,
+    "bat": 3,
+    "aspd": 100,
+    "rangeRadius": 2,
+    "rawRangeRadius": 2,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "FLY",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Flying unit.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "drone"
+   ]
+  },
+  "enemy_1031_mrogue": {
+   "key": "enemy_1031_mrogue",
+   "prefabKey": "enemy_1031_mrogue",
+   "name": "Arts Guard",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 4000,
+    "atk": 350,
+    "def": 200,
+    "res": 50,
+    "moveSpeed": 0.75,
+    "bat": 2.5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1012_dcross": {
+   "key": "enemy_1012_dcross",
+   "prefabKey": "enemy_1012_dcross",
+   "name": "Sarkaz Crossbowman",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 6000,
+    "atk": 450,
+    "def": 200,
+    "res": 50,
+    "moveSpeed": 0.8,
+    "bat": 3,
+    "aspd": 100,
+    "rangeRadius": 2.2,
+    "rawRangeRadius": 2.2,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "sarkaz"
+   ]
+  },
+  "enemy_1010_demon": {
+   "key": "enemy_1010_demon",
+   "prefabKey": "enemy_1010_demon",
+   "name": "Sarkaz Greatswordsman",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 7500,
+    "atk": 600,
+    "def": 230,
+    "res": 50,
+    "moveSpeed": 0.85,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "sarkaz"
+   ]
+  },
+  "enemy_1021_bslime": {
+   "key": "enemy_1021_bslime",
+   "prefabKey": "enemy_1021_bslime",
+   "name": "Infused Originium Slug",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2460,
+    "atk": 260,
+    "def": 0,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 1.7,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Death deals a large amount of Physical damage to surrounding units",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "boom.atk_scale": 4
+    },
+    "bbStr": {},
+    "groups": {
+     "boom": [
+      "atk_scale"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  }
+ }
+}

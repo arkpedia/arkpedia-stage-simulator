@@ -1,0 +1,1613 @@
+{
+ "code": "3-1",
+ "name": "Meeting",
+ "description": "Condition:\nThe cost of all ranged Operators is doubled.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "3-1",
+  "rows": 7,
+  "cols": 11,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_grass",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    1,
+    0,
+    0,
+    1,
+    0
+   ],
+   [
+    2,
+    3,
+    3,
+    3,
+    4,
+    3,
+    4,
+    3,
+    3,
+    3,
+    5
+   ],
+   [
+    2,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    5
+   ],
+   [
+    2,
+    3,
+    3,
+    4,
+    3,
+    4,
+    3,
+    4,
+    3,
+    3,
+    5
+   ],
+   [
+    0,
+    0,
+    0,
+    1,
+    0,
+    1,
+    0,
+    1,
+    0,
+    1,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": null,
+    "placeholder": true,
+    "start": null,
+    "end": null,
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 10
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 0
+    },
+    "end": {
+     "row": 2,
+     "col": 10
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 0
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 9
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 4,
+     "col": 0
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 2,
+     "col": 0
+    },
+    "end": {
+     "row": 2,
+     "col": 10
+    },
+    "checkpoints": [],
+    "waits": []
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 0,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": []
+   },
+   {
+    "index": 1,
+    "duration": 181,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Originium Slug α",
+      "enemy_id": "enemy_1007_slime_2",
+      "count": 3,
+      "time": 8,
+      "interval": 7,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Originium Slug α",
+      "enemy_id": "enemy_1007_slime_2",
+      "count": 3,
+      "time": 6,
+      "interval": 7,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Originium Slug α",
+      "enemy_id": "enemy_1007_slime_2",
+      "count": 3,
+      "time": 10,
+      "interval": 7,
+      "route": 3,
+      "fragment": 0
+     },
+     {
+      "enemy": "Hound Pro",
+      "enemy_id": "enemy_1000_gopro_2",
+      "count": 3,
+      "time": 25,
+      "interval": 13,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Hound Pro",
+      "enemy_id": "enemy_1000_gopro_2",
+      "count": 3,
+      "time": 25,
+      "interval": 13,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Hound Pro",
+      "enemy_id": "enemy_1000_gopro_2",
+      "count": 3,
+      "time": 25,
+      "interval": 13,
+      "route": 3,
+      "fragment": 0
+     },
+     {
+      "enemy": "Crossbowman Leader",
+      "enemy_id": "enemy_1003_ncbow_2",
+      "count": 2,
+      "time": 39,
+      "interval": 8,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Crossbowman Leader",
+      "enemy_id": "enemy_1003_ncbow_2",
+      "count": 2,
+      "time": 43,
+      "interval": 8,
+      "route": 3,
+      "fragment": 0
+     },
+     {
+      "enemy": "Crossbowman",
+      "enemy_id": "enemy_1003_ncbow",
+      "count": 1,
+      "time": 31,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Crossbowman",
+      "enemy_id": "enemy_1003_ncbow",
+      "count": 1,
+      "time": 35,
+      "route": 3,
+      "fragment": 0
+     },
+     {
+      "enemy": "Lurker",
+      "enemy_id": "enemy_1009_lurker",
+      "count": 2,
+      "time": 58,
+      "interval": 5,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Lurker",
+      "enemy_id": "enemy_1009_lurker",
+      "count": 2,
+      "time": 59,
+      "interval": 5,
+      "route": 4,
+      "fragment": 0
+     },
+     {
+      "enemy": "Rabid Hound Pro",
+      "enemy_id": "enemy_1000_gopro_3",
+      "count": 3,
+      "time": 78,
+      "interval": 16,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Rabid Hound Pro",
+      "enemy_id": "enemy_1000_gopro_3",
+      "count": 3,
+      "time": 79,
+      "interval": 16,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Rabid Hound Pro",
+      "enemy_id": "enemy_1000_gopro_3",
+      "count": 3,
+      "time": 80,
+      "interval": 16,
+      "route": 3,
+      "fragment": 1
+     },
+     {
+      "enemy": "Caster",
+      "enemy_id": "enemy_1011_wizard",
+      "count": 3,
+      "time": 81,
+      "interval": 16,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Caster",
+      "enemy_id": "enemy_1011_wizard",
+      "count": 3,
+      "time": 82,
+      "interval": 16,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Caster",
+      "enemy_id": "enemy_1011_wizard",
+      "count": 3,
+      "time": 83,
+      "interval": 16,
+      "route": 3,
+      "fragment": 1
+     },
+     {
+      "enemy": "Lurker",
+      "enemy_id": "enemy_1009_lurker",
+      "count": 3,
+      "time": 126,
+      "interval": 6,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Lurker",
+      "enemy_id": "enemy_1009_lurker",
+      "count": 3,
+      "time": 127,
+      "interval": 6,
+      "route": 4,
+      "fragment": 1
+     },
+     {
+      "enemy": "Lurker",
+      "enemy_id": "enemy_1009_lurker",
+      "count": 3,
+      "time": 128,
+      "interval": 6,
+      "route": 4,
+      "fragment": 1
+     },
+     {
+      "enemy": "Monster Mk II",
+      "enemy_id": "enemy_1005_yokai_2",
+      "count": 4,
+      "time": 152,
+      "interval": 8,
+      "route": 5,
+      "fragment": 2
+     },
+     {
+      "enemy": "Monster Mk II",
+      "enemy_id": "enemy_1005_yokai_2",
+      "count": 4,
+      "time": 157,
+      "interval": 8,
+      "route": 6,
+      "fragment": 2
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 4,
+      "time": 150,
+      "interval": 1,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 4,
+      "time": 158,
+      "interval": 1,
+      "route": 2,
+      "fragment": 2
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 4,
+      "time": 162,
+      "interval": 1,
+      "route": 3,
+      "fragment": 2
+     },
+     {
+      "enemy": "Logger",
+      "enemy_id": "enemy_1033_handax",
+      "count": 2,
+      "time": 171,
+      "interval": 10,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Crossbowman Leader",
+      "enemy_id": "enemy_1003_ncbow_2",
+      "count": 3,
+      "time": 169,
+      "interval": 3,
+      "route": 2,
+      "fragment": 2
+     },
+     {
+      "enemy": "Crossbowman Leader",
+      "enemy_id": "enemy_1003_ncbow_2",
+      "count": 3,
+      "time": 173,
+      "interval": 3,
+      "route": 3,
+      "fragment": 2
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 2,
+    "col": 0,
+    "routes": [
+     3,
+     3,
+     3,
+     3,
+     3,
+     3,
+     6,
+     3,
+     3
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 3,
+    "col": 0,
+    "routes": [
+     1,
+     1,
+     1,
+     4,
+     1,
+     1,
+     1,
+     4,
+     4,
+     1,
+     1
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 4,
+    "col": 0,
+    "routes": [
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     5,
+     2,
+     2
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 2,
+    "col": 10,
+    "routes": [
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     6,
+     2,
+     2
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 3,
+    "col": 10,
+    "routes": [
+     1,
+     1,
+     1,
+     4,
+     1,
+     1,
+     1,
+     4,
+     4,
+     1,
+     1
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 4,
+    "col": 10,
+    "routes": [
+     3,
+     3,
+     3,
+     3,
+     3,
+     3,
+     5,
+     3,
+     3
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1000_gopro_2",
+    "slug": "hound_pro",
+    "name": "Hound Pro",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1000_gopro_3",
+    "slug": "rabid_hound_pro",
+    "name": "Rabid Hound Pro",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1003_ncbow",
+    "slug": "crossbowman",
+    "name": "Crossbowman",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1003_ncbow_2",
+    "slug": "crossbowman_leader",
+    "name": "Crossbowman Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1005_yokai_2",
+    "slug": "monster_mk_ii",
+    "name": "Monster Mk II",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1007_slime_2",
+    "slug": "originium_slug_enemy_1007_slime_2",
+    "name": "Originium Slug α",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1007_slime_3",
+    "slug": "originium_slug_enemy_1007_slime_3",
+    "name": "Originium Slug β",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1009_lurker",
+    "slug": "lurker",
+    "name": "Lurker",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1011_wizard",
+    "slug": "caster",
+    "name": "Caster",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1033_handax",
+    "slug": "logger",
+    "name": "Logger",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "devices": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "3-1",
+  "geometryHash": "7fd7e9146474cab0e0c6ac2a36edad82a0d852a6506c1a46a354dcef373a2b50",
+  "moveScale": 0.65,
+  "paths": {
+   "1": {
+    "points": [
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      10,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      3
+     ],
+     [
+      10,
+      3
+     ]
+    ]
+   },
+   "2": {
+    "points": [
+     [
+      0,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2.414213562373095,
+     3.414213562373095,
+     4.414213562373095,
+     5.414213562373095,
+     6.414213562373095,
+     7.414213562373095,
+     8.82842712474619,
+     9.82842712474619,
+     10.82842712474619
+    ],
+    "length": 10.82842712474619,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      4
+     ],
+     [
+      10,
+      2
+     ]
+    ]
+   },
+   "3": {
+    "points": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3.414213562373095,
+     4.414213562373095,
+     5.414213562373095,
+     6.414213562373095,
+     7.414213562373095,
+     8.414213562373096,
+     9.414213562373096,
+     10.828427124746192
+    ],
+    "length": 10.828427124746192,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      2
+     ],
+     [
+      10,
+      4
+     ]
+    ]
+   },
+   "4": {
+    "points": [
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      10,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      10,
+      3
+     ]
+    ]
+   },
+   "5": {
+    "points": [
+     [
+      0,
+      4
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": true,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      4
+     ],
+     [
+      10,
+      4
+     ]
+    ]
+   },
+   "6": {
+    "points": [
+     [
+      0,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": true,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1007_slime_2": {
+   "key": "enemy_1007_slime_2",
+   "prefabKey": "enemy_1007_slime_2",
+   "name": "Originium Slug α",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 1050,
+    "atk": 185,
+    "def": 0,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 1.7,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1000_gopro_2": {
+   "key": "enemy_1000_gopro_2",
+   "prefabKey": "enemy_1000_gopro_2",
+   "name": "Hound Pro",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 1700,
+    "atk": 260,
+    "def": 0,
+    "res": 20,
+    "moveSpeed": 1.9,
+    "bat": 1.4,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1003_ncbow": {
+   "key": "enemy_1003_ncbow",
+   "prefabKey": "enemy_1003_ncbow",
+   "name": "Crossbowman",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 1400,
+    "atk": 240,
+    "def": 100,
+    "res": 0,
+    "moveSpeed": 0.9,
+    "bat": 2.4,
+    "aspd": 100,
+    "rangeRadius": 1.9,
+    "rawRangeRadius": 1.9,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1003_ncbow_2": {
+   "key": "enemy_1003_ncbow_2",
+   "prefabKey": "enemy_1003_ncbow_2",
+   "name": "Crossbowman Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 1900,
+    "atk": 310,
+    "def": 150,
+    "res": 0,
+    "moveSpeed": 0.9,
+    "bat": 2.4,
+    "aspd": 100,
+    "rangeRadius": 1.9,
+    "rawRangeRadius": 1.9,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1009_lurker": {
+   "key": "enemy_1009_lurker",
+   "prefabKey": "enemy_1009_lurker",
+   "name": "Lurker",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2200,
+    "atk": 300,
+    "def": 90,
+    "res": 20,
+    "moveSpeed": 1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "<$ba.invisible>Invisible</>",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1000_gopro_3": {
+   "key": "enemy_1000_gopro_3",
+   "prefabKey": "enemy_1000_gopro_3",
+   "name": "Rabid Hound Pro",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3000,
+    "atk": 370,
+    "def": 0,
+    "res": 20,
+    "moveSpeed": 1.9,
+    "bat": 1.4,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1011_wizard": {
+   "key": "enemy_1011_wizard",
+   "prefabKey": "enemy_1011_wizard",
+   "name": "Caster",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 1600,
+    "atk": 200,
+    "def": 50,
+    "res": 50,
+    "moveSpeed": 0.8,
+    "bat": 4,
+    "aspd": 100,
+    "rangeRadius": 1.8,
+    "rawRangeRadius": 1.8,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1007_slime_3": {
+   "key": "enemy_1007_slime_3",
+   "prefabKey": "enemy_1007_slime_3",
+   "name": "Originium Slug β",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 1550,
+    "atk": 240,
+    "def": 0,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 1.7,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1005_yokai_2": {
+   "key": "enemy_1005_yokai_2",
+   "prefabKey": "enemy_1005_yokai_2",
+   "name": "Monster Mk II",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 1550,
+    "atk": 220,
+    "def": 50,
+    "res": 0,
+    "moveSpeed": 0.9,
+    "bat": 3,
+    "aspd": 100,
+    "rangeRadius": 2,
+    "rawRangeRadius": 2,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "FLY",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Flying unit.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "drone"
+   ]
+  },
+  "enemy_1033_handax": {
+   "key": "enemy_1033_handax",
+   "prefabKey": "enemy_1033_handax",
+   "name": "Logger",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 8000,
+    "atk": 750,
+    "def": 80,
+    "res": 30,
+    "moveSpeed": 0.75,
+    "bat": 3.3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ }
+}

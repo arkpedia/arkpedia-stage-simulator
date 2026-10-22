@@ -1,0 +1,2225 @@
+{
+ "code": "5-3",
+ "name": "Courage and Mortality",
+ "description": "Condition:\nThe range of enemy's ranged units is increased significantly.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "5-3",
+  "rows": 7,
+  "cols": 12,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    1,
+    2,
+    2,
+    2,
+    3,
+    0,
+    0,
+    3,
+    2,
+    2,
+    2,
+    0
+   ],
+   [
+    0,
+    2,
+    4,
+    0,
+    2,
+    3,
+    2,
+    2,
+    4,
+    0,
+    2,
+    5
+   ],
+   [
+    0,
+    2,
+    2,
+    2,
+    2,
+    1,
+    0,
+    3,
+    2,
+    2,
+    2,
+    0
+   ],
+   [
+    5,
+    2,
+    0,
+    4,
+    3,
+    0,
+    1,
+    2,
+    4,
+    0,
+    2,
+    0
+   ],
+   [
+    0,
+    2,
+    2,
+    2,
+    2,
+    2,
+    3,
+    2,
+    2,
+    2,
+    2,
+    1
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": null,
+    "placeholder": true,
+    "start": null,
+    "end": null,
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 1
+    },
+    "end": {
+     "row": 4,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_current_fragment_time",
+      "after_checkpoint": -1,
+      "seconds": 180
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 1
+    },
+    "end": {
+     "row": 4,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_current_fragment_time",
+      "after_checkpoint": -1,
+      "seconds": 100
+     },
+     {
+      "type": "wait_current_fragment_time",
+      "after_checkpoint": 0,
+      "seconds": 150
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 10
+    },
+    "end": {
+     "row": 2,
+     "col": 11
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 7
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_current_fragment_time",
+      "after_checkpoint": 0,
+      "seconds": 100
+     },
+     {
+      "type": "wait_current_fragment_time",
+      "after_checkpoint": 1,
+      "seconds": 150
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 10
+    },
+    "end": {
+     "row": 2,
+     "col": 11
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 7
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_current_fragment_time",
+      "after_checkpoint": 0,
+      "seconds": 100
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 5
+    },
+    "end": {
+     "row": 2,
+     "col": 11
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 7
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 7
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 6
+    },
+    "end": {
+     "row": 4,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 4
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 7
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 2,
+     "col": 11
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 11
+    },
+    "end": {
+     "row": 4,
+     "col": 0
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 5
+    },
+    "end": {
+     "row": 2,
+     "col": 11
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 7
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 6
+    },
+    "end": {
+     "row": 4,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 4
+      }
+     }
+    ],
+    "waits": []
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 218,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Spec Ops Caster Leader",
+      "enemy_id": "enemy_1038_lunmag_2",
+      "count": 1,
+      "time": 0,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Spec Ops Caster Leader",
+      "enemy_id": "enemy_1038_lunmag_2",
+      "count": 1,
+      "time": 0,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Spec Ops Caster Leader",
+      "enemy_id": "enemy_1038_lunmag_2",
+      "count": 1,
+      "time": 0,
+      "route": 3,
+      "fragment": 0
+     },
+     {
+      "enemy": "Spec Ops Caster Leader",
+      "enemy_id": "enemy_1038_lunmag_2",
+      "count": 1,
+      "time": 0,
+      "route": 4,
+      "fragment": 0
+     },
+     {
+      "enemy": "Breaker",
+      "enemy_id": "enemy_1039_breakr",
+      "count": 4,
+      "time": 5,
+      "interval": 8,
+      "route": 5,
+      "fragment": 1
+     },
+     {
+      "enemy": "Breaker",
+      "enemy_id": "enemy_1039_breakr",
+      "count": 4,
+      "time": 37,
+      "interval": 8,
+      "route": 5,
+      "fragment": 2
+     },
+     {
+      "enemy": "Breaker",
+      "enemy_id": "enemy_1039_breakr",
+      "count": 4,
+      "time": 37,
+      "interval": 8,
+      "route": 6,
+      "fragment": 2
+     },
+     {
+      "enemy": "Breaker",
+      "enemy_id": "enemy_1039_breakr",
+      "count": 3,
+      "time": 69,
+      "interval": 8,
+      "route": 5,
+      "fragment": 3
+     },
+     {
+      "enemy": "Breaker Leader",
+      "enemy_id": "enemy_1039_breakr_2",
+      "count": 3,
+      "time": 69,
+      "interval": 8,
+      "route": 6,
+      "fragment": 3
+     },
+     {
+      "enemy": "Breaker Leader",
+      "enemy_id": "enemy_1039_breakr_2",
+      "count": 2,
+      "time": 95,
+      "interval": 12,
+      "route": 5,
+      "fragment": 4
+     },
+     {
+      "enemy": "Breaker Leader",
+      "enemy_id": "enemy_1039_breakr_2",
+      "count": 2,
+      "time": 95,
+      "interval": 12,
+      "route": 6,
+      "fragment": 4
+     },
+     {
+      "enemy": "Spec Ops Caster",
+      "enemy_id": "enemy_1038_lunmag",
+      "count": 2,
+      "time": 127,
+      "interval": 8,
+      "route": 7,
+      "fragment": 5
+     },
+     {
+      "enemy": "Breaker",
+      "enemy_id": "enemy_1039_breakr",
+      "count": 2,
+      "time": 120,
+      "interval": 8,
+      "route": 5,
+      "fragment": 5
+     },
+     {
+      "enemy": "Breaker",
+      "enemy_id": "enemy_1039_breakr",
+      "count": 2,
+      "time": 120,
+      "interval": 8,
+      "route": 6,
+      "fragment": 5
+     },
+     {
+      "enemy": "Spec Ops Caster",
+      "enemy_id": "enemy_1038_lunmag",
+      "count": 2,
+      "time": 155,
+      "interval": 12,
+      "route": 7,
+      "fragment": 6
+     },
+     {
+      "enemy": "Spec Ops Caster",
+      "enemy_id": "enemy_1038_lunmag",
+      "count": 2,
+      "time": 158,
+      "interval": 12,
+      "route": 8,
+      "fragment": 6
+     },
+     {
+      "enemy": "Breaker",
+      "enemy_id": "enemy_1039_breakr",
+      "count": 3,
+      "time": 148,
+      "interval": 8,
+      "route": 5,
+      "fragment": 6
+     },
+     {
+      "enemy": "Breaker",
+      "enemy_id": "enemy_1039_breakr",
+      "count": 3,
+      "time": 148,
+      "interval": 8,
+      "route": 6,
+      "fragment": 6
+     },
+     {
+      "enemy": "Veteran Logger",
+      "enemy_id": "enemy_1033_handax_2",
+      "count": 1,
+      "time": 193,
+      "route": 9,
+      "fragment": 7
+     },
+     {
+      "enemy": "Veteran Logger",
+      "enemy_id": "enemy_1033_handax_2",
+      "count": 1,
+      "time": 193,
+      "route": 10,
+      "fragment": 7
+     },
+     {
+      "enemy": "Breaker Leader",
+      "enemy_id": "enemy_1039_breakr_2",
+      "count": 4,
+      "time": 203,
+      "interval": 5,
+      "route": 7,
+      "fragment": 7
+     },
+     {
+      "enemy": "Breaker Leader",
+      "enemy_id": "enemy_1039_breakr_2",
+      "count": 4,
+      "time": 203,
+      "interval": 5,
+      "route": 8,
+      "fragment": 7
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 0,
+    "routes": [
+     7,
+     7,
+     7
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 3,
+    "col": 5,
+    "routes": [
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     9
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 4,
+    "col": 6,
+    "routes": [
+     6,
+     6,
+     6,
+     6,
+     6,
+     10
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 5,
+    "col": 11,
+    "routes": [
+     8,
+     8
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 2,
+    "col": 11,
+    "routes": [
+     3,
+     4,
+     5,
+     5,
+     5,
+     5,
+     7,
+     5,
+     7,
+     5,
+     9,
+     7
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 4,
+    "col": 0,
+    "routes": [
+     1,
+     2,
+     6,
+     6,
+     6,
+     6,
+     8,
+     6,
+     10,
+     8
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1033_handax_2",
+    "slug": "veteran_logger",
+    "name": "Veteran Logger",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1038_lunmag",
+    "slug": "spec_ops_caster",
+    "name": "Spec Ops Caster",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1038_lunmag_2",
+    "slug": "spec_ops_caster_leader",
+    "name": "Spec Ops Caster Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1039_breakr",
+    "slug": "breaker",
+    "name": "Breaker",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1039_breakr_2",
+    "slug": "breaker_leader",
+    "name": "Breaker Leader",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "devices": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "5-3",
+  "geometryHash": "c027e1ce587b86409564f0fad8a07e8ac8eb43d81dba290504e963bd4992f179",
+  "moveScale": 0.65,
+  "paths": {
+   "1": {
+    "points": [
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      0,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      1,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      0,
+      4
+     ]
+    ]
+   },
+   "2": {
+    "points": [
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      0,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "length": 11,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      1,
+      4
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      0,
+      4
+     ]
+    ]
+   },
+   "3": {
+    "points": [
+     [
+      10,
+      2
+     ],
+     [
+      10,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      10,
+      3
+     ],
+     [
+      10,
+      2
+     ],
+     [
+      11,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "length": 11,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      10,
+      2
+     ],
+     [
+      10,
+      2
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      11,
+      2
+     ]
+    ]
+   },
+   "4": {
+    "points": [
+     [
+      10,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      10,
+      3
+     ],
+     [
+      10,
+      2
+     ],
+     [
+      11,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      10,
+      5
+     ],
+     [
+      10,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      11,
+      2
+     ]
+    ]
+   },
+   "5": {
+    "points": [
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      10,
+      1
+     ],
+     [
+      10,
+      2
+     ],
+     [
+      11,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17
+    ],
+    "length": 17,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 7,
+      "point": [
+       5,
+       2
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      11,
+      2
+     ]
+    ]
+   },
+   "6": {
+    "points": [
+     [
+      6,
+      4
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      0,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16
+    ],
+    "length": 16,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 7,
+      "point": [
+       6,
+       5
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      6,
+      4
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      0,
+      4
+     ]
+    ]
+   },
+   "7": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      10,
+      3
+     ],
+     [
+      10,
+      2
+     ],
+     [
+      11,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14
+    ],
+    "length": 14,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      1
+     ],
+     [
+      11,
+      2
+     ]
+    ]
+   },
+   "8": {
+    "points": [
+     [
+      11,
+      5
+     ],
+     [
+      10,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      0,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "length": 12,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      11,
+      5
+     ],
+     [
+      0,
+      4
+     ]
+    ]
+   },
+   "9": {
+    "points": [
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      10,
+      1
+     ],
+     [
+      10,
+      2
+     ],
+     [
+      11,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17
+    ],
+    "length": 17,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      11,
+      2
+     ]
+    ]
+   },
+   "10": {
+    "points": [
+     [
+      6,
+      4
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      0,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16
+    ],
+    "length": 16,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      6,
+      4
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      0,
+      4
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1038_lunmag_2": {
+   "key": "enemy_1038_lunmag_2",
+   "prefabKey": "enemy_1038_lunmag_2",
+   "name": "Spec Ops Caster Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 6000,
+    "atk": 450,
+    "def": 300,
+    "res": 50,
+    "moveSpeed": 0.8,
+    "bat": 4,
+    "aspd": 100,
+    "rangeRadius": 2.4,
+    "rawRangeRadius": 2.4,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Attacks two targets simultaneously.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1039_breakr": {
+   "key": "enemy_1039_breakr",
+   "prefabKey": "enemy_1039_breakr",
+   "name": "Breaker",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3500,
+    "atk": 410,
+    "def": 50,
+    "res": 25,
+    "moveSpeed": 1.9,
+    "bat": 1.4,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 2.2,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1039_breakr_2": {
+   "key": "enemy_1039_breakr_2",
+   "prefabKey": "enemy_1039_breakr_2",
+   "name": "Breaker Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 5000,
+    "atk": 500,
+    "def": 80,
+    "res": 25,
+    "moveSpeed": 1.9,
+    "bat": 1.4,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 2.2,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1038_lunmag": {
+   "key": "enemy_1038_lunmag",
+   "prefabKey": "enemy_1038_lunmag",
+   "name": "Spec Ops Caster",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 4000,
+    "atk": 400,
+    "def": 250,
+    "res": 50,
+    "moveSpeed": 0.8,
+    "bat": 4,
+    "aspd": 100,
+    "rangeRadius": 2,
+    "rawRangeRadius": 2,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1033_handax_2": {
+   "key": "enemy_1033_handax_2",
+   "prefabKey": "enemy_1033_handax_2",
+   "name": "Veteran Logger",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 12000,
+    "atk": 850,
+    "def": 100,
+    "res": 30,
+    "moveSpeed": 0.75,
+    "bat": 3.3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ }
+}

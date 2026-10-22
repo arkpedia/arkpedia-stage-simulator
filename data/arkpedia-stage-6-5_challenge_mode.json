@@ -1,0 +1,2946 @@
+{
+ "code": "6-5",
+ "name": "Who to Kill?",
+ "description": "Condition:\nEnemy Enraged Possessed Units no longer lose HP over time.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 5,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "6-5",
+  "rows": 7,
+  "cols": 10,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_fence",
+    "height": "low",
+    "walkable": false,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    0,
+    3,
+    3,
+    0
+   ],
+   [
+    0,
+    3,
+    2,
+    0,
+    2,
+    2,
+    4,
+    2,
+    2,
+    5
+   ],
+   [
+    1,
+    6,
+    2,
+    0,
+    2,
+    2,
+    2,
+    2,
+    2,
+    0
+   ],
+   [
+    0,
+    0,
+    4,
+    4,
+    0,
+    4,
+    4,
+    0,
+    4,
+    0
+   ],
+   [
+    1,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    1
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    5,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 0
+    },
+    "end": {
+     "row": 6,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 8
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 0
+    },
+    "end": {
+     "row": 2,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 8
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 2,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 8
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 2,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 8
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 0
+    },
+    "end": {
+     "row": 6,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 3
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 0
+    },
+    "end": {
+     "row": 2,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 8
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 0
+    },
+    "end": {
+     "row": 2,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 8
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 0
+    },
+    "end": {
+     "row": 2,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 8
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 0
+    },
+    "end": {
+     "row": 6,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 9
+    },
+    "end": {
+     "row": 6,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 2,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 8
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 0
+    },
+    "end": {
+     "row": 6,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10
+     }
+    ]
+   },
+   {
+    "motion": null,
+    "placeholder": true,
+    "start": null,
+    "end": null,
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 9
+    },
+    "end": {
+     "row": 6,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 0
+    },
+    "end": {
+     "row": 2,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 8
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 2,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 8
+      }
+     }
+    ],
+    "waits": []
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 241,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Enraged Possessed Thrower",
+      "enemy_id": "enemy_1063_rageth",
+      "count": 1,
+      "time": 3,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 1,
+      "time": 11,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 3,
+      "time": 16,
+      "interval": 13,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 3,
+      "time": 21,
+      "interval": 11,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Possessed Heavy Defender",
+      "enemy_id": "enemy_1061_zomshd",
+      "count": 1,
+      "time": 59,
+      "route": 2,
+      "fragment": 2
+     },
+     {
+      "enemy": "Possessed Heavy Defender",
+      "enemy_id": "enemy_1061_zomshd",
+      "count": 1,
+      "time": 86,
+      "route": 3,
+      "fragment": 2
+     },
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 3,
+      "time": 64,
+      "interval": 10,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 3,
+      "time": 71,
+      "interval": 8,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Enraged Possessed Thrower",
+      "enemy_id": "enemy_1063_rageth",
+      "count": 1,
+      "time": 64,
+      "route": 4,
+      "fragment": 2
+     },
+     {
+      "enemy": "Enraged Possessed Soldier",
+      "enemy_id": "enemy_1062_rager",
+      "count": 1,
+      "time": 106,
+      "route": 5,
+      "fragment": 3
+     },
+     {
+      "enemy": "Enraged Possessed Soldier",
+      "enemy_id": "enemy_1062_rager",
+      "count": 1,
+      "time": 143,
+      "route": 6,
+      "fragment": 3
+     },
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 3,
+      "time": 118,
+      "interval": 8,
+      "route": 7,
+      "fragment": 3
+     },
+     {
+      "enemy": "Enraged Possessed Thrower",
+      "enemy_id": "enemy_1063_rageth",
+      "count": 1,
+      "time": 106,
+      "route": 8,
+      "fragment": 3
+     },
+     {
+      "enemy": "Enraged Possessed Thrower",
+      "enemy_id": "enemy_1063_rageth",
+      "count": 1,
+      "time": 133,
+      "route": 9,
+      "fragment": 3
+     },
+     {
+      "enemy": "Possessed Heavy Defender",
+      "enemy_id": "enemy_1061_zomshd",
+      "count": 1,
+      "time": 115,
+      "route": 10,
+      "fragment": 3
+     },
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 4,
+      "time": 166,
+      "interval": 10,
+      "route": 1,
+      "fragment": 4
+     },
+     {
+      "enemy": "Enraged Possessed Soldier",
+      "enemy_id": "enemy_1062_rager",
+      "count": 1,
+      "time": 173,
+      "route": 5,
+      "fragment": 4
+     },
+     {
+      "enemy": "Possessed Heavy Defender",
+      "enemy_id": "enemy_1061_zomshd",
+      "count": 1,
+      "time": 175,
+      "route": 10,
+      "fragment": 4
+     },
+     {
+      "enemy": "Enraged Possessed Thrower",
+      "enemy_id": "enemy_1063_rageth",
+      "count": 1,
+      "time": 168,
+      "route": 11,
+      "fragment": 4
+     },
+     {
+      "enemy": "Enraged Possessed Bonethrower",
+      "enemy_id": "enemy_1063_rageth_2",
+      "count": 1,
+      "time": 198,
+      "route": 11,
+      "fragment": 4
+     },
+     {
+      "enemy": "Enraged Possessed Thrower",
+      "enemy_id": "enemy_1063_rageth",
+      "count": 1,
+      "time": 168,
+      "route": 13,
+      "fragment": 4
+     },
+     {
+      "enemy": "Enraged Possessed Thrower",
+      "enemy_id": "enemy_1063_rageth",
+      "count": 1,
+      "time": 198,
+      "route": 13,
+      "fragment": 4
+     },
+     {
+      "enemy": "Enraged Possessed Leader",
+      "enemy_id": "enemy_1062_rager_2",
+      "count": 1,
+      "time": 211,
+      "route": 5,
+      "fragment": 5
+     },
+     {
+      "enemy": "Enraged Possessed Leader",
+      "enemy_id": "enemy_1062_rager_2",
+      "count": 1,
+      "time": 241,
+      "route": 14,
+      "fragment": 5
+     },
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 2,
+      "time": 213,
+      "interval": 1.5,
+      "route": 15,
+      "fragment": 5
+     },
+     {
+      "enemy": "Possessed Heavy Defender",
+      "enemy_id": "enemy_1061_zomshd",
+      "count": 1,
+      "time": 220,
+      "route": 10,
+      "fragment": 5
+     },
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 2,
+      "time": 226,
+      "interval": 1.5,
+      "route": 15,
+      "fragment": 5
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 0,
+    "routes": [
+     2,
+     3,
+     10,
+     10,
+     15,
+     10,
+     15
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 3,
+    "col": 0,
+    "routes": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     5,
+     6,
+     7,
+     1,
+     5,
+     5,
+     14
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 5,
+    "col": 0,
+    "routes": [
+     0,
+     4,
+     8,
+     11,
+     11
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 5,
+    "col": 9,
+    "routes": [
+     9,
+     13,
+     13
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 2,
+    "col": 9,
+    "routes": [
+     1,
+     1,
+     1,
+     2,
+     3,
+     1,
+     1,
+     5,
+     6,
+     7,
+     10,
+     1,
+     5,
+     10,
+     5,
+     14,
+     15,
+     10,
+     15
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 6,
+    "col": 5,
+    "routes": [
+     0,
+     4,
+     8,
+     9,
+     11,
+     11,
+     13,
+     13
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1043_zomsbr",
+    "slug": "possessed_soldier",
+    "name": "Possessed Soldier",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1061_zomshd",
+    "slug": "possessed_heavy_defender",
+    "name": "Possessed Heavy Defender",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1062_rager",
+    "slug": "enraged_possessed_soldier",
+    "name": "Enraged Possessed Soldier",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1062_rager_2",
+    "slug": "enraged_possessed_leader",
+    "name": "Enraged Possessed Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1063_rageth",
+    "slug": "enraged_possessed_thrower",
+    "name": "Enraged Possessed Thrower",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1063_rageth_2",
+    "slug": "enraged_possessed_bonethrower",
+    "name": "Enraged Possessed Bonethrower",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "devices": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "6-5",
+  "geometryHash": "bbb7c8fc4b55c495fcec13dad5afc7be28e7332cacb5e704cf7e6988d6b94070",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      0,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "length": 6,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 8,
+      "point": [
+       1,
+       5
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      6
+     ]
+    ]
+   },
+   "1": {
+    "points": [
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8.414213562373096,
+     9.414213562373096,
+     10.414213562373096,
+     11.828427124746192,
+     12.828427124746192
+    ],
+    "length": 12.828427124746192,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ]
+    ]
+   },
+   "2": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10.414213562373096,
+     11.414213562373096
+    ],
+    "length": 11.414213562373096,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 5,
+      "point": [
+       1,
+       1
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ]
+    ]
+   },
+   "3": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10.414213562373096,
+     11.414213562373096
+    ],
+    "length": 11.414213562373096,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ]
+    ]
+   },
+   "4": {
+    "points": [
+     [
+      0,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "length": 6,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 3,
+      "point": [
+       1,
+       5
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      6
+     ]
+    ]
+   },
+   "5": {
+    "points": [
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12.414213562373096,
+     13.414213562373096
+    ],
+    "length": 13.414213562373096,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 10,
+      "point": [
+       1,
+       3
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ]
+    ]
+   },
+   "6": {
+    "points": [
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8.414213562373096,
+     9.414213562373096,
+     10.414213562373096,
+     11.828427124746192,
+     12.828427124746192
+    ],
+    "length": 12.828427124746192,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 10,
+      "point": [
+       1,
+       3
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ]
+    ]
+   },
+   "7": {
+    "points": [
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8.414213562373096,
+     9.414213562373096,
+     10.414213562373096,
+     11.828427124746192,
+     12.828427124746192
+    ],
+    "length": 12.828427124746192,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ]
+    ]
+   },
+   "8": {
+    "points": [
+     [
+      0,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "length": 6,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      6
+     ]
+    ]
+   },
+   "9": {
+    "points": [
+     [
+      9,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "length": 5,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      9,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      6
+     ]
+    ]
+   },
+   "10": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6.414213562373095,
+     7.414213562373095,
+     8.414213562373096,
+     9.828427124746192,
+     10.828427124746192
+    ],
+    "length": 10.828427124746192,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ]
+    ]
+   },
+   "11": {
+    "points": [
+     [
+      0,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "length": 6,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 10,
+      "point": [
+       1,
+       5
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      6
+     ]
+    ]
+   },
+   "13": {
+    "points": [
+     [
+      9,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "length": 5,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 5,
+      "point": [
+       8,
+       5
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      9,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      6
+     ]
+    ]
+   },
+   "14": {
+    "points": [
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12.414213562373096,
+     13.414213562373096
+    ],
+    "length": 13.414213562373096,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ]
+    ]
+   },
+   "15": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10.414213562373096,
+     11.414213562373096
+    ],
+    "length": 11.414213562373096,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1063_rageth": {
+   "key": "enemy_1063_rageth",
+   "prefabKey": "enemy_1063_rageth",
+   "name": "Enraged Possessed Thrower",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 15000,
+    "atk": 750,
+    "def": 200,
+    "res": 30,
+    "moveSpeed": 0.7,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 2.6,
+    "rawRangeRadius": 2.6,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Will gradually lose HP over time",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "periodic_damage.damage": 250
+    },
+    "bbStr": {},
+    "groups": {
+     "periodic_damage": [
+      "damage"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "mutant"
+   ]
+  },
+  "enemy_1043_zomsbr": {
+   "key": "enemy_1043_zomsbr",
+   "prefabKey": "enemy_1043_zomsbr",
+   "name": "Possessed Soldier",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2500,
+    "atk": 250,
+    "def": 100,
+    "res": 30,
+    "moveSpeed": 0.9,
+    "bat": 1.8,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 2.5,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 80,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Regenerates HP over time.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "mutant"
+   ]
+  },
+  "enemy_1061_zomshd": {
+   "key": "enemy_1061_zomshd",
+   "prefabKey": "enemy_1061_zomshd",
+   "name": "Possessed Heavy Defender",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 10000,
+    "atk": 600,
+    "def": 800,
+    "res": 0,
+    "moveSpeed": 0.75,
+    "bat": 2.6,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 200,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Regenerates HP over time.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "mutant"
+   ]
+  },
+  "enemy_1062_rager": {
+   "key": "enemy_1062_rager",
+   "prefabKey": "enemy_1062_rager",
+   "name": "Enraged Possessed Soldier",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 20000,
+    "atk": 1000,
+    "def": 200,
+    "res": 30,
+    "moveSpeed": 1.2,
+    "bat": 1.3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Will gradually lose HP over time",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "periodic_damage.damage": 330
+    },
+    "bbStr": {},
+    "groups": {
+     "periodic_damage": [
+      "damage"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "mutant"
+   ]
+  },
+  "enemy_1063_rageth_2": {
+   "key": "enemy_1063_rageth_2",
+   "prefabKey": "enemy_1063_rageth_2",
+   "name": "Enraged Possessed Bonethrower",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 22000,
+    "atk": 1050,
+    "def": 220,
+    "res": 30,
+    "moveSpeed": 0.7,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 2.6,
+    "rawRangeRadius": 2.6,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Will gradually lose HP over time",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "periodic_damage.damage": 350
+    },
+    "bbStr": {},
+    "groups": {
+     "periodic_damage": [
+      "damage"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "mutant"
+   ]
+  },
+  "enemy_1062_rager_2": {
+   "key": "enemy_1062_rager_2",
+   "prefabKey": "enemy_1062_rager_2",
+   "name": "Enraged Possessed Leader",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 30000,
+    "atk": 1750,
+    "def": 230,
+    "res": 30,
+    "moveSpeed": 1.2,
+    "bat": 1.3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Will gradually lose HP over time",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "periodic_damage.damage": 500
+    },
+    "bbStr": {},
+    "groups": {
+     "periodic_damage": [
+      "damage"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "mutant"
+   ]
+  }
+ }
+}
