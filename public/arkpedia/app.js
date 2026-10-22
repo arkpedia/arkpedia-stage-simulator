@@ -327,10 +327,10 @@ async function start() {
     workspace.innerHTML = `<div class="battle-content"><div class="board battle-board" id="battle-board">
       <header class="battle-header">
         <button id="settings" aria-label="Battle settings" aria-expanded="false" aria-controls="battle-settings">⚙</button>
-        <div class="battle-settings" id="battle-settings" hidden><p>0-1 · Collapse <span id="battle-time" aria-label="Battle time"></span></p><button id="routes" aria-pressed="false">Paths</button><button id="restart">Restart</button><button id="exit">Back to squad</button></div>
+        <div class="battle-settings" id="battle-settings" hidden><p>${escape(data.stage.code)} · Collapse <span id="battle-time" aria-label="Battle time"></span></p><button id="routes" aria-pressed="false">Paths</button><button id="restart">Restart</button><button id="exit">Back to squad</button></div>
         <div class="battle-controls"><button id="speed" aria-label="Battle speed">1×</button><button id="pause" aria-label="Start"><span aria-hidden="true">▶</span></button></div>
       </header>
-      ${battleReadouts()}<span class="simulation-label">Simulation · 0-1</span><span class="pause-label" id="paused-label" hidden>Paused</span>
+      ${battleReadouts()}<span class="simulation-label">Simulation · ${escape(data.stage.code)}</span><span class="pause-label" id="paused-label" hidden>Paused</span>
       <aside class="command" id="command" aria-label="Selected operator" hidden></aside>
       <div class="field-command" id="field-command" aria-label="Operator actions" hidden></div>
       <button class="facing-cancel" id="facing-cancel" hidden><span aria-hidden="true">×</span>Cancel</button>

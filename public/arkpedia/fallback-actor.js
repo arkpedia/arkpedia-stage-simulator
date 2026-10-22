@@ -11,16 +11,9 @@ export class FallbackActor {
     const color = enemy ? 0xd16a6a : 0x63c7ef;
     const dark = enemy ? 0x6e2d2d : 0x235c73;
     const body = new P.Graphics();
-    body.beginFill(dark, 0.95).lineStyle(2, color, 1).drawCircle(0, 0, 20).endFill();
-    body.beginFill(color, 0.85).drawCircle(0, 0, 13).endFill();
+    body.beginFill(dark, 0.95).lineStyle(22, color, 1).drawCircle(0, 0, 240).endFill();
+    body.beginFill(color, 0.85).drawCircle(0, 0, 170).endFill();
     this.spine.addChild(body);
-    const initial = new P.Text(unit.name?.trim().slice(0, 2) || (enemy ? 'E' : 'OP'), {
-      fontFamily: 'system-ui, sans-serif', fontSize: 13, fontWeight: '700', fill: 0xf4fbfa,
-      align: 'center',
-    });
-    initial.anchor.set(0.5);
-    initial.y = -1;
-    this.spine.addChild(initial);
     this.gaugeHeight = 38;
     this.mode = 'idle';
   }
