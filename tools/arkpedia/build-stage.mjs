@@ -44,6 +44,8 @@ for (const [index, route] of geometry.routes.entries()) {
   syntheticRoutes.push(index);
 }
 if (!Object.keys(paths).length) throw Error('Playback export has no paths and no route to synthesize');
+const devicePath = join(dirname(args.stage), '..', 'stage-devices.json');
+const devices = existsSync(devicePath) ? (JSON.parse(await readFile(devicePath, 'utf8'))[source.slug] ?? []) : [];
 const stage = {
   code: source.code,
   name: source.name,
@@ -52,6 +54,7 @@ const stage = {
   mapTags: [],
   mapTagSource: null,
   geometry,
+  devices,
   pathing: {
     schemaVersion: 1,
     syntheticRoutes,
