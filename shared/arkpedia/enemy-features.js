@@ -459,6 +459,10 @@ export const ENEMY_FEATURES = Object.freeze({
   'skill:GrabEnd': { covers: r => r.skills.some(s => s.prefabKey === 'GrabEnd'), note: 'PRTS scripted action' },
   'skill:Click': { covers: r => r.skills.some(s => s.prefabKey === 'Click'), note: 'PRTS scripted action' },
   'skill:Angry': { covers: r => r.skills.some(s => s.prefabKey === 'Angry'), note: 'PRTS scripted action' },
+  // Inspired extra target.
+  'ability:When Inspired, attacks one additional target.': { covers: r => r.abilities.some(a => a.text === 'When Inspired, attacks one additional target.'),
+    ability: { kind: 'inspiredTargets', params: () => ({ base: 1, inspired: 2 }) }, note: 'one extra target while Inspired',
+    explains: /^When Inspired, attacks one additional target\.$/ },
   // Tile-denial on death.
   'ability:When defeated, the tile underneath becomes unavailable for deployment': {
     covers: r => r.abilities.some(a => a.text === 'When defeated, the tile underneath becomes unavailable for deployment'),
@@ -574,11 +578,15 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => text === 'Attacks deal Physical damage to all surrounding units.'
       || text === 'When inside Originium pollution or an Active Originium Storm, attacks deal Physical damage to all surrounding allied units and all your units inside Originium pollution or Active Originium Storms.' },
   // Guerrilla Herald: a battlefield-wide ATK/DEF buff for every enemy.
-  'talent:strength': { covers: r => sig(r, 'strength', ['atk', 'def'])
-      && r.abilities.some(a => a.text === 'Increases the ATK and DEF of enemy units when on the battlefield.'),
-    ability: { kind: 'enemyGlobalStatAura', params: r => ({ atkPct: r.talents.bb['strength.atk'], defFlat: r.talents.bb['strength.def'] }) },
-    note: 'all living enemies +atk%/+def while the Herald lives',
-    explains: /^Increases the ATK and DEF of enemy units when on the battlefield\.$/ },
+  'talent:strength': { covers: r => (sig(r, 'strength', ['atk', 'def'])
+      && r.abilities.some(a => a.text === 'Increases the ATK and DEF of enemy units when on the battlefield.'))
+      || (sig(r, 'strength', ['move_speed']) && r.abilities.some(a => a.text === 'When Inspired, gains Movement Speed.')),
+    ability: { kind: 'strengthAura', params: r => sig(r, 'strength', ['move_speed'])
+      ? { mode: 'inspired', move: r.talents.bb['strength.move_speed'] }
+      : { mode: 'aura', atkPct: r.talents.bb['strength.atk'], defFlat: r.talents.bb['strength.def'] } },
+    note: 'all living enemies +atk%/+def while the Herald lives, or Inspired movement',
+    explains: text => text === 'Increases the ATK and DEF of enemy units when on the battlefield.'
+      || text === 'When Inspired, gains Movement Speed.' },
   // Active Originium Storm: a growing storm aura that damages and slows SP recovery.
   'talent:StormAura': { covers: r => sig(r, 'StormAura', ['damage', 'damage_step', 'max_damage', 'max_radius', 'radius_step', 'range_radius', 'sp_recover_ratio']),
     ability: { kind: 'stormAura', params: r => ({ damage: r.talents.bb['StormAura.damage'], damageStep: r.talents.bb['StormAura.damage_step'],

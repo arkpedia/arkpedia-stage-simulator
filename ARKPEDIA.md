@@ -5926,3 +5926,35 @@ The geometry-only build added **15-8, 15-11, 15-12, 15-14, 15-15 and 15-18** as 
 ### Full-suite verification at 404/212 (S132, 2026-10-21)
 
 Full repository suite after E68-E71 and the 13 test-only stages: **22,813 tests, 22,802 passed, 0 failed, 11 skipped**. `docs/REMAINING.md` records that result.
+
+### Inspired movement (E72, 2026-10-21)
+
+The Guerrilla Herald `strength` feature now also covers the Inspired movement variant: while `ab:inspired` is present, the unit gains the reviewed movement multiplier; without the buff it does nothing. Support rises to **406 of 1,552** enemies; the test pins the conditional buff.
+
+### 7-4 test-only (S133, 2026-10-21)
+
+**7-4** builds with the Inspired-movement support (7×11, 95 spawns, 2 enemies) and is kept `testOnly` because its routes are synthetic. Catalogue is **213 entries** (199 public + 14 testOnly); 212 data-backed stages smoke-tested.
+
+### Inspired extra target (E73, 2026-10-21)
+
+While `ab:inspired` is present the Guerrilla Sniper attacks one additional target; without it the base count returns. Support rises to **408 of 1,552** enemies. The test pins the on/off switch.
+
+### 7-5 public (S134, 2026-10-21)
+
+**7-5** builds with its original playback and is reviewed public (8×11, 70 spawns, 6 enemies). Catalogue is **214 entries** (200 public + 14 testOnly); 213 data-backed stages smoke-tested.
+
+### Fix: Herald aura branch (S135, 2026-10-21)
+
+`strengthAura` called the later object property `enemyGlobalStatAura` by a bare name, which is not in scope; the aura branch is now defined inline. Smoke tests caught it on the 7-6/7-8/7-9 batch.
+
+### 7-6, 7-8 and 7-9 public (S136, 2026-10-21)
+
+Three more chapter-7 stages build with their original playback and are reviewed public: **7-6** (8×11, 44 spawns), **7-8** (7×11, 51) and **7-9** (8×12, 54). Catalogue is **217 entries** (203 public + 14 testOnly); 216 data-backed stages smoke-tested.
+
+### 7-13 and TR-17 (S137, 2026-10-21)
+
+The Inspired support unlocked two more public stages: **7-13** (8×11, 49 spawns, 5 enemies) and **TR-17** (6×9, 6 spawns, 3 enemies). Catalogue is **219 entries** (205 public + 14 testOnly); 218 data-backed stages smoke-tested.
+
+### Full suite after Inspired/7-x (S138, 2026-10-21)
+
+Full repository suite: **22,822 tests, 22,811 passed, 0 failed, 11 skipped** with 408 enemies and 219 catalogue entries.
