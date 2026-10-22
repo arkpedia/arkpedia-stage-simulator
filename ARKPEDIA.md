@@ -5910,3 +5910,7 @@ A reviewed death effect now marks the tile unavailable for deployment (`noDeploy
 ### Geometry-only stage builds (S128, 2026-10-21)
 
 `build-stage.mjs` no longer requires `--playback`: without it, every non-placeholder route is synthesized from the reviewed start/checkpoint/end chain. 15-4 rebuilds this way. The chapter-17 candidates still fail earlier on missing enemy records (`enemy_10203_mumag`, `enemy_10211_murad`, …), so no new stage was added.
+
+### Snapshot to 404 enemies / 205 entries (S129, 2026-10-21)
+
+`docs/REMAINING.md` records the current branch: **404** supported enemies, **204** built source stages, **205** catalogue entries, and the 22,806-test full suite after the E70/E71 and test-only stage additions.
