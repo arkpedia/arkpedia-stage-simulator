@@ -6048,3 +6048,11 @@ Rebuilt the **28 already-public stages** whose only functional devices are now s
 ### Ten more artillery stages (S156, 2026-10-22)
 
 The supported-device coverage now considers the reviewed artillery, so 12 more source stages build with original routes: 10-6/10-7/10-11/10-12 and adverse variants, 10-14/10-15 adverse variants, 13-5 and adverse, and TR-20 (fixed squad). All promoted public after route/device review. Catalogue is **235** (219 public + 16 testOnly), 234 files.
+
+### Pulse-charged enemy and 7-10 (S157, 2026-10-22)
+
+Implemented the pulse-charged Sarkaz: ordinary attacks become Arts and the Originium Altar pulse deals it no damage. With 1084 supported, **7-10** builds with its altar and original routes and is promoted public. Support is **416 enemies**; catalogue **236** (220 public + 16 testOnly), 235 files.
+
+### Inspired ATK/ASPD variants (S158, 2026-10-22)
+
+Extended the `talent:strength` feature to covered Inspired ATK and ASPD records (1082/1083) and the landing text; support is **419 enemies**. No new stage yet (7-11/7-12 still need the pulse-expanded caster range).
