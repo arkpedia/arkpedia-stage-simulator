@@ -6036,3 +6036,7 @@ Implemented the hidden controller: units on Originium-pollution tiles lose 80% n
 ### Only synthesize routes a wave uses (S153, 2026-10-22)
 
 `build-stage.mjs` no longer invents paths for unused geometry routes. 10-15's missing route 2 has no spawns, so the rebuilt stage has **no synthetic routes** and was promoted public (207 public + 15 testOnly = 222).
+
+### 15-13 conditional group merge (S154, 2026-10-22)
+
+15-13's only conditional entries are `source:wave` with a single `hidden_group`; the builder merged them as pristine spawns and the stage now builds. It stays `testOnly` for its synthetic route 4. Catalogue is **223** (207 public + 16 testOnly), 222 files.
