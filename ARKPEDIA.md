@@ -6006,3 +6006,7 @@ Imported the four original 7-6 Guerrilla enemy chibis into `arkpedia-sd-assets` 
 ### Flying native claim (E76, 2026-10-21)
 
 The shared `Flying unit.` feature now claims one native active component, supporting the Imperial Artillery Targeteer and the other flying-only records (1112/1112_2, 2045_smdrn). Support rises to **415 of 1,552** enemies; no stage count change.
+
+### W support and 1-11 (E77, 2026-10-21)
+
+Added the documented C4 features for W; the C4 kit already existed. The new support unlocked **1-11**, which builds from source geometry with synthetic routes and is kept `testOnly`. Support is **416 enemies**; catalogue is **220 entries** (203 public + 17 testOnly), 219 committed stage files.
