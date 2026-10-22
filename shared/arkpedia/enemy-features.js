@@ -459,6 +459,10 @@ export const ENEMY_FEATURES = Object.freeze({
   'skill:GrabEnd': { covers: r => r.skills.some(s => s.prefabKey === 'GrabEnd'), note: 'PRTS scripted action' },
   'skill:Click': { covers: r => r.skills.some(s => s.prefabKey === 'Click'), note: 'PRTS scripted action' },
   'skill:Angry': { covers: r => r.skills.some(s => s.prefabKey === 'Angry'), note: 'PRTS scripted action' },
+  // Inspired extra target.
+  'ability:When Inspired, attacks one additional target.': { covers: r => r.abilities.some(a => a.text === 'When Inspired, attacks one additional target.'),
+    ability: { kind: 'inspiredTargets', params: () => ({ base: 1, inspired: 2 }) }, note: 'one extra target while Inspired',
+    explains: /^When Inspired, attacks one additional target\.$/ },
   // Tile-denial on death.
   'ability:When defeated, the tile underneath becomes unavailable for deployment': {
     covers: r => r.abilities.some(a => a.text === 'When defeated, the tile underneath becomes unavailable for deployment'),

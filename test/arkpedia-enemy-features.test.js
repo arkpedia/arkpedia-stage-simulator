@@ -702,6 +702,12 @@ test('Inspired movement: the buff only applies while Inspired', () => {
   h.b.addBuff(e, { key: 'ab:inspired', persist: true }); h.run(1);
   assert.ok(e.findBuff('ab:inspiredMove'));
 });
+test('Inspired extra target applies only while Inspired', () => {
+  const key = 'enemy_1079_sotisp', h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
+  h.run(0.5); assert.equal(e.profile.maxTargets, 1);
+  h.b.addBuff(e, { key: 'ab:inspired', persist: true }); h.run(0.5); assert.equal(e.profile.maxTargets, 2);
+  h.b.removeBuff(e, 'ab:inspired'); h.run(0.5); assert.equal(e.profile.maxTargets, 1);
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

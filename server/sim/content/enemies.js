@@ -370,6 +370,10 @@ export const featureAbilities = Object.freeze({
   strengthAura: (p) => p.mode === 'inspired' ? ({
     tick(b, e) { if (e.findBuff?.('ab:inspired')) b.addBuff(e, { key: 'ab:inspiredMove', duration: 0.7, visible: true, mods: { moveMul: 1 + (p.move ?? 0) } }); },
   }) : enemyGlobalStatAura(p),
+  // Inspired extra target.
+  inspiredTargets: ({ base, inspired }) => ({
+    tick(b, e) { e.profile.maxTargets = e.findBuff?.('ab:inspired') ? inspired : base; },
+  }),
   // Tile denial: mark the death tile unavailable for deployment.
   tileDenied: () => ({
     death(c, b, e) { b.noDeployTiles ??= new Set(); b.noDeployTiles.add(`${e.tileR},${e.tileC}`); },
