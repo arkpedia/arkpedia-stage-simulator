@@ -256,7 +256,7 @@ import { catalogueFor, recordFor, fixedSquadBuilds } from "../../shared/arkpedia
 import { REGULAR_OPERATORS } from "../../shared/arkpedia/operators.js";
 import { assertRegularEnemies } from "../../shared/arkpedia/enemies.js";
 import { installEnemyFeatures } from "./content/arkpedia-enemy-features.js";
-import { STAGE_DEVICES, pulseTiles } from "../../shared/arkpedia/stage-devices.js";
+import { STAGE_DEVICES, pulseTiles, artilleryTiles } from "../../shared/arkpedia/stage-devices.js";
 import { compileBuffTemplate } from "../../shared/arkpedia/behavior.js";
 import {
   prepareSquad,
@@ -1199,18 +1199,39 @@ export class StandardBattle extends Battle {
   }
   _tickMvpStageDevices(dt) {
     for (const d of this.mvpStageDevices) {
-      const spec = STAGE_DEVICES[d.name].pulse;
-      d.sp += spec.spPerSecond * dt;
-      while (d.sp >= spec.spCost) {
-        d.sp -= spec.spCost;
-        const tiles = pulseTiles(d.row, d.col);
-        for (const u of this.units) {
-          if (!u.alive || !u.deployed || u.mem?.pulseImmune || u.profile?.pulseImmune) continue;
-          const r = Math.round(u.y), c = Math.round(u.x);
-          if (!tiles.some(([tr, tc]) => tr === r && tc === c)) continue;
-          this.dealDamage(null, u, { amount: spec.damage, type: 'true', sourceless: true, ignoreSelect: true, tags: ['device', 'pulse'] });
+      const def = STAGE_DEVICES[d.name];
+      if (def.pulse) {
+        const spec = def.pulse;
+        d.sp += spec.spPerSecond * dt;
+        while (d.sp >= spec.spCost) {
+          d.sp -= spec.spCost;
+          const tiles = pulseTiles(d.row, d.col);
+          for (const u of this.units) {
+            if (!u.alive || !u.deployed || u.mem?.pulseImmune || u.profile?.pulseImmune) continue;
+            const r = Math.round(u.y), c = Math.round(u.x);
+            if (!tiles.some(([tr, tc]) => tr === r && tc === c)) continue;
+            this.dealDamage(null, u, { amount: spec.damage, type: 'true', sourceless: true, ignoreSelect: true, tags: ['device', 'pulse'] });
+          }
+          this.fx('explode', { x: d.col, y: d.row, r: 1.5, kind: 'pulse' });
         }
-        this.fx('explode', { x: d.col, y: d.row, r: 1.5, kind: 'pulse' });
+      } else if (def.artillery) {
+        const spec = def.artillery;
+        d.sp = Math.min(spec.spCost, d.sp + spec.spPerSecond * dt);
+        if (d.sp < spec.spCost) continue;
+        const target = this.allyUnits
+          .filter(a => a.alive && a.deployed && a.kind !== 'device' && !a.hidden
+            && !a.s.flags.stealth && !a.s.flags.camu && !a.s.flags.liftoff)
+          .sort((a, b) => (b.s.blockCnt ?? 0) - (a.s.blockCnt ?? 0) || b.deploySeq - a.deploySeq)[0];
+        if (!target) continue;
+        d.sp = 0;
+        const tiles = artilleryTiles(Math.round(target.y), Math.round(target.x));
+        const set = new Set(tiles.map(([r, c]) => `${r},${c}`));
+        for (const u of this.units) {
+          if (!u.alive || !u.deployed) continue;
+          if (!set.has(`${Math.round(u.y)},${Math.round(u.x)}`)) continue;
+          this.dealDamage(null, u, { amount: spec.damage, type: 'true', sourceless: true, ignoreSelect: true, tags: ['device', 'artillery'] });
+        }
+        this.fx('explode', { x: target.x, y: target.y, r: 2, kind: 'artillery' });
       }
     }
   }

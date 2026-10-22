@@ -2,6 +2,11 @@
 // Reviewed stage devices. The source data only carries position and name; the
 // device parameters live here with their source descriptions.
 export const STAGE_DEVICES = Object.freeze({
+  'Londinium Secondary Defense Artillery': Object.freeze({
+    // PRTS: 1 meter/s, cap 120, target = highest-Block visible ally (newest on a tie),
+    // 3000 True damage to both sides in the 3x3 core plus 1x3 arms.
+    artillery: Object.freeze({ damage: 3000, spCost: 120, spPerSecond: 1, area: 'artillery' }),
+  }),
   'Originium Altar': Object.freeze({
     // PRTS 源石祭坛: auto-recovery/auto-trigger skill, initial 0, SP cost 7,
     // 500 True damage to every allied and enemy unit in the x-1 cross, including
@@ -15,4 +20,16 @@ export const SUPPORTED_STAGE_DEVICE_NAMES = Object.freeze(Object.keys(STAGE_DEVI
 /** Tiles in the x-1 cross around a device (its own tile plus four orthogonal neighbours). */
 export function pulseTiles(row, col) {
   return [[row, col], [row - 1, col], [row + 1, col], [row, col - 1], [row, col + 1]];
+}
+
+/** Tiles hit by the Londinium artillery: a 3x3 core with one 1x3 extension on each side. */
+export function artilleryTiles(row, col) {
+  const out = [];
+  for (let r = row - 2; r <= row + 2; r++) for (let c = col - 2; c <= col + 2; c++) {
+    const dr = Math.abs(r - row), dc = Math.abs(c - col);
+    if (dr <= 1 && dc <= 1) out.push([r, c]);
+    else if (dr === 2 && dc <= 1) out.push([r, c]);
+    else if (dc === 2 && dr <= 1) out.push([r, c]);
+  }
+  return out;
 }

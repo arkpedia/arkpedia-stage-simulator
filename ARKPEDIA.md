@@ -6024,3 +6024,7 @@ Added `npm run coverage:arkpedia-assets` and `docs/ASSETS.md`: 1,187 mapped mode
 Implemented the reviewed PRTS altar: auto-triggered pulse every 7 SP seconds, **500 True damage** to allied and enemy units in its `x-1` cross, including air and normally untargetable units, with pulse-immune units excluded. Unknown devices still fail closed. Rebuilt 7-8/7-9 with their altar data and promoted both back to public (205 public, 15 testOnly, 220 catalogue entries).
 
 Full suite after the altar promotion: **22,831 tests, 22,820 passed, 0 failed, 11 skipped**.
+
+### Londinium artillery device (S151, 2026-10-22)
+
+Implemented the reviewed artillery meter: 1/s to 120, target the highest-Block visible ally (newest on ties), then 3000 True damage to both sides in the 3×3 core plus 1×3 cardinal arms. Built **10-14** and **10-15** as `testOnly` because they are new and unreviewed. Catalogue is **222 entries** (205 public + 17 testOnly), 221 committed files.
