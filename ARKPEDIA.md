@@ -5982,3 +5982,19 @@ Full repository suite: **22,823 tests, 22,812 passed, 0 failed, 11 skipped** wit
 ### Recon drone (E74, 2026-10-21)
 
 The Sarkaz Requisitioned Engineering Drone now sets flying + stealth, reuses the existing `periodic_damage` self-drain, and treats the artillery-charge attack as inert without the device. A duplicate `periodic_damage` feature introduced during the work was removed, restoring the four Rager/Thirst records. Support rises to **410 of 1,552** enemies.
+
+### Coverage classifies devices (S144, 2026-10-21)
+
+`coverage:arkpedia-stages` now counts functional devices as a first-class blocker before the enemy check: **99 remaining stages** have an unhandled device. This corrected the buildable bucket to 0-1 and 15-19 only; 10-14/10-15 were device-blocked despite all enemies being supported.
+
+### Artificer charge and deathrattle (E75, 2026-10-21)
+
+The Artificer exposes `battle.artilleryCharge` progress and uses the reviewed deathrattle child after one second. The artillery device itself is still unmodeled, so no stage is promoted. A duplicate `deathrattle` feature was removed and the existing reborn branch now accepts records with skills. Support rises to **412 of 1,552** enemies.
+
+### Full suite after Artificer/coverage (S145, 2026-10-21)
+
+Full repository suite: **22,826 tests, 22,815 passed, 0 failed, 11 skipped** with 412 enemies and 99 device-blocked stages.
+
+### Coverage source guard (S146, 2026-10-21)
+
+The device-aware coverage tool read `stage-devices.json` at module load, which broke the coverage test on GitHub runners where the sibling `arkpedia-data` checkout is absent. The read is now conditional on the file existing, so the test skips cleanly.

@@ -34,3 +34,7 @@ The Originium Altar is the first target because 7-8/7-9/7-10 already depend on i
 ## Safety net
 
 `build-stage.mjs` now copies `stage-devices.json` into the stage file and `stageAdapter` refuses any functional device with a named error. Existing stage files have no `devices` field, so the 64-stage backlog is unchanged; every new build that carries an altar/turret/artillery fails until the device is reviewed.
+
+## Coverage integration
+
+The stage coverage report now classifies functional devices before the enemy check, using `stage-devices.json`. It reports **99 remaining stages** whose first blocker is an unhandled device. The buildable bucket is therefore only 0-1 and 15-19 (support-only fixed squad).

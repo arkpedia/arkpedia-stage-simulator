@@ -712,6 +712,11 @@ test('Recon drone: invisible and losing HP over time', () => {
   const key = 'enemy_1227_dair', h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key), hp = e.hp;
   h.run(1); assert.ok(e.findBuff('ab:invisible')); assert.ok(e.hp < hp);
 });
+test('Artificer: charges the artillery and leaves the reborn child', () => {
+  const key = 'enemy_1223_dmech', h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
+  h.b.autoFinish = false; h.run(2); assert.ok(h.b.artilleryCharge >= 1);
+  h.b.kill(e, null); h.run(1.2); assert.equal(h.b.enemies.some(u => u.defId === 'enemy_1220_dzoms'), true);
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

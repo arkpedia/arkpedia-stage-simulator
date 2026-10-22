@@ -459,6 +459,13 @@ export const ENEMY_FEATURES = Object.freeze({
   'skill:GrabEnd': { covers: r => r.skills.some(s => s.prefabKey === 'GrabEnd'), note: 'PRTS scripted action' },
   'skill:Click': { covers: r => r.skills.some(s => s.prefabKey === 'Click'), note: 'PRTS scripted action' },
   'skill:Angry': { covers: r => r.skills.some(s => s.prefabKey === 'Angry'), note: 'PRTS scripted action' },
+  // Artificer: charges the artillery, with the reviewed deathrattle child.
+  'ability:Continuously charges up Londinium Secondary Defense Artillery; when interrupted, the Defense Artillery will lose a portion of its charge progress': {
+    covers: r => r.abilities.some(a => a.text.startsWith('Continuously charges up Londinium Secondary Defense Artillery')),
+    ability: { kind: 'artilleryCharge', params: () => ({}) }, nativeClaim: () => ({ wrappers: 1 }),
+    note: 'artillery charge progress is exposed on the battle; the device is not implemented',
+    explains: /^Continuously charges up Londinium Secondary Defense Artillery; when interrupted, the Defense Artillery will lose a portion of its charge progress$/ },
+  'skill:charge_gunctrl': { covers: r => r.skills.some(s => s.prefabKey === 'charge_gunctrl'), note: 'artillery charge skill' },
   // Flying text shared by several records.
   'ability:Flying unit.': { covers: r => r.abilities.some(a => a.text === 'Flying unit.'), ability: { kind: 'hover', params: () => ({}) }, note: 'flying unit', explains: /^Flying unit\.$/ },
   // Recon drone: invisible, self-draining, and its attacks charge the artillery (charge state is inert without the device).
@@ -732,11 +739,11 @@ export const ENEMY_FEATURES = Object.freeze({
     r => true, 'spawns cnt enemy_key when killed', r => Object.entries(r.talents.bbStr).filter(([k]) => /^deadspawn\.enemy_key$/i.test(k)).map(([, v]) => v),
     /^Spawns \d+ <[^>]+> when defeated$/),
   // "Splits into N <X> upon death" (deathrattle): cnt children after `delay` s, spread around the parent's tile.
-  'talent:deathrattle': { covers: r => r.skills.length === 0 && (
-      (sig(r, 'deathrattle', ['cnt', 'delay', 'enemy_key', 'offset_bound'])
-        && r.abilities.some(a => /^Splits into \d+ <[^>]+> upon death$/.test(a.text)))
+  'talent:deathrattle': { covers: r => (r.skills.length === 0
+      && sig(r, 'deathrattle', ['cnt', 'delay', 'enemy_key', 'offset_bound'])
+      && r.abilities.some(a => /^Splits into \d+ <[^>]+> upon death$/.test(a.text)))
       || (sig(r, 'deathrattle', ['delay', 'enemy_key'])
-        && r.abilities.some(a => /^Will be reborn as a <[^>]+> after falling in battle for the first time$/.test(a.text)))),
+        && r.abilities.some(a => /^Will be reborn as a <[^>]+> after falling in battle for the first time$/.test(a.text))),
     ability: { kind: 'deathSpawnDelayed', params: r => ({ key: r.talents.bbStr['deathrattle.enemy_key'],
       cnt: r.talents.bb['deathrattle.cnt'] ?? 1, delay: r.talents.bb['deathrattle.delay'] ?? 0 }) },
     note: 'splits/reborn as cnt child(ren) after delay s', dependsOn: r => [r.talents.bbStr['deathrattle.enemy_key']].filter(Boolean),

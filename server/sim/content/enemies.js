@@ -372,6 +372,11 @@ export const featureAbilities = Object.freeze({
   }) : ({
     tick(b, e) { for (const u of b.enemies) if (u.alive) b.addBuff(u, { key: `ab:strength:${e.id}`, duration: 0.7, visible: true, mods: { atkPct: p.atkPct, defFlat: p.defFlat } }); },
   }),
+  // Artificer: expose artillery charge progress for a future device.
+  artilleryCharge: () => ({
+    spawn(b, e, a) { a.next = b.time + 1; },
+    tick(b, e, a) { while (b.time >= a.next) { b.artilleryCharge = (b.artilleryCharge ?? 0) + 1; a.next += 1; } },
+  }),
   // Recon drone: invisible and losing HP over time.
   invisibleDrain: () => ({
     spawn(b, e) { e.flying = true; b.addBuff(e, { key: 'ab:invisible', persist: true, flags: { stealth: true } }); },
