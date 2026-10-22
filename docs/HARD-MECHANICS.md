@@ -43,3 +43,15 @@ Three modes (`Mode_Fuchou`, `Mode_Youling`, `Mode_Shushi`) selected by 4 physica
 Multi-form bosses with shared-HP fragments, identity reveal, periodic sync attacks and summons. These are best implemented after the identity layer is fully exercised by a chapter-11 stage.
 
 Until these exist, the coverage report (`npm run coverage:arkpedia-stages`) keeps the affected stages in the unsupported/conditional/token buckets instead of approximating them.
+
+## 8. PRTS / Intrusive Call and Weakening Nodes (15-5+)
+
+`enemy_10072_mpprhd` (Intrusive Call) and `enemy_10082_mpweak` (Weakening Node) are hidden `No Damage` entities with no abilities. Intrusive Call has four story skills (`GrabBegin`, `GrabEnd`, `Click`, `Angry`); the stage description says PRTS deploys enemies and nodes and activates the nodes, whose activation lowers DEF/RES.
+
+A reviewed implementation needs:
+
+- a PRTS controller with the four reviewed scripted actions (not a normal target),
+- node activation state and the reviewed DEF/RES debuff,
+- a test that the node effect applies only after activation and expires correctly.
+
+The current support gate refuses these stages rather than treating the two entities as inert normal enemies.
