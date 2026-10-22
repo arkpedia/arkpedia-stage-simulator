@@ -12,8 +12,8 @@ const withTokens = tokens => ({ ...structuredClone(base), geometry: { ...base.ge
 test('zero-count tokens do not block the adapter', () => {
   assert.doesNotThrow(() => stageAdapter(withTokens([{ unit_id: 'trap_test', count: 0 }])));
 });
-test('a positive token count still blocks the adapter', () => {
-  assert.throws(() => stageAdapter(withTokens([{ unit_id: 'trap_test', count: 1 }])), /Unsupported stage mechanics/);
+test('an unsupported positive token still blocks the adapter', () => {
+  assert.throws(() => stageAdapter(withTokens([{ unit_id: 'trap_test', count: 1 }])), /Unsupported stage tokens/);
 });
 
 test('the reviewed Originium Altar is accepted while unknown devices still block', () => {

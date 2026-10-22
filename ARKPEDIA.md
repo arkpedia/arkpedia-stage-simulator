@@ -6072,3 +6072,7 @@ Fixed coverage to count only rows with `battle` and to resolve the base map for 
 ### Deployable token stat source (S162, 2026-10-22)
 
 Added `tools/arkpedia/import-traps.mjs` and generated `data/arkpedia-deployable-tokens.json` from the public upstream `character_table`/`skill_table` at `db6f9ef8`: **104** stage tokens with phase stats, placement position, cost, block, and skill descriptions/blackboards. This replaces the former “token stats missing” blocker with a reviewed, reproducible import.
+
+### Token deployment engine and 1-6 (S163, 2026-10-23)
+
+Stages can now carry deployable tokens resolved from `arkpedia-deployable-tokens.json`. The engine validates count/cost/ground, spawns a crate obstacle with the upstream HP/block, deducts DP and decrements the deck. 1-6 builds with five Roadblocks and stays `testOnly` until the token-strip UI is reviewed.

@@ -17,6 +17,7 @@ import { existsSync } from 'node:fs';
 import { basename, dirname, join } from 'node:path';
 import { createHash } from 'node:crypto';
 import { stageAdapter } from '../../server/sim/arkpedia.js';
+import { STAGE_TOKEN_UNITS } from '../../shared/arkpedia/stage-devices.js';
 import { mergePristineHiddenGroups } from '../../shared/arkpedia/stage-conditional.js';
 import { syntheticRoutePath } from '../../shared/arkpedia/stage-path.js';
 import { assertRegularEnemies } from '../../shared/arkpedia/enemies.js';
@@ -25,10 +26,10 @@ const args = Object.fromEntries(process.argv.slice(2).flatMap((arg, i, all) =>
   arg.startsWith('--') ? [[arg.slice(2), all[i + 1]]] : []));
 for (const key of ['stage', 'geometry', 'out']) if (!args[key]) throw Error(`Missing --${key}`);
 const read = async file => JSON.parse(await readFile(file, 'utf8'));
-const [source, geometry, playbackFile, mvp, records, support] = await Promise.all([
+const [source, geometry, playbackFile, mvp, records, support, tokenData] = await Promise.all([
   read(args.stage), read(args.geometry), args.playback ? read(args.playback) : { playbackPaths: {} }, read(new URL('../../data/arkpedia-mvp.json', import.meta.url)),
   read(new URL('../../data/arkpedia-enemy-records.json', import.meta.url)),
-  read(new URL('../../data/arkpedia-enemy-support.json', import.meta.url)),
+  read(new URL('../../data/arkpedia-enemy-support.json', import.meta.url)), read(new URL('../../data/arkpedia-deployable-tokens.json', import.meta.url)),
 ]);
 const conditionalPath = args.conditional ?? join(dirname(args.geometry), '..', 'stage-conditional', basename(args.geometry));
 if (geometry.hasConditionalSpawns && existsSync(conditionalPath)) {
@@ -47,6 +48,15 @@ for (const [index, route] of geometry.routes.entries()) {
 if (!Object.keys(paths).length) throw Error('Playback export has no paths and no route to synthesize');
 const devicePath = join(dirname(args.stage), '..', 'stage-devices.json');
 const devices = existsSync(devicePath) ? (JSON.parse(await readFile(devicePath, 'utf8'))[source.slug] ?? []) : [];
+const tokens = (geometry.suppliedUnits?.deployable_tokens ?? []).filter(t => t.count !== 0).map(t => {
+  const spec = STAGE_TOKEN_UNITS[t.unit_id];
+  if (!spec) throw Error(`Unsupported stage token: ${t.unit_id}`);
+  const token = tokenData.tokens[t.unit_id];
+  if (!token) throw Error(`No token stats for ${t.unit_id}`);
+  const stats = token.phases[0].levels.at(-1);
+  return { unitId: t.unit_id, name: token.name, count: t.count, cost: stats.cost, hp: stats.maxHp,
+    block: stats.block, position: token.position, behavior: spec.behavior, obstacle: spec.obstacle };
+});
 const stage = {
   code: source.code,
   name: source.name,
@@ -56,6 +66,7 @@ const stage = {
   mapTagSource: null,
   geometry,
   devices,
+  tokens,
   pathing: {
     schemaVersion: 1,
     syntheticRoutes,
