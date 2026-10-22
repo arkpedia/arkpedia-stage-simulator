@@ -5902,3 +5902,7 @@ Four Physical hits switch to the Fuchou table, four Arts hits to Youling (inert/
 ### Tile-denial enemy (E71, 2026-10-21)
 
 A reviewed death effect now marks the tile unavailable for deployment (`noDeployTiles`), checked by `_placementError`. Support rises to **404 of 1,552** enemies; the test pins the death mark.
+
+### 15-17 test-only (S127, 2026-10-21)
+
+**15-17** builds behind `testOnly` (8×11, 59 spawns, 7 enemies). Catalogue is **205 entries**, **199 public + 6 testOnly**; 204 data-backed stages pass the smoke test. 16-17 remains blocked by the missing `enemy_3010_mcreep` record.
