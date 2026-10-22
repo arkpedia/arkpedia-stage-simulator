@@ -182,8 +182,8 @@ export class StageRenderer {
       atlas: base + m.atlas.path,
       textures: m.textures.map((t) => base + t.path),
       pma: m.premultipliedAlpha,
-      anims: m.animationRoles,
-      animations: m.animations,
+      anims: m.animationRoles ?? {},
+      animations: m.animations ?? {},
       hits: m.hits,
       bounds: m.bounds,
     };

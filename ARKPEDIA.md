@@ -5998,3 +5998,7 @@ Full repository suite: **22,826 tests, 22,815 passed, 0 failed, 11 skipped** wit
 ### Coverage source guard (S146, 2026-10-21)
 
 The device-aware coverage tool read `stage-devices.json` at module load, which broke the coverage test on GitHub runners where the sibling `arkpedia-data` checkout is absent. The read is now conditional on the file existing, so the test skips cleanly.
+
+### 7-6 enemy artwork (S147, 2026-10-21)
+
+Imported the four original 7-6 Guerrilla enemy chibis into `arkpedia-sd-assets` (`c90415ec`) and pinned that commit in `data/arkpedia-mvp.json`. Imported models without animation-role tables now use an empty role map and fall back to the skeleton's own Idle clip, so 7-6 renders its real enemies instead of markers.
