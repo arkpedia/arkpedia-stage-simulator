@@ -6032,3 +6032,7 @@ Implemented the reviewed artillery meter: 1/s to 120, target the highest-Block v
 ### EP14 pollution controller (S152, 2026-10-22)
 
 Implemented the hidden controller: units on Originium-pollution tiles lose 80% natural SP recovery and take 50 True environment damage per second. The 14-2 file was rebuilt with its controller; pollution tiles are derived from the stage's `tile_toxic*` legend. Catalogue/counts unchanged.
+
+### Only synthesize routes a wave uses (S153, 2026-10-22)
+
+`build-stage.mjs` no longer invents paths for unused geometry routes. 10-15's missing route 2 has no spawns, so the rebuilt stage has **no synthetic routes** and was promoted public (207 public + 15 testOnly = 222).
