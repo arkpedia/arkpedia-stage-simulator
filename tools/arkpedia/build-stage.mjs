@@ -38,8 +38,9 @@ const paths = playbackFile.playbackPaths ?? playbackFile.paths ?? {};
 // The geometry route is a reviewed start/checkpoint/end chain. When the viewer export omits a route,
 // synthesize the same chain so the stage can still be played; the original path is preferred.
 const syntheticRoutes = [];
+const usedRoutes = new Set(geometry.waves.flatMap(wave => (wave.spawns || []).map(spawn => spawn.route)));
 for (const [index, route] of geometry.routes.entries()) {
-  if (paths[index] || route.placeholder) continue;
+  if (paths[index] || route.placeholder || !usedRoutes.has(index)) continue;
   paths[index] = syntheticRoutePath(route);
   syntheticRoutes.push(index);
 }
