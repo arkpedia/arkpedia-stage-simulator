@@ -5982,3 +5982,7 @@ Full repository suite: **22,823 tests, 22,812 passed, 0 failed, 11 skipped** wit
 ### Recon drone (E74, 2026-10-21)
 
 The Sarkaz Requisitioned Engineering Drone now sets flying + stealth, reuses the existing `periodic_damage` self-drain, and treats the artillery-charge attack as inert without the device. A duplicate `periodic_damage` feature introduced during the work was removed, restoring the four Rager/Thirst records. Support rises to **410 of 1,552** enemies.
+
+### Coverage classifies devices (S144, 2026-10-21)
+
+`coverage:arkpedia-stages` now counts functional devices as a first-class blocker before the enemy check: **99 remaining stages** have an unhandled device. This corrected the buildable bucket to 0-1 and 15-19 only; 10-14/10-15 were device-blocked despite all enemies being supported.

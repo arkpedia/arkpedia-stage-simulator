@@ -15,6 +15,7 @@ const ROOT = new URL('../../', import.meta.url);
 const SOURCE = new URL('../arkpedia-data/source/data/', ROOT);
 const DATA = new URL('data/', ROOT);
 const support = JSON.parse(readFileSync(new URL('arkpedia-enemy-support.json', DATA), 'utf8'));
+const devicesByStage = JSON.parse(readFileSync(new URL('stage-devices.json', SOURCE), 'utf8'));
 
 export function buildStageCoverage() {
   const stagesDir = new URL('stages/', SOURCE), geometryDir = new URL('stage-geometry/', SOURCE), conditionalDir = new URL('stage-conditional/', SOURCE);
@@ -34,6 +35,7 @@ export function buildStageCoverage() {
     let geometry;
     try { geometry = JSON.parse(readFileSync(geometryUrl, 'utf8')); } catch { byReason['bad-geometry'] = (byReason['bad-geometry'] ?? 0) + 1; continue; }
     if ((geometry.suppliedUnits?.deployable_tokens ?? []).some(t => t.count !== 0)) { byReason.tokens = (byReason.tokens ?? 0) + 1; continue; }
+    if ((devicesByStage[stage.slug] ?? []).some(d => d.kind === 'device' && !String(d.key).startsWith('char_'))) { byReason.devices = (byReason.devices ?? 0) + 1; continue; }
     if (geometry.hasConditionalSpawns) {
       byReason.conditional = (byReason.conditional ?? 0) + 1;
       const conditionalUrl = new URL(`${stage.slug}.json`, conditionalDir);
