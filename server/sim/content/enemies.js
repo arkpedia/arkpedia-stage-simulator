@@ -372,6 +372,10 @@ export const featureAbilities = Object.freeze({
   }) : ({
     tick(b, e) { for (const u of b.enemies) if (u.alive) b.addBuff(u, { key: `ab:strength:${e.id}`, duration: 0.7, visible: true, mods: { atkPct: p.atkPct, defFlat: p.defFlat } }); },
   }),
+  // Recon drone: invisible and losing HP over time.
+  invisibleDrain: () => ({
+    spawn(b, e) { e.flying = true; b.addBuff(e, { key: 'ab:invisible', persist: true, flags: { stealth: true } }); },
+  }),
   // Inspired extra target.
   inspiredTargets: ({ base, inspired }) => ({
     tick(b, e) { e.profile.maxTargets = e.findBuff?.('ab:inspired') ? inspired : base; },

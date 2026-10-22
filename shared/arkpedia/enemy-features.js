@@ -459,6 +459,18 @@ export const ENEMY_FEATURES = Object.freeze({
   'skill:GrabEnd': { covers: r => r.skills.some(s => s.prefabKey === 'GrabEnd'), note: 'PRTS scripted action' },
   'skill:Click': { covers: r => r.skills.some(s => s.prefabKey === 'Click'), note: 'PRTS scripted action' },
   'skill:Angry': { covers: r => r.skills.some(s => s.prefabKey === 'Angry'), note: 'PRTS scripted action' },
+  // Flying text shared by several records.
+  'ability:Flying unit.': { covers: r => r.abilities.some(a => a.text === 'Flying unit.'), ability: { kind: 'hover', params: () => ({}) }, note: 'flying unit', explains: /^Flying unit\.$/ },
+  // Recon drone: invisible, self-draining, and its attacks charge the artillery (charge state is inert without the device).
+  'ability:<$ba.invisible>Invisible</>, gradually loses HP over time': {
+    covers: r => r.abilities.some(a => a.text === '<$ba.invisible>Invisible</>, gradually loses HP over time'),
+    ability: { kind: 'invisibleDrain', params: () => ({}) },
+    nativeClaim: () => ({ active: 3 }), note: 'invisible and self-draining',
+    explains: /^<\$ba\.invisible>Invisible<\/>, gradually loses HP over time$/ },
+  'ability:Attacks charge Londinium Secondary Defense Artillery': {
+    covers: r => r.abilities.some(a => a.text === 'Attacks charge Londinium Secondary Defense Artillery'),
+    note: 'artillery charge is inert without the device', explains: /^Attacks charge Londinium Secondary Defense Artillery$/ },
+  'talent:charge': { covers: r => sig(r, 'charge', ['sp']), note: 'artillery charge amount' },
   // Inspired extra target.
   'ability:When Inspired, attacks one additional target.': { covers: r => r.abilities.some(a => a.text === 'When Inspired, attacks one additional target.'),
     ability: { kind: 'inspiredTargets', params: () => ({ base: 1, inspired: 2 }) }, note: 'one extra target while Inspired',

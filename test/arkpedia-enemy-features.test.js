@@ -708,6 +708,10 @@ test('Inspired extra target applies only while Inspired', () => {
   h.b.addBuff(e, { key: 'ab:inspired', persist: true }); h.run(0.5); assert.equal(e.profile.maxTargets, 2);
   h.b.removeBuff(e, 'ab:inspired'); h.run(0.5); assert.equal(e.profile.maxTargets, 1);
 });
+test('Recon drone: invisible and losing HP over time', () => {
+  const key = 'enemy_1227_dair', h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key), hp = e.hp;
+  h.run(1); assert.ok(e.findBuff('ab:invisible')); assert.ok(e.hp < hp);
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');
