@@ -5962,3 +5962,7 @@ Full repository suite: **22,822 tests, 22,811 passed, 0 failed, 11 skipped** wit
 ### 7-8/7-9 device audit (S139, 2026-10-21)
 
 Both stages contain functional Originium Altars in `stage-devices.json`, and the altar pulse is not modeled. They are moved back to `testOnly` pending a device/pulse implementation; 7-6 and 7-13 have no devices and stay public. Public is **203**, testOnly **16**, catalogue **219**.
+
+### Device audit (S140, 2026-10-21)
+
+Added `npm run audit:arkpedia-devices` and `docs/DEVICES.md`. **70 built stages** carry a functional map device (**64 public**), led by EP14 Mechanics Controller (20), Roadside Emergency Reserves (14) and Londinium Artillery (11). The report makes the pre-existing device gap explicit and sets a staged rollout instead of silently claiming parity. 7-8/7-9 stay testOnly for their Originium Altars.
