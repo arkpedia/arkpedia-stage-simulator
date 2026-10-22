@@ -369,7 +369,9 @@ export const featureAbilities = Object.freeze({
   // Strength aura (Herald) or the Inspired movement bonus.
   strengthAura: (p) => p.mode === 'inspired' ? ({
     tick(b, e) { if (e.findBuff?.('ab:inspired')) b.addBuff(e, { key: 'ab:inspiredMove', duration: 0.7, visible: true, mods: { moveMul: 1 + (p.move ?? 0) } }); },
-  }) : enemyGlobalStatAura(p),
+  }) : ({
+    tick(b, e) { for (const u of b.enemies) if (u.alive) b.addBuff(u, { key: `ab:strength:${e.id}`, duration: 0.7, visible: true, mods: { atkPct: p.atkPct, defFlat: p.defFlat } }); },
+  }),
   // Inspired extra target.
   inspiredTargets: ({ base, inspired }) => ({
     tick(b, e) { e.profile.maxTargets = e.findBuff?.('ab:inspired') ? inspired : base; },
