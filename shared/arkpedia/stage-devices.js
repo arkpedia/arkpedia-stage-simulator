@@ -2,6 +2,11 @@
 // Reviewed stage devices. The source data only carries position and name; the
 // device parameters live here with their source descriptions.
 export const STAGE_DEVICES = Object.freeze({
+  'EP14 Mechanics Controller': Object.freeze({
+    // PRTS: every unit on an Originium pollution tile loses 80% natural SP
+    // recovery and takes 50 True environment damage per second (skill 1).
+    environment: Object.freeze({ damage: 50, spMul: 0.2, interval: 1 }),
+  }),
   'Londinium Secondary Defense Artillery': Object.freeze({
     // PRTS: 1 meter/s, cap 120, target = highest-Block visible ally (newest on a tie),
     // 3000 True damage to both sides in the 3x3 core plus 1x3 arms.

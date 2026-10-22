@@ -44,3 +44,14 @@ test('the Londinium artillery hits both sides in its reviewed shape', () => {
   assert.ok(ally.hp === 0 || allyHp - ally.hp >= 3000 - 1e-6);
   assert.ok(enemy.hp <= enemyHp - 3000 + 1e-6);
 });
+
+test('the EP14 controller drains pollution tiles', () => {
+  const stage = JSON.parse(readFileSync(new URL('../data/arkpedia-stage-14-2.json', import.meta.url)));
+  const data = { ...mvp, stage, enemies: { ...mvp.enemies, ...stage.enemies } };
+  const battle = new StandardBattle(data, { operators: Object.values(data.operators).slice(0, 5).map(defaultBuild) });
+  const enemy = battle.spawnEnemy(Object.keys(stage.enemies)[0], { pos: [2, 1] });
+  const hp = enemy.hp;
+  battle._tickMvpStageDevices(1.01);
+  assert.ok(enemy.findBuff('device:pollution'));
+  assert.ok(hp - enemy.hp >= 50 - 1e-6);
+});

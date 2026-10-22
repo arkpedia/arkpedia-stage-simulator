@@ -286,6 +286,10 @@ export function stageAdapter(source) {
     ]),
   );
   const pair = (p) => [p.row, p.col];
+  const pollution = [];
+  g.tileGrid.forEach((row, r) => row.forEach((type, c) => {
+    if (String(g.tileLegend[type]?.key ?? '').includes('toxic')) pollution.push([r, c]);
+  }));
   // A route no wave spawns on never has to walk, so a viewer export may omit it. Only refuse a missing path
   // for a route the stage actually uses.
   const usedRoutes = new Set(g.waves.flatMap(wave => (wave.spawns || []).map(spawn => spawn.route)));
@@ -438,7 +442,12 @@ export class StandardBattle extends Battle {
     this.behaviors = behaviors;
     this.mvpStageDevices = (data.stage.devices ?? [])
       .filter(d => d.kind === 'device' && STAGE_DEVICES[d.name])
-      .map(d => ({ ...d, sp: 0 }));
+      .map(d => ({ ...d, sp: 0, acc: 0 }));
+    const pollution = [];
+    data.stage.geometry.tileGrid.forEach((row, r) => row.forEach((type, c) => {
+      if (String(data.stage.geometry.tileLegend[type]?.key ?? '').includes('toxic')) pollution.push([r, c]);
+    }));
+    this.mvpStagePollution = new Set(pollution.map(([r, c]) => `${r},${c}`));
     if (this.mvpStageDevices.length) this.on('tick', ({ dt }) => this._tickMvpStageDevices(dt));
     this.unitLimit = config.unit_limit;
     this.regularMapSize = Object.freeze({ rows: data.stage.geometry.rows, cols: data.stage.geometry.cols });
@@ -1213,6 +1222,20 @@ export class StandardBattle extends Battle {
             this.dealDamage(null, u, { amount: spec.damage, type: 'true', sourceless: true, ignoreSelect: true, tags: ['device', 'pulse'] });
           }
           this.fx('explode', { x: d.col, y: d.row, r: 1.5, kind: 'pulse' });
+        }
+      } else if (def.environment) {
+        const spec = def.environment;
+        d.acc += dt;
+        for (const u of this.units) {
+          if (!u.alive || !u.deployed || !this.mvpStagePollution.has(`${Math.round(u.y)},${Math.round(u.x)}`)) continue;
+          this.addBuff(u, { key: 'device:pollution', persist: true, refresh: 'replace', duration: spec.interval * 1.1, mods: { spRecoveryMul: spec.spMul } });
+        }
+        while (d.acc >= spec.interval) {
+          d.acc -= spec.interval;
+          for (const u of this.units) {
+            if (!u.alive || !u.deployed || !this.mvpStagePollution.has(`${Math.round(u.y)},${Math.round(u.x)}`)) continue;
+            this.dealDamage(null, u, { amount: spec.damage, type: 'true', sourceless: true, ignoreSelect: true, tags: ['device', 'pollution'] });
+          }
         }
       } else if (def.artillery) {
         const spec = def.artillery;
