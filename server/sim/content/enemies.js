@@ -350,7 +350,8 @@ export const featureAbilities = Object.freeze({
   // PRTS controller/node: inert until the activation rules are reviewed.
   prtsProp: () => ({
     spawn(b, e) {
-      e.untargetable = true; e.unblockable = true; e.moving = false; e.lpr = 0;
+      e.untargetable = true; e.unblockable = true; e.lpr = 0; e.s.moveSpeed = 0;
+      b.addBuff(e, { key: 'ab:prtsInert', persist: true, mods: { moveMul: 0 } });
       if (String(e.defId).includes('10072')) e.flying = true;
     },
   }),

@@ -675,6 +675,12 @@ test('Worry-Free Cargo Helper: explodes next to the guard', () => {
   e.x = guard.x + 1; e.y = guard.y; const hp = guard.hp; h.run(0.2);
   assert.ok(guard.hp < hp); assert.equal(e.alive, false);
 });
+test('PRTS props are inert: untargetable, immobile and non-leaking', () => {
+  for (const key of ['enemy_10072_mpprhd', 'enemy_10082_mpweak']) {
+    const h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key), x = e.x, y = e.y;
+    assert.equal(e.untargetable, true); assert.equal(e.lpr, 0); h.run(1); assert.equal(e.x, x); assert.equal(e.y, y);
+  }
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');
