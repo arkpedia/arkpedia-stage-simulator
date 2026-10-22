@@ -366,6 +366,10 @@ export const featureAbilities = Object.freeze({
       blocked(c, b, e, a) { if (a.mode === 'base') transform(b, e, a, 'shushi'); },
     };
   },
+  // Tile denial: mark the death tile unavailable for deployment.
+  tileDenied: () => ({
+    death(c, b, e) { b.noDeployTiles ??= new Set(); b.noDeployTiles.add(`${e.tileR},${e.tileC}`); },
+  }),
   // DP-lock caster: halt DP regeneration after a delay.
   stopCost: ({ delay, duration }) => ({
     spawn(b, e) { b.after(delay ?? 5, () => { b.flags.dpRegenHaltUntil = Math.max(b.flags.dpRegenHaltUntil ?? 0, b.time + (duration ?? 30)); }, { owner: e }); },

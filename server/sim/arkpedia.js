@@ -539,6 +539,7 @@ export class StandardBattle extends Battle {
     )
       return "Tile is occupied.";
     if (this.tileReservation(row, col)) return "Tile is reserved for an operator's return.";
+    if (this.noDeployTiles?.has(`${row},${col}`)) return "Tile is unavailable for deployment.";
     if (!fromSkill && !canSpendDp(this, 'arkpedia', this.cost(id))) return "Not enough DP.";
     return null;
   }

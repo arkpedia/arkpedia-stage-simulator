@@ -459,6 +459,11 @@ export const ENEMY_FEATURES = Object.freeze({
   'skill:GrabEnd': { covers: r => r.skills.some(s => s.prefabKey === 'GrabEnd'), note: 'PRTS scripted action' },
   'skill:Click': { covers: r => r.skills.some(s => s.prefabKey === 'Click'), note: 'PRTS scripted action' },
   'skill:Angry': { covers: r => r.skills.some(s => s.prefabKey === 'Angry'), note: 'PRTS scripted action' },
+  // Tile-denial on death.
+  'ability:When defeated, the tile underneath becomes unavailable for deployment': {
+    covers: r => r.abilities.some(a => a.text === 'When defeated, the tile underneath becomes unavailable for deployment'),
+    ability: { kind: 'tileDenied', params: () => ({}) }, nativeClaim: () => ({ active: 1 }),
+    note: 'denies deployment on the death tile', explains: /^When defeated, the tile underneath becomes unavailable for deployment$/ },
   // DP-lock caster: halts DP regeneration for a reviewed duration.
   'skill:StopCost': { covers: r => r.skills.some(s => s.prefabKey === 'StopCost'),
     ability: { kind: 'stopCost', params: r => ({ delay: r.skills[0].initCooldown, duration: r.skills[0].bb.projectile_life_time }) },

@@ -5898,3 +5898,7 @@ Added **15-9** (131 spawns) and **15-10** (62 spawns) as `testOnly` after the ic
 ### Decode Basis modes (E70, 2026-10-21)
 
 Four Physical hits switch to the Fuchou table, four Arts hits to Youling (inert/untargetable), and a block to Shushi. The base form does not attack. The reviewed mode tables, wrappers and form-change skills are claimed. Support rises to **402 of 1,552** enemies. The test pins the four-Physical transform.
+
+### Tile-denial enemy (E71, 2026-10-21)
+
+A reviewed death effect now marks the tile unavailable for deployment (`noDeployTiles`), checked by `_placementError`. Support rises to **404 of 1,552** enemies; the test pins the death mark.

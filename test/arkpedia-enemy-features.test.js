@@ -692,6 +692,10 @@ test('Decode Basis: four physical hits switch to the Fuchou table', () => {
   for (let i = 0; i < 4; i++) h.b.dealDamage(null, e, { amount: 10, type: 'phys', sourceless: true });
   assert.equal(e.s.atk, 500); assert.equal(e.profile.noAttack, false);
 });
+test('Tile-denial enemy: dying marks its tile unavailable', () => {
+  const key = 'enemy_10076_mpgrou', h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
+  h.b.autoFinish = false; h.b.kill(e, null); assert.ok(h.b.noDeployTiles.has(`${e.tileR},${e.tileC}`));
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');
