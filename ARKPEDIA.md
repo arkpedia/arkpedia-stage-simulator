@@ -6010,3 +6010,7 @@ The shared `Flying unit.` feature keeps the flying behaviour but no longer claim
 ### W support and 1-11 (E77, 2026-10-21)
 
 Added the documented C4 features for W; the C4 kit already existed. The new support unlocked **1-11**, which builds from source geometry with synthetic routes and is kept `testOnly`. Support is **416 enemies**; catalogue is **220 entries** (203 public + 17 testOnly), 219 committed stage files.
+
+### Bulk enemy artwork (S148, 2026-10-21)
+
+Imported **182** original enemy chibis into `arkpedia-sd-assets` (merged as `976d210`), covering every built-stage enemy with an upstream directory. The simulator maps **1,187** models with per-model `assetsCommit`; only `enemy_1420_lrmm`, `enemy_1177_dufrbl` and `enemy_10082_mpweak` remain without upstream artwork. The assets manifest holds 3,239 complete models.
