@@ -176,7 +176,7 @@ export class StageRenderer {
   entry(key) {
     const m = this.data.sd.models[key];
     if (!m) throw Error("Missing animation model " + key);
-    const base = artBase(this.data.sd);
+    const base = artBase(m.assetsCommit ? { ...this.data.sd, commit: m.assetsCommit } : this.data.sd);
     return {
       skel: base + m.skeleton.path,
       atlas: base + m.atlas.path,
