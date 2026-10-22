@@ -1,0 +1,2406 @@
+{
+ "code": "2-8",
+ "name": "No Promises",
+ "description": "Condition:\nThe weight of enemy units is increased significantly.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "2-8",
+  "rows": 7,
+  "cols": 11,
+  "tileLegend": [
+   {
+    "key": "tile_hole",
+    "height": "low",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_gazebo",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true,
+    "blackboard": {
+     "atk_scale": 1.7,
+     "attack_speed": -20
+    }
+   },
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_bigforce",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true,
+    "blackboard": {
+     "base_force_level": 1
+    }
+   },
+   {
+    "key": "tile_fence",
+    "height": "low",
+    "walkable": false,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_bigforce",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true,
+    "blackboard": {
+     "base_force_level": 1
+    }
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    2,
+    2,
+    0
+   ],
+   [
+    0,
+    1,
+    3,
+    4,
+    5,
+    5,
+    4,
+    6,
+    7,
+    8,
+    0
+   ],
+   [
+    0,
+    1,
+    4,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    0
+   ],
+   [
+    0,
+    1,
+    4,
+    2,
+    3,
+    4,
+    5,
+    5,
+    2,
+    2,
+    0
+   ],
+   [
+    0,
+    1,
+    4,
+    2,
+    3,
+    4,
+    5,
+    5,
+    2,
+    2,
+    0
+   ],
+   [
+    0,
+    9,
+    4,
+    9,
+    4,
+    4,
+    4,
+    4,
+    10,
+    10,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": null,
+    "placeholder": true,
+    "start": null,
+    "end": null,
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 3
+    },
+    "end": {
+     "row": 6,
+     "col": 8
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 1
+    },
+    "end": {
+     "row": 6,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 9
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 1
+    },
+    "end": {
+     "row": 6,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 9
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 3,
+     "col": 10
+    },
+    "end": {
+     "row": 6,
+     "col": 8
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 70
+     }
+    ]
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 3,
+     "col": 0
+    },
+    "end": {
+     "row": 6,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 4
+     }
+    ]
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 4,
+     "col": 0
+    },
+    "end": {
+     "row": 6,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 4
+     }
+    ]
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 3,
+     "col": 10
+    },
+    "end": {
+     "row": 6,
+     "col": 8
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 2
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 70
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 9
+    },
+    "end": {
+     "row": 6,
+     "col": 9
+    },
+    "checkpoints": [],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 9
+    },
+    "end": {
+     "row": 6,
+     "col": 9
+    },
+    "checkpoints": [],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 4.7
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 4
+    },
+    "end": {
+     "row": 6,
+     "col": 8
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 4
+    },
+    "end": {
+     "row": 6,
+     "col": 8
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 4.7
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 4
+    },
+    "end": {
+     "row": 6,
+     "col": 8
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 4.4
+     }
+    ]
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 5,
+     "col": 0
+    },
+    "end": {
+     "row": 6,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 4
+     }
+    ]
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 0,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": []
+   },
+   {
+    "index": 1,
+    "duration": 187,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Soldier",
+      "enemy_id": "enemy_1002_nsabr",
+      "count": 2,
+      "time": 5,
+      "interval": 1,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Soldier",
+      "enemy_id": "enemy_1002_nsabr",
+      "count": 2,
+      "time": 15,
+      "interval": 1,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Rioter Leader",
+      "enemy_id": "enemy_1027_mob_2",
+      "count": 1,
+      "time": 22,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Soldier",
+      "enemy_id": "enemy_1002_nsabr",
+      "count": 2,
+      "time": 28,
+      "interval": 1,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Rioter Leader",
+      "enemy_id": "enemy_1027_mob_2",
+      "count": 1,
+      "time": 34,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Rioter Leader",
+      "enemy_id": "enemy_1027_mob_2",
+      "count": 1,
+      "time": 7,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Rioter Leader",
+      "enemy_id": "enemy_1027_mob_2",
+      "count": 2,
+      "time": 29,
+      "interval": 1.5,
+      "route": 3,
+      "fragment": 0
+     },
+     {
+      "enemy": "Defender-4",
+      "enemy_id": "enemy_1017_defdrn",
+      "count": 1,
+      "time": 59,
+      "route": 4,
+      "fragment": 1
+     },
+     {
+      "enemy": "Monster",
+      "enemy_id": "enemy_1005_yokai",
+      "count": 2,
+      "time": 94,
+      "interval": 15,
+      "route": 5,
+      "fragment": 1
+     },
+     {
+      "enemy": "Monster",
+      "enemy_id": "enemy_1005_yokai",
+      "count": 2,
+      "time": 95,
+      "interval": 15,
+      "route": 6,
+      "fragment": 1
+     },
+     {
+      "enemy": "Firebomb Thrower",
+      "enemy_id": "enemy_1028_mocock_2",
+      "count": 1,
+      "time": 71,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Soldier",
+      "enemy_id": "enemy_1002_nsabr",
+      "count": 1,
+      "time": 75,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Soldier",
+      "enemy_id": "enemy_1002_nsabr",
+      "count": 2,
+      "time": 84,
+      "interval": 0.8,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Firebomb Thrower",
+      "enemy_id": "enemy_1028_mocock_2",
+      "count": 1,
+      "time": 94,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Logger",
+      "enemy_id": "enemy_1033_handax",
+      "count": 1,
+      "time": 102,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Soldier",
+      "enemy_id": "enemy_1002_nsabr",
+      "count": 1,
+      "time": 109,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Metal Crab",
+      "enemy_id": "enemy_1016_diaman",
+      "count": 1,
+      "time": 68,
+      "route": 3,
+      "fragment": 1
+     },
+     {
+      "enemy": "Rioter Leader",
+      "enemy_id": "enemy_1027_mob_2",
+      "count": 2,
+      "time": 86,
+      "interval": 1.5,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Rioter Leader",
+      "enemy_id": "enemy_1027_mob_2",
+      "count": 2,
+      "time": 101,
+      "interval": 1.5,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Defender-4",
+      "enemy_id": "enemy_1017_defdrn",
+      "count": 1,
+      "time": 133,
+      "route": 4,
+      "fragment": 2
+     },
+     {
+      "enemy": "Defender-4",
+      "enemy_id": "enemy_1017_defdrn",
+      "count": 1,
+      "time": 133,
+      "route": 7,
+      "fragment": 2
+     },
+     {
+      "enemy": "Airborne Soldier",
+      "enemy_id": "enemy_1013_airdrp",
+      "count": 2,
+      "time": 168,
+      "interval": 18,
+      "route": 8,
+      "fragment": 2
+     },
+     {
+      "enemy": "Airborne Soldier",
+      "enemy_id": "enemy_1013_airdrp",
+      "count": 2,
+      "time": 168.3,
+      "interval": 18,
+      "route": 9,
+      "fragment": 2
+     },
+     {
+      "enemy": "Airborne Soldier",
+      "enemy_id": "enemy_1013_airdrp",
+      "count": 2,
+      "time": 155,
+      "interval": 18,
+      "route": 10,
+      "fragment": 2
+     },
+     {
+      "enemy": "Airborne Soldier",
+      "enemy_id": "enemy_1013_airdrp",
+      "count": 2,
+      "time": 155.3,
+      "interval": 18,
+      "route": 11,
+      "fragment": 2
+     },
+     {
+      "enemy": "Airborne Soldier",
+      "enemy_id": "enemy_1013_airdrp",
+      "count": 2,
+      "time": 155.6,
+      "interval": 18,
+      "route": 12,
+      "fragment": 2
+     },
+     {
+      "enemy": "Metal Crab",
+      "enemy_id": "enemy_1016_diaman",
+      "count": 1,
+      "time": 140,
+      "route": 3,
+      "fragment": 2
+     },
+     {
+      "enemy": "Firebomb Thrower",
+      "enemy_id": "enemy_1028_mocock_2",
+      "count": 1,
+      "time": 155,
+      "route": 3,
+      "fragment": 2
+     },
+     {
+      "enemy": "Rioter Leader",
+      "enemy_id": "enemy_1027_mob_2",
+      "count": 2,
+      "time": 165,
+      "interval": 1,
+      "route": 3,
+      "fragment": 2
+     },
+     {
+      "enemy": "Logger",
+      "enemy_id": "enemy_1033_handax",
+      "count": 2,
+      "time": 155,
+      "interval": 26,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Monster",
+      "enemy_id": "enemy_1005_yokai",
+      "count": 3,
+      "time": 163,
+      "interval": 11,
+      "route": 5,
+      "fragment": 2
+     },
+     {
+      "enemy": "Monster",
+      "enemy_id": "enemy_1005_yokai",
+      "count": 3,
+      "time": 164,
+      "interval": 11,
+      "route": 6,
+      "fragment": 2
+     },
+     {
+      "enemy": "Monster",
+      "enemy_id": "enemy_1005_yokai",
+      "count": 2,
+      "time": 176,
+      "interval": 11,
+      "route": 13,
+      "fragment": 2
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 6,
+    "col": 1,
+    "routes": [
+     2,
+     3,
+     3,
+     2,
+     2,
+     3,
+     3,
+     3
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 6,
+    "col": 3,
+    "routes": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 6,
+    "col": 8,
+    "routes": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     4,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     4,
+     7,
+     10,
+     11,
+     12,
+     1
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 6,
+    "col": 9,
+    "routes": [
+     2,
+     3,
+     5,
+     6,
+     3,
+     2,
+     2,
+     8,
+     9,
+     3,
+     3,
+     3,
+     5,
+     6,
+     13
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1002_nsabr",
+    "slug": "soldier",
+    "name": "Soldier",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1005_yokai",
+    "slug": "monster",
+    "name": "Monster",
+    "database_level": 1
+   },
+   {
+    "enemy_id": "enemy_1013_airdrp",
+    "slug": "airborne_soldier",
+    "name": "Airborne Soldier",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1016_diaman",
+    "slug": "metal_crab",
+    "name": "Metal Crab",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1017_defdrn",
+    "slug": "defender_4",
+    "name": "Defender-4",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1027_mob_2",
+    "slug": "rioter_leader",
+    "name": "Rioter Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1028_mocock_2",
+    "slug": "firebomb_thrower",
+    "name": "Firebomb Thrower",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1033_handax",
+    "slug": "logger",
+    "name": "Logger",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "devices": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "2-8",
+  "geometryHash": "9dbec74e9e550e773e1735fac26a5a9fa49103f04da04246ed50ddec60a75a9b",
+  "moveScale": 0.65,
+  "paths": {
+   "1": {
+    "points": [
+     [
+      3,
+      6
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "length": 11,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      3,
+      6
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      8,
+      6
+     ]
+    ]
+   },
+   "2": {
+    "points": [
+     [
+      1,
+      6
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18
+    ],
+    "length": 18,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 5,
+      "seconds": 5,
+      "point": [
+       1,
+       1
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      1,
+      6
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      9,
+      6
+     ]
+    ]
+   },
+   "3": {
+    "points": [
+     [
+      1,
+      6
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18
+    ],
+    "length": 18,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      1,
+      6
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      9,
+      6
+     ]
+    ]
+   },
+   "4": {
+    "points": [
+     [
+      10,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      8,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     5.099019513592785,
+     8.704570789056774
+    ],
+    "length": 8.704570789056774,
+    "breaks": [],
+    "flying": true,
+    "holds": [
+     {
+      "at": 5.099019513592785,
+      "seconds": 70,
+      "point": [
+       5,
+       4
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      10,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      8,
+      6
+     ]
+    ]
+   },
+   "5": {
+    "points": [
+     [
+      0,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      9,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     2,
+     5,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": true,
+    "holds": [
+     {
+      "at": 2,
+      "seconds": 4,
+      "point": [
+       2,
+       3
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      9,
+      6
+     ]
+    ]
+   },
+   "6": {
+    "points": [
+     [
+      0,
+      4
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      9,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     2,
+     5,
+     9.47213595499958
+    ],
+    "length": 9.47213595499958,
+    "breaks": [],
+    "flying": true,
+    "holds": [
+     {
+      "at": 2,
+      "seconds": 4,
+      "point": [
+       2,
+       4
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      4
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      9,
+      6
+     ]
+    ]
+   },
+   "7": {
+    "points": [
+     [
+      10,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      8,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     8,
+     14.70820393249937
+    ],
+    "length": 14.70820393249937,
+    "breaks": [],
+    "flying": true,
+    "holds": [
+     {
+      "at": 8,
+      "seconds": 70,
+      "point": [
+       2,
+       3
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      10,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      8,
+      6
+     ]
+    ]
+   },
+   "8": {
+    "points": [
+     [
+      9,
+      3
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "length": 3,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 0,
+      "seconds": 5,
+      "point": [
+       9,
+       3
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      9,
+      3
+     ],
+     [
+      9,
+      6
+     ]
+    ]
+   },
+   "9": {
+    "points": [
+     [
+      9,
+      3
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "length": 3,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 0,
+      "seconds": 4.7,
+      "point": [
+       9,
+       3
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      9,
+      3
+     ],
+     [
+      9,
+      6
+     ]
+    ]
+   },
+   "10": {
+    "points": [
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 0,
+      "seconds": 5,
+      "point": [
+       4,
+       3
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      4,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      8,
+      6
+     ]
+    ]
+   },
+   "11": {
+    "points": [
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 0,
+      "seconds": 4.7,
+      "point": [
+       4,
+       3
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      4,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      8,
+      6
+     ]
+    ]
+   },
+   "12": {
+    "points": [
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 0,
+      "seconds": 4.4,
+      "point": [
+       4,
+       3
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      4,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      8,
+      6
+     ]
+    ]
+   },
+   "13": {
+    "points": [
+     [
+      0,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      9,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     2,
+     5,
+     9.123105625617661
+    ],
+    "length": 9.123105625617661,
+    "breaks": [],
+    "flying": true,
+    "holds": [
+     {
+      "at": 2,
+      "seconds": 4,
+      "point": [
+       2,
+       5
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      9,
+      6
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1002_nsabr": {
+   "key": "enemy_1002_nsabr",
+   "prefabKey": "enemy_1002_nsabr",
+   "name": "Soldier",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 1650,
+    "atk": 200,
+    "def": 100,
+    "res": 0,
+    "moveSpeed": 1.1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1027_mob_2": {
+   "key": "enemy_1027_mob_2",
+   "prefabKey": "enemy_1027_mob_2",
+   "name": "Rioter Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2650,
+    "atk": 350,
+    "def": 85,
+    "res": 0,
+    "moveSpeed": 1.1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1017_defdrn": {
+   "key": "enemy_1017_defdrn",
+   "prefabKey": "enemy_1017_defdrn",
+   "name": "Defender-4",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "NONE",
+   "stats": {
+    "maxHp": 4000,
+    "atk": 0,
+    "def": 150,
+    "res": 20,
+    "moveSpeed": 0.8,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 2.5,
+    "rawRangeRadius": 2.5,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "none",
+    "dmgTypes": [
+     "none"
+    ],
+    "motion": "FLY",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Flying unit.",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Increases the DEF of surrounding enemy units",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "defup.def": 300,
+     "defup.range_radius": 2.5
+    },
+    "bbStr": {},
+    "groups": {
+     "defup": [
+      "def",
+      "range_radius"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "drone"
+   ]
+  },
+  "enemy_1016_diaman": {
+   "key": "enemy_1016_diaman",
+   "prefabKey": "enemy_1016_diaman",
+   "name": "Metal Crab",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3000,
+    "atk": 300,
+    "def": 500,
+    "res": 85,
+    "moveSpeed": 0.75,
+    "bat": 2.3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1028_mocock_2": {
+   "key": "enemy_1028_mocock_2",
+   "prefabKey": "enemy_1028_mocock_2",
+   "name": "Firebomb Thrower",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 2000,
+    "atk": 250,
+    "def": 85,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 2.2,
+    "aspd": 100,
+    "rangeRadius": 1.75,
+    "rawRangeRadius": 1.75,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1005_yokai": {
+   "key": "enemy_1005_yokai",
+   "prefabKey": "enemy_1005_yokai",
+   "name": "Monster",
+   "level": 1,
+   "rank": "NORMAL",
+   "applyWay": "NONE",
+   "stats": {
+    "maxHp": 1870,
+    "atk": 0,
+    "def": 50,
+    "res": 0,
+    "moveSpeed": 0.9,
+    "bat": 2.3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "none",
+    "dmgTypes": [
+     "none"
+    ],
+    "motion": "FLY",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Flying unit.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "drone"
+   ]
+  },
+  "enemy_1033_handax": {
+   "key": "enemy_1033_handax",
+   "prefabKey": "enemy_1033_handax",
+   "name": "Logger",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 8000,
+    "atk": 750,
+    "def": 80,
+    "res": 30,
+    "moveSpeed": 0.75,
+    "bat": 3.3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1013_airdrp": {
+   "key": "enemy_1013_airdrp",
+   "prefabKey": "enemy_1013_airdrp",
+   "name": "Airborne Soldier",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 1450,
+    "atk": 220,
+    "def": 100,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 1.9,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Able to land directly onto the battlefield.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ }
+}

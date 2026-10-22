@@ -1,0 +1,1771 @@
+{
+ "code": "7-13",
+ "name": "Aegis of the Infected-1",
+ "description": "Condition:\nSniper and Guard Operators cannot be deployed.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "7-13",
+  "rows": 8,
+  "cols": 11,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_telout",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_telin",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    1,
+    2,
+    2,
+    0,
+    0,
+    3,
+    3,
+    0,
+    2,
+    2,
+    3
+   ],
+   [
+    4,
+    2,
+    5,
+    0,
+    6,
+    5,
+    5,
+    0,
+    5,
+    2,
+    1
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    6,
+    5,
+    5,
+    6,
+    6,
+    0,
+    0
+   ],
+   [
+    0,
+    6,
+    6,
+    6,
+    5,
+    5,
+    5,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    7,
+    2,
+    5,
+    5,
+    5,
+    5,
+    5,
+    0,
+    5,
+    2,
+    0
+   ],
+   [
+    7,
+    2,
+    5,
+    5,
+    5,
+    5,
+    6,
+    0,
+    2,
+    2,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    4,
+    7,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 8
+    },
+    "end": {
+     "row": 1,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 7,
+       "col": 8
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 1,
+       "col": 0
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 0
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 2,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 8
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 170
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 4,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": null,
+    "placeholder": true,
+    "start": null,
+    "end": null,
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 2
+    },
+    "end": {
+     "row": 1,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 0
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 2,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 8
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 150
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 0
+    },
+    "end": {
+     "row": 1,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 0
+    },
+    "end": {
+     "row": 1,
+     "col": 6
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 6
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 9
+    },
+    "end": {
+     "row": 1,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 7,
+       "col": 8
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 1,
+       "col": 0
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 0
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 2,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 9
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 20
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 2,
+      "seconds": 3
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 4,
+      "seconds": 20
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 6,
+      "seconds": 3
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 8,
+      "seconds": 10
+     }
+    ]
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 183,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Guerrilla Shieldguard",
+      "enemy_id": "enemy_1081_sotisd",
+      "count": 1,
+      "time": 0,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Guerrilla Shieldguard",
+      "enemy_id": "enemy_1081_sotisd",
+      "count": 1,
+      "time": 0,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Guerrilla Fighter",
+      "enemy_id": "enemy_1078_sotisc",
+      "count": 1,
+      "time": 5,
+      "route": 3,
+      "fragment": 1
+     },
+     {
+      "enemy": "Guerrilla Fighter",
+      "enemy_id": "enemy_1078_sotisc",
+      "count": 1,
+      "time": 10,
+      "route": 4,
+      "fragment": 1
+     },
+     {
+      "enemy": "Guerrilla Fighter",
+      "enemy_id": "enemy_1078_sotisc",
+      "count": 1,
+      "time": 18,
+      "route": 4,
+      "fragment": 1
+     },
+     {
+      "enemy": "Guerrilla Fighter",
+      "enemy_id": "enemy_1078_sotisc",
+      "count": 2,
+      "time": 27,
+      "interval": 6,
+      "route": 3,
+      "fragment": 1
+     },
+     {
+      "enemy": "Guerrilla Herald",
+      "enemy_id": "enemy_1080_sotidp",
+      "count": 1,
+      "time": 39,
+      "route": 5,
+      "fragment": 2
+     },
+     {
+      "enemy": "Guerrilla Fighter",
+      "enemy_id": "enemy_1078_sotisc",
+      "count": 2,
+      "time": 40,
+      "interval": 6,
+      "route": 4,
+      "fragment": 2
+     },
+     {
+      "enemy": "Guerrilla Hound",
+      "enemy_id": "enemy_1077_sotihd",
+      "count": 3,
+      "time": 56,
+      "interval": 5,
+      "route": 3,
+      "fragment": 2
+     },
+     {
+      "enemy": "Guerrilla Sniper",
+      "enemy_id": "enemy_1079_sotisp",
+      "count": 2,
+      "time": 72,
+      "interval": 10,
+      "route": 4,
+      "fragment": 3
+     },
+     {
+      "enemy": "Guerrilla Fighter",
+      "enemy_id": "enemy_1078_sotisc",
+      "count": 3,
+      "time": 82,
+      "interval": 6,
+      "route": 3,
+      "fragment": 3
+     },
+     {
+      "enemy": "Guerrilla Hound",
+      "enemy_id": "enemy_1077_sotihd",
+      "count": 2,
+      "time": 79,
+      "interval": 4,
+      "route": 4,
+      "fragment": 3
+     },
+     {
+      "enemy": "Guerrilla Herald",
+      "enemy_id": "enemy_1080_sotidp",
+      "count": 1,
+      "time": 79,
+      "route": 5,
+      "fragment": 3
+     },
+     {
+      "enemy": "Guerrilla Fighter",
+      "enemy_id": "enemy_1078_sotisc",
+      "count": 3,
+      "time": 105,
+      "interval": 7,
+      "route": 3,
+      "fragment": 4
+     },
+     {
+      "enemy": "Guerrilla Sniper",
+      "enemy_id": "enemy_1079_sotisp",
+      "count": 3,
+      "time": 110,
+      "interval": 8,
+      "route": 4,
+      "fragment": 4
+     },
+     {
+      "enemy": "Guerrilla Hound",
+      "enemy_id": "enemy_1077_sotihd",
+      "count": 2,
+      "time": 107,
+      "interval": 6,
+      "route": 4,
+      "fragment": 4
+     },
+     {
+      "enemy": "Guerrilla Hound",
+      "enemy_id": "enemy_1077_sotihd",
+      "count": 2,
+      "time": 127,
+      "interval": 6,
+      "route": 4,
+      "fragment": 4
+     },
+     {
+      "enemy": "Guerrilla Herald",
+      "enemy_id": "enemy_1080_sotidp",
+      "count": 1,
+      "time": 107,
+      "route": 5,
+      "fragment": 4
+     },
+     {
+      "enemy": "Guerrilla Herald",
+      "enemy_id": "enemy_1080_sotidp",
+      "count": 1,
+      "time": 146,
+      "route": 5,
+      "fragment": 5
+     },
+     {
+      "enemy": "Guerrilla Fighter",
+      "enemy_id": "enemy_1078_sotisc",
+      "count": 3,
+      "time": 139,
+      "interval": 6,
+      "route": 3,
+      "fragment": 5
+     },
+     {
+      "enemy": "Guerrilla Hound",
+      "enemy_id": "enemy_1077_sotihd",
+      "count": 3,
+      "time": 142,
+      "interval": 4,
+      "route": 4,
+      "fragment": 5
+     },
+     {
+      "enemy": "Guerrilla Sniper",
+      "enemy_id": "enemy_1079_sotisp",
+      "count": 3,
+      "time": 148,
+      "interval": 10,
+      "route": 4,
+      "fragment": 5
+     },
+     {
+      "enemy": "Guerrilla Hound",
+      "enemy_id": "enemy_1077_sotihd",
+      "count": 3,
+      "time": 158,
+      "interval": 5,
+      "route": 4,
+      "fragment": 5
+     },
+     {
+      "enemy": "Guerrilla Fighter",
+      "enemy_id": "enemy_1078_sotisc",
+      "count": 4,
+      "time": 165,
+      "interval": 6,
+      "route": 3,
+      "fragment": 5
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 5,
+    "col": 0,
+    "routes": [
+     3,
+     3,
+     3,
+     3,
+     3,
+     3,
+     3
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 6,
+    "col": 0,
+    "routes": [
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 7,
+    "col": 9,
+    "routes": [
+     5,
+     5,
+     5,
+     5
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 1,
+    "col": 5,
+    "routes": [
+     3,
+     3,
+     3,
+     3,
+     3,
+     3,
+     3
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 1,
+    "col": 6,
+    "routes": [
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 1,
+    "col": 10,
+    "routes": [
+     0,
+     2,
+     5,
+     5,
+     5,
+     5
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1077_sotihd",
+    "slug": "guerrilla_hound",
+    "name": "Guerrilla Hound",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1078_sotisc",
+    "slug": "guerrilla_fighter",
+    "name": "Guerrilla Fighter",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1079_sotisp",
+    "slug": "guerrilla_sniper",
+    "name": "Guerrilla Sniper",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1080_sotidp",
+    "slug": "guerrilla_herald",
+    "name": "Guerrilla Herald",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1081_sotisd",
+    "slug": "guerrilla_shieldguard",
+    "name": "Guerrilla Shieldguard",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "devices": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "7-13",
+  "geometryHash": "2d33e5d01d8e9a4d05ddd3082119c885631aa0c33073d0ab1c1476b888196ea4",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      8,
+      7
+     ],
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      0,
+      2
+     ],
+     [
+      10,
+      2
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "length": 12,
+    "breaks": [
+     3,
+     9
+    ],
+    "flying": false,
+    "holds": [
+     {
+      "at": 0,
+      "seconds": 170,
+      "point": [
+       8,
+       5
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 2,
+      "seconds": 5,
+      "point": [
+       8,
+       7
+      ],
+      "tunnel": true
+     },
+     {
+      "at": 7,
+      "seconds": 5,
+      "point": [
+       0,
+       2
+      ],
+      "tunnel": true
+     }
+    ],
+    "nodes": [
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      7
+     ],
+     [
+      0,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      0,
+      2
+     ],
+     [
+      10,
+      2
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ]
+   },
+   "2": {
+    "points": [
+     [
+      2,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      0,
+      2
+     ],
+     [
+      10,
+      2
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "length": 7,
+    "breaks": [
+     3
+    ],
+    "flying": false,
+    "holds": [
+     {
+      "at": 0,
+      "seconds": 150,
+      "point": [
+       2,
+       2
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 2,
+      "seconds": 5,
+      "point": [
+       0,
+       2
+      ],
+      "tunnel": true
+     }
+    ],
+    "nodes": [
+     [
+      2,
+      2
+     ],
+     [
+      0,
+      2
+     ],
+     [
+      10,
+      2
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ]
+   },
+   "3": {
+    "points": [
+     [
+      0,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "length": 9,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      1
+     ]
+    ]
+   },
+   "4": {
+    "points": [
+     [
+      0,
+      6
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      6,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "length": 11,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      6
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      6,
+      1
+     ]
+    ]
+   },
+   "5": {
+    "points": [
+     [
+      9,
+      7
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      8,
+      7
+     ],
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      0,
+      2
+     ],
+     [
+      10,
+      2
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     3,
+     4,
+     5,
+     6,
+     6,
+     7,
+     8,
+     9
+    ],
+    "length": 9,
+    "breaks": [
+     4,
+     8
+    ],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 20,
+      "point": [
+       9,
+       6
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 3,
+      "seconds": 3,
+      "point": [
+       8,
+       7
+      ],
+      "tunnel": true
+     },
+     {
+      "at": 4,
+      "seconds": 20,
+      "point": [
+       1,
+       1
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 6,
+      "seconds": 3,
+      "point": [
+       0,
+       2
+      ],
+      "tunnel": true
+     },
+     {
+      "at": 7,
+      "seconds": 10,
+      "point": [
+       9,
+       2
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      9,
+      7
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      8,
+      7
+     ],
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      0,
+      2
+     ],
+     [
+      10,
+      2
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1081_sotisd": {
+   "key": "enemy_1081_sotisd",
+   "prefabKey": "enemy_1081_sotisd",
+   "name": "Guerrilla Shieldguard",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 15000,
+    "atk": 700,
+    "def": 1300,
+    "res": 60,
+    "moveSpeed": 0.7,
+    "bat": 3.8,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 4,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": true,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "More likely to be targeted by attacks.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "taunt.taunt_level": 1
+    },
+    "bbStr": {},
+    "groups": {
+     "taunt": [
+      "taunt_level"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1078_sotisc": {
+   "key": "enemy_1078_sotisc",
+   "prefabKey": "enemy_1078_sotisc",
+   "name": "Guerrilla Fighter",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3300,
+    "atk": 300,
+    "def": 300,
+    "res": 20,
+    "moveSpeed": 1.1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": true,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "When Inspired, gains Movement Speed.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "strength.move_speed": 0.3
+    },
+    "bbStr": {},
+    "groups": {
+     "strength": [
+      "move_speed"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1080_sotidp": {
+   "key": "enemy_1080_sotidp",
+   "prefabKey": "enemy_1080_sotidp",
+   "name": "Guerrilla Herald",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 7000,
+    "atk": 300,
+    "def": 120,
+    "res": 50,
+    "moveSpeed": 1,
+    "bat": 2.7,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": true,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Increases the ATK and DEF of enemy units when on the battlefield.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "strength.atk": 0.1,
+     "strength.def": 100
+    },
+    "bbStr": {},
+    "groups": {
+     "strength": [
+      "atk",
+      "def"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1077_sotihd": {
+   "key": "enemy_1077_sotihd",
+   "prefabKey": "enemy_1077_sotihd",
+   "name": "Guerrilla Hound",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2900,
+    "atk": 350,
+    "def": 150,
+    "res": 20,
+    "moveSpeed": 1.9,
+    "bat": 1.4,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": true,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1079_sotisp": {
+   "key": "enemy_1079_sotisp",
+   "prefabKey": "enemy_1079_sotisp",
+   "name": "Guerrilla Sniper",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 3000,
+    "atk": 340,
+    "def": 300,
+    "res": 20,
+    "moveSpeed": 0.9,
+    "bat": 2.5,
+    "aspd": 100,
+    "rangeRadius": 2.2,
+    "rawRangeRadius": 2.2,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": true,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "When Inspired, attacks one additional target.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ }
+}

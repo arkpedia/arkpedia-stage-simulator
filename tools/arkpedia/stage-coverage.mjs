@@ -26,18 +26,21 @@ export function buildStageCoverage() {
   for (const file of readdirSync(stagesDir).filter(name => name.endsWith('.json'))) {
     let stage;
     try { stage = JSON.parse(readFileSync(new URL(file, stagesDir), 'utf8')); } catch { continue; }
-    if (stage.stage_type !== 'main') continue;
+    if (stage.stage_type !== 'main' || !stage.battle) continue;
     total++;
     const chapter = /^S\d/i.test(stage.code) ? 'Side stories' : /^\d+-/.test(stage.code) ? `Chapter ${stage.code.split('-')[0]}` : 'Other';
     const bucket = byChapter.get(chapter) ?? { total: 0, built: 0 };
     bucket.total++; byChapter.set(chapter, bucket);
     if (existsSync(new URL(`arkpedia-stage-${stage.slug}.json`, DATA))) { built++; bucket.built++; continue; }
-    const geometryUrl = new URL(`${stage.slug}.json`, geometryDir);
-    if (!existsSync(geometryUrl)) { byReason['no-geometry'] = (byReason['no-geometry'] ?? 0) + 1; continue; }
+    const baseSlug = stage.slug.replace(/_(challenge_mode|six_star|adverse_environment)$/, '');
+    const exactUrl = new URL(`${stage.slug}.json`, geometryDir);
+    const baseUrl = new URL(`${baseSlug}.json`, geometryDir);
+    const geometryUrl = existsSync(exactUrl) ? exactUrl : existsSync(baseUrl) ? baseUrl : null;
+    if (!geometryUrl) { byReason['no-geometry'] = (byReason['no-geometry'] ?? 0) + 1; continue; }
     let geometry;
     try { geometry = JSON.parse(readFileSync(geometryUrl, 'utf8')); } catch { byReason['bad-geometry'] = (byReason['bad-geometry'] ?? 0) + 1; continue; }
     if ((geometry.suppliedUnits?.deployable_tokens ?? []).some(t => t.count !== 0)) { byReason.tokens = (byReason.tokens ?? 0) + 1; continue; }
-    if ((devicesByStage[stage.slug] ?? []).some(d => d.kind === 'device' && !String(d.key).startsWith('char_') && !SUPPORTED_STAGE_DEVICE_NAMES.includes(d.name))) { byReason.devices = (byReason.devices ?? 0) + 1; continue; }
+    if ((devicesByStage[stage.geometryKey ?? stage.slug] ?? devicesByStage[baseSlug] ?? []).some(d => d.kind === 'device' && !String(d.key).startsWith('char_') && !SUPPORTED_STAGE_DEVICE_NAMES.includes(d.name))) { byReason.devices = (byReason.devices ?? 0) + 1; continue; }
     if (geometry.hasConditionalSpawns) {
       byReason.conditional = (byReason.conditional ?? 0) + 1;
       const conditionalUrl = new URL(`${stage.slug}.json`, conditionalDir);

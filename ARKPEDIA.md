@@ -6064,3 +6064,11 @@ Implemented Roadside Emergency Reserves as a targetable enemy-side unit device: 
 ### Static roadblocks (S160, 2026-10-22)
 
 Added the 8000 HP / 200 DEF / 20 RES enemy-side roadblock as a destructible crate obstacle with no DP reward. Rebuilt R8-1/R8-2/R8-4/R8-9/TR-18 with their devices; counts unchanged.
+
+### Combat-only coverage and 84 hard variants (S161, 2026-10-22)
+
+Fixed coverage to count only rows with `battle` and to resolve the base map for `_challenge_mode`/`_six_star`/`_adverse_environment`. All 564 combat stages have a map (directly or via the base), so the old "311 missing geometry" was a counting bug. Built the **84** hard variants with original playback routes and promoted them public. Catalogue **323** (307 public + 16 testOnly), 322 files.
+
+### Deployable token stat source (S162, 2026-10-22)
+
+Added `tools/arkpedia/import-traps.mjs` and generated `data/arkpedia-deployable-tokens.json` from the public upstream `character_table`/`skill_table` at `db6f9ef8`: **104** stage tokens with phase stats, placement position, cost, block, and skill descriptions/blackboards. This replaces the former “token stats missing” blocker with a reviewed, reproducible import.

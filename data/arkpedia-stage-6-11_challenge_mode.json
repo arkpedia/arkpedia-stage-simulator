@@ -1,0 +1,3001 @@
+{
+ "code": "6-11",
+ "name": "'Times Like These'",
+ "description": "Condition:\n7 tiles on the map will no longer allow units to be deployed upon them.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "6-11",
+  "rows": 7,
+  "cols": 11,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_flystart",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    1,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    2,
+    3,
+    3,
+    3,
+    3,
+    3,
+    1,
+    1,
+    1,
+    0,
+    0
+   ],
+   [
+    2,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    4
+   ],
+   [
+    0,
+    0,
+    1,
+    1,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    4
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    3,
+    3,
+    1,
+    1,
+    0,
+    5
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    4,
+    4,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": null,
+    "placeholder": true,
+    "start": null,
+    "end": null,
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 1
+    },
+    "end": {
+     "row": 3,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_current_fragment_time",
+      "after_checkpoint": -1,
+      "seconds": 110
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 2
+    },
+    "end": {
+     "row": 2,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_current_fragment_time",
+      "after_checkpoint": -1,
+      "seconds": 105
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 8
+    },
+    "end": {
+     "row": 3,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_current_fragment_time",
+      "after_checkpoint": -1,
+      "seconds": 123
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 9
+    },
+    "end": {
+     "row": 2,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_current_fragment_time",
+      "after_checkpoint": -1,
+      "seconds": 123
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 5
+    },
+    "end": {
+     "row": 2,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_current_fragment_time",
+      "after_checkpoint": -1,
+      "seconds": 110
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 5
+    },
+    "end": {
+     "row": 2,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_current_fragment_time",
+      "after_checkpoint": 0,
+      "seconds": 110
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 7
+    },
+    "end": {
+     "row": 2,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_current_fragment_time",
+      "after_checkpoint": -1,
+      "seconds": 130
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 7
+    },
+    "end": {
+     "row": 2,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_current_fragment_time",
+      "after_checkpoint": 0,
+      "seconds": 130
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 10
+    },
+    "end": {
+     "row": 3,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 10
+    },
+    "end": {
+     "row": 2,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 5
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 10
+    },
+    "end": {
+     "row": 3,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 0
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 5,
+     "col": 9
+    },
+    "end": {
+     "row": 2,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 30
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 6
+    },
+    "end": {
+     "row": 2,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 5
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 10
+    },
+    "end": {
+     "row": 2,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 5
+    },
+    "end": {
+     "row": 3,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     }
+    ],
+    "waits": []
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 236,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Yeti Caster Leader",
+      "enemy_id": "enemy_1068_snmage_2",
+      "count": 1,
+      "time": 0,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Yeti Caster Leader",
+      "enemy_id": "enemy_1068_snmage_2",
+      "count": 1,
+      "time": 0,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Yeti Caster Leader",
+      "enemy_id": "enemy_1068_snmage_2",
+      "count": 1,
+      "time": 0,
+      "route": 3,
+      "fragment": 0
+     },
+     {
+      "enemy": "Yeti Caster Leader",
+      "enemy_id": "enemy_1068_snmage_2",
+      "count": 1,
+      "time": 0,
+      "route": 4,
+      "fragment": 0
+     },
+     {
+      "enemy": "Infused Glacial Originium Slug",
+      "enemy_id": "enemy_1067_snslime",
+      "count": 1,
+      "time": 0,
+      "route": 5,
+      "fragment": 0
+     },
+     {
+      "enemy": "Infused Glacial Originium Slug",
+      "enemy_id": "enemy_1067_snslime",
+      "count": 1,
+      "time": 0,
+      "route": 6,
+      "fragment": 0
+     },
+     {
+      "enemy": "Infused Glacial Originium Slug",
+      "enemy_id": "enemy_1067_snslime",
+      "count": 1,
+      "time": 0,
+      "route": 7,
+      "fragment": 0
+     },
+     {
+      "enemy": "Infused Glacial Originium Slug",
+      "enemy_id": "enemy_1067_snslime",
+      "count": 1,
+      "time": 0,
+      "route": 8,
+      "fragment": 0
+     },
+     {
+      "enemy": "Yeti Operative",
+      "enemy_id": "enemy_1064_snsbr",
+      "count": 1,
+      "time": 9,
+      "route": 9,
+      "fragment": 1
+     },
+     {
+      "enemy": "Yeti Operative",
+      "enemy_id": "enemy_1064_snsbr",
+      "count": 1,
+      "time": 19,
+      "route": 9,
+      "fragment": 1
+     },
+     {
+      "enemy": "Frostfang",
+      "enemy_id": "enemy_1065_snwolf",
+      "count": 1,
+      "time": 24,
+      "route": 9,
+      "fragment": 1
+     },
+     {
+      "enemy": "Yeti Operative",
+      "enemy_id": "enemy_1064_snsbr",
+      "count": 1,
+      "time": 31,
+      "route": 9,
+      "fragment": 1
+     },
+     {
+      "enemy": "Frostfang",
+      "enemy_id": "enemy_1065_snwolf",
+      "count": 1,
+      "time": 43,
+      "route": 9,
+      "fragment": 1
+     },
+     {
+      "enemy": "Yeti Operative",
+      "enemy_id": "enemy_1064_snsbr",
+      "count": 1,
+      "time": 44,
+      "route": 9,
+      "fragment": 1
+     },
+     {
+      "enemy": "Yeti Operative",
+      "enemy_id": "enemy_1064_snsbr",
+      "count": 1,
+      "time": 34,
+      "route": 10,
+      "fragment": 1
+     },
+     {
+      "enemy": "Yeti Operative",
+      "enemy_id": "enemy_1064_snsbr",
+      "count": 1,
+      "time": 44,
+      "route": 10,
+      "fragment": 1
+     },
+     {
+      "enemy": "Frostfang",
+      "enemy_id": "enemy_1065_snwolf",
+      "count": 1,
+      "time": 45,
+      "route": 10,
+      "fragment": 1
+     },
+     {
+      "enemy": "Yeti Operative",
+      "enemy_id": "enemy_1064_snsbr",
+      "count": 3,
+      "time": 60,
+      "interval": 12,
+      "route": 9,
+      "fragment": 2
+     },
+     {
+      "enemy": "Frostfang",
+      "enemy_id": "enemy_1065_snwolf",
+      "count": 4,
+      "time": 61,
+      "interval": 12,
+      "route": 9,
+      "fragment": 2
+     },
+     {
+      "enemy": "Yeti Caster",
+      "enemy_id": "enemy_1068_snmage",
+      "count": 2,
+      "time": 72,
+      "interval": 25,
+      "route": 11,
+      "fragment": 2
+     },
+     {
+      "enemy": "Yeti Operative",
+      "enemy_id": "enemy_1064_snsbr",
+      "count": 1,
+      "time": 82,
+      "route": 10,
+      "fragment": 2
+     },
+     {
+      "enemy": "Frostfang",
+      "enemy_id": "enemy_1065_snwolf",
+      "count": 1,
+      "time": 84,
+      "route": 10,
+      "fragment": 2
+     },
+     {
+      "enemy": "Light-Armored Soldier Leader",
+      "enemy_id": "enemy_1015_litamr_2",
+      "count": 1,
+      "time": 93,
+      "route": 10,
+      "fragment": 2
+     },
+     {
+      "enemy": "Frostfang",
+      "enemy_id": "enemy_1065_snwolf",
+      "count": 1,
+      "time": 94,
+      "route": 10,
+      "fragment": 2
+     },
+     {
+      "enemy": "Infused Glacial Originium Slug",
+      "enemy_id": "enemy_1067_snslime",
+      "count": 1,
+      "time": 87,
+      "route": 9,
+      "fragment": 2
+     },
+     {
+      "enemy": "Infused Glacial Originium Slug",
+      "enemy_id": "enemy_1067_snslime",
+      "count": 1,
+      "time": 99,
+      "route": 9,
+      "fragment": 2
+     },
+     {
+      "enemy": "Infused Glacial Originium Slug",
+      "enemy_id": "enemy_1067_snslime",
+      "count": 1,
+      "time": 91,
+      "route": 10,
+      "fragment": 2
+     },
+     {
+      "enemy": "Frost",
+      "enemy_id": "enemy_1042_frostd",
+      "count": 1,
+      "time": 122,
+      "route": 12,
+      "fragment": 3
+     },
+     {
+      "enemy": "Yeti Operative",
+      "enemy_id": "enemy_1064_snsbr",
+      "count": 4,
+      "time": 124,
+      "interval": 13,
+      "route": 9,
+      "fragment": 3
+     },
+     {
+      "enemy": "Infused Glacial Originium Slug",
+      "enemy_id": "enemy_1067_snslime",
+      "count": 4,
+      "time": 125,
+      "interval": 13,
+      "route": 9,
+      "fragment": 3
+     },
+     {
+      "enemy": "Razorfang",
+      "enemy_id": "enemy_1065_snwolf_2",
+      "count": 4,
+      "time": 128,
+      "interval": 12,
+      "route": 10,
+      "fragment": 3
+     },
+     {
+      "enemy": "Light-Armored Soldier Leader",
+      "enemy_id": "enemy_1015_litamr_2",
+      "count": 4,
+      "time": 129,
+      "interval": 12,
+      "route": 10,
+      "fragment": 3
+     },
+     {
+      "enemy": "Infused Glacial Originium Slug",
+      "enemy_id": "enemy_1067_snslime",
+      "count": 2,
+      "time": 149,
+      "interval": 15,
+      "route": 13,
+      "fragment": 3
+     },
+     {
+      "enemy": "Yeti Icecleaver",
+      "enemy_id": "enemy_1069_icebrk",
+      "count": 1,
+      "time": 187,
+      "route": 14,
+      "fragment": 4
+     },
+     {
+      "enemy": "Infused Glacial Originium Slug",
+      "enemy_id": "enemy_1067_snslime",
+      "count": 2,
+      "time": 191,
+      "interval": 1,
+      "route": 15,
+      "fragment": 5
+     },
+     {
+      "enemy": "Infused Glacial Originium Slug",
+      "enemy_id": "enemy_1067_snslime",
+      "count": 2,
+      "time": 211,
+      "interval": 1,
+      "route": 15,
+      "fragment": 5
+     },
+     {
+      "enemy": "Razorfang",
+      "enemy_id": "enemy_1065_snwolf_2",
+      "count": 4,
+      "time": 193,
+      "interval": 13,
+      "route": 9,
+      "fragment": 5
+     },
+     {
+      "enemy": "Infused Glacial Originium Slug",
+      "enemy_id": "enemy_1067_snslime",
+      "count": 4,
+      "time": 194,
+      "interval": 11,
+      "route": 9,
+      "fragment": 5
+     },
+     {
+      "enemy": "Yeti Operative",
+      "enemy_id": "enemy_1064_snsbr",
+      "count": 3,
+      "time": 203,
+      "interval": 15,
+      "route": 9,
+      "fragment": 5
+     },
+     {
+      "enemy": "Razorfang",
+      "enemy_id": "enemy_1065_snwolf_2",
+      "count": 4,
+      "time": 193,
+      "interval": 12,
+      "route": 10,
+      "fragment": 5
+     },
+     {
+      "enemy": "Light-Armored Soldier Leader",
+      "enemy_id": "enemy_1015_litamr_2",
+      "count": 4,
+      "time": 194,
+      "interval": 14,
+      "route": 10,
+      "fragment": 5
+     },
+     {
+      "enemy": "Yeti Caster",
+      "enemy_id": "enemy_1068_snmage",
+      "count": 2,
+      "time": 208,
+      "interval": 20,
+      "route": 9,
+      "fragment": 5
+     },
+     {
+      "enemy": "Yeti Icecleaver",
+      "enemy_id": "enemy_1069_icebrk",
+      "count": 1,
+      "time": 226,
+      "route": 10,
+      "fragment": 5
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 3,
+    "col": 10,
+    "routes": [
+     10,
+     10,
+     10,
+     10,
+     10,
+     10,
+     10,
+     10,
+     10,
+     10,
+     14,
+     10,
+     10,
+     10
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 4,
+    "col": 10,
+    "routes": [
+     9,
+     9,
+     9,
+     9,
+     9,
+     9,
+     9,
+     9,
+     11,
+     9,
+     9,
+     9,
+     9,
+     9,
+     9,
+     9,
+     9
+    ]
+   },
+   {
+    "key": "tile_flystart",
+    "row": 5,
+    "col": 10,
+    "routes": []
+   },
+   {
+    "key": "tile_start",
+    "row": 6,
+    "col": 5,
+    "routes": [
+     15,
+     15
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 6,
+    "col": 6,
+    "routes": [
+     13
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 2,
+    "col": 0,
+    "routes": [
+     2,
+     4,
+     5,
+     6,
+     7,
+     8,
+     10,
+     10,
+     10,
+     10,
+     10,
+     10,
+     10,
+     10,
+     12,
+     10,
+     10,
+     13,
+     14,
+     10,
+     10,
+     10
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 3,
+    "col": 0,
+    "routes": [
+     1,
+     3,
+     9,
+     9,
+     9,
+     9,
+     9,
+     9,
+     9,
+     9,
+     11,
+     9,
+     9,
+     9,
+     9,
+     15,
+     15,
+     9,
+     9,
+     9,
+     9
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1015_litamr_2",
+    "slug": "light_armored_soldier_leader",
+    "name": "Light-Armored Soldier Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1042_frostd",
+    "slug": "frost",
+    "name": "Frost",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1064_snsbr",
+    "slug": "yeti_operative",
+    "name": "Yeti Operative",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1065_snwolf",
+    "slug": "frostfang",
+    "name": "Frostfang",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1065_snwolf_2",
+    "slug": "razorfang",
+    "name": "Razorfang",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1067_snslime",
+    "slug": "infused_glacial_originium_slug_enemy_1067_snslime",
+    "name": "Infused Glacial Originium Slug",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1068_snmage",
+    "slug": "yeti_caster",
+    "name": "Yeti Caster",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1068_snmage_2",
+    "slug": "yeti_caster_leader",
+    "name": "Yeti Caster Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1069_icebrk",
+    "slug": "yeti_icecleaver",
+    "name": "Yeti Icecleaver",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "devices": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "6-11",
+  "geometryHash": "1a392cc64b5fe7b0be0a328d94111fb9ee985caa80ec403e00018e89970e0735",
+  "moveScale": 0.65,
+  "paths": {
+   "1": {
+    "points": [
+     [
+      1,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 3,
+      "seconds": 10,
+      "point": [
+       4,
+       3
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      1,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ]
+   },
+   "2": {
+    "points": [
+     [
+      2,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      0,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "length": 8,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 3,
+      "seconds": 10,
+      "point": [
+       5,
+       2
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      2,
+      2
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      0,
+      2
+     ]
+    ]
+   },
+   "3": {
+    "points": [
+     [
+      8,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "length": 9,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      8,
+      4
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ]
+   },
+   "4": {
+    "points": [
+     [
+      9,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      0,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      9,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      0,
+      2
+     ]
+    ]
+   },
+   "5": {
+    "points": [
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      0,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "length": 6,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      0,
+      2
+     ]
+    ]
+   },
+   "6": {
+    "points": [
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      0,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "length": 6,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      0,
+      2
+     ]
+    ]
+   },
+   "7": {
+    "points": [
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      0,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "length": 8,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      7,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      0,
+      2
+     ]
+    ]
+   },
+   "8": {
+    "points": [
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      0,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "length": 8,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      7,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      0,
+      2
+     ]
+    ]
+   },
+   "9": {
+    "points": [
+     [
+      10,
+      4
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "length": 11,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      10,
+      4
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ]
+   },
+   "10": {
+    "points": [
+     [
+      10,
+      3
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      0,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "length": 11,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      10,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      0,
+      2
+     ]
+    ]
+   },
+   "11": {
+    "points": [
+     [
+      10,
+      4
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "length": 11,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      10,
+      4
+     ],
+     [
+      10,
+      4
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      0,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ]
+   },
+   "12": {
+    "points": [
+     [
+      9,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      0,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     4,
+     9.830951894845299
+    ],
+    "length": 9.830951894845299,
+    "breaks": [],
+    "flying": true,
+    "holds": [
+     {
+      "at": 4,
+      "seconds": 30,
+      "point": [
+       5,
+       5
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      9,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      0,
+      2
+     ]
+    ]
+   },
+   "13": {
+    "points": [
+     [
+      6,
+      6
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      0,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      6,
+      6
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      0,
+      2
+     ]
+    ]
+   },
+   "14": {
+    "points": [
+     [
+      10,
+      3
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      0,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "length": 11,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 5,
+      "point": [
+       9,
+       3
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      10,
+      3
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      0,
+      2
+     ]
+    ]
+   },
+   "15": {
+    "points": [
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "length": 8,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1068_snmage_2": {
+   "key": "enemy_1068_snmage_2",
+   "prefabKey": "enemy_1068_snmage_2",
+   "name": "Yeti Caster Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 8000,
+    "atk": 400,
+    "def": 250,
+    "res": 50,
+    "moveSpeed": 0.8,
+    "bat": 4,
+    "aspd": 100,
+    "rangeRadius": 2.2,
+    "rawRangeRadius": 2.2,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "After two attacks, the next attack applies the <$ba.cold>Cold</> effect",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [
+    {
+     "prefabKey": "coldattack",
+     "priority": 0,
+     "cooldown": 0,
+     "initCooldown": 0,
+     "spCost": 2,
+     "bb": {
+      "freeze": 10
+     },
+     "bbStr": {}
+    }
+   ],
+   "sp": {
+    "type": "INCREASE_WHEN_ATTACK",
+    "maxSp": 2,
+    "initSp": 0,
+    "increment": 1
+   },
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1067_snslime": {
+   "key": "enemy_1067_snslime",
+   "prefabKey": "enemy_1067_snslime",
+   "name": "Infused Glacial Originium Slug",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3250,
+    "atk": 300,
+    "def": 0,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 1.7,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 1.75,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Upon death, deals Physical damage in an area and applies <$ba.cold>Cold</> to affected targets",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "boom.atk_scale": 2,
+     "boom.freeze": 10
+    },
+    "bbStr": {},
+    "groups": {
+     "boom": [
+      "atk_scale",
+      "freeze"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1064_snsbr": {
+   "key": "enemy_1064_snsbr",
+   "prefabKey": "enemy_1064_snsbr",
+   "name": "Yeti Operative",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3400,
+    "atk": 360,
+    "def": 100,
+    "res": 0,
+    "moveSpeed": 1.1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Attack power increases when attacking <$ba.frozen>Frozen</> targets",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "atkup.atk_scale": 1.5
+    },
+    "bbStr": {},
+    "groups": {
+     "atkup": [
+      "atk_scale"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1065_snwolf": {
+   "key": "enemy_1065_snwolf",
+   "prefabKey": "enemy_1065_snwolf",
+   "name": "Frostfang",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3150,
+    "atk": 350,
+    "def": 0,
+    "res": 30,
+    "moveSpeed": 1.9,
+    "bat": 1.4,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Attack power increases when attacking <$ba.frozen>Frozen</> targets",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "atkup.atk_scale": 1.5
+    },
+    "bbStr": {},
+    "groups": {
+     "atkup": [
+      "atk_scale"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1068_snmage": {
+   "key": "enemy_1068_snmage",
+   "prefabKey": "enemy_1068_snmage",
+   "name": "Yeti Caster",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 5000,
+    "atk": 320,
+    "def": 200,
+    "res": 50,
+    "moveSpeed": 0.8,
+    "bat": 4.5,
+    "aspd": 100,
+    "rangeRadius": 2.2,
+    "rawRangeRadius": 2.2,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "After two attacks, the next attack applies the <$ba.cold>Cold</> effect",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [
+    {
+     "prefabKey": "coldattack",
+     "priority": 0,
+     "cooldown": 0,
+     "initCooldown": 0,
+     "spCost": 2,
+     "bb": {
+      "freeze": 10
+     },
+     "bbStr": {}
+    }
+   ],
+   "sp": {
+    "type": "INCREASE_WHEN_ATTACK",
+    "maxSp": 2,
+    "initSp": 0,
+    "increment": 1
+   },
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1015_litamr_2": {
+   "key": "enemy_1015_litamr_2",
+   "prefabKey": "enemy_1015_litamr_2",
+   "name": "Light-Armored Soldier Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3700,
+    "atk": 300,
+    "def": 500,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1042_frostd": {
+   "key": "enemy_1042_frostd",
+   "prefabKey": "enemy_1042_frostd",
+   "name": "Frost",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "NONE",
+   "stats": {
+    "maxHp": 6500,
+    "atk": 100,
+    "def": 600,
+    "res": 30,
+    "moveSpeed": 0.9,
+    "bat": 1,
+    "aspd": 100,
+    "rangeRadius": 2.5,
+    "rawRangeRadius": 2.5,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "none",
+    "dmgTypes": [
+     "none"
+    ],
+    "motion": "FLY",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Flying unit.",
+     "format": "NORMAL"
+    },
+    {
+     "text": "All friendly units within range have reduced ASPD",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "atkSpeedDown.attack_speed": -0.5,
+     "defup.range_radius": 2.5
+    },
+    "bbStr": {},
+    "groups": {
+     "atkSpeedDown": [
+      "attack_speed"
+     ],
+     "defup": [
+      "range_radius"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "drone"
+   ]
+  },
+  "enemy_1065_snwolf_2": {
+   "key": "enemy_1065_snwolf_2",
+   "prefabKey": "enemy_1065_snwolf_2",
+   "name": "Razorfang",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 4650,
+    "atk": 430,
+    "def": 0,
+    "res": 30,
+    "moveSpeed": 1.9,
+    "bat": 1.4,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Attack power increases when attacking <$ba.frozen>Frozen</> targets",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "atkup.atk_scale": 1.5
+    },
+    "bbStr": {},
+    "groups": {
+     "atkup": [
+      "atk_scale"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1069_icebrk": {
+   "key": "enemy_1069_icebrk",
+   "prefabKey": "enemy_1069_icebrk",
+   "name": "Yeti Icecleaver",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 16000,
+    "atk": 830,
+    "def": 500,
+    "res": 20,
+    "moveSpeed": 0.7,
+    "bat": 3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 1.9,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Attack power increases greatly when attacking <$ba.frozen>Frozen</> targets",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "atkup.atk_scale": 2.5
+    },
+    "bbStr": {},
+    "groups": {
+     "atkup": [
+      "atk_scale"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ }
+}
