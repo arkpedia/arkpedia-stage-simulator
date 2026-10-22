@@ -5886,3 +5886,7 @@ Intrusive Call and Weakening Node are hidden, no-damage story entities; until th
 ### 15-5/15-6/15-7 test-only (S125, 2026-10-21)
 
 Built as `testOnly` while the PRTS props are inert: **15-5** (67 spawns), **15-6** (55) and **15-7** (50). They are playable and smoke-tested but not public; the catalogue is 202 entries, **199 public + 3 testOnly**.
+
+### Ice bomb and DP-lock caster (E69, 2026-10-21)
+
+The flying ice bomb sets the flying flag; its waiting-zone disable is inert because the engine has no waiting zone. The DP-lock caster halts DP regeneration for 30 s after a 5 s delay via `dpRegenHaltUntil`. Both remain compatible with test-only stages. Support rises to **400 of 1,552** enemies.

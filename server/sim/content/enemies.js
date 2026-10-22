@@ -347,6 +347,12 @@ export const featureAbilities = Object.freeze({
   moveSpeedBonus: ({ mul }) => ({ spawn(b, e) { b.addBuff(e, { key: 'ab:moveSpeed', persist: true, visible: true, mods: { moveMul: mul } }); } }),
   // Dublinn Flying Soldier: airborne.
   hover: () => ({ spawn(b, e) { e.flying = true; } }),
+  // DP-lock caster: halt DP regeneration after a delay.
+  stopCost: ({ delay, duration }) => ({
+    spawn(b, e) { b.after(delay ?? 5, () => { b.flags.dpRegenHaltUntil = Math.max(b.flags.dpRegenHaltUntil ?? 0, b.time + (duration ?? 30)); }, { owner: e }); },
+  }),
+  // Flying ice bomb: airborne, waiting-zone disable not modeled.
+  cardBoom: () => ({ spawn(b, e) { e.flying = true; } }),
   // PRTS controller/node: inert until the activation rules are reviewed.
   prtsProp: () => ({
     spawn(b, e) {

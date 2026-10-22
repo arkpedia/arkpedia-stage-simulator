@@ -447,6 +447,17 @@ export const ENEMY_FEATURES = Object.freeze({
   'skill:GrabEnd': { covers: r => r.skills.some(s => s.prefabKey === 'GrabEnd'), note: 'PRTS scripted action' },
   'skill:Click': { covers: r => r.skills.some(s => s.prefabKey === 'Click'), note: 'PRTS scripted action' },
   'skill:Angry': { covers: r => r.skills.some(s => s.prefabKey === 'Angry'), note: 'PRTS scripted action' },
+  // DP-lock caster: halts DP regeneration for a reviewed duration.
+  'skill:StopCost': { covers: r => r.skills.some(s => s.prefabKey === 'StopCost'),
+    ability: { kind: 'stopCost', params: r => ({ delay: r.skills[0].initCooldown, duration: r.skills[0].bb.projectile_life_time }) },
+    nativeClaim: () => ({ wrappers: 1 }), note: 'halts DP regeneration after a delay',
+    explains: /^Temporarily halts your DP regeneration shortly after it enters the battlefield$/ },
+  // Flying ice bomb: its only effect is disabling a waiting-zone operator; the engine has no waiting zone, so the
+  // bomb is inert and stages containing it stay testOnly.
+  'skill:CardBoom': { covers: r => r.skills.some(s => s.prefabKey === 'CardBoom'),
+    ability: { kind: 'cardBoom', params: () => ({}) }, nativeClaim: () => ({ wrappers: 1 }),
+    note: 'flying bomb; waiting-zone disable is not modeled', explains: text => text === 'Flying unit.'
+      || text === 'Shortly after it enters the battle, throws a bomb to temporarily disable the Operator with the highest DP cost in your Deployment Waiting Zone' },
   // PRTS stage props: hidden, no-damage controller/node entities. Until the PRTS activation rules are reviewed they are inert,
   // untargetable and do not move or leak; stages that contain them stay testOnly.
   'native:prtsProp': { covers: r => (NATIVE_ONLY_FEATURES[r.key] ?? null) === 'native:prtsProp',
