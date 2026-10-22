@@ -30,3 +30,7 @@ That is stricter than today, so the rollout must be staged:
 4. Add one engine test per device for range, cadence, friendly/enemy side effects and destruction.
 
 The Originium Altar is the first target because 7-8/7-9/7-10 already depend on its pulse and are `testOnly`.
+
+## Safety net
+
+`build-stage.mjs` now copies `stage-devices.json` into the stage file and `stageAdapter` refuses any functional device with a named error. Existing stage files have no `devices` field, so the 64-stage backlog is unchanged; every new build that carries an altar/turret/artillery fails until the device is reviewed.

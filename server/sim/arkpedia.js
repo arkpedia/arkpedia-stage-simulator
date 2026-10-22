@@ -263,6 +263,8 @@ import {
 } from "../../shared/arkpedia/squad.js";
 
 export function stageAdapter(source) {
+  const devices = (source.devices ?? []).filter(d => d.kind === 'device' && !String(d.key).startsWith('char_'));
+  if (devices.length) throw new Error(`Unsupported stage devices: ${[...new Set(devices.map(d => d.name))].join(', ')}`);
   const g = source.geometry;
   const supplied = Array.isArray(g.suppliedUnits) ? g.suppliedUnits.length
     : (g.suppliedUnits?.fixed_squad?.length || 0) + (g.suppliedUnits?.deployable_tokens?.length || 0);
