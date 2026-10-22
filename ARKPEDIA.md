@@ -6060,3 +6060,7 @@ Extended the `talent:strength` feature to covered Inspired ATK and ASPD records 
 ### Roadside reserves and 7-14/7-15/7-16 (S159, 2026-10-22)
 
 Implemented Roadside Emergency Reserves as a targetable enemy-side unit device: 8000 HP, 100 DEF, route-blocking crate, and 5 DP cap + 5 DP restored on death. 12-8 was rebuilt with its five reserves, and 7-14/7-15/7-16 now build with original routes and were promoted public. Catalogue **239** (223 public + 16 testOnly), 238 files.
+
+### Static roadblocks (S160, 2026-10-22)
+
+Added the 8000 HP / 200 DEF / 20 RES enemy-side roadblock as a destructible crate obstacle with no DP reward. Rebuilt R8-1/R8-2/R8-4/R8-9/TR-18 with their devices; counts unchanged.

@@ -80,3 +80,16 @@ test('roadside reserves block, can be destroyed, and restore DP', () => {
   battle.dealDamage(null, device, { amount: 99999, type: 'true', sourceless: true, ignoreSelect: true });
   assert.equal(battle.flags.dpMax, cap + 5);
 });
+
+test('static roadblocks are destructible without a DP reward', () => {
+  const stage = JSON.parse(readFileSync(new URL('../data/arkpedia-stage-r8-1.json', import.meta.url)));
+  const data = { ...mvp, stage, enemies: { ...mvp.enemies, ...stage.enemies } };
+  const battle = new StandardBattle(data, { operators: Object.values(data.operators).slice(0, 5).map(defaultBuild) });
+  const device = battle.enemies.find(e => e.mem?.stageUnitDevice?.name === 'Static Roadblock');
+  assert.ok(device);
+  assert.equal(device.s.maxHp, 8000);
+  assert.equal(device.s.def, 200);
+  const cap = battle.flags.dpMax;
+  battle.dealDamage(null, device, { amount: 99999, type: 'true', sourceless: true, ignoreSelect: true });
+  assert.equal(battle.flags.dpMax, cap);
+});
