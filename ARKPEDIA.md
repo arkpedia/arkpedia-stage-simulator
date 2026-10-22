@@ -6027,7 +6027,7 @@ Full suite after the altar promotion: **22,831 tests, 22,820 passed, 0 failed, 1
 
 ### Londinium artillery device (S151, 2026-10-22)
 
-Implemented the reviewed artillery meter: 1/s to 120, target the highest-Block visible ally (newest on ties), then 3000 True damage to both sides in the 3×3 core plus 1×3 cardinal arms. Built **10-14** and **10-15** as `testOnly` because they are new and unreviewed. Catalogue is **222 entries** (205 public + 17 testOnly), 221 committed files.
+Implemented the reviewed artillery meter: 1/s to 120, target the highest-Block visible ally (newest on ties), then 3000 True damage to both sides in the 3×3 core plus 1×3 cardinal arms. Built **10-14** and **10-15**; 10-14 is reviewed public (original routes, artillery modeled), while 10-15 stays `testOnly` for its synthetic route. Catalogue is **222 entries** (206 public + 16 testOnly), 221 committed files.
 
 ### EP14 pollution controller (S152, 2026-10-22)
 
