@@ -256,6 +256,7 @@ import { catalogueFor, recordFor, fixedSquadBuilds } from "../../shared/arkpedia
 import { REGULAR_OPERATORS } from "../../shared/arkpedia/operators.js";
 import { assertRegularEnemies } from "../../shared/arkpedia/enemies.js";
 import { installEnemyFeatures } from "./content/arkpedia-enemy-features.js";
+import { STAGE_DEVICES, pulseTiles } from "../../shared/arkpedia/stage-devices.js";
 import { compileBuffTemplate } from "../../shared/arkpedia/behavior.js";
 import {
   prepareSquad,
@@ -264,7 +265,8 @@ import {
 
 export function stageAdapter(source) {
   const devices = (source.devices ?? []).filter(d => d.kind === 'device' && !String(d.key).startsWith('char_'));
-  if (devices.length) throw new Error(`Unsupported stage devices: ${[...new Set(devices.map(d => d.name))].join(', ')}`);
+  const unsupported = devices.filter(d => !STAGE_DEVICES[d.name]);
+  if (unsupported.length) throw new Error(`Unsupported stage devices: ${[...new Set(unsupported.map(d => d.name))].join(', ')}`);
   const g = source.geometry;
   const supplied = Array.isArray(g.suppliedUnits) ? g.suppliedUnits.length
     : (g.suppliedUnits?.fixed_squad?.length || 0) + (g.suppliedUnits?.deployable_tokens?.length || 0);
@@ -434,6 +436,10 @@ export class StandardBattle extends Battle {
     // The road talent scans initial terrain even when Thorns deploys much later.
     if (chess[THORNS_LODESTAR_ID]) captureThornsRoads(this);
     this.behaviors = behaviors;
+    this.mvpStageDevices = (data.stage.devices ?? [])
+      .filter(d => d.kind === 'device' && STAGE_DEVICES[d.name])
+      .map(d => ({ ...d, sp: 0 }));
+    if (this.mvpStageDevices.length) this.on('tick', ({ dt }) => this._tickMvpStageDevices(dt));
     this.unitLimit = config.unit_limit;
     this.regularMapSize = Object.freeze({ rows: data.stage.geometry.rows, cols: data.stage.geometry.cols });
     this.mapTags = Object.freeze([...(data.stage.mapTags ?? [])]);
@@ -1191,4 +1197,22 @@ export class StandardBattle extends Battle {
     if (this.life <= 0) return this._finish("defeated");
     super._checkEnd();
   }
+  _tickMvpStageDevices(dt) {
+    for (const d of this.mvpStageDevices) {
+      const spec = STAGE_DEVICES[d.name].pulse;
+      d.sp += spec.spPerSecond * dt;
+      while (d.sp >= spec.spCost) {
+        d.sp -= spec.spCost;
+        const tiles = pulseTiles(d.row, d.col);
+        for (const u of this.units) {
+          if (!u.alive || !u.deployed || u.mem?.pulseImmune || u.profile?.pulseImmune) continue;
+          const r = Math.round(u.y), c = Math.round(u.x);
+          if (!tiles.some(([tr, tc]) => tr === r && tc === c)) continue;
+          this.dealDamage(null, u, { amount: spec.damage, type: 'true', sourceless: true, ignoreSelect: true, tags: ['device', 'pulse'] });
+        }
+        this.fx('explode', { x: d.col, y: d.row, r: 1.5, kind: 'pulse' });
+      }
+    }
+  }
+
 }

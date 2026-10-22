@@ -16,7 +16,8 @@ test('a positive token count still blocks the adapter', () => {
   assert.throws(() => stageAdapter(withTokens([{ unit_id: 'trap_test', count: 1 }])), /Unsupported stage mechanics/);
 });
 
-test('a functional map device still blocks the adapter', () => {
-  assert.throws(() => stageAdapter({ ...structuredClone(base), devices: [{ kind: 'device', key: 'trap_011_ore', name: 'Originium Altar' }] }),
-    /Unsupported stage devices: Originium Altar/);
+test('the reviewed Originium Altar is accepted while unknown devices still block', () => {
+  assert.doesNotThrow(() => stageAdapter({ ...structuredClone(base), devices: [{ kind: 'device', key: 'trap_011_ore', name: 'Originium Altar' }] }));
+  assert.throws(() => stageAdapter({ ...structuredClone(base), devices: [{ kind: 'device', key: 'trap_002_emp', name: 'Stun Generator' }] }),
+    /Unsupported stage devices: Stun Generator/);
 });

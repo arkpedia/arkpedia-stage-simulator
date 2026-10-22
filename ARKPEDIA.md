@@ -6018,3 +6018,7 @@ Imported **182** original enemy chibis into `arkpedia-sd-assets` (merged as `976
 ### Asset coverage report (S149, 2026-10-21)
 
 Added `npm run coverage:arkpedia-assets` and `docs/ASSETS.md`: 1,187 mapped models, 3,239 assets, and 25 built stages still referencing one of three enemy records with no upstream artwork. Those units keep fallback markers; stage scenery remains a separate export gap.
+
+### Originium Altar device (S150, 2026-10-22)
+
+Implemented the reviewed PRTS altar: auto-triggered pulse every 7 SP seconds, **500 True damage** to allied and enemy units in its `x-1` cross, including air and normally untargetable units, with pulse-immune units excluded. Unknown devices still fail closed. Rebuilt 7-8/7-9 with their altar data and promoted both back to public (205 public, 15 testOnly, 220 catalogue entries).
