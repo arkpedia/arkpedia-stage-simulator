@@ -6056,3 +6056,7 @@ Implemented the pulse-charged Sarkaz: ordinary attacks become Arts and the Origi
 ### Inspired ATK/ASPD variants (S158, 2026-10-22)
 
 Extended the `talent:strength` feature to covered Inspired ATK and ASPD records (1082/1083) and the landing text; support is **419 enemies**. No new stage yet (7-11/7-12 still need the pulse-expanded caster range).
+
+### Roadside reserves and 7-14/7-15/7-16 (S159, 2026-10-22)
+
+Implemented Roadside Emergency Reserves as a targetable enemy-side unit device: 8000 HP, 100 DEF, route-blocking crate, and 5 DP cap + 5 DP restored on death. 12-8 was rebuilt with its five reserves, and 7-14/7-15/7-16 now build with original routes and were promoted public. Catalogue **239** (223 public + 16 testOnly), 238 files.

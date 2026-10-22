@@ -449,6 +449,7 @@ export class StandardBattle extends Battle {
     }));
     this.mvpStagePollution = new Set(pollution.map(([r, c]) => `${r},${c}`));
     if (this.mvpStageDevices.length) this.on('tick', ({ dt }) => this._tickMvpStageDevices(dt));
+    this._installUnitStageDevices(data.stage.devices ?? []);    if (this.mvpStageDevices.length) this.on('tick', ({ dt }) => this._tickMvpStageDevices(dt));
     this.unitLimit = config.unit_limit;
     this.regularMapSize = Object.freeze({ rows: data.stage.geometry.rows, cols: data.stage.geometry.cols });
     this.mapTags = Object.freeze([...(data.stage.mapTags ?? [])]);
@@ -1205,6 +1206,28 @@ export class StandardBattle extends Battle {
   _checkEnd() {
     if (this.life <= 0) return this._finish("defeated");
     super._checkEnd();
+  }
+  _installUnitStageDevices(devices) {
+    for (const d of devices) {
+      const spec = STAGE_DEVICES[d.name]?.unit;
+      if (!spec || !Number.isInteger(d.row) || !Number.isInteger(d.col)) continue;
+      const e = this.spawnEnemy(`device:${d.key ?? d.name}`, { pos: [d.row, d.col], countInTotal: false,
+        def: { key: d.key ?? d.name, name: d.name, applyWay: 'NONE', dmgType: 'none',
+          stats: { maxHp: spec.hp, hp: spec.hp, atk: 0, def: spec.def, res: 0, moveSpeed: 0, bat: 1, rangeRadius: 0, blockCnt: spec.block, lpr: 0 } } });
+      if (!e) continue;
+      e.mem.stageUnitDevice = { ...spec, row: d.row, col: d.col };
+      e.profile.noAttack = true; e.counted = false; e.lpr = 0; e.blockWeight = 0;
+      e.route = { legs: [{ t: 'wait', time: 1e9 }], legIdx: 0, pts: null, ptIdx: 0, suffix: null, version: -1, waitLeft: null };
+      e.s.moveSpeed = 0;
+      this.grid.setObstacle(d.row, d.col, true, spec.obstacle);
+    }
+    this.on('death', ({ unit }) => {
+      const d = unit.mem?.stageUnitDevice;
+      if (!d) return;
+      this.grid.setObstacle(d.row, d.col, false, d.obstacle);
+      this.flags.dpMax += d.dpMax;
+      this.addDp('arkpedia', d.dp);
+    });
   }
   _tickMvpStageDevices(dt) {
     for (const d of this.mvpStageDevices) {
