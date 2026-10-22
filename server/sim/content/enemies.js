@@ -347,6 +347,13 @@ export const featureAbilities = Object.freeze({
   moveSpeedBonus: ({ mul }) => ({ spawn(b, e) { b.addBuff(e, { key: 'ab:moveSpeed', persist: true, visible: true, mods: { moveMul: mul } }); } }),
   // Dublinn Flying Soldier: airborne.
   hover: () => ({ spawn(b, e) { e.flying = true; } }),
+  // PRTS controller/node: inert until the activation rules are reviewed.
+  prtsProp: () => ({
+    spawn(b, e) {
+      e.untargetable = true; e.unblockable = true; e.moving = false; e.lpr = 0;
+      if (String(e.defId).includes('10072')) e.flying = true;
+    },
+  }),
   // Higher-priority enemy target.
   tauntEnemy: ({ taunt }) => ({ spawn(b, e) { e.s.taunt = Math.max(e.s.taunt ?? 0, taunt); } }),
   // Worry-Free Cargo Helper: airborne, explodes when an operator is close.

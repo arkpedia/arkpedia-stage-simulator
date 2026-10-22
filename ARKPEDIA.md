@@ -5878,3 +5878,7 @@ Extracted `syntheticRoutePath` into `shared/arkpedia/stage-path.js`; tests pin t
 ### PRTS blocker note (S124, 2026-10-21)
 
 `docs/HARD-MECHANICS.md` now records the Intrusive Call/Weakening Node findings and the three pieces a reviewed 15-5+ implementation needs. No stage was approximated as an inert PRTS fight.
+
+### PRTS props and base distributor (E68, 2026-10-21)
+
+Intrusive Call and Weakening Node are hidden, no-damage story entities; until the PRTS activation rules are reviewed they are inert, untargetable, immobile and non-leaking. The base Prototype Auto Meal Distributor (Confused Maintenance Helper text) now uses the same periodic spawn as the `_2` variant. Support rises to **396 of 1,552** enemies. Stages containing the inert PRTS props stay `testOnly`.

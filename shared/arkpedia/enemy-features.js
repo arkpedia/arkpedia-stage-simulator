@@ -201,6 +201,8 @@ const HATEDRINKER_TEXT = 'Gains increased ATK for each Reborn Creation on the ba
 // picked up by the Altar Keeper, not by its own code).
 const NATIVE_ONLY_FEATURES = Object.freeze({
   enemy_1421_lrchld: 'native:beacon', enemy_1421_lrchld_2: 'native:beacon',
+  enemy_10072_mpprhd: 'native:prtsProp', enemy_10072_mpprhd_2: 'native:prtsProp',
+  enemy_10082_mpweak: 'native:prtsProp', enemy_10082_mpweak_2: 'native:prtsProp',
 });
 
 export const ENEMY_FEATURES = Object.freeze({
@@ -319,6 +321,9 @@ export const ENEMY_FEATURES = Object.freeze({
     ability: { kind: 'periodicSpawn', params: r => ({ key: r.skills[0].bbStr.enemy_key, count: r.skills[0].bb.cnt, cooldown: r.skills[0].cooldown, init: r.skills[0].initCooldown }) },
     nativeClaim: () => ({ wrappers: 2 }), dependsOn: r => [r.skills[0].bbStr.enemy_key], note: 'summons one Purifying Flame at a time',
     explains: /^Controls <Purifying Flames> that move along the ground/ },
+  'ability:Periodically summons 1 <Confused Maintenance Helper>': { covers: r => r.abilities.some(a => a.text === 'Periodically summons 1 <Confused Maintenance Helper>'),
+    ability: { kind: 'periodicSpawn', params: r => ({ key: r.skills[0]?.bbStr?.enemy_key ?? 'enemy_10073_mpcar', count: 1, cooldown: r.skills[0]?.cooldown ?? 5, init: r.skills[0]?.initCooldown ?? 3 }) },
+    nativeClaim: () => ({ wrappers: 1 }), note: 'one confused helper every cooldown', explains: /^Periodically summons 1 <Confused Maintenance Helper>$/ },
   'skill:SummonFireBall2': { covers: r => r.skills.some(s => s.prefabKey === 'SummonFireBall2'), note: 'second reviewed summon timer' },
   // Tombkeeper Grotesque: the first lethal hit turns it into a stone statue, then it revives airborne.
   'talent:stone': { covers: r => sig(r, 'stone', ['def', 'duration', 'magic_resistance'])
@@ -336,9 +341,9 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => text === 'Continuously deals Arts damage and <$ba.dt.burning>Burn damage</> for the skill duration'
       || text === 'Upon death, explodes and deals Arts damage, knocking down nearby Tattered Pillars and instantly defeating other <Dublinn Flamerazers>' },
   // Prototype Auto Meal Distributor: summons one maintenance helper every few seconds.
-  'ability:Periodically summons 1 <Rampaging Maintenance Helper>': { covers: r => r.abilities.some(a => a.text === 'Periodically summons 1 <Rampaging Maintenance Helper>'),
+  'ability:Periodically summons 1 <Rampaging Maintenance Helper>': { covers: r => r.abilities.some(a => /^Periodically summons 1 <(Rampaging|Confused) Maintenance Helper>$/.test(a.text)),
     ability: { kind: 'periodicSpawn', params: r => ({ key: r.skills[0]?.bbStr?.enemy_key ?? 'enemy_10073_mpcar_2', count: 1, cooldown: r.skills[0]?.cooldown ?? 5, init: r.skills[0]?.initCooldown ?? 3 }) },
-    nativeClaim: () => ({ wrappers: 1 }), note: 'one helper every cooldown', explains: /^Periodically summons 1 <Rampaging Maintenance Helper>$/ },
+    nativeClaim: () => ({ wrappers: 1 }), note: 'one helper every cooldown', explains: /^Periodically summons 1 <(Rampaging|Confused) Maintenance Helper>$/ },
   'skill:Spawn': { covers: r => r.skills.some(s => s.prefabKey === 'Spawn'), note: 'native Spawn skill consumed by periodicSpawn' },
   // Bloodborn Spawn: Arts damage scaled by the target's blocking count, and a Blood Amber death spawn.
   'talent:DamageUp': { covers: r => sig(r, 'DamageUp', ['add_on', 'scale_ratio'])
@@ -438,6 +443,15 @@ export const ENEMY_FEATURES = Object.freeze({
     note: 'unblockable; slows when hit; carries one Beacon and drops it on death',
     explains: text => text === 'Unblockable and has reduced movement speed when taking damage.'
       || text === 'Picks up nearby Beacons if it is not carrying a Beacon, and drops them on death.' },
+  'skill:GrabBegin': { covers: r => r.skills.some(s => s.prefabKey === 'GrabBegin'), nativeClaim: () => ({ wrappers: 4 }), note: 'PRTS scripted action' },
+  'skill:GrabEnd': { covers: r => r.skills.some(s => s.prefabKey === 'GrabEnd'), note: 'PRTS scripted action' },
+  'skill:Click': { covers: r => r.skills.some(s => s.prefabKey === 'Click'), note: 'PRTS scripted action' },
+  'skill:Angry': { covers: r => r.skills.some(s => s.prefabKey === 'Angry'), note: 'PRTS scripted action' },
+  // PRTS stage props: hidden, no-damage controller/node entities. Until the PRTS activation rules are reviewed they are inert,
+  // untargetable and do not move or leak; stages that contain them stay testOnly.
+  'native:prtsProp': { covers: r => (NATIVE_ONLY_FEATURES[r.key] ?? null) === 'native:prtsProp',
+    ability: { kind: 'prtsProp', params: () => ({}) }, nativeClaim: p => String(p.rootName ?? '').includes('10072') ? { active: 1 } : {},
+    note: 'inert PRTS controller/node; activation not yet modeled' },
   // Native-only stage prop: the Beacon has no own behaviour in the supported stages.
   'native:beacon': { covers: r => (NATIVE_ONLY_FEATURES[r.key] ?? null) === 'native:beacon',
     note: 'passive stage beacon; pickup belongs to the Altar Keeper', nativeClaim: () => ({ active: 2 }) },
