@@ -5930,3 +5930,7 @@ Full repository suite after E68-E71 and the 13 test-only stages: **22,813 tests,
 ### Inspired movement (E72, 2026-10-21)
 
 The Guerrilla Herald `strength` feature now also covers the Inspired movement variant: while `ab:inspired` is present, the unit gains the reviewed movement multiplier; without the buff it does nothing. Support rises to **406 of 1,552** enemies; the test pins the conditional buff.
+
+### 7-4 test-only (S133, 2026-10-21)
+
+**7-4** builds with the Inspired-movement support (7×11, 95 spawns, 2 enemies) and is kept `testOnly` because its routes are synthetic. Catalogue is **213 entries** (199 public + 14 testOnly); 212 data-backed stages smoke-tested.
