@@ -5926,3 +5926,7 @@ The geometry-only build added **15-8, 15-11, 15-12, 15-14, 15-15 and 15-18** as 
 ### Full-suite verification at 404/212 (S132, 2026-10-21)
 
 Full repository suite after E68-E71 and the 13 test-only stages: **22,813 tests, 22,802 passed, 0 failed, 11 skipped**. `docs/REMAINING.md` records that result.
+
+### Inspired movement (E72, 2026-10-21)
+
+The Guerrilla Herald `strength` feature now also covers the Inspired movement variant: while `ab:inspired` is present, the unit gains the reviewed movement multiplier; without the buff it does nothing. Support rises to **406 of 1,552** enemies; the test pins the conditional buff.

@@ -366,6 +366,10 @@ export const featureAbilities = Object.freeze({
       blocked(c, b, e, a) { if (a.mode === 'base') transform(b, e, a, 'shushi'); },
     };
   },
+  // Strength aura (Herald) or the Inspired movement bonus.
+  strengthAura: (p) => p.mode === 'inspired' ? ({
+    tick(b, e) { if (e.findBuff?.('ab:inspired')) b.addBuff(e, { key: 'ab:inspiredMove', duration: 0.7, visible: true, mods: { moveMul: 1 + (p.move ?? 0) } }); },
+  }) : enemyGlobalStatAura(p),
   // Tile denial: mark the death tile unavailable for deployment.
   tileDenied: () => ({
     death(c, b, e) { b.noDeployTiles ??= new Set(); b.noDeployTiles.add(`${e.tileR},${e.tileC}`); },

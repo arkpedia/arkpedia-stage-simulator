@@ -696,6 +696,12 @@ test('Tile-denial enemy: dying marks its tile unavailable', () => {
   const key = 'enemy_10076_mpgrou', h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
   h.b.autoFinish = false; h.b.kill(e, null); assert.ok(h.b.noDeployTiles.has(`${e.tileR},${e.tileC}`));
 });
+test('Inspired movement: the buff only applies while Inspired', () => {
+  const key = 'enemy_1078_sotisc', h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
+  assert.equal(e.findBuff('ab:inspiredMove'), null);
+  h.b.addBuff(e, { key: 'ab:inspired', persist: true }); h.run(1);
+  assert.ok(e.findBuff('ab:inspiredMove'));
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');
