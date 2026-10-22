@@ -5990,3 +5990,7 @@ The Sarkaz Requisitioned Engineering Drone now sets flying + stealth, reuses the
 ### Artificer charge and deathrattle (E75, 2026-10-21)
 
 The Artificer exposes `battle.artilleryCharge` progress and uses the reviewed deathrattle child after one second. The artillery device itself is still unmodeled, so no stage is promoted. A duplicate `deathrattle` feature was removed and the existing reborn branch now accepts records with skills. Support rises to **412 of 1,552** enemies.
+
+### Full suite after Artificer/coverage (S145, 2026-10-21)
+
+Full repository suite: **22,826 tests, 22,815 passed, 0 failed, 11 skipped** with 412 enemies and 99 device-blocked stages.
