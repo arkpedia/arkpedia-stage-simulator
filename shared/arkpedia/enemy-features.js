@@ -614,13 +614,24 @@ export const ENEMY_FEATURES = Object.freeze({
   // Guerrilla Herald: a battlefield-wide ATK/DEF buff for every enemy.
   'talent:strength': { covers: r => (sig(r, 'strength', ['atk', 'def'])
       && r.abilities.some(a => a.text === 'Increases the ATK and DEF of enemy units when on the battlefield.'))
-      || (sig(r, 'strength', ['move_speed']) && r.abilities.some(a => a.text === 'When Inspired, gains Movement Speed.')),
+      || (sig(r, 'strength', ['move_speed']) && r.abilities.some(a => a.text === 'When Inspired, gains Movement Speed.'))
+      || (sig(r, 'strength', ['atk']) && r.abilities.some(a => a.text === 'When Inspired, gains greatly increased ATK.'))
+      || (sig(r, 'strength', ['attack_speed']) && r.abilities.some(a => a.text === 'When Inspired, gains greatly increased ASPD.')),
     ability: { kind: 'strengthAura', params: r => sig(r, 'strength', ['move_speed'])
       ? { mode: 'inspired', move: r.talents.bb['strength.move_speed'] }
-      : { mode: 'aura', atkPct: r.talents.bb['strength.atk'], defFlat: r.talents.bb['strength.def'] } },
-    note: 'all living enemies +atk%/+def while the Herald lives, or Inspired movement',
+      : sig(r, 'strength', ['atk'])
+        ? { mode: 'inspired', atkPct: r.talents.bb['strength.atk'] }
+        : sig(r, 'strength', ['attack_speed'])
+          ? { mode: 'inspired', aspd: r.talents.bb['strength.attack_speed'] }
+          : { mode: 'aura', atkPct: r.talents.bb['strength.atk'], defFlat: r.talents.bb['strength.def'] } },
+    note: 'all living enemies +atk%/+def while the Herald lives, or Inspired movement/ATK/ASPD',
     explains: text => text === 'Increases the ATK and DEF of enemy units when on the battlefield.'
-      || text === 'When Inspired, gains Movement Speed.' },
+      || text === 'When Inspired, gains Movement Speed.'
+      || text === 'When Inspired, gains greatly increased ATK.'
+      || text === 'When Inspired, gains greatly increased ASPD.' },
+  'ability:Able to land directly onto the battlefield.': {
+    covers: r => r.abilities.some(a => a.text === 'Able to land directly onto the battlefield.'),
+    note: 'Landing is the stage spawn placement', explains: /^Able to land directly onto the battlefield\.$/ },
   // Active Originium Storm: a growing storm aura that damages and slows SP recovery.
   'talent:StormAura': { covers: r => sig(r, 'StormAura', ['damage', 'damage_step', 'max_damage', 'max_radius', 'radius_step', 'range_radius', 'sp_recover_ratio']),
     ability: { kind: 'stormAura', params: r => ({ damage: r.talents.bb['StormAura.damage'], damageStep: r.talents.bb['StormAura.damage_step'],
