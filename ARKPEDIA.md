@@ -5946,3 +5946,7 @@ While `ab:inspired` is present the Guerrilla Sniper attacks one additional targe
 ### Fix: Herald aura branch (S135, 2026-10-21)
 
 `strengthAura` called the later object property `enemyGlobalStatAura` by a bare name, which is not in scope; the aura branch is now defined inline. Smoke tests caught it on the 7-6/7-8/7-9 batch.
+
+### 7-6, 7-8 and 7-9 public (S136, 2026-10-21)
+
+Three more chapter-7 stages build with their original playback and are reviewed public: **7-6** (8×11, 44 spawns), **7-8** (7×11, 51) and **7-9** (8×12, 54). Catalogue is **217 entries** (203 public + 14 testOnly); 216 data-backed stages smoke-tested.

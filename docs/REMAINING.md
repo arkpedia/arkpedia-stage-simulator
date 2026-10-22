@@ -6,8 +6,8 @@ Snapshot: 2026-10-21. Regenerate the numbers with `npm run coverage:arkpedia-sta
 |---|---|---|
 | Operators / operator forms | 431 | 431 |
 | Enemies supported | 408 | 1,552 |
-| Main source stages with committed files | 213 | 709 |
-| Public catalogue (includes embedded 0-1) | 214 | 214 built |
+| Main source stages with committed files | 216 | 709 |
+| Public catalogue (includes embedded 0-1) | 217 | 217 built |
 
 The public catalogue is the committed `data/arkpedia-stage-*.json` set plus the embedded 0-1 stage; `testOnly` remains the gate for future stages.
 
