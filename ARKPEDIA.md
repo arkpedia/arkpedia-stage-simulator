@@ -6001,4 +6001,8 @@ The device-aware coverage tool read `stage-devices.json` at module load, which b
 
 ### 7-6 enemy artwork (S147, 2026-10-21)
 
-Imported the four original 7-6 Guerrilla enemy chibis into `arkpedia-sd-assets` (`c90415ec`) and pinned that commit in `data/arkpedia-mvp.json`. Imported models without animation-role tables now use an empty role map and fall back to the skeleton's own Idle clip, so 7-6 renders its real enemies instead of markers.
+Imported the four original 7-6 Guerrilla enemy chibis into `arkpedia-sd-assets` (merged as `6aefef7`) and pinned each model through its own `assetsCommit`. Imported models without animation-role tables use an empty role map and fall back to the skeleton's own Idle clip, so 7-6 renders its real enemies instead of markers.
+
+### Flying native claim (E76, 2026-10-21)
+
+The shared `Flying unit.` feature now claims one native active component, supporting the Imperial Artillery Targeteer and the other flying-only records (1112/1112_2, 2045_smdrn). Support rises to **415 of 1,552** enemies; no stage count change.
