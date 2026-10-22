@@ -5914,3 +5914,7 @@ A reviewed death effect now marks the tile unavailable for deployment (`noDeploy
 ### Snapshot to 404 enemies / 205 entries (S129, 2026-10-21)
 
 `docs/REMAINING.md` records the current branch: **404** supported enemies, **204** built source stages, **205** catalogue entries, and the 22,806-test full suite after the E70/E71 and test-only stage additions.
+
+### TR-26 test-only (S130, 2026-10-21)
+
+The geometry-only build produced **TR-26** (7×10, 24 spawns, 4 enemies) as a `testOnly` tutorial because it contains the inert PRTS props. Catalogue is **206 entries** (199 public + 7 testOnly); 205 data-backed stages pass the smoke test.
