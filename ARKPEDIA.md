@@ -6005,7 +6005,7 @@ Imported the four original 7-6 Guerrilla enemy chibis into `arkpedia-sd-assets` 
 
 ### Flying native claim (E76, 2026-10-21)
 
-The shared `Flying unit.` feature now claims one native active component, supporting the Imperial Artillery Targeteer and the other flying-only records (1112/1112_2, 2045_smdrn). Support rises to **415 of 1,552** enemies; no stage count change.
+The shared `Flying unit.` feature keeps the flying behaviour but no longer claims a native component: the native evidence does not expose the component for every flying-only record, so claiming one caused a negative claim on `enemy_1005_yokai`. Support is **413 of 1,552**; no stage count change.
 
 ### W support and 1-11 (E77, 2026-10-21)
 
