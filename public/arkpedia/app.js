@@ -167,7 +167,7 @@ function prep() {
  ${data.stage.fixedSquad ? `<p class="notice">This stage uses a fixed squad (${data.stage.fixedSquad.length} operators); the squad choices below are ignored in battle.</p>` : ''}<div class="panel help"><h3>How to play</h3><p>Choose your squad, then open the battle workspace. On mobile, rotate to landscape for battle. Drag an operator onto a tile, then choose its facing on the map. You can also select the operator and click a tile. Select a deployed operator to activate a ready skill or retreat.</p></div>
  <p class="notice">This first slice supports ${escape(data.stage.code)} and the ${ops.length} operators shown. Squad capacity is 12 + one distinct maxed support. Modules, other stages and the rest of the roster are still being built.</p></section>
  <section class="panel"><h2>Prepare your squad</h2><p class="help">Select an operator to adjust their build.</p><label class="roster-search">Find an operator<input id="roster-search" type="search" placeholder="Name or class" value="${escape(rosterQuery)}" autocomplete="off" aria-controls="roster"></label><div class="roster" id="roster" aria-label="Available operators"><p class="roster-empty" hidden>No operators match this search.</p></div><div id="build"></div><label class="support">Support · optional, fully maxed<select id="support"><option value="">No support</option></select></label><div id="support-build"></div><div class="prepare-actions"><button class="primary" id="start">Open battle workspace</button></div><p class="error" id="prep-error" role="status" aria-live="polite"></p></section></div>
- <footer>Built on Stronghold Protocol · GPL-3.0-or-later. Unofficial fan simulator; timings are not yet verified frame-for-frame against the game.<div class="links"><a href="https://github.com/arkpedia/arkpedia-stage-simulator" target="_blank" rel="noreferrer">Simulator source</a><a href="https://github.com/arkpedia/arkpedia-sd-assets" target="_blank" rel="noreferrer">Chibi assets & credits</a></div></footer></div>`;
+ <footer>Combat engine from Stronghold Protocol · GPL-3.0-or-later. Unofficial fan simulator; timings are not yet verified frame-for-frame against the game.<div class="links"><a href="https://github.com/arkpedia/arkpedia-stage-simulator" target="_blank" rel="noreferrer">Simulator source</a><a href="https://github.com/arkpedia/arkpedia-sd-assets" target="_blank" rel="noreferrer">Chibi assets & credits</a></div></footer></div>`;
   renderer = new StageRenderer(
     document.querySelector("#board"),
     data,
@@ -302,7 +302,7 @@ async function start() {
   loading = true;
   renderPrep();
   const status = document.querySelector("#prep-error");
-  status.textContent = "Loading selected chibi animations…";
+  status.textContent = "Preparing battlefield…";
   try {
     await renderer.artReady;
     selection = {
@@ -311,12 +311,13 @@ async function start() {
         ? { id: supportId, skillId: supportSkills[supportId] }
         : null,
     };
-    await renderer.preload(
+    // Never gate the battle on optional chibi downloads: start the simulation now, let the
+    // skeletons stream in behind it. A missing/slow chibi shows as an invisible unit until it
+    // arrives instead of leaving the whole simulator stuck on a loading counter.
+    void renderer.preload(
       [...chosen, ...(supportId ? [supportId] : [])],
-      (n, total) => {
-        status.textContent = `Loading chibi animations ${n}/${total}…`;
-      },
-    );
+      () => {},
+    ).catch((error) => console.error('chibi preload failed', error));
     battle = new StandardBattle(data, selection, { seed: Date.now() });
     speed = 1;
     showRoutes = false;
@@ -326,10 +327,10 @@ async function start() {
     workspace.innerHTML = `<div class="battle-content"><div class="board battle-board" id="battle-board">
       <header class="battle-header">
         <button id="settings" aria-label="Battle settings" aria-expanded="false" aria-controls="battle-settings">⚙</button>
-        <div class="battle-settings" id="battle-settings" hidden><p>0-1 · Collapse <span id="battle-time" aria-label="Battle time"></span></p><button id="routes" aria-pressed="false">Paths</button><button id="restart">Restart</button><button id="exit">Back to squad</button></div>
+        <div class="battle-settings" id="battle-settings" hidden><p>${escape(data.stage.code)} · Collapse <span id="battle-time" aria-label="Battle time"></span></p><button id="routes" aria-pressed="false">Paths</button><button id="restart">Restart</button><button id="exit">Back to squad</button></div>
         <div class="battle-controls"><button id="speed" aria-label="Battle speed">1×</button><button id="pause" aria-label="Start"><span aria-hidden="true">▶</span></button></div>
       </header>
-      ${battleReadouts()}<span class="simulation-label">Simulation · 0-1</span><span class="pause-label" id="paused-label" hidden>Paused</span>
+      ${battleReadouts()}<span class="simulation-label">Simulation · ${escape(data.stage.code)}</span><span class="pause-label" id="paused-label" hidden>Paused</span>
       <aside class="command" id="command" aria-label="Selected operator" hidden></aside>
       <div class="field-command" id="field-command" aria-label="Operator actions" hidden></div>
       <button class="facing-cancel" id="facing-cancel" hidden><span aria-hidden="true">×</span>Cancel</button>

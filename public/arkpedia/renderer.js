@@ -17,6 +17,7 @@ import { artBase } from "/shared/arkpedia/stage-art.js";
 import { loadStageArt } from "./stage-art.js";
 import { loadGates } from "./gates.js";
 import { loadSkillParticles, SkillParticleLayer } from "./particles.js";
+import { FallbackActor } from "./fallback-actor.js";
 const P = globalThis.PIXI;
 const tileRangeStripes = rangeStripes();
 const models = createAssets({
@@ -175,14 +176,14 @@ export class StageRenderer {
   entry(key) {
     const m = this.data.sd.models[key];
     if (!m) throw Error("Missing animation model " + key);
-    const base = artBase(this.data.sd);
+    const base = artBase(m.assetsCommit ? { ...this.data.sd, commit: m.assetsCommit } : this.data.sd);
     return {
       skel: base + m.skeleton.path,
       atlas: base + m.atlas.path,
       textures: m.textures.map((t) => base + t.path),
       pma: m.premultipliedAlpha,
-      anims: m.animationRoles,
-      animations: m.animations,
+      anims: m.animationRoles ?? {},
+      animations: m.animations ?? {},
       hits: m.hits,
       bounds: m.bounds,
     };
@@ -214,15 +215,17 @@ export class StageRenderer {
         stage: this, descriptor: this.data.nativeEffects?.aphrissa}));
     }
     const tokenIds = regularTokenIdsFor(ids);
+    // Only preload skeletons that exist in this SD snapshot. Records without a model get a labelled
+    // fallback marker in render(), instead of rejecting the whole preload and hiding every unit.
     const keys = [
       ...[...ids, ...tokenIds].flatMap((id) =>
         ["front", "back"].map((f) => `operator/${id}/default/${f}`),
       ),
-      ...tokenIds.map(id => `operator/${id}/default/down`).filter(key => this.data.sd.models[key]),
+      ...tokenIds.map(id => `operator/${id}/default/down`),
       ...Object.keys(this.data.enemies).map(
         (id) => `enemy/${id}/default/default`,
       ),
-    ];
+    ].filter((key) => this.data.sd.models[key]);
     let done = 0;
     // Small concurrency cap; renderer waits for the complete selected squad rather than drawing missing operators.
     const pending = keys.filter((k) => !this.preloaded.has(k));
@@ -486,12 +489,13 @@ export class StageRenderer {
           const loaded = this.preloaded.get(key);
           const heartCandle = u.defId === 'enemy_5601_entlec' && u.mem?.entelechiaHost;
           const effectOnly = nativePasses.some(pass => pass.isActor?.(u) === true);
-          if (!loaded && !heartCandle && !effectOnly) continue;
           const skillIndex = this.data.operators[u.defId]?.skills.findIndex(skill => skill.id === u.skill?.id);
           const actor = effectOnly ? new EffectOnlyActor(P, { gaugeHeight: 280 })
-            : heartCandle ? new HeartCandleActor(P) : new BattleActor(loaded.skeleton, loaded.entry,
-            skillIndex >= 0 ? skillIndex : null,
-            { attackDrivenSkill: u.profile?.attackDrivenSkill === true });
+            : heartCandle ? new HeartCandleActor(P)
+            : loaded ? new BattleActor(loaded.skeleton, loaded.entry,
+              skillIndex >= 0 ? skillIndex : null,
+              { attackDrivenSkill: u.profile?.attackDrivenSkill === true })
+            : new FallbackActor(u);
           const hp = new P.Graphics();
           this.pixi.stage.addChild(actor.spine, hp);
           if (!sameLife) actor.deploy();

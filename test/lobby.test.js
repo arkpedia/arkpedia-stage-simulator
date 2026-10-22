@@ -146,6 +146,12 @@ describe('static http server', () => {
     fs.rmSync(tmp, { recursive: true, force: true });
   });
 
+  test('sends browser root visitors to the stage simulator', async () => {
+    const r = await httpReq(srv.port, '/', { headers: { accept: 'text/html,application/xhtml+xml' } });
+    assert.equal(r.status, 302);
+    assert.equal(r.headers.location, '/arkpedia/');
+  });
+
   test('serves index.html at / with no-cache', async () => {
     const r = await httpReq(srv.port, '/');
     assert.equal(r.status, 200);

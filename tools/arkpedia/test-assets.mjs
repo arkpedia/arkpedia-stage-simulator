@@ -14,8 +14,10 @@ export function reviewedSkeletons(snapshot){
   if(typeof e?.path!=='string'||!/^models\/[\w./-]+\.skel$/.test(e.path)
     ||e.path.split('/').some(p=>!p||p==='.'||p==='..')||!Number.isSafeInteger(e.bytes)||e.bytes<1||e.bytes>16*1024*1024
     ||!/^[a-f0-9]{64}$/.test(e.sha256??''))throw Error('Invalid reviewed skeleton reference');
-  const old=files.get(e.path);if(old&&(old.sha256!==e.sha256||old.bytes!==e.bytes))throw Error('Conflicting immutable skeleton');
-  files.set(e.path,e);
+  const commit=model.assetsCommit??snapshot.sd.commit;
+  if(!/^[a-f0-9]{40}$/.test(commit))throw Error('Invalid model commit');
+  const old=files.get(e.path);if(old&&(old.sha256!==e.sha256||old.bytes!==e.bytes||old.commit!==commit))throw Error('Conflicting immutable skeleton');
+  files.set(e.path,{...e,commit});
  }
  if(!files.size)throw Error('No reviewed skeletons in snapshot');return[...files.values()];
 }
@@ -43,7 +45,7 @@ export async function prepareTestAssets({snapshot,destination,fetcher=fetch,paus
    const e=entries[next++],file=path.join(destination,e.path);let bytes;
    try{bytes=await readFile(file);}catch(error){if(error.code!=='ENOENT')throw error;}
    if(bytes){check(bytes,e);verified++;continue;}
-   bytes=await fetchReviewedBytes(`https://raw.githubusercontent.com/${snapshot.sd.repository}/${snapshot.sd.commit}/${e.path}`,e,fetcher,pause);check(bytes,e);
+   bytes=await fetchReviewedBytes(`https://raw.githubusercontent.com/${snapshot.sd.repository}/${e.commit ?? snapshot.sd.commit}/${e.path}`,e,fetcher,pause);check(bytes,e);
    await mkdir(path.dirname(file),{recursive:true});await writeFile(file,bytes,{flag:'wx'});downloaded++;
   }
  }));

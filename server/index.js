@@ -385,6 +385,14 @@ export function createStaticHandler({ publicDir, dataDir, sharedDir, simDir = pa
       await serveMedia(req, res, decoded.slice(MEDIA_PREFIX.length), query, publicDir, gzipCache, log);
       return;
     }
+    // The stage simulator is the product; browsers that open the old game shell are sent straight to it.
+    // Non-browser callers (fetch/tests with */*) still see the static root so the existing shell stays testable.
+    if ((req.method === 'GET' || req.method === 'HEAD') && decoded === '/'
+      && /text\/html/i.test(req.headers.accept || '')) {
+      res.writeHead(302, { Location: '/arkpedia/' + (query ? `?${query}` : ''), 'Cache-Control': 'no-cache', 'Content-Length': 0 });
+      res.end();
+      return;
+    }
     // Bare mount paths (e.g. "/data") → treat as the mount directory.
     const mount = mounts.find((m) => decoded.startsWith(m.prefix) || decoded === m.prefix.slice(0, -1)) || mounts[mounts.length - 1];
     const rest = decoded.length > mount.prefix.length ? decoded.slice(mount.prefix.length) : '';
