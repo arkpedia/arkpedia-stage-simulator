@@ -7,6 +7,16 @@ export const STAGE_DEVICES = Object.freeze({
     // recovery and takes 50 True environment damage per second (skill 1).
     environment: Object.freeze({ damage: 50, spMul: 0.2, interval: 1 }),
   }),
+  'Static Roadblock': Object.freeze({
+    // PRTS: 8000 HP / 200 DEF / 20 RES, enemy-faction obstacle; destroyed by
+    // operators, no DP reward.
+    unit: Object.freeze({ hp: 8000, def: 200, res: 20, block: 0, dpMax: 0, dp: 0, obstacle: 'crate' }),
+  }),
+  'Roadside Emergency Reserves': Object.freeze({
+    // PRTS: enemy-faction, targetable, 8000 HP / 100 DEF, block 5; blocks the
+    // route and restores 5 DP cap + 5 DP when defeated.
+    unit: Object.freeze({ hp: 8000, def: 100, block: 5, dpMax: 5, dp: 5, obstacle: 'crate' }),
+  }),
   'Londinium Secondary Defense Artillery': Object.freeze({
     // PRTS: 1 meter/s, cap 120, target = highest-Block visible ally (newest on a tie),
     // 3000 True damage to both sides in the 3x3 core plus 1x3 arms.
