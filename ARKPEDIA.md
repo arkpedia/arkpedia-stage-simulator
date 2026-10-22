@@ -5918,3 +5918,7 @@ A reviewed death effect now marks the tile unavailable for deployment (`noDeploy
 ### TR-26 test-only (S130, 2026-10-21)
 
 The geometry-only build produced **TR-26** (7×10, 24 spawns, 4 enemies) as a `testOnly` tutorial because it contains the inert PRTS props. Catalogue is **206 entries** (199 public + 7 testOnly); 205 data-backed stages pass the smoke test.
+
+### Geometry-only 15-x batch (S131, 2026-10-21)
+
+The geometry-only build added **15-8, 15-11, 15-12, 15-14, 15-15 and 15-18** as `testOnly` (no viewer playback; synthetic routes). **15-19** was rejected: its fixed squad uses support-only operators (`char_508_aguard`, `char_509_acast`, …) not in the regular catalogue. Catalogue is **212 entries** (199 public + 13 testOnly); 211 data-backed stages smoke-tested.
