@@ -5986,3 +5986,7 @@ The Sarkaz Requisitioned Engineering Drone now sets flying + stealth, reuses the
 ### Coverage classifies devices (S144, 2026-10-21)
 
 `coverage:arkpedia-stages` now counts functional devices as a first-class blocker before the enemy check: **99 remaining stages** have an unhandled device. This corrected the buildable bucket to 0-1 and 15-19 only; 10-14/10-15 were device-blocked despite all enemies being supported.
+
+### Artificer charge and deathrattle (E75, 2026-10-21)
+
+The Artificer exposes `battle.artilleryCharge` progress and uses the reviewed deathrattle child after one second. The artillery device itself is still unmodeled, so no stage is promoted. A duplicate `deathrattle` feature was removed and the existing reborn branch now accepts records with skills. Support rises to **412 of 1,552** enemies.

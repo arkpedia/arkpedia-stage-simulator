@@ -5,7 +5,7 @@ Snapshot: 2026-10-21. Regenerate the numbers with `npm run coverage:arkpedia-sta
 | Area | Done | Total |
 |---|---|---|
 | Operators / operator forms | 431 | 431 |
-| Enemies supported | 410 | 1,552 |
+| Enemies supported | 412 | 1,552 |
 | Main source stages with committed files | 218 | 709 |
 | Public catalogue (includes embedded 0-1) | 219 | 219 built |
 
