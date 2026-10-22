@@ -686,6 +686,12 @@ test('DP-lock caster: DP regeneration is halted for the skill duration', () => {
   h.run(6); assert.ok(h.b.flags.dpRegenHaltUntil > h.b.time);
   h.run(36); assert.ok(h.b.flags.dpRegenHaltUntil <= h.b.time);
 });
+test('Decode Basis: four physical hits switch to the Fuchou table', () => {
+  const key = 'enemy_10081_mpplai_2', h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
+  assert.equal(e.profile.noAttack, true);
+  for (let i = 0; i < 4; i++) h.b.dealDamage(null, e, { amount: 10, type: 'phys', sourceless: true });
+  assert.equal(e.s.atk, 500); assert.equal(e.profile.noAttack, false);
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

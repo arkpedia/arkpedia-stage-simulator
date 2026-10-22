@@ -355,10 +355,22 @@ export const ENEMY_FEATURES = Object.freeze({
     ability: { kind: 'deathSpawn', params: r => ({ key: r.talents.bbStr['Summon.enemy_key'], cnt: r.talents.bb['Summon.cnt'] }) },
     note: 'leaves the reviewed child on death', dependsOn: r => [r.talents.bbStr['Summon.enemy_key']].filter(Boolean),
     explains: /^Leaves behind <Blood Amber> when defeated\.$/ },
-  'talent:Passive': { covers: r => sig(r, 'Passive', ['damage_resistance', 'hp_ratio'])
-      && r.abilities.some(a => a.text === 'When affected by the pulse of a Bloodcalling Altar, will be reborn as a Bloodborn Spawn at the altar.'),
-    note: 'inert Blood Amber until the altar pulse', nativeClaim: () => ({ active: 1 }),
-    explains: /^When affected by the pulse of a Bloodcalling Altar, will be reborn as a Bloodborn Spawn at the altar\.$/ },
+  'talent:Passive': { covers: r => (sig(r, 'Passive', ['damage_resistance', 'hp_ratio'])
+      && r.abilities.some(a => a.text === 'When affected by the pulse of a Bloodcalling Altar, will be reborn as a Bloodborn Spawn at the altar.'))
+      || (sig(r, 'Passive', ['magic_max_count', 'phy_max_count'])
+        && r.abilities.some(a => a.text === 'Does not initially attack; transforms into different forms when certain conditions are met')),
+    ability: { kind: 'decodeBasis', params: r => sig(r, 'Passive', ['magic_max_count', 'phy_max_count']) ? {
+      fuchou: { hp: r.talents.bb['Mode_Fuchou_Passive.max_hp'], atk: r.talents.bb['Mode_Fuchou_Passive.atk'], def: r.talents.bb['Mode_Fuchou_Passive.def'],
+        res: r.talents.bb['Mode_Fuchou_Passive.magic_resistance'], move: r.talents.bb['Mode_Fuchou_Passive.move_speed'], bat: r.talents.bb['Mode_Fuchou_Passive.base_attack_time'] },
+      youling: { hp: r.talents.bb['Mode_Youling_Passive.max_hp'], atk: r.talents.bb['Mode_Youling_Passive.atk'], def: r.talents.bb['Mode_Youling_Passive.def'],
+        res: r.talents.bb['Mode_Youling_Passive.magic_resistance'], move: r.talents.bb['Mode_Youling_Passive.move_speed'], bat: r.talents.bb['Mode_Youling_Passive.base_attack_time'] },
+      shushi: { hp: r.talents.bb['Mode_Shushi_Passive.max_hp'], atk: r.talents.bb['Mode_Shushi_Passive.atk'], def: r.talents.bb['Mode_Shushi_Passive.def'],
+        res: r.talents.bb['Mode_Shushi_Passive.magic_resistance'], move: r.talents.bb['Mode_Shushi_Passive.move_speed'], bat: r.talents.bb['Mode_Shushi_Passive.base_attack_time'] },
+    } : {} },
+    note: 'inert Blood Amber until the altar pulse, or the Decode Basis mode table', nativeClaim: () => ({ active: 1 }),
+    explains: text => /^When affected by the pulse of a Bloodcalling Altar, will be reborn as a Bloodborn Spawn at the altar\.$/.test(text)
+      || text === 'Does not initially attack; transforms into different forms when certain conditions are met'
+      || text === 'Transforms into different forms once it has taken 4 Physical attacks, 4 Arts attacks, or if it is blocked' },
   'ability:Deals long-ranged attacks that explode after a delay, inflicting Physical damage in an area.': {
     covers: r => r.abilities.some(a => a.text === 'Deals long-ranged attacks that explode after a delay, inflicting Physical damage in an area.'),
     ability: { kind: 'bombard', params: r => ({ delay: r.talents.bb['Attack.delay'] ?? 1, radius: r.talents.bb['Attack.attack@projectile_radius'] ?? 1.1 }) },
@@ -452,6 +464,13 @@ export const ENEMY_FEATURES = Object.freeze({
     ability: { kind: 'stopCost', params: r => ({ delay: r.skills[0].initCooldown, duration: r.skills[0].bb.projectile_life_time }) },
     nativeClaim: () => ({ wrappers: 1 }), note: 'halts DP regeneration after a delay',
     explains: /^Temporarily halts your DP regeneration shortly after it enters the battlefield$/ },
+  'talent:Mode_Fuchou_Anger': { covers: r => sig(r, 'Mode_Fuchou_Anger', ['atk']), note: 'Decode Basis anger ATK value' },
+  'talent:Mode_Fuchou_Passive': { covers: r => sig(r, 'Mode_Fuchou_Passive', ['atk', 'base_attack_time', 'def', 'magic_resistance', 'mass_level', 'max_hp', 'move_speed']), note: 'Decode Basis Fuchou table' },
+  'talent:Mode_Youling_Passive': { covers: r => sig(r, 'Mode_Youling_Passive', ['atk', 'base_attack_time', 'def', 'magic_resistance', 'mass_level', 'max_hp', 'move_speed']), note: 'Decode Basis Youling table' },
+  'talent:Mode_Shushi_Passive': { covers: r => sig(r, 'Mode_Shushi_Passive', ['atk', 'base_attack_time', 'def', 'magic_resistance', 'mass_level', 'max_hp', 'move_speed']), note: 'Decode Basis Shushi table' },
+  'skill:ChangeToB': { covers: r => r.skills.some(s => s.prefabKey === 'ChangeToB'), nativeClaim: () => ({ wrappers: 3 }), note: 'Decode Basis form change' },
+  'skill:ChangeToC': { covers: r => r.skills.some(s => s.prefabKey === 'ChangeToC'), note: 'Decode Basis form change' },
+  'skill:ChangeToD': { covers: r => r.skills.some(s => s.prefabKey === 'ChangeToD'), note: 'Decode Basis form change' },
   // Flying ice bomb: its only effect is disabling a waiting-zone operator; the engine has no waiting zone, so the
   // bomb is inert and stages containing it stay testOnly.
   'skill:CardBoom': { covers: r => r.skills.some(s => s.prefabKey === 'CardBoom'),
