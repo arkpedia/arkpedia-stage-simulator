@@ -6040,3 +6040,11 @@ Implemented the hidden controller: units on Originium-pollution tiles lose 80% n
 ### 15-13 conditional group merge (S154, 2026-10-22)
 
 15-13's only conditional entries are `source:wave` with a single `hidden_group`; the builder merged them as pristine spawns and the stage now builds. It stays `testOnly` for its synthetic route 4. Catalogue is **223** (207 public + 16 testOnly), 222 files.
+
+### Rebuild public device stages (S155, 2026-10-22)
+
+Rebuilt the **28 already-public stages** whose only functional devices are now supported (Londinium artillery and EP14 controller), so their existing public files finally carry the device data: 10-4/10-8/10-11/10-16, 13-2/13-4, and 14-2/14-4/14-5/14-6/14-7/14-9/14-11/14-14/14-16 including adverse variants. Counts are unchanged.
+
+### Ten more artillery stages (S156, 2026-10-22)
+
+The supported-device coverage now considers the reviewed artillery, so 12 more source stages build with original routes: 10-6/10-7/10-11/10-12 and adverse variants, 10-14/10-15 adverse variants, 13-5 and adverse, and TR-20 (fixed squad). All promoted public after route/device review. Catalogue is **235** (219 public + 16 testOnly), 234 files.

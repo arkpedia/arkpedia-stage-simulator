@@ -6,14 +6,14 @@ Snapshot: 2026-10-21. Regenerate the numbers with `npm run coverage:arkpedia-sta
 |---|---|---|
 | Operators / operator forms | 431 | 431 |
 | Enemies supported | 413 | 1,552 |
-| Main source stages with committed files | 222 | 709 |
-| Public catalogue (includes embedded 0-1) | 223 | 223 built |
+| Main source stages with committed files | 234 | 709 |
+| Public catalogue (includes embedded 0-1) | 235 | 235 built |
 
 The public catalogue is the committed `data/arkpedia-stage-*.json` set plus the embedded 0-1 stage; `testOnly` remains the gate for future stages.
 
 ## Built by chapter
 
-`npm run coverage:arkpedia-stages` prints the current table. At this snapshot: Chapter 0 10/22, 1 9/22, 2 9/20, 3 7/16, 4 6/20, 5 5/21, 6 10/31, 7 2/36, 9 3/55, 10 15/49, 11 0/50, 12 0/55, 13 6/60, 14 2/59, 15 0/37, 16 0/34, 17 0/35, Other 17/67. Chapters 11–12 are dominated by the civilian/spy identity mechanic; 15–17 by missing geometry in the export.
+`npm run coverage:arkpedia-stages` prints the current table. At this snapshot: Chapter 0 10/22, 1 10/22, 2 9/20, 3 7/16, 4 8/20, 5 5/21, 6 10/31, 7 8/36, 9 12/55, 10 28/49, 11 6/50, 12 29/55, 13 10/60, 14 25/59, 15 15/37, 16 0/34, 17 0/35, Other 27/67, Side stories 15/20. Chapters 11–12 are dominated by the civilian/spy identity mechanic; 15–17 by missing geometry in the export.
 
 ## Why the other 594 main stages are not built
 
@@ -47,7 +47,7 @@ The unsupported-enemy group is ranked by stage count. The current top families:
 
 ## Verification
 
-- Full repository suite: 22,836 tests, 22,825 passed, 0 failed, 11 skipped.
+- Full repository suite: 22,848 tests, 22,837 passed, 0 failed, 11 skipped.
 - `npm run check:arkpedia-enemies` and `npm run check:arkpedia-stages` are the registry gates.
 - GitHub-hosted matrix only; `test/arkpedia-ci-runners.test.js` guards the runner labels.
 

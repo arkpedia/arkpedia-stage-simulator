@@ -1,0 +1,2403 @@
+{
+ "code": "TR-20",
+ "name": "Below the City Walls",
+ "description": "A simulation of the defense capabilities of Londinium's Citadel Artillery. Its fire destroys all, and hence the stronghold has never fallen. \n<Londinium Secondary Defense Artillery> Once fully charged, deals area True damage to both allies and enemies, centered on the friendly unit with the highest Block.",
+ "battle": {
+  "max_life": 15,
+  "unit_limit": 5,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "tr-20",
+  "rows": 8,
+  "cols": 11,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    1,
+    2,
+    2,
+    2,
+    1,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    3,
+    3,
+    3,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    1,
+    2,
+    3,
+    3,
+    3,
+    2,
+    1,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    3,
+    4,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    2,
+    2,
+    2,
+    2,
+    3,
+    2,
+    3,
+    2,
+    3,
+    0
+   ],
+   [
+    0,
+    1,
+    0,
+    0,
+    0,
+    4,
+    0,
+    0,
+    0,
+    5,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 3
+    },
+    "end": {
+     "row": 6,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 9
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 2
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 7
+    },
+    "end": {
+     "row": 6,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 9
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 3
+    },
+    "end": {
+     "row": 6,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 9
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": null,
+    "placeholder": true,
+    "start": null,
+    "end": null,
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 2
+    },
+    "end": {
+     "row": 6,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 9
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 8
+    },
+    "end": {
+     "row": 6,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 9
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 1
+    },
+    "end": {
+     "row": 6,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 9
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_current_fragment_time",
+      "after_checkpoint": 0,
+      "seconds": 6
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 1
+    },
+    "end": {
+     "row": 6,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 9
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_current_fragment_time",
+      "after_checkpoint": 0,
+      "seconds": 6
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 3
+    },
+    "end": {
+     "row": 6,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 9
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 7
+    },
+    "end": {
+     "row": 6,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 9
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 2
+    },
+    "end": {
+     "row": 6,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 9
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 8
+    },
+    "end": {
+     "row": 6,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 9
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 1
+    },
+    "end": {
+     "row": 6,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 9
+      }
+     }
+    ],
+    "waits": []
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 20,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Sarkaz Heirbearer Warrior",
+      "enemy_id": "enemy_1222_dpvt",
+      "count": 1,
+      "time": 0,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Warrior",
+      "enemy_id": "enemy_1222_dpvt",
+      "count": 1,
+      "time": 3,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Warrior",
+      "enemy_id": "enemy_1222_dpvt",
+      "count": 1,
+      "time": 5,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Touch of the Sanguinarch",
+      "enemy_id": "enemy_1220_dzoms",
+      "count": 2,
+      "time": 16,
+      "interval": 4,
+      "route": 4,
+      "fragment": 1
+     },
+     {
+      "enemy": "Touch of the Sanguinarch",
+      "enemy_id": "enemy_1220_dzoms",
+      "count": 2,
+      "time": 16,
+      "interval": 4,
+      "route": 5,
+      "fragment": 1
+     }
+    ]
+   },
+   {
+    "index": 1,
+    "duration": 29,
+    "pre_delay": 3,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Sarkaz Heirbearer Warrior",
+      "enemy_id": "enemy_1222_dpvt",
+      "count": 1,
+      "time": 4,
+      "route": 6,
+      "fragment": 1
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Warrior",
+      "enemy_id": "enemy_1222_dpvt",
+      "count": 1,
+      "time": 4,
+      "route": 7,
+      "fragment": 1
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Warrior",
+      "enemy_id": "enemy_1222_dpvt",
+      "count": 1,
+      "time": 4,
+      "route": 7,
+      "fragment": 1
+     },
+     {
+      "enemy": "Touch of the Sanguinarch",
+      "enemy_id": "enemy_1220_dzoms",
+      "count": 1,
+      "time": 15,
+      "route": 8,
+      "fragment": 2
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Artificer",
+      "enemy_id": "enemy_1223_dmech",
+      "count": 1,
+      "time": 10,
+      "route": 9,
+      "fragment": 2
+     },
+     {
+      "enemy": "Touch of the Sanguinarch",
+      "enemy_id": "enemy_1220_dzoms",
+      "count": 1,
+      "time": 15,
+      "route": 10,
+      "fragment": 2
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Artificer",
+      "enemy_id": "enemy_1223_dmech",
+      "count": 1,
+      "time": 10,
+      "route": 11,
+      "fragment": 2
+     },
+     {
+      "enemy": "Touch of the Sanguinarch",
+      "enemy_id": "enemy_1220_dzoms",
+      "count": 3,
+      "time": 21,
+      "interval": 1,
+      "route": 12,
+      "fragment": 2
+     },
+     {
+      "enemy": "Touch of the Sanguinarch",
+      "enemy_id": "enemy_1220_dzoms",
+      "count": 3,
+      "time": 27,
+      "interval": 1,
+      "route": 12,
+      "fragment": 2
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 3,
+    "routes": [
+     0,
+     2,
+     8
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 7,
+    "routes": [
+     1,
+     9
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 3,
+    "col": 2,
+    "routes": [
+     4,
+     10
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 3,
+    "col": 8,
+    "routes": [
+     5,
+     11
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 6,
+    "col": 1,
+    "routes": [
+     6,
+     7,
+     7,
+     12,
+     12
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 6,
+    "col": 9,
+    "routes": [
+     0,
+     1,
+     2,
+     4,
+     5,
+     6,
+     7,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     12
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1220_dzoms",
+    "slug": "touch_of_the_sanguinarch",
+    "name": "Touch of the Sanguinarch",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1222_dpvt",
+    "slug": "sarkaz_heirbearer_warrior",
+    "name": "Sarkaz Heirbearer Warrior",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1223_dmech",
+    "slug": "sarkaz_heirbearer_artificer",
+    "name": "Sarkaz Heirbearer Artificer",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [
+    {
+     "unit": "Specter",
+     "unit_id": "char_143_ghost",
+     "level": 1,
+     "elite": 2,
+     "potential": 0,
+     "skill_index": 1,
+     "skill_level": 7,
+     "hidden": true
+    },
+    {
+     "unit": "Archetto",
+     "unit_id": "char_332_archet",
+     "level": 1,
+     "elite": 2,
+     "potential": 0,
+     "skill_index": 0,
+     "skill_level": 7,
+     "hidden": true
+    },
+    {
+     "unit": "Ethan",
+     "unit_id": "char_355_ethan",
+     "level": 1,
+     "elite": 2,
+     "potential": 0,
+     "skill_index": 0,
+     "skill_level": 7,
+     "hidden": true
+    }
+   ],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "devices": [
+  {
+   "col": 0,
+   "description": null,
+   "hidden": false,
+   "key": "trap_058_gunctrl",
+   "kind": "device",
+   "name": "Londinium Secondary Defense Artillery",
+   "row": 0
+  },
+  {
+   "col": 5,
+   "description": "Blocks 3 enemies",
+   "hidden": false,
+   "key": "char_136_hsguma",
+   "kind": "operator",
+   "name": "Hoshiguma",
+   "row": 3
+  },
+  {
+   "col": 5,
+   "description": "Restores the HP of allies",
+   "hidden": false,
+   "key": "char_171_bldsk",
+   "kind": "operator",
+   "name": "Warfarin",
+   "row": 6
+  }
+ ],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "TR-20",
+  "geometryHash": "6f09e42ce8aef0166336d0126576aa09e3a619fbde199e01727b4e4f696984a9",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      3,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3.414213562373095,
+     4.414213562373095,
+     5.414213562373095,
+     6.414213562373095,
+     7.414213562373095,
+     8.414213562373096,
+     9.414213562373096,
+     10.414213562373096
+    ],
+    "length": 10.414213562373096,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 2,
+      "point": [
+       4,
+       1
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      3,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ]
+    ]
+   },
+   "1": {
+    "points": [
+     [
+      7,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3.414213562373095,
+     4.414213562373095,
+     5.414213562373095,
+     6.414213562373095,
+     7.414213562373095,
+     8.414213562373096,
+     9.414213562373096,
+     10.414213562373096
+    ],
+    "length": 10.414213562373096,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      7,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ]
+    ]
+   },
+   "2": {
+    "points": [
+     [
+      3,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3.414213562373095,
+     4.414213562373095,
+     5.414213562373095,
+     6.414213562373095,
+     7.414213562373095,
+     8.414213562373096,
+     9.414213562373096,
+     10.414213562373096
+    ],
+    "length": 10.414213562373096,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      3,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ]
+    ]
+   },
+   "4": {
+    "points": [
+     [
+      2,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      2,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ]
+    ]
+   },
+   "5": {
+    "points": [
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ]
+    ]
+   },
+   "6": {
+    "points": [
+     [
+      1,
+      6
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      1,
+      6
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ]
+    ]
+   },
+   "7": {
+    "points": [
+     [
+      1,
+      6
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      1,
+      6
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ]
+    ]
+   },
+   "8": {
+    "points": [
+     [
+      3,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "length": 11,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 5,
+      "point": [
+       4,
+       1
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      3,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ]
+    ]
+   },
+   "9": {
+    "points": [
+     [
+      7,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "length": 11,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 5,
+      "point": [
+       6,
+       1
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      7,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ]
+    ]
+   },
+   "10": {
+    "points": [
+     [
+      2,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 5,
+      "point": [
+       3,
+       3
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      2,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ]
+    ]
+   },
+   "11": {
+    "points": [
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 5,
+      "point": [
+       7,
+       3
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ]
+    ]
+   },
+   "12": {
+    "points": [
+     [
+      1,
+      6
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      1,
+      6
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": [
+  {
+   "unit": "Specter",
+   "unit_id": "char_143_ghost",
+   "level": 1,
+   "elite": 2,
+   "potential": 0,
+   "skill_index": 1,
+   "skill_level": 7,
+   "hidden": true
+  },
+  {
+   "unit": "Archetto",
+   "unit_id": "char_332_archet",
+   "level": 1,
+   "elite": 2,
+   "potential": 0,
+   "skill_index": 0,
+   "skill_level": 7,
+   "hidden": true
+  },
+  {
+   "unit": "Ethan",
+   "unit_id": "char_355_ethan",
+   "level": 1,
+   "elite": 2,
+   "potential": 0,
+   "skill_index": 0,
+   "skill_level": 7,
+   "hidden": true
+  }
+ ],
+ "enemies": {
+  "enemy_1222_dpvt": {
+   "key": "enemy_1222_dpvt",
+   "prefabKey": "enemy_1222_dpvt",
+   "name": "Sarkaz Heirbearer Warrior",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3600,
+    "atk": 340,
+    "def": 120,
+    "res": 30,
+    "moveSpeed": 1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": -1,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Will be reborn as a <Touch of the Sanguinarch> after falling in battle for the first time",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "deathrattle.delay": 1
+    },
+    "bbStr": {
+     "deathrattle.enemy_key": "enemy_1220_dzoms"
+    },
+    "groups": {
+     "deathrattle": [
+      "delay",
+      "enemy_key"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "sarkaz"
+   ]
+  },
+  "enemy_1220_dzoms": {
+   "key": "enemy_1220_dzoms",
+   "prefabKey": "enemy_1220_dzoms",
+   "name": "Touch of the Sanguinarch",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 1500,
+    "atk": 280,
+    "def": 100,
+    "res": 10,
+    "moveSpeed": 1,
+    "bat": 2.5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Reborn Creation (takes greatly reduced Physical and Arts damage)",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Units blocking it gain +1 Block (up to a maximum of +6)",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "dmg_res.damage_resistance": 0.9,
+     "buff_to_blocker.max_valid_stack_cnt": 6,
+     "buff_to_blocker.block_cnt": 1
+    },
+    "bbStr": {},
+    "groups": {
+     "dmg_res": [
+      "damage_resistance"
+     ],
+     "buff_to_blocker": [
+      "block_cnt",
+      "max_valid_stack_cnt"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1223_dmech": {
+   "key": "enemy_1223_dmech",
+   "prefabKey": "enemy_1223_dmech",
+   "name": "Sarkaz Heirbearer Artificer",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 6000,
+    "atk": 300,
+    "def": 250,
+    "res": 20,
+    "moveSpeed": 1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": -1,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Continuously charges up Londinium Secondary Defense Artillery; when interrupted, the Defense Artillery will lose a portion of its charge progress",
+     "format": "SILENCE"
+    },
+    {
+     "text": "Will be reborn as a <Touch of the Sanguinarch> after falling in battle for the first time",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "deathrattle.delay": 1
+    },
+    "bbStr": {
+     "deathrattle.enemy_key": "enemy_1220_dzoms"
+    },
+    "groups": {
+     "deathrattle": [
+      "delay",
+      "enemy_key"
+     ]
+    }
+   },
+   "skills": [
+    {
+     "prefabKey": "charge_gunctrl",
+     "priority": 0,
+     "cooldown": 5,
+     "initCooldown": 0,
+     "spCost": 5,
+     "bb": {
+      "interval": 1,
+      "hit_duration": 20,
+      "sp": 1,
+      "enemy_dmech_charge[sp_reduce].sp": -15
+     },
+     "bbStr": {}
+    }
+   ],
+   "sp": {
+    "type": "INCREASE_WITH_TIME",
+    "maxSp": 5,
+    "initSp": 0,
+    "increment": 1
+   },
+   "notCountInTotal": false,
+   "tags": [
+    "sarkaz"
+   ]
+  }
+ }
+}
