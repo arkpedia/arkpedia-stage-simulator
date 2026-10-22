@@ -3,7 +3,7 @@
 import { Battle } from "./Battle.js";
 import { DataSource } from "./simdata.js";
 import { genericKit } from "./content/generic.js";
-import { regularDpMinimum, canSpendDp, regularDpRecoveryForStep } from './content/arkpedia-dp-budget.js';
+import { regularDpMinimum, canSpendDp, spendDp, regularDpRecoveryForStep } from './content/arkpedia-dp-budget.js';
 import { regularModelKey } from '../../shared/arkpedia/facing.js';
 import { customizeMedicKit, installMedic, installMedicSquad } from './content/arkpedia-medics.js';
 import { customizeCasterKit, installCaster } from './content/arkpedia-casters.js';
@@ -256,7 +256,7 @@ import { catalogueFor, recordFor, fixedSquadBuilds } from "../../shared/arkpedia
 import { REGULAR_OPERATORS } from "../../shared/arkpedia/operators.js";
 import { assertRegularEnemies } from "../../shared/arkpedia/enemies.js";
 import { installEnemyFeatures } from "./content/arkpedia-enemy-features.js";
-import { STAGE_DEVICES, pulseTiles, artilleryTiles } from "../../shared/arkpedia/stage-devices.js";
+import { STAGE_DEVICES, STAGE_TOKEN_UNITS, pulseTiles, artilleryTiles } from "../../shared/arkpedia/stage-devices.js";
 import { compileBuffTemplate } from "../../shared/arkpedia/behavior.js";
 import {
   prepareSquad,
@@ -270,8 +270,10 @@ export function stageAdapter(source) {
   const g = source.geometry;
   const supplied = Array.isArray(g.suppliedUnits) ? g.suppliedUnits.length
     : (g.suppliedUnits?.fixed_squad?.length || 0) + (g.suppliedUnits?.deployable_tokens?.length || 0);
-  const tokens = Array.isArray(g.suppliedUnits) ? 0 : (g.suppliedUnits?.deployable_tokens ?? []).filter(t => t.count !== 0).length;
-  if (g.rows > 19 || g.cols > 21 || g.hasConditionalSpawns || tokens)
+  const tokenCards = Array.isArray(g.suppliedUnits) ? [] : (g.suppliedUnits?.deployable_tokens ?? []).filter(t => t.count !== 0);
+  const unsupportedTokens = tokenCards.filter(t => !STAGE_TOKEN_UNITS[t.unit_id]);
+  if (unsupportedTokens.length) throw new Error(`Unsupported stage tokens: ${[...new Set(unsupportedTokens.map(t => t.unit_id))].join(', ')}`);
+  if (g.rows > 19 || g.cols > 21 || g.hasConditionalSpawns)
     throw new Error("Unsupported stage mechanics");
   const chars = ["#", "h", "r", "S", "E"];
   const legend = Object.fromEntries(
@@ -362,6 +364,7 @@ export function stageAdapter(source) {
     fixedSquad: supplied ? g.suppliedUnits.fixed_squad : null,
     stage: {
       id: source.code,
+      tokens: source.tokens ?? [],
       rows: g.tileGrid.map((row) => row.map((t) => chars[t]).join("")),
       legend,
     },
@@ -448,8 +451,9 @@ export class StandardBattle extends Battle {
       if (String(data.stage.geometry.tileLegend[type]?.key ?? '').includes('toxic')) pollution.push([r, c]);
     }));
     this.mvpStagePollution = new Set(pollution.map(([r, c]) => `${r},${c}`));
+    this.mvpStageTokens = new Map((data.stage.tokens ?? []).map(t => [t.unitId, t.count]));
     if (this.mvpStageDevices.length) this.on('tick', ({ dt }) => this._tickMvpStageDevices(dt));
-    this._installUnitStageDevices(data.stage.devices ?? []);    if (this.mvpStageDevices.length) this.on('tick', ({ dt }) => this._tickMvpStageDevices(dt));
+    this._installUnitStageDevices(data.stage.devices ?? []);
     this.unitLimit = config.unit_limit;
     this.regularMapSize = Object.freeze({ rows: data.stage.geometry.rows, cols: data.stage.geometry.cols });
     this.mapTags = Object.freeze([...(data.stage.mapTags ?? [])]);
@@ -564,6 +568,20 @@ export class StandardBattle extends Battle {
   deployOperator(id, row, col, dir) {
     const unit = this._deployOperator(id, row, col, dir);
     if (unit && this.bench[id]) { this.bench[id].costDelta = 0; delete this.bench[id].baseCost; }
+    return unit;
+  }
+  deployToken(unitId, row, col) {
+    const token = (this.stage.tokens ?? this.stage.raw?.tokens ?? []).find(t => t.unitId === unitId);
+    if (!token) throw new Error('This stage has no such token.');
+    if ((this.mvpStageTokens.get(unitId) ?? 0) <= 0) throw new Error('No tokens remaining.');
+    if (!this.grid.inRect(row, col) || !this.grid.groundPassable(row, col, true)) throw new Error('Token must be placed on the ground.');
+    if (this._occ[row * this.grid.cols + col]?.alive) throw new Error('Tile is occupied.');
+    if (!canSpendDp(this, 'arkpedia', token.cost)) throw new Error('Not enough DP.');
+    const unit = this.spawnDevice(`token:${unitId}`, row, col, { hp: token.hp, def: 0, blockCnt: token.block,
+      obstacle: true, obstacleKind: token.obstacle, name: token.name });
+    if (!unit) throw new Error('Token cannot be placed here.');
+    spendDp(this, 'arkpedia', token.cost);
+    this.mvpStageTokens.set(unitId, (this.mvpStageTokens.get(unitId) ?? 1) - 1);
     return unit;
   }
   // Engine-owned delivery: reuse selected builds, kits and deployment hooks;

@@ -48,3 +48,8 @@ export function artilleryTiles(row, col) {
   }
   return out;
 }
+
+/** Deployable token behaviors the battle engine can execute. Stats come from data/arkpedia-deployable-tokens.json. */
+export const STAGE_TOKEN_UNITS = Object.freeze({
+  trap_001_crate: Object.freeze({ behavior: 'roadblock', obstacle: 'crate' }),
+});

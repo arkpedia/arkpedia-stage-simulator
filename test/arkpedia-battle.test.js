@@ -43,9 +43,10 @@ test("an appear_at_pos teleport becomes DISAPPEAR/APPEAR without a tunnel hold",
   const route = stageAdapter(stage).routes[4], kinds = route.checkpoints.map(c => c.type);
   assert.ok(kinds.includes('DISAPPEAR') && kinds.includes('APPEAR'), kinds.join(','));
 });
-test("deployable tokens and conditional spawns remain refused", () => {
+test("unsupported tokens and conditional spawns remain refused", () => {
+  assert.throws(() => stageAdapter({ ...data.stage, geometry: { ...data.stage.geometry,
+    suppliedUnits: { fixed_squad: [], deployable_tokens: [{}] } } }), /Unsupported stage tokens/);
   for (const patch of [
-    { suppliedUnits: { fixed_squad: [], deployable_tokens: [{}] } },
     { hasConditionalSpawns: true },
     { rows: 20 },
   ]) {
