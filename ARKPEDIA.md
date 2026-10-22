@@ -6014,3 +6014,7 @@ Added the documented C4 features for W; the C4 kit already existed. The new supp
 ### Bulk enemy artwork (S148, 2026-10-21)
 
 Imported **182** original enemy chibis into `arkpedia-sd-assets` (merged as `976d210`), covering every built-stage enemy with an upstream directory. The simulator maps **1,187** models with per-model `assetsCommit`; only `enemy_1420_lrmm`, `enemy_1177_dufrbl` and `enemy_10082_mpweak` remain without upstream artwork. The assets manifest holds 3,239 complete models.
+
+### Asset coverage report (S149, 2026-10-21)
+
+Added `npm run coverage:arkpedia-assets` and `docs/ASSETS.md`: 1,187 mapped models, 3,239 assets, and 25 built stages still referencing one of three enemy records with no upstream artwork. Those units keep fallback markers; stage scenery remains a separate export gap.

@@ -374,3 +374,17 @@ The project's code is GPL-3.0-or-later (`LICENSE`); none of the items below is c
   - **Novecento Wide:** © Jan Tonellato / Synthview. Free licence.
   - Both are mirrored from TimWangZi/The-font-of-Arknights.
   - Noto Sans SC and Noto Serif SC (SIL OFL) are loaded from Google Fonts, not self-hosted.
+
+## Enemy and stage artwork for the stage simulator
+
+The simulator reads an immutable `arkpedia-sd-assets` snapshot. `npm run coverage:arkpedia-assets` reports built stages whose enemy records have no model.
+
+- Simulator mapping: **1,187 models**.
+- Assets repository: **3,239** complete models.
+- 219 built stages: **25 stages** reference one of three enemy records without upstream artwork:
+  - `enemy_1420_lrmm`
+  - `enemy_1177_dufrbl`
+  - `enemy_10082_mpweak`
+- Those units render as fallback markers; no substitute artwork is used.
+- The snapshot keeps a stable `sd.commit` for source-identity receipts. Newly imported models carry `assetsCommit`, and the renderer/CI asset setup resolve each model from its own commit.
+- Only 0-1 has original exported stage scenery; other stages use the simplified tile map. That is a separate bundle-export gap.
