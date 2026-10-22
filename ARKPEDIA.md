@@ -5922,3 +5922,7 @@ The geometry-only build produced **TR-26** (7×10, 24 spawns, 4 enemies) as a `t
 ### Geometry-only 15-x batch (S131, 2026-10-21)
 
 The geometry-only build added **15-8, 15-11, 15-12, 15-14, 15-15 and 15-18** as `testOnly` (no viewer playback; synthetic routes). **15-19** was rejected: its fixed squad uses support-only operators (`char_508_aguard`, `char_509_acast`, …) not in the regular catalogue. Catalogue is **212 entries** (199 public + 13 testOnly); 211 data-backed stages smoke-tested.
+
+### Full-suite verification at 404/212 (S132, 2026-10-21)
+
+Full repository suite after E68-E71 and the 13 test-only stages: **22,813 tests, 22,802 passed, 0 failed, 11 skipped**. `docs/REMAINING.md` records that result.
