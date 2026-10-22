@@ -1,0 +1,1984 @@
+{
+ "code": "15-9",
+ "name": "Decompression Syndrome",
+ "description": "'I wake to sleep again, and delay my awakening. I touch fate on what I cannot fear. I learn through the journey I must set out on.'\n<Intrusive Call> PRTS deploys enemies and Weakening Nodes, and activates Weakening Nodes.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "15-9",
+  "rows": 7,
+  "cols": 11,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_fence_bound",
+    "height": "low",
+    "walkable": false,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_mpprts_enemy_born",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_flystart",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    1,
+    0,
+    0,
+    2,
+    2,
+    3,
+    2,
+    0,
+    0
+   ],
+   [
+    0,
+    2,
+    2,
+    2,
+    3,
+    4,
+    4,
+    4,
+    4,
+    1,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    2,
+    5,
+    3,
+    4,
+    3,
+    0,
+    0
+   ],
+   [
+    6,
+    5,
+    5,
+    4,
+    4,
+    4,
+    5,
+    4,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    7,
+    5,
+    0,
+    0,
+    0,
+    8,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    6,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "fly",
+    "start": {
+     "row": 5,
+     "col": 1
+    },
+    "end": {
+     "row": 2,
+     "col": 9
+    },
+    "checkpoints": [],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 999
+     }
+    ]
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 5,
+     "col": 5
+    },
+    "end": {
+     "row": 2,
+     "col": 9
+    },
+    "checkpoints": [],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 999
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 5
+    },
+    "end": {
+     "row": 2,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 5
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": null,
+    "placeholder": true,
+    "start": null,
+    "end": null,
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 5
+    },
+    "end": {
+     "row": 2,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 5
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 2
+    },
+    "end": {
+     "row": 2,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 7
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 0
+    },
+    "end": {
+     "row": 2,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 7
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 5,
+     "col": 9
+    },
+    "end": {
+     "row": 1,
+     "col": 2
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 2
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10
+     }
+    ]
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 5,
+     "col": 2
+    },
+    "end": {
+     "row": 1,
+     "col": 2
+    },
+    "checkpoints": [],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 12
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 5
+    },
+    "end": {
+     "row": 2,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 8
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 0
+    },
+    "end": {
+     "row": 2,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 7
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 5,
+     "col": 9
+    },
+    "end": {
+     "row": 1,
+     "col": 2
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 2
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 35
+     }
+    ]
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 5,
+     "col": 9
+    },
+    "end": {
+     "row": 1,
+     "col": 2
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 2
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 35
+     }
+    ]
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 5,
+     "col": 9
+    },
+    "end": {
+     "row": 1,
+     "col": 2
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 2
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 35
+     }
+    ]
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 5,
+     "col": 9
+    },
+    "end": {
+     "row": 1,
+     "col": 2
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 2
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 35
+     }
+    ]
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 178,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Intrusive Call",
+      "enemy_id": "enemy_10072_mpprhd",
+      "count": 1,
+      "time": 0,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Intrusive Call",
+      "enemy_id": "enemy_10072_mpprhd",
+      "count": 1,
+      "time": 0,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Rampaging Maintenance Helper",
+      "enemy_id": "enemy_10073_mpcar_2",
+      "count": 1,
+      "time": 3,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Rampaging Maintenance Helper",
+      "enemy_id": "enemy_10073_mpcar_2",
+      "count": 4,
+      "time": 17,
+      "interval": 9,
+      "route": 4,
+      "fragment": 0
+     },
+     {
+      "enemy": "Intrusive Call",
+      "enemy_id": "enemy_10072_mpprhd",
+      "count": 1,
+      "time": 0,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Rampaging Maintenance Helper",
+      "enemy_id": "enemy_10073_mpcar_2",
+      "count": 1,
+      "time": 25,
+      "route": 5,
+      "fragment": 0
+     },
+     {
+      "enemy": "Rampaging Maintenance Helper",
+      "enemy_id": "enemy_10073_mpcar_2",
+      "count": 5,
+      "time": 45,
+      "interval": 5,
+      "route": 6,
+      "fragment": 0
+     },
+     {
+      "enemy": "Static Oneiros α",
+      "enemy_id": "enemy_10080_mpiced",
+      "count": 1,
+      "time": 65,
+      "route": 7,
+      "fragment": 1
+     },
+     {
+      "enemy": "Rampaging Maintenance Helper",
+      "enemy_id": "enemy_10073_mpcar_2",
+      "count": 8,
+      "time": 65,
+      "interval": 6,
+      "route": 4,
+      "fragment": 1
+     },
+     {
+      "enemy": "Rampaging Maintenance Helper",
+      "enemy_id": "enemy_10073_mpcar_2",
+      "count": 8,
+      "time": 65,
+      "interval": 6,
+      "route": 6,
+      "fragment": 1
+     },
+     {
+      "enemy": "Intrusive Call",
+      "enemy_id": "enemy_10072_mpprhd",
+      "count": 1,
+      "time": 65,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Static Oneiros α",
+      "enemy_id": "enemy_10080_mpiced",
+      "count": 1,
+      "time": 91,
+      "route": 8,
+      "fragment": 1
+     },
+     {
+      "enemy": "Intrusive Call",
+      "enemy_id": "enemy_10072_mpprhd",
+      "count": 1,
+      "time": 66,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Static Oneiros α",
+      "enemy_id": "enemy_10080_mpiced",
+      "count": 1,
+      "time": 104,
+      "route": 8,
+      "fragment": 1
+     },
+     {
+      "enemy": "Intrusive Call",
+      "enemy_id": "enemy_10072_mpprhd",
+      "count": 1,
+      "time": 67,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Static Oneiros α",
+      "enemy_id": "enemy_10080_mpiced",
+      "count": 1,
+      "time": 122,
+      "route": 8,
+      "fragment": 1
+     },
+     {
+      "enemy": "Rampaging Maintenance Helper",
+      "enemy_id": "enemy_10073_mpcar_2",
+      "count": 30,
+      "time": 149,
+      "interval": 1,
+      "route": 9,
+      "fragment": 2
+     },
+     {
+      "enemy": "Rampaging Maintenance Helper",
+      "enemy_id": "enemy_10073_mpcar_2",
+      "count": 15,
+      "time": 163.5,
+      "interval": 1,
+      "route": 9,
+      "fragment": 2
+     },
+     {
+      "enemy": "Rampaging Maintenance Helper",
+      "enemy_id": "enemy_10073_mpcar_2",
+      "count": 30,
+      "time": 147,
+      "interval": 1,
+      "route": 10,
+      "fragment": 2
+     },
+     {
+      "enemy": "Rampaging Maintenance Helper",
+      "enemy_id": "enemy_10073_mpcar_2",
+      "count": 15,
+      "time": 161.5,
+      "interval": 1,
+      "route": 10,
+      "fragment": 2
+     },
+     {
+      "enemy": "Static Oneiros α",
+      "enemy_id": "enemy_10080_mpiced",
+      "count": 1,
+      "time": 142,
+      "route": 11,
+      "fragment": 2
+     },
+     {
+      "enemy": "Static Oneiros α",
+      "enemy_id": "enemy_10080_mpiced",
+      "count": 1,
+      "time": 143,
+      "route": 12,
+      "fragment": 2
+     },
+     {
+      "enemy": "Static Oneiros α",
+      "enemy_id": "enemy_10080_mpiced",
+      "count": 1,
+      "time": 144,
+      "route": 13,
+      "fragment": 2
+     },
+     {
+      "enemy": "Static Oneiros α",
+      "enemy_id": "enemy_10080_mpiced",
+      "count": 1,
+      "time": 145,
+      "route": 14,
+      "fragment": 2
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 4,
+    "col": 0,
+    "routes": [
+     6,
+     6,
+     10,
+     10
+    ]
+   },
+   {
+    "key": "tile_mpprts_enemy_born",
+    "row": 5,
+    "col": 4,
+    "routes": []
+   },
+   {
+    "key": "tile_flystart",
+    "row": 5,
+    "col": 9,
+    "routes": [
+     7,
+     11,
+     12,
+     13,
+     14
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 6,
+    "col": 5,
+    "routes": [
+     4,
+     4,
+     9,
+     9
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 1,
+    "col": 2,
+    "routes": [
+     7,
+     8,
+     8,
+     8,
+     11,
+     12,
+     13,
+     14
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 2,
+    "col": 9,
+    "routes": [
+     0,
+     1,
+     2,
+     4,
+     1,
+     5,
+     6,
+     4,
+     6,
+     1,
+     1,
+     1,
+     9,
+     9,
+     10,
+     10
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_10072_mpprhd",
+    "slug": "intrusive_call",
+    "name": "Intrusive Call",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_10073_mpcar_2",
+    "slug": "rampaging_maintenance_helper",
+    "name": "Rampaging Maintenance Helper",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_10080_mpiced",
+    "slug": "static_oneiros_enemy_10080_mpiced",
+    "name": "Static Oneiros α",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "15-9",
+  "geometryHash": "edcf66fbcda40f24d27dc788d502877499a00b880c97219ef9ddda9d32a58546",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      1,
+      5
+     ],
+     [
+      9,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     8.54400374531753
+    ],
+    "length": 8.54400374531753,
+    "breaks": [],
+    "flying": true,
+    "holds": [
+     {
+      "at": 0,
+      "seconds": 999,
+      "point": [
+       1,
+       5
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      1,
+      5
+     ],
+     [
+      9,
+      2
+     ]
+    ]
+   },
+   "1": {
+    "points": [
+     [
+      5,
+      5
+     ],
+     [
+      9,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     5
+    ],
+    "length": 5,
+    "breaks": [],
+    "flying": true,
+    "holds": [
+     {
+      "at": 0,
+      "seconds": 999,
+      "point": [
+       5,
+       5
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      5,
+      5
+     ],
+     [
+      9,
+      2
+     ]
+    ]
+   },
+   "2": {
+    "points": [
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      9,
+      2
+     ]
+    ]
+   },
+   "4": {
+    "points": [
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "length": 8,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      9,
+      2
+     ]
+    ]
+   },
+   "5": {
+    "points": [
+     [
+      2,
+      4
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "length": 9,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      2,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      9,
+      2
+     ]
+    ]
+   },
+   "6": {
+    "points": [
+     [
+      0,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "length": 11,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      9,
+      2
+     ]
+    ]
+   },
+   "7": {
+    "points": [
+     [
+      9,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      2,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     7,
+     11
+    ],
+    "length": 11,
+    "breaks": [],
+    "flying": true,
+    "holds": [
+     {
+      "at": 7,
+      "seconds": 10,
+      "point": [
+       2,
+       5
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      9,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      2,
+      1
+     ]
+    ]
+   },
+   "8": {
+    "points": [
+     [
+      2,
+      5
+     ],
+     [
+      2,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     4
+    ],
+    "length": 4,
+    "breaks": [],
+    "flying": true,
+    "holds": [
+     {
+      "at": 0,
+      "seconds": 12,
+      "point": [
+       2,
+       5
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      2,
+      5
+     ],
+     [
+      2,
+      1
+     ]
+    ]
+   },
+   "9": {
+    "points": [
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "length": 8,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ]
+    ]
+   },
+   "10": {
+    "points": [
+     [
+      0,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "length": 11,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      9,
+      2
+     ]
+    ]
+   },
+   "11": {
+    "points": [
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      2,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     8,
+     13
+    ],
+    "length": 13,
+    "breaks": [],
+    "flying": true,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 35,
+      "point": [
+       9,
+       6
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      2,
+      1
+     ]
+    ]
+   },
+   "12": {
+    "points": [
+     [
+      9,
+      5
+     ],
+     [
+      10,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      2,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     9,
+     13
+    ],
+    "length": 13,
+    "breaks": [],
+    "flying": true,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 35,
+      "point": [
+       10,
+       5
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      9,
+      5
+     ],
+     [
+      10,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      2,
+      1
+     ]
+    ]
+   },
+   "13": {
+    "points": [
+     [
+      9,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      2,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     7,
+     11
+    ],
+    "length": 11,
+    "breaks": [],
+    "flying": true,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 35,
+      "point": [
+       8,
+       5
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      9,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      2,
+      1
+     ]
+    ]
+   },
+   "14": {
+    "points": [
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     8,
+     11
+    ],
+    "length": 11,
+    "breaks": [],
+    "flying": true,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 35,
+      "point": [
+       9,
+       4
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      1
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_10072_mpprhd": {
+   "key": "enemy_10072_mpprhd",
+   "prefabKey": "enemy_10072_mpprhd",
+   "name": "Intrusive Call",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "NONE",
+   "stats": {
+    "maxHp": 10000,
+    "atk": 1000,
+    "def": 4000,
+    "res": 80,
+    "moveSpeed": 1.4,
+    "bat": 1,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "none",
+    "dmgTypes": [
+     "none"
+    ],
+    "motion": "FLY",
+    "immunities": {
+     "stun": true,
+     "silence": true,
+     "sleep": true,
+     "frozen": true,
+     "levitate": true
+    },
+    "otherImmunities": [
+     "disarmedCombat",
+     "feared",
+     "attract"
+    ],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [
+    {
+     "prefabKey": "GrabBegin",
+     "priority": 0,
+     "cooldown": 0,
+     "initCooldown": 0,
+     "spCost": 0,
+     "bb": {},
+     "bbStr": {}
+    },
+    {
+     "prefabKey": "GrabEnd",
+     "priority": 0,
+     "cooldown": 0,
+     "initCooldown": 0,
+     "spCost": 0,
+     "bb": {},
+     "bbStr": {}
+    },
+    {
+     "prefabKey": "Click",
+     "priority": 0,
+     "cooldown": 0,
+     "initCooldown": 0,
+     "spCost": 0,
+     "bb": {},
+     "bbStr": {}
+    },
+    {
+     "prefabKey": "Angry",
+     "priority": 0,
+     "cooldown": 0,
+     "initCooldown": 0,
+     "spCost": 0,
+     "bb": {},
+     "bbStr": {}
+    }
+   ],
+   "notCountInTotal": true,
+   "tags": []
+  },
+  "enemy_10073_mpcar_2": {
+   "key": "enemy_10073_mpcar_2",
+   "prefabKey": "enemy_10073_mpcar_2",
+   "name": "Rampaging Maintenance Helper",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2500,
+    "atk": 360,
+    "def": 200,
+    "res": 25,
+    "moveSpeed": 1.9,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": -1,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "origen"
+   ]
+  },
+  "enemy_10080_mpiced": {
+   "key": "enemy_10080_mpiced",
+   "prefabKey": "enemy_10080_mpiced",
+   "name": "Static Oneiros α",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "NONE",
+   "stats": {
+    "maxHp": 3500,
+    "atk": 500,
+    "def": 360,
+    "res": 40,
+    "moveSpeed": 0.6,
+    "bat": 3,
+    "aspd": 100,
+    "rangeRadius": 2,
+    "rawRangeRadius": 2,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 10,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "none",
+    "dmgTypes": [
+     "none"
+    ],
+    "motion": "FLY",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Flying unit.",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Shortly after it enters the battle, throws a bomb to temporarily disable the Operator with the highest DP cost in your Deployment Waiting Zone",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [
+    {
+     "prefabKey": "CardBoom",
+     "priority": 0,
+     "cooldown": 5,
+     "initCooldown": 5,
+     "spCost": 0,
+     "bb": {
+      "duration": 20,
+      "respawn_disabled": 1
+     },
+     "bbStr": {}
+    }
+   ],
+   "notCountInTotal": false,
+   "tags": [
+    "origen"
+   ]
+  }
+ }
+}

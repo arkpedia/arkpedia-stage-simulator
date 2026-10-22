@@ -5890,3 +5890,7 @@ Built as `testOnly` while the PRTS props are inert: **15-5** (67 spawns), **15-6
 ### Ice bomb and DP-lock caster (E69, 2026-10-21)
 
 The flying ice bomb sets the flying flag; its waiting-zone disable is inert because the engine has no waiting zone. The DP-lock caster halts DP regeneration for 30 s after a 5 s delay via `dpRegenHaltUntil`. Both remain compatible with test-only stages. Support rises to **400 of 1,552** enemies.
+
+### 15-9 and 15-10 test-only (S126, 2026-10-21)
+
+Added **15-9** (131 spawns) and **15-10** (62 spawns) as `testOnly` after the ice-bomb and DP-lock support. Catalogue is **204 entries**, **199 public + 5 testOnly**; all 203 data-backed stages pass the smoke test.
