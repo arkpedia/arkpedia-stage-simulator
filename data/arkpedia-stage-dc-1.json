@@ -1,0 +1,1121 @@
+{
+ "code": "DC-1",
+ "name": "Unending Road",
+ "description": "Soulless Waregeists advance tirelessly. Why has the once-energetic traveler grown exhausted?",
+ "battle": {
+  "max_life": 5,
+  "unit_limit": 8,
+  "initial_dp": 20,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "dc-1",
+  "rows": 8,
+  "cols": 11,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    3,
+    4,
+    4,
+    2,
+    0
+   ],
+   [
+    0,
+    3,
+    3,
+    0,
+    0,
+    4,
+    3,
+    4,
+    4,
+    2,
+    1
+   ],
+   [
+    0,
+    3,
+    3,
+    3,
+    3,
+    4,
+    0,
+    4,
+    4,
+    2,
+    0
+   ],
+   [
+    5,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    3,
+    3,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    4,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    0
+   ],
+   [
+    0,
+    0,
+    3,
+    2,
+    2,
+    4,
+    4,
+    4,
+    4,
+    2,
+    1
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 10
+    },
+    "end": {
+     "row": 4,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 8
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 135
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 10
+    },
+    "end": {
+     "row": 4,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 3
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 4,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 17
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 4,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 10
+    },
+    "end": {
+     "row": 4,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 8
+      }
+     }
+    ],
+    "waits": []
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 180,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Inkwave",
+      "enemy_id": "enemy_1201_sfzhi",
+      "count": 1,
+      "time": 3,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Grindstone",
+      "enemy_id": "enemy_1195_sfyin",
+      "count": 1,
+      "time": 11,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Grindstone",
+      "enemy_id": "enemy_1195_sfyin",
+      "count": 1,
+      "time": 20,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Grindstone",
+      "enemy_id": "enemy_1195_sfyin",
+      "count": 1,
+      "time": 29,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Vernacularism",
+      "enemy_id": "enemy_1197_sfshu",
+      "count": 1,
+      "time": 41,
+      "route": 2,
+      "fragment": 2
+     },
+     {
+      "enemy": "Grindstone",
+      "enemy_id": "enemy_1195_sfyin",
+      "count": 1,
+      "time": 49,
+      "route": 1,
+      "fragment": 3
+     },
+     {
+      "enemy": "Grindstone",
+      "enemy_id": "enemy_1195_sfyin",
+      "count": 1,
+      "time": 58,
+      "route": 1,
+      "fragment": 3
+     },
+     {
+      "enemy": "Grindstone",
+      "enemy_id": "enemy_1195_sfyin",
+      "count": 1,
+      "time": 67,
+      "route": 1,
+      "fragment": 3
+     },
+     {
+      "enemy": "Vernacularism",
+      "enemy_id": "enemy_1197_sfshu",
+      "count": 1,
+      "time": 67,
+      "route": 3,
+      "fragment": 3
+     },
+     {
+      "enemy": "Grindstone",
+      "enemy_id": "enemy_1195_sfyin",
+      "count": 3,
+      "time": 79,
+      "interval": 12,
+      "route": 1,
+      "fragment": 4
+     },
+     {
+      "enemy": "Vernacularism",
+      "enemy_id": "enemy_1197_sfshu",
+      "count": 3,
+      "time": 79,
+      "interval": 12,
+      "route": 3,
+      "fragment": 4
+     },
+     {
+      "enemy": "Grindstone",
+      "enemy_id": "enemy_1195_sfyin",
+      "count": 2,
+      "time": 112,
+      "interval": 3,
+      "route": 1,
+      "fragment": 5
+     },
+     {
+      "enemy": "Vernacularism",
+      "enemy_id": "enemy_1197_sfshu",
+      "count": 2,
+      "time": 125,
+      "interval": 3,
+      "route": 3,
+      "fragment": 5
+     },
+     {
+      "enemy": "Grindstone",
+      "enemy_id": "enemy_1195_sfyin",
+      "count": 4,
+      "time": 144,
+      "interval": 12,
+      "route": 1,
+      "fragment": 6
+     },
+     {
+      "enemy": "Inkwave",
+      "enemy_id": "enemy_1201_sfzhi",
+      "count": 1,
+      "time": 162,
+      "route": 4,
+      "fragment": 6
+     },
+     {
+      "enemy": "Vernacularism",
+      "enemy_id": "enemy_1197_sfshu",
+      "count": 4,
+      "time": 144,
+      "interval": 12,
+      "route": 3,
+      "fragment": 6
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 0,
+    "routes": [
+     2,
+     3,
+     3,
+     3,
+     3
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 2,
+    "col": 10,
+    "routes": [
+     0,
+     4
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 6,
+    "col": 10,
+    "routes": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 4,
+    "col": 0,
+    "routes": [
+     0,
+     1,
+     1,
+     1,
+     2,
+     1,
+     1,
+     1,
+     3,
+     1,
+     3,
+     1,
+     3,
+     1,
+     4,
+     3
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1195_sfyin",
+    "slug": "grindstone",
+    "name": "Grindstone",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1196_msfyin",
+    "slug": "wooden_seal",
+    "name": "Wooden Seal",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1197_sfshu",
+    "slug": "vernacularism",
+    "name": "Vernacularism",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1198_msfshu",
+    "slug": "novel_scroll",
+    "name": "Novel Scroll",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1201_sfzhi",
+    "slug": "inkwave",
+    "name": "Inkwave",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1202_msfzhi",
+    "slug": "wooden_paperweight",
+    "name": "Wooden Paperweight",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false,
+  "source": "cn"
+ },
+ "devices": [],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [
+   0,
+   1,
+   2,
+   3,
+   4
+  ],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "DC-1",
+  "geometryHash": "43f9220069afa6d1d364bef96727440a404a71c94fa234f4eadd9f79a611b95d",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      10,
+      2
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      0,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "1": {
+    "points": [
+     [
+      10,
+      6
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      0,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "2": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      0,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "3": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      0,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "4": {
+    "points": [
+     [
+      10,
+      2
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      0,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1201_sfzhi": {
+   "key": "enemy_1201_sfzhi",
+   "prefabKey": "enemy_1201_sfzhi",
+   "name": "Inkwave",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 6000,
+    "atk": 400,
+    "def": 400,
+    "res": 30,
+    "moveSpeed": 0.8,
+    "bat": 2.2,
+    "aspd": 100,
+    "rangeRadius": 2,
+    "rawRangeRadius": 2,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Spawns 15 <Wooden Paperweights> when defeated",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "DeadSpawn.cnt": 15
+    },
+    "bbStr": {
+     "DeadSpawn.enemy_key": "enemy_1202_msfzhi"
+    },
+    "groups": {
+     "DeadSpawn": [
+      "cnt",
+      "enemy_key"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "animated"
+   ]
+  },
+  "enemy_1202_msfzhi": {
+   "key": "enemy_1202_msfzhi",
+   "prefabKey": "enemy_1202_msfzhi",
+   "name": "Wooden Paperweight",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "NONE",
+   "stats": {
+    "maxHp": 3,
+    "atk": 0,
+    "def": 0,
+    "res": 0,
+    "moveSpeed": 0.9,
+    "bat": 1,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "none",
+    "dmgTypes": [
+     "none"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Cannot be blocked.",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Must be damaged 3 times to defeat",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "animated"
+   ]
+  },
+  "enemy_1195_sfyin": {
+   "key": "enemy_1195_sfyin",
+   "prefabKey": "enemy_1195_sfyin",
+   "name": "Grindstone",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2000,
+    "atk": 310,
+    "def": 0,
+    "res": 20,
+    "moveSpeed": 1.5,
+    "bat": 1.5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Spawns 2 <Wooden Seals> when defeated",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "DeadSpawn.cnt": 2
+    },
+    "bbStr": {
+     "DeadSpawn.enemy_key": "enemy_1196_msfyin"
+    },
+    "groups": {
+     "DeadSpawn": [
+      "cnt",
+      "enemy_key"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "animated"
+   ]
+  },
+  "enemy_1196_msfyin": {
+   "key": "enemy_1196_msfyin",
+   "prefabKey": "enemy_1196_msfyin",
+   "name": "Wooden Seal",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "NONE",
+   "stats": {
+    "maxHp": 2,
+    "atk": 0,
+    "def": 0,
+    "res": 0,
+    "moveSpeed": 0.8,
+    "bat": 1,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "none",
+    "dmgTypes": [
+     "none"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Cannot be blocked.",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Must be damaged 2 times to defeat",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "animated"
+   ]
+  },
+  "enemy_1197_sfshu": {
+   "key": "enemy_1197_sfshu",
+   "prefabKey": "enemy_1197_sfshu",
+   "name": "Vernacularism",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2500,
+    "atk": 320,
+    "def": 60,
+    "res": 0,
+    "moveSpeed": 1.4,
+    "bat": 1.4,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Spawns 3 <Novel Scrolls> when defeated",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "DeadSpawn.cnt": 3
+    },
+    "bbStr": {
+     "DeadSpawn.enemy_key": "enemy_1198_msfshu"
+    },
+    "groups": {
+     "DeadSpawn": [
+      "cnt",
+      "enemy_key"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "animated"
+   ]
+  },
+  "enemy_1198_msfshu": {
+   "key": "enemy_1198_msfshu",
+   "prefabKey": "enemy_1198_msfshu",
+   "name": "Novel Scroll",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "NONE",
+   "stats": {
+    "maxHp": 3,
+    "atk": 0,
+    "def": 0,
+    "res": 0,
+    "moveSpeed": 0.9,
+    "bat": 1,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "none",
+    "dmgTypes": [
+     "none"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Cannot be blocked.",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Must be damaged 3 times to defeat",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "animated"
+   ]
+  }
+ }
+}

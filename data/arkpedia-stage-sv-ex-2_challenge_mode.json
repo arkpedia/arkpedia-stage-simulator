@@ -1,0 +1,2384 @@
+{
+ "code": "SV-EX-2",
+ "name": "Fail-Fast",
+ "description": "Condition:\nNatural DP regeneration rate is decreased.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 9,
+  "initial_dp": 9,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "sv-ex-2",
+  "rows": 8,
+  "cols": 12,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    2,
+    0,
+    3,
+    3,
+    3,
+    0,
+    2,
+    2,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    2,
+    4,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    3,
+    2,
+    2,
+    2,
+    3,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    3,
+    2,
+    2,
+    2,
+    3,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    5,
+    4,
+    4,
+    4,
+    2,
+    2,
+    2,
+    4,
+    4,
+    2,
+    1,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 9
+    },
+    "end": {
+     "row": 6,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 4
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 9
+    },
+    "end": {
+     "row": 6,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 4
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 10
+    },
+    "end": {
+     "row": 6,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 9
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 10
+    },
+    "end": {
+     "row": 6,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 9
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 2
+    },
+    "end": {
+     "row": 6,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 4
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 2
+    },
+    "end": {
+     "row": 6,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 4
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 2
+    },
+    "end": {
+     "row": 6,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 4
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": null,
+    "placeholder": true,
+    "start": null,
+    "end": null,
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 9
+    },
+    "end": {
+     "row": 6,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 4
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 4
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 9
+    },
+    "end": {
+     "row": 6,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 4
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 6
+     }
+    ]
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 6,
+     "col": 10
+    },
+    "end": {
+     "row": 6,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 9
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 1,
+     "col": 2
+    },
+    "end": {
+     "row": 6,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 3
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 1,
+     "col": 2
+    },
+    "end": {
+     "row": 6,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 3
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 6,
+     "col": 10
+    },
+    "end": {
+     "row": 6,
+     "col": 0
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 9
+    },
+    "end": {
+     "row": 6,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     }
+    ],
+    "waits": []
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 195,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Nourished Runner",
+      "enemy_id": "enemy_1147_dshond_2",
+      "count": 1,
+      "time": 3,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Nourished Runner",
+      "enemy_id": "enemy_1147_dshond_2",
+      "count": 3,
+      "time": 13,
+      "interval": 11,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Nourished Slider",
+      "enemy_id": "enemy_1148_dssbr_2",
+      "count": 1,
+      "time": 25,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Nourished Slider",
+      "enemy_id": "enemy_1148_dssbr_2",
+      "count": 2,
+      "time": 35,
+      "interval": 5,
+      "route": 3,
+      "fragment": 0
+     },
+     {
+      "enemy": "Nourished Slider",
+      "enemy_id": "enemy_1148_dssbr_2",
+      "count": 2,
+      "time": 46,
+      "interval": 12,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Nourished Slider",
+      "enemy_id": "enemy_1148_dssbr_2",
+      "count": 1,
+      "time": 58,
+      "route": 4,
+      "fragment": 0
+     },
+     {
+      "enemy": "Nourished Slider",
+      "enemy_id": "enemy_1148_dssbr_2",
+      "count": 1,
+      "time": 59,
+      "route": 5,
+      "fragment": 0
+     },
+     {
+      "enemy": "Nourished Slider",
+      "enemy_id": "enemy_1148_dssbr_2",
+      "count": 2,
+      "time": 73,
+      "interval": 3,
+      "route": 6,
+      "fragment": 0
+     },
+     {
+      "enemy": "Nourished Runner",
+      "enemy_id": "enemy_1147_dshond_2",
+      "count": 3,
+      "time": 90,
+      "interval": 1.5,
+      "route": 6,
+      "fragment": 0
+     },
+     {
+      "enemy": "Nourished Spitter",
+      "enemy_id": "enemy_1149_dsbow_2",
+      "count": 1,
+      "time": 111,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Nourished Spitter",
+      "enemy_id": "enemy_1149_dsbow_2",
+      "count": 1,
+      "time": 118,
+      "route": 3,
+      "fragment": 1
+     },
+     {
+      "enemy": "Nourished Spitter",
+      "enemy_id": "enemy_1149_dsbow_2",
+      "count": 1,
+      "time": 111,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Nourished Spitter",
+      "enemy_id": "enemy_1149_dsbow_2",
+      "count": 1,
+      "time": 112,
+      "route": 8,
+      "fragment": 1
+     },
+     {
+      "enemy": "Nourished Spitter",
+      "enemy_id": "enemy_1149_dsbow_2",
+      "count": 1,
+      "time": 113,
+      "route": 9,
+      "fragment": 1
+     },
+     {
+      "enemy": "Nourished Drifter",
+      "enemy_id": "enemy_1150_dsjely_2",
+      "count": 1,
+      "time": 136,
+      "route": 10,
+      "fragment": 2
+     },
+     {
+      "enemy": "Nourished Drifter",
+      "enemy_id": "enemy_1150_dsjely_2",
+      "count": 1,
+      "time": 136,
+      "route": 11,
+      "fragment": 2
+     },
+     {
+      "enemy": "Nourished Drifter",
+      "enemy_id": "enemy_1150_dsjely_2",
+      "count": 2,
+      "time": 148,
+      "interval": 21,
+      "route": 12,
+      "fragment": 2
+     },
+     {
+      "enemy": "Nourished Drifter",
+      "enemy_id": "enemy_1150_dsjely_2",
+      "count": 1,
+      "time": 148,
+      "route": 13,
+      "fragment": 2
+     },
+     {
+      "enemy": "Nourished Slider",
+      "enemy_id": "enemy_1148_dssbr_2",
+      "count": 4,
+      "time": 143,
+      "interval": 13,
+      "route": 14,
+      "fragment": 2
+     },
+     {
+      "enemy": "Nourished Slider",
+      "enemy_id": "enemy_1148_dssbr_2",
+      "count": 3,
+      "time": 143,
+      "interval": 13,
+      "route": 6,
+      "fragment": 2
+     },
+     {
+      "enemy": "Nourished Runner",
+      "enemy_id": "enemy_1147_dshond_2",
+      "count": 3,
+      "time": 173,
+      "interval": 1,
+      "route": 3,
+      "fragment": 2
+     },
+     {
+      "enemy": "Nourished Runner",
+      "enemy_id": "enemy_1147_dshond_2",
+      "count": 3,
+      "time": 193,
+      "interval": 1,
+      "route": 6,
+      "fragment": 2
+     },
+     {
+      "enemy": "Nourished Runner",
+      "enemy_id": "enemy_1147_dshond_2",
+      "count": 3,
+      "time": 183,
+      "interval": 1,
+      "route": 1,
+      "fragment": 2
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 2,
+    "routes": [
+     4,
+     5,
+     6,
+     6,
+     11,
+     12,
+     6,
+     6
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 9,
+    "routes": [
+     0,
+     1,
+     1,
+     0,
+     8,
+     9,
+     14,
+     1
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 6,
+    "col": 10,
+    "routes": [
+     2,
+     3,
+     2,
+     3,
+     10,
+     13,
+     3
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 6,
+    "col": 0,
+    "routes": [
+     0,
+     1,
+     2,
+     3,
+     1,
+     4,
+     5,
+     6,
+     6,
+     2,
+     3,
+     0,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     6,
+     3,
+     6,
+     1
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1147_dshond_2",
+    "slug": "nourished_runner",
+    "name": "Nourished Runner",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1148_dssbr_2",
+    "slug": "nourished_slider",
+    "name": "Nourished Slider",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1149_dsbow_2",
+    "slug": "nourished_spitter",
+    "name": "Nourished Spitter",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1150_dsjely_2",
+    "slug": "nourished_drifter",
+    "name": "Nourished Drifter",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "devices": [],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "SV-EX-2",
+  "geometryHash": "94796d984b442c9c6947944bed9ae566dda21dfda1d485bcd8349b5d218823ad",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      9,
+      1
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      0,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7.414213562373095,
+     8.82842712474619,
+     9.82842712474619,
+     10.82842712474619,
+     11.82842712474619,
+     12.82842712474619
+    ],
+    "length": 12.82842712474619,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 2,
+      "seconds": 5,
+      "point": [
+       9,
+       3
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      9,
+      1
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      0,
+      6
+     ]
+    ]
+   },
+   "1": {
+    "points": [
+     [
+      9,
+      1
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      0,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7.414213562373095,
+     8.82842712474619,
+     9.82842712474619,
+     10.82842712474619,
+     11.82842712474619,
+     12.82842712474619
+    ],
+    "length": 12.82842712474619,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      9,
+      1
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      0,
+      6
+     ]
+    ]
+   },
+   "2": {
+    "points": [
+     [
+      10,
+      6
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      7,
+      6
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      0,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 5,
+      "point": [
+       9,
+       6
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      10,
+      6
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      0,
+      6
+     ]
+    ]
+   },
+   "3": {
+    "points": [
+     [
+      10,
+      6
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      7,
+      6
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      0,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      10,
+      6
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      0,
+      6
+     ]
+    ]
+   },
+   "4": {
+    "points": [
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      0,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "length": 11,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 2,
+      "seconds": 5,
+      "point": [
+       2,
+       3
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      0,
+      6
+     ]
+    ]
+   },
+   "5": {
+    "points": [
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      0,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "length": 11,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 5,
+      "point": [
+       2,
+       2
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      0,
+      6
+     ]
+    ]
+   },
+   "6": {
+    "points": [
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      0,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "length": 11,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      0,
+      6
+     ]
+    ]
+   },
+   "8": {
+    "points": [
+     [
+      9,
+      1
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      0,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2.414213562373095,
+     3.414213562373095,
+     4.414213562373095,
+     5.414213562373095,
+     6.82842712474619,
+     8.242640687119286,
+     9.242640687119286,
+     10.242640687119286,
+     11.242640687119286,
+     12.242640687119286
+    ],
+    "length": 12.242640687119286,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 2.414213562373095,
+      "seconds": 4,
+      "point": [
+       8,
+       3
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      9,
+      1
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      0,
+      6
+     ]
+    ]
+   },
+   "9": {
+    "points": [
+     [
+      9,
+      1
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      0,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2.414213562373095,
+     3.414213562373095,
+     4.414213562373095,
+     5.414213562373095,
+     6.82842712474619,
+     8.242640687119286,
+     9.242640687119286,
+     10.242640687119286,
+     11.242640687119286,
+     12.242640687119286
+    ],
+    "length": 12.242640687119286,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 6,
+      "point": [
+       9,
+       2
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      9,
+      1
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      0,
+      6
+     ]
+    ]
+   },
+   "10": {
+    "points": [
+     [
+      10,
+      6
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      0,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": true,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 5,
+      "point": [
+       9,
+       6
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      10,
+      6
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      0,
+      6
+     ]
+    ]
+   },
+   "11": {
+    "points": [
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      0,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     4.60555127546399,
+     7.433978400210179,
+     10.43397840021018
+    ],
+    "length": 10.43397840021018,
+    "breaks": [],
+    "flying": true,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 5,
+      "point": [
+       2,
+       2
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      0,
+      6
+     ]
+    ]
+   },
+   "12": {
+    "points": [
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      0,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     4.60555127546399,
+     7.433978400210179,
+     10.43397840021018
+    ],
+    "length": 10.43397840021018,
+    "breaks": [],
+    "flying": true,
+    "holds": [],
+    "nodes": [
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      0,
+      6
+     ]
+    ]
+   },
+   "13": {
+    "points": [
+     [
+      10,
+      6
+     ],
+     [
+      0,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": true,
+    "holds": [],
+    "nodes": [
+     [
+      10,
+      6
+     ],
+     [
+      0,
+      6
+     ]
+    ]
+   },
+   "14": {
+    "points": [
+     [
+      9,
+      1
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      0,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2.414213562373095,
+     3.414213562373095,
+     4.414213562373095,
+     5.82842712474619,
+     7.242640687119285,
+     8.242640687119284,
+     9.242640687119284,
+     10.242640687119284,
+     11.242640687119284,
+     12.242640687119284
+    ],
+    "length": 12.242640687119284,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      9,
+      1
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      0,
+      6
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1147_dshond_2": {
+   "key": "enemy_1147_dshond_2",
+   "prefabKey": "enemy_1147_dshond_2",
+   "name": "Nourished Runner",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 4000,
+    "atk": 340,
+    "def": 0,
+    "res": 20,
+    "moveSpeed": 1.9,
+    "bat": 1.3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "seamonster"
+   ]
+  },
+  "enemy_1148_dssbr_2": {
+   "key": "enemy_1148_dssbr_2",
+   "prefabKey": "enemy_1148_dssbr_2",
+   "name": "Nourished Slider",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3600,
+    "atk": 360,
+    "def": 150,
+    "res": 10,
+    "moveSpeed": 1.1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": true,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Attacks inflict additional <$ba.dt.neural>Nervous Impairment</>",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "epdamage.attack@ep_damage_ratio": 0.15
+    },
+    "bbStr": {},
+    "groups": {
+     "epdamage": [
+      "attack@ep_damage_ratio"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "seamonster"
+   ]
+  },
+  "enemy_1149_dsbow_2": {
+   "key": "enemy_1149_dsbow_2",
+   "prefabKey": "enemy_1149_dsbow_2",
+   "name": "Nourished Spitter",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 5000,
+    "atk": 320,
+    "def": 200,
+    "res": 20,
+    "moveSpeed": 0.75,
+    "bat": 3,
+    "aspd": 100,
+    "rangeRadius": 2.5,
+    "rawRangeRadius": 2.5,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": true,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "seamonster"
+   ]
+  },
+  "enemy_1150_dsjely_2": {
+   "key": "enemy_1150_dsjely_2",
+   "prefabKey": "enemy_1150_dsjely_2",
+   "name": "Nourished Drifter",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 4000,
+    "atk": 250,
+    "def": 250,
+    "res": 20,
+    "moveSpeed": 0.75,
+    "bat": 3,
+    "aspd": 100,
+    "rangeRadius": 2.5,
+    "rawRangeRadius": 2.5,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "FLY",
+    "immunities": {
+     "stun": false,
+     "silence": true,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Flying unit.",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Attacks inflict additional <$ba.dt.neural>Nervous Impairment</>",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "epdamage.attack@ep_damage_ratio": 0.2
+    },
+    "bbStr": {},
+    "groups": {
+     "epdamage": [
+      "attack@ep_damage_ratio"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "seamonster"
+   ]
+  }
+ }
+}

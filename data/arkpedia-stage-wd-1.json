@@ -1,0 +1,1218 @@
+{
+ "code": "WD-1",
+ "name": "The Siege of Redhorn",
+ "description": "The arrival of a squad from Columbia throws an unremarkable Sargon village into turmoil.",
+ "battle": {
+  "max_life": 5,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "wd-1",
+  "rows": 7,
+  "cols": 11,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    1,
+    1,
+    1,
+    2,
+    3
+   ],
+   [
+    3,
+    2,
+    1,
+    1,
+    1,
+    4,
+    4,
+    4,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    5
+   ],
+   [
+    0,
+    1,
+    1,
+    0,
+    4,
+    4,
+    1,
+    1,
+    1,
+    1,
+    5
+   ],
+   [
+    3,
+    2,
+    1,
+    1,
+    1,
+    1,
+    1,
+    4,
+    4,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 10
+    },
+    "end": {
+     "row": 3,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": null,
+    "placeholder": true,
+    "start": null,
+    "end": null,
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 0
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 7
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 10
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 7
+      }
+     }
+    ],
+    "waits": []
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 194,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Infantry",
+      "enemy_id": "enemy_1046_agent",
+      "count": 2,
+      "time": 3,
+      "interval": 15,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Infantry",
+      "enemy_id": "enemy_1046_agent",
+      "count": 2,
+      "time": 24,
+      "interval": 6,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Tactical Hound",
+      "enemy_id": "enemy_1140_merhd",
+      "count": 1,
+      "time": 13,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Tactical Hound",
+      "enemy_id": "enemy_1140_merhd",
+      "count": 1,
+      "time": 45,
+      "route": 3,
+      "fragment": 0
+     },
+     {
+      "enemy": "Tactical Hound",
+      "enemy_id": "enemy_1140_merhd",
+      "count": 3,
+      "time": 55,
+      "interval": 17,
+      "route": 3,
+      "fragment": 1
+     },
+     {
+      "enemy": "Tactical Hound",
+      "enemy_id": "enemy_1140_merhd",
+      "count": 3,
+      "time": 62,
+      "interval": 15,
+      "route": 3,
+      "fragment": 1
+     },
+     {
+      "enemy": "Tactical Hound",
+      "enemy_id": "enemy_1140_merhd",
+      "count": 2,
+      "time": 73,
+      "interval": 20,
+      "route": 4,
+      "fragment": 1
+     },
+     {
+      "enemy": "Infantry",
+      "enemy_id": "enemy_1046_agent",
+      "count": 2,
+      "time": 93,
+      "interval": 1,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "Infantry",
+      "enemy_id": "enemy_1046_agent",
+      "count": 2,
+      "time": 103,
+      "interval": 8,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "Infantry",
+      "enemy_id": "enemy_1046_agent",
+      "count": 2,
+      "time": 121,
+      "interval": 1,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "Infantry",
+      "enemy_id": "enemy_1046_agent",
+      "count": 2,
+      "time": 138,
+      "interval": 1,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "Infantry",
+      "enemy_id": "enemy_1046_agent",
+      "count": 1,
+      "time": 148,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "Tactical Hound",
+      "enemy_id": "enemy_1140_merhd",
+      "count": 4,
+      "time": 113,
+      "interval": 15,
+      "route": 4,
+      "fragment": 2
+     },
+     {
+      "enemy": "Tactical Hound",
+      "enemy_id": "enemy_1140_merhd",
+      "count": 4,
+      "time": 120,
+      "interval": 13,
+      "route": 4,
+      "fragment": 2
+     },
+     {
+      "enemy": "Tactical Hound",
+      "enemy_id": "enemy_1140_merhd",
+      "count": 4,
+      "time": 123,
+      "interval": 8,
+      "route": 3,
+      "fragment": 2
+     },
+     {
+      "enemy": "Infantry",
+      "enemy_id": "enemy_1046_agent",
+      "count": 2,
+      "time": 162,
+      "interval": 1,
+      "route": 5,
+      "fragment": 3
+     },
+     {
+      "enemy": "Infantry",
+      "enemy_id": "enemy_1046_agent",
+      "count": 2,
+      "time": 174,
+      "interval": 1,
+      "route": 5,
+      "fragment": 3
+     },
+     {
+      "enemy": "Infantry",
+      "enemy_id": "enemy_1046_agent",
+      "count": 2,
+      "time": 167,
+      "interval": 1,
+      "route": 0,
+      "fragment": 3
+     },
+     {
+      "enemy": "Infantry",
+      "enemy_id": "enemy_1046_agent",
+      "count": 2,
+      "time": 179,
+      "interval": 1,
+      "route": 0,
+      "fragment": 3
+     },
+     {
+      "enemy": "Tactical Hound",
+      "enemy_id": "enemy_1140_merhd",
+      "count": 3,
+      "time": 169,
+      "interval": 10,
+      "route": 3,
+      "fragment": 3
+     },
+     {
+      "enemy": "Tactical Hound",
+      "enemy_id": "enemy_1140_merhd",
+      "count": 3,
+      "time": 174,
+      "interval": 10,
+      "route": 4,
+      "fragment": 3
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 10,
+    "routes": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     5,
+     5,
+     0,
+     0
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 2,
+    "col": 0,
+    "routes": [
+     2,
+     3,
+     3,
+     3,
+     3,
+     3
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 5,
+    "col": 0,
+    "routes": [
+     4,
+     4,
+     4,
+     4
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 3,
+    "col": 10,
+    "routes": [
+     0,
+     0,
+     2,
+     3,
+     3,
+     3,
+     0,
+     0,
+     0,
+     0,
+     0,
+     3,
+     0,
+     0,
+     3
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 4,
+    "col": 10,
+    "routes": [
+     4,
+     4,
+     4,
+     5,
+     5,
+     4
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1046_agent",
+    "slug": "infantry",
+    "name": "Infantry",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1140_merhd",
+    "slug": "tactical_hound",
+    "name": "Tactical Hound",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "devices": [],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "WD-1",
+  "geometryHash": "f34799247ff0ea36d7b5d629f1e9b349a547ca3110aea763e5d0e3427a72d4ea",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      10,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      10,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14
+    ],
+    "length": 14,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      10,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      10,
+      3
+     ]
+    ]
+   },
+   "2": {
+    "points": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      10,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4.414213562373095,
+     5.414213562373095,
+     6.414213562373095,
+     7.414213562373095,
+     8.414213562373096,
+     9.414213562373096,
+     10.414213562373096
+    ],
+    "length": 10.414213562373096,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 10,
+      "point": [
+       1,
+       2
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      10,
+      3
+     ]
+    ]
+   },
+   "3": {
+    "points": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      10,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4.414213562373095,
+     5.414213562373095,
+     6.414213562373095,
+     7.414213562373095,
+     8.414213562373096,
+     9.414213562373096,
+     10.414213562373096
+    ],
+    "length": 10.414213562373096,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      2
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      10,
+      3
+     ]
+    ]
+   },
+   "4": {
+    "points": [
+     [
+      0,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "length": 11,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      5
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      10,
+      4
+     ]
+    ]
+   },
+   "5": {
+    "points": [
+     [
+      10,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8.414213562373096,
+     9.414213562373096,
+     10.414213562373096,
+     11.414213562373096,
+     12.414213562373096,
+     13.414213562373096,
+     14.414213562373096,
+     15.414213562373096,
+     16.414213562373096,
+     17.414213562373096,
+     18.414213562373096,
+     19.414213562373096,
+     20.414213562373096
+    ],
+    "length": 20.414213562373096,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      10,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      10,
+      4
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1046_agent": {
+   "key": "enemy_1046_agent",
+   "prefabKey": "enemy_1046_agent",
+   "name": "Infantry",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2500,
+    "atk": 280,
+    "def": 85,
+    "res": 40,
+    "moveSpeed": 1.1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1140_merhd": {
+   "key": "enemy_1140_merhd",
+   "prefabKey": "enemy_1140_merhd",
+   "name": "Tactical Hound",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2200,
+    "atk": 310,
+    "def": 0,
+    "res": 20,
+    "moveSpeed": 1.9,
+    "bat": 1.5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  }
+ }
+}
