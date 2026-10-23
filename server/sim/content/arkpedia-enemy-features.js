@@ -20,6 +20,20 @@ const ABILITIES = Object.freeze({
       b.addBuff(e, { key: 'ab:swim', duration: 1.2, refresh: 'replace', visible: true, mods: { atkPct: atk }, flags: { stealth: true } });
     },
   }),
+  bmbmot: ({ scale, epRatio }) => ({
+    death(c, b, e) {
+      for (const u of areaAlliesInTiles(b, e, e.tileR, e.tileC, 'box', 1)) {
+        if (!u.alive) continue;
+        hurt(b, e, u, e.s.atk * scale, 'phys');
+        if (epRatio > 0) elem(b, e, u, 'erosion', e.s.atk * epRatio);
+      }
+    },
+  }),
+  bleed: ({ ratio }) => ({ iv: 1, tick(b, e) { if (ratio > 0) b.dealDamage(null, e, periodicDamage(e.s.maxHp * ratio)); } }),
+  almot: ({ life }) => ({
+    spawn(b, e) { e.counted = false; },
+    death(c, b, e) { if (life) b.life = Math.max(0, b.life + life); },
+  }),
   crash: ({ scale, block }) => ({
     spawn(b, e) { e.blockWeight = Math.max(e.blockWeight ?? 1, block); },
     tick(b, e) {

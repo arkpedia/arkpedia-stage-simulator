@@ -6136,3 +6136,5 @@ Implemented the **Custom Floating Platform** token (`trap_040_canoe`): deployabl
 Implemented Dockworker vehicle crash/DeathRattle features and platform-hosted DH-6 as testOnly. Catalogue **571** = 342 public + 229 testOnly; 570 files.
 
 Implemented permanent **Deep Water Zone** damage/debuff and built **DH-7** with the Custom Floating Platform. Stage glyphs now cover every tile type in the legend. Catalogue **572** = 342 public + 230 testOnly; 571 files.
+
+Implemented suicide-boat corrosion death blasts and Dockworker life-loss/taunt enemies; built DH-8 as testOnly. Catalogue **573** = 342 public + 231 testOnly; 572 files.
