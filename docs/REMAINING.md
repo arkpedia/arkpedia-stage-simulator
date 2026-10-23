@@ -5,9 +5,9 @@ Snapshot: 2026-10-22. Regenerate the numbers with `npm run coverage:arkpedia-sta
 | Area | Done | Total |
 |---|---|---|
 | Operators / operator forms | 431 | 431 |
-| Enemies supported | 421 | 1,552 |
-| Main source stages with committed files | 341 | 564 |
-| Public catalogue (includes embedded 0-1) | 342 | 342 built |
+| Enemies supported | 425 | 1,552 |
+| Main source stages with committed files | 343 | 564 |
+| Public catalogue (includes embedded 0-1) | 344 | 344 built |
 
 The public catalogue is the committed `data/arkpedia-stage-*.json` set plus the embedded 0-1 stage; `testOnly` remains the gate for future stages.
 
@@ -47,7 +47,7 @@ The unsupported-enemy group is ranked by stage count. The current top families:
 
 ## Verification
 
-- Full repository suite: 22,964 tests, 22,953 passed, 0 failed, 11 skipped.
+- Full repository suite: 22,966 tests, 22,955 passed, 0 failed, 11 skipped.
 - `npm run check:arkpedia-enemies` and `npm run check:arkpedia-stages` are the registry gates.
 - GitHub-hosted matrix only; `test/arkpedia-ci-runners.test.js` guards the runner labels.
 
