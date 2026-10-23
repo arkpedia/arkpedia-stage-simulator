@@ -850,6 +850,16 @@ export const ENEMY_FEATURES = Object.freeze({
     ability: { kind: 'splashCorrosion', params: r => ({ ratio: r.talents.bb['EpDamage.attack@ep_damage_ratio'] }) },
     note: 'four-neighbour splash plus erosion equal to ATK × ep_damage_ratio', explains: /four adjacent tiles/, nativeClaim: () => ({ active: 1 }) },
   'talent:EpDamage': { covers: r => sig(r, 'EpDamage', ['attack@ep_damage_ratio']), note: 'splash erosion is attached by the handbook-line feature' },
+  'ability:Immune to Erosion. While in water, gains increased ATK and <$ba.invisible>Invisibility</>': {
+    covers: r => sig(r, 'Swim', ['atk']) && r.talents.bb['Swim.atk'] >= 0,
+    ability: { kind: 'swim', params: r => ({ atk: r.talents.bb['Swim.atk'] ?? 0 }) },
+    note: 'immune to Erosion; while flooded, ATK +Swim.atk and Invisible', explains: /^Immune to Erosion\. While in water/ },
+  'talent:Swim': { covers: r => sig(r, 'Swim', ['atk']), note: 'swim behaviour is attached by the handbook-line feature' },
+  'ability:Attacks deal damage to the target and all allied units in the target\'s four adjacent tiles, additionally inflicting <$ba.dt.erosion>Corrosion Damage</>': {
+    covers: r => sig(r, 'EpDamage', ['attack@ep_damage_ratio']) && r.talents.bb['EpDamage.attack@ep_damage_ratio'] > 0,
+    ability: { kind: 'splashCorrosion', params: r => ({ ratio: r.talents.bb['EpDamage.attack@ep_damage_ratio'] }) },
+    note: 'four-neighbour splash plus erosion equal to ATK × ep_damage_ratio', explains: /four adjacent tiles/ },
+  'talent:EpDamage': { covers: r => sig(r, 'EpDamage', ['attack@ep_damage_ratio']), note: 'splash erosion is attached by the handbook-line feature' },
   'ability:Attacks 2 targets simultaneously': { covers: r => r.applyWay === 'RANGED' && r.stats.rangeRadius > 0, trait: { maxTargets: 2 }, note: 'two ranged targets per attack' },
 });
 
