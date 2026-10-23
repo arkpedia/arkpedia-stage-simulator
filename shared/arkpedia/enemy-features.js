@@ -240,6 +240,13 @@ export const ENEMY_FEATURES = Object.freeze({
     ability: { kind: 'coldAttack', params: r => ({ every: 3, duration: r.skills[0].bb.freeze }) },
     note: 'every third attack applies Cold', nativeClaim: () => ({ wrappers: 1 }),
     explains: /^After two attacks, the next attack applies the <\$ba\.cold>Cold<\/> effect$/ },
+  'talent:Drown': { covers: r => sig(r, 'Drown', ['damage']) && r.abilities.some(a => /^Quickly loses HP while under the effects of 'Erosion'$/.test(a.text)),
+    ability: { kind: 'drown', params: r => ({ damage: r.talents.bb['Drown.damage'] }) },
+    note: 'takes Drown.damage True damage per second while Erosion is active', explains: /^Quickly loses HP while under the effects of 'Erosion'$/ },
+  'skill:stuncombat': { covers: r => r.skills.some(s => s.prefabKey === 'stuncombat' && s.spCost === 3 && s.bb.stun > 0),
+    ability: { kind: 'stunAttack', params: r => ({ every: 3, duration: r.skills[0].bb.stun }) },
+    note: 'every third attack stuns the target for the skill duration', nativeClaim: () => ({ wrappers: 1 }),
+    explains: /^<\$ba\.stun>Stuns<\/> ?(?:friendly|allied) units? after several attacks$/ },
   // Punisher: every third attack stuns allies in the target's area; on death it is reborn as its reviewed child.
   'skill:StunAttack': { covers: (r, nat) => isPunisherStunAttack(r, nat),
     ability: { kind: 'stunAttack', params: r => ({ every: 3, duration: r.skills[0].bb.stun }) },

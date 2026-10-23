@@ -1,0 +1,2017 @@
+{
+  "code": "DH-3",
+  "name": "Timely Assistance",
+  "description": "To Ch'en, there's never anything more important than helping others. \n<High Tide>Unable to deploy on flooded tiles. Allied units and enemies in the water will suffer from 'Erosion': Allied units have reduced ASPD, continually receive Corrosion and receive additional Corrosion when attacked; Enemies have reduced ASPD and Movement Speed, and continually lose HP",
+  "battle": {
+    "max_life": 3,
+    "unit_limit": 8,
+    "initial_dp": 10,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1
+  },
+  "mapTags": [],
+  "mapTagSource": null,
+  "geometry": {
+    "slug": "dh-3",
+    "rows": 7,
+    "cols": 10,
+    "tileLegend": [
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_floor",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      },
+      {
+        "key": "tile_start",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      }
+    ],
+    "tileGrid": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        2,
+        2,
+        2,
+        3,
+        3,
+        3,
+        3,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        4,
+        4,
+        3,
+        4,
+        4,
+        3,
+        2,
+        5
+      ],
+      [
+        1,
+        2,
+        3,
+        4,
+        3,
+        4,
+        4,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        3,
+        4,
+        3,
+        3,
+        3,
+        3,
+        2,
+        5
+      ],
+      [
+        0,
+        0,
+        2,
+        2,
+        2,
+        2,
+        2,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        5,
+        0,
+        5,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "routes": [
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 5
+        },
+        "end": {
+          "row": 1,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 4
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 3
+        },
+        "end": {
+          "row": 1,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 4
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 4,
+          "col": 9
+        },
+        "end": {
+          "row": 3,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 2
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": null,
+        "placeholder": true,
+        "start": null,
+        "end": null,
+        "checkpoints": [],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 5
+        },
+        "end": {
+          "row": 1,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 4
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 5
+        },
+        "end": {
+          "row": 1,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 4
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 0
+        },
+        "end": {
+          "row": 2,
+          "col": 9
+        },
+        "checkpoints": [],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 9
+        },
+        "end": {
+          "row": 1,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 6
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 5
+        },
+        "end": {
+          "row": 1,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 4
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 10
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 5
+        },
+        "end": {
+          "row": 1,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 4
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 11
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 3
+        },
+        "end": {
+          "row": 1,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 4
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 13
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 3
+        },
+        "end": {
+          "row": 1,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 4
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 14
+          }
+        ]
+      }
+    ],
+    "waves": [
+      {
+        "index": 0,
+        "duration": 217,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Delinquent",
+            "enemy_id": "enemy_1159_swfmob",
+            "count": 2,
+            "time": 3,
+            "interval": 15,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Delinquent",
+            "enemy_id": "enemy_1159_swfmob",
+            "count": 2,
+            "time": 8,
+            "interval": 15,
+            "route": 1,
+            "fragment": 0
+          },
+          {
+            "enemy": "Diver",
+            "enemy_id": "enemy_1158_divman",
+            "count": 2,
+            "time": 31,
+            "interval": 15,
+            "route": 2,
+            "fragment": 1
+          },
+          {
+            "enemy": "Delinquent",
+            "enemy_id": "enemy_1159_swfmob",
+            "count": 2,
+            "time": 32,
+            "interval": 20,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Delinquent",
+            "enemy_id": "enemy_1159_swfmob",
+            "count": 2,
+            "time": 37,
+            "interval": 20,
+            "route": 1,
+            "fragment": 1
+          },
+          {
+            "enemy": "Dockworker",
+            "enemy_id": "enemy_1160_hvyslr",
+            "count": 1,
+            "time": 70,
+            "route": 4,
+            "fragment": 2
+          },
+          {
+            "enemy": "Dockworker",
+            "enemy_id": "enemy_1160_hvyslr",
+            "count": 1,
+            "time": 97,
+            "route": 5,
+            "fragment": 2
+          },
+          {
+            "enemy": "Diver",
+            "enemy_id": "enemy_1158_divman",
+            "count": 1,
+            "time": 77,
+            "route": 2,
+            "fragment": 2
+          },
+          {
+            "enemy": "Diver",
+            "enemy_id": "enemy_1158_divman",
+            "count": 1,
+            "time": 87,
+            "route": 7,
+            "fragment": 2
+          },
+          {
+            "enemy": "Diver",
+            "enemy_id": "enemy_1158_divman",
+            "count": 1,
+            "time": 97,
+            "route": 2,
+            "fragment": 2
+          },
+          {
+            "enemy": "Diver",
+            "enemy_id": "enemy_1158_divman",
+            "count": 1,
+            "time": 107,
+            "route": 7,
+            "fragment": 2
+          },
+          {
+            "enemy": "Delinquent",
+            "enemy_id": "enemy_1159_swfmob",
+            "count": 3,
+            "time": 110,
+            "interval": 20,
+            "route": 0,
+            "fragment": 3
+          },
+          {
+            "enemy": "Delinquent",
+            "enemy_id": "enemy_1159_swfmob",
+            "count": 3,
+            "time": 115,
+            "interval": 20,
+            "route": 1,
+            "fragment": 3
+          },
+          {
+            "enemy": "Dockworker",
+            "enemy_id": "enemy_1160_hvyslr",
+            "count": 1,
+            "time": 163,
+            "route": 8,
+            "fragment": 4
+          },
+          {
+            "enemy": "Dockworker",
+            "enemy_id": "enemy_1160_hvyslr",
+            "count": 1,
+            "time": 163,
+            "route": 9,
+            "fragment": 4
+          },
+          {
+            "enemy": "Dockworker",
+            "enemy_id": "enemy_1160_hvyslr",
+            "count": 1,
+            "time": 163,
+            "route": 10,
+            "fragment": 4
+          },
+          {
+            "enemy": "Dockworker",
+            "enemy_id": "enemy_1160_hvyslr",
+            "count": 1,
+            "time": 163,
+            "route": 11,
+            "fragment": 4
+          },
+          {
+            "enemy": "Diver",
+            "enemy_id": "enemy_1158_divman",
+            "count": 3,
+            "time": 187,
+            "interval": 15,
+            "route": 2,
+            "fragment": 5
+          },
+          {
+            "enemy": "Diver",
+            "enemy_id": "enemy_1158_divman",
+            "count": 2,
+            "time": 187,
+            "interval": 15,
+            "route": 7,
+            "fragment": 5
+          }
+        ]
+      }
+    ],
+    "spawnTiles": [
+      {
+        "key": "tile_start",
+        "row": 2,
+        "col": 9,
+        "routes": [
+          7,
+          7,
+          7
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 4,
+        "col": 9,
+        "routes": [
+          2,
+          2,
+          2,
+          2
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 6,
+        "col": 3,
+        "routes": [
+          1,
+          1,
+          1,
+          10,
+          11
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 6,
+        "col": 5,
+        "routes": [
+          0,
+          0,
+          4,
+          5,
+          0,
+          8,
+          9
+        ]
+      }
+    ],
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 1,
+        "col": 0,
+        "routes": [
+          0,
+          1,
+          0,
+          1,
+          4,
+          5,
+          7,
+          7,
+          0,
+          1,
+          8,
+          9,
+          10,
+          11,
+          7
+        ]
+      },
+      {
+        "key": "tile_end",
+        "row": 3,
+        "col": 0,
+        "routes": [
+          2,
+          2,
+          2,
+          2
+        ]
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_1158_divman",
+        "slug": "diver",
+        "name": "Diver",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1159_swfmob",
+        "slug": "delinquent",
+        "name": "Delinquent",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1160_hvyslr",
+        "slug": "dockworker",
+        "name": "Dockworker",
+        "database_level": 0
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [],
+      "deployable_tokens": [
+        {
+          "unit": "Erosion-Resistant Coating Application Device",
+          "unit_id": "trap_046_oxygen",
+          "count": 0,
+          "level": 1,
+          "elite": 0,
+          "potential": 0,
+          "skill_index": 0,
+          "skill_level": 1
+        }
+      ]
+    },
+    "hasConditionalSpawns": false
+  },
+  "devices": [
+    {
+      "col": 0,
+      "description": null,
+      "hidden": true,
+      "key": "trap_042_tidectrl",
+      "kind": "device",
+      "name": "Tide Controller",
+      "row": 0
+    },
+    {
+      "col": 0,
+      "description": null,
+      "hidden": true,
+      "key": "trap_042_tidectrl",
+      "kind": "device",
+      "name": "Tide Controller",
+      "row": 0
+    }
+  ],
+  "tokens": [],
+  "pathing": {
+    "schemaVersion": 1,
+    "syntheticRoutes": [],
+    "producer": "Arkpedia stage browser / buildPlaybackPaths",
+    "stage": "DH-3",
+    "geometryHash": "7161fb5490c93427c741956b4cd2f2a673f8d0ac98cb648b4293a7c8126fa053",
+    "moveScale": 0.65,
+    "paths": {
+      "0": {
+        "points": [
+          [
+            5,
+            6
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2.414213562373095,
+          3.414213562373095,
+          4.414213562373095,
+          5.414213562373095,
+          6.414213562373095,
+          7.414213562373095,
+          8.414213562373096,
+          9.414213562373096
+        ],
+        "length": 9.414213562373096,
+        "breaks": [],
+        "flying": false,
+        "holds": [],
+        "nodes": [
+          [
+            5,
+            6
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      "1": {
+        "points": [
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "length": 10,
+        "breaks": [],
+        "flying": false,
+        "holds": [],
+        "nodes": [
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      "2": {
+        "points": [
+          [
+            9,
+            4
+          ],
+          [
+            8,
+            4
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4.414213562373095,
+          5.414213562373095,
+          6.414213562373095,
+          7.414213562373095,
+          8.414213562373096,
+          9.414213562373096,
+          10.414213562373096,
+          11.414213562373096
+        ],
+        "length": 11.414213562373096,
+        "breaks": [],
+        "flying": false,
+        "holds": [],
+        "nodes": [
+          [
+            9,
+            4
+          ],
+          [
+            8,
+            4
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            0,
+            3
+          ]
+        ]
+      },
+      "4": {
+        "points": [
+          [
+            5,
+            6
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2.414213562373095,
+          3.414213562373095,
+          4.414213562373095,
+          5.414213562373095,
+          6.414213562373095,
+          7.414213562373095,
+          8.414213562373096,
+          9.414213562373096
+        ],
+        "length": 9.414213562373096,
+        "breaks": [],
+        "flying": false,
+        "holds": [
+          {
+            "at": 1,
+            "seconds": 5,
+            "point": [
+              5,
+              5
+            ],
+            "tunnel": false
+          }
+        ],
+        "nodes": [
+          [
+            5,
+            6
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      "5": {
+        "points": [
+          [
+            5,
+            6
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2.414213562373095,
+          3.414213562373095,
+          4.414213562373095,
+          5.414213562373095,
+          6.414213562373095,
+          7.414213562373095,
+          8.414213562373096,
+          9.414213562373096
+        ],
+        "length": 9.414213562373096,
+        "breaks": [],
+        "flying": false,
+        "holds": [],
+        "nodes": [
+          [
+            5,
+            6
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      "7": {
+        "points": [
+          [
+            9,
+            2
+          ],
+          [
+            8,
+            2
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            6,
+            1
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "length": 10,
+        "breaks": [],
+        "flying": false,
+        "holds": [],
+        "nodes": [
+          [
+            9,
+            2
+          ],
+          [
+            8,
+            2
+          ],
+          [
+            6,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      "8": {
+        "points": [
+          [
+            5,
+            6
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2.414213562373095,
+          3.414213562373095,
+          4.414213562373095,
+          5.414213562373095,
+          6.414213562373095,
+          7.414213562373095,
+          8.414213562373096,
+          9.414213562373096
+        ],
+        "length": 9.414213562373096,
+        "breaks": [],
+        "flying": false,
+        "holds": [
+          {
+            "at": 1,
+            "seconds": 10,
+            "point": [
+              5,
+              5
+            ],
+            "tunnel": false
+          }
+        ],
+        "nodes": [
+          [
+            5,
+            6
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      "9": {
+        "points": [
+          [
+            5,
+            6
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4.414213562373095,
+          5.414213562373095,
+          6.414213562373095,
+          7.414213562373095,
+          8.414213562373096,
+          9.414213562373096,
+          10.414213562373096,
+          11.414213562373096
+        ],
+        "length": 11.414213562373096,
+        "breaks": [],
+        "flying": false,
+        "holds": [
+          {
+            "at": 2,
+            "seconds": 11,
+            "point": [
+              6,
+              5
+            ],
+            "tunnel": false
+          }
+        ],
+        "nodes": [
+          [
+            5,
+            6
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      "10": {
+        "points": [
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "length": 10,
+        "breaks": [],
+        "flying": false,
+        "holds": [
+          {
+            "at": 1,
+            "seconds": 13,
+            "point": [
+              3,
+              5
+            ],
+            "tunnel": false
+          }
+        ],
+        "nodes": [
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      "11": {
+        "points": [
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "length": 12,
+        "breaks": [],
+        "flying": false,
+        "holds": [
+          {
+            "at": 2,
+            "seconds": 14,
+            "point": [
+              2,
+              5
+            ],
+            "tunnel": false
+          }
+        ],
+        "nodes": [
+          [
+            3,
+            6
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      }
+    }
+  },
+  "art": null,
+  "gates": null,
+  "fixedSquad": [],
+  "enemies": {
+    "enemy_1159_swfmob": {
+      "key": "enemy_1159_swfmob",
+      "prefabKey": "enemy_1159_swfmob",
+      "name": "Delinquent",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 2800,
+        "atk": 280,
+        "def": 100,
+        "res": 0,
+        "moveSpeed": 1,
+        "bat": 2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Has a chance to dodge Physical attacks when not blocked",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "Evade.prob": 0.4
+        },
+        "bbStr": {},
+        "groups": {
+          "Evade": [
+            "prob"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1158_divman": {
+      "key": "enemy_1158_divman",
+      "prefabKey": "enemy_1158_divman",
+      "name": "Diver",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 3300,
+        "atk": 240,
+        "def": 150,
+        "res": 20,
+        "moveSpeed": 0.9,
+        "bat": 2.7,
+        "aspd": 100,
+        "rangeRadius": 1.9,
+        "rawRangeRadius": 1.9,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Immune to Erosion. While in water, gains increased ATK and <$ba.invisible>Invisibility</>",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "Swim.atk": 0.4
+        },
+        "bbStr": {},
+        "groups": {
+          "Swim": [
+            "atk"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1160_hvyslr": {
+      "key": "enemy_1160_hvyslr",
+      "prefabKey": "enemy_1160_hvyslr",
+      "name": "Dockworker",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 10000,
+        "atk": 800,
+        "def": 800,
+        "res": 20,
+        "moveSpeed": 0.7,
+        "bat": 3.5,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 4,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "<$ba.stun>Stuns</> allied units after several attacks",
+          "format": "SILENCE"
+        },
+        {
+          "text": "Quickly loses HP while under the effects of 'Erosion'",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "Drown.damage": 1000
+        },
+        "bbStr": {},
+        "groups": {
+          "Drown": [
+            "damage"
+          ]
+        }
+      },
+      "skills": [
+        {
+          "prefabKey": "stuncombat",
+          "priority": 0,
+          "cooldown": 1,
+          "initCooldown": 1,
+          "spCost": 3,
+          "bb": {
+            "stun": 7
+          },
+          "bbStr": {}
+        }
+      ],
+      "sp": {
+        "type": "INCREASE_WHEN_ATTACK",
+        "maxSp": 3,
+        "initSp": 0,
+        "increment": 1
+      },
+      "notCountInTotal": false,
+      "tags": []
+    }
+  },
+  "tide": [
+    {
+      "start": 40,
+      "end": 60,
+      "enemyDamage": 40,
+      "enemyAspd": 60,
+      "enemySpeed": 0.6,
+      "allyAspd": 60,
+      "allyErosion": 40,
+      "erosionRatio": 0.25
+    },
+    {
+      "start": 25,
+      "end": 55,
+      "enemyDamage": 40,
+      "enemyAspd": 60,
+      "enemySpeed": 0.6,
+      "allyAspd": 60,
+      "allyErosion": 40,
+      "erosionRatio": 0.25
+    }
+  ]
+}
