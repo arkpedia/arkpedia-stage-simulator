@@ -6126,3 +6126,5 @@ Built the remaining 155 event stages that pass the supported-enemy/device/token/
 Implemented the first reviewed High Tide stage **DH-1** (testOnly): 13–83 s tide window from the level's `ACTIVATE_PREDEFINED` action, 40 True damage/s to enemies, −60 ASPD and speed, ally −60 ASPD plus 40 Corrosion/s and 25% attacker-ATK Corrosion on hit, deployment blocked on low ground. Catalogue **563** = 342 public + 221 testOnly; 562 files.
 
 Implemented Diver swim/erosion immunity and Tidal Caster splash-Corrosion enemy features; built **DH-2** with its two level-derived tide windows (40–70 s and 83–103 s) as testOnly. Catalogue **565** = 342 public + 223 testOnly; 564 files.
+
+Added Dossoles Dive/Heavy Slugger/Tidal Caster features and built DH-3 (two tide windows), DH-EX-1 pair and DH-TR-1 as testOnly. Catalogue **568** = 342 public + 226 testOnly; 567 files.

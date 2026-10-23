@@ -20,6 +20,7 @@ const ABILITIES = Object.freeze({
       b.addBuff(e, { key: 'ab:swim', duration: 1.2, refresh: 'replace', visible: true, mods: { atkPct: atk }, flags: { stealth: true } });
     },
   }),
+  drown: ({ damage }) => ({ iv: 1, tick(b, e) { if ((e.elem?.erosion ?? 0) > 0) b.dealDamage(null, e, periodicDamage(damage)); } }),
   splashCorrosion: ({ ratio }) => ({
     dealt(c, b, e) {
       if (!c.dmg?.isAttack || !c.target) return;
