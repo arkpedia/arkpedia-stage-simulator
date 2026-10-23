@@ -6116,3 +6116,5 @@ Added the first event stage, **IC-1**, which has no carts or unsupported devices
 Added cart-free event stage **IC-2**; it passes smoke review and is public. Catalogue **352** = 334 public + 18 testOnly; 351 files.
 
 Added 47 simple event stages with only standard tiles, no devices/tokens/conditional spawns and supported enemies as `testOnly`. Catalogue **399** = 334 public + 65 testOnly; 398 files.
+
+Fixed null-route handling and added eight more simple event stages (AF-3, BH-1, FA-1, PL-1 and challenge variants) as testOnly. Catalogue **407** = 334 public + 73 testOnly; 406 files.

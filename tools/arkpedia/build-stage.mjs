@@ -42,7 +42,7 @@ const paths = playbackFile.playbackPaths ?? playbackFile.paths ?? {};
 const syntheticRoutes = [];
 const usedRoutes = new Set(geometry.waves.flatMap(wave => (wave.spawns || []).map(spawn => spawn.route)));
 for (const [index, route] of geometry.routes.entries()) {
-  if (paths[index] || route.placeholder || !usedRoutes.has(index)) continue;
+  if (!route || paths[index] || route.placeholder || !usedRoutes.has(index)) continue;
   paths[index] = syntheticRoutePath(route);
   syntheticRoutes.push(index);
 }
