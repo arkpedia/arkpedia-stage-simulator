@@ -455,6 +455,7 @@ export class StandardBattle extends Battle {
     this.mvpStageTokens = new Map((data.stage.tokens ?? []).map(t => [t.unitId, t.count]));
     if (this.mvpStageDevices.length) this.on('tick', ({ dt }) => this._tickMvpStageDevices(dt));
     this._installUnitStageDevices(data.stage.devices ?? []);
+    this._installPillarController();
     this.unitLimit = config.unit_limit;
     this.regularMapSize = Object.freeze({ rows: data.stage.geometry.rows, cols: data.stage.geometry.cols });
     this.mapTags = Object.freeze([...(data.stage.mapTags ?? [])]);
@@ -1230,15 +1231,57 @@ export class StandardBattle extends Battle {
     if (this.life <= 0) return this._finish("defeated");
     super._checkEnd();
   }
+  _installPillarController() {
+    this.on('damaged', ({ source, target, dmg }) => {
+      const d = target?.mem?.stageUnitDevice;
+      if (!d?.pillar || !target.alive) return;
+      if (source?.side === 'ally' && Math.max(Math.abs(source.tileR - target.tileR), Math.abs(source.tileC - target.tileC)) > 1) {
+        dmg.amount = 0; return;
+      }
+      if (source) d.lastSource = { r: source.tileR, c: source.tileC };
+      if (d.state === 'damaged') return;
+      if (target.hp - (dmg.amount ?? 0) <= 0) {
+        target.hp = 1; dmg.amount = 0; d.state = 'damaged';
+        this.addBuff(target, { key: 'pillar:damaged', duration: 2, visible: true, flags: { invulnerable: true }, persist: true });
+      }
+    });
+    this.on('death', ({ unit }) => {
+      const d = unit?.mem?.stageUnitDevice;
+      if (d?.pillar) this._collapsePillar(unit, d);
+    });
+  }
+
+  _collapsePillar(pillar, d) {
+    if (d.collapsed) return;
+    d.collapsed = true;
+    this.grid.setObstacle(d.row, d.col, false, d.obstacle);
+    const src = d.lastSource;
+    let dr = src ? Math.sign(d.row - src.r) : 1, dc = src ? Math.sign(d.col - src.c) : 0;
+    if (!dr && !dc) dr = 1;
+    for (const [r, c] of [[d.row, d.col], [d.row + dr, d.col + dc]]) {
+      if (!this.grid.inRect(r, c)) continue;
+      for (const e of this.enemies) {
+        if (!e.alive || Math.abs(e.tileR - r) > 0.51 || Math.abs(e.tileC - c) > 0.51) continue;
+        this.dealDamage(null, e, { amount: 12000, type: 'true', sourceless: true });
+        if (e.alive) this.applyStatus(e, 'stun', { duration: 10 });
+      }
+      for (const u of this.units) {
+        if (u.side !== 'ally' || !u.alive || u.deployed === false) continue;
+        if (Math.abs(u.tileR - r) <= 0.51 && Math.abs(u.tileC - c) <= 0.51) this.retreat(u, { reason: 'pillar', permanent: true });
+      }
+      if (!this._occ[r * this.grid.cols + c]?.alive && this.grid.groundPassable(r, c, true)) this.grid.setObstacle(r, c, true, 'block');
+    }
+  }
+
   _installUnitStageDevices(devices) {
     for (const d of devices) {
       const spec = STAGE_DEVICES[d.name]?.unit;
       if (!spec || !Number.isInteger(d.row) || !Number.isInteger(d.col)) continue;
       const e = this.spawnEnemy(`device:${d.key ?? d.name}`, { pos: [d.row, d.col], countInTotal: false,
         def: { key: d.key ?? d.name, name: d.name, applyWay: 'NONE', dmgType: 'none',
-          stats: { maxHp: spec.hp, hp: spec.hp, atk: 0, def: spec.def, res: spec.res ?? 0, moveSpeed: 0, bat: 1, rangeRadius: 0, blockCnt: spec.block, lpr: 0 } } });
+          stats: { maxHp: spec.hp, hp: spec.hp, atk: spec.atk ?? 0, def: spec.def, res: spec.res ?? 0, moveSpeed: 0, bat: 1, rangeRadius: 0, blockCnt: spec.block, lpr: 0 } } });
       if (!e) continue;
-      e.mem.stageUnitDevice = { ...spec, name: d.name, row: d.row, col: d.col };
+      e.mem.stageUnitDevice = { ...spec, name: d.name, row: d.row, col: d.col, state: spec.pillar ? 'intact' : null };
       e.profile.noAttack = true; e.counted = false; e.lpr = 0; e.blockWeight = 0;
       e.route = { legs: [{ t: 'wait', time: 1e9 }], legIdx: 0, pts: null, ptIdx: 0, suffix: null, version: -1, waitLeft: null };
       e.s.moveSpeed = 0;

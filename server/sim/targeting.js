@@ -87,6 +87,7 @@ export function canTargetEnemy(attacker, e, profile) {
   if ((f.untargetable && !ignoreTargetFree) || (f.sleep && !(profile && profile.hitSleep))) return false;
   if (f.stealth && enemyStealthed(e) && !profile?.ignoreStealth) return false;
   if (typeof profile?.canTarget === 'function' && !profile.canTarget(attacker, e)) return false;
+  if (e.mem?.stageUnitDevice?.pillar && Math.max(Math.abs((attacker.tileR ?? 0) - e.tileR), Math.abs((attacker.tileC ?? 0) - e.tileC)) > 1) return false;
   if (e.isFlying && !(profile && profile.canHitFly)) return false;
   if (profile && profile.groundOnly && e.isFlying) return false;
   return true;

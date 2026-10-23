@@ -7,6 +7,12 @@ export const STAGE_DEVICES = Object.freeze({
     // recovery and takes 50 True environment damage per second (skill 1).
     environment: Object.freeze({ damage: 50, spMul: 0.2, interval: 1 }),
   }),
+  'Tattered Pillar': Object.freeze({
+    // PRTS: 5000 HP, 12000 ATK, 0 DEF/RES. Only adjacent friendlies can damage it;
+    // the first lethal hit leaves it at 1 HP and invulnerable for 2 s; the next
+    // destroys it and collapses two tiles away from the damage source.
+    unit: Object.freeze({ hp: 5000, atk: 12000, def: 0, res: 0, block: 0, dpMax: 0, dp: 0, obstacle: 'crate', pillar: true }),
+  }),
   'Static Roadblock': Object.freeze({
     // PRTS: 8000 HP / 200 DEF / 20 RES, enemy-faction obstacle; destroyed by
     // operators, no DP reward.
