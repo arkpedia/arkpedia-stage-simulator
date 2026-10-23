@@ -13,6 +13,12 @@ export const STAGE_DEVICES = Object.freeze({
     // destroys it and collapses two tiles away from the damage source.
     unit: Object.freeze({ hp: 5000, atk: 12000, def: 0, res: 0, block: 0, dpMax: 0, dp: 0, obstacle: 'crate', pillar: true }),
   }),
+  'Kite': Object.freeze({
+    unit: Object.freeze({ hp: 6000, atk: 3000, def: 150, res: 0, block: 0, dpMax: 0, dp: 0, kite: true, range: 1.25, spCost: 7 }),
+  }),
+  'Custom Floating Platform': Object.freeze({
+    unit: Object.freeze({ hp: 100, atk: 0, def: 0, res: 0, block: 0, dpMax: 0, dp: 0, platformDevice: true }),
+  }),
   'Tide Controller': Object.freeze({
     // Hidden static controller for Dossoles High Tide; the tide schedule and
     // erosion values live on the stage's `tide` record.
