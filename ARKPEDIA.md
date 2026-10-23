@@ -6094,3 +6094,5 @@ Supported the flying targeteer's native component and built **R8-7** plus its ch
 Supported the Decaying Collector Disciple variant's Seeds of Decay summon and built **12-17/12-18/12-19 adverse** with original routes; all public. Catalogue **340** = 324 public + 16 testOnly; 339 files; enemies **421**.
 
 Implemented Allerdale's Guard as a barrier token (1000 shield to itself and adjacent allies) and built **11-5** plus adverse as test-only stages. Catalogue **342** = 324 public + 18 testOnly; 341 files.
+
+Reviewed 11-5 in the browser: the token strip shows **Allerdale's Guard ×3 · 3 DP**. Promoted 11-5 and its adverse variant public. Catalogue **342** = **326 public + 16 testOnly**.
