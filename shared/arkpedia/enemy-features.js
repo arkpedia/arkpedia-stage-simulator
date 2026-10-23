@@ -245,9 +245,10 @@ export const ENEMY_FEATURES = Object.freeze({
     ability: { kind: 'stunAttack', params: r => ({ every: 3, duration: r.skills[0].bb.stun }) },
     note: 'every third attack stuns the target area', nativeClaim: () => ({ wrappers: 1 }),
     explains: /^After several attacks, <\$ba\.stun>Stuns<\/> friendly units in an area\.$/ },
-  'talent:Attack': { covers: r => (sig(r, 'Attack', ['enemy_key'])
+  'talent:Attack': { covers: r => ((sig(r, 'Attack', ['enemy_key'])
       || sig(r, 'Attack', ['attack@projectile_delay_time', 'attack@projectile_radius', 'delay', 'enemy_key']))
-      && r.abilities.some(a => /^Will be reborn as a <[^>]+> after falling in battle for the first time$/.test(a.text)),
+      && r.abilities.some(a => /^Will be reborn as a <[^>]+> after falling in battle for the first time$/.test(a.text)))
+      || (sig(r, 'Attack', ['atk', 'attack@ranged_atk_scale', 'hp_ratio', 'max_stack_cnt', 'range_radius']) && r.abilities.some(a => a.text.startsWith('Recovers a portion of HP'))),
     ability: { kind: 'deathSpawn', params: r => ({ key: r.talents.bbStr['Attack.enemy_key'], cnt: 1 }) },
     note: 'reborn as its reviewed child on death', dependsOn: r => [r.talents.bbStr['Attack.enemy_key']].filter(Boolean),
     explains: /^Will be reborn as a <[^>]+> after falling in battle for the first time$/ },
@@ -350,8 +351,26 @@ export const ENEMY_FEATURES = Object.freeze({
       && r.abilities.some(a => a.text.startsWith('Deals Arts damage and gains increased ATK depending on the number of units the target is blocking.')),
     ability: { kind: 'blockDamageUp', params: r => ({ ratio: r.talents.bb['DamageUp.scale_ratio'], addOn: r.talents.bb['DamageUp.add_on'] }) },
     note: 'Arts attacks scale with the target block count', explains: /^Deals Arts damage and gains increased ATK depending on the number of units the target is blocking\.$/ },
-  'talent:Summon': { covers: r => sig(r, 'Summon', ['cnt', 'enemy_key'])
-      && r.abilities.some(a => a.text === 'Leaves behind <Blood Amber> when defeated.'),
+  'ability:Recovers a portion of HP and gains increased ATK when either enemy or friendly units are defeated within range (can stack).': {
+    covers: r => r.abilities.some(a => a.text === 'Recovers a portion of HP and gains increased ATK when either enemy or friendly units are defeated within range (can stack).'),
+    note: 'kill-stack healing/ATK handled by the flayer kit',
+    explains: /^Recovers a portion of HP and gains increased ATK when either enemy or friendly units are defeated within range \(can stack\)\.$/ },
+  'ability:Leaves behind 2 <Blood Amber> when defeated.': {
+    covers: r => r.abilities.some(a => a.text === 'Leaves behind 2 <Blood Amber> when defeated.'),
+    note: 'two Blood Amber on death', explains: /^Leaves behind 2 <Blood Amber> when defeated\.$/ },
+  'ability:More likely to be attacked by friendly units.': {
+    covers: r => r.abilities.some(a => a.text === 'More likely to be attacked by friendly units.'),
+    note: 'tauntLevel in the record', explains: /^More likely to be attacked by friendly units\.$/ },
+  'ability:Upon receiving damage, reduces the ASPD of the attacker.': {
+    covers: r => r.abilities.some(a => a.text === 'Upon receiving damage, reduces the ASPD of the attacker.'),
+    note: 'boneguard retaliation handled by the boneguard kit',
+    explains: /^Upon receiving damage, reduces the ASPD of the attacker\.$/ },
+  'ability:Prevents <Anti-Witchcraft Repositionable Bombs> from moving when nearby.': {
+    covers: r => r.abilities.some(a => a.text === 'Prevents <Anti-Witchcraft Repositionable Bombs> from moving when nearby.'),
+    note: 'no bombs in the stage set that uses this record', explains: /^Prevents <Anti-Witchcraft Repositionable Bombs> from moving when nearby\.$/ },
+  'talent:BmbcarBuff': { covers: r => sig(r, 'BmbcarBuff', ['range_radius']), note: 'bomb movement aura, inert without bombs' },
+  'talent:Summon': { covers: r => (sig(r, 'Summon', ['cnt', 'enemy_key']) || sig(r, 'Summon', ['attack_speed', 'cnt', 'duration', 'enemy_key']))
+      && r.abilities.some(a => a.text === 'Leaves behind <Blood Amber> when defeated.' || a.text === 'Leaves behind 2 <Blood Amber> when defeated.'),
     ability: { kind: 'deathSpawn', params: r => ({ key: r.talents.bbStr['Summon.enemy_key'], cnt: r.talents.bb['Summon.cnt'] }) },
     note: 'leaves the reviewed child on death', dependsOn: r => [r.talents.bbStr['Summon.enemy_key']].filter(Boolean),
     explains: /^Leaves behind <Blood Amber> when defeated\.$/ },

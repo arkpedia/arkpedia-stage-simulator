@@ -3650,6 +3650,22 @@ export const KITS = Object.freeze({
   },
   // 萨卡兹骸骨拷打者 · heals + ATK stack when a unit within Attack.range_radius is knocked out; leaves 2 血珀 on death — they
   // stay where it fell and wait for a 唤血祭坛 that this mode has none of (inert, not counted)
+  enemy_1364_spnaxe: (ab) => [{
+    death(c, b, e) {
+      const key = ab.tS['Summon.enemy_key'], n = T(ab, 'Summon.cnt') ?? 0;
+      if (c.reason !== 'killed' || !key || !(n > 0)) return;
+      spawnChildren(b, e, key, n, { route: stayRoute(e), countInTotal: false, mods: null });
+    },
+  }, {
+    spawn(b, e) { watchDeaths(b, e); },
+    otherDeath(c, b, e) {
+      const u = c.unit;
+      if (!u || u === e || c.reason !== 'killed' || Math.hypot(u.x - e.x, u.y - e.y) > (T(ab, 'Attack.range_radius') ?? TORTURER_RADIUS) + 1e-9) return;
+      b.heal(e, e, e.s.maxHp * (T(ab, 'Attack.hp_ratio') ?? 0), { self: true });
+      b.addBuff(e, { key: 'ab:torture', refresh: 'stack', stacks: 1, maxStacks: T(ab, 'Attack.max_stack_cnt') ?? 1, persist: true, mods: { atkPct: T(ab, 'Attack.atk') ?? 0 } });
+    },
+    hitOut(c, b, e) { if (c.dmg.isAttack && c.target !== e.blockedBy) c.dmg.amount *= T(ab, 'Attack.attack@ranged_atk_scale') ?? 1; },
+  }],
   enemy_1364_spnaxe_2: (ab) => [{
     death(c, b, e) {
       const key = ab.tS['Summon.enemy_key'], n = T(ab, 'Summon.cnt') ?? 0;
@@ -3665,6 +3681,18 @@ export const KITS = Object.freeze({
       b.addBuff(e, { key: 'ab:torture', refresh: 'stack', stacks: 1, maxStacks: T(ab, 'Attack.max_stack_cnt') ?? 1, persist: true, mods: { atkPct: T(ab, 'Attack.atk') ?? 0 } });
     },
     hitOut(c, b, e) { if (c.dmg.isAttack && c.target !== e.blockedBy) c.dmg.amount *= T(ab, 'Attack.attack@ranged_atk_scale') ?? 1; },
+  }],
+  enemy_1363_spnshd: (ab) => [{
+    hitIn(c, b, e) {
+      const s = c.source;
+      if (!s || s.side !== 'ally' || !(c.dmg.amount > 0) || !s.alive) return;
+      b.addBuff(s, { key: 'ab:boneguardAspd', duration: 5, visible: true, mods: { aspd: -40 } });
+    },
+    death(c, b, e) {
+      const key = ab.tS['Summon.enemy_key'], n = T(ab, 'Summon.cnt') ?? 0;
+      if (c.reason !== 'killed' || !key || !(n > 0)) return;
+      spawnChildren(b, e, key, n, { route: stayRoute(e), countInTotal: false, mods: null });
+    },
   }],
   enemy_1501_demonk: () => [maxTargets(2)],                          // 萨卡兹百夫长 · attacks 2 targets
   enemy_10018_sgrobh: () => [maxTargets(2)],                         // “独轮车玩具” · attacks 2 targets
