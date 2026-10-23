@@ -6140,3 +6140,5 @@ Implemented permanent **Deep Water Zone** damage/debuff and built **DH-7** with 
 Implemented suicide-boat corrosion death blasts and Dockworker life-loss/taunt enemies; built DH-8 as testOnly. Catalogue **573** = 342 public + 231 testOnly; 572 files.
 
 Built the remaining buildable Dossoles EX/MO/S stages (19 files, including challenge variants) with level-derived tide/deep-water data as testOnly. Catalogue **592** = 342 public + 250 testOnly; 591 files.
+
+Implemented Kite device fire and platform-device tiles; built DH-EX-3 and challenge as testOnly. Catalogue **594** = 342 public + 252 testOnly; 593 files.

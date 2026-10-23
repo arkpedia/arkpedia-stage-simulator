@@ -1345,11 +1345,12 @@ export class StandardBattle extends Battle {
     for (const d of devices) {
       const spec = STAGE_DEVICES[d.name]?.unit;
       if (!spec || !Number.isInteger(d.row) || !Number.isInteger(d.col) || spec.tide) continue;
+      if (spec.platformDevice) { this.platformTiles ??= new Set(); this.platformTiles.add(`${d.row},${d.col}`); continue; }
       const e = this.spawnEnemy(`device:${d.key ?? d.name}`, { pos: [d.row, d.col], countInTotal: false,
         def: { key: d.key ?? d.name, name: d.name, applyWay: 'NONE', dmgType: 'none',
           stats: { maxHp: spec.hp, hp: spec.hp, atk: spec.atk ?? 0, def: spec.def, res: spec.res ?? 0, moveSpeed: 0, bat: 1, rangeRadius: 0, blockCnt: spec.block, lpr: 0 } } });
       if (!e) continue;
-      e.mem.stageUnitDevice = { ...spec, name: d.name, row: d.row, col: d.col, state: spec.pillar ? 'intact' : null };
+      e.mem.stageUnitDevice = { ...spec, name: d.name, row: d.row, col: d.col, dir: d.dir ?? 'RIGHT', state: spec.pillar ? 'intact' : null };
       e.profile.noAttack = true; e.counted = false; e.lpr = 0; e.blockWeight = 0;
       e.route = { legs: [{ t: 'wait', time: 1e9 }], legIdx: 0, pts: null, ptIdx: 0, suffix: null, version: -1, waitLeft: null };
       e.s.moveSpeed = 0;
@@ -1394,6 +1395,16 @@ export class StandardBattle extends Battle {
             this.dealDamage(null, u, { amount: spec.damage, type: 'true', sourceless: true, ignoreSelect: true, tags: ['device', 'pollution'] });
           }
         }
+      } else if (def.kite) {
+        const spec = def.kite; d.sp += dt;
+        if (d.sp < spec.spCost) continue;
+        const dir = d.dir ?? 'RIGHT', dx = dir === 'RIGHT' ? 1 : dir === 'LEFT' ? -1 : 0, dy = dir === 'DOWN' ? 1 : dir === 'UP' ? -1 : 0;
+        const target = this.allyUnits.filter(a => a.alive && a.deployed && a.kind !== 'device' && !a.hidden)
+          .filter(a => dx ? Math.abs(a.y - d.row) <= 0.5 && (a.x - d.col) * dx > 0 : Math.abs(a.x - d.col) <= 0.5 && (a.y - d.row) * dy > 0)
+          .sort((a, b) => Math.hypot(a.y - d.row, a.x - d.col) - Math.hypot(b.y - d.row, b.x - d.col))[0];
+        if (!target) continue; d.sp = 0;
+        for (const u of this.allyUnits) if (u.alive && u.deployed && Math.hypot(u.y - target.y, u.x - target.x) <= spec.range)
+          this.dealDamage(null, u, { amount: 3000, type: 'phys', sourceless: true, tags: ['device', 'kite'] });
       } else if (def.artillery) {
         const spec = def.artillery;
         d.sp = Math.min(spec.spCost, d.sp + spec.spPerSecond * dt);
