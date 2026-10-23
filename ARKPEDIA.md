@@ -6134,3 +6134,5 @@ Built Dossoles **DH-4** and **DH-5** with their level-derived tide windows (DH-4
 Implemented the **Custom Floating Platform** token (`trap_040_canoe`): deployable on deep water, cost 3, hosts any operator on its tile. Fixed the stage geometry glyph table so `tile_deepwater` and `tile_start` are no longer dropped. Catalogue **570** = 342 public + 228 testOnly; 569 files.
 
 Implemented Dockworker vehicle crash/DeathRattle features and platform-hosted DH-6 as testOnly. Catalogue **571** = 342 public + 229 testOnly; 570 files.
+
+Implemented permanent **Deep Water Zone** damage/debuff and built **DH-7** with the Custom Floating Platform. Stage glyphs now cover every tile type in the legend. Catalogue **572** = 342 public + 230 testOnly; 571 files.
