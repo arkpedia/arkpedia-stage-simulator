@@ -553,6 +553,9 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: /^Uses chains to paralyze allied Operators\.$/ },
   // 1321: periodically drops three Seeds of Withering.
   'skill:BornBugs': { covers: r => r.skills.some(s => s.prefabKey === 'BornBugs'), note: 'native BornBugs skill consumed by the seed summoner' },
+  'ability:Periodically summons several <Seeds of Decay>': { covers: r => r.abilities.some(a => a.text === 'Periodically summons several <Seeds of Decay>'),
+    nativeClaim: () => ({ wrappers: 1 }), note: 'three Seeds of Decay every 10 s',
+    explains: /^Periodically summons several <Seeds of Decay>$/ },
   'ability:Periodically summons several <Seeds of Withering>': { covers: r => r.abilities.some(a => a.text === 'Periodically summons several <Seeds of Withering>'),
     ability: { kind: 'seedSummoner', params: () => ({ key: 'enemy_1269_nhfly', count: 3, cooldown: 10, init: 10 }) },
     nativeClaim: () => ({ wrappers: 1 }), note: 'three Seeds of Withering every 10 s',

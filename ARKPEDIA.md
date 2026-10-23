@@ -6090,3 +6090,5 @@ Imported the five fixed-squad-only operators (Sharp, Pith, Touch, Stormeye, Raid
 Reviewed 15-19 in the browser: the fixed squad shows Sharp, Pith, Touch, Stormeye and Raidian with generated fallback portraits plus Rosmontis, and the battle starts. 15-19 is public. Catalogue **335** = **319 public + 16 testOnly**.
 
 Supported the flying targeteer's native component and built **R8-7** plus its challenge variant with original routes; both are public. Catalogue **337** = 321 public + 16 testOnly; 336 files; enemies **420**.
+
+Supported the Decaying Collector Disciple variant's Seeds of Decay summon and built **12-17/12-18/12-19 adverse** with original routes; all public. Catalogue **340** = 324 public + 16 testOnly; 339 files; enemies **421**.
