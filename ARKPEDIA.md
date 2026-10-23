@@ -6132,3 +6132,5 @@ Added Dossoles Dive/Heavy Slugger/Tidal Caster features and built DH-3 (two tide
 Built Dossoles **DH-4** and **DH-5** with their level-derived tide windows (DH-4 30–100 s; DH-5 4–31, 4–9 and 23–53 s) as testOnly. Catalogue **570** = 342 public + 228 testOnly; 569 files.
 
 Implemented the **Custom Floating Platform** token (`trap_040_canoe`): deployable on deep water, cost 3, hosts any operator on its tile. Fixed the stage geometry glyph table so `tile_deepwater` and `tile_start` are no longer dropped. Catalogue **570** = 342 public + 228 testOnly; 569 files.
+
+Implemented Dockworker vehicle crash/DeathRattle features and platform-hosted DH-6 as testOnly. Catalogue **571** = 342 public + 229 testOnly; 570 files.
