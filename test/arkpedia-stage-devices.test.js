@@ -35,9 +35,16 @@ test('the Londinium artillery hits both sides in its reviewed shape', () => {
   battle.setViewport('fullscreen-workspace');
   battle.addDp('arkpedia', 99);
   const op = Object.values(data.operators).find(o => ['CASTER', 'SNIPER'].includes(o.profession)) ?? Object.values(data.operators)[0];
-  assert.ok(battle.deployOperator(op.id, 4, 4, 'RIGHT'));
+  let spot;
+  for (let r = 0; r < battle.grid.rows && !spot; r++) for (let c = 0; c < battle.grid.cols && !spot; c++) {
+    const tile = battle.grid.tile(r, c);
+    if (['RANGED', 'ALL'].includes(tile.build) && !battle._occ[r * battle.grid.cols + c]?.alive) spot = [r, c];
+  }
+  assert.ok(spot, 'a ranged tile');
+  assert.ok(battle.deployOperator(op.id, spot[0], spot[1], 'RIGHT'));
   const ally = battle.allyUnits.find(u => u.defId === op.id && u.alive);
-  const enemy = battle.spawnEnemy(Object.keys(stage.enemies)[0], { pos: [4, 5] });
+  const enemyPos = battle.grid.inRect(spot[0], spot[1] + 1) ? [spot[0], spot[1] + 1] : [spot[0] + 1, spot[1]];
+  const enemy = battle.spawnEnemy(Object.keys(stage.enemies)[0], { pos: enemyPos });
   const allyHp = ally.hp, enemyHp = enemy.hp;
   battle.mvpStageDevices[0].sp = 119.9;
   battle._tickMvpStageDevices(0.2);
