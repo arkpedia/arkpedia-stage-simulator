@@ -6100,3 +6100,5 @@ Reviewed 11-5 in the browser: the token strip shows **Allerdale's Guard ×3 · 3
 Supported the Sarkaz Boneguard and Boneguard Flayer records (taunt, damage-triggered ASPD down, death Amber and kill-stack kit) and built **13-13** plus adverse as test-only stages. Catalogue **344** = 326 public + 18 testOnly; 343 files; enemies **425**.
 
 13-13 and its adverse variant passed build/smoke review and are public. Catalogue **344** = **328 public + 16 testOnly**.
+
+The conditional data was not missing: base stages 15-10/15-17/15-4 carry it, and the builder already resolves base geometry for six-star variants. Built all three; **15-10_six_star** has original routes and is public, while 15-17/15-4 stay testOnly for synthetic routes. Catalogue **347** = 329 public + 18 testOnly; 346 files.
