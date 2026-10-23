@@ -296,7 +296,7 @@ export function stageAdapter(source) {
   // for a route the stage actually uses.
   const usedRoutes = new Set(g.waves.flatMap(wave => (wave.spawns || []).map(spawn => spawn.route)));
   const routes = g.routes.map((route, index) => {
-    if (route.placeholder)
+    if (!route || route.placeholder)
       return { start: [0, 0], end: [0, 0], checkpoints: [] };
     const path = source.pathing?.paths?.[index];
     if (!path && !usedRoutes.has(index))

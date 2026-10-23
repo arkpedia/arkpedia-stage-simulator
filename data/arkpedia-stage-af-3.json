@@ -1,0 +1,1036 @@
+{
+ "code": "AF-3",
+ "name": "Spring Cleaning",
+ "description": "We provide a comprehensive cleaning service, guaranteed to remove all kinds of impurities.\nStage available from 7/29 10:00 A.M. to 8/12 3:59 A.M.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "af-3",
+  "rows": 7,
+  "cols": 11,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    0
+   ],
+   [
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    1,
+    2,
+    2,
+    1,
+    0
+   ],
+   [
+    0,
+    1,
+    0,
+    3,
+    4,
+    0,
+    4,
+    2,
+    2,
+    1,
+    0
+   ],
+   [
+    0,
+    1,
+    0,
+    0,
+    4,
+    0,
+    4,
+    2,
+    2,
+    4,
+    0
+   ],
+   [
+    0,
+    1,
+    4,
+    4,
+    4,
+    0,
+    5,
+    2,
+    2,
+    3,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 9
+    },
+    "end": {
+     "row": 5,
+     "col": 6
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 6
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 3
+    },
+    "end": {
+     "row": 5,
+     "col": 6
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 6
+      }
+     }
+    ],
+    "waits": []
+   },
+   null
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 171.5,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Rabid Hound Pro",
+      "enemy_id": "enemy_1000_gopro_3",
+      "count": 1,
+      "time": 3,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Rabid Hound Pro",
+      "enemy_id": "enemy_1000_gopro_3",
+      "count": 1,
+      "time": 8,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Rabid Hound Pro",
+      "enemy_id": "enemy_1000_gopro_3",
+      "count": 1,
+      "time": 11,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Rabid Hound Pro",
+      "enemy_id": "enemy_1000_gopro_3",
+      "count": 1,
+      "time": 14,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Rabid Hound Pro",
+      "enemy_id": "enemy_1000_gopro_3",
+      "count": 1,
+      "time": 17,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 1,
+      "time": 3,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 1,
+      "time": 6.5,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 2,
+      "time": 10,
+      "interval": 2,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 1,
+      "time": 11.5,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 1,
+      "time": 15,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 2,
+      "time": 16.5,
+      "interval": 2,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 2,
+      "time": 18,
+      "interval": 2,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 2,
+      "time": 19.5,
+      "interval": 2,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 2,
+      "time": 22,
+      "interval": 2,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 2,
+      "time": 23.5,
+      "interval": 2,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Acid Originium Slug α",
+      "enemy_id": "enemy_1004_mslime_2",
+      "count": 3,
+      "time": 38.5,
+      "interval": 3,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Acid Originium Slug α",
+      "enemy_id": "enemy_1004_mslime_2",
+      "count": 3,
+      "time": 50.5,
+      "interval": 2,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Acid Originium Slug α",
+      "enemy_id": "enemy_1004_mslime_2",
+      "count": 4,
+      "time": 65.5,
+      "interval": 1.5,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Acid Originium Slug α",
+      "enemy_id": "enemy_1004_mslime_2",
+      "count": 4,
+      "time": 75.5,
+      "interval": 1,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Rabid Hound Pro",
+      "enemy_id": "enemy_1000_gopro_3",
+      "count": 4,
+      "time": 47.5,
+      "interval": 1.5,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Rabid Hound Pro",
+      "enemy_id": "enemy_1000_gopro_3",
+      "count": 4,
+      "time": 60.5,
+      "interval": 1.5,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Rabid Hound Pro",
+      "enemy_id": "enemy_1000_gopro_3",
+      "count": 4,
+      "time": 75.5,
+      "interval": 1,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Acid Originium Slug α",
+      "enemy_id": "enemy_1004_mslime_2",
+      "count": 3,
+      "time": 91.5,
+      "interval": 2,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Acid Originium Slug α",
+      "enemy_id": "enemy_1004_mslime_2",
+      "count": 4,
+      "time": 103.5,
+      "interval": 2,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Acid Originium Slug α",
+      "enemy_id": "enemy_1004_mslime_2",
+      "count": 4,
+      "time": 113.5,
+      "interval": 2,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Elite Brawler",
+      "enemy_id": "enemy_1056_ganwar_2",
+      "count": 3,
+      "time": 94.5,
+      "interval": 6,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "Elite Brawler",
+      "enemy_id": "enemy_1056_ganwar_2",
+      "count": 3,
+      "time": 106.5,
+      "interval": 4,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "Elite Brawler",
+      "enemy_id": "enemy_1056_ganwar_2",
+      "count": 4,
+      "time": 118.5,
+      "interval": 4,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "Acid Originium Slug α",
+      "enemy_id": "enemy_1004_mslime_2",
+      "count": 4,
+      "time": 143.5,
+      "interval": 3,
+      "route": 1,
+      "fragment": 3
+     },
+     {
+      "enemy": "Acid Originium Slug α",
+      "enemy_id": "enemy_1004_mslime_2",
+      "count": 4,
+      "time": 155.5,
+      "interval": 2,
+      "route": 1,
+      "fragment": 3
+     },
+     {
+      "enemy": "Acid Originium Slug α",
+      "enemy_id": "enemy_1004_mslime_2",
+      "count": 4,
+      "time": 165.5,
+      "interval": 1,
+      "route": 1,
+      "fragment": 3
+     },
+     {
+      "enemy": "Sarkaz Greatswordsman",
+      "enemy_id": "enemy_1010_demon",
+      "count": 3,
+      "time": 143.5,
+      "interval": 14,
+      "route": 0,
+      "fragment": 3
+     },
+     {
+      "enemy": "Elite Brawler",
+      "enemy_id": "enemy_1056_ganwar_2",
+      "count": 3,
+      "time": 146.5,
+      "interval": 4,
+      "route": 0,
+      "fragment": 3
+     },
+     {
+      "enemy": "Elite Brawler",
+      "enemy_id": "enemy_1056_ganwar_2",
+      "count": 3,
+      "time": 165.5,
+      "interval": 3,
+      "route": 0,
+      "fragment": 3
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 3,
+    "col": 3,
+    "routes": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 5,
+    "col": 9,
+    "routes": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 5,
+    "col": 6,
+    "routes": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     0,
+     0,
+     0,
+     1,
+     1,
+     1,
+     0,
+     0,
+     0,
+     1,
+     1,
+     1,
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1000_gopro_3",
+    "slug": "rabid_hound_pro",
+    "name": "Rabid Hound Pro",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1004_mslime_2",
+    "slug": "acid_originium_slug_enemy_1004_mslime_2",
+    "name": "Acid Originium Slug α",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1007_slime_3",
+    "slug": "originium_slug_enemy_1007_slime_3",
+    "name": "Originium Slug β",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1010_demon",
+    "slug": "sarkaz_greatswordsman",
+    "name": "Sarkaz Greatswordsman",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1056_ganwar_2",
+    "slug": "elite_brawler",
+    "name": "Elite Brawler",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false,
+  "source": "cn"
+ },
+ "devices": [],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [
+   0,
+   1
+  ],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "AF-3",
+  "geometryHash": "55fa2d088668ab186201c42f010fabeee4110d5014a025fcbf66ea5e637ce94e",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      6,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "1": {
+    "points": [
+     [
+      3,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      6,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "breaks": [],
+    "holds": []
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1000_gopro_3": {
+   "key": "enemy_1000_gopro_3",
+   "prefabKey": "enemy_1000_gopro_3",
+   "name": "Rabid Hound Pro",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3000,
+    "atk": 370,
+    "def": 0,
+    "res": 20,
+    "moveSpeed": 1.9,
+    "bat": 1.4,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1007_slime_3": {
+   "key": "enemy_1007_slime_3",
+   "prefabKey": "enemy_1007_slime_3",
+   "name": "Originium Slug β",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 1550,
+    "atk": 240,
+    "def": 0,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 1.7,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1004_mslime_2": {
+   "key": "enemy_1004_mslime_2",
+   "prefabKey": "enemy_1004_mslime_2",
+   "name": "Acid Originium Slug α",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 2780,
+    "atk": 290,
+    "def": 0,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 3.3,
+    "aspd": 100,
+    "rangeRadius": 1.75,
+    "rawRangeRadius": 1.75,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Every attack reduces the enemy's DEF",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "defdown.def": -15
+    },
+    "bbStr": {},
+    "groups": {
+     "defdown": [
+      "def"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1056_ganwar_2": {
+   "key": "enemy_1056_ganwar_2",
+   "prefabKey": "enemy_1056_ganwar_2",
+   "name": "Elite Brawler",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 4200,
+    "atk": 380,
+    "def": 300,
+    "res": 0,
+    "moveSpeed": 0.95,
+    "bat": 0.4,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1010_demon": {
+   "key": "enemy_1010_demon",
+   "prefabKey": "enemy_1010_demon",
+   "name": "Sarkaz Greatswordsman",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 7500,
+    "atk": 600,
+    "def": 230,
+    "res": 50,
+    "moveSpeed": 0.85,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "sarkaz"
+   ]
+  }
+ }
+}
