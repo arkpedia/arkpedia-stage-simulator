@@ -20,6 +20,13 @@ const ABILITIES = Object.freeze({
       b.addBuff(e, { key: 'ab:swim', duration: 1.2, refresh: 'replace', visible: true, mods: { atkPct: atk }, flags: { stealth: true } });
     },
   }),
+  crash: ({ scale, block }) => ({
+    spawn(b, e) { e.blockWeight = Math.max(e.blockWeight ?? 1, block); },
+    tick(b, e) {
+      const u = e.blockedBy; if (!u || !u.alive || e.mem.crashAt === u.id) return;
+      e.mem.crashAt = u.id; hurt(b, e, u, e.s.atk * scale, 'phys');
+    },
+  }),
   drown: ({ damage }) => ({ iv: 1, tick(b, e) { if ((e.elem?.erosion ?? 0) > 0) b.dealDamage(null, e, periodicDamage(damage)); } }),
   splashCorrosion: ({ ratio }) => ({
     dealt(c, b, e) {
