@@ -12,7 +12,7 @@ const make = () => new StandardBattle(data, { operators: Object.values(data.oper
 test('high tide is inactive before its start and blocks deployment on low ground', () => {
   const battle = make();
   assert.equal(battle._isFlooded(0, 0), false);
-  battle.highTide.start = 0; battle.highTide.end = 999;
+  battle.highTide.windows = [{ start: 0, end: 999 }];
   battle.step();
   let tile;
   for (let r = 0; r < battle.grid.rows && !tile; r++) for (let c = 0; c < battle.grid.cols && !tile; c++) {
@@ -31,7 +31,7 @@ test('high tide deals True damage and erosion while it is active', () => {
   }
   const enemy = battle.spawnEnemy('enemy_1007_slime_3', { pos: tile });
   assert.ok(enemy);
-  battle.highTide.start = 0; battle.highTide.end = 999;
+  battle.highTide.windows = [{ start: 0, end: 999 }];
   const hp = enemy.hp;
   battle.step(); battle.step();
   assert.ok(enemy.hp < hp, `enemy HP ${enemy.hp} did not fall below ${hp}`);

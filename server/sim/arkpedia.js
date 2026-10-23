@@ -1235,9 +1235,10 @@ export class StandardBattle extends Battle {
   }
   _installHighTide(tide) {
     if (!tide) return;
-    this.highTide = { start: tide.start ?? 0, end: tide.end ?? Infinity, damage: tide.enemyDamage ?? 40,
-      aspd: tide.enemyAspd ?? 60, speed: tide.enemySpeed ?? 0.6, allyAspd: tide.allyAspd ?? 60,
-      erosion: tide.allyErosion ?? 40, ratio: tide.erosionRatio ?? 0.25, active: false };
+    const list = Array.isArray(tide) ? tide : [tide];
+    this.highTide = { start: list[0]?.start ?? 0, end: list[0]?.end ?? Infinity, damage: list[0]?.enemyDamage ?? 40,
+      aspd: list[0]?.enemyAspd ?? 60, speed: list[0]?.enemySpeed ?? 0.6, allyAspd: list[0]?.allyAspd ?? 60,
+      erosion: list[0]?.allyErosion ?? 40, ratio: list[0]?.erosionRatio ?? 0.25, windows: list, active: false };
     this._highTideLast = -Infinity;
     this.on('tick', () => this._highTideTick());
     this.on('damaged', ({ source, target }) => {
@@ -1252,7 +1253,9 @@ export class StandardBattle extends Battle {
   _highTideTick() {
     const t = this.highTide;
     if (!t) return;
-    t.active = this.time >= t.start && this.time < t.end;
+    const win = (t.windows ?? []).find(w => this.time >= (w.start ?? 0) && this.time < (w.end ?? Infinity));
+    t.active = !!win;
+    if (win) Object.assign(t, { damage: win.enemyDamage ?? t.damage, aspd: win.enemyAspd ?? t.aspd, speed: win.enemySpeed ?? t.speed, allyAspd: win.allyAspd ?? t.allyAspd, erosion: win.allyErosion ?? t.erosion, ratio: win.erosionRatio ?? t.ratio });
     if (!t.active || this.time - this._highTideLast < 1) return;
     this._highTideLast = this.time;
     for (const e of this.enemies) {
