@@ -6142,3 +6142,5 @@ Implemented suicide-boat corrosion death blasts and Dockworker life-loss/taunt e
 Built the remaining buildable Dossoles EX/MO/S stages (19 files, including challenge variants) with level-derived tide/deep-water data as testOnly. Catalogue **592** = 342 public + 250 testOnly; 591 files.
 
 Implemented Kite device fire and platform-device tiles; built DH-EX-3 and challenge as testOnly. Catalogue **594** = 342 public + 252 testOnly; 593 files.
+
+Promoted Dossoles **DH-1 through DH-8** public after smoke/data review (high tide, deep water, platform and Kite-enabled stages). Catalogue **594** = 350 public + 244 testOnly.
