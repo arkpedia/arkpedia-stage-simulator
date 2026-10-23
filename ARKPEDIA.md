@@ -6124,3 +6124,5 @@ Promoted AF-3/BH-1/FA-1/PL-1 and challenge variants public after data/smoke revi
 Built the remaining 155 event stages that pass the supported-enemy/device/token/conditional screen as `testOnly`. Catalogue **562** = 342 public + 220 testOnly; 561 files.
 
 Implemented the first reviewed High Tide stage **DH-1** (testOnly): 13–83 s tide window from the level's `ACTIVATE_PREDEFINED` action, 40 True damage/s to enemies, −60 ASPD and speed, ally −60 ASPD plus 40 Corrosion/s and 25% attacker-ATK Corrosion on hit, deployment blocked on low ground. Catalogue **563** = 342 public + 221 testOnly; 562 files.
+
+Implemented Diver swim/erosion immunity and Tidal Caster splash-Corrosion enemy features; built **DH-2** with its two level-derived tide windows (40–70 s and 83–103 s) as testOnly. Catalogue **565** = 342 public + 223 testOnly; 564 files.

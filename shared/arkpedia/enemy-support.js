@@ -35,7 +35,7 @@ export function nativeComponents(evidence, prefabKey) {
 /** Support decision for one catalogue entry; `reasons` names everything still missing. */
 // One reviewed native claim that is not expressible from the shared flying feature: the
 // targeteer's single active component is the flying controller itself.
-const RECORD_NATIVE_CLAIMS = Object.freeze({ enemy_1112_emppnt: Object.freeze({ active: 1 }) });
+const RECORD_NATIVE_CLAIMS = Object.freeze({ enemy_1112_emppnt: Object.freeze({ active: 1 }), enemy_1161_tidmag: Object.freeze({ active: 1 }) });
 
 export function enemySupport(entry, prefabs, evidence = {}) {
   const levels = Object.values(entry.levels), reasons = [], features = [], deps = new Set();

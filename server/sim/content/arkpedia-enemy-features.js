@@ -5,7 +5,7 @@
 // abilities (content/enemies.js) through its features-only dispatch, never its
 // per-enemy kits.
 import { enemyFeature, recordFeatureIds } from '../../../shared/arkpedia/enemy-features.js';
-import { installFeatureDispatch, attach, abOf, rebornAbility, featureAbilities } from './enemies.js';
+import { installFeatureDispatch, attach, abOf, rebornAbility, featureAbilities, elem, hurt, areaAlliesInTiles } from './enemies.js';
 import { periodicDamage } from '../damage.js';
 
 const ABILITIES = Object.freeze({
@@ -13,6 +13,23 @@ const ABILITIES = Object.freeze({
   ...featureAbilities,
   // 持续损失生命: `amount` HP every second, sourceless.
   periodicLoss: ({ amount }) => ({ iv: 1, tick(b, e) { if (amount > 0) b.dealDamage(null, e, periodicDamage(amount)); } }),
+  swim: ({ atk }) => ({
+    spawn(b, e) { e.mem.erosionImmune = true; },
+    tick(b, e) {
+      if (!b.highTide?.active || !b._isFlooded?.(e.tileR, e.tileC)) return;
+      b.addBuff(e, { key: 'ab:swim', duration: 1.2, refresh: 'replace', visible: true, mods: { atkPct: atk }, flags: { stealth: true } });
+    },
+  }),
+  splashCorrosion: ({ ratio }) => ({
+    dealt(c, b, e) {
+      if (!c.dmg?.isAttack || !c.target) return;
+      for (const u of areaAlliesInTiles(b, e, c.target.tileR, c.target.tileC, 'plus', 1)) {
+        if (!u.alive || u === c.target) continue;
+        hurt(b, e, u, c.dmg.amount ?? 0, c.dmg.type ?? 'phys');
+        if (ratio > 0) elem(b, e, u, 'erosion', e.s.atk * ratio);
+      }
+    },
+  }),
 });
 
 /** Apply one spawned enemy's feature traits and abilities (its record is `e.def.raw`). */
