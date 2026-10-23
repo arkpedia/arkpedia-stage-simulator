@@ -6098,3 +6098,5 @@ Implemented Allerdale's Guard as a barrier token (1000 shield to itself and adja
 Reviewed 11-5 in the browser: the token strip shows **Allerdale's Guard ×3 · 3 DP**. Promoted 11-5 and its adverse variant public. Catalogue **342** = **326 public + 16 testOnly**.
 
 Supported the Sarkaz Boneguard and Boneguard Flayer records (taunt, damage-triggered ASPD down, death Amber and kill-stack kit) and built **13-13** plus adverse as test-only stages. Catalogue **344** = 326 public + 18 testOnly; 343 files; enemies **425**.
+
+13-13 and its adverse variant passed build/smoke review and are public. Catalogue **344** = **328 public + 16 testOnly**.
