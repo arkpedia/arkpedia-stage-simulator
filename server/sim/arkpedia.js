@@ -376,6 +376,7 @@ export function stageAdapter(source) {
 
 export class StandardBattle extends Battle {
   constructor(data, selection, { seed = 1 } = {}) {
+    if (data.stage?.operators) data = { ...data, operators: { ...data.operators, ...data.stage.operators } };
     assertRegularEnemies(data);
     const fixed = fixedSquadBuilds(data);
     const squad = fixed ? null : prepareSquad(selection, catalogueFor(data));
