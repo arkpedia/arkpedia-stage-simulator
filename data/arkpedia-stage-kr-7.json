@@ -1,0 +1,3064 @@
+{
+ "code": "KR-7",
+ "name": "Norport: Cleanup & Reconstruction",
+ "description": "Debris and biohazards must be removed in order to restore a plate. The workers are very familiar with the job now, and they have plenty of tools at hand.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "kr-7",
+  "rows": 7,
+  "cols": 11,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_telout",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_hole",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_telin",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    3,
+    0
+   ],
+   [
+    0,
+    4,
+    4,
+    5,
+    2,
+    4,
+    4,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    2,
+    2,
+    2,
+    6,
+    6,
+    6,
+    6,
+    6,
+    7
+   ],
+   [
+    0,
+    0,
+    2,
+    4,
+    4,
+    4,
+    6,
+    7,
+    6,
+    4,
+    0
+   ],
+   [
+    0,
+    7,
+    2,
+    0,
+    0,
+    8,
+    6,
+    6,
+    6,
+    6,
+    7
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 10
+    },
+    "end": {
+     "row": 1,
+     "col": 1
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 1
+    },
+    "end": {
+     "row": 1,
+     "col": 1
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 10
+    },
+    "end": {
+     "row": 1,
+     "col": 1
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 1,
+       "col": 9
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 3
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 7
+    },
+    "end": {
+     "row": 1,
+     "col": 1
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 7
+    },
+    "end": {
+     "row": 1,
+     "col": 1
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 7
+    },
+    "end": {
+     "row": 1,
+     "col": 1
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 7
+    },
+    "end": {
+     "row": 1,
+     "col": 1
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     }
+    ],
+    "waits": []
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 178,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Sarkaz Heirbearer Warrior Captain",
+      "enemy_id": "enemy_1222_dpvt_2",
+      "count": 3,
+      "time": 3,
+      "interval": 18,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Warrior Captain",
+      "enemy_id": "enemy_1222_dpvt_2",
+      "count": 2,
+      "time": 35,
+      "interval": 18,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Bombardier",
+      "enemy_id": "enemy_1361_dthrow",
+      "count": 2,
+      "time": 70,
+      "interval": 45,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Wrathgorger",
+      "enemy_id": "enemy_1226_dklord_2",
+      "count": 2,
+      "time": 81,
+      "interval": 70,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Bombardier",
+      "enemy_id": "enemy_1361_dthrow",
+      "count": 1,
+      "time": 150,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Warrior Captain",
+      "enemy_id": "enemy_1222_dpvt_2",
+      "count": 4,
+      "time": 90,
+      "interval": 18,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Warrior Captain",
+      "enemy_id": "enemy_1222_dpvt_2",
+      "count": 2,
+      "time": 160,
+      "interval": 18,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Retrofit ASV",
+      "enemy_id": "enemy_1224_dsuply_2",
+      "count": 1,
+      "time": 30,
+      "route": 3,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Retrofit ASV",
+      "enemy_id": "enemy_1224_dsuply_2",
+      "count": 1,
+      "time": 64,
+      "route": 4,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Retrofit ASV",
+      "enemy_id": "enemy_1224_dsuply_2",
+      "count": 1,
+      "time": 118.5,
+      "route": 5,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Retrofit ASV",
+      "enemy_id": "enemy_1224_dsuply_2",
+      "count": 1,
+      "time": 135.5,
+      "route": 5,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sarkaz Heirbearer Retrofit ASV",
+      "enemy_id": "enemy_1224_dsuply_2",
+      "count": 1,
+      "time": 152.5,
+      "route": 6,
+      "fragment": 0
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 3,
+    "col": 10,
+    "routes": [
+     0
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 4,
+    "col": 7,
+    "routes": [
+     3,
+     4,
+     5,
+     5,
+     6
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 5,
+    "col": 1,
+    "routes": [
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 5,
+    "col": 10,
+    "routes": [
+     2,
+     2
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 1,
+    "col": 1,
+    "routes": [
+     0,
+     1,
+     2,
+     1,
+     2,
+     1,
+     1,
+     3,
+     4,
+     5,
+     5,
+     6
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1220_dzoms",
+    "slug": "touch_of_the_sanguinarch",
+    "name": "Touch of the Sanguinarch",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1220_dzoms_2",
+    "slug": "touch_of_benevolence",
+    "name": "Touch of Benevolence",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1221_dzomg_2",
+    "slug": "gift_of_magnanimity",
+    "name": "Gift of Magnanimity",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1222_dpvt_2",
+    "slug": "sarkaz_heirbearer_warrior_captain",
+    "name": "Sarkaz Heirbearer Warrior Captain",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1224_dsuply_2",
+    "slug": "sarkaz_heirbearer_retrofit_asv",
+    "name": "Sarkaz Heirbearer Retrofit ASV",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1226_dklord_2",
+    "slug": "sarkaz_heirbearer_wrathgorger",
+    "name": "Sarkaz Heirbearer Wrathgorger",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1361_dthrow",
+    "slug": "sarkaz_heirbearer_bombardier",
+    "name": "Sarkaz Heirbearer Bombardier",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "devices": [],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "KR-7",
+  "geometryHash": "60594c9555eeb28181d5fb368d97e53287ab21f68e3ec0001def2a9d18ed8177",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      10,
+      3
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      1,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "length": 11,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      10,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      1,
+      1
+     ]
+    ]
+   },
+   "1": {
+    "points": [
+     [
+      1,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      1,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      1,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      1,
+      1
+     ]
+    ]
+   },
+   "2": {
+    "points": [
+     [
+      10,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      1,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ],
+    "length": 13,
+    "breaks": [
+     6
+    ],
+    "flying": false,
+    "holds": [
+     {
+      "at": 5,
+      "seconds": 3,
+      "point": [
+       5,
+       5
+      ],
+      "tunnel": true
+     }
+    ],
+    "nodes": [
+     [
+      10,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      1,
+      1
+     ]
+    ]
+   },
+   "3": {
+    "points": [
+     [
+      7,
+      4
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      1,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1.4142135623730951,
+     2.414213562373095,
+     3.414213562373095,
+     4.414213562373095,
+     5.414213562373095,
+     6.414213562373095,
+     7.414213562373095,
+     8.414213562373096,
+     9.414213562373096,
+     10.414213562373096,
+     11.414213562373096,
+     12.414213562373096,
+     13.414213562373096,
+     14.414213562373096,
+     15.414213562373096,
+     16.414213562373096,
+     17.414213562373096,
+     18.414213562373096,
+     19.414213562373096,
+     20.414213562373096,
+     21.414213562373096,
+     22.414213562373096,
+     23.414213562373096,
+     24.414213562373096,
+     25.414213562373096,
+     26.414213562373096,
+     27.414213562373096,
+     28.414213562373096,
+     29.414213562373096,
+     30.414213562373096,
+     31.414213562373096,
+     32.41421356237309,
+     33.41421356237309,
+     34.41421356237309,
+     35.41421356237309,
+     36.41421356237309,
+     37.41421356237309,
+     38.41421356237309,
+     39.41421356237309,
+     40.41421356237309,
+     41.41421356237309,
+     42.41421356237309,
+     43.41421356237309,
+     44.41421356237309,
+     45.41421356237309,
+     46.41421356237309,
+     47.41421356237309,
+     48.41421356237309,
+     49.41421356237309,
+     50.41421356237309,
+     51.41421356237309,
+     52.41421356237309
+    ],
+    "length": 52.41421356237309,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      7,
+      4
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      1,
+      1
+     ]
+    ]
+   },
+   "4": {
+    "points": [
+     [
+      7,
+      4
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      1,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1.4142135623730951,
+     2.414213562373095,
+     3.414213562373095,
+     4.414213562373095,
+     5.414213562373095,
+     6.414213562373095,
+     7.414213562373095,
+     8.414213562373096,
+     9.414213562373096,
+     10.414213562373096,
+     11.414213562373096,
+     12.414213562373096,
+     13.414213562373096,
+     14.414213562373096,
+     15.414213562373096,
+     16.414213562373096,
+     17.414213562373096,
+     18.414213562373096,
+     19.414213562373096,
+     20.414213562373096,
+     21.414213562373096,
+     22.414213562373096,
+     23.414213562373096,
+     24.414213562373096,
+     25.414213562373096,
+     26.414213562373096,
+     27.414213562373096,
+     28.414213562373096,
+     29.414213562373096,
+     30.414213562373096,
+     31.414213562373096,
+     32.41421356237309,
+     33.41421356237309,
+     34.41421356237309,
+     35.41421356237309,
+     36.41421356237309,
+     37.41421356237309,
+     38.41421356237309,
+     39.41421356237309,
+     40.41421356237309,
+     41.41421356237309,
+     42.41421356237309,
+     43.41421356237309,
+     44.41421356237309
+    ],
+    "length": 44.41421356237309,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      7,
+      4
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      1,
+      1
+     ]
+    ]
+   },
+   "5": {
+    "points": [
+     [
+      7,
+      4
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      1,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1.4142135623730951,
+     2.414213562373095,
+     3.414213562373095,
+     4.414213562373095,
+     5.414213562373095,
+     6.414213562373095,
+     7.414213562373095,
+     8.414213562373096,
+     9.414213562373096,
+     10.414213562373096,
+     11.414213562373096,
+     12.414213562373096,
+     13.414213562373096,
+     14.414213562373096,
+     15.414213562373096,
+     16.414213562373096,
+     17.414213562373096,
+     18.414213562373096,
+     19.414213562373096,
+     20.414213562373096,
+     21.414213562373096,
+     22.414213562373096,
+     23.414213562373096,
+     24.414213562373096,
+     25.414213562373096,
+     26.414213562373096,
+     27.414213562373096,
+     28.414213562373096,
+     29.414213562373096,
+     30.414213562373096,
+     31.414213562373096,
+     32.41421356237309,
+     33.41421356237309,
+     34.41421356237309,
+     35.41421356237309,
+     36.41421356237309
+    ],
+    "length": 36.41421356237309,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      7,
+      4
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      1,
+      1
+     ]
+    ]
+   },
+   "6": {
+    "points": [
+     [
+      7,
+      4
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      1,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1.4142135623730951,
+     2.414213562373095,
+     3.414213562373095,
+     4.414213562373095,
+     5.414213562373095,
+     6.414213562373095,
+     7.414213562373095,
+     8.414213562373096,
+     9.414213562373096,
+     10.414213562373096,
+     11.414213562373096,
+     12.414213562373096,
+     13.414213562373096,
+     14.414213562373096,
+     15.414213562373096,
+     16.414213562373096,
+     17.414213562373096,
+     18.414213562373096,
+     19.414213562373096,
+     20.414213562373096,
+     21.414213562373096,
+     22.414213562373096,
+     23.414213562373096,
+     24.414213562373096,
+     25.414213562373096,
+     26.414213562373096,
+     27.414213562373096,
+     28.414213562373096
+    ],
+    "length": 28.414213562373096,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      7,
+      4
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      1,
+      1
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1222_dpvt_2": {
+   "key": "enemy_1222_dpvt_2",
+   "prefabKey": "enemy_1222_dpvt_2",
+   "name": "Sarkaz Heirbearer Warrior Captain",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 4500,
+    "atk": 400,
+    "def": 210,
+    "res": 30,
+    "moveSpeed": 1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": -1,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Will be reborn as a <Touch of Benevolence> after falling in battle for the first time",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "deathrattle.delay": 1
+    },
+    "bbStr": {
+     "deathrattle.enemy_key": "enemy_1220_dzoms_2"
+    },
+    "groups": {
+     "deathrattle": [
+      "delay",
+      "enemy_key"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "sarkaz"
+   ]
+  },
+  "enemy_1220_dzoms_2": {
+   "key": "enemy_1220_dzoms_2",
+   "prefabKey": "enemy_1220_dzoms_2",
+   "name": "Touch of Benevolence",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 1500,
+    "atk": 380,
+    "def": 100,
+    "res": 10,
+    "moveSpeed": 1,
+    "bat": 2.5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Reborn Creation (takes greatly reduced Physical and Arts damage)",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Units blocking it gain +1 Block (up to a maximum of +6)",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "dmg_res.damage_resistance": 0.9,
+     "buff_to_blocker.max_valid_stack_cnt": 6,
+     "buff_to_blocker.block_cnt": 1
+    },
+    "bbStr": {},
+    "groups": {
+     "dmg_res": [
+      "damage_resistance"
+     ],
+     "buff_to_blocker": [
+      "block_cnt",
+      "max_valid_stack_cnt"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1224_dsuply_2": {
+   "key": "enemy_1224_dsuply_2",
+   "prefabKey": "enemy_1224_dsuply_2",
+   "name": "Sarkaz Heirbearer Retrofit ASV",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 9000,
+    "atk": 420,
+    "def": 600,
+    "res": 10,
+    "moveSpeed": 0.7,
+    "bat": 1.7,
+    "aspd": 100,
+    "rangeRadius": 1.6,
+    "rawRangeRadius": 1.6,
+    "blockCnt": 1,
+    "massLevel": 4,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "While in battle, Reborn Creations have increased ATK, and their attacks will additionally deal <$ba.dt.apoptosis>Necrosis damage</>",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "aura.enemy_dsuply_2_t[attr_buff].atk": 0.1,
+     "aura.enemy_dsuply_2_t[attr_buff].max_valid_stack_cnt": 5,
+     "aura.ep_damage_ratio": 0.1
+    },
+    "bbStr": {},
+    "groups": {
+     "aura": [
+      "enemy_dsuply_2_t[attr_buff].atk",
+      "enemy_dsuply_2_t[attr_buff].max_valid_stack_cnt",
+      "ep_damage_ratio"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "machine"
+   ]
+  },
+  "enemy_1361_dthrow": {
+   "key": "enemy_1361_dthrow",
+   "prefabKey": "enemy_1361_dthrow",
+   "name": "Sarkaz Heirbearer Bombardier",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 6000,
+    "atk": 450,
+    "def": 150,
+    "res": 40,
+    "moveSpeed": 0.8,
+    "bat": 3,
+    "aspd": 100,
+    "rangeRadius": 2,
+    "rawRangeRadius": 2,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Deals long-ranged attacks that explode after a delay, inflicting Physical damage in an area.",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Will be reborn as a <Touch of the Sanguinarch> after falling in battle for the first time",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "Attack.attack@projectile_delay_time": 4,
+     "Attack.delay": 1,
+     "Attack.attack@projectile_radius": 1.1
+    },
+    "bbStr": {
+     "Attack.enemy_key": "enemy_1220_dzoms"
+    },
+    "groups": {
+     "Attack": [
+      "attack@projectile_delay_time",
+      "attack@projectile_radius",
+      "delay",
+      "enemy_key"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "sarkaz"
+   ]
+  },
+  "enemy_1220_dzoms": {
+   "key": "enemy_1220_dzoms",
+   "prefabKey": "enemy_1220_dzoms",
+   "name": "Touch of the Sanguinarch",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 1500,
+    "atk": 280,
+    "def": 100,
+    "res": 10,
+    "moveSpeed": 1,
+    "bat": 2.5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Reborn Creation (takes greatly reduced Physical and Arts damage)",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Units blocking it gain +1 Block (up to a maximum of +6)",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "dmg_res.damage_resistance": 0.9,
+     "buff_to_blocker.max_valid_stack_cnt": 6,
+     "buff_to_blocker.block_cnt": 1
+    },
+    "bbStr": {},
+    "groups": {
+     "dmg_res": [
+      "damage_resistance"
+     ],
+     "buff_to_blocker": [
+      "block_cnt",
+      "max_valid_stack_cnt"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1226_dklord_2": {
+   "key": "enemy_1226_dklord_2",
+   "prefabKey": "enemy_1226_dklord_2",
+   "name": "Sarkaz Heirbearer Wrathgorger",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 20000,
+    "atk": 1200,
+    "def": 800,
+    "res": 20,
+    "moveSpeed": 0.5,
+    "bat": 5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": -1,
+    "blockCnt": 1,
+    "massLevel": 4,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Gains increased ATK for each Reborn Creation on the battlefield",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Will be reborn as a <Gift of Magnanimity> after falling in battle for the first time",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "deathrattle.delay": 1,
+     "aura.atk": 0.25,
+     "aura.max_valid_stack_cnt": 6
+    },
+    "bbStr": {
+     "deathrattle.enemy_key": "enemy_1221_dzomg_2"
+    },
+    "groups": {
+     "deathrattle": [
+      "delay",
+      "enemy_key"
+     ],
+     "aura": [
+      "atk",
+      "max_valid_stack_cnt"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "sarkaz"
+   ]
+  },
+  "enemy_1221_dzomg_2": {
+   "key": "enemy_1221_dzomg_2",
+   "prefabKey": "enemy_1221_dzomg_2",
+   "name": "Gift of Magnanimity",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3000,
+    "atk": 800,
+    "def": 200,
+    "res": 20,
+    "moveSpeed": 0.7,
+    "bat": 4,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Reborn Creation (takes greatly reduced Physical and Arts damage)",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Units blocking it gain +1 Block (up to a maximum of +6)",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "dmg_res.damage_resistance": 0.9,
+     "buff_to_blocker.max_valid_stack_cnt": 6,
+     "buff_to_blocker.block_cnt": 1
+    },
+    "bbStr": {},
+    "groups": {
+     "dmg_res": [
+      "damage_resistance"
+     ],
+     "buff_to_blocker": [
+      "block_cnt",
+      "max_valid_stack_cnt"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ }
+}

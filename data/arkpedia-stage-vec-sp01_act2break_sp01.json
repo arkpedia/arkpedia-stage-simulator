@@ -1,0 +1,862 @@
+{
+ "code": "VEC-SP01",
+ "name": "Internal Order",
+ "description": "Handle things in an orderly fashion, without pride, without impatience.",
+ "battle": {
+  "max_life": 1,
+  "unit_limit": 6,
+  "initial_dp": 20,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "vec-sp01_act2break_sp01",
+  "rows": 5,
+  "cols": 8,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_telout",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_telin",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    1,
+    2,
+    2,
+    2,
+    3,
+    4,
+    5,
+    0
+   ],
+   [
+    6,
+    2,
+    2,
+    2,
+    7,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    2,
+    2,
+    2,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    6,
+    6,
+    6,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 1
+    },
+    "end": {
+     "row": 1,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 30
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 2
+    },
+    "end": {
+     "row": 1,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 2
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 30
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 3
+    },
+    "end": {
+     "row": 1,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 3
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 30
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 0
+    },
+    "end": {
+     "row": 1,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 4
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 1,
+       "col": 0
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 5
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 2,
+      "seconds": 5
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 3,
+      "seconds": 5
+     }
+    ]
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 18,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Soul Maelstrom",
+      "enemy_id": "enemy_1428_lrsoul",
+      "count": 1,
+      "time": 1,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Soul Maelstrom",
+      "enemy_id": "enemy_1428_lrsoul",
+      "count": 1,
+      "time": 3,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Soul Maelstrom",
+      "enemy_id": "enemy_1428_lrsoul",
+      "count": 1,
+      "time": 5,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Focused Soul Remnant",
+      "enemy_id": "enemy_1429_lrwzrd",
+      "count": 1,
+      "time": 18,
+      "route": 3,
+      "fragment": 0
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 2,
+    "col": 0,
+    "routes": [
+     3
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 4,
+    "col": 1,
+    "routes": [
+     0
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 4,
+    "col": 2,
+    "routes": [
+     1
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 4,
+    "col": 3,
+    "routes": [
+     2
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 1,
+    "col": 5,
+    "routes": [
+     0,
+     1,
+     2,
+     3
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1428_lrsoul",
+    "slug": "soul_maelstrom",
+    "name": "Soul Maelstrom",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1429_lrwzrd",
+    "slug": "focused_soul_remnant",
+    "name": "Focused Soul Remnant",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "devices": [],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "VEC-SP01",
+  "geometryHash": "fea1b7139ec4dd88a01982920f06b2b0d9ebab82b815766fbae8c89647982370",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      5,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5.414213562373095,
+     6.414213562373095
+    ],
+    "length": 6.414213562373095,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 2,
+      "seconds": 30,
+      "point": [
+       1,
+       2
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      5,
+      1
+     ]
+    ]
+   },
+   "1": {
+    "points": [
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      5,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4.414213562373095,
+     5.414213562373095
+    ],
+    "length": 5.414213562373095,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 2,
+      "seconds": 30,
+      "point": [
+       2,
+       2
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      5,
+      1
+     ]
+    ]
+   },
+   "2": {
+    "points": [
+     [
+      3,
+      4
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      5,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3.414213562373095,
+     4.414213562373095
+    ],
+    "length": 4.414213562373095,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 2,
+      "seconds": 30,
+      "point": [
+       3,
+       2
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      3,
+      4
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      5,
+      1
+     ]
+    ]
+   },
+   "3": {
+    "points": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      5,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "length": 9,
+    "breaks": [
+     5
+    ],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 5,
+      "point": [
+       1,
+       2
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 2,
+      "seconds": 5,
+      "point": [
+       2,
+       2
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 3,
+      "seconds": 5,
+      "point": [
+       3,
+       2
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 4,
+      "seconds": 5,
+      "point": [
+       4,
+       2
+      ],
+      "tunnel": true
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      0,
+      1
+     ],
+     [
+      5,
+      1
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1428_lrsoul": {
+   "key": "enemy_1428_lrsoul",
+   "prefabKey": "enemy_1428_lrsoul",
+   "name": "Soul Maelstrom",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3500,
+    "atk": 300,
+    "def": 100,
+    "res": 50,
+    "moveSpeed": 1,
+    "bat": 3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": -1,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "sarkaz"
+   ]
+  },
+  "enemy_1429_lrwzrd": {
+   "key": "enemy_1429_lrwzrd",
+   "prefabKey": "enemy_1429_lrwzrd",
+   "name": "Focused Soul Remnant",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 8000,
+    "atk": 400,
+    "def": 400,
+    "res": 50,
+    "moveSpeed": 0.6,
+    "bat": 4,
+    "aspd": 100,
+    "rangeRadius": 1.7,
+    "rawRangeRadius": 1.7,
+    "blockCnt": 1,
+    "massLevel": 4,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Attacks deal Arts damage. Can pick up and retain up to 3 Soul Maelstroms.",
+     "format": "NORMAL"
+    },
+    {
+     "text": "When carrying a Soul Maelstrom, expends all Soul Maelstroms to deal continuous Arts damage to the target and all your units in a line.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [
+    {
+     "prefabKey": "Laser",
+     "priority": 0,
+     "cooldown": 15,
+     "initCooldown": 0,
+     "spCost": 0,
+     "bb": {
+      "atk_ladder": 0.25,
+      "atk_scale": 0.4,
+      "atk_step": 0.4
+     },
+     "bbStr": {}
+    }
+   ],
+   "notCountInTotal": false,
+   "tags": [
+    "sarkaz"
+   ]
+  }
+ }
+}

@@ -1,0 +1,1650 @@
+{
+ "code": "S9-4",
+ "name": "No Retreat",
+ "description": "Amidst brick and rubble, there is no retreat for either side.\n<Tattered Pillar> Can be knocked down by neighboring Operators, dealing True damage to the two tiles it falls on and forming rubble that blocks routes.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 30,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "s9-4",
+  "rows": 8,
+  "cols": 12,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_fence_bound",
+    "height": "low",
+    "walkable": false,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    1,
+    2,
+    2,
+    2,
+    0,
+    3,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    4,
+    1,
+    3,
+    3,
+    2,
+    3,
+    2,
+    2,
+    2,
+    3,
+    0
+   ],
+   [
+    0,
+    0,
+    1,
+    1,
+    3,
+    2,
+    2,
+    2,
+    3,
+    2,
+    2,
+    0
+   ],
+   [
+    0,
+    4,
+    1,
+    3,
+    5,
+    0,
+    0,
+    0,
+    0,
+    0,
+    6,
+    0
+   ],
+   [
+    0,
+    5,
+    1,
+    2,
+    1,
+    1,
+    5,
+    1,
+    1,
+    2,
+    2,
+    0
+   ],
+   [
+    0,
+    0,
+    5,
+    5,
+    1,
+    1,
+    1,
+    1,
+    1,
+    5,
+    5,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 2
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 2
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 50
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 1
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 2
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 15
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 1
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 3
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 15
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 1
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 2
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 1
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 3
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 1
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 2
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 1
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 2
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ]
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 188,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Dublinn Flamerazer",
+      "enemy_id": "enemy_1173_duspfr",
+      "count": 1,
+      "time": 0,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Dublinn Heavy Defender",
+      "enemy_id": "enemy_1170_dushld",
+      "count": 1,
+      "time": 3,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Heavy Defender",
+      "enemy_id": "enemy_1170_dushld",
+      "count": 1,
+      "time": 26,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Dublinn Heavy Defender",
+      "enemy_id": "enemy_1170_dushld",
+      "count": 1,
+      "time": 53,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Dublinn Flying Soldier",
+      "enemy_id": "enemy_1171_durokt",
+      "count": 1,
+      "time": 31,
+      "route": 2,
+      "fragment": 2
+     },
+     {
+      "enemy": "Dublinn Flying Soldier",
+      "enemy_id": "enemy_1171_durokt",
+      "count": 1,
+      "time": 53,
+      "route": 2,
+      "fragment": 2
+     },
+     {
+      "enemy": "Dublinn Heavy Defender",
+      "enemy_id": "enemy_1170_dushld",
+      "count": 1,
+      "time": 76,
+      "route": 1,
+      "fragment": 3
+     },
+     {
+      "enemy": "Dublinn Flamerazer",
+      "enemy_id": "enemy_1173_duspfr",
+      "count": 2,
+      "time": 98,
+      "interval": 18,
+      "route": 3,
+      "fragment": 3
+     },
+     {
+      "enemy": "Dublinn Flying Soldier",
+      "enemy_id": "enemy_1171_durokt",
+      "count": 1,
+      "time": 81,
+      "route": 4,
+      "fragment": 3
+     },
+     {
+      "enemy": "Dublinn Flamerazer",
+      "enemy_id": "enemy_1173_duspfr",
+      "count": 1,
+      "time": 93,
+      "route": 5,
+      "fragment": 3
+     },
+     {
+      "enemy": "Dublinn Flying Soldier",
+      "enemy_id": "enemy_1171_durokt",
+      "count": 2,
+      "time": 103,
+      "interval": 15,
+      "route": 4,
+      "fragment": 3
+     },
+     {
+      "enemy": "Dublinn Heavy Defender",
+      "enemy_id": "enemy_1170_dushld",
+      "count": 1,
+      "time": 128,
+      "route": 6,
+      "fragment": 3
+     },
+     {
+      "enemy": "Dublinn Heavy Defender",
+      "enemy_id": "enemy_1170_dushld",
+      "count": 2,
+      "time": 141,
+      "interval": 35,
+      "route": 1,
+      "fragment": 4
+     },
+     {
+      "enemy": "Dublinn Flamerazer",
+      "enemy_id": "enemy_1173_duspfr",
+      "count": 1,
+      "time": 163,
+      "route": 3,
+      "fragment": 4
+     },
+     {
+      "enemy": "Dublinn Flying Soldier",
+      "enemy_id": "enemy_1171_durokt",
+      "count": 2,
+      "time": 143,
+      "interval": 15,
+      "route": 4,
+      "fragment": 4
+     },
+     {
+      "enemy": "Dublinn Flamerazer",
+      "enemy_id": "enemy_1173_duspfr",
+      "count": 2,
+      "time": 151,
+      "interval": 18,
+      "route": 5,
+      "fragment": 4
+     },
+     {
+      "enemy": "Dublinn Flamerazer",
+      "enemy_id": "enemy_1173_duspfr",
+      "count": 1,
+      "time": 188,
+      "route": 5,
+      "fragment": 4
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 2,
+    "col": 1,
+    "routes": [
+     1,
+     1,
+     1,
+     1,
+     3,
+     6,
+     1,
+     3
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 4,
+    "col": 1,
+    "routes": [
+     2,
+     2,
+     4,
+     5,
+     4,
+     4,
+     5,
+     5
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 4,
+    "col": 10,
+    "routes": [
+     0,
+     1,
+     1,
+     1,
+     2,
+     2,
+     1,
+     3,
+     4,
+     5,
+     4,
+     6,
+     1,
+     3,
+     4,
+     5,
+     5
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1170_dushld",
+    "slug": "dublinn_heavy_defender",
+    "name": "Dublinn Heavy Defender",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1171_durokt",
+    "slug": "dublinn_flying_soldier",
+    "name": "Dublinn Flying Soldier",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1173_duspfr",
+    "slug": "dublinn_flamerazer",
+    "name": "Dublinn Flamerazer",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "devices": [
+  {
+   "col": 3,
+   "description": "Can only be attacked by adjacent allied units",
+   "hidden": false,
+   "key": "trap_043_dupilr",
+   "kind": "device",
+   "name": "Tattered Pillar",
+   "row": 3
+  }
+ ],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "S9-4",
+  "geometryHash": "ee554589ea7a626a86470986a1bbe99dc2db8c1e80a021bda9b9ac72098d8cde",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      10,
+      3
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15
+    ],
+    "length": 15,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 0,
+      "seconds": 50,
+      "point": [
+       2,
+       3
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      10,
+      4
+     ]
+    ]
+   },
+   "1": {
+    "points": [
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      10,
+      3
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15
+    ],
+    "length": 15,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 15,
+      "point": [
+       2,
+       2
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      10,
+      4
+     ]
+    ]
+   },
+   "2": {
+    "points": [
+     [
+      1,
+      4
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      7,
+      6
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      10,
+      5
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5.414213562373095,
+     6.414213562373095,
+     7.414213562373095,
+     8.82842712474619,
+     9.82842712474619,
+     10.82842712474619,
+     11.82842712474619
+    ],
+    "length": 11.82842712474619,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 15,
+      "point": [
+       2,
+       4
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      1,
+      4
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      10,
+      4
+     ]
+    ]
+   },
+   "3": {
+    "points": [
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      10,
+      3
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15
+    ],
+    "length": 15,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 10,
+      "point": [
+       2,
+       2
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      10,
+      4
+     ]
+    ]
+   },
+   "4": {
+    "points": [
+     [
+      1,
+      4
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      7,
+      6
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      10,
+      5
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5.414213562373095,
+     6.414213562373095,
+     7.414213562373095,
+     8.82842712474619,
+     9.82842712474619,
+     10.82842712474619,
+     11.82842712474619
+    ],
+    "length": 11.82842712474619,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 5,
+      "point": [
+       2,
+       4
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      1,
+      4
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      10,
+      4
+     ]
+    ]
+   },
+   "5": {
+    "points": [
+     [
+      1,
+      4
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      7,
+      6
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      10,
+      5
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5.414213562373095,
+     6.414213562373095,
+     7.414213562373095,
+     8.82842712474619,
+     9.82842712474619,
+     10.82842712474619,
+     11.82842712474619
+    ],
+    "length": 11.82842712474619,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 5,
+      "point": [
+       2,
+       4
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      1,
+      4
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      10,
+      4
+     ]
+    ]
+   },
+   "6": {
+    "points": [
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      10,
+      3
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15
+    ],
+    "length": 15,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 5,
+      "point": [
+       2,
+       2
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      10,
+      4
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1173_duspfr": {
+   "key": "enemy_1173_duspfr",
+   "prefabKey": "enemy_1173_duspfr",
+   "name": "Dublinn Flamerazer",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 8000,
+    "atk": 500,
+    "def": 400,
+    "res": 0,
+    "moveSpeed": 0.8,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 1.5,
+    "rawRangeRadius": 1.5,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Continuously deals Arts damage and <$ba.dt.burning>Burn damage</> for the skill duration",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Upon death, explodes and deals Arts damage, knocking down nearby Tattered Pillars and instantly defeating other <Dublinn Flamerazers>",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [
+    {
+     "prefabKey": "Flame",
+     "priority": 1,
+     "cooldown": 0,
+     "initCooldown": 0,
+     "spCost": 0,
+     "bb": {
+      "duspfr_flame[cd].duration": 10.6,
+      "duspfr_flame[cd].cooldown": 10,
+      "atk_scale": 0.12,
+      "ep_damage_ratio": 0.06,
+      "hit_interval": 0.5,
+      "duspfr_flame[cd].interval": 6
+     },
+     "bbStr": {}
+    },
+    {
+     "prefabKey": "DeadBoom",
+     "priority": 0,
+     "cooldown": 0,
+     "initCooldown": 0,
+     "spCost": 0,
+     "bb": {
+      "atk_scale": 1
+     },
+     "bbStr": {}
+    }
+   ],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1170_dushld": {
+   "key": "enemy_1170_dushld",
+   "prefabKey": "enemy_1170_dushld",
+   "name": "Dublinn Heavy Defender",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 7000,
+    "atk": 700,
+    "def": 750,
+    "res": 0,
+    "moveSpeed": 0.7,
+    "bat": 4,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 4,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "<$ba.refraction>Refraction</>",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "refracting.magic_resistance": 70
+    },
+    "bbStr": {},
+    "groups": {
+     "refracting": [
+      "magic_resistance"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1171_durokt": {
+   "key": "enemy_1171_durokt",
+   "prefabKey": "enemy_1171_durokt",
+   "name": "Dublinn Flying Soldier",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "ALL",
+   "stats": {
+    "maxHp": 6000,
+    "atk": 400,
+    "def": 350,
+    "res": 0,
+    "moveSpeed": 0.8,
+    "bat": 3,
+    "aspd": 100,
+    "rangeRadius": 1.3,
+    "rawRangeRadius": 1.3,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "<$ba.float>Low-Altitude Hovering</>",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "refracting.magic_resistance": 70
+    },
+    "bbStr": {},
+    "groups": {
+     "refracting": [
+      "magic_resistance"
+     ]
+    }
+   },
+   "skills": [
+    {
+     "prefabKey": "RecoverAnim",
+     "priority": 0,
+     "cooldown": 0,
+     "initCooldown": 0,
+     "spCost": 0,
+     "bb": {},
+     "bbStr": {}
+    }
+   ],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ }
+}

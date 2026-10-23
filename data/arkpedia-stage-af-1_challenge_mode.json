@@ -1,0 +1,1533 @@
+{
+ "code": "AF-1",
+ "name": "Sent From Above",
+ "description": "Conditions: The deployment cost of ranged Operators is tripled.\nStage available from 7/29 10:00 A.M. to 8/12 3:59 A.M.",
+ "battle": {
+  "max_life": 5,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "af-1",
+  "rows": 8,
+  "cols": 11,
+  "tileLegend": [
+   {
+    "key": "tile_hole",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_flystart",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    0
+   ],
+   [
+    0,
+    2,
+    2,
+    2,
+    3,
+    3,
+    3,
+    2,
+    2,
+    2,
+    0
+   ],
+   [
+    0,
+    2,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    2,
+    0
+   ],
+   [
+    0,
+    3,
+    3,
+    0,
+    2,
+    4,
+    2,
+    0,
+    3,
+    3,
+    0
+   ],
+   [
+    0,
+    3,
+    3,
+    0,
+    2,
+    4,
+    2,
+    0,
+    3,
+    3,
+    0
+   ],
+   [
+    0,
+    2,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    2,
+    0
+   ],
+   [
+    0,
+    2,
+    2,
+    2,
+    3,
+    3,
+    3,
+    2,
+    2,
+    2,
+    0
+   ],
+   [
+    0,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 1
+    },
+    "end": {
+     "row": 4,
+     "col": 5
+    },
+    "checkpoints": [],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 1
+    },
+    "end": {
+     "row": 3,
+     "col": 5
+    },
+    "checkpoints": [],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 7,
+     "col": 1
+    },
+    "end": {
+     "row": 4,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 2
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 7,
+     "col": 2
+    },
+    "end": {
+     "row": 4,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 2
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 9
+    },
+    "end": {
+     "row": 3,
+     "col": 5
+    },
+    "checkpoints": [],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 9
+    },
+    "end": {
+     "row": 4,
+     "col": 5
+    },
+    "checkpoints": [],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 0,
+     "col": 9
+    },
+    "end": {
+     "row": 3,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 0,
+     "col": 8
+    },
+    "end": {
+     "row": 3,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 8
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 2
+    },
+    "end": {
+     "row": 4,
+     "col": 5
+    },
+    "checkpoints": [],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 8
+    },
+    "end": {
+     "row": 3,
+     "col": 5
+    },
+    "checkpoints": [],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 6
+    },
+    "end": {
+     "row": 3,
+     "col": 5
+    },
+    "checkpoints": [],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 4
+    },
+    "end": {
+     "row": 4,
+     "col": 5
+    },
+    "checkpoints": [],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 6
+    },
+    "end": {
+     "row": 4,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 6
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 4
+    },
+    "end": {
+     "row": 3,
+     "col": 5
+    },
+    "checkpoints": [],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 9
+    },
+    "end": {
+     "row": 4,
+     "col": 5
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 9
+    },
+    "end": {
+     "row": 3,
+     "col": 5
+    },
+    "checkpoints": [],
+    "waits": []
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 180,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Airborne Soldier",
+      "enemy_id": "enemy_1013_airdrp",
+      "count": 1,
+      "time": 8,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Airborne Soldier",
+      "enemy_id": "enemy_1013_airdrp",
+      "count": 1,
+      "time": 16,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Airborne Soldier",
+      "enemy_id": "enemy_1013_airdrp",
+      "count": 2,
+      "time": 29,
+      "interval": 9,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "Airborne Soldier",
+      "enemy_id": "enemy_1013_airdrp",
+      "count": 2,
+      "time": 29,
+      "interval": 9,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Monster Mk II",
+      "enemy_id": "enemy_1005_yokai_2",
+      "count": 1,
+      "time": 35,
+      "route": 2,
+      "fragment": 2
+     },
+     {
+      "enemy": "Monster Mk II",
+      "enemy_id": "enemy_1005_yokai_2",
+      "count": 1,
+      "time": 41,
+      "route": 3,
+      "fragment": 2
+     },
+     {
+      "enemy": "Airborne Soldier",
+      "enemy_id": "enemy_1013_airdrp",
+      "count": 1,
+      "time": 56,
+      "route": 4,
+      "fragment": 3
+     },
+     {
+      "enemy": "Airborne Soldier",
+      "enemy_id": "enemy_1013_airdrp",
+      "count": 1,
+      "time": 61,
+      "route": 5,
+      "fragment": 3
+     },
+     {
+      "enemy": "Airborne Soldier",
+      "enemy_id": "enemy_1013_airdrp",
+      "count": 1,
+      "time": 64,
+      "route": 0,
+      "fragment": 3
+     },
+     {
+      "enemy": "Airborne Soldier",
+      "enemy_id": "enemy_1013_airdrp",
+      "count": 1,
+      "time": 64,
+      "route": 1,
+      "fragment": 3
+     },
+     {
+      "enemy": "Airborne Soldier",
+      "enemy_id": "enemy_1013_airdrp",
+      "count": 2,
+      "time": 77,
+      "interval": 9,
+      "route": 5,
+      "fragment": 4
+     },
+     {
+      "enemy": "Airborne Soldier",
+      "enemy_id": "enemy_1013_airdrp",
+      "count": 2,
+      "time": 77,
+      "interval": 9,
+      "route": 4,
+      "fragment": 4
+     },
+     {
+      "enemy": "Monster Mk II",
+      "enemy_id": "enemy_1005_yokai_2",
+      "count": 1,
+      "time": 83,
+      "route": 6,
+      "fragment": 4
+     },
+     {
+      "enemy": "Monster Mk II",
+      "enemy_id": "enemy_1005_yokai_2",
+      "count": 1,
+      "time": 89,
+      "route": 7,
+      "fragment": 4
+     },
+     {
+      "enemy": "Airborne Soldier",
+      "enemy_id": "enemy_1013_airdrp",
+      "count": 1,
+      "time": 85,
+      "route": 0,
+      "fragment": 4
+     },
+     {
+      "enemy": "Airborne Soldier",
+      "enemy_id": "enemy_1013_airdrp",
+      "count": 1,
+      "time": 85,
+      "route": 1,
+      "fragment": 4
+     },
+     {
+      "enemy": "Airborne Soldier Leader",
+      "enemy_id": "enemy_1013_airdrp_2",
+      "count": 1,
+      "time": 114,
+      "route": 0,
+      "fragment": 5
+     },
+     {
+      "enemy": "Airborne Soldier Leader",
+      "enemy_id": "enemy_1013_airdrp_2",
+      "count": 1,
+      "time": 114,
+      "route": 4,
+      "fragment": 5
+     },
+     {
+      "enemy": "Airborne Soldier Leader",
+      "enemy_id": "enemy_1013_airdrp_2",
+      "count": 1,
+      "time": 125,
+      "route": 1,
+      "fragment": 5
+     },
+     {
+      "enemy": "Airborne Soldier Leader",
+      "enemy_id": "enemy_1013_airdrp_2",
+      "count": 1,
+      "time": 125,
+      "route": 5,
+      "fragment": 5
+     },
+     {
+      "enemy": "Monster Mk II",
+      "enemy_id": "enemy_1005_yokai_2",
+      "count": 3,
+      "time": 101,
+      "interval": 12,
+      "route": 3,
+      "fragment": 5
+     },
+     {
+      "enemy": "Monster Mk II",
+      "enemy_id": "enemy_1005_yokai_2",
+      "count": 3,
+      "time": 101,
+      "interval": 12,
+      "route": 7,
+      "fragment": 5
+     },
+     {
+      "enemy": "Monster Mk II",
+      "enemy_id": "enemy_1005_yokai_2",
+      "count": 3,
+      "time": 106,
+      "interval": 12,
+      "route": 2,
+      "fragment": 5
+     },
+     {
+      "enemy": "Monster Mk II",
+      "enemy_id": "enemy_1005_yokai_2",
+      "count": 3,
+      "time": 106,
+      "interval": 12,
+      "route": 6,
+      "fragment": 5
+     },
+     {
+      "enemy": "Airborne Soldier Leader",
+      "enemy_id": "enemy_1013_airdrp_2",
+      "count": 1,
+      "time": 143,
+      "route": 8,
+      "fragment": 6
+     },
+     {
+      "enemy": "Airborne Soldier Leader",
+      "enemy_id": "enemy_1013_airdrp_2",
+      "count": 1,
+      "time": 146,
+      "route": 9,
+      "fragment": 6
+     },
+     {
+      "enemy": "Airborne Soldier Leader",
+      "enemy_id": "enemy_1013_airdrp_2",
+      "count": 1,
+      "time": 152,
+      "route": 10,
+      "fragment": 6
+     },
+     {
+      "enemy": "Airborne Soldier Leader",
+      "enemy_id": "enemy_1013_airdrp_2",
+      "count": 1,
+      "time": 155,
+      "route": 11,
+      "fragment": 6
+     },
+     {
+      "enemy": "Airborne Soldier Leader",
+      "enemy_id": "enemy_1013_airdrp_2",
+      "count": 1,
+      "time": 162,
+      "route": 8,
+      "fragment": 6
+     },
+     {
+      "enemy": "Airborne Soldier Leader",
+      "enemy_id": "enemy_1013_airdrp_2",
+      "count": 1,
+      "time": 162,
+      "route": 12,
+      "fragment": 6
+     },
+     {
+      "enemy": "Airborne Soldier Leader",
+      "enemy_id": "enemy_1013_airdrp_2",
+      "count": 1,
+      "time": 167,
+      "route": 13,
+      "fragment": 6
+     },
+     {
+      "enemy": "Airborne Soldier Leader",
+      "enemy_id": "enemy_1013_airdrp_2",
+      "count": 1,
+      "time": 167,
+      "route": 9,
+      "fragment": 6
+     },
+     {
+      "enemy": "Airborne Soldier Leader",
+      "enemy_id": "enemy_1013_airdrp_2",
+      "count": 1,
+      "time": 172,
+      "route": 0,
+      "fragment": 6
+     },
+     {
+      "enemy": "Airborne Soldier Leader",
+      "enemy_id": "enemy_1013_airdrp_2",
+      "count": 1,
+      "time": 172,
+      "route": 1,
+      "fragment": 6
+     },
+     {
+      "enemy": "Airborne Soldier Leader",
+      "enemy_id": "enemy_1013_airdrp_2",
+      "count": 1,
+      "time": 176,
+      "route": 14,
+      "fragment": 6
+     },
+     {
+      "enemy": "Airborne Soldier Leader",
+      "enemy_id": "enemy_1013_airdrp_2",
+      "count": 1,
+      "time": 176,
+      "route": 15,
+      "fragment": 6
+     },
+     {
+      "enemy": "Airborne Soldier Leader",
+      "enemy_id": "enemy_1013_airdrp_2",
+      "count": 1,
+      "time": 178,
+      "route": 11,
+      "fragment": 6
+     },
+     {
+      "enemy": "Airborne Soldier Leader",
+      "enemy_id": "enemy_1013_airdrp_2",
+      "count": 1,
+      "time": 178,
+      "route": 12,
+      "fragment": 6
+     },
+     {
+      "enemy": "Airborne Soldier Leader",
+      "enemy_id": "enemy_1013_airdrp_2",
+      "count": 1,
+      "time": 180,
+      "route": 13,
+      "fragment": 6
+     },
+     {
+      "enemy": "Airborne Soldier Leader",
+      "enemy_id": "enemy_1013_airdrp_2",
+      "count": 1,
+      "time": 180,
+      "route": 10,
+      "fragment": 6
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_flystart",
+    "row": 0,
+    "col": 8,
+    "routes": [
+     7,
+     7
+    ]
+   },
+   {
+    "key": "tile_flystart",
+    "row": 0,
+    "col": 9,
+    "routes": [
+     6,
+     6
+    ]
+   },
+   {
+    "key": "tile_flystart",
+    "row": 7,
+    "col": 1,
+    "routes": [
+     2,
+     2
+    ]
+   },
+   {
+    "key": "tile_flystart",
+    "row": 7,
+    "col": 2,
+    "routes": [
+     3,
+     3
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 3,
+    "col": 5,
+    "routes": [
+     1,
+     1,
+     4,
+     1,
+     4,
+     6,
+     7,
+     1,
+     4,
+     1,
+     7,
+     6,
+     9,
+     10,
+     13,
+     9,
+     1,
+     15,
+     13,
+     10
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 4,
+    "col": 5,
+    "routes": [
+     0,
+     0,
+     2,
+     3,
+     5,
+     0,
+     5,
+     0,
+     0,
+     5,
+     3,
+     2,
+     8,
+     11,
+     8,
+     12,
+     0,
+     14,
+     11,
+     12
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1005_yokai_2",
+    "slug": "monster_mk_ii",
+    "name": "Monster Mk II",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1013_airdrp",
+    "slug": "airborne_soldier",
+    "name": "Airborne Soldier",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1013_airdrp_2",
+    "slug": "airborne_soldier_leader",
+    "name": "Airborne Soldier Leader",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false,
+  "source": "cn"
+ },
+ "devices": [],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15
+  ],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "AF-1",
+  "geometryHash": "04faa7f771ede75cca1f594fecd015f7d107d6d7777fa5b329e78a6b95ae691f",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      1,
+      4
+     ],
+     [
+      5,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "1": {
+    "points": [
+     [
+      1,
+      3
+     ],
+     [
+      5,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "2": {
+    "points": [
+     [
+      1,
+      7
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      5,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "3": {
+    "points": [
+     [
+      2,
+      7
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      5,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "4": {
+    "points": [
+     [
+      9,
+      3
+     ],
+     [
+      5,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "5": {
+    "points": [
+     [
+      9,
+      4
+     ],
+     [
+      5,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "6": {
+    "points": [
+     [
+      9,
+      0
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      5,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "7": {
+    "points": [
+     [
+      8,
+      0
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      5,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "8": {
+    "points": [
+     [
+      2,
+      5
+     ],
+     [
+      5,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "9": {
+    "points": [
+     [
+      8,
+      2
+     ],
+     [
+      5,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "10": {
+    "points": [
+     [
+      6,
+      1
+     ],
+     [
+      5,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "11": {
+    "points": [
+     [
+      4,
+      6
+     ],
+     [
+      5,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "12": {
+    "points": [
+     [
+      6,
+      6
+     ],
+     [
+      5,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "13": {
+    "points": [
+     [
+      4,
+      1
+     ],
+     [
+      5,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "14": {
+    "points": [
+     [
+      9,
+      4
+     ],
+     [
+      5,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "15": {
+    "points": [
+     [
+      9,
+      3
+     ],
+     [
+      5,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1013_airdrp": {
+   "key": "enemy_1013_airdrp",
+   "prefabKey": "enemy_1013_airdrp",
+   "name": "Airborne Soldier",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 1450,
+    "atk": 220,
+    "def": 100,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 1.9,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Able to land directly onto the battlefield.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1005_yokai_2": {
+   "key": "enemy_1005_yokai_2",
+   "prefabKey": "enemy_1005_yokai_2",
+   "name": "Monster Mk II",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 1550,
+    "atk": 220,
+    "def": 50,
+    "res": 0,
+    "moveSpeed": 0.9,
+    "bat": 3,
+    "aspd": 100,
+    "rangeRadius": 2,
+    "rawRangeRadius": 2,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "FLY",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Flying unit.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "drone"
+   ]
+  },
+  "enemy_1013_airdrp_2": {
+   "key": "enemy_1013_airdrp_2",
+   "prefabKey": "enemy_1013_airdrp_2",
+   "name": "Airborne Soldier Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2300,
+    "atk": 300,
+    "def": 150,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 1.9,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Able to land directly onto the battlefield.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ }
+}

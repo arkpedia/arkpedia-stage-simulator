@@ -1,0 +1,1071 @@
+{
+ "code": "SV-2",
+ "name": "Singer",
+ "description": "Don't worry, those who converse with her are ordinary people in a biological sense.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 7,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "sv-2_act18d3_02",
+  "rows": 7,
+  "cols": 12,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_fence",
+    "height": "low",
+    "walkable": false,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    1,
+    2,
+    2,
+    3,
+    2,
+    2,
+    3,
+    3,
+    3,
+    3,
+    0,
+    0
+   ],
+   [
+    0,
+    2,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    3,
+    0,
+    0
+   ],
+   [
+    0,
+    2,
+    2,
+    4,
+    5,
+    0,
+    0,
+    0,
+    0,
+    3,
+    0,
+    0
+   ],
+   [
+    0,
+    5,
+    2,
+    2,
+    2,
+    2,
+    3,
+    3,
+    0,
+    3,
+    0,
+    0
+   ],
+   [
+    0,
+    4,
+    4,
+    4,
+    4,
+    0,
+    0,
+    6,
+    0,
+    6,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 7
+    },
+    "end": {
+     "row": 1,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": null,
+    "placeholder": true,
+    "start": null,
+    "end": null,
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 7
+    },
+    "end": {
+     "row": 1,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 1
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 9
+    },
+    "end": {
+     "row": 1,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 9
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 15
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 9
+    },
+    "end": {
+     "row": 1,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 9
+      }
+     }
+    ],
+    "waits": []
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 172,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Shell Sea Runner",
+      "enemy_id": "enemy_1147_dshond",
+      "count": 1,
+      "time": 4,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Shell Sea Runner",
+      "enemy_id": "enemy_1147_dshond",
+      "count": 3,
+      "time": 16,
+      "interval": 14,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Deep Sea Slider",
+      "enemy_id": "enemy_1148_dssbr",
+      "count": 1,
+      "time": 50,
+      "route": 3,
+      "fragment": 1
+     },
+     {
+      "enemy": "Shell Sea Runner",
+      "enemy_id": "enemy_1147_dshond",
+      "count": 5,
+      "time": 55,
+      "interval": 15,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Ridge Sea Spitter",
+      "enemy_id": "enemy_1149_dsbow",
+      "count": 2,
+      "time": 59,
+      "interval": 28,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Deep Sea Slider",
+      "enemy_id": "enemy_1148_dssbr",
+      "count": 1,
+      "time": 77,
+      "route": 4,
+      "fragment": 1
+     },
+     {
+      "enemy": "Deep Sea Slider",
+      "enemy_id": "enemy_1148_dssbr",
+      "count": 5,
+      "time": 121,
+      "interval": 11,
+      "route": 4,
+      "fragment": 2
+     },
+     {
+      "enemy": "Ridge Sea Spitter",
+      "enemy_id": "enemy_1149_dsbow",
+      "count": 2,
+      "time": 132,
+      "interval": 22,
+      "route": 2,
+      "fragment": 2
+     },
+     {
+      "enemy": "Shell Sea Runner",
+      "enemy_id": "enemy_1147_dshond",
+      "count": 3,
+      "time": 166,
+      "interval": 3,
+      "route": 4,
+      "fragment": 2
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 5,
+    "col": 7,
+    "routes": [
+     0,
+     2,
+     2,
+     2,
+     2
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 5,
+    "col": 9,
+    "routes": [
+     3,
+     4,
+     4,
+     4
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 1,
+    "col": 0,
+    "routes": [
+     0,
+     2,
+     3,
+     2,
+     2,
+     4,
+     4,
+     2,
+     4
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1147_dshond",
+    "slug": "shell_sea_runner",
+    "name": "Shell Sea Runner",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1148_dssbr",
+    "slug": "deep_sea_slider",
+    "name": "Deep Sea Slider",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1149_dsbow",
+    "slug": "ridge_sea_spitter",
+    "name": "Ridge Sea Spitter",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "devices": [],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "SV-2",
+  "geometryHash": "2de47c2534b2627a2b1aee0b65726d1e28874d18c05372fc2f772a136c260540",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      7,
+      5
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      0,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "length": 11,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 5,
+      "point": [
+       7,
+       4
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      7,
+      5
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "2": {
+    "points": [
+     [
+      7,
+      5
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      0,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "length": 11,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      7,
+      5
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "3": {
+    "points": [
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      0,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ],
+    "length": 13,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 2,
+      "seconds": 15,
+      "point": [
+       9,
+       3
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "4": {
+    "points": [
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      0,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ],
+    "length": 13,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      0,
+      1
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1147_dshond": {
+   "key": "enemy_1147_dshond",
+   "prefabKey": "enemy_1147_dshond",
+   "name": "Shell Sea Runner",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3000,
+    "atk": 280,
+    "def": 0,
+    "res": 20,
+    "moveSpeed": 1.9,
+    "bat": 1.3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "seamonster"
+   ]
+  },
+  "enemy_1148_dssbr": {
+   "key": "enemy_1148_dssbr",
+   "prefabKey": "enemy_1148_dssbr",
+   "name": "Deep Sea Slider",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2800,
+    "atk": 280,
+    "def": 130,
+    "res": 10,
+    "moveSpeed": 1.1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": true,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Attacks inflict additional <$ba.dt.neural>Nervous Impairment</>",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "epdamage.attack@ep_damage_ratio": 0.15
+    },
+    "bbStr": {},
+    "groups": {
+     "epdamage": [
+      "attack@ep_damage_ratio"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "seamonster"
+   ]
+  },
+  "enemy_1149_dsbow": {
+   "key": "enemy_1149_dsbow",
+   "prefabKey": "enemy_1149_dsbow",
+   "name": "Ridge Sea Spitter",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 4400,
+    "atk": 280,
+    "def": 160,
+    "res": 20,
+    "moveSpeed": 0.75,
+    "bat": 3,
+    "aspd": 100,
+    "rangeRadius": 2.5,
+    "rawRangeRadius": 2.5,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": true,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "seamonster"
+   ]
+  }
+ }
+}

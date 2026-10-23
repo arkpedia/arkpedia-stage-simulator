@@ -1,0 +1,4133 @@
+{
+ "code": "RI-EX-1",
+ "name": "Feint",
+ "description": "Condition:\nTiacauh Fanatics are Invisible",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 9,
+  "initial_dp": 15,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "ri-ex-1",
+  "rows": 8,
+  "cols": 12,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_fence",
+    "height": "low",
+    "walkable": false,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    1,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    2,
+    2,
+    2,
+    3,
+    3,
+    3,
+    3,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    2,
+    2,
+    2,
+    3,
+    3,
+    3,
+    4,
+    2,
+    2,
+    2,
+    1
+   ],
+   [
+    0,
+    2,
+    2,
+    2,
+    4,
+    4,
+    4,
+    4,
+    3,
+    0,
+    2,
+    0
+   ],
+   [
+    0,
+    4,
+    4,
+    4,
+    3,
+    3,
+    3,
+    4,
+    2,
+    2,
+    2,
+    0
+   ],
+   [
+    0,
+    4,
+    4,
+    4,
+    3,
+    3,
+    3,
+    4,
+    5,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    6,
+    6,
+    6,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 11
+    },
+    "end": {
+     "row": 7,
+     "col": 1
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 1
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 11
+    },
+    "end": {
+     "row": 7,
+     "col": 3
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 3
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 1
+    },
+    "end": {
+     "row": 7,
+     "col": 1
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 20
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 1
+    },
+    "end": {
+     "row": 7,
+     "col": 1
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 20.2
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 1
+    },
+    "end": {
+     "row": 7,
+     "col": 1
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 20.5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 2
+    },
+    "end": {
+     "row": 7,
+     "col": 2
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 2
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 20
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 2
+    },
+    "end": {
+     "row": 7,
+     "col": 2
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 2
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 20.2
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 2
+    },
+    "end": {
+     "row": 7,
+     "col": 2
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 2
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 20.5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 3
+    },
+    "end": {
+     "row": 7,
+     "col": 3
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 3
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 20
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 3
+    },
+    "end": {
+     "row": 7,
+     "col": 3
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 3
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 20.2
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 3
+    },
+    "end": {
+     "row": 7,
+     "col": 3
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 3
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 20.5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 1
+    },
+    "end": {
+     "row": 7,
+     "col": 1
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 15
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 1
+    },
+    "end": {
+     "row": 7,
+     "col": 1
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 15.2
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 1
+    },
+    "end": {
+     "row": 7,
+     "col": 1
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 15.5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 2
+    },
+    "end": {
+     "row": 7,
+     "col": 2
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 2
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 15
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 2
+    },
+    "end": {
+     "row": 7,
+     "col": 2
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 2
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 15.2
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 2
+    },
+    "end": {
+     "row": 7,
+     "col": 2
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 2
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 15.5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 3
+    },
+    "end": {
+     "row": 7,
+     "col": 3
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 3
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 15
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 3
+    },
+    "end": {
+     "row": 7,
+     "col": 3
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 3
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 15.2
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 3
+    },
+    "end": {
+     "row": 7,
+     "col": 3
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 3
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 15.5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 11
+    },
+    "end": {
+     "row": 7,
+     "col": 1
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 1
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": null,
+    "placeholder": true,
+    "start": null,
+    "end": null,
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 1
+    },
+    "end": {
+     "row": 7,
+     "col": 1
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 1
+    },
+    "end": {
+     "row": 7,
+     "col": 1
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10.2
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 1
+    },
+    "end": {
+     "row": 7,
+     "col": 1
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10.5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 2
+    },
+    "end": {
+     "row": 7,
+     "col": 2
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 2
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 2
+    },
+    "end": {
+     "row": 7,
+     "col": 2
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 2
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10.2
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 2
+    },
+    "end": {
+     "row": 7,
+     "col": 2
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 2
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10.5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 3
+    },
+    "end": {
+     "row": 7,
+     "col": 3
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 3
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 3
+    },
+    "end": {
+     "row": 7,
+     "col": 3
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 3
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10.2
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 3
+    },
+    "end": {
+     "row": 7,
+     "col": 3
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 3
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10.5
+     }
+    ]
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 188,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Hound Pro",
+      "enemy_id": "enemy_1000_gopro_2",
+      "count": 2,
+      "time": 6,
+      "interval": 8,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Hound Pro",
+      "enemy_id": "enemy_1000_gopro_2",
+      "count": 5,
+      "time": 22,
+      "interval": 8,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Hound Pro",
+      "enemy_id": "enemy_1000_gopro_2",
+      "count": 5,
+      "time": 22,
+      "interval": 8,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Tiacauh Warrior",
+      "enemy_id": "enemy_1093_ccsbr",
+      "count": 1,
+      "time": 33,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Tiacauh Warrior",
+      "enemy_id": "enemy_1093_ccsbr",
+      "count": 1,
+      "time": 35,
+      "route": 3,
+      "fragment": 0
+     },
+     {
+      "enemy": "Tiacauh Warrior",
+      "enemy_id": "enemy_1093_ccsbr",
+      "count": 1,
+      "time": 37,
+      "route": 4,
+      "fragment": 0
+     },
+     {
+      "enemy": "Tiacauh Warrior",
+      "enemy_id": "enemy_1093_ccsbr",
+      "count": 1,
+      "time": 33,
+      "route": 5,
+      "fragment": 0
+     },
+     {
+      "enemy": "Tiacauh Warrior",
+      "enemy_id": "enemy_1093_ccsbr",
+      "count": 1,
+      "time": 35,
+      "route": 6,
+      "fragment": 0
+     },
+     {
+      "enemy": "Tiacauh Warrior",
+      "enemy_id": "enemy_1093_ccsbr",
+      "count": 1,
+      "time": 37,
+      "route": 7,
+      "fragment": 0
+     },
+     {
+      "enemy": "Tiacauh Warrior",
+      "enemy_id": "enemy_1093_ccsbr",
+      "count": 1,
+      "time": 33,
+      "route": 8,
+      "fragment": 0
+     },
+     {
+      "enemy": "Tiacauh Warrior",
+      "enemy_id": "enemy_1093_ccsbr",
+      "count": 1,
+      "time": 35,
+      "route": 9,
+      "fragment": 0
+     },
+     {
+      "enemy": "Tiacauh Warrior",
+      "enemy_id": "enemy_1093_ccsbr",
+      "count": 1,
+      "time": 37,
+      "route": 10,
+      "fragment": 0
+     },
+     {
+      "enemy": "Tiacauh Warrior",
+      "enemy_id": "enemy_1093_ccsbr",
+      "count": 2,
+      "time": 81,
+      "interval": 28,
+      "route": 11,
+      "fragment": 1
+     },
+     {
+      "enemy": "Tiacauh Warrior",
+      "enemy_id": "enemy_1093_ccsbr",
+      "count": 2,
+      "time": 83,
+      "interval": 28,
+      "route": 12,
+      "fragment": 1
+     },
+     {
+      "enemy": "Tiacauh Warrior",
+      "enemy_id": "enemy_1093_ccsbr",
+      "count": 2,
+      "time": 85,
+      "interval": 28,
+      "route": 13,
+      "fragment": 1
+     },
+     {
+      "enemy": "Tiacauh Warrior",
+      "enemy_id": "enemy_1093_ccsbr",
+      "count": 2,
+      "time": 81,
+      "interval": 28,
+      "route": 14,
+      "fragment": 1
+     },
+     {
+      "enemy": "Tiacauh Warrior",
+      "enemy_id": "enemy_1093_ccsbr",
+      "count": 2,
+      "time": 83,
+      "interval": 28,
+      "route": 15,
+      "fragment": 1
+     },
+     {
+      "enemy": "Tiacauh Warrior",
+      "enemy_id": "enemy_1093_ccsbr",
+      "count": 2,
+      "time": 85,
+      "interval": 28,
+      "route": 16,
+      "fragment": 1
+     },
+     {
+      "enemy": "Tiacauh Warrior",
+      "enemy_id": "enemy_1093_ccsbr",
+      "count": 2,
+      "time": 81,
+      "interval": 28,
+      "route": 17,
+      "fragment": 1
+     },
+     {
+      "enemy": "Tiacauh Warrior",
+      "enemy_id": "enemy_1093_ccsbr",
+      "count": 2,
+      "time": 83,
+      "interval": 28,
+      "route": 18,
+      "fragment": 1
+     },
+     {
+      "enemy": "Tiacauh Warrior",
+      "enemy_id": "enemy_1093_ccsbr",
+      "count": 2,
+      "time": 85,
+      "interval": 28,
+      "route": 19,
+      "fragment": 1
+     },
+     {
+      "enemy": "Tiacauh Fanatic",
+      "enemy_id": "enemy_1095_ccripr",
+      "count": 3,
+      "time": 88,
+      "interval": 20,
+      "route": 20,
+      "fragment": 1
+     },
+     {
+      "enemy": "Hound Pro",
+      "enemy_id": "enemy_1000_gopro_2",
+      "count": 5,
+      "time": 86,
+      "interval": 8,
+      "route": 20,
+      "fragment": 1
+     },
+     {
+      "enemy": "Tiacauh Fanatic",
+      "enemy_id": "enemy_1095_ccripr",
+      "count": 3,
+      "time": 88,
+      "interval": 20,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Hound Pro",
+      "enemy_id": "enemy_1000_gopro_2",
+      "count": 5,
+      "time": 86,
+      "interval": 8,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Hound Pro",
+      "enemy_id": "enemy_1000_gopro_2",
+      "count": 4,
+      "time": 167,
+      "interval": 7,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "Tiacauh Fanatic",
+      "enemy_id": "enemy_1095_ccripr",
+      "count": 2,
+      "time": 177.5,
+      "interval": 10,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "Hound Pro",
+      "enemy_id": "enemy_1000_gopro_2",
+      "count": 4,
+      "time": 161,
+      "interval": 7,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Tiacauh Fanatic",
+      "enemy_id": "enemy_1095_ccripr",
+      "count": 2,
+      "time": 170,
+      "interval": 10,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Tiacauh Guard",
+      "enemy_id": "enemy_1093_ccsbr_2",
+      "count": 1,
+      "time": 168,
+      "route": 22,
+      "fragment": 2
+     },
+     {
+      "enemy": "Tiacauh Guard",
+      "enemy_id": "enemy_1093_ccsbr_2",
+      "count": 1,
+      "time": 170,
+      "route": 23,
+      "fragment": 2
+     },
+     {
+      "enemy": "Tiacauh Guard",
+      "enemy_id": "enemy_1093_ccsbr_2",
+      "count": 1,
+      "time": 172,
+      "route": 24,
+      "fragment": 2
+     },
+     {
+      "enemy": "Tiacauh Guard",
+      "enemy_id": "enemy_1093_ccsbr_2",
+      "count": 1,
+      "time": 168,
+      "route": 25,
+      "fragment": 2
+     },
+     {
+      "enemy": "Tiacauh Guard",
+      "enemy_id": "enemy_1093_ccsbr_2",
+      "count": 1,
+      "time": 170,
+      "route": 26,
+      "fragment": 2
+     },
+     {
+      "enemy": "Tiacauh Guard",
+      "enemy_id": "enemy_1093_ccsbr_2",
+      "count": 1,
+      "time": 172,
+      "route": 27,
+      "fragment": 2
+     },
+     {
+      "enemy": "Tiacauh Guard",
+      "enemy_id": "enemy_1093_ccsbr_2",
+      "count": 1,
+      "time": 168,
+      "route": 28,
+      "fragment": 2
+     },
+     {
+      "enemy": "Tiacauh Guard",
+      "enemy_id": "enemy_1093_ccsbr_2",
+      "count": 1,
+      "time": 170,
+      "route": 29,
+      "fragment": 2
+     },
+     {
+      "enemy": "Tiacauh Guard",
+      "enemy_id": "enemy_1093_ccsbr_2",
+      "count": 1,
+      "time": 172,
+      "route": 30,
+      "fragment": 2
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 0,
+    "col": 1,
+    "routes": [
+     2,
+     3,
+     4,
+     11,
+     12,
+     13,
+     22,
+     23,
+     24
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 0,
+    "col": 2,
+    "routes": [
+     5,
+     6,
+     7,
+     14,
+     15,
+     16,
+     25,
+     26,
+     27
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 0,
+    "col": 3,
+    "routes": [
+     8,
+     9,
+     10,
+     17,
+     18,
+     19,
+     28,
+     29,
+     30
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 2,
+    "col": 11,
+    "routes": [
+     0,
+     0,
+     1,
+     20,
+     20,
+     1,
+     1,
+     0,
+     0,
+     1,
+     1
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 7,
+    "col": 1,
+    "routes": [
+     0,
+     0,
+     2,
+     3,
+     4,
+     11,
+     12,
+     13,
+     20,
+     20,
+     0,
+     0,
+     22,
+     23,
+     24
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 7,
+    "col": 2,
+    "routes": [
+     5,
+     6,
+     7,
+     14,
+     15,
+     16,
+     25,
+     26,
+     27
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 7,
+    "col": 3,
+    "routes": [
+     1,
+     8,
+     9,
+     10,
+     17,
+     18,
+     19,
+     1,
+     1,
+     1,
+     1,
+     28,
+     29,
+     30
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1000_gopro_2",
+    "slug": "hound_pro",
+    "name": "Hound Pro",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1093_ccsbr",
+    "slug": "tiacauh_warrior",
+    "name": "Tiacauh Warrior",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1093_ccsbr_2",
+    "slug": "tiacauh_guard",
+    "name": "Tiacauh Guard",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1095_ccripr",
+    "slug": "tiacauh_fanatic",
+    "name": "Tiacauh Fanatic",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "devices": [],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "RI-EX-1",
+  "geometryHash": "a70df24e95843a667e075984a3863641f5153beef31f2eebbf136c4a5400d99b",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      11,
+      2
+     ],
+     [
+      10,
+      2
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      1,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15
+    ],
+    "length": 15,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      11,
+      2
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      1,
+      7
+     ]
+    ]
+   },
+   "1": {
+    "points": [
+     [
+      11,
+      2
+     ],
+     [
+      10,
+      2
+     ],
+     [
+      10,
+      3
+     ],
+     [
+      10,
+      4
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      7,
+      6
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      3,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ],
+    "length": 13,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      11,
+      2
+     ],
+     [
+      10,
+      2
+     ],
+     [
+      10,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      7,
+      6
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      3,
+      7
+     ]
+    ]
+   },
+   "2": {
+    "points": [
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      1,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 3,
+      "seconds": 20,
+      "point": [
+       1,
+       3
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      1,
+      7
+     ]
+    ]
+   },
+   "3": {
+    "points": [
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      1,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 2,
+      "seconds": 20.2,
+      "point": [
+       1,
+       2
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      7
+     ]
+    ]
+   },
+   "4": {
+    "points": [
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      1,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 20.5,
+      "point": [
+       1,
+       1
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      7
+     ]
+    ]
+   },
+   "5": {
+    "points": [
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      2,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 3,
+      "seconds": 20,
+      "point": [
+       2,
+       3
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      7
+     ]
+    ]
+   },
+   "6": {
+    "points": [
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      2,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 2,
+      "seconds": 20.2,
+      "point": [
+       2,
+       2
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      7
+     ]
+    ]
+   },
+   "7": {
+    "points": [
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      2,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 20.5,
+      "point": [
+       2,
+       1
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      7
+     ]
+    ]
+   },
+   "8": {
+    "points": [
+     [
+      3,
+      0
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      3,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 3,
+      "seconds": 20,
+      "point": [
+       3,
+       3
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      3,
+      0
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      3,
+      7
+     ]
+    ]
+   },
+   "9": {
+    "points": [
+     [
+      3,
+      0
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      3,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 2,
+      "seconds": 20.2,
+      "point": [
+       3,
+       2
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      3,
+      0
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      7
+     ]
+    ]
+   },
+   "10": {
+    "points": [
+     [
+      3,
+      0
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      3,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 20.5,
+      "point": [
+       3,
+       1
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      3,
+      0
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      3,
+      7
+     ]
+    ]
+   },
+   "11": {
+    "points": [
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      1,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 3,
+      "seconds": 15,
+      "point": [
+       1,
+       3
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      1,
+      7
+     ]
+    ]
+   },
+   "12": {
+    "points": [
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      1,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 2,
+      "seconds": 15.2,
+      "point": [
+       1,
+       2
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      7
+     ]
+    ]
+   },
+   "13": {
+    "points": [
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      1,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 15.5,
+      "point": [
+       1,
+       1
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      7
+     ]
+    ]
+   },
+   "14": {
+    "points": [
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      2,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 3,
+      "seconds": 15,
+      "point": [
+       2,
+       3
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      7
+     ]
+    ]
+   },
+   "15": {
+    "points": [
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      2,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 2,
+      "seconds": 15.2,
+      "point": [
+       2,
+       2
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      7
+     ]
+    ]
+   },
+   "16": {
+    "points": [
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      2,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 15.5,
+      "point": [
+       2,
+       1
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      7
+     ]
+    ]
+   },
+   "17": {
+    "points": [
+     [
+      3,
+      0
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      3,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 3,
+      "seconds": 15,
+      "point": [
+       3,
+       3
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      3,
+      0
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      3,
+      7
+     ]
+    ]
+   },
+   "18": {
+    "points": [
+     [
+      3,
+      0
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      3,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 2,
+      "seconds": 15.2,
+      "point": [
+       3,
+       2
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      3,
+      0
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      7
+     ]
+    ]
+   },
+   "19": {
+    "points": [
+     [
+      3,
+      0
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      3,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 15.5,
+      "point": [
+       3,
+       1
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      3,
+      0
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      3,
+      7
+     ]
+    ]
+   },
+   "20": {
+    "points": [
+     [
+      11,
+      2
+     ],
+     [
+      10,
+      2
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      1,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15
+    ],
+    "length": 15,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      11,
+      2
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      1,
+      7
+     ]
+    ]
+   },
+   "22": {
+    "points": [
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      1,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 3,
+      "seconds": 10,
+      "point": [
+       1,
+       3
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      1,
+      7
+     ]
+    ]
+   },
+   "23": {
+    "points": [
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      1,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 2,
+      "seconds": 10.2,
+      "point": [
+       1,
+       2
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      7
+     ]
+    ]
+   },
+   "24": {
+    "points": [
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      1,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 10.5,
+      "point": [
+       1,
+       1
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      7
+     ]
+    ]
+   },
+   "25": {
+    "points": [
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      2,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 3,
+      "seconds": 10,
+      "point": [
+       2,
+       3
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      7
+     ]
+    ]
+   },
+   "26": {
+    "points": [
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      2,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 2,
+      "seconds": 10.2,
+      "point": [
+       2,
+       2
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      7
+     ]
+    ]
+   },
+   "27": {
+    "points": [
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      2,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 10.5,
+      "point": [
+       2,
+       1
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      7
+     ]
+    ]
+   },
+   "28": {
+    "points": [
+     [
+      3,
+      0
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      3,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 3,
+      "seconds": 10,
+      "point": [
+       3,
+       3
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      3,
+      0
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      3,
+      7
+     ]
+    ]
+   },
+   "29": {
+    "points": [
+     [
+      3,
+      0
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      3,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 2,
+      "seconds": 10.2,
+      "point": [
+       3,
+       2
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      3,
+      0
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      7
+     ]
+    ]
+   },
+   "30": {
+    "points": [
+     [
+      3,
+      0
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      3,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 10.5,
+      "point": [
+       3,
+       1
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      3,
+      0
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      3,
+      7
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1000_gopro_2": {
+   "key": "enemy_1000_gopro_2",
+   "prefabKey": "enemy_1000_gopro_2",
+   "name": "Hound Pro",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 1700,
+    "atk": 260,
+    "def": 0,
+    "res": 20,
+    "moveSpeed": 1.9,
+    "bat": 1.4,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1093_ccsbr": {
+   "key": "enemy_1093_ccsbr",
+   "prefabKey": "enemy_1093_ccsbr",
+   "name": "Tiacauh Warrior",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2600,
+    "atk": 290,
+    "def": 60,
+    "res": 10,
+    "moveSpeed": 0.8,
+    "bat": 1.8,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": true,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Gains DEF when blocked.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "Def.def": 130
+    },
+    "bbStr": {},
+    "groups": {
+     "Def": [
+      "def"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1095_ccripr": {
+   "key": "enemy_1095_ccripr",
+   "prefabKey": "enemy_1095_ccripr",
+   "name": "Tiacauh Fanatic",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 5500,
+    "atk": 320,
+    "def": 380,
+    "res": 10,
+    "moveSpeed": 0.8,
+    "bat": 1,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Every attack reduces the enemy's DEF",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "defdown.def": -10
+    },
+    "bbStr": {},
+    "groups": {
+     "defdown": [
+      "def"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1093_ccsbr_2": {
+   "key": "enemy_1093_ccsbr_2",
+   "prefabKey": "enemy_1093_ccsbr_2",
+   "name": "Tiacauh Guard",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3600,
+    "atk": 380,
+    "def": 110,
+    "res": 10,
+    "moveSpeed": 0.9,
+    "bat": 1.8,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": true,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Gains DEF when blocked.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "Def.def": 180
+    },
+    "bbStr": {},
+    "groups": {
+     "Def": [
+      "def"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ }
+}

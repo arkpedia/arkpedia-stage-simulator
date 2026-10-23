@@ -1,0 +1,2926 @@
+{
+ "code": "PR-B-2",
+ "name": "Strike",
+ "description": "A mission to acquire the advanced materials needed for the Promotion of Sniper and Caster Operators.\nThe battle will be easier if you employ Sniper and Caster Operators well.\n<Anti-air Rune>Operators deployed on it will attack a bit more slowly but their ATK against aerial units will be increased significantly.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 9,
+  "initial_dp": 25,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "pr-b-2",
+  "rows": 8,
+  "cols": 11,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_gazebo",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true,
+    "blackboard": {
+     "atk_scale": 1.7,
+     "attack_speed": -20
+    }
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    2,
+    2,
+    2,
+    3,
+    3,
+    3,
+    2,
+    2,
+    2,
+    0
+   ],
+   [
+    0,
+    2,
+    2,
+    2,
+    4,
+    4,
+    4,
+    2,
+    2,
+    2,
+    0
+   ],
+   [
+    5,
+    4,
+    4,
+    3,
+    3,
+    3,
+    3,
+    3,
+    4,
+    4,
+    5
+   ],
+   [
+    0,
+    4,
+    6,
+    4,
+    4,
+    4,
+    4,
+    4,
+    6,
+    4,
+    0
+   ],
+   [
+    0,
+    4,
+    6,
+    4,
+    4,
+    4,
+    4,
+    4,
+    6,
+    4,
+    0
+   ],
+   [
+    5,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    5
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    5,
+    5,
+    5,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "fly",
+    "start": {
+     "row": 3,
+     "col": 0
+    },
+    "end": {
+     "row": 0,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 2
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 150
+     }
+    ]
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 6,
+     "col": 0
+    },
+    "end": {
+     "row": 0,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 3
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 150
+     }
+    ]
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 3,
+     "col": 10
+    },
+    "end": {
+     "row": 0,
+     "col": 6
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 150
+     }
+    ]
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 6,
+     "col": 10
+    },
+    "end": {
+     "row": 0,
+     "col": 6
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 7
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 150
+     }
+    ]
+   },
+   {
+    "motion": null,
+    "placeholder": true,
+    "start": null,
+    "end": null,
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 6,
+     "col": 10
+    },
+    "end": {
+     "row": 0,
+     "col": 6
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 7
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 170
+     }
+    ]
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 6,
+     "col": 0
+    },
+    "end": {
+     "row": 0,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 3
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 170
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 5
+    },
+    "end": {
+     "row": 0,
+     "col": 5
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 5
+    },
+    "end": {
+     "row": 0,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 7,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 0,
+       "col": 5
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 7,
+     "col": 6
+    },
+    "end": {
+     "row": 0,
+     "col": 6
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 7,
+     "col": 4
+    },
+    "end": {
+     "row": 0,
+     "col": 4
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 0
+    },
+    "end": {
+     "row": 0,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 4
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 0
+    },
+    "end": {
+     "row": 0,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 0,
+       "col": 4
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 10
+    },
+    "end": {
+     "row": 0,
+     "col": 6
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 6
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 10
+    },
+    "end": {
+     "row": 0,
+     "col": 6
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 0,
+       "col": 6
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 7,
+     "col": 5
+    },
+    "end": {
+     "row": 0,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 7,
+     "col": 5
+    },
+    "end": {
+     "row": 0,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 6
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 2,
+      "seconds": 6
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 4,
+      "seconds": 6
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 6,
+      "seconds": 6
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 0
+    },
+    "end": {
+     "row": 0,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 0,
+       "col": 4
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 10
+    },
+    "end": {
+     "row": 0,
+     "col": 6
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 0,
+       "col": 6
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 7,
+     "col": 5
+    },
+    "end": {
+     "row": 0,
+     "col": 5
+    },
+    "checkpoints": [],
+    "waits": []
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 213,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Monster Mk II",
+      "enemy_id": "enemy_1005_yokai_2",
+      "count": 1,
+      "time": 0,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Monster Mk II",
+      "enemy_id": "enemy_1005_yokai_2",
+      "count": 1,
+      "time": 0,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Monster Mk II",
+      "enemy_id": "enemy_1005_yokai_2",
+      "count": 1,
+      "time": 0,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Monster Mk II",
+      "enemy_id": "enemy_1005_yokai_2",
+      "count": 1,
+      "time": 0,
+      "route": 3,
+      "fragment": 0
+     },
+     {
+      "enemy": "Defender-4",
+      "enemy_id": "enemy_1017_defdrn",
+      "count": 1,
+      "time": 0,
+      "route": 5,
+      "fragment": 0
+     },
+     {
+      "enemy": "Defender-4",
+      "enemy_id": "enemy_1017_defdrn",
+      "count": 1,
+      "time": 0,
+      "route": 6,
+      "fragment": 0
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 1,
+      "time": 10,
+      "route": 8,
+      "fragment": 1
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 1,
+      "time": 11,
+      "route": 8,
+      "fragment": 1
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 1,
+      "time": 23,
+      "route": 8,
+      "fragment": 1
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 1,
+      "time": 24,
+      "route": 8,
+      "fragment": 1
+     },
+     {
+      "enemy": "Monster",
+      "enemy_id": "enemy_1005_yokai",
+      "count": 1,
+      "time": 54,
+      "route": 9,
+      "fragment": 2
+     },
+     {
+      "enemy": "Monster",
+      "enemy_id": "enemy_1005_yokai",
+      "count": 1,
+      "time": 64,
+      "route": 9,
+      "fragment": 2
+     },
+     {
+      "enemy": "Monster",
+      "enemy_id": "enemy_1005_yokai",
+      "count": 2,
+      "time": 74,
+      "interval": 1,
+      "route": 9,
+      "fragment": 2
+     },
+     {
+      "enemy": "Monster",
+      "enemy_id": "enemy_1005_yokai",
+      "count": 2,
+      "time": 84,
+      "interval": 1,
+      "route": 9,
+      "fragment": 2
+     },
+     {
+      "enemy": "Monster",
+      "enemy_id": "enemy_1005_yokai",
+      "count": 2,
+      "time": 94,
+      "interval": 1,
+      "route": 9,
+      "fragment": 2
+     },
+     {
+      "enemy": "Monster",
+      "enemy_id": "enemy_1005_yokai",
+      "count": 1,
+      "time": 54,
+      "route": 10,
+      "fragment": 2
+     },
+     {
+      "enemy": "Monster",
+      "enemy_id": "enemy_1005_yokai",
+      "count": 1,
+      "time": 64,
+      "route": 10,
+      "fragment": 2
+     },
+     {
+      "enemy": "Monster",
+      "enemy_id": "enemy_1005_yokai",
+      "count": 2,
+      "time": 74,
+      "interval": 1,
+      "route": 10,
+      "fragment": 2
+     },
+     {
+      "enemy": "Monster",
+      "enemy_id": "enemy_1005_yokai",
+      "count": 2,
+      "time": 84,
+      "interval": 1,
+      "route": 10,
+      "fragment": 2
+     },
+     {
+      "enemy": "Monster",
+      "enemy_id": "enemy_1005_yokai",
+      "count": 2,
+      "time": 94,
+      "interval": 1,
+      "route": 10,
+      "fragment": 2
+     },
+     {
+      "enemy": "Light-Armored Soldier Leader",
+      "enemy_id": "enemy_1015_litamr_2",
+      "count": 3,
+      "time": 66,
+      "interval": 17,
+      "route": 11,
+      "fragment": 2
+     },
+     {
+      "enemy": "Light-Armored Soldier Leader",
+      "enemy_id": "enemy_1015_litamr_2",
+      "count": 2,
+      "time": 67,
+      "interval": 17,
+      "route": 12,
+      "fragment": 2
+     },
+     {
+      "enemy": "Light-Armored Soldier Leader",
+      "enemy_id": "enemy_1015_litamr_2",
+      "count": 3,
+      "time": 70,
+      "interval": 17,
+      "route": 13,
+      "fragment": 2
+     },
+     {
+      "enemy": "Light-Armored Soldier Leader",
+      "enemy_id": "enemy_1015_litamr_2",
+      "count": 2,
+      "time": 71,
+      "interval": 17,
+      "route": 14,
+      "fragment": 2
+     },
+     {
+      "enemy": "Raptor",
+      "enemy_id": "enemy_1005_yokai_3",
+      "count": 1,
+      "time": 127,
+      "route": 15,
+      "fragment": 3
+     },
+     {
+      "enemy": "Defender-4",
+      "enemy_id": "enemy_1017_defdrn",
+      "count": 1,
+      "time": 134,
+      "route": 16,
+      "fragment": 3
+     },
+     {
+      "enemy": "Light-Armored Soldier Leader",
+      "enemy_id": "enemy_1015_litamr_2",
+      "count": 5,
+      "time": 151,
+      "interval": 15,
+      "route": 11,
+      "fragment": 3
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 5,
+      "time": 152,
+      "interval": 15,
+      "route": 11,
+      "fragment": 3
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 5,
+      "time": 153,
+      "interval": 15,
+      "route": 17,
+      "fragment": 3
+     },
+     {
+      "enemy": "Light-Armored Soldier Leader",
+      "enemy_id": "enemy_1015_litamr_2",
+      "count": 2,
+      "time": 179,
+      "interval": 22,
+      "route": 11,
+      "fragment": 3
+     },
+     {
+      "enemy": "Light-Armored Soldier Leader",
+      "enemy_id": "enemy_1015_litamr_2",
+      "count": 5,
+      "time": 151,
+      "interval": 15,
+      "route": 13,
+      "fragment": 3
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 5,
+      "time": 152,
+      "interval": 15,
+      "route": 13,
+      "fragment": 3
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 5,
+      "time": 153,
+      "interval": 15,
+      "route": 18,
+      "fragment": 3
+     },
+     {
+      "enemy": "Light-Armored Soldier Leader",
+      "enemy_id": "enemy_1015_litamr_2",
+      "count": 2,
+      "time": 179,
+      "interval": 22,
+      "route": 13,
+      "fragment": 3
+     },
+     {
+      "enemy": "Monster",
+      "enemy_id": "enemy_1005_yokai",
+      "count": 2,
+      "time": 154,
+      "interval": 1,
+      "route": 9,
+      "fragment": 3
+     },
+     {
+      "enemy": "Monster",
+      "enemy_id": "enemy_1005_yokai",
+      "count": 2,
+      "time": 169,
+      "interval": 1,
+      "route": 9,
+      "fragment": 3
+     },
+     {
+      "enemy": "Monster",
+      "enemy_id": "enemy_1005_yokai",
+      "count": 2,
+      "time": 184,
+      "interval": 1,
+      "route": 9,
+      "fragment": 3
+     },
+     {
+      "enemy": "Monster",
+      "enemy_id": "enemy_1005_yokai",
+      "count": 2,
+      "time": 154,
+      "interval": 1,
+      "route": 10,
+      "fragment": 3
+     },
+     {
+      "enemy": "Monster",
+      "enemy_id": "enemy_1005_yokai",
+      "count": 2,
+      "time": 169,
+      "interval": 1,
+      "route": 10,
+      "fragment": 3
+     },
+     {
+      "enemy": "Monster",
+      "enemy_id": "enemy_1005_yokai",
+      "count": 2,
+      "time": 184,
+      "interval": 1,
+      "route": 10,
+      "fragment": 3
+     },
+     {
+      "enemy": "Monster Mk II",
+      "enemy_id": "enemy_1005_yokai_2",
+      "count": 7,
+      "time": 144,
+      "interval": 7,
+      "route": 19,
+      "fragment": 3
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 3,
+    "col": 0,
+    "routes": [
+     0,
+     17
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 3,
+    "col": 10,
+    "routes": [
+     2,
+     18
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 6,
+    "col": 0,
+    "routes": [
+     1,
+     6,
+     11,
+     12,
+     11,
+     11,
+     11
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 6,
+    "col": 10,
+    "routes": [
+     3,
+     5,
+     13,
+     14,
+     13,
+     13,
+     13
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 7,
+    "col": 4,
+    "routes": [
+     10,
+     10,
+     10,
+     10,
+     10,
+     10,
+     10,
+     10
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 7,
+    "col": 5,
+    "routes": [
+     7,
+     8,
+     8,
+     8,
+     8,
+     15,
+     16,
+     19
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 7,
+    "col": 6,
+    "routes": [
+     9,
+     9,
+     9,
+     9,
+     9,
+     9,
+     9,
+     9
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 0,
+    "col": 4,
+    "routes": [
+     0,
+     1,
+     6,
+     10,
+     10,
+     10,
+     10,
+     10,
+     11,
+     12,
+     11,
+     11,
+     17,
+     11,
+     10,
+     10,
+     10
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 0,
+    "col": 5,
+    "routes": [
+     7,
+     8,
+     8,
+     8,
+     8,
+     15,
+     16,
+     19
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 0,
+    "col": 6,
+    "routes": [
+     2,
+     3,
+     5,
+     9,
+     9,
+     9,
+     9,
+     9,
+     13,
+     14,
+     13,
+     13,
+     18,
+     13,
+     9,
+     9,
+     9
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1005_yokai",
+    "slug": "monster",
+    "name": "Monster",
+    "database_level": 1
+   },
+   {
+    "enemy_id": "enemy_1005_yokai_2",
+    "slug": "monster_mk_ii",
+    "name": "Monster Mk II",
+    "database_level": 1
+   },
+   {
+    "enemy_id": "enemy_1005_yokai_3",
+    "slug": "raptor",
+    "name": "Raptor",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1007_slime_3",
+    "slug": "originium_slug_enemy_1007_slime_3",
+    "name": "Originium Slug β",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1015_litamr_2",
+    "slug": "light_armored_soldier_leader",
+    "name": "Light-Armored Soldier Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1017_defdrn",
+    "slug": "defender_4",
+    "name": "Defender-4",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "devices": [],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "PR-B-2",
+  "geometryHash": "f4bc6ec3d3867e95d0f365bedcefe967fd748519fa353e05a337266ae2f5c892",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      0,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      4,
+      0
+     ]
+    ],
+    "distances": [
+     0,
+     2,
+     5.60555127546399
+    ],
+    "length": 5.60555127546399,
+    "breaks": [],
+    "flying": true,
+    "holds": [
+     {
+      "at": 2,
+      "seconds": 150,
+      "point": [
+       2,
+       3
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      4,
+      0
+     ]
+    ]
+   },
+   "1": {
+    "points": [
+     [
+      0,
+      6
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      4,
+      0
+     ]
+    ],
+    "distances": [
+     0,
+     3.1622776601683795,
+     8.261297173761164
+    ],
+    "length": 8.261297173761164,
+    "breaks": [],
+    "flying": true,
+    "holds": [
+     {
+      "at": 3.1622776601683795,
+      "seconds": 150,
+      "point": [
+       3,
+       5
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      6
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      4,
+      0
+     ]
+    ]
+   },
+   "2": {
+    "points": [
+     [
+      10,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      6,
+      0
+     ]
+    ],
+    "distances": [
+     0,
+     2,
+     5.60555127546399
+    ],
+    "length": 5.60555127546399,
+    "breaks": [],
+    "flying": true,
+    "holds": [
+     {
+      "at": 2,
+      "seconds": 150,
+      "point": [
+       8,
+       3
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      10,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      6,
+      0
+     ]
+    ]
+   },
+   "3": {
+    "points": [
+     [
+      10,
+      6
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      6,
+      0
+     ]
+    ],
+    "distances": [
+     0,
+     3.1622776601683795,
+     8.261297173761164
+    ],
+    "length": 8.261297173761164,
+    "breaks": [],
+    "flying": true,
+    "holds": [
+     {
+      "at": 3.1622776601683795,
+      "seconds": 150,
+      "point": [
+       7,
+       5
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      10,
+      6
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      6,
+      0
+     ]
+    ]
+   },
+   "5": {
+    "points": [
+     [
+      10,
+      6
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      6,
+      0
+     ]
+    ],
+    "distances": [
+     0,
+     3.6055512754639896,
+     7.72865690108165
+    ],
+    "length": 7.72865690108165,
+    "breaks": [],
+    "flying": true,
+    "holds": [
+     {
+      "at": 3.6055512754639896,
+      "seconds": 170,
+      "point": [
+       7,
+       4
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      10,
+      6
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      6,
+      0
+     ]
+    ]
+   },
+   "6": {
+    "points": [
+     [
+      0,
+      6
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      4,
+      0
+     ]
+    ],
+    "distances": [
+     0,
+     3.6055512754639896,
+     7.72865690108165
+    ],
+    "length": 7.72865690108165,
+    "breaks": [],
+    "flying": true,
+    "holds": [
+     {
+      "at": 3.6055512754639896,
+      "seconds": 170,
+      "point": [
+       3,
+       4
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      6
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      4,
+      0
+     ]
+    ]
+   },
+   "8": {
+    "points": [
+     [
+      5,
+      7
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      0
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      5,
+      7
+     ],
+     [
+      5,
+      7
+     ],
+     [
+      5,
+      0
+     ],
+     [
+      5,
+      0
+     ]
+    ]
+   },
+   "9": {
+    "points": [
+     [
+      6,
+      7
+     ],
+     [
+      6,
+      0
+     ]
+    ],
+    "distances": [
+     0,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": true,
+    "holds": [],
+    "nodes": [
+     [
+      6,
+      7
+     ],
+     [
+      6,
+      0
+     ]
+    ]
+   },
+   "10": {
+    "points": [
+     [
+      4,
+      7
+     ],
+     [
+      4,
+      0
+     ]
+    ],
+    "distances": [
+     0,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": true,
+    "holds": [],
+    "nodes": [
+     [
+      4,
+      7
+     ],
+     [
+      4,
+      0
+     ]
+    ]
+   },
+   "11": {
+    "points": [
+     [
+      0,
+      6
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      0
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      6
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      4,
+      0
+     ]
+    ]
+   },
+   "12": {
+    "points": [
+     [
+      0,
+      6
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      0
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      6
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      4,
+      0
+     ],
+     [
+      4,
+      0
+     ]
+    ]
+   },
+   "13": {
+    "points": [
+     [
+      10,
+      6
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      7,
+      6
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      6,
+      0
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      10,
+      6
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      6,
+      0
+     ]
+    ]
+   },
+   "14": {
+    "points": [
+     [
+      10,
+      6
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      7,
+      6
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      6,
+      0
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11.414213562373096
+    ],
+    "length": 11.414213562373096,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      10,
+      6
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      6,
+      0
+     ],
+     [
+      6,
+      0
+     ]
+    ]
+   },
+   "15": {
+    "points": [
+     [
+      5,
+      7
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      0
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     4,
+     5,
+     11,
+     12,
+     18,
+     19,
+     22,
+     24,
+     25,
+     29,
+     30,
+     32,
+     33
+    ],
+    "length": 33,
+    "breaks": [],
+    "flying": true,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 5,
+      "point": [
+       5,
+       6
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      5,
+      7
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      0
+     ]
+    ]
+   },
+   "16": {
+    "points": [
+     [
+      5,
+      7
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      0
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     4,
+     5,
+     11,
+     12,
+     18,
+     19,
+     22,
+     25
+    ],
+    "length": 25,
+    "breaks": [],
+    "flying": true,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 6,
+      "point": [
+       5,
+       6
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 5,
+      "seconds": 6,
+      "point": [
+       8,
+       5
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 12,
+      "seconds": 6,
+      "point": [
+       2,
+       4
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 19,
+      "seconds": 6,
+      "point": [
+       8,
+       3
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      5,
+      7
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      0
+     ]
+    ]
+   },
+   "17": {
+    "points": [
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      0
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      0
+     ],
+     [
+      4,
+      0
+     ]
+    ]
+   },
+   "18": {
+    "points": [
+     [
+      10,
+      3
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      6,
+      0
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      10,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      0
+     ],
+     [
+      6,
+      0
+     ]
+    ]
+   },
+   "19": {
+    "points": [
+     [
+      5,
+      7
+     ],
+     [
+      5,
+      0
+     ]
+    ],
+    "distances": [
+     0,
+     7
+    ],
+    "length": 7,
+    "breaks": [],
+    "flying": true,
+    "holds": [],
+    "nodes": [
+     [
+      5,
+      7
+     ],
+     [
+      5,
+      0
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1005_yokai_2": {
+   "key": "enemy_1005_yokai_2",
+   "prefabKey": "enemy_1005_yokai_2",
+   "name": "Monster Mk II",
+   "level": 1,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 2500,
+    "atk": 330,
+    "def": 125,
+    "res": 0,
+    "moveSpeed": 0.9,
+    "bat": 3,
+    "aspd": 100,
+    "rangeRadius": 2,
+    "rawRangeRadius": 2,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "FLY",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Flying unit.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "drone"
+   ]
+  },
+  "enemy_1017_defdrn": {
+   "key": "enemy_1017_defdrn",
+   "prefabKey": "enemy_1017_defdrn",
+   "name": "Defender-4",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "NONE",
+   "stats": {
+    "maxHp": 4000,
+    "atk": 0,
+    "def": 150,
+    "res": 20,
+    "moveSpeed": 0.8,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 2.5,
+    "rawRangeRadius": 2.5,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "none",
+    "dmgTypes": [
+     "none"
+    ],
+    "motion": "FLY",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Flying unit.",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Increases the DEF of surrounding enemy units",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "defup.def": 300,
+     "defup.range_radius": 2.5
+    },
+    "bbStr": {},
+    "groups": {
+     "defup": [
+      "def",
+      "range_radius"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "drone"
+   ]
+  },
+  "enemy_1007_slime_3": {
+   "key": "enemy_1007_slime_3",
+   "prefabKey": "enemy_1007_slime_3",
+   "name": "Originium Slug β",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 1550,
+    "atk": 240,
+    "def": 0,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 1.7,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1005_yokai": {
+   "key": "enemy_1005_yokai",
+   "prefabKey": "enemy_1005_yokai",
+   "name": "Monster",
+   "level": 1,
+   "rank": "NORMAL",
+   "applyWay": "NONE",
+   "stats": {
+    "maxHp": 1870,
+    "atk": 0,
+    "def": 50,
+    "res": 0,
+    "moveSpeed": 0.9,
+    "bat": 2.3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "none",
+    "dmgTypes": [
+     "none"
+    ],
+    "motion": "FLY",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Flying unit.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "drone"
+   ]
+  },
+  "enemy_1015_litamr_2": {
+   "key": "enemy_1015_litamr_2",
+   "prefabKey": "enemy_1015_litamr_2",
+   "name": "Light-Armored Soldier Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3700,
+    "atk": 300,
+    "def": 500,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1005_yokai_3": {
+   "key": "enemy_1005_yokai_3",
+   "prefabKey": "enemy_1005_yokai_3",
+   "name": "Raptor",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 30000,
+    "atk": 660,
+    "def": 170,
+    "res": 0,
+    "moveSpeed": 0.5,
+    "bat": 3.8,
+    "aspd": 100,
+    "rangeRadius": 2,
+    "rawRangeRadius": 2,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "FLY",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Flying unit.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "drone"
+   ]
+  }
+ }
+}

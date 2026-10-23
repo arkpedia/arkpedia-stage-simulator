@@ -1,0 +1,2618 @@
+{
+ "code": "S5-9",
+ "name": "Abnormality-1",
+ "description": "A number of possessed enemies have appeared during this battle. Please make sure to fortify your defenses.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 12,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "s5-9",
+  "rows": 7,
+  "cols": 11,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_fence",
+    "height": "low",
+    "walkable": false,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_telin",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_telout",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    1,
+    2,
+    2,
+    0,
+    0,
+    3,
+    3,
+    3,
+    3,
+    3,
+    4
+   ],
+   [
+    0,
+    0,
+    2,
+    5,
+    5,
+    3,
+    5,
+    0,
+    5,
+    0,
+    0
+   ],
+   [
+    1,
+    2,
+    2,
+    3,
+    3,
+    3,
+    5,
+    5,
+    3,
+    3,
+    4
+   ],
+   [
+    1,
+    2,
+    2,
+    3,
+    3,
+    3,
+    5,
+    5,
+    3,
+    6,
+    0
+   ],
+   [
+    1,
+    2,
+    2,
+    3,
+    3,
+    3,
+    5,
+    0,
+    3,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    7,
+    0,
+    0,
+    0,
+    0,
+    0,
+    8,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 0
+    },
+    "end": {
+     "row": 1,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 0
+    },
+    "end": {
+     "row": 1,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 0
+    },
+    "end": {
+     "row": 1,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 0
+    },
+    "end": {
+     "row": 1,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 20
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 0
+    },
+    "end": {
+     "row": 1,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 20
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 0
+    },
+    "end": {
+     "row": 1,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 20
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 2
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 6,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 2,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 0
+    },
+    "end": {
+     "row": 1,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 45
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 0
+    },
+    "end": {
+     "row": 1,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 45
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 0
+    },
+    "end": {
+     "row": 1,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 45
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 2
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 6,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 5
+     }
+    ]
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 147,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 3,
+      "time": 3,
+      "interval": 8,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 3,
+      "time": 26,
+      "interval": 6,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 4,
+      "time": 12,
+      "interval": 6,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 1,
+      "time": 41,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 3,
+      "time": 25,
+      "interval": 7,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Possessed Junkman",
+      "enemy_id": "enemy_1044_zomstr",
+      "count": 1,
+      "time": 49,
+      "route": 3,
+      "fragment": 1
+     },
+     {
+      "enemy": "Possessed Junkman",
+      "enemy_id": "enemy_1044_zomstr",
+      "count": 1,
+      "time": 49,
+      "route": 4,
+      "fragment": 1
+     },
+     {
+      "enemy": "Possessed Junkman",
+      "enemy_id": "enemy_1044_zomstr",
+      "count": 1,
+      "time": 49,
+      "route": 5,
+      "fragment": 1
+     },
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 1,
+      "time": 54,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 2,
+      "time": 64,
+      "interval": 1,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 1,
+      "time": 75,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "Possessed Junkman",
+      "enemy_id": "enemy_1044_zomstr",
+      "count": 1,
+      "time": 79,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 1,
+      "time": 64,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 1,
+      "time": 74,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Possessed Junkman",
+      "enemy_id": "enemy_1044_zomstr",
+      "count": 1,
+      "time": 87,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 2,
+      "time": 61,
+      "interval": 1,
+      "route": 2,
+      "fragment": 2
+     },
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 1,
+      "time": 72,
+      "route": 2,
+      "fragment": 2
+     },
+     {
+      "enemy": "Possessed Junkman",
+      "enemy_id": "enemy_1044_zomstr",
+      "count": 1,
+      "time": 82,
+      "route": 2,
+      "fragment": 2
+     },
+     {
+      "enemy": "Breaker",
+      "enemy_id": "enemy_1039_breakr",
+      "count": 2,
+      "time": 66,
+      "interval": 8,
+      "route": 6,
+      "fragment": 2
+     },
+     {
+      "enemy": "Breaker Leader",
+      "enemy_id": "enemy_1039_breakr_2",
+      "count": 1,
+      "time": 82,
+      "route": 6,
+      "fragment": 2
+     },
+     {
+      "enemy": "Possessed Veteran Junkman",
+      "enemy_id": "enemy_1044_zomstr_2",
+      "count": 1,
+      "time": 95,
+      "route": 7,
+      "fragment": 3
+     },
+     {
+      "enemy": "Possessed Veteran Junkman",
+      "enemy_id": "enemy_1044_zomstr_2",
+      "count": 1,
+      "time": 95,
+      "route": 8,
+      "fragment": 3
+     },
+     {
+      "enemy": "Possessed Veteran Junkman",
+      "enemy_id": "enemy_1044_zomstr_2",
+      "count": 1,
+      "time": 95,
+      "route": 9,
+      "fragment": 3
+     },
+     {
+      "enemy": "Possessed Junkman",
+      "enemy_id": "enemy_1044_zomstr",
+      "count": 3,
+      "time": 110,
+      "interval": 12,
+      "route": 0,
+      "fragment": 4
+     },
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 2,
+      "time": 117,
+      "interval": 1,
+      "route": 0,
+      "fragment": 4
+     },
+     {
+      "enemy": "Possessed Junkman",
+      "enemy_id": "enemy_1044_zomstr",
+      "count": 3,
+      "time": 108,
+      "interval": 12,
+      "route": 1,
+      "fragment": 4
+     },
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 1,
+      "time": 130,
+      "route": 1,
+      "fragment": 4
+     },
+     {
+      "enemy": "Possessed Junkman",
+      "enemy_id": "enemy_1044_zomstr",
+      "count": 3,
+      "time": 112,
+      "interval": 12,
+      "route": 2,
+      "fragment": 4
+     },
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 1,
+      "time": 130,
+      "route": 2,
+      "fragment": 4
+     },
+     {
+      "enemy": "Breaker Leader",
+      "enemy_id": "enemy_1039_breakr_2",
+      "count": 3,
+      "time": 117,
+      "interval": 12,
+      "route": 10,
+      "fragment": 4
+     },
+     {
+      "enemy": "Breaker Leader",
+      "enemy_id": "enemy_1039_breakr_2",
+      "count": 1,
+      "time": 147,
+      "route": 10,
+      "fragment": 4
+     },
+     {
+      "enemy": "Spec Ops Caster Leader",
+      "enemy_id": "enemy_1038_lunmag_2",
+      "count": 1,
+      "time": 111,
+      "route": 6,
+      "fragment": 4
+     },
+     {
+      "enemy": "Spec Ops Caster Leader",
+      "enemy_id": "enemy_1038_lunmag_2",
+      "count": 1,
+      "time": 135,
+      "route": 10,
+      "fragment": 4
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 0,
+    "routes": [
+     6,
+     6,
+     10,
+     10,
+     6,
+     10
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 3,
+    "col": 0,
+    "routes": [
+     2,
+     5,
+     2,
+     2,
+     2,
+     9,
+     2,
+     2
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 4,
+    "col": 0,
+    "routes": [
+     1,
+     1,
+     4,
+     1,
+     1,
+     1,
+     8,
+     1,
+     1
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 5,
+    "col": 0,
+    "routes": [
+     0,
+     0,
+     3,
+     0,
+     0,
+     0,
+     0,
+     7,
+     0,
+     0
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 1,
+    "col": 10,
+    "routes": [
+     0,
+     0,
+     1,
+     1,
+     2,
+     3,
+     4,
+     5,
+     0,
+     0,
+     0,
+     0,
+     1,
+     1,
+     1,
+     2,
+     2,
+     2,
+     7,
+     8,
+     9,
+     0,
+     0,
+     1,
+     1,
+     2,
+     2
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 3,
+    "col": 10,
+    "routes": [
+     6,
+     6,
+     10,
+     10,
+     6,
+     10
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1038_lunmag_2",
+    "slug": "spec_ops_caster_leader",
+    "name": "Spec Ops Caster Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1039_breakr",
+    "slug": "breaker",
+    "name": "Breaker",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1039_breakr_2",
+    "slug": "breaker_leader",
+    "name": "Breaker Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1043_zomsbr",
+    "slug": "possessed_soldier",
+    "name": "Possessed Soldier",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1044_zomstr",
+    "slug": "possessed_junkman",
+    "name": "Possessed Junkman",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1044_zomstr_2",
+    "slug": "possessed_veteran_junkman",
+    "name": "Possessed Veteran Junkman",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "devices": [],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "S5-9",
+  "geometryHash": "aa065bea534b84a892692503392b6b0c999956b0c75ff27920134eddae22df17",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      0,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14
+    ],
+    "length": 14,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ]
+   },
+   "1": {
+    "points": [
+     [
+      0,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ],
+    "length": 13,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ]
+   },
+   "2": {
+    "points": [
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "length": 12,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ]
+   },
+   "3": {
+    "points": [
+     [
+      0,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14
+    ],
+    "length": 14,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 20,
+      "point": [
+       1,
+       5
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ]
+   },
+   "4": {
+    "points": [
+     [
+      0,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ],
+    "length": 13,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 20,
+      "point": [
+       1,
+       4
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ]
+   },
+   "5": {
+    "points": [
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "length": 12,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 20,
+      "point": [
+       1,
+       3
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ]
+   },
+   "6": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      10,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "length": 12,
+    "breaks": [
+     8
+    ],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 5,
+      "point": [
+       1,
+       1
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 7,
+      "seconds": 5,
+      "point": [
+       2,
+       6
+      ],
+      "tunnel": true
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      10,
+      3
+     ]
+    ]
+   },
+   "7": {
+    "points": [
+     [
+      0,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14
+    ],
+    "length": 14,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 45,
+      "point": [
+       1,
+       5
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ]
+   },
+   "8": {
+    "points": [
+     [
+      0,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ],
+    "length": 13,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 45,
+      "point": [
+       1,
+       4
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ]
+   },
+   "9": {
+    "points": [
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "length": 12,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 45,
+      "point": [
+       1,
+       3
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ]
+   },
+   "10": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      10,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "length": 12,
+    "breaks": [
+     8
+    ],
+    "flying": false,
+    "holds": [
+     {
+      "at": 7,
+      "seconds": 5,
+      "point": [
+       2,
+       6
+      ],
+      "tunnel": true
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      10,
+      3
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1043_zomsbr": {
+   "key": "enemy_1043_zomsbr",
+   "prefabKey": "enemy_1043_zomsbr",
+   "name": "Possessed Soldier",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2500,
+    "atk": 250,
+    "def": 100,
+    "res": 30,
+    "moveSpeed": 0.9,
+    "bat": 1.8,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 2.5,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 80,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Regenerates HP over time.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "mutant"
+   ]
+  },
+  "enemy_1044_zomstr": {
+   "key": "enemy_1044_zomstr",
+   "prefabKey": "enemy_1044_zomstr",
+   "name": "Possessed Junkman",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 6000,
+    "atk": 500,
+    "def": 130,
+    "res": 30,
+    "moveSpeed": 0.65,
+    "bat": 3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 2.5,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 200,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Regenerates HP over time.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "mutant"
+   ]
+  },
+  "enemy_1039_breakr": {
+   "key": "enemy_1039_breakr",
+   "prefabKey": "enemy_1039_breakr",
+   "name": "Breaker",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3500,
+    "atk": 410,
+    "def": 50,
+    "res": 25,
+    "moveSpeed": 1.9,
+    "bat": 1.4,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 2.2,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1039_breakr_2": {
+   "key": "enemy_1039_breakr_2",
+   "prefabKey": "enemy_1039_breakr_2",
+   "name": "Breaker Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 5000,
+    "atk": 500,
+    "def": 80,
+    "res": 25,
+    "moveSpeed": 1.9,
+    "bat": 1.4,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 2.2,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1044_zomstr_2": {
+   "key": "enemy_1044_zomstr_2",
+   "prefabKey": "enemy_1044_zomstr_2",
+   "name": "Possessed Veteran Junkman",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 11000,
+    "atk": 650,
+    "def": 200,
+    "res": 30,
+    "moveSpeed": 0.65,
+    "bat": 3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 2.5,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 250,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Regenerates HP over time.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "mutant"
+   ]
+  },
+  "enemy_1038_lunmag_2": {
+   "key": "enemy_1038_lunmag_2",
+   "prefabKey": "enemy_1038_lunmag_2",
+   "name": "Spec Ops Caster Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 6000,
+    "atk": 450,
+    "def": 300,
+    "res": 50,
+    "moveSpeed": 0.8,
+    "bat": 4,
+    "aspd": 100,
+    "rangeRadius": 2.4,
+    "rawRangeRadius": 2.4,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Attacks two targets simultaneously.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ }
+}

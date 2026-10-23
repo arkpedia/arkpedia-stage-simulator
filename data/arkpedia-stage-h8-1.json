@@ -1,0 +1,2190 @@
+{
+ "code": "H8-1",
+ "name": "Operation Erebus-1",
+ "description": "A precious yet fragile life. \n<Static Roadblock> Can block the movement of Ursus Civilians and Talulah, the Fighter; Can be destroyed by your units.\n<Ursus Civilian> Life Points will be deducted by 1 when killed by an enemy.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "h8-1",
+  "rows": 8,
+  "cols": 12,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    1,
+    1,
+    1,
+    1,
+    1,
+    2,
+    3,
+    2,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    1,
+    4,
+    4,
+    4,
+    1,
+    4,
+    0,
+    3,
+    0
+   ],
+   [
+    0,
+    2,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    4,
+    4,
+    2,
+    0
+   ],
+   [
+    5,
+    2,
+    0,
+    4,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    0
+   ],
+   [
+    0,
+    2,
+    0,
+    0,
+    1,
+    4,
+    4,
+    4,
+    1,
+    4,
+    4,
+    0
+   ],
+   [
+    0,
+    2,
+    2,
+    2,
+    2,
+    1,
+    1,
+    1,
+    1,
+    4,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    5,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 7
+    },
+    "end": {
+     "row": 1,
+     "col": 9
+    },
+    "checkpoints": [],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 200
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 7
+    },
+    "end": {
+     "row": 1,
+     "col": 9
+    },
+    "checkpoints": [],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 200
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 10
+    },
+    "end": {
+     "row": 2,
+     "col": 10
+    },
+    "checkpoints": [],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 200
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 0
+    },
+    "end": {
+     "row": 1,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 8
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 3
+    },
+    "end": {
+     "row": 2,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 10
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 0
+    },
+    "end": {
+     "row": 1,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 7
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 3
+    },
+    "end": {
+     "row": 2,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 7
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 3
+    },
+    "end": {
+     "row": 2,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 7
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 8
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 0
+    },
+    "end": {
+     "row": 1,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 7
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 8
+     }
+    ]
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 196,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Elite Imperial Striker",
+      "enemy_id": "enemy_1113_empace_2",
+      "count": 1,
+      "time": 0,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Elite Imperial Striker",
+      "enemy_id": "enemy_1113_empace_2",
+      "count": 1,
+      "time": 0,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Elite Imperial Striker",
+      "enemy_id": "enemy_1113_empace_2",
+      "count": 1,
+      "time": 0,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Ursus Civilian",
+      "enemy_id": "enemy_3001_upeopl",
+      "count": 1,
+      "time": 0,
+      "route": 3,
+      "fragment": 0
+     },
+     {
+      "enemy": "Ursus Civilian",
+      "enemy_id": "enemy_3001_upeopl",
+      "count": 1,
+      "time": 0,
+      "route": 4,
+      "fragment": 0
+     },
+     {
+      "enemy": "Infected Patrol Captain",
+      "enemy_id": "enemy_1107_uoffcr",
+      "count": 1,
+      "time": 10,
+      "route": 5,
+      "fragment": 1
+     },
+     {
+      "enemy": "Infected Patrol Captain",
+      "enemy_id": "enemy_1107_uoffcr",
+      "count": 1,
+      "time": 20,
+      "route": 5,
+      "fragment": 1
+     },
+     {
+      "enemy": "Infected Patrol Captain",
+      "enemy_id": "enemy_1107_uoffcr",
+      "count": 1,
+      "time": 30,
+      "route": 5,
+      "fragment": 1
+     },
+     {
+      "enemy": "Infected Patrol Captain",
+      "enemy_id": "enemy_1107_uoffcr",
+      "count": 1,
+      "time": 35,
+      "route": 6,
+      "fragment": 2
+     },
+     {
+      "enemy": "Infected Patrol Captain",
+      "enemy_id": "enemy_1107_uoffcr",
+      "count": 1,
+      "time": 45,
+      "route": 6,
+      "fragment": 2
+     },
+     {
+      "enemy": "Infected Patrol Captain",
+      "enemy_id": "enemy_1107_uoffcr",
+      "count": 1,
+      "time": 55,
+      "route": 6,
+      "fragment": 2
+     },
+     {
+      "enemy": "Elite Infected Patrol Captain",
+      "enemy_id": "enemy_1107_uoffcr_2",
+      "count": 1,
+      "time": 38,
+      "route": 5,
+      "fragment": 2
+     },
+     {
+      "enemy": "Elite Infected Patrol Captain",
+      "enemy_id": "enemy_1107_uoffcr_2",
+      "count": 1,
+      "time": 46,
+      "route": 5,
+      "fragment": 2
+     },
+     {
+      "enemy": "Elite Infected Patrol Captain",
+      "enemy_id": "enemy_1107_uoffcr_2",
+      "count": 1,
+      "time": 58,
+      "route": 5,
+      "fragment": 2
+     },
+     {
+      "enemy": "Elite Infected Patrol Captain",
+      "enemy_id": "enemy_1107_uoffcr_2",
+      "count": 1,
+      "time": 66,
+      "route": 6,
+      "fragment": 3
+     },
+     {
+      "enemy": "Elite Infected Patrol Captain",
+      "enemy_id": "enemy_1107_uoffcr_2",
+      "count": 1,
+      "time": 76,
+      "route": 6,
+      "fragment": 3
+     },
+     {
+      "enemy": "Elite Infected Patrol Captain",
+      "enemy_id": "enemy_1107_uoffcr_2",
+      "count": 1,
+      "time": 86,
+      "route": 6,
+      "fragment": 3
+     },
+     {
+      "enemy": "Elite Ursus Armored Caster",
+      "enemy_id": "enemy_1110_uamord_2",
+      "count": 1,
+      "time": 96,
+      "route": 6,
+      "fragment": 3
+     },
+     {
+      "enemy": "Elite Ursus Armored Caster",
+      "enemy_id": "enemy_1110_uamord_2",
+      "count": 1,
+      "time": 106,
+      "route": 6,
+      "fragment": 3
+     },
+     {
+      "enemy": "Elite Infected Patrol Captain",
+      "enemy_id": "enemy_1107_uoffcr_2",
+      "count": 1,
+      "time": 68,
+      "route": 5,
+      "fragment": 3
+     },
+     {
+      "enemy": "Elite Infected Patrol Captain",
+      "enemy_id": "enemy_1107_uoffcr_2",
+      "count": 1,
+      "time": 78,
+      "route": 5,
+      "fragment": 3
+     },
+     {
+      "enemy": "Elite Ursus Armored Caster",
+      "enemy_id": "enemy_1110_uamord_2",
+      "count": 1,
+      "time": 88,
+      "route": 5,
+      "fragment": 3
+     },
+     {
+      "enemy": "Elite Ursus Armored Caster",
+      "enemy_id": "enemy_1110_uamord_2",
+      "count": 1,
+      "time": 98,
+      "route": 5,
+      "fragment": 3
+     },
+     {
+      "enemy": "Ursus Civilian",
+      "enemy_id": "enemy_3001_upeopl",
+      "count": 1,
+      "time": 119,
+      "route": 4,
+      "fragment": 4
+     },
+     {
+      "enemy": "Elite Infected Patrol Captain",
+      "enemy_id": "enemy_1107_uoffcr_2",
+      "count": 1,
+      "time": 124,
+      "route": 6,
+      "fragment": 4
+     },
+     {
+      "enemy": "Elite Infected Patrol Captain",
+      "enemy_id": "enemy_1107_uoffcr_2",
+      "count": 1,
+      "time": 127,
+      "route": 6,
+      "fragment": 4
+     },
+     {
+      "enemy": "Elite Infected Patrol Captain",
+      "enemy_id": "enemy_1107_uoffcr_2",
+      "count": 1,
+      "time": 131,
+      "route": 6,
+      "fragment": 4
+     },
+     {
+      "enemy": "Elite Ursus Armored Caster",
+      "enemy_id": "enemy_1110_uamord_2",
+      "count": 1,
+      "time": 132,
+      "route": 6,
+      "fragment": 4
+     },
+     {
+      "enemy": "Elite Infected Patrol Captain",
+      "enemy_id": "enemy_1107_uoffcr_2",
+      "count": 1,
+      "time": 139,
+      "route": 6,
+      "fragment": 4
+     },
+     {
+      "enemy": "Ursus Civilian",
+      "enemy_id": "enemy_3001_upeopl",
+      "count": 1,
+      "time": 126,
+      "route": 3,
+      "fragment": 4
+     },
+     {
+      "enemy": "Elite Infected Patrol Captain",
+      "enemy_id": "enemy_1107_uoffcr_2",
+      "count": 1,
+      "time": 131,
+      "route": 5,
+      "fragment": 4
+     },
+     {
+      "enemy": "Elite Infected Patrol Captain",
+      "enemy_id": "enemy_1107_uoffcr_2",
+      "count": 1,
+      "time": 134,
+      "route": 5,
+      "fragment": 4
+     },
+     {
+      "enemy": "Elite Infected Patrol Captain",
+      "enemy_id": "enemy_1107_uoffcr_2",
+      "count": 1,
+      "time": 139,
+      "route": 5,
+      "fragment": 4
+     },
+     {
+      "enemy": "Elite Ursus Armored Caster",
+      "enemy_id": "enemy_1110_uamord_2",
+      "count": 1,
+      "time": 140,
+      "route": 5,
+      "fragment": 4
+     },
+     {
+      "enemy": "Elite Infected Patrol Captain",
+      "enemy_id": "enemy_1107_uoffcr_2",
+      "count": 1,
+      "time": 146,
+      "route": 5,
+      "fragment": 4
+     },
+     {
+      "enemy": "Elite Imperial Striker",
+      "enemy_id": "enemy_1113_empace_2",
+      "count": 1,
+      "time": 169,
+      "route": 7,
+      "fragment": 5
+     },
+     {
+      "enemy": "Elite Imperial Striker",
+      "enemy_id": "enemy_1113_empace_2",
+      "count": 1,
+      "time": 194,
+      "route": 7,
+      "fragment": 5
+     },
+     {
+      "enemy": "Elite Imperial Striker",
+      "enemy_id": "enemy_1113_empace_2",
+      "count": 1,
+      "time": 171,
+      "route": 8,
+      "fragment": 5
+     },
+     {
+      "enemy": "Elite Imperial Striker",
+      "enemy_id": "enemy_1113_empace_2",
+      "count": 1,
+      "time": 196,
+      "route": 8,
+      "fragment": 5
+     },
+     {
+      "enemy": "Elite Ursus Armored Caster",
+      "enemy_id": "enemy_1110_uamord_2",
+      "count": 2,
+      "time": 186,
+      "interval": 8,
+      "route": 6,
+      "fragment": 5
+     },
+     {
+      "enemy": "Elite Ursus Armored Caster",
+      "enemy_id": "enemy_1110_uamord_2",
+      "count": 2,
+      "time": 188,
+      "interval": 8,
+      "route": 5,
+      "fragment": 5
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 4,
+    "col": 0,
+    "routes": [
+     3,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     3,
+     5,
+     5,
+     5,
+     5,
+     5,
+     8,
+     8,
+     5
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 7,
+    "col": 3,
+    "routes": [
+     4,
+     6,
+     6,
+     6,
+     6,
+     6,
+     6,
+     6,
+     6,
+     4,
+     6,
+     6,
+     6,
+     6,
+     6,
+     7,
+     7,
+     6
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 1,
+    "col": 9,
+    "routes": [
+     0,
+     1,
+     3,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     5,
+     3,
+     5,
+     5,
+     5,
+     5,
+     5,
+     8,
+     8,
+     5
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 2,
+    "col": 10,
+    "routes": [
+     2,
+     4,
+     6,
+     6,
+     6,
+     6,
+     6,
+     6,
+     6,
+     6,
+     4,
+     6,
+     6,
+     6,
+     6,
+     6,
+     7,
+     7,
+     6
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1107_uoffcr",
+    "slug": "infected_patrol_captain",
+    "name": "Infected Patrol Captain",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1107_uoffcr_2",
+    "slug": "elite_infected_patrol_captain",
+    "name": "Elite Infected Patrol Captain",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1110_uamord_2",
+    "slug": "elite_ursus_armored_caster",
+    "name": "Elite Ursus Armored Caster",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1113_empace_2",
+    "slug": "elite_imperial_striker",
+    "name": "Elite Imperial Striker",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_3001_upeopl",
+    "slug": "ursus_civilian",
+    "name": "Ursus Civilian",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "devices": [
+  {
+   "col": 1,
+   "description": "Less likely to get attacked by your units",
+   "hidden": false,
+   "key": "trap_020_roadblock",
+   "kind": "device",
+   "name": "Static Roadblock",
+   "row": 3
+  },
+  {
+   "col": 6,
+   "description": "Less likely to get attacked by your units",
+   "hidden": false,
+   "key": "trap_020_roadblock",
+   "kind": "device",
+   "name": "Static Roadblock",
+   "row": 6
+  },
+  {
+   "col": 7,
+   "description": "Less likely to get attacked by your units",
+   "hidden": false,
+   "key": "trap_020_roadblock",
+   "kind": "device",
+   "name": "Static Roadblock",
+   "row": 6
+  },
+  {
+   "col": 5,
+   "description": "Less likely to get attacked by your units",
+   "hidden": false,
+   "key": "trap_020_roadblock",
+   "kind": "device",
+   "name": "Static Roadblock",
+   "row": 1
+  },
+  {
+   "col": 6,
+   "description": "Less likely to get attacked by your units",
+   "hidden": false,
+   "key": "trap_020_roadblock",
+   "kind": "device",
+   "name": "Static Roadblock",
+   "row": 1
+  },
+  {
+   "col": 10,
+   "description": "Less likely to get attacked by your units",
+   "hidden": false,
+   "key": "trap_020_roadblock",
+   "kind": "device",
+   "name": "Static Roadblock",
+   "row": 3
+  }
+ ],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "H8-1",
+  "geometryHash": "01efbca746941467e9cf8dada1ff89c8094ffd5df01651121c8950fc002788ec",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      7,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      9,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "length": 2,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 0,
+      "seconds": 200,
+      "point": [
+       7,
+       1
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      7,
+      1
+     ],
+     [
+      9,
+      1
+     ]
+    ]
+   },
+   "1": {
+    "points": [
+     [
+      7,
+      4
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      9,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "length": 5,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 0,
+      "seconds": 200,
+      "point": [
+       7,
+       4
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      7,
+      4
+     ],
+     [
+      9,
+      1
+     ]
+    ]
+   },
+   "2": {
+    "points": [
+     [
+      10,
+      4
+     ],
+     [
+      10,
+      3
+     ],
+     [
+      10,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "length": 2,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 0,
+      "seconds": 200,
+      "point": [
+       10,
+       4
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      10,
+      4
+     ],
+     [
+      10,
+      2
+     ]
+    ]
+   },
+   "3": {
+    "points": [
+     [
+      0,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      9,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "length": 12,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      9,
+      1
+     ]
+    ]
+   },
+   "4": {
+    "points": [
+     [
+      3,
+      7
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      7,
+      6
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      10,
+      4
+     ],
+     [
+      10,
+      3
+     ],
+     [
+      10,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "length": 12,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      3,
+      7
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      7,
+      6
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      10,
+      4
+     ],
+     [
+      10,
+      3
+     ],
+     [
+      10,
+      2
+     ]
+    ]
+   },
+   "5": {
+    "points": [
+     [
+      0,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      9,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "length": 12,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      9,
+      1
+     ]
+    ]
+   },
+   "6": {
+    "points": [
+     [
+      3,
+      7
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      10,
+      4
+     ],
+     [
+      10,
+      3
+     ],
+     [
+      10,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "length": 12,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      3,
+      7
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      10,
+      2
+     ]
+    ]
+   },
+   "7": {
+    "points": [
+     [
+      3,
+      7
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      10,
+      4
+     ],
+     [
+      10,
+      3
+     ],
+     [
+      10,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "length": 12,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 8,
+      "point": [
+       3,
+       6
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      3,
+      7
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      10,
+      2
+     ]
+    ]
+   },
+   "8": {
+    "points": [
+     [
+      0,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      9,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "length": 12,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 8,
+      "point": [
+       1,
+       4
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      9,
+      1
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1113_empace_2": {
+   "key": "enemy_1113_empace_2",
+   "prefabKey": "enemy_1113_empace_2",
+   "name": "Elite Imperial Striker",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "ALL",
+   "stats": {
+    "maxHp": 15000,
+    "atk": 1200,
+    "def": 800,
+    "res": 50,
+    "moveSpeed": 0.7,
+    "bat": 4.5,
+    "aspd": 100,
+    "rangeRadius": 1.5,
+    "rawRangeRadius": 1.5,
+    "blockCnt": 1,
+    "massLevel": 4,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Gains significantly increased ATK when HP is under 50%",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "atkup.atk": 1
+    },
+    "bbStr": {},
+    "groups": {
+     "atkup": [
+      "atk"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_3001_upeopl": {
+   "key": "enemy_3001_upeopl",
+   "prefabKey": "enemy_3001_upeopl",
+   "name": "Ursus Civilian",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "NONE",
+   "stats": {
+    "maxHp": 3500,
+    "atk": 0,
+    "def": 50,
+    "res": 0,
+    "moveSpeed": 0.65,
+    "bat": 1,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 0,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "none",
+    "dmgTypes": [
+     "none"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Does not deplete Life Points when spared, but will deplete a Life Point upon dying",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Does not count towards the defeated enemies counter",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "dead.value": -1
+    },
+    "bbStr": {},
+    "groups": {
+     "dead": [
+      "value"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1107_uoffcr": {
+   "key": "enemy_1107_uoffcr",
+   "prefabKey": "enemy_1107_uoffcr",
+   "name": "Infected Patrol Captain",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3300,
+    "atk": 330,
+    "def": 150,
+    "res": 20,
+    "moveSpeed": 1.1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Can use long-ranged weapons to attack <Ursus Civilians> and <Talulah, the Fighter>",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1107_uoffcr_2": {
+   "key": "enemy_1107_uoffcr_2",
+   "prefabKey": "enemy_1107_uoffcr_2",
+   "name": "Elite Infected Patrol Captain",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 4300,
+    "atk": 400,
+    "def": 150,
+    "res": 20,
+    "moveSpeed": 1.1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Can use long-ranged weapons to attack <Ursus Civilians> and <Talulah, the Fighter>",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1110_uamord_2": {
+   "key": "enemy_1110_uamord_2",
+   "prefabKey": "enemy_1110_uamord_2",
+   "name": "Elite Ursus Armored Caster",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 6500,
+    "atk": 420,
+    "def": 500,
+    "res": 50,
+    "moveSpeed": 0.9,
+    "bat": 2.8,
+    "aspd": 100,
+    "rangeRadius": 2.2,
+    "rawRangeRadius": 2.2,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ }
+}
