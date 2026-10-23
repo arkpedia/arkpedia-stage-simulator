@@ -581,6 +581,10 @@ export class StandardBattle extends Battle {
     const unit = this.spawnDevice(`token:${unitId}`, row, col, { hp: token.hp, def: 0, blockCnt: token.block,
       obstacle: true, obstacleKind: token.obstacle, name: token.name });
     if (!unit) throw new Error('Token cannot be placed here.');
+    if (token.behavior === 'barrier') {
+      for (const ally of [unit, ...this.units.filter(u => u.side === 'ally' && u.alive && u.deployed && u !== unit && Math.max(Math.abs(u.tileR - row), Math.abs(u.tileC - col)) <= 1)])
+        this.addBuff(ally, { key: 'ab:allerdale-barrier', source: unit, visible: true, shield: 1000 });
+    }
     spendDp(this, 'arkpedia', token.cost);
     this.mvpStageTokens.set(unitId, (this.mvpStageTokens.get(unitId) ?? 1) - 1);
     return unit;
