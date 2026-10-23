@@ -482,7 +482,7 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: /^Continuously charges up Londinium Secondary Defense Artillery; when interrupted, the Defense Artillery will lose a portion of its charge progress$/ },
   'skill:charge_gunctrl': { covers: r => r.skills.some(s => s.prefabKey === 'charge_gunctrl'), note: 'artillery charge skill' },
   // Flying text shared by several records.
-  'ability:Flying unit.': { covers: r => r.abilities.some(a => a.text === 'Flying unit.'), ability: { kind: 'hover', params: () => ({}) }, nativeClaim: () => ({ active: 1 }), note: 'flying unit', explains: /^Flying unit\.$/ },
+  'ability:Flying unit.': { covers: r => r.abilities.some(a => a.text === 'Flying unit.'), ability: { kind: 'hover', params: () => ({}) }, note: 'flying unit', explains: /^Flying unit\.$/ },
   // Recon drone: invisible, self-draining, and its attacks charge the artillery (charge state is inert without the device).
   'ability:<$ba.invisible>Invisible</>, gradually loses HP over time': {
     covers: r => r.abilities.some(a => a.text === '<$ba.invisible>Invisible</>, gradually loses HP over time'),
