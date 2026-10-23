@@ -48,7 +48,8 @@ for (const [index, route] of geometry.routes.entries()) {
 }
 if (!Object.keys(paths).length) throw Error('Playback export has no paths and no route to synthesize');
 const devicePath = join(dirname(args.stage), '..', 'stage-devices.json');
-const devices = existsSync(devicePath) ? (JSON.parse(await readFile(devicePath, 'utf8'))[source.slug] ?? []) : [];
+const baseSlug = source.slug.replace(/_(challenge_mode|six_star|adverse_environment)$/, '');
+const devices = existsSync(devicePath) ? (JSON.parse(await readFile(devicePath, 'utf8'))[source.geometryKey ?? baseSlug] ?? []) : [];
 const tokens = (geometry.suppliedUnits?.deployable_tokens ?? []).filter(t => t.count !== 0).map(t => {
   const spec = STAGE_TOKEN_UNITS[t.unit_id];
   if (!spec) throw Error(`Unsupported stage token: ${t.unit_id}`);
