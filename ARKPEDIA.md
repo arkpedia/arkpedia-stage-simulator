@@ -6122,3 +6122,5 @@ Fixed null-route handling and added eight more simple event stages (AF-3, BH-1, 
 Promoted AF-3/BH-1/FA-1/PL-1 and challenge variants public after data/smoke review. Catalogue **407** = 342 public + 65 testOnly.
 
 Built the remaining 155 event stages that pass the supported-enemy/device/token/conditional screen as `testOnly`. Catalogue **562** = 342 public + 220 testOnly; 561 files.
+
+Implemented the first reviewed High Tide stage **DH-1** (testOnly): 13–83 s tide window from the level's `ACTIVATE_PREDEFINED` action, 40 True damage/s to enemies, −60 ASPD and speed, ally −60 ASPD plus 40 Corrosion/s and 25% attacker-ATK Corrosion on hit, deployment blocked on low ground. Catalogue **563** = 342 public + 221 testOnly; 562 files.

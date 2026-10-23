@@ -3,6 +3,7 @@
 import { Battle } from "./Battle.js";
 import { DataSource } from "./simdata.js";
 import { genericKit } from "./content/generic.js";
+import { elem } from './content/enemies.js';
 import { regularDpMinimum, canSpendDp, spendDp, regularDpRecoveryForStep } from './content/arkpedia-dp-budget.js';
 import { regularModelKey } from '../../shared/arkpedia/facing.js';
 import { customizeMedicKit, installMedic, installMedicSquad } from './content/arkpedia-medics.js';
@@ -456,6 +457,7 @@ export class StandardBattle extends Battle {
     if (this.mvpStageDevices.length) this.on('tick', ({ dt }) => this._tickMvpStageDevices(dt));
     this._installUnitStageDevices(data.stage.devices ?? []);
     this._installPillarController();
+    this._installHighTide(data.stage.tide);
     this.unitLimit = config.unit_limit;
     this.regularMapSize = Object.freeze({ rows: data.stage.geometry.rows, cols: data.stage.geometry.cols });
     this.mapTags = Object.freeze([...(data.stage.mapTags ?? [])]);
@@ -1231,6 +1233,47 @@ export class StandardBattle extends Battle {
     if (this.life <= 0) return this._finish("defeated");
     super._checkEnd();
   }
+  _installHighTide(tide) {
+    if (!tide) return;
+    this.highTide = { start: tide.start ?? 0, end: tide.end ?? Infinity, damage: tide.enemyDamage ?? 40,
+      aspd: tide.enemyAspd ?? 60, speed: tide.enemySpeed ?? 0.6, allyAspd: tide.allyAspd ?? 60,
+      erosion: tide.allyErosion ?? 40, ratio: tide.erosionRatio ?? 0.25, active: false };
+    this._highTideLast = -Infinity;
+    this.on('tick', () => this._highTideTick());
+    this.on('damaged', ({ source, target }) => {
+      if (!this.highTide?.active || target?.side !== 'ally' || !target.alive) return;
+      if (target.mem?.erosionImmune || !this._isFlooded(target.tileR, target.tileC)) return;
+      elem(this, source ?? null, target, 'erosion', (source?.s?.atk ?? 0) * this.highTide.ratio);
+    });
+  }
+
+  _isFlooded(r, c) { return !!(this.highTide?.active && this.grid.inRect(r, c) && this.grid.isLow(r, c)); }
+
+  _highTideTick() {
+    const t = this.highTide;
+    if (!t) return;
+    t.active = this.time >= t.start && this.time < t.end;
+    if (!t.active || this.time - this._highTideLast < 1) return;
+    this._highTideLast = this.time;
+    for (const e of this.enemies) {
+      if (!e.alive || !this._isFlooded(e.tileR, e.tileC)) continue;
+      this.dealDamage(null, e, { amount: t.damage, type: 'true', sourceless: true });
+      if (e.alive) this.addBuff(e, { key: 'high-tide:enemy', duration: 1.2, mods: { aspd: -t.aspd, movePct: -t.speed }, visible: true });
+    }
+    for (const u of this.units) {
+      if (u.side !== 'ally' || !u.alive || u.deployed === false || !this._isFlooded(u.tileR, u.tileC)) continue;
+      this.addBuff(u, { key: 'high-tide:ally', duration: 1.2, mods: { aspd: -t.allyAspd }, visible: true });
+      if (!u.mem?.erosionImmune) elem(this, null, u, 'erosion', t.erosion);
+    }
+    this._ev(['highTide', { active: true }]);
+  }
+
+  _deploy(u, opts = {}) {
+    const r = opts.tile ? opts.tile[0] : u.homeR, c = opts.tile ? opts.tile[1] : u.homeC;
+    if (u.kind === 'op' && this._isFlooded(r, c) && !u.mem?.erosionImmune) { this.log(`high tide blocks deployment at ${r},${c}`); return false; }
+    return super._deploy(u, opts);
+  }
+
   _installPillarController() {
     this.on('damaged', ({ source, target, dmg }) => {
       const d = target?.mem?.stageUnitDevice;
@@ -1276,7 +1319,7 @@ export class StandardBattle extends Battle {
   _installUnitStageDevices(devices) {
     for (const d of devices) {
       const spec = STAGE_DEVICES[d.name]?.unit;
-      if (!spec || !Number.isInteger(d.row) || !Number.isInteger(d.col)) continue;
+      if (!spec || !Number.isInteger(d.row) || !Number.isInteger(d.col) || spec.tide) continue;
       const e = this.spawnEnemy(`device:${d.key ?? d.name}`, { pos: [d.row, d.col], countInTotal: false,
         def: { key: d.key ?? d.name, name: d.name, applyWay: 'NONE', dmgType: 'none',
           stats: { maxHp: spec.hp, hp: spec.hp, atk: spec.atk ?? 0, def: spec.def, res: spec.res ?? 0, moveSpeed: 0, bat: 1, rangeRadius: 0, blockCnt: spec.block, lpr: 0 } } });
