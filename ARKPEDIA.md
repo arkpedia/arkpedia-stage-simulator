@@ -6088,3 +6088,5 @@ Reviewed the token strip in the browser (1-6): one Roadblock card showing ×5 ·
 Imported the five fixed-squad-only operators (Sharp, Pith, Touch, Stormeye, Raidian) from the upstream character/skill tables, added a fixed-squad gate and stage-level operator overrides, and built 15-19. It stays `testOnly` for visual review. Catalogue **335** = 318 public + 17 testOnly; 334 files.
 
 Reviewed 15-19 in the browser: the fixed squad shows Sharp, Pith, Touch, Stormeye and Raidian with generated fallback portraits plus Rosmontis, and the battle starts. 15-19 is public. Catalogue **335** = **319 public + 16 testOnly**.
+
+Supported the flying targeteer's native component and built **R8-7** plus its challenge variant with original routes; both are public. Catalogue **337** = 321 public + 16 testOnly; 336 files; enemies **420**.
