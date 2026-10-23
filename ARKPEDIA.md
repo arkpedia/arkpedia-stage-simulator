@@ -6104,3 +6104,7 @@ Supported the Sarkaz Boneguard and Boneguard Flayer records (taunt, damage-trigg
 The conditional data was not missing: base stages 15-10/15-17/15-4 carry it, and the builder already resolves base geometry for six-star variants. Built all three; **15-10_six_star** has original routes and is public, while 15-17/15-4 stay testOnly for synthetic routes. Catalogue **347** = 329 public + 18 testOnly; 346 files.
 
 Implemented the Tattered Pillar controller (adjacent-only damage, first lethal leaves 1 HP + 2 s invulnerability, collapse opposite the damage source, 12000 True + 10 s Stun, friendly retreat and Battlefield Ruins). Built 9-14/9-15/9-17 challenge as test-only stages. Catalogue **350** = 329 public + 21 testOnly; 349 files.
+
+Reviewed 9-14 challenge in the browser; the five pillar devices render and the battle starts. Promoted 9-14/9-15/9-17 challenge public. Catalogue **350** = **332 public + 18 testOnly**.
+
+Rebuilt the public 9-14/9-15/9-17 stages with their Tattered Pillar devices (5/2/1 pillars), fixing a missing-device regression.
