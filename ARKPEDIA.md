@@ -6092,3 +6092,5 @@ Reviewed 15-19 in the browser: the fixed squad shows Sharp, Pith, Touch, Stormey
 Supported the flying targeteer's native component and built **R8-7** plus its challenge variant with original routes; both are public. Catalogue **337** = 321 public + 16 testOnly; 336 files; enemies **420**.
 
 Supported the Decaying Collector Disciple variant's Seeds of Decay summon and built **12-17/12-18/12-19 adverse** with original routes; all public. Catalogue **340** = 324 public + 16 testOnly; 339 files; enemies **421**.
+
+Implemented Allerdale's Guard as a barrier token (1000 shield to itself and adjacent allies) and built **11-5** plus adverse as test-only stages. Catalogue **342** = 324 public + 18 testOnly; 341 files.

@@ -47,3 +47,20 @@ test('a roadblock token deploys as a blocking crate and spends DP', () => {
   assert.equal(battle.getPlayer('arkpedia').dp, dp - 5);
   assert.equal(battle.mvpStageTokens.get('trap_001_crate'), 4);
 });
+
+import stage115 from '../data/arkpedia-stage-11-5.json' with { type: 'json' };
+const data115 = { ...mvp, stage: stage115, enemies: { ...mvp.enemies, ...stage115.enemies } };
+
+test("Allerdale's Guard grants a 1000 barrier on deployment", () => {
+  const battle = new StandardBattle(data115, { operators: Object.values(data115.operators).slice(0, 5).map(defaultBuild) });
+  const [row, col] = (() => {
+    for (let r = 0; r < stage115.geometry.rows; r++)
+      for (let c = 0; c < stage115.geometry.cols; c++)
+        if (battle.grid.groundPassable(r, c, true)) return [r, c];
+    throw new Error('no ground tile');
+  })();
+  const unit = battle.deployToken('trap_087_allady', row, col);
+  const buff = unit.findBuff('ab:allerdale-barrier');
+  assert.ok(buff);
+  assert.equal(buff.shield, 1000);
+});
