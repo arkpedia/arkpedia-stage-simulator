@@ -6106,3 +6106,5 @@ The conditional data was not missing: base stages 15-10/15-17/15-4 carry it, and
 Implemented the Tattered Pillar controller (adjacent-only damage, first lethal leaves 1 HP + 2 s invulnerability, collapse opposite the damage source, 12000 True + 10 s Stun, friendly retreat and Battlefield Ruins). Built 9-14/9-15/9-17 challenge as test-only stages. Catalogue **350** = 329 public + 21 testOnly; 349 files.
 
 Reviewed 9-14 challenge in the browser; the five pillar devices render and the battle starts. Promoted 9-14/9-15/9-17 challenge public. Catalogue **350** = **332 public + 18 testOnly**.
+
+Rebuilt the public 9-14/9-15/9-17 stages with their Tattered Pillar devices (5/2/1 pillars), fixing a missing-device regression.
