@@ -1,0 +1,1322 @@
+{
+  "code": "DH-4",
+  "name": "Triathlon",
+  "description": "A game requires rules, yet what the audience most wishes for tends to be that which breaks the rules. \n<High Tide>Unable to deploy on flooded tiles. Allied units and enemies in the water will suffer from 'Erosion': Allied units have reduced ASPD, continually receive Corrosion and receive additional Corrosion when attacked; Enemies have reduced ASPD and Movement Speed, and continually lose HP",
+  "battle": {
+    "max_life": 3,
+    "unit_limit": 9,
+    "initial_dp": 9,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1
+  },
+  "mapTags": [],
+  "mapTagSource": null,
+  "geometry": {
+    "slug": "dh-4",
+    "rows": 8,
+    "cols": 12,
+    "tileLegend": [
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_floor",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_telin",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_telout",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_start",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      }
+    ],
+    "tileGrid": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        2,
+        3,
+        3,
+        3,
+        2,
+        2,
+        1,
+        0,
+        0
+      ],
+      [
+        4,
+        2,
+        2,
+        2,
+        3,
+        1,
+        3,
+        2,
+        2,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        5,
+        1,
+        1,
+        1,
+        6,
+        2,
+        2,
+        2,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        2,
+        2,
+        2,
+        3,
+        3,
+        3,
+        2,
+        3,
+        7
+      ],
+      [
+        0,
+        0,
+        1,
+        2,
+        2,
+        3,
+        1,
+        0,
+        0,
+        2,
+        3,
+        7
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        7,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "routes": [
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 11
+        },
+        "end": {
+          "row": 3,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 3
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 11
+        },
+        "end": {
+          "row": 3,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 3
+            }
+          },
+          {
+            "type": "appear_at_pos",
+            "position": {
+              "row": 4,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 3
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 1,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 7,
+          "col": 5
+        },
+        "end": {
+          "row": 3,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 3
+            }
+          },
+          {
+            "type": "appear_at_pos",
+            "position": {
+              "row": 4,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 3
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 10
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 3,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": null,
+        "placeholder": true,
+        "start": null,
+        "end": null,
+        "checkpoints": [],
+        "waits": []
+      }
+    ],
+    "waves": [
+      {
+        "index": 0,
+        "duration": 191,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Delinquent",
+            "enemy_id": "enemy_1159_swfmob",
+            "count": 1,
+            "time": 6,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Delinquent",
+            "enemy_id": "enemy_1159_swfmob",
+            "count": 3,
+            "time": 18,
+            "interval": 8,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Delinquent",
+            "enemy_id": "enemy_1159_swfmob",
+            "count": 5,
+            "time": 25,
+            "interval": 12,
+            "route": 1,
+            "fragment": 0
+          },
+          {
+            "enemy": "Delinquent",
+            "enemy_id": "enemy_1159_swfmob",
+            "count": 3,
+            "time": 79,
+            "interval": 8,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Dockworker",
+            "enemy_id": "enemy_1160_hvyslr",
+            "count": 1,
+            "time": 88,
+            "route": 1,
+            "fragment": 1
+          },
+          {
+            "enemy": "Tidal Caster",
+            "enemy_id": "enemy_1161_tidmag",
+            "count": 1,
+            "time": 101,
+            "route": 2,
+            "fragment": 1
+          },
+          {
+            "enemy": "Tidal Caster",
+            "enemy_id": "enemy_1161_tidmag",
+            "count": 3,
+            "time": 125,
+            "interval": 22,
+            "route": 2,
+            "fragment": 2
+          },
+          {
+            "enemy": "Delinquent",
+            "enemy_id": "enemy_1159_swfmob",
+            "count": 3,
+            "time": 120,
+            "interval": 3,
+            "route": 0,
+            "fragment": 2
+          },
+          {
+            "enemy": "Delinquent",
+            "enemy_id": "enemy_1159_swfmob",
+            "count": 3,
+            "time": 120,
+            "interval": 3,
+            "route": 1,
+            "fragment": 2
+          },
+          {
+            "enemy": "Delinquent",
+            "enemy_id": "enemy_1159_swfmob",
+            "count": 3,
+            "time": 159,
+            "interval": 3,
+            "route": 0,
+            "fragment": 2
+          },
+          {
+            "enemy": "Dockworker",
+            "enemy_id": "enemy_1160_hvyslr",
+            "count": 1,
+            "time": 183,
+            "route": 1,
+            "fragment": 2
+          },
+          {
+            "enemy": "Delinquent",
+            "enemy_id": "enemy_1159_swfmob",
+            "count": 3,
+            "time": 185,
+            "interval": 3,
+            "route": 0,
+            "fragment": 2
+          }
+        ]
+      }
+    ],
+    "spawnTiles": [
+      {
+        "key": "tile_start",
+        "row": 5,
+        "col": 11,
+        "routes": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 6,
+        "col": 11,
+        "routes": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 7,
+        "col": 5,
+        "routes": [
+          2,
+          2
+        ]
+      }
+    ],
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 3,
+        "col": 0,
+        "routes": [
+          0,
+          0,
+          1,
+          0,
+          1,
+          2,
+          0,
+          2,
+          0,
+          1,
+          0,
+          1,
+          0
+        ]
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_1159_swfmob",
+        "slug": "delinquent",
+        "name": "Delinquent",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1160_hvyslr",
+        "slug": "dockworker",
+        "name": "Dockworker",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1161_tidmag",
+        "slug": "tidal_caster",
+        "name": "Tidal Caster",
+        "database_level": 0
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [],
+      "deployable_tokens": [
+        {
+          "unit": "Erosion-Resistant Coating Application Device",
+          "unit_id": "trap_046_oxygen",
+          "count": 0,
+          "level": 1,
+          "elite": 0,
+          "potential": 0,
+          "skill_index": 0,
+          "skill_level": 1
+        }
+      ]
+    },
+    "hasConditionalSpawns": false
+  },
+  "devices": [
+    {
+      "col": 0,
+      "description": null,
+      "hidden": true,
+      "key": "trap_042_tidectrl",
+      "kind": "device",
+      "name": "Tide Controller",
+      "row": 0
+    }
+  ],
+  "tokens": [],
+  "pathing": {
+    "schemaVersion": 1,
+    "syntheticRoutes": [],
+    "producer": "Arkpedia stage browser / buildPlaybackPaths",
+    "stage": "DH-4",
+    "geometryHash": "c8edf3b023fc7440f4499729e21653caf7cd85cfab73e0f94cd60106633f50f6",
+    "moveScale": 0.65,
+    "paths": {
+      "0": {
+        "points": [
+          [
+            11,
+            6
+          ],
+          [
+            10,
+            6
+          ],
+          [
+            9,
+            6
+          ],
+          [
+            9,
+            5
+          ],
+          [
+            9,
+            4
+          ],
+          [
+            8,
+            4
+          ],
+          [
+            8,
+            3
+          ],
+          [
+            8,
+            2
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            6,
+            1
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18
+        ],
+        "length": 18,
+        "breaks": [],
+        "flying": false,
+        "holds": [],
+        "nodes": [
+          [
+            11,
+            6
+          ],
+          [
+            9,
+            6
+          ],
+          [
+            9,
+            4
+          ],
+          [
+            8,
+            4
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            0,
+            3
+          ]
+        ]
+      },
+      "1": {
+        "points": [
+          [
+            11,
+            5
+          ],
+          [
+            10,
+            5
+          ],
+          [
+            9,
+            5
+          ],
+          [
+            8,
+            5
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            7,
+            3
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            6,
+            1
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "length": 21,
+        "breaks": [
+          10
+        ],
+        "flying": false,
+        "holds": [
+          {
+            "at": 9,
+            "seconds": 5,
+            "point": [
+              3,
+              4
+            ],
+            "tunnel": true
+          }
+        ],
+        "nodes": [
+          [
+            11,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            0,
+            3
+          ]
+        ]
+      },
+      "2": {
+        "points": [
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            7,
+            3
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            6,
+            2
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "length": 15,
+        "breaks": [
+          6
+        ],
+        "flying": false,
+        "holds": [
+          {
+            "at": 1,
+            "seconds": 10,
+            "point": [
+              5,
+              6
+            ],
+            "tunnel": false
+          },
+          {
+            "at": 5,
+            "seconds": 5,
+            "point": [
+              3,
+              4
+            ],
+            "tunnel": true
+          }
+        ],
+        "nodes": [
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            0,
+            3
+          ]
+        ]
+      }
+    }
+  },
+  "art": null,
+  "gates": null,
+  "fixedSquad": [],
+  "enemies": {
+    "enemy_1159_swfmob": {
+      "key": "enemy_1159_swfmob",
+      "prefabKey": "enemy_1159_swfmob",
+      "name": "Delinquent",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 2800,
+        "atk": 280,
+        "def": 100,
+        "res": 0,
+        "moveSpeed": 1,
+        "bat": 2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Has a chance to dodge Physical attacks when not blocked",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "Evade.prob": 0.4
+        },
+        "bbStr": {},
+        "groups": {
+          "Evade": [
+            "prob"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1160_hvyslr": {
+      "key": "enemy_1160_hvyslr",
+      "prefabKey": "enemy_1160_hvyslr",
+      "name": "Dockworker",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 10000,
+        "atk": 800,
+        "def": 800,
+        "res": 20,
+        "moveSpeed": 0.7,
+        "bat": 3.5,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 4,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "<$ba.stun>Stuns</> allied units after several attacks",
+          "format": "SILENCE"
+        },
+        {
+          "text": "Quickly loses HP while under the effects of 'Erosion'",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "Drown.damage": 1000
+        },
+        "bbStr": {},
+        "groups": {
+          "Drown": [
+            "damage"
+          ]
+        }
+      },
+      "skills": [
+        {
+          "prefabKey": "stuncombat",
+          "priority": 0,
+          "cooldown": 1,
+          "initCooldown": 1,
+          "spCost": 3,
+          "bb": {
+            "stun": 7
+          },
+          "bbStr": {}
+        }
+      ],
+      "sp": {
+        "type": "INCREASE_WHEN_ATTACK",
+        "maxSp": 3,
+        "initSp": 0,
+        "increment": 1
+      },
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1161_tidmag": {
+      "key": "enemy_1161_tidmag",
+      "prefabKey": "enemy_1161_tidmag",
+      "name": "Tidal Caster",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 6000,
+        "atk": 200,
+        "def": 200,
+        "res": 60,
+        "moveSpeed": 0.7,
+        "bat": 2.5,
+        "aspd": 100,
+        "rangeRadius": 2.2,
+        "rawRangeRadius": 2.2,
+        "blockCnt": 1,
+        "massLevel": 2,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "arts",
+        "dmgTypes": [
+          "arts"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": true,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Attacks deal damage to the target and all allied units in the target's four adjacent tiles, additionally inflicting <$ba.dt.erosion>Corrosion Damage</>",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "EpDamage.attack@ep_damage_ratio": 0.8
+        },
+        "bbStr": {},
+        "groups": {
+          "EpDamage": [
+            "attack@ep_damage_ratio"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    }
+  },
+  "tide": [
+    {
+      "start": 30,
+      "end": 100,
+      "enemyDamage": 40,
+      "enemyAspd": 60,
+      "enemySpeed": 0.6,
+      "allyAspd": 60,
+      "allyErosion": 40,
+      "erosionRatio": 0.25
+    }
+  ]
+}

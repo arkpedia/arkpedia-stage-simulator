@@ -6128,3 +6128,5 @@ Implemented the first reviewed High Tide stage **DH-1** (testOnly): 13–83 s ti
 Implemented Diver swim/erosion immunity and Tidal Caster splash-Corrosion enemy features; built **DH-2** with its two level-derived tide windows (40–70 s and 83–103 s) as testOnly. Catalogue **565** = 342 public + 223 testOnly; 564 files.
 
 Added Dossoles Dive/Heavy Slugger/Tidal Caster features and built DH-3 (two tide windows), DH-EX-1 pair and DH-TR-1 as testOnly. Catalogue **568** = 342 public + 226 testOnly; 567 files.
+
+Built Dossoles **DH-4** and **DH-5** with their level-derived tide windows (DH-4 30–100 s; DH-5 4–31, 4–9 and 23–53 s) as testOnly. Catalogue **570** = 342 public + 228 testOnly; 569 files.
