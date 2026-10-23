@@ -5,15 +5,15 @@ Snapshot: 2026-10-22. Regenerate the numbers with `npm run coverage:arkpedia-sta
 | Area | Done | Total |
 |---|---|---|
 | Operators / operator forms | 431 | 431 |
-| Enemies supported | 419 | 1,552 |
-| Main source stages with committed files | 334 | 564 |
-| Public catalogue (includes embedded 0-1) | 335 | 335 built |
+| Enemies supported | 420 | 1,552 |
+| Main source stages with committed files | 336 | 564 |
+| Public catalogue (includes embedded 0-1) | 337 | 337 built |
 
 The public catalogue is the committed `data/arkpedia-stage-*.json` set plus the embedded 0-1 stage; `testOnly` remains the gate for future stages.
 
 ## Built by chapter
 
-`npm run coverage:arkpedia-stages` prints the current table. At this snapshot (combat stages only; hard-variant geometry resolved from the base): Chapter 0 21/22, 1 18/22, 2 20/20, 3 13/16, 4 18/20, 5 8/20, 6 19/28, 7 24/32, 9 21/34, 10 28/30, 11 6/32, 12 29/35, 13 10/38, 14 25/38, 15 21/34, 16 0/32, 17 0/31, Other 35/61, Side stories 17/19. Remaining first blockers: devices 119, unsupported tokens 53, enemies 47, conditional 10.
+`npm run coverage:arkpedia-stages` prints the current table. At this snapshot (combat stages only; hard-variant geometry resolved from the base): Chapter 0 21/22, 1 18/22, 2 20/20, 3 13/16, 4 18/20, 5 8/20, 6 19/28, 7 24/32, 9 21/34, 10 28/30, 11 6/32, 12 29/35, 13 10/38, 14 25/38, 15 21/34, 16 0/32, 17 0/31, Other 37/61, Side stories 17/19. Remaining first blockers: devices 119, unsupported tokens 53, enemies 47, conditional 10.
 
 ## Why the other 594 main stages are not built
 
