@@ -79,9 +79,14 @@ try {
 const catalogue = catalogueFor(data);
 const ops = Object.values(data.operators);
 const rarityFolder = (op) => ["one", "two", "three", "four", "five", "six"][op.rarity - 1];
-const icon = (op) =>
+const supportPortrait = (op) => {
+  const initials = String(op.name).split(/\s+/).map(part => part[0]).join("").slice(0, 2).toUpperCase();
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120"><rect width="120" height="120" fill="#2c3440"/><text x="60" y="70" fill="#f3d27a" font-family="sans-serif" font-size="36" text-anchor="middle">${initials}</text></svg>`;
+  return `data:image/svg+xml,${encodeURIComponent(svg)}`;
+};
+const icon = (op) => op.supportOnly ? supportPortrait(op) :
   interfaceAssetUrl(data,"arkpedia/arkpedia-image-assets",`${rarityFolder(op)}-star-icons/${operatorAssetName(op.name)} - Base.webp`);
-const artwork = (op) =>
+const artwork = (op) => op.supportOnly ? supportPortrait(op) :
   interfaceAssetUrl(data,"arkpedia/arkpedia-skin-assets",`${rarityFolder(op)}-star-skins/${operatorAssetName(op.name)} - Base.webp`);
 const summonIcon = id => {
   const avatar = data.tokens?.[id]?.avatar;
