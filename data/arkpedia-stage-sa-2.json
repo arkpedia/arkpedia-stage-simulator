@@ -1,0 +1,1335 @@
+{
+ "code": "SA-2",
+ "name": "Intersection",
+ "description": "If you only have to defend a fixed position, then your job is already much easier.\nStage available from 8/26 10:00 A.M. to 9/9 03:59 A.M.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "sa-2",
+  "rows": 7,
+  "cols": 11,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    3,
+    1
+   ],
+   [
+    0,
+    4,
+    2,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    3,
+    0
+   ],
+   [
+    0,
+    4,
+    2,
+    4,
+    5,
+    3,
+    2,
+    2,
+    2,
+    3,
+    0
+   ],
+   [
+    0,
+    4,
+    2,
+    4,
+    4,
+    4,
+    4,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    1,
+    3,
+    2,
+    2,
+    2,
+    2,
+    3,
+    3,
+    3,
+    1,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 9
+    },
+    "end": {
+     "row": 3,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 6
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 5
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 2,
+      "seconds": 5
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 3,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 8
+    },
+    "end": {
+     "row": 3,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 9
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 9
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 9
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 9
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 10
+    },
+    "end": {
+     "row": 3,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 9
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 15
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 9
+    },
+    "end": {
+     "row": 3,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 9
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10
+     }
+    ]
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 163,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Invisible Caster",
+      "enemy_id": "enemy_1023_jmage",
+      "count": 2,
+      "time": 0,
+      "interval": 10,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Lurker",
+      "enemy_id": "enemy_1009_lurker",
+      "count": 1,
+      "time": 3,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Lurker",
+      "enemy_id": "enemy_1009_lurker",
+      "count": 2,
+      "time": 16,
+      "interval": 1,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Lurker",
+      "enemy_id": "enemy_1009_lurker",
+      "count": 1,
+      "time": 27,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Lurker",
+      "enemy_id": "enemy_1009_lurker",
+      "count": 2,
+      "time": 34,
+      "interval": 1,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Lurker",
+      "enemy_id": "enemy_1009_lurker",
+      "count": 2,
+      "time": 41,
+      "interval": 1,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Invisible Crossbowman",
+      "enemy_id": "enemy_1019_jshoot",
+      "count": 2,
+      "time": 26,
+      "interval": 10,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Lurker",
+      "enemy_id": "enemy_1009_lurker",
+      "count": 1,
+      "time": 60,
+      "route": 3,
+      "fragment": 1
+     },
+     {
+      "enemy": "Lurker",
+      "enemy_id": "enemy_1009_lurker",
+      "count": 2,
+      "time": 69,
+      "interval": 1,
+      "route": 4,
+      "fragment": 1
+     },
+     {
+      "enemy": "Lurker",
+      "enemy_id": "enemy_1009_lurker",
+      "count": 2,
+      "time": 77,
+      "interval": 1,
+      "route": 4,
+      "fragment": 1
+     },
+     {
+      "enemy": "Lurker",
+      "enemy_id": "enemy_1009_lurker",
+      "count": 1,
+      "time": 82,
+      "route": 4,
+      "fragment": 1
+     },
+     {
+      "enemy": "Lurker",
+      "enemy_id": "enemy_1009_lurker",
+      "count": 2,
+      "time": 87,
+      "interval": 1,
+      "route": 4,
+      "fragment": 1
+     },
+     {
+      "enemy": "Invisible Crossbowman",
+      "enemy_id": "enemy_1019_jshoot",
+      "count": 2,
+      "time": 73,
+      "interval": 15,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Invisible Caster",
+      "enemy_id": "enemy_1023_jmage",
+      "count": 2,
+      "time": 60,
+      "interval": 10,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Lurker",
+      "enemy_id": "enemy_1009_lurker",
+      "count": 1,
+      "time": 111,
+      "route": 5,
+      "fragment": 2
+     },
+     {
+      "enemy": "Lurker",
+      "enemy_id": "enemy_1009_lurker",
+      "count": 2,
+      "time": 120,
+      "interval": 1,
+      "route": 4,
+      "fragment": 2
+     },
+     {
+      "enemy": "Lurker",
+      "enemy_id": "enemy_1009_lurker",
+      "count": 1,
+      "time": 129,
+      "route": 5,
+      "fragment": 2
+     },
+     {
+      "enemy": "Lurker",
+      "enemy_id": "enemy_1009_lurker",
+      "count": 2,
+      "time": 138,
+      "interval": 1,
+      "route": 4,
+      "fragment": 2
+     },
+     {
+      "enemy": "Lurker",
+      "enemy_id": "enemy_1009_lurker",
+      "count": 1,
+      "time": 143,
+      "route": 5,
+      "fragment": 2
+     },
+     {
+      "enemy": "Lurker",
+      "enemy_id": "enemy_1009_lurker",
+      "count": 2,
+      "time": 148,
+      "interval": 1,
+      "route": 4,
+      "fragment": 2
+     },
+     {
+      "enemy": "Lurker",
+      "enemy_id": "enemy_1009_lurker",
+      "count": 1,
+      "time": 153,
+      "route": 5,
+      "fragment": 2
+     },
+     {
+      "enemy": "Lurker",
+      "enemy_id": "enemy_1009_lurker",
+      "count": 2,
+      "time": 158,
+      "interval": 1,
+      "route": 4,
+      "fragment": 2
+     },
+     {
+      "enemy": "Lurker",
+      "enemy_id": "enemy_1009_lurker",
+      "count": 1,
+      "time": 163,
+      "route": 5,
+      "fragment": 2
+     },
+     {
+      "enemy": "Invisible Crossbowman",
+      "enemy_id": "enemy_1019_jshoot",
+      "count": 4,
+      "time": 111,
+      "interval": 10,
+      "route": 2,
+      "fragment": 2
+     },
+     {
+      "enemy": "Sarkaz Centurion",
+      "enemy_id": "enemy_1501_demonk",
+      "count": 1,
+      "time": 118,
+      "route": 6,
+      "fragment": 2
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 0,
+    "routes": [
+     3,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 10,
+    "routes": [
+     5,
+     5,
+     5,
+     5,
+     5
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 5,
+    "col": 0,
+    "routes": [
+     2,
+     2,
+     2
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 5,
+    "col": 9,
+    "routes": [
+     0,
+     0,
+     6
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 3,
+    "col": 4,
+    "routes": [
+     0,
+     1,
+     1,
+     1,
+     1,
+     1,
+     2,
+     3,
+     4,
+     4,
+     4,
+     4,
+     2,
+     0,
+     5,
+     4,
+     5,
+     4,
+     5,
+     4,
+     5,
+     4,
+     5,
+     2,
+     6
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1009_lurker",
+    "slug": "lurker",
+    "name": "Lurker",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1019_jshoot",
+    "slug": "invisible_crossbowman",
+    "name": "Invisible Crossbowman",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1023_jmage",
+    "slug": "invisible_caster",
+    "name": "Invisible Caster",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1501_demonk",
+    "slug": "sarkaz_centurion",
+    "name": "Sarkaz Centurion",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false,
+  "source": "cn"
+ },
+ "devices": [],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "SA-2",
+  "geometryHash": "ddc60240636cc52f516e3eaa91e87cd1dd7f5040c55ddbf52eb638000a8f2412",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      9,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      4,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "1": {
+    "points": [
+     [
+      8,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      4,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "2": {
+    "points": [
+     [
+      0,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      4,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "3": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      4,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "4": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      4,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "5": {
+    "points": [
+     [
+      10,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      4,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "6": {
+    "points": [
+     [
+      9,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      4,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "breaks": [],
+    "holds": []
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1023_jmage": {
+   "key": "enemy_1023_jmage",
+   "prefabKey": "enemy_1023_jmage",
+   "name": "Invisible Caster",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 2200,
+    "atk": 350,
+    "def": 80,
+    "res": 50,
+    "moveSpeed": 0.8,
+    "bat": 4,
+    "aspd": 100,
+    "rangeRadius": 2,
+    "rawRangeRadius": 2,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "<$ba.invisible>Invisible</>",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1009_lurker": {
+   "key": "enemy_1009_lurker",
+   "prefabKey": "enemy_1009_lurker",
+   "name": "Lurker",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2200,
+    "atk": 300,
+    "def": 90,
+    "res": 20,
+    "moveSpeed": 1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "<$ba.invisible>Invisible</>",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1019_jshoot": {
+   "key": "enemy_1019_jshoot",
+   "prefabKey": "enemy_1019_jshoot",
+   "name": "Invisible Crossbowman",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 1800,
+    "atk": 260,
+    "def": 100,
+    "res": 20,
+    "moveSpeed": 0.9,
+    "bat": 2.7,
+    "aspd": 100,
+    "rangeRadius": 2.2,
+    "rawRangeRadius": 2.2,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "<$ba.invisible>Invisible</>",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1501_demonk": {
+   "key": "enemy_1501_demonk",
+   "prefabKey": "enemy_1501_demonk",
+   "name": "Sarkaz Centurion",
+   "level": 0,
+   "rank": "BOSS",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 15000,
+    "atk": 700,
+    "def": 250,
+    "res": 35,
+    "moveSpeed": 0.78,
+    "bat": 5,
+    "aspd": 100,
+    "rangeRadius": 2.35,
+    "rawRangeRadius": 2.35,
+    "blockCnt": 1,
+    "massLevel": 5,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Attacks two targets simultaneously.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "sarkaz"
+   ]
+  }
+ }
+}

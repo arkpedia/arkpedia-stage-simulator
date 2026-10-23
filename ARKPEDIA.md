@@ -6114,3 +6114,5 @@ Rebuilt 22 already-public stages whose supported devices were missing (reserves,
 Added the first event stage, **IC-1**, which has no carts or unsupported devices and passes smoke review; it is public. Catalogue **351** = 333 public + 18 testOnly; 350 files.
 
 Added cart-free event stage **IC-2**; it passes smoke review and is public. Catalogue **352** = 334 public + 18 testOnly; 351 files.
+
+Added 47 simple event stages with only standard tiles, no devices/tokens/conditional spawns and supported enemies as `testOnly`. Catalogue **399** = 334 public + 65 testOnly; 398 files.
