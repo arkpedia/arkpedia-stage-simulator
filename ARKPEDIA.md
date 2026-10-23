@@ -6112,3 +6112,5 @@ Rebuilt the public 9-14/9-15/9-17 stages with their Tattered Pillar devices (5/2
 Rebuilt 22 already-public stages whose supported devices were missing (reserves, EP14, altar, Tattered Pillar, static roadblocks), including 12-8/12-9/12-10/12-13/12-15/12-17/12-18/12-19 and their adverse/challenge variants, TR-23, S9-1, 7-8/7-9/7-10 challenge and R8 challenge stages.
 
 Added the first event stage, **IC-1**, which has no carts or unsupported devices and passes smoke review; it is public. Catalogue **351** = 333 public + 18 testOnly; 350 files.
+
+Added cart-free event stage **IC-2**; it passes smoke review and is public. Catalogue **352** = 334 public + 18 testOnly; 351 files.
