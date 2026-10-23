@@ -1,0 +1,1546 @@
+{
+ "code": "S3-2",
+ "name": "Lurking-2",
+ "description": "Enemy only focuses their attack on one spot, but still it's recommended to deploy Operators in the rear.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "s3-2",
+  "rows": 8,
+  "cols": 11,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_flystart",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    3
+   ],
+   [
+    0,
+    0,
+    0,
+    4,
+    0,
+    0,
+    4,
+    4,
+    2,
+    2,
+    0
+   ],
+   [
+    0,
+    0,
+    4,
+    4,
+    0,
+    4,
+    0,
+    0,
+    4,
+    2,
+    0
+   ],
+   [
+    1,
+    2,
+    2,
+    2,
+    2,
+    4,
+    0,
+    0,
+    4,
+    2,
+    0
+   ],
+   [
+    0,
+    4,
+    4,
+    4,
+    2,
+    2,
+    4,
+    4,
+    2,
+    2,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    4,
+    4,
+    2,
+    2,
+    2,
+    2,
+    2,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    5,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "fly",
+    "start": {
+     "row": 7,
+     "col": 4
+    },
+    "end": {
+     "row": 4,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 3
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 7,
+     "col": 4
+    },
+    "end": {
+     "row": 1,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 3
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 10
+    },
+    "end": {
+     "row": 4,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 4
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 10
+    },
+    "end": {
+     "row": 1,
+     "col": 0
+    },
+    "checkpoints": [],
+    "waits": []
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 125,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Monster",
+      "enemy_id": "enemy_1005_yokai",
+      "count": 1,
+      "time": 45,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Monster",
+      "enemy_id": "enemy_1005_yokai",
+      "count": 1,
+      "time": 37,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 7,
+      "time": 6,
+      "interval": 5,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 4,
+      "time": 18,
+      "interval": 7,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Lurker",
+      "enemy_id": "enemy_1009_lurker",
+      "count": 1,
+      "time": 27,
+      "route": 3,
+      "fragment": 0
+     },
+     {
+      "enemy": "Lurker",
+      "enemy_id": "enemy_1009_lurker",
+      "count": 3,
+      "time": 35,
+      "interval": 5,
+      "route": 3,
+      "fragment": 0
+     },
+     {
+      "enemy": "Monster Mk II",
+      "enemy_id": "enemy_1005_yokai_2",
+      "count": 1,
+      "time": 74,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Monster Mk II",
+      "enemy_id": "enemy_1005_yokai_2",
+      "count": 3,
+      "time": 93,
+      "interval": 16,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Monster Mk II",
+      "enemy_id": "enemy_1005_yokai_2",
+      "count": 1,
+      "time": 63,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Monster Mk II",
+      "enemy_id": "enemy_1005_yokai_2",
+      "count": 3,
+      "time": 86,
+      "interval": 16,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 1,
+      "time": 65,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 4,
+      "time": 66,
+      "interval": 3,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 2,
+      "time": 69,
+      "interval": 7,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 8,
+      "time": 89,
+      "interval": 4,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 4,
+      "time": 87,
+      "interval": 11,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 3,
+      "time": 93,
+      "interval": 9,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dual Swordsman Leader",
+      "enemy_id": "enemy_1014_rogue_2",
+      "count": 3,
+      "time": 84,
+      "interval": 17,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dual Swordsman Leader",
+      "enemy_id": "enemy_1014_rogue_2",
+      "count": 1,
+      "time": 117,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Caster Leader",
+      "enemy_id": "enemy_1011_wizard_2",
+      "count": 1,
+      "time": 119,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Invisible Crossbowman",
+      "enemy_id": "enemy_1019_jshoot",
+      "count": 3,
+      "time": 93,
+      "interval": 15,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Butcher",
+      "enemy_id": "enemy_1034_laxe",
+      "count": 1,
+      "time": 120,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Lurker",
+      "enemy_id": "enemy_1009_lurker",
+      "count": 1,
+      "time": 67,
+      "route": 3,
+      "fragment": 1
+     },
+     {
+      "enemy": "Lurker",
+      "enemy_id": "enemy_1009_lurker",
+      "count": 3,
+      "time": 74,
+      "interval": 10,
+      "route": 3,
+      "fragment": 1
+     },
+     {
+      "enemy": "Lurker",
+      "enemy_id": "enemy_1009_lurker",
+      "count": 2,
+      "time": 96,
+      "interval": 18,
+      "route": 3,
+      "fragment": 1
+     },
+     {
+      "enemy": "Junkman",
+      "enemy_id": "enemy_1030_wteeth",
+      "count": 2,
+      "time": 102,
+      "interval": 21,
+      "route": 3,
+      "fragment": 1
+     },
+     {
+      "enemy": "Invisible Crossbowman",
+      "enemy_id": "enemy_1019_jshoot",
+      "count": 5,
+      "time": 78,
+      "interval": 10,
+      "route": 3,
+      "fragment": 1
+     },
+     {
+      "enemy": "Senior Caster",
+      "enemy_id": "enemy_1018_aoemag",
+      "count": 1,
+      "time": 125,
+      "route": 3,
+      "fragment": 1
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 10,
+    "routes": [
+     2,
+     2,
+     3,
+     3,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     3,
+     3,
+     3,
+     3,
+     3,
+     3
+    ]
+   },
+   {
+    "key": "tile_flystart",
+    "row": 7,
+    "col": 4,
+    "routes": [
+     0,
+     1,
+     0,
+     0,
+     1,
+     1
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 1,
+    "col": 0,
+    "routes": [
+     1,
+     3,
+     3,
+     1,
+     1,
+     3,
+     3,
+     3,
+     3,
+     3,
+     3
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 4,
+    "col": 0,
+    "routes": [
+     0,
+     2,
+     2,
+     0,
+     0,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1005_yokai",
+    "slug": "monster",
+    "name": "Monster",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1005_yokai_2",
+    "slug": "monster_mk_ii",
+    "name": "Monster Mk II",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1007_slime_3",
+    "slug": "originium_slug_enemy_1007_slime_3",
+    "name": "Originium Slug β",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1009_lurker",
+    "slug": "lurker",
+    "name": "Lurker",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1011_wizard_2",
+    "slug": "caster_leader",
+    "name": "Caster Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1014_rogue_2",
+    "slug": "dual_swordsman_leader",
+    "name": "Dual Swordsman Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1018_aoemag",
+    "slug": "senior_caster",
+    "name": "Senior Caster",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1019_jshoot",
+    "slug": "invisible_crossbowman",
+    "name": "Invisible Crossbowman",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1030_wteeth",
+    "slug": "junkman",
+    "name": "Junkman",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1034_laxe",
+    "slug": "butcher",
+    "name": "Butcher",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "devices": [],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "S3-2",
+  "geometryHash": "0be4ebf2a10939c8a5dbeb851805774d929236ea6b91b44a46036d3a3f927a83",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      4,
+      7
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      0,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     2,
+     3.414213562373095,
+     6.414213562373095
+    ],
+    "length": 6.414213562373095,
+    "breaks": [],
+    "flying": true,
+    "holds": [],
+    "nodes": [
+     [
+      4,
+      7
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      0,
+      4
+     ]
+    ]
+   },
+   "1": {
+    "points": [
+     [
+      4,
+      7
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      0,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     5,
+     6.414213562373095,
+     9.414213562373096
+    ],
+    "length": 9.414213562373096,
+    "breaks": [],
+    "flying": true,
+    "holds": [],
+    "nodes": [
+     [
+      4,
+      7
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "2": {
+    "points": [
+     [
+      10,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      7,
+      6
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      0,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17
+    ],
+    "length": 17,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      10,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      0,
+      4
+     ]
+    ]
+   },
+   "3": {
+    "points": [
+     [
+      10,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      0,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      10,
+      1
+     ],
+     [
+      0,
+      1
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1007_slime_3": {
+   "key": "enemy_1007_slime_3",
+   "prefabKey": "enemy_1007_slime_3",
+   "name": "Originium Slug β",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 1550,
+    "atk": 240,
+    "def": 0,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 1.7,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1009_lurker": {
+   "key": "enemy_1009_lurker",
+   "prefabKey": "enemy_1009_lurker",
+   "name": "Lurker",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2200,
+    "atk": 300,
+    "def": 90,
+    "res": 20,
+    "moveSpeed": 1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "<$ba.invisible>Invisible</>",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1005_yokai": {
+   "key": "enemy_1005_yokai",
+   "prefabKey": "enemy_1005_yokai",
+   "name": "Monster",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "NONE",
+   "stats": {
+    "maxHp": 800,
+    "atk": 0,
+    "def": 50,
+    "res": 0,
+    "moveSpeed": 0.9,
+    "bat": 2.3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "none",
+    "dmgTypes": [
+     "none"
+    ],
+    "motion": "FLY",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Flying unit.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "drone"
+   ]
+  },
+  "enemy_1005_yokai_2": {
+   "key": "enemy_1005_yokai_2",
+   "prefabKey": "enemy_1005_yokai_2",
+   "name": "Monster Mk II",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 1550,
+    "atk": 220,
+    "def": 50,
+    "res": 0,
+    "moveSpeed": 0.9,
+    "bat": 3,
+    "aspd": 100,
+    "rangeRadius": 2,
+    "rawRangeRadius": 2,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "FLY",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Flying unit.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "drone"
+   ]
+  },
+  "enemy_1019_jshoot": {
+   "key": "enemy_1019_jshoot",
+   "prefabKey": "enemy_1019_jshoot",
+   "name": "Invisible Crossbowman",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 1800,
+    "atk": 260,
+    "def": 100,
+    "res": 20,
+    "moveSpeed": 0.9,
+    "bat": 2.7,
+    "aspd": 100,
+    "rangeRadius": 2.2,
+    "rawRangeRadius": 2.2,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "<$ba.invisible>Invisible</>",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1014_rogue_2": {
+   "key": "enemy_1014_rogue_2",
+   "prefabKey": "enemy_1014_rogue_2",
+   "name": "Dual Swordsman Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3000,
+    "atk": 450,
+    "def": 120,
+    "res": 0,
+    "moveSpeed": 1.1,
+    "bat": 1.2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1030_wteeth": {
+   "key": "enemy_1030_wteeth",
+   "prefabKey": "enemy_1030_wteeth",
+   "name": "Junkman",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 5000,
+    "atk": 500,
+    "def": 50,
+    "res": 20,
+    "moveSpeed": 0.8,
+    "bat": 3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1011_wizard_2": {
+   "key": "enemy_1011_wizard_2",
+   "prefabKey": "enemy_1011_wizard_2",
+   "name": "Caster Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 2400,
+    "atk": 300,
+    "def": 80,
+    "res": 50,
+    "moveSpeed": 0.8,
+    "bat": 4,
+    "aspd": 100,
+    "rangeRadius": 2,
+    "rawRangeRadius": 2,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1034_laxe": {
+   "key": "enemy_1034_laxe",
+   "prefabKey": "enemy_1034_laxe",
+   "name": "Butcher",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 9000,
+    "atk": 850,
+    "def": 230,
+    "res": 30,
+    "moveSpeed": 0.7,
+    "bat": 3.5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1018_aoemag": {
+   "key": "enemy_1018_aoemag",
+   "prefabKey": "enemy_1018_aoemag",
+   "name": "Senior Caster",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 7000,
+    "atk": 240,
+    "def": 120,
+    "res": 50,
+    "moveSpeed": 0.7,
+    "bat": 3.8,
+    "aspd": 100,
+    "rangeRadius": 2.2,
+    "rawRangeRadius": 2.2,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Deals area damage to Operators on the four cardinal tiles next to the primary target.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ }
+}

@@ -1,0 +1,1158 @@
+{
+ "code": "SK-5",
+ "name": "Fortress Siege",
+ "description": "Defend against enemies with high DEF.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 20,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "sk-5",
+  "rows": 8,
+  "cols": 11,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_hole",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    1,
+    2,
+    3,
+    0,
+    3,
+    3,
+    3,
+    4,
+    4,
+    0,
+    0
+   ],
+   [
+    0,
+    5,
+    2,
+    2,
+    5,
+    5,
+    2,
+    2,
+    5,
+    2,
+    1
+   ],
+   [
+    0,
+    3,
+    3,
+    3,
+    5,
+    5,
+    3,
+    3,
+    0,
+    3,
+    0
+   ],
+   [
+    0,
+    5,
+    2,
+    2,
+    5,
+    5,
+    2,
+    2,
+    2,
+    5,
+    0
+   ],
+   [
+    0,
+    5,
+    0,
+    3,
+    0,
+    3,
+    0,
+    3,
+    4,
+    5,
+    0
+   ],
+   [
+    0,
+    5,
+    5,
+    5,
+    5,
+    0,
+    5,
+    5,
+    5,
+    5,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    6,
+    0,
+    6,
+    4,
+    4,
+    4,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 6
+    },
+    "end": {
+     "row": 2,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 5
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 4
+    },
+    "end": {
+     "row": 1,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": null,
+    "placeholder": true,
+    "start": null,
+    "end": null,
+    "checkpoints": [],
+    "waits": []
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 204,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Light-Armored Soldier Leader",
+      "enemy_id": "enemy_1015_litamr_2",
+      "count": 1,
+      "time": 4,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Light-Armored Soldier Leader",
+      "enemy_id": "enemy_1015_litamr_2",
+      "count": 2,
+      "time": 14,
+      "interval": 1,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Light-Armored Soldier Leader",
+      "enemy_id": "enemy_1015_litamr_2",
+      "count": 5,
+      "time": 30,
+      "interval": 6,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Light-Armored Soldier Leader",
+      "enemy_id": "enemy_1015_litamr_2",
+      "count": 5,
+      "time": 28,
+      "interval": 6,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Bladed Fighter Leader",
+      "enemy_id": "enemy_1032_katar_2",
+      "count": 1,
+      "time": 72,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "Bladed Fighter Leader",
+      "enemy_id": "enemy_1032_katar_2",
+      "count": 1,
+      "time": 83,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "Bladed Fighter Leader",
+      "enemy_id": "enemy_1032_katar_2",
+      "count": 2,
+      "time": 97,
+      "interval": 1,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "Bladed Fighter Leader",
+      "enemy_id": "enemy_1032_katar_2",
+      "count": 2,
+      "time": 109,
+      "interval": 1,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "Heavy Defender Leader",
+      "enemy_id": "enemy_1006_shield_2",
+      "count": 3,
+      "time": 75,
+      "interval": 12,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Light-Armored Soldier Leader",
+      "enemy_id": "enemy_1015_litamr_2",
+      "count": 5,
+      "time": 77,
+      "interval": 8,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Metal Crab",
+      "enemy_id": "enemy_1016_diaman",
+      "count": 4,
+      "time": 133,
+      "interval": 23,
+      "route": 0,
+      "fragment": 3
+     },
+     {
+      "enemy": "Arts Guard Leader",
+      "enemy_id": "enemy_1031_mrogue_2",
+      "count": 6,
+      "time": 134,
+      "interval": 14,
+      "route": 0,
+      "fragment": 3
+     },
+     {
+      "enemy": "Heavy Defender Leader",
+      "enemy_id": "enemy_1006_shield_2",
+      "count": 3,
+      "time": 136,
+      "interval": 30,
+      "route": 0,
+      "fragment": 3
+     },
+     {
+      "enemy": "Armed Militant",
+      "enemy_id": "enemy_1035_haxe",
+      "count": 1,
+      "time": 135,
+      "route": 1,
+      "fragment": 3
+     },
+     {
+      "enemy": "Arts Guard Leader",
+      "enemy_id": "enemy_1031_mrogue_2",
+      "count": 5,
+      "time": 138,
+      "interval": 16,
+      "route": 1,
+      "fragment": 3
+     },
+     {
+      "enemy": "Armed Militant",
+      "enemy_id": "enemy_1035_haxe",
+      "count": 1,
+      "time": 162,
+      "route": 1,
+      "fragment": 3
+     },
+     {
+      "enemy": "Armed Militant",
+      "enemy_id": "enemy_1035_haxe",
+      "count": 1,
+      "time": 184,
+      "route": 1,
+      "fragment": 3
+     },
+     {
+      "enemy": "Armed Militant",
+      "enemy_id": "enemy_1035_haxe",
+      "count": 1,
+      "time": 199,
+      "route": 1,
+      "fragment": 3
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 7,
+    "col": 4,
+    "routes": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 7,
+    "col": 6,
+    "routes": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 1,
+    "col": 0,
+    "routes": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 2,
+    "col": 10,
+    "routes": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1006_shield_2",
+    "slug": "heavy_defender_leader",
+    "name": "Heavy Defender Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1015_litamr_2",
+    "slug": "light_armored_soldier_leader",
+    "name": "Light-Armored Soldier Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1016_diaman",
+    "slug": "metal_crab",
+    "name": "Metal Crab",
+    "database_level": 1
+   },
+   {
+    "enemy_id": "enemy_1031_mrogue_2",
+    "slug": "arts_guard_leader",
+    "name": "Arts Guard Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1032_katar_2",
+    "slug": "bladed_fighter_leader",
+    "name": "Bladed Fighter Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1035_haxe",
+    "slug": "armed_militant",
+    "name": "Armed Militant",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "devices": [],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "SK-5",
+  "geometryHash": "6a92c037501bed56cdd19b582bc67ba3772dc97c207e47a86938c65074f04898",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      6,
+      7
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      7,
+      6
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17
+    ],
+    "length": 17,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      6,
+      7
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ]
+   },
+   "1": {
+    "points": [
+     [
+      4,
+      7
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      0,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16
+    ],
+    "length": 16,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      4,
+      7
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      0,
+      1
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1015_litamr_2": {
+   "key": "enemy_1015_litamr_2",
+   "prefabKey": "enemy_1015_litamr_2",
+   "name": "Light-Armored Soldier Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3700,
+    "atk": 300,
+    "def": 500,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1032_katar_2": {
+   "key": "enemy_1032_katar_2",
+   "prefabKey": "enemy_1032_katar_2",
+   "name": "Bladed Fighter Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 6500,
+    "atk": 550,
+    "def": 350,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 1.5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1006_shield_2": {
+   "key": "enemy_1006_shield_2",
+   "prefabKey": "enemy_1006_shield_2",
+   "name": "Heavy Defender Leader",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 10000,
+    "atk": 600,
+    "def": 1000,
+    "res": 0,
+    "moveSpeed": 0.75,
+    "bat": 2.6,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1016_diaman": {
+   "key": "enemy_1016_diaman",
+   "prefabKey": "enemy_1016_diaman",
+   "name": "Metal Crab",
+   "level": 1,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 6000,
+    "atk": 500,
+    "def": 800,
+    "res": 85,
+    "moveSpeed": 0.75,
+    "bat": 2.3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1031_mrogue_2": {
+   "key": "enemy_1031_mrogue_2",
+   "prefabKey": "enemy_1031_mrogue_2",
+   "name": "Arts Guard Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 6500,
+    "atk": 500,
+    "def": 250,
+    "res": 50,
+    "moveSpeed": 0.75,
+    "bat": 2.5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1035_haxe": {
+   "key": "enemy_1035_haxe",
+   "prefabKey": "enemy_1035_haxe",
+   "name": "Armed Militant",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 12000,
+    "atk": 1050,
+    "def": 700,
+    "res": 30,
+    "moveSpeed": 0.65,
+    "bat": 3.5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ }
+}

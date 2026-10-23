@@ -1,0 +1,1971 @@
+{
+ "code": "DC-7",
+ "name": "Frozen Earth",
+ "description": "Condition: \n<Imperial Striker> ATK and HP increased.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 20,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "dc-7",
+  "rows": 9,
+  "cols": 12,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    1,
+    2,
+    3,
+    3,
+    3,
+    3,
+    3,
+    4,
+    4,
+    0,
+    0,
+    0
+   ],
+   [
+    1,
+    2,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    5,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    5,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    1,
+    4,
+    1,
+    4,
+    4,
+    4,
+    4,
+    5,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    3,
+    0,
+    3,
+    0,
+    0,
+    0,
+    0,
+    3,
+    0
+   ],
+   [
+    0,
+    0,
+    4,
+    3,
+    4,
+    3,
+    0,
+    0,
+    0,
+    4,
+    3,
+    0
+   ],
+   [
+    1,
+    2,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 3
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 3
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 5
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 5
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 3
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 116
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 4
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 114
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 5
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 112
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 6
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 110
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 7
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 150
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 8
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 150
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 4
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 10
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 2,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 3
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 0
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 7,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 4
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 2,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 7
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 5
+    },
+    "end": {
+     "row": 2,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 93
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 3
+    },
+    "end": {
+     "row": 2,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 3
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 93
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 2,
+     "col": 10
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 5
+    },
+    "end": {
+     "row": 3,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 41
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 3
+    },
+    "end": {
+     "row": 3,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 3
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 41
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 0
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 0
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 7,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 10
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 3
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 3
+     }
+    ]
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 206,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Ursus Civilian",
+      "enemy_id": "enemy_3001_upeopl",
+      "count": 1,
+      "time": 0,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Ursus Civilian",
+      "enemy_id": "enemy_3001_upeopl",
+      "count": 1,
+      "time": 0,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Infused Originium Slug",
+      "enemy_id": "enemy_1021_bslime",
+      "count": 1,
+      "time": 0,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Infused Originium Slug",
+      "enemy_id": "enemy_1021_bslime",
+      "count": 1,
+      "time": 0,
+      "route": 3,
+      "fragment": 1
+     },
+     {
+      "enemy": "Infused Originium Slug",
+      "enemy_id": "enemy_1021_bslime",
+      "count": 1,
+      "time": 0,
+      "route": 4,
+      "fragment": 1
+     },
+     {
+      "enemy": "Infused Originium Slug",
+      "enemy_id": "enemy_1021_bslime",
+      "count": 1,
+      "time": 0,
+      "route": 5,
+      "fragment": 1
+     },
+     {
+      "enemy": "Imperial Striker",
+      "enemy_id": "enemy_1113_empace",
+      "count": 1,
+      "time": 0,
+      "route": 6,
+      "fragment": 1
+     },
+     {
+      "enemy": "Ursus Assault Crossbowman",
+      "enemy_id": "enemy_1109_uabone",
+      "count": 1,
+      "time": 0,
+      "route": 7,
+      "fragment": 1
+     },
+     {
+      "enemy": "Ursus Mangler",
+      "enemy_id": "enemy_1108_uterer",
+      "count": 1,
+      "time": 4,
+      "route": 8,
+      "fragment": 2
+     },
+     {
+      "enemy": "Ursus Assault Crossbowman",
+      "enemy_id": "enemy_1109_uabone",
+      "count": 1,
+      "time": 18,
+      "route": 9,
+      "fragment": 3
+     },
+     {
+      "enemy": "Ursus Armored Caster",
+      "enemy_id": "enemy_1110_uamord",
+      "count": 1,
+      "time": 33,
+      "route": 10,
+      "fragment": 4
+     },
+     {
+      "enemy": "Ursus Mangler",
+      "enemy_id": "enemy_1108_uterer",
+      "count": 1,
+      "time": 49,
+      "route": 9,
+      "fragment": 5
+     },
+     {
+      "enemy": "Ursus Assault Crossbowman",
+      "enemy_id": "enemy_1109_uabone",
+      "count": 1,
+      "time": 51,
+      "route": 9,
+      "fragment": 5
+     },
+     {
+      "enemy": "Ursus Assault Crossbowman",
+      "enemy_id": "enemy_1109_uabone",
+      "count": 1,
+      "time": 58,
+      "route": 11,
+      "fragment": 6
+     },
+     {
+      "enemy": "Ursus Mangler",
+      "enemy_id": "enemy_1108_uterer",
+      "count": 1,
+      "time": 73,
+      "route": 12,
+      "fragment": 7
+     },
+     {
+      "enemy": "Imperial Striker",
+      "enemy_id": "enemy_1113_empace",
+      "count": 1,
+      "time": 73,
+      "route": 13,
+      "fragment": 7
+     },
+     {
+      "enemy": "Infused Originium Slug",
+      "enemy_id": "enemy_1021_bslime",
+      "count": 1,
+      "time": 88,
+      "route": 14,
+      "fragment": 8
+     },
+     {
+      "enemy": "Infused Originium Slug",
+      "enemy_id": "enemy_1021_bslime",
+      "count": 1,
+      "time": 88,
+      "route": 15,
+      "fragment": 8
+     },
+     {
+      "enemy": "Ursus Mangler",
+      "enemy_id": "enemy_1108_uterer",
+      "count": 2,
+      "time": 93,
+      "interval": 2,
+      "route": 9,
+      "fragment": 9
+     },
+     {
+      "enemy": "Ursus Assault Crossbowman",
+      "enemy_id": "enemy_1109_uabone",
+      "count": 2,
+      "time": 97,
+      "interval": 2,
+      "route": 9,
+      "fragment": 9
+     },
+     {
+      "enemy": "Ursus Armored Caster",
+      "enemy_id": "enemy_1110_uamord",
+      "count": 1,
+      "time": 113,
+      "route": 16,
+      "fragment": 10
+     },
+     {
+      "enemy": "Ursus Assault Crossbowman",
+      "enemy_id": "enemy_1109_uabone",
+      "count": 1,
+      "time": 125,
+      "route": 11,
+      "fragment": 11
+     },
+     {
+      "enemy": "Ursus Mangler",
+      "enemy_id": "enemy_1108_uterer",
+      "count": 1,
+      "time": 135,
+      "route": 9,
+      "fragment": 12
+     },
+     {
+      "enemy": "Imperial Striker",
+      "enemy_id": "enemy_1113_empace",
+      "count": 1,
+      "time": 138,
+      "route": 16,
+      "fragment": 12
+     },
+     {
+      "enemy": "Infused Originium Slug",
+      "enemy_id": "enemy_1021_bslime",
+      "count": 1,
+      "time": 146,
+      "route": 17,
+      "fragment": 13
+     },
+     {
+      "enemy": "Infused Originium Slug",
+      "enemy_id": "enemy_1021_bslime",
+      "count": 1,
+      "time": 146,
+      "route": 18,
+      "fragment": 13
+     },
+     {
+      "enemy": "Ursus Mangler",
+      "enemy_id": "enemy_1108_uterer",
+      "count": 2,
+      "time": 153,
+      "interval": 2,
+      "route": 9,
+      "fragment": 14
+     },
+     {
+      "enemy": "Ursus Assault Crossbowman",
+      "enemy_id": "enemy_1109_uabone",
+      "count": 2,
+      "time": 159,
+      "interval": 2,
+      "route": 9,
+      "fragment": 14
+     },
+     {
+      "enemy": "Ursus Armored Caster",
+      "enemy_id": "enemy_1110_uamord",
+      "count": 2,
+      "time": 170,
+      "interval": 3,
+      "route": 16,
+      "fragment": 15
+     },
+     {
+      "enemy": "Ursus Assault Crossbowman",
+      "enemy_id": "enemy_1109_uabone",
+      "count": 1,
+      "time": 182,
+      "route": 19,
+      "fragment": 16
+     },
+     {
+      "enemy": "Ursus Mangler",
+      "enemy_id": "enemy_1108_uterer",
+      "count": 3,
+      "time": 192,
+      "interval": 2,
+      "route": 9,
+      "fragment": 17
+     },
+     {
+      "enemy": "Imperial Striker",
+      "enemy_id": "enemy_1113_empace",
+      "count": 2,
+      "time": 192,
+      "interval": 2,
+      "route": 16,
+      "fragment": 17
+     },
+     {
+      "enemy": "Imperial Striker",
+      "enemy_id": "enemy_1113_empace",
+      "count": 1,
+      "time": 192,
+      "route": 20,
+      "fragment": 17
+     },
+     {
+      "enemy": "Ursus Mangler",
+      "enemy_id": "enemy_1108_uterer",
+      "count": 2,
+      "time": 204,
+      "interval": 2,
+      "route": 9,
+      "fragment": 18
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 0,
+    "routes": [
+     10,
+     13,
+     16,
+     16,
+     16,
+     16
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 2,
+    "col": 0,
+    "routes": [
+     8,
+     9,
+     9,
+     9,
+     12,
+     9,
+     9,
+     9,
+     9,
+     9,
+     9,
+     9
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 4,
+    "col": 3,
+    "routes": [
+     15,
+     18
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 4,
+    "col": 5,
+    "routes": [
+     14,
+     17
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 7,
+    "col": 0,
+    "routes": [
+     11,
+     11,
+     19,
+     20
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 2,
+    "col": 10,
+    "routes": [
+     10,
+     13,
+     14,
+     15,
+     16,
+     16,
+     16,
+     16
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 3,
+    "col": 10,
+    "routes": [
+     8,
+     9,
+     9,
+     9,
+     12,
+     9,
+     9,
+     9,
+     17,
+     18,
+     9,
+     9,
+     9,
+     9
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 4,
+    "col": 10,
+    "routes": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     11,
+     11,
+     19,
+     20
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1021_bslime",
+    "slug": "infused_originium_slug_enemy_1021_bslime",
+    "name": "Infused Originium Slug",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1108_uterer",
+    "slug": "ursus_mangler",
+    "name": "Ursus Mangler",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1109_uabone",
+    "slug": "ursus_assault_crossbowman",
+    "name": "Ursus Assault Crossbowman",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1110_uamord",
+    "slug": "ursus_armored_caster",
+    "name": "Ursus Armored Caster",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1113_empace",
+    "slug": "imperial_striker",
+    "name": "Imperial Striker",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_3001_upeopl",
+    "slug": "ursus_civilian",
+    "name": "Ursus Civilian",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false,
+  "source": "cn"
+ },
+ "devices": [
+  {
+   "col": 3,
+   "description": "Less likely to get attacked by your units",
+   "hidden": false,
+   "key": "trap_020_roadblock",
+   "kind": "device",
+   "name": "Static Roadblock",
+   "row": 6
+  },
+  {
+   "col": 5,
+   "description": "Less likely to get attacked by your units",
+   "hidden": false,
+   "key": "trap_020_roadblock",
+   "kind": "device",
+   "name": "Static Roadblock",
+   "row": 6
+  }
+ ],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20
+  ],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "DC-7",
+  "geometryHash": "bb51c94a7872d016af414d8c45ebb6295551f2d2957466c5067cb5716d8845cf",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      3,
+      5
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "1": {
+    "points": [
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "2": {
+    "points": [
+     [
+      3,
+      7
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "3": {
+    "points": [
+     [
+      4,
+      7
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "4": {
+    "points": [
+     [
+      5,
+      7
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "5": {
+    "points": [
+     [
+      6,
+      7
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "6": {
+    "points": [
+     [
+      7,
+      7
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "7": {
+    "points": [
+     [
+      8,
+      7
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "8": {
+    "points": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      10,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "9": {
+    "points": [
+     [
+      0,
+      2
+     ],
+     [
+      10,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "10": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      10,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "11": {
+    "points": [
+     [
+      0,
+      7
+     ],
+     [
+      1,
+      7
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "12": {
+    "points": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      10,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "13": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      10,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "14": {
+    "points": [
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "15": {
+    "points": [
+     [
+      3,
+      4
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "16": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      10,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "17": {
+    "points": [
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      10,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "18": {
+    "points": [
+     [
+      3,
+      4
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      10,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "19": {
+    "points": [
+     [
+      0,
+      7
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "20": {
+    "points": [
+     [
+      0,
+      7
+     ],
+     [
+      1,
+      7
+     ],
+     [
+      10,
+      5
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "breaks": [],
+    "holds": []
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_3001_upeopl": {
+   "key": "enemy_3001_upeopl",
+   "prefabKey": "enemy_3001_upeopl",
+   "name": "Ursus Civilian",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "NONE",
+   "stats": {
+    "maxHp": 3500,
+    "atk": 0,
+    "def": 50,
+    "res": 0,
+    "moveSpeed": 0.65,
+    "bat": 1,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 0,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "none",
+    "dmgTypes": [
+     "none"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Does not deplete Life Points when spared, but will deplete a Life Point upon dying",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Does not count towards the defeated enemies counter",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "dead.value": -1
+    },
+    "bbStr": {},
+    "groups": {
+     "dead": [
+      "value"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1021_bslime": {
+   "key": "enemy_1021_bslime",
+   "prefabKey": "enemy_1021_bslime",
+   "name": "Infused Originium Slug",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2460,
+    "atk": 260,
+    "def": 0,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 1.7,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Death deals a large amount of Physical damage to surrounding units",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "boom.atk_scale": 4
+    },
+    "bbStr": {},
+    "groups": {
+     "boom": [
+      "atk_scale"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1113_empace": {
+   "key": "enemy_1113_empace",
+   "prefabKey": "enemy_1113_empace",
+   "name": "Imperial Striker",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "ALL",
+   "stats": {
+    "maxHp": 12000,
+    "atk": 900,
+    "def": 800,
+    "res": 50,
+    "moveSpeed": 0.7,
+    "bat": 4.5,
+    "aspd": 100,
+    "rangeRadius": 1.5,
+    "rawRangeRadius": 1.5,
+    "blockCnt": 1,
+    "massLevel": 4,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Gains significantly increased ATK when HP is under 50%",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "atkup.atk": 1
+    },
+    "bbStr": {},
+    "groups": {
+     "atkup": [
+      "atk"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1109_uabone": {
+   "key": "enemy_1109_uabone",
+   "prefabKey": "enemy_1109_uabone",
+   "name": "Ursus Assault Crossbowman",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 4000,
+    "atk": 350,
+    "def": 200,
+    "res": 20,
+    "moveSpeed": 1,
+    "bat": 2.3,
+    "aspd": 100,
+    "rangeRadius": 2.4,
+    "rawRangeRadius": 2.4,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Able to land directly onto the battlefield.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1108_uterer": {
+   "key": "enemy_1108_uterer",
+   "prefabKey": "enemy_1108_uterer",
+   "name": "Ursus Mangler",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3500,
+    "atk": 380,
+    "def": 100,
+    "res": 20,
+    "moveSpeed": 1.7,
+    "bat": 1.5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1110_uamord": {
+   "key": "enemy_1110_uamord",
+   "prefabKey": "enemy_1110_uamord",
+   "name": "Ursus Armored Caster",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 5000,
+    "atk": 340,
+    "def": 500,
+    "res": 50,
+    "moveSpeed": 0.9,
+    "bat": 2.8,
+    "aspd": 100,
+    "rangeRadius": 2.2,
+    "rawRangeRadius": 2.2,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ }
+}

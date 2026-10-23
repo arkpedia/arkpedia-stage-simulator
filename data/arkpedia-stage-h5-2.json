@@ -1,0 +1,3174 @@
+{
+ "code": "H5-2",
+ "name": "Operation Inferno-2",
+ "description": "The terrain on this battlefield is relatively simple, but beware of enemy Casters. Consider deploying units with high Arts Res to draw their fire or take advantage of the holes on the ground.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "h5-2",
+  "rows": 8,
+  "cols": 12,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_hole",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    1,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    1,
+    0
+   ],
+   [
+    1,
+    3,
+    3,
+    2,
+    2,
+    4,
+    4,
+    2,
+    2,
+    3,
+    3,
+    1
+   ],
+   [
+    1,
+    3,
+    3,
+    3,
+    2,
+    2,
+    2,
+    2,
+    3,
+    3,
+    3,
+    1
+   ],
+   [
+    0,
+    3,
+    4,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    4,
+    3,
+    0
+   ],
+   [
+    0,
+    3,
+    4,
+    4,
+    3,
+    3,
+    3,
+    3,
+    4,
+    4,
+    3,
+    0
+   ],
+   [
+    0,
+    3,
+    3,
+    4,
+    4,
+    3,
+    3,
+    4,
+    4,
+    3,
+    3,
+    0
+   ],
+   [
+    0,
+    0,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    5,
+    5,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 2
+    },
+    "end": {
+     "row": 7,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 1
+    },
+    "end": {
+     "row": 7,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": null,
+    "placeholder": true,
+    "start": null,
+    "end": null,
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 0
+    },
+    "end": {
+     "row": 7,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 5
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 11
+    },
+    "end": {
+     "row": 7,
+     "col": 6
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 6
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 11
+    },
+    "end": {
+     "row": 7,
+     "col": 6
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 6
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 9
+    },
+    "end": {
+     "row": 7,
+     "col": 6
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 6
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 10
+    },
+    "end": {
+     "row": 7,
+     "col": 6
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 6
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 1
+    },
+    "end": {
+     "row": 7,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 10
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 2,
+      "seconds": 10
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 10
+    },
+    "end": {
+     "row": 7,
+     "col": 6
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 6
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 10
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 2,
+      "seconds": 10
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 7,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 5
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 1
+    },
+    "end": {
+     "row": 7,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 2
+    },
+    "end": {
+     "row": 7,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 2
+    },
+    "end": {
+     "row": 7,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 1
+    },
+    "end": {
+     "row": 7,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10
+     }
+    ]
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 302,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Spec Ops Soldier",
+      "enemy_id": "enemy_1037_lunsbr",
+      "count": 2,
+      "time": 8,
+      "interval": 9,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Spec Ops Soldier",
+      "enemy_id": "enemy_1037_lunsbr",
+      "count": 1,
+      "time": 16,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Spec Ops Soldier",
+      "enemy_id": "enemy_1037_lunsbr",
+      "count": 2,
+      "time": 23,
+      "interval": 6,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Spec Ops Soldier",
+      "enemy_id": "enemy_1037_lunsbr",
+      "count": 2,
+      "time": 23,
+      "interval": 6,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Spec Ops Caster",
+      "enemy_id": "enemy_1038_lunmag",
+      "count": 2,
+      "time": 42,
+      "interval": 12,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Spec Ops Caster",
+      "enemy_id": "enemy_1038_lunmag",
+      "count": 2,
+      "time": 42,
+      "interval": 12,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Arts Guard Leader",
+      "enemy_id": "enemy_1031_mrogue_2",
+      "count": 1,
+      "time": 46,
+      "route": 3,
+      "fragment": 1
+     },
+     {
+      "enemy": "Spec Ops Caster",
+      "enemy_id": "enemy_1038_lunmag",
+      "count": 2,
+      "time": 67,
+      "interval": 12,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "Spec Ops Caster",
+      "enemy_id": "enemy_1038_lunmag",
+      "count": 2,
+      "time": 67,
+      "interval": 12,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Arts Guard Leader",
+      "enemy_id": "enemy_1031_mrogue_2",
+      "count": 2,
+      "time": 71,
+      "interval": 12,
+      "route": 3,
+      "fragment": 2
+     },
+     {
+      "enemy": "Spec Ops Soldier",
+      "enemy_id": "enemy_1037_lunsbr",
+      "count": 2,
+      "time": 96,
+      "interval": 9,
+      "route": 4,
+      "fragment": 3
+     },
+     {
+      "enemy": "Spec Ops Soldier",
+      "enemy_id": "enemy_1037_lunsbr",
+      "count": 2,
+      "time": 96,
+      "interval": 9,
+      "route": 5,
+      "fragment": 3
+     },
+     {
+      "enemy": "Spec Ops Soldier",
+      "enemy_id": "enemy_1037_lunsbr",
+      "count": 2,
+      "time": 111,
+      "interval": 6,
+      "route": 6,
+      "fragment": 3
+     },
+     {
+      "enemy": "Spec Ops Soldier",
+      "enemy_id": "enemy_1037_lunsbr",
+      "count": 2,
+      "time": 111,
+      "interval": 6,
+      "route": 7,
+      "fragment": 3
+     },
+     {
+      "enemy": "Heavy Defender Leader",
+      "enemy_id": "enemy_1006_shield_2",
+      "count": 1,
+      "time": 96,
+      "route": 3,
+      "fragment": 3
+     },
+     {
+      "enemy": "Shielded Senior Caster",
+      "enemy_id": "enemy_1036_amraoe",
+      "count": 1,
+      "time": 105,
+      "route": 8,
+      "fragment": 3
+     },
+     {
+      "enemy": "Dual Swordsman Leader",
+      "enemy_id": "enemy_1014_rogue_2",
+      "count": 2,
+      "time": 130,
+      "interval": 9,
+      "route": 4,
+      "fragment": 4
+     },
+     {
+      "enemy": "Dual Swordsman Leader",
+      "enemy_id": "enemy_1014_rogue_2",
+      "count": 2,
+      "time": 130,
+      "interval": 9,
+      "route": 5,
+      "fragment": 4
+     },
+     {
+      "enemy": "Light-Armored Soldier Leader",
+      "enemy_id": "enemy_1015_litamr_2",
+      "count": 2,
+      "time": 145,
+      "interval": 6,
+      "route": 6,
+      "fragment": 4
+     },
+     {
+      "enemy": "Light-Armored Soldier Leader",
+      "enemy_id": "enemy_1015_litamr_2",
+      "count": 2,
+      "time": 145,
+      "interval": 6,
+      "route": 7,
+      "fragment": 4
+     },
+     {
+      "enemy": "Spec Ops Caster Leader",
+      "enemy_id": "enemy_1038_lunmag_2",
+      "count": 2,
+      "time": 162,
+      "interval": 18,
+      "route": 1,
+      "fragment": 5
+     },
+     {
+      "enemy": "Arts Guard Leader",
+      "enemy_id": "enemy_1031_mrogue_2",
+      "count": 2,
+      "time": 168,
+      "interval": 12,
+      "route": 3,
+      "fragment": 5
+     },
+     {
+      "enemy": "Veteran Logger",
+      "enemy_id": "enemy_1033_handax_2",
+      "count": 1,
+      "time": 177,
+      "route": 4,
+      "fragment": 5
+     },
+     {
+      "enemy": "Light-Armored Soldier Leader",
+      "enemy_id": "enemy_1015_litamr_2",
+      "count": 2,
+      "time": 162,
+      "interval": 12,
+      "route": 6,
+      "fragment": 5
+     },
+     {
+      "enemy": "Light-Armored Soldier Leader",
+      "enemy_id": "enemy_1015_litamr_2",
+      "count": 2,
+      "time": 162,
+      "interval": 12,
+      "route": 7,
+      "fragment": 5
+     },
+     {
+      "enemy": "Spec Ops Caster",
+      "enemy_id": "enemy_1038_lunmag",
+      "count": 3,
+      "time": 199,
+      "interval": 12,
+      "route": 0,
+      "fragment": 6
+     },
+     {
+      "enemy": "Spec Ops Caster",
+      "enemy_id": "enemy_1038_lunmag",
+      "count": 3,
+      "time": 199,
+      "interval": 12,
+      "route": 1,
+      "fragment": 6
+     },
+     {
+      "enemy": "Dual Swordsman Leader",
+      "enemy_id": "enemy_1014_rogue_2",
+      "count": 2,
+      "time": 199,
+      "interval": 12,
+      "route": 4,
+      "fragment": 6
+     },
+     {
+      "enemy": "Dual Swordsman Leader",
+      "enemy_id": "enemy_1014_rogue_2",
+      "count": 2,
+      "time": 199,
+      "interval": 12,
+      "route": 5,
+      "fragment": 6
+     },
+     {
+      "enemy": "Shielded Senior Caster",
+      "enemy_id": "enemy_1036_amraoe",
+      "count": 1,
+      "time": 205,
+      "route": 9,
+      "fragment": 6
+     },
+     {
+      "enemy": "Arts Guard Leader",
+      "enemy_id": "enemy_1031_mrogue_2",
+      "count": 2,
+      "time": 205,
+      "interval": 12,
+      "route": 3,
+      "fragment": 6
+     },
+     {
+      "enemy": "Spec Ops Caster",
+      "enemy_id": "enemy_1038_lunmag",
+      "count": 2,
+      "time": 238,
+      "interval": 12,
+      "route": 0,
+      "fragment": 7
+     },
+     {
+      "enemy": "Spec Ops Caster",
+      "enemy_id": "enemy_1038_lunmag",
+      "count": 2,
+      "time": 238,
+      "interval": 12,
+      "route": 1,
+      "fragment": 7
+     },
+     {
+      "enemy": "Light-Armored Soldier Leader",
+      "enemy_id": "enemy_1015_litamr_2",
+      "count": 3,
+      "time": 238,
+      "interval": 12,
+      "route": 7,
+      "fragment": 7
+     },
+     {
+      "enemy": "Light-Armored Soldier Leader",
+      "enemy_id": "enemy_1015_litamr_2",
+      "count": 3,
+      "time": 238,
+      "interval": 12,
+      "route": 6,
+      "fragment": 7
+     },
+     {
+      "enemy": "Arts Guard Leader",
+      "enemy_id": "enemy_1031_mrogue_2",
+      "count": 2,
+      "time": 244,
+      "interval": 15,
+      "route": 3,
+      "fragment": 7
+     },
+     {
+      "enemy": "Arts Guard Leader",
+      "enemy_id": "enemy_1031_mrogue_2",
+      "count": 2,
+      "time": 244,
+      "interval": 15,
+      "route": 10,
+      "fragment": 7
+     },
+     {
+      "enemy": "Dual Swordsman Leader",
+      "enemy_id": "enemy_1014_rogue_2",
+      "count": 2,
+      "time": 244,
+      "interval": 12,
+      "route": 4,
+      "fragment": 7
+     },
+     {
+      "enemy": "Dual Swordsman Leader",
+      "enemy_id": "enemy_1014_rogue_2",
+      "count": 2,
+      "time": 244,
+      "interval": 12,
+      "route": 5,
+      "fragment": 7
+     },
+     {
+      "enemy": "Spec Ops Caster Leader",
+      "enemy_id": "enemy_1038_lunmag_2",
+      "count": 1,
+      "time": 289,
+      "route": 11,
+      "fragment": 8
+     },
+     {
+      "enemy": "Spec Ops Caster Leader",
+      "enemy_id": "enemy_1038_lunmag_2",
+      "count": 1,
+      "time": 289,
+      "route": 12,
+      "fragment": 8
+     },
+     {
+      "enemy": "Spec Ops Caster Leader",
+      "enemy_id": "enemy_1038_lunmag_2",
+      "count": 1,
+      "time": 280,
+      "route": 13,
+      "fragment": 8
+     },
+     {
+      "enemy": "Spec Ops Caster Leader",
+      "enemy_id": "enemy_1038_lunmag_2",
+      "count": 1,
+      "time": 280,
+      "route": 14,
+      "fragment": 8
+     },
+     {
+      "enemy": "Light-Armored Soldier Leader",
+      "enemy_id": "enemy_1015_litamr_2",
+      "count": 3,
+      "time": 286,
+      "interval": 8,
+      "route": 7,
+      "fragment": 8
+     },
+     {
+      "enemy": "Light-Armored Soldier Leader",
+      "enemy_id": "enemy_1015_litamr_2",
+      "count": 3,
+      "time": 286,
+      "interval": 8,
+      "route": 6,
+      "fragment": 8
+     },
+     {
+      "enemy": "Veteran Logger",
+      "enemy_id": "enemy_1033_handax_2",
+      "count": 1,
+      "time": 286,
+      "route": 4,
+      "fragment": 8
+     },
+     {
+      "enemy": "Veteran Logger",
+      "enemy_id": "enemy_1033_handax_2",
+      "count": 1,
+      "time": 295,
+      "route": 5,
+      "fragment": 8
+     },
+     {
+      "enemy": "Heavy Defender Leader",
+      "enemy_id": "enemy_1006_shield_2",
+      "count": 1,
+      "time": 286,
+      "route": 3,
+      "fragment": 8
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 0,
+    "col": 1,
+    "routes": [
+     1,
+     1,
+     1,
+     1,
+     8,
+     1,
+     1,
+     1,
+     11,
+     14
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 0,
+    "col": 2,
+    "routes": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     12,
+     13
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 0,
+    "col": 9,
+    "routes": [
+     6,
+     6,
+     6,
+     6,
+     6
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 0,
+    "col": 10,
+    "routes": [
+     7,
+     7,
+     7,
+     9,
+     7,
+     7
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 0,
+    "routes": [
+     10
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 11,
+    "routes": [
+     5,
+     5,
+     5,
+     5,
+     5
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 2,
+    "col": 0,
+    "routes": [
+     3,
+     3,
+     3,
+     3,
+     3,
+     3,
+     3
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 2,
+    "col": 11,
+    "routes": [
+     4,
+     4,
+     4,
+     4,
+     4,
+     4
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 7,
+    "col": 5,
+    "routes": [
+     0,
+     1,
+     0,
+     1,
+     0,
+     1,
+     3,
+     0,
+     1,
+     3,
+     3,
+     8,
+     1,
+     3,
+     0,
+     1,
+     3,
+     0,
+     1,
+     3,
+     10,
+     11,
+     12,
+     13,
+     14,
+     3
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 7,
+    "col": 6,
+    "routes": [
+     4,
+     5,
+     6,
+     7,
+     4,
+     5,
+     6,
+     7,
+     4,
+     6,
+     7,
+     4,
+     5,
+     9,
+     7,
+     6,
+     4,
+     5,
+     7,
+     6,
+     4,
+     5
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1006_shield_2",
+    "slug": "heavy_defender_leader",
+    "name": "Heavy Defender Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1014_rogue_2",
+    "slug": "dual_swordsman_leader",
+    "name": "Dual Swordsman Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1015_litamr_2",
+    "slug": "light_armored_soldier_leader",
+    "name": "Light-Armored Soldier Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1031_mrogue_2",
+    "slug": "arts_guard_leader",
+    "name": "Arts Guard Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1033_handax_2",
+    "slug": "veteran_logger",
+    "name": "Veteran Logger",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1036_amraoe",
+    "slug": "shielded_senior_caster",
+    "name": "Shielded Senior Caster",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1037_lunsbr",
+    "slug": "spec_ops_soldier",
+    "name": "Spec Ops Soldier",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1038_lunmag",
+    "slug": "spec_ops_caster",
+    "name": "Spec Ops Caster",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1038_lunmag_2",
+    "slug": "spec_ops_caster_leader",
+    "name": "Spec Ops Caster Leader",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "devices": [],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "H5-2",
+  "geometryHash": "8732b014006d8a21714668a39ed070dba0690470d52c77bd8fa37037896556ef",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4.414213562373095,
+     5.82842712474619,
+     6.82842712474619,
+     7.82842712474619,
+     8.82842712474619
+    ],
+    "length": 8.82842712474619,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      7
+     ]
+    ]
+   },
+   "1": {
+    "points": [
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2.414213562373095,
+     3.414213562373095,
+     4.82842712474619,
+     6.242640687119285,
+     7.242640687119285,
+     8.242640687119284,
+     9.242640687119284
+    ],
+    "length": 9.242640687119284,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      1,
+      0
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      7
+     ]
+    ]
+   },
+   "3": {
+    "points": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      7
+     ]
+    ]
+   },
+   "4": {
+    "points": [
+     [
+      11,
+      2
+     ],
+     [
+      10,
+      2
+     ],
+     [
+      10,
+      3
+     ],
+     [
+      10,
+      4
+     ],
+     [
+      10,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      7,
+      6
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      6,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      11,
+      2
+     ],
+     [
+      10,
+      2
+     ],
+     [
+      10,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      6,
+      7
+     ]
+    ]
+   },
+   "5": {
+    "points": [
+     [
+      11,
+      1
+     ],
+     [
+      10,
+      2
+     ],
+     [
+      10,
+      3
+     ],
+     [
+      10,
+      4
+     ],
+     [
+      10,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      7,
+      6
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      6,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1.4142135623730951,
+     2.414213562373095,
+     3.414213562373095,
+     4.414213562373095,
+     5.414213562373095,
+     6.414213562373095,
+     7.414213562373095,
+     8.414213562373096,
+     9.414213562373096,
+     10.414213562373096
+    ],
+    "length": 10.414213562373096,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      11,
+      1
+     ],
+     [
+      10,
+      2
+     ],
+     [
+      10,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      6,
+      7
+     ]
+    ]
+   },
+   "6": {
+    "points": [
+     [
+      9,
+      0
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      6,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4.414213562373095,
+     5.82842712474619,
+     6.82842712474619,
+     7.82842712474619,
+     8.82842712474619
+    ],
+    "length": 8.82842712474619,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      9,
+      0
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      6,
+      7
+     ]
+    ]
+   },
+   "7": {
+    "points": [
+     [
+      10,
+      0
+     ],
+     [
+      10,
+      1
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      6,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2.414213562373095,
+     3.414213562373095,
+     4.82842712474619,
+     6.242640687119285,
+     7.242640687119285,
+     8.242640687119284,
+     9.242640687119284
+    ],
+    "length": 9.242640687119284,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      10,
+      0
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      6,
+      7
+     ]
+    ]
+   },
+   "8": {
+    "points": [
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2.414213562373095,
+     3.414213562373095,
+     4.82842712474619,
+     6.242640687119285,
+     7.242640687119285,
+     8.242640687119284,
+     9.242640687119284
+    ],
+    "length": 9.242640687119284,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 2.414213562373095,
+      "seconds": 10,
+      "point": [
+       2,
+       2
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 4.82842712474619,
+      "seconds": 10,
+      "point": [
+       4,
+       3
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 6.242640687119285,
+      "seconds": 10,
+      "point": [
+       5,
+       4
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      1,
+      0
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      7
+     ]
+    ]
+   },
+   "9": {
+    "points": [
+     [
+      10,
+      0
+     ],
+     [
+      10,
+      1
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      6,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2.414213562373095,
+     3.414213562373095,
+     4.82842712474619,
+     6.242640687119285,
+     7.242640687119285,
+     8.242640687119284,
+     9.242640687119284
+    ],
+    "length": 9.242640687119284,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 2.414213562373095,
+      "seconds": 10,
+      "point": [
+       9,
+       2
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 4.82842712474619,
+      "seconds": 10,
+      "point": [
+       7,
+       3
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 6.242640687119285,
+      "seconds": 10,
+      "point": [
+       6,
+       4
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      10,
+      0
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      6,
+      7
+     ]
+    ]
+   },
+   "10": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1.4142135623730951,
+     2.414213562373095,
+     3.414213562373095,
+     4.414213562373095,
+     5.414213562373095,
+     6.414213562373095,
+     7.414213562373095,
+     8.414213562373096,
+     9.414213562373096,
+     10.414213562373096
+    ],
+    "length": 10.414213562373096,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      7
+     ]
+    ]
+   },
+   "11": {
+    "points": [
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2.414213562373095,
+     3.414213562373095,
+     4.82842712474619,
+     6.242640687119285,
+     7.242640687119285,
+     8.242640687119284,
+     9.242640687119284
+    ],
+    "length": 9.242640687119284,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 10,
+      "point": [
+       1,
+       1
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      7
+     ]
+    ]
+   },
+   "12": {
+    "points": [
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2.414213562373095,
+     3.82842712474619,
+     5.242640687119285,
+     6.242640687119285,
+     7.242640687119285,
+     8.242640687119284
+    ],
+    "length": 8.242640687119284,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 10,
+      "point": [
+       2,
+       1
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      7
+     ]
+    ]
+   },
+   "13": {
+    "points": [
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4.414213562373095,
+     5.82842712474619,
+     6.82842712474619,
+     7.82842712474619,
+     8.82842712474619
+    ],
+    "length": 8.82842712474619,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 2,
+      "seconds": 10,
+      "point": [
+       2,
+       2
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      7
+     ]
+    ]
+   },
+   "14": {
+    "points": [
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      7
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5.414213562373095,
+     6.82842712474619,
+     7.82842712474619,
+     8.82842712474619,
+     9.82842712474619
+    ],
+    "length": 9.82842712474619,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 2,
+      "seconds": 10,
+      "point": [
+       1,
+       2
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      7
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1037_lunsbr": {
+   "key": "enemy_1037_lunsbr",
+   "prefabKey": "enemy_1037_lunsbr",
+   "name": "Spec Ops Soldier",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3200,
+    "atk": 350,
+    "def": 50,
+    "res": 0,
+    "moveSpeed": 1.1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1038_lunmag": {
+   "key": "enemy_1038_lunmag",
+   "prefabKey": "enemy_1038_lunmag",
+   "name": "Spec Ops Caster",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 4000,
+    "atk": 400,
+    "def": 250,
+    "res": 50,
+    "moveSpeed": 0.8,
+    "bat": 4,
+    "aspd": 100,
+    "rangeRadius": 2,
+    "rawRangeRadius": 2,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1031_mrogue_2": {
+   "key": "enemy_1031_mrogue_2",
+   "prefabKey": "enemy_1031_mrogue_2",
+   "name": "Arts Guard Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 6500,
+    "atk": 500,
+    "def": 250,
+    "res": 50,
+    "moveSpeed": 0.75,
+    "bat": 2.5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1006_shield_2": {
+   "key": "enemy_1006_shield_2",
+   "prefabKey": "enemy_1006_shield_2",
+   "name": "Heavy Defender Leader",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 10000,
+    "atk": 600,
+    "def": 1000,
+    "res": 0,
+    "moveSpeed": 0.75,
+    "bat": 2.6,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1036_amraoe": {
+   "key": "enemy_1036_amraoe",
+   "prefabKey": "enemy_1036_amraoe",
+   "name": "Shielded Senior Caster",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 8500,
+    "atk": 380,
+    "def": 400,
+    "res": 20,
+    "moveSpeed": 0.7,
+    "bat": 3.8,
+    "aspd": 100,
+    "rangeRadius": 2.2,
+    "rawRangeRadius": 2.2,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Deals area damage to Operators on the four cardinal tiles next to the primary target.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1014_rogue_2": {
+   "key": "enemy_1014_rogue_2",
+   "prefabKey": "enemy_1014_rogue_2",
+   "name": "Dual Swordsman Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3000,
+    "atk": 450,
+    "def": 120,
+    "res": 0,
+    "moveSpeed": 1.1,
+    "bat": 1.2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1015_litamr_2": {
+   "key": "enemy_1015_litamr_2",
+   "prefabKey": "enemy_1015_litamr_2",
+   "name": "Light-Armored Soldier Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3700,
+    "atk": 300,
+    "def": 500,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1038_lunmag_2": {
+   "key": "enemy_1038_lunmag_2",
+   "prefabKey": "enemy_1038_lunmag_2",
+   "name": "Spec Ops Caster Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 6000,
+    "atk": 450,
+    "def": 300,
+    "res": 50,
+    "moveSpeed": 0.8,
+    "bat": 4,
+    "aspd": 100,
+    "rangeRadius": 2.4,
+    "rawRangeRadius": 2.4,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Attacks two targets simultaneously.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1033_handax_2": {
+   "key": "enemy_1033_handax_2",
+   "prefabKey": "enemy_1033_handax_2",
+   "name": "Veteran Logger",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 12000,
+    "atk": 850,
+    "def": 100,
+    "res": 30,
+    "moveSpeed": 0.75,
+    "bat": 3.3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ }
+}

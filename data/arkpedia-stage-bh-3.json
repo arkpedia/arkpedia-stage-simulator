@@ -1,0 +1,914 @@
+{
+ "code": "BH-3",
+ "name": "Fatal Mistake",
+ "description": "Though some landmarks may look conspicuous from the air, choosing this as a landing spot was a serious mistake. \n<Active Originium>Operators deployed on it and enemies who have passed it will take constant damage, but their ATK and ASPD will be increased significantly.\n<Static Roadblock>Blocks the movement of Ursus Civilians and Talulah, the Fighter; Can be destroyed by your units.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "bh-3",
+  "rows": 7,
+  "cols": 11,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_fence",
+    "height": "low",
+    "walkable": false,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_infection",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true,
+    "blackboard": {
+     "atk": 0.5,
+     "attack_speed": 50,
+     "damage": 150,
+     "duration": 300
+    }
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    3,
+    3,
+    3,
+    3,
+    0
+   ],
+   [
+    0,
+    2,
+    0,
+    4,
+    2,
+    0,
+    5,
+    3,
+    4,
+    2,
+    0
+   ],
+   [
+    0,
+    2,
+    0,
+    4,
+    6,
+    0,
+    4,
+    3,
+    4,
+    2,
+    0
+   ],
+   [
+    0,
+    2,
+    0,
+    5,
+    2,
+    0,
+    4,
+    3,
+    4,
+    2,
+    0
+   ],
+   [
+    0,
+    2,
+    2,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    2,
+    0
+   ],
+   [
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    7,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 4
+    },
+    "end": {
+     "row": 6,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 9
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 40
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 1
+    },
+    "end": {
+     "row": 6,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 9
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 6,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 9
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 1
+    },
+    "end": {
+     "row": 6,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 9
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10
+     }
+    ]
+   },
+   null,
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 4
+    },
+    "end": {
+     "row": 6,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 9
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 10
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 20
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 4
+    },
+    "end": {
+     "row": 6,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 9
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 20
+     }
+    ]
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 198,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Ursus Assault Crossbowman",
+      "enemy_id": "enemy_1109_uabone",
+      "count": 1,
+      "time": 0,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Ursus Mangler",
+      "enemy_id": "enemy_1108_uterer",
+      "count": 3,
+      "time": 8,
+      "interval": 18,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Ursus Mangler",
+      "enemy_id": "enemy_1108_uterer",
+      "count": 3,
+      "time": 16,
+      "interval": 14,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Ursus Raider Leader",
+      "enemy_id": "enemy_1111_ucommd_2",
+      "count": 1,
+      "time": 77,
+      "route": 3,
+      "fragment": 2
+     },
+     {
+      "enemy": "Ursus Mangler",
+      "enemy_id": "enemy_1108_uterer",
+      "count": 3,
+      "time": 59,
+      "interval": 22,
+      "route": 2,
+      "fragment": 2
+     },
+     {
+      "enemy": "Ursus Mangler",
+      "enemy_id": "enemy_1108_uterer",
+      "count": 3,
+      "time": 68,
+      "interval": 18,
+      "route": 2,
+      "fragment": 2
+     },
+     {
+      "enemy": "Ursus Raider Leader",
+      "enemy_id": "enemy_1111_ucommd_2",
+      "count": 3,
+      "time": 129,
+      "interval": 30,
+      "route": 1,
+      "fragment": 3
+     },
+     {
+      "enemy": "Ursus Mangler",
+      "enemy_id": "enemy_1108_uterer",
+      "count": 7,
+      "time": 119,
+      "interval": 13,
+      "route": 2,
+      "fragment": 3
+     },
+     {
+      "enemy": "Ursus Mangler",
+      "enemy_id": "enemy_1108_uterer",
+      "count": 7,
+      "time": 126,
+      "interval": 12,
+      "route": 2,
+      "fragment": 3
+     },
+     {
+      "enemy": "Ursus Assault Crossbowman",
+      "enemy_id": "enemy_1109_uabone",
+      "count": 1,
+      "time": 122,
+      "route": 5,
+      "fragment": 3
+     },
+     {
+      "enemy": "Ursus Assault Crossbowman",
+      "enemy_id": "enemy_1109_uabone",
+      "count": 2,
+      "time": 157,
+      "interval": 25,
+      "route": 6,
+      "fragment": 3
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 0,
+    "routes": [
+     2,
+     2,
+     2,
+     2,
+     2
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 6,
+    "col": 1,
+    "routes": [
+     1,
+     3,
+     1
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 6,
+    "col": 9,
+    "routes": [
+     0,
+     1,
+     2,
+     3,
+     2,
+     2,
+     1,
+     2,
+     2,
+     5,
+     6
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1108_uterer",
+    "slug": "ursus_mangler",
+    "name": "Ursus Mangler",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1109_uabone",
+    "slug": "ursus_assault_crossbowman",
+    "name": "Ursus Assault Crossbowman",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1111_ucommd_2",
+    "slug": "ursus_raider_leader",
+    "name": "Ursus Raider Leader",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false,
+  "source": "cn"
+ },
+ "devices": [
+  {
+   "col": 3,
+   "description": "Less likely to get attacked by your units",
+   "hidden": false,
+   "key": "trap_020_roadblock",
+   "kind": "device",
+   "name": "Static Roadblock",
+   "row": 5
+  },
+  {
+   "col": 6,
+   "description": "Less likely to get attacked by your units",
+   "hidden": false,
+   "key": "trap_020_roadblock",
+   "kind": "device",
+   "name": "Static Roadblock",
+   "row": 1
+  },
+  {
+   "col": 8,
+   "description": "Less likely to get attacked by your units",
+   "hidden": false,
+   "key": "trap_020_roadblock",
+   "kind": "device",
+   "name": "Static Roadblock",
+   "row": 5
+  }
+ ],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [
+   0,
+   1,
+   2,
+   3,
+   5,
+   6
+  ],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "BH-3",
+  "geometryHash": "383ef28771738f6b1bfb6ce271d46ba3387f9f50135581f952abb3b67468a77b",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      4,
+      3
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "1": {
+    "points": [
+     [
+      1,
+      6
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "2": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "3": {
+    "points": [
+     [
+      1,
+      6
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "5": {
+    "points": [
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "6": {
+    "points": [
+     [
+      4,
+      3
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1109_uabone": {
+   "key": "enemy_1109_uabone",
+   "prefabKey": "enemy_1109_uabone",
+   "name": "Ursus Assault Crossbowman",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 4000,
+    "atk": 350,
+    "def": 200,
+    "res": 20,
+    "moveSpeed": 1,
+    "bat": 2.3,
+    "aspd": 100,
+    "rangeRadius": 2.4,
+    "rawRangeRadius": 2.4,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Able to land directly onto the battlefield.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1108_uterer": {
+   "key": "enemy_1108_uterer",
+   "prefabKey": "enemy_1108_uterer",
+   "name": "Ursus Mangler",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3500,
+    "atk": 380,
+    "def": 100,
+    "res": 20,
+    "moveSpeed": 1.7,
+    "bat": 1.5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1111_ucommd_2": {
+   "key": "enemy_1111_ucommd_2",
+   "prefabKey": "enemy_1111_ucommd_2",
+   "name": "Ursus Raider Leader",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 10000,
+    "atk": 700,
+    "def": 500,
+    "res": 50,
+    "moveSpeed": 1.5,
+    "bat": 2.2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Can only be blocked by units with at least 2 Block",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Can use long-ranged weapons to attack <Ursus Civilians> and <Talulah, the Fighter>",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ }
+}

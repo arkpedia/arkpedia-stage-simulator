@@ -1,0 +1,1842 @@
+{
+ "code": "VEC-01",
+ "name": "Fistful of Wind",
+ "description": "Increases some enemies' base stats.",
+ "battle": {
+  "max_life": 1,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "vec-01_act1vecb_01",
+  "rows": 7,
+  "cols": 9,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_fence_bound",
+    "height": "low",
+    "walkable": false,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1
+   ],
+   [
+    0,
+    2,
+    0,
+    3,
+    3,
+    3,
+    0,
+    2,
+    0
+   ],
+   [
+    0,
+    2,
+    4,
+    3,
+    3,
+    3,
+    4,
+    2,
+    0
+   ],
+   [
+    0,
+    2,
+    4,
+    5,
+    3,
+    4,
+    4,
+    2,
+    0
+   ],
+   [
+    1,
+    2,
+    0,
+    4,
+    3,
+    0,
+    0,
+    2,
+    1
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    6,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 0
+    },
+    "end": {
+     "row": 6,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 2,
+      "seconds": 10
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 8
+    },
+    "end": {
+     "row": 6,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 2,
+      "seconds": 25
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 6,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 45
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 8
+    },
+    "end": {
+     "row": 6,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 55
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 8
+    },
+    "end": {
+     "row": 6,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 2,
+      "seconds": 15
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 8
+    },
+    "end": {
+     "row": 6,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 45
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 6,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 35
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 6,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 70
+     }
+    ]
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 16,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Alcohol Association Member",
+      "enemy_id": "enemy_1258_durman_2",
+      "count": 1,
+      "time": 3,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Tiacauh Ripper",
+      "enemy_id": "enemy_1095_ccripr_2",
+      "count": 1,
+      "time": 3,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Alcohol Association Member",
+      "enemy_id": "enemy_1258_durman_2",
+      "count": 1,
+      "time": 14,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Tiacauh Ripper",
+      "enemy_id": "enemy_1095_ccripr_2",
+      "count": 1,
+      "time": 16,
+      "route": 3,
+      "fragment": 0
+     }
+    ]
+   },
+   {
+    "index": 1,
+    "duration": 17,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Tiacauh Ripper",
+      "enemy_id": "enemy_1095_ccripr_2",
+      "count": 1,
+      "time": 3,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Tiacauh Ripper",
+      "enemy_id": "enemy_1095_ccripr_2",
+      "count": 1,
+      "time": 3,
+      "route": 4,
+      "fragment": 0
+     },
+     {
+      "enemy": "Pugilist Prisoner",
+      "enemy_id": "enemy_1118_lidbox",
+      "count": 1,
+      "time": 17,
+      "route": 5,
+      "fragment": 0
+     },
+     {
+      "enemy": "Pugilist Prisoner",
+      "enemy_id": "enemy_1118_lidbox",
+      "count": 1,
+      "time": 17,
+      "route": 6,
+      "fragment": 0
+     },
+     {
+      "enemy": "Elite Pugilist Prisoner",
+      "enemy_id": "enemy_1118_lidbox_2",
+      "count": 1,
+      "time": 10,
+      "route": 7,
+      "fragment": 0
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 0,
+    "routes": [
+     2,
+     6,
+     7
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 8,
+    "routes": [
+     3,
+     5
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 5,
+    "col": 0,
+    "routes": [
+     0,
+     0
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 5,
+    "col": 8,
+    "routes": [
+     1,
+     4
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 6,
+    "col": 4,
+    "routes": [
+     0,
+     1,
+     2,
+     3,
+     0,
+     4,
+     5,
+     6,
+     7
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1095_ccripr_2",
+    "slug": "tiacauh_ripper",
+    "name": "Tiacauh Ripper",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1118_lidbox",
+    "slug": "pugilist_prisoner",
+    "name": "Pugilist Prisoner",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1118_lidbox_2",
+    "slug": "elite_pugilist_prisoner",
+    "name": "Elite Pugilist Prisoner",
+    "database_level": 0,
+    "overrides": {
+     "hp": 22500
+    }
+   },
+   {
+    "enemy_id": "enemy_1258_durman_2",
+    "slug": "alcohol_association_member",
+    "name": "Alcohol Association Member",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "devices": [],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "VEC-01",
+  "geometryHash": "0cafb40638fb84997e8754e20e8703c2a04875b5a885f52a1b91748de0ae2ba0",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      0,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      4,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ],
+    "length": 13,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 7,
+      "seconds": 10,
+      "point": [
+       3,
+       1
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      6
+     ]
+    ]
+   },
+   "1": {
+    "points": [
+     [
+      8,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      4,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ],
+    "length": 13,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 7,
+      "seconds": 25,
+      "point": [
+       5,
+       1
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      8,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      6
+     ]
+    ]
+   },
+   "2": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      4,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "length": 9,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 2,
+      "seconds": 45,
+      "point": [
+       2,
+       1
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      6
+     ]
+    ]
+   },
+   "3": {
+    "points": [
+     [
+      8,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      4,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "length": 9,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 2,
+      "seconds": 55,
+      "point": [
+       6,
+       1
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      8,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      6
+     ]
+    ]
+   },
+   "4": {
+    "points": [
+     [
+      8,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      4,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ],
+    "length": 13,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 7,
+      "seconds": 15,
+      "point": [
+       5,
+       1
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      8,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      6
+     ]
+    ]
+   },
+   "5": {
+    "points": [
+     [
+      8,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      4,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "length": 9,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 2,
+      "seconds": 45,
+      "point": [
+       6,
+       1
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      8,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      6
+     ]
+    ]
+   },
+   "6": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      4,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "length": 9,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 2,
+      "seconds": 35,
+      "point": [
+       2,
+       1
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      6
+     ]
+    ]
+   },
+   "7": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      4,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "length": 9,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 4,
+      "seconds": 70,
+      "point": [
+       4,
+       1
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      6
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1258_durman_2": {
+   "key": "enemy_1258_durman_2",
+   "prefabKey": "enemy_1258_durman_2",
+   "name": "Alcohol Association Member",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3600,
+    "atk": 400,
+    "def": 150,
+    "res": 50,
+    "moveSpeed": 1.1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Initially has 100% Physical Dodge for a period of time",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "Evade.prob": 1,
+     "Evade.duration": 30
+    },
+    "bbStr": {},
+    "groups": {
+     "Evade": [
+      "duration",
+      "prob"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1095_ccripr_2": {
+   "key": "enemy_1095_ccripr_2",
+   "prefabKey": "enemy_1095_ccripr_2",
+   "name": "Tiacauh Ripper",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 7500,
+    "atk": 350,
+    "def": 460,
+    "res": 10,
+    "moveSpeed": 0.8,
+    "bat": 0.9,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Every attack reduces the enemy's DEF",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "defdown.def": -15
+    },
+    "bbStr": {},
+    "groups": {
+     "defdown": [
+      "def"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1118_lidbox_2": {
+   "key": "enemy_1118_lidbox_2",
+   "prefabKey": "enemy_1118_lidbox_2",
+   "name": "Elite Pugilist Prisoner",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 22500,
+    "atk": 400,
+    "def": 400,
+    "res": 0,
+    "moveSpeed": 1.6,
+    "bat": 1,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": true,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Starts imprisoned. When imprisoned, ASPD is reduced",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Freed after a few attacks, gaining increased ATK and attacks ignore a certain portion of the target's DEF",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "liberty.atk": 0.5,
+     "confinement.times": 4,
+     "confinement.attack_speed": -50,
+     "liberty.def_penetrate": 0.8,
+     "confinement.max_stack_cnt": -1,
+     "confinement.max_valid_stack_cnt": -1
+    },
+    "bbStr": {},
+    "groups": {
+     "liberty": [
+      "atk",
+      "def_penetrate"
+     ],
+     "confinement": [
+      "attack_speed",
+      "max_stack_cnt",
+      "max_valid_stack_cnt",
+      "times"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1118_lidbox": {
+   "key": "enemy_1118_lidbox",
+   "prefabKey": "enemy_1118_lidbox",
+   "name": "Pugilist Prisoner",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 8000,
+    "atk": 300,
+    "def": 300,
+    "res": 0,
+    "moveSpeed": 1.6,
+    "bat": 1.2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": true,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Starts imprisoned. When imprisoned, ASPD is reduced",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Freed after a few attacks, gaining increased ATK and attacks ignore a certain portion of the target's DEF",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "liberty.atk": 0.5,
+     "confinement.times": 4,
+     "confinement.attack_speed": -50,
+     "liberty.def_penetrate": 0.6,
+     "confinement.max_stack_cnt": -1,
+     "confinement.max_valid_stack_cnt": -1
+    },
+    "bbStr": {},
+    "groups": {
+     "liberty": [
+      "atk",
+      "def_penetrate"
+     ],
+     "confinement": [
+      "attack_speed",
+      "max_stack_cnt",
+      "max_valid_stack_cnt",
+      "times"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ }
+}

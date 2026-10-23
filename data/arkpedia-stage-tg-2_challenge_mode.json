@@ -1,0 +1,784 @@
+{
+ "code": "TG-2",
+ "name": "Heat Drilling",
+ "description": "Condition: \n7 tiles on the battlefield are no longer available for deployment.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 12,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "tg-2",
+  "rows": 8,
+  "cols": 10,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_bigforce",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true,
+    "blackboard": {
+     "base_force_level": 2
+    }
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_volcano",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true,
+    "blackboard": {
+     "cd_max": 15,
+     "cd_min": 10,
+     "damage": 800
+    }
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    1,
+    1,
+    1,
+    0,
+    2,
+    2,
+    2,
+    0,
+    0
+   ],
+   [
+    0,
+    1,
+    1,
+    1,
+    3,
+    2,
+    1,
+    2,
+    0,
+    0
+   ],
+   [
+    4,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    2,
+    2,
+    5
+   ],
+   [
+    0,
+    1,
+    1,
+    2,
+    2,
+    2,
+    1,
+    1,
+    2,
+    0
+   ],
+   [
+    4,
+    2,
+    2,
+    2,
+    6,
+    6,
+    6,
+    1,
+    6,
+    0
+   ],
+   [
+    0,
+    1,
+    1,
+    1,
+    1,
+    1,
+    6,
+    6,
+    6,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 3
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 9
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 9
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 1
+      }
+     }
+    ],
+    "waits": []
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 184,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Nameless Independent Knight",
+      "enemy_id": "enemy_1099_nbkght",
+      "count": 2,
+      "time": 5,
+      "interval": 5,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Nameless Independent Knight",
+      "enemy_id": "enemy_1099_nbkght",
+      "count": 2,
+      "time": 22,
+      "interval": 5,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Nameless Independent Knight",
+      "enemy_id": "enemy_1099_nbkght",
+      "count": 3,
+      "time": 37,
+      "interval": 8,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Nameless Independent Knight",
+      "enemy_id": "enemy_1099_nbkght",
+      "count": 3,
+      "time": 41,
+      "interval": 8,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Training Gloompincer",
+      "enemy_id": "enemy_1100_scorpn",
+      "count": 2,
+      "time": 67,
+      "interval": 4,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Roar Knightclub Trainee",
+      "enemy_id": "enemy_1101_plkght",
+      "count": 2,
+      "time": 68,
+      "interval": 4,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Nameless Independent Knight",
+      "enemy_id": "enemy_1099_nbkght",
+      "count": 2,
+      "time": 83,
+      "interval": 12,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Independent Knight Shielder",
+      "enemy_id": "enemy_1102_sdkght",
+      "count": 2,
+      "time": 83,
+      "interval": 12,
+      "route": 3,
+      "fragment": 0
+     },
+     {
+      "enemy": "Nameless Independent Knight",
+      "enemy_id": "enemy_1099_nbkght",
+      "count": 4,
+      "time": 114,
+      "interval": 8,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Training Gloompincer",
+      "enemy_id": "enemy_1100_scorpn",
+      "count": 4,
+      "time": 118,
+      "interval": 8,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Roar Knightclub Trainee",
+      "enemy_id": "enemy_1101_plkght",
+      "count": 2,
+      "time": 152,
+      "interval": 2,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Independent Knight Shielder",
+      "enemy_id": "enemy_1102_sdkght",
+      "count": 1,
+      "time": 171,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Independent Knight Shielder",
+      "enemy_id": "enemy_1102_sdkght",
+      "count": 2,
+      "time": 179,
+      "interval": 5,
+      "route": 1,
+      "fragment": 0
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 3,
+    "col": 0,
+    "routes": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 5,
+    "col": 0,
+    "routes": [
+     0,
+     2,
+     3,
+     2,
+     2,
+     2
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 3,
+    "col": 9,
+    "routes": [
+     0,
+     1,
+     1,
+     2,
+     1,
+     1,
+     1,
+     3,
+     2,
+     1,
+     2,
+     2,
+     1
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1099_nbkght",
+    "slug": "nameless_independent_knight",
+    "name": "Nameless Independent Knight",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1100_scorpn",
+    "slug": "training_gloompincer",
+    "name": "Training Gloompincer",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1101_plkght",
+    "slug": "roar_knightclub_trainee",
+    "name": "Roar Knightclub Trainee",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1102_sdkght",
+    "slug": "independent_knight_shielder",
+    "name": "Independent Knight Shielder",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false,
+  "source": "cn"
+ },
+ "devices": [],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [
+   0,
+   1,
+   2,
+   3
+  ],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "TG-2",
+  "geometryHash": "3dd8c20e2bf12fe2c5a9ecc9a45424888d9f54ba1e079a38074c4c1302e637c4",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      0,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      9,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "1": {
+    "points": [
+     [
+      0,
+      3
+     ],
+     [
+      9,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "2": {
+    "points": [
+     [
+      0,
+      5
+     ],
+     [
+      9,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "3": {
+    "points": [
+     [
+      0,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      9,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1099_nbkght": {
+   "key": "enemy_1099_nbkght",
+   "prefabKey": "enemy_1099_nbkght",
+   "name": "Nameless Independent Knight",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2800,
+    "atk": 280,
+    "def": 150,
+    "res": 0,
+    "moveSpeed": 1.1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1100_scorpn": {
+   "key": "enemy_1100_scorpn",
+   "prefabKey": "enemy_1100_scorpn",
+   "name": "Training Gloompincer",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2000,
+    "atk": 380,
+    "def": 450,
+    "res": 30,
+    "moveSpeed": 1,
+    "bat": 2.5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1101_plkght": {
+   "key": "enemy_1101_plkght",
+   "prefabKey": "enemy_1101_plkght",
+   "name": "Roar Knightclub Trainee",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 2800,
+    "atk": 300,
+    "def": 100,
+    "res": 0,
+    "moveSpeed": 0.9,
+    "bat": 2.4,
+    "aspd": 100,
+    "rangeRadius": 2,
+    "rawRangeRadius": 2,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": true,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Has significantly increased DEF and RES for a period of time",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "buff.duration": 30,
+     "buff.def": 3000,
+     "buff.magic_resistance": 95
+    },
+    "bbStr": {},
+    "groups": {
+     "buff": [
+      "def",
+      "duration",
+      "magic_resistance"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1102_sdkght": {
+   "key": "enemy_1102_sdkght",
+   "prefabKey": "enemy_1102_sdkght",
+   "name": "Independent Knight Shielder",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 8000,
+    "atk": 700,
+    "def": 1000,
+    "res": 0,
+    "moveSpeed": 0.7,
+    "bat": 3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 4,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ }
+}

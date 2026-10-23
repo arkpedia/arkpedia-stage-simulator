@@ -1,0 +1,1907 @@
+{
+ "code": "LT-4",
+ "name": "Freebie Frenzy",
+ "description": "Starting Danger Level: 3\nRumors of a big giveaway have people flocking to the streets. But why are there fewer and fewer people around?",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 6,
+  "initial_dp": 20,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "lt-4_lt_14_04",
+  "rows": 7,
+  "cols": 12,
+  "tileLegend": [
+   {
+    "key": "tile_deepwater",
+    "height": "low",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_flystart",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    1,
+    1,
+    0,
+    0,
+    2,
+    2,
+    2,
+    2,
+    2,
+    3
+   ],
+   [
+    4,
+    5,
+    5,
+    5,
+    2,
+    2,
+    2,
+    1,
+    0,
+    0,
+    0,
+    6
+   ],
+   [
+    6,
+    0,
+    0,
+    0,
+    0,
+    1,
+    2,
+    1,
+    0,
+    0,
+    0,
+    6
+   ],
+   [
+    6,
+    0,
+    0,
+    0,
+    0,
+    1,
+    2,
+    1,
+    0,
+    0,
+    0,
+    6
+   ],
+   [
+    6,
+    0,
+    0,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    4
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    3,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 11
+    },
+    "end": {
+     "row": 1,
+     "col": 11
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 0
+    },
+    "end": {
+     "row": 6,
+     "col": 4
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 5,
+     "col": 0
+    },
+    "end": {
+     "row": 1,
+     "col": 11
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 7
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 90
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 30
+     }
+    ]
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 4,
+     "col": 0
+    },
+    "end": {
+     "row": 1,
+     "col": 11
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 7
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 90
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 30
+     }
+    ]
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 3,
+     "col": 0
+    },
+    "end": {
+     "row": 1,
+     "col": 11
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 7
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 90
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 30
+     }
+    ]
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 4,
+     "col": 11
+    },
+    "end": {
+     "row": 6,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 90
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 30
+     }
+    ]
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 3,
+     "col": 11
+    },
+    "end": {
+     "row": 6,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 90
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 30
+     }
+    ]
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 2,
+     "col": 11
+    },
+    "end": {
+     "row": 6,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 90
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 30
+     }
+    ]
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 144,
+    "pre_delay": 0,
+    "post_delay": 15,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Bladed Fighter",
+      "enemy_id": "enemy_1032_katar",
+      "count": 1,
+      "time": 11,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Bladed Fighter",
+      "enemy_id": "enemy_1032_katar",
+      "count": 1,
+      "time": 16,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Logger",
+      "enemy_id": "enemy_1033_handax",
+      "count": 1,
+      "time": 34,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Bladed Fighter",
+      "enemy_id": "enemy_1032_katar",
+      "count": 1,
+      "time": 46,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Bladed Fighter",
+      "enemy_id": "enemy_1032_katar",
+      "count": 2,
+      "time": 59,
+      "interval": 15,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "Logger",
+      "enemy_id": "enemy_1033_handax",
+      "count": 1,
+      "time": 74,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Defender-4",
+      "enemy_id": "enemy_1017_defdrn",
+      "count": 1,
+      "time": 86,
+      "route": 2,
+      "fragment": 3
+     },
+     {
+      "enemy": "Defender-4",
+      "enemy_id": "enemy_1017_defdrn",
+      "count": 1,
+      "time": 86,
+      "route": 3,
+      "fragment": 3
+     },
+     {
+      "enemy": "Defender-4",
+      "enemy_id": "enemy_1017_defdrn",
+      "count": 1,
+      "time": 86,
+      "route": 4,
+      "fragment": 3
+     },
+     {
+      "enemy": "Armed Militant",
+      "enemy_id": "enemy_1035_haxe",
+      "count": 1,
+      "time": 114,
+      "route": 0,
+      "fragment": 4
+     },
+     {
+      "enemy": "Butcher",
+      "enemy_id": "enemy_1034_laxe",
+      "count": 1,
+      "time": 99,
+      "route": 1,
+      "fragment": 4
+     },
+     {
+      "enemy": "Butcher",
+      "enemy_id": "enemy_1034_laxe",
+      "count": 1,
+      "time": 129,
+      "route": 1,
+      "fragment": 4
+     }
+    ]
+   },
+   {
+    "index": 1,
+    "duration": 117,
+    "pre_delay": 0,
+    "post_delay": 15,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Bladed Fighter",
+      "enemy_id": "enemy_1032_katar",
+      "count": 2,
+      "time": 3,
+      "interval": 3,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Bladed Fighter",
+      "enemy_id": "enemy_1032_katar",
+      "count": 2,
+      "time": 33,
+      "interval": 3,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Butcher",
+      "enemy_id": "enemy_1034_laxe",
+      "count": 2,
+      "time": 54,
+      "interval": 30,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Bladed Fighter",
+      "enemy_id": "enemy_1032_katar",
+      "count": 2,
+      "time": 66,
+      "interval": 3,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Bladed Fighter",
+      "enemy_id": "enemy_1032_katar",
+      "count": 2,
+      "time": 87,
+      "interval": 3,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Defender-4",
+      "enemy_id": "enemy_1017_defdrn",
+      "count": 1,
+      "time": 102,
+      "route": 5,
+      "fragment": 2
+     },
+     {
+      "enemy": "Defender-4",
+      "enemy_id": "enemy_1017_defdrn",
+      "count": 1,
+      "time": 102,
+      "route": 6,
+      "fragment": 2
+     },
+     {
+      "enemy": "Defender-4",
+      "enemy_id": "enemy_1017_defdrn",
+      "count": 1,
+      "time": 102,
+      "route": 7,
+      "fragment": 2
+     }
+    ]
+   },
+   {
+    "index": 2,
+    "duration": 233,
+    "pre_delay": 0,
+    "post_delay": -1,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Armed Militant",
+      "enemy_id": "enemy_1035_haxe",
+      "count": 2,
+      "time": 23,
+      "interval": 36,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Veteran Butcher",
+      "enemy_id": "enemy_1034_laxe_2",
+      "count": 2,
+      "time": 8,
+      "interval": 36,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Veteran Butcher",
+      "enemy_id": "enemy_1034_laxe_2",
+      "count": 2,
+      "time": 72,
+      "interval": 36,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Senior Armed Militant",
+      "enemy_id": "enemy_1035_haxe_2",
+      "count": 2,
+      "time": 87,
+      "interval": 36,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Defender-4",
+      "enemy_id": "enemy_1017_defdrn",
+      "count": 1,
+      "time": 126,
+      "route": 2,
+      "fragment": 2
+     },
+     {
+      "enemy": "Defender-4",
+      "enemy_id": "enemy_1017_defdrn",
+      "count": 1,
+      "time": 126,
+      "route": 3,
+      "fragment": 2
+     },
+     {
+      "enemy": "Defender-4",
+      "enemy_id": "enemy_1017_defdrn",
+      "count": 1,
+      "time": 126,
+      "route": 4,
+      "fragment": 2
+     },
+     {
+      "enemy": "Defender-4",
+      "enemy_id": "enemy_1017_defdrn",
+      "count": 1,
+      "time": 126,
+      "route": 5,
+      "fragment": 2
+     },
+     {
+      "enemy": "Defender-4",
+      "enemy_id": "enemy_1017_defdrn",
+      "count": 1,
+      "time": 126,
+      "route": 6,
+      "fragment": 2
+     },
+     {
+      "enemy": "Defender-4",
+      "enemy_id": "enemy_1017_defdrn",
+      "count": 1,
+      "time": 126,
+      "route": 7,
+      "fragment": 2
+     },
+     {
+      "enemy": "Veteran Butcher",
+      "enemy_id": "enemy_1034_laxe_2",
+      "count": 3,
+      "time": 129,
+      "interval": 30,
+      "route": 1,
+      "fragment": 3
+     },
+     {
+      "enemy": "Senior Armed Militant",
+      "enemy_id": "enemy_1035_haxe_2",
+      "count": 3,
+      "time": 138,
+      "interval": 30,
+      "route": 0,
+      "fragment": 3
+     },
+     {
+      "enemy": "Veteran Butcher",
+      "enemy_id": "enemy_1034_laxe_2",
+      "count": 2,
+      "time": 201,
+      "interval": 24,
+      "route": 1,
+      "fragment": 3
+     },
+     {
+      "enemy": "Senior Armed Militant",
+      "enemy_id": "enemy_1035_haxe_2",
+      "count": 2,
+      "time": 210,
+      "interval": 24,
+      "route": 0,
+      "fragment": 3
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 2,
+    "col": 0,
+    "routes": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   {
+    "key": "tile_flystart",
+    "row": 2,
+    "col": 11,
+    "routes": [
+     7,
+     7
+    ]
+   },
+   {
+    "key": "tile_flystart",
+    "row": 3,
+    "col": 0,
+    "routes": [
+     4,
+     4
+    ]
+   },
+   {
+    "key": "tile_flystart",
+    "row": 3,
+    "col": 11,
+    "routes": [
+     6,
+     6
+    ]
+   },
+   {
+    "key": "tile_flystart",
+    "row": 4,
+    "col": 0,
+    "routes": [
+     3,
+     3
+    ]
+   },
+   {
+    "key": "tile_flystart",
+    "row": 4,
+    "col": 11,
+    "routes": [
+     5,
+     5
+    ]
+   },
+   {
+    "key": "tile_flystart",
+    "row": 5,
+    "col": 0,
+    "routes": [
+     2,
+     2
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 5,
+    "col": 11,
+    "routes": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 1,
+    "col": 11,
+    "routes": [
+     0,
+     0,
+     0,
+     0,
+     2,
+     3,
+     4,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     2,
+     3,
+     4,
+     0,
+     0
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 6,
+    "col": 4,
+    "routes": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     5,
+     6,
+     7,
+     1,
+     1,
+     5,
+     6,
+     7,
+     1,
+     1
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1017_defdrn",
+    "slug": "defender_4",
+    "name": "Defender-4",
+    "database_level": 1
+   },
+   {
+    "enemy_id": "enemy_1032_katar",
+    "slug": "bladed_fighter",
+    "name": "Bladed Fighter",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1033_handax",
+    "slug": "logger",
+    "name": "Logger",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1034_laxe",
+    "slug": "butcher",
+    "name": "Butcher",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1034_laxe_2",
+    "slug": "veteran_butcher",
+    "name": "Veteran Butcher",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1035_haxe",
+    "slug": "armed_militant",
+    "name": "Armed Militant",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1035_haxe_2",
+    "slug": "senior_armed_militant",
+    "name": "Senior Armed Militant",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "devices": [],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "LT-4",
+  "geometryHash": "847d97548b1a73c1965f583e7f6f4bd2808db32dec7b5393b5dbd907ba657049",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      11,
+      5
+     ],
+     [
+      10,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      10,
+      1
+     ],
+     [
+      11,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14
+    ],
+    "length": 14,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      11,
+      5
+     ],
+     [
+      11,
+      1
+     ]
+    ]
+   },
+   "1": {
+    "points": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      4,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "length": 12,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      2
+     ],
+     [
+      4,
+      6
+     ]
+    ]
+   },
+   "2": {
+    "points": [
+     [
+      0,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      11,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     5,
+     7.23606797749979,
+     12.23606797749979
+    ],
+    "length": 12.23606797749979,
+    "breaks": [],
+    "flying": true,
+    "holds": [
+     {
+      "at": 5,
+      "seconds": 90,
+      "point": [
+       5,
+       5
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 7.23606797749979,
+      "seconds": 30,
+      "point": [
+       7,
+       4
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      11,
+      1
+     ]
+    ]
+   },
+   "3": {
+    "points": [
+     [
+      0,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      11,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     5,
+     7.23606797749979,
+     11.70820393249937
+    ],
+    "length": 11.70820393249937,
+    "breaks": [],
+    "flying": true,
+    "holds": [
+     {
+      "at": 5,
+      "seconds": 90,
+      "point": [
+       5,
+       4
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 7.23606797749979,
+      "seconds": 30,
+      "point": [
+       7,
+       3
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      11,
+      1
+     ]
+    ]
+   },
+   "4": {
+    "points": [
+     [
+      0,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      11,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     5,
+     7.23606797749979,
+     11.359173603117451
+    ],
+    "length": 11.359173603117451,
+    "breaks": [],
+    "flying": true,
+    "holds": [
+     {
+      "at": 5,
+      "seconds": 90,
+      "point": [
+       5,
+       3
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 7.23606797749979,
+      "seconds": 30,
+      "point": [
+       7,
+       2
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      11,
+      1
+     ]
+    ]
+   },
+   "5": {
+    "points": [
+     [
+      11,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      4,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     4,
+     6.23606797749979,
+     7.650281539872885
+    ],
+    "length": 7.650281539872885,
+    "breaks": [],
+    "flying": true,
+    "holds": [
+     {
+      "at": 4,
+      "seconds": 90,
+      "point": [
+       7,
+       4
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 6.23606797749979,
+      "seconds": 30,
+      "point": [
+       5,
+       5
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      11,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      4,
+      6
+     ]
+    ]
+   },
+   "6": {
+    "points": [
+     [
+      11,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      4,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     4,
+     6.23606797749979,
+     8.47213595499958
+    ],
+    "length": 8.47213595499958,
+    "breaks": [],
+    "flying": true,
+    "holds": [
+     {
+      "at": 4,
+      "seconds": 90,
+      "point": [
+       7,
+       3
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 6.23606797749979,
+      "seconds": 30,
+      "point": [
+       5,
+       4
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      11,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      4,
+      6
+     ]
+    ]
+   },
+   "7": {
+    "points": [
+     [
+      11,
+      2
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      4,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     4,
+     6.23606797749979,
+     9.39834563766817
+    ],
+    "length": 9.39834563766817,
+    "breaks": [],
+    "flying": true,
+    "holds": [
+     {
+      "at": 4,
+      "seconds": 90,
+      "point": [
+       7,
+       2
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 6.23606797749979,
+      "seconds": 30,
+      "point": [
+       5,
+       3
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      11,
+      2
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      4,
+      6
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1032_katar": {
+   "key": "enemy_1032_katar",
+   "prefabKey": "enemy_1032_katar",
+   "name": "Bladed Fighter",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 4000,
+    "atk": 450,
+    "def": 300,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 1.5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1033_handax": {
+   "key": "enemy_1033_handax",
+   "prefabKey": "enemy_1033_handax",
+   "name": "Logger",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 8000,
+    "atk": 750,
+    "def": 80,
+    "res": 30,
+    "moveSpeed": 0.75,
+    "bat": 3.3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1017_defdrn": {
+   "key": "enemy_1017_defdrn",
+   "prefabKey": "enemy_1017_defdrn",
+   "name": "Defender-4",
+   "level": 1,
+   "rank": "NORMAL",
+   "applyWay": "NONE",
+   "stats": {
+    "maxHp": 8000,
+    "atk": 0,
+    "def": 200,
+    "res": 20,
+    "moveSpeed": 0.8,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 2.5,
+    "rawRangeRadius": 2.5,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "none",
+    "dmgTypes": [
+     "none"
+    ],
+    "motion": "FLY",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Flying unit.",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Increases the DEF of surrounding enemy units",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "defup.def": 300,
+     "defup.range_radius": 2.5
+    },
+    "bbStr": {},
+    "groups": {
+     "defup": [
+      "def",
+      "range_radius"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "drone"
+   ]
+  },
+  "enemy_1034_laxe": {
+   "key": "enemy_1034_laxe",
+   "prefabKey": "enemy_1034_laxe",
+   "name": "Butcher",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 9000,
+    "atk": 850,
+    "def": 230,
+    "res": 30,
+    "moveSpeed": 0.7,
+    "bat": 3.5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1035_haxe": {
+   "key": "enemy_1035_haxe",
+   "prefabKey": "enemy_1035_haxe",
+   "name": "Armed Militant",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 12000,
+    "atk": 1050,
+    "def": 700,
+    "res": 30,
+    "moveSpeed": 0.65,
+    "bat": 3.5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1034_laxe_2": {
+   "key": "enemy_1034_laxe_2",
+   "prefabKey": "enemy_1034_laxe_2",
+   "name": "Veteran Butcher",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 14000,
+    "atk": 950,
+    "def": 270,
+    "res": 30,
+    "moveSpeed": 0.7,
+    "bat": 3.5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1035_haxe_2": {
+   "key": "enemy_1035_haxe_2",
+   "prefabKey": "enemy_1035_haxe_2",
+   "name": "Senior Armed Militant",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 18000,
+    "atk": 1500,
+    "def": 800,
+    "res": 30,
+    "moveSpeed": 0.65,
+    "bat": 3.5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ }
+}

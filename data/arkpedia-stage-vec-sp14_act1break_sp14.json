@@ -1,0 +1,1276 @@
+{
+ "code": "VEC-SP14",
+ "name": "No Escape",
+ "description": "When you hit a dead end, why not look at it from a different angle? Perhaps it's a starting point of not one, but many different paths.",
+ "battle": {
+  "max_life": 1,
+  "unit_limit": 6,
+  "initial_dp": 40,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "vec-sp14_act1break_sp14",
+  "rows": 7,
+  "cols": 10,
+  "tileLegend": [
+   {
+    "key": "tile_toxichill",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_telin",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_toxicroad",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_toxic",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true,
+    "blackboard": {
+     "dynamic": 1
+    }
+   },
+   {
+    "key": "tile_toxicwall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_telout",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    1,
+    0,
+    0,
+    2,
+    2,
+    2,
+    2,
+    2,
+    3
+   ],
+   [
+    0,
+    4,
+    5,
+    0,
+    2,
+    5,
+    5,
+    2,
+    0,
+    0
+   ],
+   [
+    0,
+    4,
+    5,
+    0,
+    2,
+    6,
+    0,
+    2,
+    5,
+    0
+   ],
+   [
+    0,
+    4,
+    0,
+    0,
+    5,
+    5,
+    0,
+    2,
+    5,
+    0
+   ],
+   [
+    0,
+    4,
+    0,
+    4,
+    4,
+    4,
+    4,
+    2,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    7,
+    0,
+    0,
+    0,
+    3,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 1
+    },
+    "end": {
+     "row": 3,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 6,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 60
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 1
+    },
+    "end": {
+     "row": 3,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 6,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 60
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 7
+    },
+    "end": {
+     "row": 3,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 30
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 9
+    },
+    "end": {
+     "row": 3,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     }
+    ],
+    "waits": []
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 33,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Sudaram",
+      "enemy_id": "enemy_1427_lrnazg",
+      "count": 1,
+      "time": 0,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sudaram",
+      "enemy_id": "enemy_1427_lrnazg",
+      "count": 1,
+      "time": 0,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Profane Chimera",
+      "enemy_id": "enemy_1425_lrcmra",
+      "count": 1,
+      "time": 0,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Caustic Originium Slug",
+      "enemy_id": "enemy_1424_lrboom",
+      "count": 1,
+      "time": 5,
+      "route": 3,
+      "fragment": 0
+     },
+     {
+      "enemy": "Caustic Originium Slug",
+      "enemy_id": "enemy_1424_lrboom",
+      "count": 1,
+      "time": 11,
+      "route": 3,
+      "fragment": 0
+     },
+     {
+      "enemy": "Caustic Originium Slug",
+      "enemy_id": "enemy_1424_lrboom",
+      "count": 1,
+      "time": 25,
+      "route": 3,
+      "fragment": 0
+     },
+     {
+      "enemy": "Caustic Originium Slug",
+      "enemy_id": "enemy_1424_lrboom",
+      "count": 1,
+      "time": 33,
+      "route": 3,
+      "fragment": 0
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 9,
+    "routes": [
+     3,
+     3,
+     3,
+     3
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 6,
+    "col": 7,
+    "routes": []
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 3,
+    "col": 5,
+    "routes": [
+     0,
+     1,
+     2,
+     3,
+     3,
+     3,
+     3
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1424_lrboom",
+    "slug": "caustic_originium_slug_enemy_1424_lrboom",
+    "name": "Caustic Originium Slug",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1425_lrcmra",
+    "slug": "profane_chimera",
+    "name": "Profane Chimera",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1427_lrnazg",
+    "slug": "sudaram",
+    "name": "Sudaram",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "devices": [
+  {
+   "col": 0,
+   "description": null,
+   "hidden": false,
+   "key": "trap_162_lrctrl",
+   "kind": "device",
+   "name": "EP14 Mechanics Controller",
+   "row": 0
+  }
+ ],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "VEC-SP14",
+  "geometryHash": "1bf8d61587838665ba8234c8e4e27141414a7ac9a9113243e435c7a5aaab9997",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      1,
+      5
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18,
+     19
+    ],
+    "length": 19,
+    "breaks": [
+     5
+    ],
+    "flying": false,
+    "holds": [
+     {
+      "at": 0,
+      "seconds": 60,
+      "point": [
+       1,
+       5
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 4,
+      "seconds": 10,
+      "point": [
+       1,
+       1
+      ],
+      "tunnel": true
+     }
+    ],
+    "nodes": [
+     [
+      1,
+      5
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ]
+    ]
+   },
+   "1": {
+    "points": [
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18
+    ],
+    "length": 18,
+    "breaks": [
+     4
+    ],
+    "flying": false,
+    "holds": [
+     {
+      "at": 0,
+      "seconds": 60,
+      "point": [
+       1,
+       4
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 3,
+      "seconds": 10,
+      "point": [
+       1,
+       1
+      ],
+      "tunnel": true
+     }
+    ],
+    "nodes": [
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ]
+    ]
+   },
+   "2": {
+    "points": [
+     [
+      7,
+      5
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 0,
+      "seconds": 30,
+      "point": [
+       7,
+       5
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      7,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ]
+    ]
+   },
+   "3": {
+    "points": [
+     [
+      9,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "length": 8,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      9,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1427_lrnazg": {
+   "key": "enemy_1427_lrnazg",
+   "prefabKey": "enemy_1427_lrnazg",
+   "name": "Sudaram",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 15000,
+    "atk": 900,
+    "def": 500,
+    "res": 50,
+    "moveSpeed": 0.7,
+    "bat": 5,
+    "aspd": 100,
+    "rangeRadius": 1.3,
+    "rawRangeRadius": 1.3,
+    "blockCnt": 1,
+    "massLevel": 4,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Attacks deal Physical damage to all surrounding units.",
+     "format": "NORMAL"
+    },
+    {
+     "text": "When inside Originium pollution or an Active Originium Storm, attacks deal Physical damage to all surrounding allied units and all your units inside Originium pollution or Active Originium Storms.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "sarkaz"
+   ]
+  },
+  "enemy_1425_lrcmra": {
+   "key": "enemy_1425_lrcmra",
+   "prefabKey": "enemy_1425_lrcmra",
+   "name": "Profane Chimera",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 20000,
+    "atk": 800,
+    "def": 1000,
+    "res": 50,
+    "moveSpeed": 0.6,
+    "bat": 5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": -1,
+    "blockCnt": 1,
+    "massLevel": 4,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys",
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Continuously causes an area of Originium pollution around itself when affected by Originium pollution or an Active Originium Storm, and attacks deal Arts damage instead.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "OrigAura.sp_recover_ratio": -0.8,
+     "OrigAura.damage": 50,
+     "AtkBoost.atk": 0
+    },
+    "bbStr": {},
+    "groups": {
+     "OrigAura": [
+      "damage",
+      "sp_recover_ratio"
+     ],
+     "AtkBoost": [
+      "atk"
+     ]
+    }
+   },
+   "skills": [
+    {
+     "prefabKey": "triggerAnim",
+     "priority": 0,
+     "cooldown": 9999,
+     "initCooldown": 9999,
+     "spCost": 0,
+     "bb": {},
+     "bbStr": {}
+    }
+   ],
+   "notCountInTotal": false,
+   "tags": [
+    "sarkaz"
+   ]
+  },
+  "enemy_1424_lrboom": {
+   "key": "enemy_1424_lrboom",
+   "prefabKey": "enemy_1424_lrboom",
+   "name": "Caustic Originium Slug",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 6000,
+    "atk": 300,
+    "def": 100,
+    "res": 10,
+    "moveSpeed": 1,
+    "bat": 4,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": -1,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Upon death, deals Physical damage in an area and causes Originium pollution.",
+     "format": "SILENCE"
+    },
+    {
+     "text": "Increases the strength of an Active Originium Storm when consumed by it.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "Boom.atk_scale": 3.5,
+     "DetectStorm.range_radius": 0.3
+    },
+    "bbStr": {},
+    "groups": {
+     "Boom": [
+      "atk_scale"
+     ],
+     "DetectStorm": [
+      "range_radius"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  }
+ }
+}

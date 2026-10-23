@@ -1,0 +1,576 @@
+{
+ "code": "TR-S-1",
+ "name": "Comprehensive Combat Exercise 1",
+ "description": "Doctor, try handling a more complicated situation on the battlefield!",
+ "battle": {
+  "max_life": 1,
+  "unit_limit": 4,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 0.5,
+  "dp_recovery_interval_seconds": 2
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "tr-s-1",
+  "rows": 6,
+  "cols": 8,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    0
+   ],
+   [
+    0,
+    2,
+    2,
+    2,
+    1,
+    2,
+    2,
+    3
+   ],
+   [
+    4,
+    2,
+    1,
+    2,
+    2,
+    2,
+    2,
+    0
+   ],
+   [
+    0,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": null,
+    "placeholder": true,
+    "start": null,
+    "end": null,
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 7
+    },
+    "end": {
+     "row": 3,
+     "col": 0
+    },
+    "checkpoints": [],
+    "waits": []
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 100,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 1,
+      "time": 8,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 1,
+      "time": 13,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 1,
+      "time": 21,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 1,
+      "time": 26,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 3,
+      "time": 36,
+      "interval": 1,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 3,
+      "time": 48,
+      "interval": 1,
+      "route": 1,
+      "fragment": 3
+     },
+     {
+      "enemy": "Dual Swordsman",
+      "enemy_id": "enemy_1014_rogue",
+      "count": 1,
+      "time": 53,
+      "route": 1,
+      "fragment": 3
+     },
+     {
+      "enemy": "Dual Swordsman",
+      "enemy_id": "enemy_1014_rogue",
+      "count": 2,
+      "time": 68,
+      "interval": 1,
+      "route": 1,
+      "fragment": 4
+     },
+     {
+      "enemy": "Dual Swordsman",
+      "enemy_id": "enemy_1014_rogue",
+      "count": 3,
+      "time": 80,
+      "interval": 1,
+      "route": 1,
+      "fragment": 4
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 8,
+      "time": 93,
+      "interval": 1,
+      "route": 1,
+      "fragment": 4
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 2,
+    "col": 7,
+    "routes": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 3,
+    "col": 0,
+    "routes": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1007_slime_3",
+    "slug": "originium_slug_enemy_1007_slime_3",
+    "name": "Originium Slug β",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1014_rogue",
+    "slug": "dual_swordsman",
+    "name": "Dual Swordsman",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [
+    {
+     "unit": "Kroos",
+     "unit_id": "char_124_kroos",
+     "level": 30,
+     "elite": 0,
+     "potential": 0,
+     "skill_index": 0,
+     "skill_level": 1,
+     "hidden": true
+    },
+    {
+     "unit": "Hibiscus",
+     "unit_id": "char_120_hibisc",
+     "level": 30,
+     "elite": 0,
+     "potential": 0,
+     "skill_index": 0,
+     "skill_level": 1,
+     "hidden": true
+    },
+    {
+     "unit": "Beagle",
+     "unit_id": "char_122_beagle",
+     "level": 30,
+     "elite": 0,
+     "potential": 0,
+     "skill_index": 0,
+     "skill_level": 1,
+     "hidden": true
+    },
+    {
+     "unit": "Lava",
+     "unit_id": "char_121_lava",
+     "level": 30,
+     "elite": 0,
+     "potential": 0,
+     "skill_index": 0,
+     "skill_level": 1,
+     "hidden": true
+    }
+   ],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "devices": [
+  {
+   "col": 3,
+   "description": "Blocks 2 enemies",
+   "hidden": false,
+   "key": "char_123_fang",
+   "kind": "operator",
+   "name": "Fang",
+   "row": 3
+  }
+ ],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "TR-S-1",
+  "geometryHash": "ec5fd065c4b3e8518071dc772114cf652df09ae5a7d9cf24987f13e153869411",
+  "moveScale": 0.65,
+  "paths": {
+   "1": {
+    "points": [
+     [
+      7,
+      2
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2.414213562373095,
+     3.414213562373095,
+     4.414213562373095,
+     5.414213562373095,
+     6.414213562373095,
+     7.414213562373095,
+     8.414213562373096,
+     9.414213562373096
+    ],
+    "length": 9.414213562373096,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      7,
+      2
+     ],
+     [
+      0,
+      3
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": [
+  {
+   "unit": "Kroos",
+   "unit_id": "char_124_kroos",
+   "level": 30,
+   "elite": 0,
+   "potential": 0,
+   "skill_index": 0,
+   "skill_level": 1,
+   "hidden": true
+  },
+  {
+   "unit": "Hibiscus",
+   "unit_id": "char_120_hibisc",
+   "level": 30,
+   "elite": 0,
+   "potential": 0,
+   "skill_index": 0,
+   "skill_level": 1,
+   "hidden": true
+  },
+  {
+   "unit": "Beagle",
+   "unit_id": "char_122_beagle",
+   "level": 30,
+   "elite": 0,
+   "potential": 0,
+   "skill_index": 0,
+   "skill_level": 1,
+   "hidden": true
+  },
+  {
+   "unit": "Lava",
+   "unit_id": "char_121_lava",
+   "level": 30,
+   "elite": 0,
+   "potential": 0,
+   "skill_index": 0,
+   "skill_level": 1,
+   "hidden": true
+  }
+ ],
+ "enemies": {
+  "enemy_1007_slime_3": {
+   "key": "enemy_1007_slime_3",
+   "prefabKey": "enemy_1007_slime_3",
+   "name": "Originium Slug β",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 1550,
+    "atk": 240,
+    "def": 0,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 1.7,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1014_rogue": {
+   "key": "enemy_1014_rogue",
+   "prefabKey": "enemy_1014_rogue",
+   "name": "Dual Swordsman",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2000,
+    "atk": 350,
+    "def": 100,
+    "res": 0,
+    "moveSpeed": 1.1,
+    "bat": 1.2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ }
+}

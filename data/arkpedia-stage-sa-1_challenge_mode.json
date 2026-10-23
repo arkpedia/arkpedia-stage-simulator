@@ -1,0 +1,1474 @@
+{
+ "code": "SA-1",
+ "name": "Shortcut",
+ "description": "Condition: All enemies have 50% increased DEF.\nStage available from 8/26 10:00 A.M. to 9/9 03:59 A.M.",
+ "battle": {
+  "max_life": 5,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "sa-1",
+  "rows": 7,
+  "cols": 11,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_flystart",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    3,
+    3,
+    3,
+    2,
+    0
+   ],
+   [
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    4,
+    4,
+    0,
+    2,
+    0
+   ],
+   [
+    0,
+    0,
+    4,
+    4,
+    2,
+    2,
+    4,
+    4,
+    0,
+    2,
+    0
+   ],
+   [
+    5,
+    0,
+    4,
+    4,
+    2,
+    2,
+    3,
+    3,
+    3,
+    2,
+    6
+   ],
+   [
+    5,
+    0,
+    4,
+    4,
+    2,
+    2,
+    3,
+    3,
+    3,
+    2,
+    6
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 0
+    },
+    "end": {
+     "row": 5,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 4
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 9
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 4,
+     "col": 0
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 6
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 5,
+     "col": 0
+    },
+    "end": {
+     "row": 5,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 6
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 10
+     }
+    ]
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 4,
+     "col": 0
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 7
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 60
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 30
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 0
+    },
+    "end": {
+     "row": 5,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 4
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 15
+     }
+    ]
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 4,
+     "col": 0
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 6
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 10
+     }
+    ]
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 173,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Soldier",
+      "enemy_id": "enemy_1002_nsabr",
+      "count": 1,
+      "time": 8,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Light-Armored Soldier",
+      "enemy_id": "enemy_1015_litamr",
+      "count": 1,
+      "time": 20,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Soldier",
+      "enemy_id": "enemy_1002_nsabr",
+      "count": 2,
+      "time": 33,
+      "interval": 6,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Light-Armored Soldier",
+      "enemy_id": "enemy_1015_litamr",
+      "count": 1,
+      "time": 36,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Firebomb Thrower",
+      "enemy_id": "enemy_1028_mocock_2",
+      "count": 1,
+      "time": 42,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Soldier",
+      "enemy_id": "enemy_1002_nsabr",
+      "count": 2,
+      "time": 60,
+      "interval": 6,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "Dual Swordsman",
+      "enemy_id": "enemy_1014_rogue",
+      "count": 1,
+      "time": 76,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "Firebomb Thrower",
+      "enemy_id": "enemy_1028_mocock_2",
+      "count": 2,
+      "time": 66,
+      "interval": 11,
+      "route": 2,
+      "fragment": 2
+     },
+     {
+      "enemy": "Monster",
+      "enemy_id": "enemy_1005_yokai",
+      "count": 1,
+      "time": 69,
+      "route": 3,
+      "fragment": 2
+     },
+     {
+      "enemy": "Monster",
+      "enemy_id": "enemy_1005_yokai",
+      "count": 1,
+      "time": 75,
+      "route": 4,
+      "fragment": 2
+     },
+     {
+      "enemy": "Firebomb Thrower",
+      "enemy_id": "enemy_1028_mocock_2",
+      "count": 1,
+      "time": 72,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Defender-4",
+      "enemy_id": "enemy_1017_defdrn",
+      "count": 1,
+      "time": 90,
+      "route": 5,
+      "fragment": 3
+     },
+     {
+      "enemy": "Logger",
+      "enemy_id": "enemy_1033_handax",
+      "count": 1,
+      "time": 101,
+      "route": 0,
+      "fragment": 4
+     },
+     {
+      "enemy": "Dual Swordsman",
+      "enemy_id": "enemy_1014_rogue",
+      "count": 1,
+      "time": 116,
+      "route": 0,
+      "fragment": 4
+     },
+     {
+      "enemy": "Monster",
+      "enemy_id": "enemy_1005_yokai",
+      "count": 1,
+      "time": 110,
+      "route": 3,
+      "fragment": 4
+     },
+     {
+      "enemy": "Monster",
+      "enemy_id": "enemy_1005_yokai",
+      "count": 1,
+      "time": 116,
+      "route": 4,
+      "fragment": 4
+     },
+     {
+      "enemy": "Firebomb Thrower",
+      "enemy_id": "enemy_1028_mocock_2",
+      "count": 2,
+      "time": 109,
+      "interval": 11,
+      "route": 1,
+      "fragment": 4
+     },
+     {
+      "enemy": "Light-Armored Soldier",
+      "enemy_id": "enemy_1015_litamr",
+      "count": 1,
+      "time": 125,
+      "route": 1,
+      "fragment": 4
+     },
+     {
+      "enemy": "Firebomb Thrower",
+      "enemy_id": "enemy_1028_mocock_2",
+      "count": 2,
+      "time": 104,
+      "interval": 11,
+      "route": 2,
+      "fragment": 4
+     },
+     {
+      "enemy": "Logger",
+      "enemy_id": "enemy_1033_handax",
+      "count": 1,
+      "time": 138,
+      "route": 6,
+      "fragment": 5
+     },
+     {
+      "enemy": "Dual Swordsman",
+      "enemy_id": "enemy_1014_rogue",
+      "count": 1,
+      "time": 152,
+      "route": 0,
+      "fragment": 5
+     },
+     {
+      "enemy": "Logger",
+      "enemy_id": "enemy_1033_handax",
+      "count": 1,
+      "time": 165,
+      "route": 0,
+      "fragment": 5
+     },
+     {
+      "enemy": "Light-Armored Soldier",
+      "enemy_id": "enemy_1015_litamr",
+      "count": 1,
+      "time": 147,
+      "route": 1,
+      "fragment": 5
+     },
+     {
+      "enemy": "Light-Armored Soldier",
+      "enemy_id": "enemy_1015_litamr",
+      "count": 1,
+      "time": 159,
+      "route": 1,
+      "fragment": 5
+     },
+     {
+      "enemy": "Monster",
+      "enemy_id": "enemy_1005_yokai",
+      "count": 2,
+      "time": 150,
+      "interval": 13,
+      "route": 7,
+      "fragment": 5
+     },
+     {
+      "enemy": "Monster",
+      "enemy_id": "enemy_1005_yokai",
+      "count": 2,
+      "time": 150,
+      "interval": 13,
+      "route": 4,
+      "fragment": 5
+     },
+     {
+      "enemy": "Firebomb Thrower",
+      "enemy_id": "enemy_1028_mocock_2",
+      "count": 3,
+      "time": 144,
+      "interval": 10,
+      "route": 2,
+      "fragment": 5
+     },
+     {
+      "enemy": "Dual Swordsman",
+      "enemy_id": "enemy_1014_rogue",
+      "count": 2,
+      "time": 167,
+      "interval": 6,
+      "route": 0,
+      "fragment": 5
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 0,
+    "routes": [
+     1,
+     1,
+     2,
+     2,
+     1,
+     1,
+     1,
+     2,
+     1,
+     1,
+     2
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 2,
+    "col": 0,
+    "routes": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     6,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "key": "tile_flystart",
+    "row": 4,
+    "col": 0,
+    "routes": [
+     3,
+     5,
+     3,
+     7
+    ]
+   },
+   {
+    "key": "tile_flystart",
+    "row": 5,
+    "col": 0,
+    "routes": [
+     4,
+     4,
+     4
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 4,
+    "col": 10,
+    "routes": [
+     1,
+     1,
+     2,
+     2,
+     3,
+     1,
+     5,
+     3,
+     1,
+     1,
+     2,
+     1,
+     1,
+     7,
+     2
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 5,
+    "col": 10,
+    "routes": [
+     0,
+     0,
+     0,
+     0,
+     4,
+     0,
+     0,
+     4,
+     6,
+     0,
+     0,
+     4,
+     0
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1002_nsabr",
+    "slug": "soldier",
+    "name": "Soldier",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1005_yokai",
+    "slug": "monster",
+    "name": "Monster",
+    "database_level": 1
+   },
+   {
+    "enemy_id": "enemy_1014_rogue",
+    "slug": "dual_swordsman",
+    "name": "Dual Swordsman",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1015_litamr",
+    "slug": "light_armored_soldier",
+    "name": "Light-Armored Soldier",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1017_defdrn",
+    "slug": "defender_4",
+    "name": "Defender-4",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1028_mocock_2",
+    "slug": "firebomb_thrower",
+    "name": "Firebomb Thrower",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1033_handax",
+    "slug": "logger",
+    "name": "Logger",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false,
+  "source": "cn"
+ },
+ "devices": [],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "SA-1",
+  "geometryHash": "9e43ddf74de70b6f4a3b25f572569d374baf9f8ca3cad1abf18fecd33da1e755",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      0,
+      2
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      10,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "1": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "2": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "3": {
+    "points": [
+     [
+      0,
+      4
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "4": {
+    "points": [
+     [
+      0,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      10,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "5": {
+    "points": [
+     [
+      0,
+      4
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "6": {
+    "points": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      10,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "7": {
+    "points": [
+     [
+      0,
+      4
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "breaks": [],
+    "holds": []
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1002_nsabr": {
+   "key": "enemy_1002_nsabr",
+   "prefabKey": "enemy_1002_nsabr",
+   "name": "Soldier",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 1650,
+    "atk": 200,
+    "def": 100,
+    "res": 0,
+    "moveSpeed": 1.1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1015_litamr": {
+   "key": "enemy_1015_litamr",
+   "prefabKey": "enemy_1015_litamr",
+   "name": "Light-Armored Soldier",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2500,
+    "atk": 250,
+    "def": 400,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1028_mocock_2": {
+   "key": "enemy_1028_mocock_2",
+   "prefabKey": "enemy_1028_mocock_2",
+   "name": "Firebomb Thrower",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 2000,
+    "atk": 250,
+    "def": 85,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 2.2,
+    "aspd": 100,
+    "rangeRadius": 1.75,
+    "rawRangeRadius": 1.75,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1005_yokai": {
+   "key": "enemy_1005_yokai",
+   "prefabKey": "enemy_1005_yokai",
+   "name": "Monster",
+   "level": 1,
+   "rank": "NORMAL",
+   "applyWay": "NONE",
+   "stats": {
+    "maxHp": 1870,
+    "atk": 0,
+    "def": 50,
+    "res": 0,
+    "moveSpeed": 0.9,
+    "bat": 2.3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "none",
+    "dmgTypes": [
+     "none"
+    ],
+    "motion": "FLY",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Flying unit.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "drone"
+   ]
+  },
+  "enemy_1014_rogue": {
+   "key": "enemy_1014_rogue",
+   "prefabKey": "enemy_1014_rogue",
+   "name": "Dual Swordsman",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2000,
+    "atk": 350,
+    "def": 100,
+    "res": 0,
+    "moveSpeed": 1.1,
+    "bat": 1.2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1017_defdrn": {
+   "key": "enemy_1017_defdrn",
+   "prefabKey": "enemy_1017_defdrn",
+   "name": "Defender-4",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "NONE",
+   "stats": {
+    "maxHp": 4000,
+    "atk": 0,
+    "def": 150,
+    "res": 20,
+    "moveSpeed": 0.8,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 2.5,
+    "rawRangeRadius": 2.5,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "none",
+    "dmgTypes": [
+     "none"
+    ],
+    "motion": "FLY",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Flying unit.",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Increases the DEF of surrounding enemy units",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "defup.def": 300,
+     "defup.range_radius": 2.5
+    },
+    "bbStr": {},
+    "groups": {
+     "defup": [
+      "def",
+      "range_radius"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "drone"
+   ]
+  },
+  "enemy_1033_handax": {
+   "key": "enemy_1033_handax",
+   "prefabKey": "enemy_1033_handax",
+   "name": "Logger",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 8000,
+    "atk": 750,
+    "def": 80,
+    "res": 30,
+    "moveSpeed": 0.75,
+    "bat": 3.3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ }
+}

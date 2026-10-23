@@ -1,0 +1,1219 @@
+{
+ "code": "SA-5",
+ "name": "Adaptation",
+ "description": "Sometimes, it seems like you'll have to divide your forces. In reality, one path might just need a little quick thinking rather than a whole lot of people.\nStage available from 8/26 10:00 A.M. to 9/9 03:59 A.M.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "sa-5",
+  "rows": 8,
+  "cols": 11,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_bigforce",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true,
+    "blackboard": {
+     "base_force_level": 2
+    }
+   },
+   {
+    "key": "tile_fence",
+    "height": "low",
+    "walkable": false,
+    "deployable": "melee",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    1,
+    1,
+    1,
+    1,
+    2,
+    2,
+    2,
+    2,
+    0,
+    0
+   ],
+   [
+    0,
+    1,
+    3,
+    3,
+    3,
+    3,
+    3,
+    0,
+    2,
+    2,
+    4
+   ],
+   [
+    0,
+    1,
+    1,
+    1,
+    1,
+    1,
+    2,
+    0,
+    3,
+    0,
+    0
+   ],
+   [
+    0,
+    1,
+    0,
+    0,
+    3,
+    3,
+    1,
+    1,
+    2,
+    2,
+    5
+   ],
+   [
+    4,
+    1,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    0,
+    2,
+    0
+   ],
+   [
+    4,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    6,
+    7,
+    2,
+    5
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 0
+    },
+    "end": {
+     "row": 6,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 9
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 10
+    },
+    "end": {
+     "row": 6,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 0
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 8
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 10
+    },
+    "end": {
+     "row": 6,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 1
+      }
+     }
+    ],
+    "waits": []
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 186,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 1,
+      "time": 3,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 1,
+      "time": 9,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 2,
+      "time": 15,
+      "interval": 5,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 2,
+      "time": 27,
+      "interval": 4,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Enraged Possessed Thrower",
+      "enemy_id": "enemy_1063_rageth",
+      "count": 1,
+      "time": 25,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 1,
+      "time": 60,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 1,
+      "time": 66,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 1,
+      "time": 72,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 1,
+      "time": 78,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 1,
+      "time": 83,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 1,
+      "time": 94,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Enraged Possessed Soldier",
+      "enemy_id": "enemy_1062_rager",
+      "count": 1,
+      "time": 49,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Enraged Possessed Soldier",
+      "enemy_id": "enemy_1062_rager",
+      "count": 1,
+      "time": 81,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Enraged Possessed Soldier",
+      "enemy_id": "enemy_1062_rager",
+      "count": 1,
+      "time": 101,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Enraged Possessed Thrower",
+      "enemy_id": "enemy_1063_rageth",
+      "count": 3,
+      "time": 49,
+      "interval": 25,
+      "route": 3,
+      "fragment": 1
+     },
+     {
+      "enemy": "Possessed Heavy Defender",
+      "enemy_id": "enemy_1061_zomshd",
+      "count": 1,
+      "time": 86,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Possessed Heavy Defender",
+      "enemy_id": "enemy_1061_zomshd",
+      "count": 2,
+      "time": 131,
+      "interval": 30,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 4,
+      "time": 126,
+      "interval": 15,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "Possessed Soldier",
+      "enemy_id": "enemy_1043_zomsbr",
+      "count": 2,
+      "time": 124,
+      "interval": 30,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "Enraged Possessed Leader",
+      "enemy_id": "enemy_1062_rager_2",
+      "count": 4,
+      "time": 119,
+      "interval": 20,
+      "route": 2,
+      "fragment": 2
+     },
+     {
+      "enemy": "Enraged Possessed Leader",
+      "enemy_id": "enemy_1062_rager_2",
+      "count": 1,
+      "time": 178.4,
+      "route": 2,
+      "fragment": 2
+     },
+     {
+      "enemy": "Enraged Possessed Bonethrower",
+      "enemy_id": "enemy_1063_rageth_2",
+      "count": 3,
+      "time": 136,
+      "interval": 25,
+      "route": 3,
+      "fragment": 2
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 2,
+    "col": 10,
+    "routes": [
+     1,
+     3,
+     3
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 5,
+    "col": 0,
+    "routes": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 6,
+    "col": 0,
+    "routes": [
+     2,
+     2,
+     2,
+     2,
+     2
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 4,
+    "col": 10,
+    "routes": [
+     2,
+     2,
+     2,
+     2,
+     2
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 6,
+    "col": 10,
+    "routes": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     3,
+     0,
+     0,
+     0,
+     0,
+     3
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1043_zomsbr",
+    "slug": "possessed_soldier",
+    "name": "Possessed Soldier",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1061_zomshd",
+    "slug": "possessed_heavy_defender",
+    "name": "Possessed Heavy Defender",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1062_rager",
+    "slug": "enraged_possessed_soldier",
+    "name": "Enraged Possessed Soldier",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1062_rager_2",
+    "slug": "enraged_possessed_leader",
+    "name": "Enraged Possessed Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1063_rageth",
+    "slug": "enraged_possessed_thrower",
+    "name": "Enraged Possessed Thrower",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1063_rageth_2",
+    "slug": "enraged_possessed_bonethrower",
+    "name": "Enraged Possessed Bonethrower",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false,
+  "source": "cn"
+ },
+ "devices": [],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [
+   0,
+   1,
+   2,
+   3
+  ],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "SA-5",
+  "geometryHash": "76f84d14230717d3b62d2792d5c3aea26f16649c9128f61d227f41c2894d547d",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      0,
+      5
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      10,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "1": {
+    "points": [
+     [
+      10,
+      2
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      10,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "2": {
+    "points": [
+     [
+      0,
+      6
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "3": {
+    "points": [
+     [
+      10,
+      2
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      10,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "breaks": [],
+    "holds": []
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1043_zomsbr": {
+   "key": "enemy_1043_zomsbr",
+   "prefabKey": "enemy_1043_zomsbr",
+   "name": "Possessed Soldier",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2500,
+    "atk": 250,
+    "def": 100,
+    "res": 30,
+    "moveSpeed": 0.9,
+    "bat": 1.8,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 2.5,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 80,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Regenerates HP over time.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "mutant"
+   ]
+  },
+  "enemy_1063_rageth": {
+   "key": "enemy_1063_rageth",
+   "prefabKey": "enemy_1063_rageth",
+   "name": "Enraged Possessed Thrower",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 15000,
+    "atk": 750,
+    "def": 200,
+    "res": 30,
+    "moveSpeed": 0.7,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 2.6,
+    "rawRangeRadius": 2.6,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Will gradually lose HP over time",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "periodic_damage.damage": 250
+    },
+    "bbStr": {},
+    "groups": {
+     "periodic_damage": [
+      "damage"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "mutant"
+   ]
+  },
+  "enemy_1062_rager": {
+   "key": "enemy_1062_rager",
+   "prefabKey": "enemy_1062_rager",
+   "name": "Enraged Possessed Soldier",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 20000,
+    "atk": 1000,
+    "def": 200,
+    "res": 30,
+    "moveSpeed": 1.2,
+    "bat": 1.3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Will gradually lose HP over time",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "periodic_damage.damage": 330
+    },
+    "bbStr": {},
+    "groups": {
+     "periodic_damage": [
+      "damage"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "mutant"
+   ]
+  },
+  "enemy_1061_zomshd": {
+   "key": "enemy_1061_zomshd",
+   "prefabKey": "enemy_1061_zomshd",
+   "name": "Possessed Heavy Defender",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 10000,
+    "atk": 600,
+    "def": 800,
+    "res": 0,
+    "moveSpeed": 0.75,
+    "bat": 2.6,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 200,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Regenerates HP over time.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "mutant"
+   ]
+  },
+  "enemy_1062_rager_2": {
+   "key": "enemy_1062_rager_2",
+   "prefabKey": "enemy_1062_rager_2",
+   "name": "Enraged Possessed Leader",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 30000,
+    "atk": 1750,
+    "def": 230,
+    "res": 30,
+    "moveSpeed": 1.2,
+    "bat": 1.3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Will gradually lose HP over time",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "periodic_damage.damage": 500
+    },
+    "bbStr": {},
+    "groups": {
+     "periodic_damage": [
+      "damage"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "mutant"
+   ]
+  },
+  "enemy_1063_rageth_2": {
+   "key": "enemy_1063_rageth_2",
+   "prefabKey": "enemy_1063_rageth_2",
+   "name": "Enraged Possessed Bonethrower",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 22000,
+    "atk": 1050,
+    "def": 220,
+    "res": 30,
+    "moveSpeed": 0.7,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 2.6,
+    "rawRangeRadius": 2.6,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Will gradually lose HP over time",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "periodic_damage.damage": 350
+    },
+    "bbStr": {},
+    "groups": {
+     "periodic_damage": [
+      "damage"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "mutant"
+   ]
+  }
+ }
+}

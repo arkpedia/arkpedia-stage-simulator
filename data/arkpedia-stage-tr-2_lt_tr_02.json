@@ -1,0 +1,681 @@
+{
+ "code": "TR-2",
+ "name": "Training Ground #9",
+ "description": "Starting Danger Level: 1\nA training field specially built by Rhodes Island for the Security Drill, it simulates the mine area's terrain in greater detail.",
+ "battle": {
+  "max_life": 1,
+  "unit_limit": 3,
+  "initial_dp": 99,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "tr-2_lt_tr_02",
+  "rows": 7,
+  "cols": 10,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    1,
+    2,
+    2,
+    3,
+    2,
+    2,
+    2,
+    2,
+    2,
+    4
+   ],
+   [
+    0,
+    2,
+    5,
+    0,
+    2,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    2,
+    2,
+    2,
+    2,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": null,
+    "placeholder": true,
+    "start": null,
+    "end": null,
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 9
+    },
+    "end": {
+     "row": 2,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 8
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 7
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 9
+    },
+    "end": {
+     "row": 2,
+     "col": 0
+    },
+    "checkpoints": [],
+    "waits": []
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": -0.5,
+    "pre_delay": 0,
+    "post_delay": -1,
+    "max_wait_for_next_wave": null,
+    "spawns": []
+   },
+   {
+    "index": 1,
+    "duration": 2.5,
+    "pre_delay": 2.5,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": []
+   },
+   {
+    "index": 2,
+    "duration": -1,
+    "pre_delay": 0,
+    "post_delay": -1,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Big Bob",
+      "enemy_id": "enemy_1001_bigbo",
+      "count": 1,
+      "time": 0,
+      "route": 1,
+      "fragment": 0
+     }
+    ]
+   },
+   {
+    "index": 3,
+    "duration": 17,
+    "pre_delay": 2,
+    "post_delay": 15,
+    "max_wait_for_next_wave": null,
+    "spawns": []
+   },
+   {
+    "index": 4,
+    "duration": 24,
+    "pre_delay": 0,
+    "post_delay": -1,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Infused Originium Slug",
+      "enemy_id": "enemy_1021_bslime",
+      "count": 2,
+      "time": 3,
+      "interval": 6,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Infused Originium Slug",
+      "enemy_id": "enemy_1021_bslime",
+      "count": 2,
+      "time": 20,
+      "interval": 5,
+      "route": 2,
+      "fragment": 0
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 2,
+    "col": 9,
+    "routes": [
+     1,
+     2,
+     2
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 2,
+    "col": 0,
+    "routes": [
+     1,
+     2,
+     2
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1001_bigbo",
+    "slug": "big_bob",
+    "name": "Big Bob",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1021_bslime",
+    "slug": "infused_originium_slug_enemy_1021_bslime",
+    "name": "Infused Originium Slug",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [
+    {
+     "unit": "Grani",
+     "unit_id": "char_220_grani",
+     "level": 50,
+     "elite": 2,
+     "potential": 5,
+     "skill_index": 1,
+     "skill_level": 7
+    },
+    {
+     "unit": "Skadi",
+     "unit_id": "char_263_skadi",
+     "level": 50,
+     "elite": 2,
+     "potential": 5,
+     "skill_index": 2,
+     "skill_level": 7
+    },
+    {
+     "unit": "Mudrock",
+     "unit_id": "char_311_mudrok",
+     "level": 50,
+     "elite": 2,
+     "potential": 5,
+     "skill_index": 1,
+     "skill_level": 7
+    },
+    {
+     "unit": "Perfumer",
+     "unit_id": "char_181_flower",
+     "level": 50,
+     "elite": 2,
+     "potential": 5,
+     "skill_index": 0,
+     "skill_level": 7
+    }
+   ],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "devices": [
+  {
+   "col": 3,
+   "description": "Blocks 2 enemies",
+   "hidden": false,
+   "key": "char_149_scave",
+   "kind": "operator",
+   "name": "Scavenger",
+   "row": 2
+  }
+ ],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "TR-2",
+  "geometryHash": "5e2a490e8335f74c7a035f40a620705a460c11660b010dec9cf7cc88fbca0a80",
+  "moveScale": 0.65,
+  "paths": {
+   "1": {
+    "points": [
+     [
+      9,
+      2
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      0,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "length": 9,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 7,
+      "point": [
+       8,
+       2
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      9,
+      2
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      0,
+      2
+     ]
+    ]
+   },
+   "2": {
+    "points": [
+     [
+      9,
+      2
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      0,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "length": 9,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      9,
+      2
+     ],
+     [
+      0,
+      2
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": [
+  {
+   "unit": "Grani",
+   "unit_id": "char_220_grani",
+   "level": 50,
+   "elite": 2,
+   "potential": 5,
+   "skill_index": 1,
+   "skill_level": 7
+  },
+  {
+   "unit": "Skadi",
+   "unit_id": "char_263_skadi",
+   "level": 50,
+   "elite": 2,
+   "potential": 5,
+   "skill_index": 2,
+   "skill_level": 7
+  },
+  {
+   "unit": "Mudrock",
+   "unit_id": "char_311_mudrok",
+   "level": 50,
+   "elite": 2,
+   "potential": 5,
+   "skill_index": 1,
+   "skill_level": 7
+  },
+  {
+   "unit": "Perfumer",
+   "unit_id": "char_181_flower",
+   "level": 50,
+   "elite": 2,
+   "potential": 5,
+   "skill_index": 0,
+   "skill_level": 7
+  }
+ ],
+ "enemies": {
+  "enemy_1001_bigbo": {
+   "key": "enemy_1001_bigbo",
+   "prefabKey": "enemy_1001_bigbo",
+   "name": "Big Bob",
+   "level": 0,
+   "rank": "BOSS",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 22000,
+    "atk": 1900,
+    "def": 800,
+    "res": 30,
+    "moveSpeed": 0.5,
+    "bat": 6,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 4,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1021_bslime": {
+   "key": "enemy_1021_bslime",
+   "prefabKey": "enemy_1021_bslime",
+   "name": "Infused Originium Slug",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2460,
+    "atk": 260,
+    "def": 0,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 1.7,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Death deals a large amount of Physical damage to surrounding units",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "boom.atk_scale": 4
+    },
+    "bbStr": {},
+    "groups": {
+     "boom": [
+      "atk_scale"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  }
+ }
+}
