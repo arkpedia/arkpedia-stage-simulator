@@ -240,6 +240,26 @@ export const ENEMY_FEATURES = Object.freeze({
     ability: { kind: 'coldAttack', params: r => ({ every: 3, duration: r.skills[0].bb.freeze }) },
     note: 'every third attack applies Cold', nativeClaim: () => ({ wrappers: 1 }),
     explains: /^After two attacks, the next attack applies the <\$ba\.cold>Cold<\/> effect$/ },
+  'ability:Upon death, deals Physical damage in an area and causes Originium pollution.': {
+    covers: r => sig(r, 'Boom', ['atk_scale']) && r.abilities.some(a => a.text === 'Upon death, deals Physical damage in an area and causes Originium pollution.'),
+    ability: { kind: 'causticSlug', params: r => ({ scale: r.talents.bb['Boom.atk_scale'] }) },
+    note: 'death blast plus pollution', explains: /^Upon death, deals Physical damage in an area and causes Originium pollution\.$/,
+  },
+  'ability:Death deals Physical damage and <$ba.dt.erosion>Corrosion damage</> to surrounding units': {
+    covers: r => sig(r, 'Boom', ['atk_scale', 'ep_damage_ratio']) && sig(r, 'Bleed', ['hp_ratio']),
+    ability: { kind: 'bmbmot', params: r => ({ scale: r.talents.bb['Boom.atk_scale'], epRatio: r.talents.bb['Boom.ep_damage_ratio'] }) },
+    note: 'death blast Physical + Corrosion; Bleed drains hp_ratio of max HP per second', explains: /^Death deals Physical damage and .*Corrosion damage/,
+  },
+  'talent:Bleed': { covers: r => sig(r, 'Bleed', ['hp_ratio']), ability: { kind: 'bleed', params: r => ({ ratio: r.talents.bb['Bleed.hp_ratio'] }) },
+    note: 'loses hp_ratio of max HP per second' },
+  'ability:Enemies prioritize attacking this unit, unit will deplete Life Points upon dying': {
+    covers: r => sig(r, 'Dead', ['value']) && r.talents.bb['Dead.value'] < 0,
+    ability: { kind: 'almot', params: r => ({ life: r.talents.bb['Dead.value'] }) },
+    note: 'does not count as defeated; removes |Dead.value| Life Points on death', nativeClaim: () => ({ active: 1 }),
+    explains: /^Enemies prioritize attacking this unit/,
+  },
+  'talent:Dead': { covers: r => sig(r, 'Dead', ['value']), note: 'death life loss is attached by the handbook-line feature' },
+  'ability:Does not count towards the defeated enemies counter': { covers: r => r.abilities.some(a => a.text === 'Does not count towards the defeated enemies counter'), note: 'not counted as a defeat' },
   'ability:Can only be blocked by units with at least 3 Block, and deals Physical damage by colliding with player\'s units': {
     covers: r => sig(r, 'Crash', ['atk_scale']) && r.talents.bb['Crash.atk_scale'] > 0,
     ability: { kind: 'crash', params: r => ({ scale: r.talents.bb['Crash.atk_scale'], block: 3 }) },
@@ -469,9 +489,10 @@ export const ENEMY_FEATURES = Object.freeze({
   'talent:AtkBoost': { covers: r => sig(r, 'AtkBoost', ['atk']), note: 'the chimera AtkBoost value is 0' },
   'skill:triggerAnim': { covers: r => r.skills.some(s => s.prefabKey === 'triggerAnim'), note: 'native trigger animation skill' },
   // Caustic Originium Slug: death blast + pollution, and a storm-strength boost when consumed.
-  'talent:Boom': { covers: r => sig(r, 'Boom', ['atk_scale'])
-      && r.abilities.some(a => a.text === 'Upon death, deals Physical damage in an area and causes Originium pollution.'),
-    ability: { kind: 'causticSlug', params: r => ({ scale: r.talents.bb['Boom.atk_scale'] }) },
+  'talent:Boom': { covers: r => (sig(r, 'Boom', ['atk_scale'])
+      && r.abilities.some(a => a.text === 'Upon death, deals Physical damage in an area and causes Originium pollution.'))
+      || sig(r, 'Boom', ['atk_scale', 'ep_damage_ratio']),
+    note: 'death blast is attached by the handbook-line feature',
     note: 'death blast, pollution and a storm boost when consumed',
     explains: text => text === 'Upon death, deals Physical damage in an area and causes Originium pollution.'
       || text === 'Increases the strength of an Active Originium Storm when consumed by it.' },
