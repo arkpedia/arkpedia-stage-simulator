@@ -3573,6 +3573,7 @@ export const KITS = Object.freeze({
   enemy_1112_emppnt: kitShell,                                       // 帝国炮火先兆者 · attacks are shells landing 3 s later (r 1.2)
   enemy_1112_emppnt_2: kitShell,                                     // 帝国炮火中枢先兆者 · same
   enemy_1321_wdarft: (ab) => [skill(ab.sk.BornBugs, (b, e) => spawnChildren(b, e, 'enemy_1269_nhfly', BUGS_PER_CAST))], // 枯朽萃聚使徒 · spawns 枯朽之种
+  enemy_1321_wdarft_2: (ab) => [skill(ab.sk.BornBugs, (b, e) => spawnChildren(b, e, 'enemy_1367_dseed', BUGS_PER_CAST))], // 枯朽萃聚使徒 · spawns 枯朽之种
   enemy_1269_nhfly: () => [{                                         // 枯朽之种 · no normal attack: dives onto a nearby operator and self-destructs
     spawn(b, e) { e.profile.noAttack = true; },
     tick(b, e, a, dt) {
