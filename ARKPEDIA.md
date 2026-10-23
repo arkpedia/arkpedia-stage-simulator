@@ -6138,3 +6138,5 @@ Implemented Dockworker vehicle crash/DeathRattle features and platform-hosted DH
 Implemented permanent **Deep Water Zone** damage/debuff and built **DH-7** with the Custom Floating Platform. Stage glyphs now cover every tile type in the legend. Catalogue **572** = 342 public + 230 testOnly; 571 files.
 
 Implemented suicide-boat corrosion death blasts and Dockworker life-loss/taunt enemies; built DH-8 as testOnly. Catalogue **573** = 342 public + 231 testOnly; 572 files.
+
+Built the remaining buildable Dossoles EX/MO/S stages (19 files, including challenge variants) with level-derived tide/deep-water data as testOnly. Catalogue **592** = 342 public + 250 testOnly; 591 files.
