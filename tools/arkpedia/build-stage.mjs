@@ -31,6 +31,7 @@ const [source, geometry, playbackFile, mvp, records, support, tokenData] = await
   read(new URL('../../data/arkpedia-enemy-records.json', import.meta.url)),
   read(new URL('../../data/arkpedia-enemy-support.json', import.meta.url)), read(new URL('../../data/arkpedia-deployable-tokens.json', import.meta.url)),
 ]);
+const supportOperators = await read(new URL('../../data/arkpedia-support-operators.json', import.meta.url));
 const conditionalPath = args.conditional ?? join(dirname(args.geometry), '..', 'stage-conditional', basename(args.geometry));
 if (geometry.hasConditionalSpawns && existsSync(conditionalPath)) {
   mergePristineHiddenGroups(geometry, JSON.parse(await readFile(conditionalPath, 'utf8')));
@@ -57,6 +58,10 @@ const tokens = (geometry.suppliedUnits?.deployable_tokens ?? []).filter(t => t.c
   return { unitId: t.unit_id, name: token.name, count: t.count, cost: stats.cost, hp: stats.maxHp,
     block: stats.block, position: token.position, behavior: spec.behavior, obstacle: spec.obstacle };
 });
+const fixedCards = geometry.suppliedUnits?.fixed_squad ?? [];
+const supportForStage = Object.fromEntries(fixedCards
+  .filter(card => !mvp.operators[card.unit_id] && supportOperators.operators[card.unit_id])
+  .map(card => [card.unit_id, supportOperators.operators[card.unit_id]]));
 const stage = {
   code: source.code,
   name: source.name,
@@ -67,6 +72,7 @@ const stage = {
   geometry,
   devices,
   tokens,
+  operators: Object.keys(supportForStage).length ? supportForStage : undefined,
   pathing: {
     schemaVersion: 1,
     syntheticRoutes,

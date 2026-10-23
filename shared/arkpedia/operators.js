@@ -9,6 +9,7 @@ import { VANGUARD_OPERATORS } from './vanguard-operators.js';
 import { DEFENDER_OPERATORS } from './defender-operators.js';
 import { ADVANCED_SNIPER_OPERATORS } from './advanced-sniper-operators.js';
 import { SUPPORT_OPERATORS } from './support-operators.js';
+import { FIXED_SQUAD_OPERATORS } from './fixed-squad-operators.js';
 import { SPECIALIST_OPERATORS } from './specialist-operators.js';
 import { UTILITY_OPERATORS } from './utility-operators.js';
 import { ROBOT_EXPANSION_OPERATORS } from './robot-expansion-operators.js';
@@ -273,6 +274,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...DEFENDER_OPERATORS,
   ...ADVANCED_SNIPER_OPERATORS,
   ...SUPPORT_OPERATORS,
+  ...FIXED_SQUAD_OPERATORS,
   ...SPECIALIST_OPERATORS,
   ...UTILITY_OPERATORS,
   ...ROBOT_EXPANSION_OPERATORS,
