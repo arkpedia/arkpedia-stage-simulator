@@ -276,7 +276,8 @@ export function stageAdapter(source) {
   if (unsupportedTokens.length) throw new Error(`Unsupported stage tokens: ${[...new Set(unsupportedTokens.map(t => t.unit_id))].join(', ')}`);
   if (g.rows > 19 || g.cols > 21 || g.hasConditionalSpawns)
     throw new Error("Unsupported stage mechanics");
-  const chars = ["#", "h", "r", "S", "E", "w", "t"];
+  const baseChars = ["#", "h", "r", "S", "E"];
+  const chars = g.tileLegend.map((_, i) => baseChars[i] ?? String.fromCharCode(65 + i - baseChars.length));
   const legend = Object.fromEntries(
     g.tileLegend.map((t, i) => [
       chars[i],
@@ -458,6 +459,7 @@ export class StandardBattle extends Battle {
     this._installUnitStageDevices(data.stage.devices ?? []);
     this._installPillarController();
     this._installHighTide(data.stage.tide);
+    this._installDeepWater(data.stage.deepWater);
     this.unitLimit = config.unit_limit;
     this.regularMapSize = Object.freeze({ rows: data.stage.geometry.rows, cols: data.stage.geometry.cols });
     this.mapTags = Object.freeze([...(data.stage.mapTags ?? [])]);
@@ -580,7 +582,7 @@ export class StandardBattle extends Battle {
     const token = { ...(STAGE_TOKEN_UNITS[unitId] ?? {}), ...found };
     if ((this.mvpStageTokens.get(unitId) ?? 0) <= 0) throw new Error('No tokens remaining.');
     if (!this.grid.inRect(row, col) || (!this.grid.groundPassable(row, col, true)
-      && !(token.water && String(this.grid.tile(row, col)?.key ?? '').includes('water')))) throw new Error('Token must be placed on the ground or water.');
+      && !(token.water && /water|deep/.test(String(this.grid.tile(row, col)?.key ?? ''))))) throw new Error('Token must be placed on the ground or water.');
     if (this._occ[row * this.grid.cols + col]?.alive) throw new Error('Tile is occupied.');
     if (!canSpendDp(this, 'arkpedia', token.cost)) throw new Error('Not enough DP.');
     const unit = this.spawnDevice(`token:${unitId}`, row, col, { hp: token.hp, def: 0, blockCnt: token.block,
@@ -1236,6 +1238,23 @@ export class StandardBattle extends Battle {
     if (this.life <= 0) return this._finish("defeated");
     super._checkEnd();
   }
+  _installDeepWater(water) {
+    if (!water) return;
+    this.deepWater = { damage: water.damage ?? 40, aspd: water.aspd ?? 60, speed: water.speed ?? 0.6 };
+    this._deepWaterLast = -Infinity;
+    this.on('tick', () => {
+      if (this.time - this._deepWaterLast < 1) return;
+      this._deepWaterLast = this.time;
+      for (const e of this.enemies) {
+        if (!e.alive || !this._isDeepWater(e.tileR, e.tileC)) continue;
+        this.dealDamage(null, e, { amount: this.deepWater.damage, type: 'true', sourceless: true });
+        if (e.alive) this.addBuff(e, { key: 'deep-water:enemy', duration: 1.2, mods: { aspd: -this.deepWater.aspd, movePct: -this.deepWater.speed }, visible: true });
+      }
+    });
+  }
+
+  _isDeepWater(r, c) { return !!(this.grid.inRect(r, c) && /water|deep/.test(String(this.grid.tile(r, c)?.key ?? ''))); }
+
   _installHighTide(tide) {
     if (!tide) return;
     const list = Array.isArray(tide) ? tide : [tide];

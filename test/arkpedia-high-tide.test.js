@@ -36,3 +36,16 @@ test('high tide deals True damage and erosion while it is active', () => {
   battle.step(); battle.step();
   assert.ok(enemy.hp < hp, `enemy HP ${enemy.hp} did not fall below ${hp}`);
 });
+
+test('deep water damages enemies without a tide window', async () => {
+  const dh7 = (await import('../data/arkpedia-stage-dh-7.json', { with: { type: 'json' } })).default;
+  const battle = new StandardBattle({ ...mvp, stage: dh7, enemies: { ...mvp.enemies, ...dh7.enemies } },
+    { operators: Object.values(mvp.operators).slice(0, 1).map(defaultBuild) });
+  let tile;
+  for (let r = 0; r < battle.grid.rows && !tile; r++) for (let c = 0; c < battle.grid.cols && !tile; c++) if (battle._isDeepWater(r, c)) tile = [r, c];
+  assert.ok(tile);
+  const enemy = battle.spawnEnemy('enemy_1007_slime_3', { pos: tile });
+  const hp = enemy.hp;
+  battle.step(); battle.step();
+  assert.ok(enemy.hp < hp);
+});
