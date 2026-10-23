@@ -1,0 +1,2123 @@
+{
+  "code": "DH-S-1",
+  "name": "Curious Coincidences",
+  "description": "Condition:\nAll allied units have -1 Block",
+  "battle": {
+    "max_life": 3,
+    "unit_limit": 8,
+    "initial_dp": 11,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1
+  },
+  "mapTags": [],
+  "mapTagSource": null,
+  "geometry": {
+    "slug": "dh-s-1",
+    "rows": 7,
+    "cols": 12,
+    "tileLegend": [
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_telin",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      },
+      {
+        "key": "tile_start",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_floor",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_telout",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      }
+    ],
+    "tileGrid": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        2,
+        0,
+        3,
+        4,
+        5,
+        2,
+        2,
+        2,
+        5,
+        5,
+        0
+      ],
+      [
+        0,
+        2,
+        3,
+        6,
+        3,
+        5,
+        2,
+        2,
+        2,
+        5,
+        5,
+        0
+      ],
+      [
+        0,
+        2,
+        3,
+        2,
+        3,
+        3,
+        3,
+        3,
+        1,
+        2,
+        2,
+        0
+      ],
+      [
+        0,
+        5,
+        3,
+        2,
+        7,
+        2,
+        2,
+        6,
+        3,
+        2,
+        2,
+        0
+      ],
+      [
+        4,
+        5,
+        0,
+        2,
+        2,
+        2,
+        2,
+        2,
+        3,
+        5,
+        5,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        4,
+        0
+      ]
+    ],
+    "routes": [
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 4
+        },
+        "end": {
+          "row": 4,
+          "col": 4
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 8
+            }
+          },
+          {
+            "type": "appear_at_pos",
+            "position": {
+              "row": 4,
+              "col": 7
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 1,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 10
+        },
+        "end": {
+          "row": 4,
+          "col": 4
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 10
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 8
+            }
+          },
+          {
+            "type": "appear_at_pos",
+            "position": {
+              "row": 4,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 4
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 1,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 9
+        },
+        "end": {
+          "row": 4,
+          "col": 4
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 8
+            }
+          },
+          {
+            "type": "appear_at_pos",
+            "position": {
+              "row": 4,
+              "col": 7
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 60
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 1,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": null,
+        "placeholder": true,
+        "start": null,
+        "end": null,
+        "checkpoints": [],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 9
+        },
+        "end": {
+          "row": 4,
+          "col": 4
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 8
+            }
+          },
+          {
+            "type": "appear_at_pos",
+            "position": {
+              "row": 4,
+              "col": 7
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 10
+        },
+        "end": {
+          "row": 4,
+          "col": 4
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 8
+            }
+          },
+          {
+            "type": "appear_at_pos",
+            "position": {
+              "row": 4,
+              "col": 7
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 155
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 10
+        },
+        "end": {
+          "row": 4,
+          "col": 4
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 8
+            }
+          },
+          {
+            "type": "appear_at_pos",
+            "position": {
+              "row": 4,
+              "col": 7
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 9
+        },
+        "end": {
+          "row": 4,
+          "col": 4
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 8
+            }
+          },
+          {
+            "type": "appear_at_pos",
+            "position": {
+              "row": 4,
+              "col": 7
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 135
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 1,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 9
+        },
+        "end": {
+          "row": 4,
+          "col": 4
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 8
+            }
+          },
+          {
+            "type": "appear_at_pos",
+            "position": {
+              "row": 4,
+              "col": 7
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 10
+        },
+        "end": {
+          "row": 4,
+          "col": 4
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 8
+            }
+          },
+          {
+            "type": "appear_at_pos",
+            "position": {
+              "row": 4,
+              "col": 7
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 200
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 10
+        },
+        "end": {
+          "row": 4,
+          "col": 4
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 8
+            }
+          },
+          {
+            "type": "appear_at_pos",
+            "position": {
+              "row": 4,
+              "col": 7
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 0
+        },
+        "end": {
+          "row": 4,
+          "col": 4
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 0
+            }
+          },
+          {
+            "type": "appear_at_pos",
+            "position": {
+              "row": 2,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 3
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 12
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 2,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 0
+        },
+        "end": {
+          "row": 4,
+          "col": 4
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 0
+            }
+          },
+          {
+            "type": "appear_at_pos",
+            "position": {
+              "row": 2,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 3
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 2,
+            "seconds": 5
+          }
+        ]
+      }
+    ],
+    "waves": [
+      {
+        "index": 0,
+        "duration": 200,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Delinquent Boss",
+            "enemy_id": "enemy_1159_swfmob_2",
+            "count": 5,
+            "time": 3,
+            "interval": 9,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Dockworker Leader",
+            "enemy_id": "enemy_1160_hvyslr_2",
+            "count": 1,
+            "time": 22,
+            "route": 1,
+            "fragment": 0
+          },
+          {
+            "enemy": "Dockworker Leader Motorboat",
+            "enemy_id": "enemy_1163_hvymot_2",
+            "count": 1,
+            "time": 0,
+            "route": 2,
+            "fragment": 0
+          },
+          {
+            "enemy": "Dockworker Leader Motorboat",
+            "enemy_id": "enemy_1163_hvymot_2",
+            "count": 1,
+            "time": 0,
+            "route": 5,
+            "fragment": 0
+          },
+          {
+            "enemy": "Dockworker Leader Motorboat",
+            "enemy_id": "enemy_1163_hvymot_2",
+            "count": 1,
+            "time": 0,
+            "route": 7,
+            "fragment": 0
+          },
+          {
+            "enemy": "Dockworker Leader Motorboat",
+            "enemy_id": "enemy_1163_hvymot_2",
+            "count": 1,
+            "time": 0,
+            "route": 9,
+            "fragment": 0
+          },
+          {
+            "enemy": "Tidal Leader Speedboat",
+            "enemy_id": "enemy_1162_magmot_2",
+            "count": 1,
+            "time": 55,
+            "route": 11,
+            "fragment": 0
+          },
+          {
+            "enemy": "Delinquent Boss",
+            "enemy_id": "enemy_1159_swfmob_2",
+            "count": 4,
+            "time": 85,
+            "interval": 9,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Dockworker Leader",
+            "enemy_id": "enemy_1160_hvyslr_2",
+            "count": 1,
+            "time": 95,
+            "route": 1,
+            "fragment": 0
+          },
+          {
+            "enemy": "Tidal Leader Speedboat",
+            "enemy_id": "enemy_1162_magmot_2",
+            "count": 1,
+            "time": 145,
+            "route": 12,
+            "fragment": 0
+          },
+          {
+            "enemy": "Tidal Leader Speedboat",
+            "enemy_id": "enemy_1162_magmot_2",
+            "count": 1,
+            "time": 145,
+            "route": 1,
+            "fragment": 0
+          },
+          {
+            "enemy": "Delinquent Boss",
+            "enemy_id": "enemy_1159_swfmob_2",
+            "count": 3,
+            "time": 185,
+            "interval": 3.5,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Dockworker Leader",
+            "enemy_id": "enemy_1160_hvyslr_2",
+            "count": 1,
+            "time": 185,
+            "route": 1,
+            "fragment": 0
+          },
+          {
+            "enemy": "Tidal Leader",
+            "enemy_id": "enemy_1161_tidmag_2",
+            "count": 1,
+            "time": 200,
+            "route": 12,
+            "fragment": 0
+          }
+        ]
+      }
+    ],
+    "spawnTiles": [
+      {
+        "key": "tile_start",
+        "row": 1,
+        "col": 4,
+        "routes": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 5,
+        "col": 0,
+        "routes": [
+          11,
+          12,
+          12
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 6,
+        "col": 10,
+        "routes": [
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    ],
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 4,
+        "col": 4,
+        "routes": [
+          0,
+          1,
+          2,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          0,
+          0,
+          1,
+          0,
+          12,
+          1,
+          0,
+          1,
+          12
+        ]
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_1159_swfmob_2",
+        "slug": "delinquent_boss",
+        "name": "Delinquent Boss",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1160_hvyslr_2",
+        "slug": "dockworker_leader",
+        "name": "Dockworker Leader",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1161_tidmag_2",
+        "slug": "tidal_leader",
+        "name": "Tidal Leader",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1162_magmot_2",
+        "slug": "tidal_leader_speedboat",
+        "name": "Tidal Leader Speedboat",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1163_hvymot_2",
+        "slug": "dockworker_leader_motorboat",
+        "name": "Dockworker Leader Motorboat",
+        "database_level": 0
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [],
+      "deployable_tokens": [
+        {
+          "unit": "Erosion-Resistant Coating Application Device",
+          "unit_id": "trap_046_oxygen",
+          "count": 0,
+          "level": 1,
+          "elite": 0,
+          "potential": 0,
+          "skill_index": 0,
+          "skill_level": 1
+        }
+      ]
+    },
+    "hasConditionalSpawns": false
+  },
+  "devices": [
+    {
+      "col": 0,
+      "description": null,
+      "hidden": true,
+      "key": "trap_042_tidectrl",
+      "kind": "device",
+      "name": "Tide Controller",
+      "row": 0
+    },
+    {
+      "col": 0,
+      "description": null,
+      "hidden": true,
+      "key": "trap_042_tidectrl",
+      "kind": "device",
+      "name": "Tide Controller",
+      "row": 0
+    }
+  ],
+  "tokens": [],
+  "pathing": {
+    "schemaVersion": 1,
+    "syntheticRoutes": [],
+    "producer": "Arkpedia stage browser / buildPlaybackPaths",
+    "stage": "DH-S-1",
+    "geometryHash": "c5f07ad1da394514ff2b73da08d18b675e3b3ab85dd19d67476de29375dc2dba",
+    "moveScale": 0.65,
+    "paths": {
+      "0": {
+        "points": [
+          [
+            4,
+            1
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            6,
+            1
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            2
+          ],
+          [
+            8,
+            3
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            4,
+            4
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          6,
+          7,
+          8,
+          9
+        ],
+        "length": 9,
+        "breaks": [
+          7
+        ],
+        "flying": false,
+        "holds": [
+          {
+            "at": 6,
+            "seconds": 5,
+            "point": [
+              8,
+              3
+            ],
+            "tunnel": true
+          }
+        ],
+        "nodes": [
+          [
+            4,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            3
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            4,
+            4
+          ]
+        ]
+      },
+      "1": {
+        "points": [
+          [
+            10,
+            6
+          ],
+          [
+            10,
+            5
+          ],
+          [
+            10,
+            4
+          ],
+          [
+            10,
+            3
+          ],
+          [
+            9,
+            3
+          ],
+          [
+            8,
+            3
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            4
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "length": 10,
+        "breaks": [
+          6
+        ],
+        "flying": false,
+        "holds": [
+          {
+            "at": 5,
+            "seconds": 5,
+            "point": [
+              8,
+              3
+            ],
+            "tunnel": true
+          }
+        ],
+        "nodes": [
+          [
+            10,
+            6
+          ],
+          [
+            10,
+            3
+          ],
+          [
+            8,
+            3
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            4
+          ]
+        ]
+      },
+      "2": {
+        "points": [
+          [
+            9,
+            2
+          ],
+          [
+            8,
+            3
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            4,
+            4
+          ]
+        ],
+        "distances": [
+          0,
+          1.4142135623730951,
+          1.4142135623730951,
+          2.414213562373095,
+          3.414213562373095,
+          4.414213562373095
+        ],
+        "length": 4.414213562373095,
+        "breaks": [
+          2
+        ],
+        "flying": false,
+        "holds": [
+          {
+            "at": 0,
+            "seconds": 60,
+            "point": [
+              9,
+              2
+            ],
+            "tunnel": false
+          },
+          {
+            "at": 1.4142135623730951,
+            "seconds": 5,
+            "point": [
+              8,
+              3
+            ],
+            "tunnel": true
+          }
+        ],
+        "nodes": [
+          [
+            9,
+            2
+          ],
+          [
+            9,
+            2
+          ],
+          [
+            8,
+            3
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            4,
+            4
+          ]
+        ]
+      },
+      "5": {
+        "points": [
+          [
+            10,
+            2
+          ],
+          [
+            9,
+            2
+          ],
+          [
+            8,
+            3
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            4,
+            4
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2.414213562373095,
+          2.414213562373095,
+          3.414213562373095,
+          4.414213562373095,
+          5.414213562373095
+        ],
+        "length": 5.414213562373095,
+        "breaks": [
+          3
+        ],
+        "flying": false,
+        "holds": [
+          {
+            "at": 0,
+            "seconds": 155,
+            "point": [
+              10,
+              2
+            ],
+            "tunnel": false
+          },
+          {
+            "at": 2.414213562373095,
+            "seconds": 5,
+            "point": [
+              8,
+              3
+            ],
+            "tunnel": true
+          }
+        ],
+        "nodes": [
+          [
+            10,
+            2
+          ],
+          [
+            8,
+            3
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            4,
+            4
+          ]
+        ]
+      },
+      "7": {
+        "points": [
+          [
+            9,
+            1
+          ],
+          [
+            9,
+            2
+          ],
+          [
+            8,
+            3
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            4,
+            4
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2.414213562373095,
+          2.414213562373095,
+          3.414213562373095,
+          4.414213562373095,
+          5.414213562373095
+        ],
+        "length": 5.414213562373095,
+        "breaks": [
+          3
+        ],
+        "flying": false,
+        "holds": [
+          {
+            "at": 0,
+            "seconds": 135,
+            "point": [
+              9,
+              1
+            ],
+            "tunnel": false
+          },
+          {
+            "at": 2.414213562373095,
+            "seconds": 5,
+            "point": [
+              8,
+              3
+            ],
+            "tunnel": true
+          }
+        ],
+        "nodes": [
+          [
+            9,
+            1
+          ],
+          [
+            9,
+            1
+          ],
+          [
+            8,
+            3
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            4,
+            4
+          ]
+        ]
+      },
+      "9": {
+        "points": [
+          [
+            10,
+            1
+          ],
+          [
+            9,
+            2
+          ],
+          [
+            8,
+            3
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            4,
+            4
+          ]
+        ],
+        "distances": [
+          0,
+          1.4142135623730951,
+          2.8284271247461903,
+          2.8284271247461903,
+          3.8284271247461903,
+          4.82842712474619,
+          5.82842712474619
+        ],
+        "length": 5.82842712474619,
+        "breaks": [
+          3
+        ],
+        "flying": false,
+        "holds": [
+          {
+            "at": 0,
+            "seconds": 200,
+            "point": [
+              10,
+              1
+            ],
+            "tunnel": false
+          },
+          {
+            "at": 2.8284271247461903,
+            "seconds": 5,
+            "point": [
+              8,
+              3
+            ],
+            "tunnel": true
+          }
+        ],
+        "nodes": [
+          [
+            10,
+            1
+          ],
+          [
+            8,
+            3
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            4,
+            4
+          ]
+        ]
+      },
+      "11": {
+        "points": [
+          [
+            0,
+            5
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            4
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          6,
+          7,
+          8,
+          9
+        ],
+        "length": 9,
+        "breaks": [
+          7
+        ],
+        "flying": false,
+        "holds": [
+          {
+            "at": 1,
+            "seconds": 12,
+            "point": [
+              1,
+              5
+            ],
+            "tunnel": false
+          },
+          {
+            "at": 6,
+            "seconds": 5,
+            "point": [
+              0,
+              1
+            ],
+            "tunnel": true
+          }
+        ],
+        "nodes": [
+          [
+            0,
+            5
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            4
+          ]
+        ]
+      },
+      "12": {
+        "points": [
+          [
+            0,
+            5
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            4
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          6,
+          7,
+          8,
+          9
+        ],
+        "length": 9,
+        "breaks": [
+          7
+        ],
+        "flying": false,
+        "holds": [
+          {
+            "at": 6,
+            "seconds": 5,
+            "point": [
+              0,
+              1
+            ],
+            "tunnel": true
+          }
+        ],
+        "nodes": [
+          [
+            0,
+            5
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            4
+          ]
+        ]
+      }
+    }
+  },
+  "art": null,
+  "gates": null,
+  "fixedSquad": [],
+  "enemies": {
+    "enemy_1163_hvymot_2": {
+      "key": "enemy_1163_hvymot_2",
+      "prefabKey": "enemy_1163_hvymot_2",
+      "name": "Dockworker Leader Motorboat",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 20000,
+        "atk": 1400,
+        "def": 1200,
+        "res": 0,
+        "moveSpeed": 1.2,
+        "bat": 5,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 4,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": true,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Can only be blocked by units with at least 3 Block, and deals Physical damage by colliding with player's units",
+          "format": "NORMAL"
+        },
+        {
+          "text": "The <Dockworker Leader> will continue battle after the vehicle is destroyed",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "Crash.atk_scale": 1
+        },
+        "bbStr": {
+          "DeathRattle.enemy_key": "enemy_1160_hvyslr_2"
+        },
+        "groups": {
+          "Crash": [
+            "atk_scale"
+          ],
+          "DeathRattle": [
+            "enemy_key"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "machine"
+      ]
+    },
+    "enemy_1159_swfmob_2": {
+      "key": "enemy_1159_swfmob_2",
+      "prefabKey": "enemy_1159_swfmob_2",
+      "name": "Delinquent Boss",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 3500,
+        "atk": 360,
+        "def": 120,
+        "res": 0,
+        "moveSpeed": 1,
+        "bat": 2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Has a chance to dodge Physical attacks when not blocked",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "Evade.prob": 0.4
+        },
+        "bbStr": {},
+        "groups": {
+          "Evade": [
+            "prob"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1160_hvyslr_2": {
+      "key": "enemy_1160_hvyslr_2",
+      "prefabKey": "enemy_1160_hvyslr_2",
+      "name": "Dockworker Leader",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 14000,
+        "atk": 1000,
+        "def": 1000,
+        "res": 20,
+        "moveSpeed": 0.7,
+        "bat": 3.5,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 4,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "<$ba.stun>Stuns</> allied units after several attacks",
+          "format": "SILENCE"
+        },
+        {
+          "text": "Quickly loses HP while under the effects of 'Erosion'",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "Drown.damage": 1400
+        },
+        "bbStr": {},
+        "groups": {
+          "Drown": [
+            "damage"
+          ]
+        }
+      },
+      "skills": [
+        {
+          "prefabKey": "stuncombat",
+          "priority": 0,
+          "cooldown": 1,
+          "initCooldown": 1,
+          "spCost": 3,
+          "bb": {
+            "stun": 7
+          },
+          "bbStr": {}
+        }
+      ],
+      "sp": {
+        "type": "INCREASE_WHEN_ATTACK",
+        "maxSp": 3,
+        "initSp": 0,
+        "increment": 1
+      },
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1162_magmot_2": {
+      "key": "enemy_1162_magmot_2",
+      "prefabKey": "enemy_1162_magmot_2",
+      "name": "Tidal Leader Speedboat",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 16000,
+        "atk": 380,
+        "def": 220,
+        "res": 0,
+        "moveSpeed": 1.1,
+        "bat": 3.5,
+        "aspd": 100,
+        "rangeRadius": 3,
+        "rawRangeRadius": 3,
+        "blockCnt": 1,
+        "massLevel": 4,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "arts",
+        "dmgTypes": [
+          "arts"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": true,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Attacks deal damage to the target and all allied units in the target's four adjacent tiles, additionally inflicting <$ba.dt.erosion>Corrosion Damage</>",
+          "format": "NORMAL"
+        },
+        {
+          "text": "The <Tidal Leader> will continue battle after the vehicle is destroyed",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "EpDamage.attack@ep_damage_ratio": 0.8
+        },
+        "bbStr": {
+          "DeathRattle.enemy_key": "enemy_1161_tidmag_2"
+        },
+        "groups": {
+          "EpDamage": [
+            "attack@ep_damage_ratio"
+          ],
+          "DeathRattle": [
+            "enemy_key"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "machine"
+      ]
+    },
+    "enemy_1161_tidmag_2": {
+      "key": "enemy_1161_tidmag_2",
+      "prefabKey": "enemy_1161_tidmag_2",
+      "name": "Tidal Leader",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 8000,
+        "atk": 260,
+        "def": 220,
+        "res": 60,
+        "moveSpeed": 0.7,
+        "bat": 2.5,
+        "aspd": 100,
+        "rangeRadius": 2.2,
+        "rawRangeRadius": 2.2,
+        "blockCnt": 1,
+        "massLevel": 2,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "arts",
+        "dmgTypes": [
+          "arts"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": true,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Attacks deal damage to the target and all allied units in the target's four adjacent tiles, additionally inflicting <$ba.dt.erosion>Corrosion Damage</>",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "EpDamage.attack@ep_damage_ratio": 0.8
+        },
+        "bbStr": {},
+        "groups": {
+          "EpDamage": [
+            "attack@ep_damage_ratio"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    }
+  },
+  "tide": [
+    {
+      "start": 55.0,
+      "end": 85.0,
+      "enemyDamage": 40,
+      "enemyAspd": 60,
+      "enemySpeed": 0.6,
+      "allyAspd": 60,
+      "allyErosion": 40,
+      "erosionRatio": 0.25
+    },
+    {
+      "start": 145.0,
+      "end": 175.0,
+      "enemyDamage": 40,
+      "enemyAspd": 60,
+      "enemySpeed": 0.6,
+      "allyAspd": 60,
+      "allyErosion": 40,
+      "erosionRatio": 0.25
+    }
+  ]
+}

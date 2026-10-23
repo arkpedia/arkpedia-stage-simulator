@@ -1,0 +1,1763 @@
+{
+  "code": "DH-EX-5",
+  "name": "Seaside Vantage Point",
+  "description": "These smugglers armed to the teeth presume that none would dare provoke them. Lin Y\u00fchsia disagrees. \n<High Tide>Unable to deploy on flooded tiles. Allied units and enemies in the water will suffer from 'Erosion': Allied units have reduced ASPD, continually receive Corrosion and receive additional Corrosion when attacked; Enemies have reduced ASPD and Movement Speed, and continually lose HP",
+  "battle": {
+    "max_life": 3,
+    "unit_limit": 8,
+    "initial_dp": 9,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1
+  },
+  "mapTags": [],
+  "mapTagSource": null,
+  "geometry": {
+    "slug": "dh-ex-5",
+    "rows": 8,
+    "cols": 11,
+    "tileLegend": [
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_start",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_floor",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      }
+    ],
+    "tileGrid": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        2,
+        3,
+        3,
+        3,
+        3,
+        3,
+        1,
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        3,
+        3,
+        0,
+        3,
+        0
+      ],
+      [
+        4,
+        2,
+        3,
+        3,
+        5,
+        0,
+        3,
+        3,
+        0,
+        3,
+        0
+      ],
+      [
+        0,
+        5,
+        3,
+        3,
+        5,
+        0,
+        3,
+        3,
+        5,
+        3,
+        0
+      ],
+      [
+        0,
+        0,
+        5,
+        3,
+        5,
+        5,
+        3,
+        3,
+        5,
+        3,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "routes": [
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 0
+        },
+        "end": {
+          "row": 3,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 3
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 8
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 9
+        },
+        "end": {
+          "row": 3,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 3
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 7
+        },
+        "end": {
+          "row": 3,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 3
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 0
+        },
+        "end": {
+          "row": 3,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 3
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": null,
+        "placeholder": true,
+        "start": null,
+        "end": null,
+        "checkpoints": [],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 0
+        },
+        "end": {
+          "row": 3,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 3
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 5
+          }
+        ]
+      }
+    ],
+    "waves": [
+      {
+        "index": 0,
+        "duration": 191,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Delinquent Boss",
+            "enemy_id": "enemy_1159_swfmob_2",
+            "count": 1,
+            "time": 12,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Diver Leader",
+            "enemy_id": "enemy_1158_divman_2",
+            "count": 1,
+            "time": 6,
+            "route": 1,
+            "fragment": 0
+          },
+          {
+            "enemy": "Competition Transport Vessel",
+            "enemy_id": "enemy_3003_alymot",
+            "count": 1,
+            "time": 7,
+            "route": 2,
+            "fragment": 0
+          },
+          {
+            "enemy": "Delinquent Boss",
+            "enemy_id": "enemy_1159_swfmob_2",
+            "count": 4,
+            "time": 30,
+            "interval": 11,
+            "route": 3,
+            "fragment": 0
+          },
+          {
+            "enemy": "Competition Transport Vessel",
+            "enemy_id": "enemy_3003_alymot",
+            "count": 1,
+            "time": 43,
+            "route": 2,
+            "fragment": 0
+          },
+          {
+            "enemy": "Diver Leader",
+            "enemy_id": "enemy_1158_divman_2",
+            "count": 2,
+            "time": 44,
+            "interval": 3,
+            "route": 1,
+            "fragment": 0
+          },
+          {
+            "enemy": "Competition Transport Vessel",
+            "enemy_id": "enemy_3003_alymot",
+            "count": 1,
+            "time": 72,
+            "route": 2,
+            "fragment": 1
+          },
+          {
+            "enemy": "Diver Leader",
+            "enemy_id": "enemy_1158_divman_2",
+            "count": 2,
+            "time": 71,
+            "interval": 3,
+            "route": 1,
+            "fragment": 1
+          },
+          {
+            "enemy": "Tidal Leader Speedboat",
+            "enemy_id": "enemy_1162_magmot_2",
+            "count": 1,
+            "time": 78,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Competition Transport Vessel",
+            "enemy_id": "enemy_3003_alymot",
+            "count": 1,
+            "time": 113,
+            "route": 2,
+            "fragment": 1
+          },
+          {
+            "enemy": "Diver Leader",
+            "enemy_id": "enemy_1158_divman_2",
+            "count": 3,
+            "time": 107,
+            "interval": 11,
+            "route": 1,
+            "fragment": 1
+          },
+          {
+            "enemy": "Unmanned Heavy Explosive Boat",
+            "enemy_id": "enemy_1164_bmbmot_2",
+            "count": 3,
+            "time": 107,
+            "interval": 4,
+            "route": 3,
+            "fragment": 1
+          },
+          {
+            "enemy": "Tidal Leader Speedboat",
+            "enemy_id": "enemy_1162_magmot_2",
+            "count": 1,
+            "time": 138,
+            "route": 5,
+            "fragment": 2
+          },
+          {
+            "enemy": "Competition Transport Vessel",
+            "enemy_id": "enemy_3003_alymot",
+            "count": 2,
+            "time": 155,
+            "interval": 27,
+            "route": 2,
+            "fragment": 2
+          },
+          {
+            "enemy": "Tidal Leader Speedboat",
+            "enemy_id": "enemy_1162_magmot_2",
+            "count": 1,
+            "time": 159,
+            "route": 1,
+            "fragment": 2
+          },
+          {
+            "enemy": "Diver Leader",
+            "enemy_id": "enemy_1158_divman_2",
+            "count": 3,
+            "time": 172,
+            "interval": 9,
+            "route": 1,
+            "fragment": 2
+          },
+          {
+            "enemy": "Unmanned Heavy Explosive Boat",
+            "enemy_id": "enemy_1164_bmbmot_2",
+            "count": 5,
+            "time": 171,
+            "interval": 5,
+            "route": 3,
+            "fragment": 2
+          }
+        ]
+      }
+    ],
+    "spawnTiles": [
+      {
+        "key": "tile_start",
+        "row": 1,
+        "col": 0,
+        "routes": [
+          0,
+          3,
+          0,
+          3,
+          5,
+          3
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 1,
+        "col": 7,
+        "routes": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 1,
+        "col": 9,
+        "routes": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    ],
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 3,
+        "col": 0,
+        "routes": [
+          0,
+          1,
+          2,
+          3,
+          2,
+          1,
+          1,
+          2,
+          1,
+          0,
+          2,
+          1,
+          3,
+          1,
+          5,
+          2,
+          1,
+          1,
+          3
+        ]
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_1158_divman_2",
+        "slug": "diver_leader",
+        "name": "Diver Leader",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1159_swfmob_2",
+        "slug": "delinquent_boss",
+        "name": "Delinquent Boss",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1161_tidmag_2",
+        "slug": "tidal_leader",
+        "name": "Tidal Leader",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1162_magmot_2",
+        "slug": "tidal_leader_speedboat",
+        "name": "Tidal Leader Speedboat",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1164_bmbmot_2",
+        "slug": "unmanned_heavy_explosive_boat",
+        "name": "Unmanned Heavy Explosive Boat",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_3003_alymot",
+        "slug": "competition_transport_vessel",
+        "name": "Competition Transport Vessel",
+        "database_level": 0
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [],
+      "deployable_tokens": [
+        {
+          "unit": "Erosion-Resistant Coating Application Device",
+          "unit_id": "trap_046_oxygen",
+          "count": 0,
+          "level": 1,
+          "elite": 0,
+          "potential": 0,
+          "skill_index": 0,
+          "skill_level": 1
+        }
+      ]
+    },
+    "hasConditionalSpawns": false
+  },
+  "devices": [
+    {
+      "col": 0,
+      "description": null,
+      "hidden": true,
+      "key": "trap_042_tidectrl",
+      "kind": "device",
+      "name": "Tide Controller",
+      "row": 0
+    },
+    {
+      "col": 0,
+      "description": null,
+      "hidden": true,
+      "key": "trap_042_tidectrl",
+      "kind": "device",
+      "name": "Tide Controller",
+      "row": 0
+    }
+  ],
+  "tokens": [],
+  "pathing": {
+    "schemaVersion": 1,
+    "syntheticRoutes": [],
+    "producer": "Arkpedia stage browser / buildPlaybackPaths",
+    "stage": "DH-EX-5",
+    "geometryHash": "f676b7e7dac41cac63acaa5a0aa9653d1037ea5eb719a729998c881da29818e4",
+    "moveScale": 0.65,
+    "paths": {
+      "0": {
+        "points": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            6,
+            1
+          ],
+          [
+            6,
+            2
+          ],
+          [
+            6,
+            3
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            6,
+            6
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            4,
+            6
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20
+        ],
+        "length": 20,
+        "breaks": [],
+        "flying": false,
+        "holds": [
+          {
+            "at": 1,
+            "seconds": 8,
+            "point": [
+              1,
+              1
+            ],
+            "tunnel": false
+          }
+        ],
+        "nodes": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            6,
+            1
+          ],
+          [
+            6,
+            6
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            0,
+            3
+          ]
+        ]
+      },
+      "1": {
+        "points": [
+          [
+            9,
+            1
+          ],
+          [
+            9,
+            2
+          ],
+          [
+            9,
+            3
+          ],
+          [
+            9,
+            4
+          ],
+          [
+            9,
+            5
+          ],
+          [
+            9,
+            6
+          ],
+          [
+            8,
+            6
+          ],
+          [
+            7,
+            6
+          ],
+          [
+            6,
+            6
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            4,
+            6
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17
+        ],
+        "length": 17,
+        "breaks": [],
+        "flying": false,
+        "holds": [],
+        "nodes": [
+          [
+            9,
+            1
+          ],
+          [
+            9,
+            6
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            0,
+            3
+          ]
+        ]
+      },
+      "2": {
+        "points": [
+          [
+            7,
+            1
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            7,
+            3
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            7,
+            6
+          ],
+          [
+            6,
+            6
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            4,
+            6
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "length": 15,
+        "breaks": [],
+        "flying": false,
+        "holds": [],
+        "nodes": [
+          [
+            7,
+            1
+          ],
+          [
+            7,
+            6
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            0,
+            3
+          ]
+        ]
+      },
+      "3": {
+        "points": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            6,
+            1
+          ],
+          [
+            6,
+            2
+          ],
+          [
+            6,
+            3
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            6,
+            6
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            4,
+            6
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20
+        ],
+        "length": 20,
+        "breaks": [],
+        "flying": false,
+        "holds": [],
+        "nodes": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            6,
+            1
+          ],
+          [
+            6,
+            6
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            0,
+            3
+          ]
+        ]
+      },
+      "5": {
+        "points": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            6,
+            1
+          ],
+          [
+            6,
+            2
+          ],
+          [
+            6,
+            3
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            6,
+            6
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            4,
+            6
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20
+        ],
+        "length": 20,
+        "breaks": [],
+        "flying": false,
+        "holds": [
+          {
+            "at": 1,
+            "seconds": 5,
+            "point": [
+              1,
+              1
+            ],
+            "tunnel": false
+          }
+        ],
+        "nodes": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            6,
+            1
+          ],
+          [
+            6,
+            6
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            0,
+            3
+          ]
+        ]
+      }
+    }
+  },
+  "art": null,
+  "gates": null,
+  "fixedSquad": [],
+  "enemies": {
+    "enemy_1158_divman_2": {
+      "key": "enemy_1158_divman_2",
+      "prefabKey": "enemy_1158_divman_2",
+      "name": "Diver Leader",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 4000,
+        "atk": 320,
+        "def": 200,
+        "res": 20,
+        "moveSpeed": 0.9,
+        "bat": 2.7,
+        "aspd": 100,
+        "rangeRadius": 1.9,
+        "rawRangeRadius": 1.9,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Immune to Erosion. While in water, gains increased ATK and <$ba.invisible>Invisibility</>",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "Swim.atk": 0.4
+        },
+        "bbStr": {},
+        "groups": {
+          "Swim": [
+            "atk"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_3003_alymot": {
+      "key": "enemy_3003_alymot",
+      "prefabKey": "enemy_3003_alymot",
+      "name": "Competition Transport Vessel",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "NONE",
+      "stats": {
+        "maxHp": 2000,
+        "atk": 100,
+        "def": 100,
+        "res": 0,
+        "moveSpeed": 0.65,
+        "bat": 1,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 4,
+        "lpr": 0,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "none",
+        "dmgTypes": [
+          "none"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": true,
+          "silence": true,
+          "sleep": false,
+          "frozen": true,
+          "levitate": true
+        },
+        "otherImmunities": [],
+        "tauntLevel": 1
+      },
+      "abilities": [
+        {
+          "text": "Enemies prioritize attacking this unit, unit will deplete Life Points upon dying",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Does not count towards the defeated enemies counter",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "Dead.value": -2
+        },
+        "bbStr": {},
+        "groups": {
+          "Dead": [
+            "value"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1159_swfmob_2": {
+      "key": "enemy_1159_swfmob_2",
+      "prefabKey": "enemy_1159_swfmob_2",
+      "name": "Delinquent Boss",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 3500,
+        "atk": 360,
+        "def": 120,
+        "res": 0,
+        "moveSpeed": 1,
+        "bat": 2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Has a chance to dodge Physical attacks when not blocked",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "Evade.prob": 0.4
+        },
+        "bbStr": {},
+        "groups": {
+          "Evade": [
+            "prob"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1162_magmot_2": {
+      "key": "enemy_1162_magmot_2",
+      "prefabKey": "enemy_1162_magmot_2",
+      "name": "Tidal Leader Speedboat",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 16000,
+        "atk": 380,
+        "def": 220,
+        "res": 0,
+        "moveSpeed": 1.1,
+        "bat": 3.5,
+        "aspd": 100,
+        "rangeRadius": 3,
+        "rawRangeRadius": 3,
+        "blockCnt": 1,
+        "massLevel": 4,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "arts",
+        "dmgTypes": [
+          "arts"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": true,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Attacks deal damage to the target and all allied units in the target's four adjacent tiles, additionally inflicting <$ba.dt.erosion>Corrosion Damage</>",
+          "format": "NORMAL"
+        },
+        {
+          "text": "The <Tidal Leader> will continue battle after the vehicle is destroyed",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "EpDamage.attack@ep_damage_ratio": 0.8
+        },
+        "bbStr": {
+          "DeathRattle.enemy_key": "enemy_1161_tidmag_2"
+        },
+        "groups": {
+          "EpDamage": [
+            "attack@ep_damage_ratio"
+          ],
+          "DeathRattle": [
+            "enemy_key"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "machine"
+      ]
+    },
+    "enemy_1164_bmbmot_2": {
+      "key": "enemy_1164_bmbmot_2",
+      "prefabKey": "enemy_1164_bmbmot_2",
+      "name": "Unmanned Heavy Explosive Boat",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "NONE",
+      "stats": {
+        "maxHp": 10000,
+        "atk": 400,
+        "def": 400,
+        "res": 0,
+        "moveSpeed": 1.2,
+        "bat": 1,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 3,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Death deals Physical damage and <$ba.dt.erosion>Corrosion damage</> to surrounding units",
+          "format": "SILENCE"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "Bleed.hp_ratio": 0.04,
+          "Boom.atk_scale": 2,
+          "Boom.ep_damage_ratio": 1.7
+        },
+        "bbStr": {},
+        "groups": {
+          "Bleed": [
+            "hp_ratio"
+          ],
+          "Boom": [
+            "atk_scale",
+            "ep_damage_ratio"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "machine"
+      ]
+    }
+  },
+  "tide": [
+    {
+      "start": 5.0,
+      "end": 40.0,
+      "enemyDamage": 40,
+      "enemyAspd": 60,
+      "enemySpeed": 0.6,
+      "allyAspd": 60,
+      "allyErosion": 40,
+      "erosionRatio": 0.25
+    },
+    {
+      "start": 5.0,
+      "end": 40.0,
+      "enemyDamage": 40,
+      "enemyAspd": 60,
+      "enemySpeed": 0.6,
+      "allyAspd": 60,
+      "allyErosion": 40,
+      "erosionRatio": 0.25
+    }
+  ]
+}
