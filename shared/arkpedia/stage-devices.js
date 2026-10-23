@@ -64,4 +64,5 @@ export function artilleryTiles(row, col) {
 export const STAGE_TOKEN_UNITS = Object.freeze({
   trap_001_crate: Object.freeze({ behavior: 'roadblock', obstacle: 'crate' }),
   trap_087_allady: Object.freeze({ behavior: 'barrier' }),
+  trap_040_canoe: Object.freeze({ behavior: 'platform', water: true, platform: true }),
 });

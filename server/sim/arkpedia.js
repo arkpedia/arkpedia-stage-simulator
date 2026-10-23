@@ -276,7 +276,7 @@ export function stageAdapter(source) {
   if (unsupportedTokens.length) throw new Error(`Unsupported stage tokens: ${[...new Set(unsupportedTokens.map(t => t.unit_id))].join(', ')}`);
   if (g.rows > 19 || g.cols > 21 || g.hasConditionalSpawns)
     throw new Error("Unsupported stage mechanics");
-  const chars = ["#", "h", "r", "S", "E"];
+  const chars = ["#", "h", "r", "S", "E", "w", "t"];
   const legend = Object.fromEntries(
     g.tileLegend.map((t, i) => [
       chars[i],
@@ -547,7 +547,7 @@ export class StandardBattle extends Battle {
     )
       return "Select a tile on the map.";
     // An owner may give a tile another build type (Nasti's platform becomes a ranged tile).
-    const tile = { ...this.grid.tile(row, col), ...(this.regularTileBuild?.(row, col) ? { build: this.regularTileBuild(row, col) } : {}) },
+    const tile = { ...this.grid.tile(row, col), ...(this.regularTileBuild?.(row, col) ? { build: this.regularTileBuild(row, col) } : {}), ...(this.platformTiles?.has(`${row},${col}`) ? { build: 'ALL' } : {}) },
       position = this.data.getChess(id).position;
     const rangedTrait = REGULAR_OPERATORS[id]?.deployOnRanged && tile.build === 'RANGED';
     // An owner may admit another build type on specific tiles (Violet Mizutsune Orchid's talent).
@@ -575,15 +575,18 @@ export class StandardBattle extends Battle {
     return unit;
   }
   deployToken(unitId, row, col) {
-    const token = (this.stage.tokens ?? this.stage.raw?.tokens ?? []).find(t => t.unitId === unitId);
-    if (!token) throw new Error('This stage has no such token.');
+    const found = (this.stage.tokens ?? this.stage.raw?.tokens ?? []).find(t => t.unitId === unitId);
+    if (!found) throw new Error('This stage has no such token.');
+    const token = { ...(STAGE_TOKEN_UNITS[unitId] ?? {}), ...found };
     if ((this.mvpStageTokens.get(unitId) ?? 0) <= 0) throw new Error('No tokens remaining.');
-    if (!this.grid.inRect(row, col) || !this.grid.groundPassable(row, col, true)) throw new Error('Token must be placed on the ground.');
+    if (!this.grid.inRect(row, col) || (!this.grid.groundPassable(row, col, true)
+      && !(token.water && String(this.grid.tile(row, col)?.key ?? '').includes('water')))) throw new Error('Token must be placed on the ground or water.');
     if (this._occ[row * this.grid.cols + col]?.alive) throw new Error('Tile is occupied.');
     if (!canSpendDp(this, 'arkpedia', token.cost)) throw new Error('Not enough DP.');
     const unit = this.spawnDevice(`token:${unitId}`, row, col, { hp: token.hp, def: 0, blockCnt: token.block,
       obstacle: true, obstacleKind: token.obstacle, name: token.name });
     if (!unit) throw new Error('Token cannot be placed here.');
+    if (token.platform) { unit.mem.regularHost = { accepts: () => true }; this.platformTiles ??= new Set(); this.platformTiles.add(`${row},${col}`); }
     if (token.behavior === 'barrier') {
       for (const ally of [unit, ...this.units.filter(u => u.side === 'ally' && u.alive && u.deployed && u !== unit && Math.max(Math.abs(u.tileR - row), Math.abs(u.tileC - col)) <= 1)])
         this.addBuff(ally, { key: 'ab:allerdale-barrier', source: unit, visible: true, shield: 1000 });
