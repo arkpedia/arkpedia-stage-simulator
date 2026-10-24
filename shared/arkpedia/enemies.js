@@ -18,6 +18,8 @@ export function assertRegularEnemies(data) {
     for (const child of spawns[id] ?? [])
       if (!data.enemies[child]) throw Error(`Missing record of an enemy ${id} spawns: ${child}`);
   }
+  if (data.stage.devices?.some(d => d.key === 'trap_329_rift') && !data.enemies.enemy_10211_murad)
+    throw Error('Missing canonical Leak Source record for Leak Marker device');
   for (const wave of data.stage.geometry.waves)
     for (const spawn of wave.spawns)
       if (!enemies[spawn.enemy_id] || !data.enemies[spawn.enemy_id])

@@ -126,6 +126,7 @@ const addEnemy = id => {
   enemyIds.add(id);
   for (const child of support.enemies[id].spawns ?? []) addEnemy(child);
 };
+for (const device of devices) if (device.key === 'trap_329_rift') addEnemy('enemy_10211_murad');
 for (const spawn of adapter.spawns) addEnemy(spawn.enemyKey);
 stage.enemies = Object.fromEntries([...enemyIds].map(id => [id, configured(id)]));
 assertRegularEnemies({ ...mvp, enemies: stage.enemies, stage });

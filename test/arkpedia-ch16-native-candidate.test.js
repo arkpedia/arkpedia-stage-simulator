@@ -7,7 +7,7 @@ import { verifiedNative } from '../tools/arkpedia/enemy-support.mjs';
 import { deriveEnemySupport, prefabPath } from '../shared/arkpedia/enemy-support.js';
 
 const read = name => JSON.parse(readFileSync(new URL(`../data/${name}`, import.meta.url)));
-const candidate = read('candidates/arkpedia-ch16-native-abilities.json');
+const candidate = { ...read('candidates/arkpedia-ch16-native-abilities.json'), actions: read('candidates/arkpedia-ch16-action-source.json') };
 const indexBytes = readFileSync(new URL('../data/arkpedia-enemy-clock-source.json', import.meta.url));
 const index = JSON.parse(indexBytes);
 const indexSha = createHash('sha256').update(indexBytes).digest('hex');
@@ -32,15 +32,13 @@ test('candidate original component corruption fails the existing evidence verifi
   assert.throws(() => verifiedNative(changed, index.prefabs, indexSha, templates), /does not match the timing index/);
 });
 
-test('native availability admits only the implemented miner, leaving unfinished chapter 16 candidates gated', () => {
+test('all six base prefabs require complete records and reviewed native contracts', () => {
   const records = read('candidates/arkpedia-enemy-records.canonical.json');
   const support = deriveEnemySupport(Object.fromEntries(keys.map(key => [key, records.enemies[key]])),
     index.prefabs, candidate);
-  assert.equal(support[keys[0]].policy, 'stats-attacks-and-features');
-  for (const key of keys.slice(1)) {
-    assert.equal(support[key].policy, null, key);
-    assert.ok(support[key].reasons.length, key);
-    assert.ok(support[key].reasons.every(reason => !reason.startsWith('prefab-missing:')), key);
+  for (const key of keys) {
+    assert.equal(support[key].policy, 'stats-attacks-and-features', key);
+    assert.deepEqual(support[key].reasons, [], key);
   }
 });
 

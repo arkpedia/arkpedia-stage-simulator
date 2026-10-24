@@ -257,6 +257,7 @@ import { catalogueFor, recordFor, fixedSquadBuilds } from "../../shared/arkpedia
 import { REGULAR_OPERATORS } from "../../shared/arkpedia/operators.js";
 import { assertRegularEnemies } from "../../shared/arkpedia/enemies.js";
 import { installEnemyFeatures } from "./content/arkpedia-enemy-features.js";
+import { installChapter17Devices } from './content/chapter17.js';
 import { STAGE_DEVICES, STAGE_TOKEN_UNITS, pulseTiles, artilleryTiles } from "../../shared/arkpedia/stage-devices.js";
 import { compileBuffTemplate } from "../../shared/arkpedia/behavior.js";
 import {
@@ -457,6 +458,7 @@ export class StandardBattle extends Battle {
     this.mvpStageTokens = new Map((data.stage.tokens ?? []).map(t => [t.unitId, t.count]));
     if (this.mvpStageDevices.length) this.on('tick', ({ dt }) => this._tickMvpStageDevices(dt));
     this._installUnitStageDevices(data.stage.devices ?? []);
+    installChapter17Devices(this, data.stage.devices ?? []);
     this._installPillarController();
     this._installHighTide(data.stage.tide);
     this._installDeepWater(data.stage.deepWater);

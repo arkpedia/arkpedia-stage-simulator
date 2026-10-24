@@ -45,7 +45,9 @@ export async function buildEnemySupport({ candidate = false } = {}) {
     }
     for (const row of [...Object.values(actions.templates), ...Object.values(actions.projectiles).flat(), ...Object.values(actions.environments).flat()])
       if (sha(row.originalJson) !== row.sha256) throw Error('Chapter 16 serialized action checksum mismatch');
-    candidateSources = { nativeAbilities: { path: 'data/candidates/arkpedia-ch16-native-abilities.json', sha256: sha(extraRaw) },
+    const contractRaw = await readFile(new URL('data/candidates/arkpedia-ch17-reviewed-contracts.json', root));
+    native.actions = actions;
+    candidateSources = { reviewedContract: { path: 'data/candidates/arkpedia-ch17-reviewed-contracts.json', sha256: sha(contractRaw) }, nativeAbilities: { path: 'data/candidates/arkpedia-ch16-native-abilities.json', sha256: sha(extraRaw) },
       actions: { path: 'data/candidates/arkpedia-ch16-action-source.json', sha256: sha(actionRaw) } };
     Object.assign(native.prefabs, extra.prefabs);
   }

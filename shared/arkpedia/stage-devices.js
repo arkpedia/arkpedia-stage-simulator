@@ -2,6 +2,7 @@
 // Reviewed stage devices. The source data only carries position and name; the
 // device parameters live here with their source descriptions.
 export const STAGE_DEVICES = Object.freeze({
+  'Leak Marker': Object.freeze({ chapter17Marker: true }),
   'EP14 Mechanics Controller': Object.freeze({
     // PRTS: every unit on an Originium pollution tile loses 80% natural SP
     // recovery and takes 50 True environment damage per second (skill 1).

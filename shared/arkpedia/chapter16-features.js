@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Chapter 16 candidates are exact-record families. Native source availability
 // alone never clears their support gate.
+import reviewed from '../../data/candidates/arkpedia-ch17-reviewed-contracts.json' with { type: 'json' };
 const MINER_TEXT = "Allied unit; recovers HP when within any Medic Operator's Attack Range";
 const groups = { TileEscapeShadowManager: ['times'], GetHeal: ['heal_scale'], FearLoseBlood: ['value'] };
 function minerCovered(r, n) {
@@ -26,11 +27,44 @@ export const CHAPTER16_FEATURES = {
   'talent:GetHeal': miner,
   'talent:TileEscapeShadowManager': { covers: minerCovered, note: 'Included in GetHeal controller.' },
   'talent:FearLoseBlood': { covers: minerCovered, note: 'Included in GetHeal controller.' },
-  // Keep map-bound candidates refused until their environment integration and
-  // native parity tests are complete. The runtime factories remain testable.
-  'skill:ChargeRift': { covers: () => false, ability: { kind: 'ch16ChargeRift', params: r => r } },
-  'talent:ReverseDamage': { covers: () => false, ability: { kind: 'ch16ReverseDamage', params: r => r } },
-  'talent:DeadSummon': { covers: () => false, ability: { kind: 'ch16DeadSummon', params: r => r } },
-  'talent:Shiled': { covers: () => false, ability: { kind: 'ch16WarCaster', params: r => r } },
-  'talent:CheckAppear': { covers: () => false, ability: { kind: 'ch16LeakSource', params: r => r } },
+  ...chapter17Features(),
 };
+
+function coversChapter17(r, n) {
+  const proof = reviewed.enemies[r.key];
+  return !!proof && JSON.stringify(n.$actions?.()) === JSON.stringify(reviewed.actions) && r.prefabKey === r.key
+    && JSON.stringify(r.talents.groups) === JSON.stringify(proof.groups)
+    && JSON.stringify(r.abilities.map(a => a.text)) === JSON.stringify(proof.abilities)
+    && JSON.stringify(r.skills.map(s => ({ prefabKey: s.prefabKey, bb: Object.keys(s.bb).sort() }))) === JSON.stringify(proof.skills)
+    && Object.keys(r.talents.bb).sort().join('|') === Object.entries(proof.groups).flatMap(([g, ps]) => ps.map(p => `${g}.${p}`)).sort().join('|')
+    && Object.values(r.talents.bb).every(Number.isFinite) && r.skills.every(s => Object.values(s.bb).every(Number.isFinite)
+      && [s.cooldown, s.initCooldown, s.spCost].every(v => Number.isFinite(v) && v >= 0))
+    && (r.key !== 'enemy_10210_muwiz' || r.talents.bb['Shiled.hp_ratio'] > 0 && r.skills.find(s => s.prefabKey === 'GetShield').bb.dynamic_add > 0)
+    && (r.key !== 'enemy_10211_murad' || r.sp?.type === 'INCREASE_WITH_TIME' && [r.sp.increment, r.sp.initSp, r.sp.maxSp].every(Number.isFinite)
+      && r.skills.filter(s => /RoundLaser$/.test(s.prefabKey)).every(s => s.bb.projectileNum >= 2))
+    && JSON.stringify(n.$retained?.()) === JSON.stringify(proof.native);
+}
+function chapter17Features() {
+  const out = {};
+  const anchors = {
+    enemy_10203_mumag: ['skill:ChargeRift', 'ch16ChargeRift'],
+    enemy_10206_muveg: ['talent:ReverseDamage', 'ch16ReverseDamage'],
+    enemy_10208_mucow: ['talent:DeadSummon', 'ch16DeadSummon'],
+    enemy_10210_muwiz: ['talent:Shiled', 'ch16WarCaster'],
+    enemy_10211_murad: ['talent:CheckAppear', 'ch16LeakSource'],
+  };
+  for (const [key, proof] of Object.entries(reviewed.enemies)) {
+    const [anchor, kind] = anchors[key];
+    for (const id of [...Object.keys(proof.groups).map(g => `talent:${g}`), ...proof.skills.map(s => `skill:${s.prefabKey}`)]) {
+      // No two reviewed records share these skill/talent names except the
+      // MuradPollut group; the covers predicate still checks the entire record.
+      out[id] = { covers: coversChapter17, note: 'Exact retained native contract and implemented chapter 17 controller.' };
+    }
+    Object.assign(out[anchor], { ability: r => r.key === key ? { kind, params: () => r } : null,
+      explains: (text, r) => r.key === key && proof.abilities.includes(text),
+      nativeClaim: (p, n) => JSON.stringify(n.$retained?.()) === JSON.stringify(proof.native)
+        ? { wrappers: proof.counts.enemyAbilityWrappers, active: proof.counts.activeGeneralOrCommonAbilities } : null,
+      ...(key === 'enemy_10208_mucow' ? { dependsOn: () => ['enemy_10211_murad'] } : {}) });
+  }
+  return out;
+}

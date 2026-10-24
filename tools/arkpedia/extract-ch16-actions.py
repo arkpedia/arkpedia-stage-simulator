@@ -71,7 +71,8 @@ for obj in projectile_objects.values():
         continue
     for path, entry in obj.read_typetree()['m_Container']:
         if not any('/' + name + '.' in path for name in ['projectile_enemy_murad', 'projectile_enemy_murad_hide',
-                                                        'projectile_enemy_muwiz_line', 'projectile_enemy_mumag_charge']):
+                                                        'projectile_enemy_muwiz_line', 'projectile_enemy_mumag_charge',
+                                                        'projectile_enemy_muwiz', 'projectile_enemy_mumag']):
             continue
         root = entry['asset']['m_PathID']
         rows, seen = [], set()
@@ -82,16 +83,44 @@ for obj in projectile_objects.values():
                 cid = comp['component']['m_PathID']
                 component = projectile_objects[cid]
                 if component.type.name == 'Transform':
+                    text = canonical(component.read_typetree())
+                    rows.append({'pathId': str(cid), 'objectName': go['m_Name'], 'componentType': 'Transform',
+                                 'originalJson': text, 'sha256': sha(text.encode())})
+                    seen.add(cid)
                     for child in component.read_typetree()['m_Children']:
                         tr = projectile_objects[child['m_PathID']].read_typetree()
                         visit_game_object(tr['m_GameObject']['m_PathID'])
-                elif component.type.name == 'MonoBehaviour' and cid not in seen:
+                elif component.type.name in ('MonoBehaviour', 'SphereCollider', 'BoxCollider', 'CapsuleCollider', 'CircleCollider2D', 'BoxCollider2D', 'CapsuleCollider2D') and cid not in seen:
                     seen.add(cid)
                     text = canonical(component.read_typetree())
                     rows.append({'pathId': str(cid), 'objectName': go['m_Name'],
                                  'originalJson': text, 'sha256': sha(text.encode())})
 
         visit_game_object(root)
+        # Range assets/selectors can be same-bundle ScriptableObjects outside
+        # the GameObject hierarchy. Retain their transitive serialized closure.
+        def references(value):
+            if isinstance(value, dict):
+                if value.get('m_FileID') == 0 and 'm_PathID' in value:
+                    yield int(value['m_PathID'])
+                for child in value.values():
+                    yield from references(child)
+            elif isinstance(value, list):
+                for child in value:
+                    yield from references(child)
+
+        pending = [json.loads(row['originalJson']) for row in rows]
+        while pending:
+            for cid in references(pending.pop()):
+                component = projectile_objects.get(cid)
+                if cid in seen or component is None or component.type.name != 'MonoBehaviour':
+                    continue
+                seen.add(cid)
+                tree = component.read_typetree()
+                text = canonical(tree)
+                rows.append({'pathId': str(cid), 'objectName': tree.get('m_Name', ''),
+                             'referenced': True, 'originalJson': text, 'sha256': sha(text.encode())})
+                pending.append(tree)
         projectiles[path] = sorted(rows, key=lambda row: int(row['pathId']))
 
 env_objects = load('battle/prefabs/[uc]envsystems.ab')
@@ -100,7 +129,7 @@ for obj in env_objects.values():
     if obj.type.name != 'AssetBundle':
         continue
     for path, entry in obj.read_typetree()['m_Container']:
-        if 'mainline16_ctrl' not in path and 'mainline17_ctrl' not in path:
+        if 'mainline16_ctrl' not in path and 'mainline17_ctrl' not in path and 'mainline17_boss_ctrl' not in path:
             continue
         go = env_objects[entry['asset']['m_PathID']].read_typetree()
         rows = []
@@ -117,7 +146,7 @@ result = {'schemaVersion': 1, 'scope': 'Serialized source data only; no runtime 
           'source': {'inventory': 'data/arkpedia-cn-native-source.json', 'sha256': sha(inventory_bytes), 'bundles': sources},
           'environments': dict(sorted(environments.items())),
           'templates': dict(sorted(templates.items())), 'projectiles': dict(sorted(projectiles.items()))}
-assert len(projectiles) == 4 and 'mcreep_t[get_heal]' in templates
+assert len(projectiles) == 6 and 'mcreep_t[get_heal]' in templates
 text = json.dumps(result, ensure_ascii=False, indent=1) + '\n'
 target = ROOT / 'data/candidates/arkpedia-ch16-action-source.json'
 if '--check' in sys.argv:

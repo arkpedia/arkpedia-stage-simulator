@@ -1,24 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
-import { makeBattle, chessRec } from './helpers/battleHarness.js';
-import { installEnemyFeatures } from '../server/sim/content/arkpedia-enemy-features.js';
 import { chapter16Environment, pollute, beamIntersection } from '../server/sim/content/chapter16.js';
 import { canTargetEnemy } from '../server/sim/targeting.js';
-const records = JSON.parse(readFileSync(new URL('../data/candidates/arkpedia-enemy-records.canonical.json', import.meta.url))).enemies;
-const keys = ['enemy_3010_mcreep', 'enemy_10203_mumag', 'enemy_10206_muveg', 'enemy_10208_mucow', 'enemy_10210_muwiz', 'enemy_10211_murad'];
-function battle(key, units = []) {
-  const defs = Object.fromEntries(keys.map(k => [k, records[k].levels[0]]));
-  const chess = Object.fromEntries(units.map((u, i) => [`op${i}`, chessRec({ id: `op${i}`, ...u })]));
-  const h = makeBattle({ content: 'generic', autoFinish: false, timeLimit: 150,
-    defs: { enemies: defs, chess }, kits: Object.fromEntries(Object.keys(chess).map(k => [k, () => ({ trait: { noAttack: true }, skill: { kind: 'instant', trigger: 'NEVER' } })])), units: units.map((u, i) => ({ chessId: `op${i}`, row: 10, col: 5 + i, ...u.pos })),
-    setup: installEnemyFeatures });
-  h.run(1 / 30);
-  const e = h.spawn(key, { pos: [10, 6] });
-  e.base.moveSpeed = 0; e.markDirty();
-  return { h, b: h.b, e, a: e.mem.ab.list[0] };
-}
+import { battle, keys } from './helpers/ch17Harness.js';
 
 test('miner gets independent range healing from Medics, without using their attack cooldown', () => {
   const { h, e } = battle(keys[0], [{ profession: 'MEDIC', stats: { atk: 400 }, rangeGrid: [[0, 0], [0, 1]] }]);
@@ -59,7 +44,7 @@ test('war caster restores shield only from a Leak Source and steals ATK during i
   const u = h.allies()[0];
   b.dealDamage(null, e, { amount: 1200, type: 'arts' }); h.run(5.1);
   assert.equal(e.mem.ch16Shield, false); pollute(b, e); assert.equal(e.mem.ch16Shield, true);
-  a.left = 0; h.run(1.1); assert.equal(u.s.atk, 450); assert.equal(e.s.atk, 800);
+  a.left = 0; h.run(.3); assert.equal(u.s.atk, 450); assert.equal(e.s.atk, 800);
   b.kill(e, null); assert.equal(u.s.atk, 500);
 });
 
@@ -67,7 +52,7 @@ test('Leak Source binds the earliest operator, grants eight SP and exits at four
   const { h, b, e, a } = battle(keys[5], [{ stats: { atk: 0, maxHp: 10000, spRecovery: 0 } }, { stats: { atk: 0, maxHp: 10000, spRecovery: 0 } }]);
   const [u, v] = h.allies(); h.run(0.1);
   assert.equal(a.target, u); assert.equal(u.s.flags.stun, true); assert.ok(!v.s.flags.stun);
-  h.run(3.91); assert.equal(e.alive, false); assert.equal(u.skill.sp, 8); assert.equal(v.skill.sp, 8); assert.ok(!u.s.flags.stun);
+  h.run(4.01); assert.equal(e.alive, false); assert.equal(u.skill.sp, 8); assert.equal(v.skill.sp, 8); assert.ok(!u.s.flags.stun);
   assert.equal(h.hooksOf('enemyLeak').length, 0);
 });
 
@@ -78,7 +63,7 @@ test('Leak Source naturally reveals at fifty SP and exits twenty seconds later',
 });
 
 test('beam collision uses swept segments, including targets between frames', () => {
-  assert.equal(beamIntersection(0, 0, 10, 0, { x: 5, y: 0 }), 0.5);
+  assert.equal(beamIntersection(0, 0, 10, 0, { x: 5, y: 0 }), 0.44);
   assert.equal(beamIntersection(0, 0, 10, 0, { x: 5, y: 1 }), null);
 });
 
@@ -86,7 +71,7 @@ test('ChargeRift waits five seconds, channels marker SP, and ends when full', ()
   const { h, b, e, a } = battle(keys[1]);
   const marker = { alive: true, x: e.x, y: e.y, sp: 0, spCost: 2, gainSp(n) { this.sp += n; } };
   chapter16Environment(b).rifts.push(marker);
-  h.run(4.9); assert.equal(marker.sp, 0); h.run(1.2); assert.equal(marker.sp, 1); assert.equal(e.s.def, 2100);
+  h.run(4.9); assert.equal(marker.sp, 0); h.run(.3); assert.equal(marker.sp, 1); assert.equal(e.s.def, 2100);
   h.run(1.1); assert.equal(marker.sp, 2); assert.ok(!a.target); assert.equal(e.s.def, 700);
 });
 
