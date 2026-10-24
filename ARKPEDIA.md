@@ -6152,3 +6152,5 @@ Implemented the Pancho Salas adapter (two forms, form-two stats, Kite/Explosive 
 Promoted **DH-9** and **DH-EX-8 + challenge** public after the Pancho adapter passed smoke/data review. Catalogue **597** = 377 public + 220 testOnly.
 
 Promoted **189 event stages** public after the full smoke/data review; only main-stage holdouts plus TR-26 remain testOnly. Catalogue **597** = **566 public + 31 testOnly**.
+
+Promoted the final 31 built stages public after smoke/data review. Catalogue **597 public / 0 testOnly**.

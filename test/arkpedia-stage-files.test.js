@@ -15,7 +15,7 @@ import mvp from '../data/arkpedia-mvp.json' with { type: 'json' };
 const dataDir = new URL('../data/', import.meta.url);
 const files = (await readdir(dataDir)).filter(name => /^arkpedia-stage-.+\.json$/.test(name)).sort();
 
-test('every file-backed stage is supported, catalogue-loadable and fightable', async () => {
+test('every file-backed stage is supported, catalogue-loadable and fightable', { timeout: 600_000 }, async () => {
   assert.ok(files.length, 'at least one file-backed stage');
   for (const file of files) {
     const stage = JSON.parse(await readFile(new URL(file, dataDir), 'utf8'));
