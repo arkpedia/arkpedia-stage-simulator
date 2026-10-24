@@ -1,0 +1,1965 @@
+{
+ "testOnly": true,
+ "enemyCatalogue": "canonical-ch16-candidate-v1",
+ "canonicalData": {
+  "repository": "arkpedia/arkpedia-data",
+  "commit": "79e81a8a872b2ecc592647d81a864ccbf1f8ca06"
+ },
+ "upstream": {
+  "repository": "ArknightsAssets/ArknightsGamedata",
+  "commit": "db6f9ef8046ad17dbebe3ff1d0dd88844a5bc78c"
+ },
+ "code": "16-2",
+ "name": "Distant Dawn",
+ "description": "There is no light to bear witness here.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "16-2",
+  "rows": 7,
+  "cols": 11,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    1,
+    2,
+    2,
+    3,
+    3,
+    3,
+    2,
+    2,
+    2,
+    0
+   ],
+   [
+    0,
+    4,
+    4,
+    4,
+    2,
+    1,
+    3,
+    3,
+    0,
+    2,
+    1
+   ],
+   [
+    1,
+    2,
+    2,
+    4,
+    2,
+    2,
+    4,
+    3,
+    2,
+    0,
+    0
+   ],
+   [
+    0,
+    4,
+    2,
+    4,
+    2,
+    2,
+    2,
+    4,
+    5,
+    0,
+    0
+   ],
+   [
+    0,
+    4,
+    2,
+    4,
+    2,
+    2,
+    2,
+    4,
+    3,
+    3,
+    0
+   ],
+   [
+    0,
+    0,
+    5,
+    0,
+    0,
+    5,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 4
+    },
+    "end": {
+     "row": 6,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 4
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 2
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 20
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 6
+    },
+    "end": {
+     "row": 6,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 2
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 25
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 5
+    },
+    "end": {
+     "row": 6,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 2
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 20
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 4
+    },
+    "end": {
+     "row": 6,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 55
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 5
+    },
+    "end": {
+     "row": 6,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 65
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 6
+    },
+    "end": {
+     "row": 6,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 6
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 55
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 4
+    },
+    "end": {
+     "row": 2,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 4
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 2
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 50
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 5
+    },
+    "end": {
+     "row": 2,
+     "col": 5
+    },
+    "checkpoints": [],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 50
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 6
+    },
+    "end": {
+     "row": 2,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 2
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 50
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 2
+    },
+    "end": {
+     "row": 6,
+     "col": 2
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 0
+    },
+    "end": {
+     "row": 6,
+     "col": 2
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 2
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 15
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 1
+    },
+    "end": {
+     "row": 6,
+     "col": 2
+    },
+    "checkpoints": [],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 60
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 8
+    },
+    "end": {
+     "row": 2,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 115
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 500
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 9
+    },
+    "end": {
+     "row": 2,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 115
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 500
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 2
+    },
+    "end": {
+     "row": 3,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 2
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 500
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 5
+    },
+    "end": {
+     "row": 2,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 500
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 1
+    },
+    "end": {
+     "row": 6,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 0
+    },
+    "end": {
+     "row": 6,
+     "col": 2
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 2
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 5
+    },
+    "end": {
+     "row": 6,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 5
+    },
+    "end": {
+     "row": 6,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 85
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 5
+    },
+    "end": {
+     "row": 4,
+     "col": 8
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 6
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 8
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 2
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 2,
+      "seconds": 2
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 3,
+      "seconds": 10
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 10
+    },
+    "end": {
+     "row": 4,
+     "col": 8
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 0
+    },
+    "end": {
+     "row": 6,
+     "col": 2
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 5
+    },
+    "end": {
+     "row": 6,
+     "col": 5
+    },
+    "checkpoints": [],
+    "waits": []
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 160,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Infected Patrol Captain",
+      "enemy_id": "enemy_1107_uoffcr",
+      "count": 1,
+      "time": 0,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Infected Patrol Captain",
+      "enemy_id": "enemy_1107_uoffcr",
+      "count": 1,
+      "time": 0,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Infected Patrol Captain",
+      "enemy_id": "enemy_1107_uoffcr",
+      "count": 1,
+      "time": 0,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Infected Patrol Captain",
+      "enemy_id": "enemy_1107_uoffcr",
+      "count": 1,
+      "time": 0,
+      "route": 3,
+      "fragment": 0
+     },
+     {
+      "enemy": "Elite Infected Patrol Captain",
+      "enemy_id": "enemy_1107_uoffcr_2",
+      "count": 1,
+      "time": 0,
+      "route": 4,
+      "fragment": 0
+     },
+     {
+      "enemy": "Infected Patrol Captain",
+      "enemy_id": "enemy_1107_uoffcr",
+      "count": 1,
+      "time": 0,
+      "route": 5,
+      "fragment": 0
+     },
+     {
+      "enemy": "Miner Guerrilla",
+      "enemy_id": "enemy_3010_mcreep",
+      "count": 1,
+      "time": 0,
+      "route": 6,
+      "fragment": 0
+     },
+     {
+      "enemy": "Miner Guerrilla",
+      "enemy_id": "enemy_3010_mcreep",
+      "count": 1,
+      "time": 0,
+      "route": 7,
+      "fragment": 0
+     },
+     {
+      "enemy": "Miner Guerrilla",
+      "enemy_id": "enemy_3010_mcreep",
+      "count": 1,
+      "time": 0,
+      "route": 8,
+      "fragment": 0
+     },
+     {
+      "enemy": "Miner Guerrilla",
+      "enemy_id": "enemy_3010_mcreep",
+      "count": 1,
+      "time": 0,
+      "route": 9,
+      "fragment": 0
+     },
+     {
+      "enemy": "Infected Patrol Captain",
+      "enemy_id": "enemy_1107_uoffcr",
+      "count": 1,
+      "time": 0,
+      "route": 10,
+      "fragment": 0
+     },
+     {
+      "enemy": "Elite Infected Patrol Captain",
+      "enemy_id": "enemy_1107_uoffcr_2",
+      "count": 1,
+      "time": 0,
+      "route": 11,
+      "fragment": 0
+     },
+     {
+      "enemy": "Miner Guerrilla",
+      "enemy_id": "enemy_3010_mcreep",
+      "count": 1,
+      "time": 0,
+      "route": 12,
+      "fragment": 0
+     },
+     {
+      "enemy": "Miner Guerrilla",
+      "enemy_id": "enemy_3010_mcreep",
+      "count": 1,
+      "time": 0,
+      "route": 13,
+      "fragment": 0
+     },
+     {
+      "enemy": "Miner Guerrilla",
+      "enemy_id": "enemy_3010_mcreep",
+      "count": 1,
+      "time": 5,
+      "route": 14,
+      "fragment": 1
+     },
+     {
+      "enemy": "Miner Guerrilla",
+      "enemy_id": "enemy_3010_mcreep",
+      "count": 1,
+      "time": 10,
+      "route": 15,
+      "fragment": 1
+     },
+     {
+      "enemy": "Infected Patrol Captain",
+      "enemy_id": "enemy_1107_uoffcr",
+      "count": 3,
+      "time": 27,
+      "interval": 15,
+      "route": 16,
+      "fragment": 1
+     },
+     {
+      "enemy": "Infected Patrol Captain",
+      "enemy_id": "enemy_1107_uoffcr",
+      "count": 2,
+      "time": 36,
+      "interval": 19,
+      "route": 17,
+      "fragment": 1
+     },
+     {
+      "enemy": "Ursus Mangler",
+      "enemy_id": "enemy_1108_uterer",
+      "count": 1,
+      "time": 68,
+      "route": 18,
+      "fragment": 2
+     },
+     {
+      "enemy": "Elite Infected Patrol Captain",
+      "enemy_id": "enemy_1107_uoffcr_2",
+      "count": 1,
+      "time": 65,
+      "route": 19,
+      "fragment": 2
+     },
+     {
+      "enemy": "Ursus Mangler",
+      "enemy_id": "enemy_1108_uterer",
+      "count": 1,
+      "time": 68,
+      "route": 20,
+      "fragment": 2
+     },
+     {
+      "enemy": "Infected Patrol Captain",
+      "enemy_id": "enemy_1107_uoffcr",
+      "count": 2,
+      "time": 92,
+      "interval": 4,
+      "route": 21,
+      "fragment": 2
+     },
+     {
+      "enemy": "Infected Patrol Captain",
+      "enemy_id": "enemy_1107_uoffcr",
+      "count": 3,
+      "time": 115,
+      "interval": 19,
+      "route": 21,
+      "fragment": 2
+     },
+     {
+      "enemy": "Ursus Mangler",
+      "enemy_id": "enemy_1108_uterer",
+      "count": 1,
+      "time": 150,
+      "route": 21,
+      "fragment": 2
+     },
+     {
+      "enemy": "Infected Patrol Captain",
+      "enemy_id": "enemy_1107_uoffcr",
+      "count": 5,
+      "time": 99,
+      "interval": 10,
+      "route": 16,
+      "fragment": 2
+     },
+     {
+      "enemy": "Infected Patrol Captain",
+      "enemy_id": "enemy_1107_uoffcr",
+      "count": 4,
+      "time": 99,
+      "interval": 17,
+      "route": 22,
+      "fragment": 2
+     },
+     {
+      "enemy": "Infected Patrol Captain",
+      "enemy_id": "enemy_1107_uoffcr",
+      "count": 1,
+      "time": 150,
+      "route": 22,
+      "fragment": 2
+     },
+     {
+      "enemy": "Infected Patrol Captain",
+      "enemy_id": "enemy_1107_uoffcr",
+      "count": 2,
+      "time": 156,
+      "interval": 4,
+      "route": 23,
+      "fragment": 2
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 1,
+    "routes": [
+     16,
+     16
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 2,
+    "col": 5,
+    "routes": [
+     18,
+     19,
+     20,
+     23
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 2,
+    "col": 10,
+    "routes": [
+     21,
+     21,
+     21
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 3,
+    "col": 0,
+    "routes": [
+     10,
+     17,
+     22,
+     22
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 4,
+    "col": 8,
+    "routes": [
+     20,
+     21,
+     21,
+     21
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 6,
+    "col": 2,
+    "routes": [
+     9,
+     10,
+     11,
+     17,
+     22,
+     22
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 6,
+    "col": 5,
+    "routes": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     16,
+     18,
+     19,
+     16,
+     23
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1107_uoffcr",
+    "slug": "infected_patrol_captain",
+    "name": "Infected Patrol Captain",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1107_uoffcr_2",
+    "slug": "elite_infected_patrol_captain",
+    "name": "Elite Infected Patrol Captain",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1108_uterer",
+    "slug": "ursus_mangler",
+    "name": "Ursus Mangler",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_3010_mcreep",
+    "slug": "miner_guerrilla",
+    "name": "Miner Guerrilla",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "conditionalHandled": false,
+ "devices": [],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23
+  ],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "16-2",
+  "geometryHash": "437d6ad05db48c5440fd7a508ef01c7873d3b2261d7f86b56049f7a9367a79c8",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      5,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "1": {
+    "points": [
+     [
+      6,
+      2
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "2": {
+    "points": [
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "3": {
+    "points": [
+     [
+      4,
+      1
+     ],
+     [
+      5,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "4": {
+    "points": [
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "5": {
+    "points": [
+     [
+      6,
+      1
+     ],
+     [
+      5,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "6": {
+    "points": [
+     [
+      4,
+      5
+     ],
+     [
+      5,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "7": {
+    "points": [
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "8": {
+    "points": [
+     [
+      6,
+      5
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "9": {
+    "points": [
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "10": {
+    "points": [
+     [
+      0,
+      3
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "11": {
+    "points": [
+     [
+      1,
+      3
+     ],
+     [
+      2,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "12": {
+    "points": [
+     [
+      8,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      5,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "13": {
+    "points": [
+     [
+      9,
+      5
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      5,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "14": {
+    "points": [
+     [
+      2,
+      6
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      0,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "15": {
+    "points": [
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "16": {
+    "points": [
+     [
+      1,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      5,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "17": {
+    "points": [
+     [
+      0,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "18": {
+    "points": [
+     [
+      5,
+      2
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      5,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "19": {
+    "points": [
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      5,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "20": {
+    "points": [
+     [
+      5,
+      2
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      8,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "21": {
+    "points": [
+     [
+      10,
+      2
+     ],
+     [
+      8,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "22": {
+    "points": [
+     [
+      0,
+      3
+     ],
+     [
+      2,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "23": {
+    "points": [
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1107_uoffcr": {
+   "key": "enemy_1107_uoffcr",
+   "prefabKey": "enemy_1107_uoffcr",
+   "name": "Infected Patrol Captain",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3300,
+    "atk": 330,
+    "def": 150,
+    "res": 20,
+    "moveSpeed": 1.1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Can use long-ranged weapons to attack <Ursus Civilians> and <Talulah, the Fighter>",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1107_uoffcr_2": {
+   "key": "enemy_1107_uoffcr_2",
+   "prefabKey": "enemy_1107_uoffcr_2",
+   "name": "Elite Infected Patrol Captain",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 4300,
+    "atk": 400,
+    "def": 150,
+    "res": 20,
+    "moveSpeed": 1.1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Can use long-ranged weapons to attack <Ursus Civilians> and <Talulah, the Fighter>",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_3010_mcreep": {
+   "key": "enemy_3010_mcreep",
+   "prefabKey": "enemy_3010_mcreep",
+   "name": "Miner Guerrilla",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3000,
+    "atk": 500,
+    "def": 150,
+    "res": 0,
+    "moveSpeed": 0.7,
+    "bat": 3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 1,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 0,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Allied unit; recovers HP when within any Medic Operator's Attack Range",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "TileEscapeShadowManager.times": 3,
+     "GetHeal.heal_scale": 0.5,
+     "FearLoseBlood.value": 200
+    },
+    "bbStr": {},
+    "groups": {
+     "TileEscapeShadowManager": [
+      "times"
+     ],
+     "GetHeal": [
+      "heal_scale"
+     ],
+     "FearLoseBlood": [
+      "value"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": true,
+   "tags": []
+  },
+  "enemy_1108_uterer": {
+   "key": "enemy_1108_uterer",
+   "prefabKey": "enemy_1108_uterer",
+   "name": "Ursus Mangler",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3500,
+    "atk": 380,
+    "def": 100,
+    "res": 20,
+    "moveSpeed": 1.7,
+    "bat": 1.5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ }
+}

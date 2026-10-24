@@ -6,9 +6,11 @@
 // per-enemy kits.
 import { enemyFeature, recordFeatureIds } from '../../../shared/arkpedia/enemy-features.js';
 import { installFeatureDispatch, attach, abOf, rebornAbility, featureAbilities, elem, hurt, areaAlliesInTiles } from './enemies.js';
+import { chapter16Abilities } from './chapter16.js';
 import { periodicDamage } from '../damage.js';
 
 const ABILITIES = Object.freeze({
+  ...chapter16Abilities,
   reborn: params => rebornAbility(params),
   ...featureAbilities,
   // 持续损失生命: `amount` HP every second, sourceless.

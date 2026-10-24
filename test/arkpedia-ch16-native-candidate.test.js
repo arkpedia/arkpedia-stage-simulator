@@ -32,13 +32,27 @@ test('candidate original component corruption fails the existing evidence verifi
   assert.throws(() => verifiedNative(changed, index.prefabs, indexSha, templates), /does not match the timing index/);
 });
 
-test('native availability does not admit unimplemented chapter 16 enemy behavior', () => {
+test('native availability admits only the implemented miner, leaving unfinished chapter 16 candidates gated', () => {
   const records = read('candidates/arkpedia-enemy-records.canonical.json');
   const support = deriveEnemySupport(Object.fromEntries(keys.map(key => [key, records.enemies[key]])),
     index.prefabs, candidate);
-  for (const key of keys) {
+  assert.equal(support[keys[0]].policy, 'stats-attacks-and-features');
+  for (const key of keys.slice(1)) {
     assert.equal(support[key].policy, null, key);
     assert.ok(support[key].reasons.length, key);
     assert.ok(support[key].reasons.every(reason => !reason.startsWith('prefab-missing:')), key);
+  }
+});
+
+test('miner support requires its retained native healing clock and passive reference', () => {
+  const records = read('candidates/arkpedia-enemy-records.canonical.json');
+  for (const change of [
+    c => { c._buffs[0].triggerInterval = 0.5; },
+    c => { c._buffs[0].templateKey = 'unreviewed_heal'; },
+  ]) {
+    const changed = structuredClone(candidate), row = changed.prefabs[prefabPath(keys[0])].find(c => c.objectName === 'GetHeal' && !c.referenced);
+    const component = JSON.parse(row.originalJson); change(component); row.originalJson = JSON.stringify(component);
+    const support = deriveEnemySupport({ [keys[0]]: records.enemies[keys[0]] }, index.prefabs, changed);
+    assert.equal(support[keys[0]].policy, null);
   }
 });

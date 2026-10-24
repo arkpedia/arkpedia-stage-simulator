@@ -10,6 +10,7 @@ import { applyStage } from '../shared/arkpedia/stages.js';
 import { StandardBattle, stageAdapter } from '../server/sim/arkpedia.js';
 import { defaultBuild } from '../shared/arkpedia/loadout.js';
 import support from '../data/arkpedia-enemy-support.json' with { type: 'json' };
+import candidateSupport from '../data/candidates/arkpedia-ch16-enemy-support.json' with { type: 'json' };
 import mvp from '../data/arkpedia-mvp.json' with { type: 'json' };
 
 const dataDir = new URL('../data/', import.meta.url);
@@ -22,8 +23,9 @@ test('every file-backed stage is supported, catalogue-loadable and fightable', {
     const id = file.replace(/^arkpedia-stage-/, '').replace(/\.json$/, '');
     assert.ok(stage.code, `${file} code`);
     assert.ok(stage.enemies && Object.keys(stage.enemies).length, `${id} carries enemy records`);
+    const selectedSupport = stage.testOnly && stage.enemyCatalogue === 'canonical-ch16-candidate-v1' ? candidateSupport : support;
     for (const [enemyId, record] of Object.entries(stage.enemies)) {
-      assert.ok(support.enemies[enemyId]?.policy, `${id} enemy ${enemyId} is supported`);
+      assert.ok(selectedSupport.enemies[enemyId]?.policy, `${id} enemy ${enemyId} is supported`);
       assert.equal(record.key, enemyId, `${id} record key`);
     }
     const adapter = stageAdapter(stage);
@@ -39,8 +41,8 @@ test('every file-backed stage is supported, catalogue-loadable and fightable', {
     }
 
     const data = structuredClone(mvp);
-    const index = { schemaVersion: 1, defaultStage: id, stages: [{ id, code: stage.code, name: stage.name, data: file }] };
-    const { entry } = await applyStage(data, index, null, async () => ({ ok: true, json: async () => stage }));
+    const index = { schemaVersion: 1, defaultStage: id, stages: [{ id, code: stage.code, name: stage.name, data: file, testOnly: stage.testOnly ?? false }] };
+    const { entry } = await applyStage(data, index, null, async () => ({ ok: true, json: async () => stage }), { experimental: true });
     assert.equal(entry.id, id); assert.equal(data.stage.code, stage.code);
     for (const enemyId of Object.keys(stage.enemies)) assert.ok(data.enemies[enemyId], `${id} merged ${enemyId}`);
 

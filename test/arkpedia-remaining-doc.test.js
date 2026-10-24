@@ -15,5 +15,5 @@ const count = label => {
 test('the remaining report matches the data snapshots', () => {
   assert.equal(count('Enemies supported'), support.summary.supported);
   assert.equal(count('Main source stages with committed files'), index.stages.filter(s => s.data).length);
-  assert.equal(count('Public catalogue'), index.stages.length);
+  assert.equal(count('Public catalogue'), index.stages.filter(s => !s.testOnly).length);
 });

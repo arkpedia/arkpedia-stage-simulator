@@ -12,6 +12,8 @@
 // An enemy is supported only when every feature it uses is registered and
 // covered (shared/arkpedia/enemy-support.js).
 
+import { CHAPTER16_FEATURES } from './chapter16-features.js';
+
 /** The group's parameter keys are exactly `params`. */
 const sig = (r, g, params) => JSON.stringify(r.talents.groups[g] ?? null) === JSON.stringify([...params].sort());
 const ELEMENT_TERMS = Object.freeze({ 'ba.dt.neural': 'neural', 'ba.dt.burning': 'burn', 'ba.dt.apoptosis': 'apoptosis', 'ba.dt.erosion': 'erosion' });
@@ -951,6 +953,7 @@ export const ENEMY_FEATURE_PATTERNS = Object.freeze([
 /** The registered feature for an id, exact or by pattern. */
 export function enemyFeature(id) {
   if (Object.hasOwn(ENEMY_FEATURES, id)) return ENEMY_FEATURES[id];
+  if (Object.hasOwn(CHAPTER16_FEATURES, id)) return CHAPTER16_FEATURES[id];
   if (!id.startsWith('ability:')) return null;
   const text = id.slice('ability:'.length);
   for (const p of ENEMY_FEATURE_PATTERNS) { const m = text.match(p.re); if (m) return p.make(m); }

@@ -21,27 +21,55 @@ export function verifiedNative(evidence, prefabs, indexSha, templatePin) {
   }
   return evidence;
 }
-export async function buildEnemySupport() {
-  const recordsRaw = await readFile(new URL('data/arkpedia-enemy-records.json', root)), indexRaw = await readFile(new URL('data/arkpedia-enemy-clock-source.json', root));
+export async function buildEnemySupport({ candidate = false } = {}) {
+  const recordsPath = candidate ? 'data/candidates/arkpedia-enemy-records.canonical.json' : 'data/arkpedia-enemy-records.json';
+  const recordsRaw = await readFile(new URL(recordsPath, root)), indexRaw = await readFile(new URL('data/arkpedia-enemy-clock-source.json', root));
   const nativeRaw = await readFile(new URL('data/arkpedia-enemy-native-abilities.json', root));
   const records = JSON.parse(recordsRaw), prefabs = JSON.parse(indexRaw).prefabs, native = verifiedNative(JSON.parse(nativeRaw), prefabs, sha(indexRaw), JSON.parse(await readFile(new URL('data/arkpedia-mvp.json', root))).behaviors.source);
+  let candidateSources;
+  if (candidate) {
+    const receipt = JSON.parse(await readFile(new URL('data/candidates/arkpedia-enemy-records.canonical.receipt.json', root)));
+    if (receipt.output.sha256 !== sha(recordsRaw) || receipt.output.bytes !== recordsRaw.length
+      || JSON.stringify(receipt.canonicalData) !== JSON.stringify(records.canonicalData))
+      throw Error('Canonical chapter 16 snapshot does not match its receipt');
+    const extraRaw = await readFile(new URL('data/candidates/arkpedia-ch16-native-abilities.json', root));
+    const extra = verifiedNative(JSON.parse(extraRaw), prefabs, sha(indexRaw), native.source.templates);
+    const actionRaw = await readFile(new URL('data/candidates/arkpedia-ch16-action-source.json', root));
+    const actions = JSON.parse(actionRaw), inventoryRaw = await readFile(new URL('data/arkpedia-cn-native-source.json', root));
+    const inventory = JSON.parse(inventoryRaw);
+    if (actions.source.sha256 !== sha(inventoryRaw)) throw Error('Chapter 16 actions name another native inventory');
+    for (const row of actions.source.bundles) {
+      const pinned = inventory.bundles.find(b => b.path === row.path);
+      if (pinned ? pinned.sha256 !== row.sha256 : row.manifestSha256 !== inventory.source.manifestSha256)
+        throw Error('Chapter 16 action bundle is not pinned');
+    }
+    for (const row of [...Object.values(actions.templates), ...Object.values(actions.projectiles).flat(), ...Object.values(actions.environments).flat()])
+      if (sha(row.originalJson) !== row.sha256) throw Error('Chapter 16 serialized action checksum mismatch');
+    candidateSources = { nativeAbilities: { path: 'data/candidates/arkpedia-ch16-native-abilities.json', sha256: sha(extraRaw) },
+      actions: { path: 'data/candidates/arkpedia-ch16-action-source.json', sha256: sha(actionRaw) } };
+    Object.assign(native.prefabs, extra.prefabs);
+  }
   const enemies = deriveEnemySupport(records.enemies, prefabs, native);
   const supported = Object.values(enemies).filter(e => e.policy).length;
   return { schemaVersion: 1,
     scope: 'Derived regular-stage enemy support. An enemy is supported only when everything it uses has an approved implementation; today that is the stat-only tier. Not a claim of game-frame parity.',
-    source: { records: { path: 'data/arkpedia-enemy-records.json', sha256: sha(recordsRaw) }, nativeTimingIndex: { path: 'data/arkpedia-enemy-clock-source.json', sha256: sha(indexRaw) },
-      nativeAbilities: { path: 'data/arkpedia-enemy-native-abilities.json', sha256: sha(nativeRaw) } },
+    source: { records: { path: recordsPath, sha256: sha(recordsRaw) }, nativeTimingIndex: { path: 'data/arkpedia-enemy-clock-source.json', sha256: sha(indexRaw) },
+      nativeAbilities: { path: 'data/arkpedia-enemy-native-abilities.json', sha256: sha(nativeRaw) },
+      ...(candidateSources ? { candidate: candidateSources } : {}) },
     summary: { enemies: Object.keys(enemies).length, supported, unsupported: Object.keys(enemies).length - supported },
     enemies };
 }
 if (import.meta.url === `file://${process.argv[1]}`) {
-  const support = await buildEnemySupport(), text = JSON.stringify(support) + '\n';
+  const candidate = process.argv.includes('--candidate-ch16');
+  const output = candidate ? new URL('data/candidates/arkpedia-ch16-enemy-support.json', root) : OUT;
+  const registryOutput = candidate ? new URL('data/candidates/arkpedia-ch16-regular-enemies.json', root) : REGISTRY;
+  const support = await buildEnemySupport({ candidate }), text = JSON.stringify(support) + '\n';
   // The compact registry the battle and app load: supported id -> policy.
-  const registry = JSON.stringify({ schemaVersion: 1, source: 'data/arkpedia-enemy-support.json',
+  const registry = JSON.stringify({ schemaVersion: 1, source: candidate ? 'data/candidates/arkpedia-ch16-enemy-support.json' : 'data/arkpedia-enemy-support.json',
     enemies: Object.fromEntries(Object.entries(support.enemies).filter(([, e]) => e.policy).map(([id, e]) => [id, e.policy])),
     spawns: Object.fromEntries(Object.entries(support.enemies).filter(([, e]) => e.policy && e.spawns.length).map(([id, e]) => [id, e.spawns])) }, null, 1) + '\n';
   if (process.argv.includes('--check')) {
-    if (await readFile(OUT, 'utf8') !== text || await readFile(REGISTRY, 'utf8') !== registry) { console.error('Enemy support files are stale'); process.exit(1); }
+    if (await readFile(output, 'utf8') !== text || await readFile(registryOutput, 'utf8') !== registry) { console.error('Enemy support files are stale'); process.exit(1); }
     console.log('Enemy support matches the catalogue and timing index');
-  } else { await writeFile(OUT, text); await writeFile(REGISTRY, registry); console.log(`Wrote ${text.length} + ${registry.length} bytes`); }
+  } else { await writeFile(output, text); await writeFile(registryOutput, registry); console.log(`Wrote ${text.length} + ${registry.length} bytes`); }
 }

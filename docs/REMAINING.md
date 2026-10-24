@@ -6,14 +6,14 @@ Snapshot: 2026-10-22. Regenerate the numbers with `npm run coverage:arkpedia-sta
 |---|---|---|
 | Operators / operator forms | 431 | 431 |
 | Enemies supported | 440 | 1,552 |
-| Main source stages with committed files | 596 | 564 |
+| Main source stages with committed files | 597 | 564 |
 | Public catalogue (includes embedded 0-1) | 597 | 597 built |
 
-The public catalogue is the committed `data/arkpedia-stage-*.json` set plus the embedded 0-1 stage; `testOnly` remains the gate for future stages.
+The public catalogue contains 597 reviewed stages. Experimental 16-2 is a separate test-only build using the complete canonical enemy candidate; see `CH16-BEHAVIORS.md`. Committed experimental files are counted above but are excluded from the public count.
 
 ## Built by chapter
 
-`npm run coverage:arkpedia-stages` prints the current table. At this snapshot (combat stages only; hard-variant geometry resolved from the base): Chapter 0 21/22, 1 18/22, 2 20/20, 3 13/16, 4 18/20, 5 8/20, 6 19/28, 7 24/32, 9 21/34, 10 28/30, 11 6/32, 12 29/35, 13 10/38, 14 25/38, 15 21/34, 16 0/32, 17 0/31, Other 37/61, Side stories 17/19. Remaining first blockers: devices 119, unsupported tokens 53, enemies 47, conditional 10.
+`npm run coverage:arkpedia-stages` prints the current table. At this snapshot (combat stages only; hard-variant geometry resolved from the base): Chapter 0 21/22, 1 18/22, 2 20/20, 3 13/16, 4 18/20, 5 8/20, 6 19/28, 7 24/32, 9 21/34, 10 28/30, 11 6/32, 12 29/35, 13 10/38, 14 25/38, 15 21/34, 16 1/32, 17 0/31, Other 37/61, Side stories 17/19. Remaining first blockers: devices 119, unsupported tokens 53, enemies 47, conditional 10.
 
 ## Why the other 594 main stages are not built
 
@@ -47,7 +47,7 @@ The unsupported-enemy group is ranked by stage count. The current top families:
 
 ## Verification
 
-- Full repository suite: 22,931 tests, 22,920 passed, 0 failed, 11 skipped.
+- Last baseline full repository suite: 22,931 tests, 22,920 passed, 0 failed, 11 skipped.
 - `npm run check:arkpedia-enemies` and `npm run check:arkpedia-stages` are the registry gates.
 - GitHub-hosted matrix only; `test/arkpedia-ci-runners.test.js` guards the runner labels.
 

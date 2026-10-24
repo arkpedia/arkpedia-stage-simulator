@@ -798,6 +798,15 @@ const STAND = { wind: 0, rest: 0 };
  * unblocked ranged enemy is in the wind-up of its next attack (cooldown ≤ its clip's wind-up, attackStand) with a
  * target in range: it stands (updateEnemy).
  */
+function enemyAttackCandidates(b, e, reach) {
+  const allies = b.alliesInRadius(e.x, e.y, reach, null);
+  // Neutral enemies (chapter 16 miners) oppose enemies but remain outside the
+  // operator roster. Their -1 taunt makes ordinary operators preferred.
+  for (const u of b.enemies) if (u !== e && u.alive && u.deployed && !u.hidden && u.profile?.neutral
+    && Math.hypot(u.x - e.x, u.y - e.y) <= reach) allies.push(u);
+  return allies;
+}
+
 function enemyAttack(b, e) {
   const def = e.def;
   if (e.profile && e.profile.noAttack) return false;
@@ -819,17 +828,17 @@ function enemyAttack(b, e) {
   if (e.atkCd > 0) {
     // the wind-up of the next attack (GitHub #58): an unblocked ranged enemy stands once a target is in range
     if (e.blockedBy || radius <= 0 || !(e.atkCd <= attackStand(e, STAND).wind + 1e-9)) return false;
-    return b.alliesInRadius(e.x, e.y, reach, null).some((a) => canTargetAlly(e, a, true) && (!own || own(a)));
+    return enemyAttackCandidates(b, e, reach).some((a) => canTargetAlly(e, a, true) && (!own || own(a)));
   }
   let targets = [];
   if (e.blockedBy) {
     const bl = e.blockedBy;
     if (radius > 0) {
-      targets = b.alliesInRadius(e.x, e.y, reach, null).filter((a) => a === bl || canTargetAlly(e, a, true));
+      targets = enemyAttackCandidates(b, e, reach).filter((a) => a === bl || canTargetAlly(e, a, true));
       if (!targets.includes(bl) && bl.alive) targets.push(bl);
     } else if (bl.alive && bl.deployed) targets = [bl];
   } else if (radius > 0) {
-    targets = b.alliesInRadius(e.x, e.y, reach, null).filter((a) => canTargetAlly(e, a, true));
+    targets = enemyAttackCandidates(b, e, reach).filter((a) => canTargetAlly(e, a, true));
   }
   if (own && targets.length) targets = targets.filter((a) => own(a));
   if (targets.length > 1) sortAllyTargets(e, targets);

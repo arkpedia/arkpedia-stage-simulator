@@ -65,6 +65,8 @@ export async function applyStage(data, index, requested = null, fetchImpl = fetc
     if (!response.ok) throw Error(`Stage data unavailable: ${entry.id}`);
     const stage = await response.json();
     if (!stage || typeof stage !== 'object' || !stage.geometry) throw Error(`Stage data is not a stage: ${entry.id}`);
+    if (stage.enemyCatalogue && (!entry.testOnly || !experimental || stage.testOnly !== true))
+      throw Error('Candidate enemy catalogue requires an experimental test-only stage');
     data.stage = { ...stage, code: entry.code, name: entry.name, description: entry.description ?? stage.description ?? '' };
     if (stage.operators && typeof stage.operators === 'object') data.operators = { ...(data.operators ?? {}), ...stage.operators };
     if (stage.enemies && typeof stage.enemies === 'object') data.enemies = { ...(data.enemies ?? {}), ...stage.enemies };
