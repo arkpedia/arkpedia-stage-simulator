@@ -11,7 +11,7 @@ export async function loadCanonicalEnemyTables({ lock, cacheDir, fetchImpl = fet
   if (!/^[a-f0-9]{40}$/.test(pin.commit ?? '')) throw new Error('Canonical data lock has an invalid commit');
   if (!cacheDir) throw new Error('A cache directory is required');
   await mkdir(cacheDir, { recursive: true });
-  const out = {};
+  const staged = [];
   for (const [name, file] of Object.entries(pin.files ?? {})) {
     if (!file || typeof file.path !== 'string' || file.path.split('/').some(part => !part || part === '.' || part === '..')) throw new Error(`Invalid canonical path for ${name}`);
     const url = `https://raw.githubusercontent.com/${pin.repository}/${pin.commit}/${file.path}`;
@@ -19,11 +19,17 @@ export async function loadCanonicalEnemyTables({ lock, cacheDir, fetchImpl = fet
     if (!response.ok) throw new Error(`Canonical fetch failed for ${name}: HTTP ${response.status}`);
     const bytes = Buffer.from(await response.arrayBuffer());
     if (bytes.length !== file.bytes || sha(bytes) !== file.sha256) throw new Error(`Canonical checksum mismatch for ${name}`);
+    staged.push({ name, bytes, url, file });
+  }
+  // All-or-nothing: only after every input has verified do we expose any file.
+  const out = {};
+  const nonce = `${process.pid}-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+  for (const { name, bytes, url, file } of staged) {
     const target = join(cacheDir, `${name}.json`);
-    const temp = `${target}.tmp`;
+    const temp = `${target}.${nonce}.tmp`;
     await writeFile(temp, bytes);
     await rename(temp, target);
-    out[name] = { bytes, url, path: target };
+    out[name] = { bytes, url, path: target, sha256: file.sha256 };
   }
-  return { commit: pin.commit, repository: pin.repository, files: out };
+  return { commit: pin.commit, repository: pin.repository, upstream: pin.upstream ?? null, files: out };
 }
