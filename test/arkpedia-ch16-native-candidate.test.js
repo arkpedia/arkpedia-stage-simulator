@@ -56,3 +56,14 @@ test('miner support requires its retained native healing clock and passive refer
     assert.equal(support[keys[0]].policy, null);
   }
 });
+
+
+test('miner support refuses a changed native profession validator', () => {
+  const records = read('candidates/arkpedia-enemy-records.canonical.json'), changed = structuredClone(candidate);
+  const rows = changed.prefabs[prefabPath(keys[0])];
+  const heal = JSON.parse(rows.find(c => c.objectName === 'GetHeal' && !c.referenced).originalJson);
+  const validator = rows.find(c => c.pathId === heal._targetValidator.m_PathID);
+  const value = JSON.parse(validator.originalJson); value._targetOptions.professionMask = 16;
+  validator.originalJson = JSON.stringify(value);
+  assert.equal(deriveEnemySupport({ [keys[0]]: records.enemies[keys[0]] }, index.prefabs, changed)[keys[0]].policy, null);
+});

@@ -8,11 +8,15 @@ function minerCovered(r, n) {
     && r.skills.length === 0 && r.abilities.length === 1 && r.abilities[0].text === MINER_TEXT
     && r.notCountInTotal && r.stats.lpr === 0
     && n.GetHeal?.length === 1 && n.GetHeal[0]._buffs?.[0]?.triggerInterval === 1
-    && n.GetHeal[0]._buffs[0].templateKey === 'mcreep_t[get_heal]'
+    && n.GetHeal[0]._buffs.length === 1 && n.GetHeal[0]._buffs[0].templateKey === 'mcreep_t[get_heal]'
+    && n.$ref(n.GetHeal[0]._targetValidator)?._targetOptions?.professionMask === 8
+    && n.$ref(n.GetHeal[0]._targetValidator)?._targetOptions?.targetSide === 7
     && n.FearLoseBlood?.[0]?._buffs?.[0]?.templateKey === 'mcreep_t[fear_listener]'
     && Math.abs(n.FearLoseBlood[0]._buffs[0].triggerInterval - 0.3) < 1e-7
     && n.TileEscapeShadowManager?.[0]?._buffs?.[0]?.templateKey === 'mcreep_t[work_espace_shadow]'
-    && n.Passive?.[0]?._buffs?.some(b => b.buffKey === 'mark_neutral[effect]')
+    && JSON.stringify(n.Passive?.[0]?._buffs?.map(b => b.buffKey)) === JSON.stringify([
+      'enemy_mcreep_self_mark', 'enemy_mcreep_able_to_be_blocked', 'mark_neutral[effect]', 'mcreep_a[reach_exit]'])
+    && n.Default?.[0]?._generalAbilities?.length === 1
     && n.$ref(n.Default?.[0]?._generalAbilities?.[0]) === n.Passive[0];
 }
 const miner = { covers: minerCovered, ability: { kind: 'ch16Miner', params: r => r },
