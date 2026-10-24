@@ -65,3 +65,13 @@ test('miner support refuses a changed native profession validator', () => {
   validator.originalJson = JSON.stringify(value);
   assert.equal(deriveEnemySupport({ [keys[0]]: records.enemies[keys[0]] }, index.prefabs, changed)[keys[0]].policy, null);
 });
+
+test('10120 BlockMcreep evidence clears candidate support', () => {
+  const records = read('candidates/arkpedia-enemy-records.canonical.json');
+  const extra = read('candidates/arkpedia-ch16-native-10120.json');
+  verifiedNative(extra, index.prefabs, indexSha, templates);
+  const native = { ...candidate, prefabs: { ...candidate.prefabs, ...extra.prefabs } };
+  const support = deriveEnemySupport({ enemy_10120_uaghst: records.enemies.enemy_10120_uaghst }, index.prefabs, native);
+  assert.equal(support.enemy_10120_uaghst.policy, 'stats-attacks-and-features');
+  assert.deepEqual(support.enemy_10120_uaghst.reasons, []);
+});

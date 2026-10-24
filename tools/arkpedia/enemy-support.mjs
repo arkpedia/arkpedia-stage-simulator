@@ -50,6 +50,10 @@ export async function buildEnemySupport({ candidate = false } = {}) {
     candidateSources = { reviewedContract: { path: 'data/candidates/arkpedia-ch17-reviewed-contracts.json', sha256: sha(contractRaw) }, nativeAbilities: { path: 'data/candidates/arkpedia-ch16-native-abilities.json', sha256: sha(extraRaw) },
       actions: { path: 'data/candidates/arkpedia-ch16-action-source.json', sha256: sha(actionRaw) } };
     Object.assign(native.prefabs, extra.prefabs);
+    const extra10120Raw = await readFile(new URL('data/candidates/arkpedia-ch16-native-10120.json', root));
+    const extra10120 = verifiedNative(JSON.parse(extra10120Raw), prefabs, sha(indexRaw), native.source.templates);
+    Object.assign(native.prefabs, extra10120.prefabs);
+    candidateSources.nativeAbilities10120 = { path: 'data/candidates/arkpedia-ch16-native-10120.json', sha256: sha(extra10120Raw) };
   }
   const enemies = deriveEnemySupport(records.enemies, prefabs, native);
   const supported = Object.values(enemies).filter(e => e.policy).length;
