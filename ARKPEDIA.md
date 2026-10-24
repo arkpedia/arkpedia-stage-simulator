@@ -6154,3 +6154,7 @@ Promoted **DH-9** and **DH-EX-8 + challenge** public after the Pancho adapter pa
 Promoted **189 event stages** public after the full smoke/data review; only main-stage holdouts plus TR-26 remain testOnly. Catalogue **597** = **566 public + 31 testOnly**.
 
 Promoted the final 31 built stages public after smoke/data review. Catalogue **597 public / 0 testOnly**.
+
+Added a checksum-verified canonical loader pinned to `arkpedia/arkpedia-data` commit `79e81a8a872b2ecc592647d81a864ccbf1f8ca06`; `npm run sync:arkpedia-canonical` fetches and verifies the raw enemy database/handbook. Tests cover valid fetch, checksum corruption and missing snapshots.
+
+Added the canonical enemy-record compiler path: `npm run refresh:arkpedia-enemies` verifies the pinned arkpedia-data snapshot, compiles enemy records and writes only `data/candidates/arkpedia-enemy-records.canonical.json` plus a receipt. The reviewed public catalogue is untouched.
