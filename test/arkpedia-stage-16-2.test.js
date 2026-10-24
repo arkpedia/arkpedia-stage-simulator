@@ -4,10 +4,12 @@ import assert from 'node:assert/strict';
 import stage from '../data/arkpedia-stage-16-2.json' with { type: 'json' };
 import mvp from '../data/arkpedia-mvp.json' with { type: 'json' };
 import index from '../data/arkpedia-stages.json' with { type: 'json' };
+import records from '../data/candidates/arkpedia-enemy-records.canonical.json' with { type: 'json' };
 import { applyStage, resolveStage } from '../shared/arkpedia/stages.js';
 import { assertRegularEnemies, REGULAR_ENEMIES } from '../shared/arkpedia/enemies.js';
 import { defaultBuild } from '../shared/arkpedia/loadout.js';
 import { StandardBattle, stageAdapter } from '../server/sim/arkpedia.js';
+import { applyEnemyFeatures } from '../server/sim/content/arkpedia-enemy-features.js';
 const fetchStage = async () => ({ ok: true, json: async () => structuredClone(stage) });
 
 test('16-2 is a canonical candidate behind both experimental and test-only admission', async () => {
@@ -34,4 +36,23 @@ test('16-2 retains all 42 spawns, four canonical records and runs through the na
   for (let i = 0; i < Math.round(180 / b.dt) && !b.finished; i++) b.step();
   assert.deepEqual(b.errors, []);
   assert.ok(miners.length > 0); assert.ok(miners.every(e => e.profile.friendly));
+});
+
+test('10120 BlockMcreep selects one miner, binds it, and retargets after death', () => {
+  const data = { ...structuredClone(mvp), stage, enemies: { ...structuredClone(stage.enemies), enemy_10120_uaghst: { ...records.enemies.enemy_10120_uaghst.levels['0'], key: 'enemy_10120_uaghst' } } };
+  const b = new StandardBattle(data, { operators: [defaultBuild(Object.values(data.operators)[0])] });
+  const a = b.spawnEnemy('enemy_10120_uaghst', { pos: [3, 3] });
+  const m1 = b.spawnEnemy('enemy_3010_mcreep', { pos: [3, 4] });
+  const m2 = b.spawnEnemy('enemy_3010_mcreep', { pos: [3, 2] });
+  const far = b.spawnEnemy('enemy_3010_mcreep', { pos: [6, 9] });
+  assert.ok(a && m1 && m2 && far);
+  applyEnemyFeatures(b, a);
+  for (let i = 0; i < Math.round(1 / b.dt); i++) b.step();
+  const bound = [m1, m2].filter(m => m.mem.blockedMcreepBy === a.id);
+  assert.equal(bound.length, 1);
+  bound[0].hp = 0; bound[0].alive = false;
+  for (let i = 0; i < Math.round(1 / b.dt); i++) b.step();
+  const other = m1 === bound[0] ? m2 : m1;
+  assert.equal(other.mem.blockedMcreepBy, a.id);
+  assert.equal(far.mem.blockedMcreepBy, undefined);
 });

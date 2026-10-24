@@ -11,6 +11,26 @@ import { periodicDamage } from '../damage.js';
 
 const ABILITIES = Object.freeze({
   ...chapter16Abilities,
+  blockMcreep: ({ cnt = 1, range = 1 }) => ({
+    spawn(b, e) { e.mem.mcAcc = 0; e.mem.mcTarget = null; },
+    tick(b, e, _a, dt) {
+      if (!e.alive) return;
+      e.mem.mcAcc = (e.mem.mcAcc ?? 0) + dt;
+      if (e.mem.mcAcc < 0.3) return;
+      e.mem.mcAcc = 0;
+      let t = e.mem.mcTarget;
+      if (!t?.alive || t.mem?.blockedMcreepBy !== e.id) t = null;
+      if (!t) {
+        const candidates = b.enemies.filter(x => x.alive && x !== e && String(x.defId).startsWith('enemy_3010_mcreep')
+          && Math.max(Math.abs(x.tileR - e.tileR), Math.abs(x.tileC - e.tileC)) <= range
+          && (!x.mem?.blockedMcreepBy || x.mem.blockedMcreepBy === e.id))
+          .sort((a, z) => Math.hypot(a.tileR - e.tileR, a.tileC - e.tileC) - Math.hypot(z.tileR - e.tileR, z.tileC - e.tileC));
+        t = candidates[0] ?? null;
+        if (t) { t.mem.blockedMcreepBy = e.id; e.mem.mcTarget = t; }
+      }
+      if (t) b.applyStatus(t, 'bind', { duration: 0.35, source: e });
+    },
+  }),
   reborn: params => rebornAbility(params),
   ...featureAbilities,
   // 持续损失生命: `amount` HP every second, sourceless.

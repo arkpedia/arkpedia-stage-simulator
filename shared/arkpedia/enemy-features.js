@@ -216,6 +216,11 @@ export const ENEMY_FEATURES = Object.freeze({
   'ability:Drains 1 Life Point when entering the Objective Point': { covers: r => r.stats.lpr === 1, note: 'the engine drains lpr Life Points on a leak' },
   // Spawn traits.
   'ability:Cannot be blocked.': { covers: () => true, trait: { flags: { unblockable: true } }, note: 'unblockable for life' },
+  'ability:Can fight 1 <Miner Guerrilla> at a time': { covers: r => r.key === 'enemy_10120_uaghst',
+    ability: r => ({ kind: 'blockMcreep', params: () => ({ cnt: r.talents.bb['BlockMcreep.block_mcreep_cnt'] ?? 1, range: (r.talents.bb['BlockMcreep.range_radius'] ?? 0.9) + (r.talents.bb['BlockMcreep.range_radius_add'] ?? 0.1) }) }),
+    note: 'BlockMcreep: every 0.3 s selects one nearest Miner Guerrilla and applies UNMOVABLE; one engagement at a time', nativeClaim: () => ({ active: 1 }) },
+  'talent:BlockMcreep': { covers: r => r.key === 'enemy_10120_uaghst',
+    note: 'native BlockMcreep/SelectNearestMcreep pair; runtime lives on the ability line', nativeClaim: () => ({ wrappers: 2 }) },
   'ability:<$ba.invisible>Invisible</>': { covers: () => true, trait: { flags: { stealth: true } },
     note: 'Invisible (ba.invisible): untargetable until revealed or blocked; blocking lifts it for the engine STEALTH_RESTORE window' },
   'ability:Attacks two targets simultaneously.': { covers: r => r.applyWay === 'RANGED' && r.stats.rangeRadius > 0, trait: { maxTargets: 2 }, note: 'two ranged targets per attack' },
