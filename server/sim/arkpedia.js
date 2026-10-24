@@ -274,7 +274,7 @@ export function stageAdapter(source) {
   const tokenCards = Array.isArray(g.suppliedUnits) ? [] : (g.suppliedUnits?.deployable_tokens ?? []).filter(t => t.count !== 0);
   const unsupportedTokens = tokenCards.filter(t => !STAGE_TOKEN_UNITS[t.unit_id]);
   if (unsupportedTokens.length) throw new Error(`Unsupported stage tokens: ${[...new Set(unsupportedTokens.map(t => t.unit_id))].join(', ')}`);
-  if (g.rows > 19 || g.cols > 21 || g.hasConditionalSpawns)
+  if (g.rows > 19 || g.cols > 21 || (g.hasConditionalSpawns && !source.conditionalHandled))
     throw new Error("Unsupported stage mechanics");
   const baseChars = ["#", "h", "r", "S", "E"];
   const chars = g.tileLegend.map((_, i) => baseChars[i] ?? String.fromCharCode(65 + i - baseChars.length));

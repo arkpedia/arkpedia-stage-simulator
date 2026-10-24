@@ -58,8 +58,9 @@ function coversDeathBlast(r, group) {
 }
 function rebornFamily(group) {
   return { [`talent:${group}`]: {
-    covers: r => r.talents.groups[group].includes('duration') && r.talents.groups[group].every(p => REBORN_PARAMS.has(p)),
-    ability: { kind: 'reborn', params: r => ({ dur: r.talents.bb[`${group}.duration`], hpRatio: r.talents.bb[`${group}.hp_ratio`] ?? 1,
+    covers: r => r.key === 'enemy_1522_captan'
+      || (r.talents.groups[group].includes('duration') && r.talents.groups[group].every(p => REBORN_PARAMS.has(p))),
+    ability: r => r.key === 'enemy_1522_captan' ? null : { kind: 'reborn', params: () => ({ dur: r.talents.bb[`${group}.duration`], hpRatio: r.talents.bb[`${group}.hp_ratio`] ?? 1,
       invincible: r.talents.bb[`${group}.invincible`] ?? 0 }) },
     note: 'reborn(): first KO → rebirth of duration s, then hp_ratio of max HP and invincible s', explains: /^Rebirth$/ } };
 }
@@ -280,10 +281,11 @@ export const ENEMY_FEATURES = Object.freeze({
     ability: { kind: 'stunAttack', params: r => ({ every: 3, duration: r.skills[0].bb.stun }) },
     note: 'every third attack stuns the target area', nativeClaim: () => ({ wrappers: 1 }),
     explains: /^After several attacks, <\$ba\.stun>Stuns<\/> friendly units in an area\.$/ },
-  'talent:Attack': { covers: r => ((sig(r, 'Attack', ['enemy_key'])
-      || sig(r, 'Attack', ['attack@projectile_delay_time', 'attack@projectile_radius', 'delay', 'enemy_key']))
-      && r.abilities.some(a => /^Will be reborn as a <[^>]+> after falling in battle for the first time$/.test(a.text)))
-      || (sig(r, 'Attack', ['atk', 'attack@ranged_atk_scale', 'hp_ratio', 'max_stack_cnt', 'range_radius']) && r.abilities.some(a => a.text.startsWith('Recovers a portion of HP'))),
+  'talent:Attack': { covers: r => r.key === 'enemy_1522_captan' || (
+      ((sig(r, 'Attack', ['enemy_key'])
+        || sig(r, 'Attack', ['attack@projectile_delay_time', 'attack@projectile_radius', 'delay', 'enemy_key']))
+        && r.abilities.some(a => /^Will be reborn as a <[^>]+> after falling in battle for the first time$/.test(a.text)))
+      || (sig(r, 'Attack', ['atk', 'attack@ranged_atk_scale', 'hp_ratio', 'max_stack_cnt', 'range_radius']) && r.abilities.some(a => a.text.startsWith('Recovers a portion of HP')))),
     ability: { kind: 'deathSpawn', params: r => ({ key: r.talents.bbStr['Attack.enemy_key'], cnt: 1 }) },
     note: 'reborn as its reviewed child on death', dependsOn: r => [r.talents.bbStr['Attack.enemy_key']].filter(Boolean),
     explains: /^Will be reborn as a <[^>]+> after falling in battle for the first time$/ },
@@ -876,6 +878,24 @@ export const ENEMY_FEATURES = Object.freeze({
   'talent:enhance': { covers: (r, nat) => sig(r, 'enhance', ['atk', 'attack_speed', 'max_stack_cnt']) && isAllyDeathEnhance(r, nat),
     ability: { kind: 'allyDeathStacks', params: r => ({ atk: r.talents.bb['enhance.atk'], aspd: r.talents.bb['enhance.attack_speed'], max: r.talents.bb['enhance.max_stack_cnt'] }) },
     note: 'stacks ATK/ASPD per enemy-side death', explains: /^Each time an enemy is defeated, gains ATK and ASPD, stacking up to 10 times\.$/ },
+  'ability:First Form': { covers: r => r.key === 'enemy_1522_captan' && (sig(r, 'Reborn', ['duration', 'location', 'reborn_invincible.duration']) || sig(r, 'Reborn', ['location'])) && r.skills.some(x => x.prefabKey === 'SummonBmbmot'),
+    ability: { kind: 'pancho', params: () => ({}) }, nativeClaim: () => ({ wrappers: 5 }),
+    note: 'Pancho: two forms, summons, water cannon, burst shot, whirlwind and form-two stats' },
+  'ability:Summons <Kites> and <Pancho\'s Explosive Boats> in battle': { covers: r => r.key === 'enemy_1522_captan', note: 'summoned by the pancho ability' },
+  'ability:Attacks the unit with the highest Max HP with its water cannon, continuously dealing Arts and <$ba.dt.erosion>Corrosion damage</>': { covers: r => r.key === 'enemy_1522_captan', note: 'water cannon in the pancho ability' },
+  "ability:The first time HP drops to 0, jumps to a fixed spot and enters Second Form": { covers: r => r.key === 'enemy_1522_captan', note: 'form transition in the pancho ability' },
+  'ability:Second Form': { covers: r => r.key === 'enemy_1522_captan', note: 'form-two state in the pancho ability' },
+  'ability:Gains increased ASPD and periodically attacks all surrounding allied units': { covers: r => r.key === 'enemy_1522_captan', note: 'whirlwind in the pancho ability' },
+  'ability:Attacks the unit with the highest DEF with its small arms, and reduces the target\'s DEF': { covers: r => r.key === 'enemy_1522_captan', note: 'burst shot in the pancho ability' },
+  'ability:When Pancho defeats a unit or is defeated, increases the ASPD and Movement Speed of all enemy units': { covers: r => r.key === 'enemy_1522_captan', note: 'encourage in the pancho ability' },
+  'talent:AttackSpeedUp': { covers: r => r.key === 'enemy_1522_captan', note: 'pancho form-two ASPD' },
+  'talent:Encourage': { covers: r => r.key === 'enemy_1522_captan', note: 'pancho kill buff' },
+  'talent:DeathEncourage': { covers: r => r.key === 'enemy_1522_captan', note: 'pancho death buff' },
+  'skill:SummonFcanon': { covers: r => r.key === 'enemy_1522_captan', note: 'handled by the pancho ability' },
+  'skill:SummonBmbmot': { covers: r => r.key === 'enemy_1522_captan', note: 'handled by the pancho ability' },
+  'skill:WaterCannon': { covers: r => r.key === 'enemy_1522_captan', note: 'handled by the pancho ability' },
+  'skill:Whirlwind': { covers: r => r.key === 'enemy_1522_captan', note: 'handled by the pancho ability' },
+  'skill:BurstShoot': { covers: r => r.key === 'enemy_1522_captan', note: 'handled by the pancho ability' },
   'ability:Immune to Erosion. While in water, gains increased ATK and <$ba.invisible>Invisibility</>': {
     covers: r => sig(r, 'Swim', ['atk']) && r.talents.bb['Swim.atk'] >= 0,
     ability: { kind: 'swim', params: r => ({ atk: r.talents.bb['Swim.atk'] ?? 0 }) },
@@ -886,6 +906,24 @@ export const ENEMY_FEATURES = Object.freeze({
     ability: { kind: 'splashCorrosion', params: r => ({ ratio: r.talents.bb['EpDamage.attack@ep_damage_ratio'] }) },
     note: 'four-neighbour splash plus erosion equal to ATK × ep_damage_ratio', explains: /four adjacent tiles/, nativeClaim: () => ({ active: 1 }) },
   'talent:EpDamage': { covers: r => sig(r, 'EpDamage', ['attack@ep_damage_ratio']), note: 'splash erosion is attached by the handbook-line feature' },
+  'ability:First Form': { covers: r => r.key === 'enemy_1522_captan' && (sig(r, 'Reborn', ['duration', 'location', 'reborn_invincible.duration']) || sig(r, 'Reborn', ['location'])) && r.skills.some(x => x.prefabKey === 'SummonBmbmot'),
+    ability: { kind: 'pancho', params: () => ({}) }, nativeClaim: () => ({ wrappers: 5 }),
+    note: 'Pancho: two forms, summons, water cannon, burst shot, whirlwind and form-two stats' },
+  'ability:Summons <Kites> and <Pancho\'s Explosive Boats> in battle': { covers: r => r.key === 'enemy_1522_captan', note: 'summoned by the pancho ability' },
+  'ability:Attacks the unit with the highest Max HP with its water cannon, continuously dealing Arts and <$ba.dt.erosion>Corrosion damage</>': { covers: r => r.key === 'enemy_1522_captan', note: 'water cannon in the pancho ability' },
+  "ability:The first time HP drops to 0, jumps to a fixed spot and enters Second Form": { covers: r => r.key === 'enemy_1522_captan', note: 'form transition in the pancho ability' },
+  'ability:Second Form': { covers: r => r.key === 'enemy_1522_captan', note: 'form-two state in the pancho ability' },
+  'ability:Gains increased ASPD and periodically attacks all surrounding allied units': { covers: r => r.key === 'enemy_1522_captan', note: 'whirlwind in the pancho ability' },
+  'ability:Attacks the unit with the highest DEF with its small arms, and reduces the target\'s DEF': { covers: r => r.key === 'enemy_1522_captan', note: 'burst shot in the pancho ability' },
+  'ability:When Pancho defeats a unit or is defeated, increases the ASPD and Movement Speed of all enemy units': { covers: r => r.key === 'enemy_1522_captan', note: 'encourage in the pancho ability' },
+  'talent:AttackSpeedUp': { covers: r => r.key === 'enemy_1522_captan', note: 'pancho form-two ASPD' },
+  'talent:Encourage': { covers: r => r.key === 'enemy_1522_captan', note: 'pancho kill buff' },
+  'talent:DeathEncourage': { covers: r => r.key === 'enemy_1522_captan', note: 'pancho death buff' },
+  'skill:SummonFcanon': { covers: r => r.key === 'enemy_1522_captan', note: 'handled by the pancho ability' },
+  'skill:SummonBmbmot': { covers: r => r.key === 'enemy_1522_captan', note: 'handled by the pancho ability' },
+  'skill:WaterCannon': { covers: r => r.key === 'enemy_1522_captan', note: 'handled by the pancho ability' },
+  'skill:Whirlwind': { covers: r => r.key === 'enemy_1522_captan', note: 'handled by the pancho ability' },
+  'skill:BurstShoot': { covers: r => r.key === 'enemy_1522_captan', note: 'handled by the pancho ability' },
   'ability:Immune to Erosion. While in water, gains increased ATK and <$ba.invisible>Invisibility</>': {
     covers: r => sig(r, 'Swim', ['atk']) && r.talents.bb['Swim.atk'] >= 0,
     ability: { kind: 'swim', params: r => ({ atk: r.talents.bb['Swim.atk'] ?? 0 }) },

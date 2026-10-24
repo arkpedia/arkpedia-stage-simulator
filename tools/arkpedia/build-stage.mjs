@@ -71,6 +71,7 @@ const stage = {
   mapTags: [],
   mapTagSource: null,
   geometry,
+  conditionalHandled: args.allowConditional === '1',
   devices,
   tokens,
   operators: Object.keys(supportForStage).length ? supportForStage : undefined,

@@ -6146,3 +6146,5 @@ Implemented Kite device fire and platform-device tiles; built DH-EX-3 and challe
 Promoted Dossoles **DH-1 through DH-8** public after smoke/data review (high tide, deep water, platform and Kite-enabled stages). Catalogue **594** = 350 public + 244 testOnly.
 
 Promoted the remaining Dossoles EX, MO, S and TR stages public after smoke/data review. Dossoles public coverage is now complete except DH-9/EX-8 (Pancho conditional summons). Catalogue **594** = 374 public + 220 testOnly.
+
+Implemented the Pancho Salas adapter (two forms, form-two stats, Kite/Explosive Boat summons, water cannon, burst shot, whirlwind); built DH-9 and DH-EX-8 plus challenge as testOnly with `conditionalHandled`. Catalogue **597** = 374 public + 223 testOnly; 596 files.
