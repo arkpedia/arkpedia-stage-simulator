@@ -6148,3 +6148,5 @@ Promoted Dossoles **DH-1 through DH-8** public after smoke/data review (high tid
 Promoted the remaining Dossoles EX, MO, S and TR stages public after smoke/data review. Dossoles public coverage is now complete except DH-9/EX-8 (Pancho conditional summons). Catalogue **594** = 374 public + 220 testOnly.
 
 Implemented the Pancho Salas adapter (two forms, form-two stats, Kite/Explosive Boat summons, water cannon, burst shot, whirlwind); built DH-9 and DH-EX-8 plus challenge as testOnly with `conditionalHandled`. Catalogue **597** = 374 public + 223 testOnly; 596 files.
+
+Promoted **DH-9** and **DH-EX-8 + challenge** public after the Pancho adapter passed smoke/data review. Catalogue **597** = 377 public + 220 testOnly.
