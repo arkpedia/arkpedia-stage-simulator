@@ -20,6 +20,42 @@ const ABILITIES = Object.freeze({
       b.addBuff(e, { key: 'ab:swim', duration: 1.2, refresh: 'replace', visible: true, mods: { atkPct: atk }, flags: { stealth: true } });
     },
   }),
+
+  pancho: () => ({
+    spawn(b, e, a) {
+      a.form = 1; a.f = 0; a.b = 0; a.w = 0; a.u = 0; a.whirl = 0;
+      e.profile.noAttack = true;
+    },
+    tick(b, e, a, dt) {
+      if (!e.alive) return;
+      a.f += dt; a.b += dt; a.w += dt; a.u += dt; a.whirl += dt;
+      if (a.f >= 20) { a.f = 0; const k = b.spawnEnemy('enemy_1162_magmot', { pos: [e.tileR, e.tileC] }); if (k) k.s.moveSpeed = 0.5; }
+      if (a.b >= 17) { a.b = 0; b.spawnEnemy('enemy_1164_bmbmot_3', { pos: [e.tileR, e.tileC] }); }
+      if (a.w >= 18) {
+        a.w = 0;
+        const t = b.allyUnits.filter(u => u.alive && u.deployed).sort((x, y) => y.s.maxHp - x.s.maxHp)[0];
+        if (t) { hurt(b, e, t, e.s.atk * 0.2, 'arts'); elem(b, e, t, 'erosion', e.s.atk * 0.2); }
+      }
+      if (a.u >= 18) {
+        a.u = 0;
+        const t = b.allyUnits.filter(u => u.alive && u.deployed).sort((x, y) => y.s.def - x.s.def)[0];
+        if (t) { hurt(b, e, t, e.s.atk * 0.5, 'phys'); b.addBuff(t, { key: 'pancho:defdown', duration: 10, mods: { defPct: -0.5 }, visible: true }); }
+      }
+      if (a.whirl >= 2 && a.form === 2) {
+        a.whirl = 0;
+        for (const u of areaAlliesInTiles(b, e, e.tileR, e.tileC, 'box', 1)) {
+          if (u.alive) { hurt(b, e, u, e.s.atk, 'phys'); elem(b, e, u, 'erosion', e.s.atk * 0.3); }
+        }
+      }
+    },
+    killed(c, b, e, a) {
+      if (a.form !== 1) return false;
+      a.form = 2; e.base.maxHp = e.s.maxHp = 35000; e.base.atk = e.s.atk = 1200; e.base.def = e.s.def = 850;
+      e.hp = 35000; e.profile.noAttack = true;
+      b.addBuff(e, { key: 'pancho:form2', duration: 10, visible: true, flags: { invulnerable: true } });
+      return true;
+    },
+  }),
   bmbmot: ({ scale, epRatio }) => ({
     death(c, b, e) {
       for (const u of areaAlliesInTiles(b, e, e.tileR, e.tileC, 'box', 1)) {
@@ -65,10 +101,11 @@ export function applyEnemyFeatures(battle, e) {
     if (!f) continue;
     if (f.trait?.flags) battle.addBuff(e, { key: `feature:${id}`, persist: true, flags: { ...f.trait.flags } });
     if (f.trait?.maxTargets) e.profile.maxTargets = Math.max(e.profile.maxTargets ?? 1, f.trait.maxTargets);
-    if (f.ability) {
-      const make = ABILITIES[f.ability.kind];
-      if (!make) throw Error(`Unknown enemy feature ability: ${f.ability.kind}`);
-      abilities.push(make(f.ability.params(record), abOf(battle, e)));
+    const ability = typeof f.ability === 'function' ? f.ability(record) : f.ability;
+    if (ability) {
+      const make = ABILITIES[ability.kind];
+      if (!make) throw Error(`Unknown enemy feature ability: ${ability.kind}`);
+      abilities.push(make(ability.params(record), abOf(battle, e)));
     }
   }
   if (abilities.length) { installFeatureDispatch(battle); abOf(battle, e); attach(battle, e, abilities); }
