@@ -100,3 +100,14 @@ test('static roadblocks are destructible without a DP reward', () => {
   battle.dealDamage(null, device, { amount: 99999, type: 'true', sourceless: true, ignoreSelect: true });
   assert.equal(battle.flags.dpMax, cap);
 });
+
+test('Rock Wall is a destructible stage obstacle', () => {
+  const rock = { ...stage, devices: [{ col: 3, row: 4, key: 'trap_272_nomstn', kind: 'device', name: 'Rock Wall' }] };
+  const battle = new StandardBattle({ ...mvp, stage: rock, enemies: { ...mvp.enemies, ...rock.enemies } },
+    { operators: Object.values(data.operators).slice(0, 1).map(defaultBuild) });
+  const wall = battle.enemies.find(e => e.mem?.stageUnitDevice?.name === 'Rock Wall');
+  assert.ok(wall, 'wall spawned');
+  assert.equal(wall.s.maxHp, 8000);
+  assert.equal(wall.s.def, 300);
+  assert.ok(battle.grid.obstacle[4 * battle.grid.cols + 3]);
+});
