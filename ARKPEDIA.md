@@ -6144,3 +6144,5 @@ Built the remaining buildable Dossoles EX/MO/S stages (19 files, including chall
 Implemented Kite device fire and platform-device tiles; built DH-EX-3 and challenge as testOnly. Catalogue **594** = 342 public + 252 testOnly; 593 files.
 
 Promoted Dossoles **DH-1 through DH-8** public after smoke/data review (high tide, deep water, platform and Kite-enabled stages). Catalogue **594** = 350 public + 244 testOnly.
+
+Promoted the remaining Dossoles EX, MO, S and TR stages public after smoke/data review. Dossoles public coverage is now complete except DH-9/EX-8 (Pancho conditional summons). Catalogue **594** = 374 public + 220 testOnly.
