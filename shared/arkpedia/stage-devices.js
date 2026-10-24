@@ -20,6 +20,7 @@ export const STAGE_DEVICES = Object.freeze({
   'Custom Floating Platform': Object.freeze({
     unit: Object.freeze({ hp: 100, atk: 0, def: 0, res: 0, block: 0, dpMax: 0, dp: 0, platformDevice: true }),
   }),
+  // character_table.json trap_272_nomstn: 8000 HP, 300 DEF, 20 RES, block 0.
   'Rock Wall': Object.freeze({
     unit: Object.freeze({ hp: 8000, atk: 0, def: 300, res: 20, block: 0, dpMax: 0, dp: 0, obstacle: 'block' }),
   }),

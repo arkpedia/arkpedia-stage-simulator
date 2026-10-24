@@ -110,4 +110,7 @@ test('Rock Wall is a destructible stage obstacle', () => {
   assert.equal(wall.s.maxHp, 8000);
   assert.equal(wall.s.def, 300);
   assert.ok(battle.grid.obstacle[4 * battle.grid.cols + 3]);
+  battle.dealDamage(null, wall, { amount: wall.hp, type: 'true', canDodge: false });
+  assert.equal(wall.alive, false);
+  assert.ok(!battle.grid.obstacle[4 * battle.grid.cols + 3]);
 });
