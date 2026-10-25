@@ -64,14 +64,19 @@ export function chapter17Environment(b) {
       return child;
     },
     expose(source) {
-      for (const wall of env.firewalls) if (wall.owner.alive) {
+      for (const wall of [...env.firewalls]) {
+        if (!wall.current()) { wall.retire(); continue; }
         const sides = wall.sides.filter(s => !s.broken).sort((a, z) => dist(a, source) - dist(z, source) || a.index - z.index);
-        if (sides.length) wall.button = { side: sides[0], until: b.time + wall.duration, clicks: 0 };
+        wall.button = sides.length ? { side: sides[0], until: b.time + wall.duration, clicks: 0 } : null;
       }
       b.emit('firewallVulnerability', { source });
     },
   };
   b.on('tick', ({ dt }) => {
+    for (const wall of [...env.firewalls]) {
+      if (!wall.current()) wall.retire();
+      else if (wall.button && b.time >= wall.button.until) wall.button = null;
+    }
     for (const marker of env.rifts) if (marker.alive && marker.nativeMarker) {
       marker.sp = Math.min(marker.spCost, marker.sp + dt * marker.spRecovery);
       marker.scan += dt;
@@ -389,16 +394,38 @@ export function leakSource(r) {
 /** Integration port for native boss firewall controllers. It intentionally does
  * not approve or implement the bosses' attacks/rebirth/phase transitions. */
 export function registerChapter17Firewall(b, owner, { width = 3, height = 3, duration = 5, clicks = 3, onBreak = () => {} } = {}) {
-  const wall = { owner, duration, requiredClicks: clicks, button: null,
-    sides: [[0, -height / 2], [width / 2, 0], [0, height / 2], [-width / 2, 0]]
-      .map(([dx, dy], index) => ({ index, x: owner.x + dx, y: owner.y + dy, broken: false })),
+  const env = chapter17Environment(b), life = owner.deploySeq, handles = [];
+  const wall = { owner, ownerLife: life, duration, requiredClicks: clicks, button: null, active: true, sides: [],
+    current: () => wall.active && !b.finished && owner.alive && owner.deployed && owner.deploySeq === life,
+    retire() {
+      if (!wall.active) return;
+      wall.active = false; wall.button = null;
+      const index = env.firewalls.indexOf(wall);
+      if (index >= 0) env.firewalls.splice(index, 1);
+      for (const handle of handles) b.off(handle);
+    },
+    // The caller commits this at the native environment-refresh action after a
+    // Blink; moving the owner alone must not prematurely move the old firewall.
+    refresh() {
+      if (!wall.current()) { wall.retire(); return false; }
+      wall.button = null;
+      wall.sides = [[0, -height / 2], [width / 2, 0], [0, height / 2], [-width / 2, 0]]
+        .map(([dx, dy], index) => ({ index, x: owner.x + dx, y: owner.y + dy, broken: false }));
+      return true;
+    },
     click(index) {
+      if (!wall.current()) { wall.retire(); return false; }
       const button = wall.button;
-      if (!owner.alive || !button || button.side.index !== index || b.time >= button.until) return false;
+      if (button && b.time >= button.until) wall.button = null;
+      if (!wall.button || button.side.index !== index) return false;
       if (++button.clicks >= clicks) { button.side.broken = true; wall.button = null; onBreak(index); }
       return true;
     },
   };
-  chapter17Environment(b).firewalls.push(wall);
+  if (!wall.refresh()) return wall;
+  env.firewalls.push(wall);
+  handles.push(b.on('death', ({ unit }) => { if (unit === owner) wall.retire(); }, { owner: wall }),
+    b.on('removed', ({ unit }) => { if (unit === owner) wall.retire(); }, { owner: wall }),
+    b.on('battleEnd', () => wall.retire(), { owner: wall }));
   return wall;
 }

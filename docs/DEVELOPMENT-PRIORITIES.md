@@ -427,3 +427,51 @@ event-alias extraction independently reproduce the retained receipts. All
 test-only generated paths retain their canonical wait/teleport contracts. The
 four locally quarantined tracked test files remain required in hosted CI and
 are preserved in Git; their local absence is not staged as deletion.
+
+## Chapter 17 firewall boss source and interaction lifetime
+
+The four remaining Chapter 17 firewall bosses (`enemy_1590_muama`,
+`enemy_1591_mutwin`, `enemy_1591_mutwin_2`, `enemy_1593_musnake`) now retain complete
+original prefab/projectile/template closures, all 99 indexed components, seven
+projectiles, 17 templates and four original prefab-bound skeleton clock sources.
+The source workflow independently reproduces these from the frozen publisher
+bundles. This retains mechanical evidence without importing visual assets or
+granting enemy/stage support. All four enemy support policies remain null.
+
+The existing firewall integration port now owns its perimeter/button state by
+the owner's deployment identity. Death, removal, reuse or battle end retires the
+wall and its listeners. Exposure and ticks discard stale walls; expired buttons
+lose partial click progress. An explicit refresh commits the perimeter at the
+new owner position, restores its sides and clears the prior button; changing the
+owner position alone does not preempt the later native environment action.
+Break callbacks clear the completed button before reentrant calls. Tests cover
+these interactions, simultaneous owners, all sides, rectangular dimensions and
+source/closure mutation rejection. This port still does not implement boss
+attacks, damage geometry, deployment restrictions or phase controllers.
+
+The new source audit distinguishes three mechanics that cannot share one button
+implementation: firewall vulnerabilities use the existing three-click/five-second
+configuration; the snake's HP-step counter needs ten clicks in ten seconds with
+different success/failure buffs; its final counter needs fifteen clicks and uses
+the retained 999999-second duration with the same finish buff on success/failure.
+Snake initialization explicitly requests all firewall sides. The terminal buff
+also finishes/skips the current wave, while timeout separately modifies LP by
+the canonical -50 value without marking a route exit. Twin recovery depends on
+the reciprocal `ally_alive` buff and current modes. These paths, checkpoint
+teleportation, line attacks and firewall/deployment geometry remain held for
+their complete controllers. The generic firewall port must not substitute for
+them or admit 17-18.
+
+The preceding f5c7e5e2 checkpoint passed all fifteen hosted continuation jobs in
+run 40197246345. Its full Linux/Windows Node 22/24 matrix (40197258983) is still
+running; that handle must be observed to completion rather than restarted.
+
+Verification for this firewall checkpoint: all 13 new source/lifecycle checks
+pass; together with the existing parity tests, the targeted run passed 52 tests.
+The local focused run exercised 644 tests: 643 passed and the canonical loader
+hit a sandbox temporary-file rename denial (`EPERM`). That complete five-test
+loader file then passed outside the sandbox. This records the invocation and
+permission repair separately, rather than claiming one green aggregate run.
+Graph, indexed-component and original-clock extraction also reproduce all four
+bosses independently. Hosted continuation/source reproduction remains required
+for the committed checkpoint, including the four quarantined local test files.
