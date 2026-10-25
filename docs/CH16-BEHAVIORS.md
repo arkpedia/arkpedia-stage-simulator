@@ -900,3 +900,44 @@ The final 16-8 focused cohort passed 328 tests with two opt-in browser skips
 independent Attack/Combat mode clocks. Six test-runner partition/launch checks
 passed after the aggregate smoke deadline adjustment. Full and hosted results
 for this continuation must be recorded separately when they complete.
+
+### Windows mechanics continuation: Manglerbeast, Phantom, 16-10 and 16-11
+
+Both Manglerbeast variants and Army Phantom now have exact-record native/source
+claims and normal feature dispatch. Shared M1Start spelling retains separate
+Slug/Manglerbeast controllers and wrapper counts. Phantom shares the one-miner
+handbook line with Infiltrator/Commander without attaching duplicate controllers.
+Its movement link chooses the nearest miner; its ordinary weapon independently
+uses the existing taunt/deployment priority. The original direct test now checks
+the selected weapon target rather than assuming both selectors choose one body.
+Miner healing copies live Medic ATK as specified by the native action. Ground-only
+engagement acquisition excludes airborne/liftoff miners.
+
+Hosted checkpoint `686ac33e` passed 341 focused tests on each of Ubuntu and
+Windows Node 24 (zero failures/skips). This predates the new stage/route work below.
+Local Bitdefender quarantine is handled by hosted validation, not by disabling
+security or dropping affected tests. See `DEVELOPMENT-PRIORITIES.md` for the
+owner's mechanics-first scope across all enemies, stages, and operators.
+
+16-10 and 16-11 are pinned to the existing canonical245d7c6 release, with its
+independent manifest, complete raw level, route/producer and level receipts.
+Their normal waves have 27 and 28 hostile spawns respectively. 16-10 includes
+12 Army Phantoms, eight Slugs, six Shieldguards and one Manglerbeast. 16-11
+includes 23 Slugs and five Manglerbeasts; the four `raid4` Six-Star-only spawns
+remain excluded. Both retain their original tunnel branch and native0.5 move scale.
+The branch compiler now accepts explicit disappearance, finite nonnegative
+waits and matched reappearance; it rejects malformed/unclosed control sequences.
+16-11's ten-second hidden wait and reappearance at row6/col0 are preserved.
+Summoned-body cursor displacement is retained through teleport under the existing
+candidate navigation convention; captured native movement/frame parity remains held.
+
+Thirteen new local stage/source/lifecycle tests pass, including byte-identical
+builder reproduction, corrupt-input refusal, default-cap seeded clears and
+Windows CLI execution. Seeded clear times: 16-10 at240.03/267.17/267.33s;
+16-11 at234.03s for all three seeds. Tunnel commands stop feeding new miners
+after120s in these route-only fixtures. All608 file-backed stage records pass
+support, catalogue-load and live-battle smoke checks. The catalogue has609
+entries:597 public and12 test-only. No public entry was promoted.
+New hosted focused, full-repository and mechanical desktop/phone checks must be
+recorded separately after completion; no stage art/model/effects expansion is
+part of this mechanics checkpoint.

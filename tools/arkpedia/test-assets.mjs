@@ -51,7 +51,7 @@ export async function prepareTestAssets({snapshot,destination,fetcher=fetch,paus
  }));
  return{models:entries.length,verified,downloaded};
 }
-if(process.argv[1]&&import.meta.url===new URL(`file://${process.argv[1]}`).href){
+if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)){
  const root=fileURLToPath(new URL('../../',import.meta.url));
  const snapshot=JSON.parse(await readFile(path.join(root,'data/arkpedia-mvp.json')));
  console.log(await prepareTestAssets({snapshot,destination:path.resolve(root,'../arkpedia-sd-assets')}));

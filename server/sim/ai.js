@@ -766,7 +766,9 @@ function advanceRoute(b, e, dt, R, standing = false) {
       continue;
     }
     if (leg.t === 'appear') {
-      e.x = leg.c; e.y = leg.r;
+      // Summoned branch bodies retain their cursor displacement across a
+      // native teleport just as they do across ordinary MOVE checkpoints.
+      e.x = leg.c + (R.cursorOffset?.x ?? 0); e.y = leg.r + (R.cursorOffset?.y ?? 0);
       if (b.hasHook('enemyBeforeAppear')) b.emit('enemyBeforeAppear', { enemy: e });
       if (!e.alive) return;
       b._setHidden(e, false);

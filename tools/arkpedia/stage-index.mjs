@@ -9,6 +9,8 @@
 // `testOnly` entry, so the developer QA view can open it but the public
 // simulator neither lists nor accepts it without `?experimental=1`.
 import { readFile, readdir, writeFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+import { resolve } from 'node:path';
 
 const root = new URL('../../', import.meta.url);
 const INDEX = new URL('data/arkpedia-stages.json', root);
@@ -37,7 +39,7 @@ export async function buildStageIndex() {
   return { schemaVersion: 1, defaultStage: current.defaultStage, stages: [...curated, ...generated] };
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const index = await buildStageIndex(), text = JSON.stringify(index, null, 2) + '\n';
   if (process.argv.includes('--check')) {
     if (await readFile(INDEX, 'utf8') !== text) { console.error('Stage catalogue is stale: run node tools/arkpedia/stage-index.mjs'); process.exit(1); }

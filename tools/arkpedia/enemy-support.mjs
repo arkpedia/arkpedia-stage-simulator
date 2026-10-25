@@ -5,6 +5,8 @@
 //   node tools/arkpedia/enemy-support.mjs [--check]
 import { readFile, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
+import { fileURLToPath } from 'node:url';
+import { resolve } from 'node:path';
 import { deriveEnemySupport } from '../../shared/arkpedia/enemy-support.js';
 const root = new URL('../../', import.meta.url), OUT = new URL('data/arkpedia-enemy-support.json', root), REGISTRY = new URL('data/arkpedia-regular-enemies.json', root);
 const sha = b => createHash('sha256').update(b).digest('hex');
@@ -162,7 +164,7 @@ export async function buildEnemySupport({ candidate = false } = {}) {
     summary: { enemies: Object.keys(enemies).length, supported, unsupported: Object.keys(enemies).length - supported },
     enemies };
 }
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const candidate = process.argv.includes('--candidate-ch16');
   const output = candidate ? new URL('data/candidates/arkpedia-ch16-enemy-support.json', root) : OUT;
   const registryOutput = candidate ? new URL('data/candidates/arkpedia-ch16-regular-enemies.json', root) : REGISTRY;

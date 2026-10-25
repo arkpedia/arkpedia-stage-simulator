@@ -27,15 +27,29 @@ export function chapter16BranchSpawner(b, source) {
     const points = Array.isArray(native.checkpoints) ? native.checkpoints
       : native.checkpoints && typeof native.checkpoints === 'object' && Object.keys(native.checkpoints).length === 0 ? [] : null;
     if (!points) throw Error('Unreviewed Chapter 16 branch checkpoints');
+    let hidden = false;
     const checkpoints = points.map(cp => {
-      if (cp.type !== 'MOVE' || cp.time !== 0 || cp.randomizeReachOffset || cp.reachDistance !== 0)
+      if (cp.randomizeReachOffset || cp.reachDistance !== 0)
         throw Error('Unreviewed Chapter 16 branch checkpoint');
-      const position = point(cp.position);
       const offset = cp.reachOffset ?? { x: 0, y: 0 };
       if (![offset.x, offset.y].every(Number.isFinite) || Math.abs(offset.x) >= .5 || Math.abs(offset.y) >= .5)
         throw Error('Invalid Chapter 16 branch reach offset');
-      return { type: 'MOVE', pos: [position[0] + offset.y, position[1] + offset.x] };
+      if (cp.type === 'MOVE' && cp.time === 0 && !hidden) {
+        const position = point(cp.position);
+        return { type: 'MOVE', pos: [position[0] + offset.y, position[1] + offset.x] };
+      }
+      if (offset.x !== 0 || offset.y !== 0) throw Error('Unreviewed Chapter 16 branch control offset');
+      if (cp.type === 'DISAPPEAR' && cp.time === 0 && !hidden) {
+        hidden = true; return { type: 'DISAPPEAR' };
+      }
+      if (cp.type === 'WAIT_FOR_SECONDS' && Number.isFinite(cp.time) && cp.time >= 0)
+        return { type: 'WAIT', time: cp.time };
+      if (cp.type === 'APPEAR_AT_POS' && cp.time === 0 && hidden) {
+        hidden = false; return { type: 'APPEAR', pos: point(cp.position) };
+      }
+      throw Error('Unreviewed Chapter 16 branch checkpoint');
     });
+    if (hidden) throw Error('Unclosed Chapter 16 branch disappearance');
     const offset = native.spawnOffset, spread = native.spawnRandomRange;
     if (![offset?.x, offset?.y, spread?.x, spread?.y].every(Number.isFinite)
       || spread.x < 0 || spread.y < 0) throw Error('Invalid Chapter 16 branch spawn distribution');

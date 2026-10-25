@@ -8,7 +8,7 @@ import { join } from 'node:path';
 const chrome = process.env.CHROME_PATH ?? '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const enabled = process.env.RENDER_E2E === '1' && existsSync(chrome);
 const stageCode = process.env.CH16_QA_STAGE ?? '16-3';
-if (!['16-3', '16-4', '16-5', '16-6', '16-7', '16-8'].includes(stageCode)) throw Error('Only reviewed test-only tunnel stages may run this QA');
+if (!['16-3', '16-4', '16-5', '16-6', '16-7', '16-8', '16-10', '16-11'].includes(stageCode)) throw Error('Only reviewed test-only tunnel stages may run this QA');
 const out = process.env.CH16_QA_OUT ?? '/tmp/codex-ch16-ui';
 
 test(`test-only ${stageCode} tunnel command works with natural SP, keyboard, mobile layout and restart`,
@@ -21,7 +21,7 @@ test(`test-only ${stageCode} tunnel command works with natural SP, keyboard, mob
     mkdirSync(out, { recursive: true });
     try {
       browser = await puppeteer.launch({ executablePath: chrome, headless: true,
-        args: ['--no-first-run', '--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist',
+        args: ['--no-first-run', process.platform === 'darwin' ? '--use-angle=metal' : '--use-angle=swiftshader', '--enable-gpu', '--ignore-gpu-blocklist',
           '--disable-background-timer-throttling', '--disable-renderer-backgrounding'] });
       let page = await browser.newPage();
       page.on('pageerror', e => errors.push(e.message));
