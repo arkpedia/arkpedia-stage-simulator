@@ -81,8 +81,13 @@ Flyer, Brute and Bag native graphs are retained without controller admission.
 Brute's original bound Skill events are0.833333313/1.266666651/1.666666627s,
 with a2.200000048s clip. A direct candidate now owns normal/enhanced cast clocks,
 retains the original target deployment across all hits, reads live ATK per hit,
-and cancels pending hits on control, source death and battle end. Sixteen focused
-tests pass, with 23 related source/pollution regressions also passing. It remains
+and cancels pending hits on control, source death and battle end. Twenty-one focused
+tests pass. Both original cast components mark `affectedBySlowDown=1`; the candidate
+now consumes live slowed elapsed time between markers, rather than scheduling
+fixed world-time callbacks. Reentrant death cannot release remaining markers.
+The timeMode0/maxAnimScale1 rate mapping samples BAT/interval with a cap of1,
+following existing native operator owners rather than the generic clip-fit
+fallback. This is still an explicit mapping, not recovered compiled behavior. It remains
 unregistered: the compiled FSM, cooldown reset event and ASPD/slow-down rate
 boundaries still need independent review. Candidate tests exercise the proposed
 contract; they do not resolve those source uncertainties or admit stages 17-8/9.
@@ -94,3 +99,18 @@ The full local file-backed load/fight sweep passes. Hosted validation found a
 stale one-tunnel browser expectation for two-tunnel 16-15 and a generic runner
 deadline shorter than the catalogue test's own deadline; both are corrected,
 without removing scenarios or changing the simulation's gameplay time cap.
+
+Hosted checkpoint `835d7b26`:409/409 focused tests pass independently on Ubuntu
+and Windows; both16-14 and16-15 desktop/touch/restart browser scenarios pass.
+The full eight-shard Linux/Windows Node22/24 regression at `4eb108d0` remains in
+progress and must not be reported as green before its terminal results.
+
+Stage-local definitions now have an isolated compiler path in
+`shared/arkpedia/enemy-records.js`. It requires literal `useDb=false` data and a
+separately reviewed native damage type; no catalogue row or handbook is borrowed.
+Source tests cover16-9's local miner and17-18's four local infantry/Brute/
+rockbreaker/caster records. In particular, the miner's fear-loss parameter is0,
+the local rockbreaker's null skill list does not inherit SummonSelf, and the
+17-18 children are uncounted while retaining a life cost of1. Compilation alone
+grants no support or stage admission; dedicated source/native reviews and builder
+integration remain required for these stages.

@@ -6,6 +6,7 @@ import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {pollutionBrute} from '../server/sim/content/chapter17-brute.js';
 import {pollute} from '../server/sim/content/chapter17.js';
+import {applySourceSlowDown,NATIVE_SLOW_DOWN_CONTRACT} from '../server/sim/content/arkpedia-slow-down.js';
 import {attach,installFeatureDispatch} from '../server/sim/content/enemies.js';
 import {makeBattle,chessRec} from './helpers/battleHarness.js';
 import {verifiedNative,verifiedChapter16FamilyGraph} from '../tools/arkpedia/enemy-support.mjs';
@@ -43,6 +44,13 @@ test('Brute exact source closure, indexed claims and original three-event clock 
     assert.deepEqual(skel.eventPayloads.Skill.map(e=>e.time),review.defaults.enhancedHits);
     assert.equal(skel.exactDurations.Skill,review.defaults.enhancedDuration);
   }
+  for(const rows of Object.values(read('candidates/arkpedia-ch17-brute-source.json').prefabs)) {
+    const attacks=rows.map(r=>JSON.parse(r.originalJson)).filter(n=>['Attack','Skill'].includes(n._animKey));
+    assert.equal(attacks.length,2);
+    for(const attack of attacks) {
+      assert.equal(attack._affectedBySlowDown,1);assert.equal(attack._timeMode,0);assert.equal(attack._maxAnimScale,1);
+    }
+  }
 });
 for(const key of keys)test(key+' default melee waits for the real Attack event rather than dealing an immediate hit',()=>{
   const f=fixture(key),p=begin(f),hp=f.u.hp;
@@ -70,6 +78,39 @@ test('each remaining hit reads live ATK while retaining its original target depl
   f.h.run(.9);assert.equal(hp-f.u.hp,atk);
   f.b.addBuff(f.e,{key:'fixture-atk-up',persist:true,mods:{atkPct:1}});f.h.run(.9);
   assert.equal(hp-f.u.hp,5*atk);assert.deepEqual(f.b.errors,[]);
+});
+
+for(const enhanced of [false,true])test((enhanced?'enhanced':'normal')+' original cast clock consumes live native slow_down and resumes without replay',()=>{
+  const f=fixture(),p=begin(f,enhanced);
+  f.h.run(.4);const age=p.age;
+  const slow=applySourceSlowDown(f.b,f.u,f.e,{key:'brute-clock-fixture',increment:.5,maxStrength:.5,
+    maxStacks:1,duration:30,contract:NATIVE_SLOW_DOWN_CONTRACT});
+  assert.ok(slow);assert.equal(f.e.s.slowDownRate,.5);
+  f.h.run(.6);assert.ok(Math.abs(p.age-age-.3)<=f.b.dt);
+  assert.equal(f.hits.length,0,'world time alone must not release the first hit');
+  f.b.removeBuff(f.e,slow);f.h.run(.2);assert.equal(f.hits.length,1);
+  if(enhanced) {
+    const second=applySourceSlowDown(f.b,f.u,f.e,{key:'brute-clock-fixture',increment:.5,maxStrength:.5,
+      maxStacks:1,duration:30,contract:NATIVE_SLOW_DOWN_CONTRACT});
+    f.h.run(.4);assert.equal(f.hits.length,1,'mid-combo slowdown delays the next marker');
+    f.b.removeBuff(f.e,second);f.h.run(.8);assert.equal(f.hits.length,3);
+  }
+  f.h.run(.6);assert.equal(f.a.pending,null);assert.equal(f.hits.length,enhanced?3:1);
+  assert.deepEqual(f.b.errors,[]);
+});
+
+test('death during a hit callback cannot release any remaining markers',()=>{
+  const f=fixture();f.b.on('ch17BruteHit',()=>f.b.kill(f.e,null));begin(f,true);f.h.run(3);
+  assert.equal(f.hits.length,1);assert.equal(f.a.active,false);assert.equal(f.a.pending,null);
+  assert.equal(f.e.findBuff('ch17:brute-cast'),null);assert.deepEqual(f.b.errors,[]);
+});
+
+for(const aspd of [900,-50])test('native clip-rate candidate retains maxAnimScale1 at ASPD delta '+aspd,()=>{
+  const f=fixture();f.b.addBuff(f.e,{key:'brute-rate-fixture',persist:true,mods:{aspd}});
+  const p=begin(f,true);assert.equal(p.rate,aspd>0?1:.5);
+  f.h.run(aspd>0?.8:1.6);assert.equal(f.hits.length,0);
+  f.h.run(.1);assert.equal(f.hits.length,1);
+  f.h.run(aspd>0?1:2);assert.equal(f.hits.length,3);assert.deepEqual(f.b.errors,[]);
 });
 test('removing the original target cannot transfer later hits to a replacement deployment',()=>{
   const f=fixture();begin(f,true);f.h.run(.9);assert.equal(f.hits.length,1);

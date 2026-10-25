@@ -124,6 +124,29 @@ export function compileEnemy({ key, rows, handbook = null, level = 0, overwritte
   };
 }
 
+/** Compile a useDb=false level definition in isolation. Damage type is owned
+ * by the separate native/stage review, since the level data has no handbook
+ * damageType. No catalogue row, prefab alias, talent or skill is inherited. */
+export function compileStageLocalEnemy(ref, { damageType } = {}) {
+  if (!ref || ref.useDb !== false || typeof ref.id !== 'string' || !ref.id
+    || ref.level !== 0 || !ref.overwrittenData || typeof ref.overwrittenData !== 'object')
+    throw Error('A complete level-zero useDb=false enemy definition is required');
+  if (!Object.hasOwn(DMG_MAP,damageType)) throw Error('Stage-local enemy requires a reviewed native damage type');
+  const data=ref.overwrittenData;
+  for (const key of ['name','prefabKey','applyWay','motion','levelType','lifePointReduce','notCountInTotal'])
+    if (data[key]?.m_defined !== true || data[key].m_value == null)
+      throw Error('Incomplete stage-local enemy field: '+key);
+  if (!data.prefabKey.m_value || typeof data.prefabKey.m_value !== 'string') throw Error('Missing stage-local prefab identity');
+  for (const key of ['maxHp','atk','def','magicResistance','moveSpeed','baseAttackTime','attackSpeed']) {
+    const value=data.attributes?.[key];
+    if (value?.m_defined !== true || typeof value.m_value !== 'number' || !Number.isFinite(value.m_value))
+      throw Error('Incomplete stage-local enemy attribute: '+key);
+  }
+  const text=fieldValue(data.description,'');
+  return compileEnemy({key:ref.id,rows:[{level:0,enemyData:data}],level:0,
+    handbook:{damageType:[damageType],abilityList:text?[{text,textFormat:'NORMAL'}]:[]}});
+}
+
 /** Features an enemy record uses: talent groups and skill prefab keys, each with its exact parameter-key signature. */
 export function enemyFeatures(record) {
   const out = [];
