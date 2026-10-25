@@ -38,7 +38,7 @@ test(`test-only ${stageCode} tunnel command works with natural SP, keyboard, mob
       await page.waitForSelector('#stage-actions button', { timeout: 60000 });
       assert.match(await page.$eval('.simulation-label', e => e.textContent), /Test-only/);
       const command = '#stage-actions button';
-      assert.equal(await page.$$eval(command, es => es.length), stageCode === '16-5' ? 2 : 1);
+      assert.equal(await page.$$eval(command, es => es.length), ['16-5', '16-15'].includes(stageCode) ? 2 : 1);
       if (stageCode === '16-5') {
         const labels = await page.$$eval(command, es => es.map(e => e.textContent));
         assert.ok(labels[0].includes('Lower Hidden Tunnel')); assert.ok(labels[1].includes('Upper Hidden Tunnel'));
