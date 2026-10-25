@@ -19,7 +19,9 @@ The exact predefined 17-14 Closure build now has an internal level-three module
 adapter and an explicit separate instance/control adapter. Canonical 17-14
 admission, field UI integration, initial native FSM dispatch, withdrawal/card
 regeneration rules and S3 compatibility with that stage's enemy clocks remain
-gated, along with the four 17-16 modules.
+gated. The exact hidden 17-16 Ptilopsis build now has an internal level-three
+module adapter; its range mapping and the other three modules remain under
+review before stage admission.
 Rockbreaker's eligible split animation now consumes live `slow_down` elapsed
 work for both release and completion, rather than fixed world-time callbacks.
 The six selected infantry/caster/carrier Combat cooldowns and Brute's owned
@@ -34,6 +36,10 @@ interaction without admitting 17-14 or widening public enemy compatibility.
 Removing a separate same-character operator body now leaves the player's card
 cooldown and captured payment untouched. Only the body selected by that card
 can start its redeployment cooldown; ordinary death and withdrawal still do so.
+Ptilopsis's module now retains the pinned extended default range and two
+independent max-only SP recovery effects. Admission receipts prevent a retired
+source or replaced target life from leaving a stale aura behind. This remains
+an internal build, with no public module/card or 17-16 activation.
 
 The retained native components/canonical record supply the parameters and action
 graph. Supplemental first-hand [PRTS HP-loss research, revision 442170](https://prts.wiki/index.php?title=%E7%89%B9%E6%AE%8A%E6%9C%BA%E5%88%B6&oldid=442170)
@@ -1454,3 +1460,48 @@ rules and 17-14 admission remain open. The 4132c9ad continuation run 40232796570
 completed successfully; its full run 40232802377 was still live at this checkpoint.
 The final expanded focused run passed all 1,538 available cases. The compact
 feeding contract also reproduced from its pinned inputs without byte changes.
+
+## Exact hidden 17-16 Ptilopsis module and named SP admission
+
+The predefined module intake now includes the frozen CN range table, verified
+by byte length, Git blob and SHA256 at the existing a550f5e0 commit. Its selected
+y-3 grid has 13 cells. The native artifact retains the same seven prefabs, 39
+components and five templates; only the table-input provenance changed. Both
+the table producer and original native extraction reproduce with --check.
+
+An internal adapter accepts only the canonical hidden Ptilopsis card's E2/80,
+potential-one, trust-100, S2 rank-seven, level-three module build. It adds 100 HP,
+47 ATK and the source default range, plus independent global +0.30 and local
++0.35 named SP recovery producers. The strongest eligible named effect applies;
+personal recovery remains additive. Ordinary healing uses the extended default
+grid, and S2 retains its own main grid and attack-interval behavior. Operators
+with healing restrictions can receive SP, tokens cannot, and only automatic SP
+recovery accrues time SP. Public module selection and stage/card activation
+remain closed.
+
+The local _extendable=0 range component is explicitly mapped to the current
+main grid, excluding temporary distance extensions and externally inherited
+extra keys. This mapping, recipient categories and sampled aura updates are
+regular simulator aliases; the retained component fields do not establish
+compiled native collider/FSM binding or prove S2 range parity. The global aura
+persists through owner disappearance while local coverage turns off. These
+limits remain part of the 17-16 gate, alongside its other three modules and
+dialog/hidden-card controls.
+
+The shared named channel now supports distinct producers owned by the same
+operator. Each accepted buff carries producer, source-life and target-life
+receipts. Reentrant source retirement cannot leave a late aura; a surviving
+producer is restored immediately, and an old cleanup cannot erase a newer
+same-key producer. Rejecting the independent local offer still allows the
+global offer. Source-body reuse, recipient-body replacement, disappearance,
+death, retirement and battle completion have explicit coverage.
+
+All 122 targeted module, medic, caster and support-aura cases passed. This
+includes the other consumers of the shared named channel and Closure's existing
+module regression. The previous full run 40232802377 at 4132c9ad completed
+successfully on all eight platform/runtime shards, and continuation 40234930051
+at c1649cb1 also succeeded. These hosted results precede this module checkpoint.
+The expanded focused run passed all 1,551 locally available cases. A final
+fourteenth module case additionally verifies that stopping an overwritten
+producer preserves its successor under the exact same map key; all 14 module
+cases passed. The four locally quarantined tests remain in Git and hosted CI.

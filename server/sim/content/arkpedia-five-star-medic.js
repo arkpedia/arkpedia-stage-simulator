@@ -4,6 +4,7 @@ import evidence from '../../../data/arkpedia-five-star-medic-prefabs.json' with 
 import { absoluteRangeKeys, canTargetEnemy, sortEnemyTargets } from '../targeting.js';
 import { bodyInKeys } from '../body.js';
 import { aggregateMods, RESIST_STATUSES } from '../buffs.js';
+import {installPtilopsisStageModule} from './arkpedia-ptilopsis-stage-module.js';
 
 const live = u => u?.alive && u.deployed;
 const model = (id, u) => evidence.models[id][['UP', 'LEFT'].includes(u.dir) ? 'Back' : 'Front'];
@@ -21,22 +22,36 @@ const abnormal = a => [...RESIST_STATUSES].some(s => a.s.flags[s]) || (a.findBuf
 
 /** Source named spRecover channel: highest live producer, separate from personal
  * SP buffs. Future source-reviewed producers may share this channel. */
-export function registerNamedSpRecovery(b, u, value, eligible = () => true) {
+export function registerNamedSpRecovery(b, u, value, eligible = () => true, {key: producerKey=u.id} = {}) {
+  if(!Number.isFinite(value)||value<0)throw Error('Invalid named SP recovery producer');
   const sources = b._arkpediaSpRecover ??= new Map();
-  sources.set(u.id, { unit: u, value, eligible });
-  const sync = () => {
-    for (const ally of b.allyUnits) {
-      let highest = null;
-      if (live(ally) && !ally.hidden && !ally.s.flags.isolated)
-        for (const entry of sources.values()) if (live(entry.unit) && entry.eligible(ally)
-          && (!highest || entry.value > highest.value)) highest = entry;
-      const key = 'source:spRecover', old = ally.findBuff(key);
-      if (!highest) b.removeBuff(ally, key);
-      else if (old?.mods.spRecoveryFlat !== highest.value || old.source !== highest.unit)
-        b.addBuff(ally, { key, source: highest.unit, mods: { spRecoveryFlat: highest.value } });
+  const entry={unit:u,value,eligible,key:producerKey,id:b._arkpediaSpRecoverSequence=(b._arkpediaSpRecoverSequence??0)+1};sources.set(producerKey,entry);
+  const targetLive=ally=>live(ally)&&!ally.hidden&&!ally.s.flags.isolated;
+  const sameReceipt=(a,r)=>a?.entry===r.entry&&a.sourceLife===r.sourceLife&&a.targetLife===r.targetLife;
+  const syncAlly=(ally,retry=true)=>{
+    const key='source:spRecover',life=ally.deploySeq;
+    const candidates=targetLive(ally)?[...sources.values()].filter(e=>live(e.unit)&&e.eligible(ally)).sort((a,z)=>z.value-a.value):[];
+    for(const selected of candidates){
+      if(sources.get(selected.key)!==selected||!live(selected.unit)||!selected.eligible(ally))continue;
+      const receipt={entry:selected.id,sourceLife:selected.unit.deploySeq,targetLife:life},old=ally.findBuff(key);
+      if(old?.mods.spRecoveryFlat===selected.value&&old.source===selected.unit&&sameReceipt(old.data?.namedSpRecovery,receipt))return;
+      const added=b.addBuff(ally,{key,source:selected.unit,mods:{spRecoveryFlat:selected.value},data:{namedSpRecovery:receipt}});
+      if(!added){if(!targetLive(ally)||ally.deploySeq!==life)return;continue;}
+      const current=targetLive(ally)&&ally.deploySeq===life&&live(selected.unit)&&selected.unit.deploySeq===receipt.sourceLife
+        &&sources.get(selected.key)===selected&&selected.eligible(ally);
+      if(!current&&sameReceipt(added.data?.namedSpRecovery,receipt)){
+        b.removeBuff(ally,added);
+        // One bounded repair restores a surviving producer after reentrant
+        // retirement, without adopting a replacement target life.
+        if(retry&&targetLive(ally)&&ally.deploySeq===life)syncAlly(ally,false);
+      }
+      return;
     }
+    b.removeBuff(ally,key);
   };
-  for (const event of ['deploy', 'death', 'tick']) b.on(event, sync, { owner: u });
+  const sync=()=>{for(const ally of b.allyUnits)syncAlly(ally);};
+  const handles=['deploy','death','tick'].map(event=>b.on(event,sync,{owner:u}));
+  sync.stop=()=>{if(sources.get(producerKey)===entry)sources.delete(producerKey);for(const h of handles)b.off(h);sync();};
   return sync;
 }
 
@@ -196,7 +211,10 @@ export function installFiveStarMedic({ battle: b, unit: u, def }) {
   if (!FIVE_STAR_MEDIC_OPERATORS[id]) return;
   const talent = def.talents[0]?.bb;
   if (!talent) return;
-  if (id === 'char_128_plosis') registerNamedSpRecovery(b, u, talent.sp_recovery_per_sec);
+  if (id === 'char_128_plosis') {
+    if(def.raw.arkpedia.module&&def.raw.arkpedia.module!=='none')installPtilopsisStageModule(b,u,def,registerNamedSpRecovery);
+    else registerNamedSpRecovery(b,u,talent.sp_recovery_per_sec);
+  }
   else if (id === 'char_275_breeze') {
     const sync = () => syncBreeze(b, u, def);
     for (const event of ['deploy', 'death', 'tick']) b.on(event, sync, { owner: u });

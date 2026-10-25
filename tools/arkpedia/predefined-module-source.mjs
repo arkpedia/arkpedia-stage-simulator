@@ -43,7 +43,13 @@ export async function predefinedModuleTables({fetching=false,fetchImpl=fetch,cac
   if(!phase||meta?.charId!==p.owner||refs.length!==1)throw Error('Module does not match canonical predefined owner');
   selected[key]={owner:p.owner,stage:p.stage,level:p.level,unlock:{phase:meta.unlockEvolvePhase,level:meta.unlockLevel},phase};
  }
- return{schemaVersion:1,testOnly:true,scope:'Exact table/native intake for predefined level-three modules. No stage, public module or gameplay admission.',lock:{path:'data/arkpedia-predefined-modules.lock.json',sha256:hash('sha256',lockBytes)},source:{tables:lock.tables,client:lock.client,bundles:lock.bundles},stages,modules:selected};
+ const rangeIds=[...new Set(Object.values(selected).flatMap(m=>m.phase.parts).flatMap(p=>[
+  ...(p.overrideTraitDataBundle?.candidates??[]),...(p.addOrOverrideTalentDataBundle?.candidates??[])]).map(c=>c.rangeId).filter(Boolean))];
+ const ranges=Object.fromEntries(rangeIds.map(id=>{
+  const r=tables.range_table[id];if(r?.id!==id||!Array.isArray(r.grids)||r.grids.some(p=>!Number.isInteger(p.row)||!Number.isInteger(p.col)))throw Error('Unreviewed predefined module range: '+id);
+  return[id,r];
+ }));
+ return{schemaVersion:1,testOnly:true,scope:'Exact table/native intake for predefined level-three modules. No stage, public module or gameplay admission.',lock:{path:'data/arkpedia-predefined-modules.lock.json',sha256:hash('sha256',lockBytes)},source:{tables:lock.tables,client:lock.client,bundles:lock.bundles},stages,modules:selected,ranges};
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(resolve(process.argv[1])).href){
  if(process.argv.slice(2).some(a=>!['--fetch','--check'].includes(a)))throw Error('Usage: predefined-module-source.mjs [--fetch] [--check]');
