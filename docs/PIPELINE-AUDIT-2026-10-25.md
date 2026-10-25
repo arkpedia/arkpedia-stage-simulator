@@ -4,9 +4,10 @@ Observed 2026-10-25. Scope: the pinned original 16-3 level, Arkpedia's stage
 producer, the canonical preview data snapshot, and the simulator admission
 boundary. This is a local replay and preview repair, not a production-site audit.
 
-The canonical enemy handoff works. The existing stage geometry handoff loses
-information required by the Hidden Tunnel, so 16-3 must remain unadmitted until
-both that export and its simulator device/route consumers are verified.
+The canonical enemy and corrected stage handoffs are verified through an
+experimental 16-3 build. The original geometry export lost Hidden Tunnel route
+information; the repaired canonical preview and runtime now retain it. Both
+16-2 and 16-3 remain explicitly test-only; public admission is outside this work.
 
 | Requirement | Evidence state | Observation |
 |---|---|---|
@@ -15,8 +16,8 @@ both that export and its simulator device/route consumers are verified.
 | Tunnel branch route and checkpoint precision | broken in existing snapshot | The producer computes `extra_routes` but omits them from final geometry, and drops checkpoint reach offsets and traversal settings. |
 | Producer correction | verified working locally | `arkpedia/arkpedia@5556df22fd0ec0ec265559d164f4acf4c4b6b963`, draft [PR 763](https://github.com/arkpedia/arkpedia/pull/763); 32 focused route, numeric/CN and workflow tests pass. Hosted CI is separately pending. |
 | Corrected canonical preview release | verified working | Compiler output at `arkpedia-data@e49aaf3cc8ab09c5730a3dd81cead2e1a6ae005d`, draft PR #44; both local validators and hosted validation pass. No mutable pointer changed. |
-| Hidden Tunnel, facility and branch runtime integration | not implemented completely | Retained native evidence and existing shadow/engagement substrate do not constitute stage admission. |
-| Test-only boundary | verified working | Only 16-2 is experimentally admitted; 597 public stages are unchanged. New stage publication remains excluded. |
+| Hidden Tunnel, facility and branch runtime integration | verified experimentally | Reviewed checksum-bound 16-3 build; real branch traversal, facility damage, natural SP/manual control, source parity and full-stage tests. |
+| Test-only boundary | verified working | 16-2 and 16-3 require experimental access; 597 public stages are unchanged. Browser QA verifies public rejection. |
 
 ## Handoffs
 
@@ -95,3 +96,15 @@ Both validators passed for the new compiler output (838 pages, 8,125 public file
 canonical snapshot. [Hosted run 40150491404](https://github.com/arkpedia/arkpedia-data/actions/runs/40150491404)
 passed at `84f3c833`, with publishing/proposal jobs skipped. No production change
 or simulator-stage admission follows from this source correction.
+
+## Consumer integration follow-up
+
+The current producer revision is `d350e087`, and the canonical preview is
+`84f3c833`. The earlier revisions in the table record intermediate audit evidence.
+The consumer's separate reviewed stage record binds all retained evidence hashes.
+Its test-only 16-3 build has 22 normal hostiles, four canonical enemy dependencies,
+0.5 movement scale, the precise extra route and manual tunnel command. The optional
+SIX_STAR `raid` group remains excluded. Enemy data still uses the original
+checksum-verified `79e81a8a` snapshot. Integration, route, source-parity and browser
+checks exercise this consumer; no production pointer or public catalogue entry
+was promoted. Details and reproducible commands are in `CH16-BEHAVIORS.md`.

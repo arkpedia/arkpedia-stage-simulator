@@ -31,15 +31,32 @@ const [source, geometry, playbackFile, mvp, records, support, tokenData] = await
   read(new URL(args.candidate === 'ch16' ? '../../data/candidates/arkpedia-enemy-records.canonical.json' : '../../data/arkpedia-enemy-records.json', import.meta.url)),
   read(new URL(args.candidate === 'ch16' ? '../../data/candidates/arkpedia-ch16-enemy-support.json' : '../../data/arkpedia-enemy-support.json', import.meta.url)), read(new URL('../../data/arkpedia-deployable-tokens.json', import.meta.url)),
 ]);
+let chapter16Source = null, chapter16Review = null;
 if (args.candidate === 'ch16') {
-  if (source.code !== '16-2') throw Error('Chapter 16 candidate admission is currently reviewed only for test-only 16-2');
+  if (!['16-2', '16-3'].includes(source.code)) throw Error('Chapter 16 candidate admission is reviewed only for test-only 16-2 and 16-3');
+  if (source.code === '16-3') {
+    chapter16Review = await read(new URL('../../data/candidates/arkpedia-ch16-reviewed-stage.json', import.meta.url));
+    if (chapter16Review.code !== '16-3' || chapter16Review.testOnly !== true) throw Error('Missing test-only 16-3 review');
+    for (const { path, sha256 } of Object.values(chapter16Review.sources)) {
+      const bytes = await readFile(new URL('../../' + path, import.meta.url));
+      if (createHash('sha256').update(bytes).digest('hex') !== sha256) throw Error('Chapter 16 stage review source changed: ' + path);
+    }
+    chapter16Source = await read(new URL('../../' + chapter16Review.sources.stageSource.path, import.meta.url));
+    for (const [key, file] of [['stage', args.stage], ['geometry', args.geometry], ...(args.conditional ? [['conditional', args.conditional]] : [])]) {
+      if (createHash('sha256').update(await readFile(file)).digest('hex') !== chapter16Source.inputs[key].sha256)
+        throw Error('16-3 input does not match its reviewed canonical source: ' + key);
+    }
+    if (chapter16Source.testOnly !== true || chapter16Source.stage.slug !== '16-3'
+      || chapter16Source.rawLevel.options.moveMultiplier !== chapter16Review.expected.moveMultiplier)
+      throw Error('Unreviewed 16-3 level contract');
+  }
   const raw = await readFile(new URL('../../data/candidates/arkpedia-enemy-records.canonical.json', import.meta.url));
   if (createHash('sha256').update(raw).digest('hex') !== support.source.records.sha256)
     throw Error('Candidate support was generated from another canonical snapshot');
 }
 const supportOperators = await read(new URL('../../data/arkpedia-support-operators.json', import.meta.url));
 const conditionalPath = args.conditional ?? join(dirname(args.geometry), '..', 'stage-conditional', basename(args.geometry));
-if (geometry.hasConditionalSpawns && existsSync(conditionalPath)) {
+if (!chapter16Source && geometry.hasConditionalSpawns && existsSync(conditionalPath)) {
   mergePristineHiddenGroups(geometry, JSON.parse(await readFile(conditionalPath, 'utf8')));
 }
 const paths = playbackFile.playbackPaths ?? playbackFile.paths ?? {};
@@ -55,7 +72,7 @@ for (const [index, route] of geometry.routes.entries()) {
 if (!Object.keys(paths).length) throw Error('Playback export has no paths and no route to synthesize');
 const devicePath = join(dirname(args.stage), '..', 'stage-devices.json');
 const baseSlug = source.slug.replace(/_(challenge_mode|six_star|adverse_environment)$/, '');
-const devices = existsSync(devicePath) ? (JSON.parse(await readFile(devicePath, 'utf8'))[source.geometryKey ?? baseSlug] ?? []) : [];
+const devices = chapter16Source?.devices ?? (existsSync(devicePath) ? (JSON.parse(await readFile(devicePath, 'utf8'))[source.geometryKey ?? baseSlug] ?? []) : []);
 const tokens = (geometry.suppliedUnits?.deployable_tokens ?? []).filter(t => t.count !== 0).map(t => {
   const spec = STAGE_TOKEN_UNITS[t.unit_id];
   if (!spec) throw Error(`Unsupported stage token: ${t.unit_id}`);
@@ -78,7 +95,10 @@ const stage = {
   mapTags: [],
   mapTagSource: null,
   geometry,
-  conditionalHandled: args.allowConditional === '1',
+  conditionalHandled: !!chapter16Source || args.allowConditional === '1',
+  ...(chapter16Source ? { chapter16Source: { testOnly: true, canonicalData: chapter16Source.canonicalData,
+    upstream: chapter16Source.upstream, inputs: chapter16Source.inputs, rawLevel: chapter16Source.rawLevel },
+    excludedHiddenGroups: chapter16Review.expected.excludedHiddenGroups } : {}),
   devices,
   tokens,
   operators: Object.keys(supportForStage).length ? supportForStage : undefined,
@@ -88,7 +108,7 @@ const stage = {
     producer: 'Arkpedia stage browser / buildPlaybackPaths',
     stage: source.code,
     geometryHash: createHash('sha256').update(JSON.stringify(geometry)).digest('hex'),
-    moveScale: 0.65,
+    moveScale: chapter16Source?.rawLevel.options.moveMultiplier ?? 0.65,
     paths,
   },
   art: null,
@@ -97,6 +117,8 @@ const stage = {
 };
 // The battle compiler and the supported-enemy gate are the same ones used by 0-1.
 const adapter = stageAdapter(stage);
+if (chapter16Review && adapter.spawns.length !== chapter16Review.expected.hostiles)
+  throw Error('16-3 normal hostile count differs from the reviewed source');
 stage.fixedSquad = adapter.fixedSquad;
 // The level file owns each enemy's database level and any attribute overrides
 // (stage geometry `enemyConfigurations`); the catalogue is the source record.
@@ -127,7 +149,10 @@ const addEnemy = id => {
   for (const child of support.enemies[id].spawns ?? []) addEnemy(child);
 };
 for (const device of devices) if (device.key === 'trap_329_rift') addEnemy('enemy_10211_murad');
+for (const device of devices) if (device.key === 'trap_270_spawnp') addEnemy('enemy_3010_mcreep');
 for (const spawn of adapter.spawns) addEnemy(spawn.enemyKey);
+if (chapter16Review && JSON.stringify([...enemyIds].sort()) !== JSON.stringify([...chapter16Review.expected.enemies].sort()))
+  throw Error('16-3 enemy dependency set differs from the reviewed source');
 stage.enemies = Object.fromEntries([...enemyIds].map(id => [id, configured(id)]));
 assertRegularEnemies({ ...mvp, enemies: stage.enemies, stage });
 await writeFile(args.out, JSON.stringify(stage, null, 1) + '\n');

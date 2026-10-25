@@ -6,10 +6,10 @@ Snapshot: 2026-10-22. Regenerate the numbers with `npm run coverage:arkpedia-sta
 |---|---|---|
 | Operators / operator forms | 431 | 431 |
 | Enemies supported | 440 | 1,552 |
-| Main source stages with committed files | 597 | 564 |
+| Main source stages with committed files | 598 | 564 |
 | Public catalogue (includes embedded 0-1) | 597 | 597 built |
 
-The public catalogue contains 597 reviewed stages. Experimental 16-2 is a separate test-only build using the complete canonical enemy candidate; see `CH16-BEHAVIORS.md`. Committed experimental files are counted above but are excluded from the public count.
+The public catalogue contains 597 reviewed stages. Experimental 16-2 and 16-3 are separate test-only builds using the complete canonical enemy candidate; see `CH16-BEHAVIORS.md`. There are 599 catalogue entries: 597 public and two test-only. The older coverage snapshot below has not been regenerated.
 
 ## Built by chapter
 
@@ -49,6 +49,7 @@ The unsupported-enemy group is ranked by stage count. The current top families:
 
 - Last baseline full repository suite (`7cc8d93e`): 23,011 tests, 23,000 passed, 0 failed, 11 skipped. Subsequent canonical-stage loader checks are additional focused tests, not a rerun of this baseline.
 - The `d9772edc` full local run exercised 23,021 tests: 22,936 passed, 11 failed, 63 cancelled, 11 skipped. The failures/cancellations came from denied localhost sockets (`listen EPERM`). All nine affected files were rerun with local socket permission: 123/123 passed. Later raw-level/tunnel additions have separate focused verification; this is not a claim of one completely green full-suite invocation at the later head.
+- The 16-3 integration full run exercised 23,042 tests with loopback permission: 23,029 passed, one failed, zero cancelled, 12 skipped (742 seconds). The sole failure was the report's stale file-backed-stage count, 597 instead of 598; that count is corrected and its test passes on rerun. The focused Chapter 16/17 suite passes 105/105; the opt-in real-app browser check passes, including public rejection, natural SP, keyboard/touch and restart. This records the full invocation and targeted repair separately.
 - `npm run check:arkpedia-enemies` and `npm run check:arkpedia-stages` are the registry gates.
 - GitHub-hosted matrix only; `test/arkpedia-ci-runners.test.js` guards the runner labels.
 

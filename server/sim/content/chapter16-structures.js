@@ -19,6 +19,7 @@ export function installChapter16Structures(b) {
     const key = `ch16:structure-stop:${unit.id}:${sourceLife}`;
     const stopped = new Map();
     unit.mem.ch16Structure = true;
+    unit.holdsBattle = false;
     unit.mem.ch16BodyRadius = .25;
     if (spec.chapter16Structure === 'rock')
       b.addBuff(unit, { key: 'ch16:rock-target-free', persist: true, flags: { untargetable: true } });
@@ -53,7 +54,7 @@ export function installChapter16Structures(b) {
       if (unit.profile?.neutral || !live(unit) || unit.findBuff('ch16:shadow-trigger')) return;
       b.addBuff(unit, { key: 'ch16:shadow-trigger', persist: true, interval: .3,
         onTick() {
-          if (!unit.blockedBy && env.isShadow(unit.tileR, unit.tileC)) {
+          if (!unit.blockedBy && env.isShadow(Math.round(unit.y), Math.round(unit.x))) {
             if (!unit.findBuff('mainline16_enemy_target_free[core]'))
               b.addBuff(unit, { key: 'mainline16_enemy_target_free[core]', persist: true, flags: { stealth: true } });
           } else b.removeBuff(unit, 'mainline16_enemy_target_free[core]');

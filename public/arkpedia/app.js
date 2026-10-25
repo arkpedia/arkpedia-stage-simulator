@@ -15,6 +15,7 @@ import { swipeFacing } from "/shared/arkpedia/placement.js";
 import { marcilBenchMana } from '/sim/content/arkpedia-marcil.js';
 import { skillHud, skillSourceFor, ammunitionHud } from "/shared/arkpedia/skill-hud.js";
 import { battleHud } from "/shared/arkpedia/battle-hud.js";
+import { drawStageCommands } from './stage-commands.js';
 import { interfaceAssetUrl } from "/shared/arkpedia/interface-assets.js";
 import { requiresLandscape } from "/shared/arkpedia/viewport.js";
 import { flowingShapeDeck, FlowingShapeCopyInteraction } from './muelsyse-copy.js';
@@ -337,7 +338,8 @@ async function start() {
         <div class="battle-settings" id="battle-settings" hidden><p>${escape(data.stage.code)} · Collapse <span id="battle-time" aria-label="Battle time"></span></p><button id="routes" aria-pressed="false">Paths</button><button id="restart">Restart</button><button id="exit">Back to squad</button></div>
         <div class="battle-controls"><button id="speed" aria-label="Battle speed">1×</button><button id="pause" aria-label="Start"><span aria-hidden="true">▶</span></button></div>
       </header>
-      ${battleReadouts()}<span class="simulation-label">Simulation · ${escape(data.stage.code)}</span><span class="pause-label" id="paused-label" hidden>Paused</span>
+      ${battleReadouts()}<span class="simulation-label">${data.stage.testOnly ? 'Test-only simulation' : 'Simulation'} · ${escape(data.stage.code)}</span><span class="pause-label" id="paused-label" hidden>Paused</span>
+      <div class="stage-actions" id="stage-actions" aria-label="Stage device commands" hidden></div>
       <aside class="command" id="command" aria-label="Selected operator" hidden></aside>
       <div class="field-command" id="field-command" aria-label="Operator actions" hidden></div>
       <button class="facing-cancel" id="facing-cancel" hidden><span aria-hidden="true">×</span>Cancel</button>
@@ -694,6 +696,7 @@ function updateShelfTrack() {
 }
 function drawHud() {
   if (!workspace || !battle) return;
+  drawStageCommands(workspace.querySelector('#stage-actions'), battle, { inactive: landscapeRequired || viewport === 'preview', onAction: drawHud });
   if (copyFlow && !copyFlow.active) {
     const old = selected;
     cancelPlacement();

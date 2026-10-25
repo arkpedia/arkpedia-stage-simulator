@@ -8,6 +8,11 @@ const sk = (r, key) => r.skills.find(s => s.prefabKey === key);
 const bb = (r, group, key) => r.talents.bb[`${group}.${key}`];
 const controlled = e => e.s.flags.stun || e.s.flags.sleep || e.s.flags.levitate || e.s.flags.disarm;
 const dist = (a, z) => Math.hypot(a.x - z.x, a.y - z.y);
+const positionTile = u => [Math.round(u.y ?? u.tileR), Math.round(u.x ?? u.tileC)];
+const tileDistance = (a, z) => {
+  const [ar, ac] = positionTile(a), [zr, zc] = positionTile(z);
+  return Math.abs(ar - zr) + Math.abs(ac - zc);
+};
 const opponents = (b, x, y, radius) => [...b.alliesInRadius(x, y, radius),
   ...b.enemies.filter(u => live(u) && u.profile?.neutral && Math.hypot(u.x-x, u.y-y) <= radius)];
 const ops = b => b.allyUnits.filter(u => live(u) && u.kind === 'op');
@@ -32,12 +37,13 @@ export function chapter17Environment(b) {
     summonTiles(source = null) {
       const out = [];
       const rect = b.rect;
-      for (let r = source ? source.tileR - 1 : rect.r0; r <= (source ? source.tileR + 1 : rect.r1); r++)
-        for (let c = source ? source.tileC - 1 : rect.c0; c <= (source ? source.tileC + 1 : rect.c1); c++) {
+      const [sr, sc] = source ? positionTile(source) : [0, 0];
+      for (let r = source ? sr - 1 : rect.r0; r <= (source ? sr + 1 : rect.r1); r++)
+        for (let c = source ? sc - 1 : rect.c0; c <= (source ? sc + 1 : rect.c1); c++) {
           const tile = b.grid.tile(r, c);
           if (b.grid.inRect(r, c) && tile.height === 'LOW' && tile.build !== 'NONE' && tile.pass === 'ALL'
             && !b._occ[r * COLS + c]?.alive && !b.grid.obstacle[r * COLS + c]
-            && !b.enemies.some(u => u.alive && u.mem.ch16Leak && u.tileR === r && u.tileC === c)) out.push([r, c]);
+            && !b.enemies.some(u => u.alive && u.mem.ch16Leak && positionTile(u)[0] === r && positionTile(u)[1] === c)) out.push([r, c]);
         }
       return out;
     },
@@ -100,7 +106,7 @@ export function installChapter17Devices(b, devices) {
 // DEFAULT, maxStackCnt=1, independentCharacterSource=false: a single named
 // pollution buff. A new application replaces it; sources never add DOT clocks.
 export function applyPollution(b, source, target, p) {
-  const d = Math.abs(target.tileR - source.tileR) + Math.abs(target.tileC - source.tileC);
+  const d = tileDistance(target, source);
   const q = Math.max(0, Math.min(1, (d - p.min_distance) / (p.max_distance - p.min_distance)));
   const interval = d <= 1 ? p.interval : p.max_interval * q;
   const scale = d >= p.max_distance ? p.atk_scale : p.max_atk_scale * (1 - q);
@@ -260,11 +266,11 @@ export function leakSource(r) {
         b.addBuff(e, { key: 'ch16:level', persist: true, mods: { atkPct: level.bb.atk } });
       }
       if (a.exit && b.time >= a.exit - 1e-9) { b.kill(e, null); return; }
-      if (a.target && (!sameLife(a.target, a.seq) || Math.abs(a.target.tileR - e.tileR) + Math.abs(a.target.tileC - e.tileC) > 1)) release(b, e, a);
+      if (a.target && (!sameLife(a.target, a.seq) || tileDistance(a.target, e) > 1)) release(b, e, a);
       a.scan += dt;
       if (!a.target && a.scan >= 0.1 - 1e-9) {
         a.scan %= 0.1;
-        a.target = ops(b).filter(u => u.def.profession !== 'NONE' && Math.abs(u.tileR - e.tileR) + Math.abs(u.tileC - e.tileC) <= 1)
+        a.target = ops(b).filter(u => u.def.profession !== 'NONE' && tileDistance(u, e) <= 1)
           .sort((x, y) => x.deploySeq - y.deploySeq)[0];
         if (a.target) {
           a.seq = a.target.deploySeq; a.bound = 0; a.pulse = 0;

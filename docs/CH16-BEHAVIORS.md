@@ -53,13 +53,11 @@ action closure are rejected. Extraction never rewrites the reviewed contract.
 Variants need their own native evidence and review; they are not admitted by a
 base-prefab match.
 
-Only `16-2` is currently accepted by the experimental runtime candidate registry.
-Its 42 source spawns and four canonical records carry canonical/upstream commit
-provenance; the builder verifies the support snapshot checksum. Catalogue loading
-requires `?experimental=1&stage=16-2`, and the stage remains `testOnly`.
-There are no special shadow tiles or devices on this source map. Other chapter 16
-maps still require their own shadow/device review, including miner attacks on
-obstructing rock walls. Their admission is outside this five-controller change.
+`16-2` and `16-3` are accepted by the experimental runtime candidate registry.
+16-2 retains its 42 source spawns and four canonical records. 16-3 has 22 normal
+hostile spawns plus unmanaged miner summons, using four canonical records. Both
+require `?experimental=1`, remain `testOnly`, and verify the candidate support
+snapshot checksum. No other Chapter 16/17 stage is admitted by this review.
 
 ### Device continuation
 
@@ -77,9 +75,9 @@ deployment life, and restores shadow when an escape pulse expires. The facility'
 21-tile `x-2` field and miner's nine-tile `x-4` escape range are checked against
 the retained tables. Miner pulses now update this queryable state, with bounds
 checks to prevent an off-map column from aliasing the preceding row. Facility and
-Rock Wall structure/miner interaction is now connected to StandardBattle; the
-tunnel's branch summons/manual command and route traversal still require
-integration before 16-3 can be admitted. No new stage is admitted by this work.
+Rock Wall structure/miner interaction and Hidden Tunnel branch summons/manual
+commands are connected to StandardBattle. The separately reviewed 16-3 build
+below exercises them together behind the test-only boundary.
 
 The same extraction retains the complete miner and 10120 graphs, including
 selector siblings omitted by the earlier component-only export, and the
@@ -131,13 +129,13 @@ deployed operator blocking a canonical enemy is tested, as are source death,
 miner escape, fear stopping escape refresh, and expiry restoring the field.
 Every runtime fixture asserts that the battle recorded no swallowed AI/hook
 errors. These checks establish controller integration and retained-source parity,
-not independent captured-game frame parity or completed stage admission.
+not independent captured-game frame parity or public stage admission.
 
 ### Canonical stage route repair
 
 The existing canonical 16-3 export retained original conditional wave indices
 10/14 after main-route deduplication and omitted its miner extra route. The
-producer correction is draft Arkpedia PR #763 at `5556df22`; the compiler-produced
+producer correction is draft Arkpedia PR #763 at `d350e087`; the compiler-produced
 data preview is draft arkpedia-data PR #44, now at
 `84f3c8334db1c505429bce848147b32ca6a1cc20`. Hosted data validation passed and
 publication was skipped. The preview uses current dev's normal compiler, so its
@@ -149,8 +147,9 @@ then verifies the release inventory and producer/upstream receipts. It retains
 the result in `data/candidates/arkpedia-stage-16-3-source.json`, explicitly
 `testOnly: true, admitted: false`. Conditional waves use main route 7; the miner
 branch separately uses extra route 0 with exact reach offsets and traversal
-settings. This source refresh does not alter the enemy snapshot pin or admit
-16-3. Facility/tunnel integration and branch traversal still precede admission.
+settings. This source bundle remains unadmitted evidence; the separate reviewed
+stage contract controls the experimental build. The enemy snapshot pin remains
+unchanged.
 
 The producer at `d350e087` now retains complete level bytes in
 `data/simulator/raw/levels/16-3.json`, with an independent upstream receipt in
@@ -170,9 +169,13 @@ not be used to admit this stage's optional raid enemies.
 ### Hidden Tunnel continuation
 
 `chapter16-tunnel.js` implements the native summon, host counters, standby/advance
-command and independent born buffs, with a required branch-spawn callback. It is
-not installed in the stage adapter yet. Stage branch traversal and the manual UI
-action remain necessary before 16-3 can be built.
+command and independent born buffs, with a required branch-spawn callback.
+`chapter16-branch.js` validates the reviewed branch action and uses the complete
+canonical extra route, spawn jitter and fractional checkpoint offsets.
+StandardBattle installs the preplaced ally tunnel and exposes its manual command.
+The UI shows SP, waiting and total miners, preserves keyboard focus and button
+bounds, and resets the control on restart. Natural SP, Enter, touch activation,
+phone landscape and restart are exercised by the opt-in browser test.
 
 The original `sktok_spawnp` graph is separately retained by
 `extract-ch16-tunnel-skill.py` from the checksum-pinned shared skill bundle.
@@ -209,6 +212,45 @@ node tools/arkpedia/build-stage.mjs \
 node tools/arkpedia/stage-index.mjs
 npm run test:arkpedia-ch16
 ```
+
+## Reviewed test-only 16-3 build
+
+`data/candidates/arkpedia-ch16-reviewed-stage.json` is a separate review record
+binding the canonical level, native device and native tunnel-skill evidence by
+SHA-256. The builder refuses changed evidence or stage/geometry bytes. It verifies
+22 normal hostiles and the four-enemy dependency closure, excludes optional `raid`,
+and preserves the source's 0.5 movement multiplier. The stage retains separate
+canonical provenance for stage inputs (`84f3c833`) and enemy records (`79e81a8a`).
+The catalogue contains 599 entries: **597 public, two test-only**.
+
+Integration tests release three naturally summoned miners, traverse their exact
+fractional checkpoints, damage and destroy both facilities, and finish their
+harmless branch route. Static structures and unmanaged miners do not hold the
+battle open after its ordinary hostiles finish. Enemy spawn `tileR`/`tileC` fields
+are not moving coordinates: miner healing/shadow queries, death-summon placement
+and pollution queries now use current world positions. Moving-unit regressions
+cover the range and death-location cases.
+
+The flow field still uses integer tile anchors, then approaches the precise
+fractional endpoint without adding an unwanted center visit. Existing integer
+route behavior remains covered by the route regression suite. Full-stage tests
+assert the absence of swallowed hook/AI errors and optional raid enemies.
+
+```sh
+node tools/arkpedia/build-stage.mjs --candidate ch16 \
+  --stage .cache/arkpedia/canonical-stage-16-3/stage.json \
+  --geometry .cache/arkpedia/canonical-stage-16-3/geometry.json \
+  --conditional .cache/arkpedia/canonical-stage-16-3/conditional.json \
+  --out data/arkpedia-stage-16-3.json
+npm run test:arkpedia-ch16
+RENDER_E2E=1 node --test test/arkpedia-ch16-ui.browser.test.js
+```
+
+The browser check rejects public access, then exercises the actual app with
+natural SP rather than injected state. Screenshots were inspected on desktop and
+844×390 phone landscape. These are gameplay/control checks; stage art and some
+unit/device artwork use existing fallbacks. No captured-game rendering/frame
+parity or public admission is claimed.
 
 ## Retained source and parity evidence
 

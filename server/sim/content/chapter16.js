@@ -37,13 +37,14 @@ export function miner(r) {
       a.heal = 0; a.scan = 0; a.fear = null;
     },
     tick(b, e, a, dt) {
+      const row = Math.round(e.y), col = Math.round(e.x);
       a.heal += dt; a.scan += dt;
       if (a.heal >= 1 - 1e-9) {
         a.heal -= 1;
         for (const medic of operators(b)) {
           if (medic.def.profession !== 'MEDIC') continue;
           if (medic.rangeChanged) b._refreshRange(medic);
-          if (medic.rangeKeys?.includes(e.tileR * COLS + e.tileC))
+          if (medic.rangeKeys?.includes(row * COLS + col))
             b.heal(medic, e, medic.s.atk * bb(r, 'GetHeal', 'heal_scale'));
         }
       }
@@ -54,7 +55,7 @@ export function miner(r) {
         if (!e.s.flags.fear && !e.findBuff('gyegrd_a[exist]')) {
           const env = chapter16Shadow(b);
           for (let dr = -1; dr <= 1; dr++) for (let dc = -1; dc <= 1; dc++) {
-            env.suppressShadow(e.tileR + dr, e.tileC + dc, bb(r, 'TileEscapeShadowManager', 'times'));
+            env.suppressShadow(row + dr, col + dc, bb(r, 'TileEscapeShadowManager', 'times'));
           }
         }
       }

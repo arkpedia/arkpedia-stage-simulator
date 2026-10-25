@@ -10,7 +10,7 @@ export const REGULAR_ENEMIES = Object.freeze({ ...registry.enemies });
 export const REGULAR_ENEMY_SPAWNS = Object.freeze({ ...registry.spawns });
 
 export function assertRegularEnemies(data) {
-  const candidateMode = data.stage.code === '16-2' && data.stage.testOnly === true && data.stage.enemyCatalogue === 'canonical-ch16-candidate-v1';
+  const candidateMode = ['16-2', '16-3'].includes(data.stage.code) && data.stage.testOnly === true && data.stage.enemyCatalogue === 'canonical-ch16-candidate-v1';
   const enemies = candidateMode ? candidate.enemies : REGULAR_ENEMIES;
   const spawns = candidateMode ? candidate.spawns : REGULAR_ENEMY_SPAWNS;
   for (const id of Object.keys(data.enemies)) {
@@ -20,6 +20,8 @@ export function assertRegularEnemies(data) {
   }
   if (data.stage.devices?.some(d => d.key === 'trap_329_rift') && !data.enemies.enemy_10211_murad)
     throw Error('Missing canonical Leak Source record for Leak Marker device');
+  if (data.stage.devices?.some(d => d.key === 'trap_270_spawnp') && !data.enemies.enemy_3010_mcreep)
+    throw Error('Missing canonical Miner Guerrilla record for Hidden Tunnel device');
   for (const wave of data.stage.geometry.waves)
     for (const spawn of wave.spawns)
       if (!enemies[spawn.enemy_id] || !data.enemies[spawn.enemy_id])

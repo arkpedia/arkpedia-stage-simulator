@@ -530,7 +530,10 @@ function planLeg(b, e, leg) {
     pts = [{ x: leg.c, y: leg.r }];
   } else {
     const k = tileKey(b, e);
-    const f = legField(b, leg.r, leg.c, k);
+    // Reach offsets address a point inside the destination tile. Flow fields
+    // still address integer tiles; a fractional key silently loses the path.
+    const anchorR = Math.round(leg.r), anchorC = Math.round(leg.c);
+    const f = legField(b, anchorR, anchorC, k);
     pts = [];
     if (f) {
       let x = k;
@@ -542,7 +545,9 @@ function planLeg(b, e, leg) {
       }
     }
     const last = pts[pts.length - 1];
-    if (!last || last.x !== leg.c || last.y !== leg.r) pts.push({ x: leg.c, y: leg.r });
+    if (last && last.x === anchorC && last.y === anchorR && (leg.c !== anchorC || leg.r !== anchorR)) pts.pop();
+    const preciseLast = pts[pts.length - 1];
+    if (!preciseLast || preciseLast.x !== leg.c || preciseLast.y !== leg.r) pts.push({ x: leg.c, y: leg.r });
     // The smoothed chain is line-of-sight clear from the tile CENTRE only. An enemy re-planning off-centre (pushed,
     // released by 诱导, an obstacle change mid-segment) first steps back to its tile centre when the straight line to
     // the first waypoint would cut a tile it cannot walk (a fence corner, a crate) — else it would walk inside it.

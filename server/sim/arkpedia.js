@@ -259,6 +259,7 @@ import { assertRegularEnemies } from "../../shared/arkpedia/enemies.js";
 import { installEnemyFeatures } from "./content/arkpedia-enemy-features.js";
 import { installChapter17Devices } from './content/chapter17.js';
 import { installChapter16Structures } from './content/chapter16-structures.js';
+import { installChapter16Tunnels } from './content/chapter16-tunnel.js';
 import { STAGE_DEVICES, STAGE_TOKEN_UNITS, pulseTiles, artilleryTiles } from "../../shared/arkpedia/stage-devices.js";
 import { compileBuffTemplate } from "../../shared/arkpedia/behavior.js";
 import {
@@ -460,6 +461,7 @@ export class StandardBattle extends Battle {
     if (this.mvpStageDevices.length) this.on('tick', ({ dt }) => this._tickMvpStageDevices(dt));
     this._installUnitStageDevices(data.stage.devices ?? []);
     installChapter16Structures(this);
+    installChapter16Tunnels(this, data.stage.devices ?? [], data.stage.chapter16Source);
     installChapter17Devices(this, data.stage.devices ?? []);
     this._installPillarController();
     this._installHighTide(data.stage.tide);
@@ -1220,6 +1222,10 @@ export class StandardBattle extends Battle {
       (unit.skill.manual || unit.skill.spec.manualActivation?.() === true) &&
       unit.skill.activate("manual")
     );
+  }
+  activateStageDevice(id) {
+    if (!canDeployInViewport(this.viewport) || this.finished) return false;
+    return this.stageDeviceActions?.get(id)?.state.activate() ?? false;
   }
   // An owner-declared second field action (e.g. Hadiya's Equipment Adaptation).
   secondaryActionOperator(id) {

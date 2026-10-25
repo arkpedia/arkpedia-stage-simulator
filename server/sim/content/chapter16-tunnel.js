@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Native spawnp_t summon/count/stop/move actions. The caller supplies the
 // reviewed branch action; this module never substitutes a main route for it.
+import { chapter16BranchSpawner } from './chapter16-branch.js';
 export const TUNNEL_CONTRACT = Object.freeze({ interval: 15, total: 5, waiting: 3,
   spCost: 15, initSp: 0, spPerSecond: 1, branch: 'mcreep_route', action: 0 });
 const live = u => u?.alive && u.deployed && !u.hidden;
@@ -16,11 +17,14 @@ export function hiddenTunnel(b, owner, { spawnBranch }) {
   const state = { mode: 0, sp: TUNNEL_CONTRACT.initSp, spCost: TUNNEL_CONTRACT.spCost,
     get total() { return [...children.values()].filter(c => c.counted).length; },
     get waiting() { return [...children.values()].filter(c => c.waiting).length; },
+    canActivate() {
+      return valid() && !owner.s.flags.stun && !owner.s.flags.sleep && !owner.s.flags.freeze
+        && !owner.s.flags.levitate && state.sp >= state.spCost - 1e-9;
+    },
     activate() {
       // The retained skill cannot be cast in an abnormal action state, but
       // cannot be silenced. A ready activation always toggles, even with no miners.
-      if (!valid() || owner.s.flags.stun || owner.s.flags.sleep || owner.s.flags.freeze
-        || owner.s.flags.levitate || state.sp < state.spCost - 1e-9) return false;
+      if (!state.canActivate()) return false;
       state.sp = 0;
       state.mode = 1 - state.mode;
       if (state.mode === 1) for (const [child, record] of children)
@@ -54,7 +58,7 @@ export function hiddenTunnel(b, owner, { spawnBranch }) {
       children.set(child, record);
       child.mem.ch16TunnelHost = { unit: owner, life };
       // Native summons are unmanaged/unharmful, irrespective of level overrides.
-      child.counted = false; child.lpr = 0;
+      child.counted = false; child.lpr = 0; child.holdsBattle = false;
       const key = `spawnp_t[count_manager_m${state.mode}]`;
       record.countBuff = b.addBuff(child, { key, source: owner, persist: true,
         onRemove() { record.counted = false; if (!record.waiting) children.delete(child); } });
@@ -64,4 +68,20 @@ export function hiddenTunnel(b, owner, { spawnBranch }) {
     }
   });
   return state;
+}
+
+/** Preplaced ally-side trap, independent of operator cards. */
+export function installChapter16Tunnels(b, devices, source) {
+  const tunnels = devices.filter(d => d.key === 'trap_270_spawnp');
+  if (!tunnels.length) return;
+  const spawnBranch = chapter16BranchSpawner(b, source);
+  b.stageDeviceActions ??= new Map();
+  for (const d of tunnels) {
+    const owner = b.spawnDevice(d.key, d.row, d.col, { name: d.name,
+      hp: 3000, def: 100, res: 0, blockCnt: 0 });
+    if (!owner) throw Error('Hidden Tunnel could not be placed at its canonical position');
+    const state = hiddenTunnel(b, owner, { spawnBranch });
+    owner.mem.ch16Tunnel = state;
+    b.stageDeviceActions.set(`tunnel:${owner.id}`, { name: d.name, owner, state });
+  }
 }
