@@ -7,6 +7,7 @@ import {fileURLToPath,pathToFileURL} from 'node:url';
 import {resolve} from 'node:path';
 import {parsePinnedCNManifest,verifyCNNativeBundle,CN_NATIVE_PIN} from './cn-native-source.mjs';
 import {verifiedChapter16FamilyGraph} from './enemy-support.mjs';
+import {verifiedFirewallEnvironmentSource} from './firewall-environment-source.mjs';
 const root=new URL('../../',import.meta.url),cache=new URL('.cache/arkpedia/cn-native-source/',root);
 const sha=b=>createHash('sha256').update(b).digest('hex');
 
@@ -29,6 +30,10 @@ export async function familySourcePlan(families,{read=readFile}={}){
       ||clock.source.bundle.manifestSha256!==CN_NATIVE_PIN.manifestSha256)throw Error('Family clock and native graph pins disagree');
     for(const row of graph.source.bundles)add(row);
     add(clock.source.bundle);
+    if(family==='ch17-firewall-boss'){
+      const environment=verifiedFirewallEnvironmentSource(await read(new URL('data/candidates/arkpedia-ch17-firewall-environment-source.json',root)),inventory);
+      add(environment.source.bundle);
+    }
   }
   return [...bundles.values()].sort((a,b)=>a.path.localeCompare(b.path));
 }

@@ -681,3 +681,56 @@ all fifteen jobs. These are frozen preceding checkpoints; hosted checks for
 the new health controller must be observed separately. Support/stage counts
 are unchanged; the complete snake and the nine remaining normal stages have
 not been admitted.
+
+## Composed snake action phases and retained firewall environment
+
+`chapter17-snake-core.js` now composes HP-loss/recovery/injury, line casting,
+terminal counter/wave intent and the real LP timeout on one deployment. A
+successful injury interrupts the actor's actual pending line cast; it does not
+reset an unrelated placeholder timer. New casts consult the owned interaction
+predicate and injury state. Partial installation rolls back admitted phases,
+and terminal handoff retires the full actor even if a kill observer revives the
+body. This composition remains an internal candidate until the firewall and
+canonical wave/stage receiver are complete.
+
+The original Skill_1 clock releases at 2.4666666984558105 of its 6 seconds.
+Canonical GlobalLineAttack keeps initial cooldown15 and repeat cooldown25;
+the community page's different displayed cooldowns do not replace those records.
+Literal cast time consumes live native slowdown once and is independent of ASPD.
+Each retained grid column emits one downward speed10, radius0.5 projectile with
+a ten-second life and a one-target cap. Target-free is ignored; liftoff still
+has ground motion. Already born projectiles survive source retirement while
+unborn output is cancelled by injury. Swept contact, grid border peeling and
+clock dispatch are declared local mappings pending actual stage geometry review.
+
+An impact has no initial damage. Its single named parent supplies canonical
+300 true damage each second for10 seconds and owns a separate derived stun.
+Stun immunity/resistance does not delete or shorten that parent. Replacement
+cleans its own child, and parent removal preserves unrelated stuns. Both flying
+projectiles and already attached impacts retain source-life snapshots across
+body reuse. Hidden-body damage follows the ordinary engine pipeline; the parent
+continues its clock without bypassing that pipeline. Battle end removes all
+owned output. These are mechanics implementations, without model/effects work
+or a claim of compiled client/frame parity.
+
+The native `battle/prefabs/[uc]envsystems.ab` is now retained for the complete
+boss/firewall and Leak Source environment closures: two prefabs, eight components.
+Its publisher-manifest MD5/size and original bundle SHA256 are verified before
+extraction; a separate complete-graph digest prevents self-rehashed component
+changes from silently authorizing new rules. It supplies snake width7/height4,
+the other three bosses' x-4 range identity, five-second/three-click vulnerabilities
+and the generic harmless Leak Source spawn settings. The hosted fetch plan now
+has eight deduplicated original dependencies and independently reproduces these
+environment graphs. Capturing configuration/effect-key names for mechanics is
+not a visual import or environment behavior approval.
+
+All34 new line/core cases pass, and all944 locally available focused mechanics
+checks passed together. Four additional environment verification checks and both
+fetch-plan tests pass. The new source contract and Python environment extractor
+both reproduce with `--check`, and all eight cached dependency bundles verify.
+The preceding HP checkpoint cd1180fc passed all fifteen continuation jobs in
+run40206399587. Full Linux/Windows Node22/24 run40206399907 remains live at that
+checkpoint and must be observed rather than replaced while running. No enemy or
+stage support counts change; firewall damage/deployment geometry, initial side
+selection, canonical wave/branch integration, the other bosses and the wider
+operator audit remain mechanics work before art, models or effects.

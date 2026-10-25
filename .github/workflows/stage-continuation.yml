@@ -36,6 +36,7 @@ jobs:
           python tools/arkpedia/extract-enemy-family-source.py --family ch17-channel-carrier --prefab enemy_10203_mumag --prefab enemy_10203_mumag_2 --prefab enemy_10208_mucow --prefab enemy_10208_mucow_2 --check
           python tools/arkpedia/extract-enemy-family-source.py --family ch17-war-caster --prefab enemy_10210_muwiz --prefab enemy_10210_muwiz_2 --check
           python tools/arkpedia/extract-enemy-family-source.py --family ch17-firewall-boss --prefab enemy_1590_muama --prefab enemy_1591_mutwin --prefab enemy_1591_mutwin_2 --prefab enemy_1593_musnake --check
+          python tools/arkpedia/extract-firewall-environment-source.py --check
           python tools/arkpedia/extract-enemy-native-abilities.py --prefab enemy_3011_dyegrd --output data/candidates/arkpedia-ch16-story-guardian-native.json --check
           python tools/arkpedia/extract-enemy-native-abilities.py --prefab enemy_10128_fearpj --output data/candidates/arkpedia-ch16-fear-projectile-native.json --check
           python tools/arkpedia/extract-enemy-native-abilities.py --prefab enemy_10207_mubrut --prefab enemy_10207_mubrut_2 --output data/candidates/arkpedia-ch17-brute-native.json --check
@@ -61,6 +62,7 @@ jobs:
           node tools/arkpedia/snake-terminal-contract.mjs --check
           node tools/arkpedia/snake-timeout-contract.mjs --check
           node tools/arkpedia/snake-health-contract.mjs --check
+          node tools/arkpedia/snake-line-contract.mjs --check
   focused:
     strategy:
       fail-fast: false
