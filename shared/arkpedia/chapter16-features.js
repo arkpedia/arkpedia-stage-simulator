@@ -3,6 +3,7 @@
 // alone never clears their support gate.
 import reviewed from '../../data/candidates/arkpedia-ch17-reviewed-contracts.json' with { type: 'json' };
 import crossbowReview from '../../data/candidates/arkpedia-ch16-reviewed-crossbow.json' with { type: 'json' };
+import reactionReview from '../../data/candidates/arkpedia-ch17-reviewed-reactions.json' with { type: 'json' };
 const MINER_TEXT = "Allied unit; recovers HP when within any Medic Operator's Attack Range";
 const groups = { TileEscapeShadowManager: ['times'], GetHeal: ['heal_scale'], FearLoseBlood: ['value'] };
 function minerCovered(r, n) {
@@ -48,7 +49,41 @@ export const CHAPTER16_FEATURES = {
   'talent:TileEscapeShadowManager': { covers: minerCovered, note: 'Included in GetHeal controller.' },
   'talent:FearLoseBlood': { covers: minerCovered, note: 'Included in GetHeal controller.' },
   ...chapter17Features(),
+  ...pollutionReactionFeatures(),
 };
+
+function pollutionReactionCovered(r, n) {
+  const proof = reactionReview.enemies[r.key];
+  return reactionReview.testOnly === true && !!proof && r.prefabKey === r.key
+    && n.$familyEvidence?.('infantryBow') === reactionReview.sources.graph.sha256
+    && JSON.stringify(r.talents.groups) === JSON.stringify(proof.groups)
+    && JSON.stringify(r.talents.bb) === JSON.stringify(proof.bb)
+    && JSON.stringify(r.abilities) === JSON.stringify(proof.abilities)
+    && JSON.stringify(r.skills) === JSON.stringify(proof.skills)
+    && JSON.stringify(n.$retained?.()) === JSON.stringify(proof.native);
+}
+function pollutionReactionFeatures() {
+  const explains = (text, r) => reactionReview.enemies[r.key]?.abilities.some(a => a.text === text);
+  const nativeClaim = (p, n) => {
+    const proof = Object.values(reactionReview.enemies).find(proof => JSON.stringify(n.$retained?.()) === JSON.stringify(proof.native));
+    return proof ? { wrappers: proof.counts.enemyAbilityWrappers, active: proof.counts.activeGeneralOrCommonAbilities } : null;
+  };
+  return {
+    // This group also belongs to the previously reviewed Trimortalis. Its
+    // ReverseDamage anchor retains that controller and its native claim.
+    'talent:MuradPollut': {
+      covers: (r, n) => coversChapter17(r, n) || pollutionReactionCovered(r, n),
+      ability: r => reactionReview.enemies[r.key] && r.key.startsWith('enemy_10201_')
+        ? { kind: 'ch17PollutionInfantry', params: () => r } : null,
+      explains, nativeClaim, note: 'Exact native pollution reaction; infantry immediate heal, existing Trimortalis boost retained.',
+    },
+    'ability:Next attack deals Arts damage when affected by a <Leak Source>.': {
+      covers: pollutionReactionCovered, ability: r => reactionReview.enemies[r.key]
+        ? { kind: 'ch17PollutionBowman', params: () => r } : null,
+      nativeClaim, note: 'Experimental bowman mode and cast-end cooldown reset; native animation duration unverified.',
+    },
+  };
+}
 
 function coversChapter17(r, n) {
   const proof = reviewed.enemies[r.key];

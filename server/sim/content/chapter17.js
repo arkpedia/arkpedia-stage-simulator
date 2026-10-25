@@ -54,7 +54,10 @@ export function chapter17Environment(b) {
       const child = b.spawnEnemy('enemy_10211_murad', { pos: b.rng.pick(tiles), countInTotal: false });
       // The native environment creates a static, harmless summon, not a walker
       // with the stage's route 0 (which could leak before its own lifetime ends).
-      if (child) child.route = { legs: [{ t: 'wait', time: 1e9 }], legIdx: 0, pts: null, ptIdx: 0, suffix: null, version: -1, waitLeft: null };
+      if (child) {
+        child.route = { legs: [{ t: 'wait', time: 1e9 }], legIdx: 0, pts: null, ptIdx: 0, suffix: null, version: -1, waitLeft: null };
+        child.holdsBattle = false; // Native environment _unharmful=1, separate from the display count.
+      }
       return child;
     },
     expose(source) {
@@ -244,6 +247,7 @@ export function pollute(b, target) {
   const r = target.def?.raw;
   if (r?.prefabKey === 'enemy_10206_muveg') target.mem.ch16PollutedUntil = b.time + bb(r, 'MuradPollut', 'duration');
   target.mem.ch16RestoreShield?.();
+  target.mem.ch17PollutionReaction?.();
 }
 
 export function leakSource(r) {
