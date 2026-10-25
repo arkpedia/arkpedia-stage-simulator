@@ -4,11 +4,12 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { verifiedChapter16FamilyGraph, verifiedNative } from '../tools/arkpedia/enemy-support.mjs';
+import { parseSkel } from '../tools/assets/skel.mjs';
 const bytes = path => readFileSync(new URL('../data/' + path, import.meta.url));
 const inventory = bytes('arkpedia-cn-native-source.json'), enemies = bytes('arkpedia-cn-enemy-native-source.json');
 const index = JSON.parse(bytes('arkpedia-enemy-clock-source.json'));
 const verify = graph => verifiedChapter16FamilyGraph(JSON.stringify(graph), inventory, enemies, index);
-for (const [chapter,family] of [['ch17','flyer'],['ch17','bag'],['ch16','story-guardian'],['ch16','fear-projectile']]) {
+for (const [chapter,family] of [['ch17','flyer'],['ch17','bag'],['ch16','fear-projectile']]) {
   const graph = JSON.parse(bytes(`candidates/arkpedia-${chapter}-${family}-source.json`));
   test(`${family} retained source closure does not admit its unfinished controller`, () => {
     assert.doesNotThrow(() => verify(graph));
@@ -22,7 +23,7 @@ for (const [chapter,family] of [['ch17','flyer'],['ch17','bag'],['ch16','story-g
       assert.equal(support.enemies[key].policy, null);
   });
 }
-for (const family of ['crossbow', 'commander', 'artillery']) {
+for (const family of ['crossbow', 'commander', 'artillery', 'story-guardian']) {
   const graph = JSON.parse(bytes(`candidates/arkpedia-ch16-${family}-source.json`));
   test(`${family} complete graph matches the pinned inventory, timing components and action closure`, () => {
     assert.doesNotThrow(() => verify(graph));
@@ -79,4 +80,14 @@ test('fear projectile source requires its separate explosion and full-HP removal
   assert.ok(tick[1].$type.endsWith('+FinishBuff'));
   const missing=structuredClone(g);missing.projectiles={};
   assert.throws(()=>verify(missing),/projectile closure incomplete/);
+});
+
+test('fear projectile original clock source cannot be replaced by a fabricated OnAttack marker',()=>{
+  const source=JSON.parse(bytes('candidates/arkpedia-ch16-fear-projectile-animation-source.json'));
+  const row=source.enemies.enemy_10128_fearpj,raw=Buffer.from(row.base64,'base64');
+  assert.equal(raw.length,row.bytes);assert.equal(createHash('sha256').update(raw).digest('hex'),row.sha256);
+  assert.equal(source.source.graph.sha256,createHash('sha256').update(bytes('candidates/arkpedia-ch16-fear-projectile-source.json')).digest('hex'));
+  const skel=parseSkel(raw,undefined,{includeEventPayloads:true,includeExactDurations:true});
+  assert.equal(skel.exactDurations.Attack,.5333333611488342);assert.deepEqual(skel.eventPayloads,{});
+  assert.equal(JSON.parse(bytes('candidates/arkpedia-ch16-enemy-support.json')).enemies.enemy_10128_fearpj.policy,null);
 });

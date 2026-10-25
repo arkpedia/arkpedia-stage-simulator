@@ -12,6 +12,16 @@ The latest route/harmless-wave continuation below supersedes earlier stage-input
 pins and route-only timing claims. Historical runs predate the corrected
 synthetic waits/teleports and are not current fidelity evidence.
 
+The Windows mechanics continuation is tracked in `DEVELOPMENT-PRIORITIES.md`.
+There are now614 catalogue entries (597 public,17 test-only) and468 source-bound
+candidate enemy identities. Normal17-8/9 integrate pollution Brutes; the story
+Guardian has its own native-clock, delayed self-damage and global miner-fog
+controller. Stage16-9 remains unadmitted pending its fear-projectile and local
+miner contracts. A token-only stage with an empty fixed-squad array now retains
+the player's selected operators; real fixed squads remain enforced. These are
+experimental mechanics mappings, not public promotion or compiled/frame parity.
+Stage art/models/chibis and new effects remain deferred until mechanics finish.
+
 ## Controllers and integration
 
 The miner controller remains in `server/sim/content/chapter16.js`; the other five

@@ -98,15 +98,16 @@ Reading original event-clock bytes for mechanics is not a visual-model import.
 
 The seven-stage continuation checks cover 16-10/11/14/15 and 17-7/8/9. The catalogue
 contains614 entries (597 public and17 test-only), with613 file-backed stages.
-The prior611-stage local file-backed load/fight sweep passes. Hosted validation found a
+The613-stage local file-backed load/fight sweep at `54f100ad` passes. Hosted validation found a
 stale one-tunnel browser expectation for two-tunnel 16-15 and a generic runner
 deadline shorter than the catalogue test's own deadline; both are corrected,
 without removing scenarios or changing the simulation's gameplay time cap.
 
 Hosted checkpoint `835d7b26`:409/409 focused tests pass independently on Ubuntu
 and Windows; both16-14 and16-15 desktop/touch/restart browser scenarios pass.
-The full eight-shard Linux/Windows Node22/24 regression at `4eb108d0` remains in
-progress and must not be reported as green before its terminal results.
+The full eight-shard Linux/Windows Node22/24 regression at `4eb108d0` completed
+successfully. That frozen checkpoint predates the Brute/Guardian integrations;
+it is not a claim that the later head has completed the full matrix.
 
 Stage-local definitions now have an isolated compiler path in
 `shared/arkpedia/enemy-records.js`. It requires literal `useDb=false` data and a
@@ -130,14 +131,60 @@ The route-only17-9 fixture clears at300.7 seconds under an explicit330-second te
 cap; its separate default300-second timeout test passes. The gameplay cap is
 unchanged. Candidate support is467/1,901; the coverage report is regenerated.
 
-The remaining16-9 Guardian and fear-projectile graphs, all indexed components,
+The16-9 Guardian and fear-projectile graphs, all indexed components,
 templates and the explosion projectile are retained against the pinned native
 inventories. Source-only checks preserve the Guardian delayed self-HP-loss and
 miner fog marker, and the fear projectile's derived miner fear/disarm ending at
-full HP. No support is granted until their controllers and interactions exist.
+full HP. The fear projectile remains source-only; the Guardian is now registered
+under the exact experimental contract described below.
 
 The expanded locally available focused suite ran431 tests:430 passed and one
 temporary-cache atomic rename was denied by the Windows sandbox. The affected
 canonical-stage file then passed5/5 with normal host filesystem access. The four
 quarantined test files remain excluded only from that local invocation; hosted
 CI runs the complete declared suite with those tracked files intact.
+
+## Guardian and token-only preparation continuation
+
+`25aaff91` fixes the17-8 browser failure: its five Roadblocks accompany an empty
+fixed-squad array, which must preserve the player's squad choices. The adapter
+now emits null for absent fixed operators, and preparation treats legacy empty
+arrays the same way. Real fixed squads remain enforced. The actual local
+desktop/touch clock, pause/restart and public rejection scenario passes; its
+captures were inspected. Hosted run40186136583 passes both Linux/Windows focused
+suites and all four16-14/15 and17-8/9 browser jobs.
+
+The Guardian (`enemy_3011_dyegrd`) now has one automatically attached controller
+for its DelayBloodDot talent and AOE skill. Twenty dedicated checks cover exact
+native graph/index/record gates, original Attack02/Skill_01 clocks, marked-miner
+input and area center, live ATK, selectability/ground filters, brief controls,
+slow_down, input life retention, shared fog ownership and retirement. The actual
+miner controller resumes shadow suppression after the final Guardian leaves.
+An accepted75-second delay parent starts the immobilizing pure-damage child on
+disable; early removal also starts it, while rejected parents create no callback.
+One-second pulses read current max HP, pass through damage modifiers, survive
+silence/stun and can kill the owner. Source retirement cancels future owned work.
+
+The buff-event alias receipt independently matches unchanged action lists at the
+same keys in both frozen native and named-template sources. Five aliases have
+three retained witnesses each; event25 is ON_BUFF_DISABLE, corroborated by30
+matching templates. Only $type assembly suffixes are normalized, and booleans
+remain distinct from numbers. The retained named source and complete native
+bundle checksums are verified. This recovers serialized aliases, not compiled
+methods or frame parity.
+
+Candidate support is468/1,901; the catalogue remains614 entries,597 public and17
+test-only. Stage16-9 is still unadmitted: the fear projectile and local miner
+contracts must be completed first. The projectile's original skeleton has no
+OnAttack events, so no synthetic hit marker or borrowed clock is admitted.
+The locally available focused suite passes459/459, excluding only the four
+quarantined files retained in Git. Two additional source-plan tests pass.
+
+`fetch-enemy-family-source.mjs` verifies only the seven exact dependency bundles
+for Guardian/fear-projectile/Brute and the pinned named template file. Hosted
+continuation CI now independently reruns all three graph/indexed/clock extractors
+and the alias recovery script from those original bytes. This source job grants
+no support on its own. Guardian native callback/FSM ordering and radius/rate
+resolution retain explicit shared-engine mappings; compiled/frame parity is not
+claimed. The operator-wide mechanics audit remains in phase1; visual integration
+waits for that phase to finish.

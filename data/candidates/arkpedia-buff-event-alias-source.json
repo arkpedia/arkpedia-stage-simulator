@@ -1,0 +1,401 @@
+{
+  "schemaVersion": 1,
+  "scope": "Serialized numeric buff-event alias facts only; no compiled dispatch, frame parity or enemy/operator support.",
+  "source": {
+    "nativeInventory": {
+      "path": "data/arkpedia-cn-native-source.json",
+      "sha256": "b6e0cfbe21768b277e42cae0f6f4ae627ee69020898bcacb1b8e5ed05bee7655"
+    },
+    "manifestSha256": "d1ac02a61d98e6e4c772335bb85dc44da4794a0a8bc915354b6f9ffbc7ec1f35",
+    "nativeBundle": {
+      "path": "config/buff_template_holder.ab",
+      "bytes": 1963907,
+      "md5": "8d395a42a34fbbb5af1f2e4ad7d39ef8",
+      "sha256": "30bacb35c8962817931d8fd2cad66cd5a4455b86f6f34e21257829ff7f0fd0a3"
+    },
+    "namedTemplates": {
+      "repository": "Kengxxiao/ArknightsGameData_YoStar",
+      "commit": "57010cb5b2afea112cae57daa756b58676ba6850",
+      "path": "en_US/gamedata/battle/buff_template_data.json",
+      "sha256": "79dce42d1ffa76196984b80678422e0323e406f6a044f1a25b1de75e0c5b9d27"
+    }
+  },
+  "normalization": "Only the assembly suffix after the first comma in $type is removed. All other action fields and list order match exactly at the same template key.",
+  "events": {
+    "0": {
+      "name": "ON_BUFF_START",
+      "matchingTemplates": 643,
+      "witnesses": [
+        {
+          "template": "HealViaMaxHpRatio",
+          "numeric": 0,
+          "name": "ON_BUFF_START",
+          "nativeActionsJson": "[{\"_healTarget\":\"BUFF_OWNER\",\"_getMaxHpFromTarget\":false,\"_ignoreHealFree\":false,\"_skipModifierEvent\":true,\"$type\":\"Torappu.Battle.Action.Nodes+HealViaMaxHpRatio\"}]",
+          "namedActions": [
+            {
+              "$type": "Torappu.Battle.Action.Nodes+HealViaMaxHpRatio, Assembly-CSharp",
+              "_healTarget": "BUFF_OWNER",
+              "_getMaxHpFromTarget": false,
+              "_ignoreHealFree": false,
+              "_skipModifierEvent": true
+            }
+          ]
+        },
+        {
+          "template": "[env]effect_for_pollute",
+          "numeric": 0,
+          "name": "ON_BUFF_START",
+          "nativeActionsJson": "[{\"_targetType\":\"BUFF_OWNER\",\"_heightType\":\"HIGHLAND\",\"$type\":\"Torappu.Battle.Action.Nodes+CheckHeightTypeOfRootTile\"},{\"_decCntIfStack\":false,\"_updateOverrideMap\":true,\"$type\":\"Torappu.Battle.Action.Nodes+FinishBuff\"}]",
+          "namedActions": [
+            {
+              "$type": "Torappu.Battle.Action.Nodes+CheckHeightTypeOfRootTile, Assembly-CSharp",
+              "_targetType": "BUFF_OWNER",
+              "_heightType": "HIGHLAND"
+            },
+            {
+              "$type": "Torappu.Battle.Action.Nodes+FinishBuff, Assembly-CSharp",
+              "_decCntIfStack": false,
+              "_updateOverrideMap": true
+            }
+          ]
+        },
+        {
+          "template": "[g]cooperate_enemy_after_attack_harder",
+          "numeric": 0,
+          "name": "ON_BUFF_START",
+          "nativeActionsJson": "[{\"_conditionNode\":{\"_targetType\":\"BUFF_OWNER\",\"$type\":\"Torappu.Battle.Action.Nodes+CheckIsFootballEnemy\"},\"_succeedNodes\":null,\"_failNodes\":[{\"_conditionNode\":{\"_targetType\":\"BUFF_OWNER\",\"$type\":\"Torappu.Battle.Action.Nodes+CheckIsTrackTargetEnemy\"},\"_succeedNodes\":null,\"_failNodes\":[{\"_decCntIfStack\":false,\"_updateOverrideMap\":true,\"$type\":\"Torappu.Battle.Action.Nodes+FinishBuff\"}],\"$type\":\"Torappu.Battle.Action.Nodes+IfElse\"}],\"$type\":\"Torappu.Battle.Action.Nodes+IfElse\"}]",
+          "namedActions": [
+            {
+              "$type": "Torappu.Battle.Action.Nodes+IfElse, Assembly-CSharp",
+              "_conditionNode": {
+                "$type": "Torappu.Battle.Action.Nodes+CheckIsFootballEnemy, Assembly-CSharp",
+                "_targetType": "BUFF_OWNER"
+              },
+              "_succeedNodes": null,
+              "_failNodes": [
+                {
+                  "$type": "Torappu.Battle.Action.Nodes+IfElse, Assembly-CSharp",
+                  "_conditionNode": {
+                    "$type": "Torappu.Battle.Action.Nodes+CheckIsTrackTargetEnemy, Assembly-CSharp",
+                    "_targetType": "BUFF_OWNER"
+                  },
+                  "_succeedNodes": null,
+                  "_failNodes": [
+                    {
+                      "$type": "Torappu.Battle.Action.Nodes+FinishBuff, Assembly-CSharp",
+                      "_decCntIfStack": false,
+                      "_updateOverrideMap": true
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "1": {
+      "name": "ON_BUFF_FINISH",
+      "matchingTemplates": 326,
+      "witnesses": [
+        {
+          "template": "agoat2_s_3[end]",
+          "numeric": 1,
+          "name": "ON_BUFF_FINISH",
+          "nativeActionsJson": "[{\"_modeIndex\":0,\"_loadModeFromBlackboard\":false,\"_restoreDefault\":false,\"_restartFSM\":true,\"_targetType\":\"TARGET\",\"$type\":\"Torappu.Battle.Action.Nodes+SwitchMode\"}]",
+          "namedActions": [
+            {
+              "$type": "Torappu.Battle.Action.Nodes+SwitchMode, Assembly-CSharp",
+              "_modeIndex": 0,
+              "_loadModeFromBlackboard": false,
+              "_restoreDefault": false,
+              "_restartFSM": true,
+              "_targetType": "TARGET"
+            }
+          ]
+        },
+        {
+          "template": "agoat2_s_3[switch][end]",
+          "numeric": 1,
+          "name": "ON_BUFF_FINISH",
+          "nativeActionsJson": "[{\"_targetType\":\"BUFF_OWNER\",\"_checkCurModeIndex\":3,\"_loadCurModeBbKey\":\"\",\"$type\":\"Torappu.Battle.Action.Nodes+CheckUnitCurrentMode\"},{\"_conditionNode\":{\"_targetType\":\"BUFF_OWNER\",\"_buffKeys\":[\"agoat2_s_3[end]\"],\"isAND\":true,\"_loadFromBlackboard\":false,\"_checkBuffSource\":false,\"_buffSourceType\":\"BUFF_SOURCE\",\"_checkSourceHost\":false,\"$type\":\"Torappu.Battle.Action.Nodes+CheckContainsBuff\"},\"_succeedNodes\":null,\"_failNodes\":[{\"_modeIndex\":0,\"_loadModeFromBlackboard\":false,\"_restoreDefault\":false,\"_restartFSM\":true,\"_targetType\":\"TARGET\",\"$type\":\"Torappu.Battle.Action.Nodes+SwitchMode\"}],\"$type\":\"Torappu.Battle.Action.Nodes+IfElse\"}]",
+          "namedActions": [
+            {
+              "$type": "Torappu.Battle.Action.Nodes+CheckUnitCurrentMode, Assembly-CSharp",
+              "_targetType": "BUFF_OWNER",
+              "_checkCurModeIndex": 3,
+              "_loadCurModeBbKey": ""
+            },
+            {
+              "$type": "Torappu.Battle.Action.Nodes+IfElse, Assembly-CSharp",
+              "_conditionNode": {
+                "$type": "Torappu.Battle.Action.Nodes+CheckContainsBuff, Assembly-CSharp",
+                "_targetType": "BUFF_OWNER",
+                "_buffKeys": [
+                  "agoat2_s_3[end]"
+                ],
+                "isAND": true,
+                "_loadFromBlackboard": false,
+                "_checkBuffSource": false,
+                "_buffSourceType": "BUFF_SOURCE",
+                "_checkSourceHost": false
+              },
+              "_succeedNodes": null,
+              "_failNodes": [
+                {
+                  "$type": "Torappu.Battle.Action.Nodes+SwitchMode, Assembly-CSharp",
+                  "_modeIndex": 0,
+                  "_loadModeFromBlackboard": false,
+                  "_restoreDefault": false,
+                  "_restartFSM": true,
+                  "_targetType": "TARGET"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "template": "angel2_s_1[switch_mode]",
+          "numeric": 1,
+          "name": "ON_BUFF_FINISH",
+          "nativeActionsJson": "[{\"_modeIndex\":0,\"_loadModeFromBlackboard\":false,\"_restoreDefault\":false,\"_restartFSM\":true,\"_targetType\":\"BUFF_OWNER\",\"$type\":\"Torappu.Battle.Action.Nodes+SwitchMode\"}]",
+          "namedActions": [
+            {
+              "$type": "Torappu.Battle.Action.Nodes+SwitchMode, Assembly-CSharp",
+              "_modeIndex": 0,
+              "_loadModeFromBlackboard": false,
+              "_restoreDefault": false,
+              "_restartFSM": true,
+              "_targetType": "BUFF_OWNER"
+            }
+          ]
+        }
+      ]
+    },
+    "2": {
+      "name": "ON_BUFF_TRIGGER",
+      "matchingTemplates": 215,
+      "witnesses": [
+        {
+          "template": "[env]burn_dmg",
+          "numeric": 2,
+          "name": "ON_BUFF_TRIGGER",
+          "nativeActionsJson": "[{\"_damageType\":\"MAGICAL\",\"_damageKey\":\"addOnDamage\",\"_baseDamageKey\":\"baseDamage\",\"_durationToIncreaseKey\":\"addOnDuration\",\"_ignoreForSp\":true,\"_attackType\":\"BUFF\",\"_isEnvDamage\":true,\"_isRatioToMaxHp\":false,\"_isIncreasingToCap\":true,\"_skipModifierEvent\":false,\"_elementDamageType\":\"NONE\",\"$type\":\"Torappu.Battle.Action.Nodes+BleedingDamagePerSec\"},{\"_var\":\"ep_scale\",\"_noVarShowWarning\":true,\"$type\":\"Torappu.Battle.Action.Nodes+IsBlackboardZero\"},{\"$type\":\"Torappu.Battle.Action.Nodes+IfNot\"},{\"_damageType\":\"MAGICAL\",\"_damageKey\":\"addOnDamage\",\"_baseDamageKey\":\"baseDamage\",\"_durationToIncreaseKey\":\"addOnDuration\",\"_ignoreForSp\":true,\"_attackType\":\"BUFF\",\"_isEnvDamage\":true,\"_isRatioToMaxHp\":false,\"_isIncreasingToCap\":true,\"_skipModifierEvent\":false,\"_elementDamageType\":\"FIRE\",\"$type\":\"Torappu.Battle.Action.Nodes+BleedingDamagePerSec\"}]",
+          "namedActions": [
+            {
+              "$type": "Torappu.Battle.Action.Nodes+BleedingDamagePerSec, Assembly-CSharp",
+              "_damageType": "MAGICAL",
+              "_damageKey": "addOnDamage",
+              "_baseDamageKey": "baseDamage",
+              "_durationToIncreaseKey": "addOnDuration",
+              "_ignoreForSp": true,
+              "_attackType": "BUFF",
+              "_isEnvDamage": true,
+              "_isRatioToMaxHp": false,
+              "_isIncreasingToCap": true,
+              "_skipModifierEvent": false,
+              "_elementDamageType": "NONE"
+            },
+            {
+              "$type": "Torappu.Battle.Action.Nodes+IsBlackboardZero, Assembly-CSharp",
+              "_var": "ep_scale",
+              "_noVarShowWarning": true
+            },
+            {
+              "$type": "Torappu.Battle.Action.Nodes+IfNot, Assembly-CSharp"
+            },
+            {
+              "$type": "Torappu.Battle.Action.Nodes+BleedingDamagePerSec, Assembly-CSharp",
+              "_damageType": "MAGICAL",
+              "_damageKey": "addOnDamage",
+              "_baseDamageKey": "baseDamage",
+              "_durationToIncreaseKey": "addOnDuration",
+              "_ignoreForSp": true,
+              "_attackType": "BUFF",
+              "_isEnvDamage": true,
+              "_isRatioToMaxHp": false,
+              "_isIncreasingToCap": true,
+              "_skipModifierEvent": false,
+              "_elementDamageType": "FIRE"
+            }
+          ]
+        },
+        {
+          "template": "[g]acid_rain",
+          "numeric": 2,
+          "name": "ON_BUFF_TRIGGER",
+          "nativeActionsJson": "[{\"_conditionNode\":{\"_targetType\":\"BUFF_OWNER\",\"_buffKeys\":[\"trap_xbawea[exclude]\"],\"isAND\":true,\"_loadFromBlackboard\":false,\"_checkBuffSource\":false,\"_buffSourceType\":\"BUFF_SOURCE\",\"_checkSourceHost\":false,\"$type\":\"Torappu.Battle.Action.Nodes+CheckContainsBuff\"},\"_succeedNodes\":null,\"_failNodes\":[{\"_elementDamageType\":\"WATER\",\"_sourceType\":\"SOURCE\",\"_isFixedEpDamage\":true,\"_baseOnHostAtk\":false,\"_baseOnEnemyHostAtk\":false,\"_fixedEpDamageKey\":\"value\",\"_fixedEpDamage\":0.0,\"_noSource\":true,\"_forceUseProjectileCachedAtk\":false,\"_multiplyWithBuffValidStackCnt\":false,\"_buffKey\":null,\"_buffSourceType\":\"BUFF_OWNER\",\"_targetType\":\"TARGET\",\"_isEnvElementDamage\":true,\"_loadElementTypeFromBb\":false,\"_fixedEpDamageScale\":\"\",\"_epDamageScale\":\"ep_damage_ratio\",\"$type\":\"Torappu.Battle.Action.Nodes+ApplyElementDamage\"}],\"$type\":\"Torappu.Battle.Action.Nodes+IfElse\"}]",
+          "namedActions": [
+            {
+              "$type": "Torappu.Battle.Action.Nodes+IfElse, Assembly-CSharp",
+              "_conditionNode": {
+                "$type": "Torappu.Battle.Action.Nodes+CheckContainsBuff, Assembly-CSharp",
+                "_targetType": "BUFF_OWNER",
+                "_buffKeys": [
+                  "trap_xbawea[exclude]"
+                ],
+                "isAND": true,
+                "_loadFromBlackboard": false,
+                "_checkBuffSource": false,
+                "_buffSourceType": "BUFF_SOURCE",
+                "_checkSourceHost": false
+              },
+              "_succeedNodes": null,
+              "_failNodes": [
+                {
+                  "$type": "Torappu.Battle.Action.Nodes+ApplyElementDamage, Assembly-CSharp",
+                  "_elementDamageType": "WATER",
+                  "_sourceType": "SOURCE",
+                  "_isFixedEpDamage": true,
+                  "_baseOnHostAtk": false,
+                  "_baseOnEnemyHostAtk": false,
+                  "_fixedEpDamageKey": "value",
+                  "_fixedEpDamage": 0.0,
+                  "_noSource": true,
+                  "_forceUseProjectileCachedAtk": false,
+                  "_multiplyWithBuffValidStackCnt": false,
+                  "_buffKey": null,
+                  "_buffSourceType": "BUFF_OWNER",
+                  "_targetType": "TARGET",
+                  "_isEnvElementDamage": true,
+                  "_loadElementTypeFromBb": false,
+                  "_fixedEpDamageScale": "",
+                  "_epDamageScale": "ep_damage_ratio"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "template": "acfend_t_2[enemy]",
+          "numeric": 2,
+          "name": "ON_BUFF_TRIGGER",
+          "nativeActionsJson": "[{\"_targetType\":\"BUFF_SOURCE\",\"_checkBlockedBySource\":false,\"_checkBlockedBySourceToken\":false,\"_sourceType\":\"BUFF_SOURCE\",\"_checkBlockedCount\":false,\"$type\":\"Torappu.Battle.Action.Nodes+CheckBlocked\"},{\"$type\":\"Torappu.Battle.Action.Nodes+IfNot\"},{\"_decCntIfStack\":false,\"_updateOverrideMap\":true,\"$type\":\"Torappu.Battle.Action.Nodes+FinishBuff\"}]",
+          "namedActions": [
+            {
+              "$type": "Torappu.Battle.Action.Nodes+CheckBlocked, Assembly-CSharp",
+              "_targetType": "BUFF_SOURCE",
+              "_checkBlockedBySource": false,
+              "_checkBlockedBySourceToken": false,
+              "_sourceType": "BUFF_SOURCE",
+              "_checkBlockedCount": false
+            },
+            {
+              "$type": "Torappu.Battle.Action.Nodes+IfNot, Assembly-CSharp"
+            },
+            {
+              "$type": "Torappu.Battle.Action.Nodes+FinishBuff, Assembly-CSharp",
+              "_decCntIfStack": false,
+              "_updateOverrideMap": true
+            }
+          ]
+        }
+      ]
+    },
+    "3": {
+      "name": "ON_OWNER_KILLED",
+      "matchingTemplates": 22,
+      "witnesses": [
+        {
+          "template": "[g]cooperate_get_branch",
+          "numeric": 3,
+          "name": "ON_OWNER_KILLED",
+          "nativeActionsJson": "[{\"_isLoop\":true,\"_branchId\":\"\",\"_maxValidEnemyCount\":-1,\"$type\":\"Torappu.Battle.Action.Nodes+MoveNextLevelBranch\"}]",
+          "namedActions": [
+            {
+              "$type": "Torappu.Battle.Action.Nodes+MoveNextLevelBranch, Assembly-CSharp",
+              "_isLoop": true,
+              "_branchId": "",
+              "_maxValidEnemyCount": -1
+            }
+          ]
+        },
+        {
+          "template": "cdcasterb_skill_aura",
+          "numeric": 3,
+          "name": "ON_OWNER_KILLED",
+          "nativeActionsJson": "[{\"_targetType\":\"BUFF_SOURCE\",\"_sourceType\":\"SOURCE\",\"_ignoreHealFree\":false,\"_healValueKey\":\"value\",\"$type\":\"Torappu.Battle.Action.Nodes+FixedValueHeal\"}]",
+          "namedActions": [
+            {
+              "$type": "Torappu.Battle.Action.Nodes+FixedValueHeal, Assembly-CSharp",
+              "_targetType": "BUFF_SOURCE",
+              "_sourceType": "SOURCE",
+              "_ignoreHealFree": false,
+              "_healValueKey": "value"
+            }
+          ]
+        },
+        {
+          "template": "die_to_add_cost",
+          "numeric": 3,
+          "name": "ON_OWNER_KILLED",
+          "nativeActionsJson": "[{\"_sourceType\":\"SOURCE\",\"_forceToDisplayNumber\":false,\"_forceToDisplayNegativeNumber\":false,\"_blackboardKey\":\"cost\",\"$type\":\"Torappu.Battle.Action.Nodes+ModifyCost\"}]",
+          "namedActions": [
+            {
+              "$type": "Torappu.Battle.Action.Nodes+ModifyCost, Assembly-CSharp",
+              "_sourceType": "SOURCE",
+              "_forceToDisplayNumber": false,
+              "_forceToDisplayNegativeNumber": false,
+              "_blackboardKey": "cost"
+            }
+          ]
+        }
+      ]
+    },
+    "25": {
+      "name": "ON_BUFF_DISABLE",
+      "matchingTemplates": 29,
+      "witnesses": [
+        {
+          "template": "amiya3_s_1",
+          "numeric": 25,
+          "name": "ON_BUFF_DISABLE",
+          "nativeActionsJson": "[{\"_modeIndex\":0,\"_loadModeFromBlackboard\":false,\"_restoreDefault\":false,\"_restartFSM\":true,\"_targetType\":\"TARGET\",\"$type\":\"Torappu.Battle.Action.Nodes+SwitchMode\"}]",
+          "namedActions": [
+            {
+              "$type": "Torappu.Battle.Action.Nodes+SwitchMode, Assembly-CSharp",
+              "_modeIndex": 0,
+              "_loadModeFromBlackboard": false,
+              "_restoreDefault": false,
+              "_restartFSM": true,
+              "_targetType": "TARGET"
+            }
+          ]
+        },
+        {
+          "template": "bryota_s_2_ally[self]",
+          "numeric": 25,
+          "name": "ON_BUFF_DISABLE",
+          "nativeActionsJson": "[{\"_updateOverrideMap\":true,\"$type\":\"Torappu.Battle.Action.Nodes+FinishDerivedBuff\"}]",
+          "namedActions": [
+            {
+              "$type": "Torappu.Battle.Action.Nodes+FinishDerivedBuff, Assembly-CSharp",
+              "_updateOverrideMap": true
+            }
+          ]
+        },
+        {
+          "template": "caper_s_2",
+          "numeric": 25,
+          "name": "ON_BUFF_DISABLE",
+          "nativeActionsJson": "[{\"_targetType\":\"BUFF_OWNER\",\"_reset\":true,\"$type\":\"Torappu.Battle.Action.Nodes+ModifyBoomberangMaxCnt\"},{\"_modeIndex\":0,\"_loadModeFromBlackboard\":false,\"_restoreDefault\":false,\"_restartFSM\":true,\"_targetType\":\"TARGET\",\"$type\":\"Torappu.Battle.Action.Nodes+SwitchMode\"}]",
+          "namedActions": [
+            {
+              "$type": "Torappu.Battle.Action.Nodes+ModifyBoomberangMaxCnt, Assembly-CSharp",
+              "_targetType": "BUFF_OWNER",
+              "_reset": true
+            },
+            {
+              "$type": "Torappu.Battle.Action.Nodes+SwitchMode, Assembly-CSharp",
+              "_modeIndex": 0,
+              "_loadModeFromBlackboard": false,
+              "_restoreDefault": false,
+              "_restartFSM": true,
+              "_targetType": "TARGET"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
