@@ -9,7 +9,7 @@
 import { readdirSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { resolve } from 'node:path';
+import { resolve, relative } from 'node:path';
 
 /** The test files assigned to one shard of a stable recursive test sort. */
 export function testFilesForShard(total = 1, index = 0) {
@@ -18,6 +18,20 @@ export function testFilesForShard(total = 1, index = 0) {
     .map(name => name.replaceAll('\\', '/'))
     .filter(name => name.endsWith('.test.js')).sort()
     .filter((_, at) => at % n === i);
+}
+
+// Bound the command line, not the test count. Windows rejects a process
+// command above 32,767 UTF-16 characters; leave room for Node/flags/quoting.
+export function testFileBatches(files, maxChars = 12000) {
+  const batches = []; let batch = [], chars = 0;
+  for (const file of files) {
+    const cost = file.length * 2 + 3; // conservative quoting/escaping allowance
+    if (cost > maxChars) throw Error('Test filename exceeds launch budget: ' + file);
+    if (batch.length && chars + cost > maxChars) { batches.push(batch); batch = []; chars = 0; }
+    batch.push(file); chars += cost;
+  }
+  if (batch.length) batches.push(batch);
+  return batches;
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
@@ -34,10 +48,18 @@ if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1]
   // give only these long files a bounded ten-minute deadline.
   const long = files.filter(file => /[\\/]match[\\/]fullmatch[^\\/]*\.test\.js$/.test(file));
   const ordinary = files.filter(file => !long.includes(file));
+  let failed = false;
+  const repo = fileURLToPath(new URL('../', import.meta.url));
   for (const [selected, timeout] of [[long, 600000], [ordinary, 180000]]) {
     if (!selected.length) continue;
     console.log(`Running ${selected.length} test files (file deadline ${timeout}ms)`);
-    const result = spawnSync(process.execPath, ['--test', `--test-timeout=${timeout}`, ...selected], { stdio: 'inherit' });
-    if (result.status !== 0) process.exit(result.status ?? 1);
+    const batches = testFileBatches(selected.map(file => relative(repo, file)));
+    for (const [index, batch] of batches.entries()) {
+      console.log(`Batch ${index + 1}/${batches.length}: ${batch.length} files`);
+      const result = spawnSync(process.execPath, ['--test', `--test-timeout=${timeout}`, ...batch], { stdio: 'inherit', cwd: repo });
+      if (result.error) console.error('Could not launch test batch:', result.error.message);
+      if (result.status !== 0) failed = true;
+    }
   }
+  process.exit(failed ? 1 : 0);
 }
