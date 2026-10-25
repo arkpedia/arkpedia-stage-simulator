@@ -369,7 +369,7 @@ export function stageAdapter(source) {
     return out;
   }).sort((a, b) => a.time - b.time);
   return {
-    fixedSquad: supplied ? g.suppliedUnits.fixed_squad : null,
+    fixedSquad: supplied && g.suppliedUnits.fixed_squad?.length ? g.suppliedUnits.fixed_squad : null,
     stage: {
       id: source.code,
       tokens: source.tokens ?? [],

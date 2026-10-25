@@ -30,8 +30,16 @@ test(`experimental ${stageCode} renders and runs on desktop/phone, rejects publi
         const page = await browser.newPage(); page.on('pageerror', e => errors.push(e.message));
         await page.setViewport(viewport);
         await page.goto(`${base}?experimental=1&stage=${stageCode}`, { waitUntil: 'domcontentloaded' });
-        await page.waitForSelector('#start'); await page.click('#start');
-        await page.waitForSelector('#deployment button', { timeout: 60000 });
+        await page.waitForSelector('#start:not(:disabled)'); await page.click('#start');
+        try {
+          await page.waitForFunction(() => document.querySelector('#deployment button')
+            || (document.querySelector('#prep-error')?.textContent
+              && !document.querySelector('#prep-error').textContent.includes('Preparing battlefield')), { timeout: 60000 });
+          assert.ok(await page.$('#deployment button'), await page.$eval('#prep-error', e => e.textContent).catch(() => 'Deployment controls missing'));
+        } catch (error) {
+          await page.screenshot({ path: join(out, `${name}-startup-failure.png`) });
+          throw new Error(`Stage startup failed: ${JSON.stringify(errors)}; ${await page.$eval('body', e => e.textContent.slice(-2000))}`, { cause: error });
+        }
         assert.ok((await page.$eval('.simulation-label', e => e.textContent)).includes(`Test-only simulation · ${stageCode}`));
         assert.equal(await page.$eval('#stage-actions', e => e.hidden), true);
         await page.click('#speed'); await page.click('#pause');
