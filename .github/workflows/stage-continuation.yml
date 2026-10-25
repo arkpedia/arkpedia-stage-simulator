@@ -1,0 +1,32 @@
+name: Stage continuation checks
+on:
+  push:
+    branches: [dev/windows-stage-continuation]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: stage-continuation-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  focused:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    env:
+      SP_E2E: '0'
+      SP_REAL_E2E: '0'
+      RENDER_E2E: '0'
+      NO_COLOR: '1'
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: node tools/arkpedia/test-assets.mjs
+      - run: npm run test:arkpedia-ch16

@@ -25,9 +25,11 @@ test('Army Phantom full graph and indexed identities match its separate exact-re
  assert.deepEqual(review.enemies[key].counts,{enemyAbilityWrappers:0,activeGeneralOrCommonAbilities:1});
 });
 test('Phantom retains one miner link, independent neutral-only melee and its source army mark',()=>{
- const{h,e,a,u,spawnMiner}=fixture(),m=spawnMiner(7.6);spawnMiner(7.9);const hp=u.hp;
+ const{h,e,a,u,spawnMiner}=fixture(),m=spawnMiner(7.6),weaponTarget=spawnMiner(7.9);const hp=u.hp;
  h.run(.61);assert.equal(a.engagements.size,1);assert.equal(a.engagement.target,m);assert.ok(e.findBuff('enemy_field_army_self_mark'));
- e.atkCd=0;const before=m.hp;h.run(.04);assert.equal(before-m.hp,250);assert.equal(u.hp,hp);assert.deepEqual(h.b.errors,[]);
+ assert.equal(e.profile.meleeTarget(),weaponTarget);
+ const linkedHp=m.hp,before=weaponTarget.hp;e.atkCd=0;h.run(.04);
+ assert.equal(before-weaponTarget.hp,250);assert.equal(m.hp,linkedHp);assert.equal(u.hp,hp);assert.deepEqual(h.b.errors,[]);
 });
 test('Phantom releases its owned link on distance/death and does not acquire an airborne miner',()=>{
  const{h,b,e,a,spawnMiner}=fixture(),m=spawnMiner(7.6);m.motion='FLY';h.run(.34);assert.equal(a.engagements.size,0);
