@@ -17,6 +17,9 @@ an engine-owned entry point for future stage receivers. The room action's own
 withdrawal scope and timing remain under review.
 The exact predefined 17-14 Closure build now has an internal level-three module
 adapter; predefined placement/control and the four 17-16 modules remain gated.
+Removing a separate same-character operator body now leaves the player's card
+cooldown and captured payment untouched. Only the body selected by that card
+can start its redeployment cooldown; ordinary death and withdrawal still do so.
 
 The retained native components/canonical record supply the parameters and action
 graph. Supplemental first-hand [PRTS HP-loss research, revision 442170](https://prts.wiki/index.php?title=%E7%89%B9%E6%AE%8A%E6%9C%BA%E5%88%B6&oldid=442170)
@@ -40,6 +43,8 @@ environmental rules, navigation, targeting, status effects, damage/healing,
 operator skills/talents/forms and their interactions. Audit the existing operator
 implementations against source evidence; most are already implemented, but a
 support count alone is not evidence of complete behavioral coverage.
+Include operator modules in that mechanics audit before starting stage art,
+models, enemy chibis, or effects, as reaffirmed by the owner on 2026-10-25.
 
 Use checksum-verified canonical arkpedia-data, retained original native evidence,
 and the existing exact-record support/receipt gates. Do not guess missing source

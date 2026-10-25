@@ -45,6 +45,20 @@ test('stale body and deployment-life references cannot withdraw the current oper
  assert.equal(b.withdrawOperator(old),false);assert.equal(b.withdrawOperator(current,{life:current.deploySeq-1}),false);assert.equal(b.dp,0);assert.equal(current.alive,true);
  const paid=b.bench[GUARD].lastCost;assert.equal(b.withdrawOperator(current),true);assert.equal(b.dp,Math.floor(Math.min(paid/2,current.base.cost)));assert.deepEqual(b.errors,[]);
 });
+
+test('removing an independent same-character body cannot change the selected card cooldown or payment',()=>{
+ for(const removal of ['killed','retreat']){
+  const{b,deploy}=fixture(),current=deploy(),entry=b.bench[GUARD],paid=entry.lastCost;
+  const separate=b._makeAlly(b.getPlayer('arkpedia'),b.data.getChess(GUARD),'op',2,6,{dir:'RIGHT'});
+  b._setupUnit(separate,{talents:[],trait:{noAttack:true},skill:null});assert.ok(b._deploy(separate));
+  entry.readyAt=123;assert.equal(b.withdrawOperator(separate),false);
+  if(removal==='killed')b.kill(separate,null);else b.retreat(separate,{permanent:true});
+  assert.equal(separate.alive,false);assert.equal(entry.readyAt,123);assert.equal(entry.unit,current);assert.equal(current.alive,true);
+  assert.equal(entry.lastCost,paid);assert.equal(b.dp,0);assert.equal(b.withdrawOperator(current),true);
+  assert.equal(entry.readyAt,b.time+current.base.respawnTime*current.s.redeployMul);
+  assert.equal(b.dp,Math.floor(Math.min(paid/2,current.base.cost)));assert.deepEqual(b.errors,[]);
+ }
+});
 test('nonrefunding merchants and non-withdrawal deaths do not acquire ordinary refunds',()=>{
  const merchant=fixture([MERCHANT]);const u=merchant.deploy();assert.ok(merchant.b.bench[MERCHANT].lastCost>0);assert.equal(merchant.b.withdrawOperator(u),true);assert.equal(merchant.b.dp,0);
  for(const reason of ['killed','expired']){const{b,deploy}=fixture(),u=deploy();if(reason==='killed')b.kill(u,null);else b.retreat(u,{reason,permanent:true});assert.equal(b.withdrawOperator(u),false);assert.equal(b.dp,0);assert.deepEqual(b.errors,[]);}

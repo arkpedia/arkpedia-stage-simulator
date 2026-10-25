@@ -1247,7 +1247,7 @@ export class StandardBattle extends Battle {
   _remove(unit, reason, killer, permanent) {
     if (unit.side === "ally" && unit.kind === "op") {
       const entry = this.bench[unit.defId];
-      if (entry) entry.readyAt = this.time + unit.base.respawnTime * unit.s.redeployMul;
+      if (entry?.unit === unit) entry.readyAt = this.time + unit.base.respawnTime * unit.s.redeployMul;
       permanent = true;
     }
     super._remove(unit, reason, killer, permanent);
