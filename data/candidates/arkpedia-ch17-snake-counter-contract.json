@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 1,
+  "testOnly": true,
+  "scope": "Source-bound snake click-counter transport and resolution only; no HP-step, injury, fatal, timeout, attack, firewall, wave, stage or enemy-support approval.",
+  "sources": {
+    "graph": {
+      "path": "data/candidates/arkpedia-ch17-firewall-boss-source.json",
+      "sha256": "4c1dcad409a812cb001dc182ca804462ca3733f840b246dc0c6fdb02c2fbd244"
+    },
+    "records": {
+      "path": "data/candidates/arkpedia-enemy-records.canonical.json",
+      "sha256": "c69db59414b2fbd6c1a8327c9c22ddb21cfdaadc4e89a97a824679f61ec07b93"
+    },
+    "events": {
+      "path": "data/candidates/arkpedia-buff-event-alias-source.json",
+      "sha256": "df85c1d8ee05e0391c7be3854bb39632bdf5282b1f48b061c4e7af5b5397e407"
+    }
+  },
+  "enemy": "enemy_1593_musnake",
+  "record": {
+    "groups": {
+      "TimeOut": [
+        "duration",
+        "interval",
+        "value"
+      ],
+      "StepKill": [
+        "enemy_musnake_heal_buff.hp_ratio",
+        "hp_ratio"
+      ],
+      "DamageResistance": [
+        "damage_resistance"
+      ]
+    },
+    "bb": {
+      "TimeOut.interval": 998,
+      "TimeOut.duration": 999,
+      "TimeOut.value": -50,
+      "StepKill.hp_ratio": 0.2,
+      "StepKill.enemy_musnake_heal_buff.hp_ratio": 0.2,
+      "DamageResistance.damage_resistance": 0.9
+    },
+    "skills": [
+      {
+        "prefabKey": "GlobalLineAttack",
+        "priority": 0,
+        "cooldown": 25,
+        "initCooldown": 15,
+        "spCost": 0,
+        "bb": {
+          "value": 300,
+          "stun": 10
+        },
+        "bbStr": {}
+      },
+      {
+        "prefabKey": "Injured",
+        "priority": 0,
+        "cooldown": 0,
+        "initCooldown": 0,
+        "spCost": 0,
+        "bb": {
+          "stun_duration": 7,
+          "hp_ratio": 0.05
+        },
+        "bbStr": {}
+      }
+    ],
+    "abilities": [
+      {
+        "text": "Becomes Invulnerable upon losing a certain amount of HP. Takes damage and becomes <$ba.stun>stunned</> if a special interaction is performed within this duration; otherwise recovers HP.",
+        "format": "NORMAL"
+      },
+      {
+        "text": "[Firewall] Has a Firewall around itself; takes greatly reduced Physical and Arts damage from outside the Firewall.",
+        "format": "NORMAL"
+      },
+      {
+        "text": "[Information Flood] Releases a flood of information in a fixed direction, causing the first unit hit to be <$ba.stun>stunned</> and continuously take True damage for a period of time.",
+        "format": "NORMAL"
+      },
+      {
+        "text": "[Halt Process] When a long time has passed in the battle, disappears and drains 50 Life Points.",
+        "format": "NORMAL"
+      },
+      {
+        "text": "Cannot be teleported",
+        "format": "NORMAL"
+      }
+    ]
+  },
+  "cases": {
+    "step": {
+      "template": "enemy_musnake_hp_ratio_trigger",
+      "event": 2,
+      "actionIndex": 1,
+      "action": {
+        "_bossType": "BUFF_OWNER",
+        "_mountPointType": "HEAD",
+        "_requiredClickCount": 10,
+        "_duration": 10,
+        "_playEffect": false,
+        "_successBuffKey": "enemy_musnake_stun_buff",
+        "_failedBuffKey": "enemy_musnake_heal_buff",
+        "$type": "Torappu.Battle.Action.Nodes+Mainline17CreateBossClickCounterButton"
+      }
+    },
+    "final": {
+      "template": "enemy_musnake_during_click",
+      "event": 2,
+      "actionIndex": 0,
+      "action": {
+        "_bossType": "BUFF_OWNER",
+        "_mountPointType": "HEAD",
+        "_requiredClickCount": 15,
+        "_duration": 999999,
+        "_playEffect": true,
+        "_successBuffKey": "enemy_musnake_kill_self_buff",
+        "_failedBuffKey": "enemy_musnake_kill_self_buff",
+        "$type": "Torappu.Battle.Action.Nodes+Mainline17CreateBossClickCounterButton"
+      }
+    }
+  },
+  "limits": [
+    "The caller applies the exact success/failure buff selected by the retained action; those buff mechanics require their own phase controller.",
+    "Click/deadline ordering and input transport are local simulator mappings, not compiled-dispatch or captured frame parity."
+  ]
+}

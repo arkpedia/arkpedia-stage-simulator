@@ -56,6 +56,7 @@ jobs:
           python tools/arkpedia/extract-enemy-family-clocks.py --family ch17-firewall-boss --bundle refs/arts/enm_art_26.ab --check
           python tools/arkpedia/recover-buff-event-aliases.py --check
           python tools/arkpedia/recover-buff-event-aliases.py --war-caster --check
+          node tools/arkpedia/snake-counter-contract.mjs --check
   focused:
     strategy:
       fail-fast: false

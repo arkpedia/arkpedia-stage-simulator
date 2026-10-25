@@ -475,3 +475,43 @@ permission repair separately, rather than claiming one green aggregate run.
 Graph, indexed-component and original-clock extraction also reproduce all four
 bosses independently. Hosted continuation/source reproduction remains required
 for the committed checkpoint, including the four quarantined local test files.
+
+## Source-bound snake counter subsystem
+
+The two snake button actions now have a reproducible source contract derived
+from the complete boss graph and the independently corroborated ON_BUFF_TRIGGER
+alias. It pins both original action nodes, their template/event positions and
+the exact canonical record. Counter creation rejects unknown kinds, changed
+records and missing result dispatchers before replacing an accepted counter.
+This is a counter subsystem, not registration of the snake as supported.
+
+Step counters require ten accepted clicks before ten world seconds and dispatch
+`enemy_musnake_stun_buff` on success or `enemy_musnake_heal_buff` on expiry.
+Terminal counters require fifteen clicks with the original 999999-second
+deadline and dispatch `enemy_musnake_kill_self_buff` for either outcome.
+Inputs name the owner, deployment life and counter instance, so an old input
+cannot progress a replacement counter or another deployment. Expiry resolves
+once on the battle clock; silence/action control does not pause the button.
+Death, removal, life reuse, undeployment and battle end cancel without applying
+a success/failure buff. Completion detaches first, allowing its result dispatcher
+to replace the counter or remove its owner without stale cleanup deleting new
+state. Snapshots contain plain input/progress data for later mechanical controls.
+
+The caller must still implement the selected result buff, HP-step admission,
+Injured scheduling, final/fatal admission, source timeout/LP changes, full wave
+completion and all attack/firewall mechanics. No placeholder buff dispatcher,
+automatic phase advance, visual work, enemy-support change or stage admission
+is introduced. Input/deadline ordering is a declared local simulator mapping;
+compiled dispatch and captured frame parity are not claimed.
+
+The preceding 694d5fe5 firewall checkpoint passed all fifteen hosted continuation
+jobs in run 40198285662, including source reproduction and both OS focused jobs.
+The f5c7e5e2 full matrix run 40197258983 currently has four successful shards and
+four still running; it must finish before dispatching a replacement full matrix.
+
+Verification: all 24 new counter checks pass, and all 668 locally available
+focused mechanics tests pass in one run with ordinary temporary-file
+permissions (no failures, cancellations or skips). The source-contract generator
+also reproduces the retained actions with `--check`; hosted source verification
+now runs this check. The four quarantined tracked tests remain unmodified in Git
+and required in hosted CI. Candidate enemy/stage counts remain unchanged.
