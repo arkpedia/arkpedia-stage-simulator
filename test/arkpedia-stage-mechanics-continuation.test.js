@@ -16,6 +16,8 @@ const read = p => JSON.parse(bytes(p));
 const mvp = read('arkpedia-mvp.json'), index = read('arkpedia-stages.json');
 const hash = b => createHash('sha256').update(b).digest('hex');
 const specs = {
+  '17-5': { total:18, scheduled:19, counts:{enemy_10201_muinf:14,enemy_10204_mudia:2,enemy_10205_mufly:2,enemy_10211_murad:1}, hidden:['raid','raid6A'], clearsBefore:293 },
+  '17-6': { total:30, scheduled:31, counts:{enemy_10201_muinf:13,enemy_10203_mumag:4,enemy_10204_mudia:8,enemy_10205_mufly:5,enemy_10211_murad:1}, hidden:['hidden1'], cap:400, clearsBefore:367 },
   '16-10': { total:27, counts:{enemy_10120_uaghst_2:12,enemy_10126_rkbomb:8,enemy_10124_uashld:6,enemy_10127_rkmbst:1}, hidden:[] },
   '16-11': { total:28, counts:{enemy_10126_rkbomb:23,enemy_10127_rkmbst:5}, hidden:['raid4'] },
   '16-14': { total:28, counts:{enemy_10124_uashld_2:2,enemy_10120_uaghst_2:21,enemy_10127_rkmbst_2:5}, hidden:['raid4'] },
@@ -102,8 +104,14 @@ for (const [code,spec] of Object.entries(specs)) {
     } else if(code==='16-11')assert.ok(born.some(e=>e.defId==='enemy_10126_rkbomb'&&e.mem.ab.list.some(a=>a.changeMode&&a.mode===1)));
     if(code==='17-7')assert.ok(born.some(e=>e.mem.ch17RockbreakerParent),'natural marker pollution triggers a real split');
     if(code==='17-8')assert.ok(bruteArmed,'natural Leak Source contact arms a real scheduled Brute');
+    if(['17-5','17-6'].includes(code))assert.ok(born.some(e=>e.defId==='enemy_10205_mufly'&&e.mem.ch17FlyerMode===2),'scheduled Flyers find two real Leak Sources and finish both growth steps');
   });
 }
+
+test('17-6 route-only fixture retains the unchanged 300-second game timeout',()=>{
+  const b=battle('17-6');while(!b.finished)b.step();
+  assert.equal(b.result().reason,'timeout');assert.equal(b.timeLimit,300);assert.deepEqual(b.errors,[]);
+});
 
 test('16-15 route-only fixture retains the default 300-second timeout rather than raising the game cap',()=>{
   const b=battle('16-15');

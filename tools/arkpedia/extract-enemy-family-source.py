@@ -125,6 +125,12 @@ for obj in load('config/buff_template_holder.ab').values():
 
 def dependencies(value):
     if isinstance(value, dict):
+        # EmitProjectile may resolve its empty projectile key from a buff's
+        # typed blackboard entry, rather than a literal _projectileKey field.
+        if ('projectile' in str(value.get('key', '')).lower()
+                and isinstance(value.get('valueStr'), str)
+                and value['valueStr'].startswith('projectile_')):
+            yield 'projectile', value['valueStr']
         for key, child in value.items():
             if key == 'templateKey' and child:
                 yield 'template', child

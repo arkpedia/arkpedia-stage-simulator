@@ -9,7 +9,7 @@ const bytes = path => readFileSync(new URL('../data/' + path, import.meta.url));
 const inventory = bytes('arkpedia-cn-native-source.json'), enemies = bytes('arkpedia-cn-enemy-native-source.json');
 const index = JSON.parse(bytes('arkpedia-enemy-clock-source.json'));
 const verify = graph => verifiedChapter16FamilyGraph(JSON.stringify(graph), inventory, enemies, index);
-for (const [chapter,family] of [['ch17','flyer'],['ch17','bag'],['ch16','fear-projectile']]) {
+for (const [chapter,family] of [['ch17','bag'],['ch16','fear-projectile']]) {
   const graph = JSON.parse(bytes(`candidates/arkpedia-${chapter}-${family}-source.json`));
   test(`${family} retained source closure does not admit its unfinished controller`, () => {
     assert.doesNotThrow(() => verify(graph));

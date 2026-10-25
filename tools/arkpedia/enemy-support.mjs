@@ -51,6 +51,9 @@ export function verifiedChapter16FamilyGraph(raw, inventoryRaw, enemyInventoryRa
   const projects = new Set(Object.keys(graph.projectiles).map(path => path.split('/').at(-1).replace(/\.prefab$/, '')));
   function visit(value) {
     if (!value || typeof value !== 'object') return;
+    if (typeof value.key === 'string' && value.key.toLowerCase().includes('projectile')
+      && typeof value.valueStr === 'string' && value.valueStr.startsWith('projectile_') && !projects.has(value.valueStr))
+      throw Error('Chapter 16 family blackboard projectile closure incomplete: ' + value.valueStr);
     for (const [key, child] of Object.entries(value)) {
       if (key === '_projectileKey' && child && !projects.has(child)) throw Error('Chapter 16 family projectile closure incomplete: ' + child);
       if (key === 'templateKey' && child && !graph.templates[child]) throw Error('Chapter 16 family template closure incomplete: ' + child);
@@ -128,6 +131,7 @@ export async function buildEnemySupport({ candidate = false } = {}) {
       ['crossbow', 'data/candidates/arkpedia-ch16-reviewed-crossbow.json'],
       ['infantryBow', 'data/candidates/arkpedia-ch17-reviewed-reactions.json'],
       ['brute', 'data/candidates/arkpedia-ch17-reviewed-brute.json'],
+      ['flyer', 'data/candidates/arkpedia-ch17-reviewed-flyer.json'],
       ['storyGuardian', 'data/candidates/arkpedia-ch16-reviewed-story-guardian.json'],
       ['rockbreaker', 'data/candidates/arkpedia-ch17-rockbreaker-contract.json'],
       ['shieldguard', 'data/candidates/arkpedia-ch16-reviewed-shieldguard.json'],

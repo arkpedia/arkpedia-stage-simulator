@@ -49,6 +49,8 @@ if (args.candidate === 'ch16') {
     '17-2': 'arkpedia-ch17-reviewed-stage-17-2.json',
     '17-3': 'arkpedia-ch17-reviewed-stage-17-3.json',
     '17-4': 'arkpedia-ch17-reviewed-stage-17-4.json',
+    '17-5': 'arkpedia-ch17-reviewed-stage-17-5.json',
+    '17-6': 'arkpedia-ch17-reviewed-stage-17-6.json',
     '17-7': 'arkpedia-ch17-reviewed-stage-17-7.json',
     '17-8': 'arkpedia-ch17-reviewed-stage-17-8.json',
     '17-9': 'arkpedia-ch17-reviewed-stage-17-9.json',

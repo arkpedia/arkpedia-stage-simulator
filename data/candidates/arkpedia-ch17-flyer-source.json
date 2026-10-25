@@ -18,6 +18,14 @@
     "sha256": "a5717d522cf58b23f4728c8a6096fda8d1b34d6f0e3d15b8b112ad57574efd89"
    },
    {
+    "path": "battle/prefabs/[uc]projectiles.ab",
+    "bytes": 1833151,
+    "md5": "3847f49e8384d2cc9cfea1d56e0bf9bd",
+    "archive": "battle_prefabs_[uc]projectiles.dat",
+    "url": "https://ak.hycdn.cn/assetbundle/official/Android/assets/26-09-22-07-47-20_6c71fa/battle_prefabs_%5Buc%5Dprojectiles.dat",
+    "sha256": "f7a1858f6e213251d56d2883e4dcf410f48951a1b0efc565427da182275a0db3"
+   },
+   {
     "path": "config/buff_template_holder.ab",
     "bytes": 1963907,
     "md5": "8d395a42a34fbbb5af1f2e4ad7d39ef8",
@@ -2169,7 +2177,46 @@
    }
   ]
  },
- "projectiles": {},
+ "projectiles": {
+  "dyn/battle/prefabs/[uc]projectiles/projectile_enemy_mufly.prefab": [
+   {
+    "pathId": "-8995993612319908500",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"_canFlyThroughTheDeathArea\":0,\"_exceptFlyCharacter\":0,\"_exceptSource\":0,\"_exceptTraceTarget\":0,\"_goThroughWall\":1,\"_ignoreCamouflage\":1,\"_ignoreRangeScale\":0,\"_markReachedOnlyWhenTargetEnter\":0,\"_mergeTraceTargetMotion\":0,\"_onlyCheckHitWhenReachTarget\":1,\"_onlyCheckHitWhenStop\":0,\"_onlyTraceTarget\":0,\"_overridePurposeMaskWithTargetOptions\":0,\"_rangeToLoad\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_targetOptions\":{\"abnormalCombo\":0,\"abnormalFlag\":0,\"checkUnitType\":0,\"containAbnormalFlag\":0,\"containSomeAbnormalFlags\":0,\"enableAdvancedOptions\":1,\"excludeAbnormalFlag\":0,\"excludeSomeAbnormalFlags\":0,\"ignoreAllyTargetFree\":0,\"ignoreHealFree\":0,\"ignoreMotionMode\":0,\"ignoreTargetFree\":0,\"ignoreTargetSide\":0,\"onlyIgnoreSomeOfTargetFreeCase\":0,\"professionMask\":0,\"purposeMask\":0,\"targetCategory\":1,\"targetMotion\":1,\"targetSide\":2,\"unitTypeMask\":0},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"7796294063143460204\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-3494225671239136090\"}}",
+    "sha256": "b6b88396381fecd31685e1ab0b3565ab5b864982b0bb49d22378454fb5ee16e6"
+   },
+   {
+    "pathId": "-6712743689897435796",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"_alwaysPlayStartEffects\":1,\"_clearEffectsOnTileOnStop\":0,\"_clearHitEffectOnStop\":0,\"_clearPlayEffectOnStop\":0,\"_clearReachedEffectWhenStop\":0,\"_effectOnTrigger\":[],\"_effectsToTargetWhenStart\":[\"enemy_mufly_skill_01_die\"],\"_effectsToTileWhenStart\":[],\"_effectsWhenHit\":[],\"_effectsWhenReached\":[],\"_effectsWhenStart\":[],\"_effectsWhenStop\":[],\"_followTargetGround\":0,\"_forceReachTargetGround\":0,\"_mainEffectToReplace\":\"\",\"_onlyPlayHitEffectOnNotTraceTarget\":0,\"_onlyPlayHitEffectOnTraceTarget\":0,\"_onlyPlayHitEffectOnce\":0,\"_playStartEffectOnlyOnProjectile\":0,\"_repalceEffectsWhenHit\":[],\"_replaceHitEffectAfterFirstHit\":0,\"_replaceMainEffectWhenReach\":0,\"_setReachEffectOnProjectile\":0,\"_syncEffectScaleViaProjectile\":0,\"_useSourceFaceVector\":0,\"_useSourceFaceVectorOnHit\":0,\"_useSourceFaceVectorOnStart\":0,\"_useTraceTargetWhenReach\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"7796294063143460204\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"6834194400804168919\"}}",
+    "sha256": "bbe4ab75c75516bb0bec450ef520cfb5d5ab8b938fda35e4bcc218dbedba0c2d"
+   },
+   {
+    "pathId": "-5683044810237928084",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"_actionController\":{\"_addExtraBuffsWhenReached\":0,\"_detachAllBuffsWhenStopped\":0,\"_detachAllExtraBuffsWhenStopped\":0,\"_detachBuffsWhenTargetLeave\":0,\"_dontAddBuffs\":0,\"_excludeAttachments\":0,\"_extraBuffsInTheEnd\":[],\"_onlyAddBuffsToTargetOnce\":0,\"_onlyAddBuffsToTraceTarget\":0,\"_useExtraBuffsWhenStopHit\":0,\"_useSelfBlackboard\":0},\"_allowZeroBlockCntLimit\":0,\"_alwaysHitTraceTargetInTheEnd\":0,\"_alwaysHitTraceTargetWhenReached\":0,\"_alwaysReachInTheEnd\":1,\"_bodyTransform\":{\"m_FileID\":0,\"m_PathID\":\"-3389746348646916756\"},\"_canHitSameTargetMultipleTimes\":0,\"_clearMainEffectWhenReached\":0,\"_containsChildrenBehaviours\":0,\"_eliminatableStatus\":0,\"_fireProjectileReachedEvent\":0,\"_fixDealHitTargetLeft\":0,\"_getLifeTimeFromBB\":0,\"_getMaxHitNumFromBB\":0,\"_hitNumType\":2,\"_keepAlreadyHitTime\":-1.0,\"_lifeTime\":1.0,\"_lifeTimeType\":1,\"_limitedMaxHitNumToSourceBlockedCnt\":0,\"_mainEffect\":\"\",\"_managedBySource\":0,\"_maxHitNum\":0,\"_maxHitNumBBKey\":\"\",\"_movementAdjustableStatus\":0,\"_overrideAudioSignal\":\"\",\"_projectileType\":0,\"_randomDelayToBorn\":0.0,\"_stopAfterFirstHit\":0,\"_stopAfterMaxHit\":0,\"_stopGraphicProjectileWhenClearMainEffect\":0,\"_stopWhenSourceInvalid\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"7796294063143460204\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-8797129986015012478\"}}",
+    "sha256": "7d5838a6c8102502b59f31715135afb13321607d1f49859c89f1c329a38fe48f"
+   },
+   {
+    "pathId": "-3389746348646916756",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"7796294063143460204\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "4b5f387f60372ddf2aaeda37a8dbc8212e44bbf86903b9d1b08f30b1c14da69e"
+   },
+   {
+    "pathId": "4777858455170325868",
+    "componentType": "CircleCollider2D",
+    "originalJson": "{\"m_Density\":1.0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"7796294063143460204\"},\"m_IsTrigger\":false,\"m_Material\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Offset\":{\"x\":0.0,\"y\":0.0},\"m_Radius\":1.25,\"m_UsedByComposite\":false,\"m_UsedByEffector\":false}",
+    "sha256": "c005fdc24634c00b4e55b834db5d0eec015a2c629ea815bb79301fe026c8a1b2"
+   },
+   {
+    "pathId": "7796294063143460204",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-3389746348646916756\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-5683044810237928084\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-6712743689897435796\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-8995993612319908500\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"4777858455170325868\"}}],\"m_IsActive\":true,\"m_Layer\":14,\"m_Name\":\"projectile_enemy_mufly\",\"m_Tag\":0}",
+    "sha256": "9d1f07e543caf8aa3f6c523dac725d80ca50c8472b213f27dd263846ce8aebc9"
+   }
+  ]
+ },
  "templates": {
   "empty": {
    "originalJson": "{\"effectKey\":\"\",\"eventToActions\":{\"_items\":[]},\"onEventPriority\":0,\"templateKey\":\"empty\"}",

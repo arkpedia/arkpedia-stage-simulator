@@ -188,3 +188,35 @@ no support on its own. Guardian native callback/FSM ordering and radius/rate
 resolution retain explicit shared-engine mappings; compiled/frame parity is not
 claimed. The operator-wide mechanics audit remains in phase1; visual integration
 waits for that phase to finish.
+
+## Flyer mechanics checkpoint
+
+The two canonical Flyer variants now have an exact-record test-only controller.
+Its complete graph includes the death projectile resolved through a blackboard
+string, which the earlier source extractor missed. Both extraction and graph
+verification now require that dependency. The retained native graph, indexed
+components and prefab-bound Change clocks independently reproduce from the
+original pinned bundles. The shared trace cursor selects Leak Sources, suspends
+original route progress, and returns to that route after source selection ends.
+Two distinct source contacts commit growth at the original OnAttack markers;
+silence, stun protection, brief interruptions and slow_down have separate tests.
+The born one-second projectile survives its owner's death, samples live same-life
+ATK and selectable ground bodies at its retained death point, holds battle
+completion, and uses a captured ATK fallback after source-object reuse.
+
+Stages17-5/17-6 retain19/31 scheduled source bodies,18/30 counted hostiles and
+their original optional-group exclusions. Natural Leak Sources drive scheduled
+Flyers through both growth steps. Three seeded no-operator fixtures clear each
+stage;17-6 uses an explicit400-second fixture cap, while a separate test retains
+the unchanged300-second game timeout. Native compiled/FSM/frame fidelity remains
+an explicit limitation of the local mappings. Candidate support is470/1,901;
+616 catalogue entries comprise597 public and19 test-only. The canonical coverage
+inventory has3,275 unbuilt combat-stage records and1,431 unsupported enemies.
+Operator-wide mechanics and modules still require the separate audit before art,
+models, chibis or effects begin.
+
+The locally available continuation suite passes499/499; four tracked files remain
+unavailable locally and are run by hosted CI. The two new browser scenarios pass
+desktop/phone startup, pause, restart and public-access rejection. Both viewport
+captures were inspected. The previous09f52106 checkpoint passed all seven hosted
+continuation jobs; latest-head hosted results must be recorded separately.

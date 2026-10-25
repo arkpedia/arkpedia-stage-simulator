@@ -622,8 +622,11 @@ export function remainingDistance(b, e) {
 export function updateEnemy(b, e, dt) {
   const R = e.route;
   if (!e.alive) return;
-  updateNativeMoveCheckpoints(e);
-  if (earlyRouteExit(b, e)) return;
+  const trace = nativeFlyingTrace(e);
+  if (!trace) {
+    updateNativeMoveCheckpoints(e);
+    if (earlyRouteExit(b, e)) return;
+  }
   // hidden (teleporting) enemies only advance wait legs
   const stunned = e.s.flags.stun;
   // Different native attack abilities (e.g. crossbowman's Attack/Combat)
@@ -663,8 +666,38 @@ export function updateEnemy(b, e, dt) {
   if (e.mem.fearMove) endFear(e);
   // 诱导 (ba.attract "无法被阻挡并向目标位置移动"): walks to the attract point instead of following its route
   if (e.s.flags.attract) { if (standing) e.moving = false; else moveAttracted(b, e, dt); return; }
+  if (trace) {
+    if (standing) e.moving = false;
+    else moveNativeFlyingTrace(b, e, trace, dt);
+    return;
+  }
   advanceRoute(b, e, dt, R, standing);
   if (e.alive) { updateNativeMoveCheckpoints(e); earlyRouteExit(b, e); }
+}
+
+function nativeFlyingTrace(e) {
+  const trace = e.profile?.nativeFlyingTrace, target = trace?.target;
+  if (!trace?.enabled || trace.ownerLife !== e.deploySeq || e.hidden
+    || !target?.alive || !target.deployed || target.hidden || target.deploySeq !== trace.targetLife) return null;
+  if (e.motion !== 'FLY' || !(trace.reachRadius >= 0) || !Number.isFinite(trace.reachRadius))
+    throw Error('Native flying trace requires a flying owner and finite contact radius');
+  return trace;
+}
+
+// A source-owned cursor suspends the original route rather than replacing it
+// with a synthetic route whose end would leak. Fear/attract retain priority.
+function moveNativeFlyingTrace(b, e, trace, dt) {
+  if (!e.alive || nativeFlyingTrace(e) !== trace) { e.moving = false; return; }
+  const dx = trace.target.x-e.x, dy = trace.target.y-e.y, distance = Math.hypot(dx,dy);
+  const remaining = Math.max(0,distance-trace.reachRadius);
+  const budget = e.s.moveSpeed*(b.flags.moveScale??MOVE_SCALE)*dt;
+  const step = Math.min(remaining,budget);
+  e.moving = step > 1e-9;
+  if (!e.moving) return;
+  const from = b.hasHook('enemyMoved') ? {x:e.x,y:e.y} : null;
+  e.x += dx/distance*step; e.y += dy/distance*step;
+  if (e.route) e.route.pts = null;
+  if (observeEnemyMove(b,e,from,'native-trace')) e.moving = false;
 }
 
 function updateNativeMoveCheckpoints(e) {

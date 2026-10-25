@@ -964,3 +964,23 @@ battle completion and bring the live totals to33/33/30 without altering the28
 scheduled source hostiles. All29 continuation stage tests pass locally, including
 normal builder reproduction and mutated-source rejection. Hosted checks for the
 latest continuation are separate from the previously verified16-10/16-11 head.
+
+17-5/17-6 add the source-bound two-charge Flyer controller and a flying Leak
+Source trace cursor. Original Change markers commit each growth step; silence,
+source stun protection, interrupted changes and live slow_down are independent.
+The death projectile is retained through its blackboard dependency and resolves
+one second after emission, preserving born-work ownership and its death point.
+Its damage uses live same-life ATK with a guarded fallback after source reuse;
+current selection, camouflage bypass, retirement and battle-end cleanup have
+explicit checks. Exact record/native/count claims gate both Flyer variants.
+
+The new stages retain19/31 scheduled bodies and18/30 counted hostiles. Normal
+optional groups remain excluded (`raid`/`raid6A`, `hidden1`). Three seeded
+fixtures per stage exercise natural source contacts and both growth steps.
+The no-operator17-6 fixture needs400 seconds; another check proves its unchanged
+300-second game default still times out. The catalogue is616 entries with597
+public and19 test-only. Candidate enemy support is470/1,901. The local expanded
+suite passes499 available tests, and both new desktop/phone browser scenarios
+pass; the four locally unavailable tracked tests remain hosted-CI requirements.
+Native compiled/frame parity, the remaining mechanics backlog and the operator
+audit remain open. No art, model, chibi or effect ingestion is part of this work.

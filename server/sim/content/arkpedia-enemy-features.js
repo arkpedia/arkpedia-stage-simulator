@@ -12,10 +12,12 @@ import { periodicDamage } from '../damage.js';
 import { nativeDuckRun } from './duck-run.js';
 import { pollutionBrute } from './chapter17-brute.js';
 import { storyGuardian } from './chapter16-story-guardian.js';
+import { pollutionFlyer } from './chapter17-flyer.js';
 
 const ABILITIES = Object.freeze({
   nativeDuckRun,
   ch17PollutionBrute: pollutionBrute,
+  ch17PollutionFlyer: pollutionFlyer,
   ch16StoryGuardian: storyGuardian,
   ...chapter16Abilities,
   blockMcreep,
