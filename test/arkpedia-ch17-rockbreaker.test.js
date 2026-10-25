@@ -10,6 +10,7 @@ import { makeBattle } from './helpers/battleHarness.js';
 import { installEnemyFeatures } from '../server/sim/content/arkpedia-enemy-features.js';
 import { deriveEnemySupport, prefabPath } from '../shared/arkpedia/enemy-support.js';
 import { parseSkel } from '../tools/assets/skel.mjs';
+import {applySourceSlowDown,NATIVE_SLOW_DOWN_CONTRACT} from '../server/sim/content/arkpedia-slow-down.js';
 const bytes = p => readFileSync(new URL('../data/' + p, import.meta.url));
 const read = p => JSON.parse(bytes(p));
 const records = read('candidates/arkpedia-enemy-records.canonical.json').enemies;
@@ -35,6 +36,10 @@ function fixture(variant = false, seed = 19) {
 test('both native prefab skeleton bindings reproduce the exact Skill hit/end times', () => {
   for (const file of Object.values(contract.sources)) assert.equal(hash(readFileSync(new URL('../' + file.path, import.meta.url))), file.sha256);
   assert.equal(proof.source.bundle.manifestSha256, read('arkpedia-cn-native-source.json').source.manifestSha256);
+  for(const enemy of Object.values(contract.enemies)){
+    const skills=enemy.native.map(JSON.parse).filter(c=>c._animKey==='Skill');assert.equal(skills.length,1);
+    assert.equal(skills[0]._affectedBySlowDown,1);assert.equal(skills[0]._timeMode,1);assert.equal(skills[0]._maxAnimScale,1);assert.equal(skills[0]._waitForAttackEvent,1);
+  }
   for (const row of Object.values(proof.enemies)) {
     const raw = Buffer.from(row.base64, 'base64');
     assert.equal(raw.length, row.bytes); assert.equal(hash(raw), row.sha256);
@@ -46,6 +51,36 @@ test('both native prefab skeleton bindings reproduce the exact Skill hit/end tim
     assert.equal(decoded.eventPayloads.Skill[0].name, 'OnAttack');
     assert.equal(decoded.eventPayloads.Skill[0].time, contract.defaults.skillHit);
   }
+});
+
+const slow=f=>applySourceSlowDown(f.b,{id:'fixture:source-slow'},f.e,{key:'rockbreaker-clock',increment:.5,maxStrength:.5,
+  maxStacks:1,duration:30,contract:NATIVE_SLOW_DOWN_CONTRACT});
+for(const variant of [false,true])test(`native slow_down delays both split release and completion for variant ${variant}`,()=>{
+  const f=fixture(variant);assert.ok(slow(f));assert.equal(f.e.s.slowDownRate,.5);pollute(f.b,f.e);
+  f.h.run(2.25);assert.equal(f.children().length,0);assert.ok(f.a.pending);
+  f.h.run(.12);assert.equal(f.children().length,1);assert.ok(f.a.pending);assert.ok(f.e.s.flags.noMove);
+  f.h.run(1.5);assert.ok(f.a.pending);f.h.run(.2);assert.equal(f.a.pending,null);assert.equal(f.children().length,1);
+  assert.ok(!f.e.s.flags.noMove);assert.deepEqual(f.b.errors,[]);
+});
+
+test('live slowdown changes consume only remaining split work before and after the release marker',()=>{
+  const f=fixture();pollute(f.b,f.e);f.h.run(.4);const p=f.a.pending,start=p.age,first=slow(f);
+  f.h.run(.8);assert.ok(Math.abs(p.age-start-.4)<f.b.dt);assert.equal(f.children().length,0);
+  f.b.removeBuff(f.e,first);f.h.run(.4);assert.equal(f.children().length,1);assert.ok(f.a.pending);
+  const second=slow(f),hitAge=p.age;f.h.run(.4);assert.ok(Math.abs(p.age-hitAge-.2)<f.b.dt);assert.equal(f.children().length,1);
+  assert.equal(f.a.pending,p);f.b.removeBuff(f.e,second);f.h.run(.65);assert.equal(f.a.pending,null);assert.equal(f.children().length,1);assert.deepEqual(f.b.errors,[]);
+});
+
+for(const aspd of [900,-50])test(`fixed-time native Skill ignores ordinary ASPD delta ${aspd}`,()=>{
+  const f=fixture();f.b.addBuff(f.e,{key:'fixture:aspd',mods:{aspd}});pollute(f.b,f.e);
+  f.h.run(1.13);assert.equal(f.children().length,0);f.h.run(.07);assert.equal(f.children().length,1);
+  f.h.run(.85);assert.equal(f.a.pending,null);assert.deepEqual(f.b.errors,[]);
+});
+
+for(const stop of ['death','battleEnd','control'])test(`${stop} retires a slowed split without a later world-time callback`,()=>{
+  const f=fixture();slow(f);pollute(f.b,f.e);f.h.run(.4);
+  if(stop==='death')f.b.kill(f.e,null);else if(stop==='battleEnd')f.b.emit('battleEnd',{});else f.b.applyStatus(f.e,'stun',{duration:.1});
+  f.h.run(6);assert.equal(f.children().length,0);assert.equal(f.a.pending,null);assert.ok(!f.e.findBuff('enemy_mudia_summon_ing'));assert.deepEqual(f.b.errors,[]);
 });
 
 for (const variant of [false, true]) test(`split releases at the native event, marks both bodies once, and preserves variant ${variant}`, () => {

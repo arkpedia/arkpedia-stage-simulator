@@ -20,6 +20,8 @@ adapter and an explicit separate instance/control adapter. Canonical 17-14
 admission, field UI integration, initial native FSM dispatch, withdrawal/card
 regeneration rules and S3 compatibility with that stage's enemy clocks remain
 gated, along with the four 17-16 modules.
+Rockbreaker's eligible split animation now consumes live `slow_down` elapsed
+work for both release and completion, rather than fixed world-time callbacks.
 Removing a separate same-character operator body now leaves the player's card
 cooldown and captured payment untouched. Only the body selected by that card
 can start its redeployment cooldown; ordinary death and withdrawal still do so.
@@ -1271,3 +1273,30 @@ withdrawal/card regeneration. In particular, the retained Rockbreaker Skill
 component declares `_affectedBySlowDown=1`; its current fixed world-time split
 callbacks need review before that combination can be admitted. Neither the
 builder's predefined gate nor the stage catalogue has been relaxed.
+
+## Rockbreaker native split clock under slow_down
+
+Both retained Rockbreaker Skill components explicitly have
+`_affectedBySlowDown=1`, `_timeMode=1`, `_maxAnimScale=1`, and
+`_waitForAttackEvent=1`. The controller now validates that selected native clock
+and consumes its remaining animation work through `sourceAbilityDelta` on each
+feature tick. The exact retained OnAttack marker remains 1.1666666269302368
+animation seconds and completion remains two animation seconds. Ordinary ASPD
+does not change this fixed-time Skill; native slow_down changes its eligible
+elapsed work. Applying or removing slowdown before or after release affects only
+the remaining work and does not replay a child spawn.
+
+The split claims its release before invoking spawn callbacks. Existing source
+flags, independently continuing Combat cooldown, route handoff, exact child
+variant, failed-spawn retry after recovery, and completion ownership are retained.
+Control, death, retirement and battle-end cleanup remove the owned pending state
+without leaving a scheduled world-time release behind. The source and controller
+suites passed all 28 cases, including eight new clock/lifecycle checks across
+both variants, live speed changes and independent ASPD.
+The expanded focused stage/controller run then passed all 1,497 available cases.
+
+This corrects the split timing prerequisite identified above. It does not approve
+Closure S3 against the candidate enemy catalogue: all relevant attack, ability,
+channel, periodic and dependent-enemy clocks still need their complete source
+review before widening that compatibility boundary. Native compiled/frame parity
+and 17-14 admission remain held.
