@@ -16,7 +16,10 @@ Ordinary operator withdrawals now share captured payment/refund accounting and
 an engine-owned entry point for future stage receivers. The room action's own
 withdrawal scope and timing remain under review.
 The exact predefined 17-14 Closure build now has an internal level-three module
-adapter; predefined placement/control and the four 17-16 modules remain gated.
+adapter and an explicit separate instance/control adapter. Canonical 17-14
+admission, field UI integration, initial native FSM dispatch, withdrawal/card
+regeneration rules and S3 compatibility with that stage's enemy clocks remain
+gated, along with the four 17-16 modules.
 Removing a separate same-character operator body now leaves the player's card
 cooldown and captured payment untouched. Only the body selected by that card
 can start its redeployment cooldown; ordinary death and withdrawal still do so.
@@ -1228,3 +1231,43 @@ module kits; hidden-card activation and tutorial/story dispatch remain required.
 The other remaining enemies/stages, boss-room and main-wave integration and the
 broader operator/module audit remain open. No public module, enemy or stage
 promotion, artwork/chibi ingestion or effects campaign has begun.
+
+## Explicit predefined Closure instance and field control prerequisite
+
+The internal 17-14 adapter now selects the complete retained canonical source
+contract before installing an operator. It derives the preset's E2/90, potential
+one, trust 100, S3 rank ten and level-three module, and places its separate body
+at row 3, column 3 facing right. The canonical `char_exclude` rune bans the
+player's Closure; the adapter rejects a player card, another source body or a
+second roster/deck owner. This is an explicit internal entry point, not automatic
+stage admission or a deployable player card.
+
+The source instance has the distinct control key
+`predefined:17-14:char_4228_closur:0`. The normal skill command can operate that
+body through this key while checking its captured deployment life and workspace
+state. A bare character ID cannot select it. Its original combat, S3, command
+center, roster and module controllers compose without spending starting DP,
+consuming a player card discount, or editing the selected squad. The retained
+native character occupies one deployment slot; its command center occupies zero.
+The internal instance has no captured player payment and does not enter the
+player-card withdrawal/refund path. This does not establish the native stage's
+manual withdrawal or subsequent card-generation behavior.
+
+Eight instance checks and the module/withdrawal suites passed all 32 cases.
+The expanded focused run then passed all 1,489 available cases.
+Checks cover exact source and override rejection, duplicate/card ownership,
+source-tile occupancy and slot limits, real S3 DP pulses, actual command-center
+placement, actual module incoming damage, stale control lives, retirement and
+owned-controller/deck cleanup. The preceding body-identity checkpoint passed all
+1,481 available local focused checks; its hosted continuation run 40228409669
+also completed successfully. The four unavailable local tests remain tracked
+and run on hosted CI.
+
+The predefined adapter preserves `assertClosurEnemyCompatibility`: source
+delivery cannot bypass the existing S3 enemy-clock review. 17-14 needs the
+candidate enemy controllers and their dependencies reviewed under `slow_down`,
+in addition to field UI integration, initial native dispatch and verified
+withdrawal/card regeneration. In particular, the retained Rockbreaker Skill
+component declares `_affectedBySlowDown=1`; its current fixed world-time split
+callbacks need review before that combination can be admitted. Neither the
+builder's predefined gate nor the stage catalogue has been relaxed.

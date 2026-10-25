@@ -1216,8 +1216,11 @@ export class StandardBattle extends Battle {
   }
   activateOperator(id) {
     if (!canDeployInViewport(this.viewport) || this.finished) return false;
-    const unit = typeof id === 'string' && id.startsWith('token:')
-      ? selectedRegularSummon(this, id)?.unit : this.bench[id]?.unit;
+    const predefined = this.predefinedOperators?.get(id);
+    let unit;
+    if (typeof id === 'string' && id.startsWith('token:')) unit = selectedRegularSummon(this, id)?.unit;
+    else if (predefined) unit = predefined.unit?.deploySeq === predefined.life ? predefined.unit : null;
+    else unit = this.bench[id]?.unit;
     if (unit?.alive && unit.skill.active && unit.skill.spec.manualCancel) {
       // A skill that puts its own owner to sleep (Titi S2) stays stoppable while that sleep lasts.
       if ((!unit.canAct && !unit.skill.spec.cancelWhileOwnSleep?.()) || unit.skill.silenceBlocked) return false;
