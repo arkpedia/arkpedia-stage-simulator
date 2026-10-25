@@ -79,5 +79,18 @@ Candidate combat support is now465/1,901; this does not admit any Integrated
 Strategies stage or certify its mode-specific reward/economy rules.
 Flyer, Brute and Bag native graphs are retained without controller admission.
 Brute's original bound Skill events are0.833333313/1.266666651/1.666666627s,
-with a2.200000048s clip; its attack/interrupt/reset integration remains unfinished.
+with a2.200000048s clip. A direct candidate now owns normal/enhanced cast clocks,
+retains the original target deployment across all hits, reads live ATK per hit,
+and cancels pending hits on control, source death and battle end. Sixteen focused
+tests pass, with 23 related source/pollution regressions also passing. It remains
+unregistered: the compiled FSM, cooldown reset event and ASPD/slow-down rate
+boundaries still need independent review. Candidate tests exercise the proposed
+contract; they do not resolve those source uncertainties or admit stages 17-8/9.
 Reading original event-clock bytes for mechanics is not a visual-model import.
+
+The five-stage continuation checks cover 16-10/11/14/15 and 17-7. The catalogue
+contains 612 entries (597 public and 15 test-only), with 611 file-backed stages.
+The full local file-backed load/fight sweep passes. Hosted validation found a
+stale one-tunnel browser expectation for two-tunnel 16-15 and a generic runner
+deadline shorter than the catalogue test's own deadline; both are corrected,
+without removing scenarios or changing the simulation's gameplay time cap.
