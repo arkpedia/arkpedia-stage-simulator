@@ -3,6 +3,7 @@
 // records; native actions are retained in arkpedia-ch16-action-source.json.
 import { COLS } from '../constants.js';
 import { chapter16Shadow } from './chapter16-shadow.js';
+import { mobileCrossbow } from './chapter16-crossbow.js';
 
 const living = u => u?.alive && u.deployed && !u.hidden;
 const bb = (r, group, key) => r.talents.bb[`${group}.${key}`];
@@ -68,5 +69,5 @@ export function miner(r) {
   };
 }
 
-export const chapter16Abilities = { ch16Miner: miner, ch16ReverseDamage: reverseDamage, ch16DeadSummon: deadSummon,
+export const chapter16Abilities = { ch16MobileCrossbow: mobileCrossbow, ch16Miner: miner, ch16ReverseDamage: reverseDamage, ch16DeadSummon: deadSummon,
   ch16ChargeRift: chargeRift, ch16WarCaster: warCaster, ch16LeakSource: leakSource };

@@ -121,6 +121,22 @@ export async function buildEnemySupport({ candidate = false } = {}) {
     native.chapter16DeviceSha256 = sha(deviceRaw);
     candidateSources.deviceEvidence = engagement.deviceSource;
     candidateSources.engagementContract = { path: 'data/candidates/arkpedia-ch16-reviewed-engagement.json', sha256: sha(engagementRaw) };
+    const crossbowReviewRaw = await readFile(new URL('data/candidates/arkpedia-ch16-reviewed-crossbow.json', root));
+    const crossbowReview = JSON.parse(crossbowReviewRaw);
+    if (crossbowReview.testOnly !== true) throw Error('Crossbow review must remain test-only');
+    const familyBytes = {};
+    for (const [name, file] of Object.entries(crossbowReview.sources)) {
+      const raw = await readFile(new URL(file.path, root));
+      if (sha(raw) !== file.sha256) throw Error('Crossbow evidence differs from reviewed source: ' + name);
+      familyBytes[name] = raw;
+    }
+    const crossbow = verifiedNative(JSON.parse(familyBytes.indexed), prefabs, sha(indexRaw), native.source.templates);
+    verifiedChapter16FamilyGraph(familyBytes.graph, inventoryRaw,
+      await readFile(new URL('data/arkpedia-cn-enemy-native-source.json', root)), JSON.parse(indexRaw));
+    Object.assign(native.prefabs, crossbow.prefabs);
+    native.chapter16Families = { crossbow: { graphSha256: sha(familyBytes.graph) } };
+    candidateSources.crossbowContract = { path: 'data/candidates/arkpedia-ch16-reviewed-crossbow.json', sha256: sha(crossbowReviewRaw) };
+    candidateSources.crossbowEvidence = crossbowReview.sources;
   }
   const enemies = deriveEnemySupport(records.enemies, prefabs, native);
   const supported = Object.values(enemies).filter(e => e.policy).length;

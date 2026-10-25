@@ -2,8 +2,8 @@
 // Candidate mobile crossbowman controller. Retained-source review is separate
 // from this implementation; importing it never admits an enemy or stage.
 const live = u => u?.alive && u.deployed && !u.hidden;
-// Candidate range queries currently use unit centers. Collider-edge parity is
-// still under review; this module deliberately has no support-registry entry.
+// The test-only contract uses centers for direct radius queries, separately
+// from the weapon collision selector. Original collider-edge parity is unverified.
 export function mobileCrossbow(r) {
   const bb = r.talents.bb, prefix = 'ExtraPowerListener.';
   const radius = bb[prefix + 'radius_1'], orderedRadius = bb[prefix + 'radius_2'];

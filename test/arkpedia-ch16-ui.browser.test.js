@@ -7,9 +7,11 @@ import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 const chrome = process.env.CHROME_PATH ?? '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const enabled = process.env.RENDER_E2E === '1' && existsSync(chrome);
+const stageCode = process.env.CH16_QA_STAGE ?? '16-3';
+if (!['16-3', '16-4'].includes(stageCode)) throw Error('Only reviewed test-only tunnel stages may run this QA');
 const out = process.env.CH16_QA_OUT ?? '/tmp/codex-ch16-ui';
 
-test('test-only 16-3 tunnel command works with natural SP, keyboard, mobile layout and restart',
+test(`test-only ${stageCode} tunnel command works with natural SP, keyboard, mobile layout and restart`,
   { skip: enabled ? false : 'set RENDER_E2E=1 with Chrome installed', timeout: 120000 }, async () => {
     const { startServer } = await import('../server/index.js');
     const puppeteer = (await import('puppeteer-core')).default;
@@ -25,13 +27,13 @@ test('test-only 16-3 tunnel command works with natural SP, keyboard, mobile layo
       page.on('pageerror', e => errors.push(e.message));
       await page.setViewport({ width: 1440, height: 900 });
       const base = `http://127.0.0.1:${server.port}/arkpedia/`;
-      await page.goto(`${base}?stage=16-3`, { waitUntil: 'domcontentloaded' });
+      await page.goto(`${base}?stage=${stageCode}`, { waitUntil: 'domcontentloaded' });
       await page.waitForFunction(() => document.body.textContent.includes('This stage is test-only'));
       assert.equal(await page.$('#start'), null);
       await page.waitForFunction(() => document.readyState === 'complete');
-      assert.deepEqual(errors, ['Stage 16-3 is test-only: open it with ?experimental=1']);
+      assert.deepEqual(errors, [`Stage ${stageCode} is test-only: open it with ?experimental=1`]);
       errors.length = 0;
-      await page.goto(`${base}?experimental=1&stage=16-3`, { waitUntil: 'domcontentloaded' });
+      await page.goto(`${base}?experimental=1&stage=${stageCode}`, { waitUntil: 'domcontentloaded' });
       await page.waitForSelector('#start'); await page.click('#start');
       await page.waitForSelector('#stage-actions button', { timeout: 60000 });
       assert.match(await page.$eval('.simulation-label', e => e.textContent), /Test-only/);
@@ -68,7 +70,7 @@ test('test-only 16-3 tunnel command works with natural SP, keyboard, mobile layo
       page = await browser.newPage();
       page.on('pageerror', e => errors.push(e.message));
       await page.setViewport({ width: 844, height: 390, isMobile: true, hasTouch: true });
-      await page.goto(`${base}?experimental=1&stage=16-3`, { waitUntil: 'domcontentloaded' });
+      await page.goto(`${base}?experimental=1&stage=${stageCode}`, { waitUntil: 'domcontentloaded' });
       await page.waitForSelector('#start'); await page.tap('#start');
       await page.waitForSelector('#stage-actions button', { timeout: 60000 });
       await page.waitForFunction(() => {
@@ -83,7 +85,7 @@ test('test-only 16-3 tunnel command works with natural SP, keyboard, mobile layo
       await chargeAndCommand(true);
       await page.screenshot({ path: join(out, 'phone-restarted-commanded.png') });
       assert.deepEqual(errors, []);
-      writeFileSync(join(out, 'result.json'), JSON.stringify({ stage: '16-3', testOnly: true, errors,
+      writeFileSync(join(out, 'result.json'), JSON.stringify({ stage: stageCode, testOnly: true, errors,
         checks: ['public rejection', 'natural SP', 'owner queue release', 'keyboard', 'stable focus and bounds', 'desktop', 'phone landscape', 'restart'] }, null, 2));
     } finally { await browser?.close(); await server.close(); }
   });

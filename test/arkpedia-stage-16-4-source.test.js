@@ -26,7 +26,7 @@ test('16-4 retains the complete checksum-verified canonical inputs and independe
   assert.equal(source.rawLevel.extraRoutes[0].visitEveryCheckPoint, false);
 });
 
-test('the next enemy evidence matches the original native timing index without granting support', () => {
+test('the next enemy evidence matches the original native timing index without granting public support', () => {
   const bytes = readFileSync(new URL('../data/arkpedia-enemy-clock-source.json', import.meta.url));
   const index = JSON.parse(bytes);
   const native = read('data/candidates/arkpedia-ch16-crossbow-native.json');
@@ -36,11 +36,13 @@ test('the next enemy evidence matches the original native timing index without g
   const changed = structuredClone(native);
   Object.values(changed.prefabs)[0][0].originalJson += ' ';
   assert.throws(() => verifiedNative(changed, index.prefabs, createHash('sha256').update(bytes).digest('hex'), pin), /does not match/);
-  assert.equal(read('data/candidates/arkpedia-ch16-enemy-support.json').enemies.enemy_10121_uasnip.policy, null);
+  assert.equal(read('data/candidates/arkpedia-ch16-enemy-support.json').enemies.enemy_10121_uasnip.policy, 'stats-attacks-and-features');
+  assert.equal(read('data/arkpedia-enemy-support.json').enemies.enemy_10121_uasnip?.policy ?? null, null);
 });
 
-test('16-4 stays outside the catalogue while its explicit early-exit traversal can be decoded', () => {
-  assert.throws(() => resolveStage(read('data/arkpedia-stages.json'), '16-4', { experimental: true }));
+test('16-4 remains experimental while its explicit early-exit traversal can be decoded', () => {
+  assert.throws(() => resolveStage(read('data/arkpedia-stages.json'), '16-4'), /test-only/);
+  assert.equal(resolveStage(read('data/arkpedia-stages.json'), '16-4', { experimental: true }).testOnly, true);
   assert.equal(typeof chapter16BranchSpawner({}, source), 'function');
   assert.throws(() => execFileSync(process.execPath, ['tools/arkpedia/canonical-stage.mjs', '--stage', '../unreviewed'],
     { cwd: new URL('../', import.meta.url), stdio: 'pipe' }), error => /only pinned source intakes/.test(String(error.stderr)));

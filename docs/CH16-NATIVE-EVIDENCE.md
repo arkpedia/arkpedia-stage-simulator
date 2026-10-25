@@ -45,7 +45,9 @@ TileEscapeShadowManager behaviors; ChargeRift; ReverseDamage/MuradPollut;
 DeadSummon; shield/StealAtk/LockDamage; and Murad's visibility/beam lifecycle.
 The current behavior/admission status is in `CH16-BEHAVIORS.md`. All six base controllers
 now clear candidate support under exact native contracts; stage admission remains
-restricted to test-only 16-2 and 16-3. Compile candidate support against the complete canonical enemy
+restricted to test-only 16-2, 16-3 and 16-4. The crossbow's separate experimental
+contract records its unresolved native direct-radius edge semantics; see
+`CH16-BEHAVIORS.md`. Compile candidate support against the complete canonical enemy
 candidate and verified merged evidence; do not overlay one enemy into the old
 public catalogue. Implement and review behaviors before building/admitting
 stages. No production pointer or public registry changes are part of this work.

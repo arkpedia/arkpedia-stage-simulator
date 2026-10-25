@@ -6,10 +6,10 @@ Snapshot: 2026-10-22. Regenerate the numbers with `npm run coverage:arkpedia-sta
 |---|---|---|
 | Operators / operator forms | 431 | 431 |
 | Enemies supported | 440 | 1,552 |
-| Main source stages with committed files | 598 | 564 |
+| Main source stages with committed files | 599 | 564 |
 | Public catalogue (includes embedded 0-1) | 597 | 597 built |
 
-The public catalogue contains 597 reviewed stages. Experimental 16-2 and 16-3 are separate test-only builds using the complete canonical enemy candidate; see `CH16-BEHAVIORS.md`. There are 599 catalogue entries: 597 public and two test-only. The older coverage snapshot below has not been regenerated.
+The public catalogue contains 597 reviewed stages. Experimental 16-2, 16-3 and 16-4 are separate test-only builds using the complete canonical enemy candidate; see `CH16-BEHAVIORS.md`. There are 600 catalogue entries: 597 public and three test-only. The older coverage snapshot below has not been regenerated.
 
 ## Built by chapter
 

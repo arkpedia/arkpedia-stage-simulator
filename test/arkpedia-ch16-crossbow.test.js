@@ -7,17 +7,19 @@ import { createHash } from 'node:crypto';
 import { mobileCrossbow } from '../server/sim/content/chapter16-crossbow.js';
 import { makeBattle, chessRec, enemyRec } from './helpers/battleHarness.js';
 import { installFeatureDispatch, attach } from '../server/sim/content/enemies.js';
+import { installEnemyFeatures } from '../server/sim/content/arkpedia-enemy-features.js';
+import { deriveEnemySupport, prefabPath } from '../shared/arkpedia/enemy-support.js';
 const read = path => JSON.parse(readFileSync(new URL('../' + path, import.meta.url)));
 const rec = read('data/candidates/arkpedia-enemy-records.canonical.json').enemies.enemy_10121_uasnip.levels[0];
 const proof = read('data/candidates/arkpedia-ch16-crossbow-source.json');
-function fixture({ blocker = false, near = false } = {}) {
+function fixture({ blocker = false, near = false, automatic = false } = {}) {
   const h = makeBattle({ content: 'generic', autoFinish: false,
     defs: { enemies: { [rec.key]: rec, other: enemyRec({ key: 'other', atk: 0 }) },
       chess: { dummy: chessRec({ id: 'dummy', stats: { maxHp: 1e6, atk: 0, def: 100, blockCnt: blocker ? 2 : 0 } }) } },
-    units: [{ chessId: 'dummy', row: 10, col: near ? 6 : 5 }], setup: installFeatureDispatch });
+    units: [{ chessId: 'dummy', row: 10, col: near ? 6 : 5 }], setup: automatic ? installEnemyFeatures : installFeatureDispatch });
   const e = h.spawn(rec.key, { pos: [10, blocker ? 5 : 7] });
   e.base.moveSpeed = 0; e.markDirty();
-  const a = mobileCrossbow(rec); attach(h.b, e, [a]);
+  const a = mobileCrossbow(rec); if (!automatic) attach(h.b, e, [a]);
   return { h, e, a, u: h.unit('dummy'), b: h.b };
 }
 
@@ -45,6 +47,41 @@ test('retained native listener and projectile distinguish cadence, marker, radiu
   assert.equal(projectile.find(n => '_speed' in n)._speed, 10);
   assert.equal(projectile.find(n => '_lifeTime' in n)._lifeTime, 10);
   assert.equal(rec.talents.bb['ExtraPowerListener.attack@atk_scale_2'], 2.5);
+});
+
+test('experimental feature dispatch attaches the implemented controller; radius edges use the explicit center-distance model', () => {
+  const { h, b, e, u } = fixture({ automatic: true });
+  u.x = e.x - 1.51; h.run(.11);
+  assert.ok(e.findBuff('uasnip_no_ally_nearby_able_attack'), 'an overlapping body alone does not satisfy this candidate direct-radius model');
+  u.x = e.x - 1.5; h.run(.11); assert.equal(e.findBuff('uasnip_no_ally_nearby_able_attack'), null);
+  b.addBuff(e, { key: 'enemy_uacomd_extra_power', persist: true });
+  u.x = e.x - .51; h.run(.11); assert.ok(e.findBuff('uasnip_no_ally_nearby_able_attack'));
+  u.x = e.x - .5; h.run(.11); assert.equal(e.findBuff('uasnip_no_ally_nearby_able_attack'), null);
+  assert.deepEqual(b.errors, []);
+});
+
+test('candidate support requires complete reviewed records, indexed components and full-graph evidence', () => {
+  const native = read('data/candidates/arkpedia-ch16-crossbow-native.json');
+  const review = read('data/candidates/arkpedia-ch16-reviewed-crossbow.json');
+  const records = read('data/candidates/arkpedia-enemy-records.canonical.json').enemies;
+  const index = read('data/arkpedia-enemy-clock-source.json');
+  const evidence = { ...native, chapter16Families: { crossbow: { graphSha256: review.sources.graph.sha256 } } };
+  const keys = ['enemy_10121_uasnip', 'enemy_10121_uasnip_2'];
+  const entries = Object.fromEntries(keys.map(k => [k, records[k]]));
+  const supported = deriveEnemySupport(entries, index.prefabs, evidence);
+  for (const key of keys) {
+    assert.equal(supported[key].policy, 'stats-attacks-and-features');
+    assert.equal(supported[key].native[key].claimedWrappers, 0);
+    assert.equal(supported[key].native[key].claimedActive, 1);
+    assert.equal(deriveEnemySupport(entries, index.prefabs, native)[key].policy, null);
+    const changed = structuredClone(evidence); changed.prefabs[prefabPath(key)][0].originalJson += ' ';
+    assert.equal(deriveEnemySupport(entries, index.prefabs, changed)[key].policy, null);
+    const newIndex = structuredClone(index.prefabs);
+    newIndex[prefabPath(key)].clockComponents.push({ fields: { _familyMask: 1, _trigger: {} } });
+    assert.equal(deriveEnemySupport(entries, newIndex, evidence)[key].policy, null);
+    const newRecords = structuredClone(entries); newRecords[key].levels[0].talents.bb['ExtraPowerListener.radius_1'] = 2;
+    assert.equal(deriveEnemySupport(newRecords, index.prefabs, evidence)[key].policy, null);
+  }
 });
 
 test('isolated ranged attack has native multiplier, travel and a born projectile that survives source death', () => {
