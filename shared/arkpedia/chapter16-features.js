@@ -10,6 +10,8 @@ import artilleryReview from '../../data/candidates/arkpedia-ch16-reviewed-artill
 import commanderReview from '../../data/candidates/arkpedia-ch16-reviewed-commander.json' with { type: 'json' };
 import slugReview from '../../data/candidates/arkpedia-ch16-reviewed-abnormal-slug.json' with { type: 'json' };
 import fortbreakerReview from '../../data/candidates/arkpedia-ch16-reviewed-fortbreaker.json' with { type: 'json' };
+import manglerbeastReview from '../../data/candidates/arkpedia-ch16-reviewed-manglerbeast.json' with { type: 'json' };
+import phantomReview from '../../data/candidates/arkpedia-ch16-reviewed-phantom.json' with { type: 'json' };
 const MINER_TEXT = "Allied unit; recovers HP when within any Medic Operator's Attack Range";
 const groups = { TileEscapeShadowManager: ['times'], GetHeal: ['heal_scale'], FearLoseBlood: ['value'] };
 function minerCovered(r, n) {
@@ -42,6 +44,8 @@ function familyCovered(review, family, r, n) {
     && JSON.stringify(n.$retained?.()) === JSON.stringify(proof.native);
 }
 export const abnormalSlugCovered = (r, n) => familyCovered(slugReview, 'abnormalSlug', r, n);
+export const manglerbeastCovered = (r, n) => familyCovered(manglerbeastReview, 'manglerbeast', r, n);
+export const phantomCovered = (r, n) => familyCovered(phantomReview, 'phantom', r, n);
 export const commanderCovered = (r, n) => familyCovered(commanderReview, 'commander', r, n);
 export const fortbreakerCovered = (r, n) => familyCovered(fortbreakerReview, 'fortbreaker', r, n);
 export const shieldguardCovered = (r, n) => familyCovered(shieldguardReview, 'shieldguard', r, n);
@@ -57,8 +61,21 @@ function familyFeature(review, family, kind) {
     note: 'Source-bound experimental controller; captured native frame/render parity held.',
   };
 }
+// Shared native spellings retain separate exact-record source and count claims.
+function familyUnion(...features) {
+  return {
+    covers: (r, n) => features.some(f => f.covers(r, n)),
+    ability: r => features.map(f => f.ability(r)).find(Boolean) ?? null,
+    explains: (text, r) => features.some(f => f.explains(text, r)),
+    nativeClaim: (p, n) => features.map(f => f.nativeClaim(p, n)).find(Boolean) ?? null,
+    note: 'Separate source-bound experimental families sharing one native feature name.',
+  };
+}
+export const phantomFeature = familyFeature(phantomReview, 'phantom', 'ch16ArmyPhantom');
 export const CHAPTER16_FEATURES = {
-  'skill:M1Start': familyFeature(slugReview, 'abnormalSlug', 'ch16AbnormalSlug'),
+  'skill:M1Start': familyUnion(familyFeature(slugReview, 'abnormalSlug', 'ch16AbnormalSlug'),
+    familyFeature(manglerbeastReview, 'manglerbeast', 'ch16Manglerbeast')),
+  'talent:M0Shield': { covers: manglerbeastCovered, note: 'Manglerbeast shield and separate ASPD owned by M1Start controller.' },
   'ability:Gives <@eb.key>orders</> to Army enemies on the field': familyFeature(commanderReview, 'commander', 'ch16Commander'),
   'skill:SkyProjectile': familyFeature(fortbreakerReview, 'fortbreaker', 'ch16Fortbreaker'),
   'talent:ExtraPower': familyFeature(shieldguardReview, 'shieldguard', 'ch16Shieldguard'),

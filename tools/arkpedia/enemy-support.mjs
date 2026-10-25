@@ -130,6 +130,8 @@ export async function buildEnemySupport({ candidate = false } = {}) {
       ['fortbreaker', 'data/candidates/arkpedia-ch16-reviewed-fortbreaker.json'],
       ['commander', 'data/candidates/arkpedia-ch16-reviewed-commander.json'],
       ['abnormalSlug', 'data/candidates/arkpedia-ch16-reviewed-abnormal-slug.json'],
+      ['manglerbeast', 'data/candidates/arkpedia-ch16-reviewed-manglerbeast.json'],
+      ['phantom', 'data/candidates/arkpedia-ch16-reviewed-phantom.json'],
       ['artillery', 'data/candidates/arkpedia-ch16-reviewed-artillery.json'],
       ['patrol', 'data/candidates/arkpedia-ch16-reviewed-patrol.json'],
     ]) {

@@ -7,6 +7,8 @@ import { patrolCaptain } from './chapter16-patrol.js';
 import { frontlineCommander } from './chapter16-commander.js';
 import { abnormalSlug } from './chapter16-abnormal-slug.js';
 import { fortbreaker } from './chapter16-fortbreaker.js';
+import { abnormalManglerbeast } from './chapter16-manglerbeast.js';
+import { armyPhantom } from './chapter16-phantom.js';
 import { shieldguard } from './chapter16-shieldguard.js';
 import { lightArtillery } from './chapter16-artillery.js';
 import { mobileCrossbow } from './chapter16-crossbow.js';
@@ -81,5 +83,6 @@ export function miner(r) {
 }
 
 export const chapter16Abilities = { ch17PollutionInfantry: pollutionInfantry, ch17PollutionBowman: pollutionBowman, ch17Rockbreaker: rockbreaker,
+  ch16Manglerbeast: abnormalManglerbeast, ch16ArmyPhantom: armyPhantom,
   ch16AbnormalSlug: abnormalSlug, ch16Commander: frontlineCommander, ch16Fortbreaker: fortbreaker, ch16PatrolCaptain: patrolCaptain, ch16Shieldguard: shieldguard, ch16LightArtillery: lightArtillery, ch16MobileCrossbow: mobileCrossbow, ch16Miner: miner, ch16ReverseDamage: reverseDamage, ch16DeadSummon: deadSummon,
   ch16ChargeRift: chargeRift, ch16WarCaster: warCaster, ch16LeakSource: leakSource };

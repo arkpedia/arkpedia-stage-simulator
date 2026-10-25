@@ -80,6 +80,28 @@ test('Manglerbeast original graph/indexed evidence and skeleton bytes match inde
   for(const key of['A_Attack','B_Attack']){assert.equal(d.exactDurations[key],2);assert.equal(d.eventPayloads[key][0].time,.800000011920929);assert.equal(d.eventPayloads[key][0].name,'OnAttack');}
  }
 });
+test('candidate feature dispatch installs each exact Manglerbeast once and rejects changed source or record claims',()=>{
+ const native=read(review.sources.indexed.path),clock=read('data/arkpedia-enemy-clock-source.json');
+ const evidence={...native,chapter16Families:{manglerbeast:{graphSha256:review.sources.graph.sha256}}};
+ for(const key of Object.keys(review.enemies)){
+  const entries={[key]:records[key]};
+  assert.equal(deriveEnemySupport(entries,clock.prefabs,evidence)[key].policy,'stats-attacks-and-features');
+  assert.equal(deriveEnemySupport(entries,clock.prefabs,native)[key].policy,null);
+  for(const mutate of [n=>{n.chapter16Families.manglerbeast.graphSha256='0'.repeat(64);},n=>{n.prefabs[prefabPath(key)][0].originalJson+=' ';}]){
+   const changed=structuredClone(evidence);mutate(changed);
+   assert.equal(deriveEnemySupport(entries,clock.prefabs,changed)[key].policy,null);
+  }
+  for(const mutate of [r=>{r.talents.bb['M0Shield.attack_speed']++;},r=>{r.skills[0].cooldown++;},r=>{r.abilities[0].text+=' changed';}]){
+   const changed=structuredClone(entries);mutate(changed[key].levels[0]);
+   assert.equal(deriveEnemySupport(changed,clock.prefabs,evidence)[key].policy,null);
+  }
+  const h=makeBattle({content:'generic',autoFinish:false,setup:b=>{installFeatureDispatch(b);installEnemyFeatures(b);},defs:{enemies:{[key]:records[key].levels[0]}}});
+  h.b.start();const e=h.spawn(key,{pos:[10,7]});
+  assert.equal(e.mem.ab.list.length,1);assert.equal(e.mem.ab.list.filter(a=>a.changeMode).length,1);
+  assert.equal(e.s.aspd,200);assert.equal(e.s.taunt,1);assert.deepEqual(h.b.errors,[]);
+ }
+});
+
 test('the native pool/DR actions contain no slug-style InverseDamage',()=>{
  const g=read(review.sources.graph.path),n=JSON.parse(g.templates['rkmbst_m0_t[shield]'].originalJson);
  const start=JSON.parse(n.eventToActions._items.find(e=>e.key===0).value.SerializedState);assert.equal(start[0]._attributeType,'MAX_HP');assert.equal(start[1]._multiplyParamKey,'init_shield_hp_ratio');
