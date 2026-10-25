@@ -10,6 +10,8 @@ import { defaultBuild } from '../shared/arkpedia/loadout.js';
 import { acquireTargets, effectiveProfile } from '../server/sim/ai.js';
 import { makeDamageInfo } from '../server/sim/damage.js';
 import { dirVec } from '../server/sim/dir.js';
+import canonical from '../data/candidates/arkpedia-enemy-records.canonical.json' with {type:'json'};
+import {installChapter17MutwinCore} from '../server/sim/content/chapter17-mutwin-core.js';
 const ID = 'char_362_saga';
 const near = (a, z, eps = 1e-5) => assert.ok(Math.abs(a-z) < eps, `${a} != ${z}`);
 function advance(b, seconds) {
@@ -88,12 +90,13 @@ test('Preaching ignores dodged, canceled and gauge-only receipts; cleansed wound
   const a=b.deployOperator('char_103_angel',2,4,'RIGHT'); a.skill.setSpTotal(0); a.skill.rule='NEVER'; a.atkCd=1000;
   b.kill(e,a); near(a.skill.spTotal,0); advance(b,10.1);
 });
-test('wounds prevent attacks, blocking and all healing, and their10s no-source expiry does not grant SP',()=>{
+test('wounds prevent blocking combat and all healing, and their10s no-source expiry does not grant SP',()=>{
   const {b,deploy}=make(),u=deploy(),e=enemy(b,{hp:100});
+  b.removeBuff(e,'test:pin');b.addBuff(e,{key:'test:pin',flags:{noMove:true}});
   e.base.moveSpeed=1; e.base.hpRecoveryPerSec=20; e.markDirty();
   e.blockedBy=u; u.blocking.push(e); b.dealDamage(u,e,{amount:200,type:'true'});
   assert.equal(e.blockedBy,null); assert.equal(u.blocking.includes(e),false);
-  assert.equal(e.s.flags.unblockable,true); assert.equal(e.s.flags.disarm,true); near(e.s.moveSpeed,.2); near(e.s.hpRegen,0);
+  assert.equal(e.s.flags.noCombat,true); assert.ok(!e.s.flags.disarm); near(e.s.moveSpeed,.2); near(e.s.hpRegen,0);
   near(b.heal(u,e,100),0); near(b.heal(e,e,100,{self:true}),0);
   advance(b,9.9); assert.equal(e.alive,true); b.dealDamage(u,e,{amount:0,type:'true'});
   u.skill.setSpTotal(0); advance(b,.2); assert.equal(e.alive,false); near(e.deathAt,10); near(u.skill.spTotal,.2);
@@ -219,4 +222,27 @@ test('ordinary AI attacks only one normal victim, then shares wounded kills with
   const ally=b.deployOperator('char_103_angel',2,4,'RIGHT'); ally.skill.setSpTotal(0); ally.skill.rule='NEVER';
   b.kill(a,ally); near(ally.skill.spTotal,2); assert.equal(effectiveProfile(u).hitAllBlocked,false);
   assert.equal(u.findBuff('saga_e_003[damage_scale]'),null); assert.equal(u.s.flatDamageResistance,0);
+});
+for(const second of [false,true])test('real Saga '+(second?'S2 finishing':'wound expiry')+' allows a paired twin to rebirth without granting kill SP',()=>{
+ const {b,deploy}=make({skill:second?1:0}),u=deploy(),rooms=[],cores=[];
+ for(const[key,col]of [['enemy_1591_mutwin',5],['enemy_1591_mutwin_2',8]]){
+  const e=b.spawnEnemy(key,{pos:[3,col],def:canonical.enemies[key].levels[0]});cores.push(installChapter17MutwinCore(b,e,{finishRoom:r=>rooms.push(r)}));
+ }
+ const e=cores[0].lifecycle.owner;b.dealDamage(u,e,{amount:1e6,type:'true'});assert.equal(e.hp,1);assert.ok(e.findBuff('cripple'));assert.ok(!e.s.flags.disarm);
+ if(second){cast(b,u);advance(b,1.2);}else advance(b,10.2);
+ assert.ok(e.alive);assert.equal(cores[0].lifecycle.phase,'fake');assert.equal(e.hp,1000);assert.equal(e.findBuff('cripple'),null);assert.ok(e.stats.attacks>0);assert.equal(b.killed,0);assert.equal(u.stats.kills,0);assert.equal(rooms.length,0);assert.deepEqual(b.errors,[]);
+});
+test('Saga target-owned wound timers cannot kill a replacement deployment of the same body',()=>{
+ const {b,deploy}=make(),u=deploy(),e=enemy(b,{hp:100});b.dealDamage(u,e,{amount:200,type:'true'});assert.ok(e.findBuff('cripple'));e.deploySeq++;e.hp=42;
+ advance(b,10.1);assert.ok(e.alive);near(e.hp,42);assert.equal(e.findBuff('cripple'),null);
+});
+test('Saga S2 delayed finishing cannot consume a new deployment foreign wound',()=>{
+ const {b,deploy}=make({skill:1}),u=deploy(),e=enemy(b,{hp:100});b.dealDamage(u,e,{amount:200,type:'true'});cast(b,u);advance(b,.4);
+ e.deploySeq++;e.hp=42;const mark=b.addBuff(e,{key:'cripple',source:u,duration:30});advance(b,.8);assert.ok(e.alive);near(e.hp,42);assert.equal(e.findBuff('cripple'),mark);
+});
+test('Saga DISABLE_COMBAT remains distinct from an ordinary unblockable status under immunity',()=>{
+ const {b,deploy}=make(),u=deploy(),e=enemy(b,{hp:100});e.blockedBy=u;u.blocking.push(e);b.addBuff(e,{key:'fixture-immunity',data:{nativeUnblockableImmune:true}});
+ b.dealDamage(u,e,{amount:200,type:'true'});assert.equal(e.blockedBy,null);assert.ok(e.s.flags.noCombat);assert.equal(e.s.flags.unblockable,false);assert.equal(b._checkBlock(e),false);
+ const z=enemy(b,{c:6});z.blockedBy=u;u.blocking.push(z);b.addBuff(z,{key:'fixture-immunity',data:{nativeUnblockableImmune:true}});
+ b.applyStatus(z,'unblockable',{duration:1});assert.equal(z.blockedBy,u);assert.equal(z.s.flags.unblockable,false);assert.deepEqual(b.errors,[]);
 });

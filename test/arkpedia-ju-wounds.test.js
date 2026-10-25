@@ -4,13 +4,17 @@ import assert from 'node:assert/strict';
 import {make, enemy, killer, hit, advance, near} from './helpers/ju-fixture.js';
 import {JU_WOUND_CONTRACT, verifyJuWoundSource} from '../server/sim/content/arkpedia-ju-wounds.js';
 import {juNativeInputs} from '../server/sim/content/arkpedia-ju-source.js';
+import canonical from '../data/candidates/arkpedia-enemy-records.canonical.json' with {type:'json'};
+import {installChapter17MutwinCore} from '../server/sim/content/chapter17-mutwin-core.js';
 
 test('Ju wounds require the original source contract and reject changed native dispatch', () => {
   assert.throws(() => make({contract: {...JU_WOUND_CONTRACT}}), /exact wound contract/);
   assert.throws(() => make({mutate: d => { d.stats.atk++; }}), /Incomplete/);
   const paths = [n => n.talent._buffs[0].blackboard[0].value++,
     n => n.templates.ju_t_1.eventToActions.ON_OUTPUT_DAMAGE[0]._sharedFlagIndex = 'OTHER',
-    n => n.templates.cripple.eventToActions.ON_OWNER_KILLED_BY_MAIN_TARGET[0]._forceFlag = true];
+    n => n.templates.cripple.eventToActions.ON_OWNER_KILLED_BY_MAIN_TARGET[0]._forceFlag = true,
+    n => n.templates.cripple.eventToActions.ON_BUFF_TRIGGER[2]._skipReborn = true,
+    n => n.templates.cripple.eventToActions.ON_BEFORE_APPEAR[0]._skipReborn = true];
   for (const mutate of paths) { const n = structuredClone(juNativeInputs()); mutate(n); assert.throws(() => verifyJuWoundSource(n), /Changed original/); }
 });
 
@@ -19,7 +23,7 @@ for (const [elite, sp] of [[0, 1], [1, 1], [2, 2]])
     const f = make({elite}), e = enemy(f), k = killer(f);
     hit(f, e); assert.equal(e.hp, 1); assert.ok(e.findBuff('cripple'));
     assert.equal(e.s.flags.healFree, true); assert.equal(e.s.flags.noHpRecovery, true);
-    assert.equal(e.s.flags.unblockable, true); assert.equal(e.s.blockCnt, 0);
+    assert.equal(e.s.flags.noCombat, true); assert.equal(e.s.blockCnt, 0);
     f.b.dealDamage(k, e, {amount: 10, type: 'true'});
     near(k.skill.spTotal, sp); assert.equal(f.wounds.pending.size, 0); assert.equal(f.wounds.watchers.length, 0);
     assert.equal(e.findBuff('cripple'), null); assert.deepEqual(f.b.errors, []);
@@ -192,4 +196,16 @@ test('An independently inserted owner marker cannot be adopted as Ju talent admi
   f.deploy(); const foreign = f.u.findBuff('ju_t_1'), e = enemy(f);
   hit(f, e); assert.equal(e.alive, false); f.wounds.stop();
   assert.equal(f.u.findBuff('ju_t_1'), foreign);
+});
+test('real Ju wound expiry uses the native non-skipping kill and lets a paired twin enter rebirth',()=>{
+ const f=make(),rooms=[],cores=[];for(const[key,col]of [['enemy_1591_mutwin',7],['enemy_1591_mutwin_2',10]]){
+  const e=f.b.spawnEnemy(key,{pos:[5,col],def:canonical.enemies[key].levels[0]});cores.push(installChapter17MutwinCore(f.b,e,{finishRoom:r=>rooms.push(r)}));
+ }
+ const e=cores[0].lifecycle.owner;hit(f,e,1e6);assert.equal(e.hp,1);assert.ok(e.findBuff('cripple'));assert.ok(!e.s.flags.disarm);assert.equal(cores[0].lifecycle.phase,'active');
+ advance(f.b,f.record.talentBb[0].interval+.2);assert.ok(e.alive);assert.equal(cores[0].lifecycle.phase,'fake');assert.equal(e.hp,1000);assert.equal(e.findBuff('cripple'),null);
+ assert.equal(f.wounds.pending.size,0);assert.equal(f.wounds.watchers.length,0);assert.ok(e.stats.attacks>0);assert.equal(f.u.stats.kills,0);assert.equal(f.b.killed,0);assert.equal(rooms.length,0);assert.deepEqual(f.b.errors,[]);
+});
+test('Ju native DISABLE_COMBAT prevents blocking independently of ordinary unblockable immunity',()=>{
+ const f=make(),e=enemy(f),k=killer(f);e.blockedBy=k;k.blocking.push(e);f.b.addBuff(e,{key:'fixture-immunity',data:{nativeUnblockableImmune:true}});
+ hit(f,e);assert.equal(e.blockedBy,null);assert.ok(e.s.flags.noCombat);assert.equal(e.s.flags.unblockable,false);assert.equal(f.b._checkBlock(e),false);assert.ok(e.findBuff('cripple'));assert.deepEqual(f.b.errors,[]);
 });

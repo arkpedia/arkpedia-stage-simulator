@@ -5,6 +5,28 @@ import evidence from '../../../data/arkpedia-saga-prefabs.json' with { type: 'js
 import { resolveHit } from '../ai.js';
 import { isHpLoss } from '../damage.js';
 import { absoluteRangeKeys, canTargetEnemy, sortEnemyTargets } from '../targeting.js';
+import {executeEnemyInstantKill,verifyEnemyInstantKill} from '../enemy-instant-kill.js';
+import {captureEnemySource as captureKillSource} from './enemy-source-view.js';
+
+export function verifySagaInstantKillSource(source=evidence){
+  try{
+    const wound=source.templates.saga_t_1.eventToActions.ON_AFTER_OUTPUT_DAMAGE[3]._buff,original=[];
+    const collect=value=>{if(!value||typeof value!=='object')return;if(value.buffKey==='cripple')original.push(value);for(const child of Object.values(value))collect(child);};
+    for(const item of source.originalTemplates.saga_t_1.eventToActions._items)collect(JSON.parse(item.value.SerializedState));
+    if(original.length!==1||wound.attributes.abnormalFlags.join()!=='HEAL_FREE,DISABLE_COMBAT'||JSON.stringify(wound.attributes)!==JSON.stringify(original[0].attributes))throw Error('Mismatch');
+  }catch{throw Error('Changed original Saga InstantKill/wound inputs');}
+  const specs=[['saga_s_2','ON_BUFF_FINISH',1,3,false],['cripple','ON_BUFF_TRIGGER',2,2,true],['cripple','ON_BEFORE_APPEAR',43,0,true]];
+  return specs.map(([key,event,code,index,noSource])=>{
+    try{
+      const action=verifyEnemyInstantKill(source.templates[key].eventToActions[event][index]),
+        raw=verifyEnemyInstantKill(JSON.parse(source.originalTemplates[key].eventToActions._items.find(e=>e.key===code).value.SerializedState)[index]);
+      if(action._skipReborn||action._killSource||action._targetType!=='TARGET'||action._noSource!==noSource
+        ||Object.keys(action).some(k=>k==='$type'?action[k].split(',')[0]!==raw[k].split(',')[0]:action[k]!==raw[k]))throw Error('Mismatch');
+      return action;
+    }catch{throw Error('Changed original Saga InstantKill inputs');}
+  });
+}
+const [secondKill,woundKill,appearKill]=verifySagaInstantKillSource();
 
 const ID = 'char_362_saga', SECOND = 'skchr_saga_2', THIRD = 'skchr_saga_3';
 const live = u => u?.alive && u.deployed && !u.hidden;
@@ -48,14 +70,17 @@ function castSecond(b, u) {
     const keys = absoluteRangeKeys(u.def.skill.rangeGrid, u.tileR, u.tileC, u.dir);
     const victims = b.enemiesInKeys(keys, u, plain);
     sortEnemyTargets(b, u, victims, null);
+    const sourceLife=u.deploySeq,sourceView=captureKillSource(u);
     for (const e of victims.slice(0, 6)) {
+      const targetLife=e.deploySeq;
       resolveHit(b, u, { ...plain, atkScale: bb.atk_scale }, e, info, e.x, e.y);
-      if (!e.alive) continue;
+      if (!e.alive||e.deploySeq!==targetLife) continue;
       // The target-owned native active buff finishes .7s after the hit. It
       // survives source retirement and only eliminates a still-wounded target.
       b.after(.7, () => {
-        if (e.alive && e.findBuff('cripple')) {
-          b.kill(e, u); b.removeBuff(e, 'cripple');
+        if (e.alive && e.deploySeq===targetLife && e.findBuff('cripple')) {
+          executeEnemyInstantKill(b,{source:u.alive&&u.deployed&&u.deploySeq===sourceLife?u:sourceView,target:e,action:secondKill});
+          if(e.deploySeq===targetLife)b.removeBuff(e, 'cripple');
         }
       }, { owner: e });
     }
@@ -64,25 +89,31 @@ function castSecond(b, u) {
 
 function wound(b, u, e, bb) {
   if (!e.alive || e.findBuff('cripple')) return;
+  const targetLife=e.deploySeq;
   let killHook, appearHook, timer;
   const mark = b.addBuff(e, { key: 'cripple', status: 'cripple', source: u,
-    flags: { unblockable: true, disarm: true, healFree: true, noHpRecovery: true },
+    flags: { noCombat: true, healFree: true, noHpRecovery: true },
     mods: { moveMul: 1 + bb.move_speed, blockCntMul: 0, hpRegenMul: 0 },
     onRemove: () => { b.off(killHook); b.off(appearHook); timer?.cancel(); } });
+  if(!mark||!e.alive||!e.deployed||e.deploySeq!==targetLife||e.findBuff('cripple')!==mark){b.removeBuff(e,mark);return;}
   b._unblock(e);
   killHook = b.on('kill', ({ killer, victim }) => {
-    if (victim !== e || e.findBuff('cripple') !== mark) return;
+    if (victim !== e || e.deploySeq!==targetLife || e.findBuff('cripple') !== mark) return;
     if (live(killer)) killer.skill?.gainSp(bb.sp, 'gift');
     b.removeBuff(e, mark);
   }, { owner: e });
   appearHook = b.on('enemyBeforeAppear', ({ enemy }) => {
-    if (enemy === e && e.findBuff('cripple') === mark) b.kill(e, null);
+    if (enemy === e && e.findBuff('cripple') === mark){
+      if(e.deploySeq===targetLife)executeEnemyInstantKill(b,{source:u,target:e,action:appearKill});
+      else b.removeBuff(e,mark);
+    }
   }, { owner: e });
   timer = b.after(bb.interval, () => {
     if (!e.alive || e.findBuff('cripple') !== mark) return;
+    if(e.deploySeq!==targetLife){b.removeBuff(e,mark);return;}
     // Original cripple trigger skips InstantKill in DISAPPEAR, then finishes
     // the buff. ON_BEFORE_APPEAR kills only while the buff is still present.
-    if (!e.hidden) b.kill(e, null);
+    if (!e.hidden) executeEnemyInstantKill(b,{source:u,target:e,action:woundKill});
     b.removeBuff(e, mark);
   }, { owner: e });
 }

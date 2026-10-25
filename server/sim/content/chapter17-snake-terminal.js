@@ -4,6 +4,7 @@ import contract from '../../../data/candidates/arkpedia-ch17-snake-terminal-cont
 import {currentHpZeroAttemptReceipt} from '../damage.js';
 import {startChapter17SnakeCounter} from './chapter17-boss-counter.js';
 import {attachSnakeInteractionWait} from './chapter17-snake-wait.js';
+import {executeEnemyInstantKill} from '../enemy-instant-kill.js';
 const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
 
 export function installChapter17SnakeTerminal(b,e,{finishWave}={}){
@@ -48,7 +49,7 @@ export function installChapter17SnakeTerminal(b,e,{finishWave}={}){
      b.removeBuff(e,contract.finish.find(n=>n.$type.endsWith('+FinishBuffsById'))._buffKey);
      const action=Object.freeze({...contract.finish.find(n=>n.$type.endsWith('+FinishCurrentWave'))});
      const waveReceipt=Object.freeze({source:e,sourceLife:life,action});
-     try{b.kill(e,e);}finally{
+     try{executeEnemyInstantKill(b,{source:e,buffOwner:e,action:contract.finish.find(n=>n.$type.endsWith('+InstantKill'))});}finally{
       // Native AlwaysNext continues the wave handoff after InstantKill, even
       // if its removal handlers retire this controller or revive the body.
       try{finishWave(waveReceipt);}finally{phase.stop();}

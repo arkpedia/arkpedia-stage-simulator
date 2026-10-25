@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import {isHpLoss} from '../damage.js';
 import {JU_ID, juNativeInputs, selectedJuInputs} from './arkpedia-ju-source.js';
+import {executeEnemyInstantKill,verifyEnemyInstantKill} from '../enemy-instant-kill.js';
 
 export const JU_WOUND_CONTRACT = Object.freeze({
   policy: 'source-cn-ju-damage-floor-and-target-owned-cripple-v1',
@@ -41,7 +42,10 @@ export function verifyJuWoundSource(native = juNativeInputs()) {
   if (JSON.stringify(modifiers.map(m => [m.attributeType, m.formulaItem, m.loadFromBlackboard, m.value]))
     !== JSON.stringify([['MOVE_SPEED','FINAL_SCALER',true,0],['BLOCK_CNT','FINAL_SCALER',false,0],
       ['HP_RECOVERY_PER_SEC','FINAL_SCALER',false,0],['HP_RECOVERY_PER_SEC_BY_MAX_HP_RATIO','FINAL_SCALER',false,0]])) fail();
-  return {floor: talent[0].blackboard[0].value};
+  let triggerKill,appearKill;
+  try{triggerKill=verifyEnemyInstantKill(cripple.ON_BUFF_TRIGGER[2]);appearKill=verifyEnemyInstantKill(cripple.ON_BEFORE_APPEAR[0]);}catch{fail();}
+  if(triggerKill._skipReborn||appearKill._skipReborn||triggerKill._killSource||appearKill._killSource||triggerKill._targetType!=='TARGET'||appearKill._targetType!=='TARGET')fail();
+  return {floor: talent[0].blackboard[0].value,triggerKill,appearKill};
 }
 
 export class JuWounds {
@@ -49,7 +53,7 @@ export class JuWounds {
     if (contract !== JU_WOUND_CONTRACT || unit.def.charId !== JU_ID || unit.deploySeq !== 0)
       throw Error('Fresh original selected Ju and exact wound contract required');
     this.b = battle; this.u = unit; this.record = selectedJuInputs(unit);
-    this.floor = verifyJuWoundSource().floor;
+    const native=verifyJuWoundSource();this.floor=native.floor;this.killActions=native;
     this.bb = this.record.talentBb[0];
     this.seq = null; this.marker = null; this.stopped = false;
     this.handles = []; this.watchers = []; this.pending = new Map();
@@ -105,7 +109,7 @@ export class JuWounds {
     this.admitting.add(target);
     try {
       p.mark = this.b.addBuff(target, {key: 'cripple', status: 'cripple', source: this.u, refresh: 'keep',
-        flags: {unblockable: true, disarm: true, healFree: true, noHpRecovery: true},
+        flags: {noCombat: true, healFree: true, noHpRecovery: true},
         mods: {moveMul: 1 + this.bb.move_speed, blockCntMul: 0, hpRegenMul: 0},
         data: {juWound: p, sp: p.sp}, onRemove: () => this.finish(p)});
     } finally { this.admitting.delete(target); }
@@ -128,7 +132,7 @@ export class JuWounds {
         for (const p of [...this.pending.values()]) {
           if (!this.identity(p) || !alive(p.target)) { this.finish(p); continue; }
           if (due(b.time, p.until)) {
-            if (!p.target.hidden) b.kill(p.target, null);
+            if (!p.target.hidden) executeEnemyInstantKill(b,{source:this.u,target:p.target,action:this.killActions.triggerKill});
             this.finish(p);
           }
         }
@@ -141,7 +145,7 @@ export class JuWounds {
       }),
       b.on('enemyBeforeAppear', ({enemy}) => {
         const p = this.pending.get(enemy);
-        if (p && this.identity(p)) { b.kill(enemy, null); this.finish(p); }
+        if (p && this.identity(p)) { executeEnemyInstantKill(b,{source:this.u,target:enemy,action:this.killActions.appearKill}); this.finish(p); }
       }),
       b.on('removed', ({unit}) => { const p = this.pending.get(unit); if (p) this.finish(p); }),
       b.on('battleEnd', () => this.drain()),

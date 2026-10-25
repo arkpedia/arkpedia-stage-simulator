@@ -906,6 +906,9 @@ function enemyAttack(b, e) {
   // Content may flip it with `e.profile.melee = false`.
   const melee = e.profile?.melee ?? def.applyWay === 'MELEE';
   const radius = melee ? 0 : e.base.rangeRadius;
+  // Native DISABLE_COMBAT forbids blocking attacks and new blocking, while
+  // an existing block is retained. Unblocked ranged attacks remain eligible.
+  if(e.s.flags.noCombat&&(e.blockedBy||melee))return false;
   // the range circle takes an ally whose 0.25 collider touches it (PRTS 作战机制 §碰撞体积: 索敌 uses the colliders)
   const reach = radius > 0 ? radius + ALLY_COLLIDER_RADIUS : 0;
   // `e.profile.canTarget(ally)`: the enemy's own target rule (只攻击地面单位, 不会攻击飞行单位 …; content/enemies.js),

@@ -72,7 +72,7 @@ export function installChapter17MuamaLine(b,e,{combat}={}){
     &&Math.abs(Math.round(d.horizontal?t.y:t.x)-Math.round(d.horizontal?e.y:e.x))<=1));
   },
   canAct({ignoreSilence=false}={}){return state.valid()&&!state.pending&&!combat.suspended&&!combat.pending&&!combat.actionBusy&&combat.cooldown<=1e-9
-   &&!intrinsic(e)&&!e.s.flags.disarm&&(ignoreSilence||!e.s.flags.silence)&&!(e.s.flags.tremble&&e.blockedBy);},
+   &&!intrinsic(e)&&!e.s.flags.disarm&&(ignoreSilence||!e.s.flags.silence)&&!((e.s.flags.tremble||e.s.flags.noCombat)&&e.blockedBy);},
   tryReady(){
    if(!state.canAct({ignoreSilence:true}))return false;
    const ready=Object.keys(skills).filter(name=>!e.s.flags.silence&&state.cooldowns[name]<=1e-9&&state.choices(name).length).map(name=>()=>state.cast(name));

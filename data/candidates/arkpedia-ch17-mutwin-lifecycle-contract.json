@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "testOnly": true,
-  "scope": "Internal twin rebirth/fake-death recovery and source-bound partner ownership. Room handoff requires a canonical receiver; no complete enemy/stage admission.",
+  "scope": "Internal twin HP-loss/native InstantKill rebirth, fake-death recovery and source-bound partner ownership. Room handoff requires a canonical receiver; no complete enemy/stage admission.",
   "sources": {
     "foundation": {
       "path": "data/candidates/arkpedia-ch17-muama-blink-contract.json",
@@ -1158,7 +1158,7 @@
     "Only one live deployment of each exact twin prefab is registered per battle. Partner markers are source/deployment owned; a partner in rebirth or fake-death cannot qualify. Multiple simultaneous copies require a separate aura/override review.",
     "Rebirth retains the serialized four keys and explicitly marked nativeDurable instances; runtime persist alone does not prove native durability. Existing incoming-buff producers need a durability audit before full stage admission. Teleport immunity/transient controls clear, unborn actions cancel and skills reset. Root line cooldowns continue during fake-death; the initial-mode Blink cooldown pauses.",
     "The fake-death heal parent ticks on world seconds through the ordinary heal modifier/heal-free pipeline. Losing an established partner marker forces death immediately; starting without a qualifying partner is handled by the first native heal-parent tick.",
-    "Mode return uses an explicit local state restart without inventing additional animation holds. Born projectiles/impacts retain their source ownership. Scripted kill/removal bypasses the HP-loss bridge; forced partner-loss kill bypasses rebirth.",
+    "Mode return uses an explicit local state restart without inventing additional animation holds. Born projectiles/impacts retain source ownership. Explicit native enemy InstantKill can request authenticated rebirth without damage credit; skipReborn bypasses that request, and the short protected rebirth coalesces further non-skipping requests. Legacy Battle.kill/removal keeps its bypass semantics. Native noReason/exit/rally/state-switch variants remain separate ports.",
     "The first twin alone owns the native room-finish parent. Its exact camera/branch actions and room offset are passed once to a required receiver; the receiver must execute canonical stage withdrawal/camera/branch semantics before admission."
   ]
 }

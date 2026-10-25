@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import contract from '../../../data/candidates/arkpedia-ch17-mutwin-lifecycle-contract.json' with {type:'json'};
 import {currentFatalDamageReceipt} from '../damage.js';
+import {currentEnemyInstantKillReceipt,executeEnemyInstantKill} from '../enemy-instant-kill.js';
 const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b),registries=new WeakMap();
 const freeze=value=>{if(value&&typeof value==='object'){for(const child of Object.values(value))freeze(child);Object.freeze(value);}return value;},roomActions=freeze(structuredClone(contract.roomFinish));
 function registryFor(b){
@@ -54,9 +55,7 @@ export function installChapter17MutwinLifecycle(b,e,{actions,finishRoom}={}){
   },
   forceDeath(){
    if(!state.valid()||state.phase==='dying')return;state.phase='dying';state.detachPartner();
-   // Source InstantKill explicitly skips rebirth; the shared scripted kill
-   // path bypasses this controller's authenticated fatal HP-loss entry.
-   b.kill(e,e);if(state.active)state.stop();
+   executeEnemyInstantKill(b,{source:e,target:e,action:contract.markFinish[0]._succeedNodes[0]});if(state.active)state.stop();
   },
   beginReborn(){
    if(!state.valid()||!['active','fake'].includes(state.phase))return;
@@ -100,6 +99,13 @@ export function installChapter17MutwinLifecycle(b,e,{actions,finishRoom}={}){
   handles.push(b.on('fatal',ctx=>{
    const receipt=currentFatalDamageReceipt(ctx,b);if(!receipt||receipt.unit!==e||receipt.unitLife!==life||ctx.prevented||!state.valid()||!['active','fake'].includes(state.phase)||seen.has(receipt))return;
    seen.add(receipt);ctx.prevented=true;ctx.afterHpLoss=()=>state.beginReborn();
+  },{owner:state,priority:100}),b.on('enemyInstantKill',ctx=>{
+   const receipt=currentEnemyInstantKillReceipt(ctx,b);
+   if(!receipt||receipt.unit!==e||receipt.unitLife!==life||receipt.action._skipReborn||ctx.reborn||!state.valid()||seen.has(receipt))return;
+   seen.add(receipt);
+   if(state.phase==='reborn'&&e.buffs.includes(state.hold)){e.hp=Math.min(1,e.s.maxHp);ctx.reborn=true;return;}
+   if(!['active','fake'].includes(state.phase))return;
+   state.beginReborn();ctx.reborn=state.valid()&&state.phase==='reborn';
   },{owner:state,priority:100}),b.on('tick',()=>{
    if(!state.valid()){state.stop();return;}
    if(state.phase==='reborn'&&b.time+1e-9>=state.rebornUntil)state.enterFake();registry.sync();

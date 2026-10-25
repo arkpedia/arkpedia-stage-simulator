@@ -4,10 +4,11 @@ Current continuation: the snake's HP phases, line attack, timeout, firewall and
 native hit body are composed as an internal candidate. AMa-10 and both twins now
 have source-bound ordinary attacks, target ATK ramps, immobility/teleport markers,
 x-4 firewall boundaries, internal three-lane line actors, checkpoint refresh and
-the twins' internal HP-loss rebirth/fake-death recovery. Complete boss support
-remains held for native kill/durability integration, source sequence dispatch
-review, canonical wave/branch/story
-integration, mechanical input routing and staged-record reviews are completed.
+the twins' internal HP-loss and native InstantKill rebirth/fake-death recovery.
+Saga and Ju wound finishers now use that explicit native kill path. Complete
+boss support remains held pending the incoming durability audit, source sequence
+dispatch review, canonical wave/branch/story integration, mechanical input
+routing and staged-record reviews.
 
 The retained native components/canonical record supply the parameters and action
 graph. Supplemental first-hand [PRTS HP-loss research, revision 442170](https://prts.wiki/index.php?title=%E7%89%B9%E6%AE%8A%E6%9C%BA%E5%88%B6&oldid=442170)
@@ -983,3 +984,45 @@ No threshold was relaxed. The preceding refresh checkpoint 3aa989b3 passed all
 eight Linux/Windows Node22/24 shards successfully. New-head native-source,
 behavior and full-matrix verification remain separate. The nine remaining
 normal-stage gates and all visual-work priorities remain unchanged.
+
+## Native enemy InstantKill and wound interactions
+
+The internal native enemy InstantKill operation now validates its exact retained
+action fields and exposes a temporary private rebirth receipt. Non-skipping
+requests enter or coalesce the twin's protected short rebirth without damage or
+kill credit. The partner-mark finalizer honors skipReborn. Generic Battle.kill
+keeps its existing behavior; noReason, rally, exit and state-switch variants are
+outside this operation. Stale deployments and forged/replayed events cannot
+admit a new rebirth.
+
+Saga's ordinary wound timer, before-appear kill and S2 delayed finisher, Ju's
+wound finishers, and the snake terminal kill now use the explicit native path.
+Saga's decoded nodes are checked against the retained original serialized
+actions. Delayed finishers retain the original source credit and target life;
+old timers cannot kill a reused body or remove a replacement deployment's wound.
+Real Saga/Ju interactions with the paired twin core exercise the native rebirth
+path without granting complete boss or stage support.
+
+The retained wound flag DISABLE_COMBAT now maps to an enemy-only noCombat flag.
+It prevents new blocking and blocking attacks, preserves an existing block by
+itself, and permits unblocked ranged attacks. It is independent of ordinary
+unblockable immunity. The whole cripple bridge also applies its zero-block-count
+modifier and explicitly releases the block; it no longer invents blanket disarm.
+The native flags are authoritative. Supplemental first-hand
+[PRTS abnormal-effect notes, revision 440606](https://prts.wiki/index.php?title=%E5%BC%82%E5%B8%B8%E6%95%88%E6%9E%9C&oldid=440606)
+describe DISABLE_COMBAT's blocking restrictions and distinguish BLOCK_FREE's
+automatic release. Those notes identify client 2.7.81 and supplement the older
+pinned native source; they are not replacement source or captured frame proof.
+
+Latest local verification: all 1,194 available focused checks and all 134 final
+kill/wound/lifecycle integration checks passed. The broader simulator suite
+passed 632 cases with three skipped and no failures. The four known quarantined test
+files remain in Git and hosted validation. All 18 receipt inputs retain identical
+Git-normalized bytes. The preceding 5ee1f774 checkpoint passed all 15 hosted
+continuation jobs; its full run 40217962392 remains active at this observation.
+New-head CI is separate from those results.
+
+Canonical room withdrawal/refund/order, branch/wave/story dispatch, staged room
+overrides, incoming durable-buff coverage and client/FSM timing still require
+review and integration. Source/support counts and all nine remaining normal-stage
+gates are unchanged. Art, models, chibis and effects remain after mechanics.

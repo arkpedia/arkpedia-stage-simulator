@@ -7,7 +7,7 @@ import {ALLY_COLLIDER_RADIUS} from '../constants.js';
 import {sourceAbilityDelta} from './arkpedia-slow-down.js';
 import {captureEnemySource} from './enemy-source-view.js';
 const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b),live=u=>u?.alive&&u.deployed&&!u.hidden,noAttackOwners=new WeakMap();
-const controlled=e=>['stun','freeze','sleep','levitate','fear','disarm'].some(k=>e.s.flags[k])||e.s.flags.tremble&&!!e.blockedBy;
+const controlled=e=>['stun','freeze','sleep','levitate','fear','disarm'].some(k=>e.s.flags[k])||(e.s.flags.tremble||e.s.flags.noCombat)&&!!e.blockedBy;
 export function installChapter17MuamaCombat(b,e){
  const proof=contract.enemies[e?.defId],r=e?.def?.raw;
  if(!proof||r?.key!==e.defId||r.prefabKey!==e.defId||!same(r.talents,proof.record.talents)||!same(r.skills,proof.record.skills)||!same(r.abilities,proof.record.abilities))

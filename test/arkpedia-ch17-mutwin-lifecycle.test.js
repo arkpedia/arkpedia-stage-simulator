@@ -9,6 +9,8 @@ import {installChapter17MutwinLifecycle} from '../server/sim/content/chapter17-m
 import {currentFatalDamageReceipt} from '../server/sim/damage.js';
 import {mutwinLifecycleContract} from '../tools/arkpedia/mutwin-lifecycle-contract.mjs';
 import {chapter17Environment,chapter17FirewallSnapshot as snapshot,clickChapter17Firewall as click} from '../server/sim/content/chapter17.js';
+import {executeEnemyInstantKill,currentEnemyInstantKillReceipt} from '../server/sim/enemy-instant-kill.js';
+import saga from '../data/arkpedia-saga-prefabs.json' with {type:'json'};
 const bytes=p=>readFileSync(new URL('../'+p,import.meta.url)),read=p=>JSON.parse(bytes(p));
 const contract=read('data/candidates/arkpedia-ch17-mutwin-lifecycle-contract.json'),keys=Object.keys(contract.enemies),records=read('data/candidates/arkpedia-enemy-records.canonical.json').enemies;
 function fixture({pair=true,receiver}={}){
@@ -190,4 +192,14 @@ test('whole-core replacement preserves the true profile baseline across source-l
   const f=fixture(),e=f.other;e.deploySeq++;e.deployedAt=f.b.time;if(replaceProfile)e.profile={...e.profile,noAttack:true};
   const core=install(f.b,e);assert.equal(core.actions.combat.originalNoAttack,replaceProfile);f.otherCore.stop();assert.ok(e.profile.noAttack);core.stop();assert.equal(e.profile.noAttack,replaceProfile);noErrors(f);
  }
+});
+test('non-skipping native InstantKill enters rebirth without HP-damage credit and coalesces the short protected state',()=>{
+ const f=fixture(),action=saga.templates.cripple.eventToActions.ON_BUFF_TRIGGER[2];
+ assert.equal(executeEnemyInstantKill(f.b,{source:f.t,target:f.e,action}).status,'reborn');assert.equal(f.e.hp,1);assert.equal(f.core.lifecycle.rebirths,1);assert.equal(f.t.stats.dmg,0);assert.equal(f.t.stats.kills,0);
+ assert.equal(executeEnemyInstantKill(f.b,{source:f.t,target:f.e,action}).status,'reborn');assert.equal(f.core.lifecycle.rebirths,1);assert.equal(f.e.hp,1);
+ f.h.runUntil(()=>f.core.lifecycle.phase==='fake',1);assert.equal(f.e.hp,1000);assert.equal(f.rooms.length,0);noErrors(f);
+});
+test('forged native kill admissions cannot create rebirth, and a real skip flag bypasses it',()=>{
+ const f=fixture();f.b.emit('enemyInstantKill',{unit:f.e,source:f.t,reborn:false});assert.equal(f.core.lifecycle.phase,'active');assert.equal(f.e.hp,50000);assert.equal(currentEnemyInstantKillReceipt({unit:f.e},f.b),null);
+ executeEnemyInstantKill(f.b,{source:f.e,target:f.other,action:contract.markFinish[0]._succeedNodes[0]});assert.equal(f.e.alive,false);assert.ok(f.other.alive);assert.equal(f.rooms.length,1);noErrors(f);
 });

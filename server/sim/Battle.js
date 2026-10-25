@@ -1183,7 +1183,7 @@ export class Battle {
     if (e.blockedBy || e.hidden || !e.alive) return !!e.blockedBy;
     if (this.identityLocks?.size && !e.profile?.revealed && (e.profile?.spy || e.profile?.friendly)) return false;
     const f = e.s.flags;
-    if (f.unblockable || f.levitate || f.fear) return false;
+    if (f.unblockable || f.noCombat || f.levitate || f.fear) return false;
     const r0 = Math.round(e.y), c0 = Math.round(e.x);
     const w = e.blockWeight ?? 1;
     let u = null, bd = Infinity;
@@ -1584,7 +1584,10 @@ export class Battle {
       }
     }
     const f = tpl.flags;
-    if (f && target.side === 'enemy' && (f.levitate || f.unblockable || f.fear)) this._unblock(target);
+    if (f && target.side === 'enemy' && (f.levitate || f.unblockable || f.fear)) {
+      const effective=target.s.flags;
+      if(f.levitate&&effective.levitate||f.unblockable&&effective.unblockable||f.fear&&effective.fear)this._unblock(target);
+    }
     if (f && target.side === 'ally' && f.noBlock) this.releaseBlocked(target);
     if (this._hooks.statusApplied) this.emit('statusApplied', { source, target, status: key, duration, value, entered });
     return true;
