@@ -9,6 +9,12 @@ import { loadCanonicalEnemyTables } from './canonical-data.mjs';
 export const CANONICAL_STAGE_LOCKS = Object.freeze({
   '16-3': '../../data/arkpedia-ch16-stage.lock.json',
   '16-4': '../../data/arkpedia-ch16-stage-16-4.lock.json',
+  '16-5': '../../data/arkpedia-canonical-stage-16-5.lock.json',
+  '16-6': '../../data/arkpedia-canonical-stage-16-6.lock.json',
+  '16-7': '../../data/arkpedia-canonical-stage-16-7.lock.json',
+  '17-2': '../../data/arkpedia-canonical-stage-17-2.lock.json',
+  '17-3': '../../data/arkpedia-canonical-stage-17-3.lock.json',
+  '17-4': '../../data/arkpedia-canonical-stage-17-4.lock.json',
 });
 
 export function validateCanonicalStageSnapshot(snapshot, lock) {
@@ -58,7 +64,7 @@ export async function loadCanonicalStage({ lock, cacheDir, fetchImpl } = {}) {
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const args = process.argv.slice(2), code = args.length ? args[1] : '16-3';
   if (args.length && (args.length !== 2 || args[0] !== '--stage') || !Object.hasOwn(CANONICAL_STAGE_LOCKS, code))
-    throw Error('Usage: canonical-stage.mjs [--stage 16-3|16-4]; only pinned source intakes are allowed');
+    throw Error(`Usage: canonical-stage.mjs [--stage ${Object.keys(CANONICAL_STAGE_LOCKS).join('|')}]; only pinned source intakes are allowed`);
   const lock = JSON.parse(await readFile(new URL(CANONICAL_STAGE_LOCKS[code], import.meta.url)));
   const bundle = await loadCanonicalStage({ lock, cacheDir: fileURLToPath(new URL(`../../.cache/arkpedia/canonical-stage-${code}/`, import.meta.url)) });
   await writeFile(new URL(`../../data/candidates/arkpedia-stage-${code}-source.json`, import.meta.url), JSON.stringify(bundle, null, 2) + '\n');

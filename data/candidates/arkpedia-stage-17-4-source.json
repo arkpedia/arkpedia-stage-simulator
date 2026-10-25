@@ -1,0 +1,7002 @@
+{
+  "schemaVersion": 1,
+  "testOnly": true,
+  "admitted": false,
+  "canonicalData": {
+    "repository": "arkpedia/arkpedia-data",
+    "commit": "657f85cc032ae5da807135f536d3263c6b249ed7"
+  },
+  "upstream": {
+    "repository": "ArknightsAssets/ArknightsGamedata",
+    "commit": "db6f9ef8046ad17dbebe3ff1d0dd88844a5bc78c"
+  },
+  "producer": {
+    "repository": "arkpedia/arkpedia",
+    "commit": "e5a96b56e312c3e73a54865da57bc33172119a0b"
+  },
+  "inputs": {
+    "stage": {
+      "path": "source/data/stages/17-4.json",
+      "bytes": 5109,
+      "sha256": "cb4172938d68cc95b790cd980076df58bfb3486d324f4a747eddcf006bd1164b"
+    },
+    "geometry": {
+      "path": "source/data/stage-geometry/17-4.json",
+      "bytes": 12923,
+      "sha256": "c6ab6649ba8e76421b0afe7352877c4229277a5afb8e20e39cbe6e57686d5469"
+    },
+    "conditional": {
+      "path": "source/data/stage-conditional/17-4.json",
+      "bytes": 484,
+      "sha256": "2e6703daa09e478341f1c872df39b8835903ea25868016f1bf6953519b25048f"
+    },
+    "devices": {
+      "path": "source/data/stage-devices.json",
+      "bytes": 1886587,
+      "sha256": "c9b70c96272e9aa8573046ec2b3c65510bd5342cddf9b8de6b2c5b7f48c9fb44"
+    },
+    "routeReceipt": {
+      "path": "source/data/stage-route-source/17-4.json",
+      "bytes": 943,
+      "sha256": "149927fa2faaf062490055e8eccd2726af4fc1cdba18cb500498bd79bb75b4ff"
+    },
+    "manifest": {
+      "path": "release/manifest.json",
+      "bytes": 3098551,
+      "sha256": "444019d654d0d666872c7fb0f9231df6d073410f9b42e2100f2c6d2722322ca5"
+    },
+    "rawLevel": {
+      "path": "source/data/simulator/raw/levels/17-4.json",
+      "bytes": 65984,
+      "sha256": "0719c5a6a3ae5b24bc511035d9175b69ca86fd753f3784135c45b68bdca2c613"
+    },
+    "levelReceipt": {
+      "path": "source/data/simulator/stage-levels-source.json",
+      "bytes": 1839,
+      "sha256": "97a04f29233ed40d9cb9a014b8e385c5daf573ae4bb3a11214e79ba500cca0ff"
+    }
+  },
+  "routeReceipt": {
+    "schemaVersion": 1,
+    "scope": "Canonical simulator candidate inputs only. No simulator admission or release pointer change.",
+    "upstream": {
+      "repository": "ArknightsAssets/ArknightsGamedata",
+      "commit": "db6f9ef8046ad17dbebe3ff1d0dd88844a5bc78c",
+      "path": "en/gamedata/levels/obt/main/level_main_17-03.json",
+      "sha256": "0719c5a6a3ae5b24bc511035d9175b69ca86fd753f3784135c45b68bdca2c613"
+    },
+    "producer": {
+      "repository": "arkpedia/arkpedia",
+      "commit": "e5a96b56e312c3e73a54865da57bc33172119a0b",
+      "entrypoint": "scripts/stage-pipeline/lib/encode.mjs",
+      "rawEntrypoint": "scripts/imports/import-simulator-stage-levels.mjs"
+    },
+    "outputs": {
+      "source/data/stage-geometry/17-4.json": "c6ab6649ba8e76421b0afe7352877c4229277a5afb8e20e39cbe6e57686d5469",
+      "source/data/stage-conditional/17-4.json": "2e6703daa09e478341f1c872df39b8835903ea25868016f1bf6953519b25048f"
+    },
+    "rawLevelPath": "source/data/simulator/raw/levels/17-4.json"
+  },
+  "levelReceipt": {
+    "version": 1,
+    "source": {
+      "repository": "ArknightsAssets/ArknightsGamedata",
+      "commit": "db6f9ef8046ad17dbebe3ff1d0dd88844a5bc78c"
+    },
+    "files": {
+      "raw/levels/16-3.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_16-02.json",
+        "bytes": 54041,
+        "sha256": "fa693b20c843694be0911ba668a910e63074170406cd8881be9fe87a068238c9"
+      },
+      "raw/levels/16-4.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_16-03.json",
+        "bytes": 45854,
+        "sha256": "3bb4e26ab6fb87bc81593973e17b8f6c2b6563777b30060dd422f2ebbe009f52"
+      },
+      "raw/levels/16-5.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_16-04.json",
+        "bytes": 37774,
+        "sha256": "5dd04fb47ffa1c0f38bbacaef9ed4ff320a6632a31246185297806de461d7041"
+      },
+      "raw/levels/16-6.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_16-05.json",
+        "bytes": 55173,
+        "sha256": "ee6bfa66bf4f00a91e19580ef102df55f440b5d5f81de949ae459d41cab1e328"
+      },
+      "raw/levels/16-7.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_16-06.json",
+        "bytes": 66072,
+        "sha256": "c0a9641fc4c2c22411cdfd256132bf9ed74881be7cce8b8d74fb7c7a626aff14"
+      },
+      "raw/levels/17-2.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_17-01.json",
+        "bytes": 29422,
+        "sha256": "7417b4718b171b9c15df980ba0129b8ddde4da9932c26c3ceb1d04d5f6200c9f"
+      },
+      "raw/levels/17-3.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_17-02.json",
+        "bytes": 39053,
+        "sha256": "6c61699981ab99505ac2f6db6129d61708dc63c41070e2591c64a33106fa70a1"
+      },
+      "raw/levels/17-4.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_17-03.json",
+        "bytes": 65984,
+        "sha256": "0719c5a6a3ae5b24bc511035d9175b69ca86fd753f3784135c45b68bdca2c613"
+      }
+    }
+  },
+  "rawLevel": {
+    "options": {
+      "characterLimit": 9,
+      "maxLifePoint": 3,
+      "initialCost": 8,
+      "maxCost": 99,
+      "costIncreaseTime": 1,
+      "moveMultiplier": 0.5,
+      "steeringEnabled": true,
+      "reachableCheckIgnoreStartTile": false,
+      "isTrainingLevel": false,
+      "isHardTrainingLevel": false,
+      "isPredefinedCardsSelectable": false,
+      "displayRestTime": false,
+      "maxPlayTime": 0,
+      "functionDisableMask": "NONE",
+      "configBlackBoard": null
+    },
+    "levelId": null,
+    "mapId": null,
+    "bgmEvent": "act4mainss_nbat1",
+    "environmentSe": null,
+    "mapData": {
+      "map": [
+        [
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          69
+        ],
+        [
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59
+        ],
+        [
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49
+        ],
+        [
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39
+        ],
+        [
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29
+        ],
+        [
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19
+        ],
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      ],
+      "tiles": [
+        {
+          "tileKey": "tile_forbidden",
+          "heightType": "HIGHLAND",
+          "buildableType": "NONE",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_forbidden",
+          "heightType": "HIGHLAND",
+          "buildableType": "NONE",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_forbidden",
+          "heightType": "HIGHLAND",
+          "buildableType": "NONE",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_forbidden",
+          "heightType": "HIGHLAND",
+          "buildableType": "NONE",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_forbidden",
+          "heightType": "HIGHLAND",
+          "buildableType": "NONE",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_forbidden",
+          "heightType": "HIGHLAND",
+          "buildableType": "NONE",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_forbidden",
+          "heightType": "HIGHLAND",
+          "buildableType": "NONE",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_forbidden",
+          "heightType": "HIGHLAND",
+          "buildableType": "NONE",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_forbidden",
+          "heightType": "HIGHLAND",
+          "buildableType": "NONE",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_forbidden",
+          "heightType": "HIGHLAND",
+          "buildableType": "NONE",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_forbidden",
+          "heightType": "HIGHLAND",
+          "buildableType": "NONE",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_forbidden",
+          "heightType": "HIGHLAND",
+          "buildableType": "NONE",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_floor",
+          "heightType": "LOWLAND",
+          "buildableType": "NONE",
+          "passableMask": "ALL",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_floor",
+          "heightType": "LOWLAND",
+          "buildableType": "NONE",
+          "passableMask": "ALL",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "buildableType": "MELEE",
+          "passableMask": "ALL",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "buildableType": "MELEE",
+          "passableMask": "ALL",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "buildableType": "MELEE",
+          "passableMask": "ALL",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_wall",
+          "heightType": "HIGHLAND",
+          "buildableType": "RANGED",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_wall",
+          "heightType": "HIGHLAND",
+          "buildableType": "RANGED",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_forbidden",
+          "heightType": "HIGHLAND",
+          "buildableType": "NONE",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_forbidden",
+          "heightType": "HIGHLAND",
+          "buildableType": "NONE",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_floor",
+          "heightType": "LOWLAND",
+          "buildableType": "NONE",
+          "passableMask": "ALL",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_floor",
+          "heightType": "LOWLAND",
+          "buildableType": "NONE",
+          "passableMask": "ALL",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_forbidden",
+          "heightType": "HIGHLAND",
+          "buildableType": "NONE",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "buildableType": "MELEE",
+          "passableMask": "ALL",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_hole",
+          "heightType": "LOWLAND",
+          "buildableType": "NONE",
+          "passableMask": "ALL",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "buildableType": "MELEE",
+          "passableMask": "ALL",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "buildableType": "MELEE",
+          "passableMask": "ALL",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "buildableType": "MELEE",
+          "passableMask": "ALL",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_forbidden",
+          "heightType": "HIGHLAND",
+          "buildableType": "NONE",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_forbidden",
+          "heightType": "HIGHLAND",
+          "buildableType": "NONE",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_start",
+          "heightType": "LOWLAND",
+          "buildableType": "NONE",
+          "passableMask": "ALL",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_forbidden",
+          "heightType": "HIGHLAND",
+          "buildableType": "NONE",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_forbidden",
+          "heightType": "HIGHLAND",
+          "buildableType": "NONE",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "buildableType": "MELEE",
+          "passableMask": "ALL",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_hole",
+          "heightType": "LOWLAND",
+          "buildableType": "NONE",
+          "passableMask": "ALL",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_wall",
+          "heightType": "HIGHLAND",
+          "buildableType": "RANGED",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_wall",
+          "heightType": "HIGHLAND",
+          "buildableType": "RANGED",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "buildableType": "MELEE",
+          "passableMask": "ALL",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_forbidden",
+          "heightType": "HIGHLAND",
+          "buildableType": "NONE",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_forbidden",
+          "heightType": "HIGHLAND",
+          "buildableType": "NONE",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_floor",
+          "heightType": "LOWLAND",
+          "buildableType": "NONE",
+          "passableMask": "ALL",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "buildableType": "MELEE",
+          "passableMask": "ALL",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_forbidden",
+          "heightType": "HIGHLAND",
+          "buildableType": "NONE",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "buildableType": "MELEE",
+          "passableMask": "ALL",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_hole",
+          "heightType": "LOWLAND",
+          "buildableType": "NONE",
+          "passableMask": "ALL",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_wall",
+          "heightType": "HIGHLAND",
+          "buildableType": "RANGED",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_wall",
+          "heightType": "HIGHLAND",
+          "buildableType": "RANGED",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "buildableType": "MELEE",
+          "passableMask": "ALL",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_forbidden",
+          "heightType": "HIGHLAND",
+          "buildableType": "NONE",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_forbidden",
+          "heightType": "HIGHLAND",
+          "buildableType": "NONE",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_forbidden",
+          "heightType": "HIGHLAND",
+          "buildableType": "NONE",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "buildableType": "MELEE",
+          "passableMask": "ALL",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "buildableType": "MELEE",
+          "passableMask": "ALL",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "buildableType": "MELEE",
+          "passableMask": "ALL",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_forbidden",
+          "heightType": "HIGHLAND",
+          "buildableType": "NONE",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_end",
+          "heightType": "LOWLAND",
+          "buildableType": "NONE",
+          "passableMask": "ALL",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "buildableType": "MELEE",
+          "passableMask": "ALL",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "buildableType": "MELEE",
+          "passableMask": "ALL",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_forbidden",
+          "heightType": "HIGHLAND",
+          "buildableType": "NONE",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_forbidden",
+          "heightType": "HIGHLAND",
+          "buildableType": "NONE",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_forbidden",
+          "heightType": "HIGHLAND",
+          "buildableType": "NONE",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_forbidden",
+          "heightType": "HIGHLAND",
+          "buildableType": "NONE",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_forbidden",
+          "heightType": "HIGHLAND",
+          "buildableType": "NONE",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_forbidden",
+          "heightType": "HIGHLAND",
+          "buildableType": "NONE",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_forbidden",
+          "heightType": "HIGHLAND",
+          "buildableType": "NONE",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_forbidden",
+          "heightType": "HIGHLAND",
+          "buildableType": "NONE",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_forbidden",
+          "heightType": "HIGHLAND",
+          "buildableType": "NONE",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_forbidden",
+          "heightType": "HIGHLAND",
+          "buildableType": "NONE",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        },
+        {
+          "tileKey": "tile_forbidden",
+          "heightType": "HIGHLAND",
+          "buildableType": "NONE",
+          "passableMask": "FLY_ONLY",
+          "playerSideMask": "ALL",
+          "blackboard": null,
+          "effects": null
+        }
+      ],
+      "blockEdges": null,
+      "tags": null,
+      "effects": null,
+      "layerRects": null
+    },
+    "tilesDisallowToLocate": {},
+    "runes": [
+      {
+        "difficultyMask": "ALL",
+        "key": "env_system_new",
+        "professionMask": 1023,
+        "buildableMask": "ALL",
+        "blackboard": [
+          {
+            "key": "key",
+            "value": 0,
+            "valueStr": "env_v073_mainline17_ctrl"
+          }
+        ]
+      },
+      {
+        "difficultyMask": "SIX_STAR",
+        "key": "char_attribute_mul",
+        "professionMask": 1023,
+        "buildableMask": "ALL",
+        "blackboard": [
+          {
+            "key": "atk",
+            "value": 0.8,
+            "valueStr": null
+          }
+        ]
+      },
+      {
+        "difficultyMask": "SIX_STAR",
+        "key": "enemy_attribute_mul",
+        "professionMask": 1023,
+        "buildableMask": "ALL",
+        "blackboard": [
+          {
+            "key": "atk",
+            "value": 1.1,
+            "valueStr": null
+          },
+          {
+            "key": "def",
+            "value": 1.1,
+            "valueStr": null
+          },
+          {
+            "key": "max_hp",
+            "value": 1.2,
+            "valueStr": null
+          },
+          {
+            "key": "rune_alias",
+            "value": 0,
+            "valueStr": "sixstar_basic_attribute"
+          }
+        ]
+      },
+      {
+        "difficultyMask": "SIX_STAR",
+        "key": "global_lifepoint",
+        "professionMask": 1023,
+        "buildableMask": "ALL",
+        "blackboard": [
+          {
+            "key": "value",
+            "value": 1,
+            "valueStr": null
+          }
+        ]
+      }
+    ],
+    "optionalRunes": {
+      "rune_level1_1": [
+        {
+          "difficultyMask": "SIX_STAR",
+          "key": "add_other_rune_blackb",
+          "professionMask": 1023,
+          "buildableMask": "ALL",
+          "blackboard": [
+            {
+              "key": "atk",
+              "value": 0.1,
+              "valueStr": null
+            },
+            {
+              "key": "def",
+              "value": 0.1,
+              "valueStr": null
+            },
+            {
+              "key": "max_hp",
+              "value": 0.2,
+              "valueStr": null
+            },
+            {
+              "key": "rune_alias",
+              "value": 0,
+              "valueStr": "sixstar_basic_attribute"
+            },
+            {
+              "key": "six_star_rune_alias",
+              "value": 0,
+              "valueStr": "rune_level1_1"
+            }
+          ]
+        },
+        {
+          "difficultyMask": "SIX_STAR",
+          "key": "enemy_attribute_mul",
+          "professionMask": 1023,
+          "buildableMask": "ALL",
+          "blackboard": [
+            {
+              "key": "max_hp",
+              "value": 1.5,
+              "valueStr": null
+            },
+            {
+              "key": "enemy",
+              "value": 0,
+              "valueStr": "enemy_10204_mudia"
+            },
+            {
+              "key": "six_star_rune_alias",
+              "value": 0,
+              "valueStr": "rune_level1_1"
+            }
+          ]
+        }
+      ],
+      "rune_level1_2": [
+        {
+          "difficultyMask": "SIX_STAR",
+          "key": "add_other_rune_blackb",
+          "professionMask": 1023,
+          "buildableMask": "ALL",
+          "blackboard": [
+            {
+              "key": "atk",
+              "value": 0.1,
+              "valueStr": null
+            },
+            {
+              "key": "def",
+              "value": 0.1,
+              "valueStr": null
+            },
+            {
+              "key": "max_hp",
+              "value": 0.2,
+              "valueStr": null
+            },
+            {
+              "key": "rune_alias",
+              "value": 0,
+              "valueStr": "sixstar_basic_attribute"
+            },
+            {
+              "key": "six_star_rune_alias",
+              "value": 0,
+              "valueStr": "rune_level1_2"
+            }
+          ]
+        },
+        {
+          "difficultyMask": "SIX_STAR",
+          "key": "enemy_attribute_mul",
+          "professionMask": 1023,
+          "buildableMask": "ALL",
+          "blackboard": [
+            {
+              "key": "def",
+              "value": 1.3,
+              "valueStr": null
+            },
+            {
+              "key": "enemy",
+              "value": 0,
+              "valueStr": "enemy_10204_mudia"
+            },
+            {
+              "key": "six_star_rune_alias",
+              "value": 0,
+              "valueStr": "rune_level1_2"
+            }
+          ]
+        }
+      ],
+      "rune_level2_1": [
+        {
+          "difficultyMask": "SIX_STAR",
+          "key": "add_other_rune_blackb",
+          "professionMask": 1023,
+          "buildableMask": "ALL",
+          "blackboard": [
+            {
+              "key": "atk",
+              "value": 0.1,
+              "valueStr": null
+            },
+            {
+              "key": "def",
+              "value": 0.1,
+              "valueStr": null
+            },
+            {
+              "key": "max_hp",
+              "value": 0.2,
+              "valueStr": null
+            },
+            {
+              "key": "rune_alias",
+              "value": 0,
+              "valueStr": "sixstar_basic_attribute"
+            },
+            {
+              "key": "six_star_rune_alias",
+              "value": 0,
+              "valueStr": "rune_level2_1"
+            }
+          ]
+        },
+        {
+          "difficultyMask": "SIX_STAR",
+          "key": "level_hidden_group_enable",
+          "professionMask": 1023,
+          "buildableMask": "ALL",
+          "blackboard": [
+            {
+              "key": "key",
+              "value": 0,
+              "valueStr": "hidden1"
+            },
+            {
+              "key": "six_star_rune_alias",
+              "value": 0,
+              "valueStr": "rune_level2_1"
+            }
+          ]
+        }
+      ],
+      "rune_level2_2": [
+        {
+          "difficultyMask": "SIX_STAR",
+          "key": "add_other_rune_blackb",
+          "professionMask": 1023,
+          "buildableMask": "ALL",
+          "blackboard": [
+            {
+              "key": "atk",
+              "value": 0.1,
+              "valueStr": null
+            },
+            {
+              "key": "def",
+              "value": 0.1,
+              "valueStr": null
+            },
+            {
+              "key": "max_hp",
+              "value": 0.2,
+              "valueStr": null
+            },
+            {
+              "key": "rune_alias",
+              "value": 0,
+              "valueStr": "sixstar_basic_attribute"
+            },
+            {
+              "key": "six_star_rune_alias",
+              "value": 0,
+              "valueStr": "rune_level2_2"
+            }
+          ]
+        },
+        {
+          "difficultyMask": "SIX_STAR",
+          "key": "enemy_weight_add",
+          "professionMask": 1023,
+          "buildableMask": "ALL",
+          "blackboard": [
+            {
+              "key": "enemy",
+              "value": 0,
+              "valueStr": "enemy_10204_mudia"
+            },
+            {
+              "key": "value",
+              "value": 3,
+              "valueStr": null
+            },
+            {
+              "key": "six_star_rune_alias",
+              "value": 0,
+              "valueStr": "rune_level2_2"
+            }
+          ]
+        }
+      ]
+    },
+    "globalBuffs": null,
+    "routes": [
+      {
+        "motionMode": "WALK",
+        "startPosition": {
+          "row": 4,
+          "col": 4
+        },
+        "endPosition": {
+          "row": 5,
+          "col": 6
+        },
+        "spawnRandomRange": {
+          "x": 0,
+          "y": 0
+        },
+        "spawnOffset": {
+          "x": 0,
+          "y": 0
+        },
+        "checkpoints": [
+          {
+            "type": "WAIT_FOR_SECONDS",
+            "time": 80,
+            "position": {
+              "row": 0,
+              "col": 0
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 4
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryTileCenter": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryCheckPoint": false
+      },
+      {
+        "motionMode": "WALK",
+        "startPosition": {
+          "row": 2,
+          "col": 2
+        },
+        "endPosition": {
+          "row": 5,
+          "col": 6
+        },
+        "spawnRandomRange": {
+          "x": 0,
+          "y": 0
+        },
+        "spawnOffset": {
+          "x": 0,
+          "y": 0
+        },
+        "checkpoints": [
+          {
+            "type": "WAIT_FOR_SECONDS",
+            "time": 60,
+            "position": {
+              "row": 0,
+              "col": 0
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 2
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryTileCenter": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryCheckPoint": false
+      },
+      {
+        "motionMode": "WALK",
+        "startPosition": {
+          "row": 4,
+          "col": 2
+        },
+        "endPosition": {
+          "row": 5,
+          "col": 6
+        },
+        "spawnRandomRange": {
+          "x": 0,
+          "y": 0
+        },
+        "spawnOffset": {
+          "x": 0,
+          "y": 0
+        },
+        "checkpoints": [
+          {
+            "type": "WAIT_FOR_SECONDS",
+            "time": 80,
+            "position": {
+              "row": 0,
+              "col": 0
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 2
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 4
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 4
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryTileCenter": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryCheckPoint": false
+      },
+      {
+        "motionMode": "WALK",
+        "startPosition": {
+          "row": 3,
+          "col": 4
+        },
+        "endPosition": {
+          "row": 5,
+          "col": 6
+        },
+        "spawnRandomRange": {
+          "x": 0,
+          "y": 0
+        },
+        "spawnOffset": {
+          "x": 0,
+          "y": 0
+        },
+        "checkpoints": [
+          {
+            "type": "WAIT_FOR_SECONDS",
+            "time": 45,
+            "position": {
+              "row": 0,
+              "col": 0
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 4
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryTileCenter": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryCheckPoint": false
+      },
+      {
+        "motionMode": "WALK",
+        "startPosition": {
+          "row": 3,
+          "col": 1
+        },
+        "endPosition": {
+          "row": 5,
+          "col": 6
+        },
+        "spawnRandomRange": {
+          "x": 0,
+          "y": 0
+        },
+        "spawnOffset": {
+          "x": 0,
+          "y": 0
+        },
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 2
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryTileCenter": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryCheckPoint": false
+      },
+      {
+        "motionMode": "WALK",
+        "startPosition": {
+          "row": 3,
+          "col": 1
+        },
+        "endPosition": {
+          "row": 5,
+          "col": 6
+        },
+        "spawnRandomRange": {
+          "x": 0,
+          "y": 0
+        },
+        "spawnOffset": {
+          "x": 0,
+          "y": 0
+        },
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 2
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 3
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": -0.22
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryTileCenter": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryCheckPoint": false
+      },
+      {
+        "motionMode": "E_NUM",
+        "startPosition": {
+          "row": 0,
+          "col": 0
+        },
+        "endPosition": {
+          "row": 0,
+          "col": 0
+        },
+        "spawnRandomRange": {
+          "x": 0,
+          "y": 0
+        },
+        "spawnOffset": {
+          "x": 0,
+          "y": 0
+        },
+        "checkpoints": null,
+        "allowDiagonalMove": true,
+        "visitEveryTileCenter": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryCheckPoint": false
+      },
+      {
+        "motionMode": "WALK",
+        "startPosition": {
+          "row": 3,
+          "col": 1
+        },
+        "endPosition": {
+          "row": 5,
+          "col": 6
+        },
+        "spawnRandomRange": {
+          "x": 0,
+          "y": 0
+        },
+        "spawnOffset": {
+          "x": 0,
+          "y": 0
+        },
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 4,
+              "col": 1
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 4,
+              "col": 2
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 2
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 3
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 4
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 4,
+              "col": 4
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 3,
+              "col": 4
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 4
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 4
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 5
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryTileCenter": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryCheckPoint": false
+      },
+      {
+        "motionMode": "WALK",
+        "startPosition": {
+          "row": 3,
+          "col": 1
+        },
+        "endPosition": {
+          "row": 5,
+          "col": 6
+        },
+        "spawnRandomRange": {
+          "x": 0,
+          "y": 0
+        },
+        "spawnOffset": {
+          "x": 0,
+          "y": 0
+        },
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 2
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 3
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": -0.22
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryTileCenter": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryCheckPoint": false
+      },
+      {
+        "motionMode": "WALK",
+        "startPosition": {
+          "row": 3,
+          "col": 1
+        },
+        "endPosition": {
+          "row": 5,
+          "col": 6
+        },
+        "spawnRandomRange": {
+          "x": 0,
+          "y": 0
+        },
+        "spawnOffset": {
+          "x": 0,
+          "y": 0
+        },
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 2
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryTileCenter": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryCheckPoint": false
+      },
+      {
+        "motionMode": "WALK",
+        "startPosition": {
+          "row": 3,
+          "col": 1
+        },
+        "endPosition": {
+          "row": 5,
+          "col": 6
+        },
+        "spawnRandomRange": {
+          "x": 0,
+          "y": 0
+        },
+        "spawnOffset": {
+          "x": 0,
+          "y": 0
+        },
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 2
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryTileCenter": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryCheckPoint": false
+      },
+      {
+        "motionMode": "WALK",
+        "startPosition": {
+          "row": 3,
+          "col": 1
+        },
+        "endPosition": {
+          "row": 5,
+          "col": 6
+        },
+        "spawnRandomRange": {
+          "x": 0,
+          "y": 0
+        },
+        "spawnOffset": {
+          "x": 0,
+          "y": 0
+        },
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 2
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 3
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": -0.22
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryTileCenter": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryCheckPoint": false
+      },
+      {
+        "motionMode": "WALK",
+        "startPosition": {
+          "row": 3,
+          "col": 1
+        },
+        "endPosition": {
+          "row": 5,
+          "col": 6
+        },
+        "spawnRandomRange": {
+          "x": 0,
+          "y": 0
+        },
+        "spawnOffset": {
+          "x": 0,
+          "y": 0
+        },
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 4,
+              "col": 1
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 4,
+              "col": 2
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 2
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 3
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 4
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 4,
+              "col": 4
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 3,
+              "col": 4
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 4
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 4
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 5
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryTileCenter": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryCheckPoint": false
+      },
+      {
+        "motionMode": "WALK",
+        "startPosition": {
+          "row": 3,
+          "col": 1
+        },
+        "endPosition": {
+          "row": 5,
+          "col": 6
+        },
+        "spawnRandomRange": {
+          "x": 0,
+          "y": 0
+        },
+        "spawnOffset": {
+          "x": 0,
+          "y": 0
+        },
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 4,
+              "col": 2
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 2
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 4
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 4
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryTileCenter": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryCheckPoint": false
+      },
+      {
+        "motionMode": "WALK",
+        "startPosition": {
+          "row": 3,
+          "col": 1
+        },
+        "endPosition": {
+          "row": 5,
+          "col": 6
+        },
+        "spawnRandomRange": {
+          "x": 0,
+          "y": 0
+        },
+        "spawnOffset": {
+          "x": 0,
+          "y": 0
+        },
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 4,
+              "col": 1
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 4,
+              "col": 2
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 2
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 3
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 4
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 4,
+              "col": 4
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 3,
+              "col": 4
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 4
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 4
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryTileCenter": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryCheckPoint": false
+      },
+      {
+        "motionMode": "WALK",
+        "startPosition": {
+          "row": 3,
+          "col": 1
+        },
+        "endPosition": {
+          "row": 5,
+          "col": 6
+        },
+        "spawnRandomRange": {
+          "x": 0,
+          "y": 0
+        },
+        "spawnOffset": {
+          "x": 0,
+          "y": 0
+        },
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 2
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 3
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": -0.22
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryTileCenter": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryCheckPoint": false
+      },
+      {
+        "motionMode": "WALK",
+        "startPosition": {
+          "row": 3,
+          "col": 1
+        },
+        "endPosition": {
+          "row": 5,
+          "col": 6
+        },
+        "spawnRandomRange": {
+          "x": 0,
+          "y": 0
+        },
+        "spawnOffset": {
+          "x": 0,
+          "y": 0
+        },
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 2
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryTileCenter": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryCheckPoint": false
+      },
+      {
+        "motionMode": "WALK",
+        "startPosition": {
+          "row": 3,
+          "col": 1
+        },
+        "endPosition": {
+          "row": 5,
+          "col": 6
+        },
+        "spawnRandomRange": {
+          "x": 0,
+          "y": 0
+        },
+        "spawnOffset": {
+          "x": 0,
+          "y": 0
+        },
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 4,
+              "col": 2
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 2
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 4
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 4
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryTileCenter": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryCheckPoint": false
+      },
+      {
+        "motionMode": "WALK",
+        "startPosition": {
+          "row": 3,
+          "col": 1
+        },
+        "endPosition": {
+          "row": 5,
+          "col": 6
+        },
+        "spawnRandomRange": {
+          "x": 0,
+          "y": 0
+        },
+        "spawnOffset": {
+          "x": 0,
+          "y": 0
+        },
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 3
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryTileCenter": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryCheckPoint": false
+      },
+      {
+        "motionMode": "WALK",
+        "startPosition": {
+          "row": 3,
+          "col": 1
+        },
+        "endPosition": {
+          "row": 5,
+          "col": 6
+        },
+        "spawnRandomRange": {
+          "x": 0,
+          "y": 0
+        },
+        "spawnOffset": {
+          "x": 0,
+          "y": 0
+        },
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 2
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 3
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": -0.22
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryTileCenter": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryCheckPoint": false
+      },
+      {
+        "motionMode": "WALK",
+        "startPosition": {
+          "row": 3,
+          "col": 1
+        },
+        "endPosition": {
+          "row": 5,
+          "col": 6
+        },
+        "spawnRandomRange": {
+          "x": 0,
+          "y": 0
+        },
+        "spawnOffset": {
+          "x": 0,
+          "y": 0
+        },
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 2
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 4
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 4
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryTileCenter": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryCheckPoint": false
+      },
+      {
+        "motionMode": "WALK",
+        "startPosition": {
+          "row": 3,
+          "col": 1
+        },
+        "endPosition": {
+          "row": 5,
+          "col": 6
+        },
+        "spawnRandomRange": {
+          "x": 0,
+          "y": 0
+        },
+        "spawnOffset": {
+          "x": 0,
+          "y": 0
+        },
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 4,
+              "col": 1
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 4,
+              "col": 2
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "WAIT_FOR_SECONDS",
+            "time": 7,
+            "position": {
+              "row": 0,
+              "col": 0
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 2
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 4
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 4
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryTileCenter": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryCheckPoint": false
+      },
+      {
+        "motionMode": "WALK",
+        "startPosition": {
+          "row": 3,
+          "col": 1
+        },
+        "endPosition": {
+          "row": 5,
+          "col": 6
+        },
+        "spawnRandomRange": {
+          "x": 0,
+          "y": 0
+        },
+        "spawnOffset": {
+          "x": 0,
+          "y": 0
+        },
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 4,
+              "col": 1
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "WAIT_FOR_SECONDS",
+            "time": 10,
+            "position": {
+              "row": 0,
+              "col": 0
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 4,
+              "col": 2
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 2
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 4
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 4
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryTileCenter": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryCheckPoint": false
+      },
+      {
+        "motionMode": "WALK",
+        "startPosition": {
+          "row": 3,
+          "col": 1
+        },
+        "endPosition": {
+          "row": 5,
+          "col": 6
+        },
+        "spawnRandomRange": {
+          "x": 0,
+          "y": 0
+        },
+        "spawnOffset": {
+          "x": 0,
+          "y": 0
+        },
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 1
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 2
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "WAIT_FOR_SECONDS",
+            "time": 7,
+            "position": {
+              "row": 0,
+              "col": 0
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 2
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryTileCenter": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryCheckPoint": false
+      },
+      {
+        "motionMode": "WALK",
+        "startPosition": {
+          "row": 3,
+          "col": 1
+        },
+        "endPosition": {
+          "row": 5,
+          "col": 6
+        },
+        "spawnRandomRange": {
+          "x": 0,
+          "y": 0
+        },
+        "spawnOffset": {
+          "x": 0,
+          "y": 0
+        },
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 1
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "WAIT_FOR_SECONDS",
+            "time": 10,
+            "position": {
+              "row": 0,
+              "col": 0
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 2
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 2
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 1,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 6
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 2,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 5,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryTileCenter": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryCheckPoint": false
+      }
+    ],
+    "extraRoutes": {},
+    "enemies": {},
+    "enemyDbRefs": [
+      {
+        "useDb": true,
+        "id": "enemy_10211_murad",
+        "level": 0,
+        "overwrittenData": null
+      },
+      {
+        "useDb": true,
+        "id": "enemy_10201_muinf",
+        "level": 0,
+        "overwrittenData": null
+      },
+      {
+        "useDb": true,
+        "id": "enemy_10203_mumag",
+        "level": 0,
+        "overwrittenData": null
+      },
+      {
+        "useDb": true,
+        "id": "enemy_10204_mudia",
+        "level": 0,
+        "overwrittenData": null
+      }
+    ],
+    "waves": [
+      {
+        "preDelay": 0,
+        "postDelay": 0,
+        "maxTimeWaitingForNextWave": -1,
+        "fragments": [
+          {
+            "preDelay": 0,
+            "actions": [
+              {
+                "actionType": "SPAWN",
+                "managedByScheduler": true,
+                "key": "enemy_10203_mumag",
+                "count": 1,
+                "preDelay": 0,
+                "interval": 1,
+                "routeIndex": 0,
+                "blockFragment": false,
+                "autoPreviewRoute": false,
+                "autoDisplayEnemyInfo": false,
+                "isUnharmfulAndAlwaysCountAsKilled": false,
+                "hiddenGroup": null,
+                "randomSpawnGroupKey": null,
+                "randomSpawnGroupPackKey": null,
+                "randomType": "ALWAYS",
+                "refreshType": "ALWAYS",
+                "weight": 0,
+                "dontBlockWave": false,
+                "forceBlockWaveInBranch": false
+              },
+              {
+                "actionType": "SPAWN",
+                "managedByScheduler": true,
+                "key": "enemy_10204_mudia",
+                "count": 1,
+                "preDelay": 0,
+                "interval": 1,
+                "routeIndex": 1,
+                "blockFragment": false,
+                "autoPreviewRoute": false,
+                "autoDisplayEnemyInfo": false,
+                "isUnharmfulAndAlwaysCountAsKilled": false,
+                "hiddenGroup": "hidden1",
+                "randomSpawnGroupKey": null,
+                "randomSpawnGroupPackKey": null,
+                "randomType": "ALWAYS",
+                "refreshType": "ALWAYS",
+                "weight": 0,
+                "dontBlockWave": false,
+                "forceBlockWaveInBranch": false
+              },
+              {
+                "actionType": "SPAWN",
+                "managedByScheduler": true,
+                "key": "enemy_10204_mudia",
+                "count": 1,
+                "preDelay": 0,
+                "interval": 1,
+                "routeIndex": 2,
+                "blockFragment": false,
+                "autoPreviewRoute": false,
+                "autoDisplayEnemyInfo": false,
+                "isUnharmfulAndAlwaysCountAsKilled": false,
+                "hiddenGroup": "hidden1",
+                "randomSpawnGroupKey": null,
+                "randomSpawnGroupPackKey": null,
+                "randomType": "ALWAYS",
+                "refreshType": "ALWAYS",
+                "weight": 0,
+                "dontBlockWave": false,
+                "forceBlockWaveInBranch": false
+              },
+              {
+                "actionType": "SPAWN",
+                "managedByScheduler": true,
+                "key": "enemy_10204_mudia",
+                "count": 1,
+                "preDelay": 0,
+                "interval": 1,
+                "routeIndex": 3,
+                "blockFragment": false,
+                "autoPreviewRoute": false,
+                "autoDisplayEnemyInfo": false,
+                "isUnharmfulAndAlwaysCountAsKilled": false,
+                "hiddenGroup": "hidden1",
+                "randomSpawnGroupKey": null,
+                "randomSpawnGroupPackKey": null,
+                "randomType": "ALWAYS",
+                "refreshType": "ALWAYS",
+                "weight": 0,
+                "dontBlockWave": false,
+                "forceBlockWaveInBranch": false
+              }
+            ]
+          },
+          {
+            "preDelay": 0,
+            "actions": [
+              {
+                "actionType": "SPAWN",
+                "managedByScheduler": true,
+                "key": "enemy_10201_muinf",
+                "count": 1,
+                "preDelay": 3,
+                "interval": 1,
+                "routeIndex": 4,
+                "blockFragment": false,
+                "autoPreviewRoute": true,
+                "autoDisplayEnemyInfo": false,
+                "isUnharmfulAndAlwaysCountAsKilled": false,
+                "hiddenGroup": null,
+                "randomSpawnGroupKey": null,
+                "randomSpawnGroupPackKey": null,
+                "randomType": "ALWAYS",
+                "refreshType": "ALWAYS",
+                "weight": 0,
+                "dontBlockWave": false,
+                "forceBlockWaveInBranch": false
+              },
+              {
+                "actionType": "SPAWN",
+                "managedByScheduler": true,
+                "key": "enemy_10201_muinf",
+                "count": 3,
+                "preDelay": 12,
+                "interval": 8,
+                "routeIndex": 5,
+                "blockFragment": false,
+                "autoPreviewRoute": false,
+                "autoDisplayEnemyInfo": false,
+                "isUnharmfulAndAlwaysCountAsKilled": false,
+                "hiddenGroup": null,
+                "randomSpawnGroupKey": null,
+                "randomSpawnGroupPackKey": null,
+                "randomType": "ALWAYS",
+                "refreshType": "ALWAYS",
+                "weight": 0,
+                "dontBlockWave": false,
+                "forceBlockWaveInBranch": false
+              }
+            ]
+          },
+          {
+            "preDelay": 10,
+            "actions": [
+              {
+                "actionType": "DISPLAY_ENEMY_INFO",
+                "managedByScheduler": true,
+                "key": "enemy_10204_mudia",
+                "count": 1,
+                "preDelay": 0,
+                "interval": 12,
+                "routeIndex": 6,
+                "blockFragment": false,
+                "autoPreviewRoute": true,
+                "autoDisplayEnemyInfo": false,
+                "isUnharmfulAndAlwaysCountAsKilled": false,
+                "hiddenGroup": null,
+                "randomSpawnGroupKey": null,
+                "randomSpawnGroupPackKey": null,
+                "randomType": "ALWAYS",
+                "refreshType": "ALWAYS",
+                "weight": 0,
+                "dontBlockWave": false,
+                "forceBlockWaveInBranch": false
+              },
+              {
+                "actionType": "SPAWN",
+                "managedByScheduler": true,
+                "key": "enemy_10204_mudia",
+                "count": 1,
+                "preDelay": 3,
+                "interval": 1,
+                "routeIndex": 7,
+                "blockFragment": false,
+                "autoPreviewRoute": true,
+                "autoDisplayEnemyInfo": false,
+                "isUnharmfulAndAlwaysCountAsKilled": false,
+                "hiddenGroup": null,
+                "randomSpawnGroupKey": null,
+                "randomSpawnGroupPackKey": null,
+                "randomType": "ALWAYS",
+                "refreshType": "ALWAYS",
+                "weight": 0,
+                "dontBlockWave": false,
+                "forceBlockWaveInBranch": false
+              },
+              {
+                "actionType": "SPAWN",
+                "managedByScheduler": true,
+                "key": "enemy_10201_muinf",
+                "count": 3,
+                "preDelay": 8,
+                "interval": 4,
+                "routeIndex": 8,
+                "blockFragment": false,
+                "autoPreviewRoute": false,
+                "autoDisplayEnemyInfo": false,
+                "isUnharmfulAndAlwaysCountAsKilled": false,
+                "hiddenGroup": null,
+                "randomSpawnGroupKey": null,
+                "randomSpawnGroupPackKey": null,
+                "randomType": "ALWAYS",
+                "refreshType": "ALWAYS",
+                "weight": 0,
+                "dontBlockWave": false,
+                "forceBlockWaveInBranch": false
+              },
+              {
+                "actionType": "SPAWN",
+                "managedByScheduler": true,
+                "key": "enemy_10201_muinf",
+                "count": 1,
+                "preDelay": 3,
+                "interval": 1,
+                "routeIndex": 9,
+                "blockFragment": false,
+                "autoPreviewRoute": false,
+                "autoDisplayEnemyInfo": false,
+                "isUnharmfulAndAlwaysCountAsKilled": false,
+                "hiddenGroup": null,
+                "randomSpawnGroupKey": null,
+                "randomSpawnGroupPackKey": null,
+                "randomType": "ALWAYS",
+                "refreshType": "ALWAYS",
+                "weight": 0,
+                "dontBlockWave": false,
+                "forceBlockWaveInBranch": false
+              }
+            ]
+          },
+          {
+            "preDelay": 10,
+            "actions": [
+              {
+                "actionType": "SPAWN",
+                "managedByScheduler": true,
+                "key": "enemy_10201_muinf",
+                "count": 1,
+                "preDelay": 3,
+                "interval": 1,
+                "routeIndex": 10,
+                "blockFragment": false,
+                "autoPreviewRoute": false,
+                "autoDisplayEnemyInfo": false,
+                "isUnharmfulAndAlwaysCountAsKilled": false,
+                "hiddenGroup": null,
+                "randomSpawnGroupKey": null,
+                "randomSpawnGroupPackKey": null,
+                "randomType": "ALWAYS",
+                "refreshType": "ALWAYS",
+                "weight": 0,
+                "dontBlockWave": false,
+                "forceBlockWaveInBranch": false
+              },
+              {
+                "actionType": "SPAWN",
+                "managedByScheduler": true,
+                "key": "enemy_10201_muinf",
+                "count": 3,
+                "preDelay": 8,
+                "interval": 4,
+                "routeIndex": 11,
+                "blockFragment": false,
+                "autoPreviewRoute": false,
+                "autoDisplayEnemyInfo": false,
+                "isUnharmfulAndAlwaysCountAsKilled": false,
+                "hiddenGroup": null,
+                "randomSpawnGroupKey": null,
+                "randomSpawnGroupPackKey": null,
+                "randomType": "ALWAYS",
+                "refreshType": "ALWAYS",
+                "weight": 0,
+                "dontBlockWave": false,
+                "forceBlockWaveInBranch": false
+              },
+              {
+                "actionType": "SPAWN",
+                "managedByScheduler": true,
+                "key": "enemy_10204_mudia",
+                "count": 1,
+                "preDelay": 11,
+                "interval": 1,
+                "routeIndex": 12,
+                "blockFragment": false,
+                "autoPreviewRoute": true,
+                "autoDisplayEnemyInfo": false,
+                "isUnharmfulAndAlwaysCountAsKilled": false,
+                "hiddenGroup": null,
+                "randomSpawnGroupKey": null,
+                "randomSpawnGroupPackKey": null,
+                "randomType": "ALWAYS",
+                "refreshType": "ALWAYS",
+                "weight": 0,
+                "dontBlockWave": false,
+                "forceBlockWaveInBranch": false
+              }
+            ]
+          },
+          {
+            "preDelay": 0,
+            "actions": [
+              {
+                "actionType": "SPAWN",
+                "managedByScheduler": true,
+                "key": "enemy_10203_mumag",
+                "count": 1,
+                "preDelay": 0,
+                "interval": 1,
+                "routeIndex": 13,
+                "blockFragment": false,
+                "autoPreviewRoute": false,
+                "autoDisplayEnemyInfo": false,
+                "isUnharmfulAndAlwaysCountAsKilled": false,
+                "hiddenGroup": null,
+                "randomSpawnGroupKey": null,
+                "randomSpawnGroupPackKey": null,
+                "randomType": "ALWAYS",
+                "refreshType": "ALWAYS",
+                "weight": 0,
+                "dontBlockWave": false,
+                "forceBlockWaveInBranch": false
+              }
+            ]
+          },
+          {
+            "preDelay": 5,
+            "actions": [
+              {
+                "actionType": "SPAWN",
+                "managedByScheduler": true,
+                "key": "enemy_10204_mudia",
+                "count": 1,
+                "preDelay": 3,
+                "interval": 1,
+                "routeIndex": 14,
+                "blockFragment": false,
+                "autoPreviewRoute": true,
+                "autoDisplayEnemyInfo": false,
+                "isUnharmfulAndAlwaysCountAsKilled": false,
+                "hiddenGroup": null,
+                "randomSpawnGroupKey": null,
+                "randomSpawnGroupPackKey": null,
+                "randomType": "ALWAYS",
+                "refreshType": "ALWAYS",
+                "weight": 0,
+                "dontBlockWave": false,
+                "forceBlockWaveInBranch": false
+              },
+              {
+                "actionType": "SPAWN",
+                "managedByScheduler": true,
+                "key": "enemy_10201_muinf",
+                "count": 3,
+                "preDelay": 8,
+                "interval": 4,
+                "routeIndex": 15,
+                "blockFragment": false,
+                "autoPreviewRoute": false,
+                "autoDisplayEnemyInfo": false,
+                "isUnharmfulAndAlwaysCountAsKilled": false,
+                "hiddenGroup": null,
+                "randomSpawnGroupKey": null,
+                "randomSpawnGroupPackKey": null,
+                "randomType": "ALWAYS",
+                "refreshType": "ALWAYS",
+                "weight": 0,
+                "dontBlockWave": false,
+                "forceBlockWaveInBranch": false
+              },
+              {
+                "actionType": "SPAWN",
+                "managedByScheduler": true,
+                "key": "enemy_10201_muinf",
+                "count": 1,
+                "preDelay": 3,
+                "interval": 1,
+                "routeIndex": 16,
+                "blockFragment": false,
+                "autoPreviewRoute": false,
+                "autoDisplayEnemyInfo": false,
+                "isUnharmfulAndAlwaysCountAsKilled": false,
+                "hiddenGroup": null,
+                "randomSpawnGroupKey": null,
+                "randomSpawnGroupPackKey": null,
+                "randomType": "ALWAYS",
+                "refreshType": "ALWAYS",
+                "weight": 0,
+                "dontBlockWave": false,
+                "forceBlockWaveInBranch": false
+              }
+            ]
+          },
+          {
+            "preDelay": 0,
+            "actions": [
+              {
+                "actionType": "SPAWN",
+                "managedByScheduler": true,
+                "key": "enemy_10203_mumag",
+                "count": 1,
+                "preDelay": 3,
+                "interval": 1,
+                "routeIndex": 17,
+                "blockFragment": false,
+                "autoPreviewRoute": false,
+                "autoDisplayEnemyInfo": false,
+                "isUnharmfulAndAlwaysCountAsKilled": false,
+                "hiddenGroup": null,
+                "randomSpawnGroupKey": null,
+                "randomSpawnGroupPackKey": null,
+                "randomType": "ALWAYS",
+                "refreshType": "ALWAYS",
+                "weight": 0,
+                "dontBlockWave": false,
+                "forceBlockWaveInBranch": false
+              },
+              {
+                "actionType": "SPAWN",
+                "managedByScheduler": true,
+                "key": "enemy_10203_mumag",
+                "count": 1,
+                "preDelay": 12,
+                "interval": 1,
+                "routeIndex": 18,
+                "blockFragment": false,
+                "autoPreviewRoute": false,
+                "autoDisplayEnemyInfo": false,
+                "isUnharmfulAndAlwaysCountAsKilled": false,
+                "hiddenGroup": null,
+                "randomSpawnGroupKey": null,
+                "randomSpawnGroupPackKey": null,
+                "randomType": "ALWAYS",
+                "refreshType": "ALWAYS",
+                "weight": 0,
+                "dontBlockWave": false,
+                "forceBlockWaveInBranch": false
+              }
+            ]
+          },
+          {
+            "preDelay": 5,
+            "actions": [
+              {
+                "actionType": "SPAWN",
+                "managedByScheduler": true,
+                "key": "enemy_10201_muinf",
+                "count": 2,
+                "preDelay": 8,
+                "interval": 8,
+                "routeIndex": 19,
+                "blockFragment": false,
+                "autoPreviewRoute": false,
+                "autoDisplayEnemyInfo": false,
+                "isUnharmfulAndAlwaysCountAsKilled": false,
+                "hiddenGroup": null,
+                "randomSpawnGroupKey": null,
+                "randomSpawnGroupPackKey": null,
+                "randomType": "ALWAYS",
+                "refreshType": "ALWAYS",
+                "weight": 0,
+                "dontBlockWave": false,
+                "forceBlockWaveInBranch": false
+              },
+              {
+                "actionType": "SPAWN",
+                "managedByScheduler": true,
+                "key": "enemy_10201_muinf",
+                "count": 2,
+                "preDelay": 3,
+                "interval": 8,
+                "routeIndex": 20,
+                "blockFragment": false,
+                "autoPreviewRoute": false,
+                "autoDisplayEnemyInfo": false,
+                "isUnharmfulAndAlwaysCountAsKilled": false,
+                "hiddenGroup": null,
+                "randomSpawnGroupKey": null,
+                "randomSpawnGroupPackKey": null,
+                "randomType": "ALWAYS",
+                "refreshType": "ALWAYS",
+                "weight": 0,
+                "dontBlockWave": false,
+                "forceBlockWaveInBranch": false
+              }
+            ]
+          },
+          {
+            "preDelay": 12,
+            "actions": [
+              {
+                "actionType": "SPAWN",
+                "managedByScheduler": true,
+                "key": "enemy_10204_mudia",
+                "count": 1,
+                "preDelay": 0,
+                "interval": 1,
+                "routeIndex": 21,
+                "blockFragment": false,
+                "autoPreviewRoute": false,
+                "autoDisplayEnemyInfo": false,
+                "isUnharmfulAndAlwaysCountAsKilled": false,
+                "hiddenGroup": null,
+                "randomSpawnGroupKey": null,
+                "randomSpawnGroupPackKey": null,
+                "randomType": "ALWAYS",
+                "refreshType": "ALWAYS",
+                "weight": 0,
+                "dontBlockWave": false,
+                "forceBlockWaveInBranch": false
+              },
+              {
+                "actionType": "SPAWN",
+                "managedByScheduler": true,
+                "key": "enemy_10204_mudia",
+                "count": 1,
+                "preDelay": 3,
+                "interval": 1,
+                "routeIndex": 22,
+                "blockFragment": false,
+                "autoPreviewRoute": false,
+                "autoDisplayEnemyInfo": false,
+                "isUnharmfulAndAlwaysCountAsKilled": false,
+                "hiddenGroup": null,
+                "randomSpawnGroupKey": null,
+                "randomSpawnGroupPackKey": null,
+                "randomType": "ALWAYS",
+                "refreshType": "ALWAYS",
+                "weight": 0,
+                "dontBlockWave": false,
+                "forceBlockWaveInBranch": false
+              },
+              {
+                "actionType": "SPAWN",
+                "managedByScheduler": true,
+                "key": "enemy_10204_mudia",
+                "count": 1,
+                "preDelay": 0,
+                "interval": 1,
+                "routeIndex": 23,
+                "blockFragment": false,
+                "autoPreviewRoute": false,
+                "autoDisplayEnemyInfo": false,
+                "isUnharmfulAndAlwaysCountAsKilled": false,
+                "hiddenGroup": null,
+                "randomSpawnGroupKey": null,
+                "randomSpawnGroupPackKey": null,
+                "randomType": "ALWAYS",
+                "refreshType": "ALWAYS",
+                "weight": 0,
+                "dontBlockWave": false,
+                "forceBlockWaveInBranch": false
+              },
+              {
+                "actionType": "SPAWN",
+                "managedByScheduler": true,
+                "key": "enemy_10204_mudia",
+                "count": 1,
+                "preDelay": 3,
+                "interval": 1,
+                "routeIndex": 24,
+                "blockFragment": false,
+                "autoPreviewRoute": false,
+                "autoDisplayEnemyInfo": false,
+                "isUnharmfulAndAlwaysCountAsKilled": false,
+                "hiddenGroup": null,
+                "randomSpawnGroupKey": null,
+                "randomSpawnGroupPackKey": null,
+                "randomType": "ALWAYS",
+                "refreshType": "ALWAYS",
+                "weight": 0,
+                "dontBlockWave": false,
+                "forceBlockWaveInBranch": false
+              }
+            ]
+          }
+        ],
+        "advancedWaveTag": null
+      }
+    ],
+    "branches": null,
+    "predefines": {
+      "characterInsts": {},
+      "tokenInsts": [
+        {
+          "position": {
+            "row": 3,
+            "col": 3
+          },
+          "direction": "UP",
+          "hidden": false,
+          "alias": "trap_329_rift#1",
+          "uniEquipIds": null,
+          "showSpIllust": false,
+          "masterInfos": null,
+          "inst": {
+            "characterKey": "trap_329_rift",
+            "level": 1,
+            "phase": "PHASE_0",
+            "favorPoint": 0,
+            "potentialRank": 0
+          },
+          "skillIndex": 0,
+          "mainSkillLvl": 1,
+          "skinId": "",
+          "tmplId": null,
+          "overrideSkillBlackboard": null,
+          "overrideTalents": null
+        }
+      ],
+      "characterCards": {},
+      "tokenCards": {}
+    },
+    "hardPredefines": {
+      "characterInsts": {},
+      "tokenInsts": {},
+      "characterCards": {},
+      "tokenCards": {}
+    },
+    "excludeCharIdList": null,
+    "randomSeed": 879579860,
+    "operaConfig": null,
+    "cameraPlugin": ""
+  },
+  "stage": {
+    "slug": "17-4",
+    "id": "main_17-03",
+    "code": "17-4",
+    "name": "Silent Masses",
+    "description": "The axe in your hand is raised, just to cut the nettles silently in the garden. \n<Leak Marker> Randomly selects a deployable low-ground tile and generates a Leak Source",
+    "stage_type": "main",
+    "variant": null,
+    "chapter": 17,
+    "zone": {
+      "id": "act4mainss_zone1",
+      "name": "Critical Phase Transition",
+      "group": null,
+      "type": "mainline_activity"
+    },
+    "act": {
+      "id": "chapter_3",
+      "name": "Nexus Point of Future",
+      "index": 3
+    },
+    "event": {
+      "id": "act4mainss",
+      "name": "Critical Phase Transition",
+      "type": null,
+      "is_rerun": false
+    },
+    "order": 6,
+    "available_on": null,
+    "difficulty": {
+      "tier": "normal",
+      "recommended_level": "LV.40"
+    },
+    "sanity_cost": 21,
+    "lmd": 210,
+    "exp": 210,
+    "lmd_3star": 252,
+    "exp_3star": 252,
+    "battle": {
+      "max_life": 3,
+      "unit_limit": 9,
+      "initial_dp": 8,
+      "max_dp": 99,
+      "dp_per_second": 1,
+      "dp_recovery_interval_seconds": 1
+    },
+    "enemies": {
+      "total": 31,
+      "by_rank": {
+        "Normal": [
+          {
+            "slug": "experimental_subject_f_009",
+            "name": "Experimental Subject F-009",
+            "index": "ES1",
+            "count": 20
+          },
+          {
+            "slug": "rockbreaker_enemy_10204_mudia",
+            "name": "Rockbreaker",
+            "index": "ES7",
+            "count": 7
+          },
+          {
+            "slug": "heterogeneous_fungi",
+            "name": "Heterogeneous Fungi",
+            "index": "ES5",
+            "count": 4
+          }
+        ],
+        "Elite": [],
+        "Boss": []
+      },
+      "conditional": {
+        "total": 3,
+        "by_rank": {
+          "Normal": [
+            {
+              "slug": "rockbreaker_enemy_10204_mudia",
+              "name": "Rockbreaker",
+              "index": "ES7",
+              "count": 3
+            }
+          ],
+          "Elite": [],
+          "Boss": []
+        }
+      }
+    },
+    "drops": [
+      {
+        "item": {
+          "slug": "factory_scrip",
+          "id": "act4mainss_token",
+          "name": "'Factory scrip'",
+          "is_operator": false
+        },
+        "kind": "one_time",
+        "rarity": "Guaranteed",
+        "raw": {
+          "type": "ACTIVITY_ITEM",
+          "drop_type": [
+            "COMPLETE"
+          ],
+          "occ_percent": [
+            "ALWAYS"
+          ]
+        }
+      },
+      {
+        "item": {
+          "slug": "originite_prime",
+          "id": "4002",
+          "name": "Originite Prime",
+          "is_operator": false
+        },
+        "kind": "one_time",
+        "rarity": "Guaranteed",
+        "raw": {
+          "type": "DIAMOND",
+          "drop_type": [
+            "COMPLETE"
+          ],
+          "occ_percent": [
+            "ALWAYS"
+          ]
+        }
+      },
+      {
+        "item": {
+          "slug": "coagulative_nodule",
+          "id": "31093",
+          "name": "Coagulative Nodule",
+          "is_operator": false
+        },
+        "kind": "farmable",
+        "rarity": "Rare",
+        "raw": {
+          "type": "MATERIAL",
+          "drop_type": [
+            "NORMAL"
+          ],
+          "occ_percent": [
+            "OFTEN"
+          ]
+        }
+      },
+      {
+        "item": {
+          "slug": "diketon",
+          "id": "30051",
+          "name": "Diketon",
+          "is_operator": false
+        },
+        "kind": "farmable",
+        "rarity": "Rare",
+        "raw": {
+          "type": "MATERIAL",
+          "drop_type": [
+            "ADDITIONAL"
+          ],
+          "occ_percent": [
+            "OFTEN"
+          ]
+        }
+      },
+      {
+        "item": {
+          "slug": "ester",
+          "id": "30031",
+          "name": "Ester",
+          "is_operator": false
+        },
+        "kind": "farmable",
+        "rarity": "Rare",
+        "raw": {
+          "type": "MATERIAL",
+          "drop_type": [
+            "ADDITIONAL"
+          ],
+          "occ_percent": [
+            "OFTEN"
+          ]
+        }
+      },
+      {
+        "item": {
+          "slug": "aggregate_cyclicene",
+          "id": "31083",
+          "name": "Aggregate Cyclicene",
+          "is_operator": false
+        },
+        "kind": "farmable",
+        "rarity": "Very Rare",
+        "raw": {
+          "type": "MATERIAL",
+          "drop_type": [
+            "ADDITIONAL"
+          ],
+          "occ_percent": [
+            "SOMETIMES"
+          ]
+        }
+      },
+      {
+        "item": {
+          "slug": "aketon",
+          "id": "30053",
+          "name": "Aketon",
+          "is_operator": false
+        },
+        "kind": "farmable",
+        "rarity": "Very Rare",
+        "raw": {
+          "type": "MATERIAL",
+          "drop_type": [
+            "ADDITIONAL"
+          ],
+          "occ_percent": [
+            "SOMETIMES"
+          ]
+        }
+      },
+      {
+        "item": {
+          "slug": "chiral_refractor",
+          "id": "31094",
+          "name": "Chiral Refractor",
+          "is_operator": false
+        },
+        "kind": "farmable",
+        "rarity": "Very Rare",
+        "raw": {
+          "type": "MATERIAL",
+          "drop_type": [
+            "SPECIAL"
+          ],
+          "occ_percent": [
+            "SOMETIMES"
+          ]
+        }
+      },
+      {
+        "item": {
+          "slug": "compound_cutting_fluid",
+          "id": "31053",
+          "name": "Compound Cutting Fluid",
+          "is_operator": false
+        },
+        "kind": "farmable",
+        "rarity": "Very Rare",
+        "raw": {
+          "type": "MATERIAL",
+          "drop_type": [
+            "ADDITIONAL"
+          ],
+          "occ_percent": [
+            "SOMETIMES"
+          ]
+        }
+      },
+      {
+        "item": {
+          "slug": "crystalline_component",
+          "id": "31033",
+          "name": "Crystalline Component",
+          "is_operator": false
+        },
+        "kind": "farmable",
+        "rarity": "Very Rare",
+        "raw": {
+          "type": "MATERIAL",
+          "drop_type": [
+            "ADDITIONAL"
+          ],
+          "occ_percent": [
+            "SOMETIMES"
+          ]
+        }
+      },
+      {
+        "item": {
+          "slug": "electrode_unit",
+          "id": "31113",
+          "name": "Electrode Unit",
+          "is_operator": false
+        },
+        "kind": "farmable",
+        "rarity": "Very Rare",
+        "raw": {
+          "type": "MATERIAL",
+          "drop_type": [
+            "ADDITIONAL"
+          ],
+          "occ_percent": [
+            "SOMETIMES"
+          ]
+        }
+      },
+      {
+        "item": {
+          "slug": "grindstone",
+          "id": "30093",
+          "name": "Grindstone",
+          "is_operator": false
+        },
+        "kind": "farmable",
+        "rarity": "Very Rare",
+        "raw": {
+          "type": "MATERIAL",
+          "drop_type": [
+            "ADDITIONAL"
+          ],
+          "occ_percent": [
+            "SOMETIMES"
+          ]
+        }
+      },
+      {
+        "item": {
+          "slug": "polyester",
+          "id": "30032",
+          "name": "Polyester",
+          "is_operator": false
+        },
+        "kind": "farmable",
+        "rarity": "Very Rare",
+        "raw": {
+          "type": "MATERIAL",
+          "drop_type": [
+            "ADDITIONAL"
+          ],
+          "occ_percent": [
+            "SOMETIMES"
+          ]
+        }
+      },
+      {
+        "item": {
+          "slug": "polyester_pack",
+          "id": "30033",
+          "name": "Polyester Pack",
+          "is_operator": false
+        },
+        "kind": "farmable",
+        "rarity": "Very Rare",
+        "raw": {
+          "type": "MATERIAL",
+          "drop_type": [
+            "ADDITIONAL"
+          ],
+          "occ_percent": [
+            "SOMETIMES"
+          ]
+        }
+      },
+      {
+        "item": {
+          "slug": "polyketon",
+          "id": "30052",
+          "name": "Polyketon",
+          "is_operator": false
+        },
+        "kind": "farmable",
+        "rarity": "Very Rare",
+        "raw": {
+          "type": "MATERIAL",
+          "drop_type": [
+            "ADDITIONAL"
+          ],
+          "occ_percent": [
+            "SOMETIMES"
+          ]
+        }
+      },
+      {
+        "item": {
+          "slug": "rma70_12",
+          "id": "30103",
+          "name": "RMA70-12",
+          "is_operator": false
+        },
+        "kind": "farmable",
+        "rarity": "Very Rare",
+        "raw": {
+          "type": "MATERIAL",
+          "drop_type": [
+            "ADDITIONAL"
+          ],
+          "occ_percent": [
+            "SOMETIMES"
+          ]
+        }
+      },
+      {
+        "item": {
+          "slug": "semi_synthetic_solvent",
+          "id": "31043",
+          "name": "Semi-Synthetic Solvent",
+          "is_operator": false
+        },
+        "kind": "farmable",
+        "rarity": "Very Rare",
+        "raw": {
+          "type": "MATERIAL",
+          "drop_type": [
+            "ADDITIONAL"
+          ],
+          "occ_percent": [
+            "SOMETIMES"
+          ]
+        }
+      }
+    ],
+    "preview": "images/stages/17-4.png",
+    "geometry": "17-4",
+    "content": {
+      "kind": "story",
+      "id": "act4mainss_zone1",
+      "label": "EP 17",
+      "name": "Critical Phase Transition",
+      "release_date": "2026-10-14"
+    },
+    "geometryKey": "17-4"
+  },
+  "geometry": {
+    "slug": "17-4",
+    "rows": 7,
+    "cols": 10,
+    "tileLegend": [
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_floor",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      },
+      {
+        "key": "tile_hole",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_start",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      }
+    ],
+    "tileGrid": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        2,
+        3,
+        3,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        0,
+        2,
+        4,
+        2,
+        2,
+        2,
+        0
+      ],
+      [
+        0,
+        5,
+        0,
+        0,
+        2,
+        4,
+        3,
+        3,
+        2,
+        0
+      ],
+      [
+        0,
+        1,
+        2,
+        0,
+        2,
+        4,
+        3,
+        3,
+        2,
+        0
+      ],
+      [
+        0,
+        0,
+        2,
+        2,
+        2,
+        0,
+        6,
+        2,
+        2,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "routes": [
+      {
+        "motion": "walk",
+        "start": {
+          "row": 4,
+          "col": 4
+        },
+        "end": {
+          "row": 5,
+          "col": 6
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 8
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 80
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryCheckPoint": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryTileCenter": false
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 2
+        },
+        "end": {
+          "row": 5,
+          "col": 6
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 8
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 60
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryCheckPoint": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryTileCenter": false
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 4,
+          "col": 2
+        },
+        "end": {
+          "row": 5,
+          "col": 6
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 8
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 80
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryCheckPoint": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryTileCenter": false
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 4
+        },
+        "end": {
+          "row": 5,
+          "col": 6
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 8
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 45
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryCheckPoint": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryTileCenter": false
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 1
+        },
+        "end": {
+          "row": 5,
+          "col": 6
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 8
+            }
+          }
+        ],
+        "waits": [],
+        "allowDiagonalMove": true,
+        "visitEveryCheckPoint": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryTileCenter": false
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 1
+        },
+        "end": {
+          "row": 5,
+          "col": 6
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 3
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": -0.22
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 8
+            }
+          }
+        ],
+        "waits": [],
+        "allowDiagonalMove": true,
+        "visitEveryCheckPoint": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryTileCenter": false
+      },
+      {
+        "motion": null,
+        "placeholder": true,
+        "start": null,
+        "end": null,
+        "checkpoints": [],
+        "waits": [],
+        "allowDiagonalMove": true,
+        "visitEveryCheckPoint": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryTileCenter": false
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 1
+        },
+        "end": {
+          "row": 5,
+          "col": 6
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 8
+            }
+          }
+        ],
+        "waits": [],
+        "allowDiagonalMove": true,
+        "visitEveryCheckPoint": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryTileCenter": false
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 1
+        },
+        "end": {
+          "row": 5,
+          "col": 6
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 8
+            }
+          }
+        ],
+        "waits": [],
+        "allowDiagonalMove": true,
+        "visitEveryCheckPoint": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryTileCenter": false
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 1
+        },
+        "end": {
+          "row": 5,
+          "col": 6
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 8
+            }
+          }
+        ],
+        "waits": [],
+        "allowDiagonalMove": true,
+        "visitEveryCheckPoint": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryTileCenter": false
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 1
+        },
+        "end": {
+          "row": 5,
+          "col": 6
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 8
+            }
+          }
+        ],
+        "waits": [],
+        "allowDiagonalMove": true,
+        "visitEveryCheckPoint": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryTileCenter": false
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 1
+        },
+        "end": {
+          "row": 5,
+          "col": 6
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 8
+            }
+          }
+        ],
+        "waits": [],
+        "allowDiagonalMove": true,
+        "visitEveryCheckPoint": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryTileCenter": false
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 1
+        },
+        "end": {
+          "row": 5,
+          "col": 6
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 8
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 1,
+            "seconds": 7
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryCheckPoint": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryTileCenter": false
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 1
+        },
+        "end": {
+          "row": 5,
+          "col": 6
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 8
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 10
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryCheckPoint": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryTileCenter": false
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 1
+        },
+        "end": {
+          "row": 5,
+          "col": 6
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 8
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 1,
+            "seconds": 7
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryCheckPoint": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryTileCenter": false
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 1
+        },
+        "end": {
+          "row": 5,
+          "col": 6
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 8
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 10
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryCheckPoint": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryTileCenter": false
+      }
+    ],
+    "waves": [
+      {
+        "index": 0,
+        "duration": 149,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Heterogeneous Fungi",
+            "enemy_id": "enemy_10203_mumag",
+            "count": 1,
+            "time": 0,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Experimental Subject F-009",
+            "enemy_id": "enemy_10201_muinf",
+            "count": 1,
+            "time": 3,
+            "route": 4,
+            "fragment": 1
+          },
+          {
+            "enemy": "Experimental Subject F-009",
+            "enemy_id": "enemy_10201_muinf",
+            "count": 3,
+            "time": 12,
+            "interval": 8,
+            "route": 5,
+            "fragment": 1
+          },
+          {
+            "enemy": "Rockbreaker",
+            "enemy_id": "enemy_10204_mudia",
+            "count": 1,
+            "time": 41,
+            "route": 7,
+            "fragment": 2
+          },
+          {
+            "enemy": "Experimental Subject F-009",
+            "enemy_id": "enemy_10201_muinf",
+            "count": 3,
+            "time": 46,
+            "interval": 4,
+            "route": 5,
+            "fragment": 2
+          },
+          {
+            "enemy": "Experimental Subject F-009",
+            "enemy_id": "enemy_10201_muinf",
+            "count": 1,
+            "time": 41,
+            "route": 4,
+            "fragment": 2
+          },
+          {
+            "enemy": "Experimental Subject F-009",
+            "enemy_id": "enemy_10201_muinf",
+            "count": 1,
+            "time": 67,
+            "route": 4,
+            "fragment": 3
+          },
+          {
+            "enemy": "Experimental Subject F-009",
+            "enemy_id": "enemy_10201_muinf",
+            "count": 3,
+            "time": 72,
+            "interval": 4,
+            "route": 5,
+            "fragment": 3
+          },
+          {
+            "enemy": "Rockbreaker",
+            "enemy_id": "enemy_10204_mudia",
+            "count": 1,
+            "time": 75,
+            "route": 7,
+            "fragment": 3
+          },
+          {
+            "enemy": "Heterogeneous Fungi",
+            "enemy_id": "enemy_10203_mumag",
+            "count": 1,
+            "time": 80,
+            "route": 8,
+            "fragment": 4
+          },
+          {
+            "enemy": "Rockbreaker",
+            "enemy_id": "enemy_10204_mudia",
+            "count": 1,
+            "time": 88,
+            "route": 9,
+            "fragment": 5
+          },
+          {
+            "enemy": "Experimental Subject F-009",
+            "enemy_id": "enemy_10201_muinf",
+            "count": 3,
+            "time": 93,
+            "interval": 4,
+            "route": 5,
+            "fragment": 5
+          },
+          {
+            "enemy": "Experimental Subject F-009",
+            "enemy_id": "enemy_10201_muinf",
+            "count": 1,
+            "time": 88,
+            "route": 4,
+            "fragment": 5
+          },
+          {
+            "enemy": "Heterogeneous Fungi",
+            "enemy_id": "enemy_10203_mumag",
+            "count": 1,
+            "time": 104,
+            "route": 8,
+            "fragment": 6
+          },
+          {
+            "enemy": "Heterogeneous Fungi",
+            "enemy_id": "enemy_10203_mumag",
+            "count": 1,
+            "time": 113,
+            "route": 10,
+            "fragment": 6
+          },
+          {
+            "enemy": "Experimental Subject F-009",
+            "enemy_id": "enemy_10201_muinf",
+            "count": 2,
+            "time": 126,
+            "interval": 8,
+            "route": 5,
+            "fragment": 7
+          },
+          {
+            "enemy": "Experimental Subject F-009",
+            "enemy_id": "enemy_10201_muinf",
+            "count": 2,
+            "time": 121,
+            "interval": 8,
+            "route": 11,
+            "fragment": 7
+          },
+          {
+            "enemy": "Rockbreaker",
+            "enemy_id": "enemy_10204_mudia",
+            "count": 1,
+            "time": 146,
+            "route": 12,
+            "fragment": 8
+          },
+          {
+            "enemy": "Rockbreaker",
+            "enemy_id": "enemy_10204_mudia",
+            "count": 1,
+            "time": 149,
+            "route": 13,
+            "fragment": 8
+          },
+          {
+            "enemy": "Rockbreaker",
+            "enemy_id": "enemy_10204_mudia",
+            "count": 1,
+            "time": 146,
+            "route": 14,
+            "fragment": 8
+          },
+          {
+            "enemy": "Rockbreaker",
+            "enemy_id": "enemy_10204_mudia",
+            "count": 1,
+            "time": 149,
+            "route": 15,
+            "fragment": 8
+          }
+        ]
+      }
+    ],
+    "spawnTiles": [
+      {
+        "key": "tile_start",
+        "row": 3,
+        "col": 1,
+        "routes": [
+          4,
+          5,
+          7,
+          5,
+          4,
+          4,
+          5,
+          7,
+          8,
+          9,
+          5,
+          4,
+          8,
+          10,
+          5,
+          11,
+          12,
+          13,
+          14,
+          15
+        ]
+      }
+    ],
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 5,
+        "col": 6,
+        "routes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          7,
+          5,
+          4,
+          4,
+          5,
+          7,
+          8,
+          9,
+          5,
+          4,
+          8,
+          10,
+          5,
+          11,
+          12,
+          13,
+          14,
+          15
+        ]
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_10201_muinf",
+        "slug": "experimental_subject_f_009",
+        "name": "Experimental Subject F-009",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_10203_mumag",
+        "slug": "heterogeneous_fungi",
+        "name": "Heterogeneous Fungi",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_10204_mudia",
+        "slug": "rockbreaker_enemy_10204_mudia",
+        "name": "Rockbreaker",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_10211_murad",
+        "slug": "leak_source",
+        "name": "Leak Source",
+        "database_level": 0
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [],
+      "deployable_tokens": []
+    },
+    "hasConditionalSpawns": true
+  },
+  "conditional": [
+    {
+      "enemy": "Rockbreaker",
+      "enemy_id": "enemy_10204_mudia",
+      "count": 1,
+      "time": 0,
+      "route": 1,
+      "wave": 0,
+      "fragment": 0,
+      "source": "wave",
+      "condition": {
+        "hidden_group": "hidden1"
+      }
+    },
+    {
+      "enemy": "Rockbreaker",
+      "enemy_id": "enemy_10204_mudia",
+      "count": 1,
+      "time": 0,
+      "route": 2,
+      "wave": 0,
+      "fragment": 0,
+      "source": "wave",
+      "condition": {
+        "hidden_group": "hidden1"
+      }
+    },
+    {
+      "enemy": "Rockbreaker",
+      "enemy_id": "enemy_10204_mudia",
+      "count": 1,
+      "time": 0,
+      "route": 3,
+      "wave": 0,
+      "fragment": 0,
+      "source": "wave",
+      "condition": {
+        "hidden_group": "hidden1"
+      }
+    }
+  ],
+  "devices": [
+    {
+      "col": 3,
+      "description": null,
+      "hidden": false,
+      "key": "trap_329_rift",
+      "kind": "device",
+      "name": "Leak Marker",
+      "row": 3
+    }
+  ]
+}

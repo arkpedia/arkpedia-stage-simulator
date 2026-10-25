@@ -1,5 +1,22 @@
 # Chapter 16 stage route handoff audit
 
+## Reproducible receipt follow-up
+
+Producer commit `e5a96b56e312c3e73a54865da57bc33172119a0b` closes a later
+reproducibility gap: the daily raw-level intake now invokes the normal geometry
+builder/encoder and writes route receipts itself. It validates the pinned table
+membership and slug/level mapping, prepares every selected map before writing,
+and declares the geometry/conditional outputs in the refresh rollback graph.
+The producer cohort passes 35 checks. The next batch includes 16-5 through 16-7
+and 17-2 through 17-4, in addition to the existing 16-3/16-4 inputs. Canonical
+export/validation and subsequent consumer pinning remain separate operations;
+this producer change does not admit any simulator stage or publish content.
+
+The regenerated 16-4 geometry/conditional bytes match the currently consumed
+canonical snapshot exactly. The regenerated 16-3 objects are semantically equal,
+with only JSON formatting differences. Existing immutable consumer pins remain
+unchanged.
+
 Observed 2026-10-25. Scope: the pinned original 16-3 level, Arkpedia's stage
 producer, the canonical preview data snapshot, and the simulator admission
 boundary. This is a local replay and preview repair, not a production-site audit.
