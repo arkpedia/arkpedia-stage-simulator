@@ -8,6 +8,7 @@ import { prepareClosurS2, CLOSUR_S2_CONTRACT } from './arkpedia-closur-s2.js';
 import { prepareClosurS3, CLOSUR_S3_CONTRACT } from './arkpedia-closur-s3.js';
 import { canTargetEnemy, sortEnemyTargets } from '../targeting.js';
 import { bodyInKeys } from '../body.js';
+import {prepareClosurModule} from './arkpedia-closur-module.js';
 export const CLOSUR_COMBAT_CONTRACT = Object.freeze({
   scope: 'Selected original ordinary fire, owned-blocker trait, all thirty source skill ranks and command-center interactions',
   mapping: 'Ordinary first fire plays the explicit Begin then the aliased Attack_Loop; subsequent continuous attacks omit Begin. Presentation follows the selected primary, retaining deployment geometry. S2 captures up to two windup inputs and fires independent speed-ten projectiles. S3 selects at release, grows to seven targets, and attaches a delayed hit at the target for the original .30000001192092896s. Both use literal mode clips. Direct damage is normal physical; current source ATK and owned-blocker trait are sampled at impact.',
@@ -139,7 +140,7 @@ export class ClosurCombatController {
   }
   install() {
     if (this.handles.length || this.stopped) throw Error('Closure combat cannot be reinstalled');
-    this.point.install(); this.command.install?.();
+    this.point.install(); this.command.install?.();this.module?.install();
     this.handles = [this.b.on('deploy', ({ unit, move }) => {
       if (unit !== this.u || move) return;
       this.seq = unit.deploySeq; this.facing = unit.dir; this.continuing = false;
@@ -152,7 +153,7 @@ export class ClosurCombatController {
   }
   stop() {
     if (this.stopped) return; this.stopped = true; this.phase = null; this.accepting = false;
-    this.command.stop?.(); this.point.stop();
+    this.module?.stop();this.command.stop?.(); this.point.stop();
     for (const h of this.handles) this.b.off(h); this.handles = [];
     delete this.u.mem.regularFormVisual; delete this.u.mem.regularVisualDirection;
   }
@@ -174,6 +175,7 @@ export function prepareClosurCombat(b, u, { contract } = {}) {
     : record.owner.index === 1 ? prepareClosurS2(point, { contract: CLOSUR_S2_CONTRACT })
       : prepareClosurS3(point, { contract: CLOSUR_S3_CONTRACT });
   const controller = new ClosurCombatController(point, command);
+  controller.module=prepareClosurModule(point);
   const skill = { ...command.spec, onStart: ctx => { command.spec.onStart?.(ctx); if (record.owner.index > 0) controller.startMode(record.owner.index + 1); },
     onEnd: ctx => { command.spec.onEnd?.(ctx); if (record.owner.index > 0) controller.endMode(); } };
   return { record: record.owner, tokenRecord: record, controller, point, command, kit: { talents: [], install: null,

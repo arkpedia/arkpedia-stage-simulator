@@ -3,7 +3,7 @@
 import e from '../../../data/arkpedia-native-operators/char_4228_closur.json' with { type: 'json' };
 import { CLOSUR_ID as ID, selectedClosurBuild } from './arkpedia-closur-source.js';
 export const CLOSUR_ROSTER_CONTRACT = Object.freeze({
-  scope: 'Unmoduled selected Closure roster talent: strongest DP floor and Rhodes Island operator ATK',
+  scope: 'Selected Closure roster talent, including the exact internal 17-14 module: strongest DP floor and Rhodes Island operator ATK',
   limits: 'Deck category/tag aliases and negative-DP recovery are explicit regular-stage mappings, not compiled Unity dispatch proof. No playable kit is installed.',
   frameParity: false,
 });
@@ -19,7 +19,7 @@ export function installClosurRoster(b, builds, { contract } = {}) {
   const talents = selected.map(r => r.talentBb[1]).filter(Boolean);
   const floor = Math.min(0, ...talents.map(t => t.cost)), atk = Math.max(0, ...talents.map(t => t.atk));
   const playerId = 'arkpedia', key = 'closur:roster:rhodes-atk';
-  if (!b.getPlayer(playerId) || ![0, -3, -4].includes(floor) || ![0, .04].includes(atk))
+  if (!b.getPlayer(playerId) || ![0, -3, -4, -5].includes(floor) || ![0, .04, .08].includes(atk))
     throw Error('Unreviewed Closure roster talent values');
   b.regularDpFloors ??= new Map();
   if (b.regularDpFloors.has(playerId)) throw Error('Existing unreviewed regular DP floor');

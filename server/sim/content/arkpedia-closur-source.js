@@ -3,10 +3,13 @@
 import e from '../../../data/arkpedia-native-operators/char_4228_closur.json' with { type: 'json' };
 import { selectedCNSourceBuild } from './arkpedia-selected-cn-source.js';
 import { sourceCandidate } from '../../../shared/arkpedia/summons.js';
+import {applyClosurStageModule} from './arkpedia-closur-module-source.js';
 export const CLOSUR_ID = 'char_4228_closur';
 export const CLOSUR_TOKEN_ID = 'token_10066_closur_ourbase';
 export const CLOSUR_SKILLS = Object.freeze(['skchr_closur_1', 'skchr_closur_2', 'skchr_closur_3']);
-export const selectedClosurBuild = build => selectedCNSourceBuild(e, CLOSUR_ID, build);
+export const selectedClosurBuild = build => build?.module==='uniequip_002_closur'
+  ? applyClosurStageModule(selectedCNSourceBuild(e,CLOSUR_ID,{...build,module:'none'}),build)
+  : selectedCNSourceBuild(e, CLOSUR_ID, build);
 export function selectedClosurToken(build) {
   const owner = selectedClosurBuild(build), c = e.tables.tokens[CLOSUR_TOKEN_ID], phase = c.phases[build.elite];
   const low = phase.attributesKeyFrames[0], high = phase.attributesKeyFrames.at(-1);

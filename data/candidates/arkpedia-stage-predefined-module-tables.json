@@ -1,0 +1,998 @@
+{
+  "schemaVersion": 1,
+  "testOnly": true,
+  "scope": "Exact table/native intake for predefined level-three modules. No stage, public module or gameplay admission.",
+  "lock": {
+    "path": "data/arkpedia-predefined-modules.lock.json",
+    "sha256": "ee0b084b133bf04a758555e9fb20138fe35cfeb0275f52f17e3edbdfe582fd7a"
+  },
+  "source": {
+    "tables": {
+      "repository": "Kengxxiao/ArknightsGameData",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "files": {
+        "battle_equip_table": {
+          "path": "zh_CN/gamedata/excel/battle_equip_table.json",
+          "bytes": 5710707,
+          "gitBlob": "106129ae4e8708b12bd84b3df86c2de71d4ec810",
+          "sha256": "006687f201a823abf31c6a1c57b2269099bd3ea375c2ec3ae5595cc98a1ec460"
+        },
+        "uniequip_table": {
+          "path": "zh_CN/gamedata/excel/uniequip_table.json",
+          "bytes": 3365012,
+          "gitBlob": "ccee0499e1e80287710720a1958d9c2b88ef6bd7",
+          "sha256": "b508483cc87c03d8313f4dd8dfc1b9195bc50385a8dfec51d17e657cb26ffad9"
+        }
+      }
+    },
+    "client": {
+      "version": "2.7.71",
+      "resourceVersion": "26-09-22-07-47-20_6c71fa",
+      "baseURL": "https://ak.hycdn.cn/assetbundle/official/Android/assets/26-09-22-07-47-20_6c71fa/",
+      "manifestBytes": 3241788,
+      "manifestSha256": "d1ac02a61d98e6e4c772335bb85dc44da4794a0a8bc915354b6f9ffbc7ec1f35"
+    },
+    "bundles": {
+      "equips": {
+        "path": "battle/prefabs/[uc]equips.ab",
+        "bytes": 728179,
+        "md5": "6506f489f0f5b7bb7709d9df05d2895c",
+        "archive": "battle_prefabs_[uc]equips.dat",
+        "url": "https://ak.hycdn.cn/assetbundle/official/Android/assets/26-09-22-07-47-20_6c71fa/battle_prefabs_%5Buc%5Dequips.dat",
+        "sha256": "52a56a0d2c10eb422aaf8a7a3a296bb45bbd8c825fb4ab136a08dd53d536ac81"
+      },
+      "templates": {
+        "path": "config/buff_template_holder.ab",
+        "bytes": 1963907,
+        "md5": "8d395a42a34fbbb5af1f2e4ad7d39ef8",
+        "archive": "config_buff_template_holder.dat",
+        "url": "https://ak.hycdn.cn/assetbundle/official/Android/assets/26-09-22-07-47-20_6c71fa/config_buff_template_holder.dat",
+        "sha256": "30bacb35c8962817931d8fd2cad66cd5a4455b86f6f34e21257829ff7f0fd0a3"
+      }
+    }
+  },
+  "stages": {
+    "17-14": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "245d7c601ce3a4a42adcfb84faa1bd1123d507bb",
+      "rawLevel": {
+        "path": "source/data/simulator/raw/levels/17-14.json",
+        "bytes": 69256,
+        "sha256": "0e2d433f7945b2378d8a1a830400f3c8d8afa329161a489a7f8969b022353036"
+      },
+      "predefines": {
+        "characterInsts": [
+          {
+            "position": {
+              "row": 3,
+              "col": 3
+            },
+            "direction": "RIGHT",
+            "hidden": false,
+            "alias": null,
+            "uniEquipIds": [
+              {
+                "key": "uniequip_002_closur",
+                "level": 3
+              }
+            ],
+            "showSpIllust": false,
+            "masterInfos": null,
+            "inst": {
+              "characterKey": "char_4228_closur",
+              "level": 90,
+              "phase": "PHASE_2",
+              "favorPoint": 50,
+              "potentialRank": 0
+            },
+            "skillIndex": 2,
+            "mainSkillLvl": 10,
+            "skinId": "",
+            "tmplId": null,
+            "overrideSkillBlackboard": null,
+            "overrideTalents": null
+          }
+        ],
+        "tokenInsts": [
+          {
+            "position": {
+              "row": 5,
+              "col": 5
+            },
+            "direction": "UP",
+            "hidden": false,
+            "alias": "trap_329_rift#1",
+            "uniEquipIds": null,
+            "showSpIllust": false,
+            "masterInfos": null,
+            "inst": {
+              "characterKey": "trap_329_rift",
+              "level": 1,
+              "phase": "PHASE_0",
+              "favorPoint": 0,
+              "potentialRank": 0
+            },
+            "skillIndex": 0,
+            "mainSkillLvl": 1,
+            "skinId": "",
+            "tmplId": null,
+            "overrideSkillBlackboard": null,
+            "overrideTalents": null
+          }
+        ],
+        "characterCards": {},
+        "tokenCards": {}
+      }
+    },
+    "17-16": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "245d7c601ce3a4a42adcfb84faa1bd1123d507bb",
+      "rawLevel": {
+        "path": "source/data/simulator/raw/levels/17-16.json",
+        "bytes": 46991,
+        "sha256": "a1d6a96987f313cdb8bb407153929f9fdc17535e9aaa28e0edf4da3e8f6910e4"
+      },
+      "predefines": {
+        "characterInsts": [
+          {
+            "position": {
+              "row": 4,
+              "col": 3
+            },
+            "direction": "RIGHT",
+            "hidden": false,
+            "alias": "char_4226_veen#1",
+            "uniEquipIds": null,
+            "showSpIllust": false,
+            "masterInfos": null,
+            "inst": {
+              "characterKey": "char_4226_veen",
+              "level": 90,
+              "phase": "PHASE_2",
+              "favorPoint": 100,
+              "potentialRank": 5
+            },
+            "skillIndex": 2,
+            "mainSkillLvl": 8,
+            "skinId": "",
+            "tmplId": null,
+            "overrideSkillBlackboard": null,
+            "overrideTalents": null
+          }
+        ],
+        "tokenInsts": {},
+        "characterCards": [
+          {
+            "hidden": true,
+            "alias": "char_488_buildr#1",
+            "uniEquipIds": [
+              {
+                "key": "uniequip_002_buildr",
+                "level": 3
+              }
+            ],
+            "showSpIllust": false,
+            "masterInfos": null,
+            "inst": {
+              "characterKey": "char_488_buildr",
+              "level": 80,
+              "phase": "PHASE_2",
+              "favorPoint": 50,
+              "potentialRank": 0
+            },
+            "skillIndex": 1,
+            "mainSkillLvl": 7,
+            "skinId": "",
+            "tmplId": null,
+            "overrideSkillBlackboard": null,
+            "overrideTalents": null
+          },
+          {
+            "hidden": true,
+            "alias": "char_4023_rfalcn#1",
+            "uniEquipIds": [
+              {
+                "key": "uniequip_002_rfalcn",
+                "level": 3
+              }
+            ],
+            "showSpIllust": false,
+            "masterInfos": null,
+            "inst": {
+              "characterKey": "char_4023_rfalcn",
+              "level": 80,
+              "phase": "PHASE_2",
+              "favorPoint": 50,
+              "potentialRank": 0
+            },
+            "skillIndex": 1,
+            "mainSkillLvl": 7,
+            "skinId": "",
+            "tmplId": null,
+            "overrideSkillBlackboard": null,
+            "overrideTalents": null
+          },
+          {
+            "hidden": true,
+            "alias": "char_128_plosis#1",
+            "uniEquipIds": [
+              {
+                "key": "uniequip_002_plosis",
+                "level": 3
+              }
+            ],
+            "showSpIllust": false,
+            "masterInfos": null,
+            "inst": {
+              "characterKey": "char_128_plosis",
+              "level": 80,
+              "phase": "PHASE_2",
+              "favorPoint": 50,
+              "potentialRank": 0
+            },
+            "skillIndex": 1,
+            "mainSkillLvl": 7,
+            "skinId": "",
+            "tmplId": null,
+            "overrideSkillBlackboard": null,
+            "overrideTalents": null
+          },
+          {
+            "hidden": true,
+            "alias": "char_473_mberry#1",
+            "uniEquipIds": [
+              {
+                "key": "uniequip_002_mberry",
+                "level": 3
+              }
+            ],
+            "showSpIllust": false,
+            "masterInfos": null,
+            "inst": {
+              "characterKey": "char_473_mberry",
+              "level": 80,
+              "phase": "PHASE_2",
+              "favorPoint": 50,
+              "potentialRank": 0
+            },
+            "skillIndex": 1,
+            "mainSkillLvl": 7,
+            "skinId": "",
+            "tmplId": null,
+            "overrideSkillBlackboard": null,
+            "overrideTalents": null
+          }
+        ],
+        "tokenCards": {}
+      }
+    }
+  },
+  "modules": {
+    "uniequip_002_closur": {
+      "owner": "char_4228_closur",
+      "stage": "17-14",
+      "level": 3,
+      "unlock": {
+        "phase": "PHASE_2",
+        "level": 60
+      },
+      "phase": {
+        "equipLevel": 3,
+        "parts": [
+          {
+            "resKey": null,
+            "target": "DISPLAY",
+            "isToken": false,
+            "validInGameTag": null,
+            "validInMapTag": null,
+            "addOrOverrideTalentDataBundle": {
+              "candidates": null
+            },
+            "overrideTraitDataBundle": {
+              "candidates": [
+                {
+                  "additionalDescription": null,
+                  "unlockCondition": {
+                    "phase": "PHASE_2",
+                    "level": 60
+                  },
+                  "requiredPotentialRank": 0,
+                  "blackboard": [],
+                  "overrideDescripton": "可以在攻击范围内选择一次<@ba.kw>战术点</>来召唤援军，援军受到来自自身阻挡单位的伤害降低<@ba.kw>15%</>，自身攻击援军阻挡的敌人时攻击力提升至150%",
+                  "prefabKey": null,
+                  "rangeId": null
+                }
+              ]
+            }
+          },
+          {
+            "resKey": "closur_equip_1_1_p1",
+            "target": "TALENT",
+            "isToken": false,
+            "validInGameTag": null,
+            "validInMapTag": null,
+            "addOrOverrideTalentDataBundle": {
+              "candidates": [
+                {
+                  "displayRangeId": false,
+                  "upgradeDescription": "",
+                  "talentIndex": -1,
+                  "validModeIndices": null,
+                  "unlockCondition": {
+                    "phase": "PHASE_2",
+                    "level": 60
+                  },
+                  "requiredPotentialRank": 0,
+                  "prefabKey": "10",
+                  "name": null,
+                  "description": null,
+                  "rangeId": null,
+                  "blackboard": [
+                    {
+                      "key": "damage_scale",
+                      "value": 0.85,
+                      "valueStr": null
+                    }
+                  ],
+                  "tokenKey": null,
+                  "isHideTalent": true
+                }
+              ]
+            },
+            "overrideTraitDataBundle": {
+              "candidates": null
+            }
+          },
+          {
+            "resKey": null,
+            "target": "TALENT_DATA_ONLY",
+            "isToken": false,
+            "validInGameTag": null,
+            "validInMapTag": null,
+            "addOrOverrideTalentDataBundle": {
+              "candidates": [
+                {
+                  "displayRangeId": false,
+                  "upgradeDescription": "携带可露希尔时，<$ba.costlowerbound>部署费用下限</>降低5，【罗德岛】干员攻击力+8%",
+                  "talentIndex": 1,
+                  "validModeIndices": null,
+                  "unlockCondition": {
+                    "phase": "PHASE_2",
+                    "level": 60
+                  },
+                  "requiredPotentialRank": 0,
+                  "prefabKey": "2",
+                  "name": "极限调度",
+                  "description": null,
+                  "rangeId": null,
+                  "blackboard": [
+                    {
+                      "key": "cost",
+                      "value": -5,
+                      "valueStr": null
+                    },
+                    {
+                      "key": "atk",
+                      "value": 0.08,
+                      "valueStr": null
+                    }
+                  ],
+                  "tokenKey": null,
+                  "isHideTalent": false
+                },
+                {
+                  "displayRangeId": false,
+                  "upgradeDescription": "携带可露希尔时，<$ba.costlowerbound>部署费用下限</>降低6<@ba.talpu>（+1）</>，【罗德岛】干员攻击力+8%",
+                  "talentIndex": 1,
+                  "validModeIndices": null,
+                  "unlockCondition": {
+                    "phase": "PHASE_2",
+                    "level": 60
+                  },
+                  "requiredPotentialRank": 2,
+                  "prefabKey": "2",
+                  "name": "极限调度",
+                  "description": null,
+                  "rangeId": null,
+                  "blackboard": [
+                    {
+                      "key": "cost",
+                      "value": -6,
+                      "valueStr": null
+                    },
+                    {
+                      "key": "atk",
+                      "value": 0.08,
+                      "valueStr": null
+                    }
+                  ],
+                  "tokenKey": null,
+                  "isHideTalent": false
+                }
+              ]
+            },
+            "overrideTraitDataBundle": {
+              "candidates": null
+            }
+          }
+        ],
+        "attributeBlackboard": [
+          {
+            "key": "max_hp",
+            "value": 180,
+            "valueStr": null
+          },
+          {
+            "key": "atk",
+            "value": 30,
+            "valueStr": null
+          },
+          {
+            "key": "def",
+            "value": 25,
+            "valueStr": null
+          }
+        ],
+        "tokenAttributeBlackboard": {}
+      }
+    },
+    "uniequip_002_buildr": {
+      "owner": "char_488_buildr",
+      "stage": "17-16",
+      "level": 3,
+      "unlock": {
+        "phase": "PHASE_2",
+        "level": 50
+      },
+      "phase": {
+        "equipLevel": 3,
+        "parts": [
+          {
+            "resKey": "buildr_equip_1_3_p1",
+            "target": "TRAIT",
+            "isToken": false,
+            "validInGameTag": null,
+            "validInMapTag": null,
+            "addOrOverrideTalentDataBundle": {
+              "candidates": null
+            },
+            "overrideTraitDataBundle": {
+              "candidates": [
+                {
+                  "additionalDescription": null,
+                  "unlockCondition": {
+                    "phase": "PHASE_2",
+                    "level": 50
+                  },
+                  "requiredPotentialRank": 0,
+                  "blackboard": [
+                    {
+                      "key": "atk",
+                      "value": 0.08,
+                      "valueStr": null
+                    },
+                    {
+                      "key": "def",
+                      "value": 0.08,
+                      "valueStr": null
+                    }
+                  ],
+                  "overrideDescripton": "能够阻挡两个敌人，阻挡敌人时攻击力和防御力各+8％",
+                  "prefabKey": null,
+                  "rangeId": null
+                }
+              ]
+            }
+          },
+          {
+            "resKey": null,
+            "target": "TALENT_DATA_ONLY",
+            "isToken": false,
+            "validInGameTag": null,
+            "validInMapTag": null,
+            "addOrOverrideTalentDataBundle": {
+              "candidates": [
+                {
+                  "displayRangeId": false,
+                  "upgradeDescription": "在战场停留30秒后，生命上限+20%",
+                  "talentIndex": 0,
+                  "validModeIndices": null,
+                  "unlockCondition": {
+                    "phase": "PHASE_2",
+                    "level": 50
+                  },
+                  "requiredPotentialRank": 0,
+                  "prefabKey": "1",
+                  "name": "拆迁队守则",
+                  "description": null,
+                  "rangeId": null,
+                  "blackboard": [
+                    {
+                      "key": "interval",
+                      "value": 30,
+                      "valueStr": null
+                    },
+                    {
+                      "key": "max_hp",
+                      "value": 0.2,
+                      "valueStr": null
+                    }
+                  ],
+                  "tokenKey": null,
+                  "isHideTalent": false
+                },
+                {
+                  "displayRangeId": false,
+                  "upgradeDescription": "在战场停留30秒后，生命上限+23%<@ba.talpu>（+3%）</>",
+                  "talentIndex": 0,
+                  "validModeIndices": null,
+                  "unlockCondition": {
+                    "phase": "PHASE_2",
+                    "level": 50
+                  },
+                  "requiredPotentialRank": 4,
+                  "prefabKey": "1",
+                  "name": "拆迁队守则",
+                  "description": null,
+                  "rangeId": null,
+                  "blackboard": [
+                    {
+                      "key": "interval",
+                      "value": 30,
+                      "valueStr": null
+                    },
+                    {
+                      "key": "max_hp",
+                      "value": 0.23,
+                      "valueStr": null
+                    }
+                  ],
+                  "tokenKey": null,
+                  "isHideTalent": false
+                }
+              ]
+            },
+            "overrideTraitDataBundle": {
+              "candidates": null
+            }
+          }
+        ],
+        "attributeBlackboard": [
+          {
+            "key": "max_hp",
+            "value": 260,
+            "valueStr": null
+          },
+          {
+            "key": "def",
+            "value": 37,
+            "valueStr": null
+          }
+        ],
+        "tokenAttributeBlackboard": {}
+      }
+    },
+    "uniequip_002_rfalcn": {
+      "owner": "char_4023_rfalcn",
+      "stage": "17-16",
+      "level": 3,
+      "unlock": {
+        "phase": "PHASE_2",
+        "level": 50
+      },
+      "phase": {
+        "equipLevel": 3,
+        "parts": [
+          {
+            "resKey": null,
+            "target": "DISPLAY",
+            "isToken": false,
+            "validInGameTag": null,
+            "validInMapTag": null,
+            "addOrOverrideTalentDataBundle": {
+              "candidates": null
+            },
+            "overrideTraitDataBundle": {
+              "candidates": [
+                {
+                  "additionalDescription": "首次部署时部署费用-4",
+                  "unlockCondition": {
+                    "phase": "PHASE_2",
+                    "level": 50
+                  },
+                  "requiredPotentialRank": 0,
+                  "blackboard": [],
+                  "overrideDescripton": null,
+                  "prefabKey": null,
+                  "rangeId": null
+                }
+              ]
+            }
+          },
+          {
+            "resKey": "rfalcn_equip_1_3_p1",
+            "target": "TALENT",
+            "isToken": false,
+            "validInGameTag": null,
+            "validInMapTag": null,
+            "addOrOverrideTalentDataBundle": {
+              "candidates": [
+                {
+                  "displayRangeId": false,
+                  "upgradeDescription": "",
+                  "talentIndex": -1,
+                  "validModeIndices": null,
+                  "unlockCondition": {
+                    "phase": "PHASE_2",
+                    "level": 50
+                  },
+                  "requiredPotentialRank": 0,
+                  "prefabKey": "20_root",
+                  "name": null,
+                  "description": null,
+                  "rangeId": null,
+                  "blackboard": [
+                    {
+                      "key": "runtime_cost",
+                      "value": -4,
+                      "valueStr": null
+                    }
+                  ],
+                  "tokenKey": null,
+                  "isHideTalent": true
+                }
+              ]
+            },
+            "overrideTraitDataBundle": {
+              "candidates": null
+            }
+          },
+          {
+            "resKey": "rfalcn_equip_1_3_p2",
+            "target": "TALENT",
+            "isToken": false,
+            "validInGameTag": null,
+            "validInMapTag": null,
+            "addOrOverrideTalentDataBundle": {
+              "candidates": [
+                {
+                  "displayRangeId": false,
+                  "upgradeDescription": "在【沙洲遗闻】中，自身技力自然回复速度+0.3/秒；技能开启时，将自身携带的资源送至背包",
+                  "talentIndex": 1,
+                  "validModeIndices": null,
+                  "unlockCondition": {
+                    "phase": "PHASE_2",
+                    "level": 50
+                  },
+                  "requiredPotentialRank": 0,
+                  "prefabKey": "10",
+                  "name": "习惯使然",
+                  "description": null,
+                  "rangeId": null,
+                  "blackboard": [
+                    {
+                      "key": "sp_recovery_per_sec",
+                      "value": 0.3,
+                      "valueStr": null
+                    }
+                  ],
+                  "tokenKey": null,
+                  "isHideTalent": false
+                }
+              ]
+            },
+            "overrideTraitDataBundle": {
+              "candidates": null
+            }
+          }
+        ],
+        "attributeBlackboard": [
+          {
+            "key": "max_hp",
+            "value": 180,
+            "valueStr": null
+          },
+          {
+            "key": "atk",
+            "value": 30,
+            "valueStr": null
+          },
+          {
+            "key": "def",
+            "value": 20,
+            "valueStr": null
+          }
+        ],
+        "tokenAttributeBlackboard": {}
+      }
+    },
+    "uniequip_002_plosis": {
+      "owner": "char_128_plosis",
+      "stage": "17-16",
+      "level": 3,
+      "unlock": {
+        "phase": "PHASE_2",
+        "level": 50
+      },
+      "phase": {
+        "equipLevel": 3,
+        "parts": [
+          {
+            "resKey": null,
+            "target": "DISPLAY",
+            "isToken": false,
+            "validInGameTag": null,
+            "validInMapTag": null,
+            "addOrOverrideTalentDataBundle": {
+              "candidates": null
+            },
+            "overrideTraitDataBundle": {
+              "candidates": [
+                {
+                  "additionalDescription": "攻击范围<@ba.kw>扩大</>",
+                  "unlockCondition": {
+                    "phase": "PHASE_2",
+                    "level": 50
+                  },
+                  "requiredPotentialRank": 0,
+                  "blackboard": [],
+                  "overrideDescripton": null,
+                  "prefabKey": null,
+                  "rangeId": null
+                }
+              ]
+            }
+          },
+          {
+            "resKey": "plosis_equip_1_3_p1",
+            "target": "TALENT",
+            "isToken": false,
+            "validInGameTag": null,
+            "validInMapTag": null,
+            "addOrOverrideTalentDataBundle": {
+              "candidates": [
+                {
+                  "displayRangeId": true,
+                  "upgradeDescription": "",
+                  "talentIndex": -1,
+                  "validModeIndices": null,
+                  "unlockCondition": {
+                    "phase": "PHASE_2",
+                    "level": 50
+                  },
+                  "requiredPotentialRank": 0,
+                  "prefabKey": "10",
+                  "name": null,
+                  "description": null,
+                  "rangeId": "y-3",
+                  "blackboard": [
+                    {
+                      "key": "sp_recovery_per_sec",
+                      "value": 0.3,
+                      "valueStr": null
+                    }
+                  ],
+                  "tokenKey": null,
+                  "isHideTalent": true
+                }
+              ]
+            },
+            "overrideTraitDataBundle": {
+              "candidates": null
+            }
+          },
+          {
+            "resKey": "plosis_equip_1_3_p2",
+            "target": "TALENT",
+            "isToken": false,
+            "validInGameTag": null,
+            "validInMapTag": null,
+            "addOrOverrideTalentDataBundle": {
+              "candidates": [
+                {
+                  "displayRangeId": false,
+                  "upgradeDescription": "在场时所有友方单位的技力自然回复速度+0.3/秒，攻击范围内的友方单位改为+0.35/秒（同类效果取最高）",
+                  "talentIndex": 0,
+                  "validModeIndices": null,
+                  "unlockCondition": {
+                    "phase": "PHASE_2",
+                    "level": 50
+                  },
+                  "requiredPotentialRank": 0,
+                  "prefabKey": "11",
+                  "name": "技力光环",
+                  "description": null,
+                  "rangeId": null,
+                  "blackboard": [
+                    {
+                      "key": "sp_recovery_per_sec",
+                      "value": 0.35,
+                      "valueStr": null
+                    }
+                  ],
+                  "tokenKey": null,
+                  "isHideTalent": false
+                }
+              ]
+            },
+            "overrideTraitDataBundle": {
+              "candidates": null
+            }
+          }
+        ],
+        "attributeBlackboard": [
+          {
+            "key": "max_hp",
+            "value": 100,
+            "valueStr": null
+          },
+          {
+            "key": "atk",
+            "value": 47,
+            "valueStr": null
+          }
+        ],
+        "tokenAttributeBlackboard": {}
+      }
+    },
+    "uniequip_002_mberry": {
+      "owner": "char_473_mberry",
+      "stage": "17-16",
+      "level": 3,
+      "unlock": {
+        "phase": "PHASE_2",
+        "level": 50
+      },
+      "phase": {
+        "equipLevel": 3,
+        "parts": [
+          {
+            "resKey": null,
+            "target": "TRAIT_DATA_ONLY",
+            "isToken": false,
+            "validInGameTag": null,
+            "validInMapTag": null,
+            "addOrOverrideTalentDataBundle": {
+              "candidates": null
+            },
+            "overrideTraitDataBundle": {
+              "candidates": [
+                {
+                  "additionalDescription": null,
+                  "unlockCondition": {
+                    "phase": "PHASE_2",
+                    "level": 50
+                  },
+                  "requiredPotentialRank": 0,
+                  "blackboard": [
+                    {
+                      "key": "ep_heal_ratio",
+                      "value": 0.6,
+                      "valueStr": null
+                    }
+                  ],
+                  "overrideDescripton": "恢复友方单位生命，并回复相当于攻击力<@ba.kw>{ep_heal_ratio:0%}</>的<$ba.dt.element>元素损伤</>（可以回复未受伤友方单位的<$ba.dt.element>元素损伤</>）",
+                  "prefabKey": null,
+                  "rangeId": null
+                }
+              ]
+            }
+          },
+          {
+            "resKey": "mberry_equip_1_3_p1",
+            "target": "TALENT",
+            "isToken": false,
+            "validInGameTag": null,
+            "validInMapTag": null,
+            "addOrOverrideTalentDataBundle": {
+              "candidates": [
+                {
+                  "displayRangeId": false,
+                  "upgradeDescription": "",
+                  "talentIndex": -1,
+                  "validModeIndices": null,
+                  "unlockCondition": {
+                    "phase": "PHASE_2",
+                    "level": 50
+                  },
+                  "requiredPotentialRank": 0,
+                  "prefabKey": "10",
+                  "name": null,
+                  "description": null,
+                  "rangeId": null,
+                  "blackboard": [
+                    {
+                      "key": "ep_heal_ratio",
+                      "value": 0.6,
+                      "valueStr": null
+                    }
+                  ],
+                  "tokenKey": null,
+                  "isHideTalent": true
+                }
+              ]
+            },
+            "overrideTraitDataBundle": {
+              "candidates": null
+            }
+          },
+          {
+            "resKey": null,
+            "target": "TALENT_DATA_ONLY",
+            "isToken": false,
+            "validInGameTag": null,
+            "validInMapTag": null,
+            "addOrOverrideTalentDataBundle": {
+              "candidates": [
+                {
+                  "displayRangeId": false,
+                  "upgradeDescription": "场上存在桑葚和另外至少一名【医疗】干员时，所有【医疗】干员的攻击力+15%",
+                  "talentIndex": 0,
+                  "validModeIndices": null,
+                  "unlockCondition": {
+                    "phase": "PHASE_2",
+                    "level": 50
+                  },
+                  "requiredPotentialRank": 0,
+                  "prefabKey": "1",
+                  "name": "助手",
+                  "description": null,
+                  "rangeId": null,
+                  "blackboard": [
+                    {
+                      "key": "atk",
+                      "value": 0.15,
+                      "valueStr": null
+                    }
+                  ],
+                  "tokenKey": null,
+                  "isHideTalent": false
+                },
+                {
+                  "displayRangeId": false,
+                  "upgradeDescription": "场上存在桑葚和另外至少一名【医疗】干员时，所有【医疗】干员的攻击力+16%<@ba.talpu>（+1%）</>",
+                  "talentIndex": 0,
+                  "validModeIndices": null,
+                  "unlockCondition": {
+                    "phase": "PHASE_2",
+                    "level": 50
+                  },
+                  "requiredPotentialRank": 4,
+                  "prefabKey": "1",
+                  "name": "助手",
+                  "description": null,
+                  "rangeId": null,
+                  "blackboard": [
+                    {
+                      "key": "atk",
+                      "value": 0.16,
+                      "valueStr": null
+                    }
+                  ],
+                  "tokenKey": null,
+                  "isHideTalent": false
+                }
+              ]
+            },
+            "overrideTraitDataBundle": {
+              "candidates": null
+            }
+          }
+        ],
+        "attributeBlackboard": [
+          {
+            "key": "max_hp",
+            "value": 80,
+            "valueStr": null
+          },
+          {
+            "key": "atk",
+            "value": 35,
+            "valueStr": null
+          }
+        ],
+        "tokenAttributeBlackboard": {}
+      }
+    }
+  }
+}

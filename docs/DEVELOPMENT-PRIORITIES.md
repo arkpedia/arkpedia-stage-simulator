@@ -15,6 +15,8 @@ extra routes and exact local Brute; room-to-branch ordering remains unconnected.
 Ordinary operator withdrawals now share captured payment/refund accounting and
 an engine-owned entry point for future stage receivers. The room action's own
 withdrawal scope and timing remain under review.
+The exact predefined 17-14 Closure build now has an internal level-three module
+adapter; predefined placement/control and the four 17-16 modules remain gated.
 
 The retained native components/canonical record supply the parameters and action
 graph. Supplemental first-hand [PRTS HP-loss research, revision 442170](https://prts.wiki/index.php?title=%E7%89%B9%E6%AE%8A%E6%9C%BA%E5%88%B6&oldid=442170)
@@ -1164,3 +1166,60 @@ classifies units, orders withdrawal/camera movement, or applies its 2.5-second
 delay. Those room-specific semantics, the wave receiver and the remaining stage,
 enemy and operator/module audits remain mechanics work. No admission or visual
 campaign has begun.
+
+## Predefined module intake and exact 17-14 Closure mechanics
+
+The five level-three modules required by canonical 17-14/17-16 now have a
+separate, test-only source lock. Both complete equipment tables are verified by
+length, SHA-256 and Git blob at the existing CN commit. The equipment and template
+bundles match the existing 2.7.71 publisher manifest and explicit SHA-256 pins.
+Each module is checked against its actual canonical predefined owner and level;
+the original level bytes are independently verified before selection. A fresh
+cache independently reproduces the same table artifact. The native extractor
+retains all seven required prefab graphs, 39 components including collision
+components, and the five-template closure. Both table and native reproduction
+are now required by hosted native-source validation.
+
+The exact 17-14 Closure build (E2 level90, raw potentialRank0/favorPoint50, S3rank10,
+uniequip_002_closur level3) now selects its source-owned module data internally.
+It receives +180 HP, +30 ATK and +25 DEF; the token does not inherit those owner
+stats. Its upgraded roster talent supplies a -5 DP floor and 8% Rhodes Island
+operator ATK. Other stage/build/module-level combinations fail closed, and the
+public module catalogue remains empty.
+
+The retained closur_e_002_tr callback is event10/ON_TAKE_DAMAGE, corroborated by
+the existing separate event-alias receipt. It checks whether the modifier source
+is blocked by the recipient, then applies unfiltered nonstacking DamageScale.
+The internal controller gives the exact module's ground recipients a 0.85 scale
+on post-defence incoming damage from their current blocked attacker. Eligible
+recipients are the owner's summons and its exact reinforcement-marked allies;
+the owner itself is excluded by the native selector. Supplemental first-hand
+[Closure notes, revision 442616](https://prts.wiki/index.php?title=%E5%8F%AF%E9%9C%B2%E5%B8%8C%E5%B0%94&oldid=442616)
+corroborate the marked-ally interpretation. They do not replace the retained
+native parameters or constitute compiled-client/frame proof.
+
+Module marks belong to one owner/deployment and one recipient life. Source
+retirement, target replacement, lost reinforcement marking, rejected admission
+and explicit cleanup cannot transfer the reduction or remove foreign buffs.
+Retired/reused attackers cannot borrow their old blocking relation. Overlapping
+owners contribute one module scale, consistent with the nonstacking action.
+The adapter composes with real S3 attacks, range expansion and DP pulses. Its
+selector/category aliases, tick scheduling and grouped scale mapping remain
+explicit local execution rules. General modules and native visual/frame parity
+are not claimed.
+
+The expanded focused run passed all 1,478 available cases. The final composed
+Closure integration run passed 93 cases, including the added real S3/module
+interaction. That final run includes 13 module-specific checks after stricter
+source/provenance guards and rejected/foreign marker checks. All new receipt inputs retain identical bytes through
+Git normalization. The 4b9a470f predecessor passed all 15 continuation jobs; full
+run 40222394497 at da6e2750 also completed all eight Linux/Windows Node22/24 shards
+successfully. New-head hosted validation is separate.
+
+17-14 is still unadmitted: the predefined operator needs its own instance identity,
+placement, player controls and roster integration. The existing predefined guard
+still rejects it. The four 17-16 module graphs are retained source, not implemented
+module kits; hidden-card activation and tutorial/story dispatch remain required.
+The other remaining enemies/stages, boss-room and main-wave integration and the
+broader operator/module audit remain open. No public module, enemy or stage
+promotion, artwork/chibi ingestion or effects campaign has begun.
