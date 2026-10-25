@@ -4,15 +4,16 @@
 import review from '../../../data/candidates/arkpedia-ch17-reviewed-brute.json' with { type: 'json' };
 import { canTargetAlly } from '../targeting.js';
 import { sourceAbilityDelta } from './arkpedia-slow-down.js';
+import {matchesChapter17LocalBrute} from './chapter17-boss-branch-records.js';
 const live = e => e?.alive && e.deployed && !e.hidden;
-const controlled = e => ['stun','freeze','sleep','levitate','fear','disarm'].some(flag => e.s.flags[flag]);
+const controlled = e => ['stun','freeze','sleep','levitate','fear','disarm'].some(flag => e.s.flags[flag])||e.s.flags.noCombat&&!!e.blockedBy;
 const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 
-export function pollutionBrute(r) {
-  const proof = review.enemies[r.key];
-  if (!proof || r.prefabKey !== r.key || !same(r.talents.groups,proof.groups)
+export function pollutionBrute(r,{stage}={}) {
+  const local=matchesChapter17LocalBrute(r,stage),proof = review.enemies[local?r.prefabKey:r.key];
+  if (!proof || (stage!==undefined&&!local) || !local&&(r.prefabKey !== r.key || !same(r.talents.groups,proof.groups)
     || !same(r.talents.bb,proof.bb) || !same(r.skills,proof.skills) || !same(r.abilities,proof.abilities))
-    throw Error('Unreviewed pollution Brute contract');
+  ) throw Error('Unreviewed pollution Brute contract');
   return {
     spawn(b, e, a) {
       const life = e.deploySeq;

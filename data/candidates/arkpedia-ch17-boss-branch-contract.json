@@ -1,0 +1,624 @@
+{
+  "schemaVersion": 1,
+  "testOnly": true,
+  "stage": "17-18",
+  "branch": "boss",
+  "scope": "Internal explicit boss branch scheduler and exact local Brute. Room/wave execution and stage admission remain held.",
+  "sources": {
+    "stage": {
+      "path": "data/candidates/arkpedia-stage-17-18-source.json",
+      "sha256": "0e77534d9d6aeafb2c0fc5f5ea27a01f9d5a3f5efb76131c027615b28690d4f1",
+      "bytes": 213019
+    },
+    "lock": {
+      "path": "data/arkpedia-canonical-stage-17-18.lock.json",
+      "sha256": "fbf937e8272e8402b97a1a4f1bce79698fe930ba43bcaa7aecc779bccc6d2a81",
+      "bytes": 1906
+    },
+    "foundation": {
+      "path": "data/candidates/arkpedia-ch17-mutwin-lifecycle-contract.json",
+      "sha256": "ae7f7abdc3ae57fbb7fa01b008fb8e3ae99863c31bf8db13be5e1dbc50f2d7ac",
+      "bytes": 37204
+    },
+    "records": {
+      "path": "data/candidates/arkpedia-enemy-records.canonical.json",
+      "sha256": "c69db59414b2fbd6c1a8327c9c22ddb21cfdaadc4e89a97a824679f61ec07b93",
+      "bytes": 2845573
+    },
+    "receipt": {
+      "path": "data/candidates/arkpedia-enemy-records.canonical.receipt.json",
+      "sha256": "c9cdf456320bf73203290856f5992f6b92de9e1383e069edcc04a3b2dd93389c",
+      "bytes": 385
+    },
+    "brute": {
+      "path": "data/candidates/arkpedia-ch17-reviewed-brute.json",
+      "sha256": "024da2cf32539640e533c1d85a8f5661b590360791ce37158c9d690e732ef6b8",
+      "bytes": 31174
+    }
+  },
+  "entries": [
+    {
+      "time": 3,
+      "enemyKey": "enemy_1593_musnake",
+      "extraRouteIndex": 0,
+      "action": {
+        "actionType": "SPAWN",
+        "managedByScheduler": true,
+        "key": "enemy_1593_musnake",
+        "count": 1,
+        "preDelay": 3,
+        "interval": 1,
+        "routeIndex": 0,
+        "blockFragment": false,
+        "autoPreviewRoute": false,
+        "autoDisplayEnemyInfo": true,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      },
+      "native": {
+        "motionMode": "WALK",
+        "startPosition": {
+          "row": 14,
+          "col": 5
+        },
+        "endPosition": {
+          "row": 13,
+          "col": 0
+        },
+        "spawnRandomRange": {
+          "x": 0,
+          "y": 0
+        },
+        "spawnOffset": {
+          "x": 0,
+          "y": 0
+        },
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 12,
+              "col": 9
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryTileCenter": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryCheckPoint": false
+      },
+      "route": {
+        "motion": "WALK",
+        "start": [
+          14,
+          5
+        ],
+        "end": [
+          13,
+          0
+        ],
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "pos": [
+              12,
+              9
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "time": 6,
+      "enemyKey": "enemy_10207_mubrut_2_a",
+      "extraRouteIndex": 1,
+      "action": {
+        "actionType": "SPAWN",
+        "managedByScheduler": true,
+        "key": "enemy_10207_mubrut_2_a",
+        "count": 1,
+        "preDelay": 6,
+        "interval": 1,
+        "routeIndex": 1,
+        "blockFragment": false,
+        "autoPreviewRoute": false,
+        "autoDisplayEnemyInfo": false,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      },
+      "native": {
+        "motionMode": "WALK",
+        "startPosition": {
+          "row": 12,
+          "col": 10
+        },
+        "endPosition": {
+          "row": 12,
+          "col": 0
+        },
+        "spawnRandomRange": {
+          "x": 0,
+          "y": 0
+        },
+        "spawnOffset": {
+          "x": 0,
+          "y": 0
+        },
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 12,
+              "col": 9
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "WAIT_FOR_SECONDS",
+            "time": 20,
+            "position": {
+              "row": -8,
+              "col": 0
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 11,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 11,
+              "col": 2
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryTileCenter": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryCheckPoint": false
+      },
+      "route": {
+        "motion": "WALK",
+        "start": [
+          12,
+          10
+        ],
+        "end": [
+          12,
+          0
+        ],
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "pos": [
+              12,
+              9
+            ]
+          },
+          {
+            "type": "WAIT",
+            "time": 20
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              11,
+              8
+            ]
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              11,
+              2
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "time": 9,
+      "enemyKey": "enemy_10207_mubrut_2_a",
+      "extraRouteIndex": 2,
+      "action": {
+        "actionType": "SPAWN",
+        "managedByScheduler": true,
+        "key": "enemy_10207_mubrut_2_a",
+        "count": 1,
+        "preDelay": 9,
+        "interval": 1,
+        "routeIndex": 2,
+        "blockFragment": false,
+        "autoPreviewRoute": false,
+        "autoDisplayEnemyInfo": false,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      },
+      "native": {
+        "motionMode": "WALK",
+        "startPosition": {
+          "row": 13,
+          "col": 10
+        },
+        "endPosition": {
+          "row": 13,
+          "col": 0
+        },
+        "spawnRandomRange": {
+          "x": 0,
+          "y": 0
+        },
+        "spawnOffset": {
+          "x": 0,
+          "y": 0
+        },
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 13,
+              "col": 9
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "WAIT_FOR_SECONDS",
+            "time": 20,
+            "position": {
+              "row": -8,
+              "col": 0
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 11,
+              "col": 9
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 11,
+              "col": 1
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          },
+          {
+            "type": "MOVE",
+            "time": 0,
+            "position": {
+              "row": 13,
+              "col": 1
+            },
+            "reachOffset": {
+              "x": 0,
+              "y": 0
+            },
+            "randomizeReachOffset": false,
+            "reachDistance": 0
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryTileCenter": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryCheckPoint": false
+      },
+      "route": {
+        "motion": "WALK",
+        "start": [
+          13,
+          10
+        ],
+        "end": [
+          13,
+          0
+        ],
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "pos": [
+              13,
+              9
+            ]
+          },
+          {
+            "type": "WAIT",
+            "time": 20
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              11,
+              9
+            ]
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              11,
+              1
+            ]
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              13,
+              1
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "records": {
+    "enemy_1593_musnake": {
+      "key": "enemy_1593_musnake",
+      "prefabKey": "enemy_1593_musnake",
+      "name": "'Alpha and Omega'",
+      "level": 0,
+      "rank": "BOSS",
+      "applyWay": "NONE",
+      "stats": {
+        "maxHp": 88888,
+        "atk": 888,
+        "def": 888,
+        "res": 8,
+        "moveSpeed": 0,
+        "bat": 1,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": -1,
+        "blockCnt": 1,
+        "massLevel": 6,
+        "lpr": 3,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 1,
+        "hitRateArts": 1,
+        "dmgType": "none",
+        "dmgTypes": [
+          "none"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": true,
+          "levitate": true
+        },
+        "otherImmunities": [
+          "feared",
+          "attract"
+        ],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Becomes Invulnerable upon losing a certain amount of HP. Takes damage and becomes <$ba.stun>stunned</> if a special interaction is performed within this duration; otherwise recovers HP.",
+          "format": "NORMAL"
+        },
+        {
+          "text": "[Firewall] Has a Firewall around itself; takes greatly reduced Physical and Arts damage from outside the Firewall.",
+          "format": "NORMAL"
+        },
+        {
+          "text": "[Information Flood] Releases a flood of information in a fixed direction, causing the first unit hit to be <$ba.stun>stunned</> and continuously take True damage for a period of time.",
+          "format": "NORMAL"
+        },
+        {
+          "text": "[Halt Process] When a long time has passed in the battle, disappears and drains 50 Life Points.",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Cannot be teleported",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "TimeOut.interval": 998,
+          "TimeOut.duration": 999,
+          "TimeOut.value": -50,
+          "StepKill.hp_ratio": 0.2,
+          "StepKill.enemy_musnake_heal_buff.hp_ratio": 0.2,
+          "DamageResistance.damage_resistance": 0.9
+        },
+        "bbStr": {},
+        "groups": {
+          "TimeOut": [
+            "duration",
+            "interval",
+            "value"
+          ],
+          "StepKill": [
+            "enemy_musnake_heal_buff.hp_ratio",
+            "hp_ratio"
+          ],
+          "DamageResistance": [
+            "damage_resistance"
+          ]
+        }
+      },
+      "skills": [
+        {
+          "prefabKey": "GlobalLineAttack",
+          "priority": 0,
+          "cooldown": 25,
+          "initCooldown": 15,
+          "spCost": 0,
+          "bb": {
+            "value": 300,
+            "stun": 10
+          },
+          "bbStr": {}
+        },
+        {
+          "prefabKey": "Injured",
+          "priority": 0,
+          "cooldown": 0,
+          "initCooldown": 0,
+          "spCost": 0,
+          "bb": {
+            "stun_duration": 7,
+            "hp_ratio": 0.05
+          },
+          "bbStr": {}
+        }
+      ],
+      "notCountInTotal": false,
+      "tags": {}
+    },
+    "enemy_10207_mubrut_2_a": {
+      "key": "enemy_10207_mubrut_2_a",
+      "prefabKey": "enemy_10207_mubrut_2",
+      "name": "Angry 'Shishiga'",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 12000,
+        "atk": 2100,
+        "def": 800,
+        "res": 25,
+        "moveSpeed": 0.5,
+        "bat": 6,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": -1,
+        "blockCnt": 1,
+        "massLevel": 3,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Next attack hits three times when affected by a Leak Source.",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "sp": {
+        "type": "INCREASE_WITH_TIME",
+        "maxSp": 0,
+        "initSp": 0,
+        "increment": 1
+      },
+      "notCountInTotal": true,
+      "tags": {}
+    }
+  },
+  "limits": [
+    "Branch start is explicit. The camera/withdraw/branch ordering and the main-wave FinishCurrentWave receiver are separate stage integration work.",
+    "Spawn times use the canonical conditional producer offsets 3/6/9 from branch start. Typed native extra-route MOVE/WAIT checkpoints are retained; this local scheduling bridge is not compiled-client or captured-frame proof.",
+    "The local Brute is compiled in isolation from the level, including its uncounted/life and hit-rate values. Its exact prefab combat uses the retained Brute action graph and clocks; its description and numerical fields are never inherited from a catalogue alias."
+  ]
+}

@@ -10,6 +10,8 @@ boss support remains held pending the incoming durability audit, source sequence
 dispatch review, canonical wave/branch/story integration, mechanical input
 routing and remaining staged-record reviews. The exact 17-18 twin records now
 have an explicit internal stage selection, including their canonical room offset.
+The canonical boss branch also has an explicit internal scheduler with its own
+extra routes and exact local Brute; room-to-branch ordering remains unconnected.
 
 The retained native components/canonical record supply the parameters and action
 graph. Supplemental first-hand [PRTS HP-loss research, revision 442170](https://prts.wiki/index.php?title=%E7%89%B9%E6%AE%8A%E6%9C%BA%E5%88%B6&oldid=442170)
@@ -1067,3 +1069,49 @@ withdrawal/refund, camera/branch ordering, conditional boss-wave execution,
 story/input routing and remaining local enemy integration still gate 17-18.
 No enemy policy, stage admission or public promotion was granted. All nine
 remaining normal-stage gates and the mechanics-before-visuals order remain.
+
+## Canonical 17-18 boss branch and local Brute
+
+The internal boss branch now schedules the snake at 3 seconds and the two local
+Brutes at 6 and 9 seconds relative to an explicit branch start. These offsets
+agree with the retained canonical conditional producer; they are not accumulated
+into 3/9/18 or flattened into the ordinary wave schedule. The source checker
+reuses the checksum-verified full stage/database intake, binds the retained Brute
+review and verifies every scheduler action, route-space choice and traversal
+option. Native extra-route MOVE checkpoints and the two 20-second WAITs retain
+their order. WAIT's (-8,0) position is sentinel metadata, never a movement target.
+The existing 0.05 native checkpoint reach radius is preserved.
+
+The local enemy_10207_mubrut_2_a record compiles independently from the level.
+Its literal description, SP, uncounted/life and hit-rate fields remain local;
+there is no catalogue alias inheritance. Its exact prefab uses the retained
+Brute normal/three-hit attack graph and clocks only with an explicit 17-18
+selection and a full compiled-record match. The Brute also now honors the
+enemy-only DISABLE_COMBAT restriction for an existing blocking attack.
+
+The scheduler installs the composed snake core and actual Brute ability on fresh
+accepted deployments. Pending work holds the battle open; once it has all spawned
+and the units have gone, those holds no longer prevent completion. Branch work
+outlives the first twin's life. Explicit cancellation stops unborn spawns while
+born enemies retain their own combat lifecycle. Repeated/reentrant starts cannot
+duplicate the branch, and a reused spawn body cannot acquire the old body's core.
+A finished battle or deferred end request during spawn observers prevents late
+controller/receipt mutation. Runtime stat overrides require a separate review.
+
+Canonical-terrain tests exercise the real route wait, relative timing, count/life
+rules, local Brute pollution triplets and blocking control, the snake's terminal
+15-click counter and exact wave-finish intent, cancellation and deployment reuse.
+The expanded focused run passed all 1,209 available cases. Two further shutdown
+and admission checks were then added, and the final branch/Brute/snake integration
+suite passed all 89 cases. The new source
+checker is required in hosted native-source checks; its receipt inputs retain
+identical bytes after Git normalization.
+
+The preceding da6e2750 checkpoint completed all 15 hosted continuation jobs.
+Its full matrix run 40222394497 is still active at this observation and is not
+replaced. Room withdrawal/refund, camera/branch start ordering, the actual
+main-wave finish receiver, story/input routing and remaining local enemy/device
+integration still gate complete 17-18 support. The scheduler exposes an explicit
+start and native wave intent; it does not invent those missing receivers or claim
+compiled-client/captured-frame parity. No enemy policy or stage admission changed,
+and all nine normal-stage gates remain. Mechanics still precede visual work.
