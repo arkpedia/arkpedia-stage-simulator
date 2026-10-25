@@ -70,7 +70,7 @@ def extract(objects, names):
                     continue
                 seen.add(pid)
                 component = objects[pid]
-                if component.type.name not in ('GameObject', 'Transform', 'MonoBehaviour'):
+                if component.type.name not in ('GameObject', 'Transform', 'MonoBehaviour', 'CircleCollider2D', 'Rigidbody2D'):
                     continue
                 tree = component.read_typetree()
                 pending.extend(refs(tree))

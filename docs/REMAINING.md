@@ -47,7 +47,7 @@ The unsupported-enemy group is ranked by stage count. The current top families:
 
 ## Verification
 
-- Last baseline full repository suite: 23,005 tests, 22,994 passed, 0 failed, 11 skipped.
+- Last baseline full repository suite (`7cc8d93e`): 23,011 tests, 23,000 passed, 0 failed, 11 skipped. Subsequent canonical-stage loader checks are additional focused tests, not a rerun of this baseline.
 - `npm run check:arkpedia-enemies` and `npm run check:arkpedia-stages` are the registry gates.
 - GitHub-hosted matrix only; `test/arkpedia-ci-runners.test.js` guards the runner labels.
 

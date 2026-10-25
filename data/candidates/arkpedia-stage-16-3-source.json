@@ -1,0 +1,1677 @@
+{
+  "schemaVersion": 1,
+  "testOnly": true,
+  "admitted": false,
+  "canonicalData": {
+    "repository": "arkpedia/arkpedia-data",
+    "commit": "e49aaf3cc8ab09c5730a3dd81cead2e1a6ae005d"
+  },
+  "upstream": {
+    "repository": "ArknightsAssets/ArknightsGamedata",
+    "commit": "db6f9ef8046ad17dbebe3ff1d0dd88844a5bc78c"
+  },
+  "producer": {
+    "repository": "arkpedia/arkpedia",
+    "commit": "5556df22fd0ec0ec265559d164f4acf4c4b6b963"
+  },
+  "inputs": {
+    "stage": {
+      "path": "source/data/stages/16-3.json",
+      "bytes": 5342,
+      "sha256": "da147b27cbd2bb2c003d33b143531f0ac1297b825bb790040294c7d5315e238f"
+    },
+    "geometry": {
+      "path": "source/data/stage-geometry/16-3.json",
+      "bytes": 15596,
+      "sha256": "ad2d177135b381b9df107ee38f5fbf8b29e0881c9a74c5ee5e60b2cde5be7d08"
+    },
+    "conditional": {
+      "path": "source/data/stage-conditional/16-3.json",
+      "bytes": 624,
+      "sha256": "941ce38428a7f1de4798bccfee986bdd16e0822da1c72f1114f6985f1f4e3998"
+    },
+    "devices": {
+      "path": "source/data/stage-devices.json",
+      "bytes": 1886587,
+      "sha256": "c9b70c96272e9aa8573046ec2b3c65510bd5342cddf9b8de6b2c5b7f48c9fb44"
+    },
+    "routeReceipt": {
+      "path": "source/data/stage-route-source/16-3.json",
+      "bytes": 808,
+      "sha256": "7ed66c76918a1dd39e844128fa40632ea9d50ab8686d3da68f1211c4cbcf110a"
+    },
+    "manifest": {
+      "path": "release/manifest.json",
+      "bytes": 3096569,
+      "sha256": "9ed3ad8e8fd7a1d3a7ccc64c1a04f469abcd444369b4d988bd3497750b4be970"
+    }
+  },
+  "routeReceipt": {
+    "schemaVersion": 1,
+    "scope": "Preview-only source geometry repair. No stage simulator admission or release pointer change.",
+    "upstream": {
+      "repository": "ArknightsAssets/ArknightsGamedata",
+      "commit": "db6f9ef8046ad17dbebe3ff1d0dd88844a5bc78c",
+      "path": "en/gamedata/levels/obt/main/level_main_16-02.json",
+      "sha256": "fa693b20c843694be0911ba668a910e63074170406cd8881be9fe87a068238c9"
+    },
+    "producer": {
+      "repository": "arkpedia/arkpedia",
+      "commit": "5556df22fd0ec0ec265559d164f4acf4c4b6b963",
+      "entrypoint": "scripts/stage-pipeline/lib/encode.mjs"
+    },
+    "outputs": {
+      "source/data/stage-geometry/16-3.json": "ad2d177135b381b9df107ee38f5fbf8b29e0881c9a74c5ee5e60b2cde5be7d08",
+      "source/data/stage-conditional/16-3.json": "941ce38428a7f1de4798bccfee986bdd16e0822da1c72f1114f6985f1f4e3998"
+    }
+  },
+  "stage": {
+    "slug": "16-3",
+    "id": "main_16-02",
+    "code": "16-3",
+    "name": "Path in Sight",
+    "description": "Life is a bog that you keep sinking deeper and deeper into, until it swallows you.\n<Hidden Tunnel> Toggles the standby/deployed status of Miner Guerrillas assembled here.\n<Heavily Polluted Facility> Creates Toxic Pollution around it that prevents deployment and makes enemies invisible.\n<Rock Wall> Units cannot be deployed on this tile.",
+    "stage_type": "main",
+    "variant": null,
+    "chapter": 16,
+    "zone": {
+      "id": "act3mainss_zone1",
+      "name": "Abnormal Spectrum",
+      "group": null,
+      "type": "mainline_activity"
+    },
+    "act": {
+      "id": "chapter_3",
+      "name": "Nexus Point of Future",
+      "index": 3
+    },
+    "event": {
+      "id": "act3mainss",
+      "name": "Abnormal Spectrum",
+      "type": null,
+      "is_rerun": false
+    },
+    "order": 4,
+    "available_on": null,
+    "difficulty": {
+      "tier": "normal",
+      "recommended_level": "LV.30"
+    },
+    "sanity_cost": 21,
+    "lmd": 210,
+    "exp": 210,
+    "lmd_3star": 252,
+    "exp_3star": 252,
+    "battle": {
+      "max_life": 3,
+      "unit_limit": 8,
+      "initial_dp": 10,
+      "max_dp": 99,
+      "dp_per_second": 1,
+      "dp_recovery_interval_seconds": 1
+    },
+    "enemies": {
+      "total": 22,
+      "by_rank": {
+        "Normal": [
+          {
+            "slug": "ursus_mangler",
+            "name": "Ursus Mangler",
+            "index": "U3",
+            "count": 10
+          },
+          {
+            "slug": "army_infiltrator",
+            "name": "Army Infiltrator",
+            "index": "JTJ01",
+            "count": 8
+          },
+          {
+            "slug": "ursus_assault_crossbowman",
+            "name": "Ursus Assault Crossbowman",
+            "index": "U5",
+            "count": 4
+          }
+        ],
+        "Elite": [],
+        "Boss": []
+      },
+      "conditional": {
+        "total": 5,
+        "by_rank": {
+          "Normal": [
+            {
+              "slug": "army_infiltrator",
+              "name": "Army Infiltrator",
+              "index": "JTJ01",
+              "count": 4
+            },
+            {
+              "slug": "miner_guerrilla",
+              "name": "Miner Guerrilla",
+              "index": "KG01",
+              "count": 1
+            }
+          ],
+          "Elite": [],
+          "Boss": []
+        }
+      }
+    },
+    "drops": [
+      {
+        "item": {
+          "slug": "flint",
+          "id": "act3mainss_token",
+          "name": "Flint",
+          "is_operator": false
+        },
+        "kind": "one_time",
+        "rarity": "Guaranteed",
+        "raw": {
+          "type": "ACTIVITY_ITEM",
+          "drop_type": [
+            "COMPLETE"
+          ],
+          "occ_percent": [
+            "ALWAYS"
+          ]
+        }
+      },
+      {
+        "item": {
+          "slug": "originite_prime",
+          "id": "4002",
+          "name": "Originite Prime",
+          "is_operator": false
+        },
+        "kind": "one_time",
+        "rarity": "Guaranteed",
+        "raw": {
+          "type": "DIAMOND",
+          "drop_type": [
+            "COMPLETE"
+          ],
+          "occ_percent": [
+            "ALWAYS"
+          ]
+        }
+      },
+      {
+        "item": {
+          "slug": "integrated_device",
+          "id": "30063",
+          "name": "Integrated Device",
+          "is_operator": false
+        },
+        "kind": "farmable",
+        "rarity": "Rare",
+        "raw": {
+          "type": "MATERIAL",
+          "drop_type": [
+            "NORMAL"
+          ],
+          "occ_percent": [
+            "OFTEN"
+          ]
+        }
+      },
+      {
+        "item": {
+          "slug": "sugar",
+          "id": "30022",
+          "name": "Sugar",
+          "is_operator": false
+        },
+        "kind": "farmable",
+        "rarity": "Rare",
+        "raw": {
+          "type": "MATERIAL",
+          "drop_type": [
+            "ADDITIONAL"
+          ],
+          "occ_percent": [
+            "OFTEN"
+          ]
+        }
+      },
+      {
+        "item": {
+          "slug": "coagulative_nodule",
+          "id": "31093",
+          "name": "Coagulative Nodule",
+          "is_operator": false
+        },
+        "kind": "farmable",
+        "rarity": "Very Rare",
+        "raw": {
+          "type": "MATERIAL",
+          "drop_type": [
+            "ADDITIONAL"
+          ],
+          "occ_percent": [
+            "SOMETIMES"
+          ]
+        }
+      },
+      {
+        "item": {
+          "slug": "drill_battle_record",
+          "id": "2001",
+          "name": "Drill Battle Record",
+          "is_operator": false
+        },
+        "kind": "farmable",
+        "rarity": "Very Rare",
+        "raw": {
+          "type": "CARD_EXP",
+          "drop_type": [
+            "ADDITIONAL"
+          ],
+          "occ_percent": [
+            "SOMETIMES"
+          ]
+        }
+      },
+      {
+        "item": {
+          "slug": "frontline_battle_record",
+          "id": "2002",
+          "name": "Frontline Battle Record",
+          "is_operator": false
+        },
+        "kind": "farmable",
+        "rarity": "Very Rare",
+        "raw": {
+          "type": "CARD_EXP",
+          "drop_type": [
+            "ADDITIONAL"
+          ],
+          "occ_percent": [
+            "SOMETIMES"
+          ]
+        }
+      },
+      {
+        "item": {
+          "slug": "incandescent_alloy",
+          "id": "31023",
+          "name": "Incandescent Alloy",
+          "is_operator": false
+        },
+        "kind": "farmable",
+        "rarity": "Very Rare",
+        "raw": {
+          "type": "MATERIAL",
+          "drop_type": [
+            "ADDITIONAL"
+          ],
+          "occ_percent": [
+            "SOMETIMES"
+          ]
+        }
+      },
+      {
+        "item": {
+          "slug": "manganese_ore",
+          "id": "30083",
+          "name": "Manganese Ore",
+          "is_operator": false
+        },
+        "kind": "farmable",
+        "rarity": "Very Rare",
+        "raw": {
+          "type": "MATERIAL",
+          "drop_type": [
+            "ADDITIONAL"
+          ],
+          "occ_percent": [
+            "SOMETIMES"
+          ]
+        }
+      },
+      {
+        "item": {
+          "slug": "optimized_device",
+          "id": "30064",
+          "name": "Optimized Device",
+          "is_operator": false
+        },
+        "kind": "farmable",
+        "rarity": "Very Rare",
+        "raw": {
+          "type": "MATERIAL",
+          "drop_type": [
+            "SPECIAL"
+          ],
+          "occ_percent": [
+            "SOMETIMES"
+          ]
+        }
+      },
+      {
+        "item": {
+          "slug": "oriron",
+          "id": "30042",
+          "name": "Oriron",
+          "is_operator": false
+        },
+        "kind": "farmable",
+        "rarity": "Very Rare",
+        "raw": {
+          "type": "MATERIAL",
+          "drop_type": [
+            "ADDITIONAL"
+          ],
+          "occ_percent": [
+            "SOMETIMES"
+          ]
+        }
+      },
+      {
+        "item": {
+          "slug": "oriron_cluster",
+          "id": "30043",
+          "name": "Oriron Cluster",
+          "is_operator": false
+        },
+        "kind": "farmable",
+        "rarity": "Very Rare",
+        "raw": {
+          "type": "MATERIAL",
+          "drop_type": [
+            "ADDITIONAL"
+          ],
+          "occ_percent": [
+            "SOMETIMES"
+          ]
+        }
+      },
+      {
+        "item": {
+          "slug": "oriron_shard",
+          "id": "30041",
+          "name": "Oriron Shard",
+          "is_operator": false
+        },
+        "kind": "farmable",
+        "rarity": "Very Rare",
+        "raw": {
+          "type": "MATERIAL",
+          "drop_type": [
+            "ADDITIONAL"
+          ],
+          "occ_percent": [
+            "SOMETIMES"
+          ]
+        }
+      },
+      {
+        "item": {
+          "slug": "sugar_pack",
+          "id": "30023",
+          "name": "Sugar Pack",
+          "is_operator": false
+        },
+        "kind": "farmable",
+        "rarity": "Very Rare",
+        "raw": {
+          "type": "MATERIAL",
+          "drop_type": [
+            "ADDITIONAL"
+          ],
+          "occ_percent": [
+            "SOMETIMES"
+          ]
+        }
+      },
+      {
+        "item": {
+          "slug": "sugar_substitute",
+          "id": "30021",
+          "name": "Sugar Substitute",
+          "is_operator": false
+        },
+        "kind": "farmable",
+        "rarity": "Very Rare",
+        "raw": {
+          "type": "MATERIAL",
+          "drop_type": [
+            "ADDITIONAL"
+          ],
+          "occ_percent": [
+            "SOMETIMES"
+          ]
+        }
+      },
+      {
+        "item": {
+          "slug": "tactical_battle_record",
+          "id": "2003",
+          "name": "Tactical Battle Record",
+          "is_operator": false
+        },
+        "kind": "farmable",
+        "rarity": "Very Rare",
+        "raw": {
+          "type": "CARD_EXP",
+          "drop_type": [
+            "ADDITIONAL"
+          ],
+          "occ_percent": [
+            "SOMETIMES"
+          ]
+        }
+      },
+      {
+        "item": {
+          "slug": "transmuted_salt",
+          "id": "31063",
+          "name": "Transmuted Salt",
+          "is_operator": false
+        },
+        "kind": "farmable",
+        "rarity": "Very Rare",
+        "raw": {
+          "type": "MATERIAL",
+          "drop_type": [
+            "ADDITIONAL"
+          ],
+          "occ_percent": [
+            "SOMETIMES"
+          ]
+        }
+      }
+    ],
+    "preview": "images/stages/16-3.png",
+    "geometry": "16-3",
+    "content": {
+      "kind": "story",
+      "id": "act3mainss_zone1",
+      "label": "EP 16",
+      "name": "Abnormal Spectrum",
+      "release_date": "2026-03-19"
+    },
+    "geometryKey": "16-3"
+  },
+  "geometry": {
+    "slug": "16-3",
+    "rows": 8,
+    "cols": 11,
+    "tileLegend": [
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_start",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_floor",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_fence_bound",
+        "height": "low",
+        "walkable": false,
+        "deployable": "melee",
+        "flyable": true
+      }
+    ],
+    "tileGrid": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        3
+      ],
+      [
+        0,
+        0,
+        2,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        0
+      ],
+      [
+        5,
+        2,
+        2,
+        0,
+        1,
+        1,
+        1,
+        1,
+        0,
+        3,
+        0
+      ],
+      [
+        0,
+        4,
+        2,
+        0,
+        4,
+        2,
+        2,
+        2,
+        4,
+        2,
+        0
+      ],
+      [
+        0,
+        0,
+        2,
+        1,
+        1,
+        2,
+        6,
+        2,
+        0,
+        2,
+        0
+      ],
+      [
+        0,
+        0,
+        2,
+        2,
+        2,
+        2,
+        0,
+        2,
+        2,
+        2,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "routes": [
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 6
+        },
+        "end": {
+          "row": 3,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 2
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 3
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 135
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryCheckPoint": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryTileCenter": false
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 1
+        },
+        "end": {
+          "row": 3,
+          "col": 9
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 5
+            },
+            "reachOffset": {
+              "x": -0.46,
+              "y": -0.03
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": -0.45,
+              "y": -0.08
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 9
+            }
+          }
+        ],
+        "waits": [],
+        "allowDiagonalMove": true,
+        "visitEveryCheckPoint": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryTileCenter": false
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 10
+        },
+        "end": {
+          "row": 3,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 2
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 5
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryCheckPoint": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryTileCenter": false
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 10
+        },
+        "end": {
+          "row": 3,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 2
+            }
+          }
+        ],
+        "waits": [],
+        "allowDiagonalMove": true,
+        "visitEveryCheckPoint": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryTileCenter": false
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 8
+        },
+        "end": {
+          "row": 3,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 2
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 92
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryCheckPoint": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryTileCenter": false
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 4
+        },
+        "end": {
+          "row": 3,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 2
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 67
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryCheckPoint": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryTileCenter": false
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 9
+        },
+        "end": {
+          "row": 3,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 2
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 5
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryCheckPoint": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryTileCenter": false
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 9
+        },
+        "end": {
+          "row": 3,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 2
+            }
+          }
+        ],
+        "waits": [],
+        "allowDiagonalMove": true,
+        "visitEveryCheckPoint": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryTileCenter": false
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 7
+        },
+        "end": {
+          "row": 3,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 2
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 39
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryCheckPoint": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryTileCenter": false
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 9
+        },
+        "end": {
+          "row": 3,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 9
+            },
+            "reachOffset": {
+              "x": -0.13,
+              "y": 0.24
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 2
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 45
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryCheckPoint": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryTileCenter": false
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 9
+        },
+        "end": {
+          "row": 3,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 9
+            },
+            "reachOffset": {
+              "x": 0.15,
+              "y": -0.16
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 2
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 45
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryCheckPoint": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryTileCenter": false
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 9
+        },
+        "end": {
+          "row": 3,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 9
+            },
+            "reachOffset": {
+              "x": -0.25,
+              "y": -0.24
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 2
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 45
+          }
+        ],
+        "allowDiagonalMove": true,
+        "visitEveryCheckPoint": false,
+        "visitEveryNodeCenter": false,
+        "visitEveryTileCenter": false
+      }
+    ],
+    "extraRoutes": [
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 1
+        },
+        "end": {
+          "row": 3,
+          "col": 9
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 4
+            },
+            "reachOffset": {
+              "x": 0.46,
+              "y": 0
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 8
+            },
+            "reachOffset": {
+              "x": -0.46,
+              "y": -0.01
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 9
+            }
+          }
+        ],
+        "waits": [],
+        "allowDiagonalMove": true,
+        "spawnRandomRange": {
+          "x": 0.4,
+          "y": 0.4
+        },
+        "visitEveryCheckPoint": true,
+        "visitEveryNodeCenter": false,
+        "visitEveryTileCenter": false
+      }
+    ],
+    "waves": [
+      {
+        "index": 0,
+        "duration": 151,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Ursus Assault Crossbowman",
+            "enemy_id": "enemy_1109_uabone",
+            "count": 1,
+            "time": 5,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Ursus Mangler",
+            "enemy_id": "enemy_1108_uterer",
+            "count": 1,
+            "time": 15,
+            "route": 2,
+            "fragment": 1
+          },
+          {
+            "enemy": "Ursus Mangler",
+            "enemy_id": "enemy_1108_uterer",
+            "count": 1,
+            "time": 31,
+            "route": 3,
+            "fragment": 1
+          },
+          {
+            "enemy": "Ursus Mangler",
+            "enemy_id": "enemy_1108_uterer",
+            "count": 2,
+            "time": 44,
+            "interval": 4,
+            "route": 3,
+            "fragment": 1
+          },
+          {
+            "enemy": "Ursus Mangler",
+            "enemy_id": "enemy_1108_uterer",
+            "count": 2,
+            "time": 58,
+            "interval": 4,
+            "route": 3,
+            "fragment": 1
+          },
+          {
+            "enemy": "Ursus Assault Crossbowman",
+            "enemy_id": "enemy_1109_uabone",
+            "count": 1,
+            "time": 53,
+            "route": 4,
+            "fragment": 1
+          },
+          {
+            "enemy": "Ursus Assault Crossbowman",
+            "enemy_id": "enemy_1109_uabone",
+            "count": 1,
+            "time": 78,
+            "route": 5,
+            "fragment": 1
+          },
+          {
+            "enemy": "Army Infiltrator",
+            "enemy_id": "enemy_10120_uaghst",
+            "count": 1,
+            "time": 43,
+            "route": 6,
+            "fragment": 1
+          },
+          {
+            "enemy": "Army Infiltrator",
+            "enemy_id": "enemy_10120_uaghst",
+            "count": 1,
+            "time": 83,
+            "route": 7,
+            "fragment": 1
+          },
+          {
+            "enemy": "Ursus Assault Crossbowman",
+            "enemy_id": "enemy_1109_uabone",
+            "count": 1,
+            "time": 106,
+            "route": 8,
+            "fragment": 2
+          },
+          {
+            "enemy": "Ursus Mangler",
+            "enemy_id": "enemy_1108_uterer",
+            "count": 2,
+            "time": 118,
+            "interval": 3,
+            "route": 3,
+            "fragment": 2
+          },
+          {
+            "enemy": "Ursus Mangler",
+            "enemy_id": "enemy_1108_uterer",
+            "count": 2,
+            "time": 149,
+            "interval": 2,
+            "route": 3,
+            "fragment": 2
+          },
+          {
+            "enemy": "Army Infiltrator",
+            "enemy_id": "enemy_10120_uaghst",
+            "count": 3,
+            "time": 119,
+            "interval": 15,
+            "route": 7,
+            "fragment": 2
+          },
+          {
+            "enemy": "Army Infiltrator",
+            "enemy_id": "enemy_10120_uaghst",
+            "count": 1,
+            "time": 127,
+            "route": 9,
+            "fragment": 2
+          },
+          {
+            "enemy": "Army Infiltrator",
+            "enemy_id": "enemy_10120_uaghst",
+            "count": 1,
+            "time": 130,
+            "route": 10,
+            "fragment": 2
+          },
+          {
+            "enemy": "Army Infiltrator",
+            "enemy_id": "enemy_10120_uaghst",
+            "count": 1,
+            "time": 133,
+            "route": 11,
+            "fragment": 2
+          }
+        ]
+      }
+    ],
+    "spawnTiles": [
+      {
+        "key": "tile_start",
+        "row": 1,
+        "col": 10,
+        "routes": [
+          2,
+          3,
+          3,
+          3,
+          3,
+          3
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 3,
+        "col": 9,
+        "routes": [
+          6,
+          7,
+          7,
+          7,
+          7,
+          9,
+          10,
+          11
+        ]
+      }
+    ],
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 3,
+        "col": 0,
+        "routes": [
+          0,
+          2,
+          3,
+          3,
+          3,
+          4,
+          5,
+          6,
+          7,
+          7,
+          8,
+          3,
+          3,
+          7,
+          7,
+          9,
+          10,
+          11
+        ]
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_10120_uaghst",
+        "slug": "army_infiltrator",
+        "name": "Army Infiltrator",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1108_uterer",
+        "slug": "ursus_mangler",
+        "name": "Ursus Mangler",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1109_uabone",
+        "slug": "ursus_assault_crossbowman",
+        "name": "Ursus Assault Crossbowman",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_3010_mcreep",
+        "slug": "miner_guerrilla",
+        "name": "Miner Guerrilla",
+        "database_level": 0
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [],
+      "deployable_tokens": []
+    },
+    "hasConditionalSpawns": true
+  },
+  "conditional": [
+    {
+      "enemy": "Army Infiltrator",
+      "enemy_id": "enemy_10120_uaghst",
+      "count": 1,
+      "time": 63,
+      "route": 7,
+      "wave": 0,
+      "fragment": 1,
+      "source": "wave",
+      "condition": {
+        "hidden_group": "raid"
+      }
+    },
+    {
+      "enemy": "Army Infiltrator",
+      "enemy_id": "enemy_10120_uaghst",
+      "count": 3,
+      "time": 116,
+      "interval": 15,
+      "route": 7,
+      "wave": 0,
+      "fragment": 2,
+      "source": "wave",
+      "condition": {
+        "hidden_group": "raid"
+      }
+    },
+    {
+      "enemy": "Miner Guerrilla",
+      "enemy_id": "enemy_3010_mcreep",
+      "count": 1,
+      "time": 0,
+      "route": 0,
+      "phase": 0,
+      "branch": "mcreep_route",
+      "source": "branch"
+    }
+  ],
+  "devices": [
+    {
+      "col": 1,
+      "description": "Periodically calls over a Miner Guerrilla",
+      "hidden": false,
+      "key": "trap_270_spawnp",
+      "kind": "device",
+      "name": "Hidden Tunnel",
+      "row": 4
+    },
+    {
+      "col": 4,
+      "description": "Fills its Attack Range with Toxic Pollution",
+      "hidden": false,
+      "key": "trap_271_fowstn",
+      "kind": "device",
+      "name": "Heavily Polluted Facility",
+      "row": 4
+    },
+    {
+      "col": 8,
+      "description": "Fills its Attack Range with Toxic Pollution",
+      "hidden": false,
+      "key": "trap_271_fowstn",
+      "kind": "device",
+      "name": "Heavily Polluted Facility",
+      "row": 4
+    },
+    {
+      "col": 3,
+      "description": null,
+      "hidden": false,
+      "key": "trap_272_nomstn",
+      "kind": "device",
+      "name": "Rock Wall",
+      "row": 5
+    },
+    {
+      "col": 4,
+      "description": null,
+      "hidden": false,
+      "key": "trap_272_nomstn",
+      "kind": "device",
+      "name": "Rock Wall",
+      "row": 5
+    }
+  ]
+}

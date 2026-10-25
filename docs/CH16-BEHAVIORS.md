@@ -97,6 +97,37 @@ checksum and parameter signature in `arkpedia-ch16-reviewed-engagement.json`.
 The extractor does not rewrite that approval record. Wrapper counts alone or
 changed range parameters no longer clear its support gate.
 
+The extractor also retains native CircleCollider2D and Rigidbody2D components.
+Both structure StopMcreep children use a radius of approximately 0.8; this is a
+separate contact field from the facility's `x-2` shadow range. The physics-only
+extension added 17 components while leaving every previously reviewed row,
+template and table byte unchanged. The engagement checksum was reviewed for
+that additive evidence change; its exact behavior/parameter checks remain.
+
+### Canonical stage route repair
+
+The existing canonical 16-3 export retained original conditional wave indices
+10/14 after main-route deduplication and omitted its miner extra route. The
+producer correction is draft Arkpedia PR #763 at `5556df22`; the compiler-produced
+data preview is draft arkpedia-data PR #44 at
+`e49aaf3cc8ab09c5730a3dd81cead2e1a6ae005d`. Hosted data validation passed and
+publication was skipped. The preview uses current dev's normal compiler, so its
+generated page-prop/route changes are included; it is not a production release.
+
+`arkpedia-ch16-stage.lock.json` pins all stage inputs, release manifest and route
+receipt. `canonical-stage.mjs` uses the shared all-input checksum transport and
+then verifies the release inventory and producer/upstream receipts. It retains
+the result in `data/candidates/arkpedia-stage-16-3-source.json`, explicitly
+`testOnly: true, admitted: false`. Conditional waves use main route 7; the miner
+branch separately uses extra route 0 with exact reach offsets and traversal
+settings. This source refresh does not alter the enemy snapshot pin or admit
+16-3. Facility/tunnel integration and branch traversal still precede admission.
+
+```sh
+node tools/arkpedia/canonical-stage.mjs
+node --test test/arkpedia-canonical-stage.test.js test/arkpedia-canonical-data.test.js
+```
+
 ```sh
 .cache/map-env/bin/python tools/arkpedia/extract-ch16-devices.py --check
 node --test test/arkpedia-ch16-shadow.test.js
