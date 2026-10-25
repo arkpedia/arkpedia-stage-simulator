@@ -2,6 +2,8 @@
 // The CI shard split must be a partition: every test file once, no duplicates.
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 import { readdirSync } from 'node:fs';
 import { testFilesForShard } from '../tools/run-tests.mjs';
 
@@ -30,3 +32,9 @@ for (const total of [2, 3, 5]) {
     assert.deepEqual([...new Set(seen)].sort(), ALL);
   });
 }
+
+test('the actual CLI enters its main function on the host platform and lists the selected shard', () => {
+  const output = execFileSync(process.execPath, [fileURLToPath(new URL('../tools/run-tests.mjs', import.meta.url)), '--list'],
+    { encoding: 'utf8', env: { ...process.env, SHARD_TOTAL: '2', SHARD_INDEX: '1' } });
+  assert.deepEqual(JSON.parse(output), testFilesForShard(2, 1).map(name => fileURLToPath(new URL('../test/' + name, import.meta.url))));
+});
