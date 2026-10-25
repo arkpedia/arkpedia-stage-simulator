@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Exact hidden 17-16 build only. No public module/card/stage admission.
-import{createHash}from'node:crypto';
+import{jsonSourceDigest as digest}from'../../../shared/arkpedia/source-digest.js';
 import tables from '../../../data/candidates/arkpedia-stage-predefined-module-tables.json' with{type:'json'};
 import native from '../../../data/candidates/arkpedia-stage-predefined-module-native.json' with{type:'json'};
 import{recordFor}from'../../../shared/arkpedia/loadout.js';
-const ID='char_4023_rfalcn',KEY='uniequip_002_rfalcn',digest=x=>createHash('sha256').update(JSON.stringify(x)).digest('hex');
+const ID='char_4023_rfalcn',KEY='uniequip_002_rfalcn';
 export function verifyKestrelStageModule(t=tables,n=native){
  const m=t.modules[KEY],cards=t.stages['17-16'].predefines.characterCards.filter(c=>c.inst.characterKey===ID);
  if(digest(m)!=='783df0999dbb148d0c71d4e4cb330958013958359a4bc374caec5290357c0f02'

@@ -1,12 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Exact hidden 17-16 card only; public module and stage admission stay closed.
-import {createHash} from 'node:crypto';
+import {jsonSourceDigest as digest} from '../../../shared/arkpedia/source-digest.js';
 import tables from '../../../data/candidates/arkpedia-stage-predefined-module-tables.json' with {type:'json'};
 import native from '../../../data/candidates/arkpedia-stage-predefined-module-native.json' with {type:'json'};
 import aliases from '../../../data/candidates/arkpedia-blockee-event-alias-source.json' with {type:'json'};
 import {recordFor} from '../../../shared/arkpedia/loadout.js';
 const ID='char_488_buildr',KEY='uniequip_002_buildr';
-const digest=x=>createHash('sha256').update(JSON.stringify(x)).digest('hex');
 export function verifyPoncirusStageModule(t=tables,n=native,a=aliases){
  const m=t.modules[KEY],cards=t.stages['17-16'].predefines.characterCards.filter(c=>c.inst.characterKey===ID);
  // Whole retained records bind all flags, recipients, derived-buff ownership,

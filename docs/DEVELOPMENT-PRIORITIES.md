@@ -1642,3 +1642,31 @@ Ptilopsis full matrix 40237601264 were still in progress at this checkpoint.
 The expanded focused run passed all 1,582 locally available cases. A final
 runtime guard additionally rejects an S1 ability presented with unchanged S2
 build metadata; all 11 module/composition cases passed with that check too.
+
+## Portable module receipts and browser startup regression
+
+Kestrel continuation 40238691150 failed all twelve browser jobs on startup;
+its local mechanics results were insufficient to detect that shared-runtime
+regression. A local headless Edge reproduction captured the exact cause:
+the browser requested node:crypto and rejected the unsupported module scheme.
+The whole-record digest imports introduced with Poncirus were Node-only even
+though the simulator is also imported directly by the browser.
+
+Poncirus, Kestrel and Mulberry now use a shared synchronous UTF-8 JSON SHA256
+implementation with no platform imports. Expected source receipts and their
+complete-record coverage remain unchanged. Independent Node crypto comparisons
+cover UTF-8/surrogate inputs, all padding boundaries through multiple blocks,
+a long input and every retained predefined module, prefab, template and card.
+All 30 affected module/composition cases and both digest checks passed. The
+real 17-12 browser check also passed in installed headless Edge, covering
+desktop/phone startup, public-access rejection and restart. The original
+failed run remains a failure; only a later checkpoint can validate the fix.
+The real 16-14 headless Edge test also passed, including natural SP, the tunnel
+command, keyboard input, mobile layout and restart. No test timeout was raised
+or browser assertion weakened to repair the import regression.
+All three affected source-gated builders also executed successfully inside
+headless Edge. The portable digest matched browser Web Crypto on a Unicode,
+multi-block JSON input, independently of the Node reference checks.
+The final expanded focused run passed all 1,584 locally available cases with
+the portable verifier. The four quarantined tests remain retained in Git and
+hosted CI, and all stage/public-module admission gates remain unchanged.

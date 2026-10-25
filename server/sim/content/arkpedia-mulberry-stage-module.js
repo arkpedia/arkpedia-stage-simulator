@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Exact hidden S2 card only; no public module/card or stage admission.
-import{createHash}from'node:crypto';
+import{jsonSourceDigest as digest}from'../../../shared/arkpedia/source-digest.js';
 import tables from '../../../data/candidates/arkpedia-stage-predefined-module-tables.json' with{type:'json'};
 import native from '../../../data/candidates/arkpedia-stage-predefined-module-native.json' with{type:'json'};
 import{recordFor}from'../../../shared/arkpedia/loadout.js';
-const ID='char_473_mberry',KEY='uniequip_002_mberry',digest=x=>createHash('sha256').update(JSON.stringify(x)).digest('hex');
+const ID='char_473_mberry',KEY='uniequip_002_mberry';
 export function verifyMulberryStageModule(t=tables,n=native){
  const m=t.modules[KEY],cards=t.stages['17-16'].predefines.characterCards.filter(c=>c.inst.characterKey===ID);
  // Full-record receipts include the native S1-only modifier. It cannot be
