@@ -90,7 +90,7 @@ for (const type of ['phys','arts']) test(`war shield ${type}: threshold uses raw
 });
 
 test('war caster completes seven channel pulses then waits the full fifteen-second cooldown', () => {
-  const { h, e, a } = battle(keys[4], [unit()]); a.left=0; h.run(7.1);
+  const { h, e, a } = battle(keys[4], [unit()]); e.atkCd=100; a.left=0; h.run(7.1);
   assert.equal(e.s.atk,1100); assert.ok(!a.target); h.run(14.8); assert.ok(!a.target); h.run(.2); assert.ok(a.target);
 });
 
@@ -200,7 +200,7 @@ test('ordinary Fungi projectile uses native speed10, respects Arts dodge, and su
 });
 
 test('native link flight gates first hit, then repeats at one-second intervals',()=>{
-  const {h,b,e,a}=battle(keys[4],[unit(500,{row:10,col:4})]),u=h.allies()[0];a.left=0;h.run(.1);near(u.s.atk,500);
+  const {h,b,e,a}=battle(keys[4],[unit(500,{row:10,col:4})]),u=h.allies()[0];e.atkCd=100;a.left=0;h.run(.1);near(u.s.atk,500);
   h.run(.2);near(u.s.atk,450);h.run(.9);near(u.s.atk,450);h.run(.1);near(u.s.atk,400);
 });
 

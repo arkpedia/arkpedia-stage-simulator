@@ -368,3 +368,62 @@ independently reproduces all four prefabs. Hosted source reproduction includes
 this family alongside the prior five families; range-table verification uses
 the retained complete original bytes, SHA256 and upstream Git-blob identity.
 The four tracked locally unavailable tests remain hosted-run requirements.
+
+## Stronger War Caster and predefined-operator guard
+
+The stronger War Caster now has an exact-record controller including its one-shot
+Leave skill. Complete base/strong graphs retain 40 indexed components, two
+projectiles, seven templates and two original clock receipts. Leave becomes ready
+120 seconds after deployment, ignores silence and disarm, and commits once when
+the caster is visible and free of intrinsic action control. The priority-one
+retirement interrupts a lock, aliases Die to Leave and uses the native instant-
+kill path without marking a route exit. Its zero LP value remains canonical.
+Skill scheduling/preemption and refresh/frame timing remain explicit local
+mappings rather than compiled/frame claims.
+
+A separate callback receipt independently corroborates event 61 as
+ON_BEFORE_TARGET_APPLY_MODIFIER (three unchanged source witnesses) and event 10
+as ON_TAKE_DAMAGE (75 matches, three retained witnesses). Existing five-event
+receipts remain byte-identical. The shared caster's active lock buff now uses
+genuine accepted modifier receipts rather than net HP loss for theft. Full
+shield absorption and zero HP damage still allow theft; protected, missed,
+cancelled and fabricated receipts do not. A born ordinary splash arriving during
+a lock can also trigger this owner buff on each accepted recipient. Two older
+channel-only tests now suppress unrelated ordinary attacks in their fixtures.
+
+Source/victim deployment identities, the 2050 gain cap and at-least-one target ATK
+remain enforced. Retirement clears owned target reductions, source gains, lock,
+shield and restoration callbacks; reentrant source death cannot continue a pulse
+or leave a newly accepted hold behind. Born splash retains recipient/source life
+guards and the original source view after object reuse. Thirty dedicated checks
+cover these behaviors and exact support rejection cases.
+
+17-16 remains unadmitted despite its enemy support: the source also owns
+predeployed Viy (phase2 level90, raw potentialRank5/favorPoint100 and
+skillIndex2/mainSkillLvl8), four initially hidden
+operator cards with ACTIVATE_PREDEFINED tutorial actions, and DIALOG/STORY source
+references. Those must be implemented and verified rather than made available
+from time zero. 17-14's predefined Closure also carries a level 3 module requiring
+its own mechanics audit. The candidate compiler now rejects unsupported
+predefined operator instances and hidden/tutorial card activation before output.
+
+Candidate support is 475/1,901; 1,426 canonical enemies remain unsupported. The
+catalogue stays 622 entries, 597 public and 25 test-only, with nine normal Chapter
+16/17 candidates still gated. The complete operator/module audit and all visual
+phases remain open. Hosted results for the newer enemy checkpoint are separate
+from earlier successes.
+
+The 2e6ecc00 continuation checkpoint passed all fifteen hosted jobs. The older
+8507929e full matrix run 40192086233 completed seven successful shards and failed
+Windows Node 22 shard 1 solely when the aggregate stage-continuation file exceeded
+its 180-second file deadline. That aggregate now uses the existing bounded 600s
+class for long catalogue/match sweeps, retaining every stage, seed and assertion;
+ordinary files keep 180s and game timeouts are unchanged. A new exact-head full
+run is required rather than treating the timeout as a passing result.
+
+Local verification passes all 631 available focused tests and the six existing
+shard/CLI partition checks. Graph, indexed-component, original-clock and new
+event-alias extraction independently reproduce the retained receipts. All
+test-only generated paths retain their canonical wait/teleport contracts. The
+four locally quarantined tracked test files remain required in hosted CI and
+are preserved in Git; their local absence is not staged as deletion.

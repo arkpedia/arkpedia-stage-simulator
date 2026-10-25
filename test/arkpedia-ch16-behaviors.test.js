@@ -39,12 +39,15 @@ test('war caster raw threshold breaks the shield without swallowing the breaking
   assert.equal(e.s.def, 900); assert.equal(e.s.res, 40);
 });
 
-test('war caster restores shield only from a Leak Source and steals ATK during its channel', () => {
+test('war caster restores shield from a Leak Source and the active lock observes ordinary and channel modifiers', () => {
   const { h, b, e, a } = battle(keys[4], [{ stats: { atk: 500, def: 0, maxHp: 50000 }, rangeGrid: [[0, 0]] }]);
   const u = h.allies()[0];
   b.dealDamage(null, e, { amount: 1200, type: 'arts' }); h.run(5.1);
   assert.equal(e.mem.ch16Shield, false); pollute(b, e); assert.equal(e.mem.ch16Shield, true);
-  a.left = 0; h.run(.3); assert.equal(u.s.atk, 450); assert.equal(e.s.atk, 800);
+  const receipts=[];b.on('beforeTargetModifier',c=>{if(c.source===e&&a.target&&c.outcome==='accepted')receipts.push(c.dmg.isAttack);});
+  // The ordinary projectile born just before the lock also reaches its victim
+  // while the native ON_BEFORE_TARGET_APPLY_MODIFIER owner buff is affecting.
+  a.left = 0; h.run(.3);assert.deepEqual(receipts,[true,false]);assert.equal(u.s.atk,400);assert.equal(e.s.atk,850);
   b.kill(e, null); assert.equal(u.s.atk, 500);
 });
 

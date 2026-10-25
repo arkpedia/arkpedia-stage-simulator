@@ -17,6 +17,7 @@ import guardianReview from '../../data/candidates/arkpedia-ch16-reviewed-story-g
 import flyerReview from '../../data/candidates/arkpedia-ch17-reviewed-flyer.json' with { type: 'json' };
 import bagReview from '../../data/candidates/arkpedia-ch17-reviewed-bag.json' with { type: 'json' };
 import channelCarrierReview from '../../data/candidates/arkpedia-ch17-reviewed-channel-carrier.json' with { type: 'json' };
+import warCasterReview from '../../data/candidates/arkpedia-ch17-reviewed-war-caster.json' with {type:'json'};
 const MINER_TEXT = "Allied unit; recovers HP when within any Medic Operator's Attack Range";
 const groups = { TileEscapeShadowManager: ['times'], GetHeal: ['heal_scale'], FearLoseBlood: ['value'] };
 function minerCovered(r, n) {
@@ -213,5 +214,10 @@ function chapter17Features() {
   out['skill:ChargeRift']=familyUnion(out['skill:ChargeRift'],familyFeature(channelCarrierReview,'channelCarrier','ch17StrongChannel'));
   out['talent:DeadSummon']=familyUnion(out['talent:DeadSummon'],{
     ...familyFeature(channelCarrierReview,'channelCarrier','ch17StrongCarrier'),dependsOn:()=>['enemy_10211_murad']});
+  out['talent:Shiled']=familyUnion(out['talent:Shiled'],familyFeature(warCasterReview,'warCaster','ch17StrongWarCaster'));
+  for(const id of ['talent:StealAtk','skill:GetShield','skill:LockDamage']){
+    const previous=out[id];out[id]={...previous,covers:(r,n)=>previous.covers(r,n)||familyCovered(warCasterReview,'warCaster',r,n)};
+  }
+  out['skill:Leave']={covers:(r,n)=>familyCovered(warCasterReview,'warCaster',r,n),note:'One-shot retirement is owned by the stronger War Caster controller.'};
   return out;
 }

@@ -17,6 +17,7 @@ import { existsSync } from 'node:fs';
 import { basename, dirname, join } from 'node:path';
 import { createHash } from 'node:crypto';
 import { applyReviewedHiddenGroups } from './reviewed-hidden-groups.mjs';
+import {assertCandidatePredefines} from './candidate-predefines.mjs';
 import { stageAdapter } from '../../server/sim/arkpedia.js';
 import { STAGE_TOKEN_UNITS } from '../../shared/arkpedia/stage-devices.js';
 import { mergePristineHiddenGroups } from '../../shared/arkpedia/stage-conditional.js';
@@ -78,6 +79,7 @@ if (args.candidate === 'ch16') {
     if (chapter16Source.testOnly !== true || chapter16Source.stage.slug !== source.slug
       || chapter16Source.rawLevel.options.moveMultiplier !== chapter16Review.expected.moveMultiplier)
       throw Error('Unreviewed ' + source.code + ' level contract');
+    assertCandidatePredefines(chapter16Source);
     applyReviewedHiddenGroups(geometry, chapter16Source, chapter16Review.expected);
   }
   const raw = await readFile(new URL('../../data/candidates/arkpedia-enemy-records.canonical.json', import.meta.url));

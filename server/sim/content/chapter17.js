@@ -4,6 +4,7 @@ import { COLS } from '../constants.js';
 import { canTargetAlly, areaSelectable, aggroCmp } from '../targeting.js';
 import markerReview from '../../../data/candidates/arkpedia-ch17-reviewed-marker.json' with { type: 'json' };
 import {captureEnemySource} from './enemy-source-view.js';
+import {isCurrentTargetModifierReceipt} from '../damage.js';
 const live = u => u?.alive && u.deployed && !u.hidden;
 const sameLife = (u, seq) => live(u) && u.deploySeq === seq;
 const sk = (r, key) => r.skills.find(s => s.prefabKey === key);
@@ -219,7 +220,7 @@ function updateTheft(b, target) {
   const entries = target.mem.ch17Theft;
   let best = 0;
   for (const [source, data] of entries ?? []) {
-    if (!source.alive || target.deploySeq !== data.seq) { entries.delete(source); continue; }
+    if (!source.alive || source.deploySeq!==data.sourceLife || target.deploySeq !== data.seq) { entries.delete(source); continue; }
     best = Math.max(best, data.value);
   }
   if (best) b.addBuff(target, { key: 'ch17:stolen-atk', persist: true, refresh: 'replace', mods: { atkFinalFlat: -best } });
@@ -230,30 +231,48 @@ export function stealAttack(b, e, a, target, r) {
   const take = Math.max(0, Math.min(bb(r, 'StealAtk', 'steal_atk'), target.s.atk - 1, bb(r, 'StealAtk', 'steal_atk_max') - total));
   if (!take) return;
   const entries = target.mem.ch17Theft ??= new Map();
-  const old = entries.get(e), value = (old?.seq === target.deploySeq ? old.value : 0) + take;
-  entries.set(e, { seq: target.deploySeq, value }); a.stolen.add(target); a.totalStolen = total + take;
+  const old = entries.get(e), value = (old?.seq === target.deploySeq && old.sourceLife===e.deploySeq ? old.value : 0) + take;
+  entries.set(e, { seq: target.deploySeq, sourceLife:e.deploySeq, value }); a.stolen.add(target); a.totalStolen = total + take;
   updateTheft(b, target);
-  b.addBuff(e, { key: 'ch16:stolen', persist: true, refresh: 'replace', mods: { atkFinalFlat: a.totalStolen } });
+  a.stolenBuff=b.addBuff(e, { key: 'ch16:stolen', persist: true, refresh: 'replace', mods: { atkFinalFlat: a.totalStolen } });
 }
 function shield(b, e, r) {
   e.mem.ch16Shield = true;
-  b.addBuff(e, { key: 'ch16:shield', persist: true, refresh: 'replace', mods: { defPct: bb(r, 'Shiled', 'def'), resFlat: bb(r, 'Shiled', 'magic_resistance') } });
+  return b.addBuff(e, { key: 'ch16:shield', persist: true, refresh: 'replace', mods: { defPct: bb(r, 'Shiled', 'def'), resFlat: bb(r, 'Shiled', 'magic_resistance') } });
 }
 export function warCaster(r) {
-  const s = sk(r, 'LockDamage');
-  const end = (b, e, a) => { a.target = null; b.removeBuff(e, 'ch16:lock'); a.left = s.cooldown; };
+  const s = sk(r, 'LockDamage'),leave=sk(r,'Leave');
+  const end = (b, e, a) => { a.target = null; b.removeBuff(e,a.hold);a.hold=null;a.left = s.cooldown; };
   return {
     spawn(b, e, a) {
-      shield(b, e, r); a.left = s.initCooldown; a.stolen = new Set(); e.profile.deferHit = true;
-      e.mem.ch16RestoreShield = () => {
+      a.active=true;a.life=e.deploySeq;a.born=b.time;a.leaveUsed=false;
+      a.valid=()=>a.active&&e.alive&&e.deployed&&e.deploySeq===a.life;
+      a.left = s.initCooldown; a.stolen = new Set(); e.profile.deferHit = true;
+      a.retire=()=>{
+        if(!a.active)return;a.active=false;end(b,e,a);
+        for(const target of a.stolen){if(target.mem.ch17Theft?.get(e)?.sourceLife===a.life)target.mem.ch17Theft.delete(e);updateTheft(b,target);}
+        a.stolen.clear();b.removeBuff(e,a.stolenBuff);b.removeBuff(e,a.shieldBuff);
+        if(e.mem.ch16RestoreShield===a.restore)delete e.mem.ch16RestoreShield;
+        if(e.deploySeq===a.life)e.mem.ch16Shield=false;
+      };
+      a.restore = () => {
         // Native enemy_muwiz_t checks !CheckEnemySkillAffecting before its
         // forced GetShield. It ignores cooldown, but does not replace LockDamage.
-        if (!e.mem.ch16Shield && !a.target && !intrinsicControl(e)) { shield(b, e, r); e.atkCd = e.s.interval; }
+        if (a.valid()&&!e.hidden&&!e.mem.ch16Shield&&!a.target&&!intrinsicControl(e)) { a.shieldBuff=shield(b,e,r);e.atkCd=e.s.interval; }
       };
+      e.mem.ch16RestoreShield=a.restore;
       b.on('death', ({ unit }) => {
-        if (unit === e) for (const target of a.stolen) { target.mem.ch17Theft?.delete(e); updateTheft(b, target); }
+        if (unit === e) a.retire();
         else if (a.stolen.has(unit)) { unit.mem.ch17Theft?.clear(); b.removeBuff(unit, 'ch17:stolen-atk'); }
       }, { owner: e });
+      b.on('removed',({unit})=>{if(unit===e)a.retire();},{owner:e});b.on('battleEnd',a.retire,{owner:e});
+      b.on('beforeTargetModifier',c=>{
+        if(isCurrentTargetModifierReceipt(c)&&c.outcome==='accepted'&&c.source===e&&a.valid()&&!e.hidden
+          &&a.target&&sameLife(a.target,a.seq)&&!intrinsicControl(e)&&!e.s.flags.silence
+          &&a.epoch===e.actionControlEpoch&&a.silenceEpoch===e.silenceEpoch&&c.target.deploySeq===c.targetLife)
+          stealAttack(b,e,a,c.target,r);
+      },{owner:e});
+      a.shieldBuff=shield(b,e,r);if(!a.valid())b.removeBuff(e,a.shieldBuff);
     },
     hitIn(c, b, e) {
       if (!e.mem.ch16Shield || !['phys', 'arts'].includes(c.dmg.type)) return;
@@ -261,30 +280,48 @@ export function warCaster(r) {
       else { e.mem.ch16Shield = false; b.removeBuff(e, 'ch16:shield'); }
     },
     attack(c, b, e) {
+      const life=e.deploySeq,snapshot=captureEnemySource(e);
       for (const target of c.targets) b.addProjectile({ from: e, target, speed: 8, source: e, maxAge: 10,
         onHit(c) {
-          for (const u of opponents(b, c.x, c.y, 1)) if (areaSelectable(e, u)) hit(b, e, u, e.s.atk, 'arts', { canDodge: true });
+          const source=e.deploySeq===life?e:snapshot;
+          const targets=opponents(b,c.x,c.y,1).filter(u=>areaSelectable(source,u)).map(u=>[u,u.deploySeq]);
+          for(const[u,seq]of targets){const current=e.deploySeq===life?e:snapshot;if(sameLife(u,seq)&&areaSelectable(current,u))hit(b,current,u,current.s.atk,'arts',{canDodge:true});}
         } });
     },
     tick(b, e, a, dt) {
+      if(!a.active)return;
+      if(!a.valid()){a.retire();return;}
+      // The priority-one no-target Leave spell is one-shot and ignores silence.
+      // Its native instant-kill action does not mark a route exit or lose LP.
+      if(leave&&!a.leaveUsed&&b.time-a.born>=leave.initCooldown-1e-8&&!e.hidden&&!intrinsicControl(e)){
+        a.leaveUsed=true;end(b,e,a);e.mem.ch17WarCasterLeave=true;b.kill(e,e);
+        b.emit('ch17WarCasterLeave',{source:e,sourceLife:a.life,age:b.time-a.born});return;
+      }
       if (a.target) {
-        if (!sameLife(a.target, a.seq) || intrinsicControl(e) || e.actionControlEpoch !== a.epoch) { end(b, e, a); return; }
+        if (e.hidden||!sameLife(a.target, a.seq) || intrinsicControl(e) || e.actionControlEpoch !== a.epoch
+          ||e.s.flags.silence||e.silenceEpoch!==a.silenceEpoch) { end(b, e, a); return; }
         a.elapsed += dt;
         while (a.elapsed >= a.next - 1e-9 && a.next < s.bb.hit_duration - 1e-9) {
-          const target = a.target, before = target.hp;
+          const target = a.target;
           hit(b, e, target, e.s.atk * s.bb.atk_scale, 'arts', { isAttack: false, tags: ['chapter17', 'dot', 'periodic'] });
-          if (target.hp < before && target.alive) stealAttack(b, e, a, target, r);
           a.next += 1;
+          if(!a.active||a.target!==target)return;
+          if(!a.valid()){a.retire();return;}
+          if(!sameLife(target,a.seq)){end(b,e,a);return;}
         }
         if (a.elapsed >= s.bb.hit_duration - 1e-9) end(b, e, a);
         return;
       }
       a.left -= dt;
-      if (a.left > 1e-9 || controlled(e)) return;
+      if (a.left > 1e-9 || e.hidden||controlled(e)||e.s.flags.silence) return;
       a.target = b.alliesInRadius(e.x, e.y, r.stats.rangeRadius).filter(u => !u.isFlying && !u.s.flags.liftoff && canTargetAlly(e, u, true)).sort(aggroCmp)[0];
-      if (a.target) { lock(b, e, 'ch16:lock'); a.seq = a.target.deploySeq; a.elapsed = 0; a.next = dist(e, a.target) / 10; void e.s; a.epoch = e.actionControlEpoch; }
+      if (a.target) {
+        const target=a.target,seq=target.deploySeq,hold=lock(b,e,'ch16:lock');a.hold=hold;
+        if(!hold||!a.valid()||a.target!==target||!sameLife(target,seq)){b.removeBuff(e,hold);if(a.active)end(b,e,a);return;}
+        a.seq=seq;a.elapsed=0;a.next=dist(e,target)/10;void e.s;a.epoch=e.actionControlEpoch;a.silenceEpoch=e.silenceEpoch;
+      }
     },
-    death(c, b, e, a) { end(b, e, a); },
+    death(c, b, e, a) { a.retire(); },
   };
 }
 export function pollute(b, target) {

@@ -15,6 +15,7 @@ import { storyGuardian } from './chapter16-story-guardian.js';
 import { pollutionFlyer } from './chapter17-flyer.js';
 import { pollutionBag } from './chapter17-bag.js';
 import {strongChannel,strongCarrier} from './chapter17-channel-carrier.js';
+import {strongWarCaster}from'./chapter17-war-caster.js';
 
 const ABILITIES = Object.freeze({
   nativeDuckRun,
@@ -23,6 +24,7 @@ const ABILITIES = Object.freeze({
   ch17PollutionBag: pollutionBag,
   ch17StrongChannel:strongChannel,
   ch17StrongCarrier:strongCarrier,
+  ch17StrongWarCaster:strongWarCaster,
   ch16StoryGuardian: storyGuardian,
   ...chapter16Abilities,
   blockMcreep,

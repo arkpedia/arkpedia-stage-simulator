@@ -46,10 +46,12 @@ if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1]
   // complete simulations in one file.
   // Node 22 hosted runners exceeded the generic 180s file deadline, while
   // individual scenarios completed normally. The catalogue sweep also exceeded
-  // that file-wide deadline on Windows Node 22. Keep every stage, seed and
+  // that file-wide deadline on Windows Node 22. The aggregate continuation
+  // file also exceeded180s in run40192086233 while its focused job and the
+  // other seven full matrix shards passed. Keep every stage, seed and
   // assertion; isolate these aggregate files with a bounded ten-minute deadline.
   const long = files.filter(file => /[\\/]match[\\/]fullmatch[^\\/]*\.test\.js$/.test(file)
-    || /[\\/]arkpedia-stage-(?:smoke|files)\.test\.js$/.test(file));
+    || /[\\/]arkpedia-stage-(?:smoke|files|mechanics-continuation)\.test\.js$/.test(file));
   const ordinary = files.filter(file => !long.includes(file));
   let failed = false;
   const repo = fileURLToPath(new URL('../', import.meta.url));
