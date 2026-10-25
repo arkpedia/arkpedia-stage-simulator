@@ -63,19 +63,16 @@ export function chapter17Environment(b) {
       }
       return child;
     },
-    expose(source) {
+    expose(source, { allSides = false } = {}) {
       for (const wall of [...env.firewalls]) {
-        if (!wall.current()) { wall.retire(); continue; }
-        const sides = wall.sides.filter(s => !s.broken).sort((a, z) => dist(a, source) - dist(z, source) || a.index - z.index);
-        wall.button = sides.length ? { side: sides[0], until: b.time + wall.duration, clicks: 0 } : null;
+        wall.expose(source, { allSides });
       }
-      b.emit('firewallVulnerability', { source });
+      b.emit('firewallVulnerability', { source, allSides });
     },
   };
   b.on('tick', ({ dt }) => {
     for (const wall of [...env.firewalls]) {
-      if (!wall.current()) wall.retire();
-      else if (wall.button && b.time >= wall.button.until) wall.button = null;
+      wall.prune();
     }
     for (const marker of env.rifts) if (marker.alive && marker.nativeMarker) {
       marker.sp = Math.min(marker.spCost, marker.sp + dt * marker.spRecovery);
@@ -394,31 +391,56 @@ export function leakSource(r) {
 /** Integration port for native boss firewall controllers. It intentionally does
  * not approve or implement the bosses' attacks/rebirth/phase transitions. */
 export function registerChapter17Firewall(b, owner, { width = 3, height = 3, duration = 5, clicks = 3, onBreak = () => {} } = {}) {
+  if (![width,height,duration].every(n=>Number.isFinite(n)&&n>0)||!Number.isSafeInteger(clicks)||clicks<1||typeof onBreak!=='function')
+    throw Error('Invalid firewall perimeter or click contract');
   const env = chapter17Environment(b), life = owner.deploySeq, handles = [];
-  const wall = { owner, ownerLife: life, duration, requiredClicks: clicks, button: null, active: true, sides: [],
+  const buttons=new Map();let generation=0,preferredSide=null;
+  const wall = { owner, ownerLife: life, id:env.nextFirewallId=(env.nextFirewallId??0)+1,
+    duration, requiredClicks: clicks, active: true, sides: [],
+    // Compatibility view for callers that expose one side. Mechanical inputs
+    // and snapshots below enumerate all simultaneously active side buttons.
+    get button(){wall.prune();return buttons.get(preferredSide)??buttons.values().next().value??null;},
     current: () => wall.active && !b.finished && owner.alive && owner.deployed && owner.deploySeq === life,
     retire() {
       if (!wall.active) return;
-      wall.active = false; wall.button = null;
+      wall.active = false; buttons.clear();
       const index = env.firewalls.indexOf(wall);
       if (index >= 0) env.firewalls.splice(index, 1);
       for (const handle of handles) b.off(handle);
+    },
+    prune(){
+      if(!wall.current()){wall.retire();return false;}
+      for(const[index,button]of buttons)if(b.time>=button.until)buttons.delete(index);
+      return true;
+    },
+    expose(source,{allSides=false}={}){
+      if(!wall.prune())return 0;
+      const sides=wall.sides.filter(s=>!s.broken);
+      if(!allSides)sides.sort((a,z)=>dist(a,source)-dist(z,source)||a.index-z.index);
+      const selected=allSides?sides:sides.slice(0,1),exposureId=++generation;
+      for(const side of selected)buttons.set(side.index,{side,until:b.time+duration,clicks:0,exposureId});
+      preferredSide=selected[0]?.index??null;return selected.length;
+    },
+    snapshot(){
+      if(!wall.prune())return[];
+      return[...buttons.values()].map(button=>({ownerId:owner.id,ownerLife:life,wallId:wall.id,side:button.side.index,
+        exposureId:button.exposureId,clicks:button.clicks,required:clicks,remaining:Math.max(0,button.until-b.time)}));
     },
     // The caller commits this at the native environment-refresh action after a
     // Blink; moving the owner alone must not prematurely move the old firewall.
     refresh() {
       if (!wall.current()) { wall.retire(); return false; }
-      wall.button = null;
+      buttons.clear();generation++;preferredSide=null;
       wall.sides = [[0, -height / 2], [width / 2, 0], [0, height / 2], [-width / 2, 0]]
         .map(([dx, dy], index) => ({ index, x: owner.x + dx, y: owner.y + dy, broken: false }));
       return true;
     },
-    click(index) {
-      if (!wall.current()) { wall.retire(); return false; }
-      const button = wall.button;
-      if (button && b.time >= button.until) wall.button = null;
-      if (!wall.button || button.side.index !== index) return false;
-      if (++button.clicks >= clicks) { button.side.broken = true; wall.button = null; onBreak(index); }
+    click(index,input=null) {
+      if(!wall.prune())return false;
+      const button=buttons.get(index);if(!button)return false;
+      if(input&&(input.ownerId!==owner.id||input.ownerLife!==life||input.wallId!==wall.id
+        ||input.side!==index||input.exposureId!==button.exposureId))return false;
+      if (++button.clicks >= clicks) { button.side.broken = true; buttons.delete(index); onBreak(index); }
       return true;
     },
   };
@@ -428,4 +450,15 @@ export function registerChapter17Firewall(b, owner, { width = 3, height = 3, dur
     b.on('removed', ({ unit }) => { if (unit === owner) wall.retire(); }, { owner: wall }),
     b.on('battleEnd', () => wall.retire(), { owner: wall }));
   return wall;
+}
+
+/** Mechanical input adapter for future stage controls. Legacy direct
+ * click(index) remains an internal integration port only. */
+export function clickChapter17Firewall(b,input){
+  if(!input||!['ownerId','ownerLife','wallId','exposureId','side'].every(k=>Number.isSafeInteger(input[k]))||input.side<0||input.side>3)return false;
+  for(const wall of [...(b.chapter16?.firewalls??[])])if(wall.id===input.wallId)return wall.click(input.side,input);
+  return false;
+}
+export function chapter17FirewallSnapshot(b){
+  return[...(b.chapter16?.firewalls??[])].flatMap(wall=>wall.snapshot());
 }

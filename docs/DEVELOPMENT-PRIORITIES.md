@@ -454,7 +454,8 @@ implementation: firewall vulnerabilities use the existing three-click/five-secon
 configuration; the snake's HP-step counter needs ten clicks in ten seconds with
 different success/failure buffs; its final counter needs fifteen clicks and uses
 the retained 999999-second duration with the same finish buff on success/failure.
-Snake initialization explicitly requests all firewall sides. The terminal buff
+Snake initialization sets `_createForAllWalls=true`; its native selection scope
+still needs verification. The terminal buff
 also finishes/skips the current wave, while timeout separately modifies LP by
 the canonical -50 value without marking a route exit. Twin recovery depends on
 the reciprocal `ally_alive` buff and current modes. These paths, checkpoint
@@ -610,3 +611,37 @@ cases. The source contract reproduces with
 fifteen continuation jobs at 8a0a0b7a; full run 40201217661 remains active and
 must be observed rather than replaced while it is running. Candidate support
 and stage counts remain unchanged.
+
+## Independent firewall side interaction state
+
+The firewall integration port now retains multiple simultaneous side windows
+instead of one mutable button per boss. Each selected side owns its three-click
+progress and five-second deadline. Reexposure resets the selected side without
+erasing another side's live progress; expired or broken sides no longer accept
+clicks. A perimeter refresh clears the previous windows, restores its sides and
+changes exposure identity. The existing single-side compatibility view remains
+available to the earlier Leak Source interaction tests.
+
+Plain snapshots and a mechanical input adapter carry the owner, deployment,
+wall-instance, side and exposure identities. Old inputs cannot progress a new
+window at the same side index, a refreshed perimeter, another owner's wall or
+a replacement wall. A break removes its button before invoking the callback, so
+reentrant refresh/exposure cannot have its new state erased by old cleanup.
+Wall retirement still removes every owned window and listener.
+
+The port supports explicit all-side exposure for future controller integration.
+The retained snake source's `_createForAllWalls=true` flag is asserted as a
+source fact; its exact compiled selection scope is not established by that field
+alone and is not automatically dispatched into this port. Independent side
+windows, reexposure replacement and input ordering are local interaction
+mappings. No boss is admitted, deployment/damage geometry is not approved, and
+no UI routing or visual/effects work is added by these internal adapters.
+
+The fourteen new source/interaction cases and the existing firewall/parity
+checks pass together (66 tests), and all 883 locally available focused mechanics
+checks pass in one run with no failures, cancellations or skips. The preceding 1cb06025 timeout checkpoint
+passed all fifteen hosted continuation jobs in run 40203285375. The full run
+40201217661 remains a separate validation handle for the earlier damage-hook
+checkpoint; five shards passed and three were still active at the checkpoint
+check. Its authoritative status must be checked again before dispatching
+another full matrix. All normal-stage and enemy-support gates remain unchanged.
