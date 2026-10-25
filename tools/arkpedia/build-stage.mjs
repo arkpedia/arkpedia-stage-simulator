@@ -16,6 +16,7 @@ import { readFile, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { basename, dirname, join } from 'node:path';
 import { createHash } from 'node:crypto';
+import { applyReviewedHiddenGroups } from './reviewed-hidden-groups.mjs';
 import { stageAdapter } from '../../server/sim/arkpedia.js';
 import { STAGE_TOKEN_UNITS } from '../../shared/arkpedia/stage-devices.js';
 import { mergePristineHiddenGroups } from '../../shared/arkpedia/stage-conditional.js';
@@ -40,11 +41,12 @@ if (args.candidate === 'ch16') {
     '16-5': 'arkpedia-ch16-reviewed-stage-16-5.json',
     '16-6': 'arkpedia-ch16-reviewed-stage-16-6.json',
     '16-7': 'arkpedia-ch16-reviewed-stage-16-7.json',
+    '16-8': 'arkpedia-ch16-reviewed-stage-16-8.json',
     '17-2': 'arkpedia-ch17-reviewed-stage-17-2.json',
     '17-3': 'arkpedia-ch17-reviewed-stage-17-3.json',
     '17-4': 'arkpedia-ch17-reviewed-stage-17-4.json',
   };
-  if (!Object.hasOwn(stageReviews, source.code)) throw Error('Candidate admission is reviewed only for test-only 16-2, 16-3, 16-4, 16-5, 16-6, 16-7, 17-2, 17-3 and 17-4');
+  if (!Object.hasOwn(stageReviews, source.code)) throw Error('Candidate admission is reviewed only for test-only 16-2, 16-3, 16-4, 16-5, 16-6, 16-7, 16-8, 17-2, 17-3 and 17-4');
   {
     const reviewPath = stageReviews[source.code];
     chapter16Review = await read(new URL('../../data/candidates/' + reviewPath, import.meta.url));
@@ -61,17 +63,7 @@ if (args.candidate === 'ch16') {
     if (chapter16Source.testOnly !== true || chapter16Source.stage.slug !== source.slug
       || chapter16Source.rawLevel.options.moveMultiplier !== chapter16Review.expected.moveMultiplier)
       throw Error('Unreviewed ' + source.code + ' level contract');
-    const groups = [...new Set(chapter16Source.conditional.filter(s => s.source === 'wave')
-      .map(s => s.condition?.hidden_group).filter(Boolean))].sort();
-    if (JSON.stringify(groups) !== JSON.stringify([...chapter16Review.expected.excludedHiddenGroups].sort()))
-      throw Error('Unreviewed excluded hidden groups for ' + source.code);
-    const runes = [...(chapter16Source.rawLevel.runes ?? []), ...Object.values(chapter16Source.rawLevel.optionalRunes ?? {}).flat()];
-    for (const group of groups) {
-      const enables = runes.filter(r => r.key === 'level_hidden_group_enable'
-        && r.blackboard?.some(bb => bb.key === 'key' && bb.valueStr === group));
-      if (!enables.length || enables.some(r => r.difficultyMask !== 'SIX_STAR'))
-        throw Error('Hidden group is not exclusively a source SIX_STAR option: ' + group);
-    }
+    applyReviewedHiddenGroups(geometry, chapter16Source, chapter16Review.expected);
   }
   const raw = await readFile(new URL('../../data/candidates/arkpedia-enemy-records.canonical.json', import.meta.url));
   if (createHash('sha256').update(raw).digest('hex') !== support.source.records.sha256)
@@ -121,7 +113,8 @@ const stage = {
   conditionalHandled: !!chapter16Source || args.allowConditional === '1',
   ...(chapter16Source ? { chapter16Source: { testOnly: true, canonicalData: chapter16Source.canonicalData,
     upstream: chapter16Source.upstream, inputs: chapter16Source.inputs, rawLevel: chapter16Source.rawLevel },
-    excludedHiddenGroups: chapter16Review.expected.excludedHiddenGroups } : {}),
+    excludedHiddenGroups: chapter16Review.expected.excludedHiddenGroups,
+    ...(chapter16Review.expected.includedHiddenGroups ? { includedHiddenGroups: chapter16Review.expected.includedHiddenGroups } : {}) } : {}),
   devices,
   tokens,
   operators: Object.keys(supportForStage).length ? supportForStage : undefined,

@@ -59,7 +59,7 @@ action closure are rejected. Extraction never rewrites the reviewed contract.
 Variants need their own native evidence and review; they are not admitted by a
 base-prefab match.
 
-`16-2`, `16-3`, `16-4`, `16-5`, `16-6`, `16-7`, `17-2`, `17-3` and `17-4` are accepted by the experimental runtime candidate registry.
+`16-2`, `16-3`, `16-4`, `16-5`, `16-6`, `16-7`, `16-8`, `17-2`, `17-3` and `17-4` are accepted by the experimental runtime candidate registry.
 16-2 retains its 42 source spawns and four canonical records. 16-3 has 22 normal
 hostile spawns plus unmanaged miner summons, using four canonical records. 16-4
 has 17 normal hostiles and four canonical records. 17-2 has 28 normal hostiles
@@ -70,7 +70,9 @@ hostiles, two independent tunnel actions and four canonical records. 16-6 retain
 24 scheduled units (21 hostiles and three neutral miners), one tunnel and four
 canonical records. 16-7 retains 36 scheduled units (26 hostiles and ten
 source-marked harmless miners), seven canonical records and native Commander
-orders. All nine require `?experimental=1`, remain `testOnly`, and verify the candidate support
+orders. 16-8 retains 35 hostiles, one tunnel, four canonical records and the
+normal ALL-enabled group0; the Six-Star replacement group1 remains excluded.
+All ten require `?experimental=1`, remain `testOnly`, and verify the candidate support
 snapshot checksum. No other Chapter 16/17 stage is admitted by this review.
 
 ### Device continuation
@@ -839,3 +841,62 @@ reports launch errors and runs all batches before reporting failure. Partition,
 actual CLI-entry and launch-budget regressions pass. The Windows limit is
 specified by [CreateProcessW](https://learn.microsoft.com/en-us/windows/desktop/api/processthreadsapi/nf-processthreadsapi-createprocessw).
 Fresh hosted verification of the batched runner remains pending.
+
+Checkpoint validation, 2026-10-25: commit `98219c33ac05f0033dfd5ece981548b260fbf470`
+passed the actual batched CI entry point locally (`SP_E2E=0 SP_REAL_E2E=0
+RENDER_E2E=0 node tools/run-tests.mjs`): 23,181 tests, 23,168 passed,
+13 skipped, zero failures/cancellations across all eight Node groups. This
+covers Commander, all nine test-only stages, canonical harmless-spawn flags,
+source checkpoint waits/teleports and the Windows argument-budget repair.
+The separate 297-test focused suite and viewed desktop/phone 16-7 command,
+natural-SP and restart checks passed. This is candidate validation; public
+admission and captured native frame/render parity remain held.
+
+### Abnormal Originium Slug and normal-play 16-8
+
+Both `enemy_10126_rkbomb` variants have an exact-record controller contract.
+The native root BlockMcreep link persists across modes. Mode 0 owns a taunt
+buff, 50% Physical/Arts reduction for non-miner sources, and fixed sourceless
+200 Arts retaliation against valid attackers. Only marked miner Physical hits
+consume the snapshot pool (10% of initial maximum HP); miner Arts/True bypass
+both pool and reduction. Pool exhaustion removes the owned shield mechanics,
+switches permanently to mode 1 and forces the one-second `Trans` clip despite
+silence/readiness. The clip is stun immune; other action control interrupts its
+owned lock, including brief control removed before the next tick. Both modes
+retain independent Attack/Combat clocks. Death and battle end clean up hooks,
+modifiers and pending tasks. Original attack events are retained but ordinary
+shared melee timing/collider and incoming native callback parity remain held.
+No death explosion is inferred from the art's unused event marker.
+
+16-8's canonical normal ALL rune enables `group0` (five slugs). Its independently
+reviewed integration includes that group, excludes optional Six-Star `group1`,
+and retains 35 hostile spawns: 20 Patrol Captains, 12 slugs and three Shieldguards.
+The compiler validates the full group partition, source runes, conditions and
+wave/route references before adding any entries. Neither branch nor random
+conditions are silently flattened. Both root and index entries remain test-only.
+
+Three seeded route-only fixtures exercise live mode changes and canonical
+miner summons, clearing at 369.17 / 403.57 / 314.10 seconds with an explicit
+600-second fixture clock. The normal 300-second limit remains unchanged and has
+a separate timeout assertion. Actual-app desktop/phone natural SP, keyboard,
+touch, focus/bounds and restart checks passed; screenshots were viewed.
+All ten builds reproduced byte-for-byte through the normal builder. Public
+catalogue entries remain byte-equivalent. 16-9 was independently verified from
+`arkpedia-data@245d7c6` manifest, stage identity, route and level receipts, then
+fetched through the checksum loader; it remains source-only and fails admission.
+
+Hosted checkpoint `98219c33` passed all four Ubuntu Node 22/24 shards and both
+Windows Node 24 shards. Windows Node 22 shard 1 completed the seeded full-match
+files successfully but timed out the aggregate `arkpedia-stage-smoke.test.js`
+file at 180 seconds. Its individual stage startup checks share that file-wide
+deadline. The runner now isolates this full-catalogue sweep with the existing
+bounded ten-minute aggregate-file budget, preserving every stage and assertion.
+The remaining ordinary files retain their 180-second deadline. A fresh hosted
+run is required before claiming this repair verified on Windows Node 22.
+
+The final 16-8 focused cohort passed 328 tests with two opt-in browser skips
+(330 total), and the separate real-app browser invocation passed. The slug's
+17 direct/source/registration tests also cover real operator blocking and
+independent Attack/Combat mode clocks. Six test-runner partition/launch checks
+passed after the aggregate smoke deadline adjustment. Full and hosted results
+for this continuation must be recorded separately when they complete.

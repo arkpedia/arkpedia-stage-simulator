@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "code": "16-8",
+  "testOnly": true,
+  "scope": "Experimental canonical normal-stage integration. Includes only default ALL-enabled group0; Six-Star replacement group1 and public/captured frame admission remain held.",
+  "sources": {
+    "stageSource": {
+      "path": "data/candidates/arkpedia-stage-16-8-source.json",
+      "sha256": "ff76ce2c0bf0da4c8ecbb7460fb10cc1d48f29dba288facc3548f11627b52f03"
+    },
+    "devices": {
+      "path": "data/candidates/arkpedia-ch16-device-source.json",
+      "sha256": "247f67e9b967857b8bf33546367e5877e365ce38fdbae7c609bda4a9a3258e64"
+    },
+    "tunnelSkill": {
+      "path": "data/candidates/arkpedia-ch16-tunnel-skill-source.json",
+      "sha256": "e5392e7f0a65f9acbb0ee4ec594191811c251ddf4fc42f27ec90d509deaeb648"
+    },
+    "abnormalSlug": {
+      "path": "data/candidates/arkpedia-ch16-reviewed-abnormal-slug.json",
+      "sha256": "0ae44ea1f2f958c62fc67dda0c77153229eee0c7bbdd60986c925363f5ffa784"
+    },
+    "shieldguard": {
+      "path": "data/candidates/arkpedia-ch16-reviewed-shieldguard.json",
+      "sha256": "925b1717f28b45a6756955a45817860fbc688273292a485e0a23e41b4acfe704"
+    },
+    "patrol": {
+      "path": "data/candidates/arkpedia-ch16-reviewed-patrol.json",
+      "sha256": "e0f4c1e226f12ad84dec5c05e94072f6fb64baa0d854d249adc84f6255a5856d"
+    },
+    "engagement": {
+      "path": "data/candidates/arkpedia-ch16-reviewed-engagement.json",
+      "sha256": "6c63aeb46c0f3d68f58fb1d04591f20ac5c5881bdea77cfb96ae34782cf0a74d"
+    }
+  },
+  "expected": {
+    "scheduledSpawns": 35,
+    "countedHostiles": 35,
+    "enemies": [
+      "enemy_10124_uashld",
+      "enemy_10126_rkbomb",
+      "enemy_1107_uoffcr",
+      "enemy_3010_mcreep"
+    ],
+    "includedHiddenGroups": [
+      "group0"
+    ],
+    "excludedHiddenGroups": [
+      "group1"
+    ],
+    "branch": "mcreep_route",
+    "actions": [
+      0
+    ],
+    "extraRoutes": [
+      0
+    ],
+    "moveMultiplier": 0.5
+  }
+}

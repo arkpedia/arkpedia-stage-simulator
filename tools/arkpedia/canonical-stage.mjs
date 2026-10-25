@@ -14,6 +14,7 @@ export const CANONICAL_STAGE_LOCKS = Object.freeze({
   '16-6': '../../data/arkpedia-canonical-stage-16-6.lock.json',
   '16-7': '../../data/arkpedia-canonical-stage-16-7.lock.json',
   '16-8': '../../data/arkpedia-canonical-stage-16-8.lock.json',
+  '16-9': '../../data/arkpedia-canonical-stage-16-9.lock.json',
   '17-2': '../../data/arkpedia-canonical-stage-17-2.lock.json',
   '17-3': '../../data/arkpedia-canonical-stage-17-3.lock.json',
   '17-4': '../../data/arkpedia-canonical-stage-17-4.lock.json',

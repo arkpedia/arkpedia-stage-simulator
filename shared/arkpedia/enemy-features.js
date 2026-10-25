@@ -12,7 +12,7 @@
 // An enemy is supported only when every feature it uses is registered and
 // covered (shared/arkpedia/enemy-support.js).
 
-import { CHAPTER16_FEATURES, shieldguardCovered, fortbreakerCovered, commanderCovered } from './chapter16-features.js';
+import { CHAPTER16_FEATURES, abnormalSlugCovered, shieldguardCovered, fortbreakerCovered, commanderCovered } from './chapter16-features.js';
 import patrolReview from '../../data/candidates/arkpedia-ch16-reviewed-patrol.json' with { type: 'json' };
 import engagement from '../../data/candidates/arkpedia-ch16-reviewed-engagement.json' with { type: 'json' };
 
@@ -231,7 +231,7 @@ export const ENEMY_FEATURES = Object.freeze({
   'ability:Can fight 1 <Miner Guerrilla> at a time': { covers: (r, n) => blockMcreepCovered(r, n) || commanderCovered(r, n),
     ability: r => r.key === engagement.blockMcreep.key ? ({ kind: 'blockMcreep', params: () => ({ cnt: r.talents.bb['BlockMcreep.block_mcreep_cnt'], range: r.talents.bb['BlockMcreep.range_radius'], rangeAdd: r.talents.bb['BlockMcreep.range_radius_add'], attackRange: r.stats.rawRangeRadius, markArmy: r.key === engagement.blockMcreep.key }) }) : null,
     note: 'BlockMcreep: every 0.3 s selects one nearest Miner Guerrilla and applies UNMOVABLE; one engagement at a time', nativeClaim: (p, n) => JSON.stringify(n.$retained?.()) === JSON.stringify(engagement.native) ? { active: 1 } : null },
-  'talent:BlockMcreep': { covers: (r, n) => blockMcreepCovered(r, n) || shieldguardCovered(r, n) || fortbreakerCovered(r, n) || commanderCovered(r, n),
+  'talent:BlockMcreep': { covers: (r, n) => blockMcreepCovered(r, n) || shieldguardCovered(r, n) || fortbreakerCovered(r, n) || commanderCovered(r, n) || abnormalSlugCovered(r, n),
     note: 'native BlockMcreep/SelectNearestMcreep pair; runtime lives on the ability line' },
   'ability:<$ba.invisible>Invisible</>': { covers: () => true, trait: { flags: { stealth: true } },
     note: 'Invisible (ba.invisible): untargetable until revealed or blocked; blocking lifts it for the engine STEALTH_RESTORE window' },
@@ -784,9 +784,9 @@ export const ENEMY_FEATURES = Object.freeze({
       || text === 'Initially has 100% Physical Dodge for a period of time'
       || text === 'Upon dropping below half HP for the first time, gains 100% Physical Dodge for a period of time' },
   // Rhine Defense: a one-hit Physical/Arts shield.
-  'talent:Shield': { covers: r => sig(r, 'Shield', ['block_damage_cnt', 'max_block_damage_cnt'])
-      && r.abilities.some(a => a.text === 'Blocks 1 instance of Physical or Arts damage'),
-    ability: { kind: 'hitShield', params: r => ({ count: r.talents.bb['Shield.max_block_damage_cnt'] }) },
+  'talent:Shield': { covers: (r, n) => abnormalSlugCovered(r, n) || (sig(r, 'Shield', ['block_damage_cnt', 'max_block_damage_cnt'])
+      && r.abilities.some(a => a.text === 'Blocks 1 instance of Physical or Arts damage')),
+    ability: r => Object.hasOwn(r.talents.bb, 'Shield.max_block_damage_cnt') ? { kind: 'hitShield', params: () => ({ count: r.talents.bb['Shield.max_block_damage_cnt'] }) } : null,
     note: 'blocks max_block_damage_cnt Physical/Arts hits', explains: /^Blocks 1 instance of Physical or Arts damage$/ },
   // Roar Knightclub: a timed flat DEF/RES buff declared by the record.
   'talent:buff': { covers: r => sig(r, 'buff', ['def', 'duration', 'magic_resistance'])

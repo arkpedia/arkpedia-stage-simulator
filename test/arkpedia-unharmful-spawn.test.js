@@ -31,7 +31,7 @@ test('the scheduled receipt crosses the queue into one life; the same enemy spaw
   assert.deepEqual(h.b.errors, []); assert.deepEqual(other.b.errors, []);
 });
 
-for (const code of ['16-2', '16-3', '16-4', '16-5', '16-6', '16-7', '17-2', '17-3', '17-4'])
+for (const code of ['16-2', '16-3', '16-4', '16-5', '16-6', '16-7', '16-8', '17-2', '17-3', '17-4'])
   test(`${code} exported scheduled harmless flags equal the complete canonical native actions`, () => {
     const source = read('candidates/arkpedia-stage-' + code + '-source.json'), built = read('arkpedia-stage-' + code + '.json');
     const marked = source.rawLevel.waves.flatMap(w => w.fragments.flatMap(f => f.actions))
