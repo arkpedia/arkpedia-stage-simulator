@@ -1,0 +1,225 @@
+{
+  "schemaVersion": 1,
+  "testOnly": true,
+  "scope": "Source-bound snake one-shot timeout, reasonless body retirement and ordinary-stage LP modification only. No HP-step, injury, attack, firewall, wave, stage or complete enemy-support approval.",
+  "sources": {
+    "counter": {
+      "path": "data/candidates/arkpedia-ch17-snake-counter-contract.json",
+      "sha256": "dd9b720a275dc2329cccc457781308fd215ee919608f27d668faf317683a4058"
+    },
+    "graph": {
+      "path": "data/candidates/arkpedia-ch17-firewall-boss-source.json",
+      "sha256": "4c1dcad409a812cb001dc182ca804462ca3733f840b246dc0c6fdb02c2fbd244"
+    },
+    "indexed": {
+      "path": "data/candidates/arkpedia-ch17-firewall-boss-native.json",
+      "sha256": "b66124027d7a1463a715a1479b201b984e01fbea3d73b140ac33709f96a84eda"
+    },
+    "events": {
+      "path": "data/candidates/arkpedia-buff-event-alias-source.json",
+      "sha256": "df85c1d8ee05e0391c7be3854bb39632bdf5282b1f48b061c4e7af5b5397e407"
+    }
+  },
+  "enemy": "enemy_1593_musnake",
+  "record": {
+    "groups": {
+      "TimeOut": [
+        "duration",
+        "interval",
+        "value"
+      ],
+      "StepKill": [
+        "enemy_musnake_heal_buff.hp_ratio",
+        "hp_ratio"
+      ],
+      "DamageResistance": [
+        "damage_resistance"
+      ]
+    },
+    "bb": {
+      "TimeOut.interval": 998,
+      "TimeOut.duration": 999,
+      "TimeOut.value": -50,
+      "StepKill.hp_ratio": 0.2,
+      "StepKill.enemy_musnake_heal_buff.hp_ratio": 0.2,
+      "DamageResistance.damage_resistance": 0.9
+    },
+    "skills": [
+      {
+        "prefabKey": "GlobalLineAttack",
+        "priority": 0,
+        "cooldown": 25,
+        "initCooldown": 15,
+        "spCost": 0,
+        "bb": {
+          "value": 300,
+          "stun": 10
+        },
+        "bbStr": {}
+      },
+      {
+        "prefabKey": "Injured",
+        "priority": 0,
+        "cooldown": 0,
+        "initCooldown": 0,
+        "spCost": 0,
+        "bb": {
+          "stun_duration": 7,
+          "hp_ratio": 0.05
+        },
+        "bbStr": {}
+      }
+    ],
+    "abilities": [
+      {
+        "text": "Becomes Invulnerable upon losing a certain amount of HP. Takes damage and becomes <$ba.stun>stunned</> if a special interaction is performed within this duration; otherwise recovers HP.",
+        "format": "NORMAL"
+      },
+      {
+        "text": "[Firewall] Has a Firewall around itself; takes greatly reduced Physical and Arts damage from outside the Firewall.",
+        "format": "NORMAL"
+      },
+      {
+        "text": "[Information Flood] Releases a flood of information in a fixed direction, causing the first unit hit to be <$ba.stun>stunned</> and continuously take True damage for a period of time.",
+        "format": "NORMAL"
+      },
+      {
+        "text": "[Halt Process] When a long time has passed in the battle, disappears and drains 50 Life Points.",
+        "format": "NORMAL"
+      },
+      {
+        "text": "Cannot be teleported",
+        "format": "NORMAL"
+      }
+    ]
+  },
+  "buff": {
+    "attributes": {
+      "abnormalAntis": [],
+      "abnormalComboImmunes": [],
+      "abnormalCombos": [],
+      "abnormalFlags": [],
+      "abnormalImmunes": [],
+      "attributeModifiers": []
+    },
+    "audioSignal": "",
+    "blackboard": [],
+    "buffKey": "enemy_musnake_time_out",
+    "clearAllStackCntWhenTimeUp": 0,
+    "disableOverride": 0,
+    "durationKey": "duration",
+    "enableInitDirectionFromSource": 0,
+    "firstTriggerInterval": -1,
+    "independentCharacterSource": 0,
+    "isDamageMissable": 0,
+    "isDurableBuff": 0,
+    "isFreezable": 0,
+    "isGroundBoundable": 0,
+    "isLevitatable": 0,
+    "isSilenceable": 0,
+    "isStunnable": 0,
+    "lifeTime": 0,
+    "lifeTimeType": 1,
+    "loadFromDB": 0,
+    "maxStackCnt": 1,
+    "maxValidStackCnt": -1,
+    "onEventPriority": 0,
+    "overrideEffectKey": "",
+    "overrideKey": "",
+    "overrideOnEventPriority": 0,
+    "overrideType": 0,
+    "priority": -1,
+    "priorityBBKeys": [],
+    "refreshRemainingTimeWhenStackMax": 0,
+    "remainingTimeKey": "",
+    "statusResistable": 2,
+    "stripBlackboardParamsWithBuffKey": 0,
+    "takeSnapshotWhenExtend": 0,
+    "templateKey": "enemy_musnake_time_out",
+    "triggerCnt": 1,
+    "triggerInterval": -1,
+    "triggerLifeType": 1,
+    "waitFirstTriggerInterval": 1
+  },
+  "start": [
+    {
+      "_loadFromBlackboard": true,
+      "_countDownKey": "interval",
+      "_countDownTime": 60,
+      "_disableCountDown": false,
+      "_resetIfAlreadyActive": true,
+      "$type": "Torappu.Battle.Action.Nodes+SetEnemyBossCountDown"
+    }
+  ],
+  "trigger": [
+    {
+      "_buffKey": "enemy_musnak_before_dead",
+      "_loadFromBlackboard": false,
+      "_decCntIfStack": false,
+      "_updateOverrideMap": true,
+      "_targetType": "BUFF_OWNER",
+      "_checkBuffSource": false,
+      "_sourceType": "BUFF_SOURCE",
+      "_alsoClearNullSource": false,
+      "_finishHostBuff": false,
+      "_decCntKey": null,
+      "_decCnt": 1,
+      "$type": "Torappu.Battle.Action.Nodes+FinishBuffsById"
+    },
+    {
+      "$type": "Torappu.Battle.Action.Nodes+AlwaysNext"
+    },
+    {
+      "_targetType": "TARGET",
+      "_killSource": true,
+      "_noSource": false,
+      "_withdrawIfRallyPoint": false,
+      "_resultIfInRallyPointMode": false,
+      "_skipReborn": false,
+      "_noReason": true,
+      "_markReachExit": false,
+      "_switchState": false,
+      "$type": "Torappu.Battle.Action.Nodes+InstantKill"
+    },
+    {
+      "$type": "Torappu.Battle.Action.Nodes+AlwaysNext"
+    },
+    {
+      "_duration": 5,
+      "_strength": {
+        "x": 0.1,
+        "y": 0.1,
+        "z": 0
+      },
+      "_vibrato": 25,
+      "_randomness": 0.15,
+      "_allowNoSource": true,
+      "$type": "Torappu.Battle.Action.Nodes+ShakeCamera"
+    },
+    {
+      "_sourceType": "SOURCE",
+      "_isSub": false,
+      "_blackboardKey": "value",
+      "_isReachExit": false,
+      "$type": "Torappu.Battle.Action.Nodes+ModifyLifePoint"
+    },
+    {
+      "$type": "Torappu.Battle.Action.Nodes+AlwaysNext"
+    },
+    {
+      "_target": "BUFF_OWNER",
+      "_audioSignal": "ON_MUSNAKE_TIME_OUT",
+      "$type": "Torappu.Battle.Action.Nodes+PlayAudio"
+    }
+  ],
+  "defaults": {
+    "interval": 998,
+    "duration": 999,
+    "lifePointDelta": -50
+  },
+  "limits": [
+    "World countdown and the -1 interval sentinel map to the canonical TimeOut interval; this is a local dispatch mapping, not compiled/frame parity.",
+    "Native noReason InstantKill maps to a non-kill, non-leak removal followed by its AlwaysNext LP modification. Camera/audio are deferred visual work.",
+    "The receiver must expose real finite ordinary-stage life points; a missing life ledger is rejected rather than initialized or replaced."
+  ]
+}

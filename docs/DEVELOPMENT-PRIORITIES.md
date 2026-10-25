@@ -567,3 +567,46 @@ fifteen continuation jobs at 634c6a2b. Full run 40197258983 passed all eight
 Linux/Windows Node 22/24 shards at f5c7e5e2; that is a verified earlier baseline,
 not certification of the new damage-hook change. A new exact-head full run is
 required for this checkpoint.
+
+## Snake timeout and HP-step source boundary
+
+The snake's TimeOut passive now has its own reproducible source contract and
+runtime subsystem. The retained single-trigger buff loads the canonical interval
+998 and duration 999; its countdown and one-shot action use world time. The
+original noReason InstantKill is mapped to a non-kill, non-leak body retirement,
+followed by the distinct AlwaysNext LP modification of -50. The original
+`enemy_musnak_before_dead` finish key is retained literally. Camera shake and
+audio remain later visual/effects work.
+
+Timeout requires a fresh, exact-record deployment and an existing finite
+ordinary-stage life ledger. It does not manufacture default LP, consume the
+enemy's route-exit value or award a kill. The real StandardBattle integration
+check proves the LP decrease and defeated outcome independently of catalogue
+admission; its normal constructor still rejects the complete unsupported snake.
+The fixture's inline diagnostic body does not change stage/source/registry gates.
+
+Owned countdown buffs, tasks and listeners cancel on death, removal, life reuse,
+undeployment or battle end. A completed terminal sequence cancels the timeout;
+timeout cancels a pending terminal button without invoking its successful
+wave-finish handoff. Source retirement cannot replay LP changes, including when
+a death callback reuses the body. Corrupt life ledgers report an error and stop
+the timer rather than initializing new LP. The interval sentinel, world-clock
+dispatch and reasonless retirement remain explicit local mappings without
+compiled/frame parity claims.
+
+HP-step research found 27 named HpRatioTrigger templates, including other
+MarkCurrentHpRatio producers, but no native method body establishing how the
+marked ratio resets after healing or injury. The snake source explicitly has
+GT, a non-minimum-ratio comparison, its 0.10000000149011612 polling interval and
+the canonical 0.2 ratio. Those fields do not by themselves prove a reset policy.
+Automatic HP-step admission remains gated; a guessed mark reset is not used to
+enable 17-18. Injury, line attacks, firewall/deployment rules, full wave/branch
+handling and the other remaining bosses/operators are still open.
+
+All 869 locally available focused mechanics checks pass in one run with no
+failures, cancellations or skips, including the 23 timeout source/lifecycle/LP
+cases. The source contract reproduces with
+`--check` and is included in hosted source validation. Run 40201202488 passed all
+fifteen continuation jobs at 8a0a0b7a; full run 40201217661 remains active and
+must be observed rather than replaced while it is running. Candidate support
+and stage counts remain unchanged.
