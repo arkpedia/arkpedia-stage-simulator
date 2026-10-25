@@ -189,7 +189,8 @@ import { customizeSurtrKit, installSurtr } from './content/arkpedia-surtr.js';
 import { customizeSpuriaKit, installSpuria } from './content/arkpedia-spuria.js';
 import { customizeMayerKit, installMayer } from './content/arkpedia-mayer.js';
 import { customizeFangFireSharpenedKit, installFangFireSharpened, adjustFangFireSharpenedCost,
-  consumeFangFireSharpenedCard, fangFireSharpenedRefund } from './content/arkpedia-fang-fire-sharpened.js';
+  consumeFangFireSharpenedCard } from './content/arkpedia-fang-fire-sharpened.js';
+import {recordOperatorPayment,claimOperatorRefund} from './operator-withdrawal.js';
 import { customizeSiegeKit, installSiege } from './content/arkpedia-siege.js';
 import { customizeFirewatchKit, installFirewatch } from './content/arkpedia-firewatch.js';
 import { customizeSurferKit, installSurfer } from './content/arkpedia-surfer.js';
@@ -1183,6 +1184,9 @@ export class StandardBattle extends Battle {
     }
     const costAttribute = this.cost(id);
     entry.lastCost = fromSkill ? 0 : costAttribute;
+    const support=REGULAR_OPERATORS[id];
+    recordOperatorPayment(this,unit,{paid:entry.lastCost,baseCost:entry.baseCost??def.stats.cost,
+      refundRatio:support.noRetreatRefund?0:['charger','fang-fire-sharpened'].includes(support.mechanic)?1:.5});
     ps.dp -= entry.lastCost;
     // A free card delivery is a real deployment, not MOVE_LIKE_RESPAWN.
     this._deploy(unit, { tile: [row, col], costAttribute });
@@ -1200,13 +1204,15 @@ export class StandardBattle extends Battle {
     if (!canDeployInViewport(this.viewport) || this.finished)
       throw new Error("Battle workspace is inactive.");
     const entry = this.bench[id];
-    if (!entry?.unit?.alive) throw new Error("Operator is not deployed.");
-    const support = REGULAR_OPERATORS[id];
-    const refund = support.noRetreatRefund ? 0 : support.mechanic === "fang-fire-sharpened"
-      ? fangFireSharpenedRefund(entry) : support.mechanic === "charger"
-      ? entry.unit.base.cost : Math.floor(entry.lastCost / 2);
-    this.addDp("arkpedia", refund);
-    this.retreat(entry.unit, { permanent: true });
+    if (!this.withdrawOperator(entry?.unit)) throw new Error("Operator is not deployed.");
+  }
+  // Engine-owned withdrawal bypasses the workspace viewport, while retaining
+  // the selected bench/body identity and an optional captured deployment life.
+  withdrawOperator(unit,{life=unit?.deploySeq}={}) {
+    if(this.finished||this._endReq||unit?.kind!=='op'||!unit.alive||!unit.deployed
+      ||unit.deploySeq!==life||this.bench[unit.defId]?.unit!==unit)return false;
+    this.addDp("arkpedia",claimOperatorRefund(this,unit));
+    this.retreat(unit,{permanent:true});return true;
   }
   activateOperator(id) {
     if (!canDeployInViewport(this.viewport) || this.finished) return false;

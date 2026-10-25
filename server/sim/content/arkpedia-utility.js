@@ -188,7 +188,7 @@ export function installUtility({ battle: b, unit: u, def }) {
           duration: bb['weak[limit]'], value: bb.damage_scale - 1, source: u,
         });
       }
-      b.retreat(u, { permanent: true });
+      b.withdrawOperator(u);
     }, { owner: u });
   }, { owner: u });
   if (id === 'char_4188_confes') b.on('blocked', ({ blocker, enemy }) => {

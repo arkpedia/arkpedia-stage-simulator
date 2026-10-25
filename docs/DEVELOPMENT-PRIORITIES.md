@@ -12,6 +12,9 @@ routing and remaining staged-record reviews. The exact 17-18 twin records now
 have an explicit internal stage selection, including their canonical room offset.
 The canonical boss branch also has an explicit internal scheduler with its own
 extra routes and exact local Brute; room-to-branch ordering remains unconnected.
+Ordinary operator withdrawals now share captured payment/refund accounting and
+an engine-owned entry point for future stage receivers. The room action's own
+withdrawal scope and timing remain under review.
 
 The retained native components/canonical record supply the parameters and action
 graph. Supplemental first-hand [PRTS HP-loss research, revision 442170](https://prts.wiki/index.php?title=%E7%89%B9%E6%AE%8A%E6%9C%BA%E5%88%B6&oldid=442170)
@@ -1115,3 +1118,49 @@ integration still gate complete 17-18 support. The scheduler exposes an explicit
 start and native wave intent; it does not invent those missing receivers or claim
 compiled-client/captured-frame parity. No enemy policy or stage admission changed,
 and all nine normal-stage gates remain. Mechanics still precede visual work.
+
+## Shared operator withdrawal accounting
+
+Ordinary card deployments now capture the payment, basic-cost refund cap and
+selected refund ratio in a private Unit-owned account before deployment hooks.
+Manual withdrawal and the engine-owned withdrawOperator entry point use that
+same account. The engine entry point accepts only the current bench Unit and
+optionally its captured deployment life, independently of the workspace viewport.
+The refund is claimed before removal callbacks, so a nested request or later card
+mutation cannot pay it again. A new paid card deployment owns a new account.
+
+The general rule is floor(min(deployment cost times refund ratio, basic cost)).
+Its supplemental first-hand source is
+[PRTS deployment-cost research, revision 434779](https://prts.wiki/index.php?title=%E9%83%A8%E7%BD%B2%E8%B4%B9%E7%94%A8&oldid=434779),
+which identifies client 2.7.71 and distinguishes base-cost changes from temporary
+card discounts. This fixes Charger over-refunds after Fang's one-use discount,
+caps temporary card cost increases, and preserves SilverAsh S3's accepted swapped
+base cost after the card override is consumed. Nonrefunding merchant traits stay
+zero. The existing local zero-payment skill-delivery policy also returns zero;
+the delivery adapter's native deployment/refund parity remains explicitly held.
+
+The caller audit found two original Withdraw actions bypassing refund accounting:
+Amiya S3's suicide template and THRM-EX's explosion finish. Both retained nodes
+withdraw the source and switch to the dead state. THRM-EX's retained character
+component explicitly sets a 0.5 withdrawal recovery ratio. Their controllers now
+use the shared engine entry point. Amiya's previous no-refund test was an incorrect
+expectation; its natural-completion checks now verify the withdrawal refund at
+all ten skill ranks. Token expiry, death, merchant upkeep, transport and other
+special removal reasons are not indiscriminately converted into refunds.
+
+The first expanded focused run passed 1,284 cases before these final two caller
+corrections. A separate broad operator interaction run passed all 170 cases,
+including Fang/Vanguards, Ines, SilverAsh, Kal'tsit, the held delivery adapter and
+Swire's economy. The final new withdrawal, caster and utility suites passed all
+47 checks, covering the real source-owned automatic withdrawals, stale bodies,
+life mismatches, viewport independence, capped refunds and immutable payments.
+The final expanded focused mechanics run, including both corrected automatic
+withdrawal callers and their existing suites, passed all 1,323 available cases.
+
+The 64a4c414 boss-branch checkpoint passed all 15 hosted continuation jobs.
+Full run 40222394497 at da6e2750 is still active at this observation. This shared
+withdrawal prerequisite does not establish how Mainline17MoveCameraWithWithdraw
+classifies units, orders withdrawal/camera movement, or applies its 2.5-second
+delay. Those room-specific semantics, the wave receiver and the remaining stage,
+enemy and operator/module audits remain mechanics work. No admission or visual
+campaign has begun.

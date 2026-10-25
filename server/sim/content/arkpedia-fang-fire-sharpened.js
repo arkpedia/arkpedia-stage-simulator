@@ -25,10 +25,6 @@ export function adjustFangFireSharpenedCost(b, id, ordinaryCost) {
 export function consumeFangFireSharpenedCard(b, id) {
   if (ordinaryOperator(b, id)) b._fangFireSharpenedCard = 0;
 }
-export function fangFireSharpenedRefund(entry) {
-  // First-only and temporary discounts cannot mint DP on withdrawal.
-  return Math.min(entry.lastCost, entry.unit.base.cost);
-}
 function clearCast(b, u, state) {
   if (!state || u.mem.fangFireSharpenedCast !== state) return;
   u.mem.fangFireSharpenedCast = null;

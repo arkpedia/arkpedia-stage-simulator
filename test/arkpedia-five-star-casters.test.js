@@ -118,14 +118,15 @@ test('Amiya interrupted burst loses unreleased shots; normal S2 expiry applies t
   assert.equal(u.skill.active, false); assert.ok(u.s.flags.stun); advance(b, 10); assert.ok(!u.s.flags.stun);
 });
 
-test('Amiya S3 expands range, scales max HP preserving ratio, deals true damage and force-retreats without refund', () => {
+test('Amiya S3 expands range, scales max HP preserving ratio, deals true damage and refunds its native withdrawal', () => {
+  const withdraw=evidence.templates.suicide.eventToActions.ON_BUFF_START[0];assert.ok(withdraw.$type.startsWith('Torappu.Battle.Action.Nodes+Withdraw,'));assert.equal(withdraw._withdrawSource,true);
   for (let rank = 1; rank <= 10; rank++) {
     const { b, u, src } = make(amiya, { rank, skill: 2 }), t = b.enemies[0];
     const bb = bbOf(src.operators[amiya].skills[2].levels[rank - 1]), atk = u.s.atk, hp = u.s.maxHp;
     t.base.res = 95; t.base.def = 10000; t.markDirty(); u.hp = hp / 2; const range = u.rangeKeys.length; activate(u);
     near(u.s.maxHp, hp + u.base.maxHp * bb.max_hp); near(u.hpRatio, .5); assert.ok(u.rangeKeys.length > range);
     near(attack(b, u, t), atk + u.base.atk * bb.atk); const dp = b.dp; b.flags.dpPerSec = 0; advance(b, 31);
-    assert.equal(u.alive, false); assert.equal(u.removeReason, 'skill'); near(b.dp, dp);
+    assert.equal(u.alive, false); assert.equal(u.removeReason, 'retreat'); near(b.dp, Math.min(b.flags.dpMax,dp+Math.floor(Math.min(b.bench[amiya].lastCost/2,u.base.cost))));
     assert.ok(b.bench[amiya].readyAt > b.time); // ordinary new placement becomes possible after cooldown.
   }
 });

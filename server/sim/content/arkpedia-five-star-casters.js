@@ -142,7 +142,7 @@ export function customizeFiveStarCasterKit({ id, def, kit }) {
       ...duration({ atkPct: bb.atk, hpPct: bb.max_hp }), targeting: { rangeGrid: skill.rangeGrid },
       attack: { dmgType: 'true', windup: .867, attackVisual: 'Skill1' },
       onEnd: ({ battle, unit, reason }) => {
-        if (reason === 'duration' && unit.alive) battle.retreat(unit, { reason: 'skill', permanent: true });
+        if (reason === 'duration' && unit.alive) battle.withdrawOperator(unit);
       } };
     else kit.skill = duration({ aspd: bb.attack_speed });
   } else if (id === 'char_166_skfire') {
