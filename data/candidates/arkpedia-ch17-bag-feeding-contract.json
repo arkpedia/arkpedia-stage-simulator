@@ -1,0 +1,182 @@
+{
+  "schemaVersion": 1,
+  "testOnly": true,
+  "frameParity": false,
+  "scope": "Selected Bag feeding clocks, nonstatus feeding parent and native consumption action. No stage or Closure compatibility admission.",
+  "sources": {
+    "data/candidates/arkpedia-ch17-reviewed-bag.json": {
+      "path": "data/candidates/arkpedia-ch17-reviewed-bag.json",
+      "sha256": "1c83d6fda81637efe3a5cb896fe354f32188603ea5201f55ce185115f634dc11"
+    },
+    "data/candidates/arkpedia-ch17-bag-source.json": {
+      "path": "data/candidates/arkpedia-ch17-bag-source.json",
+      "sha256": "b1f77caed72360b08888b90b9fae2ee88f1adde51b71ab23dc0ed85e2daa620c"
+    },
+    "data/candidates/arkpedia-ch17-bag-native.json": {
+      "path": "data/candidates/arkpedia-ch17-bag-native.json",
+      "sha256": "c73bd70af84780a41156c83dfc27e7e8fa86fcb69afa2c5406d44de1deed5eb6"
+    },
+    "data/candidates/arkpedia-ch17-bag-animation-source.json": {
+      "path": "data/candidates/arkpedia-ch17-bag-animation-source.json",
+      "sha256": "966fd6f2d3cd769a5937470e26947324857b5580e46de1e9150d28185a8097a1"
+    },
+    "data/candidates/arkpedia-buff-event-alias-source.json": {
+      "path": "data/candidates/arkpedia-buff-event-alias-source.json",
+      "sha256": "df85c1d8ee05e0391c7be3854bb39632bdf5282b1f48b061c4e7af5b5397e407"
+    }
+  },
+  "eventNames": {
+    "finish": "ON_BUFF_FINISH",
+    "trigger": "ON_BUFF_TRIGGER"
+  },
+  "defaults": {
+    "contactRadius": 0.35,
+    "searchPeriod": 1,
+    "defaultSearchPeriod": 5,
+    "feedingDuration": 10.5,
+    "feedingInterval": 1
+  },
+  "enemies": {
+    "enemy_10209_mubag": {
+      "combatPathId": "-6485888928763053998",
+      "combatOriginalJson": "{\"_attachPassiveBuffsOnDummy\":1,\"_forceAsDmgOrHealAbility\":0,\"_ignoreIfOwnerDead\":0,\"_interruptAbilityOnDetach\":1,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"3182291499934578770\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"4865767822664548221\"}}",
+      "skillPathId": "2380478880844314706",
+      "skillOriginalJson": "{\"_actions\":{\"SerializedObjectReferences\":[],\"SerializedState\":\"[]\"},\"_activeBuffs\":[],\"_affectedBySlowDown\":0,\"_allowNoTarget\":0,\"_alwaysIncludeTarget\":1,\"_animKey\":\"\",\"_attachPassiveBuffsOnDummy\":1,\"_attackType\":1,\"_checkFaceToFirstCastTargetDownAttack\":0,\"_cooldown\":0.0,\"_cooldownKey\":\"anim_duration\",\"_downAnimKey\":\"\",\"_downEndAnimKey\":\"\",\"_endAnimKey\":\"\",\"_escapeTime\":0.0,\"_faceToDefault\":0,\"_faceToFirstCastTarget\":0,\"_faceToFront\":0,\"_faceToTarget\":1,\"_forceAsDmgOrHealAbility\":0,\"_forceFaceToDirection\":0,\"_ignoreIfOwnerDead\":0,\"_ignorePalsyInterrupt\":0,\"_interruptAbilityOnDetach\":1,\"_interuptIfTargetDead\":0,\"_maxAnimScale\":-1.0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_onlyPlayEndAnimWhenIsLastAbility\":0,\"_preDelay\":0.0,\"_resetCdStrategy\":1,\"_selectTargetSource\":2,\"_selectTargetTiming\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_timeMode\":3,\"_upAnimKey\":\"\",\"_upEndAnimKey\":\"\",\"_useDynamicAttackType\":0,\"_waitForAttackEvent\":1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"2740006975335200850\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"2165892974539515790\"}}",
+      "feeding": {
+        "attributes": {
+          "abnormalAntis": [],
+          "abnormalComboImmunes": [],
+          "abnormalCombos": [],
+          "abnormalFlags": [],
+          "abnormalImmunes": [],
+          "attributeModifiers": []
+        },
+        "audioSignal": "",
+        "blackboard": [],
+        "buffKey": "enemy_mubag_atk_up",
+        "clearAllStackCntWhenTimeUp": 0,
+        "disableOverride": 0,
+        "durationKey": "duration_atk_dur",
+        "enableInitDirectionFromSource": 0,
+        "firstTriggerInterval": -1,
+        "independentCharacterSource": 0,
+        "isDamageMissable": 0,
+        "isDurableBuff": 0,
+        "isFreezable": 0,
+        "isGroundBoundable": 0,
+        "isLevitatable": 0,
+        "isSilenceable": 0,
+        "isStunnable": 0,
+        "lifeTime": 10.5,
+        "lifeTimeType": 1,
+        "loadFromDB": 0,
+        "maxStackCnt": 1,
+        "maxValidStackCnt": -1,
+        "onEventPriority": 0,
+        "overrideEffectKey": "",
+        "overrideKey": "",
+        "overrideOnEventPriority": 0,
+        "overrideType": 0,
+        "priority": -1,
+        "priorityBBKeys": [],
+        "refreshRemainingTimeWhenStackMax": 0,
+        "remainingTimeKey": "",
+        "statusResistable": 2,
+        "stripBlackboardParamsWithBuffKey": 0,
+        "takeSnapshotWhenExtend": 0,
+        "templateKey": "enemy_mubag_atk_up",
+        "triggerCnt": 0,
+        "triggerInterval": 1,
+        "triggerLifeType": 2,
+        "waitFirstTriggerInterval": 1
+      },
+      "phaseDuration": 11
+    },
+    "enemy_10209_mubag_2": {
+      "combatPathId": "-6735041889634418622",
+      "combatOriginalJson": "{\"_attachPassiveBuffsOnDummy\":1,\"_forceAsDmgOrHealAbility\":0,\"_ignoreIfOwnerDead\":0,\"_interruptAbilityOnDetach\":1,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-832654460155527102\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"4865767822664548221\"}}",
+      "skillPathId": "-421330593335476158",
+      "skillOriginalJson": "{\"_actions\":{\"SerializedObjectReferences\":[],\"SerializedState\":\"[]\"},\"_activeBuffs\":[],\"_affectedBySlowDown\":0,\"_allowNoTarget\":0,\"_alwaysIncludeTarget\":1,\"_animKey\":\"\",\"_attachPassiveBuffsOnDummy\":1,\"_attackType\":1,\"_checkFaceToFirstCastTargetDownAttack\":0,\"_cooldown\":0.0,\"_cooldownKey\":\"anim_duration\",\"_downAnimKey\":\"\",\"_downEndAnimKey\":\"\",\"_endAnimKey\":\"\",\"_escapeTime\":0.0,\"_faceToDefault\":0,\"_faceToFirstCastTarget\":0,\"_faceToFront\":0,\"_faceToTarget\":1,\"_forceAsDmgOrHealAbility\":0,\"_forceFaceToDirection\":0,\"_ignoreIfOwnerDead\":0,\"_ignorePalsyInterrupt\":0,\"_interruptAbilityOnDetach\":1,\"_interuptIfTargetDead\":0,\"_maxAnimScale\":-1.0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_onlyPlayEndAnimWhenIsLastAbility\":0,\"_preDelay\":0.0,\"_resetCdStrategy\":1,\"_selectTargetSource\":2,\"_selectTargetTiming\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_timeMode\":3,\"_upAnimKey\":\"\",\"_upEndAnimKey\":\"\",\"_useDynamicAttackType\":0,\"_waitForAttackEvent\":1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"2011877969722671170\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"2165892974539515790\"}}",
+      "feeding": {
+        "attributes": {
+          "abnormalAntis": [],
+          "abnormalComboImmunes": [],
+          "abnormalCombos": [],
+          "abnormalFlags": [],
+          "abnormalImmunes": [],
+          "attributeModifiers": []
+        },
+        "audioSignal": "",
+        "blackboard": [],
+        "buffKey": "enemy_mubag_atk_up",
+        "clearAllStackCntWhenTimeUp": 0,
+        "disableOverride": 0,
+        "durationKey": "duration_atk_dur",
+        "enableInitDirectionFromSource": 0,
+        "firstTriggerInterval": -1,
+        "independentCharacterSource": 0,
+        "isDamageMissable": 0,
+        "isDurableBuff": 0,
+        "isFreezable": 0,
+        "isGroundBoundable": 0,
+        "isLevitatable": 0,
+        "isSilenceable": 0,
+        "isStunnable": 0,
+        "lifeTime": 10.5,
+        "lifeTimeType": 1,
+        "loadFromDB": 0,
+        "maxStackCnt": 1,
+        "maxValidStackCnt": -1,
+        "onEventPriority": 0,
+        "overrideEffectKey": "",
+        "overrideKey": "",
+        "overrideOnEventPriority": 0,
+        "overrideType": 0,
+        "priority": -1,
+        "priorityBBKeys": [],
+        "refreshRemainingTimeWhenStackMax": 0,
+        "remainingTimeKey": "",
+        "statusResistable": 2,
+        "stripBlackboardParamsWithBuffKey": 0,
+        "takeSnapshotWhenExtend": 0,
+        "templateKey": "enemy_mubag_atk_up",
+        "triggerCnt": 0,
+        "triggerInterval": 1,
+        "triggerLifeType": 2,
+        "waitFirstTriggerInterval": 1
+      },
+      "phaseDuration": 11
+    }
+  },
+  "consume": [
+    {
+      "_targetType": "BUFF_SOURCE",
+      "$type": "Torappu.Battle.Action.Nodes+CheckEnemySkillAffecting"
+    },
+    {
+      "_targetType": "BUFF_OWNER",
+      "_killSource": false,
+      "_noSource": false,
+      "_withdrawIfRallyPoint": false,
+      "_resultIfInRallyPointMode": false,
+      "_skipReborn": false,
+      "_noReason": false,
+      "_markReachExit": false,
+      "_switchState": false,
+      "$type": "Torappu.Battle.Action.Nodes+InstantKill"
+    }
+  ],
+  "finishTrigger": [
+    {
+      "_targetType": "BUFF_OWNER",
+      "_excludeThisBuff": false,
+      "_excludeInTriggerAll": false,
+      "_buffKeys": [
+        "enemy_mubag_kill_murad[flag]"
+      ],
+      "_forceTrigger": false,
+      "_triggerAllBuffs": false,
+      "$type": "Torappu.Battle.Action.Nodes+TriggerBuffsByKeys"
+    }
+  ]
+}

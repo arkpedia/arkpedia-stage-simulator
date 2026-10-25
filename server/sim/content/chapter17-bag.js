@@ -3,6 +3,8 @@
 import review from '../../../data/candidates/arkpedia-ch17-reviewed-bag.json' with {type:'json'};
 import {leakSourceTrace} from './chapter17-trace.js';
 import {areaSelectable} from '../targeting.js';
+import {executeEnemyInstantKill} from '../enemy-instant-kill.js';
+import {verifyBagFeedingSource} from './chapter17-bag-feeding-source.js';
 const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
 const live=e=>e?.alive&&e.deployed&&!e.hidden;
 const controlled=e=>['stun','freeze','sleep','levitate','fear'].some(k=>e.s.flags[k]);
@@ -12,7 +14,7 @@ export function pollutionBag(r){
  const proof=review.enemies[r.key];
  if(!proof||r.prefabKey!==r.key||!same(r.talents.groups,proof.groups)||!same(r.talents.bb,proof.bb)
    ||!same(r.skills,proof.skills)||!same(r.abilities,proof.abilities))throw Error('Unreviewed pollution Bag contract');
- const skill=r.skills[0],bb=r.talents.bb;
+ const clock=verifyBagFeedingSource(r.key),skill=r.skills[0],bb=r.talents.bb;
  return{
   spawn(b,e,a){
    const life=e.deploySeq,valid=()=>a.active&&e.alive&&e.deployed&&e.deploySeq===life;
@@ -63,7 +65,8 @@ export function pollutionBag(r){
     const p={startedAt:b.time,epoch:e.actionControlEpoch,feed:null,hold:null};a.phase=p;
     p.hold=b.addBuff(e,{key:'ch17:bag-feeding',source:e,persist:true,flags:{noMove:true}});
     if(!p.hold||!a.phaseValid(p)){b.removeBuff(e,p.hold);a.finish(p);return false;}
-    p.feed=b.addBuff(e,{key:FEED,source:e,duration:d.feedingDuration,interval:d.feedingInterval,
+    p.feed=b.addBuff(e,{key:FEED,source:e,duration:clock.feedingDuration,interval:clock.feedingInterval,
+     sourceStatusResistable:clock.feedingSourceStatusResistable,
      onTick:()=>{
       if(!a.phaseValid(p)){a.finish(p);return;}
       a.syncContacts();if(!a.currentContact()){a.finish(p);return;}
@@ -77,7 +80,8 @@ export function pollutionBag(r){
        const target=c.target;
        // Follow the current derived flag to its own still-live parent. Do not
        // reselect a nearby source or run this callback after early removal.
-       b.kill(target,e);a.release(c);b.emit('ch17BagConsumed',{source:e,target});
+       const result=executeEnemyInstantKill(b,{source:e,buffOwner:target,action:clock.killAction});
+       a.release(c);if(result.status==='killed')b.emit('ch17BagConsumed',{source:e,target});
       }
      }});
     if(!p.feed||!a.phaseValid(p)){b.removeBuff(e,p.feed);a.finish(p);return false;}
@@ -106,7 +110,7 @@ export function pollutionBag(r){
    if(!a.valid()){a.detach();return;}
    const dt=Math.max(0,b.time-a.lastAt);a.lastAt=b.time;a.cooldown=Math.max(0,a.cooldown-dt);
    a.syncContacts();a.trace.refresh();
-   if(a.phase){const p=a.phase;if(!a.phaseValid(p)||b.time-p.startedAt>=skill.bb.anim_duration-1e-8)a.finish(p);}
+   if(a.phase){const p=a.phase;if(!a.phaseValid(p)||b.time-p.startedAt>=clock.phaseDuration-1e-8)a.finish(p);}
    else a.begin();
   },
   death(c,b,e,a){a.detach();},

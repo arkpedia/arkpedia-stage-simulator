@@ -27,6 +27,10 @@ Combat cooldown now consume their native-eligible slowdown clocks too. The six
 ordinary Attack controllers now use their bound OnAttack/clip-end events rather
 than generic instant hits and standing pauses. Full enemy compatibility, native
 selector/FSM/frame parity and stage admission remain under review.
+Bag consumption now executes its literal non-skipping native InstantKill action
+through the authenticated enemy lifecycle path, with its feeding clocks retained
+on world time. An exact predefined Closure/module/S3 composition checks that
+interaction without admitting 17-14 or widening public enemy compatibility.
 Removing a separate same-character operator body now leaves the player's card
 cooldown and captured payment untouched. Only the body selected by that card
 can start its redeployment cooldown; ordinary death and withdrawal still do so.
@@ -1405,3 +1409,48 @@ controls/withdrawal/card rules and 17-14 admission remain separate gates. The
 e05e4273 predecessor's hosted continuation run 40230887587 succeeded. Full run
 40227541145 at aee87df9 also completed all eight Linux/Windows Node22/24 shards
 successfully; validation of the new Attack adapters is a separate checkpoint.
+
+## Bag feeding clocks and native consumption under Closure S3
+
+The Bag feeding contract now reproduces the exact selected Combat reference,
+feeding skill component, noncontrol feeding-parent specification, finish/trigger
+aliases and consumption action from all pinned Bag review inputs. Its native
+skill has affectedBySlowDown0 and timeMode3; the 10.5-second feeding parent emits
+ten one-second stack ticks while the record-backed skill phase lasts 11 seconds.
+The regular automatic-eligibility mapping handles this unnamed noncontrol
+parent; its raw numeric resistance enum is retained without inventing a new
+enum alias. Native-source CI independently reproduces the compact contract.
+
+The derived flag routes its finish trigger back to its own parent. That parent
+checks the Bag's affecting skill, then executes InstantKill on BUFF_OWNER with
+killSource=false, noSource=false and skipReborn=false. The controller now uses
+that explicit authenticated native path instead of generic Battle.kill. The Bag
+retains kill credit and the action bypasses damage/shields/floors, while native
+rebirth admission, recipient deployment-life checks and battle-end cancellation
+remain effective. The consumption event is emitted only for an actual kill,
+not for a rebirth, replaced body or cancelled request. Generic kill is unchanged.
+
+The source, Bag, consumption and native kill integration run passed all 57 cases,
+including seven new source/action checks. They verify producer/hash reproduction,
+both variants' literal recipients and kill credit, no damage packet, authenticated
+receipt lifetime, admitted rebirth, replacement target life, battle completion
+during admission and source/clock mutation rejection.
+
+A separate controlled-field composition passed with the exact predefined 17-14
+Closure build, level-three module, roster talent, real S3 and command center,
+and the real stronger Bag/Leak Source controllers. Actual S3 hits slow the Bag,
+while the untargetable Leak Source receives neither a hit nor slowdown. Feeding
+still earns ten permanent stacks, consumes through the authenticated native
+action at 10.5 seconds, and releases its skill phase at 11 seconds. S3 remains
+active and generates DP throughout. Durability buffs keep the participants alive
+for this interaction check; this is not a canonical stage-clear result or a
+bypass of public selection/admission gates.
+
+The Leak Source's own terminal actions include a distinct BUFF_SOURCE selection
+whose caller/source-credit context still needs review before conversion. The
+current change does not guess that context or extend unsupported action modes.
+The broader S3 enemy compatibility audit and predefined controls, withdrawal/card
+rules and 17-14 admission remain open. The 4132c9ad continuation run 40232796570
+completed successfully; its full run 40232802377 was still live at this checkpoint.
+The final expanded focused run passed all 1,538 available cases. The compact
+feeding contract also reproduced from its pinned inputs without byte changes.
