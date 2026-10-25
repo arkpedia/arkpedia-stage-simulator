@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Rebuild generated paths only from the geometry already retained in a pinned
-// test-only build. This never fetches, substitutes or edits source geometry.
+// Rebuild generated paths from retained canonical geometry and original level
+// checkpoints. This never fetches, substitutes or edits either source.
 import { readFile, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
-import { syntheticRoutePath } from '../../shared/arkpedia/stage-path.js';
+import { sourceBoundRoutePath } from '../../shared/arkpedia/stage-path.js';
 const root = new URL('../../data/', import.meta.url);
 const index = JSON.parse(await readFile(new URL('arkpedia-stages.json', root)));
 const pending = [];
@@ -17,7 +17,7 @@ for (const entry of index.stages.filter(s => s.testOnly)) {
     throw Error('Candidate geometry changed: ' + stage.code);
   let changed = false;
   for (const i of stage.pathing.syntheticRoutes) {
-    const path = syntheticRoutePath(stage.geometry.routes[i]);
+    const path = sourceBoundRoutePath(stage.geometry.routes[i], stage.chapter16Source?.rawLevel.routes);
     changed ||= JSON.stringify(path) !== JSON.stringify(stage.pathing.paths[i]);
     stage.pathing.paths[i] = path;
   }

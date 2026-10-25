@@ -2,7 +2,22 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
-import { syntheticRoutePath } from '../shared/arkpedia/stage-path.js';
+import { syntheticRoutePath,sourceBoundRoutePath } from '../shared/arkpedia/stage-path.js';
+import {readFileSync}from'node:fs';
+const source=JSON.parse(readFileSync(new URL('../data/candidates/arkpedia-stage-17-13-source.json',import.meta.url)));
+
+test('deduplicated geometry binds to native checkpoints and distinguishes hidden tunnel waits from visible waits',()=>{
+ const route=source.geometry.routes[0],native=source.rawLevel.routes[0];
+ const path=sourceBoundRoutePath(route,[source.rawLevel.routes.at(-1),native,structuredClone(native)]);
+ assert.deepEqual(path.holds,[{at:1,seconds:10},{at:2,seconds:10},{at:3,seconds:10,tunnel:true}]);
+ assert.deepEqual(path.breaks,[4]);
+ const visible=structuredClone(native);visible.checkpoints=visible.checkpoints.filter(p=>p.type!=='DISAPPEAR');
+ assert.throws(()=>sourceBoundRoutePath(route,[native,visible]),/Ambiguous/);
+ const changed=structuredClone(native);changed.checkpoints.find(p=>p.type==='WAIT_FOR_SECONDS').time++;
+ assert.throws(()=>sourceBoundRoutePath(route,[changed]),/No original route/);
+ const unclosed=structuredClone(native);unclosed.checkpoints=unclosed.checkpoints.filter(p=>p.type!=='APPEAR_AT_POS');
+ assert.throws(()=>sourceBoundRoutePath(route,[unclosed]),/No original route/);
+});
 
 test('a synthetic route path is [col,row] start/checkpoints/end and dedupes', () => {
   const path = syntheticRoutePath({ start: { row: 4, col: 2 }, end: { row: 5, col: 8 },

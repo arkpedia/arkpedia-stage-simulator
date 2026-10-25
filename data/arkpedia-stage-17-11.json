@@ -1,0 +1,3937 @@
+{
+ "testOnly": true,
+ "enemyCatalogue": "canonical-ch16-candidate-v1",
+ "canonicalData": {
+  "repository": "arkpedia/arkpedia-data",
+  "commit": "79e81a8a872b2ecc592647d81a864ccbf1f8ca06"
+ },
+ "upstream": {
+  "repository": "ArknightsAssets/ArknightsGamedata",
+  "commit": "db6f9ef8046ad17dbebe3ff1d0dd88844a5bc78c"
+ },
+ "code": "17-11",
+ "name": "Desolation",
+ "description": "In your cramped sanctuary you murmur silently to yourself: No—This is not my war. \n<Leak Marker> Randomly selects a deployable low-ground tile and generates a Leak Source",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 9,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "17-11",
+  "rows": 8,
+  "cols": 12,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_flystart",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    2,
+    0,
+    0
+   ],
+   [
+    0,
+    1,
+    3,
+    4,
+    3,
+    0,
+    3,
+    0,
+    3,
+    0,
+    2,
+    0
+   ],
+   [
+    0,
+    3,
+    0,
+    3,
+    4,
+    3,
+    4,
+    3,
+    0,
+    3,
+    1,
+    5
+   ],
+   [
+    0,
+    3,
+    3,
+    4,
+    3,
+    4,
+    3,
+    4,
+    3,
+    0,
+    1,
+    5
+   ],
+   [
+    0,
+    6,
+    0,
+    3,
+    4,
+    3,
+    4,
+    3,
+    4,
+    3,
+    1,
+    5
+   ],
+   [
+    0,
+    0,
+    6,
+    3,
+    3,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "fly",
+    "start": {
+     "row": 2,
+     "col": 2
+    },
+    "end": {
+     "row": 5,
+     "col": 1
+    },
+    "checkpoints": [],
+    "waits": [],
+    "allowDiagonalMove": true,
+    "visitEveryCheckPoint": false,
+    "visitEveryNodeCenter": false,
+    "visitEveryTileCenter": false
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 5,
+     "col": 9
+    },
+    "end": {
+     "row": 6,
+     "col": 2
+    },
+    "checkpoints": [],
+    "waits": [],
+    "allowDiagonalMove": true,
+    "visitEveryCheckPoint": false,
+    "visitEveryNodeCenter": false,
+    "visitEveryTileCenter": false
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 10
+    },
+    "end": {
+     "row": 6,
+     "col": 2
+    },
+    "checkpoints": [],
+    "waits": [],
+    "allowDiagonalMove": true,
+    "visitEveryCheckPoint": false,
+    "visitEveryNodeCenter": false,
+    "visitEveryTileCenter": false
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 9
+    },
+    "end": {
+     "row": 5,
+     "col": 1
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 8
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ],
+    "allowDiagonalMove": true,
+    "visitEveryCheckPoint": false,
+    "visitEveryNodeCenter": false,
+    "visitEveryTileCenter": false
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 9
+    },
+    "end": {
+     "row": 5,
+     "col": 1
+    },
+    "checkpoints": [],
+    "waits": [],
+    "allowDiagonalMove": true,
+    "visitEveryCheckPoint": false,
+    "visitEveryNodeCenter": false,
+    "visitEveryTileCenter": false
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 5,
+     "col": 11
+    },
+    "end": {
+     "row": 5,
+     "col": 1
+    },
+    "checkpoints": [],
+    "waits": [],
+    "allowDiagonalMove": true,
+    "visitEveryCheckPoint": false,
+    "visitEveryNodeCenter": false,
+    "visitEveryTileCenter": false
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 4,
+     "col": 11
+    },
+    "end": {
+     "row": 5,
+     "col": 1
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [],
+    "allowDiagonalMove": true,
+    "visitEveryCheckPoint": false,
+    "visitEveryNodeCenter": false,
+    "visitEveryTileCenter": false
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 3,
+     "col": 11
+    },
+    "end": {
+     "row": 5,
+     "col": 1
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [],
+    "allowDiagonalMove": true,
+    "visitEveryCheckPoint": false,
+    "visitEveryNodeCenter": false,
+    "visitEveryTileCenter": false
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 160,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Leak Source",
+      "enemy_id": "enemy_10211_murad",
+      "count": 1,
+      "time": 0,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Leak Source",
+      "enemy_id": "enemy_10211_murad",
+      "count": 1,
+      "time": 0,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Experimental Subject F-009",
+      "enemy_id": "enemy_10201_muinf",
+      "count": 3,
+      "time": 3,
+      "interval": 5,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Experimental Subject F-009",
+      "enemy_id": "enemy_10201_muinf",
+      "count": 3,
+      "time": 30,
+      "interval": 2,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Rockbreaker",
+      "enemy_id": "enemy_10204_mudia",
+      "count": 1,
+      "time": 47,
+      "route": 3,
+      "fragment": 2
+     },
+     {
+      "enemy": "Rockbreaker",
+      "enemy_id": "enemy_10204_mudia",
+      "count": 2,
+      "time": 69,
+      "interval": 3,
+      "route": 4,
+      "fragment": 2
+     },
+     {
+      "enemy": "Experimental Subject F-009",
+      "enemy_id": "enemy_10201_muinf",
+      "count": 2,
+      "time": 54,
+      "interval": 2,
+      "route": 2,
+      "fragment": 2
+     },
+     {
+      "enemy": "Experimental Subject F-009",
+      "enemy_id": "enemy_10201_muinf",
+      "count": 2,
+      "time": 64,
+      "interval": 2,
+      "route": 2,
+      "fragment": 2
+     },
+     {
+      "enemy": "Experimental Subject F-009",
+      "enemy_id": "enemy_10201_muinf",
+      "count": 3,
+      "time": 74,
+      "interval": 2,
+      "route": 2,
+      "fragment": 2
+     },
+     {
+      "enemy": "Experimental Subject A-000",
+      "enemy_id": "enemy_10205_mufly",
+      "count": 1,
+      "time": 62,
+      "route": 5,
+      "fragment": 2
+     },
+     {
+      "enemy": "Experimental Subject A-000",
+      "enemy_id": "enemy_10205_mufly",
+      "count": 2,
+      "time": 57,
+      "interval": 15,
+      "route": 6,
+      "fragment": 2
+     },
+     {
+      "enemy": "Experimental Subject A-000",
+      "enemy_id": "enemy_10205_mufly",
+      "count": 2,
+      "time": 67,
+      "interval": 15,
+      "route": 7,
+      "fragment": 2
+     },
+     {
+      "enemy": "'Shishiga'",
+      "enemy_id": "enemy_10207_mubrut",
+      "count": 1,
+      "time": 100,
+      "route": 3,
+      "fragment": 3
+     },
+     {
+      "enemy": "'Shishiga'",
+      "enemy_id": "enemy_10207_mubrut",
+      "count": 1,
+      "time": 130,
+      "route": 4,
+      "fragment": 3
+     },
+     {
+      "enemy": "'Shishiga'",
+      "enemy_id": "enemy_10207_mubrut",
+      "count": 2,
+      "time": 150,
+      "interval": 3,
+      "route": 4,
+      "fragment": 3
+     },
+     {
+      "enemy": "Experimental Subject A-000",
+      "enemy_id": "enemy_10205_mufly",
+      "count": 3,
+      "time": 120,
+      "interval": 10,
+      "route": 5,
+      "fragment": 3
+     },
+     {
+      "enemy": "Experimental Subject A-000",
+      "enemy_id": "enemy_10205_mufly",
+      "count": 3,
+      "time": 130,
+      "interval": 10,
+      "route": 6,
+      "fragment": 3
+     },
+     {
+      "enemy": "Experimental Subject F-009",
+      "enemy_id": "enemy_10201_muinf",
+      "count": 4,
+      "time": 107,
+      "interval": 1,
+      "route": 2,
+      "fragment": 3
+     },
+     {
+      "enemy": "Experimental Subject F-009",
+      "enemy_id": "enemy_10201_muinf",
+      "count": 4,
+      "time": 127,
+      "interval": 1,
+      "route": 2,
+      "fragment": 3
+     },
+     {
+      "enemy": "Experimental Subject F-009",
+      "enemy_id": "enemy_10201_muinf",
+      "count": 4,
+      "time": 147,
+      "interval": 1,
+      "route": 2,
+      "fragment": 3
+     },
+     {
+      "enemy": "Experimental Subject F-009",
+      "enemy_id": "enemy_10201_muinf",
+      "count": 4,
+      "time": 157,
+      "interval": 1,
+      "route": 2,
+      "fragment": 3
+     },
+     {
+      "enemy": "Experimental Subject A-000",
+      "enemy_id": "enemy_10205_mufly",
+      "count": 3,
+      "time": 140,
+      "interval": 10,
+      "route": 7,
+      "fragment": 3
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 9,
+    "routes": [
+     3,
+     4,
+     3,
+     4,
+     4
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 2,
+    "col": 10,
+    "routes": [
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2
+    ]
+   },
+   {
+    "key": "tile_flystart",
+    "row": 3,
+    "col": 11,
+    "routes": [
+     7,
+     7
+    ]
+   },
+   {
+    "key": "tile_flystart",
+    "row": 4,
+    "col": 11,
+    "routes": [
+     6,
+     6
+    ]
+   },
+   {
+    "key": "tile_flystart",
+    "row": 5,
+    "col": 11,
+    "routes": [
+     5,
+     5
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 5,
+    "col": 1,
+    "routes": [
+     0,
+     3,
+     4,
+     5,
+     6,
+     7,
+     3,
+     4,
+     4,
+     5,
+     6,
+     7
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 6,
+    "col": 2,
+    "routes": [
+     1,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_10201_muinf",
+    "slug": "experimental_subject_f_009",
+    "name": "Experimental Subject F-009",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_10204_mudia",
+    "slug": "rockbreaker_enemy_10204_mudia",
+    "name": "Rockbreaker",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_10205_mufly",
+    "slug": "experimental_subject_a_000",
+    "name": "Experimental Subject A-000",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_10207_mubrut",
+    "slug": "shishiga",
+    "name": "'Shishiga'",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_10211_murad",
+    "slug": "leak_source",
+    "name": "Leak Source",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "conditionalHandled": true,
+ "chapter16Source": {
+  "testOnly": true,
+  "canonicalData": {
+   "repository": "arkpedia/arkpedia-data",
+   "commit": "245d7c601ce3a4a42adcfb84faa1bd1123d507bb"
+  },
+  "upstream": {
+   "repository": "ArknightsAssets/ArknightsGamedata",
+   "commit": "db6f9ef8046ad17dbebe3ff1d0dd88844a5bc78c"
+  },
+  "inputs": {
+   "stage": {
+    "path": "source/data/stages/17-11.json",
+    "bytes": 5022,
+    "sha256": "fe3f3cbdb1c52e6d7faa864f872dfe4628d8fbaad79e19e431dedbf62b7acb70"
+   },
+   "geometry": {
+    "path": "source/data/stage-geometry/17-11.json",
+    "bytes": 6585,
+    "sha256": "e782796ea0ce1a8e596ca968881709e5f760a5b95018106ca510658f4573f03c"
+   },
+   "conditional": {
+    "path": "source/data/stage-conditional/17-11.json",
+    "bytes": 2,
+    "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+   },
+   "devices": {
+    "path": "source/data/stage-devices.json",
+    "bytes": 1886587,
+    "sha256": "c9b70c96272e9aa8573046ec2b3c65510bd5342cddf9b8de6b2c5b7f48c9fb44"
+   },
+   "routeReceipt": {
+    "path": "source/data/stage-route-source/17-11.json",
+    "bytes": 946,
+    "sha256": "91a121c016085a012f070ada4109152502077cbd8a89c1d741c1f82db5be8987"
+   },
+   "manifest": {
+    "path": "release/manifest.json",
+    "bytes": 3105177,
+    "sha256": "278c6e912597450ecea9582dbb9b89301d89451b6542eab6efab530093d2a60c"
+   },
+   "rawLevel": {
+    "path": "source/data/simulator/raw/levels/17-11.json",
+    "bytes": 41540,
+    "sha256": "6b698cde47d6389a5d3a0619044b20628a74dbedb325751f91f31a7f51926a00"
+   },
+   "levelReceipt": {
+    "path": "source/data/simulator/stage-levels-source.json",
+    "bytes": 7296,
+    "sha256": "cec7f6606e1b05a3c9cc42f673db13211be5c8adf71832756fb5749df9ab2837"
+   }
+  },
+  "rawLevel": {
+   "options": {
+    "characterLimit": 9,
+    "maxLifePoint": 3,
+    "initialCost": 10,
+    "maxCost": 99,
+    "costIncreaseTime": 1,
+    "moveMultiplier": 0.5,
+    "steeringEnabled": true,
+    "reachableCheckIgnoreStartTile": false,
+    "isTrainingLevel": false,
+    "isHardTrainingLevel": false,
+    "isPredefinedCardsSelectable": false,
+    "displayRestTime": false,
+    "maxPlayTime": 0,
+    "functionDisableMask": "NONE",
+    "configBlackBoard": null
+   },
+   "levelId": null,
+   "mapId": null,
+   "bgmEvent": "act4mainss_nbat2",
+   "environmentSe": null,
+   "mapData": {
+    "map": [
+     [
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95
+     ],
+     [
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83
+     ],
+     [
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71
+     ],
+     [
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59
+     ],
+     [
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47
+     ],
+     [
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35
+     ],
+     [
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+     ],
+     [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+     ]
+    ],
+    "tiles": [
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_floor",
+      "heightType": "LOWLAND",
+      "buildableType": "NONE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_floor",
+      "heightType": "LOWLAND",
+      "buildableType": "NONE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_floor",
+      "heightType": "LOWLAND",
+      "buildableType": "NONE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_floor",
+      "heightType": "LOWLAND",
+      "buildableType": "NONE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_floor",
+      "heightType": "LOWLAND",
+      "buildableType": "NONE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_floor",
+      "heightType": "LOWLAND",
+      "buildableType": "NONE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_floor",
+      "heightType": "LOWLAND",
+      "buildableType": "NONE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_floor",
+      "heightType": "LOWLAND",
+      "buildableType": "NONE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_start",
+      "heightType": "LOWLAND",
+      "buildableType": "NONE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_floor",
+      "heightType": "LOWLAND",
+      "buildableType": "NONE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_road",
+      "heightType": "LOWLAND",
+      "buildableType": "MELEE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_wall",
+      "heightType": "HIGHLAND",
+      "buildableType": "RANGED",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_road",
+      "heightType": "LOWLAND",
+      "buildableType": "MELEE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_road",
+      "heightType": "LOWLAND",
+      "buildableType": "MELEE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_road",
+      "heightType": "LOWLAND",
+      "buildableType": "MELEE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_start",
+      "heightType": "LOWLAND",
+      "buildableType": "NONE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_road",
+      "heightType": "LOWLAND",
+      "buildableType": "MELEE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_road",
+      "heightType": "LOWLAND",
+      "buildableType": "MELEE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_wall",
+      "heightType": "HIGHLAND",
+      "buildableType": "RANGED",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_road",
+      "heightType": "LOWLAND",
+      "buildableType": "MELEE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_wall",
+      "heightType": "HIGHLAND",
+      "buildableType": "RANGED",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_road",
+      "heightType": "LOWLAND",
+      "buildableType": "MELEE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_road",
+      "heightType": "LOWLAND",
+      "buildableType": "MELEE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_floor",
+      "heightType": "LOWLAND",
+      "buildableType": "NONE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_flystart",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_road",
+      "heightType": "LOWLAND",
+      "buildableType": "MELEE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_road",
+      "heightType": "LOWLAND",
+      "buildableType": "MELEE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_wall",
+      "heightType": "HIGHLAND",
+      "buildableType": "RANGED",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_road",
+      "heightType": "LOWLAND",
+      "buildableType": "MELEE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_wall",
+      "heightType": "HIGHLAND",
+      "buildableType": "RANGED",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_road",
+      "heightType": "LOWLAND",
+      "buildableType": "MELEE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_wall",
+      "heightType": "HIGHLAND",
+      "buildableType": "RANGED",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_road",
+      "heightType": "LOWLAND",
+      "buildableType": "MELEE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_floor",
+      "heightType": "LOWLAND",
+      "buildableType": "NONE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_flystart",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_end",
+      "heightType": "LOWLAND",
+      "buildableType": "NONE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_road",
+      "heightType": "LOWLAND",
+      "buildableType": "MELEE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_wall",
+      "heightType": "HIGHLAND",
+      "buildableType": "RANGED",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_road",
+      "heightType": "LOWLAND",
+      "buildableType": "MELEE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_wall",
+      "heightType": "HIGHLAND",
+      "buildableType": "RANGED",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_road",
+      "heightType": "LOWLAND",
+      "buildableType": "MELEE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_wall",
+      "heightType": "HIGHLAND",
+      "buildableType": "RANGED",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_road",
+      "heightType": "LOWLAND",
+      "buildableType": "MELEE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_floor",
+      "heightType": "LOWLAND",
+      "buildableType": "NONE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_flystart",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_end",
+      "heightType": "LOWLAND",
+      "buildableType": "NONE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_road",
+      "heightType": "LOWLAND",
+      "buildableType": "MELEE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_road",
+      "heightType": "LOWLAND",
+      "buildableType": "MELEE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_floor",
+      "heightType": "LOWLAND",
+      "buildableType": "NONE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_floor",
+      "heightType": "LOWLAND",
+      "buildableType": "NONE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_floor",
+      "heightType": "LOWLAND",
+      "buildableType": "NONE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_floor",
+      "heightType": "LOWLAND",
+      "buildableType": "NONE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_floor",
+      "heightType": "LOWLAND",
+      "buildableType": "NONE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_floor",
+      "heightType": "LOWLAND",
+      "buildableType": "NONE",
+      "passableMask": "ALL",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     },
+     {
+      "tileKey": "tile_forbidden",
+      "heightType": "HIGHLAND",
+      "buildableType": "NONE",
+      "passableMask": "FLY_ONLY",
+      "playerSideMask": "ALL",
+      "blackboard": null,
+      "effects": null
+     }
+    ],
+    "blockEdges": null,
+    "tags": null,
+    "effects": null,
+    "layerRects": null
+   },
+   "tilesDisallowToLocate": {},
+   "runes": [
+    {
+     "difficultyMask": "ALL",
+     "key": "env_system_new",
+     "professionMask": 1023,
+     "buildableMask": "ALL",
+     "blackboard": [
+      {
+       "key": "key",
+       "value": 0,
+       "valueStr": "env_v073_mainline17_ctrl"
+      }
+     ]
+    },
+    {
+     "difficultyMask": "SIX_STAR",
+     "key": "global_lifepoint",
+     "professionMask": 1023,
+     "buildableMask": "ALL",
+     "blackboard": [
+      {
+       "key": "value",
+       "value": 1,
+       "valueStr": null
+      }
+     ]
+    },
+    {
+     "difficultyMask": "SIX_STAR",
+     "key": "enemy_attribute_mul",
+     "professionMask": 1023,
+     "buildableMask": "ALL",
+     "blackboard": [
+      {
+       "key": "atk",
+       "value": 1.1,
+       "valueStr": null
+      },
+      {
+       "key": "def",
+       "value": 1.1,
+       "valueStr": null
+      },
+      {
+       "key": "max_hp",
+       "value": 1.2,
+       "valueStr": null
+      },
+      {
+       "key": "rune_alias",
+       "value": 0,
+       "valueStr": "sixstar_basic_attribute"
+      }
+     ]
+    },
+    {
+     "difficultyMask": "SIX_STAR",
+     "key": "char_attribute_mul",
+     "professionMask": 1023,
+     "buildableMask": "ALL",
+     "blackboard": [
+      {
+       "key": "max_hp",
+       "value": 0.7,
+       "valueStr": null
+      }
+     ]
+    }
+   ],
+   "optionalRunes": {
+    "rune_level1_1": [
+     {
+      "difficultyMask": "SIX_STAR",
+      "key": "add_other_rune_blackb",
+      "professionMask": 1023,
+      "buildableMask": "ALL",
+      "blackboard": [
+       {
+        "key": "atk",
+        "value": 0.1,
+        "valueStr": null
+       },
+       {
+        "key": "def",
+        "value": 0.1,
+        "valueStr": null
+       },
+       {
+        "key": "max_hp",
+        "value": 0.2,
+        "valueStr": null
+       },
+       {
+        "key": "rune_alias",
+        "value": 0,
+        "valueStr": "sixstar_basic_attribute"
+       },
+       {
+        "key": "six_star_rune_alias",
+        "value": 0,
+        "valueStr": "rune_level1_1"
+       }
+      ]
+     },
+     {
+      "difficultyMask": "SIX_STAR",
+      "key": "char_cost_add",
+      "professionMask": 1023,
+      "buildableMask": "ALL",
+      "blackboard": [
+       {
+        "key": "value",
+        "value": 3,
+        "valueStr": null
+       },
+       {
+        "key": "six_star_rune_alias",
+        "value": 0,
+        "valueStr": "rune_level1_1"
+       }
+      ]
+     }
+    ],
+    "rune_level1_2": [
+     {
+      "difficultyMask": "SIX_STAR",
+      "key": "add_other_rune_blackb",
+      "professionMask": 1023,
+      "buildableMask": "ALL",
+      "blackboard": [
+       {
+        "key": "atk",
+        "value": 0.1,
+        "valueStr": null
+       },
+       {
+        "key": "def",
+        "value": 0.1,
+        "valueStr": null
+       },
+       {
+        "key": "max_hp",
+        "value": 0.2,
+        "valueStr": null
+       },
+       {
+        "key": "rune_alias",
+        "value": 0,
+        "valueStr": "sixstar_basic_attribute"
+       },
+       {
+        "key": "six_star_rune_alias",
+        "value": 0,
+        "valueStr": "rune_level1_2"
+       }
+      ]
+     },
+     {
+      "difficultyMask": "SIX_STAR",
+      "key": "char_respawntime_mul",
+      "professionMask": 1023,
+      "buildableMask": "ALL",
+      "blackboard": [
+       {
+        "key": "scale",
+        "value": 1.5,
+        "valueStr": null
+       },
+       {
+        "key": "six_star_rune_alias",
+        "value": 0,
+        "valueStr": "rune_level1_2"
+       }
+      ]
+     }
+    ],
+    "rune_level2_1": [
+     {
+      "difficultyMask": "SIX_STAR",
+      "key": "add_other_rune_blackb",
+      "professionMask": 1023,
+      "buildableMask": "ALL",
+      "blackboard": [
+       {
+        "key": "atk",
+        "value": 0.1,
+        "valueStr": null
+       },
+       {
+        "key": "def",
+        "value": 0.1,
+        "valueStr": null
+       },
+       {
+        "key": "max_hp",
+        "value": 0.2,
+        "valueStr": null
+       },
+       {
+        "key": "rune_alias",
+        "value": 0,
+        "valueStr": "sixstar_basic_attribute"
+       },
+       {
+        "key": "six_star_rune_alias",
+        "value": 0,
+        "valueStr": "rune_level2_1"
+       }
+      ]
+     },
+     {
+      "difficultyMask": "SIX_STAR",
+      "key": "enemy_attribute_mul",
+      "professionMask": 1023,
+      "buildableMask": "ALL",
+      "blackboard": [
+       {
+        "key": "enemy",
+        "value": 0,
+        "valueStr": "enemy_10211_murad"
+       },
+       {
+        "key": "atk",
+        "value": 1.7,
+        "valueStr": null
+       },
+       {
+        "key": "six_star_rune_alias",
+        "value": 0,
+        "valueStr": "rune_level2_1"
+       }
+      ]
+     }
+    ],
+    "rune_level2_2": [
+     {
+      "difficultyMask": "SIX_STAR",
+      "key": "add_other_rune_blackb",
+      "professionMask": 1023,
+      "buildableMask": "ALL",
+      "blackboard": [
+       {
+        "key": "atk",
+        "value": 0.1,
+        "valueStr": null
+       },
+       {
+        "key": "def",
+        "value": 0.1,
+        "valueStr": null
+       },
+       {
+        "key": "max_hp",
+        "value": 0.2,
+        "valueStr": null
+       },
+       {
+        "key": "rune_alias",
+        "value": 0,
+        "valueStr": "sixstar_basic_attribute"
+       },
+       {
+        "key": "six_star_rune_alias",
+        "value": 0,
+        "valueStr": "rune_level2_2"
+       }
+      ]
+     },
+     {
+      "difficultyMask": "SIX_STAR",
+      "key": "enemy_talent_blackb_add",
+      "professionMask": 1023,
+      "buildableMask": "ALL",
+      "blackboard": [
+       {
+        "key": "enemy",
+        "value": 0,
+        "valueStr": "enemy_10211_murad"
+       },
+       {
+        "key": "CheckAppear.enemy_murad_check_appear.duration",
+        "value": 4,
+        "valueStr": null
+       },
+       {
+        "key": "CheckAppear.enemy_murad_check_appear.interval",
+        "value": 4,
+        "valueStr": null
+       },
+       {
+        "key": "six_star_rune_alias",
+        "value": 0,
+        "valueStr": "rune_level2_2"
+       }
+      ]
+     }
+    ]
+   },
+   "globalBuffs": null,
+   "routes": [
+    {
+     "motionMode": "FLY",
+     "startPosition": {
+      "row": 2,
+      "col": 2
+     },
+     "endPosition": {
+      "row": 5,
+      "col": 1
+     },
+     "spawnRandomRange": {
+      "x": 0,
+      "y": 0
+     },
+     "spawnOffset": {
+      "x": 0,
+      "y": 0
+     },
+     "checkpoints": {},
+     "allowDiagonalMove": true,
+     "visitEveryTileCenter": false,
+     "visitEveryNodeCenter": false,
+     "visitEveryCheckPoint": false
+    },
+    {
+     "motionMode": "FLY",
+     "startPosition": {
+      "row": 5,
+      "col": 9
+     },
+     "endPosition": {
+      "row": 6,
+      "col": 2
+     },
+     "spawnRandomRange": {
+      "x": 0,
+      "y": 0
+     },
+     "spawnOffset": {
+      "x": 0,
+      "y": 0
+     },
+     "checkpoints": {},
+     "allowDiagonalMove": true,
+     "visitEveryTileCenter": false,
+     "visitEveryNodeCenter": false,
+     "visitEveryCheckPoint": false
+    },
+    {
+     "motionMode": "WALK",
+     "startPosition": {
+      "row": 2,
+      "col": 10
+     },
+     "endPosition": {
+      "row": 6,
+      "col": 2
+     },
+     "spawnRandomRange": {
+      "x": 0,
+      "y": 0
+     },
+     "spawnOffset": {
+      "x": 0,
+      "y": 0
+     },
+     "checkpoints": {},
+     "allowDiagonalMove": true,
+     "visitEveryTileCenter": false,
+     "visitEveryNodeCenter": false,
+     "visitEveryCheckPoint": false
+    },
+    {
+     "motionMode": "WALK",
+     "startPosition": {
+      "row": 2,
+      "col": 10
+     },
+     "endPosition": {
+      "row": 6,
+      "col": 2
+     },
+     "spawnRandomRange": {
+      "x": 0,
+      "y": 0
+     },
+     "spawnOffset": {
+      "x": 0,
+      "y": 0
+     },
+     "checkpoints": {},
+     "allowDiagonalMove": true,
+     "visitEveryTileCenter": false,
+     "visitEveryNodeCenter": false,
+     "visitEveryCheckPoint": false
+    },
+    {
+     "motionMode": "WALK",
+     "startPosition": {
+      "row": 1,
+      "col": 9
+     },
+     "endPosition": {
+      "row": 5,
+      "col": 1
+     },
+     "spawnRandomRange": {
+      "x": 0,
+      "y": 0
+     },
+     "spawnOffset": {
+      "x": 0,
+      "y": 0
+     },
+     "checkpoints": [
+      {
+       "type": "MOVE",
+       "time": 0,
+       "position": {
+        "row": 1,
+        "col": 8
+       },
+       "reachOffset": {
+        "x": 0,
+        "y": 0
+       },
+       "randomizeReachOffset": false,
+       "reachDistance": 0
+      },
+      {
+       "type": "WAIT_FOR_SECONDS",
+       "time": 5,
+       "position": {
+        "row": 0,
+        "col": 0
+       },
+       "reachOffset": {
+        "x": 0,
+        "y": 0
+       },
+       "randomizeReachOffset": false,
+       "reachDistance": 0
+      }
+     ],
+     "allowDiagonalMove": true,
+     "visitEveryTileCenter": false,
+     "visitEveryNodeCenter": false,
+     "visitEveryCheckPoint": false
+    },
+    {
+     "motionMode": "WALK",
+     "startPosition": {
+      "row": 1,
+      "col": 9
+     },
+     "endPosition": {
+      "row": 5,
+      "col": 1
+     },
+     "spawnRandomRange": {
+      "x": 0,
+      "y": 0
+     },
+     "spawnOffset": {
+      "x": 0,
+      "y": 0
+     },
+     "checkpoints": {},
+     "allowDiagonalMove": true,
+     "visitEveryTileCenter": false,
+     "visitEveryNodeCenter": false,
+     "visitEveryCheckPoint": false
+    },
+    {
+     "motionMode": "WALK",
+     "startPosition": {
+      "row": 2,
+      "col": 10
+     },
+     "endPosition": {
+      "row": 6,
+      "col": 2
+     },
+     "spawnRandomRange": {
+      "x": 0,
+      "y": 0
+     },
+     "spawnOffset": {
+      "x": 0,
+      "y": 0
+     },
+     "checkpoints": {},
+     "allowDiagonalMove": true,
+     "visitEveryTileCenter": false,
+     "visitEveryNodeCenter": false,
+     "visitEveryCheckPoint": false
+    },
+    {
+     "motionMode": "WALK",
+     "startPosition": {
+      "row": 2,
+      "col": 10
+     },
+     "endPosition": {
+      "row": 6,
+      "col": 2
+     },
+     "spawnRandomRange": {
+      "x": 0,
+      "y": 0
+     },
+     "spawnOffset": {
+      "x": 0,
+      "y": 0
+     },
+     "checkpoints": {},
+     "allowDiagonalMove": true,
+     "visitEveryTileCenter": false,
+     "visitEveryNodeCenter": false,
+     "visitEveryCheckPoint": false
+    },
+    {
+     "motionMode": "WALK",
+     "startPosition": {
+      "row": 2,
+      "col": 10
+     },
+     "endPosition": {
+      "row": 6,
+      "col": 2
+     },
+     "spawnRandomRange": {
+      "x": 0,
+      "y": 0
+     },
+     "spawnOffset": {
+      "x": 0,
+      "y": 0
+     },
+     "checkpoints": {},
+     "allowDiagonalMove": true,
+     "visitEveryTileCenter": false,
+     "visitEveryNodeCenter": false,
+     "visitEveryCheckPoint": false
+    },
+    {
+     "motionMode": "FLY",
+     "startPosition": {
+      "row": 5,
+      "col": 11
+     },
+     "endPosition": {
+      "row": 5,
+      "col": 1
+     },
+     "spawnRandomRange": {
+      "x": 0,
+      "y": 0
+     },
+     "spawnOffset": {
+      "x": 0,
+      "y": 0
+     },
+     "checkpoints": {},
+     "allowDiagonalMove": true,
+     "visitEveryTileCenter": false,
+     "visitEveryNodeCenter": false,
+     "visitEveryCheckPoint": false
+    },
+    {
+     "motionMode": "FLY",
+     "startPosition": {
+      "row": 4,
+      "col": 11
+     },
+     "endPosition": {
+      "row": 5,
+      "col": 1
+     },
+     "spawnRandomRange": {
+      "x": 0,
+      "y": 0
+     },
+     "spawnOffset": {
+      "x": 0,
+      "y": 0
+     },
+     "checkpoints": [
+      {
+       "type": "MOVE",
+       "time": 0,
+       "position": {
+        "row": 4,
+        "col": 1
+       },
+       "reachOffset": {
+        "x": 0,
+        "y": 0
+       },
+       "randomizeReachOffset": false,
+       "reachDistance": 0
+      }
+     ],
+     "allowDiagonalMove": true,
+     "visitEveryTileCenter": false,
+     "visitEveryNodeCenter": false,
+     "visitEveryCheckPoint": false
+    },
+    {
+     "motionMode": "FLY",
+     "startPosition": {
+      "row": 3,
+      "col": 11
+     },
+     "endPosition": {
+      "row": 5,
+      "col": 1
+     },
+     "spawnRandomRange": {
+      "x": 0,
+      "y": 0
+     },
+     "spawnOffset": {
+      "x": 0,
+      "y": 0
+     },
+     "checkpoints": [
+      {
+       "type": "MOVE",
+       "time": 0,
+       "position": {
+        "row": 3,
+        "col": 1
+       },
+       "reachOffset": {
+        "x": 0,
+        "y": 0
+       },
+       "randomizeReachOffset": false,
+       "reachDistance": 0
+      }
+     ],
+     "allowDiagonalMove": true,
+     "visitEveryTileCenter": false,
+     "visitEveryNodeCenter": false,
+     "visitEveryCheckPoint": false
+    },
+    {
+     "motionMode": "WALK",
+     "startPosition": {
+      "row": 1,
+      "col": 9
+     },
+     "endPosition": {
+      "row": 5,
+      "col": 1
+     },
+     "spawnRandomRange": {
+      "x": 0,
+      "y": 0
+     },
+     "spawnOffset": {
+      "x": 0,
+      "y": 0
+     },
+     "checkpoints": [
+      {
+       "type": "MOVE",
+       "time": 0,
+       "position": {
+        "row": 1,
+        "col": 8
+       },
+       "reachOffset": {
+        "x": 0,
+        "y": 0
+       },
+       "randomizeReachOffset": false,
+       "reachDistance": 0
+      },
+      {
+       "type": "WAIT_FOR_SECONDS",
+       "time": 5,
+       "position": {
+        "row": 0,
+        "col": 0
+       },
+       "reachOffset": {
+        "x": 0,
+        "y": 0
+       },
+       "randomizeReachOffset": false,
+       "reachDistance": 0
+      }
+     ],
+     "allowDiagonalMove": true,
+     "visitEveryTileCenter": false,
+     "visitEveryNodeCenter": false,
+     "visitEveryCheckPoint": false
+    },
+    {
+     "motionMode": "WALK",
+     "startPosition": {
+      "row": 1,
+      "col": 9
+     },
+     "endPosition": {
+      "row": 5,
+      "col": 1
+     },
+     "spawnRandomRange": {
+      "x": 0,
+      "y": 0
+     },
+     "spawnOffset": {
+      "x": 0,
+      "y": 0
+     },
+     "checkpoints": {},
+     "allowDiagonalMove": true,
+     "visitEveryTileCenter": false,
+     "visitEveryNodeCenter": false,
+     "visitEveryCheckPoint": false
+    },
+    {
+     "motionMode": "WALK",
+     "startPosition": {
+      "row": 1,
+      "col": 9
+     },
+     "endPosition": {
+      "row": 5,
+      "col": 1
+     },
+     "spawnRandomRange": {
+      "x": 0,
+      "y": 0
+     },
+     "spawnOffset": {
+      "x": 0,
+      "y": 0
+     },
+     "checkpoints": {},
+     "allowDiagonalMove": true,
+     "visitEveryTileCenter": false,
+     "visitEveryNodeCenter": false,
+     "visitEveryCheckPoint": false
+    },
+    {
+     "motionMode": "FLY",
+     "startPosition": {
+      "row": 5,
+      "col": 11
+     },
+     "endPosition": {
+      "row": 5,
+      "col": 1
+     },
+     "spawnRandomRange": {
+      "x": 0,
+      "y": 0
+     },
+     "spawnOffset": {
+      "x": 0,
+      "y": 0
+     },
+     "checkpoints": {},
+     "allowDiagonalMove": true,
+     "visitEveryTileCenter": false,
+     "visitEveryNodeCenter": false,
+     "visitEveryCheckPoint": false
+    },
+    {
+     "motionMode": "FLY",
+     "startPosition": {
+      "row": 4,
+      "col": 11
+     },
+     "endPosition": {
+      "row": 5,
+      "col": 1
+     },
+     "spawnRandomRange": {
+      "x": 0,
+      "y": 0
+     },
+     "spawnOffset": {
+      "x": 0,
+      "y": 0
+     },
+     "checkpoints": [
+      {
+       "type": "MOVE",
+       "time": 0,
+       "position": {
+        "row": 4,
+        "col": 1
+       },
+       "reachOffset": {
+        "x": 0,
+        "y": 0
+       },
+       "randomizeReachOffset": false,
+       "reachDistance": 0
+      }
+     ],
+     "allowDiagonalMove": true,
+     "visitEveryTileCenter": false,
+     "visitEveryNodeCenter": false,
+     "visitEveryCheckPoint": false
+    },
+    {
+     "motionMode": "WALK",
+     "startPosition": {
+      "row": 2,
+      "col": 10
+     },
+     "endPosition": {
+      "row": 6,
+      "col": 2
+     },
+     "spawnRandomRange": {
+      "x": 0,
+      "y": 0
+     },
+     "spawnOffset": {
+      "x": 0,
+      "y": 0
+     },
+     "checkpoints": {},
+     "allowDiagonalMove": true,
+     "visitEveryTileCenter": false,
+     "visitEveryNodeCenter": false,
+     "visitEveryCheckPoint": false
+    },
+    {
+     "motionMode": "WALK",
+     "startPosition": {
+      "row": 2,
+      "col": 10
+     },
+     "endPosition": {
+      "row": 6,
+      "col": 2
+     },
+     "spawnRandomRange": {
+      "x": 0,
+      "y": 0
+     },
+     "spawnOffset": {
+      "x": 0,
+      "y": 0
+     },
+     "checkpoints": {},
+     "allowDiagonalMove": true,
+     "visitEveryTileCenter": false,
+     "visitEveryNodeCenter": false,
+     "visitEveryCheckPoint": false
+    },
+    {
+     "motionMode": "WALK",
+     "startPosition": {
+      "row": 2,
+      "col": 10
+     },
+     "endPosition": {
+      "row": 6,
+      "col": 2
+     },
+     "spawnRandomRange": {
+      "x": 0,
+      "y": 0
+     },
+     "spawnOffset": {
+      "x": 0,
+      "y": 0
+     },
+     "checkpoints": {},
+     "allowDiagonalMove": true,
+     "visitEveryTileCenter": false,
+     "visitEveryNodeCenter": false,
+     "visitEveryCheckPoint": false
+    },
+    {
+     "motionMode": "WALK",
+     "startPosition": {
+      "row": 2,
+      "col": 10
+     },
+     "endPosition": {
+      "row": 6,
+      "col": 2
+     },
+     "spawnRandomRange": {
+      "x": 0,
+      "y": 0
+     },
+     "spawnOffset": {
+      "x": 0,
+      "y": 0
+     },
+     "checkpoints": {},
+     "allowDiagonalMove": true,
+     "visitEveryTileCenter": false,
+     "visitEveryNodeCenter": false,
+     "visitEveryCheckPoint": false
+    },
+    {
+     "motionMode": "FLY",
+     "startPosition": {
+      "row": 3,
+      "col": 11
+     },
+     "endPosition": {
+      "row": 5,
+      "col": 1
+     },
+     "spawnRandomRange": {
+      "x": 0,
+      "y": 0
+     },
+     "spawnOffset": {
+      "x": 0,
+      "y": 0
+     },
+     "checkpoints": [
+      {
+       "type": "MOVE",
+       "time": 0,
+       "position": {
+        "row": 3,
+        "col": 1
+       },
+       "reachOffset": {
+        "x": 0,
+        "y": 0
+       },
+       "randomizeReachOffset": false,
+       "reachDistance": 0
+      }
+     ],
+     "allowDiagonalMove": true,
+     "visitEveryTileCenter": false,
+     "visitEveryNodeCenter": false,
+     "visitEveryCheckPoint": false
+    }
+   ],
+   "extraRoutes": {},
+   "enemies": {},
+   "enemyDbRefs": [
+    {
+     "useDb": true,
+     "id": "enemy_10211_murad",
+     "level": 0,
+     "overwrittenData": null
+    },
+    {
+     "useDb": true,
+     "id": "enemy_10201_muinf",
+     "level": 0,
+     "overwrittenData": null
+    },
+    {
+     "useDb": true,
+     "id": "enemy_10207_mubrut",
+     "level": 0,
+     "overwrittenData": null
+    },
+    {
+     "useDb": true,
+     "id": "enemy_10204_mudia",
+     "level": 0,
+     "overwrittenData": null
+    },
+    {
+     "useDb": true,
+     "id": "enemy_10205_mufly",
+     "level": 0,
+     "overwrittenData": null
+    }
+   ],
+   "waves": [
+    {
+     "preDelay": 0,
+     "postDelay": 0,
+     "maxTimeWaitingForNextWave": -1,
+     "fragments": [
+      {
+       "preDelay": 0,
+       "actions": [
+        {
+         "actionType": "SPAWN",
+         "managedByScheduler": true,
+         "key": "enemy_10211_murad",
+         "count": 1,
+         "preDelay": 0,
+         "interval": 1,
+         "routeIndex": 0,
+         "blockFragment": false,
+         "autoPreviewRoute": false,
+         "autoDisplayEnemyInfo": false,
+         "isUnharmfulAndAlwaysCountAsKilled": false,
+         "hiddenGroup": null,
+         "randomSpawnGroupKey": null,
+         "randomSpawnGroupPackKey": null,
+         "randomType": "ALWAYS",
+         "refreshType": "ALWAYS",
+         "weight": 0,
+         "dontBlockWave": false,
+         "forceBlockWaveInBranch": false
+        },
+        {
+         "actionType": "SPAWN",
+         "managedByScheduler": true,
+         "key": "enemy_10211_murad",
+         "count": 1,
+         "preDelay": 0,
+         "interval": 1,
+         "routeIndex": 1,
+         "blockFragment": false,
+         "autoPreviewRoute": false,
+         "autoDisplayEnemyInfo": false,
+         "isUnharmfulAndAlwaysCountAsKilled": false,
+         "hiddenGroup": null,
+         "randomSpawnGroupKey": null,
+         "randomSpawnGroupPackKey": null,
+         "randomType": "ALWAYS",
+         "refreshType": "ALWAYS",
+         "weight": 0,
+         "dontBlockWave": false,
+         "forceBlockWaveInBranch": false
+        }
+       ]
+      },
+      {
+       "preDelay": 0,
+       "actions": [
+        {
+         "actionType": "SPAWN",
+         "managedByScheduler": true,
+         "key": "enemy_10201_muinf",
+         "count": 3,
+         "preDelay": 3,
+         "interval": 5,
+         "routeIndex": 2,
+         "blockFragment": false,
+         "autoPreviewRoute": true,
+         "autoDisplayEnemyInfo": false,
+         "isUnharmfulAndAlwaysCountAsKilled": false,
+         "hiddenGroup": null,
+         "randomSpawnGroupKey": null,
+         "randomSpawnGroupPackKey": null,
+         "randomType": "ALWAYS",
+         "refreshType": "ALWAYS",
+         "weight": 0,
+         "dontBlockWave": false,
+         "forceBlockWaveInBranch": false
+        },
+        {
+         "actionType": "SPAWN",
+         "managedByScheduler": true,
+         "key": "enemy_10201_muinf",
+         "count": 3,
+         "preDelay": 30,
+         "interval": 2,
+         "routeIndex": 3,
+         "blockFragment": false,
+         "autoPreviewRoute": false,
+         "autoDisplayEnemyInfo": false,
+         "isUnharmfulAndAlwaysCountAsKilled": false,
+         "hiddenGroup": null,
+         "randomSpawnGroupKey": null,
+         "randomSpawnGroupPackKey": null,
+         "randomType": "ALWAYS",
+         "refreshType": "ALWAYS",
+         "weight": 0,
+         "dontBlockWave": false,
+         "forceBlockWaveInBranch": false
+        }
+       ]
+      },
+      {
+       "preDelay": 10,
+       "actions": [
+        {
+         "actionType": "SPAWN",
+         "managedByScheduler": true,
+         "key": "enemy_10204_mudia",
+         "count": 1,
+         "preDelay": 3,
+         "interval": 1,
+         "routeIndex": 4,
+         "blockFragment": false,
+         "autoPreviewRoute": true,
+         "autoDisplayEnemyInfo": false,
+         "isUnharmfulAndAlwaysCountAsKilled": false,
+         "hiddenGroup": null,
+         "randomSpawnGroupKey": null,
+         "randomSpawnGroupPackKey": null,
+         "randomType": "ALWAYS",
+         "refreshType": "ALWAYS",
+         "weight": 0,
+         "dontBlockWave": false,
+         "forceBlockWaveInBranch": false
+        },
+        {
+         "actionType": "SPAWN",
+         "managedByScheduler": true,
+         "key": "enemy_10204_mudia",
+         "count": 2,
+         "preDelay": 25,
+         "interval": 3,
+         "routeIndex": 5,
+         "blockFragment": false,
+         "autoPreviewRoute": false,
+         "autoDisplayEnemyInfo": false,
+         "isUnharmfulAndAlwaysCountAsKilled": false,
+         "hiddenGroup": null,
+         "randomSpawnGroupKey": null,
+         "randomSpawnGroupPackKey": null,
+         "randomType": "ALWAYS",
+         "refreshType": "ALWAYS",
+         "weight": 0,
+         "dontBlockWave": false,
+         "forceBlockWaveInBranch": false
+        },
+        {
+         "actionType": "SPAWN",
+         "managedByScheduler": true,
+         "key": "enemy_10201_muinf",
+         "count": 2,
+         "preDelay": 10,
+         "interval": 2,
+         "routeIndex": 6,
+         "blockFragment": false,
+         "autoPreviewRoute": false,
+         "autoDisplayEnemyInfo": false,
+         "isUnharmfulAndAlwaysCountAsKilled": false,
+         "hiddenGroup": null,
+         "randomSpawnGroupKey": null,
+         "randomSpawnGroupPackKey": null,
+         "randomType": "ALWAYS",
+         "refreshType": "ALWAYS",
+         "weight": 0,
+         "dontBlockWave": false,
+         "forceBlockWaveInBranch": false
+        },
+        {
+         "actionType": "SPAWN",
+         "managedByScheduler": true,
+         "key": "enemy_10201_muinf",
+         "count": 2,
+         "preDelay": 20,
+         "interval": 2,
+         "routeIndex": 7,
+         "blockFragment": false,
+         "autoPreviewRoute": false,
+         "autoDisplayEnemyInfo": false,
+         "isUnharmfulAndAlwaysCountAsKilled": false,
+         "hiddenGroup": null,
+         "randomSpawnGroupKey": null,
+         "randomSpawnGroupPackKey": null,
+         "randomType": "ALWAYS",
+         "refreshType": "ALWAYS",
+         "weight": 0,
+         "dontBlockWave": false,
+         "forceBlockWaveInBranch": false
+        },
+        {
+         "actionType": "SPAWN",
+         "managedByScheduler": true,
+         "key": "enemy_10201_muinf",
+         "count": 3,
+         "preDelay": 30,
+         "interval": 2,
+         "routeIndex": 8,
+         "blockFragment": false,
+         "autoPreviewRoute": false,
+         "autoDisplayEnemyInfo": false,
+         "isUnharmfulAndAlwaysCountAsKilled": false,
+         "hiddenGroup": null,
+         "randomSpawnGroupKey": null,
+         "randomSpawnGroupPackKey": null,
+         "randomType": "ALWAYS",
+         "refreshType": "ALWAYS",
+         "weight": 0,
+         "dontBlockWave": false,
+         "forceBlockWaveInBranch": false
+        },
+        {
+         "actionType": "SPAWN",
+         "managedByScheduler": true,
+         "key": "enemy_10205_mufly",
+         "count": 1,
+         "preDelay": 18,
+         "interval": 1,
+         "routeIndex": 9,
+         "blockFragment": false,
+         "autoPreviewRoute": true,
+         "autoDisplayEnemyInfo": false,
+         "isUnharmfulAndAlwaysCountAsKilled": false,
+         "hiddenGroup": null,
+         "randomSpawnGroupKey": null,
+         "randomSpawnGroupPackKey": null,
+         "randomType": "ALWAYS",
+         "refreshType": "ALWAYS",
+         "weight": 0,
+         "dontBlockWave": false,
+         "forceBlockWaveInBranch": false
+        },
+        {
+         "actionType": "SPAWN",
+         "managedByScheduler": true,
+         "key": "enemy_10205_mufly",
+         "count": 2,
+         "preDelay": 13,
+         "interval": 15,
+         "routeIndex": 10,
+         "blockFragment": false,
+         "autoPreviewRoute": true,
+         "autoDisplayEnemyInfo": false,
+         "isUnharmfulAndAlwaysCountAsKilled": false,
+         "hiddenGroup": null,
+         "randomSpawnGroupKey": null,
+         "randomSpawnGroupPackKey": null,
+         "randomType": "ALWAYS",
+         "refreshType": "ALWAYS",
+         "weight": 0,
+         "dontBlockWave": false,
+         "forceBlockWaveInBranch": false
+        },
+        {
+         "actionType": "SPAWN",
+         "managedByScheduler": true,
+         "key": "enemy_10205_mufly",
+         "count": 2,
+         "preDelay": 23,
+         "interval": 15,
+         "routeIndex": 11,
+         "blockFragment": false,
+         "autoPreviewRoute": true,
+         "autoDisplayEnemyInfo": false,
+         "isUnharmfulAndAlwaysCountAsKilled": false,
+         "hiddenGroup": null,
+         "randomSpawnGroupKey": null,
+         "randomSpawnGroupPackKey": null,
+         "randomType": "ALWAYS",
+         "refreshType": "ALWAYS",
+         "weight": 0,
+         "dontBlockWave": false,
+         "forceBlockWaveInBranch": false
+        }
+       ]
+      },
+      {
+       "preDelay": 15,
+       "actions": [
+        {
+         "actionType": "SPAWN",
+         "managedByScheduler": true,
+         "key": "enemy_10207_mubrut",
+         "count": 1,
+         "preDelay": 3,
+         "interval": 1,
+         "routeIndex": 12,
+         "blockFragment": false,
+         "autoPreviewRoute": true,
+         "autoDisplayEnemyInfo": false,
+         "isUnharmfulAndAlwaysCountAsKilled": false,
+         "hiddenGroup": null,
+         "randomSpawnGroupKey": null,
+         "randomSpawnGroupPackKey": null,
+         "randomType": "ALWAYS",
+         "refreshType": "ALWAYS",
+         "weight": 0,
+         "dontBlockWave": false,
+         "forceBlockWaveInBranch": false
+        },
+        {
+         "actionType": "SPAWN",
+         "managedByScheduler": true,
+         "key": "enemy_10207_mubrut",
+         "count": 1,
+         "preDelay": 33,
+         "interval": 1,
+         "routeIndex": 13,
+         "blockFragment": false,
+         "autoPreviewRoute": false,
+         "autoDisplayEnemyInfo": false,
+         "isUnharmfulAndAlwaysCountAsKilled": false,
+         "hiddenGroup": null,
+         "randomSpawnGroupKey": null,
+         "randomSpawnGroupPackKey": null,
+         "randomType": "ALWAYS",
+         "refreshType": "ALWAYS",
+         "weight": 0,
+         "dontBlockWave": false,
+         "forceBlockWaveInBranch": false
+        },
+        {
+         "actionType": "SPAWN",
+         "managedByScheduler": true,
+         "key": "enemy_10207_mubrut",
+         "count": 2,
+         "preDelay": 53,
+         "interval": 3,
+         "routeIndex": 14,
+         "blockFragment": false,
+         "autoPreviewRoute": false,
+         "autoDisplayEnemyInfo": false,
+         "isUnharmfulAndAlwaysCountAsKilled": false,
+         "hiddenGroup": null,
+         "randomSpawnGroupKey": null,
+         "randomSpawnGroupPackKey": null,
+         "randomType": "ALWAYS",
+         "refreshType": "ALWAYS",
+         "weight": 0,
+         "dontBlockWave": false,
+         "forceBlockWaveInBranch": false
+        },
+        {
+         "actionType": "SPAWN",
+         "managedByScheduler": true,
+         "key": "enemy_10205_mufly",
+         "count": 3,
+         "preDelay": 23,
+         "interval": 10,
+         "routeIndex": 15,
+         "blockFragment": false,
+         "autoPreviewRoute": false,
+         "autoDisplayEnemyInfo": false,
+         "isUnharmfulAndAlwaysCountAsKilled": false,
+         "hiddenGroup": null,
+         "randomSpawnGroupKey": null,
+         "randomSpawnGroupPackKey": null,
+         "randomType": "ALWAYS",
+         "refreshType": "ALWAYS",
+         "weight": 0,
+         "dontBlockWave": false,
+         "forceBlockWaveInBranch": false
+        },
+        {
+         "actionType": "SPAWN",
+         "managedByScheduler": true,
+         "key": "enemy_10205_mufly",
+         "count": 3,
+         "preDelay": 33,
+         "interval": 10,
+         "routeIndex": 16,
+         "blockFragment": false,
+         "autoPreviewRoute": false,
+         "autoDisplayEnemyInfo": false,
+         "isUnharmfulAndAlwaysCountAsKilled": false,
+         "hiddenGroup": null,
+         "randomSpawnGroupKey": null,
+         "randomSpawnGroupPackKey": null,
+         "randomType": "ALWAYS",
+         "refreshType": "ALWAYS",
+         "weight": 0,
+         "dontBlockWave": false,
+         "forceBlockWaveInBranch": false
+        },
+        {
+         "actionType": "SPAWN",
+         "managedByScheduler": true,
+         "key": "enemy_10201_muinf",
+         "count": 4,
+         "preDelay": 10,
+         "interval": 1,
+         "routeIndex": 17,
+         "blockFragment": false,
+         "autoPreviewRoute": false,
+         "autoDisplayEnemyInfo": false,
+         "isUnharmfulAndAlwaysCountAsKilled": false,
+         "hiddenGroup": null,
+         "randomSpawnGroupKey": null,
+         "randomSpawnGroupPackKey": null,
+         "randomType": "ALWAYS",
+         "refreshType": "ALWAYS",
+         "weight": 0,
+         "dontBlockWave": false,
+         "forceBlockWaveInBranch": false
+        },
+        {
+         "actionType": "SPAWN",
+         "managedByScheduler": true,
+         "key": "enemy_10201_muinf",
+         "count": 4,
+         "preDelay": 30,
+         "interval": 1,
+         "routeIndex": 18,
+         "blockFragment": false,
+         "autoPreviewRoute": false,
+         "autoDisplayEnemyInfo": false,
+         "isUnharmfulAndAlwaysCountAsKilled": false,
+         "hiddenGroup": null,
+         "randomSpawnGroupKey": null,
+         "randomSpawnGroupPackKey": null,
+         "randomType": "ALWAYS",
+         "refreshType": "ALWAYS",
+         "weight": 0,
+         "dontBlockWave": false,
+         "forceBlockWaveInBranch": false
+        },
+        {
+         "actionType": "SPAWN",
+         "managedByScheduler": true,
+         "key": "enemy_10201_muinf",
+         "count": 4,
+         "preDelay": 50,
+         "interval": 1,
+         "routeIndex": 19,
+         "blockFragment": false,
+         "autoPreviewRoute": false,
+         "autoDisplayEnemyInfo": false,
+         "isUnharmfulAndAlwaysCountAsKilled": false,
+         "hiddenGroup": null,
+         "randomSpawnGroupKey": null,
+         "randomSpawnGroupPackKey": null,
+         "randomType": "ALWAYS",
+         "refreshType": "ALWAYS",
+         "weight": 0,
+         "dontBlockWave": false,
+         "forceBlockWaveInBranch": false
+        },
+        {
+         "actionType": "SPAWN",
+         "managedByScheduler": true,
+         "key": "enemy_10201_muinf",
+         "count": 4,
+         "preDelay": 60,
+         "interval": 1,
+         "routeIndex": 20,
+         "blockFragment": false,
+         "autoPreviewRoute": false,
+         "autoDisplayEnemyInfo": false,
+         "isUnharmfulAndAlwaysCountAsKilled": false,
+         "hiddenGroup": null,
+         "randomSpawnGroupKey": null,
+         "randomSpawnGroupPackKey": null,
+         "randomType": "ALWAYS",
+         "refreshType": "ALWAYS",
+         "weight": 0,
+         "dontBlockWave": false,
+         "forceBlockWaveInBranch": false
+        },
+        {
+         "actionType": "SPAWN",
+         "managedByScheduler": true,
+         "key": "enemy_10205_mufly",
+         "count": 3,
+         "preDelay": 43,
+         "interval": 10,
+         "routeIndex": 21,
+         "blockFragment": false,
+         "autoPreviewRoute": false,
+         "autoDisplayEnemyInfo": false,
+         "isUnharmfulAndAlwaysCountAsKilled": false,
+         "hiddenGroup": null,
+         "randomSpawnGroupKey": null,
+         "randomSpawnGroupPackKey": null,
+         "randomType": "ALWAYS",
+         "refreshType": "ALWAYS",
+         "weight": 0,
+         "dontBlockWave": false,
+         "forceBlockWaveInBranch": false
+        }
+       ]
+      }
+     ],
+     "advancedWaveTag": null
+    }
+   ],
+   "branches": null,
+   "predefines": {
+    "characterInsts": {},
+    "tokenInsts": [
+     {
+      "position": {
+       "row": 2,
+       "col": 5
+      },
+      "direction": "UP",
+      "hidden": false,
+      "alias": "trap_329_rift#1",
+      "uniEquipIds": null,
+      "showSpIllust": false,
+      "masterInfos": null,
+      "inst": {
+       "characterKey": "trap_329_rift",
+       "level": 1,
+       "phase": "PHASE_0",
+       "favorPoint": 0,
+       "potentialRank": 0
+      },
+      "skillIndex": 0,
+      "mainSkillLvl": 1,
+      "skinId": "",
+      "tmplId": null,
+      "overrideSkillBlackboard": null,
+      "overrideTalents": null
+     },
+     {
+      "position": {
+       "row": 3,
+       "col": 2
+      },
+      "direction": "UP",
+      "hidden": false,
+      "alias": "trap_329_rift#2",
+      "uniEquipIds": null,
+      "showSpIllust": false,
+      "masterInfos": null,
+      "inst": {
+       "characterKey": "trap_329_rift",
+       "level": 1,
+       "phase": "PHASE_0",
+       "favorPoint": 0,
+       "potentialRank": 0
+      },
+      "skillIndex": 0,
+      "mainSkillLvl": 1,
+      "skinId": "",
+      "tmplId": null,
+      "overrideSkillBlackboard": null,
+      "overrideTalents": null
+     }
+    ],
+    "characterCards": {},
+    "tokenCards": {}
+   },
+   "hardPredefines": {
+    "characterInsts": {},
+    "tokenInsts": {},
+    "characterCards": {},
+    "tokenCards": {}
+   },
+   "excludeCharIdList": null,
+   "randomSeed": 407752641,
+   "operaConfig": null,
+   "cameraPlugin": ""
+  }
+ },
+ "excludedHiddenGroups": [],
+ "includedHiddenGroups": [],
+ "devices": [
+  {
+   "col": 5,
+   "description": null,
+   "hidden": false,
+   "key": "trap_329_rift",
+   "kind": "device",
+   "name": "Leak Marker",
+   "row": 2
+  },
+  {
+   "col": 2,
+   "description": null,
+   "hidden": false,
+   "key": "trap_329_rift",
+   "kind": "device",
+   "name": "Leak Marker",
+   "row": 3
+  }
+ ],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "17-11",
+  "geometryHash": "e782796ea0ce1a8e596ca968881709e5f760a5b95018106ca510658f4573f03c",
+  "moveScale": 0.5,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      2,
+      2
+     ],
+     [
+      1,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "1": {
+    "points": [
+     [
+      9,
+      5
+     ],
+     [
+      2,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "2": {
+    "points": [
+     [
+      10,
+      2
+     ],
+     [
+      2,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "3": {
+    "points": [
+     [
+      9,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      1,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 5
+     }
+    ]
+   },
+   "4": {
+    "points": [
+     [
+      9,
+      1
+     ],
+     [
+      1,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "5": {
+    "points": [
+     [
+      11,
+      5
+     ],
+     [
+      1,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "6": {
+    "points": [
+     [
+      11,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "7": {
+    "points": [
+     [
+      11,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      1,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_10211_murad": {
+   "key": "enemy_10211_murad",
+   "prefabKey": "enemy_10211_murad",
+   "name": "Leak Source",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "NONE",
+   "stats": {
+    "maxHp": 100000,
+    "atk": 15,
+    "def": 0,
+    "res": 0,
+    "moveSpeed": 0,
+    "bat": 0.5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": -1,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 0,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 1,
+    "hitRateArts": 1,
+    "dmgType": "none",
+    "dmgTypes": [
+     "none"
+    ],
+    "motion": "FLY",
+    "immunities": {
+     "stun": true,
+     "silence": true,
+     "sleep": true,
+     "frozen": true,
+     "levitate": true
+    },
+    "otherImmunities": [
+     "feared",
+     "palsy",
+     "attract"
+    ],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Cannot be attacked",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Not visible normally; increases ATK when it reveals itself.",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Periodically fires a ring of beams that cause the first allied unit hit to take continuous True damage for a period of time, with closer units taking higher damage more frequently. When a beam hits a target, it accelerates the process of revealing the source.",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Reveals itself after some time, firing more beams more frequently; leaves the field some time after revealing itself.",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Revealed when an Operator is deployed on its tile or the four adjacent tiles; during this period, beams only affect the earliest-deployed Operator nearby; leaves the field after some time and gives all allied Operators SP.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "CheckAppear.enemy_murad_check_appear.duration": 5,
+     "CheckAppear.enemy_murad_check_appear.interval": 4,
+     "CheckAppear.enemy_murad_check_appear.sp": 8,
+     "CheckAppear.atk_scale": 8
+    },
+    "bbStr": {},
+    "groups": {
+     "CheckAppear": [
+      "atk_scale",
+      "enemy_murad_check_appear.duration",
+      "enemy_murad_check_appear.interval",
+      "enemy_murad_check_appear.sp"
+     ]
+    }
+   },
+   "skills": [
+    {
+     "prefabKey": "HideRoundLaser",
+     "priority": 0,
+     "cooldown": 6,
+     "initCooldown": 6,
+     "spCost": 0,
+     "bb": {
+      "projectileNum": 8,
+      "atk_scale": 1,
+      "endAngle": 315,
+      "startAngle": 0,
+      "max_atk_scale": 2,
+      "max_distance": 5,
+      "min_distance": 1,
+      "max_interval": 1.5,
+      "dot_duration": 5,
+      "interval": 1.5
+     },
+     "bbStr": {}
+    },
+    {
+     "prefabKey": "RoundLaser",
+     "priority": 0,
+     "cooldown": 4,
+     "initCooldown": 4,
+     "spCost": 0,
+     "bb": {
+      "projectileNum": 8,
+      "atk_scale": 8,
+      "endAngle": 315,
+      "startAngle": 0,
+      "max_atk_scale": 10,
+      "max_distance": 5,
+      "min_distance": 1,
+      "max_interval": 1,
+      "dot_duration": 5,
+      "interval": 1
+     },
+     "bbStr": {}
+    },
+    {
+     "prefabKey": "LevelUp",
+     "priority": 0,
+     "cooldown": 0,
+     "initCooldown": 0,
+     "spCost": 50,
+     "bb": {
+      "duration": 20,
+      "atk": 0.5
+     },
+     "bbStr": {}
+    }
+   ],
+   "sp": {
+    "type": "INCREASE_WITH_TIME",
+    "maxSp": 50,
+    "initSp": 0,
+    "increment": 1
+   },
+   "notCountInTotal": true,
+   "tags": {}
+  },
+  "enemy_10201_muinf": {
+   "key": "enemy_10201_muinf",
+   "prefabKey": "enemy_10201_muinf",
+   "name": "Experimental Subject F-009",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 4000,
+    "atk": 250,
+    "def": 20,
+    "res": 20,
+    "moveSpeed": 1.2,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": -1,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 1,
+    "hitRateArts": 1,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Recovers HP when affected by a <Leak Source>.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "MuradPollut.hp_ratio": 0.2
+    },
+    "bbStr": {},
+    "groups": {
+     "MuradPollut": [
+      "hp_ratio"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": {}
+  },
+  "enemy_10204_mudia": {
+   "key": "enemy_10204_mudia",
+   "prefabKey": "enemy_10204_mudia",
+   "name": "Rockbreaker",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 4500,
+    "atk": 500,
+    "def": 1500,
+    "res": 60,
+    "moveSpeed": 0.75,
+    "bat": 2.3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": -1,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 1,
+    "hitRateArts": 1,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Splits when first affected by a <Leak Source>.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [
+    {
+     "prefabKey": "SummonSelf",
+     "priority": 0,
+     "cooldown": 99999,
+     "initCooldown": 0,
+     "spCost": 0,
+     "bb": {},
+     "bbStr": {}
+    }
+   ],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_10205_mufly": {
+   "key": "enemy_10205_mufly",
+   "prefabKey": "enemy_10205_mufly",
+   "name": "Experimental Subject A-000",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "NONE",
+   "stats": {
+    "maxHp": 4800,
+    "atk": 350,
+    "def": 80,
+    "res": 20,
+    "moveSpeed": 0.55,
+    "bat": 3,
+    "aspd": 100,
+    "rangeRadius": 1.4,
+    "rawRangeRadius": 1.4,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 1,
+    "hitRateArts": 1,
+    "dmgType": "none",
+    "dmgTypes": [
+     "none"
+    ],
+    "motion": "FLY",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Flying unit.",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Death deals a large amount of Physical damage to surrounding units",
+     "format": "SILENCE"
+    },
+    {
+     "text": "Continuously moves toward the nearest <Leak Source>; increases in size and deals increased damage on death for each <Leak Source> touched, up to a maximum of 2 times.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "DefaultBoom.atk_scale": 1,
+     "S1Boom.atk_scale": 2,
+     "S2Boom.atk_scale": 3
+    },
+    "bbStr": {},
+    "groups": {
+     "DefaultBoom": [
+      "atk_scale"
+     ],
+     "S1Boom": [
+      "atk_scale"
+     ],
+     "S2Boom": [
+      "atk_scale"
+     ]
+    }
+   },
+   "skills": [
+    {
+     "prefabKey": "Charge",
+     "priority": 0,
+     "cooldown": 9999,
+     "initCooldown": 0,
+     "spCost": 0,
+     "bb": {},
+     "bbStr": {}
+    },
+    {
+     "prefabKey": "Charge",
+     "priority": 0,
+     "cooldown": 9999,
+     "initCooldown": 0,
+     "spCost": 0,
+     "bb": {},
+     "bbStr": {}
+    }
+   ],
+   "notCountInTotal": false,
+   "tags": {}
+  },
+  "enemy_10207_mubrut": {
+   "key": "enemy_10207_mubrut",
+   "prefabKey": "enemy_10207_mubrut",
+   "name": "'Shishiga'",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 9000,
+    "atk": 1800,
+    "def": 800,
+    "res": 25,
+    "moveSpeed": 0.5,
+    "bat": 6,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": -1,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 1,
+    "hitRateArts": 1,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Next attack hits three times when affected by a <Leak Source>.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": {}
+  }
+ }
+}

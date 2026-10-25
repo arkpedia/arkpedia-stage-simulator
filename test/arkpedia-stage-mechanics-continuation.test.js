@@ -16,6 +16,8 @@ const read = p => JSON.parse(bytes(p));
 const mvp = read('arkpedia-mvp.json'), index = read('arkpedia-stages.json');
 const hash = b => createHash('sha256').update(b).digest('hex');
 const specs = {
+  '17-11': { total:50, scheduled:52, counts:{enemy_10211_murad:2,enemy_10201_muinf:29,enemy_10204_mudia:3,enemy_10205_mufly:14,enemy_10207_mubrut:4}, hidden:[] },
+  '17-13': { total:72, counts:{enemy_10204_mudia_2:66,enemy_10201_muinf_2:3,enemy_10207_mubrut_2:3}, hidden:[] },
   '17-5': { total:18, scheduled:19, counts:{enemy_10201_muinf:14,enemy_10204_mudia:2,enemy_10205_mufly:2,enemy_10211_murad:1}, hidden:['raid','raid6A'], clearsBefore:293 },
   '17-6': { total:30, scheduled:31, counts:{enemy_10201_muinf:13,enemy_10203_mumag:4,enemy_10204_mudia:8,enemy_10205_mufly:5,enemy_10211_murad:1}, hidden:['hidden1'], cap:400, clearsBefore:367 },
   '16-10': { total:27, counts:{enemy_10120_uaghst_2:12,enemy_10126_rkbomb:8,enemy_10124_uashld:6,enemy_10127_rkmbst:1}, hidden:[] },
@@ -81,7 +83,7 @@ for (const [code,spec] of Object.entries(specs)) {
     assert.equal(existsSync(refused),false);
   });
   for(const seed of [19,71,129])test(code+' seeded normal battle '+seed,()=>{
-    const b=battle(code,seed),born=[];let bruteArmed=false;
+    const b=battle(code,seed),born=[],hiddenSince=new Map(),hiddenDurations=[];let bruteArmed=false;
     assert.equal(b.timeLimit,300);
     assert.equal(b.total,spec.total);
     if(spec.cap)b.timeLimit=spec.cap;
@@ -90,6 +92,13 @@ for (const [code,spec] of Object.entries(specs)) {
       for(const[id,e]of b.stageDeviceActions??[])if(b.time<121&&e.state.canActivate())b.activateStageDevice(id);
       b.step();
       bruteArmed ||= b.enemies.some(e=>e.defId==='enemy_10207_mubrut'&&e.mem.ab?.list.some(a=>a.mode===1));
+      if(code==='17-13'){
+        for(const e of born){
+          if(!e.alive||e.defId!=='enemy_10204_mudia_2')continue;
+          if(e.hidden&&!hiddenSince.has(e))hiddenSince.set(e,b.time);
+          else if(!e.hidden&&hiddenSince.has(e)){hiddenDurations.push(b.time-hiddenSince.get(e));hiddenSince.delete(e);}
+        }
+      }
     }
     assert.equal(b.result().reason,'cleared');assert.ok(b.time<(spec.clearsBefore??280));
     assert.equal(b.total,spec.total+born.filter(e=>e.mem.ch17RockbreakerParent).length);assert.deepEqual(b.errors,[]);
@@ -104,7 +113,13 @@ for (const [code,spec] of Object.entries(specs)) {
     } else if(code==='16-11')assert.ok(born.some(e=>e.defId==='enemy_10126_rkbomb'&&e.mem.ab.list.some(a=>a.changeMode&&a.mode===1)));
     if(code==='17-7')assert.ok(born.some(e=>e.mem.ch17RockbreakerParent),'natural marker pollution triggers a real split');
     if(code==='17-8')assert.ok(bruteArmed,'natural Leak Source contact arms a real scheduled Brute');
-    if(['17-5','17-6'].includes(code))assert.ok(born.some(e=>e.defId==='enemy_10205_mufly'&&e.mem.ch17FlyerMode===2),'scheduled Flyers find two real Leak Sources and finish both growth steps');
+    if(['17-5','17-6','17-11'].includes(code))assert.ok(born.some(e=>e.defId==='enemy_10205_mufly'&&e.mem.ch17FlyerMode===2),'scheduled Flyers find two real Leak Sources and finish both growth steps');
+    if(code==='17-13'){
+      assert.ok(hiddenDurations.length>0,'source teleports keep their hidden wait and reappear');
+      assert.ok(hiddenDurations.every(t=>Math.abs(t-10)<=2*b.dt),'each original tunnel wait remains hidden for ten seconds');
+      assert.ok(born.some(e=>e.mem.ch17RockbreakerParent),'natural sources split stronger Rockbreakers');
+      assert.ok(b.total>spec.total);
+    }
   });
 }
 

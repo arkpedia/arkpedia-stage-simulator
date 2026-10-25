@@ -20,7 +20,7 @@ import { applyReviewedHiddenGroups } from './reviewed-hidden-groups.mjs';
 import { stageAdapter } from '../../server/sim/arkpedia.js';
 import { STAGE_TOKEN_UNITS } from '../../shared/arkpedia/stage-devices.js';
 import { mergePristineHiddenGroups } from '../../shared/arkpedia/stage-conditional.js';
-import { syntheticRoutePath } from '../../shared/arkpedia/stage-path.js';
+import { syntheticRoutePath, sourceBoundRoutePath } from '../../shared/arkpedia/stage-path.js';
 import { assertRegularEnemies } from '../../shared/arkpedia/enemies.js';
 
 const args = Object.fromEntries(process.argv.slice(2).flatMap((arg, i, all) =>
@@ -54,6 +54,8 @@ if (args.candidate === 'ch16') {
     '17-7': 'arkpedia-ch17-reviewed-stage-17-7.json',
     '17-8': 'arkpedia-ch17-reviewed-stage-17-8.json',
     '17-9': 'arkpedia-ch17-reviewed-stage-17-9.json',
+    '17-11': 'arkpedia-ch17-reviewed-stage-17-11.json',
+    '17-13': 'arkpedia-ch17-reviewed-stage-17-13.json',
   };
   if (!Object.hasOwn(stageReviews, source.code)) throw Error('Candidate admission is reviewed only for test-only ' + Object.keys(stageReviews).join(', '));
   {
@@ -90,7 +92,7 @@ const syntheticRoutes = [];
 const usedRoutes = new Set(geometry.waves.flatMap(wave => (wave.spawns || []).map(spawn => spawn.route)));
 for (const [index, route] of geometry.routes.entries()) {
   if (!route || paths[index] || route.placeholder || !usedRoutes.has(index)) continue;
-  paths[index] = syntheticRoutePath(route);
+  paths[index] = chapter16Source ? sourceBoundRoutePath(route,chapter16Source.rawLevel.routes) : syntheticRoutePath(route);
   syntheticRoutes.push(index);
 }
 if (!Object.keys(paths).length) throw Error('Playback export has no paths and no route to synthesize');

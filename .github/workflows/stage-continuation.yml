@@ -25,23 +25,26 @@ jobs:
       - run: python -m pip install -r tools/arkpedia/stages/requirements.txt
       - run: node --test test/arkpedia-enemy-family-source-plan.test.js
       - name: Fetch exact frozen family dependencies and named template source
-        run: node tools/arkpedia/fetch-enemy-family-source.mjs --fetch ch16-story-guardian ch16-fear-projectile ch17-brute ch17-flyer
+        run: node tools/arkpedia/fetch-enemy-family-source.mjs --fetch ch16-story-guardian ch16-fear-projectile ch17-brute ch17-flyer ch17-bag
       - name: Independently reproduce complete native graphs and indexed components
         run: |
           python tools/arkpedia/extract-enemy-family-source.py --family ch16-story-guardian --prefab enemy_3011_dyegrd --check
           python tools/arkpedia/extract-enemy-family-source.py --family ch16-fear-projectile --prefab enemy_10128_fearpj --check
           python tools/arkpedia/extract-enemy-family-source.py --family ch17-brute --prefab enemy_10207_mubrut --prefab enemy_10207_mubrut_2 --check
           python tools/arkpedia/extract-enemy-family-source.py --family ch17-flyer --prefab enemy_10205_mufly --prefab enemy_10205_mufly_2 --check
+          python tools/arkpedia/extract-enemy-family-source.py --family ch17-bag --prefab enemy_10209_mubag --prefab enemy_10209_mubag_2 --check
           python tools/arkpedia/extract-enemy-native-abilities.py --prefab enemy_3011_dyegrd --output data/candidates/arkpedia-ch16-story-guardian-native.json --check
           python tools/arkpedia/extract-enemy-native-abilities.py --prefab enemy_10128_fearpj --output data/candidates/arkpedia-ch16-fear-projectile-native.json --check
           python tools/arkpedia/extract-enemy-native-abilities.py --prefab enemy_10207_mubrut --prefab enemy_10207_mubrut_2 --output data/candidates/arkpedia-ch17-brute-native.json --check
           python tools/arkpedia/extract-enemy-native-abilities.py --prefab enemy_10205_mufly --prefab enemy_10205_mufly_2 --output data/candidates/arkpedia-ch17-flyer-native.json --check
+          python tools/arkpedia/extract-enemy-native-abilities.py --prefab enemy_10209_mubag --prefab enemy_10209_mubag_2 --output data/candidates/arkpedia-ch17-bag-native.json --check
       - name: Reproduce prefab-bound clocks and corroborate serialized buff event aliases
         run: |
           python tools/arkpedia/extract-enemy-family-clocks.py --family ch16-story-guardian --bundle refs/arts/enm_art_23.ab --check
           python tools/arkpedia/extract-enemy-family-clocks.py --family ch16-fear-projectile --bundle refs/arts/enm_art_23.ab --check
           python tools/arkpedia/extract-enemy-family-clocks.py --family ch17-brute --bundle refs/arts/enm_art_26.ab --check
           python tools/arkpedia/extract-enemy-family-clocks.py --family ch17-flyer --bundle refs/arts/enm_art_26.ab --check
+          python tools/arkpedia/extract-enemy-family-clocks.py --family ch17-bag --bundle refs/arts/enm_art_26.ab --check
           python tools/arkpedia/recover-buff-event-aliases.py --check
   focused:
     strategy:
@@ -94,7 +97,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        stage: ['17-5', '17-6', '17-8', '17-9']
+        stage: ['17-5', '17-6', '17-8', '17-9', '17-11', '17-13']
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:

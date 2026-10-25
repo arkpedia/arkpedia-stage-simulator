@@ -220,3 +220,51 @@ unavailable locally and are run by hosted CI. The two new browser scenarios pass
 desktop/phone startup, pause, restart and public-access rejection. Both viewport
 captures were inspected. The previous09f52106 checkpoint passed all seven hosted
 continuation jobs; latest-head hosted results must be recorded separately.
+
+## Further Chapter17 integration and Bag source audit
+
+Flyer checkpoint a36af72b passed all nine hosted continuation jobs: source
+reproduction, focused Linux/Windows checks, two Chapter16 browser scenarios and
+four Chapter17 browser scenarios. This includes the four tracked test files
+unavailable locally; antivirus remains enabled.
+
+17-11 and17-13 use the existing reviewed Infantry, Rockbreaker, Brute and Flyer
+controllers. The source levels retain52 scheduled/50 counted and72 scheduled/72
+counted bodies respectively, two Leak Markers each, and no optional hidden spawn
+groups.17-13 includes finite waits, hidden teleports and stronger Rockbreaker
+splits; these remain live mechanics rather than flattened playback paths.
+The catalogue is now618 entries,597 public and21 test-only. Enemy support stays
+470/1,901; the canonical inventory retains3,273 unbuilt combat-stage records.
+
+The Bag family remains unsupported. Its complete graph,40 indexed components and
+two prefab-bound original clock receipts now have source constraints. Feeding
+owns a10.5-second timed parent with1-second delayed pulses, while the AtkUp skill
+uses its own11-second duration and ignores slow_down. The contact aura is an
+infinite parent, despite the separate ReachedAura.duration10 blackboard field.
+It creates a derived flag on the Bag with the Leak Source as the special buff
+source. Natural feeding completion triggers that flag back to its own contact
+parent, which checks the Bag skill is still affecting before killing its owner.
+Permanent ATK stacks are not derived from that parent. The runtime must preserve
+these identities, interruption and removal semantics; a generic ten-second
+delay that kills the nearest source is insufficient. Skill cooldown/re-entry and
+overlapping contact ownership still need explicit runtime/lifecycle tests before
+admission. Hosted source reproduction includes Bag without granting support.
+
+The17-13 live test exposed a shared path bug: geometry preserves finite wait
+lengths but drops DISAPPEAR. Those waits previously remained visible before an
+instant teleport. Source-bound generation now matches each deduplicated geometry
+route against complete original routes, preserving the hidden interval and
+rejecting mismatched or ambiguous visibility/timing. Native indices cannot be
+used directly because geometry deduplicates routes. Regeneration corrects16-6,
+16-11,16-14,16-15 and17-6 as well as the new17-13 build, without changing pinned
+geometry. Three seeded17-13 runs verify each observed tunnel stays hidden for
+ten seconds before reappearance. Source mutation/ambiguity checks reject altered
+waits and unclosed disappearance. Browser checks for17-11/17-13 pass on desktop
+and phone; original-source/runtime suites are rerun against the regenerated paths.
+
+The regenerated-path checkpoint passes513 locally available continuation tests.
+The four tracked locally unavailable files remain unchanged in Git and are
+included in hosted Linux/Windows checks. The new stages pass independent builder
+reproduction, canonical-byte mutation rejection, public-access rejection and
+three seeded battle integrations each. No new enemy support is inferred from
+the Bag source audit; its runtime controller and stage admissions remain open.
