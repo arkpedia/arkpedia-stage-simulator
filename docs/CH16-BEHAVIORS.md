@@ -385,3 +385,34 @@ pass; neither variant is added to support. Native art/frame parity remains held.
   --output data/candidates/arkpedia-ch16-commander-native.json --check
 node --test test/arkpedia-ch16-commander.test.js
 ```
+
+### Light Artillery continuation (unadmitted)
+
+`chapter16-artillery.js` adds a separate candidate for `enemy_10122_uacann`.
+The complete native graph includes both the travelling shell and the separate
+stationary burning-area projectile; retaining only the shell misses the latter's
+1.5-radius collider and detach-on-exit/stop policy. Both variants and 24 indexed
+components are retained from the existing checksum-pinned native bundles.
+
+Eleven source and shared-engine tests cover physical shell impact, live attack
+at impact, fixed Arts ticks independent of ATK, three-second lifetime, overlapping
+areas, recipient exit/reentry, explicit collider edges, ground filtering,
+camouflage, source-death rules, battle-end cleanup, and actual commander orders
+changing miner priority. Born shells survive their source; the impact action's
+`CheckUnitAlive` prevents a dead source from creating a new field. Already born
+fields persist until their own lifetime ends. The periodic effect marker uses
+the native 0.2-second cadence. No support entry or stage admission is added.
+This is source-backed candidate behavior testing, not captured native frame parity.
+
+Seven additional family-evidence tests bind the crossbow, commander and artillery
+complete graphs to their native inventories and indexed component hashes. They
+reject self-rehashed changes to indexed components and incomplete projectile or
+buff-template action closure. These checks do not grant support/admission.
+
+```sh
+.cache/map-env/bin/python tools/arkpedia/extract-ch16-artillery.py --check
+.cache/map-env/bin/python tools/arkpedia/extract-enemy-native-abilities.py \
+  --prefab enemy_10122_uacann --prefab enemy_10122_uacann_2 \
+  --output data/candidates/arkpedia-ch16-artillery-native.json --check
+node --test test/arkpedia-ch16-artillery.test.js
+```

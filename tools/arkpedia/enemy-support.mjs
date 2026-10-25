@@ -22,6 +22,43 @@ export function verifiedNative(evidence, prefabs, indexSha, templatePin) {
   return evidence;
 }
 
+/** Validate unadmitted family evidence without granting a feature/support claim. */
+export function verifiedChapter16FamilyGraph(raw, inventoryRaw, enemyInventoryRaw, index) {
+  const graph = JSON.parse(raw), inventory = JSON.parse(inventoryRaw), enemies = JSON.parse(enemyInventoryRaw);
+  if (graph.source.inventory !== 'data/arkpedia-cn-native-source.json'
+    || graph.source.sha256 !== sha(inventoryRaw)
+    || graph.source.enemyInventory?.path !== 'data/arkpedia-cn-enemy-native-source.json'
+    || graph.source.enemyInventory.sha256 !== sha(enemyInventoryRaw)
+    || index.source.inventory !== 'data/arkpedia-cn-enemy-native-source.json'
+    || index.source.sha256 !== sha(enemyInventoryRaw)) throw Error('Chapter 16 family inventories disagree');
+  for (const row of graph.source.bundles) {
+    const pinned = [...inventory.bundles, ...enemies.bundles].find(b => b.path === row.path);
+    if (pinned ? ['sha256', 'bytes', 'md5'].some(key => pinned[key] !== row[key])
+      : row.manifestSha256 !== inventory.source.manifestSha256) throw Error('Chapter 16 family bundle is not pinned');
+  }
+  const all = [...Object.values(graph.prefabs).flat(), ...Object.values(graph.projectiles).flat(), ...Object.values(graph.templates)];
+  for (const row of all) if (sha(row.originalJson) !== row.sha256) throw Error('Chapter 16 family component checksum mismatch');
+  for (const [path, rows] of Object.entries(graph.prefabs)) {
+    const prefab = index.prefabs[path];
+    if (!prefab || new Set(rows.map(r => r.pathId)).size !== rows.length) throw Error('Unknown or duplicate Chapter 16 family component');
+    const bundle = graph.source.bundles.find(b => b.path === prefab.bundle);
+    if (!bundle) throw Error('Chapter 16 family prefab bundle missing');
+    for (const entry of prefab.clockComponents) if (!rows.some(r => r.pathId === entry.pathId && r.sha256 === entry.originalDataSha256))
+      throw Error('Chapter 16 family graph differs from indexed component');
+  }
+  const projects = new Set(Object.keys(graph.projectiles).map(path => path.split('/').at(-1).replace(/\.prefab$/, '')));
+  function visit(value) {
+    if (!value || typeof value !== 'object') return;
+    for (const [key, child] of Object.entries(value)) {
+      if (key === '_projectileKey' && child && !projects.has(child)) throw Error('Chapter 16 family projectile closure incomplete: ' + child);
+      if (key === 'templateKey' && child && !graph.templates[child]) throw Error('Chapter 16 family template closure incomplete: ' + child);
+      if (key === 'SerializedState') visit(JSON.parse(child)); else visit(child);
+    }
+  }
+  for (const row of all) visit(JSON.parse(row.originalJson));
+  return graph;
+}
+
 /** Keep the complete graph proof on the same inventory as the indexed components. */
 export function verifiedChapter16Devices(raw, inventoryRaw, enemyInventoryRaw, timingSource) {
   const evidence = JSON.parse(raw), inventory = JSON.parse(inventoryRaw), enemies = JSON.parse(enemyInventoryRaw);
