@@ -30,11 +30,13 @@ def sha(raw):
 
 inventory_raw = (ROOT / 'data/arkpedia-cn-native-source.json').read_bytes()
 inventory = json.loads(inventory_raw)
+enemy_inventory_raw = (ROOT / 'data/arkpedia-cn-enemy-native-source.json').read_bytes()
+enemy_inventory = json.loads(enemy_inventory_raw)
 sources = []
 
 
 def load(path):
-    row = next(b for b in inventory['bundles'] if b['path'] == path)
+    row = next(b for b in inventory['bundles'] + enemy_inventory['bundles'] if b['path'] == path)
     raw = (ROOT / '.cache/arkpedia/cn-native-source/bundles' / path).read_bytes()
     assert len(raw) == row['bytes'] and hashlib.md5(raw).hexdigest() == row['md5'], path
     assert sha(raw) == row['sha256'], path
@@ -53,30 +55,37 @@ def refs(value):
             yield from refs(child)
 
 
-objects = load('pkgrps/btl_pfb_tokens_4.ab')
-prefabs = {}
-for obj in objects.values():
-    if obj.type.name != 'AssetBundle':
-        continue
-    for path, entry in obj.read_typetree()['m_Container']:
-        if not any(key in path for key in ['trap_270_spawnp', 'trap_271_fowstn', 'trap_272_nomstn']):
+def extract(objects, names):
+    prefabs = {}
+    for obj in objects.values():
+        if obj.type.name != 'AssetBundle':
             continue
-        pending, seen, rows = [int(entry['asset']['m_PathID'])], set(), []
-        while pending:
-            pid = pending.pop()
-            if pid in seen or pid not in objects:
+        for path, entry in obj.read_typetree()['m_Container']:
+            if not any('/' + key + '.prefab' in path for key in names):
                 continue
-            seen.add(pid)
-            component = objects[pid]
-            if component.type.name not in ('GameObject', 'Transform', 'MonoBehaviour'):
-                continue
-            tree = component.read_typetree()
-            pending.extend(refs(tree))
-            text = canonical(tree)
-            rows.append({'pathId': str(pid), 'componentType': component.type.name,
-                         'originalJson': text, 'sha256': sha(text.encode())})
-        prefabs[path] = sorted(rows, key=lambda r: int(r['pathId']))
+            pending, seen, rows = [int(entry['asset']['m_PathID'])], set(), []
+            while pending:
+                pid = pending.pop()
+                if pid in seen or pid not in objects:
+                    continue
+                seen.add(pid)
+                component = objects[pid]
+                if component.type.name not in ('GameObject', 'Transform', 'MonoBehaviour'):
+                    continue
+                tree = component.read_typetree()
+                pending.extend(refs(tree))
+                text = canonical(tree)
+                rows.append({'pathId': str(pid), 'componentType': component.type.name,
+                             'originalJson': text, 'sha256': sha(text.encode())})
+            prefabs[path] = sorted(rows, key=lambda r: int(r['pathId']))
+    return prefabs
+
+
+prefabs = extract(load('pkgrps/btl_pfb_tokens_4.ab'), ['trap_270_spawnp', 'trap_271_fowstn', 'trap_272_nomstn'])
 assert len(prefabs) == 3, list(prefabs)
+enemies = extract(load('battle/enm_pfb_28.ab'), ['enemy_3010_mcreep'])
+enemies.update(extract(load('battle/enm_pfb_27.ab'), ['enemy_10120_uaghst']))
+assert len(enemies) == 2
 
 # Use the serialized native holder, rather than an unverified cached table.
 holder = load('config/buff_template_holder.ab')
@@ -101,8 +110,9 @@ def template_refs(value):
             yield from template_refs(child)
 
 
-pending = [key for rows in prefabs.values() for row in rows
+pending = [key for rows in list(prefabs.values()) + list(enemies.values()) for row in rows
            for key in template_refs(json.loads(row['originalJson']))]
+pending += [key for key in available if key.startswith('block_mcreep[') or key == 'mainline16_g[block_mcreep]']
 templates = {}
 while pending:
     key = pending.pop()
@@ -125,8 +135,10 @@ skills = {s['skillId']: tables['skill_table.json'][s['skillId']]
           for record in characters.values() for s in record['skills']}
 result = {'schemaVersion': 1, 'scope': 'Source evidence only; no behavior or admission approval.',
           'source': {'inventory': 'data/arkpedia-cn-native-source.json',
-                     'sha256': sha(inventory_raw), 'bundles': sources},
+                     'sha256': sha(inventory_raw), 'bundles': sources,
+                     'enemyInventory': {'path': 'data/arkpedia-cn-enemy-native-source.json', 'sha256': sha(enemy_inventory_raw)}},
           'prefabs': dict(sorted(prefabs.items())), 'templates': dict(sorted(templates.items())),
+          'enemyPrefabs': enemies,
           'tableSource': inventory['source']['tableSource'], 'characters': characters, 'skills': skills,
           'ranges': {key: tables['range_table.json'][key] for key in ['x-2', 'x-4', '0-1']}}
 text = json.dumps(result, ensure_ascii=False, indent=1) + '\n'

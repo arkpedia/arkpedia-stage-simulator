@@ -13,6 +13,14 @@
 // covered (shared/arkpedia/enemy-support.js).
 
 import { CHAPTER16_FEATURES } from './chapter16-features.js';
+import engagement from '../../data/candidates/arkpedia-ch16-reviewed-engagement.json' with { type: 'json' };
+
+const blockMcreepCovered = (r, n) => r.key === engagement.blockMcreep.key
+  && sig(r, 'BlockMcreep', ['block_mcreep_cnt', 'range_radius', 'range_radius_add'])
+  && r.talents.bb['BlockMcreep.block_mcreep_cnt'] === engagement.blockMcreep.count
+  && r.talents.bb['BlockMcreep.range_radius'] === engagement.blockMcreep.range
+  && r.talents.bb['BlockMcreep.range_radius_add'] === engagement.blockMcreep.rangeAdd
+  && n.$deviceEvidence?.() === engagement.deviceSource.sha256;
 
 /** The group's parameter keys are exactly `params`. */
 const sig = (r, g, params) => JSON.stringify(r.talents.groups[g] ?? null) === JSON.stringify([...params].sort());
@@ -216,10 +224,10 @@ export const ENEMY_FEATURES = Object.freeze({
   'ability:Drains 1 Life Point when entering the Objective Point': { covers: r => r.stats.lpr === 1, note: 'the engine drains lpr Life Points on a leak' },
   // Spawn traits.
   'ability:Cannot be blocked.': { covers: () => true, trait: { flags: { unblockable: true } }, note: 'unblockable for life' },
-  'ability:Can fight 1 <Miner Guerrilla> at a time': { covers: r => r.key === 'enemy_10120_uaghst',
-    ability: r => ({ kind: 'blockMcreep', params: () => ({ cnt: r.talents.bb['BlockMcreep.block_mcreep_cnt'] ?? 1, range: (r.talents.bb['BlockMcreep.range_radius'] ?? 0.9) + (r.talents.bb['BlockMcreep.range_radius_add'] ?? 0.1) }) }),
+  'ability:Can fight 1 <Miner Guerrilla> at a time': { covers: blockMcreepCovered,
+    ability: r => ({ kind: 'blockMcreep', params: () => ({ cnt: r.talents.bb['BlockMcreep.block_mcreep_cnt'], range: r.talents.bb['BlockMcreep.range_radius'], rangeAdd: r.talents.bb['BlockMcreep.range_radius_add'] }) }),
     note: 'BlockMcreep: every 0.3 s selects one nearest Miner Guerrilla and applies UNMOVABLE; one engagement at a time', nativeClaim: () => ({ active: 1 }) },
-  'talent:BlockMcreep': { covers: r => r.key === 'enemy_10120_uaghst',
+  'talent:BlockMcreep': { covers: blockMcreepCovered,
     note: 'native BlockMcreep/SelectNearestMcreep pair; runtime lives on the ability line', nativeClaim: () => ({ wrappers: 2 }) },
   'ability:<$ba.invisible>Invisible</>': { covers: () => true, trait: { flags: { stealth: true } },
     note: 'Invisible (ba.invisible): untargetable until revealed or blocked; blocking lifts it for the engine STEALTH_RESTORE window' },

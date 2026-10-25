@@ -81,6 +81,22 @@ a field is only one part of the facility contract: structure/miner interaction,
 damage scaling and the tunnel's branch summons/manual command still require
 integration before 16-3 can be admitted. No new stage is admitted by this work.
 
+The same extraction retains the complete miner and 10120 graphs, including
+selector siblings omitted by the earlier component-only export, and the
+`block_mcreep` action closure. 10120 engagement now locks both participants,
+releases on range exit or either deployment's removal, and connects each side
+to the existing ordinary melee attack pipeline. The acquisition radius and
+post-acquisition radius extension stay separate. This matters because the
+canonical table marks 10120's generic attack mode `NONE`, while its native
+Default/Attack graph supplies a physical attack against marked neutrals.
+An isolated integration scenario verifies their independent attack clocks and
+damage; the old scenario accidentally installed the feature twice.
+
+10120 candidate support additionally requires the exact reviewed device-source
+checksum and parameter signature in `arkpedia-ch16-reviewed-engagement.json`.
+The extractor does not rewrite that approval record. Wrapper counts alone or
+changed range parameters no longer clear its support gate.
+
 ```sh
 .cache/map-env/bin/python tools/arkpedia/extract-ch16-devices.py --check
 node --test test/arkpedia-ch16-shadow.test.js

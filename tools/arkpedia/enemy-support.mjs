@@ -54,6 +54,13 @@ export async function buildEnemySupport({ candidate = false } = {}) {
     const extra10120 = verifiedNative(JSON.parse(extra10120Raw), prefabs, sha(indexRaw), native.source.templates);
     Object.assign(native.prefabs, extra10120.prefabs);
     candidateSources.nativeAbilities10120 = { path: 'data/candidates/arkpedia-ch16-native-10120.json', sha256: sha(extra10120Raw) };
+    const engagementRaw = await readFile(new URL('data/candidates/arkpedia-ch16-reviewed-engagement.json', root));
+    const engagement = JSON.parse(engagementRaw);
+    const deviceRaw = await readFile(new URL(engagement.deviceSource.path, root));
+    if (sha(deviceRaw) !== engagement.deviceSource.sha256) throw Error('Chapter 16 engagement source differs from reviewed contract');
+    native.chapter16DeviceSha256 = sha(deviceRaw);
+    candidateSources.deviceEvidence = engagement.deviceSource;
+    candidateSources.engagementContract = { path: 'data/candidates/arkpedia-ch16-reviewed-engagement.json', sha256: sha(engagementRaw) };
   }
   const enemies = deriveEnemySupport(records.enemies, prefabs, native);
   const supported = Object.values(enemies).filter(e => e.policy).length;

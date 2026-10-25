@@ -70,8 +70,16 @@ test('10120 BlockMcreep evidence and selector clear candidate support', () => {
   const records = read('candidates/arkpedia-enemy-records.canonical.json');
   const extra = read('candidates/arkpedia-ch16-native-10120.json');
   verifiedNative(extra, index.prefabs, indexSha, templates);
-  const native = { ...candidate, prefabs: { ...candidate.prefabs, ...extra.prefabs } };
+  const deviceRaw = readFileSync(new URL('../data/candidates/arkpedia-ch16-device-source.json', import.meta.url));
+  const native = { ...candidate, chapter16DeviceSha256: createHash('sha256').update(deviceRaw).digest('hex'),
+    prefabs: { ...candidate.prefabs, ...extra.prefabs } };
   const support = deriveEnemySupport({ enemy_10120_uaghst: records.enemies.enemy_10120_uaghst }, index.prefabs, native);
   assert.equal(support.enemy_10120_uaghst.policy, 'stats-attacks-and-features');
   assert.deepEqual(support.enemy_10120_uaghst.reasons, []);
+  const missing = deriveEnemySupport({ enemy_10120_uaghst: records.enemies.enemy_10120_uaghst }, index.prefabs,
+    { ...native, chapter16DeviceSha256: null });
+  assert.equal(missing.enemy_10120_uaghst.policy, null, 'native wrapper counts alone cannot approve the engagement');
+  const changed = structuredClone(records.enemies.enemy_10120_uaghst);
+  changed.levels[0].talents.bb['BlockMcreep.range_radius_add'] = .2;
+  assert.equal(deriveEnemySupport({ enemy_10120_uaghst: changed }, index.prefabs, native).enemy_10120_uaghst.policy, null);
 });

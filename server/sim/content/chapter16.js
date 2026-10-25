@@ -10,13 +10,19 @@ const flag = (b, e, key, flags, duration) => b.addBuff(e, { key, flags, duration
 const damage = (b, source, target, amount, type = 'true') => b.dealDamage(source, target, { amount, type, canDodge: false, tags: ['chapter16'] });
 const operators = b => b.allyUnits.filter(u => living(u) && u.kind === 'op');
 
-import { chapter17Environment as chapter16Environment, reverseDamage, deadSummon, chargeRift, warCaster, leakSource } from './chapter17.js';
+import { reverseDamage, deadSummon, chargeRift, warCaster, leakSource } from './chapter17.js';
 export { chapter17Environment as chapter16Environment, reverseDamage, deadSummon, chargeRift, warCaster, leakSource, pollute, beamIntersection } from './chapter17.js';
 
 export function miner(r) {
   return {
     spawn(b, e, a) {
       e.profile.friendly = true; e.profile.neutral = true; e.profile.noAttack = true;
+      e.mem.ch16Miner = true;
+      e.profile.meleeTarget = () => {
+        const link = e.mem.ch16Engagement;
+        return link?.source.alive && link.source.deployed && !link.source.hidden
+          && link.source.deploySeq === link.sourceLife && e.deploySeq === link.targetLife ? link.source : null;
+      };
       b.addBuff(e, { key: 'ch16:neutral-taunt', persist: true, mods: { taunt: -1 } });
       b.on('elementHit', c => { if (c.target === e) c.cancel = true; }, { owner: e });
       flag(b, e, 'ch16:neutral', { unblockable: true });

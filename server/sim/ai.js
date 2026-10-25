@@ -809,7 +809,10 @@ function enemyAttackCandidates(b, e, reach) {
 
 function enemyAttack(b, e) {
   const def = e.def;
-  if (e.profile && e.profile.noAttack) return false;
+  // Native chapter 16 engagements supply a melee opponent independently of
+  // operator blocking. Both combatants still use normal attack clocks/hooks.
+  const meleeTarget = e.profile?.meleeTarget?.();
+  if (e.profile && e.profile.noAttack && !meleeTarget) return false;
   const dmgType = (e.profile && e.profile.dmgType) || def.dmgType;
   if (dmgType === 'none' || e.s.atk <= 0) return false;
   if (e.s.flags.fear || e.s.flags.disarm) return false;
@@ -837,6 +840,8 @@ function enemyAttack(b, e) {
       targets = enemyAttackCandidates(b, e, reach).filter((a) => a === bl || canTargetAlly(e, a, true));
       if (!targets.includes(bl) && bl.alive) targets.push(bl);
     } else if (bl.alive && bl.deployed) targets = [bl];
+  } else if (meleeTarget?.alive && meleeTarget.deployed && !meleeTarget.hidden) {
+    targets = [meleeTarget];
   } else if (radius > 0) {
     targets = enemyAttackCandidates(b, e, reach).filter((a) => canTargetAlly(e, a, true));
   }
