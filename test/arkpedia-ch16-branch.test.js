@@ -91,6 +91,7 @@ test('branch source rejects changed actions, route spaces and traversal contract
     c => { c.rawLevel.branches.mcreep_route.phases[0].actions[0].routeIndex = 99; },
     c => { c.rawLevel.branches.mcreep_route.phases[0].actions[0].key = 'enemy_1108_uterer'; },
     c => { c.rawLevel.extraRoutes[0].visitEveryTileCenter = true; },
+    c => { c.rawLevel.extraRoutes[0].checkpoints = true; },
     c => { c.rawLevel.extraRoutes[0].checkpoints[0].randomizeReachOffset = true; },
   ]) {
     const changed = structuredClone(source); change(changed);

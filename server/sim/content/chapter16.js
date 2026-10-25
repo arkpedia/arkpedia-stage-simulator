@@ -3,6 +3,9 @@
 // records; native actions are retained in arkpedia-ch16-action-source.json.
 import { COLS } from '../constants.js';
 import { chapter16Shadow } from './chapter16-shadow.js';
+import { patrolCaptain } from './chapter16-patrol.js';
+import { shieldguard } from './chapter16-shieldguard.js';
+import { lightArtillery } from './chapter16-artillery.js';
 import { mobileCrossbow } from './chapter16-crossbow.js';
 import { rockbreaker } from './chapter17-rockbreaker.js';
 import { pollutionInfantry, pollutionBowman } from './chapter17-pollution-reactions.js';
@@ -72,5 +75,5 @@ export function miner(r) {
 }
 
 export const chapter16Abilities = { ch17PollutionInfantry: pollutionInfantry, ch17PollutionBowman: pollutionBowman, ch17Rockbreaker: rockbreaker,
-  ch16MobileCrossbow: mobileCrossbow, ch16Miner: miner, ch16ReverseDamage: reverseDamage, ch16DeadSummon: deadSummon,
+  ch16PatrolCaptain: patrolCaptain, ch16Shieldguard: shieldguard, ch16LightArtillery: lightArtillery, ch16MobileCrossbow: mobileCrossbow, ch16Miner: miner, ch16ReverseDamage: reverseDamage, ch16DeadSummon: deadSummon,
   ch16ChargeRift: chargeRift, ch16WarCaster: warCaster, ch16LeakSource: leakSource };

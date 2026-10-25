@@ -12,7 +12,8 @@
 // An enemy is supported only when every feature it uses is registered and
 // covered (shared/arkpedia/enemy-support.js).
 
-import { CHAPTER16_FEATURES } from './chapter16-features.js';
+import { CHAPTER16_FEATURES, shieldguardCovered } from './chapter16-features.js';
+import patrolReview from '../../data/candidates/arkpedia-ch16-reviewed-patrol.json' with { type: 'json' };
 import engagement from '../../data/candidates/arkpedia-ch16-reviewed-engagement.json' with { type: 'json' };
 
 const blockMcreepCovered = (r, n) => r.key === engagement.blockMcreep.key
@@ -230,7 +231,7 @@ export const ENEMY_FEATURES = Object.freeze({
   'ability:Can fight 1 <Miner Guerrilla> at a time': { covers: blockMcreepCovered,
     ability: r => ({ kind: 'blockMcreep', params: () => ({ cnt: r.talents.bb['BlockMcreep.block_mcreep_cnt'], range: r.talents.bb['BlockMcreep.range_radius'], rangeAdd: r.talents.bb['BlockMcreep.range_radius_add'], attackRange: r.stats.rawRangeRadius, markArmy: r.key === engagement.blockMcreep.key }) }),
     note: 'BlockMcreep: every 0.3 s selects one nearest Miner Guerrilla and applies UNMOVABLE; one engagement at a time', nativeClaim: () => ({ active: 1 }) },
-  'talent:BlockMcreep': { covers: blockMcreepCovered,
+  'talent:BlockMcreep': { covers: (r, n) => blockMcreepCovered(r, n) || shieldguardCovered(r, n),
     note: 'native BlockMcreep/SelectNearestMcreep pair; runtime lives on the ability line' },
   'ability:<$ba.invisible>Invisible</>': { covers: () => true, trait: { flags: { stealth: true } },
     note: 'Invisible (ba.invisible): untargetable until revealed or blocked; blocking lifts it for the engine STEALTH_RESTORE window' },
@@ -605,8 +606,15 @@ export const ENEMY_FEATURES = Object.freeze({
     note: 'passive stage beacon; pickup belongs to the Altar Keeper', nativeClaim: () => ({ active: 2 }) },
   // Ursus patrol: prioritize the named civilian/Talulah targets.
   'ability:Can use long-ranged weapons to attack <Ursus Civilians> and <Talulah, the Fighter>': {
-    covers: r => r.abilities.some(a => a.text === 'Can use long-ranged weapons to attack <Ursus Civilians> and <Talulah, the Fighter>'),
-    ability: { kind: 'namedPriority', params: () => ({ names: ['Ursus Civilian', 'Talulah'] }) }, note: 'named-target priority; otherwise normal targeting',
+    covers: r => r.abilities.some(a => a.text === 'Can use long-ranged weapons to attack <Ursus Civilians> and <Talulah, the Fighter>')
+      && (r.key !== patrolReview.enemy.key || r.prefabKey === patrolReview.enemy.prefabKey
+        && JSON.stringify(r.abilities) === JSON.stringify(patrolReview.enemy.abilities)
+        && JSON.stringify(r.talents.groups) === JSON.stringify(patrolReview.enemy.groups)
+        && JSON.stringify(r.talents.bb) === JSON.stringify(patrolReview.enemy.bb)
+        && JSON.stringify(r.skills) === JSON.stringify(patrolReview.enemy.skills)),
+    ability: r => r.key === patrolReview.enemy.key ? { kind: 'ch16PatrolCaptain', params: () => r }
+      : { kind: 'namedPriority', params: () => ({ names: ['Ursus Civilian', 'Talulah'] }) },
+    note: 'Native Patrol Captain marked-neutral projectile/Combat selectors; other family records retain their previous named priority.',
     explains: /^Can use long-ranged weapons to attack <Ursus Civilians> and <Talulah, the Fighter>$/ },
   // Witherer: a lingering corruption zone on death.
   'talent:PollutedDie': { covers: r => sig(r, 'PollutedDie', ['polluted_damage_high', 'polluted_damage_low', 'projectile_life_time', 'projectile_range'])

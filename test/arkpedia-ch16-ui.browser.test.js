@@ -8,7 +8,7 @@ import { join } from 'node:path';
 const chrome = process.env.CHROME_PATH ?? '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const enabled = process.env.RENDER_E2E === '1' && existsSync(chrome);
 const stageCode = process.env.CH16_QA_STAGE ?? '16-3';
-if (!['16-3', '16-4'].includes(stageCode)) throw Error('Only reviewed test-only tunnel stages may run this QA');
+if (!['16-3', '16-4', '16-5'].includes(stageCode)) throw Error('Only reviewed test-only tunnel stages may run this QA');
 const out = process.env.CH16_QA_OUT ?? '/tmp/codex-ch16-ui';
 
 test(`test-only ${stageCode} tunnel command works with natural SP, keyboard, mobile layout and restart`,
@@ -38,6 +38,11 @@ test(`test-only ${stageCode} tunnel command works with natural SP, keyboard, mob
       await page.waitForSelector('#stage-actions button', { timeout: 60000 });
       assert.match(await page.$eval('.simulation-label', e => e.textContent), /Test-only/);
       const command = '#stage-actions button';
+      assert.equal(await page.$$eval(command, es => es.length), stageCode === '16-5' ? 2 : 1);
+      if (stageCode === '16-5') {
+        const labels = await page.$$eval(command, es => es.map(e => e.textContent));
+        assert.ok(labels[0].includes('Lower Hidden Tunnel')); assert.ok(labels[1].includes('Upper Hidden Tunnel'));
+      }
       const initial = await page.$eval(command, e => e.textContent);
       assert.match(initial, /0 waiting/); assert.match(initial, /0\/15 SP/);
       await page.click(command);
@@ -61,6 +66,12 @@ test(`test-only ${stageCode} tunnel command works with natural SP, keyboard, mob
         assert.equal(await page.$eval(command, e => e.getAttribute('aria-pressed')), 'true');
         if (!touch) assert.equal(await page.$eval(command, e => document.activeElement === e), true);
         assert.match(await page.$eval(command, e => e.textContent), /0 waiting/);
+        if (stageCode === '16-5') {
+          const other = (await page.$$(command))[1];
+          assert.equal(await other.evaluate(e => e.getAttribute('aria-pressed')), 'false');
+          assert.match(await other.evaluate(e => e.textContent), /1 waiting/);
+          assert.match(await other.evaluate(e => e.textContent), /15\/15 SP/);
+        }
         assert.match(await page.$eval(command, e => e.textContent), /0\/15 SP/);
         assert.deepEqual(await page.$eval(command, e => { const r = e.getBoundingClientRect(); return [r.x, r.y, r.width, r.height]; }), before);
       }
@@ -74,8 +85,9 @@ test(`test-only ${stageCode} tunnel command works with natural SP, keyboard, mob
       await page.waitForSelector('#start'); await page.tap('#start');
       await page.waitForSelector('#stage-actions button', { timeout: 60000 });
       await page.waitForFunction(() => {
-        const r = document.querySelector('#stage-actions button').getBoundingClientRect();
-        return r.x >= 0 && r.right <= innerWidth && r.y >= 0 && r.bottom <= innerHeight;
+        return [...document.querySelectorAll('#stage-actions button')].every(e => {
+          const r = e.getBoundingClientRect(); return r.x >= 0 && r.right <= innerWidth && r.y >= 0 && r.bottom <= innerHeight;
+        });
       });
       await chargeAndCommand(true);
       await page.screenshot({ path: join(out, 'phone-commanded.png') });

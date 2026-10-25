@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "code": "16-5",
+  "testOnly": true,
+  "scope": "Experimental canonical stage integration with two native tunnel-action overrides. No public admission or captured frame parity.",
+  "sources": {
+    "stageSource": {
+      "path": "data/candidates/arkpedia-stage-16-5-source.json",
+      "sha256": "1432f28ac2642dc9fa5b7da466e630d61b829a8f0582c940759b4d1555a5d64e"
+    },
+    "devices": {
+      "path": "data/candidates/arkpedia-ch16-device-source.json",
+      "sha256": "247f67e9b967857b8bf33546367e5877e365ce38fdbae7c609bda4a9a3258e64"
+    },
+    "tunnelSkill": {
+      "path": "data/candidates/arkpedia-ch16-tunnel-skill-source.json",
+      "sha256": "e5392e7f0a65f9acbb0ee4ec594191811c251ddf4fc42f27ec90d509deaeb648"
+    },
+    "shieldguard": {
+      "path": "data/candidates/arkpedia-ch16-reviewed-shieldguard.json",
+      "sha256": "925b1717f28b45a6756955a45817860fbc688273292a485e0a23e41b4acfe704"
+    },
+    "artillery": {
+      "path": "data/candidates/arkpedia-ch16-reviewed-artillery.json",
+      "sha256": "ea3ecf0f3ecc4ed7e551806ea30e36924bf526f51c4d16a5886f5fae42bc79aa"
+    },
+    "patrol": {
+      "path": "data/candidates/arkpedia-ch16-reviewed-patrol.json",
+      "sha256": "e0f4c1e226f12ad84dec5c05e94072f6fb64baa0d854d249adc84f6255a5856d"
+    }
+  },
+  "expected": {
+    "hostiles": 26,
+    "enemies": [
+      "enemy_10122_uacann",
+      "enemy_10124_uashld",
+      "enemy_1107_uoffcr",
+      "enemy_3010_mcreep"
+    ],
+    "excludedHiddenGroups": [],
+    "branch": "mcreep_route",
+    "actions": [
+      0,
+      1
+    ],
+    "extraRoutes": [
+      0,
+      1
+    ],
+    "moveMultiplier": 0.5
+  }
+}

@@ -5,6 +5,8 @@ import reviewed from '../../data/candidates/arkpedia-ch17-reviewed-contracts.jso
 import crossbowReview from '../../data/candidates/arkpedia-ch16-reviewed-crossbow.json' with { type: 'json' };
 import reactionReview from '../../data/candidates/arkpedia-ch17-reviewed-reactions.json' with { type: 'json' };
 import rockbreakerReview from '../../data/candidates/arkpedia-ch17-rockbreaker-contract.json' with { type: 'json' };
+import shieldguardReview from '../../data/candidates/arkpedia-ch16-reviewed-shieldguard.json' with { type: 'json' };
+import artilleryReview from '../../data/candidates/arkpedia-ch16-reviewed-artillery.json' with { type: 'json' };
 const MINER_TEXT = "Allied unit; recovers HP when within any Medic Operator's Attack Range";
 const groups = { TileEscapeShadowManager: ['times'], GetHeal: ['heal_scale'], FearLoseBlood: ['value'] };
 function minerCovered(r, n) {
@@ -26,7 +28,32 @@ function minerCovered(r, n) {
 const miner = { covers: minerCovered, ability: { kind: 'ch16Miner', params: r => r },
   nativeClaim: (p, n) => n.Passive?.length === 1 ? { active: 1 } : null,
   explains: text => text === MINER_TEXT, note: 'Neutral miner: Medic range healing, fear blood loss and shadow suppression.' };
+function familyCovered(review, family, r, n) {
+  const proof = review.enemies[r.key];
+  return review.testOnly === true && !!proof && r.prefabKey === r.key
+    && n.$familyEvidence?.(family) === review.sources.graph.sha256
+    && JSON.stringify(r.talents.groups) === JSON.stringify(proof.groups)
+    && JSON.stringify(r.talents.bb) === JSON.stringify(proof.bb)
+    && JSON.stringify(r.abilities) === JSON.stringify(proof.abilities)
+    && JSON.stringify(r.skills) === JSON.stringify(proof.skills)
+    && JSON.stringify(n.$retained?.()) === JSON.stringify(proof.native);
+}
+export const shieldguardCovered = (r, n) => familyCovered(shieldguardReview, 'shieldguard', r, n);
+function familyFeature(review, family, kind) {
+  return {
+    covers: (r, n) => familyCovered(review, family, r, n),
+    ability: r => review.enemies[r.key] ? { kind, params: () => r } : null,
+    explains: (text, r) => review.enemies[r.key]?.abilities.some(a => a.text === text),
+    nativeClaim: (p, n) => {
+      const proof = Object.values(review.enemies).find(p => JSON.stringify(n.$retained?.()) === JSON.stringify(p.native));
+      return proof ? { wrappers: proof.counts.enemyAbilityWrappers, active: proof.counts.activeGeneralOrCommonAbilities } : null;
+    },
+    note: 'Source-bound experimental controller; captured native frame/render parity held.',
+  };
+}
 export const CHAPTER16_FEATURES = {
+  'talent:ExtraPower': familyFeature(shieldguardReview, 'shieldguard', 'ch16Shieldguard'),
+  'talent:ProjectileBoomRange': familyFeature(artilleryReview, 'artillery', 'ch16LightArtillery'),
   'skill:SummonSelf': {
     covers: (r, n) => {
       const proof = rockbreakerReview.enemies[r.key];

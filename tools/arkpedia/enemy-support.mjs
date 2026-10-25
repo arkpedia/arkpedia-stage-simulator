@@ -126,6 +126,9 @@ export async function buildEnemySupport({ candidate = false } = {}) {
       ['crossbow', 'data/candidates/arkpedia-ch16-reviewed-crossbow.json'],
       ['infantryBow', 'data/candidates/arkpedia-ch17-reviewed-reactions.json'],
       ['rockbreaker', 'data/candidates/arkpedia-ch17-rockbreaker-contract.json'],
+      ['shieldguard', 'data/candidates/arkpedia-ch16-reviewed-shieldguard.json'],
+      ['artillery', 'data/candidates/arkpedia-ch16-reviewed-artillery.json'],
+      ['patrol', 'data/candidates/arkpedia-ch16-reviewed-patrol.json'],
     ]) {
       const reviewRaw = await readFile(new URL(reviewPath, root)), review = JSON.parse(reviewRaw);
       if (review.testOnly !== true) throw Error(family + ' review must remain test-only');

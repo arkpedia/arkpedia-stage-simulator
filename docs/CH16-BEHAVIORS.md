@@ -53,13 +53,14 @@ action closure are rejected. Extraction never rewrites the reviewed contract.
 Variants need their own native evidence and review; they are not admitted by a
 base-prefab match.
 
-`16-2`, `16-3`, `16-4`, `17-2`, `17-3` and `17-4` are accepted by the experimental runtime candidate registry.
+`16-2`, `16-3`, `16-4`, `16-5`, `17-2`, `17-3` and `17-4` are accepted by the experimental runtime candidate registry.
 16-2 retains its 42 source spawns and four canonical records. 16-3 has 22 normal
 hostile spawns plus unmanaged miner summons, using four canonical records. 16-4
 has 17 normal hostiles and four canonical records. 17-2 has 28 normal hostiles
 and two canonical records. 17-3 has 24 normal hostiles, one Leak Marker and four
 canonical records. 17-4 has 31 normal hostiles, one Leak Marker and four
-canonical records, plus source-triggered Rockbreaker children. All six
+canonical records, plus source-triggered Rockbreaker children. 16-5 has 26 normal
+hostiles, two independent tunnel actions and four canonical records. All seven
 require `?experimental=1`, remain `testOnly`, and verify the candidate support
 snapshot checksum. No other Chapter 16/17 stage is admitted by this review.
 
@@ -225,7 +226,7 @@ SHA-256. The builder refuses changed evidence or stage/geometry bytes. It verifi
 22 normal hostiles and the four-enemy dependency closure, excludes optional `raid`,
 and preserves the source's 0.5 movement multiplier. The stage retains separate
 canonical provenance for stage inputs (`84f3c833`) and enemy records (`79e81a8a`).
-The catalogue contains 603 entries: **597 public, six test-only**.
+The catalogue contains 604 entries: **597 public, seven test-only**.
 
 Integration tests release three naturally summoned miners, traverse their exact
 fractional checkpoints, damage and destroy both facilities, and finish their
@@ -468,7 +469,8 @@ The consumer fetched and checksum-verified all eight inputs per stage. Every
 retained bundle remains `testOnly: true, admitted: false`. Seven checks cover
 their provenance and separation from builder/catalogue admission. 17-2 now has
 the separate experimental review below; 17-3 also has the marker review described
-below, and 17-4 has the Rockbreaker review. The other three remain unbuilt/unindexed. Pending families include
+below, 17-4 has the Rockbreaker review, and 16-5 has its controller/branch
+review. The other two remain unbuilt/unindexed. Pending families include
 Shieldguard and Fortbreaker for the next chapter 16 maps, and the chapter 17
 split-controller family. Existing consumer stage/enemy pins stay
 immutable. `npm run test:arkpedia-ch16` includes the source-only intake checks.
@@ -624,7 +626,8 @@ seconds with zero engine errors, six/seven real-beam-triggered children and
 correct total hostile counts of 37/38. A legally deployed guard exercises
 ordinary combat alongside the split path. SIX_STAR modifiers are excluded.
 17-4 is explicitly test-only and requires experimental mode; the catalogue is
-603 entries, **597 public and six test-only**. 16-5, 16-6 and 16-7 remain unadmitted.
+604 entries, **597 public and seven test-only** after the separate 16-5 review
+below. 16-6 and 16-7 remain unadmitted.
 
 The focused controller/source/stage suite passes 217/217. Support, records,
 coverage and sharding checks pass 15 tests with one skip and no failures (16 total).
@@ -638,4 +641,76 @@ The simplified art and marker-display limitations described above remain.
 .cache/map-env/bin/python tools/arkpedia/extract-ch17-rockbreaker-animation.py --check
 node --test test/arkpedia-ch17-rockbreaker-source.test.js test/arkpedia-ch17-rockbreaker.test.js test/arkpedia-stage-17-4.test.js
 RENDER_E2E=1 CH17_QA_STAGE=17-4 CH17_QA_OUT=/tmp/codex-ch17-4-ui node --test test/arkpedia-ch17-ui.browser.test.js
+```
+
+
+### Experimental Shieldguard, artillery and 16-5
+
+`extract-ch16-shieldguard.py` retains both native prefab graphs, six templates and
+30 indexed components. The independent Shieldguard review binds exact records
+and component content. Its shared miner engagement now permits three links:
+one nearest available miner per 0.3-second scan, exclusive ownership, 0.9-radius
+acquisition including the miner body, 1.0-radius center release. Releasing one
+link preserves the other movement locks. The weapon still selects only one
+marked neutral per attack independently of movement ownership. Native Attack_B
+and Combat Attack_A use separate cooldowns. Orders reduce physical/Arts damage
+by 40% after mitigation, including sourceless damage; true damage and HP loss
+remain unchanged. The 0.1-second visual listener is separate from immediate
+incoming-damage checks. Silence does not disable those native passive effects.
+Source death/battle end remove every owned link and visual instance.
+
+The existing artillery candidate is now source-bound in ordinary feature
+dispatch for both variants. Its separate review retains the complete projectile
+and action closure. Existing shell/burn, source-death, overlapping areas,
+recipient exit/reentry and real commander-priority tests still pass. Changed
+records, absent full-family proof and altered components cannot clear either
+family's candidate support. Original captured animation/collider frame parity
+remains held; shared engine attack timing and recipient body radii apply.
+
+16-5 also exposed a preexisting Patrol Captain implementation gap: named-target
+priority alone could not perform its native ranged attack on marked neutral
+units. The retained full prefab/projectile graph and nine indexed components
+show radius 1.2000000476837158, a single marked-neutral ground target, speed 10,
+five-second projectile life and separate blocker Combat. The corrected controller
+uses those selectors and independent Attack/Combat clocks. Born shots survive
+source death and use current ATK at impact. The unchanged public record equals
+the canonical record byte-for-byte as a parsed entry; no enemy overlay or new
+public admission is used. Other patrol-family records keep their prior behavior.
+Original Attack_01/Attack_02 animation events remain unverified.
+
+The canonical level has two tunnel instances overriding `talent@action_index`
+to 0 and 1. Branch installation now validates both original miner actions and
+extra routes, including the source's empty-checkpoint object form. Each tunnel
+uses its own retained skill override; unknown blackboard keys/action indices
+are rejected before accepting a battle. Existing one-action tunnel/branch tests
+remain valid. Commands consume only the selected owner's SP and release only
+its queue, with separate native total/waiting caps.
+
+The separate `arkpedia-ch16-reviewed-stage-16-5.json` binds the canonical stage
+snapshot at `arkpedia-data@657f85cc032ae5da807135f536d3263c6b249ed7`, device/skill
+evidence and all three controller reviews. It contains 23 Patrol Captains, two
+Light Artillery and one Shieldguard, plus unmanaged miner branches. Three seeds
+clear at 195.83 seconds with 26 counted hostiles and both original extra routes;
+actual Patrol Captain/artillery attacks hit the miners. Tests verify each
+branch's source position/owner, separate queue release, caps and rejection of
+unknown overrides. Native branch miners remain uncounted and harmless.
+
+The full local CI-entrypoint suite passes **23,189 tests: 23,176 passed, zero
+failed/cancelled, 13 skipped** (729.8 seconds), with localhost networking enabled
+for HTTP/WebSocket tests. The focused suite passes 245/245. A normalized shared-damage-packet regression
+failed before the per-recipient reduction fix and passes afterward: an ordered
+Shieldguard cannot reduce damage for another recipient or compound the packet
+multiplier. Incoming modifier ownership is retired on death/battle end. Public/candidate support and the 604-entry
+index checks pass. Actual-app Chrome checks pass public rejection, natural SP,
+keyboard/touch activation, independent owner queues, distinct Upper/Lower
+Tunnel labels, all command bounds on phone, stable focus, and restart. Desktop/phone screenshots in
+`/tmp/codex-ch16-5-ui` were viewed. All seven new stages remain explicitly
+test-only; all 597 public stage entries and public enemy data artifacts are
+unchanged. No production pointer, merge, publication or deployment is advanced.
+
+```sh
+.cache/map-env/bin/python tools/arkpedia/extract-ch16-shieldguard.py --check
+.cache/map-env/bin/python tools/arkpedia/extract-ch16-patrol.py --check
+node --test test/arkpedia-ch16-shieldguard.test.js test/arkpedia-ch16-artillery.test.js test/arkpedia-ch16-patrol.test.js test/arkpedia-stage-16-5.test.js
+RENDER_E2E=1 CH16_QA_STAGE=16-5 CH16_QA_OUT=/tmp/codex-ch16-5-ui node --test test/arkpedia-ch16-ui.browser.test.js
 ```

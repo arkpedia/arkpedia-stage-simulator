@@ -36,11 +36,12 @@ if (args.candidate === 'ch16') {
   const stageReviews = {
     '16-3': 'arkpedia-ch16-reviewed-stage.json',
     '16-4': 'arkpedia-ch16-reviewed-stage-16-4.json',
+    '16-5': 'arkpedia-ch16-reviewed-stage-16-5.json',
     '17-2': 'arkpedia-ch17-reviewed-stage-17-2.json',
     '17-3': 'arkpedia-ch17-reviewed-stage-17-3.json',
     '17-4': 'arkpedia-ch17-reviewed-stage-17-4.json',
   };
-  if (source.code !== '16-2' && !Object.hasOwn(stageReviews, source.code)) throw Error('Candidate admission is reviewed only for test-only 16-2, 16-3, 16-4, 17-2, 17-3 and 17-4');
+  if (source.code !== '16-2' && !Object.hasOwn(stageReviews, source.code)) throw Error('Candidate admission is reviewed only for test-only 16-2, 16-3, 16-4, 16-5, 17-2, 17-3 and 17-4');
   if (source.code !== '16-2') {
     const reviewPath = stageReviews[source.code];
     chapter16Review = await read(new URL('../../data/candidates/' + reviewPath, import.meta.url));

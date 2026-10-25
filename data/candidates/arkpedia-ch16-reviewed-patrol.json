@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "testOnly": true,
+  "scope": "Source-bound correction of the existing Patrol Captain controller; no new public or stage admission.",
+  "sources": {
+    "graph": {
+      "path": "data/candidates/arkpedia-ch16-patrol-source.json",
+      "sha256": "3b374755ee04adcce18c1a152d7cbadd9c06be9ef4866dd4d1d07376486b3611"
+    },
+    "indexed": {
+      "path": "data/candidates/arkpedia-ch16-patrol-native.json",
+      "sha256": "04fd6c9e5bada5530d62730c45f2425ba81c475f90ee177c88c828e9323e7592"
+    }
+  },
+  "enemy": {
+    "key": "enemy_1107_uoffcr",
+    "prefabKey": "enemy_1107_uoffcr",
+    "abilities": [
+      {
+        "text": "Can use long-ranged weapons to attack <Ursus Civilians> and <Talulah, the Fighter>",
+        "format": "NORMAL"
+      }
+    ],
+    "groups": {},
+    "bb": {},
+    "skills": []
+  },
+  "defaults": {
+    "radius": 1.2000000476837158,
+    "projectileSpeed": 10,
+    "projectileLife": 5
+  },
+  "unverified": [
+    "Original Attack_01/Attack_02 animation events and native collider-edge frame parity; shared-engine attack model remains in use"
+  ]
+}

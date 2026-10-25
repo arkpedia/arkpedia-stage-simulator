@@ -50,12 +50,12 @@ test('artillery source closure retains both projectiles, native collision radius
   assert.equal(action._attackType, 'BUFF'); assert.equal(action._noSourceDamage, false);
 });
 
-test('both artillery variants retain indexed evidence and remain outside admission', () => {
+test('both artillery variants retain indexed evidence and clear only candidate admission', () => {
   const bytes = readFileSync(new URL('../data/arkpedia-enemy-clock-source.json', import.meta.url)), index = JSON.parse(bytes);
   verifiedNative(read('data/candidates/arkpedia-ch16-artillery-native.json'), index.prefabs,
     createHash('sha256').update(bytes).digest('hex'), read('data/arkpedia-mvp.json').behaviors.source);
   const support = read('data/candidates/arkpedia-ch16-enemy-support.json');
-  for (const k of [key, key + '_2']) assert.equal(support.enemies[k].policy, null);
+  for (const k of [key, key + '_2']) assert.equal(support.enemies[k].policy, 'stats-attacks-and-features');
 });
 
 test('shared engine shell deals physical impact, then three independent fixed Arts ticks', () => {
@@ -154,4 +154,23 @@ test('a damage hook ending the battle cannot attach field receipts to later reci
   h.run(1.1);
   assert.ok(units.every(u => u.buffs.every(buff => !buff.key.startsWith('ch16:burn:'))));
   assert.deepEqual(b.errors, []);
+});
+
+test('ordinary feature dispatch installs source-reviewed artillery and rejects missing or changed family proof', async () => {
+  const { installEnemyFeatures } = await import('../server/sim/content/arkpedia-enemy-features.js');
+  const { deriveEnemySupport, prefabPath } = await import('../shared/arkpedia/enemy-support.js');
+  const review = read('data/candidates/arkpedia-ch16-reviewed-artillery.json'), native = read('data/candidates/arkpedia-ch16-artillery-native.json');
+  for (const file of Object.values(review.sources)) assert.equal(createHash('sha256').update(readFileSync(new URL('../' + file.path, import.meta.url))).digest('hex'), file.sha256);
+  const index = read('data/arkpedia-enemy-clock-source.json'), entries = Object.fromEntries(Object.keys(review.enemies).map(k => [k, records[k]]));
+  const evidence = { ...native, chapter16Families: { artillery: { graphSha256: review.sources.graph.sha256 } } };
+  for (const k of Object.keys(entries)) {
+    assert.equal(deriveEnemySupport(entries, index.prefabs, evidence)[k].policy, 'stats-attacks-and-features');
+    assert.equal(deriveEnemySupport(entries, index.prefabs, native)[k].policy, null);
+    const changed = structuredClone(evidence); changed.prefabs[prefabPath(k)][0].originalJson += ' ';
+    assert.equal(deriveEnemySupport(entries, index.prefabs, changed)[k].policy, null);
+  }
+  const h = makeBattle({ content: 'generic', autoFinish: false, setup: installEnemyFeatures,
+    defs: { enemies: { [key]: records[key].levels[0] } } });
+  h.b.start(); const e = h.spawn(key, { pos: [10, 7] });
+  assert.equal(e.profile.deferHit, true); assert.ok(h.b.chapter16Artillery); assert.ok(e.findBuff('enemy_field_army_self_mark'));
 });
