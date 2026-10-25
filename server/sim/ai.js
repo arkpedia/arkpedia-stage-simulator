@@ -917,7 +917,9 @@ function enemyAttack(b, e) {
   // `e.profile.canTarget(ally)`: the enemy's own target rule (只攻击地面单位, 不会攻击飞行单位 …; content/enemies.js),
   // applied to the candidates before the priority sort and the target count
   const own = e.profile && typeof e.profile.canTarget === 'function' ? e.profile.canTarget : null;
+  if(e.profile?.sourceAttack?.pending)return true;
   if (e.atkCd > 0) {
+    if(e.profile?.sourceAttack)return false;
     // the wind-up of the next attack (GitHub #58): an unblocked ranged enemy stands once a target is in range
     if (e.blockedBy || radius <= 0 || !(e.atkCd <= attackStand(e, STAND).wind + 1e-9)) return false;
     return enemyAttackCandidates(b, e, reach).some((a) => canTargetAlly(e, a, true) && (!own || own(a)));
@@ -959,6 +961,7 @@ function enemyAttack(b, e) {
     targets = (ctx.targets || []).filter((t) => t && t.alive);
     if (!targets.length || !e.alive) return false;
   }
+  if(e.profile?.sourceAttack)return e.profile.sourceAttack.begin(targets);
   e.lastAttackAt = b.time;
   e.stats.attacks++;
   const attackId = ++b._attackSeq;

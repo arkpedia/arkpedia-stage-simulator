@@ -17,6 +17,7 @@ import { pollutionBag } from './chapter17-bag.js';
 import {strongChannel,strongCarrier} from './chapter17-channel-carrier.js';
 import {strongWarCaster}from'./chapter17-war-caster.js';
 import {chapter17AttackClock} from './chapter17-attack-clocks.js';
+import {chapter17OrdinaryAttack} from './chapter17-ordinary-attacks.js';
 
 const ABILITIES = Object.freeze({
   nativeDuckRun,
@@ -130,6 +131,8 @@ export function applyEnemyFeatures(battle, e) {
       abilities.push(make(ability.params(record), abOf(battle, e)));
     }
   }
+  const ordinaryAttack=chapter17OrdinaryAttack(record);
+  if(ordinaryAttack)abilities.push(ordinaryAttack);
   if (abilities.length) { installFeatureDispatch(battle); abOf(battle, e); attach(battle, e, abilities); }
 }
 

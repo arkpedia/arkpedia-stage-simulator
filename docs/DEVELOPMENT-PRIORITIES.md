@@ -23,9 +23,10 @@ gated, along with the four 17-16 modules.
 Rockbreaker's eligible split animation now consumes live `slow_down` elapsed
 work for both release and completion, rather than fixed world-time callbacks.
 The six selected infantry/caster/carrier Combat cooldowns and Brute's owned
-Combat cooldown now consume their native-eligible slowdown clocks too. Full
-enemy compatibility, ordinary native attack-event timing and stage admission
-remain under review.
+Combat cooldown now consume their native-eligible slowdown clocks too. The six
+ordinary Attack controllers now use their bound OnAttack/clip-end events rather
+than generic instant hits and standing pauses. Full enemy compatibility, native
+selector/FSM/frame parity and stage admission remain under review.
 Removing a separate same-character operator body now leaves the player's card
 cooldown and captured payment untouched. Only the body selected by that card
 can start its redeployment cooldown; ordinary death and withdrawal still do so.
@@ -1348,3 +1349,59 @@ native attack-event timing is the next review step. Bag feeding/aura clocks,
 untargetable Leak Source behavior and the full stage interaction composition
 also remain part of the S3 compatibility audit. No Closure compatibility boundary,
 predefined builder gate, enemy registry or stage catalogue was widened.
+
+## Bound ordinary Attack events for infantry, casters and carriers
+
+The prefab-bound infantry/bow skeleton bytes are now retained as mechanical
+event-clock evidence, alongside the existing channel/carrier skeleton source.
+The extractor follows the actual SkeletonDataAsset pointer through the frozen
+prefab and art bundle, checks the manifest/bundle/source bytes and reproduces
+the result in native-source CI. No new rendered art, model, chibi or effects
+campaign is included.
+
+The compact Combat contract now also derives the single OnAttack marker and
+exact Attack duration from those bound original skeleton bytes. Both infantry
+variants hit at 0.36666667461395264 animation seconds and finish at
+1.7999999523162842; both casters launch at 0.5333333611488342 and finish at
+1.3333333730697632; both carriers hit at 0.800000011920929 and finish at
+1.6666666269302368. The selected native components require input-target timing0,
+target source2, no interruption solely because that target dies, no targetless
+input, no pre-delay/escape time and the retained physical/Arts damage type.
+
+These six source controllers now own their ordinary cast state and movement
+hold. Generic AI supplies the existing target/body/taunt ordering, then hands
+the accepted input to the source controller. It claims the cast/attack identity
+once, advances its eligible clip work under live slowdown with the existing
+timeMode0/maxAnimScale1 mapping, and releases only at the bound marker. Physical
+hits sample current ATK there; the caster's existing source projectile owner
+launches its speed-ten shot there and carries that same attack identity through
+impact. Cooldown, cast completion and unmarked channel clocks remain distinct.
+
+The original target life is captured without transferring a pending hit to a
+replacement deployment. Brief accepted control, retirement, source-life reuse
+and battle end cancel unreleased work and clear the owned hold. Born caster
+projectiles retain their independent lifetime after source death and the shared
+projectile engine rejects replacement target lives. ChargeRift can interrupt an
+ordinary windup while retaining its own movement/disarm hold and SP link.
+The final source/event/clock/channel/reaction integration run passed 73 cases,
+including 19 ordinary-event checks and reentrant source death during damage.
+The final expanded focused run passed all 1,530 available cases, and the bound
+infantry/bow extraction plus compact event contract independently reproduced
+without changing their retained bytes.
+
+The initial expanded run found the 17-12 Bag combat fixture's rear-facing sniper
+no longer reached a Bag before timeout. A paired diagnostic with only the new
+Attack adapters disabled reproduced the old four-hit result; with source timing,
+changed carrier death times changed Leak Source/Bags' late feeding positions.
+The fixture now legally faces the feeding area instead of depending on those
+late positions, while preserving actual operator damage/death ownership and
+adding a requirement that a killed Bag really entered feeding. Both 17-10 and
+17-12 combat/cleanup checks pass with that stronger encounter assertion.
+
+Generic target/collider aliases, sampled clip-rate mapping, fixed-tick dispatch,
+initial native FSM/BORN timing and compiled/frame/pixel parity remain explicit
+limitations. Closure's full candidate enemy compatibility, the predefined stage
+controls/withdrawal/card rules and 17-14 admission remain separate gates. The
+e05e4273 predecessor's hosted continuation run 40230887587 succeeded. Full run
+40227541145 at aee87df9 also completed all eight Linux/Windows Node22/24 shards
+successfully; validation of the new Attack adapters is a separate checkpoint.

@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "testOnly": true,
   "frameParity": false,
-  "scope": "Exact selected Chapter 17 ordinary Combat cooldowns. No stage, S3 enemy compatibility, animation/FSM or other ability clock admission.",
+  "scope": "Exact selected Chapter 17 ordinary Combat clocks and bound Attack event markers. No stage, S3 enemy compatibility, compiled FSM/frame or other ability clock admission.",
   "sources": {
     "data/candidates/arkpedia-ch17-reviewed-reactions.json": {
       "path": "data/candidates/arkpedia-ch17-reviewed-reactions.json",
@@ -27,6 +27,14 @@
     "data/candidates/arkpedia-ch17-channel-carrier-source.json": {
       "path": "data/candidates/arkpedia-ch17-channel-carrier-source.json",
       "sha256": "abebb812c4c812c7e5bccdf9907892e4cc43840dd4124ba0764f3b4f50057d78"
+    },
+    "data/candidates/arkpedia-ch17-infantry-bow-animation-source.json": {
+      "path": "data/candidates/arkpedia-ch17-infantry-bow-animation-source.json",
+      "sha256": "f08aabc14e185ffacc328fd0aebd71952b5993377eaa05392c644217a3a609da"
+    },
+    "data/candidates/arkpedia-ch17-channel-carrier-animation-source.json": {
+      "path": "data/candidates/arkpedia-ch17-channel-carrier-animation-source.json",
+      "sha256": "c4c8f17c593be4867d9256d63ac00ff7a4cad822b93eb74436aab9c8b0055f96"
     }
   },
   "enemies": {
@@ -39,6 +47,7 @@
       ],
       "levels": {
         "0": {
+          "applyWay": "MELEE",
           "groups": {
             "MuradPollut": [
               "hp_ratio"
@@ -55,6 +64,11 @@
           ],
           "skills": []
         }
+      },
+      "attack": {
+        "duration": 1.7999999523162842,
+        "hit": 0.36666667461395264,
+        "damageType": "phys"
       }
     },
     "enemy_10201_muinf_2": {
@@ -66,6 +80,7 @@
       ],
       "levels": {
         "0": {
+          "applyWay": "MELEE",
           "groups": {
             "MuradPollut": [
               "hp_ratio"
@@ -82,6 +97,11 @@
           ],
           "skills": []
         }
+      },
+      "attack": {
+        "duration": 1.7999999523162842,
+        "hit": 0.36666667461395264,
+        "damageType": "phys"
       }
     },
     "enemy_10203_mumag": {
@@ -93,6 +113,7 @@
       ],
       "levels": {
         "0": {
+          "applyWay": "RANGED",
           "groups": {},
           "bb": {},
           "abilities": [
@@ -118,6 +139,11 @@
             }
           ]
         }
+      },
+      "attack": {
+        "duration": 1.3333333730697632,
+        "hit": 0.5333333611488342,
+        "damageType": "arts"
       }
     },
     "enemy_10203_mumag_2": {
@@ -129,6 +155,7 @@
       ],
       "levels": {
         "0": {
+          "applyWay": "RANGED",
           "groups": {},
           "bb": {},
           "abilities": [
@@ -154,6 +181,11 @@
             }
           ]
         }
+      },
+      "attack": {
+        "duration": 1.3333333730697632,
+        "hit": 0.5333333611488342,
+        "damageType": "arts"
       }
     },
     "enemy_10208_mucow": {
@@ -165,6 +197,7 @@
       ],
       "levels": {
         "0": {
+          "applyWay": "MELEE",
           "groups": {
             "DeadSummon": [
               "max_cnt"
@@ -185,6 +218,11 @@
           ],
           "skills": []
         }
+      },
+      "attack": {
+        "duration": 1.6666666269302368,
+        "hit": 0.800000011920929,
+        "damageType": "phys"
       }
     },
     "enemy_10208_mucow_2": {
@@ -196,6 +234,7 @@
       ],
       "levels": {
         "0": {
+          "applyWay": "MELEE",
           "groups": {
             "DeadSummon": [
               "max_cnt"
@@ -216,6 +255,11 @@
           ],
           "skills": []
         }
+      },
+      "attack": {
+        "duration": 1.6666666269302368,
+        "hit": 0.800000011920929,
+        "damageType": "phys"
       }
     }
   }

@@ -212,7 +212,7 @@ export function chargeRift(r) {
     attack(c, b, e) {
       const life=e.deploySeq,snapshot=captureEnemySource(e);
       for (const target of c.targets) b.addProjectile({ from: e, target, speed: 10, source: e, maxAge: 10,
-        onHit: c => { if(c.target){const source=e.deploySeq===life?e:snapshot;hit(b,source,c.target,source.s.atk,'arts',{canDodge:true});} } });
+        onHit: impact => { if(impact.target){const source=e.deploySeq===life?e:snapshot;hit(b,source,impact.target,source.s.atk,'arts',{canDodge:true,attackId:c.attackId});} } });
     },
     death(c, b, e, a) { a.retire(); },
   };

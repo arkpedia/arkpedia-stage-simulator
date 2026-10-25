@@ -138,17 +138,21 @@ for (const [code,spec] of Object.entries(specs)) {
 for(const code of ['17-10','17-12'])test(code+' legally deployed sniper attacks scheduled Bags and retires a killed feeding controller',()=>{
   const id='char_124_kroos',b=new StandardBattle(data(code),{operators:[defaultBuild(mvp.operators[id])]},{seed:19});
   b.life=1000;b.setViewport('fullscreen-workspace');
-  const killed=[];let hits=0;
+  const killed=[],feeding=new Set();let hits=0;
+  b.on('ch17BagFeedingStart',c=>{if(c.source.defId==='enemy_10209_mubag')feeding.add(c.source.id);});
   b.on('death',c=>{if(c.unit.defId==='enemy_10209_mubag'&&c.killer?.side==='ally')killed.push(c.unit);});
   b.on('damaged',c=>{if(c.source?.defId===id&&c.target.defId==='enemy_10209_mubag')hits++;});
   while(b.time<150)b.step();
   assert.equal(b.placementError(id,3,6),null);
-  const sniper=b.deployOperator(id,3,6,code==='17-10'?'RIGHT':'DOWN');assert.ok(sniper);
+  // Aim into the actual feeding area. The rear arc used by the old 17-12
+  // fixture relied on late carrier-death/Leak Source timing near timeout.
+  const sniper=b.deployOperator(id,3,6,code==='17-10'?'RIGHT':'UP');assert.ok(sniper);
   // Controlled durability/output fixture; targeting, attack clocks, damage and
   // death ownership still use the actual legally deployed operator pipeline.
   b.addBuff(sniper,{key:'bag-combat-fixture',persist:true,mods:{hpFlat:1e6,atkFlat:10000}});sniper.hp=sniper.s.maxHp;
   while(!b.finished)b.step();
   assert.ok(hits>0);assert.ok(killed.length>0);
+  assert.ok(killed.some(e=>feeding.has(e.id)),'a killed Bag must have entered its real feeding controller');
   for(const e of killed){const a=e.mem.ab.list.find(a=>a.contacts);assert.equal(a.active,false);assert.equal(a.phase,null);assert.equal(a.contacts.size,0);assert.equal(e.profile.nativeFlyingTrace,undefined);}
   assert.equal(b.timeLimit,300);assert.deepEqual(b.errors,[]);
 });
