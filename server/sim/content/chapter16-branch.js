@@ -16,7 +16,7 @@ export function chapter16BranchSpawner(b, source) {
     throw Error('Unreviewed Chapter 16 miner branch action');
   const native = raw.extraRoutes[action.routeIndex];
   if (native.motionMode !== 'WALK' || native.allowDiagonalMove !== true || native.visitEveryTileCenter !== false
-    || native.visitEveryNodeCenter !== false || native.visitEveryCheckPoint !== true)
+    || native.visitEveryNodeCenter !== false || typeof native.visitEveryCheckPoint !== 'boolean')
     throw Error('Unreviewed Chapter 16 branch traversal options');
   const point = p => {
     if (!Number.isInteger(p?.row) || !Number.isInteger(p?.col)) throw Error('Invalid Chapter 16 branch position');
@@ -41,7 +41,13 @@ export function chapter16BranchSpawner(b, source) {
     const pos = [start[0] + offset.y + (b.rng() * 2 - 1) * spread.y,
       start[1] + offset.x + (b.rng() * 2 - 1) * spread.x];
     const child = b.spawnEnemy(action.key, { route: { motion: 'WALK', start, end, checkpoints }, pos, countInTotal: false });
-    if (child) { child.mem.ch16Branch = { id, action: index, route: action.routeIndex, host: owner.id }; child.lpr = 0; }
+    if (child) {
+      child.mem.ch16Branch = { id, action: index, route: action.routeIndex, host: owner.id }; child.lpr = 0;
+      child.route.cursorOffset = { x: pos[1] - start[1], y: pos[0] - start[0] };
+      child.route.goal = { x: end[1], y: end[0] };
+      child.route.visitEveryCheckPoint = native.visitEveryCheckPoint;
+      child.route.nativeReachRadius = .05;
+    }
     return child;
   };
 }

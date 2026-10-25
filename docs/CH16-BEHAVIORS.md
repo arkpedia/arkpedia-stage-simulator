@@ -293,21 +293,23 @@ passed with publication/proposal skipped. The simulator fetched all eight pinned
 inputs and verified the release, original-level and producer receipts. The source
 bundle remains `admitted: false`, `testOnly: true`; no 16-4 stage is indexed.
 The level has 17 normal hostiles and movement multiplier 0.5. Its branch's
-`visitEveryCheckPoint: false` differs from 16-3 and is intentionally refused by
-that reviewed consumer until the traversal contract is resolved.
+`visitEveryCheckPoint: false` allows reaching the exit before all checkpoints;
+16-3's true value requires completing them. Both values now have isolated
+traversal coverage; 16-4 remains unadmitted pending controller/range review and
+full-stage integration.
 
 `extract-ch16-crossbow.py` retains both Mobile Crossbowman prefab graphs, its
 speed-10/lifetime-10 projectile and native action templates. A separate targeted
 extraction retains 22 timing-index-verified components. The candidate controller
 in `chapter16-crossbow.js` is tested through shared attack/projectile dispatch:
-ranged 2.5× damage, nearby enemy/native-marked-miner interference, commander's
+ranged 2.5× damage, nearby player-unit/native-marked-miner interference, commander's
 smaller radius, marker cleanup and unscaled blocked combat. Native selectors,
 listener cadence and non-silenceability are separately asserted. Range queries
 currently use world-position centers; collider-edge parity is still unreviewed.
 **The controller has no support-registry entry.** Retaining/exercising it does
-not approve this prefab or 16-4; stage traversal and full-stage integration are
-also still outstanding. The combined focused suite now passes 114/114; the
-16-4/crossbow intake adds nine checks after the separately recorded 16-3 full run.
+not approve this prefab or 16-4; full-stage integration is still outstanding.
+The combined focused suite now passes 118/118 after correcting recipient
+faction, independent Attack/Combat cooldowns and branch navigation offsets.
 
 ```sh
 node tools/arkpedia/canonical-stage.mjs --stage 16-4
@@ -317,3 +319,23 @@ node tools/arkpedia/canonical-stage.mjs --stage 16-4
   --output data/candidates/arkpedia-ch16-crossbow-native.json --check
 node --test test/arkpedia-ch16-crossbow.test.js test/arkpedia-stage-16-4-source.test.js
 ```
+
+### Traversal and crossbow source cross-check
+
+The native crossbow listener's `ALLY` side means player-side units; nearby enemy
+units do not suppress it. Its distinct `_attack` and `_combat` references require
+separate cooldowns. Tests cover real block/release switches and direct selection
+of player units despite target-free/camouflage/isolation. This matches the
+[PRTS crossbowman mechanics](https://prts.wiki/w/集团军机动弩手), cross-checked
+against the retained selector/ability fields; range-edge parity remains open.
+
+The original experimental
+[pathing analysis](https://www.bilibili.com/opus/900558138389823489) distinguishes
+body and navigation-cursor coordinates. Branch spawn jitter now remains a fixed
+body-to-cursor offset through checkpoints and the exit. Fields, contact and
+blocking still query the body. Explicit false permits an early exit within the
+reported 0.05 cursor radius; true requires the final checkpoint sequence. Existing
+routes without these declarations keep their previous behavior. Tests exercise
+both flags and shifted endpoints, while retaining full miner/facility integration.
+These changes do not implement the client's complete steering/inertia solver or
+claim captured-game frame parity.

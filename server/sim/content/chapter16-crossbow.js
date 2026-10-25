@@ -13,7 +13,12 @@ export function mobileCrossbow(r) {
     spawn(b, e, a) {
       a.scan = 0; a.ranged = false;
       e.profile.melee = true; e.profile.deferHit = true;
-      e.profile.canTarget = u => (!e.blockedBy || u === e.blockedBy) && !u.isFlying && !u.s.flags.liftoff;
+      e.profile.attackCooldowns = { attack: 0, combat: 0 };
+      e.profile.attackMode = () => {
+        e.profile.melee = !!e.blockedBy;
+        return e.blockedBy ? 'combat' : 'attack';
+      };
+      e.profile.canTarget = u => (e.blockedBy ? u === e.blockedBy : a.ranged) && !u.isFlying && !u.s.flags.liftoff;
       b.addBuff(e, { key: 'enemy_field_army_self_mark', persist: true });
     },
     tick(b, e, a, dt) {
@@ -22,8 +27,10 @@ export function mobileCrossbow(r) {
         a.scan -= .1;
         const ordered = !!e.findBuff('enemy_uacomd_extra_power');
         const reach = ordered ? orderedRadius : radius;
-        a.ranged = !b.enemies.some(u => u !== e && live(u)
-          && (!u.profile?.neutral || u.findBuff('enemy_mcreep_self_mark'))
+        // ALLY is the absolute player side, not the enemy owner's side.
+        // The second native query separately names marked NEUTRAL miners.
+        a.ranged = ![...b.allyUnits, ...b.enemies.filter(u => u.profile?.neutral && u.findBuff('enemy_mcreep_self_mark'))]
+          .some(u => live(u)
           && Math.hypot(u.x - e.x, u.y - e.y) <= reach + 1e-9);
         if (ordered && !e.findBuff('uacomd_t[extra_effect]')) b.addBuff(e, { key: 'uacomd_t[extra_effect]', persist: true });
         else if (!ordered) b.removeBuff(e, 'uacomd_t[extra_effect]');
@@ -31,7 +38,6 @@ export function mobileCrossbow(r) {
           b.addBuff(e, { key: 'uasnip_no_ally_nearby_able_attack', persist: true });
         else if (!a.ranged) b.removeBuff(e, 'uasnip_no_ally_nearby_able_attack');
       }
-      e.profile.melee = !!e.blockedBy || !a.ranged;
     },
     attack(c, b, e) {
       for (const target of c.targets) {

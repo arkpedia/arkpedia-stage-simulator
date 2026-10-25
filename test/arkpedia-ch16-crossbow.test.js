@@ -10,11 +10,11 @@ import { installFeatureDispatch, attach } from '../server/sim/content/enemies.js
 const read = path => JSON.parse(readFileSync(new URL('../' + path, import.meta.url)));
 const rec = read('data/candidates/arkpedia-enemy-records.canonical.json').enemies.enemy_10121_uasnip.levels[0];
 const proof = read('data/candidates/arkpedia-ch16-crossbow-source.json');
-function fixture({ blocker = false } = {}) {
+function fixture({ blocker = false, near = false } = {}) {
   const h = makeBattle({ content: 'generic', autoFinish: false,
     defs: { enemies: { [rec.key]: rec, other: enemyRec({ key: 'other', atk: 0 }) },
       chess: { dummy: chessRec({ id: 'dummy', stats: { maxHp: 1e6, atk: 0, def: 100, blockCnt: blocker ? 2 : 0 } }) } },
-    units: [{ chessId: 'dummy', row: 10, col: 5 }], setup: installFeatureDispatch });
+    units: [{ chessId: 'dummy', row: 10, col: near ? 6 : 5 }], setup: installFeatureDispatch });
   const e = h.spawn(rec.key, { pos: [10, blocker ? 5 : 7] });
   e.base.moveSpeed = 0; e.markDirty();
   const a = mobileCrossbow(rec); attach(h.b, e, [a]);
@@ -39,6 +39,8 @@ test('retained native listener and projectile distinguish cadence, marker, radiu
   assert.equal(listener.isSilenceable, 0);
   const shot = native.find(n => n._projectileKey === 'projectile_enemy_uasnip');
   assert.equal(shot._atkScaleKey, 'atk_scale_2'); assert.equal(shot._useCachedAtkOnly, 0);
+  const mode = native.find(n => n._attack && n._combat);
+  assert.notEqual(mode._attack.m_PathID, mode._combat.m_PathID, 'separate native animation abilities own separate cooldowns');
   const projectile = Object.values(proof.projectiles)[0].map(r => JSON.parse(r.originalJson));
   assert.equal(projectile.find(n => '_speed' in n)._speed, 10);
   assert.equal(projectile.find(n => '_lifeTime' in n)._lifeTime, 10);
@@ -54,9 +56,8 @@ test('isolated ranged attack has native multiplier, travel and a born projectile
   assert.equal(hp - u.hp, 850, 'the native multiplier applies to ATK before DEF'); assert.deepEqual(b.errors, []);
 });
 
-test('nearby enemies inhibit ranged attack; commander orders shrink the query and expiry restores interference', () => {
-  const { h, e, b } = fixture();
-  const other = h.spawn('other', { pos: [10, 8] }); other.base.moveSpeed = 0; other.markDirty();
+test('nearby player units inhibit ranged attack; commander orders shrink the query and expiry restores interference', () => {
+  const { h, e, b } = fixture({ near: true });
   h.run(.11); assert.equal(e.stats.attacks, 0);
   b.addBuff(e, { key: 'enemy_uacomd_extra_power', persist: true }); h.run(.11);
   assert.equal(e.stats.attacks, 1); assert.ok(e.findBuff('uacomd_t[extra_effect]'));
@@ -83,12 +84,39 @@ test('the blocked combat path is an ordinary unscaled physical hit, independent 
 });
 
 test('the nonsilenceable listener rechecks current positions on its independent native cadence', () => {
-  const { h, e, b } = fixture();
-  const other = h.spawn('other', { pos: [10, 8] }); other.base.moveSpeed = 0; other.markDirty();
+  const { h, e, b, u } = fixture({ near: true });
   h.run(.11); assert.equal(e.findBuff('uasnip_no_ally_nearby_able_attack'), null);
-  other.x = 9;
+  u.x = 5;
   b.addBuff(e, { key: 'test:silence', persist: true, flags: { silence: true } });
   h.run(.03); assert.equal(e.findBuff('uasnip_no_ally_nearby_able_attack'), null);
   h.run(.04); assert.ok(e.findBuff('uasnip_no_ally_nearby_able_attack'));
-  assert.equal(other.tileC, 8); assert.deepEqual(b.errors, []);
+  assert.equal(u.tileC, 6); assert.deepEqual(b.errors, []);
+});
+
+test('enemy-side units are not ALLY query recipients; player-side direct selection ignores targetability', () => {
+  const { h, e, b, u } = fixture();
+  const other = h.spawn('other', { pos: [10, 8] }); other.base.moveSpeed = 0; other.markDirty();
+  h.run(.14); assert.equal(e.stats.attacks, 1, 'a nearby same-side enemy does not interfere');
+  u.x = 6;
+  b.addBuff(u, { key: 'test:selection', persist: true, flags: { untargetable: true, camou: true, isolated: true } });
+  h.run(.11);
+  assert.equal(e.findBuff('uasnip_no_ally_nearby_able_attack'), null);
+  assert.deepEqual(b.errors, []);
+});
+
+test('real block and release switches retain separate native Attack and Combat cooldowns', () => {
+  const { h, e, b, u } = fixture();
+  h.run(.14); assert.equal(e.stats.attacks, 1);
+  assert.ok(e.profile.attackCooldowns.attack > 4.8);
+  u.base.blockCnt = 2; u.markDirty();
+  e.x = u.x; assert.equal(b._checkBlock(e), true);
+  h.run(b.dt);
+  assert.equal(e.stats.attacks, 2, 'fresh Combat does not inherit the ranged cooldown');
+  assert.ok(e.profile.attackCooldowns.combat > 4.9);
+  b._unblock(e); e.x = 7;
+  h.run(1);
+  assert.equal(e.stats.attacks, 2, 'returning to Attack retains its already spent cooldown');
+  h.run(4.1);
+  assert.equal(e.stats.attacks, 3);
+  assert.deepEqual(b.errors, []);
 });

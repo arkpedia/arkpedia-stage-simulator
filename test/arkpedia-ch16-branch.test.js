@@ -36,16 +36,43 @@ test('three commanded miners traverse the original route, destroy contacted stru
   const visited = new Set();
   b.on('enemyMoved', ({ enemy, to }) => {
     if (!initial.includes(enemy)) return;
-    if (Math.abs(to.x - 4.46) < 1e-9 && Math.abs(to.y - 4) < 1e-9) visited.add('first facility');
-    if (Math.abs(to.x - 7.54) < 1e-9 && Math.abs(to.y - 3.99) < 1e-9) visited.add('second facility');
+    const x = to.x - enemy.route.cursorOffset.x, y = to.y - enemy.route.cursorOffset.y;
+    if (Math.hypot(x - 4.46, y - 4) <= .05 + 1e-9) visited.add('first facility');
+    if (Math.hypot(x - 7.54, y - 3.99) <= .05 + 1e-9) visited.add('second facility');
   });
   b.on('damaged', c => { if (c.target.mem.ch16Structure && c.source?.mem.ch16Miner) damage.push(c.target); });
   run(240);
   assert.ok(damage.length > 0);
   assert.ok(b.enemies.every(e => !e.mem.stageUnitDevice || e.mem.stageUnitDevice.chapter16Structure !== 'facility' || !e.alive));
   assert.ok(initial.every(e => !e.alive && e.removeReason === 'leak'));
-  assert.equal(visited.size, 2, 'movement reaches both exact offset checkpoints instead of the structure centers');
+  assert.equal(visited.size, 2, 'navigation reaches the offset checkpoints while retaining each body-to-cursor offset');
   assert.equal(b.life, 1000);
+});
+
+test('native branch jitter persists through movement and the endpoint', () => {
+  const { b, run, source } = chapter16StageFixture({ isolated: true });
+  b.setViewport('fullscreen-workspace'); run(15.1);
+  const [id] = b.stageDeviceActions.keys(), child = b.enemies.find(e => e.mem.ch16TunnelHost);
+  const offset = { ...child.route.cursorOffset };
+  assert.ok(Math.hypot(offset.x, offset.y) > .01);
+  b.activateStageDevice(id); run(240);
+  assert.equal(child.removeReason, 'leak');
+  const goal = source.rawLevel.extraRoutes[0].endPosition;
+  assert.ok(Math.hypot(child.x - goal.col - offset.x, child.y - goal.row - offset.y) <= .05 + 1e-9);
+  assert.ok(Math.hypot(child.x - goal.col, child.y - goal.row) >= Math.hypot(offset.x, offset.y) - .05 - 1e-9);
+});
+
+test('visitEveryCheckPoint controls early exit, independently of remaining checkpoint order', () => {
+  for (const required of [true, false]) {
+    const { b, run, source } = chapter16StageFixture({ isolated: true });
+    const changed = structuredClone(source); changed.rawLevel.extraRoutes[0].visitEveryCheckPoint = required;
+    const child = chapter16BranchSpawner(b, changed)('mcreep_route', 0, { id: 999 });
+    child.x = child.route.goal.x + child.route.cursorOffset.x + .02;
+    child.y = child.route.goal.y + child.route.cursorOffset.y;
+    run(b.dt);
+    assert.equal(child.alive, required);
+    if (!required) assert.equal(child.removeReason, 'leak');
+  }
 });
 
 test('normal 16-3 schedules 22 hostiles, excludes the optional raid group and can clear with surviving static devices', () => {

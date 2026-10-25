@@ -525,11 +525,13 @@ const tileKey = (b, e) => {
  */
 function planLeg(b, e, leg) {
   const R = e.route;
+  const ox = R.cursorOffset?.x ?? 0, oy = R.cursorOffset?.y ?? 0;
+  const cursor = { x: e.x - ox, y: e.y - oy };
   let pts;
   if (e.motion === 'FLY') {
     pts = [{ x: leg.c, y: leg.r }];
   } else {
-    const k = tileKey(b, e);
+    const k = tileKey(b, cursor);
     // Reach offsets address a point inside the destination tile. Flow fields
     // still address integer tiles; a fractional key silently loses the path.
     const anchorR = Math.round(leg.r), anchorC = Math.round(leg.c);
@@ -551,10 +553,13 @@ function planLeg(b, e, leg) {
     // The smoothed chain is line-of-sight clear from the tile CENTRE only. An enemy re-planning off-centre (pushed,
     // released by 诱导, an obstacle change mid-segment) first steps back to its tile centre when the straight line to
     // the first waypoint would cut a tile it cannot walk (a fence corner, a crate) — else it would walk inside it.
-    if (f && (e.x !== k % COLS || e.y !== ((k / COLS) | 0)) && !straightClear(b.grid, e.x, e.y, pts[0])) {
+    if (f && (cursor.x !== k % COLS || cursor.y !== ((k / COLS) | 0)) && !straightClear(b.grid, cursor.x, cursor.y, pts[0])) {
       pts.unshift({ x: k % COLS, y: (k / COLS) | 0 });
     }
   }
+  // Native summon jitter offsets the body from a persistent navigation cursor;
+  // it does not steer away at the first checkpoint. Ordinary routes have no offset.
+  if (ox || oy) pts = pts.map(p => ({ x: p.x + ox, y: p.y + oy }));
   R.pts = pts;
   R.ptIdx = 0;
   R.version = b.grid.version;
@@ -606,7 +611,7 @@ export function remainingDistance(b, e) {
     const p = R.pts[R.ptIdx];
     d += Math.hypot(p.x - e.x, p.y - e.y) + R.suffix[R.ptIdx];
   } else if (leg && leg.t === 'move') {
-    d += Math.hypot(leg.c - e.x, leg.r - e.y);
+    d += Math.hypot(leg.c + (R.cursorOffset?.x ?? 0) - e.x, leg.r + (R.cursorOffset?.y ?? 0) - e.y);
   }
   return d;
 }
@@ -617,11 +622,23 @@ export function remainingDistance(b, e) {
 export function updateEnemy(b, e, dt) {
   const R = e.route;
   if (!e.alive) return;
+  updateNativeMoveCheckpoints(e);
+  if (earlyRouteExit(b, e)) return;
   // hidden (teleporting) enemies only advance wait legs
   const stunned = e.s.flags.stun;
-  if (e.atkCd > 0 && !stunned && !e.hidden) e.atkCd = Math.max(0, e.atkCd - dt);
+  // Different native attack abilities (e.g. crossbowman's Attack/Combat)
+  // retain separate cooldowns. Choosing one must not erase the other clock.
+  const clocks = e.profile?.attackCooldowns;
+  const clock = clocks ? e.profile.attackMode(b, e) : null, life = e.deploySeq;
+  if (clocks && !Object.hasOwn(clocks, clock)) throw Error('Invalid enemy attack cooldown selection');
+  if (!stunned && !e.hidden) {
+    if (clocks) for (const key of Object.keys(clocks)) clocks[key] = Math.max(0, clocks[key] - dt);
+    else if (e.atkCd > 0) e.atkCd = Math.max(0, e.atkCd - dt);
+  }
+  if (clocks) e.atkCd = clocks[clock];
   // true: an unblocked ranged enemy in the wind-up of its next attack with a target in range (it stands)
   const winding = !e.hidden && !stunned && enemyAttack(b, e);
+  if (clocks && e.profile.attackCooldowns === clocks && e.deploySeq === life) clocks[clock] = e.atkCd;
   if (!e.alive) return;
   // a stun / freeze / sleep cuts the attack clip short: no stand left once it ends [ASSUMED]
   if (stunned && !e.hidden) { e.atkStandUntil = -Infinity; return; }
@@ -647,6 +664,29 @@ export function updateEnemy(b, e, dt) {
   // 诱导 (ba.attract "无法被阻挡并向目标位置移动"): walks to the attract point instead of following its route
   if (e.s.flags.attract) { if (standing) e.moving = false; else moveAttracted(b, e, dt); return; }
   advanceRoute(b, e, dt, R, standing);
+  if (e.alive) { updateNativeMoveCheckpoints(e); earlyRouteExit(b, e); }
+}
+
+function updateNativeMoveCheckpoints(e) {
+  const r = e.route;
+  if (!(r?.nativeReachRadius > 0) || e.hidden) return;
+  const x = e.x - (r.cursorOffset?.x ?? 0), y = e.y - (r.cursorOffset?.y ?? 0);
+  let leg;
+  while ((leg = r.legs[r.legIdx])?.t === 'move' && !leg.final
+    && Math.hypot(x - leg.c, y - leg.r) <= r.nativeReachRadius + 1e-9) {
+    r.legIdx++; r.pts = null;
+  }
+}
+
+// Explicit native false permits reaching the objective before all checkpoints;
+// true requires the final move leg. Undefined preserves existing route behavior.
+function earlyRouteExit(b, e) {
+  const r = e.route;
+  if (typeof r?.visitEveryCheckPoint !== 'boolean' || e.hidden || !r.goal) return false;
+  if (r.visitEveryCheckPoint && !r.legs[r.legIdx]?.final) return false;
+  if (Math.hypot(e.x - (r.cursorOffset?.x ?? 0) - r.goal.x,
+    e.y - (r.cursorOffset?.y ?? 0) - r.goal.y) > .05 + 1e-9) return false;
+  b.leak(e); return true;
 }
 
 /**

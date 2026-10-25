@@ -39,9 +39,9 @@ test('the next enemy evidence matches the original native timing index without g
   assert.equal(read('data/candidates/arkpedia-ch16-enemy-support.json').enemies.enemy_10121_uasnip.policy, null);
 });
 
-test('16-4 stays outside the catalogue and its different traversal contract is refused by the 16-3 branch consumer', () => {
+test('16-4 stays outside the catalogue while its explicit early-exit traversal can be decoded', () => {
   assert.throws(() => resolveStage(read('data/arkpedia-stages.json'), '16-4', { experimental: true }));
-  assert.throws(() => chapter16BranchSpawner({}, source), /Unreviewed Chapter 16 branch traversal/);
+  assert.equal(typeof chapter16BranchSpawner({}, source), 'function');
   assert.throws(() => execFileSync(process.execPath, ['tools/arkpedia/canonical-stage.mjs', '--stage', '../unreviewed'],
     { cwd: new URL('../', import.meta.url), stdio: 'pipe' }), error => /only pinned source intakes/.test(String(error.stderr)));
 });
