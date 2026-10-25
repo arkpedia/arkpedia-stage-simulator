@@ -5,7 +5,22 @@ import assert from 'node:assert/strict';
 import { readdirSync } from 'node:fs';
 import { testFilesForShard } from '../tools/run-tests.mjs';
 
-const ALL = readdirSync(new URL('../test/', import.meta.url)).filter(name => name.endsWith('.test.js')).sort();
+function discover(directory, prefix = '') {
+  return readdirSync(directory, { withFileTypes: true }).flatMap(entry => {
+    const name = prefix + entry.name;
+    return entry.isDirectory() ? discover(new URL(entry.name + '/', directory), name + '/')
+      : entry.name.endsWith('.test.js') ? [name] : [];
+  });
+}
+const ALL = discover(new URL('../test/', import.meta.url)).sort();
+
+test('CI includes nested pathing/render regression suites while excluding fixture helpers', () => {
+  const files = testFilesForShard();
+  assert.ok(files.includes('sim/pathing-crosscheck.test.js'));
+  assert.ok(files.includes('render/playtest6_hitcap.test.js'));
+  assert.ok(!files.includes('render/fakepixi.js'));
+  assert.ok(files.every(file => !file.includes('\\')));
+});
 
 for (const total of [2, 3, 5]) {
   test(`the ${total}-way shard split is an exact partition`, () => {

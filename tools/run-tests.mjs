@@ -4,16 +4,17 @@
 //   node tools/run-tests.mjs
 //   SHARD_INDEX=1 SHARD_TOTAL=2 node tools/run-tests.mjs
 //
-// The shard split is a stable sort of test/*.test.js, so every file runs once
+// The shard split includes nested engine/render suites, so every file runs once
 // and the local command stays identical to CI.
 import { readdirSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
-/** The test files assigned to one shard of a stable `test/*.test.js` sort. */
+/** The test files assigned to one shard of a stable recursive test sort. */
 export function testFilesForShard(total = 1, index = 0) {
   const n = Math.max(1, Number(total)), i = Math.min(n - 1, Math.max(0, Number(index)));
-  return readdirSync(new URL('../test/', import.meta.url))
+  return readdirSync(new URL('../test/', import.meta.url), { recursive: true })
+    .map(name => name.replaceAll('\\', '/'))
     .filter(name => name.endsWith('.test.js')).sort()
     .filter((_, at) => at % n === i);
 }
