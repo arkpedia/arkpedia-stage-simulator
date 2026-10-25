@@ -1,0 +1,222 @@
+{
+  "schemaVersion": 1,
+  "testOnly": true,
+  "frameParity": false,
+  "scope": "Exact selected Chapter 17 ordinary Combat cooldowns. No stage, S3 enemy compatibility, animation/FSM or other ability clock admission.",
+  "sources": {
+    "data/candidates/arkpedia-ch17-reviewed-reactions.json": {
+      "path": "data/candidates/arkpedia-ch17-reviewed-reactions.json",
+      "sha256": "f78b9aa3ce06cd289c09bc391b16d880dd7bd334d7da74d910a706017994d318"
+    },
+    "data/candidates/arkpedia-ch17-reviewed-channel-carrier.json": {
+      "path": "data/candidates/arkpedia-ch17-reviewed-channel-carrier.json",
+      "sha256": "4306ab11e9457bc4d940414ad2010c945fa9339b084e5ff7defccaab222d2147"
+    },
+    "data/candidates/arkpedia-ch16-enemy-support.json": {
+      "path": "data/candidates/arkpedia-ch16-enemy-support.json",
+      "sha256": "bbd2dc08358c1d9201ff80f2d91d67643113bb284d545177f6b9252f2198aa93"
+    },
+    "data/candidates/arkpedia-enemy-records.canonical.json": {
+      "path": "data/candidates/arkpedia-enemy-records.canonical.json",
+      "sha256": "c69db59414b2fbd6c1a8327c9c22ddb21cfdaadc4e89a97a824679f61ec07b93"
+    },
+    "data/candidates/arkpedia-ch17-infantry-bow-source.json": {
+      "path": "data/candidates/arkpedia-ch17-infantry-bow-source.json",
+      "sha256": "3287403fdbb872d2a7996e870ee1c40fa98f7ad5798f9717a5c3cd4ea698264e"
+    },
+    "data/candidates/arkpedia-ch17-channel-carrier-source.json": {
+      "path": "data/candidates/arkpedia-ch17-channel-carrier-source.json",
+      "sha256": "abebb812c4c812c7e5bccdf9907892e4cc43840dd4124ba0764f3b4f50057d78"
+    }
+  },
+  "enemies": {
+    "enemy_10201_muinf": {
+      "combatPathId": "1088474935445595348",
+      "rootPathId": "-3185562296444934956",
+      "native": [
+        "{\"_addIndexToSignalId\":1,\"_alwaysHideHp\":{\"isDefined\":0,\"value\":0},\"_alwaysHideSp\":{\"isDefined\":0,\"value\":0},\"_animatorHooker\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_attack\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_attackTrigger\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_bodyTransform\":{\"m_FileID\":0,\"m_PathID\":\"-2793130386760489772\"},\"_combat\":{\"m_FileID\":0,\"m_PathID\":\"1088474935445595348\"},\"_extraRangesToShow\":[],\"_generalAbilities\":[],\"_hideUIAttackRange\":0,\"_includeIndexZero\":1,\"_overrideDeadEffect\":\"\",\"_overrideStartEffect\":\"\",\"_rangeToShow\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_updateAttackRangeExtendByAttributeDirty\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"3643136202181485780\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"5390319429299248724\"}}",
+        "{\"_activeBuffs\":[],\"_affectedBySlowDown\":1,\"_allowNoTarget\":0,\"_alwaysIncludeTarget\":1,\"_alwaysPutIncludeTargetFirst\":0,\"_animKey\":\"Attack\",\"_atkScale\":1.0,\"_atkScaleKey\":\"atk_scale\",\"_attachPassiveBuffsOnDummy\":1,\"_attackType\":1,\"_checkFaceToFirstCastTargetDownAttack\":0,\"_cooldown\":0.0,\"_cooldownKey\":\"duration\",\"_damageType\":1,\"_deliveryParaWhenReplaceActionNode\":0,\"_downAnimKey\":\"\",\"_downEndAnimKey\":\"\",\"_elementDamageType\":0,\"_endAnimKey\":\"Idle\",\"_epDamageRatio\":0.0,\"_escapeTime\":0.0,\"_extraDamageType\":0,\"_faceToDefault\":0,\"_faceToFirstCastTarget\":0,\"_faceToFront\":0,\"_faceToTarget\":1,\"_forceAsDmgOrHealAbility\":0,\"_forceFaceToDirection\":1,\"_ignoreIfOwnerDead\":0,\"_ignorePalsyInterrupt\":0,\"_interruptAbilityOnDetach\":1,\"_interuptIfTargetDead\":0,\"_maxAnimScale\":1.0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_onlyPlayEndAnimWhenIsLastAbility\":0,\"_preDelay\":0.0,\"_resetCdStrategy\":1,\"_selectTargetSource\":2,\"_selectTargetTiming\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_timeMode\":0,\"_upAnimKey\":\"\",\"_upEndAnimKey\":\"\",\"_useDynamicAttackType\":0,\"_waitForAttackEvent\":1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-2903371687786863404\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"4381884627089348317\"}}"
+      ],
+      "levels": {
+        "0": {
+          "groups": {
+            "MuradPollut": [
+              "hp_ratio"
+            ]
+          },
+          "bb": {
+            "MuradPollut.hp_ratio": 0.2
+          },
+          "abilities": [
+            {
+              "text": "Recovers HP when affected by a <Leak Source>.",
+              "format": "NORMAL"
+            }
+          ],
+          "skills": []
+        }
+      }
+    },
+    "enemy_10201_muinf_2": {
+      "combatPathId": "6622971150239629340",
+      "rootPathId": "-8684805088870760420",
+      "native": [
+        "{\"_addIndexToSignalId\":1,\"_alwaysHideHp\":{\"isDefined\":0,\"value\":0},\"_alwaysHideSp\":{\"isDefined\":0,\"value\":0},\"_animatorHooker\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_attack\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_attackTrigger\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_bodyTransform\":{\"m_FileID\":0,\"m_PathID\":\"3726306689969192988\"},\"_combat\":{\"m_FileID\":0,\"m_PathID\":\"6622971150239629340\"},\"_extraRangesToShow\":[],\"_generalAbilities\":[],\"_hideUIAttackRange\":0,\"_includeIndexZero\":1,\"_overrideDeadEffect\":\"\",\"_overrideStartEffect\":\"\",\"_rangeToShow\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_updateAttackRangeExtendByAttributeDirty\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-6793701644802031588\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"5390319429299248724\"}}",
+        "{\"_activeBuffs\":[],\"_affectedBySlowDown\":1,\"_allowNoTarget\":0,\"_alwaysIncludeTarget\":1,\"_alwaysPutIncludeTargetFirst\":0,\"_animKey\":\"Attack\",\"_atkScale\":1.0,\"_atkScaleKey\":\"atk_scale\",\"_attachPassiveBuffsOnDummy\":1,\"_attackType\":1,\"_checkFaceToFirstCastTargetDownAttack\":0,\"_cooldown\":0.0,\"_cooldownKey\":\"duration\",\"_damageType\":1,\"_deliveryParaWhenReplaceActionNode\":0,\"_downAnimKey\":\"\",\"_downEndAnimKey\":\"\",\"_elementDamageType\":0,\"_endAnimKey\":\"Idle\",\"_epDamageRatio\":0.0,\"_escapeTime\":0.0,\"_extraDamageType\":0,\"_faceToDefault\":0,\"_faceToFirstCastTarget\":0,\"_faceToFront\":0,\"_faceToTarget\":1,\"_forceAsDmgOrHealAbility\":0,\"_forceFaceToDirection\":1,\"_ignoreIfOwnerDead\":0,\"_ignorePalsyInterrupt\":0,\"_interruptAbilityOnDetach\":1,\"_interuptIfTargetDead\":0,\"_maxAnimScale\":1.0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_onlyPlayEndAnimWhenIsLastAbility\":0,\"_preDelay\":0.0,\"_resetCdStrategy\":1,\"_selectTargetSource\":2,\"_selectTargetTiming\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_timeMode\":0,\"_upAnimKey\":\"\",\"_upEndAnimKey\":\"\",\"_useDynamicAttackType\":0,\"_waitForAttackEvent\":1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"3258778508747571228\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"4381884627089348317\"}}"
+      ],
+      "levels": {
+        "0": {
+          "groups": {
+            "MuradPollut": [
+              "hp_ratio"
+            ]
+          },
+          "bb": {
+            "MuradPollut.hp_ratio": 0.2
+          },
+          "abilities": [
+            {
+              "text": "Recovers HP when affected by a <Leak Source>.",
+              "format": "NORMAL"
+            }
+          ],
+          "skills": []
+        }
+      }
+    },
+    "enemy_10203_mumag": {
+      "combatPathId": "7016965454762153609",
+      "rootPathId": "-5805797718380505463",
+      "native": [
+        "{\"_addIndexToSignalId\":1,\"_alwaysHideHp\":{\"isDefined\":0,\"value\":0},\"_alwaysHideSp\":{\"isDefined\":0,\"value\":0},\"_animatorHooker\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_attack\":{\"m_FileID\":0,\"m_PathID\":\"7016965454762153609\"},\"_attackTrigger\":{\"m_FileID\":0,\"m_PathID\":\"4704494608293172873\"},\"_bodyTransform\":{\"m_FileID\":0,\"m_PathID\":\"-6773535981253749111\"},\"_combat\":{\"m_FileID\":0,\"m_PathID\":\"7016965454762153609\"},\"_extraRangesToShow\":[],\"_generalAbilities\":[],\"_hideUIAttackRange\":0,\"_includeIndexZero\":1,\"_overrideDeadEffect\":\"\",\"_overrideStartEffect\":\"\",\"_rangeToShow\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_updateAttackRangeExtendByAttributeDirty\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-793710343257516407\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"5390319429299248724\"}}",
+        "{\"_activeBuffs\":[],\"_affectedBySlowDown\":1,\"_allowNoTarget\":0,\"_alwaysIncludeTarget\":1,\"_animKey\":\"Attack\",\"_atkScale\":1.0,\"_atkScaleKey\":\"atk_scale\",\"_attachPassiveBuffsOnDummy\":1,\"_attackType\":1,\"_checkFaceToFirstCastTargetDownAttack\":0,\"_cooldown\":0.0,\"_cooldownKey\":\"duration\",\"_damageType\":2,\"_deliveryParaWhenReplaceActionNode\":0,\"_downAnimKey\":\"\",\"_downEndAnimKey\":\"\",\"_elementDamageType\":0,\"_emitToInputPosWhenTargetIsInvalid\":0,\"_emitToInputRootTileWhenTargetIsInvalid\":0,\"_endAnimKey\":\"Idle\",\"_epDamageRatio\":0.0,\"_escapeTime\":0.0,\"_extraDamageType\":0,\"_extraProjectileKeys\":[],\"_faceToDefault\":0,\"_faceToFirstCastTarget\":0,\"_faceToFront\":0,\"_faceToTarget\":1,\"_fireAttackFinishWhenProjectileInvalid\":0,\"_fireCreateProjectileEvent\":0,\"_forceAsDmgOrHealAbility\":0,\"_forceFaceToDirection\":0,\"_ignoreIfOwnerDead\":0,\"_ignorePalsyInterrupt\":0,\"_interruptAbilityOnDetach\":1,\"_interuptIfTargetDead\":0,\"_maxAnimScale\":1.0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_minPostDelayWhenProjectileInvalid\":0.0,\"_mountGroup\":{\"loopType\":0,\"mountPoints\":[]},\"_mountPointType\":2,\"_notClearProjectileWhenCastEnd\":0,\"_onlyPlayEndAnimWhenIsLastAbility\":0,\"_preDelay\":0.0,\"_projectileDestination\":0,\"_projectileKey\":\"projectile_enemy_mumag\",\"_resetCdStrategy\":1,\"_selectTargetSource\":2,\"_selectTargetTiming\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_timeMode\":0,\"_transferSource\":0,\"_upAnimKey\":\"\",\"_upEndAnimKey\":\"\",\"_useCachedAtkOnly\":0,\"_useDynamicAttackType\":0,\"_useMountGroup\":0,\"_waitForAnimEndWhenProjectileInvalid\":0,\"_waitForAttackEvent\":1,\"_waitForProjectileInvalid\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"3612626145255102089\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"4156651312234227407\"}}"
+      ],
+      "levels": {
+        "0": {
+          "groups": {},
+          "bb": {},
+          "abilities": [
+            {
+              "text": "Continuously channels at a Leak Marker in attack range, causing it to create Leak Sources and gaining increased DEF.",
+              "format": "NORMAL"
+            }
+          ],
+          "skills": [
+            {
+              "prefabKey": "ChargeRift",
+              "priority": 0,
+              "cooldown": 10,
+              "initCooldown": 5,
+              "spCost": 0,
+              "bb": {
+                "def": 2,
+                "sp": 1,
+                "duration": 15,
+                "hit_duration": 15
+              },
+              "bbStr": {}
+            }
+          ]
+        }
+      }
+    },
+    "enemy_10203_mumag_2": {
+      "combatPathId": "-3776282175530949411",
+      "rootPathId": "550754605306455261",
+      "native": [
+        "{\"_addIndexToSignalId\":1,\"_alwaysHideHp\":{\"isDefined\":0,\"value\":0},\"_alwaysHideSp\":{\"isDefined\":0,\"value\":0},\"_animatorHooker\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_attack\":{\"m_FileID\":0,\"m_PathID\":\"-3776282175530949411\"},\"_attackTrigger\":{\"m_FileID\":0,\"m_PathID\":\"-437581955576912675\"},\"_bodyTransform\":{\"m_FileID\":0,\"m_PathID\":\"5764047157273863389\"},\"_combat\":{\"m_FileID\":0,\"m_PathID\":\"-3776282175530949411\"},\"_extraRangesToShow\":[],\"_generalAbilities\":[],\"_hideUIAttackRange\":0,\"_includeIndexZero\":1,\"_overrideDeadEffect\":\"\",\"_overrideStartEffect\":\"\",\"_rangeToShow\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_updateAttackRangeExtendByAttributeDirty\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-8057951288992160547\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"5390319429299248724\"}}",
+        "{\"_activeBuffs\":[],\"_affectedBySlowDown\":1,\"_allowNoTarget\":0,\"_alwaysIncludeTarget\":1,\"_animKey\":\"Attack\",\"_atkScale\":1.0,\"_atkScaleKey\":\"atk_scale\",\"_attachPassiveBuffsOnDummy\":1,\"_attackType\":1,\"_checkFaceToFirstCastTargetDownAttack\":0,\"_cooldown\":0.0,\"_cooldownKey\":\"duration\",\"_damageType\":2,\"_deliveryParaWhenReplaceActionNode\":0,\"_downAnimKey\":\"\",\"_downEndAnimKey\":\"\",\"_elementDamageType\":0,\"_emitToInputPosWhenTargetIsInvalid\":0,\"_emitToInputRootTileWhenTargetIsInvalid\":0,\"_endAnimKey\":\"Idle\",\"_epDamageRatio\":0.0,\"_escapeTime\":0.0,\"_extraDamageType\":0,\"_extraProjectileKeys\":[],\"_faceToDefault\":0,\"_faceToFirstCastTarget\":0,\"_faceToFront\":0,\"_faceToTarget\":1,\"_fireAttackFinishWhenProjectileInvalid\":0,\"_fireCreateProjectileEvent\":0,\"_forceAsDmgOrHealAbility\":0,\"_forceFaceToDirection\":0,\"_ignoreIfOwnerDead\":0,\"_ignorePalsyInterrupt\":0,\"_interruptAbilityOnDetach\":1,\"_interuptIfTargetDead\":0,\"_maxAnimScale\":1.0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_minPostDelayWhenProjectileInvalid\":0.0,\"_mountGroup\":{\"loopType\":0,\"mountPoints\":[]},\"_mountPointType\":2,\"_notClearProjectileWhenCastEnd\":0,\"_onlyPlayEndAnimWhenIsLastAbility\":0,\"_preDelay\":0.0,\"_projectileDestination\":0,\"_projectileKey\":\"projectile_enemy_mumag\",\"_resetCdStrategy\":1,\"_selectTargetSource\":2,\"_selectTargetTiming\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_timeMode\":0,\"_transferSource\":0,\"_upAnimKey\":\"\",\"_upEndAnimKey\":\"\",\"_useCachedAtkOnly\":0,\"_useDynamicAttackType\":0,\"_useMountGroup\":0,\"_waitForAnimEndWhenProjectileInvalid\":0,\"_waitForAttackEvent\":1,\"_waitForProjectileInvalid\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-9065927854646123299\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"4156651312234227407\"}}"
+      ],
+      "levels": {
+        "0": {
+          "groups": {},
+          "bb": {},
+          "abilities": [
+            {
+              "text": "Continuously channels at a Leak Marker in attack range, causing it to create Leak Sources and gaining increased DEF.",
+              "format": "NORMAL"
+            }
+          ],
+          "skills": [
+            {
+              "prefabKey": "ChargeRift",
+              "priority": 0,
+              "cooldown": 10,
+              "initCooldown": 5,
+              "spCost": 0,
+              "bb": {
+                "def": 2,
+                "sp": 1,
+                "duration": 15,
+                "hit_duration": 15
+              },
+              "bbStr": {}
+            }
+          ]
+        }
+      }
+    },
+    "enemy_10208_mucow": {
+      "combatPathId": "1425442861491807337",
+      "rootPathId": "8275293598527841385",
+      "native": [
+        "{\"_addIndexToSignalId\":1,\"_alwaysHideHp\":{\"isDefined\":0,\"value\":0},\"_alwaysHideSp\":{\"isDefined\":0,\"value\":0},\"_animatorHooker\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_attack\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_attackTrigger\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_bodyTransform\":{\"m_FileID\":0,\"m_PathID\":\"9192066283060323433\"},\"_combat\":{\"m_FileID\":0,\"m_PathID\":\"1425442861491807337\"},\"_extraRangesToShow\":[],\"_generalAbilities\":[],\"_hideUIAttackRange\":0,\"_includeIndexZero\":1,\"_overrideDeadEffect\":\"\",\"_overrideStartEffect\":\"\",\"_rangeToShow\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_updateAttackRangeExtendByAttributeDirty\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-8708715442844408727\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"5390319429299248724\"}}",
+        "{\"_activeBuffs\":[],\"_affectedBySlowDown\":1,\"_allowNoTarget\":0,\"_alwaysIncludeTarget\":1,\"_alwaysPutIncludeTargetFirst\":0,\"_animKey\":\"Attack\",\"_atkScale\":1.0,\"_atkScaleKey\":\"atk_scale\",\"_attachPassiveBuffsOnDummy\":1,\"_attackType\":1,\"_checkFaceToFirstCastTargetDownAttack\":0,\"_cooldown\":0.0,\"_cooldownKey\":\"duration\",\"_damageType\":1,\"_deliveryParaWhenReplaceActionNode\":0,\"_downAnimKey\":\"\",\"_downEndAnimKey\":\"\",\"_elementDamageType\":0,\"_endAnimKey\":\"Idle\",\"_epDamageRatio\":0.0,\"_escapeTime\":0.0,\"_extraDamageType\":0,\"_faceToDefault\":0,\"_faceToFirstCastTarget\":0,\"_faceToFront\":0,\"_faceToTarget\":1,\"_forceAsDmgOrHealAbility\":0,\"_forceFaceToDirection\":0,\"_ignoreIfOwnerDead\":0,\"_ignorePalsyInterrupt\":0,\"_interruptAbilityOnDetach\":1,\"_interuptIfTargetDead\":0,\"_maxAnimScale\":1.0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_onlyPlayEndAnimWhenIsLastAbility\":0,\"_preDelay\":0.0,\"_resetCdStrategy\":1,\"_selectTargetSource\":2,\"_selectTargetTiming\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_timeMode\":0,\"_upAnimKey\":\"\",\"_upEndAnimKey\":\"\",\"_useDynamicAttackType\":0,\"_waitForAttackEvent\":1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-3143978676553063319\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"4381884627089348317\"}}"
+      ],
+      "levels": {
+        "0": {
+          "groups": {
+            "DeadSummon": [
+              "max_cnt"
+            ]
+          },
+          "bb": {
+            "DeadSummon.max_cnt": 1
+          },
+          "abilities": [
+            {
+              "text": "More likely to be attacked",
+              "format": "NORMAL"
+            },
+            {
+              "text": "Creates a <Leak Source> nearby when defeated.",
+              "format": "NORMAL"
+            }
+          ],
+          "skills": []
+        }
+      }
+    },
+    "enemy_10208_mucow_2": {
+      "combatPathId": "-2778793732625526387",
+      "rootPathId": "861881285725000077",
+      "native": [
+        "{\"_addIndexToSignalId\":1,\"_alwaysHideHp\":{\"isDefined\":0,\"value\":0},\"_alwaysHideSp\":{\"isDefined\":0,\"value\":0},\"_animatorHooker\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_attack\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_attackTrigger\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_bodyTransform\":{\"m_FileID\":0,\"m_PathID\":\"-7678434270479773299\"},\"_combat\":{\"m_FileID\":0,\"m_PathID\":\"-2778793732625526387\"},\"_extraRangesToShow\":[],\"_generalAbilities\":[],\"_hideUIAttackRange\":0,\"_includeIndexZero\":1,\"_overrideDeadEffect\":\"\",\"_overrideStartEffect\":\"\",\"_rangeToShow\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_updateAttackRangeExtendByAttributeDirty\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-3133071327341047411\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"5390319429299248724\"}}",
+        "{\"_activeBuffs\":[],\"_affectedBySlowDown\":1,\"_allowNoTarget\":0,\"_alwaysIncludeTarget\":1,\"_alwaysPutIncludeTargetFirst\":0,\"_animKey\":\"Attack\",\"_atkScale\":1.0,\"_atkScaleKey\":\"atk_scale\",\"_attachPassiveBuffsOnDummy\":1,\"_attackType\":1,\"_checkFaceToFirstCastTargetDownAttack\":0,\"_cooldown\":0.0,\"_cooldownKey\":\"duration\",\"_damageType\":1,\"_deliveryParaWhenReplaceActionNode\":0,\"_downAnimKey\":\"\",\"_downEndAnimKey\":\"\",\"_elementDamageType\":0,\"_endAnimKey\":\"Idle\",\"_epDamageRatio\":0.0,\"_escapeTime\":0.0,\"_extraDamageType\":0,\"_faceToDefault\":0,\"_faceToFirstCastTarget\":0,\"_faceToFront\":0,\"_faceToTarget\":1,\"_forceAsDmgOrHealAbility\":0,\"_forceFaceToDirection\":0,\"_ignoreIfOwnerDead\":0,\"_ignorePalsyInterrupt\":0,\"_interruptAbilityOnDetach\":1,\"_interuptIfTargetDead\":0,\"_maxAnimScale\":1.0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_onlyPlayEndAnimWhenIsLastAbility\":0,\"_preDelay\":0.0,\"_resetCdStrategy\":1,\"_selectTargetSource\":2,\"_selectTargetTiming\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_timeMode\":0,\"_upAnimKey\":\"\",\"_upEndAnimKey\":\"\",\"_useDynamicAttackType\":0,\"_waitForAttackEvent\":1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"8574811677106966925\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"4381884627089348317\"}}"
+      ],
+      "levels": {
+        "0": {
+          "groups": {
+            "DeadSummon": [
+              "max_cnt"
+            ]
+          },
+          "bb": {
+            "DeadSummon.max_cnt": 1
+          },
+          "abilities": [
+            {
+              "text": "More likely to be attacked",
+              "format": "NORMAL"
+            },
+            {
+              "text": "Creates a <Leak Source> nearby when defeated.",
+              "format": "NORMAL"
+            }
+          ],
+          "skills": []
+        }
+      }
+    }
+  }
+}

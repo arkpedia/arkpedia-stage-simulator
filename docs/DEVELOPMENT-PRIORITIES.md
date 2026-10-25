@@ -22,6 +22,10 @@ regeneration rules and S3 compatibility with that stage's enemy clocks remain
 gated, along with the four 17-16 modules.
 Rockbreaker's eligible split animation now consumes live `slow_down` elapsed
 work for both release and completion, rather than fixed world-time callbacks.
+The six selected infantry/caster/carrier Combat cooldowns and Brute's owned
+Combat cooldown now consume their native-eligible slowdown clocks too. Full
+enemy compatibility, ordinary native attack-event timing and stage admission
+remain under review.
 Removing a separate same-character operator body now leaves the player's card
 cooldown and captured payment untouched. Only the body selected by that card
 can start its redeployment cooldown; ordinary death and withdrawal still do so.
@@ -1300,3 +1304,47 @@ Closure S3 against the candidate enemy catalogue: all relevant attack, ability,
 channel, periodic and dependent-enemy clocks still need their complete source
 review before widening that compatibility boundary. Native compiled/frame parity
 and 17-14 admission remain held.
+
+## Selected Chapter 17 Combat cooldown bindings
+
+`ch17-attack-clock-contract.mjs` now reproduces a compact contract from the two
+checksum-verified infantry/channel/carrier graphs and the pinned canonical enemy
+records. It follows each source state's exact local `_combat` reference to its
+Attack component instead of selecting a matching animation name. The contract
+retains the complete Combat-owner/Attack component JSON and exact per-level
+skill, ability, talent-group and blackboard values for both infantry variants,
+both channeling casters and both carriers. This avoids interpreting the older
+base-family normalized skill-key inventory as complete parameter evidence.
+The native-source CI job reproduces this contract independently.
+
+All six selected Attack components declare `_affectedBySlowDown=1`, timeMode0,
+maxAnimScale1, duration-based cooldown and reset strategy1. Feature dispatch
+validates the selected record and binding before setting the ordinary Combat
+clock flag. The enemy loop consumes the live slowdown multiplier only for these
+explicit bindings; unrelated skill/channel/periodic clocks retain their own
+controllers. Brute's normal/enhanced Attack/Skill native flags are also checked,
+and its independently owned Combat cooldown now consumes eligible slowed work
+alongside its already source-timed clips. This is a local source-flag mapping,
+not compiled native timing/frame proof.
+
+The combined clock, Brute, channel/carrier and infantry/bow integration run
+passed all 79 checks. New coverage verifies every retained reference and
+canonical level, source-contract reproduction and hashes, live speed changes,
+control pauses, a real blocked infantry attack delayed by its remaining Combat
+work, mutation rejection and Brute's separate normal/enhanced cooldowns. The
+caster's native unmarked ChargeRift timer is checked to stay on world time while
+Combat slows. Neither the unbound bow's multiple native attack modes nor other
+unreviewed enemy clocks are inferred from this flag.
+The expanded focused run passed all 1,511 available cases. All six contract
+inputs also match their saved Git blob bytes. The preceding d714133a hosted
+continuation run 40229599765 completed successfully; the older aee87df9 full
+run 40227541145 has seven successful shards and one Windows Node22 shard still
+running, so it is not reported as a completed full-suite pass.
+
+This clears further cooldown prerequisites for 17-14. The ordinary generic
+attack loop still has its documented fallback hit/standing rules rather than
+these families' full source event/FSM adapters; their initial and in-progress
+native attack-event timing is the next review step. Bag feeding/aura clocks,
+untargetable Leak Source behavior and the full stage interaction composition
+also remain part of the S3 compatibility audit. No Closure compatibility boundary,
+predefined builder gate, enemy registry or stage catalogue was widened.

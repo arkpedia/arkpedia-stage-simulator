@@ -94,6 +94,13 @@ test('each remaining hit reads live ATK while retaining its original target depl
   assert.equal(hp-f.u.hp,5*atk);assert.deepEqual(f.b.errors,[]);
 });
 
+for(const enhanced of [false,true])test((enhanced?'enhanced':'normal')+' native Combat cooldown consumes live slowdown independently of its pending clip',()=>{
+  const f=fixture();begin(f,enhanced);f.h.run(.1);const before=f.a.cooldown;
+  const buff=applySourceSlowDown(f.b,f.u,f.e,{key:'brute-cooldown-fixture',increment:.5,maxStrength:.5,maxStacks:1,duration:30,contract:NATIVE_SLOW_DOWN_CONTRACT});
+  f.h.run(.4);assert.ok(Math.abs(f.a.cooldown-before+.2)<f.b.dt);assert.ok(f.a.pending);
+  f.b.removeBuff(f.e,buff);f.h.run(.2);assert.ok(Math.abs(f.a.cooldown-before+.4)<f.b.dt);assert.deepEqual(f.b.errors,[]);
+});
+
 for(const enhanced of [false,true])test((enhanced?'enhanced':'normal')+' original cast clock consumes live native slow_down and resumes without replay',()=>{
   const f=fixture(),p=begin(f,enhanced);
   f.h.run(.4);const age=p.age;

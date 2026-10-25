@@ -16,6 +16,7 @@ import { pollutionFlyer } from './chapter17-flyer.js';
 import { pollutionBag } from './chapter17-bag.js';
 import {strongChannel,strongCarrier} from './chapter17-channel-carrier.js';
 import {strongWarCaster}from'./chapter17-war-caster.js';
+import {chapter17AttackClock} from './chapter17-attack-clocks.js';
 
 const ABILITIES = Object.freeze({
   nativeDuckRun,
@@ -114,6 +115,8 @@ export function applyEnemyFeatures(battle, e) {
   const record = e.def?.raw;
   // Only compiled catalogue records (shared/arkpedia/enemy-records.js) carry features.
   if (!record?.abilities || !record.talents?.groups) return;
+  const attackClock=chapter17AttackClock(record);
+  if(attackClock)e.profile.attackCooldownAffectedBySlowDown=attackClock.affectedBySlowDown;
   const abilities = [];
   for (const id of recordFeatureIds(record)) {
     const f = enemyFeature(id);

@@ -638,8 +638,11 @@ export function updateEnemy(b, e, dt) {
   const clock = clocks ? e.profile.attackMode(b, e) : null, life = e.deploySeq;
   if (clocks && !Object.hasOwn(clocks, clock)) throw Error('Invalid enemy attack cooldown selection');
   if (!stunned && !e.hidden) {
-    if (clocks) for (const key of Object.keys(clocks)) clocks[key] = Math.max(0, clocks[key] - dt);
-    else if (e.atkCd > 0) e.atkCd = Math.max(0, e.atkCd - dt);
+    // Only source-bound ordinary Combat clocks opt into slowed elapsed time;
+    // unrelated skill/channel/periodic controllers keep their own clocks.
+    const elapsed=dt*(e.profile?.attackCooldownAffectedBySlowDown===true?e.s.slowDownRate:1);
+    if (clocks) for (const key of Object.keys(clocks)) clocks[key] = Math.max(0, clocks[key] - elapsed);
+    else if (e.atkCd > 0) e.atkCd = Math.max(0, e.atkCd - elapsed);
   }
   if (clocks) e.atkCd = clocks[clock];
   // true: an unblocked ranged enemy in the wind-up of its next attack with a target in range (it stands)

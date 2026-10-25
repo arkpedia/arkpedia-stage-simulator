@@ -14,6 +14,9 @@ export function pollutionBrute(r,{stage}={}) {
   if (!proof || (stage!==undefined&&!local) || !local&&(r.prefabKey !== r.key || !same(r.talents.groups,proof.groups)
     || !same(r.talents.bb,proof.bb) || !same(r.skills,proof.skills) || !same(r.abilities,proof.abilities))
   ) throw Error('Unreviewed pollution Brute contract');
+  const clocks=proof.native.map(JSON.parse).filter(c=>['Attack','Skill'].includes(c._animKey));
+  if(clocks.length!==2||new Set(clocks.map(c=>c._animKey)).size!==2||clocks.some(c=>c._affectedBySlowDown!==1||c._timeMode!==0||c._maxAnimScale!==1))
+    throw Error('Unreviewed pollution Brute Combat clocks');
   return {
     spawn(b, e, a) {
       const life = e.deploySeq;
@@ -93,7 +96,7 @@ export function pollutionBrute(r,{stage}={}) {
         if (a.pending) a.finish(a.pending);
         return;
       }
-      if (!e.s.flags.stun) a.cooldown = Math.max(0,a.cooldown-dt);
+      if (!e.s.flags.stun) a.cooldown = Math.max(0,a.cooldown-sourceAbilityDelta(e,dt,true));
       if (a.pending) {
         a.advance(a.pending);
       } else if (!a.cooldown) a.cast();
