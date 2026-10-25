@@ -33,9 +33,14 @@ const [source, geometry, playbackFile, mvp, records, support, tokenData] = await
 ]);
 let chapter16Source = null, chapter16Review = null;
 if (args.candidate === 'ch16') {
-  if (!['16-2', '16-3', '16-4'].includes(source.code)) throw Error('Chapter 16 candidate admission is reviewed only for test-only 16-2, 16-3 and 16-4');
+  const stageReviews = {
+    '16-3': 'arkpedia-ch16-reviewed-stage.json',
+    '16-4': 'arkpedia-ch16-reviewed-stage-16-4.json',
+    '17-2': 'arkpedia-ch17-reviewed-stage-17-2.json',
+  };
+  if (source.code !== '16-2' && !Object.hasOwn(stageReviews, source.code)) throw Error('Candidate admission is reviewed only for test-only 16-2, 16-3, 16-4 and 17-2');
   if (source.code !== '16-2') {
-    const reviewPath = source.code === '16-3' ? 'arkpedia-ch16-reviewed-stage.json' : 'arkpedia-ch16-reviewed-stage-16-4.json';
+    const reviewPath = stageReviews[source.code];
     chapter16Review = await read(new URL('../../data/candidates/' + reviewPath, import.meta.url));
     if (chapter16Review.code !== source.code || chapter16Review.testOnly !== true) throw Error('Missing test-only ' + source.code + ' review');
     for (const { path, sha256 } of Object.values(chapter16Review.sources)) {

@@ -10,7 +10,7 @@ import { resolveStage } from '../shared/arkpedia/stages.js';
 const read = path => JSON.parse(readFileSync(new URL('../data/' + path, import.meta.url)));
 const index = read('arkpedia-stages.json');
 const codes = ['16-5', '16-6', '16-7', '17-2', '17-3', '17-4'];
-for (const code of codes) test(`${code} retains only canonical source evidence and cannot enter the stage catalogue`, () => {
+for (const code of codes) test(`${code} retains canonical source evidence with a separate test-only admission gate`, () => {
   assert.ok(CANONICAL_STAGE_LOCKS[code]);
   const lock = read(`arkpedia-canonical-stage-${code}.lock.json`), source = read(`candidates/arkpedia-stage-${code}-source.json`);
   assert.deepEqual(source.inputs, lock.files);
@@ -25,11 +25,14 @@ for (const code of codes) test(`${code} retains only canonical source evidence a
   assert.equal(source.levelReceipt.files[`raw/levels/${code}.json`].sha256, lock.files.rawLevel.sha256);
   for (const key of ['geometry', 'conditional']) assert.equal(source.routeReceipt.outputs[lock.files[key].path], lock.files[key].sha256);
   assert.equal(source.rawLevel.options.moveMultiplier, .5);
-  assert.throws(() => resolveStage(index, code, { experimental: true }), /Unknown stage/);
+  if (code === '17-2') {
+    assert.throws(() => resolveStage(index, code), /test-only/);
+    assert.equal(resolveStage(index, code, { experimental: true }).testOnly, true);
+  } else assert.throws(() => resolveStage(index, code, { experimental: true }), /Unknown stage/);
 });
 
 test('retaining the next canonical levels cannot bypass the builder stage-review gate', () => {
-  const source = read('candidates/arkpedia-stage-17-2-source.json'), dir = mkdtempSync(join(tmpdir(), 'next-stage-gate-'));
+  const source = read('candidates/arkpedia-stage-17-4-source.json'), dir = mkdtempSync(join(tmpdir(), 'next-stage-gate-'));
   const stage = join(dir, 'stage.json'), geometry = join(dir, 'geometry.json'), out = join(dir, 'out.json');
   writeFileSync(stage, JSON.stringify(source.stage)); writeFileSync(geometry, JSON.stringify(source.geometry));
   assert.throws(() => execFileSync(process.execPath, ['tools/arkpedia/build-stage.mjs', '--candidate', 'ch16', '--stage', stage,

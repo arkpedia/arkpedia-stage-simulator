@@ -45,9 +45,18 @@ TileEscapeShadowManager behaviors; ChargeRift; ReverseDamage/MuradPollut;
 DeadSummon; shield/StealAtk/LockDamage; and Murad's visibility/beam lifecycle.
 The current behavior/admission status is in `CH16-BEHAVIORS.md`. All six base controllers
 now clear candidate support under exact native contracts; stage admission remains
-restricted to test-only 16-2, 16-3 and 16-4. The crossbow's separate experimental
+restricted to test-only 16-2, 16-3, 16-4 and 17-2. The crossbow's separate experimental
 contract records its unresolved native direct-radius edge semantics; see
 `CH16-BEHAVIORS.md`. Compile candidate support against the complete canonical enemy
 candidate and verified merged evidence; do not overlay one enemy into the old
 public catalogue. Implement and review behaviors before building/admitting
 stages. No production pointer or public registry changes are part of this work.
+
+The next Chapter 17 reaction evidence is retained separately in
+`arkpedia-ch17-infantry-bow-source.json` and
+`arkpedia-ch17-infantry-bow-native.json` under `data/candidates/`: four full
+prefab graphs, two projectile graphs, four native templates and 42 indexed
+components. The independent reaction review binds those files and the existing
+environment evidence. The shared-engine attack-end approximation is explicit;
+the original native animation duration is not claimed verified. See the 17-2
+section of `CH16-BEHAVIORS.md` for integration and browser checks.
