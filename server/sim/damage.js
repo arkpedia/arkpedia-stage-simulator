@@ -289,6 +289,11 @@ const modifierReceipts = new WeakSet();
 // Keep the legacy observation object mutable, but retain a separate authentic
 // receipt for source controllers that must reject fabricated/replayed events.
 const hpZeroAttemptReceipts = new WeakMap();
+const fatalDamageReceipts = new WeakMap();
+export const currentFatalDamageReceipt = (ctx,battle) => {
+  const receipt=fatalDamageReceipts.get(ctx);
+  return receipt?.battle===battle?receipt:null;
+};
 export const currentHpZeroAttemptReceipt = (ctx,battle) => {
   const receipt=hpZeroAttemptReceipts.get(ctx);
   return receipt?.battle===battle?receipt:null;
@@ -468,6 +473,7 @@ function retainsDamageLife(target, life) {
  */
 export function applyHpLoss(battle, source, target, amount, dmg, hpFloorReceipt = null) {
   if (!target.alive) return 0;
+  const targetLife = target.deploySeq;
   let dealt = 0;
   const hs = dmg && dmg.sourceless ? null : source; // the source hooks see (无来源: none; `credit` keeps it)
   if (target.bossPool) {
@@ -510,7 +516,9 @@ export function applyHpLoss(battle, source, target, amount, dmg, hpFloorReceipt 
       target.hp = 0;
       if (battle._hooks.fatal) {
         const fctx = { unit: target, source: hs, credit: source, dmg, amount, prevented: false };
-        battle.emit('fatal', fctx);
+        fatalDamageReceipts.set(fctx,Object.freeze({battle,unit:target,unitLife:targetLife,source:hs,credit:source,dmg,amount,before}));
+        try { battle.emit('fatal', fctx); } finally { fatalDamageReceipts.delete(fctx); }
+        if(target.deploySeq!==targetLife)return 0;
         if (fctx.prevented && target.alive) {
           if (typeof fctx.afterHpLoss === 'function') postFatal = fctx.afterHpLoss;
           else if (target.hp < 1) target.hp = Math.min(1, target.s.maxHp);

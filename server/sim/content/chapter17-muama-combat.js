@@ -6,7 +6,7 @@ import {canTargetAlly,sortAllyTargets} from '../targeting.js';
 import {ALLY_COLLIDER_RADIUS} from '../constants.js';
 import {sourceAbilityDelta} from './arkpedia-slow-down.js';
 import {captureEnemySource} from './enemy-source-view.js';
-const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b),live=u=>u?.alive&&u.deployed&&!u.hidden;
+const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b),live=u=>u?.alive&&u.deployed&&!u.hidden,noAttackOwners=new WeakMap();
 const controlled=e=>['stun','freeze','sleep','levitate','fear','disarm'].some(k=>e.s.flags[k])||e.s.flags.tremble&&!!e.blockedBy;
 export function installChapter17MuamaCombat(b,e){
  const proof=contract.enemies[e?.defId],r=e?.def?.raw;
@@ -14,18 +14,23 @@ export function installChapter17MuamaCombat(b,e){
   throw Error('Unreviewed Muama/twin combat contract');
  if(b.finished||!live(e)||!Number.isFinite(e.deployedAt)||Math.abs(e.deployedAt-b.time)>1e-9)throw Error('Muama combat must attach to a fresh live deployment');
  const life=e.deploySeq,old=e.mem.ch17MuamaCombat;
- const inheritedNoAttack=old?.profile===e.profile&&e.profile.noAttack===true?old.originalNoAttack:e.profile.noAttack;
+ const previous=noAttackOwners.get(e.profile)??old;
+ const inheritedNoAttack=previous?.profile===e.profile&&e.profile.noAttack===true?previous.originalNoAttack:e.profile.noAttack;
  if(old?.active&&old.ownerLife===life)throw Error('A deployment may own only one Muama combat controller');if(old?.active)old.stop();
  const d=proof.defaults,handles=[],profile=e.profile,oldNoAttack=inheritedNoAttack;
  const state={active:true,ownerLife:life,profile,originalNoAttack:oldNoAttack,suspended:false,actionBusy:null,pending:null,cooldown:0,buffs:[],wall:null,ramp:null,count:0,lastTarget:null,lastTargetLife:null,
   valid:()=>state.active&&!b.finished&&live(e)&&e.deploySeq===life,
   interrupt(){state.pending=null;},
+  releasePassivesExcept(keys){
+   const keep=new Set(keys),removed=state.buffs.filter(buff=>!keep.has(buff.key));
+   state.buffs=state.buffs.filter(buff=>keep.has(buff.key));for(const buff of removed)b.removeBuff(e,buff);
+  },
   stop(){
    if(!state.active)return;const ownsSlot=e.mem.ch17MuamaCombat===state;state.active=false;state.interrupt();state.wall?.retire();
    if(b._takenMultipliers?.get(state)===state.multiplier)b._takenMultipliers.delete(state);
    for(const buff of state.buffs)b.removeBuff(e,buff);b.removeBuff(e,state.ramp);
    for(const h of handles)b.off(h);if(ownsSlot)delete e.mem.ch17MuamaCombat;
-   if(ownsSlot&&e.deploySeq===life&&e.profile===profile)profile.noAttack=oldNoAttack;
+   if(ownsSlot&&e.deploySeq===life&&e.profile===profile){profile.noAttack=oldNoAttack;if(noAttackOwners.get(profile)===state)noAttackOwners.delete(profile);}
   },
   choices(){
    const list=b.alliesInRadius(e.x,e.y,e.base.rangeRadius+ALLY_COLLIDER_RADIUS).filter(t=>canTargetAlly(e,t,true));
@@ -72,12 +77,12 @@ export function installChapter17MuamaCombat(b,e){
    return target===e&&['phys','arts'].includes(dmg.type)&&crossedChapter17FirewallSides(state.wall,source,e).length?1-d.resistance:1;
   },
  };
- e.mem.ch17MuamaCombat=state;profile.noAttack=true;
+ e.mem.ch17MuamaCombat=state;noAttackOwners.set(profile,state);profile.noAttack=true;
  try{
   state.wall=registerChapter17Firewall(b,e,{width:3,height:3,duration:proof.config.vulnerabilityButtonDuration,
    clicks:proof.config.vulnerabilityRequiredClickCount,onRetire:()=>state.stop()});state.wall.blocksDeployment=state.blocksDeployment;
   for(const spec of proof.passive){
-   const buff=b.addBuff(e,{key:spec.buffKey,source:e,persist:true,flags:spec.attributes.abnormalFlags.includes(22)?{noMove:true}:null,onRemove:()=>state.stop()});
+   let buff;buff=b.addBuff(e,{key:spec.buffKey,source:e,persist:true,flags:spec.attributes.abnormalFlags.includes(22)?{noMove:true}:null,onRemove:()=>{if(state.buffs.includes(buff))state.stop();}});
    if(!buff||!state.valid()){b.removeBuff(e,buff);throw Error('Muama passive admission failed');}state.buffs.push(buff);
   }
   b._takenMultipliers??=new Map();b._takenMultipliers.set(state,state.multiplier);

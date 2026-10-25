@@ -3,9 +3,10 @@
 Current continuation: the snake's HP phases, line attack, timeout, firewall and
 native hit body are composed as an internal candidate. AMa-10 and both twins now
 have source-bound ordinary attacks, target ATK ramps, immobility/teleport markers,
-x-4 firewall boundaries, internal three-lane line actors and checkpoint refresh.
-Complete boss support remains held while twins' fake-death/reborn transitions, source sequence
-dispatch review, canonical wave/branch/story
+x-4 firewall boundaries, internal three-lane line actors, checkpoint refresh and
+the twins' internal HP-loss rebirth/fake-death recovery. Complete boss support
+remains held for native kill/durability integration, source sequence dispatch
+review, canonical wave/branch/story
 integration, mechanical input routing and staged-record reviews are completed.
 
 The retained native components/canonical record supply the parameters and action
@@ -925,3 +926,60 @@ at the latest observation, and has not been replaced. Native reproduction and
 the new Blink receipt checker remain required in continuation CI. Twins'
 fake-death/reborn/room behavior and canonical boss/wave integration remain the
 next mechanics work. No art/models/chibis/effects campaign has started.
+
+## Twin HP-loss rebirth, recovery and partner ownership
+
+The source-bound twin core now composes the action actors with an authenticated
+fatal HP-loss bridge and the native fake-death mode. It binds the full native
+mode hierarchy, reciprocal prefab validators, four retained buff keys, heal and
+marker actions, and first-twin room parent to a reproducible receipt. Separately
+pinned [PRTS observations, revision 441736](https://prts.wiki/index.php?title=AMa-10%E5%BC%82%E6%9E%84%E4%BD%93&oldid=441736)
+corroborate the short rebirth, recovery and teleport-immunity behavior.
+
+Fatal damage is accounted before a private one-HP protected rebirth bridge;
+after the canonical 0.1-second interval, the body enters fake death at 2% current
+maximum HP. The literal heal parent applies 4% current maximum HP each world
+second through normal healing modifiers and heal-free checks. Its literal
+ally_alive condition has source checking disabled in the native action; the
+simulator honors that condition while cleaning only its own exact derived
+instances. Recovery to full HP restarts the active mode. Removing an established
+partner marker forces final death with no additional rebirth. If no marker can
+be established on entry, the first heal-parent check takes the native failure
+branch. Late partner arrival, simultaneous knockdowns, repeated cycles and
+source reuse have separate checks. One exact live deployment per twin prefab
+is admitted by this internal factory; duplicate-copy aura overrides remain held.
+
+Rebirth keeps the source ATK ramp, immobility/firewall and first-twin room parent,
+clears teleport immunity and transient buffs, and aborts unborn casts. Explicit
+nativeDurable metadata also retains a buff; simulator persist alone is not
+treated as proof of native durability. Skill clocks reset at rebirth completion:
+root line skills then continue cooling in fake death, while the mode-bound Blink
+clock pauses. Born output keeps the same original source life and samples live
+ATK after transient modifiers clear. Rebirth does not refresh a broken firewall.
+Protection is installed before transient-removal callbacks; nested transitions
+cannot kill a newly accepted recovery state or mutate another deployment.
+
+Only the first twin owns the camera/branch finish parent. Its immutable exact
+action receipt and base-record room string go once to a required stage receiver;
+the factory does not invent camera movement, withdrawal or branch execution.
+The altered staged room records, canonical room handoff, native non-skipping
+InstantKill/rebirth semantics, incoming durable-buff metadata, and client/FSM
+timing still need integration review before boss/stage admission. Existing
+scripted kill/removal keeps its bypass behavior. No complete boss policy or new
+stage has been granted by the HP-loss candidate.
+
+Whole-core replacement also retains the original generic-attack profile flag
+through a source-life change. A private weak ownership record carries its true
+baseline across composition teardown, while stale actors still cannot overwrite
+the current deployment's flags.
+
+Latest broad local pass: 1,125 available focused checks. The final composed boss
+suites, including the profile-transfer regression, pass 149 cases. The core
+behavior run passed 631 cases with three skipped and one wall-clock benchmark
+miss while suites competed for CPU; both benchmarks then passed in isolation
+(worst case 54.7 microseconds/tick against the 500-microsecond threshold).
+No threshold was relaxed. The preceding refresh checkpoint 3aa989b3 passed all
+15 hosted continuation jobs. Full run 40212773386 at 184e63bf also completed all
+eight Linux/Windows Node22/24 shards successfully. New-head native-source,
+behavior and full-matrix verification remain separate. The nine remaining
+normal-stage gates and all visual-work priorities remain unchanged.

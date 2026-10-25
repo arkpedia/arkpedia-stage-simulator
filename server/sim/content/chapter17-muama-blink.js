@@ -8,7 +8,7 @@ export function installChapter17MuamaBlink(b,e,{combat,line}={}){
  if(!combat?.valid()||!line?.valid()||e.mem.ch17MuamaCombat!==combat||e.mem.ch17MuamaLine!==line||Math.abs(e.deployedAt-b.time)>1e-9)throw Error('Muama Blink requires fresh matching combat and line actors');
  const life=e.deploySeq,old=e.mem.ch17MuamaBlink;if(old?.active&&old.ownerLife===life)throw Error('A deployment may own only one Muama Blink controller');if(old?.active)old.stop();
  const d=proof.defaults,handles=[];
- const state={active:true,ownerLife:life,cooldown:d.initialCooldown,pending:null,buff:null,refreshTask:null,root:root(e),
+ const state={active:true,ownerLife:life,enabled:true,cooldown:d.initialCooldown,pending:null,buff:null,refreshTask:null,root:root(e),
   valid:()=>state.active&&!b.finished&&combat.valid()&&line.valid()&&e.mem.ch17MuamaCombat===combat&&e.mem.ch17MuamaLine===line&&e.deploySeq===life,
   finish(q=state.pending){if(!q)return;if(state.pending===q)state.pending=null;if(combat.actionBusy===q)combat.actionBusy=null;const hold=q.hold;q.hold=null;b.removeBuff(e,hold);},
   stop(){
@@ -21,7 +21,7 @@ export function installChapter17MuamaBlink(b,e,{combat,line}={}){
    if(!leg||leg.t!=='move'||leg.final||!Number.isFinite(leg.r)||!Number.isFinite(leg.c))return null;
    return{route,index,leg,x:leg.c+(route.cursorOffset?.x??0),y:leg.r+(route.cursorOffset?.y??0)};
   },
-  ready:()=>state.valid()&&state.cooldown<=1e-9&&!state.pending&&line.canAct({ignoreSilence:true}),
+  ready:()=>state.enabled&&state.valid()&&state.cooldown<=1e-9&&!state.pending&&line.canAct({ignoreSilence:true}),
   cast(){
    if(!state.ready())return false;
    let buff;buff=b.addBuff(e,{key:d.buffKey,source:e,duration:d.duration,sourceStatusResistable:false,data:{nativeUnblockableImmune:true},admit:()=>state.valid(),
@@ -54,6 +54,7 @@ export function installChapter17MuamaBlink(b,e,{combat,line}={}){
  const action={ready:state.ready,cast:state.cast};e.mem.ch17MuamaBlink=state;line.extraActions.set(state,action);
  handles.push(b.on('tick',({dt})=>{
   if(!state.valid()){state.stop();return;}
+  if(!state.enabled){state.finish();return;}
   if(!e.s.flags.stun)state.cooldown=Math.max(0,state.cooldown-dt);
   const q=state.pending;if(!q)return;
   if(combat.suspended||combat.actionBusy!==q||!e.buffs.includes(q.hold)){state.finish(q);return;}

@@ -1,0 +1,1164 @@
+{
+  "schemaVersion": 1,
+  "testOnly": true,
+  "scope": "Internal twin rebirth/fake-death recovery and source-bound partner ownership. Room handoff requires a canonical receiver; no complete enemy/stage admission.",
+  "sources": {
+    "foundation": {
+      "path": "data/candidates/arkpedia-ch17-muama-blink-contract.json",
+      "sha256": "581cd65a2c08df08d6d26134044823296d57a796bee4a7092196eaa1c927b4cd"
+    },
+    "graph": {
+      "path": "data/candidates/arkpedia-ch17-firewall-boss-source.json",
+      "sha256": "4c1dcad409a812cb001dc182ca804462ca3733f840b246dc0c6fdb02c2fbd244"
+    },
+    "events": {
+      "path": "data/candidates/arkpedia-buff-event-alias-source.json",
+      "sha256": "df85c1d8ee05e0391c7be3854bb39632bdf5282b1f48b061c4e7af5b5397e407"
+    },
+    "notes": {
+      "path": "data/candidates/arkpedia-ch17-mutwin-lifecycle-notes.json",
+      "sha256": "27ac5e9e9748b0b7cf3fbc23414212de9f7359d6563aa750e50b46d421f31dd5"
+    }
+  },
+  "markStart": [
+    {
+      "_conditionNode": {
+        "_ownerType": "BUFF_OWNER",
+        "$type": "Torappu.Battle.Action.Nodes+CheckUnitInRebornState"
+      },
+      "_succeedNodes": null,
+      "_failNodes": [
+        {
+          "_buff": {
+            "attributes": {
+              "abnormalFlags": [],
+              "abnormalImmunes": [],
+              "abnormalAntis": [],
+              "abnormalCombos": [],
+              "abnormalComboImmunes": [],
+              "attributeModifiers": []
+            },
+            "buffKey": "ally_alive",
+            "loadFromDB": false,
+            "isDurableBuff": false,
+            "isDamageMissable": false,
+            "isSilenceable": false,
+            "isStunnable": false,
+            "isFreezable": false,
+            "isLevitatable": false,
+            "isGroundBoundable": false,
+            "statusResistable": "AUTOMATIC",
+            "templateKey": "empty",
+            "disableOverride": false,
+            "overrideKey": null,
+            "overrideType": "DEFAULT",
+            "maxStackCnt": 1,
+            "refreshRemainingTimeWhenStackMax": false,
+            "clearAllStackCntWhenTimeUp": false,
+            "maxValidStackCnt": -1,
+            "independentCharacterSource": false,
+            "overrideEffectKey": null,
+            "overrideOnEventPriority": false,
+            "onEventPriority": "DEFAULT",
+            "audioSignal": null,
+            "lifeTimeType": "INFINITY",
+            "takeSnapshotWhenExtend": false,
+            "durationKey": null,
+            "remainingTimeKey": null,
+            "lifeTime": 0,
+            "triggerLifeType": "IMMEDIATELY",
+            "triggerCnt": 0,
+            "triggerInterval": -1,
+            "waitFirstTriggerInterval": true,
+            "firstTriggerInterval": -1,
+            "priority": -1,
+            "priorityBBKeys": [],
+            "stripBlackboardParamsWithBuffKey": false,
+            "blackboard": [],
+            "enableInitDirectionFromSource": false
+          },
+          "_buffOwner": "SOURCE",
+          "_useSpecialBuffSource": false,
+          "_specialBuffSource": "BUFF_SOURCE",
+          "_isDerivedBuff": true,
+          "_finishDerivedBuffIfParentFinish": true,
+          "_inherateSourceProjectileFromParentBuff": false,
+          "_hookEffectKeyFromSourceProjectile": false,
+          "$type": "Torappu.Battle.Action.Nodes+CreateBuff"
+        }
+      ],
+      "$type": "Torappu.Battle.Action.Nodes+IfElse"
+    }
+  ],
+  "markFinish": [
+    {
+      "_conditionNode": {
+        "_targetType": "SOURCE",
+        "_checkCurModeIndex": 1,
+        "_loadCurModeBbKey": "",
+        "$type": "Torappu.Battle.Action.Nodes+CheckUnitCurrentMode"
+      },
+      "_succeedNodes": [
+        {
+          "_targetType": "TARGET",
+          "_killSource": true,
+          "_noSource": false,
+          "_withdrawIfRallyPoint": false,
+          "_resultIfInRallyPointMode": false,
+          "_skipReborn": true,
+          "_noReason": false,
+          "_markReachExit": false,
+          "_switchState": false,
+          "$type": "Torappu.Battle.Action.Nodes+InstantKill"
+        }
+      ],
+      "_failNodes": null,
+      "$type": "Torappu.Battle.Action.Nodes+IfElse"
+    }
+  ],
+  "healTick": [
+    {
+      "_conditionNode": {
+        "_targetType": "BUFF_OWNER",
+        "_buffKeys": [
+          "ally_alive"
+        ],
+        "isAND": true,
+        "_loadFromBlackboard": false,
+        "_checkBuffSource": false,
+        "_buffSourceType": "BUFF_SOURCE",
+        "_checkSourceHost": false,
+        "$type": "Torappu.Battle.Action.Nodes+CheckContainsBuff"
+      },
+      "_succeedNodes": [
+        {
+          "_healTarget": "BUFF_OWNER",
+          "_getMaxHpFromTarget": false,
+          "_ignoreHealFree": false,
+          "_skipModifierEvent": false,
+          "$type": "Torappu.Battle.Action.Nodes+HealViaMaxHpRatio"
+        },
+        {
+          "_conditionNode": {
+            "_targetType": "BUFF_OWNER",
+            "_condType": "GE",
+            "_value": 0,
+            "_useSourceHpRatio": false,
+            "_sourceType": "SOURCE",
+            "_blackboardPrefix": "target_",
+            "$type": "Torappu.Battle.Action.Nodes+FilterByTargetHpRatio"
+          },
+          "_succeedNodes": [
+            {
+              "_modeIndex": 0,
+              "_loadModeFromBlackboard": false,
+              "_restoreDefault": true,
+              "_restartFSM": true,
+              "_targetType": "TARGET",
+              "$type": "Torappu.Battle.Action.Nodes+SwitchMode"
+            }
+          ],
+          "_failNodes": null,
+          "$type": "Torappu.Battle.Action.Nodes+IfElse"
+        }
+      ],
+      "_failNodes": [
+        {
+          "_targetType": "TARGET",
+          "_killSource": true,
+          "_noSource": false,
+          "_withdrawIfRallyPoint": false,
+          "_resultIfInRallyPointMode": false,
+          "_skipReborn": true,
+          "_noReason": false,
+          "_markReachExit": false,
+          "_switchState": false,
+          "$type": "Torappu.Battle.Action.Nodes+InstantKill"
+        }
+      ],
+      "$type": "Torappu.Battle.Action.Nodes+IfElse"
+    }
+  ],
+  "roomFinish": [
+    {
+      "_loadOffsetFromBlackboard": true,
+      "_offset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "_offsetKey": "boss_room",
+      "_delay": 2.5,
+      "$type": "Torappu.Battle.Action.Nodes+Mainline17MoveCameraWithWithdraw"
+    },
+    {
+      "_isLoop": false,
+      "_branchId": "boss",
+      "_maxValidEnemyCount": -1,
+      "$type": "Torappu.Battle.Action.Nodes+MoveNextLevelBranch"
+    }
+  ],
+  "enemies": {
+    "enemy_1591_mutwin": {
+      "record": {
+        "talents": {
+          "bb": {
+            "FakeDeath.target_hp_ratio": 1,
+            "FakeDeath.hp_ratio": 0.04,
+            "SameTargetAtkUp.atk": 100,
+            "SameTargetAtkUp.max_stack_cnt": 4,
+            "DamageResistance.damage_resistance": 0.9,
+            "Reborn.duration": 0.1,
+            "Reborn.hp_ratio": 0.02
+          },
+          "bbStr": {
+            "DamageResistance.boss_room": "(0,6,0)"
+          },
+          "groups": {
+            "FakeDeath": [
+              "hp_ratio",
+              "target_hp_ratio"
+            ],
+            "SameTargetAtkUp": [
+              "atk",
+              "max_stack_cnt"
+            ],
+            "DamageResistance": [
+              "boss_room",
+              "damage_resistance"
+            ],
+            "Reborn": [
+              "duration",
+              "hp_ratio"
+            ]
+          }
+        },
+        "skills": [
+          {
+            "prefabKey": "HorizontalLineAttack",
+            "priority": 0,
+            "cooldown": 40,
+            "initCooldown": 40,
+            "spCost": 0,
+            "bb": {
+              "value": 200,
+              "stun": 5
+            },
+            "bbStr": {}
+          },
+          {
+            "prefabKey": "VerticalLine",
+            "priority": 0,
+            "cooldown": 40,
+            "initCooldown": 20,
+            "spCost": 0,
+            "bb": {
+              "value": 200,
+              "stun": 5
+            },
+            "bbStr": {}
+          },
+          {
+            "prefabKey": "Blink",
+            "priority": 0,
+            "cooldown": 60,
+            "initCooldown": 20,
+            "spCost": 0,
+            "bb": {},
+            "bbStr": {}
+          }
+        ],
+        "abilities": [
+          {
+            "text": "Cannot move or be teleported.",
+            "format": "NORMAL"
+          },
+          {
+            "text": "ATK gradually increases when attacking the same target",
+            "format": "NORMAL"
+          },
+          {
+            "text": "When another AMa-10 Isomer is alive and not in coma, enters a coma when HP reaches 0 and begins regenerating; revives when HP reaches max.",
+            "format": "NORMAL"
+          },
+          {
+            "text": "[Firewall] Has a Firewall around its 8 surrounding tiles; takes greatly reduced Physical and Arts damage from outside the firewall. Allied units cannot be deployed inside the Firewall.",
+            "format": "NORMAL"
+          },
+          {
+            "text": "[Refresh] Periodically teleports to the target tile and refreshes the Firewall.",
+            "format": "NORMAL"
+          },
+          {
+            "text": "[Information Flood] Releases a 3-tile-wide flood of information in a direction, causing the first unit hit to be <$ba.stun>stunned</> and continuously take True damage for a period of time.",
+            "format": "NORMAL"
+          }
+        ]
+      },
+      "reborn": {
+        "_abilityName": "",
+        "_affectWhenNotRootTalent": 0,
+        "_applyBlackboardBySkill": 0,
+        "_applyStrBlackboardBySkill": 0,
+        "_applyTalentRange": 0,
+        "_applyTalentScale": 0,
+        "_attachInDummy": 0,
+        "_attackBlackboardModeIndex": -1,
+        "_buffs": [],
+        "_buffsRetainedWhenReborn": [
+          "enemy_mutwin_move_camera",
+          "enemy_mutwin_t[damage_resistance]",
+          "enemy_muama_t",
+          "enemy_mutwin_passiveBuff"
+        ],
+        "_checkValidBySkillIndex": [],
+        "_clearEffectsAfterReborn": 0,
+        "_defaultModeIndex": -1,
+        "_detachAbilityWhenReborn": 0,
+        "_effects": [],
+        "_extraAttackBlackboardModeIndices": [],
+        "_extraRebornDataPresets": [],
+        "_finishHandleAbilityAfterReborn": 0,
+        "_fromRawDataToSkill": 0,
+        "_hpRechargeRatio": 0.05000000074505806,
+        "_influenceSkillBlackboard": 0,
+        "_keepAlive": 0,
+        "_maxRespawnCnt": -1,
+        "_modeIndex": 1,
+        "_overrideDefaultRangeId": 0,
+        "_overwriteParentRangeId": 0,
+        "_overwriteTalentKey": "",
+        "_rebornAfterWave": 0,
+        "_rebornAfterWaveCnt": 0,
+        "_scaleCertainKeyFlag": 0,
+        "_scaleCertainKeyList": [],
+        "_scaleCertainMode": 0,
+        "_scaleModeIndices": [],
+        "_useAbilityToHandle": 0,
+        "_validWhenContainsBuff": "",
+        "_writeRangeIdToProjectileBlackboard": 0,
+        "m_Enabled": 1,
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": "-590671994973082105"
+        },
+        "m_Name": "",
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": "-4458530021321694031"
+        }
+      },
+      "aura": {
+        "_attachPassiveBuffsOnDummy": 1,
+        "_buffs": [
+          {
+            "attributes": {
+              "abnormalAntis": [],
+              "abnormalComboImmunes": [],
+              "abnormalCombos": [],
+              "abnormalFlags": [],
+              "abnormalImmunes": [],
+              "attributeModifiers": []
+            },
+            "audioSignal": "",
+            "blackboard": [],
+            "buffKey": "enemy_mutin_mark_alive",
+            "clearAllStackCntWhenTimeUp": 0,
+            "disableOverride": 0,
+            "durationKey": "duration",
+            "enableInitDirectionFromSource": 0,
+            "firstTriggerInterval": -1,
+            "independentCharacterSource": 0,
+            "isDamageMissable": 0,
+            "isDurableBuff": 0,
+            "isFreezable": 0,
+            "isGroundBoundable": 0,
+            "isLevitatable": 0,
+            "isSilenceable": 0,
+            "isStunnable": 0,
+            "lifeTime": 0,
+            "lifeTimeType": 2,
+            "loadFromDB": 0,
+            "maxStackCnt": 1,
+            "maxValidStackCnt": -1,
+            "onEventPriority": 0,
+            "overrideEffectKey": "",
+            "overrideKey": "",
+            "overrideOnEventPriority": 0,
+            "overrideType": 0,
+            "priority": -1,
+            "priorityBBKeys": [],
+            "refreshRemainingTimeWhenStackMax": 0,
+            "remainingTimeKey": "",
+            "statusResistable": 2,
+            "stripBlackboardParamsWithBuffKey": 0,
+            "takeSnapshotWhenExtend": 0,
+            "templateKey": "enemy_mutin_mark_alive",
+            "triggerCnt": 0,
+            "triggerInterval": -1,
+            "triggerLifeType": 0,
+            "waitFirstTriggerInterval": 1
+          }
+        ],
+        "_clearBuffsWhenDisappear": 0,
+        "_effects": [],
+        "_excludeReborningEntity": 0,
+        "_forceAsDmgOrHealAbility": 0,
+        "_forceRemoveAllBuffsByKey": 0,
+        "_forceTick": 0,
+        "_ignoreIfOwnerDead": 0,
+        "_interruptAbilityOnDetach": 1,
+        "_interval": 0,
+        "_listenUnitRebornEvent": 1,
+        "_metadata": {
+          "blackboardPrefix": "",
+          "namedAsAlias": ""
+        },
+        "_onlyDetactTargetWhenStarted": 0,
+        "_onlyDetectCurrentMapLayer": 0,
+        "_passiveBuffs": [
+          {
+            "attributes": {
+              "abnormalAntis": [],
+              "abnormalComboImmunes": [],
+              "abnormalCombos": [],
+              "abnormalFlags": [
+                5,
+                3,
+                22
+              ],
+              "abnormalImmunes": [],
+              "attributeModifiers": []
+            },
+            "audioSignal": "mutiwin_start_reborn",
+            "blackboard": [],
+            "buffKey": "enemy_mutiwin_t[heal]",
+            "clearAllStackCntWhenTimeUp": 0,
+            "disableOverride": 0,
+            "durationKey": "duration",
+            "enableInitDirectionFromSource": 0,
+            "firstTriggerInterval": -1,
+            "independentCharacterSource": 0,
+            "isDamageMissable": 0,
+            "isDurableBuff": 0,
+            "isFreezable": 0,
+            "isGroundBoundable": 0,
+            "isLevitatable": 0,
+            "isSilenceable": 0,
+            "isStunnable": 0,
+            "lifeTime": 0,
+            "lifeTimeType": 2,
+            "loadFromDB": 0,
+            "maxStackCnt": 1,
+            "maxValidStackCnt": -1,
+            "onEventPriority": 0,
+            "overrideEffectKey": "",
+            "overrideKey": "",
+            "overrideOnEventPriority": 0,
+            "overrideType": 0,
+            "priority": -1,
+            "priorityBBKeys": [],
+            "refreshRemainingTimeWhenStackMax": 0,
+            "remainingTimeKey": "",
+            "statusResistable": 2,
+            "stripBlackboardParamsWithBuffKey": 0,
+            "takeSnapshotWhenExtend": 0,
+            "templateKey": "enemy_mutiwin_t[heal]",
+            "triggerCnt": 0,
+            "triggerInterval": 1,
+            "triggerLifeType": 2,
+            "waitFirstTriggerInterval": 1
+          }
+        ],
+        "_removeBuffIncludeReborning": 0,
+        "_removeBuffWhenAbilityDetached": 1,
+        "_selector": {
+          "m_FileID": 0,
+          "m_PathID": "0"
+        },
+        "_selfOption": 0,
+        "_targetValidator": {
+          "m_FileID": 0,
+          "m_PathID": "6719355232335146503"
+        },
+        "_tryRemoveBuffFirstWhenReborn": 1,
+        "_useDurableRallyPointLikeSwitch": 0,
+        "m_Enabled": 1,
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": "-8220266786915176953"
+        },
+        "m_Name": "",
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": "-5793748974791823428"
+        }
+      },
+      "validator": {
+        "_loadFromBlackboard": 0,
+        "_reverse": 0,
+        "_targetId": "enemy_1591_mutwin_2",
+        "_targetOptions": {
+          "abnormalCombo": 0,
+          "abnormalFlag": 0,
+          "checkUnitType": 0,
+          "containAbnormalFlag": 0,
+          "containSomeAbnormalFlags": 0,
+          "enableAdvancedOptions": 1,
+          "excludeAbnormalFlag": 0,
+          "excludeSomeAbnormalFlags": 0,
+          "ignoreAllyTargetFree": 0,
+          "ignoreHealFree": 0,
+          "ignoreMotionMode": 0,
+          "ignoreTargetFree": 0,
+          "ignoreTargetSide": 0,
+          "onlyIgnoreSomeOfTargetFreeCase": 0,
+          "professionMask": 0,
+          "purposeMask": 0,
+          "targetCategory": 1,
+          "targetMotion": 3,
+          "targetSide": 1,
+          "unitTypeMask": 0
+        },
+        "m_Enabled": 1,
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": "-8220266786915176953"
+        },
+        "m_Name": "",
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": "4228536478899308872"
+        }
+      },
+      "mode": {
+        "_addIndexToSignalId": 1,
+        "_alwaysHideHp": {
+          "isDefined": 0,
+          "value": 0
+        },
+        "_alwaysHideSp": {
+          "isDefined": 0,
+          "value": 0
+        },
+        "_animatorHooker": {
+          "m_FileID": 0,
+          "m_PathID": "-1346619675711328761"
+        },
+        "_attack": {
+          "m_FileID": 0,
+          "m_PathID": "0"
+        },
+        "_attackTrigger": {
+          "m_FileID": 0,
+          "m_PathID": "0"
+        },
+        "_bodyTransform": {
+          "m_FileID": 0,
+          "m_PathID": "6840128151274892807"
+        },
+        "_combat": {
+          "m_FileID": 0,
+          "m_PathID": "0"
+        },
+        "_extraRangesToShow": [],
+        "_generalAbilities": [],
+        "_hideUIAttackRange": 0,
+        "_includeIndexZero": 1,
+        "_overrideDeadEffect": "",
+        "_overrideStartEffect": "",
+        "_rangeToShow": {
+          "m_FileID": 0,
+          "m_PathID": "0"
+        },
+        "_updateAttackRangeExtendByAttributeDirty": 0,
+        "m_Enabled": 1,
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": "-6636637184771576313"
+        },
+        "m_Name": "",
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": "5390319429299248724"
+        }
+      },
+      "normal": {
+        "_addIndexToSignalId": 1,
+        "_alwaysHideHp": {
+          "isDefined": 0,
+          "value": 0
+        },
+        "_alwaysHideSp": {
+          "isDefined": 0,
+          "value": 0
+        },
+        "_animatorHooker": {
+          "m_FileID": 0,
+          "m_PathID": "0"
+        },
+        "_attack": {
+          "m_FileID": 0,
+          "m_PathID": "7085793479146515975"
+        },
+        "_attackTrigger": {
+          "m_FileID": 0,
+          "m_PathID": "7222649539901435399"
+        },
+        "_bodyTransform": {
+          "m_FileID": 0,
+          "m_PathID": "630164299776306695"
+        },
+        "_combat": {
+          "m_FileID": 0,
+          "m_PathID": "7085793479146515975"
+        },
+        "_extraRangesToShow": [],
+        "_generalAbilities": [],
+        "_hideUIAttackRange": 0,
+        "_includeIndexZero": 1,
+        "_overrideDeadEffect": "",
+        "_overrideStartEffect": "",
+        "_rangeToShow": {
+          "m_FileID": 0,
+          "m_PathID": "0"
+        },
+        "_updateAttackRangeExtendByAttributeDirty": 0,
+        "m_Enabled": 1,
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": "9084626538627247623"
+        },
+        "m_Name": "",
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": "5390319429299248724"
+        }
+      },
+      "camera": {
+        "attributes": {
+          "abnormalAntis": [],
+          "abnormalComboImmunes": [],
+          "abnormalCombos": [],
+          "abnormalFlags": [],
+          "abnormalImmunes": [],
+          "attributeModifiers": []
+        },
+        "audioSignal": "",
+        "blackboard": [],
+        "buffKey": "enemy_mutwin_move_camera",
+        "clearAllStackCntWhenTimeUp": 0,
+        "disableOverride": 0,
+        "durationKey": "duration",
+        "enableInitDirectionFromSource": 0,
+        "firstTriggerInterval": -1,
+        "independentCharacterSource": 0,
+        "isDamageMissable": 0,
+        "isDurableBuff": 0,
+        "isFreezable": 0,
+        "isGroundBoundable": 0,
+        "isLevitatable": 0,
+        "isSilenceable": 0,
+        "isStunnable": 0,
+        "lifeTime": 0,
+        "lifeTimeType": 2,
+        "loadFromDB": 0,
+        "maxStackCnt": 1,
+        "maxValidStackCnt": -1,
+        "onEventPriority": 0,
+        "overrideEffectKey": "",
+        "overrideKey": "",
+        "overrideOnEventPriority": 0,
+        "overrideType": 0,
+        "priority": -1,
+        "priorityBBKeys": [],
+        "refreshRemainingTimeWhenStackMax": 0,
+        "remainingTimeKey": "",
+        "statusResistable": 2,
+        "stripBlackboardParamsWithBuffKey": 0,
+        "takeSnapshotWhenExtend": 0,
+        "templateKey": "enemy_mutwin_move_camera",
+        "triggerCnt": 0,
+        "triggerInterval": -1,
+        "triggerLifeType": 0,
+        "waitFirstTriggerInterval": 1
+      },
+      "defaults": {
+        "partner": "enemy_1591_mutwin_2",
+        "rebornDuration": 0.1,
+        "rebornRatio": 0.02,
+        "healRatio": 0.04,
+        "resumeRatio": 1,
+        "interval": 1,
+        "retainedKeys": [
+          "enemy_mutwin_move_camera",
+          "enemy_mutwin_t[damage_resistance]",
+          "enemy_muama_t",
+          "enemy_mutwin_passiveBuff"
+        ],
+        "room": "(0,6,0)"
+      }
+    },
+    "enemy_1591_mutwin_2": {
+      "record": {
+        "talents": {
+          "bb": {
+            "FakeDeath.target_hp_ratio": 1,
+            "FakeDeath.hp_ratio": 0.04,
+            "SameTargetAtkUp.atk": 100,
+            "SameTargetAtkUp.max_stack_cnt": 4,
+            "DamageResistance.damage_resistance": 0.9,
+            "Reborn.duration": 0.1,
+            "Reborn.hp_ratio": 0.02
+          },
+          "bbStr": {
+            "DamageResistance.boss_room": "(0,6,0)"
+          },
+          "groups": {
+            "FakeDeath": [
+              "hp_ratio",
+              "target_hp_ratio"
+            ],
+            "SameTargetAtkUp": [
+              "atk",
+              "max_stack_cnt"
+            ],
+            "DamageResistance": [
+              "boss_room",
+              "damage_resistance"
+            ],
+            "Reborn": [
+              "duration",
+              "hp_ratio"
+            ]
+          }
+        },
+        "skills": [
+          {
+            "prefabKey": "HorizontalLineAttack",
+            "priority": 0,
+            "cooldown": 40,
+            "initCooldown": 40,
+            "spCost": 0,
+            "bb": {
+              "value": 200,
+              "stun": 5
+            },
+            "bbStr": {}
+          },
+          {
+            "prefabKey": "VerticalLine",
+            "priority": 0,
+            "cooldown": 40,
+            "initCooldown": 20,
+            "spCost": 0,
+            "bb": {
+              "value": 200,
+              "stun": 5
+            },
+            "bbStr": {}
+          },
+          {
+            "prefabKey": "Blink",
+            "priority": 0,
+            "cooldown": 60,
+            "initCooldown": 20,
+            "spCost": 0,
+            "bb": {},
+            "bbStr": {}
+          }
+        ],
+        "abilities": [
+          {
+            "text": "Cannot move or be teleported.",
+            "format": "NORMAL"
+          },
+          {
+            "text": "ATK gradually increases when attacking the same target",
+            "format": "NORMAL"
+          },
+          {
+            "text": "When another AMa-10 Isomer is alive and not in coma, enters a coma when HP reaches 0 and begins regenerating; revives when HP reaches max.",
+            "format": "NORMAL"
+          },
+          {
+            "text": "[Firewall] Has a Firewall around its 8 surrounding tiles; takes greatly reduced Physical and Arts damage from outside the firewall. Allied units cannot be deployed inside the Firewall.",
+            "format": "NORMAL"
+          },
+          {
+            "text": "[Refresh] Periodically teleports to the target tile and refreshes the Firewall.",
+            "format": "NORMAL"
+          },
+          {
+            "text": "[Information Flood] Releases a 3-tile-wide flood of information in a direction, causing the first unit hit to be <$ba.stun>stunned</> and continuously take True damage for a period of time.",
+            "format": "NORMAL"
+          }
+        ]
+      },
+      "reborn": {
+        "_abilityName": "",
+        "_affectWhenNotRootTalent": 0,
+        "_applyBlackboardBySkill": 0,
+        "_applyStrBlackboardBySkill": 0,
+        "_applyTalentRange": 0,
+        "_applyTalentScale": 0,
+        "_attachInDummy": 0,
+        "_attackBlackboardModeIndex": -1,
+        "_buffs": [],
+        "_buffsRetainedWhenReborn": [
+          "enemy_mutwin_move_camera",
+          "enemy_mutwin_t[damage_resistance]",
+          "enemy_muama_t",
+          "enemy_mutwin_passiveBuff"
+        ],
+        "_checkValidBySkillIndex": [],
+        "_clearEffectsAfterReborn": 0,
+        "_defaultModeIndex": -1,
+        "_detachAbilityWhenReborn": 0,
+        "_effects": [],
+        "_extraAttackBlackboardModeIndices": [],
+        "_extraRebornDataPresets": [],
+        "_finishHandleAbilityAfterReborn": 0,
+        "_fromRawDataToSkill": 0,
+        "_hpRechargeRatio": 0.05000000074505806,
+        "_influenceSkillBlackboard": 0,
+        "_keepAlive": 0,
+        "_maxRespawnCnt": -1,
+        "_modeIndex": 1,
+        "_overrideDefaultRangeId": 0,
+        "_overwriteParentRangeId": 0,
+        "_overwriteTalentKey": "",
+        "_rebornAfterWave": 0,
+        "_rebornAfterWaveCnt": 0,
+        "_scaleCertainKeyFlag": 0,
+        "_scaleCertainKeyList": [],
+        "_scaleCertainMode": 0,
+        "_scaleModeIndices": [],
+        "_useAbilityToHandle": 0,
+        "_validWhenContainsBuff": "",
+        "_writeRangeIdToProjectileBlackboard": 0,
+        "m_Enabled": 1,
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": "-586564100166554678"
+        },
+        "m_Name": "",
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": "-4458530021321694031"
+        }
+      },
+      "aura": {
+        "_attachPassiveBuffsOnDummy": 1,
+        "_buffs": [
+          {
+            "attributes": {
+              "abnormalAntis": [],
+              "abnormalComboImmunes": [],
+              "abnormalCombos": [],
+              "abnormalFlags": [],
+              "abnormalImmunes": [],
+              "attributeModifiers": []
+            },
+            "audioSignal": "",
+            "blackboard": [],
+            "buffKey": "enemy_mutin_mark_alive",
+            "clearAllStackCntWhenTimeUp": 0,
+            "disableOverride": 0,
+            "durationKey": "duration",
+            "enableInitDirectionFromSource": 0,
+            "firstTriggerInterval": -1,
+            "independentCharacterSource": 0,
+            "isDamageMissable": 0,
+            "isDurableBuff": 0,
+            "isFreezable": 0,
+            "isGroundBoundable": 0,
+            "isLevitatable": 0,
+            "isSilenceable": 0,
+            "isStunnable": 0,
+            "lifeTime": 0,
+            "lifeTimeType": 2,
+            "loadFromDB": 0,
+            "maxStackCnt": 1,
+            "maxValidStackCnt": -1,
+            "onEventPriority": 0,
+            "overrideEffectKey": "",
+            "overrideKey": "",
+            "overrideOnEventPriority": 0,
+            "overrideType": 0,
+            "priority": -1,
+            "priorityBBKeys": [],
+            "refreshRemainingTimeWhenStackMax": 0,
+            "remainingTimeKey": "",
+            "statusResistable": 2,
+            "stripBlackboardParamsWithBuffKey": 0,
+            "takeSnapshotWhenExtend": 0,
+            "templateKey": "enemy_mutin_mark_alive",
+            "triggerCnt": 0,
+            "triggerInterval": -1,
+            "triggerLifeType": 0,
+            "waitFirstTriggerInterval": 1
+          }
+        ],
+        "_clearBuffsWhenDisappear": 0,
+        "_effects": [],
+        "_excludeReborningEntity": 0,
+        "_forceAsDmgOrHealAbility": 0,
+        "_forceRemoveAllBuffsByKey": 0,
+        "_forceTick": 0,
+        "_ignoreIfOwnerDead": 0,
+        "_interruptAbilityOnDetach": 1,
+        "_interval": 0,
+        "_listenUnitRebornEvent": 1,
+        "_metadata": {
+          "blackboardPrefix": "",
+          "namedAsAlias": ""
+        },
+        "_onlyDetactTargetWhenStarted": 0,
+        "_onlyDetectCurrentMapLayer": 0,
+        "_passiveBuffs": [
+          {
+            "attributes": {
+              "abnormalAntis": [],
+              "abnormalComboImmunes": [],
+              "abnormalCombos": [],
+              "abnormalFlags": [
+                5,
+                3,
+                22
+              ],
+              "abnormalImmunes": [],
+              "attributeModifiers": []
+            },
+            "audioSignal": "mutiwin_start_reborn",
+            "blackboard": [],
+            "buffKey": "enemy_mutiwin_t[heal]",
+            "clearAllStackCntWhenTimeUp": 0,
+            "disableOverride": 0,
+            "durationKey": "duration",
+            "enableInitDirectionFromSource": 0,
+            "firstTriggerInterval": -1,
+            "independentCharacterSource": 0,
+            "isDamageMissable": 0,
+            "isDurableBuff": 0,
+            "isFreezable": 0,
+            "isGroundBoundable": 0,
+            "isLevitatable": 0,
+            "isSilenceable": 0,
+            "isStunnable": 0,
+            "lifeTime": 0,
+            "lifeTimeType": 2,
+            "loadFromDB": 0,
+            "maxStackCnt": 1,
+            "maxValidStackCnt": -1,
+            "onEventPriority": 0,
+            "overrideEffectKey": "",
+            "overrideKey": "",
+            "overrideOnEventPriority": 0,
+            "overrideType": 0,
+            "priority": -1,
+            "priorityBBKeys": [],
+            "refreshRemainingTimeWhenStackMax": 0,
+            "remainingTimeKey": "",
+            "statusResistable": 2,
+            "stripBlackboardParamsWithBuffKey": 0,
+            "takeSnapshotWhenExtend": 0,
+            "templateKey": "enemy_mutiwin_t[heal]",
+            "triggerCnt": 0,
+            "triggerInterval": 1,
+            "triggerLifeType": 2,
+            "waitFirstTriggerInterval": 1
+          }
+        ],
+        "_removeBuffIncludeReborning": 0,
+        "_removeBuffWhenAbilityDetached": 1,
+        "_selector": {
+          "m_FileID": 0,
+          "m_PathID": "0"
+        },
+        "_selfOption": 0,
+        "_targetValidator": {
+          "m_FileID": 0,
+          "m_PathID": "3825511703464733642"
+        },
+        "_tryRemoveBuffFirstWhenReborn": 1,
+        "_useDurableRallyPointLikeSwitch": 0,
+        "m_Enabled": 1,
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": "-1665818299468649526"
+        },
+        "m_Name": "",
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": "-5793748974791823428"
+        }
+      },
+      "validator": {
+        "_loadFromBlackboard": 0,
+        "_reverse": 0,
+        "_targetId": "enemy_1591_mutwin",
+        "_targetOptions": {
+          "abnormalCombo": 0,
+          "abnormalFlag": 0,
+          "checkUnitType": 0,
+          "containAbnormalFlag": 0,
+          "containSomeAbnormalFlags": 0,
+          "enableAdvancedOptions": 1,
+          "excludeAbnormalFlag": 0,
+          "excludeSomeAbnormalFlags": 0,
+          "ignoreAllyTargetFree": 0,
+          "ignoreHealFree": 0,
+          "ignoreMotionMode": 0,
+          "ignoreTargetFree": 0,
+          "ignoreTargetSide": 0,
+          "onlyIgnoreSomeOfTargetFreeCase": 0,
+          "professionMask": 0,
+          "purposeMask": 0,
+          "targetCategory": 1,
+          "targetMotion": 3,
+          "targetSide": 1,
+          "unitTypeMask": 0
+        },
+        "m_Enabled": 1,
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": "-1665818299468649526"
+        },
+        "m_Name": "",
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": "4228536478899308872"
+        }
+      },
+      "mode": {
+        "_addIndexToSignalId": 1,
+        "_alwaysHideHp": {
+          "isDefined": 0,
+          "value": 0
+        },
+        "_alwaysHideSp": {
+          "isDefined": 0,
+          "value": 0
+        },
+        "_animatorHooker": {
+          "m_FileID": 0,
+          "m_PathID": "7774081692798905290"
+        },
+        "_attack": {
+          "m_FileID": 0,
+          "m_PathID": "0"
+        },
+        "_attackTrigger": {
+          "m_FileID": 0,
+          "m_PathID": "0"
+        },
+        "_bodyTransform": {
+          "m_FileID": 0,
+          "m_PathID": "4981962843747937226"
+        },
+        "_combat": {
+          "m_FileID": 0,
+          "m_PathID": "0"
+        },
+        "_extraRangesToShow": [],
+        "_generalAbilities": [],
+        "_hideUIAttackRange": 0,
+        "_includeIndexZero": 1,
+        "_overrideDeadEffect": "",
+        "_overrideStartEffect": "",
+        "_rangeToShow": {
+          "m_FileID": 0,
+          "m_PathID": "0"
+        },
+        "_updateAttackRangeExtendByAttributeDirty": 0,
+        "m_Enabled": 1,
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": "-4864068143879590966"
+        },
+        "m_Name": "",
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": "5390319429299248724"
+        }
+      },
+      "normal": {
+        "_addIndexToSignalId": 1,
+        "_alwaysHideHp": {
+          "isDefined": 0,
+          "value": 0
+        },
+        "_alwaysHideSp": {
+          "isDefined": 0,
+          "value": 0
+        },
+        "_animatorHooker": {
+          "m_FileID": 0,
+          "m_PathID": "0"
+        },
+        "_attack": {
+          "m_FileID": 0,
+          "m_PathID": "9166924020372564938"
+        },
+        "_attackTrigger": {
+          "m_FileID": 0,
+          "m_PathID": "-1141255510545634358"
+        },
+        "_bodyTransform": {
+          "m_FileID": 0,
+          "m_PathID": "-269518830886229046"
+        },
+        "_combat": {
+          "m_FileID": 0,
+          "m_PathID": "9166924020372564938"
+        },
+        "_extraRangesToShow": [],
+        "_generalAbilities": [],
+        "_hideUIAttackRange": 0,
+        "_includeIndexZero": 1,
+        "_overrideDeadEffect": "",
+        "_overrideStartEffect": "",
+        "_rangeToShow": {
+          "m_FileID": 0,
+          "m_PathID": "0"
+        },
+        "_updateAttackRangeExtendByAttributeDirty": 0,
+        "m_Enabled": 1,
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": "-8792255558290609206"
+        },
+        "m_Name": "",
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": "5390319429299248724"
+        }
+      },
+      "camera": null,
+      "defaults": {
+        "partner": "enemy_1591_mutwin",
+        "rebornDuration": 0.1,
+        "rebornRatio": 0.02,
+        "healRatio": 0.04,
+        "resumeRatio": 1,
+        "interval": 1,
+        "retainedKeys": [
+          "enemy_mutwin_move_camera",
+          "enemy_mutwin_t[damage_resistance]",
+          "enemy_muama_t",
+          "enemy_mutwin_passiveBuff"
+        ],
+        "room": "(0,6,0)"
+      }
+    }
+  },
+  "limits": [
+    "Fatal HP loss uses an authenticated post-loss repair bridge. The engine keeps one positive HP during the short protected rebirth, then assigns the canonical rebirth ratio before entering fake-death mode. This is not a literal native death/FSM or compiled/frame proof.",
+    "Only one live deployment of each exact twin prefab is registered per battle. Partner markers are source/deployment owned; a partner in rebirth or fake-death cannot qualify. Multiple simultaneous copies require a separate aura/override review.",
+    "Rebirth retains the serialized four keys and explicitly marked nativeDurable instances; runtime persist alone does not prove native durability. Existing incoming-buff producers need a durability audit before full stage admission. Teleport immunity/transient controls clear, unborn actions cancel and skills reset. Root line cooldowns continue during fake-death; the initial-mode Blink cooldown pauses.",
+    "The fake-death heal parent ticks on world seconds through the ordinary heal modifier/heal-free pipeline. Losing an established partner marker forces death immediately; starting without a qualifying partner is handled by the first native heal-parent tick.",
+    "Mode return uses an explicit local state restart without inventing additional animation holds. Born projectiles/impacts retain their source ownership. Scripted kill/removal bypasses the HP-loss bridge; forced partner-loss kill bypasses rebirth.",
+    "The first twin alone owns the native room-finish parent. Its exact camera/branch actions and room offset are passed once to a required receiver; the receiver must execute canonical stage withdrawal/camera/branch semantics before admission."
+  ]
+}
