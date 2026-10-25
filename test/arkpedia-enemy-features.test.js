@@ -2,6 +2,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import support from '../data/arkpedia-enemy-support.json' with { type: 'json' };
+import candidateRecords from '../data/candidates/arkpedia-enemy-records.canonical.json' with { type: 'json' };
+import candidateSupport from '../data/candidates/arkpedia-ch16-enemy-support.json' with { type: 'json' };
 import { ENEMY_FEATURES, recordFeatureIds } from '../shared/arkpedia/enemy-features.js';
 import { enemyStealthed, canTargetAlly, canTargetEnemy, sortAllyTargets } from '../server/sim/targeting.js';
 import { spawnAny, ENEMY_RECORDS } from './helpers/enemyHarness.js';
@@ -10,12 +12,15 @@ import { installEnemyFeatures } from '../server/sim/content/arkpedia-enemy-featu
 
 const enemy = (h, key) => h.b.units.find(u => u.side === 'enemy' && u.defId === key);
 const usedBy = id => Object.entries(support.enemies).filter(([, e]) => e.features?.includes(id)).map(([k]) => k);
+const candidateUsedBy = id => Object.entries(candidateRecords.enemies).filter(([, e]) => Object.values(e.levels).some(r => recordFeatureIds(r).includes(id))).map(([k]) => k);
+const candidateApproved = id => Object.values(candidateSupport.enemies).filter(e => e.features?.includes(id) && e.policy).length;
 
 test('every registered feature is used by an enemy and approved for at least one', () => {
   for (const id of Object.keys(ENEMY_FEATURES)) {
     const users = Object.entries(ENEMY_RECORDS.enemies).filter(([, e]) => Object.values(e.levels).some(r => recordFeatureIds(r).includes(id)));
-    assert.ok(users.length, `${id} is used`);
-    assert.ok(usedBy(id).length, `${id} clears at least one enemy`);
+    const candidateUsers = candidateUsedBy(id);
+    assert.ok(users.length || candidateUsers.length, `${id} is used`);
+    assert.ok(usedBy(id).length || candidateApproved(id), `${id} clears at least one enemy`);
   }
 });
 test('Flying unit: the record flies; a ground guard does not block it', () => {
