@@ -18,10 +18,18 @@ export function miner(r) {
     spawn(b, e, a) {
       e.profile.friendly = true; e.profile.neutral = true; e.profile.noAttack = true;
       e.mem.ch16Miner = true;
+      b.addBuff(e, { key: 'enemy_mcreep_self_mark', persist: true });
       e.profile.meleeTarget = () => {
         const link = e.mem.ch16Engagement;
-        return link?.source.alive && link.source.deployed && !link.source.hidden
-          && link.source.deploySeq === link.sourceLife && e.deploySeq === link.targetLife ? link.source : null;
+        if (link?.source.alive && link.source.deployed && !link.source.hidden
+          && link.source.deploySeq === link.sourceLife && e.deploySeq === link.targetLife) return link.source;
+        return b.enemies.filter(u => u !== e && living(u) && !u.profile?.neutral && !u.profile?.friendly
+          && !u.s.flags.sleep && !u.s.flags.stealth && !u.s.flags.camou
+          // Native selector ignores TARGET_FREE, including the Rock Wall's
+          // passive. Other invisibility states still prevent acquisition.
+          && Math.hypot(u.x - e.x, u.y - e.y) <= r.stats.rawRangeRadius + (u.mem.ch16BodyRadius ?? .1) + 1e-9)
+          .sort((a, z) => (z.s.taunt ?? 0) - (a.s.taunt ?? 0)
+            || Math.hypot(a.x - e.x, a.y - e.y) - Math.hypot(z.x - e.x, z.y - e.y) || a.id - z.id)[0] ?? null;
       };
       b.addBuff(e, { key: 'ch16:neutral-taunt', persist: true, mods: { taunt: -1 } });
       b.on('elementHit', c => { if (c.target === e) c.cancel = true; }, { owner: e });

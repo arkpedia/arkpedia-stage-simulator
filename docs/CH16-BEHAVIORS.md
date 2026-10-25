@@ -13,7 +13,7 @@ base-prefab controllers and their shared environment are in `chapter17.js`.
 
 | Prefab | Implemented behavior | Integration/parity checks |
 |---|---|---|
-| `enemy_3010_mcreep` | Neutral targeting, independent Medic-range healing, fear damage, nine-tile shadow suppression | Healing/range, true damage, neutrality, elemental immunity |
+| `enemy_3010_mcreep` | Neutral targeting, independent Medic-range healing, fear damage, nine-tile shadow suppression, ordinary melee against enemies/structures | Healing/range, true damage, neutrality, elemental immunity, target-free Rock Wall damage |
 | `enemy_10203_mumag` | Native speed-10 ordinary projectile; marker targeting; 15-second ChargeRift; DEF/channel locks | Marker taunt/deployment priority, flight/repeat timing, interruption, target removal, full cooldown after channel |
 | `enemy_10206_muveg` | Delayed ordinary hit; sourceless retaliation; refreshed pollution enhancement | 0.7-second delay/current ATK, separate target lives, pre-mitigation counter, area selection/cap, damage classification |
 | `enemy_10208_mucow` | Data-driven taunt and death summon | Seeded placement, occupied/blocked/high/unbuildable/existing-source exclusions, no summon on leak, no-valid-tile behavior |
@@ -76,17 +76,19 @@ escape. It combines overlapping live-source fields, ends fields with the source
 deployment life, and restores shadow when an escape pulse expires. The facility's
 21-tile `x-2` field and miner's nine-tile `x-4` escape range are checked against
 the retained tables. Miner pulses now update this queryable state, with bounds
-checks to prevent an off-map column from aliasing the preceding row. Registering
-a field is only one part of the facility contract: structure/miner interaction,
-damage scaling and the tunnel's branch summons/manual command still require
+checks to prevent an off-map column from aliasing the preceding row. Facility and
+Rock Wall structure/miner interaction is now connected to StandardBattle; the
+tunnel's branch summons/manual command and route traversal still require
 integration before 16-3 can be admitted. No new stage is admitted by this work.
 
 The same extraction retains the complete miner and 10120 graphs, including
 selector siblings omitted by the earlier component-only export, and the
 `block_mcreep` action closure. 10120 engagement now locks both participants,
 releases on range exit or either deployment's removal, and connects each side
-to the existing ordinary melee attack pipeline. The acquisition radius and
-post-acquisition radius extension stay separate. This matters because the
+to the existing ordinary melee attack pipeline. The acquisition selector includes
+the miner's retained 0.1 body collider; the periodic range check separately adds
+the native `range_radius_add` of 0.1. This corrects the earlier point-only
+acquisition assumption. This matters because the
 canonical table marks 10120's generic attack mode `NONE`, while its native
 Default/Attack graph supplies a physical attack against marked neutrals.
 An isolated integration scenario verifies their independent attack clocks and
@@ -103,6 +105,33 @@ separate contact field from the facility's `x-2` shadow range. The physics-only
 extension added 17 components while leaving every previously reviewed row,
 template and table byte unchanged. The engagement checksum was reviewed for
 that additive evidence change; its exact behavior/parameter checks remain.
+
+The original global-buff bundle was then fetched from the same immutable CN
+manifest and checksum-verified (`battle/prefabs/[uc]globalbuffs.ab`, SHA-256
+`b6c62b7bcc2557d76bd6c04255d783673e0b5506bff71f2204ef017e0b31a9fa`).
+The device extractor now retains `mainline16_enemy_target_free` and its action
+closure: wait for the first 0.3-second tick, remove invisibility when blocked,
+otherwise add/remove it according to the enemy's shadow tile. Existing reviewed
+graphs/templates/tables stayed unchanged. The separate reviewed engagement
+checksum was updated after that additive comparison, not by the extractor.
+
+`chapter16-structures.js` attaches to the real stage units. The StopMcreep
+physics trigger includes the miner body radius, releases on contact exit or
+source removal, and handles overlapping owners. Both structures multiply
+miner-sourced received damage by five after mitigation, before shields, without
+mutating an area attack's shared DamageInfo. Miners use their native attack
+selector radius even though the table compiler sets generic MELEE range to zero;
+they can select the Rock Wall's TARGET_FREE passive. The facility additionally
+owns its shadow field and native control immunities. Cold immunity now passes
+through the existing status admission path alongside the other immunities.
+
+Shadow blocks operator placement, backend deployment and manual token placement.
+The native periodic invisibility contract applies to enemy-side units; a real
+deployed operator blocking a canonical enemy is tested, as are source death,
+miner escape, fear stopping escape refresh, and expiry restoring the field.
+Every runtime fixture asserts that the battle recorded no swallowed AI/hook
+errors. These checks establish controller integration and retained-source parity,
+not independent captured-game frame parity or completed stage admission.
 
 ### Canonical stage route repair
 

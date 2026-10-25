@@ -21,14 +21,14 @@ function actions(key, event) {
   return JSON.parse(JSON.parse(proof.templates[key].originalJson).eventToActions._items.find(i => i.key === event).value.SerializedState);
 }
 
-test('native engagement locks both participants and has a separate release radius', () => {
+test('native engagement includes the miner collider at acquisition and uses the native release radius', () => {
   const start = actions('block_mcreep[to_mcreep]', 0);
   assert.equal(start[0]._buffOwner, 'BUFF_SOURCE');
   assert.deepEqual(start[0]._buff.attributes.abnormalFlags, ['UNMOVABLE']);
   assert.equal(start[2]._additionKey, 'range_radius_add');
-  const { h, spawn } = fixture(), e = spawn(soldier, 6), m = spawn(miner, 6.8);
+  const { h, spawn } = fixture(), e = spawn(soldier, 6), m = spawn(miner, 6.95);
   h.run(.31);
-  assert.equal(e.mem.mcTarget, m);
+  assert.equal(e.mem.mcTarget, m, 'the 0.9 selector touches the miner 0.1 body collider');
   assert.ok(e.s.flags.noMove && m.s.flags.noMove);
   e.base.moveSpeed = 1; m.base.moveSpeed = 1; e.markDirty(); m.markDirty();
   const positions = [e.x, e.y, m.x, m.y]; h.run(.3);

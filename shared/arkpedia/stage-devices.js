@@ -22,7 +22,12 @@ export const STAGE_DEVICES = Object.freeze({
   }),
   // character_table.json trap_272_nomstn: 8000 HP, 300 DEF, 20 RES, block 0.
   'Rock Wall': Object.freeze({
-    unit: Object.freeze({ hp: 8000, atk: 0, def: 300, res: 20, block: 0, dpMax: 0, dp: 0, obstacle: 'block' }),
+    unit: Object.freeze({ hp: 8000, atk: 0, def: 300, res: 20, block: 0, dpMax: 0, dp: 0, obstacle: 'block', chapter16Structure: 'rock' }),
+  }),
+  // trap_271_fowstn: stats and x-2 field retained in ch16-device-source.
+  'Heavily Polluted Facility': Object.freeze({
+    unit: Object.freeze({ hp: 30000, atk: 0, def: 300, res: 50, block: 0, dpMax: 0, dp: 0, obstacle: 'block', chapter16Structure: 'facility',
+      immunities: Object.freeze({ stun: true, cold: true, frozen: true, silence: true, levitate: true, sleep: true }) }),
   }),
   'Tide Controller': Object.freeze({
     // Hidden static controller for Dossoles High Tide; the tide schedule and

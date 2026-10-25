@@ -2,6 +2,7 @@
 // mainline16_g[block_mcreep] / block_mcreep[to_mcreep], retained in device-source.
 const live = u => u?.alive && u.deployed && !u.hidden;
 const distance = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
+export const MINER_BODY_RADIUS = .1;
 
 export function blockMcreep({ cnt, range, rangeAdd }) {
   if (cnt !== 1 || !(range > 0) || !(rangeAdd >= 0)) throw Error('Unreviewed BlockMcreep parameters');
@@ -45,7 +46,7 @@ export function blockMcreep({ cnt, range, rangeAdd }) {
         if (a.engagement && distance(e, a.engagement.target) > range + rangeAdd + 1e-9) a.release();
         if (a.engagement || !live(e)) continue;
         const target = b.enemies.filter(u => live(u) && u.mem.ch16Miner && !u.mem.ch16Engagement
-          && !u.s.flags.sleep && !u.s.flags.untargetable && distance(e, u) <= range + 1e-9)
+          && !u.s.flags.sleep && !u.s.flags.untargetable && distance(e, u) <= range + MINER_BODY_RADIUS + 1e-9)
           .sort((u, v) => distance(e, u) - distance(e, v) || u.id - v.id)[0];
         if (!target) continue;
         const link = { source: e, target, sourceLife: e.deploySeq, targetLife: target.deploySeq,

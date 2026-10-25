@@ -36,10 +36,19 @@ sources = []
 
 
 def load(path):
-    row = next(b for b in inventory['bundles'] + enemy_inventory['bundles'] if b['path'] == path)
+    row = next((b for b in inventory['bundles'] + enemy_inventory['bundles'] if b['path'] == path), None)
+    if row is None:
+        manifest_bytes = (ROOT / '.cache/arkpedia/cn-native-source/hot_update_list.json').read_bytes()
+        assert sha(manifest_bytes) == inventory['source']['manifestSha256']
+        original = next(b for b in json.loads(manifest_bytes)['abInfos'] if b['name'] == path)
+        row = {'path': path, 'bytes': original['abSize'], 'md5': original['md5'],
+               'manifestSha256': sha(manifest_bytes)}
     raw = (ROOT / '.cache/arkpedia/cn-native-source/bundles' / path).read_bytes()
     assert len(raw) == row['bytes'] and hashlib.md5(raw).hexdigest() == row['md5'], path
-    assert sha(raw) == row['sha256'], path
+    if 'sha256' in row:
+        assert sha(raw) == row['sha256'], path
+    else:
+        row['sha256'] = sha(raw)
     sources.append(row)
     return {o.path_id: o for o in UnityPy.load(raw).objects}
 
@@ -86,6 +95,8 @@ assert len(prefabs) == 3, list(prefabs)
 enemies = extract(load('battle/enm_pfb_28.ab'), ['enemy_3010_mcreep'])
 enemies.update(extract(load('battle/enm_pfb_27.ab'), ['enemy_10120_uaghst']))
 assert len(enemies) == 2
+global_prefabs = extract(load('battle/prefabs/[uc]globalbuffs.ab'), ['mainline16_enemy_target_free'])
+assert len(global_prefabs) == 1
 
 # Use the serialized native holder, rather than an unverified cached table.
 holder = load('config/buff_template_holder.ab')
@@ -110,7 +121,7 @@ def template_refs(value):
             yield from template_refs(child)
 
 
-pending = [key for rows in list(prefabs.values()) + list(enemies.values()) for row in rows
+pending = [key for rows in list(prefabs.values()) + list(enemies.values()) + list(global_prefabs.values()) for row in rows
            for key in template_refs(json.loads(row['originalJson']))]
 pending += [key for key in available if key.startswith('block_mcreep[') or key == 'mainline16_g[block_mcreep]']
 templates = {}
@@ -139,6 +150,7 @@ result = {'schemaVersion': 1, 'scope': 'Source evidence only; no behavior or adm
                      'enemyInventory': {'path': 'data/arkpedia-cn-enemy-native-source.json', 'sha256': sha(enemy_inventory_raw)}},
           'prefabs': dict(sorted(prefabs.items())), 'templates': dict(sorted(templates.items())),
           'enemyPrefabs': enemies,
+          'globalPrefabs': global_prefabs,
           'tableSource': inventory['source']['tableSource'], 'characters': characters, 'skills': skills,
           'ranges': {key: tables['range_table.json'][key] for key in ['x-2', 'x-4', '0-1']}}
 text = json.dumps(result, ensure_ascii=False, indent=1) + '\n'
