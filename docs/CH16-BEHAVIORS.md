@@ -53,11 +53,12 @@ action closure are rejected. Extraction never rewrites the reviewed contract.
 Variants need their own native evidence and review; they are not admitted by a
 base-prefab match.
 
-`16-2`, `16-3`, `16-4` and `17-2` are accepted by the experimental runtime candidate registry.
+`16-2`, `16-3`, `16-4`, `17-2` and `17-3` are accepted by the experimental runtime candidate registry.
 16-2 retains its 42 source spawns and four canonical records. 16-3 has 22 normal
 hostile spawns plus unmanaged miner summons, using four canonical records. 16-4
 has 17 normal hostiles and four canonical records. 17-2 has 28 normal hostiles
-and two canonical records. All four
+and two canonical records. 17-3 has 24 normal hostiles, one Leak Marker and four
+canonical records. All five
 require `?experimental=1`, remain `testOnly`, and verify the candidate support
 snapshot checksum. No other Chapter 16/17 stage is admitted by this review.
 
@@ -223,7 +224,7 @@ SHA-256. The builder refuses changed evidence or stage/geometry bytes. It verifi
 22 normal hostiles and the four-enemy dependency closure, excludes optional `raid`,
 and preserves the source's 0.5 movement multiplier. The stage retains separate
 canonical provenance for stage inputs (`84f3c833`) and enemy records (`79e81a8a`).
-The catalogue contains 601 entries: **597 public, four test-only**.
+The catalogue contains 602 entries: **597 public, five test-only**.
 
 Integration tests release three naturally summoned miners, traverse their exact
 fractional checkpoints, damage and destroy both facilities, and finish their
@@ -465,9 +466,10 @@ page changes. Manifest SHA-256 is
 The consumer fetched and checksum-verified all eight inputs per stage. Every
 retained bundle remains `testOnly: true, admitted: false`. Seven checks cover
 their provenance and separation from builder/catalogue admission. 17-2 now has
-the separate experimental review below; the other five remain unbuilt/unindexed. Pending families include Shieldguard and Fortbreaker for
-the next chapter 16 maps, plus the chapter 17 pollution-sensitive infantry,
-bowman and split-controller families. Existing consumer stage/enemy pins stay
+the separate experimental review below; 17-3 also has the marker review described
+below. The other four remain unbuilt/unindexed. Pending families include
+Shieldguard and Fortbreaker for the next chapter 16 maps, and the chapter 17
+split-controller family. Existing consumer stage/enemy pins stay
 immutable. `npm run test:arkpedia-ch16` includes the source-only intake checks.
 
 ### Experimental Chapter 17 reaction controllers and 17-2
@@ -529,4 +531,55 @@ node tools/arkpedia/build-stage.mjs --candidate ch16 \
   --out data/arkpedia-stage-17-2.json
 node --test test/arkpedia-ch17-pollution-reactions.test.js test/arkpedia-stage-17-2.test.js
 RENDER_E2E=1 node --test test/arkpedia-ch17-ui.browser.test.js
+```
+
+
+### Experimental Leak Marker and 17-3
+
+`extract-ch17-marker.py` retains the complete `trap_329_rift` and `sktok_rift`
+prefab graphs and three native templates, plus checksum-verified character/skill
+rows from the existing pinned CN inventory. The independent marker review binds
+those bytes and the existing environment evidence. The marker has native defaults
+of 0 initial SP, 55 SP cost and 1 SP/second. Its periodic request checks skill
+availability and grants `trap_rift_s_flag` only after a successful environment
+summon; the AUTO skill requires that flag. Failed selection retains full SP.
+Successful summons respect the one-second repeat flag even if another controller
+immediately refills SP. The isolated regression fails on the former implementation.
+
+Root `_rewriteTileOptions: 0` disables the mode's serialized tile defaults.
+The runtime preserves the original map's deployment/passability. The marker is an
+invulnerable, nonwithdrawable enemy device; ChargeRift uses the same SP port.
+Native skill-animation and subframe timing remain unverified; the shared fixed
+simulation timestep applies. The simplified renderer still uses existing art
+fallbacks; the marker currently has no dedicated scene mesh or SP display.
+This is a test-only presentation limitation, not native marker-art parity.
+
+The separate `arkpedia-ch17-reviewed-stage-17-3.json` binds canonical inputs at
+`arkpedia-data@657f85cc032ae5da807135f536d3263c6b249ed7`, marker evidence,
+reaction review, environment and native inventories. The normal map contains 17
+F-009, two R-044 and five Heterogeneous Fungi, with one marker at row 2/column 3.
+SIX_STAR modifiers are excluded. The test-only file/index require experimental
+mode; the public catalogue remains 597.
+
+The focused controller/source/stage suite passes 191/191, including five marker
+evidence/behavior/mutation checks and seven stage checks. Public/candidate support
+and the 602-entry index checks pass. The support/records/sharding checks pass
+14 tests with one skip and no failures (15 total).
+Three seeds exercise actual caster SP delivery and 13 harmless marker summons;
+all 24 normal hostiles finish at 360.6 seconds while surviving harmless sources
+do not hold the battle open. These route-only runs explicitly extend the test
+clock to 600 seconds. **The shared runtime's default 300-second cap still times
+out without a deployed squad**, which has a separate regression and is not
+reported as a successful clear. Ordinary combat against a legally deployed guard
+also runs without engine errors. Native captured frame parity and public
+admission remain held.
+
+Actual-app Chrome checks pass public rejection, desktop/phone playback,
+pause/resume, control bounds and restart. Desktop/phone screenshots in
+`/tmp/codex-ch17-3-ui` were viewed; no unexpected page errors occurred.
+
+```sh
+.cache/map-env/bin/python tools/arkpedia/extract-ch17-marker.py --check
+node --test test/arkpedia-ch17-marker.test.js test/arkpedia-stage-17-3.test.js
+RENDER_E2E=1 CH17_QA_STAGE=17-3 CH17_QA_OUT=/tmp/codex-ch17-3-ui node --test test/arkpedia-ch17-ui.browser.test.js
 ```
