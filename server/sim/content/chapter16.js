@@ -2,6 +2,7 @@
 // Candidate chapter 16/17 controllers. Parameters come from canonical enemy
 // records; native actions are retained in arkpedia-ch16-action-source.json.
 import { COLS } from '../constants.js';
+import { chapter16Shadow } from './chapter16-shadow.js';
 
 const living = u => u?.alive && u.deployed && !u.hidden;
 const bb = (r, group, key) => r.talents.bb[`${group}.${key}`];
@@ -37,10 +38,9 @@ export function miner(r) {
         if (e.s.flags.fear) { if (a.fear == null) a.fear = 0; }
         else a.fear = null;
         if (!e.s.flags.fear && !e.findBuff('gyegrd_a[exist]')) {
-          const env = chapter16Environment(b);
+          const env = chapter16Shadow(b);
           for (let dr = -1; dr <= 1; dr++) for (let dc = -1; dc <= 1; dc++) {
-            const key = (e.tileR + dr) * COLS + e.tileC + dc;
-            env.shadowSuppressedUntil.set(key, b.time + bb(r, 'TileEscapeShadowManager', 'times'));
+            env.suppressShadow(e.tileR + dr, e.tileC + dc, bb(r, 'TileEscapeShadowManager', 'times'));
           }
         }
       }

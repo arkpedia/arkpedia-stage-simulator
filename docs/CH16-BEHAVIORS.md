@@ -61,6 +61,31 @@ There are no special shadow tiles or devices on this source map. Other chapter 1
 maps still require their own shadow/device review, including miner attacks on
 obstructing rock walls. Their admission is outside this five-controller change.
 
+### Device continuation
+
+`extract-ch16-devices.py` now retains the facility, Hidden Tunnel and Rock Wall
+prefab graphs and their transitive native template closure. It verifies the token
+bundle and template holder against the existing CN inventory, and verifies the
+character/skill/range table bytes before retaining their relevant rows. The
+result is `data/candidates/arkpedia-ch16-device-source.json`; it supplies evidence,
+not admission approval. Enemy records and stage geometry still come from the
+canonical `arkpedia-data` flow.
+
+The shadow environment now distinguishes persistent fields from temporary miner
+escape. It combines overlapping live-source fields, ends fields with the source
+deployment life, and restores shadow when an escape pulse expires. The facility's
+21-tile `x-2` field and miner's nine-tile `x-4` escape range are checked against
+the retained tables. Miner pulses now update this queryable state, with bounds
+checks to prevent an off-map column from aliasing the preceding row. Registering
+a field is only one part of the facility contract: structure/miner interaction,
+damage scaling and the tunnel's branch summons/manual command still require
+integration before 16-3 can be admitted. No new stage is admitted by this work.
+
+```sh
+.cache/map-env/bin/python tools/arkpedia/extract-ch16-devices.py --check
+node --test test/arkpedia-ch16-shadow.test.js
+```
+
 ```sh
 node tools/arkpedia/enemy-support.mjs --candidate-ch16
 node tools/arkpedia/build-stage.mjs \
