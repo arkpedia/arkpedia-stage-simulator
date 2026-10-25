@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import test from'node:test';import assert from'node:assert/strict';
-import{mkdtemp,rm}from'node:fs/promises';import{fileURLToPath,pathToFileURL}from'node:url';import{join,resolve}from'node:path';
+import{mkdtemp,rm,mkdir,rmdir,stat}from'node:fs/promises';import{fileURLToPath,pathToFileURL}from'node:url';import{join,resolve}from'node:path';import{tmpdir}from'node:os';
 import data from'../data/arkpedia-mvp.json' with{type:'json'};
 import source from'../data/candidates/arkpedia-predefined-tutorial-source.json' with{type:'json'};
 import{StandardBattle}from'../server/sim/arkpedia.js';import{defaultBuild}from'../shared/arkpedia/loadout.js';
@@ -9,8 +9,12 @@ import{installViyPredefined,selectedViyPredefined,applyViyTutorialSp,VIY_PREDEFI
 const ID='char_4226_veen',near=(a,b)=>assert.ok(Math.abs(a-b)<1e-6,`${a} != ${b}`);
 function fixture(){const d=structuredClone(data);d.stage.geometry.waves[0].spawns=[];d.stage.battle.dp_per_second=0;
  const b=new StandardBattle(d,{operators:[defaultBuild(d.operators.char_122_beagle)]});b.autoFinish=false;b.setViewport('fullscreen-workspace');b.grid.tiles=b.grid.tiles.map(t=>({...t,height:'LOW',build:'ALL',pass:'ALL'}));return b;}
-async function withCache(fn){const root=resolve(fileURLToPath(new URL('../.cache/',import.meta.url))),prefix=join(root,'tutorial-proof-'),dir=await mkdtemp(prefix);
+async function withCache(fn,root=fileURLToPath(new URL('../.cache/',import.meta.url))){root=resolve(root);await mkdir(root,{recursive:true});const prefix=join(root,'tutorial-proof-'),dir=await mkdtemp(prefix);
  try{return await fn(pathToFileURL(dir+'/'));}finally{if(!resolve(dir).startsWith(prefix))throw Error('Unsafe tutorial cache cleanup');await rm(dir,{recursive:true,force:true});}}
+test('tutorial test setup creates an absent cache parent on a fresh checkout',async()=>{
+ const outer=await mkdtemp(join(tmpdir(),'arkpedia-tutorial-root-')),root=join(outer,'fresh-cache');
+ try{await withCache(async cache=>assert.ok((await stat(fileURLToPath(cache))).isDirectory()),root);}finally{await rmdir(root);await rmdir(outer);}
+});
 test('three pinned scripts and all seven canonical actions reproduce from a cold verified cache',async()=>{
  const urls=[];await withCache(async cacheDir=>{const actual=await predefinedTutorialSource({fetching:true,cacheDir,fetchImpl:async url=>{
   urls.push(url);const script=Object.values(source.scripts).find(r=>url.endsWith(r.source.path));assert.ok(script);return{ok:true,arrayBuffer:async()=>Buffer.from(script.originalText)};

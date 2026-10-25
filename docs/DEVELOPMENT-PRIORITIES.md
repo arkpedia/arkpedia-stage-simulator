@@ -30,7 +30,9 @@ stage admission; these helpers do not open public module selection.
 The three exact 17-16 tutorial scripts now have checksum-pinned source intake.
 The preset Viy body has a separate internal native-controller instance, and its
 literal EnsureMinSp(50) command targets only that captured deployment life.
-Dialog pausing/completion, hidden-card delivery and native initial FSM timing
+An explicit hidden-card action receiver now registers the four exact records
+and exposes each bench card only on its own literal activation action. Dialog
+pausing/completion, canonical fragment dispatch and native initial FSM timing
 remain unconnected, so canonical 17-16 remains held.
 Rockbreaker's eligible split animation now consumes live `slow_down` elapsed
 work for both release and completion, rather than fixed world-time callbacks.
@@ -1729,3 +1731,57 @@ receiver also ran in real headless Edge: it constructed the separate one-slot
 preset, modified SP from 24 to the engine cap 49, and activated its real S3
 through the private control key with no simulator errors. This browser fixture
 does not connect the canonical dialog/card scheduler or admit the stage.
+
+## Exact 17-16 hidden-card delivery and atomic staged records
+
+DataSource now has an explicit per-battle registerChessRecords operation for
+source-reviewed staged records. It prepares the complete batch before mutation,
+rejects selected/fallback/cached-definition conflicts, invalidates cached misses
+and preserves existing definition identities. It copies the caller's dictionary
+and freezes copied records/defs, so one battle cannot register into another
+battle's input. Default and explicit loadout resolution use the existing path,
+including through loadout views. No existing getter is replaced or wrapped.
+
+The internal 17-16 card adapter registers the four exact source-backed module
+records while their deployment entries remain absent. Hidden cards cannot
+spend DP, consume a deployment slot or enter through free skill delivery. Its
+receiver accepts only one of the four complete literal ACTIVATE_PREDEFINED
+records, including alias, preDelay and all source flags. Each action exposes
+only its own source bench entry. Duplicate delivery is idempotent and cannot
+reset payment, deployments, the first-use cost reduction or redeployment
+cooldown. Replaced registrations/entries, changed actions, late/duplicate
+installation and battle completion fail closed or cancel the receiver.
+
+The delivered cards use the real deployment, module, immutable payment/refund
+and cooldown paths. A controlled field containing preset Viy and all four cards
+checks source module SP and Medic ATK interactions and Viy's real private S3
+control. Kestrel pays nine DP on first deployment, refunds four on withdrawal,
+and the duplicate activation leaves his deployment count and cooldown intact;
+his next ordinary cost is nineteen. Constructor selection remains closed for
+the module builds, and the predefined builder guard and stage catalogue remain
+unchanged.
+
+All 47 targeted card/tutorial/loadout cases passed, including eleven new
+registration/card cases. The expanded focused run passed all 1,644 locally
+available cases. A persistent real-browser engine regression also passed in
+headless Edge with all five preset roles and the source cards, their costs,
+SP/ATK effects, SP command and refund/cooldown behavior. Hosted continuation
+now runs this browser fixture alongside the existing 17-12 UI check. It is a
+separate engine fixture, not a canonical stage-clear or dialog/UI parity result.
+
+This adapter receives actions explicitly; it does not schedule them or infer
+absolute battle time from fragment-relative preDelay. Dialog pause/completion,
+canonical fragment dispatch and initial native FSM timing remain open before
+canonical 17-16 integration/admission. Generic card redeployment accounting is
+an explicit existing-engine mapping, not proof of the client's predefined-card
+withdrawal/regeneration rules. Public stage/module selection remains unchanged.
+
+The preceding tutorial continuation 40241338666 failed its Linux and Windows
+focused jobs because the new tutorial tests called mkdtemp under .cache without
+first creating that parent on a fresh checkout. This was a test-setup defect;
+the helper now creates its parent, with a separate regression that starts from
+an absent nested cache directory. All 48 final targeted checks passed, including
+that fresh-cache regression. The earlier failed run is not reported as success.
+The final expanded focused run passed all 1,645 locally available cases after
+the setup correction. The real-browser engine fixture also passed. The four
+quarantined tests remain in Git and continue to run in hosted validation.

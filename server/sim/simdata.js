@@ -536,6 +536,31 @@ export class DataSource {
   rawStage(id) { return this.raw.stages[id] ?? this.fallback?.rawStage(id) ?? null; }
   rawWave(id) { return this.raw.waves[id] ?? this.fallback?.rawWave(id) ?? null; }
 
+  /** Add source-reviewed per-battle staged records without replacing a selected
+   * or fallback definition. Prepare the entire batch before changing the view;
+   * cached misses must not hide a subsequently delivered predefined card. */
+  registerChessRecords(records) {
+    if (!records || typeof records !== 'object' || Array.isArray(records)) throw Error('Invalid staged chess records');
+    const prepared = new Map();
+    for (const [id, record] of Object.entries(records)) {
+      if (!id || id.includes('|') || !record || typeof record !== 'object'
+        || (record.chessId ?? record.id ?? id) !== id || this.rawChess(id)
+        || [...this._chess].some(([key, def]) => def && (key === id || key.startsWith(id + '|'))))
+        throw Error('Staged chess record conflicts with an existing definition: ' + id);
+      const raw = freezeDef(structuredClone(record));
+      const lo = resolveLoadout(raw, null), def = normalizeChess({ chessId: id, ...loadoutRecord(raw, lo) }); def.loadout = lo;
+      prepared.set(id, { raw, def: freezeDef(def) });
+    }
+    // Copy the dictionary: registering in this battle must not mutate the
+    // caller's input map or another DataSource built from that same input.
+    this.raw.chess = { ...this.raw.chess, ...Object.fromEntries([...prepared].map(([id, p]) => [id, p.raw])) };
+    for (const [id, p] of prepared) {
+      for (const key of this._chess.keys()) if (key === id || key.startsWith(id + '|')) this._chess.delete(key);
+      this._chess.set(id, p.def);
+    }
+    return new Map([...prepared].map(([id, p]) => [id, p.def]));
+  }
+
   /**
    * Chess def for the default loadout, or for `loadout` `{ skillIndex, moduleId }` (DESIGN §16; resolved with
    * resolveLoadout — illegal choices fall back to the default). `def.loadout` = the resolved loadout (null for records
