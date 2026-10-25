@@ -541,7 +541,7 @@ export class Battle {
         const pp = this._pp(p.ownerPlayerId ?? this._ownerForTile(p.pos ?? this._routeFor(p.routeIndex, p.route)?.start));
         if (pp) pp.total--;
       }
-      this.unspawned.push({ enemyKey: p.enemyKey, time: p.time, tag: p.tag ?? null, sourcePlayerId: p.sourcePlayerId ?? null });
+      this.unspawned.push({ enemyKey: p.enemyKey, time: p.time, ...(p.dormant ? { activationPending: true } : {}), tag: p.tag ?? null, sourcePlayerId: p.sourcePlayerId ?? null });
     }
     this._pending = [];
     this._finish('timeout');
@@ -763,16 +763,63 @@ export class Battle {
   // =============================================================================================================
   // spawns
 
+  /** Reserve counted, dormant spawns for an owned wave. Activation measures
+   * each reviewed offset from the actual wave boundary, never a guessed time. */
+  reserveEnemySpawns(spawns, owner) {
+    if (!owner || !['object', 'function'].includes(typeof owner) || this.finished || this._endReq)
+      throw Error('Enemy spawn reservation requires a live owner');
+    if (!Array.isArray(spawns) || !spawns.length || spawns.length > MAX_ALIVE_ENEMIES) throw Error('Enemy spawn reservation requires entries');
+    const prepared = spawns.map(s => {
+      if (!s || !Number.isFinite(s.time) || s.time < 0 || (s.count ?? 1) !== 1 || !s.enemyKey)
+        throw Error('Invalid reserved enemy spawn');
+      const copy = structuredClone(s);
+      const def = copy.def ? copy.def.type === 'enemy' && copy.def.immune instanceof Set ? copy.def : normalizeEnemy(copy.enemyKey, copy.def) : this.data.getEnemy(copy.enemyKey);
+      if (!def) throw Error('Unknown reserved enemy spawn');
+      copy.def = def;
+      if (this.enemyOverrides[copy.enemyKey]) throw Error('Unreviewed reserved enemy override');
+      copy.rejectRuntimeOverride = true;
+      return copy;
+    });
+    const pending = [], reservation = { spawned: [] };
+    for (const s of prepared) {
+      const at = this._pending.length;
+      this._queueSpawn(s, true);
+      const p = this._pending[at]; p.dormant = true; p.reservation = reservation; p.reservationIndex = pending.length; pending.push(p);
+    }
+    const sort = () => this._pending.sort((a,b) => Number(!!a.dormant)-Number(!!b.dormant) || a.time-b.time || a.seq-b.seq);
+    sort(); let state = 'dormant'; const thisBattle = this;
+    const live = () => !this.finished && !this._endReq;
+    return Object.freeze({
+      get pendingCount() { return pending.filter(p => thisBattle._pending.includes(p)).length; },
+      get spawned() { return Object.freeze([...reservation.spawned]); },
+      activate: () => {
+        if (!live() || state !== 'dormant') return false;
+        state = 'active';
+        for (const p of pending) { p.time += this.time; p.dormant = false; }
+        sort(); return true;
+      },
+      cancel: () => {
+        if (!live() || state === 'cancelled') return false;
+        state = 'cancelled'; const own = new Set(pending);
+        for (const p of this._pending.filter(p => own.has(p))) if (p.precounted) {
+          this.total--; const pp = this._pp(p.ownerPlayerId ?? this._ownerForTile(p.pos ?? this._routeFor(p.routeIndex,p.route)?.start));
+          if (pp) pp.total--;
+        }
+        this._pending = this._pending.filter(p => !own.has(p)); return true;
+      },
+    });
+  }
+
   _queueSpawn(s, precount) {
     if (Number(s.time) === Infinity) return; // "never" — not scheduled, not counted
     // capped: a bogus count (Infinity, 1e9) would otherwise hang the constructor / exhaust memory
     const count = Math.min(MAX_ALIVE_ENEMIES, Math.max(1, Math.floor(fin(s.count ?? 1, 1)) || 1));
     const interval = Math.max(0, fin(s.interval, 0));
-    const def = this.data.getEnemy(s.enemyKey);
+    const def = s.def ?? this.data.getEnemy(s.enemyKey);
     for (let i = 0; i < count; i++) {
       const p = {
-        time: Math.max(0, fin(s.time, 0)) + i * interval, enemyKey: s.enemyKey, routeIndex: s.routeIndex ?? 0, route: s.route ?? null,
-        mods: s.mods ?? null, sourcePlayerId: s.sourcePlayerId ?? null, bounty: s.bounty ?? null, tag: s.tag ?? null,
+        time: Math.max(0, fin(s.time, 0)) + i * interval, enemyKey: s.enemyKey, def: s.def, routeIndex: s.routeIndex ?? 0, route: s.route ?? null,
+        mods: s.mods ?? null, rejectRuntimeOverride: s.rejectRuntimeOverride, sourcePlayerId: s.sourcePlayerId ?? null, bounty: s.bounty ?? null, tag: s.tag ?? null,
         ownerPlayerId: s.ownerPlayerId ?? null, pos: s.pos ?? null, seq: ++this._spawnSeq, countInTotal: s.countInTotal, holdsBattle: s.holdsBattle,
       };
       p.counted = p.countInTotal ?? (!(def && def.notCountInTotal) && p.tag !== 'boss' && p.tag !== 'part');
@@ -789,9 +836,12 @@ export class Battle {
 
   _processSpawns() {
     const now = this.time + 1e-9;
-    while (this._pending.length && this._pending[0].time <= now) {
+    while (this._pending.length && !this.finished && !this._endReq && !this._pending[0].dormant && this._pending[0].time <= now) {
       const p = this._pending.shift();
-      this._safe(() => this.spawnEnemy(p.enemyKey, { ...p, _precounted: p.precounted }), 'spawnEnemy');
+      this._safe(() => {
+        const life = this._deploySeq + 1, unit = this.spawnEnemy(p.enemyKey, { ...p, _precounted: p.precounted });
+        if (p.reservation) p.reservation.spawned.push(Object.freeze({ unit, unitLife: life, time: this.time, index: p.reservationIndex }));
+      }, 'spawnEnemy');
     }
   }
 
@@ -833,6 +883,7 @@ export class Battle {
     if (!def) def = this.data.getEnemy(enemyKey);
     if (!def) { this.log(`unknown enemy ${enemyKey}`); def = { ...FALLBACK_ENEMY, id: enemyKey, key: enemyKey }; }
     const ov = this.enemyOverrides[def.key] ?? this.enemyOverrides[enemyKey];
+    if (ov && opts.rejectRuntimeOverride) throw Error('Unreviewed reserved enemy override');
     if (ov && ov.stats) {
       const st = ov.stats;
       def = { ...def,

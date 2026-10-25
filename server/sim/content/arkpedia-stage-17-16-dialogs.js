@@ -5,6 +5,7 @@
 import tutorial from '../../../data/candidates/arkpedia-predefined-tutorial-source.json' with{type:'json'};
 import{applyViyTutorialSp}from'./arkpedia-viy-predefined.js';
 const retained=JSON.stringify(tutorial),owners=new WeakMap();
+export const ownsStage17_16Dialogs=(b,controller)=>{const entry=owners.get(b);return!!entry&&entry.controller===controller&&entry.active();};
 export function installStage17_16Dialogs(b,{source=tutorial}={}){
  if(JSON.stringify(source)!==retained)throw Error('Unreviewed 17-16 dialog source');
  source=structuredClone(source);
@@ -41,5 +42,5 @@ export function installStage17_16Dialogs(b,{source=tutorial}={}){
   },
   stop(){if(stopped)return;stopped=true;pending=null;active=null;hold?.release();hold=null;b.off(handle);},
  };
- const handle=b.on('battleEnd',()=>controller.stop(),{owner:controller});owners.set(b,controller);return controller;
+ const handle=b.on('battleEnd',()=>controller.stop(),{owner:controller});owners.set(b,{controller,active:()=>!stopped});return Object.freeze(controller);
 }

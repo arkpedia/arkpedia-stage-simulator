@@ -1,0 +1,1494 @@
+{
+  "schemaVersion": 1,
+  "testOnly": true,
+  "admitted": false,
+  "frameParity": false,
+  "scope": "Internal exact 17-16 ordered actions, routes and enemy records. Dynamic wave-clear and tutorial pause use explicit regular-engine mappings; no stage or native scheduler/FSM admission.",
+  "sources": {
+    "data/candidates/arkpedia-stage-17-16-source.json": {
+      "path": "data/candidates/arkpedia-stage-17-16-source.json",
+      "sha256": "9f152c8905bed50f22385d46c6e6093b786f7f01622d51031ecb29a57612feb3"
+    },
+    "data/arkpedia-canonical-stage-17-16.lock.json": {
+      "path": "data/arkpedia-canonical-stage-17-16.lock.json",
+      "sha256": "c5fc657f8b72bb90f58523ea8c99cb03ec04cd62e1560cea5100b97e48bf518d"
+    },
+    "data/candidates/arkpedia-ch16-enemy-support.json": {
+      "path": "data/candidates/arkpedia-ch16-enemy-support.json",
+      "sha256": "bbd2dc08358c1d9201ff80f2d91d67643113bb284d545177f6b9252f2198aa93"
+    },
+    "data/candidates/arkpedia-enemy-records.canonical.json": {
+      "path": "data/candidates/arkpedia-enemy-records.canonical.json",
+      "sha256": "c69db59414b2fbd6c1a8327c9c22ddb21cfdaadc4e89a97a824679f61ec07b93"
+    }
+  },
+  "layout": {
+    "stage": {
+      "id": "17-16",
+      "tokens": [],
+      "rows": [
+        "############",
+        "##hhrrrrr###",
+        "#hhrrrrrrrrS",
+        "ErrrrrrrrrrS",
+        "###hrrrrrrrS",
+        "ErrrrrrrrrrS",
+        "#hhrrrrrrrrS",
+        "##hhrrrrr###",
+        "############"
+      ],
+      "legend": {
+        "#": {
+          "height": "HIGH",
+          "build": "NONE",
+          "pass": "FLY",
+          "key": "tile_forbidden"
+        },
+        "h": {
+          "height": "HIGH",
+          "build": "RANGED",
+          "pass": "FLY",
+          "key": "tile_wall"
+        },
+        "r": {
+          "height": "LOW",
+          "build": "MELEE",
+          "pass": "ALL",
+          "key": "tile_road"
+        },
+        "S": {
+          "height": "LOW",
+          "build": "NONE",
+          "pass": "ALL",
+          "key": "tile_start"
+        },
+        "E": {
+          "height": "LOW",
+          "build": "NONE",
+          "pass": "ALL",
+          "key": "tile_end"
+        }
+      }
+    },
+    "rect": {
+      "r0": 0,
+      "r1": 8,
+      "c0": 0,
+      "c1": 11
+    },
+    "routes": [
+      {
+        "motion": "WALK",
+        "start": [
+          5,
+          11
+        ],
+        "end": [
+          3,
+          0
+        ],
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "pos": [
+              5,
+              10
+            ],
+            "time": 0
+          },
+          {
+            "type": "WAIT",
+            "pos": [
+              5,
+              10
+            ],
+            "time": 3
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              3,
+              0
+            ],
+            "time": 0
+          }
+        ]
+      },
+      {
+        "motion": "WALK",
+        "start": [
+          3,
+          11
+        ],
+        "end": [
+          5,
+          0
+        ],
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "pos": [
+              3,
+              10
+            ],
+            "time": 0
+          },
+          {
+            "type": "WAIT",
+            "pos": [
+              3,
+              10
+            ],
+            "time": 3
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              5,
+              0
+            ],
+            "time": 0
+          }
+        ]
+      },
+      {
+        "motion": "WALK",
+        "start": [
+          4,
+          11
+        ],
+        "end": [
+          3,
+          0
+        ],
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "pos": [
+              4,
+              10
+            ],
+            "time": 0
+          },
+          {
+            "type": "WAIT",
+            "pos": [
+              4,
+              10
+            ],
+            "time": 50
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              4,
+              4
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              3,
+              0
+            ],
+            "time": 0
+          }
+        ]
+      },
+      {
+        "motion": "WALK",
+        "start": [
+          5,
+          11
+        ],
+        "end": [
+          3,
+          0
+        ],
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "pos": [
+              5,
+              9
+            ],
+            "time": 0
+          },
+          {
+            "type": "WAIT",
+            "pos": [
+              5,
+              9
+            ],
+            "time": 10
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              3,
+              0
+            ],
+            "time": 0
+          }
+        ]
+      },
+      {
+        "motion": "WALK",
+        "start": [
+          6,
+          11
+        ],
+        "end": [
+          3,
+          0
+        ],
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "pos": [
+              6,
+              9
+            ],
+            "time": 0
+          },
+          {
+            "type": "WAIT",
+            "pos": [
+              6,
+              9
+            ],
+            "time": 10
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              3,
+              0
+            ],
+            "time": 0
+          }
+        ]
+      },
+      {
+        "motion": "WALK",
+        "start": [
+          5,
+          11
+        ],
+        "end": [
+          3,
+          0
+        ],
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "pos": [
+              5,
+              10
+            ],
+            "time": 0
+          },
+          {
+            "type": "WAIT",
+            "pos": [
+              5,
+              10
+            ],
+            "time": 10
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              3,
+              0
+            ],
+            "time": 0
+          }
+        ]
+      },
+      {
+        "motion": "WALK",
+        "start": [
+          6,
+          11
+        ],
+        "end": [
+          3,
+          0
+        ],
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "pos": [
+              6,
+              10
+            ],
+            "time": 0
+          },
+          {
+            "type": "WAIT",
+            "pos": [
+              6,
+              10
+            ],
+            "time": 10
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              3,
+              0
+            ],
+            "time": 0
+          }
+        ]
+      },
+      {
+        "motion": "WALK",
+        "start": [
+          3,
+          11
+        ],
+        "end": [
+          5,
+          0
+        ],
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "pos": [
+              3,
+              9
+            ],
+            "time": 0
+          },
+          {
+            "type": "WAIT",
+            "pos": [
+              3,
+              9
+            ],
+            "time": 10
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              5,
+              0
+            ],
+            "time": 0
+          }
+        ]
+      },
+      {
+        "motion": "WALK",
+        "start": [
+          2,
+          11
+        ],
+        "end": [
+          5,
+          0
+        ],
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "pos": [
+              2,
+              9
+            ],
+            "time": 0
+          },
+          {
+            "type": "WAIT",
+            "pos": [
+              2,
+              9
+            ],
+            "time": 10
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              5,
+              0
+            ],
+            "time": 0
+          }
+        ]
+      },
+      {
+        "motion": "WALK",
+        "start": [
+          3,
+          11
+        ],
+        "end": [
+          5,
+          0
+        ],
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "pos": [
+              3,
+              10
+            ],
+            "time": 0
+          },
+          {
+            "type": "WAIT",
+            "pos": [
+              3,
+              10
+            ],
+            "time": 10
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              5,
+              0
+            ],
+            "time": 0
+          }
+        ]
+      },
+      {
+        "motion": "WALK",
+        "start": [
+          2,
+          11
+        ],
+        "end": [
+          5,
+          0
+        ],
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "pos": [
+              2,
+              10
+            ],
+            "time": 0
+          },
+          {
+            "type": "WAIT",
+            "pos": [
+              2,
+              10
+            ],
+            "time": 10
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              5,
+              0
+            ],
+            "time": 0
+          }
+        ]
+      },
+      {
+        "motion": "WALK",
+        "start": [
+          0,
+          0
+        ],
+        "end": [
+          0,
+          0
+        ],
+        "checkpoints": []
+      },
+      {
+        "motion": "WALK",
+        "start": [
+          4,
+          8
+        ],
+        "end": [
+          5,
+          0
+        ],
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "pos": [
+              3.99,
+              7.87
+            ],
+            "time": 0
+          },
+          {
+            "type": "WAIT",
+            "pos": [
+              3.99,
+              7.87
+            ],
+            "time": 10
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              4,
+              4
+            ],
+            "time": 0
+          },
+          {
+            "type": "WAIT",
+            "pos": [
+              4,
+              4
+            ],
+            "time": 50
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              5,
+              0
+            ],
+            "time": 0
+          }
+        ]
+      },
+      {
+        "motion": "WALK",
+        "start": [
+          5,
+          9
+        ],
+        "end": [
+          5,
+          0
+        ],
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "pos": [
+              5,
+              8.86
+            ],
+            "time": 0
+          },
+          {
+            "type": "WAIT",
+            "pos": [
+              5,
+              8.86
+            ],
+            "time": 15
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              5.03,
+              4.65
+            ],
+            "time": 0
+          },
+          {
+            "type": "WAIT",
+            "pos": [
+              5.03,
+              4.65
+            ],
+            "time": 40
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              5,
+              0
+            ],
+            "time": 0
+          }
+        ]
+      },
+      {
+        "motion": "WALK",
+        "start": [
+          3,
+          9
+        ],
+        "end": [
+          3,
+          0
+        ],
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "pos": [
+              3,
+              8.81
+            ],
+            "time": 0
+          },
+          {
+            "type": "WAIT",
+            "pos": [
+              3,
+              8.81
+            ],
+            "time": 15
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              3.03,
+              4.76
+            ],
+            "time": 0
+          },
+          {
+            "type": "WAIT",
+            "pos": [
+              3.03,
+              4.76
+            ],
+            "time": 40
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              3,
+              0
+            ],
+            "time": 0
+          }
+        ]
+      }
+    ]
+  },
+  "records": {
+    "enemy_10210_muwiz_2": {
+      "key": "enemy_10210_muwiz_2",
+      "prefabKey": "enemy_10210_muwiz_2",
+      "name": "Ursus War Caster",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 20000,
+        "atk": 750,
+        "def": 900,
+        "res": 40,
+        "moveSpeed": 0.35,
+        "bat": 5,
+        "aspd": 100,
+        "rangeRadius": 2.8,
+        "rawRangeRadius": 2.8,
+        "blockCnt": 1,
+        "massLevel": 3,
+        "lpr": 0,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 1,
+        "hitRateArts": 1,
+        "dmgType": "arts",
+        "dmgTypes": [
+          "arts"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": true,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Attacks deal Arts splash damage",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Has a shield that protects against Physical and Arts damage. Shield is broken after taking a certain amount of damage in a single hit. Gains greatly increased DEF when shield is active, while RES is reduced. Shield is created when affected by a <Leak Source>.",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Locks on to allied units, continuously dealing Arts damage and stealing a portion of the target's ATK.",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "Shiled.hp_ratio": 1,
+          "Shiled.def": 0.2,
+          "Shiled.magic_resistance": -20,
+          "StealAtk.steal_atk": 50,
+          "StealAtk.steal_atk_max": 2050,
+          "Shiled.max_damage": 1200
+        },
+        "bbStr": {},
+        "groups": {
+          "Shiled": [
+            "def",
+            "hp_ratio",
+            "magic_resistance",
+            "max_damage"
+          ],
+          "StealAtk": [
+            "steal_atk",
+            "steal_atk_max"
+          ]
+        }
+      },
+      "skills": [
+        {
+          "prefabKey": "GetShield",
+          "priority": 0,
+          "cooldown": 5,
+          "initCooldown": 5,
+          "spCost": 0,
+          "bb": {
+            "dynamic_add": 1000
+          },
+          "bbStr": {}
+        },
+        {
+          "prefabKey": "LockDamage",
+          "priority": 0,
+          "cooldown": 15,
+          "initCooldown": 15,
+          "spCost": 0,
+          "bb": {
+            "atk_scale": 0.4,
+            "projectile_life_time": 7,
+            "hit_duration": 7
+          },
+          "bbStr": {}
+        },
+        {
+          "prefabKey": "Leave",
+          "priority": 1,
+          "cooldown": 5,
+          "initCooldown": 120,
+          "spCost": 0,
+          "bb": {},
+          "bbStr": {}
+        }
+      ],
+      "notCountInTotal": false,
+      "tags": {}
+    },
+    "enemy_10120_uaghst": {
+      "key": "enemy_10120_uaghst",
+      "prefabKey": "enemy_10120_uaghst",
+      "name": "Army Infiltrator",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "NONE",
+      "stats": {
+        "maxHp": 5000,
+        "atk": 400,
+        "def": 200,
+        "res": 0,
+        "moveSpeed": 1,
+        "bat": 2,
+        "aspd": 100,
+        "rangeRadius": 1,
+        "rawRangeRadius": 1,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Cannot be blocked.",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Can fight 1 <Miner Guerrilla> at a time",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "BlockMcreep.range_radius": 0.9,
+          "BlockMcreep.block_mcreep_cnt": 1,
+          "BlockMcreep.range_radius_add": 0.1
+        },
+        "bbStr": {},
+        "groups": {
+          "BlockMcreep": [
+            "block_mcreep_cnt",
+            "range_radius",
+            "range_radius_add"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_10125_uacomd": {
+      "key": "enemy_10125_uacomd",
+      "prefabKey": "enemy_10125_uacomd",
+      "name": "Army Frontline Commander",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 15000,
+        "atk": 1000,
+        "def": 500,
+        "res": 40,
+        "moveSpeed": 0.7,
+        "bat": 2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 1,
+        "blockCnt": 1,
+        "massLevel": 2,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Gives <@eb.key>orders</> to Army enemies on the field",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Can fight 1 <Miner Guerrilla> at a time",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "BlockMcreep.range_radius": 0.9,
+          "BlockMcreep.block_mcreep_cnt": 1,
+          "BlockMcreep.range_radius_add": 0.1
+        },
+        "bbStr": {},
+        "groups": {
+          "BlockMcreep": [
+            "block_mcreep_cnt",
+            "range_radius",
+            "range_radius_add"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    }
+  },
+  "waves": [
+    {
+      "index": 0,
+      "duration": 58,
+      "waitForManagedEnemies": true,
+      "actions": [
+        {
+          "fragment": 0,
+          "actionIndex": 0,
+          "time": 3,
+          "action": {
+            "actionType": "SPAWN",
+            "managedByScheduler": true,
+            "key": "enemy_10120_uaghst",
+            "count": 1,
+            "preDelay": 3,
+            "interval": 1,
+            "routeIndex": 0,
+            "blockFragment": false,
+            "autoPreviewRoute": true,
+            "autoDisplayEnemyInfo": false,
+            "isUnharmfulAndAlwaysCountAsKilled": false,
+            "hiddenGroup": null,
+            "randomSpawnGroupKey": null,
+            "randomSpawnGroupPackKey": null,
+            "randomType": "ALWAYS",
+            "refreshType": "ALWAYS",
+            "weight": 0,
+            "dontBlockWave": false,
+            "forceBlockWaveInBranch": false
+          }
+        },
+        {
+          "fragment": 0,
+          "actionIndex": 1,
+          "time": 14,
+          "action": {
+            "actionType": "SPAWN",
+            "managedByScheduler": true,
+            "key": "enemy_10120_uaghst",
+            "count": 1,
+            "preDelay": 14,
+            "interval": 1,
+            "routeIndex": 1,
+            "blockFragment": false,
+            "autoPreviewRoute": true,
+            "autoDisplayEnemyInfo": false,
+            "isUnharmfulAndAlwaysCountAsKilled": false,
+            "hiddenGroup": null,
+            "randomSpawnGroupKey": null,
+            "randomSpawnGroupPackKey": null,
+            "randomType": "ALWAYS",
+            "refreshType": "ALWAYS",
+            "weight": 0,
+            "dontBlockWave": false,
+            "forceBlockWaveInBranch": false
+          }
+        },
+        {
+          "fragment": 1,
+          "actionIndex": 0,
+          "time": 24,
+          "action": {
+            "actionType": "SPAWN",
+            "managedByScheduler": true,
+            "key": "enemy_10125_uacomd",
+            "count": 1,
+            "preDelay": 0,
+            "interval": 1,
+            "routeIndex": 2,
+            "blockFragment": false,
+            "autoPreviewRoute": false,
+            "autoDisplayEnemyInfo": false,
+            "isUnharmfulAndAlwaysCountAsKilled": false,
+            "hiddenGroup": null,
+            "randomSpawnGroupKey": null,
+            "randomSpawnGroupPackKey": null,
+            "randomType": "ALWAYS",
+            "refreshType": "ALWAYS",
+            "weight": 0,
+            "dontBlockWave": false,
+            "forceBlockWaveInBranch": false
+          }
+        },
+        {
+          "fragment": 1,
+          "actionIndex": 1,
+          "time": 29,
+          "action": {
+            "actionType": "SPAWN",
+            "managedByScheduler": true,
+            "key": "enemy_10120_uaghst",
+            "count": 1,
+            "preDelay": 5,
+            "interval": 1,
+            "routeIndex": 3,
+            "blockFragment": false,
+            "autoPreviewRoute": false,
+            "autoDisplayEnemyInfo": false,
+            "isUnharmfulAndAlwaysCountAsKilled": false,
+            "hiddenGroup": null,
+            "randomSpawnGroupKey": null,
+            "randomSpawnGroupPackKey": null,
+            "randomType": "ALWAYS",
+            "refreshType": "ALWAYS",
+            "weight": 0,
+            "dontBlockWave": false,
+            "forceBlockWaveInBranch": false
+          }
+        },
+        {
+          "fragment": 1,
+          "actionIndex": 2,
+          "time": 29,
+          "action": {
+            "actionType": "SPAWN",
+            "managedByScheduler": true,
+            "key": "enemy_10120_uaghst",
+            "count": 1,
+            "preDelay": 5,
+            "interval": 1,
+            "routeIndex": 4,
+            "blockFragment": false,
+            "autoPreviewRoute": false,
+            "autoDisplayEnemyInfo": false,
+            "isUnharmfulAndAlwaysCountAsKilled": false,
+            "hiddenGroup": null,
+            "randomSpawnGroupKey": null,
+            "randomSpawnGroupPackKey": null,
+            "randomType": "ALWAYS",
+            "refreshType": "ALWAYS",
+            "weight": 0,
+            "dontBlockWave": false,
+            "forceBlockWaveInBranch": false
+          }
+        },
+        {
+          "fragment": 1,
+          "actionIndex": 3,
+          "time": 31,
+          "action": {
+            "actionType": "SPAWN",
+            "managedByScheduler": true,
+            "key": "enemy_10120_uaghst",
+            "count": 1,
+            "preDelay": 7,
+            "interval": 1,
+            "routeIndex": 5,
+            "blockFragment": false,
+            "autoPreviewRoute": false,
+            "autoDisplayEnemyInfo": false,
+            "isUnharmfulAndAlwaysCountAsKilled": false,
+            "hiddenGroup": null,
+            "randomSpawnGroupKey": null,
+            "randomSpawnGroupPackKey": null,
+            "randomType": "ALWAYS",
+            "refreshType": "ALWAYS",
+            "weight": 0,
+            "dontBlockWave": false,
+            "forceBlockWaveInBranch": false
+          }
+        },
+        {
+          "fragment": 1,
+          "actionIndex": 4,
+          "time": 31,
+          "action": {
+            "actionType": "SPAWN",
+            "managedByScheduler": true,
+            "key": "enemy_10120_uaghst",
+            "count": 1,
+            "preDelay": 7,
+            "interval": 1,
+            "routeIndex": 6,
+            "blockFragment": false,
+            "autoPreviewRoute": false,
+            "autoDisplayEnemyInfo": false,
+            "isUnharmfulAndAlwaysCountAsKilled": false,
+            "hiddenGroup": null,
+            "randomSpawnGroupKey": null,
+            "randomSpawnGroupPackKey": null,
+            "randomType": "ALWAYS",
+            "refreshType": "ALWAYS",
+            "weight": 0,
+            "dontBlockWave": false,
+            "forceBlockWaveInBranch": false
+          }
+        },
+        {
+          "fragment": 2,
+          "actionIndex": 0,
+          "time": 56,
+          "action": {
+            "actionType": "SPAWN",
+            "managedByScheduler": true,
+            "key": "enemy_10120_uaghst",
+            "count": 1,
+            "preDelay": 5,
+            "interval": 1,
+            "routeIndex": 7,
+            "blockFragment": false,
+            "autoPreviewRoute": false,
+            "autoDisplayEnemyInfo": false,
+            "isUnharmfulAndAlwaysCountAsKilled": false,
+            "hiddenGroup": null,
+            "randomSpawnGroupKey": null,
+            "randomSpawnGroupPackKey": null,
+            "randomType": "ALWAYS",
+            "refreshType": "ALWAYS",
+            "weight": 0,
+            "dontBlockWave": false,
+            "forceBlockWaveInBranch": false
+          }
+        },
+        {
+          "fragment": 2,
+          "actionIndex": 1,
+          "time": 56,
+          "action": {
+            "actionType": "SPAWN",
+            "managedByScheduler": true,
+            "key": "enemy_10120_uaghst",
+            "count": 1,
+            "preDelay": 5,
+            "interval": 1,
+            "routeIndex": 8,
+            "blockFragment": false,
+            "autoPreviewRoute": false,
+            "autoDisplayEnemyInfo": false,
+            "isUnharmfulAndAlwaysCountAsKilled": false,
+            "hiddenGroup": null,
+            "randomSpawnGroupKey": null,
+            "randomSpawnGroupPackKey": null,
+            "randomType": "ALWAYS",
+            "refreshType": "ALWAYS",
+            "weight": 0,
+            "dontBlockWave": false,
+            "forceBlockWaveInBranch": false
+          }
+        },
+        {
+          "fragment": 2,
+          "actionIndex": 2,
+          "time": 58,
+          "action": {
+            "actionType": "SPAWN",
+            "managedByScheduler": true,
+            "key": "enemy_10120_uaghst",
+            "count": 1,
+            "preDelay": 7,
+            "interval": 1,
+            "routeIndex": 9,
+            "blockFragment": false,
+            "autoPreviewRoute": false,
+            "autoDisplayEnemyInfo": false,
+            "isUnharmfulAndAlwaysCountAsKilled": false,
+            "hiddenGroup": null,
+            "randomSpawnGroupKey": null,
+            "randomSpawnGroupPackKey": null,
+            "randomType": "ALWAYS",
+            "refreshType": "ALWAYS",
+            "weight": 0,
+            "dontBlockWave": false,
+            "forceBlockWaveInBranch": false
+          }
+        },
+        {
+          "fragment": 2,
+          "actionIndex": 3,
+          "time": 58,
+          "action": {
+            "actionType": "SPAWN",
+            "managedByScheduler": true,
+            "key": "enemy_10120_uaghst",
+            "count": 1,
+            "preDelay": 7,
+            "interval": 1,
+            "routeIndex": 10,
+            "blockFragment": false,
+            "autoPreviewRoute": false,
+            "autoDisplayEnemyInfo": false,
+            "isUnharmfulAndAlwaysCountAsKilled": false,
+            "hiddenGroup": null,
+            "randomSpawnGroupKey": null,
+            "randomSpawnGroupPackKey": null,
+            "randomType": "ALWAYS",
+            "refreshType": "ALWAYS",
+            "weight": 0,
+            "dontBlockWave": false,
+            "forceBlockWaveInBranch": false
+          }
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "duration": 13.3,
+      "waitForManagedEnemies": true,
+      "actions": [
+        {
+          "fragment": 0,
+          "actionIndex": 0,
+          "time": 3,
+          "action": {
+            "actionType": "DIALOG",
+            "managedByScheduler": true,
+            "key": "Obt/Tutorial/Level/main_17-15_a",
+            "count": 1,
+            "preDelay": 3,
+            "interval": 1,
+            "routeIndex": 11,
+            "blockFragment": false,
+            "autoPreviewRoute": false,
+            "autoDisplayEnemyInfo": false,
+            "isUnharmfulAndAlwaysCountAsKilled": false,
+            "hiddenGroup": null,
+            "randomSpawnGroupKey": null,
+            "randomSpawnGroupPackKey": null,
+            "randomType": "ALWAYS",
+            "refreshType": "ALWAYS",
+            "weight": 0,
+            "dontBlockWave": false,
+            "forceBlockWaveInBranch": false
+          }
+        },
+        {
+          "fragment": 0,
+          "actionIndex": 1,
+          "time": 6,
+          "action": {
+            "actionType": "SPAWN",
+            "managedByScheduler": true,
+            "key": "enemy_10210_muwiz_2",
+            "count": 1,
+            "preDelay": 6,
+            "interval": 1,
+            "routeIndex": 12,
+            "blockFragment": false,
+            "autoPreviewRoute": false,
+            "autoDisplayEnemyInfo": false,
+            "isUnharmfulAndAlwaysCountAsKilled": false,
+            "hiddenGroup": null,
+            "randomSpawnGroupKey": null,
+            "randomSpawnGroupPackKey": null,
+            "randomType": "ALWAYS",
+            "refreshType": "ALWAYS",
+            "weight": 0,
+            "dontBlockWave": false,
+            "forceBlockWaveInBranch": false
+          }
+        },
+        {
+          "fragment": 0,
+          "actionIndex": 2,
+          "time": 9,
+          "action": {
+            "actionType": "SPAWN",
+            "managedByScheduler": true,
+            "key": "enemy_10210_muwiz_2",
+            "count": 1,
+            "preDelay": 9,
+            "interval": 1,
+            "routeIndex": 13,
+            "blockFragment": false,
+            "autoPreviewRoute": false,
+            "autoDisplayEnemyInfo": false,
+            "isUnharmfulAndAlwaysCountAsKilled": false,
+            "hiddenGroup": null,
+            "randomSpawnGroupKey": null,
+            "randomSpawnGroupPackKey": null,
+            "randomType": "ALWAYS",
+            "refreshType": "ALWAYS",
+            "weight": 0,
+            "dontBlockWave": false,
+            "forceBlockWaveInBranch": false
+          }
+        },
+        {
+          "fragment": 0,
+          "actionIndex": 3,
+          "time": 9,
+          "action": {
+            "actionType": "SPAWN",
+            "managedByScheduler": true,
+            "key": "enemy_10210_muwiz_2",
+            "count": 1,
+            "preDelay": 9,
+            "interval": 1,
+            "routeIndex": 14,
+            "blockFragment": false,
+            "autoPreviewRoute": false,
+            "autoDisplayEnemyInfo": false,
+            "isUnharmfulAndAlwaysCountAsKilled": false,
+            "hiddenGroup": null,
+            "randomSpawnGroupKey": null,
+            "randomSpawnGroupPackKey": null,
+            "randomType": "ALWAYS",
+            "refreshType": "ALWAYS",
+            "weight": 0,
+            "dontBlockWave": false,
+            "forceBlockWaveInBranch": false
+          }
+        },
+        {
+          "fragment": 0,
+          "actionIndex": 4,
+          "time": 12,
+          "action": {
+            "actionType": "DIALOG",
+            "managedByScheduler": true,
+            "key": "Obt/Tutorial/Level/main_17-15_b",
+            "count": 1,
+            "preDelay": 12,
+            "interval": 1,
+            "routeIndex": 15,
+            "blockFragment": false,
+            "autoPreviewRoute": false,
+            "autoDisplayEnemyInfo": false,
+            "isUnharmfulAndAlwaysCountAsKilled": false,
+            "hiddenGroup": null,
+            "randomSpawnGroupKey": null,
+            "randomSpawnGroupPackKey": null,
+            "randomType": "ALWAYS",
+            "refreshType": "ALWAYS",
+            "weight": 0,
+            "dontBlockWave": false,
+            "forceBlockWaveInBranch": false
+          }
+        },
+        {
+          "fragment": 0,
+          "actionIndex": 5,
+          "time": 12.1,
+          "action": {
+            "actionType": "STORY",
+            "managedByScheduler": true,
+            "key": "Obt/Tutorial/Level/main_17-15_c",
+            "count": 1,
+            "preDelay": 12.1,
+            "interval": 1,
+            "routeIndex": 16,
+            "blockFragment": false,
+            "autoPreviewRoute": false,
+            "autoDisplayEnemyInfo": false,
+            "isUnharmfulAndAlwaysCountAsKilled": false,
+            "hiddenGroup": null,
+            "randomSpawnGroupKey": null,
+            "randomSpawnGroupPackKey": null,
+            "randomType": "ALWAYS",
+            "refreshType": "ALWAYS",
+            "weight": 0,
+            "dontBlockWave": false,
+            "forceBlockWaveInBranch": false
+          }
+        },
+        {
+          "fragment": 0,
+          "actionIndex": 6,
+          "time": 13,
+          "action": {
+            "actionType": "ACTIVATE_PREDEFINED",
+            "managedByScheduler": true,
+            "key": "char_473_mberry#1",
+            "count": 1,
+            "preDelay": 13,
+            "interval": 1,
+            "routeIndex": 17,
+            "blockFragment": false,
+            "autoPreviewRoute": false,
+            "autoDisplayEnemyInfo": false,
+            "isUnharmfulAndAlwaysCountAsKilled": false,
+            "hiddenGroup": null,
+            "randomSpawnGroupKey": null,
+            "randomSpawnGroupPackKey": null,
+            "randomType": "ALWAYS",
+            "refreshType": "ALWAYS",
+            "weight": 0,
+            "dontBlockWave": false,
+            "forceBlockWaveInBranch": false
+          }
+        },
+        {
+          "fragment": 0,
+          "actionIndex": 7,
+          "time": 13.1,
+          "action": {
+            "actionType": "ACTIVATE_PREDEFINED",
+            "managedByScheduler": true,
+            "key": "char_128_plosis#1",
+            "count": 1,
+            "preDelay": 13.1,
+            "interval": 1,
+            "routeIndex": 18,
+            "blockFragment": false,
+            "autoPreviewRoute": false,
+            "autoDisplayEnemyInfo": false,
+            "isUnharmfulAndAlwaysCountAsKilled": false,
+            "hiddenGroup": null,
+            "randomSpawnGroupKey": null,
+            "randomSpawnGroupPackKey": null,
+            "randomType": "ALWAYS",
+            "refreshType": "ALWAYS",
+            "weight": 0,
+            "dontBlockWave": false,
+            "forceBlockWaveInBranch": false
+          }
+        },
+        {
+          "fragment": 0,
+          "actionIndex": 8,
+          "time": 13.2,
+          "action": {
+            "actionType": "ACTIVATE_PREDEFINED",
+            "managedByScheduler": true,
+            "key": "char_4023_rfalcn#1",
+            "count": 1,
+            "preDelay": 13.2,
+            "interval": 1,
+            "routeIndex": 19,
+            "blockFragment": false,
+            "autoPreviewRoute": false,
+            "autoDisplayEnemyInfo": false,
+            "isUnharmfulAndAlwaysCountAsKilled": false,
+            "hiddenGroup": null,
+            "randomSpawnGroupKey": null,
+            "randomSpawnGroupPackKey": null,
+            "randomType": "ALWAYS",
+            "refreshType": "ALWAYS",
+            "weight": 0,
+            "dontBlockWave": false,
+            "forceBlockWaveInBranch": false
+          }
+        },
+        {
+          "fragment": 0,
+          "actionIndex": 9,
+          "time": 13.3,
+          "action": {
+            "actionType": "ACTIVATE_PREDEFINED",
+            "managedByScheduler": true,
+            "key": "char_488_buildr#1",
+            "count": 1,
+            "preDelay": 13.3,
+            "interval": 1,
+            "routeIndex": 20,
+            "blockFragment": false,
+            "autoPreviewRoute": false,
+            "autoDisplayEnemyInfo": false,
+            "isUnharmfulAndAlwaysCountAsKilled": false,
+            "hiddenGroup": null,
+            "randomSpawnGroupKey": null,
+            "randomSpawnGroupPackKey": null,
+            "randomType": "ALWAYS",
+            "refreshType": "ALWAYS",
+            "weight": 0,
+            "dontBlockWave": false,
+            "forceBlockWaveInBranch": false
+          }
+        }
+      ]
+    }
+  ],
+  "battle": {
+    "max_life": 3,
+    "unit_limit": 9,
+    "initial_dp": 10,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1
+  },
+  "moveScale": 0.5
+}

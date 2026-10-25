@@ -10,6 +10,7 @@ const retained=JSON.stringify(source),owners=new WeakMap(),factories=[
  [mulberryStageBuild,mulberryStageRecord],[ptilopsisStageBuild,ptilopsisStageRecord],
  [kestrelStageBuild,kestrelStageRecord],[poncirusStageBuild,poncirusStageRecord],
 ];
+export const ownsStage17_16Cards=(b,controller)=>{const entry=owners.get(b);return!!entry&&entry.controller===controller&&entry.active();};
 export function installStage17_16Cards(b,data,{tutorial=source}={}){
  if(JSON.stringify(tutorial)!==retained)throw Error('Unreviewed 17-16 predefined card source');
  tutorial=structuredClone(tutorial);
@@ -42,5 +43,5 @@ export function installStage17_16Cards(b,data,{tutorial=source}={}){
   stop(){if(stopped)return;stopped=true;b.off(handle);},
  };
  const records=new Map(rows.map(r=>[r.build.id,b.data.rawChess(r.build.id)])),handle=b.on('battleEnd',()=>controller.stop(),{owner:controller});
- owners.set(b,controller);return controller;
+ owners.set(b,{controller,active:()=>!stopped});return Object.freeze(controller);
 }

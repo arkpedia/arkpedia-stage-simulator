@@ -33,8 +33,11 @@ literal EnsureMinSp(50) command targets only that captured deployment life.
 An explicit hidden-card action receiver now registers the four exact records
 and exposes each bench card only on its own literal activation action. An
 internal dialog receiver now owns combat suspension and per-instruction
-completion. Canonical fragment dispatch, presentation/UI completion and native
-initial FSM timing remain unconnected, so canonical 17-16 remains held.
+completion. An internal source scheduler now composes all 21 ordered actions
+across two owned waves on source terrain/routes, waiting for managed enemies
+before advancing to wave two. Native scheduler/initial FSM timing, fixed-squad
+constructor admission and actual presentation/UI completion remain unverified
+or unconnected, so canonical 17-16 remains held.
 Rockbreaker's eligible split animation now consumes live `slow_down` elapsed
 work for both release and completion, rather than fixed world-time callbacks.
 The six selected infantry/caster/carrier Combat cooldowns and Brute's owned
@@ -1882,3 +1885,73 @@ running at this checkpoint. The older full run 40241359318 at 692ad40e remained
 live with reported shard failures; downloaded Linux and Windows failure logs
 both identify the absent .cache parent in the tutorial fixture already corrected
 in 7041669b. It is not a green full run, and no competing full run was dispatched.
+
+## Source-bound 17-16 wave composition
+
+The ordinary stage adapter flattens the second wave after the first wave's last
+scheduled action at 58 seconds. The canonical raw level instead retains two
+waves with maxTimeWaitingForNextWave=-1, zero wave pre/post delays and no branch
+or fragment-blocking actions. A reproducible internal contract now binds the
+complete 21 action records and their fragment indices, source terrain, all used
+route chains/waits/reach offsets, three canonical enemy records and the existing
+candidate support snapshot. Geometry spawn offsets independently agree with
+the compiled fragment offsets. Native-source CI reproduces this contract;
+runtime verification uses the portable JSON digest and detaches admitted input.
+
+The internal scheduler maps that wave setting to waiting for every managed
+enemy deployment from the current wave to retire before starting the next
+wave's relative clock. This is an explicit regular-engine interpretation, not
+compiled native scheduler/frame proof. All fourteen enemy spawns are reserved
+and counted immediately. The second reservation remains dormant, preventing
+premature victory without assigning a fabricated absolute spawn time. Actual
+activation measures offsets from the observed wave boundary. Ordinary queued
+spawns retain their previous timing and accounting.
+
+Each reservation has its own capability for activation/cancellation and frozen
+birth receipts containing the captured deployment life. Cancelling removes only
+its own unborn entries and precounts; born bodies and another reservation remain
+owned by their existing lives. Timeout removes dormant bodies as unspawned with
+activationPending metadata, rather than leaking them. An entire input batch is
+validated before counters change, inline definitions are detached, and runtime
+overrides cannot replace source records. An end request inside a spawn callback
+now stops later due spawns in that phase before they can create more bodies.
+
+The source scheduler requires the exact source field/routes/movement scale,
+fresh same-battle dialog/card receivers and the authenticated live preset Viy.
+Receivers are frozen and stopped or foreign receivers cannot be adopted. It
+reserves the original enemy definitions, runs both dialogs through owned
+suspension, routes the literal SP command and delivers each of the four source
+cards. Missing births, replaced deployments, retired action receivers and
+runtime overrides end the internal run as forced/error rather than allowing a
+misleading clear. A legitimate final wave retirement releases the scheduler's
+pending work and permits the ordinary clear path; it does not force victory.
+
+Fifteen targeted reservation/source-schedule cases passed. The source-field
+fixture keeps a first-wave enemy alive beyond 90 seconds and proves that wave
+two remains dormant; after its controlled retirement, DIALOG offsets 3 and 12,
+caster offsets 6/9/9, STORY 12.1 and cards 13/13.1/13.2/13.3 remain relative to
+the actual second-wave boundary. A separate route check uses unchanged enemy
+speed and reaches its native three-second wait. Receiver regressions passed all
+41 cases, and the shared core/battle suites passed all 37 cases.
+
+Both persistent real Edge checks passed without skips. The added source-field
+browser fixture holds the first wave, completes fourteen presentation receipts,
+delivers four cards, observes SP 49, and lets all three real War Caster
+controllers perform their non-skipping native departure at age 120. These are
+controlled integration fixtures: an unused Beagle constructor entry, extra Viy
+HP and parked enemies isolate scheduling from battle balance. Their fourteen
+retirements are not an unmodified canonical fixed-squad clear or native parity
+claim. Actual camera/dialog UI, native initial FSM/scheduler ordering and exact
+fixed-squad constructor integration remain open. All nine remaining normal
+stages, the public catalogue and public module selection retain their gates.
+
+Preceding War Caster continuation 40244970950 at 58ebede5 passed all fifteen
+hosted jobs. Older full run 40241359318 at 692ad40e is now terminal failure:
+all four shard-zero jobs passed, while all four shard-one logs identify only
+the same two tutorial cold-cache setup failures already fixed in 7041669b.
+The old full run is not reported as green; its terminal state now permits a
+fresh complete Linux/Windows, Node 22/24 verification at this new checkpoint.
+
+The final expanded focused run passed all 1,678 locally available cases after
+the final ownership/error guards. The four quarantined tracked tests remain
+unchanged in Git for hosted execution.

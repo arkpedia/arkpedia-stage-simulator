@@ -36,11 +36,16 @@ export function installViyPredefined(b,{source=tutorial}={}){
  entry.unit=u;entry.life=u.deploySeq;entry.predefined=true;b.predefinedOperators??=new Map();b.predefinedOperators.set(entry.key,entry);
  roles.set(b,{entry,u,life:u.deploySeq,skill:u.skill});return entry;
 }
-export function applyViyTutorialSp(b,{key=VIY_SP_TUTORIAL,source=tutorial}={}){
- if(JSON.stringify(source)!==retained||key!==VIY_SP_TUTORIAL)throw Error('Unreviewed Viy tutorial SP command');
+function currentRole(b){
  const role=roles.get(b),u=role?.u;
  if(!role||b.finished||b._endReq||b.predefinedOperators?.get(VIY_PREDEFINED_KEY)!==role.entry||role.entry.unit!==u||role.entry.life!==role.life
-  ||!u.alive||!u.deployed||u.deploySeq!==role.life||!b.units.includes(u)||u.skill!==role.skill||u.skill.unit!==u||u.skill.id!=='skchr_veen_3')return{status:'cancelled'};
+  ||!u.alive||!u.deployed||u.deploySeq!==role.life||!b.units.includes(u)||u.skill!==role.skill||u.skill.unit!==u||u.skill.id!=='skchr_veen_3')return null;
+ return role;
+}
+export const hasCurrentViyPredefined=b=>!!currentRole(b);
+export function applyViyTutorialSp(b,{key=VIY_SP_TUTORIAL,source=tutorial}={}){
+ if(JSON.stringify(source)!==retained||key!==VIY_SP_TUTORIAL)throw Error('Unreviewed Viy tutorial SP command');
+ const role=currentRole(b);if(!role)return{status:'cancelled'};const u=role.u;
  const before=u.skill.spTotal;
  // Explicit existing-engine mapping: a scripted SP modification, capped by
  // the selected skill's capacity; active timed skills reject modification.
