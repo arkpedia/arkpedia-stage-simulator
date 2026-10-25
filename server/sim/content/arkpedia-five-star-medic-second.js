@@ -3,6 +3,7 @@ import { FIVE_STAR_MEDIC_SECOND_OPERATORS } from '../../../shared/arkpedia/five-
 import evidence from '../../../data/arkpedia-five-star-medic-second-prefabs.json' with { type: 'json' };
 import { absoluteRangeKeys } from '../targeting.js';
 import { bodyInKeys } from '../body.js';
+import{installMulberryStageModule}from'./arkpedia-mulberry-stage-module.js';
 
 const live = a => a?.alive && a.deployed && !a.hidden;
 const model = (u) => evidence.models[u.defId][['UP', 'LEFT'].includes(u.dir) ? 'Back' : 'Front'];
@@ -267,18 +268,31 @@ export function installFiveStarMedicSecond({ battle: b, unit: u, def }) {
     };
     for (const ev of ['deploy', 'death', 'tick']) b.on(ev, sync, { owner: u });
   } else if (id === 'char_473_mberry') {
+    if(def.raw.arkpedia.module&&def.raw.arkpedia.module!=='none')installMulberryStageModule(b,u,def);
     if (def.skill.id === 'skchr_mberry_2') registerBerryProtection(b, u, def.skill.bb.ep_damage_resistance);
     if (talent) {
+      const marks=new Map(),handles=[],key=`mulberry:medic:${u.id}`;let life=null,stopped=false;
+      const current=()=>!stopped&&!b.finished&&live(u)&&u.deploySeq===life;
+      const enough=()=>b.allyUnits.filter(a=>live(a)&&a.def.profession==='MEDIC').length>=2;
+      const eligible=a=>current()&&enough()&&auraAlly(b,a,u,true)&&a.def.profession==='MEDIC';
+      const clear=(a,row)=>{if(marks.get(a)===row)marks.delete(a);b.removeBuff(a,row.buff);};
       const sync = () => {
-        const enough = b.allyUnits.filter(a => live(a) && a.def.profession === 'MEDIC').length >= 2;
-        const key = `mulberry:medic:${u.id}`;
+        if(life===null&&live(u))life=u.deploySeq;
+        for(const[a,row]of [...marks])if(a.deploySeq!==row.life||!eligible(a)||!a.buffs.includes(row.buff))clear(a,row);
         for (const ally of b.allyUnits) {
-          const eligible = live(u) && enough && auraAlly(b, ally, u, true) && ally.def.profession === 'MEDIC';
-          if (!eligible) b.removeBuff(ally, key);
-          else if (!ally.findBuff(key)) b.addBuff(ally, { key, source: u, mods: { atkPct: talent.atk } });
+          if(!eligible(ally)||marks.has(ally))continue;
+          const row={life:ally.deploySeq,buff:null};marks.set(ally,row);
+          row.buff=b.addBuff(ally,{key,source:u,mods:{atkPct:talent.atk},
+            admit:()=>marks.get(ally)===row&&ally.deploySeq===row.life&&eligible(ally),
+            onRemove:()=>{if(marks.get(ally)===row)marks.delete(ally);}});
+          if(!row.buff||marks.get(ally)!==row||ally.deploySeq!==row.life||!eligible(ally))clear(ally,row);
         }
       };
-      for (const ev of ['deploy', 'death', 'tick']) b.on(ev, sync, { owner: u });
+      const stop=()=>{if(stopped)return;stopped=true;for(const[a,row]of [...marks])clear(a,row);for(const h of handles)b.off(h);};
+      for(const ev of ['deploy','death','tick','removed'])handles.push(b.on(ev,({unit}={})=>{
+        if(life!==null&&(u.deploySeq!==life||!u.alive||!u.deployed)||unit===u&&(ev==='death'||ev==='removed'))stop();else sync();
+      },{owner:u}));
+      handles.push(b.on('battleEnd',stop,{owner:u}));
     }
   }
 }

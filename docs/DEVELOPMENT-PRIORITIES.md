@@ -23,8 +23,10 @@ gated. The exact hidden 17-16 Ptilopsis build now has an internal level-three
 module adapter. Poncirus's exact hidden build now has its level-three blocking
 module and strengthened HP talent too. Kestrel's first-deployment module cost
 now uses captured card payments, with its sandbox-only SP effect excluded.
-Ptilopsis's range mapping, Mulberry's module and stage controls remain under
-review before stage admission.
+Mulberry's exact S2 build now has its level-three elemental-healing ratio and
+Medic aura, and all four 17-16 module builds compose in an internal field check.
+Ptilopsis's range mapping and the stage controls remain under review before
+stage admission; these helpers do not open public module selection.
 Rockbreaker's eligible split animation now consumes live `slow_down` elapsed
 work for both release and completion, rather than fixed world-time callbacks.
 The six selected infantry/caster/carrier Combat cooldowns and Brute's owned
@@ -1594,3 +1596,49 @@ predefined table producer and native extraction reproduced with --check. At
 this checkpoint, Poncirus continuation 40238170817 and the preceding Ptilopsis
 full run 40237601264 remained live; neither result is being treated as success
 or replaced by another full dispatch.
+
+## Exact hidden 17-16 Mulberry module and lifetime-owned Medic aura
+
+The canonical hidden E2/80, potential-one, trust-100, S2 rank-seven Mulberry
+card now has an internal level-three module adapter. Complete module, card,
+native prefab and action-template records are bound by SHA256 receipts. Its
+stats add 80 HP and 35 ATK, its ordinary elemental-healing ratio is 0.60, and
+its selected Medic aura is +15% ATK. The existing healing projectile and S2's
+direct healing, elemental protection and SP lockout retain their behavior.
+Full-HP elemental injury remains a valid target. Neither ordinary nor S2
+healing adds the old 0.50 trait on top of the new ratio.
+
+The retained module template checks skill index zero and filters the literal
+skchr_mberry_1 ability before modifying that skill's elemental ratio using its
+heal_scale. That S1-specific action is not applied to the canonical S2 card.
+Other module builds, potentials and ranks, including S1, are rejected by this
+private adapter and remain outside its support claim. The public module/card
+catalogue and canonical 17-16 activation/admission gates remain closed.
+
+The shared Medic aura now owns each target buff and captures source/recipient
+deployment lives. It rechecks the living Medic count and recipient eligibility
+inside admission, preventing retirement or body replacement inside beforeBuff
+from leaving a late stat bonus. Cleanup preserves unrelated personal ATK buffs.
+Removal, death, replacement source life and battle completion release owned
+buffs and listeners. This correction applies to the existing module-free aura
+as well. Existing live/present/count/category and sampled-update mappings remain
+regular simulator aliases; native compiled selection, disappearance semantics,
+first passive/FSM ordering and exact frame parity remain unproven.
+
+All 39 initial module and existing medic checks passed. A subsequent controlled
+composition of all four exact hidden 17-16 builds also passed: actual card
+deployment charges Kestrel nine DP, Ptilopsis grants the other three builds
+1.35 automatic SP per second in local range, Mulberry's aura boosts both Medics,
+and her real S2 heals HP plus 60% ATK elemental injury with that composed ATK.
+Retiring Ptilopsis removes both her SP contribution and the now-unqualified
+two-Medic aura. All 11 final module cases passed. This fixture injects exact
+records after public selection validation; it is not a canonical stage clear,
+hidden-card activation or approval to bypass the predefined builder guard.
+
+The table and original native producers reproduced with --check. The preceding
+Poncirus continuation 40238170817 was cancelled after later work superseded it;
+it is not reported as a test success. Kestrel continuation 40238691150 and the
+Ptilopsis full matrix 40237601264 were still in progress at this checkpoint.
+The expanded focused run passed all 1,582 locally available cases. A final
+runtime guard additionally rejects an S1 ability presented with unchanged S2
+build metadata; all 11 module/composition cases passed with that check too.
