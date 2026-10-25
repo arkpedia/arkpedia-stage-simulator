@@ -51,8 +51,11 @@ export function miner(r) {
         for (const medic of operators(b)) {
           if (medic.def.profession !== 'MEDIC') continue;
           if (medic.rangeChanged) b._refreshRange(medic);
-          if (medic.rangeKeys?.includes(row * COLS + col))
-            b.heal(medic, e, medic.s.atk * bb(r, 'GetHeal', 'heal_scale'));
+          if (medic.rangeKeys?.includes(row * COLS + col)) {
+            // Native AssignAttributeToBB(ATK, scaleVar='') -> FixedValueHeal.
+            // The retained action never reads the catalogue's legacy heal_scale.
+            b.heal(medic, e, medic.s.atk);
+          }
         }
       }
       if (a.scan >= 0.3 - 1e-9) {

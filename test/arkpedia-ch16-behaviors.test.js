@@ -7,7 +7,7 @@ import { battle, keys } from './helpers/ch17Harness.js';
 
 test('miner gets independent range healing from Medics, without using their attack cooldown', () => {
   const { h, e } = battle(keys[0], [{ profession: 'MEDIC', stats: { atk: 400 }, rangeGrid: [[0, 0], [0, 1]] }]);
-  e.hp = 1000; h.run(1.01); assert.equal(e.hp, 1200);
+  e.hp = 1000; h.run(1.01); assert.equal(e.hp, 1400);
   assert.equal(e.profile.friendly, true); assert.equal(e.s.flags.unblockable, true);
   assert.equal(canTargetEnemy(h.allies()[0], e), false);
 });

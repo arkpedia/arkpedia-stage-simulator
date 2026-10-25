@@ -2,6 +2,7 @@
 // mainline16_g[block_mcreep] / block_mcreep[to_mcreep], retained in device-source.
 import { canTargetAlly, sortAllyTargets } from '../targeting.js';
 const live = u => u?.alive && u.deployed && !u.hidden;
+const ground = u => !u.isFlying && !u.s.flags.liftoff;
 const distance = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
 export const MINER_BODY_RADIUS = .1;
 
@@ -19,7 +20,7 @@ export function blockMcreep({ cnt, range, rangeAdd, attackRange = 1, markArmy = 
       }
       if (markArmy) b.addBuff(e, { key: 'enemy_field_army_self_mark', persist: true });
       e.profile.meleeTarget = () => {
-        const targets = b.enemies.filter(u => u !== e && live(u) && u.profile?.neutral
+        const targets = b.enemies.filter(u => u !== e && live(u) && ground(u) && u.profile?.neutral
           && u.findBuff('mark_neutral[effect]') && canTargetAlly(e, u, true)
           && distance(e, u) <= attackRange + (u.mem.ch16BodyRadius ?? MINER_BODY_RADIUS) + 1e-9);
         sortAllyTargets(e, targets);
@@ -52,7 +53,7 @@ export function blockMcreep({ cnt, range, rangeAdd, attackRange = 1, markArmy = 
         if (a.engagements.size >= cnt || !live(e)) continue;
         // The native periodic selector acquires one nearest available miner per
         // scan, even when the source can retain several simultaneous links.
-        const target = b.enemies.filter(u => live(u) && u.mem.ch16Miner && !u.mem.ch16Engagement
+        const target = b.enemies.filter(u => live(u) && ground(u) && u.mem.ch16Miner && !u.mem.ch16Engagement
           && !u.s.flags.sleep && !u.s.flags.untargetable && distance(e, u) <= range + MINER_BODY_RADIUS + 1e-9)
           .sort((u, v) => distance(e, u) - distance(e, v) || u.id - v.id)[0];
         if (!target) continue;
