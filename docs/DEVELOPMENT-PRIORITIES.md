@@ -46,6 +46,9 @@ Bag consumption now executes its literal non-skipping native InstantKill action
 through the authenticated enemy lifecycle path, with its feeding clocks retained
 on world time. An exact predefined Closure/module/S3 composition checks that
 interaction without admitting 17-14 or widening public enemy compatibility.
+The stronger War Caster's Leave action now uses the same literal native kill
+path, including its non-skipping rebirth flag and cancellation on a deferred
+battle-end request. Canonical wave sequencing remains a separate open item.
 Removing a separate same-character operator body now leaves the player's card
 cooldown and captured payment untouched. Only the body selected by that card
 can start its redeployment cooldown; ordinary death and withdrawal still do so.
@@ -1839,3 +1842,43 @@ was widened. Preceding card continuation 40242630401 at 7041669b passed all
 fifteen hosted jobs; full run 40241359318 remained live at this checkpoint.
 
 The shared core and battle regression suites also passed all 37 cases.
+
+## Stronger War Caster departure through native InstantKill
+
+The stronger War Caster's existing 120-second Leave controller previously called
+generic Battle.kill directly. Its retained enemy_muwiz_s_leave template instead
+contains an explicit TARGET InstantKill with killSource/noSource/skipReborn all
+false. A reproducible contract now retains the complete original template,
+Die-to-Leave animation alias, AlwaysNext and kill node, bound to the already
+checksum-verified graph and review. Hosted native-source validation reproduces
+that contract. Runtime verification uses the portable browser-safe JSON digest;
+changed flags, surrounding actions or original bytes are rejected.
+
+Leave now executes that literal action through the authenticated native enemy
+kill primitive. The existing skill mapping still targets its own current body
+and retains self-source credit, zero LP cost, silence/control rules and one-shot
+use. An accepted rebirth survives the action and cannot receive a second Leave.
+Replacement during admission cannot kill the new deployment or emit a stale
+departure event. Self-target/selector and FSM timing remain explicit engine
+mappings, not new compiled client proof. The visual alias is retained source;
+this change does not implement presentation or delay killing until clip end.
+
+The new integration regression exposed a shared cancellation gap: forceEnd
+during a combat tick creates a deferred end request, so checking only finished
+still allowed InstantKill to commit after the request. Native kill admission now
+also checks the pending end request, restores untouched pending HP, skips kill
+accounting and refuses a subsequent native action. Generic Battle.kill remains
+unchanged. Both immediate and deferred completion paths are covered.
+
+All 48 targeted War Caster/native-kill checks passed. The expanded focused suite
+passed all 1,663 locally available mechanics checks, and the persistent real Edge
+browser fixture passed with no skipped browser check. Four quarantined tracked
+tests remain in hosted CI. Canonical wave/fragment sequencing, preset initial
+dispatch and stage input/presentation integration remain open; all nine remaining
+normal stages and public module selection retain their existing admission gates.
+
+Dialog checkpoint 652f9df8 was pushed and its continuation 40244481318 was still
+running at this checkpoint. The older full run 40241359318 at 692ad40e remained
+live with reported shard failures; downloaded Linux and Windows failure logs
+both identify the absent .cache parent in the tutorial fixture already corrected
+in 7041669b. It is not a green full run, and no competing full run was dispatched.

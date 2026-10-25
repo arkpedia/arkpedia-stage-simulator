@@ -5,6 +5,7 @@ import { canTargetAlly, areaSelectable, aggroCmp } from '../targeting.js';
 import markerReview from '../../../data/candidates/arkpedia-ch17-reviewed-marker.json' with { type: 'json' };
 import {captureEnemySource} from './enemy-source-view.js';
 import {isCurrentTargetModifierReceipt} from '../damage.js';
+import {executeEnemyInstantKill,verifyEnemyInstantKill} from '../enemy-instant-kill.js';
 const live = u => u?.alive && u.deployed && !u.hidden;
 const sameLife = (u, seq) => live(u) && u.deploySeq === seq;
 const sk = (r, key) => r.skills.find(s => s.prefabKey === key);
@@ -242,8 +243,9 @@ function shield(b, e, r) {
   e.mem.ch16Shield = true;
   return b.addBuff(e, { key: 'ch16:shield', persist: true, refresh: 'replace', mods: { defPct: bb(r, 'Shiled', 'def'), resFlat: bb(r, 'Shiled', 'magic_resistance') } });
 }
-export function warCaster(r) {
+export function warCaster(r,{leaveAction=null}={}) {
   const s = sk(r, 'LockDamage'),leave=sk(r,'Leave');
+  const leaveKill=leave?verifyEnemyInstantKill(leaveAction):null;
   const end = (b, e, a) => { a.target = null; b.removeBuff(e,a.hold);a.hold=null;a.left = s.cooldown; };
   return {
     spawn(b, e, a) {
@@ -296,8 +298,12 @@ export function warCaster(r) {
       // The priority-one no-target Leave spell is one-shot and ignores silence.
       // Its native instant-kill action does not mark a route exit or lose LP.
       if(leave&&!a.leaveUsed&&b.time-a.born>=leave.initCooldown-1e-8&&!e.hidden&&!intrinsicControl(e)){
-        a.leaveUsed=true;end(b,e,a);e.mem.ch17WarCasterLeave=true;b.kill(e,e);
-        b.emit('ch17WarCasterLeave',{source:e,sourceLife:a.life,age:b.time-a.born});return;
+        a.leaveUsed=true;end(b,e,a);if(!a.valid())return;
+        e.mem.ch17WarCasterLeave=true;
+        const result=executeEnemyInstantKill(b,{source:e,target:e,action:leaveKill});
+        if(!b.finished&&!b._endReq&&e.deploySeq===a.life&&['killed','reborn','survived'].includes(result.status))
+          b.emit('ch17WarCasterLeave',{source:e,sourceLife:a.life,age:b.time-a.born,status:result.status});
+        return;
       }
       if (a.target) {
         if (e.hidden||!sameLife(a.target, a.seq) || intrinsicControl(e) || e.actionControlEpoch !== a.epoch

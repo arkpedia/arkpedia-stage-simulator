@@ -6,7 +6,8 @@ import {createHash}from'node:crypto';
 import {makeBattle,chessRec}from'./helpers/battleHarness.js';
 import {installEnemyFeatures}from'../server/sim/content/arkpedia-enemy-features.js';
 import {pollute}from'../server/sim/content/chapter17.js';
-import {strongWarCaster}from'../server/sim/content/chapter17-war-caster.js';
+import {strongWarCaster,warCasterLeaveAction}from'../server/sim/content/chapter17-war-caster.js';
+import {currentEnemyInstantKillReceipt}from'../server/sim/enemy-instant-kill.js';
 import {verifiedNative,verifiedChapter16FamilyGraph}from'../tools/arkpedia/enemy-support.mjs';
 import {deriveEnemySupport,prefabPath}from'../shared/arkpedia/enemy-support.js';
 import {parseSkel}from'../tools/assets/skel.mjs';
@@ -47,6 +48,35 @@ test('Leave retires one counted zero-LP body at120 seconds without using the Lea
  assert.equal(f.e.mem.ch17WarCasterLeave,true);assert.equal(f.a.active,false);f.h.run(4);assert.equal(f.leaves.length,1);assert.deepEqual(f.b.errors,[]);
 });
 test('normal caster has no synthetic120-second Leave skill',()=>{const f=fixture(normal);f.h.run(125);assert.ok(f.e.alive);assert.equal(f.leaves.length,0);assert.deepEqual(f.b.errors,[]);});
+
+test('Leave binds its complete original template and rejects any changed kill or surrounding action',()=>{
+ const source=read('candidates/arkpedia-war-caster-leave-contract.json');
+ for(const pin of Object.values(source.sources))assert.equal(sha(readFileSync(new URL('../'+pin.path,import.meta.url))),pin.sha256);
+ assert.equal(sha(source.template.originalJson),source.template.sha256);
+ const template=JSON.parse(source.template.originalJson);assert.deepEqual(JSON.parse(template.eventToActions._items[0].value.SerializedState),source.actions);
+ assert.deepEqual(warCasterLeaveAction(),source.actions[2]);
+ for(const change of [p=>p.actions[2]._skipReborn=true,p=>p.actions[2]._noSource=true,p=>p.actions[0]._replaceAnimPairs[0].toAnimKey='Die',p=>p.template.originalJson+=' ']){
+  const altered=structuredClone(source);change(altered);assert.throws(()=>warCasterLeaveAction(altered),/Unreviewed/);
+ }
+});
+
+test('Leave dispatches the authentic non-skipping self-target action and preserves accepted rebirth without a second departure',()=>{
+ const f=fixture(),life=f.e.deploySeq;let calls=0,receipt;
+ f.b.on('enemyInstantKill',ctx=>{calls++;receipt=currentEnemyInstantKillReceipt(ctx,f.b);assert.equal(receipt.unit,f.e);assert.equal(receipt.source,f.e);assert.equal(receipt.unitLife,life);assert.deepEqual(receipt.action,warCasterLeaveAction());ctx.unit.hp=123;ctx.reborn=true;});
+ f.a.born=f.b.time-120;f.h.run(.1);assert.equal(calls,1);assert.ok(f.e.alive);assert.equal(f.e.hp,123);assert.equal(f.b.killed,0);assert.equal(f.leaves.length,1);assert.equal(f.leaves[0].status,'reborn');
+ f.h.run(121);assert.equal(calls,1);assert.equal(f.leaves.length,1);assert.ok(f.e.alive);assert.deepEqual(f.b.errors,[]);
+});
+
+for(const mode of ['reuse','end'])test('Leave cannot kill or report a stale departure after admission '+mode,()=>{
+ const f=fixture();let calls=0;f.b.on('enemyInstantKill',ctx=>{calls++;if(mode==='reuse'){ctx.unit.deploySeq++;ctx.unit.hp=456;}else f.b.forceEnd();});
+ const hp=f.e.hp;f.a.born=f.b.time-120;f.h.run(.1);assert.equal(calls,1);assert.ok(f.e.alive);assert.equal(f.e.hp,mode==='reuse'?456:hp);assert.equal(f.b.killed,0);assert.equal(f.leaves.length,0);assert.deepEqual(f.b.errors,[]);
+});
+
+test('Leave bypasses protection and damage hooks but retains self kill credit and zero LP cost',()=>{
+ const f=fixture(),life=f.b.life;let damage=0,killer=null;f.b.addBuff(f.e,{key:'fixture-protect-leave',flags:{invulnerable:true,undeadable:true},shield:1e6});
+ f.b.on('hit',()=>damage++);f.b.on('kill',ctx=>{killer=ctx.killer;});f.a.born=f.b.time-120;f.h.run(.1);
+ assert.equal(f.e.alive,false);assert.equal(killer,f.e);assert.equal(damage,0);assert.equal(f.e.stats.kills,1);assert.equal(f.b.life,life);assert.equal(f.leaves.length,1);assert.equal(f.leaves[0].status,'killed');assert.deepEqual(f.b.errors,[]);
+});
 test('Leave ignores forced silence and a nonattack disarm',()=>{
  const f=fixture();f.b.addBuff(f.e,{key:'fixture-flags',persist:true,flags:{silence:true,disarm:true}});f.h.run(120.1);
  assert.equal(f.leaves.length,1);assert.equal(f.e.alive,false);assert.deepEqual(f.b.errors,[]);

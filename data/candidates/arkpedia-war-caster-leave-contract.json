@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "testOnly": true,
+  "frameParity": false,
+  "scope": "Exact stronger War Caster Leave template and literal InstantKill flags. Self-target execution uses the existing regular-engine skill mapping; no native selector/FSM timing or stage admission.",
+  "sources": {
+    "review": {
+      "path": "data/candidates/arkpedia-ch17-reviewed-war-caster.json",
+      "sha256": "53ed4218388ca2394ef740354552fef6c27b3126d74789c2626498be4446f752"
+    },
+    "graph": {
+      "path": "data/candidates/arkpedia-ch17-war-caster-source.json",
+      "sha256": "cee4011cfe6cd5a09f265d6674a9c6087196ff20c84bd8513bf9f92f08049154"
+    }
+  },
+  "template": {
+    "originalJson": "{\"effectKey\":\"\",\"eventToActions\":{\"_items\":[{\"key\":0,\"value\":{\"SerializedObjectReferences\":[],\"SerializedState\":\"[{\\\"_target\\\":\\\"BUFF_OWNER\\\",\\\"_replaceAnimPairs\\\":[{\\\"fromAnimKey\\\":\\\"Die\\\",\\\"toAnimKey\\\":\\\"Leave\\\"}],\\\"_isOverwrite\\\":true,\\\"_modifyCurrentMode\\\":true,\\\"_modeIndex\\\":-1,\\\"$type\\\":\\\"Torappu.Battle.Action.Nodes+ModifyAnimatorHookerReplacePair\\\"},{\\\"$type\\\":\\\"Torappu.Battle.Action.Nodes+AlwaysNext\\\"},{\\\"_targetType\\\":\\\"TARGET\\\",\\\"_killSource\\\":false,\\\"_noSource\\\":false,\\\"_withdrawIfRallyPoint\\\":false,\\\"_resultIfInRallyPointMode\\\":false,\\\"_skipReborn\\\":false,\\\"_noReason\\\":false,\\\"_markReachExit\\\":false,\\\"_switchState\\\":false,\\\"$type\\\":\\\"Torappu.Battle.Action.Nodes+InstantKill\\\"}]\"}}]},\"onEventPriority\":0,\"templateKey\":\"enemy_muwiz_s_leave\"}",
+    "sha256": "28adc5996a5e9b8aaffa9b20e2d6506671e270897322206a9dc689c21973f3c3"
+  },
+  "event": 0,
+  "actions": [
+    {
+      "_target": "BUFF_OWNER",
+      "_replaceAnimPairs": [
+        {
+          "fromAnimKey": "Die",
+          "toAnimKey": "Leave"
+        }
+      ],
+      "_isOverwrite": true,
+      "_modifyCurrentMode": true,
+      "_modeIndex": -1,
+      "$type": "Torappu.Battle.Action.Nodes+ModifyAnimatorHookerReplacePair"
+    },
+    {
+      "$type": "Torappu.Battle.Action.Nodes+AlwaysNext"
+    },
+    {
+      "_targetType": "TARGET",
+      "_killSource": false,
+      "_noSource": false,
+      "_withdrawIfRallyPoint": false,
+      "_resultIfInRallyPointMode": false,
+      "_skipReborn": false,
+      "_noReason": false,
+      "_markReachExit": false,
+      "_switchState": false,
+      "$type": "Torappu.Battle.Action.Nodes+InstantKill"
+    }
+  ]
+}

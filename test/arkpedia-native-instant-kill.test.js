@@ -40,6 +40,12 @@ test('explicit rebirth acceptance must repair positive HP; a flag alone cannot l
 test('battle-end cancellation restores untouched pending HP without killing after finalization',()=>{
  const f=fixture();f.b.on('enemyInstantKill',()=>f.b._finish('defeat'));assert.equal(execute(f.b,{source:f.op,target:f.e,action:normal}).status,'cancelled');assert.ok(f.e.alive);assert.equal(f.e.hp,100);assert.equal(f.b.killed,0);
 });
+
+test('a deferred end request during native admission cancels before kill bookkeeping or further native actions',()=>{
+ const f=fixture(),hp=f.e.hp;let first,second,calls=0;f.b.on('enemyInstantKill',()=>{calls++;f.b.forceEnd();});
+ f.b.after(0,()=>{first=execute(f.b,{source:f.op,target:f.e,action:normal});second=execute(f.b,{source:f.op,target:f.source,action:normal});});f.b.step();
+ assert.equal(first.status,'cancelled');assert.equal(second.status,'inactive');assert.equal(calls,1);assert.equal(f.e.hp,hp);assert.ok(f.e.alive&&f.source.alive);assert.equal(f.b.killed,0);assert.ok(f.b.finished);assert.equal(f.b.result().killed,0);assert.deepEqual(f.b.errors,[]);
+});
 test('unsupported noReason/exit/rally/state variants, unknown fields and ally recipients fail closed',()=>{
  for(const key of ['_noReason','_markReachExit','_withdrawIfRallyPoint','_resultIfInRallyPointMode','_switchState'])assert.throws(()=>verify({...normal,[key]:true}),/Unreviewed/);
  assert.throws(()=>verify({...normal,_skipReborn:0}),/Unreviewed/);assert.throws(()=>verify({...normal,extra:true}),/Unreviewed/);
