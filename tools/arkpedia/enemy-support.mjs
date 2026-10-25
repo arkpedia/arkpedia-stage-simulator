@@ -134,6 +134,7 @@ export async function buildEnemySupport({ candidate = false } = {}) {
       ['abnormalSlug', 'data/candidates/arkpedia-ch16-reviewed-abnormal-slug.json'],
       ['manglerbeast', 'data/candidates/arkpedia-ch16-reviewed-manglerbeast.json'],
       ['phantom', 'data/candidates/arkpedia-ch16-reviewed-phantom.json'],
+      ['duckRun', 'data/candidates/arkpedia-reviewed-duck-run.json'],
       ['artillery', 'data/candidates/arkpedia-ch16-reviewed-artillery.json'],
       ['patrol', 'data/candidates/arkpedia-ch16-reviewed-patrol.json'],
     ]) {

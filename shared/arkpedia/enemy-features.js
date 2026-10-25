@@ -15,6 +15,7 @@
 import { CHAPTER16_FEATURES, abnormalSlugCovered, shieldguardCovered, fortbreakerCovered, commanderCovered, manglerbeastCovered, phantomCovered, phantomFeature } from './chapter16-features.js';
 import patrolReview from '../../data/candidates/arkpedia-ch16-reviewed-patrol.json' with { type: 'json' };
 import engagement from '../../data/candidates/arkpedia-ch16-reviewed-engagement.json' with { type: 'json' };
+import { DUCK_FEATURES } from './duck-features.js';
 
 const blockMcreepCovered = (r, n) => r.key === engagement.blockMcreep.key
   && Number.isFinite(r.stats.rawRangeRadius) && r.stats.rawRangeRadius > 0
@@ -221,6 +222,7 @@ const NATIVE_ONLY_FEATURES = Object.freeze({
 });
 
 export const ENEMY_FEATURES = Object.freeze({
+  ...DUCK_FEATURES,
   // Handbook lines restating what the record's stats already model.
   'ability:Flying unit.': { covers: r => r.stats.motion === 'FLY', note: 'motion FLY' },
   'ability:Regenerates HP over time.': { covers: r => r.stats.hpRecoveryPerSec > 0, note: 'hpRecoveryPerSec' },

@@ -35,7 +35,7 @@ const miner = { covers: minerCovered, ability: { kind: 'ch16Miner', params: r =>
   explains: text => text === MINER_TEXT, note: 'Neutral miner: Medic range healing, fear blood loss and shadow suppression.' };
 function familyCovered(review, family, r, n) {
   const proof = review.enemies[r.key];
-  return review.testOnly === true && !!proof && r.prefabKey === r.key
+  return review.testOnly === true && !!proof && r.prefabKey === (proof.prefabKey ?? r.key)
     && n.$familyEvidence?.(family) === review.sources.graph.sha256
     && JSON.stringify(r.talents.groups) === JSON.stringify(proof.groups)
     && JSON.stringify(r.talents.bb) === JSON.stringify(proof.bb)
@@ -49,7 +49,7 @@ export const phantomCovered = (r, n) => familyCovered(phantomReview, 'phantom', 
 export const commanderCovered = (r, n) => familyCovered(commanderReview, 'commander', r, n);
 export const fortbreakerCovered = (r, n) => familyCovered(fortbreakerReview, 'fortbreaker', r, n);
 export const shieldguardCovered = (r, n) => familyCovered(shieldguardReview, 'shieldguard', r, n);
-function familyFeature(review, family, kind) {
+export function familyFeature(review, family, kind) {
   return {
     covers: (r, n) => familyCovered(review, family, r, n),
     ability: r => review.enemies[r.key] ? { kind, params: () => r } : null,

@@ -9,8 +9,10 @@ import { installFeatureDispatch, attach, abOf, rebornAbility, featureAbilities, 
 import { chapter16Abilities } from './chapter16.js';
 import { blockMcreep } from './chapter16-engagement.js';
 import { periodicDamage } from '../damage.js';
+import { nativeDuckRun } from './duck-run.js';
 
 const ABILITIES = Object.freeze({
+  nativeDuckRun,
   ...chapter16Abilities,
   blockMcreep,
   reborn: params => rebornAbility(params),

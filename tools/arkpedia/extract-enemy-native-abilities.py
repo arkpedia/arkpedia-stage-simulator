@@ -138,9 +138,9 @@ if selected:
     result['objects'] = sorted({c['objectName'] for rows in components.values() for c in rows if not c.get('referenced')})
 text = json.dumps(result, ensure_ascii=False, indent=1) + '\n'
 if args.check:
-    if OUT.read_text() != text: sys.exit('Enemy native ability evidence is stale')
+    if OUT.read_text(encoding='utf8') != text: sys.exit('Enemy native ability evidence is stale')
     print('Enemy native ability evidence matches the pinned bundles')
 else:
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(text)
+    OUT.write_text(text, encoding='utf8', newline='\n')
     print('Wrote', sum(len(v) for v in components.values()), 'components from', len(components), 'prefabs')

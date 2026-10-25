@@ -43,3 +43,41 @@ effects must reflect verified behavior rather than stand in for implementation.
 New stage admissions remain test-only. Public catalogue promotion, merging, and
 production deployment require explicit owner approval. Keep development moving
 autonomously within these priorities.
+
+## Starting inventory
+
+`node tools/arkpedia/mechanics-coverage.mjs` verifies the canonical stage release
+manifest and every stage/geometry/conditional/device input it reads. It writes
+`data/candidates/arkpedia-mechanics-coverage.json`. The inventory includes all
+combat-stage metadata, rather than only the old main-story report: 3,891 records
+across normal stages, variants, activities, Integrated Strategies, Contingency
+Contract, tower and reclamation modes. This count is source records, not a claim
+of unique maps or mode completion.
+
+At the initial Windows mechanics checkpoint: 609 catalogue records (597 public,
+12 test-only), 3,282 unbuilt combat-stage records, 463 source-bound supported
+enemies out of 1,901 canonical enemies, and 431 registered target operator forms
+with 949 skills. Operator registration checks skill identities/talent keys; it
+does not certify complete operator mechanics. A separate source/behavior audit
+remains required, including module effects and existing candidate limitations.
+Generic stage gates overlap; existing reviewed stages can handle some observed
+gates, so this report cannot grant or revoke runtime admission on its own.
+
+All 34 normal 16-2..18 / 17-2..18 source levels are now retained with exact
+manifest/route/producer/full-level receipts. Retention alone grants no stage or
+enemy support. Remaining source-only levels continue to fail the stage-review
+gate. Local `useDb=false` enemies in 16-9 and 17-18 require their own source-bound
+records; never substitute a same-name catalogue enemy.
+
+The first wider enemy continuation registers Duck Lord's permanent damage-triggered
+Run mode against its original prefab/template closure. The normal and strategy
+database identities intentionally share the original prefab, with separate exact
+blackboard contracts (+400% and +300% movement speed). Nine source/behavior tests
+cover all database levels, automatic single attachment, unblockability/no attacks,
+accepted shielded/zero-HP-loss damage, control, cleanup and mutation refusal.
+Candidate combat support is now465/1,901; this does not admit any Integrated
+Strategies stage or certify its mode-specific reward/economy rules.
+Flyer, Brute and Bag native graphs are retained without controller admission.
+Brute's original bound Skill events are0.833333313/1.266666651/1.666666627s,
+with a2.200000048s clip; its attack/interrupt/reset integration remains unfinished.
+Reading original event-clock bytes for mechanics is not a visual-model import.

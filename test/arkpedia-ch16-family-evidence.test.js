@@ -8,6 +8,15 @@ const bytes = path => readFileSync(new URL('../data/' + path, import.meta.url));
 const inventory = bytes('arkpedia-cn-native-source.json'), enemies = bytes('arkpedia-cn-enemy-native-source.json');
 const index = JSON.parse(bytes('arkpedia-enemy-clock-source.json'));
 const verify = graph => verifiedChapter16FamilyGraph(JSON.stringify(graph), inventory, enemies, index);
+for (const family of ['flyer', 'brute', 'bag']) {
+  const graph = JSON.parse(bytes(`candidates/arkpedia-ch17-${family}-source.json`));
+  test(`${family} retained source closure does not admit its unfinished controller`, () => {
+    assert.doesNotThrow(() => verify(graph));
+    const support = JSON.parse(bytes('candidates/arkpedia-ch16-enemy-support.json'));
+    for (const key of Object.keys(graph.prefabs).map(p => p.split('/').at(-1).replace('.prefab', '')))
+      assert.equal(support.enemies[key].policy, null);
+  });
+}
 for (const family of ['crossbow', 'commander', 'artillery']) {
   const graph = JSON.parse(bytes(`candidates/arkpedia-ch16-${family}-source.json`));
   test(`${family} complete graph matches the pinned inventory, timing components and action closure`, () => {
