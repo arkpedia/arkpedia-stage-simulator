@@ -1,5 +1,24 @@
 # Development priorities
 
+Current continuation: snake HP-loss, recovery and injury now have a source-bound
+controller and contract. The HP-stage counter persists through healing; one large
+loss advances past crossed thresholds without queueing multiple challenges.
+Injury deals canonical 5% maximum-HP true damage at admission and holds action
+for 7 seconds without applying Stunned. Failed challenges heal canonical 20%
+through the ordinary heal pipeline. Both step and terminal interaction windows
+now own invulnerability and a separate ability-trigger predicate, rather than
+ordinary silence. The future complete actor must consume that predicate and
+the mandatory cast-interruption receipt. Full boss support remains held.
+
+The retained native components/canonical record supply the parameters and action
+graph. Supplemental first-hand [PRTS HP-loss research, revision 442170](https://prts.wiki/index.php?title=%E7%89%B9%E6%AE%8A%E6%9C%BA%E5%88%B6&oldid=442170)
+and [snake corrections, revision 441734](https://prts.wiki/index.php?title=%E2%80%9C%E7%BB%88%E5%A7%8B%E2%80%9D&oldid=441734)
+resolve persistent-stage, injury-onset and waiting semantics; their revision
+references and factual notes are pinned separately. This is not compiled client
+or captured frame proof. No alternate enemy/stage data or wiki timing replaces
+the canonical records. Attack/firewall/wave integration and the wider operator,
+enemy and stage audits remain mechanics work before any new visual campaign.
+
 Owner direction, 2026-10-25: take over development on the Windows workspace and
 complete mechanics before expanding visual content. This direction supersedes
 the narrower Chapter 16/17 handoff as the overall project scope; that backlog
@@ -645,3 +664,20 @@ passed all fifteen hosted continuation jobs in run 40203285375. The full run
 checkpoint; five shards passed and three were still active at the checkpoint
 check. Its authoritative status must be checked again before dispatching
 another full matrix. All normal-stage and enemy-support gates remain unchanged.
+
+## HP-loss and injury continuation validation
+
+The health controller at the current continuation has 27 focused checks covering
+strict thresholds, healing persistence, overshoot, the initial/live maximum-HP
+ratios, true-damage shields, heal prohibition, forced-skill eligibility, terminal
+precedence, rejected buffs, source mutation, body reuse and battle termination.
+All 908 locally available checks passed together before the last two source
+mutation checks were added; all 27 health checks then passed together. The four
+previously quarantined tests remain tracked and run on hosted CI.
+
+Full matrix run 40201217661 at 8a0a0b7a completed successfully across all eight
+Linux/Windows Node22/24 shards. Continuation run 40204339318 at 0baa9166 passed
+all fifteen jobs. These are frozen preceding checkpoints; hosted checks for
+the new health controller must be observed separately. Support/stage counts
+are unchanged; the complete snake and the nine remaining normal stages have
+not been admitted.

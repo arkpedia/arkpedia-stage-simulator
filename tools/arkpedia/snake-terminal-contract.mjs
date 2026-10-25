@@ -9,7 +9,8 @@ const root=new URL('../../',import.meta.url),sha=b=>createHash('sha256').update(
 export async function snakeTerminalContract({read=readFile}={}){
  const sources={},raw={};
  for(const[name,path]of Object.entries({counter:'data/candidates/arkpedia-ch17-snake-counter-contract.json',graph:'data/candidates/arkpedia-ch17-firewall-boss-source.json',
-  indexed:'data/candidates/arkpedia-ch17-firewall-boss-native.json',events:'data/candidates/arkpedia-firewall-boss-event-alias-source.json',status:'data/arkpedia-makoto-status-source.json'})){
+  indexed:'data/candidates/arkpedia-ch17-firewall-boss-native.json',events:'data/candidates/arkpedia-firewall-boss-event-alias-source.json',status:'data/arkpedia-makoto-status-source.json',
+  notes:'data/candidates/arkpedia-ch17-boss-mechanics-notes.json'})){
   raw[name]=await read(new URL(path,root));sources[name]={path,sha256:sha(raw[name])};
  }
  const counter=await snakeCounterContract({read});
@@ -19,6 +20,8 @@ export async function snakeTerminalContract({read=readFile}={}){
  const graph=JSON.parse(raw.graph),events=JSON.parse(raw.events),status=JSON.parse(raw.status);
  if(events.events['27']?.name!=='ON_BEFORE_TRY_SET_HP_ZERO'||events.events['44']?.name!=='ON_OWNER_ROOT_TILE_CHANGED')throw Error('Uncorroborated firewall boss callback aliases');
  if(status.definitions.UNDEADABLE!==6||status.definitions.E_NUM!==46)throw Error('Unreviewed snake terminal status alias');
+ const notes=JSON.parse(raw.notes);
+ if(notes.sources?.snake?.revision!==441734||notes.interactionWait?.invulnerable!==true||notes.interactionWait?.blocksAbilityTriggers!==true)throw Error('Unreviewed snake waiting semantics');
  const components=native.prefabs['dyn/battle/prefabs/enemies/'+counter.enemy+'.prefab'];
  const before=components.flatMap(c=>JSON.parse(c.originalJson)._buffs??[]).filter(b=>b.buffKey==='enemy_musnake_before_dead');
  if(before.length!==1||JSON.stringify(before[0].attributes.abnormalFlags)!=='[6]'||before[0].isSilenceable!==0)throw Error('Unreviewed snake terminal floor');
@@ -33,6 +36,7 @@ export async function snakeTerminalContract({read=readFile}={}){
   sources,enemy:counter.enemy,record:counter.record,beforeDead:before[0],admission,finish,
   status:{name:'UNDEADABLE',value:6,versionLimit:status.source.versionLimit},
   limits:['The pre-floor HP-set callback and UNIQUE terminal-child coalescing are local engine mappings; compiled dispatch and frame parity are not claimed.',
+   'Revision-pinned PRTS mechanics research corroborates interaction invulnerability and ability-trigger hold, distinct from ordinary silence. The future boss actor must consult the owned waiting predicate.',
    'The finishWave receiver must implement the retained FinishCurrentWave action on an admitted canonical wave. This subsystem cannot admit a stage or replace it by force-clearing every pending spawn.']};
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(resolve(process.argv[1])).href){

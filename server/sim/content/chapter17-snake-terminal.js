@@ -3,6 +3,7 @@
 import contract from '../../../data/candidates/arkpedia-ch17-snake-terminal-contract.json' with {type:'json'};
 import {currentHpZeroAttemptReceipt} from '../damage.js';
 import {startChapter17SnakeCounter} from './chapter17-boss-counter.js';
+import {attachSnakeInteractionWait} from './chapter17-snake-wait.js';
 const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
 
 export function installChapter17SnakeTerminal(b,e,{finishWave}={}){
@@ -29,7 +30,9 @@ export function installChapter17SnakeTerminal(b,e,{finishWave}={}){
   begin(){
    if(!valid()||phase.pending||phase.committed||!e.buffs.includes(phase.floor))return;
    const q={active:true,child:null,task:null,counter:null};phase.pending=q;phase.mode='waiting';
-   q.child=b.addBuff(e,{key:childSpec.buffKey,source:e,persist:true,
+   b.emit('ch17SnakeTerminalStarted',{source:e,sourceLife:life});
+   if(!valid()||phase.pending!==q){phase.cancelPending(q);return;}
+   q.child=attachSnakeInteractionWait(b,e,{
     onRemove:()=>{if(q.active)phase.cancelPending(q);}});
    if(!q.child||!valid()||phase.pending!==q){phase.cancelPending(q);b.removeBuff(e,q.child);if(!valid())phase.stop();return;}
    q.task=b.after(childSpec.triggerInterval,()=>{

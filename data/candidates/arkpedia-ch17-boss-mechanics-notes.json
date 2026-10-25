@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "kind": "community-mechanics-corroboration",
+  "sources": {
+    "hpLoss": {
+      "publisher": "PRTS",
+      "revision": 442170,
+      "url": "https://prts.wiki/index.php?title=%E7%89%B9%E6%AE%8A%E6%9C%BA%E5%88%B6&oldid=442170#%E5%B7%B2%E6%8D%9F%E5%A4%B1%E7%94%9F%E5%91%BD%E5%80%BC%E5%88%A4%E5%AE%9A"
+    },
+    "snake": {
+      "publisher": "PRTS",
+      "revision": 441734,
+      "url": "https://prts.wiki/index.php?title=%E2%80%9C%E7%BB%88%E5%A7%8B%E2%80%9D&oldid=441734"
+    }
+  },
+  "hpLoss": {
+    "initialStage": 1,
+    "comparison": "GT",
+    "requirePositiveHp": true,
+    "resetOnHealing": false,
+    "overshoot": "one trigger, advance to floor(loss / step + 1)"
+  },
+  "injured": {
+    "damageAtSkillStart": true,
+    "formalStunnedStatus": false
+  },
+  "interactionWait": {
+    "invulnerable": true,
+    "blocksAbilityTriggers": true
+  },
+  "scope": "Supplemental first-hand mechanics research for serialized-node semantics. Canonical tables and retained native components remain the identity, parameter and action sources; this supplies no alternate enemy/stage data.",
+  "limits": "Revision references and retained factual rules are not compiled-dispatch, client-version or captured-frame proof. Automatic support and stage admission remain separate."
+}
