@@ -1,0 +1,941 @@
+{
+  "schemaVersion": 1,
+  "testOnly": true,
+  "scope": "Internal Muama/twin checkpoint Blink, protection state, unblockable immunity and delayed firewall refresh; complete bosses/stages remain held.",
+  "sources": {
+    "line": {
+      "path": "data/candidates/arkpedia-ch17-muama-line-contract.json",
+      "sha256": "19d36554b270374ef025bb9cd665b4f73918cc6844ca90993d0c44958807517e"
+    },
+    "graph": {
+      "path": "data/candidates/arkpedia-ch17-firewall-boss-source.json",
+      "sha256": "4c1dcad409a812cb001dc182ca804462ca3733f840b246dc0c6fdb02c2fbd244"
+    },
+    "clock": {
+      "path": "data/candidates/arkpedia-ch17-firewall-boss-animation-source.json",
+      "sha256": "c6420b3c0fea3863e56f25b117ec6802f3e29c05bea006a8b8ed1aa3339b13a8"
+    },
+    "events": {
+      "path": "data/candidates/arkpedia-firewall-boss-event-alias-source.json",
+      "sha256": "4aaf0540d9373b577702b3901b5d9862ec5baca3e1a8c0c19ccb1a710241e905"
+    },
+    "notes": {
+      "path": "data/candidates/arkpedia-ch17-muama-mechanics-notes.json",
+      "sha256": "263f26c26057af6a0bf43f1c523da40d8300c22c4dd3c519cf13115f06009dc3"
+    }
+  },
+  "rootActions": [
+    {
+      "_buff": {
+        "attributes": {
+          "abnormalFlags": [],
+          "abnormalImmunes": [],
+          "abnormalAntis": [],
+          "abnormalCombos": [],
+          "abnormalComboImmunes": [],
+          "attributeModifiers": []
+        },
+        "buffKey": "enemy_muama_trriger_env",
+        "loadFromDB": false,
+        "isDurableBuff": false,
+        "isDamageMissable": false,
+        "isSilenceable": false,
+        "isStunnable": false,
+        "isFreezable": false,
+        "isLevitatable": false,
+        "isGroundBoundable": false,
+        "statusResistable": "AUTOMATIC",
+        "templateKey": "enemy_muama_trriger_env",
+        "disableOverride": false,
+        "overrideKey": null,
+        "overrideType": "DEFAULT",
+        "maxStackCnt": 1,
+        "refreshRemainingTimeWhenStackMax": false,
+        "clearAllStackCntWhenTimeUp": false,
+        "maxValidStackCnt": -1,
+        "independentCharacterSource": false,
+        "overrideEffectKey": null,
+        "overrideOnEventPriority": false,
+        "onEventPriority": "DEFAULT",
+        "audioSignal": null,
+        "lifeTimeType": "LIMITED",
+        "takeSnapshotWhenExtend": false,
+        "durationKey": null,
+        "remainingTimeKey": null,
+        "lifeTime": 0.15,
+        "triggerLifeType": "LIMITED",
+        "triggerCnt": 1,
+        "triggerInterval": 0.1,
+        "waitFirstTriggerInterval": true,
+        "firstTriggerInterval": -1,
+        "priority": -1,
+        "priorityBBKeys": [],
+        "stripBlackboardParamsWithBuffKey": false,
+        "blackboard": [],
+        "enableInitDirectionFromSource": false
+      },
+      "_buffOwner": "BUFF_OWNER",
+      "_useSpecialBuffSource": false,
+      "_specialBuffSource": "BUFF_SOURCE",
+      "_isDerivedBuff": false,
+      "_finishDerivedBuffIfParentFinish": false,
+      "_inherateSourceProjectileFromParentBuff": false,
+      "_hookEffectKeyFromSourceProjectile": false,
+      "$type": "Torappu.Battle.Action.Nodes+CreateBuff"
+    },
+    {
+      "_target": "BUFF_OWNER",
+      "_audioSignal": "muama_blink_end",
+      "$type": "Torappu.Battle.Action.Nodes+PlayAudio"
+    }
+  ],
+  "refreshActions": [
+    {
+      "_envKey": "env_v073_mainline17_boss_ctrl",
+      "_target": "SOURCE",
+      "_triggerWithEvent": false,
+      "_eventName": null,
+      "_triggerWithBlackboard": false,
+      "_readResultFromBlackboard": false,
+      "_tryRuntimeLoad": false,
+      "$type": "Torappu.Battle.Action.Nodes+TriggerEnvSystem"
+    },
+    {
+      "_targetType": "TARGET",
+      "_sourceType": "SOURCE",
+      "_effectKey": "",
+      "_useSourceFaceVactor": false,
+      "_useSourceToTargetDirection": false,
+      "_useConstDirection": false,
+      "_constDirection": "UP",
+      "_createEffectHoldBySource": false,
+      "_createEffectConstDirectionHoldBySource": false,
+      "_useAttackPlaybackSpeed": false,
+      "_manualSetPlaybackSpeed": false,
+      "_blackboardKey": "",
+      "_playbackSpeed": 1,
+      "$type": "Torappu.Battle.Action.Nodes+CreateEffect"
+    }
+  ],
+  "enemies": {
+    "enemy_1590_muama": {
+      "record": {
+        "talents": {
+          "bb": {
+            "SameTargetAtkUp.atk": 100,
+            "SameTargetAtkUp.max_stack_cnt": 4,
+            "DamageResistance.damage_resistance": 0.9
+          },
+          "bbStr": {},
+          "groups": {
+            "SameTargetAtkUp": [
+              "atk",
+              "max_stack_cnt"
+            ],
+            "DamageResistance": [
+              "damage_resistance"
+            ]
+          }
+        },
+        "skills": [
+          {
+            "prefabKey": "HorizontalLineAttack",
+            "priority": 0,
+            "cooldown": 40,
+            "initCooldown": 40,
+            "spCost": 0,
+            "bb": {
+              "value": 120,
+              "stun": 8
+            },
+            "bbStr": {}
+          },
+          {
+            "prefabKey": "VerticalLine",
+            "priority": 0,
+            "cooldown": 40,
+            "initCooldown": 20,
+            "spCost": 0,
+            "bb": {
+              "value": 120,
+              "stun": 10
+            },
+            "bbStr": {}
+          },
+          {
+            "prefabKey": "Blink",
+            "priority": 0,
+            "cooldown": 60,
+            "initCooldown": 30,
+            "spCost": 0,
+            "bb": {},
+            "bbStr": {}
+          }
+        ],
+        "abilities": [
+          {
+            "text": "Cannot move or be teleported.",
+            "format": "NORMAL"
+          },
+          {
+            "text": "ATK gradually increases when attacking the same target",
+            "format": "NORMAL"
+          },
+          {
+            "text": "[Firewall] Has a Firewall around its 8 surrounding tiles; takes greatly reduced Physical and Arts damage from outside the firewall. Allied units cannot be deployed inside the Firewall.",
+            "format": "NORMAL"
+          },
+          {
+            "text": "[Refresh] Periodically teleports to the target tile and refreshes the Firewall.",
+            "format": "NORMAL"
+          },
+          {
+            "text": "[Information Flood] Releases a 3-tile-wide flood of information in a direction, causing the first unit hit to be <$ba.stun>stunned</> and continuously take True damage for a period of time.",
+            "format": "NORMAL"
+          }
+        ]
+      },
+      "wrapper": {
+        "_addEnemyIdToSignalId": 1,
+        "_castLikeAttack": 0,
+        "_checkParentActive": 0,
+        "_familyMask": 3,
+        "_ignoreSilence": 1,
+        "_immuneStunWhenAffecting": 0,
+        "_maxTriggerTime": -1,
+        "_overwriteInitCooldown": -1,
+        "_resetCdWaitFirstPeriod": 1,
+        "_resetMainAbilityCdWhenCastEnd": 0,
+        "_trigger": {
+          "m_FileID": 0,
+          "m_PathID": "-8387023601214307620"
+        },
+        "m_Enabled": 1,
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": "-6189579070657805604"
+        },
+        "m_Name": "",
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": "-5087399121287503180"
+        }
+      },
+      "ability": {
+        "_attachPassiveBuffsOnDummy": 1,
+        "_buffs": [
+          {
+            "attributes": {
+              "abnormalAntis": [],
+              "abnormalComboImmunes": [],
+              "abnormalCombos": [],
+              "abnormalFlags": [],
+              "abnormalImmunes": [
+                3
+              ],
+              "attributeModifiers": []
+            },
+            "audioSignal": "muama_blink_start",
+            "blackboard": [
+              {
+                "key": "effect",
+                "value": 0,
+                "valueStr": "enemy_muama_back_end"
+              }
+            ],
+            "buffKey": "enemy_muama_blink",
+            "clearAllStackCntWhenTimeUp": 0,
+            "disableOverride": 0,
+            "durationKey": "duration",
+            "enableInitDirectionFromSource": 0,
+            "firstTriggerInterval": -1,
+            "independentCharacterSource": 0,
+            "isDamageMissable": 0,
+            "isDurableBuff": 0,
+            "isFreezable": 0,
+            "isGroundBoundable": 0,
+            "isLevitatable": 0,
+            "isSilenceable": 0,
+            "isStunnable": 0,
+            "lifeTime": 5,
+            "lifeTimeType": 1,
+            "loadFromDB": 0,
+            "maxStackCnt": 1,
+            "maxValidStackCnt": -1,
+            "onEventPriority": 0,
+            "overrideEffectKey": "enemy_muama_launch",
+            "overrideKey": "",
+            "overrideOnEventPriority": 0,
+            "overrideType": 0,
+            "priority": -1,
+            "priorityBBKeys": [],
+            "refreshRemainingTimeWhenStackMax": 0,
+            "remainingTimeKey": "",
+            "statusResistable": 2,
+            "stripBlackboardParamsWithBuffKey": 0,
+            "takeSnapshotWhenExtend": 0,
+            "templateKey": "enemy_muama_blink_buff",
+            "triggerCnt": 0,
+            "triggerInterval": -1,
+            "triggerLifeType": 0,
+            "waitFirstTriggerInterval": 1
+          }
+        ],
+        "_checkBuffEarlyFinish": 0,
+        "_enableUpdateCooldown": 0,
+        "_escapeTime": 0,
+        "_forceAsDmgOrHealAbility": 0,
+        "_ignoreIfOwnerDead": 0,
+        "_ignoreInfiniteBuffCooldown": 0,
+        "_interruptAbilityOnDetach": 1,
+        "_interuptIfTargetDead": 0,
+        "_metadata": {
+          "blackboardPrefix": "",
+          "namedAsAlias": ""
+        },
+        "_passiveBuffs": [],
+        "_preDelay": 0,
+        "_resetCdStrategy": 1,
+        "_selector": {
+          "m_FileID": 0,
+          "m_PathID": "0"
+        },
+        "_updateLifetimeWhenSpellStart": 0,
+        "_waitForAttackEvent": 0,
+        "_waitForCasting": 0,
+        "m_Enabled": 1,
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": "-6189579070657805604"
+        },
+        "m_Name": "",
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": "-4234909118878081699"
+        }
+      },
+      "actionComponent": {
+        "_actions": {
+          "SerializedObjectReferences": [],
+          "SerializedState": "[{\"_toNextCheckpoint\":true,\"_toMapPosition\":false,\"_useNewRouteBeforeBlink\":false,\"_branchId\":null,\"_newRouteStartPointAsTargetPosition\":false,\"_useAnimSpeed\":true,\"_withoutSwitchToBlinkState\":false,\"_skipDisappearCheckpoint\":false,\"_forceSetDisappear\":false,\"_forceToMapPosition\":false,\"_distanceCustomKey\":null,\"_useRowAndColOnBlackboard\":false,\"_useRowAndColAsWorldPosition\":false,\"_failIfTargetGridIsRoot\":false,\"_switchState\":false,\"_toEndIfNoCheckpoint\":false,\"$type\":\"Torappu.Battle.Action.Nodes+BlinkNode\"}]"
+        },
+        "_onlyRunOnce": 0,
+        "_runActionOnEvent": 4,
+        "m_Enabled": 1,
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": "-6189579070657805604"
+        },
+        "m_Name": "",
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": "-215856016818471014"
+        }
+      },
+      "blink": {
+        "_toNextCheckpoint": true,
+        "_toMapPosition": false,
+        "_useNewRouteBeforeBlink": false,
+        "_branchId": null,
+        "_newRouteStartPointAsTargetPosition": false,
+        "_useAnimSpeed": true,
+        "_withoutSwitchToBlinkState": false,
+        "_skipDisappearCheckpoint": false,
+        "_forceSetDisappear": false,
+        "_forceToMapPosition": false,
+        "_distanceCustomKey": null,
+        "_useRowAndColOnBlackboard": false,
+        "_useRowAndColAsWorldPosition": false,
+        "_failIfTargetGridIsRoot": false,
+        "_switchState": false,
+        "_toEndIfNoCheckpoint": false,
+        "$type": "Torappu.Battle.Action.Nodes+BlinkNode"
+      },
+      "disappear": {
+        "animKey": "Disappear",
+        "animName": "Move",
+        "ignoreMissing": 1,
+        "loop": 0,
+        "speed": 1
+      },
+      "appear": {
+        "animKey": "Appear",
+        "animName": "Start",
+        "ignoreMissing": 1,
+        "loop": 0,
+        "speed": 1
+      },
+      "defaults": {
+        "initialCooldown": 30,
+        "cooldown": 60,
+        "buffKey": "enemy_muama_blink",
+        "duration": 5,
+        "intro": 2,
+        "outro": 1.5,
+        "refreshDelay": 0.1,
+        "refreshLifetime": 0.15
+      }
+    },
+    "enemy_1591_mutwin": {
+      "record": {
+        "talents": {
+          "bb": {
+            "FakeDeath.target_hp_ratio": 1,
+            "FakeDeath.hp_ratio": 0.04,
+            "SameTargetAtkUp.atk": 100,
+            "SameTargetAtkUp.max_stack_cnt": 4,
+            "DamageResistance.damage_resistance": 0.9,
+            "Reborn.duration": 0.1,
+            "Reborn.hp_ratio": 0.02
+          },
+          "bbStr": {
+            "DamageResistance.boss_room": "(0,6,0)"
+          },
+          "groups": {
+            "FakeDeath": [
+              "hp_ratio",
+              "target_hp_ratio"
+            ],
+            "SameTargetAtkUp": [
+              "atk",
+              "max_stack_cnt"
+            ],
+            "DamageResistance": [
+              "boss_room",
+              "damage_resistance"
+            ],
+            "Reborn": [
+              "duration",
+              "hp_ratio"
+            ]
+          }
+        },
+        "skills": [
+          {
+            "prefabKey": "HorizontalLineAttack",
+            "priority": 0,
+            "cooldown": 40,
+            "initCooldown": 40,
+            "spCost": 0,
+            "bb": {
+              "value": 200,
+              "stun": 5
+            },
+            "bbStr": {}
+          },
+          {
+            "prefabKey": "VerticalLine",
+            "priority": 0,
+            "cooldown": 40,
+            "initCooldown": 20,
+            "spCost": 0,
+            "bb": {
+              "value": 200,
+              "stun": 5
+            },
+            "bbStr": {}
+          },
+          {
+            "prefabKey": "Blink",
+            "priority": 0,
+            "cooldown": 60,
+            "initCooldown": 20,
+            "spCost": 0,
+            "bb": {},
+            "bbStr": {}
+          }
+        ],
+        "abilities": [
+          {
+            "text": "Cannot move or be teleported.",
+            "format": "NORMAL"
+          },
+          {
+            "text": "ATK gradually increases when attacking the same target",
+            "format": "NORMAL"
+          },
+          {
+            "text": "When another AMa-10 Isomer is alive and not in coma, enters a coma when HP reaches 0 and begins regenerating; revives when HP reaches max.",
+            "format": "NORMAL"
+          },
+          {
+            "text": "[Firewall] Has a Firewall around its 8 surrounding tiles; takes greatly reduced Physical and Arts damage from outside the firewall. Allied units cannot be deployed inside the Firewall.",
+            "format": "NORMAL"
+          },
+          {
+            "text": "[Refresh] Periodically teleports to the target tile and refreshes the Firewall.",
+            "format": "NORMAL"
+          },
+          {
+            "text": "[Information Flood] Releases a 3-tile-wide flood of information in a direction, causing the first unit hit to be <$ba.stun>stunned</> and continuously take True damage for a period of time.",
+            "format": "NORMAL"
+          }
+        ]
+      },
+      "wrapper": {
+        "_addEnemyIdToSignalId": 1,
+        "_castLikeAttack": 0,
+        "_checkParentActive": 0,
+        "_familyMask": 3,
+        "_ignoreSilence": 1,
+        "_immuneStunWhenAffecting": 0,
+        "_maxTriggerTime": -1,
+        "_overwriteInitCooldown": -1,
+        "_resetCdWaitFirstPeriod": 1,
+        "_resetMainAbilityCdWhenCastEnd": 0,
+        "_trigger": {
+          "m_FileID": 0,
+          "m_PathID": "-2758847074850394617"
+        },
+        "m_Enabled": 1,
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": "1443672888664043015"
+        },
+        "m_Name": "",
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": "-5087399121287503180"
+        }
+      },
+      "ability": {
+        "_attachPassiveBuffsOnDummy": 1,
+        "_buffs": [
+          {
+            "attributes": {
+              "abnormalAntis": [],
+              "abnormalComboImmunes": [],
+              "abnormalCombos": [],
+              "abnormalFlags": [],
+              "abnormalImmunes": [
+                3
+              ],
+              "attributeModifiers": []
+            },
+            "audioSignal": "muama_blink_start",
+            "blackboard": [
+              {
+                "key": "effect",
+                "value": 0,
+                "valueStr": "enemy_mutwin_back_end"
+              }
+            ],
+            "buffKey": "enemy_mutwin_blink",
+            "clearAllStackCntWhenTimeUp": 0,
+            "disableOverride": 0,
+            "durationKey": "duration",
+            "enableInitDirectionFromSource": 0,
+            "firstTriggerInterval": -1,
+            "independentCharacterSource": 0,
+            "isDamageMissable": 0,
+            "isDurableBuff": 0,
+            "isFreezable": 0,
+            "isGroundBoundable": 0,
+            "isLevitatable": 0,
+            "isSilenceable": 0,
+            "isStunnable": 0,
+            "lifeTime": 5,
+            "lifeTimeType": 1,
+            "loadFromDB": 0,
+            "maxStackCnt": 1,
+            "maxValidStackCnt": -1,
+            "onEventPriority": 0,
+            "overrideEffectKey": "enemy_mutwin_launch",
+            "overrideKey": "",
+            "overrideOnEventPriority": 0,
+            "overrideType": 0,
+            "priority": -1,
+            "priorityBBKeys": [],
+            "refreshRemainingTimeWhenStackMax": 0,
+            "remainingTimeKey": "",
+            "statusResistable": 2,
+            "stripBlackboardParamsWithBuffKey": 0,
+            "takeSnapshotWhenExtend": 0,
+            "templateKey": "enemy_muama_blink_buff",
+            "triggerCnt": 0,
+            "triggerInterval": -1,
+            "triggerLifeType": 0,
+            "waitFirstTriggerInterval": 1
+          }
+        ],
+        "_checkBuffEarlyFinish": 0,
+        "_enableUpdateCooldown": 0,
+        "_escapeTime": 0,
+        "_forceAsDmgOrHealAbility": 0,
+        "_ignoreIfOwnerDead": 0,
+        "_ignoreInfiniteBuffCooldown": 0,
+        "_interruptAbilityOnDetach": 1,
+        "_interuptIfTargetDead": 0,
+        "_metadata": {
+          "blackboardPrefix": "",
+          "namedAsAlias": ""
+        },
+        "_passiveBuffs": [],
+        "_preDelay": 0,
+        "_resetCdStrategy": 1,
+        "_selector": {
+          "m_FileID": 0,
+          "m_PathID": "0"
+        },
+        "_updateLifetimeWhenSpellStart": 0,
+        "_waitForAttackEvent": 0,
+        "_waitForCasting": 0,
+        "m_Enabled": 1,
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": "1443672888664043015"
+        },
+        "m_Name": "",
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": "-4234909118878081699"
+        }
+      },
+      "actionComponent": {
+        "_actions": {
+          "SerializedObjectReferences": [],
+          "SerializedState": "[{\"_toNextCheckpoint\":true,\"_toMapPosition\":false,\"_useNewRouteBeforeBlink\":false,\"_branchId\":null,\"_newRouteStartPointAsTargetPosition\":false,\"_useAnimSpeed\":true,\"_withoutSwitchToBlinkState\":false,\"_skipDisappearCheckpoint\":false,\"_forceSetDisappear\":false,\"_forceToMapPosition\":false,\"_distanceCustomKey\":null,\"_useRowAndColOnBlackboard\":false,\"_useRowAndColAsWorldPosition\":false,\"_failIfTargetGridIsRoot\":false,\"_switchState\":false,\"_toEndIfNoCheckpoint\":false,\"$type\":\"Torappu.Battle.Action.Nodes+BlinkNode\"}]"
+        },
+        "_onlyRunOnce": 0,
+        "_runActionOnEvent": 4,
+        "m_Enabled": 1,
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": "1443672888664043015"
+        },
+        "m_Name": "",
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": "-215856016818471014"
+        }
+      },
+      "blink": {
+        "_toNextCheckpoint": true,
+        "_toMapPosition": false,
+        "_useNewRouteBeforeBlink": false,
+        "_branchId": null,
+        "_newRouteStartPointAsTargetPosition": false,
+        "_useAnimSpeed": true,
+        "_withoutSwitchToBlinkState": false,
+        "_skipDisappearCheckpoint": false,
+        "_forceSetDisappear": false,
+        "_forceToMapPosition": false,
+        "_distanceCustomKey": null,
+        "_useRowAndColOnBlackboard": false,
+        "_useRowAndColAsWorldPosition": false,
+        "_failIfTargetGridIsRoot": false,
+        "_switchState": false,
+        "_toEndIfNoCheckpoint": false,
+        "$type": "Torappu.Battle.Action.Nodes+BlinkNode"
+      },
+      "disappear": {
+        "animKey": "Disappear",
+        "animName": "Move",
+        "ignoreMissing": 1,
+        "loop": 0,
+        "speed": 1
+      },
+      "appear": {
+        "animKey": "Appear",
+        "animName": "Start",
+        "ignoreMissing": 1,
+        "loop": 0,
+        "speed": 1
+      },
+      "defaults": {
+        "initialCooldown": 20,
+        "cooldown": 60,
+        "buffKey": "enemy_mutwin_blink",
+        "duration": 5,
+        "intro": 2,
+        "outro": 1.5,
+        "refreshDelay": 0.1,
+        "refreshLifetime": 0.15
+      }
+    },
+    "enemy_1591_mutwin_2": {
+      "record": {
+        "talents": {
+          "bb": {
+            "FakeDeath.target_hp_ratio": 1,
+            "FakeDeath.hp_ratio": 0.04,
+            "SameTargetAtkUp.atk": 100,
+            "SameTargetAtkUp.max_stack_cnt": 4,
+            "DamageResistance.damage_resistance": 0.9,
+            "Reborn.duration": 0.1,
+            "Reborn.hp_ratio": 0.02
+          },
+          "bbStr": {
+            "DamageResistance.boss_room": "(0,6,0)"
+          },
+          "groups": {
+            "FakeDeath": [
+              "hp_ratio",
+              "target_hp_ratio"
+            ],
+            "SameTargetAtkUp": [
+              "atk",
+              "max_stack_cnt"
+            ],
+            "DamageResistance": [
+              "boss_room",
+              "damage_resistance"
+            ],
+            "Reborn": [
+              "duration",
+              "hp_ratio"
+            ]
+          }
+        },
+        "skills": [
+          {
+            "prefabKey": "HorizontalLineAttack",
+            "priority": 0,
+            "cooldown": 40,
+            "initCooldown": 40,
+            "spCost": 0,
+            "bb": {
+              "value": 200,
+              "stun": 5
+            },
+            "bbStr": {}
+          },
+          {
+            "prefabKey": "VerticalLine",
+            "priority": 0,
+            "cooldown": 40,
+            "initCooldown": 20,
+            "spCost": 0,
+            "bb": {
+              "value": 200,
+              "stun": 5
+            },
+            "bbStr": {}
+          },
+          {
+            "prefabKey": "Blink",
+            "priority": 0,
+            "cooldown": 60,
+            "initCooldown": 20,
+            "spCost": 0,
+            "bb": {},
+            "bbStr": {}
+          }
+        ],
+        "abilities": [
+          {
+            "text": "Cannot move or be teleported.",
+            "format": "NORMAL"
+          },
+          {
+            "text": "ATK gradually increases when attacking the same target",
+            "format": "NORMAL"
+          },
+          {
+            "text": "When another AMa-10 Isomer is alive and not in coma, enters a coma when HP reaches 0 and begins regenerating; revives when HP reaches max.",
+            "format": "NORMAL"
+          },
+          {
+            "text": "[Firewall] Has a Firewall around its 8 surrounding tiles; takes greatly reduced Physical and Arts damage from outside the firewall. Allied units cannot be deployed inside the Firewall.",
+            "format": "NORMAL"
+          },
+          {
+            "text": "[Refresh] Periodically teleports to the target tile and refreshes the Firewall.",
+            "format": "NORMAL"
+          },
+          {
+            "text": "[Information Flood] Releases a 3-tile-wide flood of information in a direction, causing the first unit hit to be <$ba.stun>stunned</> and continuously take True damage for a period of time.",
+            "format": "NORMAL"
+          }
+        ]
+      },
+      "wrapper": {
+        "_addEnemyIdToSignalId": 1,
+        "_castLikeAttack": 0,
+        "_checkParentActive": 0,
+        "_familyMask": 3,
+        "_ignoreSilence": 1,
+        "_immuneStunWhenAffecting": 0,
+        "_maxTriggerTime": -1,
+        "_overwriteInitCooldown": -1,
+        "_resetCdWaitFirstPeriod": 1,
+        "_resetMainAbilityCdWhenCastEnd": 0,
+        "_trigger": {
+          "m_FileID": 0,
+          "m_PathID": "-310128625387410486"
+        },
+        "m_Enabled": 1,
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": "1874737504082357194"
+        },
+        "m_Name": "",
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": "-5087399121287503180"
+        }
+      },
+      "ability": {
+        "_attachPassiveBuffsOnDummy": 1,
+        "_buffs": [
+          {
+            "attributes": {
+              "abnormalAntis": [],
+              "abnormalComboImmunes": [],
+              "abnormalCombos": [],
+              "abnormalFlags": [],
+              "abnormalImmunes": [
+                3
+              ],
+              "attributeModifiers": []
+            },
+            "audioSignal": "muama_blink_start",
+            "blackboard": [
+              {
+                "key": "effect",
+                "value": 0,
+                "valueStr": "enemy_mutwin_back_end"
+              }
+            ],
+            "buffKey": "enemy_mutwin_blink",
+            "clearAllStackCntWhenTimeUp": 0,
+            "disableOverride": 0,
+            "durationKey": "duration",
+            "enableInitDirectionFromSource": 0,
+            "firstTriggerInterval": -1,
+            "independentCharacterSource": 0,
+            "isDamageMissable": 0,
+            "isDurableBuff": 0,
+            "isFreezable": 0,
+            "isGroundBoundable": 0,
+            "isLevitatable": 0,
+            "isSilenceable": 0,
+            "isStunnable": 0,
+            "lifeTime": 5,
+            "lifeTimeType": 1,
+            "loadFromDB": 0,
+            "maxStackCnt": 1,
+            "maxValidStackCnt": -1,
+            "onEventPriority": 0,
+            "overrideEffectKey": "enemy_mutwin_launch",
+            "overrideKey": "",
+            "overrideOnEventPriority": 0,
+            "overrideType": 0,
+            "priority": -1,
+            "priorityBBKeys": [],
+            "refreshRemainingTimeWhenStackMax": 0,
+            "remainingTimeKey": "",
+            "statusResistable": 2,
+            "stripBlackboardParamsWithBuffKey": 0,
+            "takeSnapshotWhenExtend": 0,
+            "templateKey": "enemy_muama_blink_buff",
+            "triggerCnt": 0,
+            "triggerInterval": -1,
+            "triggerLifeType": 0,
+            "waitFirstTriggerInterval": 1
+          }
+        ],
+        "_checkBuffEarlyFinish": 0,
+        "_enableUpdateCooldown": 0,
+        "_escapeTime": 0,
+        "_forceAsDmgOrHealAbility": 0,
+        "_ignoreIfOwnerDead": 0,
+        "_ignoreInfiniteBuffCooldown": 0,
+        "_interruptAbilityOnDetach": 1,
+        "_interuptIfTargetDead": 0,
+        "_metadata": {
+          "blackboardPrefix": "",
+          "namedAsAlias": ""
+        },
+        "_passiveBuffs": [],
+        "_preDelay": 0,
+        "_resetCdStrategy": 1,
+        "_selector": {
+          "m_FileID": 0,
+          "m_PathID": "0"
+        },
+        "_updateLifetimeWhenSpellStart": 0,
+        "_waitForAttackEvent": 0,
+        "_waitForCasting": 0,
+        "m_Enabled": 1,
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": "1874737504082357194"
+        },
+        "m_Name": "",
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": "-4234909118878081699"
+        }
+      },
+      "actionComponent": {
+        "_actions": {
+          "SerializedObjectReferences": [],
+          "SerializedState": "[{\"_toNextCheckpoint\":true,\"_toMapPosition\":false,\"_useNewRouteBeforeBlink\":false,\"_branchId\":null,\"_newRouteStartPointAsTargetPosition\":false,\"_useAnimSpeed\":true,\"_withoutSwitchToBlinkState\":false,\"_skipDisappearCheckpoint\":false,\"_forceSetDisappear\":false,\"_forceToMapPosition\":false,\"_distanceCustomKey\":null,\"_useRowAndColOnBlackboard\":false,\"_useRowAndColAsWorldPosition\":false,\"_failIfTargetGridIsRoot\":false,\"_switchState\":false,\"_toEndIfNoCheckpoint\":false,\"$type\":\"Torappu.Battle.Action.Nodes+BlinkNode\"}]"
+        },
+        "_onlyRunOnce": 0,
+        "_runActionOnEvent": 4,
+        "m_Enabled": 1,
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": "1874737504082357194"
+        },
+        "m_Name": "",
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": "-215856016818471014"
+        }
+      },
+      "blink": {
+        "_toNextCheckpoint": true,
+        "_toMapPosition": false,
+        "_useNewRouteBeforeBlink": false,
+        "_branchId": null,
+        "_newRouteStartPointAsTargetPosition": false,
+        "_useAnimSpeed": true,
+        "_withoutSwitchToBlinkState": false,
+        "_skipDisappearCheckpoint": false,
+        "_forceSetDisappear": false,
+        "_forceToMapPosition": false,
+        "_distanceCustomKey": null,
+        "_useRowAndColOnBlackboard": false,
+        "_useRowAndColAsWorldPosition": false,
+        "_failIfTargetGridIsRoot": false,
+        "_switchState": false,
+        "_toEndIfNoCheckpoint": false,
+        "$type": "Torappu.Battle.Action.Nodes+BlinkNode"
+      },
+      "disappear": {
+        "animKey": "Disappear",
+        "animName": "Move",
+        "ignoreMissing": 1,
+        "loop": 0,
+        "speed": 1
+      },
+      "appear": {
+        "animKey": "Appear",
+        "animName": "Start",
+        "ignoreMissing": 1,
+        "loop": 0,
+        "speed": 1
+      },
+      "defaults": {
+        "initialCooldown": 20,
+        "cooldown": 60,
+        "buffKey": "enemy_mutwin_blink",
+        "duration": 5,
+        "intro": 2,
+        "outro": 1.5,
+        "refreshDelay": 0.1,
+        "refreshLifetime": 0.15
+      }
+    }
+  },
+  "limits": [
+    "Skill admission shares the ready ordinary/line action opportunity and ignores silence. Its source buff and skill cooldown start immediately; the separately owned blink state holds action/movement through intro and outro.",
+    "Literal Move/Start clip seconds are a local animation-speed dispatch, not compiled/frame proof. Blink state protection overrides the source buff unblockable immunity; ordinary unblockable parents remain attached and resume when immunity expires.",
+    "Only a current nonfinal MOVE checkpoint is mapped. WAIT/APPEAR/DISAPPEAR dispatch is not inferred here; an exhausted checkpoint list leaves position unchanged. Canonical stage integration must verify its real route/cursor against this mapping.",
+    "Relocation commits the captured route cursor only if its route, index and checkpoint still match. Root change dispatch uses accepted enemyMoved endpoints, and coalesces the native single named delayed parent. The refresh is not derived from the five-second buff and survives its expiration.",
+    "Source retirement/reuse, route replacement before arrival, rejected protection and battle end cannot leave a stale action lock or move another life. Born line output remains owned independently."
+  ]
+}

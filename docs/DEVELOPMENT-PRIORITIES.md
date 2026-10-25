@@ -3,8 +3,8 @@
 Current continuation: the snake's HP phases, line attack, timeout, firewall and
 native hit body are composed as an internal candidate. AMa-10 and both twins now
 have source-bound ordinary attacks, target ATK ramps, immobility/teleport markers,
-x-4 firewall boundaries and internal three-lane line actors. Complete boss
-support remains held while refresh/fake-death/reborn transitions, source sequence
+x-4 firewall boundaries, internal three-lane line actors and checkpoint refresh.
+Complete boss support remains held while twins' fake-death/reborn transitions, source sequence
 dispatch review, canonical wave/branch/story
 integration, mechanical input routing and staged-record reviews are completed.
 
@@ -877,3 +877,51 @@ all browser scenarios. Its full eight-shard Node22/24 Linux/Windows run
 The new line source checker and behavior suite are included in continuation CI.
 Enemy/stage support counts and the nine remaining normal-stage gates are
 unchanged. Mechanics still precede all new art/models/chibis and effects.
+
+## AMa-10/twin checkpoint refresh and action composition
+
+The retained Blink wrappers, instant buff, BlinkNode action, Disappear/Appear
+bindings and Move/Start clocks now have an independently reproducible receipt.
+The internal action composition installs ordinary combat, both line skills and
+refresh together and rolls back partial admission. A failed or retired part
+retires its sibling actors; previously born line output retains its independent
+ownership. Canonical enemy and stage support gates remain unchanged.
+
+Blink joins the same ready-action arbitration as the two line skills, including
+its native silence exemption. Its five-second parent and skill cooldown begin
+immediately, while a separately owned state protects the two-second intro and
+1.5-second outro. The state prevents ordinary route/checkpoint/exit handling from
+consuming the newly arrived body before the outro ends. Original route identity,
+cursor index, checkpoint coordinates and cursor offset are revalidated before
+committing the jump and discarding path caches. An exhausted checkpoint list
+leaves the body's position unchanged.
+
+Native abnormal immunity suppresses the unblockable flag while retaining its
+original parents. Blink state supplies its own temporary protection; after the
+outro, real blocking works during the remaining immunity window, then existing
+unblockable parents resume when immunity expires. Accepted root-tile changes
+create the single named, coalescing delayed environment-trigger parent. It
+refreshes the current owner's firewall after 0.1 seconds, restoring broken sides
+and invalidating stale click receipts. That parent is not derived from the
+five-second buff and can finish after the listening buff expires. Source reuse,
+retirement and battle end cannot refresh another deployment's wall.
+
+These rules agree with the separately retained [PRTS first-hand observations,
+revision 441735](https://prts.wiki/index.php?title=AMa-10&oldid=441735). The native
+components remain the parameter/action sources. Literal clip dispatch, state
+bridging and root-center geometry remain local mappings, not compiled/frame
+proof. Current nonfinal MOVE checkpoints are covered; WAIT/APPEAR/DISAPPEAR
+dispatch is explicitly not inferred. The actual canonical 17-18 Muama/twin
+routes are all MOVE sequences and now pass cursor-order checks within the full
+17-by-11 rectangle. This is route verification, not branch/story/wave admission
+or approval of the altered staged twin room records.
+
+All 1,085 locally available focused checks passed, and the separate simulation
+core regression passed 632 cases with three skipped. The final refresh suite
+then passed 37 cases, including three added composition/admission checks.
+The preceding d87b26eb checkpoint passed all 15 hosted continuation jobs.
+Full run 40212773386 at 184e63bf has four successful shards and four still running
+at the latest observation, and has not been replaced. Native reproduction and
+the new Blink receipt checker remain required in continuation CI. Twins'
+fake-death/reborn/room behavior and canonical boss/wave integration remain the
+next mechanics work. No art/models/chibis/effects campaign has started.

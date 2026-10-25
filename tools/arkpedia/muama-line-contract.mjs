@@ -50,7 +50,7 @@ export async function muamaLineContract({read=readFile}={}){
  }
  return{schemaVersion:1,testOnly:true,scope:'Internal Muama/twin horizontal and vertical line actors and collision/impact mechanics. No complete boss or stage admission.',sources,start,tick,enemies,
   limits:['Begin, Loop and End are played once in sequence using literal source clip seconds, unaffected by ASPD or slowdown. This local sequence dispatch is not compiled/frame proof; native timeMode0 and sequence fields remain retained for review.',
-   'Ready skills occupy a ready ordinary attack opportunity. Ordinary cooldown continues while casting; skill cooldown restarts at cast end. Equal ready line skills use seeded random arbitration. Blink must join the same actor arbitration before full boss support.',
+   'Ready skills occupy a ready ordinary attack opportunity. Ordinary cooldown continues while casting; skill cooldown restarts at cast end. Equal ready line skills and separately installed reviewed actions use seeded random arbitration. A line-only controller does not synthesize Blink.',
    'Three rays use root-tile row/column centers with offsets -1,0,1 and the selected target axis direction, captured at admission. Exact visual mount projection and zero-axis facing are local mappings, not captured client geometry.',
    'Admission uses ordinary ground target filters; collision ignores target-free flags but skips hidden bodies, devices and flying motion. Swept point/circle transport is a local mapping.',
    'Physical impact does not gate the separate named DOT/derived stun on damage success. One parent per native key replaces earlier ownership across same-key casters; distinct native keys coexist.',

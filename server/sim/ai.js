@@ -622,6 +622,9 @@ export function remainingDistance(b, e) {
 export function updateEnemy(b, e, dt) {
   const R = e.route;
   if (!e.alive) return;
+  // A source-owned blink state finishes its outro before route checkpoints or
+  // the objective can consume the newly arrived body.
+  if (e.buffs.some(buff => buff.data?.nativeBlinkState === true)) { e.moving = false; return; }
   const trace = nativeFlyingTrace(e);
   if (!trace) {
     updateNativeMoveCheckpoints(e);

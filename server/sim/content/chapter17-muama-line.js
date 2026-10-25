@@ -61,7 +61,7 @@ export function installChapter17MuamaLine(b,e,{combat}={}){
  if(!combat?.valid()||e.mem.ch17MuamaCombat!==combat||combat.ownerLife!==e.deploySeq||Math.abs(e.deployedAt-b.time)>1e-9)throw Error('Muama lines require the fresh deployment combat actor');
  const life=e.deploySeq,old=e.mem.ch17MuamaLine;if(old?.active&&old.ownerLife===life)throw Error('A deployment may own only one Muama line controller');if(old?.active)old.stop();
  const output=outputFor(b),handles=[],skills=proof.skills;
- const state={active:true,ownerLife:life,pending:null,output,cooldowns:Object.fromEntries(Object.entries(skills).map(([k,s])=>[k,s.defaults.initialCooldown])),
+ const state={active:true,ownerLife:life,pending:null,output,extraActions:new Map(),cooldowns:Object.fromEntries(Object.entries(skills).map(([k,s])=>[k,s.defaults.initialCooldown])),
   valid:()=>state.active&&combat.valid()&&e.mem.ch17MuamaCombat===combat&&e.deploySeq===life,
   interrupt(){const q=state.pending;if(!q)return;state.pending=null;state.cooldowns[q.name]=q.defaults.cooldown;if(combat.actionBusy===q)combat.actionBusy=null;},
   stop(){if(!state.active)return;state.active=false;state.interrupt();for(const h of handles)b.off(h);if(combat.readyAction===state.tryReady)combat.readyAction=null;if(e.mem.ch17MuamaLine===state)delete e.mem.ch17MuamaLine;output.actors.delete(state);output.prune();},
@@ -71,12 +71,13 @@ export function installChapter17MuamaLine(b,e,{combat}={}){
    return sortAllyTargets(e,b.allies().filter(t=>ground(t)&&canTargetAlly(selector,t,true)
     &&Math.abs(Math.round(d.horizontal?t.y:t.x)-Math.round(d.horizontal?e.y:e.x))<=1));
   },
-  canAct(){return state.valid()&&!state.pending&&!combat.suspended&&!combat.pending&&!combat.actionBusy&&combat.cooldown<=1e-9
-   &&!intrinsic(e)&&!e.s.flags.disarm&&!e.s.flags.silence&&!(e.s.flags.tremble&&e.blockedBy);},
+  canAct({ignoreSilence=false}={}){return state.valid()&&!state.pending&&!combat.suspended&&!combat.pending&&!combat.actionBusy&&combat.cooldown<=1e-9
+   &&!intrinsic(e)&&!e.s.flags.disarm&&(ignoreSilence||!e.s.flags.silence)&&!(e.s.flags.tremble&&e.blockedBy);},
   tryReady(){
-   if(!state.canAct())return false;
-   const ready=Object.keys(skills).filter(name=>state.cooldowns[name]<=1e-9&&state.choices(name).length);
-   return ready.length?state.cast(ready.length===1?ready[0]:b.rng.pick(ready)):false;
+   if(!state.canAct({ignoreSilence:true}))return false;
+   const ready=Object.keys(skills).filter(name=>!e.s.flags.silence&&state.cooldowns[name]<=1e-9&&state.choices(name).length).map(name=>()=>state.cast(name));
+   for(const action of state.extraActions.values())if(action.ready())ready.push(action.cast);
+   return ready.length?(ready.length===1?ready[0]:b.rng.pick(ready))():false;
   },
   cast(name){
    const d=skills[name]?.defaults;if(!d||!state.canAct()||state.cooldowns[name]>1e-9)return false;

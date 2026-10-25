@@ -207,6 +207,7 @@ export function aggregateMods(buffs) {
   let permRangeExtend = 0;
   let sluggishMoveMul = 1;
   let nativeSlowDown = 0;
+  let nativeUnblockableImmune = false, nativeBlinkState = false;
   // dodge sources are independent rolls: total = 1 − Π(1 − p)^stacks (one single source keeps its exact value)
   const dodge = { dodgePhys: null, dodgeArts: null };
   // Source-owned valued statuses can be removed independently. Only the
@@ -233,6 +234,8 @@ export function aggregateMods(buffs) {
   }
   for (let i = 0; i < buffs.length; i++) {
     const b = buffs[i];
+    nativeUnblockableImmune ||= b.data?.nativeUnblockableImmune === true;
+    nativeBlinkState ||= b.data?.nativeBlinkState === true;
     const st = b.stacks;
     const slow = b.data?.nativeSlowDown;
     if (slow && Number.isFinite(slow.increment) && slow.increment > 0
@@ -287,5 +290,8 @@ export function aggregateMods(buffs) {
   if (nativeSlowDown > 0) {
     for (const k of ['moveMul', 'aspdMul', 'slowDownMul']) mul[k] = (mul[k] ?? 1) * (1 - nativeSlowDown);
   }
+  // Native abnormal immunity suppresses the flag without removing its parents.
+  // A blink state supplies its own movement/blocking protection independently.
+  if (nativeUnblockableImmune && !nativeBlinkState) flags.unblockable = false;
   return { add, mul, flags, shield, permRangeExtend };
 }

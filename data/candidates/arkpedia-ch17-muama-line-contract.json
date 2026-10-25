@@ -5,7 +5,7 @@
   "sources": {
     "combat": {
       "path": "data/candidates/arkpedia-ch17-muama-combat-contract.json",
-      "sha256": "007cd12903f1f2ad475b76830dfffa8bdcf152dfdf484008f7987acfbfe38583"
+      "sha256": "69663279e7cd31f398ec95cfdd20b83d6d67cf2129e2d504df254e305766cb07"
     },
     "graph": {
       "path": "data/candidates/arkpedia-ch17-firewall-boss-source.json",
@@ -17,7 +17,7 @@
     },
     "notes": {
       "path": "data/candidates/arkpedia-ch17-muama-mechanics-notes.json",
-      "sha256": "3387522c6f53dddc00e164ed6e9d004b39fbecbb09de0d613de7a4bc56d50ea5"
+      "sha256": "263f26c26057af6a0bf43f1c523da40d8300c22c4dd3c519cf13115f06009dc3"
     }
   },
   "start": [
@@ -3227,7 +3227,7 @@
   },
   "limits": [
     "Begin, Loop and End are played once in sequence using literal source clip seconds, unaffected by ASPD or slowdown. This local sequence dispatch is not compiled/frame proof; native timeMode0 and sequence fields remain retained for review.",
-    "Ready skills occupy a ready ordinary attack opportunity. Ordinary cooldown continues while casting; skill cooldown restarts at cast end. Equal ready line skills use seeded random arbitration. Blink must join the same actor arbitration before full boss support.",
+    "Ready skills occupy a ready ordinary attack opportunity. Ordinary cooldown continues while casting; skill cooldown restarts at cast end. Equal ready line skills and separately installed reviewed actions use seeded random arbitration. A line-only controller does not synthesize Blink.",
     "Three rays use root-tile row/column centers with offsets -1,0,1 and the selected target axis direction, captured at admission. Exact visual mount projection and zero-axis facing are local mappings, not captured client geometry.",
     "Admission uses ordinary ground target filters; collision ignores target-free flags but skips hidden bodies, devices and flying motion. Swept point/circle transport is a local mapping.",
     "Physical impact does not gate the separate named DOT/derived stun on damage success. One parent per native key replaces earlier ownership across same-key casters; distinct native keys coexist.",
