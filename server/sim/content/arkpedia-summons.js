@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import { canSpendDp } from './arkpedia-dp-budget.js';
+import {chapter17FirewallBlocksDeployment} from './chapter17.js';
 import evidence from '../../../data/arkpedia-summon-prefabs.json' with { type: 'json' };
 import { REGULAR_SUMMONS, summonCardId, summonUnitId, summonRecordFor } from '../../../shared/arkpedia/summons.js';
 import { canDeployInViewport } from '../../../shared/arkpedia/squad.js';
@@ -49,6 +50,7 @@ export function regularSummonCards(battle) {
 
 export function summonPlacementError(battle, key, row, col) {
   const state = cardState(battle, key);
+  if(state&&chapter17FirewallBlocksDeployment(battle,row,col))return 'Firewall blocks deployment on this tile.';
   if (state?.deck?.placementError) return state.deck.placementError(row, col);
   if (!canDeployInViewport(battle.viewport)) return 'Open the fullscreen workspace to deploy.';
   if (battle.finished) return 'Battle has ended.';

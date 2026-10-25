@@ -257,7 +257,7 @@ import { catalogueFor, recordFor, fixedSquadBuilds } from "../../shared/arkpedia
 import { REGULAR_OPERATORS } from "../../shared/arkpedia/operators.js";
 import { assertRegularEnemies } from "../../shared/arkpedia/enemies.js";
 import { installEnemyFeatures } from "./content/arkpedia-enemy-features.js";
-import { installChapter17Devices } from './content/chapter17.js';
+import { installChapter17Devices, chapter17FirewallBlocksDeployment } from './content/chapter17.js';
 import { installChapter16Structures } from './content/chapter16-structures.js';
 import { installChapter16Tunnels } from './content/chapter16-tunnel.js';
 import { STAGE_DEVICES, STAGE_TOKEN_UNITS, pulseTiles, artilleryTiles } from "../../shared/arkpedia/stage-devices.js";
@@ -544,6 +544,7 @@ export class StandardBattle extends Battle {
     if (!fromSkill && !canDeployInViewport(this.viewport))
       return "Open the fullscreen workspace to deploy.";
     if (this.finished) return "Battle has ended.";
+    if (chapter17FirewallBlocksDeployment(this,row,col)) return "Firewall blocks deployment on this tile.";
     if (this.chapter16?.isShadow?.(row, col)) return "High-risk pollution blocks deployment on this tile.";
     if (!entry || entry.unit?.alive) return "Operator is unavailable.";
     if (!fromSkill && entry.readyAt > this.time) return "Operator is still redeploying.";
@@ -589,6 +590,7 @@ export class StandardBattle extends Battle {
   deployToken(unitId, row, col) {
     const found = (this.stage.tokens ?? this.stage.raw?.tokens ?? []).find(t => t.unitId === unitId);
     if (!found) throw new Error('This stage has no such token.');
+    if (chapter17FirewallBlocksDeployment(this,row,col)) throw new Error('Firewall blocks deployment on this tile.');
     if (this.chapter16?.isShadow?.(row, col)) throw new Error('High-risk pollution blocks deployment on this tile.');
     const token = { ...(STAGE_TOKEN_UNITS[unitId] ?? {}), ...found };
     if ((this.mvpStageTokens.get(unitId) ?? 0) <= 0) throw new Error('No tokens remaining.');

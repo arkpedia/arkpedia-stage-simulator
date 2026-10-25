@@ -734,3 +734,56 @@ checkpoint and must be observed rather than replaced while running. No enemy or
 stage support counts change; firewall damage/deployment geometry, initial side
 selection, canonical wave/branch integration, the other bosses and the wider
 operator audit remain mechanics work before art, models or effects.
+
+## Snake firewall, native target body and direct placement
+
+The composed snake actor now installs its native7×4 firewall and root hit
+rectangle. Its nonsilenceable DamageResistance parent supplies one conditional
+Physical/Arts multiplier when the source-to-recipient segment crosses a remaining
+wall. It applies after DEF/RES and before shields, including corner crossings
+only once; it does not edit a reusable area-damage packet. Inside sources,
+sourceless output, True/elemental HP damage and ordinary HP loss retain their
+separate paths. Breaking one side removes reduction only for segments that no
+longer cross a remaining side. Whole-body tile/radius targeting now uses the
+retained native root BoxCollider2D and the existing huge-unit body helpers.
+
+The source InitFireButton lifetime owns one initial set of bottom/right/left
+three-click windows; top has no initial vulnerability in this encounter, as
+corroborated by the separately pinned first-hand snake research. All three
+windows keep independent five-second deadlines. A later Leak Source event
+still exposes the nearest remaining side. Generic all-side exposure now accepts
+an explicit side subset without changing other owners' windows or its earlier
+default behavior. Retirement cancels owned windows, modifiers, flags, body
+geometry and listeners together, including body reuse and rejected admissions.
+
+Operator cards, skill-delivered operator cards through the normal placement
+API, manual summon cards (including custom source decks) and player-placed
+stage tokens consult the source-bound firewall checker before spending DP,
+stock or deployment slots. The interaction-only firewall port supplies no
+placement policy. Automatic conjures and forced movement do not silently gain
+new placement checks: their separate native selector/checker contracts remain
+authoritative. Snake interior exclusion does not borrow Muama's directional
+three-tile release. The retained canonical snake branch starts at row14/col5
+on a17×11 grid; its interior footprint already has nondeployable base floor,
+and its upper boundary meets the forbidden map border. No alternate map or
+stage admission follows from the synthetic interaction checks.
+
+The new source contract pins the full environment graph, canonical parameters,
+native passive/init/collider bindings and independently corroborated buff-finish
+and take-damage callbacks. Strict segment endpoints, tile-center exclusion,
+fixed-tick buff finish and explicit environment refresh remain local mappings.
+Teleport/refresh parity, renderer body metadata, real mechanical input routing,
+canonical wave/branch/story integration and the other bosses remain open. No
+art/models/effects campaign or public support promotion has started.
+
+All975 locally available focused mechanics checks passed together before the
+last canonical-footprint cross-check was added. The firewall suite then includes
+28 source/behavior/lifecycle/API checks. The separate41 placement/summon/squad/
+stage-device regression checks also pass. The previous d2942579 continuation
+passed both hosted behavior jobs and all twelve browser scenarios, while its
+native-source job failed because the new original-clock parser dependency was
+not installed there. That job now runs locked `npm ci` before verification;
+the clock/source checks remain required. Full run40206399907 at cd1180fc is still
+live, with six successful shards and two WindowsNode22 shards running at the
+latest observation; do not replace it while running. Stage/enemy counts and
+the nine remaining normal-stage gates are unchanged.

@@ -390,8 +390,8 @@ export function leakSource(r) {
 
 /** Integration port for native boss firewall controllers. It intentionally does
  * not approve or implement the bosses' attacks/rebirth/phase transitions. */
-export function registerChapter17Firewall(b, owner, { width = 3, height = 3, duration = 5, clicks = 3, onBreak = () => {} } = {}) {
-  if (![width,height,duration].every(n=>Number.isFinite(n)&&n>0)||!Number.isSafeInteger(clicks)||clicks<1||typeof onBreak!=='function')
+export function registerChapter17Firewall(b, owner, { width = 3, height = 3, duration = 5, clicks = 3, onBreak = () => {}, onRetire = () => {} } = {}) {
+  if (![width,height,duration].every(n=>Number.isFinite(n)&&n>0)||!Number.isSafeInteger(clicks)||clicks<1||typeof onBreak!=='function'||typeof onRetire!=='function')
     throw Error('Invalid firewall perimeter or click contract');
   const env = chapter17Environment(b), life = owner.deploySeq, handles = [];
   const buttons=new Map();let generation=0,preferredSide=null;
@@ -407,15 +407,18 @@ export function registerChapter17Firewall(b, owner, { width = 3, height = 3, dur
       const index = env.firewalls.indexOf(wall);
       if (index >= 0) env.firewalls.splice(index, 1);
       for (const handle of handles) b.off(handle);
+      onRetire();
     },
     prune(){
       if(!wall.current()){wall.retire();return false;}
       for(const[index,button]of buttons)if(b.time>=button.until)buttons.delete(index);
       return true;
     },
-    expose(source,{allSides=false}={}){
+    expose(source,{allSides=false,sideIndices=null}={}){
+      if(sideIndices!==null&&(!Array.isArray(sideIndices)||sideIndices.some(i=>!Number.isSafeInteger(i)||i<0||i>3)))
+        throw Error('Invalid firewall side selection');
       if(!wall.prune())return 0;
-      const sides=wall.sides.filter(s=>!s.broken);
+      const sides=wall.sides.filter(s=>!s.broken&&(sideIndices===null||sideIndices.includes(s.index)));
       if(!allSides)sides.sort((a,z)=>dist(a,source)-dist(z,source)||a.index-z.index);
       const selected=allSides?sides:sides.slice(0,1),exposureId=++generation;
       for(const side of selected)buttons.set(side.index,{side,until:b.time+duration,clicks:0,exposureId});
@@ -461,4 +464,11 @@ export function clickChapter17Firewall(b,input){
 }
 export function chapter17FirewallSnapshot(b){
   return[...(b.chapter16?.firewalls??[])].flatMap(wall=>wall.snapshot());
+}
+
+/** Only an installed source-bound controller may supply a placement checker.
+ * The older interaction-only port never bans deployment on its own. */
+export function chapter17FirewallBlocksDeployment(b,row,col){
+  if(!Number.isSafeInteger(row)||!Number.isSafeInteger(col))return false;
+  return [...(b.chapter16?.firewalls??[])].some(wall=>wall.blocksDeployment?.(row,col)===true);
 }

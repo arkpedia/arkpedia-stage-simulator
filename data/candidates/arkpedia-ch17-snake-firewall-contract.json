@@ -1,0 +1,328 @@
+{
+  "schemaVersion": 1,
+  "testOnly": true,
+  "scope": "Snake firewall incoming damage, native hit body, direct-placement exclusion and initial side interaction only. No complete enemy/stage/wave or compiled/frame approval.",
+  "sources": {
+    "health": {
+      "path": "data/candidates/arkpedia-ch17-snake-health-contract.json",
+      "sha256": "75c15d98f55581414c1b12036675455e079315bf561c55f3fdd7f012ee79553f"
+    },
+    "graph": {
+      "path": "data/candidates/arkpedia-ch17-firewall-boss-source.json",
+      "sha256": "4c1dcad409a812cb001dc182ca804462ca3733f840b246dc0c6fdb02c2fbd244"
+    },
+    "indexed": {
+      "path": "data/candidates/arkpedia-ch17-firewall-boss-native.json",
+      "sha256": "b66124027d7a1463a715a1479b201b984e01fbea3d73b140ac33709f96a84eda"
+    },
+    "environment": {
+      "path": "data/candidates/arkpedia-ch17-firewall-environment-source.json",
+      "sha256": "783f86d0cd5a03beee0378160a93294c4b12c6bf87bfee0afe56e2aea721fabe"
+    },
+    "notes": {
+      "path": "data/candidates/arkpedia-ch17-boss-mechanics-notes.json",
+      "sha256": "d3bcd59147358a16a26adf52e8dfd77f6478b79817e4c9b1b525e7b4091ea912"
+    },
+    "events": {
+      "path": "data/candidates/arkpedia-buff-event-alias-source.json",
+      "sha256": "df85c1d8ee05e0391c7be3854bb39632bdf5282b1f48b061c4e7af5b5397e407"
+    },
+    "damageEvents": {
+      "path": "data/candidates/arkpedia-war-caster-event-alias-source.json",
+      "sha256": "1880a5154c2fbc5b18fe5462bd9d925f07cf5ab8cdcdd046088671720031d768"
+    }
+  },
+  "enemy": "enemy_1593_musnake",
+  "record": {
+    "groups": {
+      "TimeOut": [
+        "duration",
+        "interval",
+        "value"
+      ],
+      "StepKill": [
+        "enemy_musnake_heal_buff.hp_ratio",
+        "hp_ratio"
+      ],
+      "DamageResistance": [
+        "damage_resistance"
+      ]
+    },
+    "bb": {
+      "TimeOut.interval": 998,
+      "TimeOut.duration": 999,
+      "TimeOut.value": -50,
+      "StepKill.hp_ratio": 0.2,
+      "StepKill.enemy_musnake_heal_buff.hp_ratio": 0.2,
+      "DamageResistance.damage_resistance": 0.9
+    },
+    "skills": [
+      {
+        "prefabKey": "GlobalLineAttack",
+        "priority": 0,
+        "cooldown": 25,
+        "initCooldown": 15,
+        "spCost": 0,
+        "bb": {
+          "value": 300,
+          "stun": 10
+        },
+        "bbStr": {}
+      },
+      {
+        "prefabKey": "Injured",
+        "priority": 0,
+        "cooldown": 0,
+        "initCooldown": 0,
+        "spCost": 0,
+        "bb": {
+          "stun_duration": 7,
+          "hp_ratio": 0.05
+        },
+        "bbStr": {}
+      }
+    ],
+    "abilities": [
+      {
+        "text": "Becomes Invulnerable upon losing a certain amount of HP. Takes damage and becomes <$ba.stun>stunned</> if a special interaction is performed within this duration; otherwise recovers HP.",
+        "format": "NORMAL"
+      },
+      {
+        "text": "[Firewall] Has a Firewall around itself; takes greatly reduced Physical and Arts damage from outside the Firewall.",
+        "format": "NORMAL"
+      },
+      {
+        "text": "[Information Flood] Releases a flood of information in a fixed direction, causing the first unit hit to be <$ba.stun>stunned</> and continuously take True damage for a period of time.",
+        "format": "NORMAL"
+      },
+      {
+        "text": "[Halt Process] When a long time has passed in the battle, disappears and drains 50 Life Points.",
+        "format": "NORMAL"
+      },
+      {
+        "text": "Cannot be teleported",
+        "format": "NORMAL"
+      }
+    ]
+  },
+  "config": {
+    "bossId": "enemy_1593_musnake",
+    "bottomWallEffect": "enemy_muama_range_01_down_start",
+    "firewallHeight": 4,
+    "firewallRangeId": "",
+    "firewallWidth": 7,
+    "leftWallEffect": "enemy_muama_range_01_left_start",
+    "rightWallEffect": "enemy_muama_range_01_right_start",
+    "topWallEffect": "enemy_muama_range_01_up_start",
+    "vulnerabilityButtonDuration": 5,
+    "vulnerabilityRequiredClickCount": 3
+  },
+  "parent": {
+    "attributes": {
+      "abnormalAntis": [],
+      "abnormalComboImmunes": [],
+      "abnormalCombos": [],
+      "abnormalFlags": [
+        22
+      ],
+      "abnormalImmunes": [],
+      "attributeModifiers": []
+    },
+    "audioSignal": "",
+    "blackboard": [],
+    "buffKey": "enemy_musnake_t[damage_resistance]",
+    "clearAllStackCntWhenTimeUp": 0,
+    "disableOverride": 0,
+    "durationKey": "duration",
+    "enableInitDirectionFromSource": 0,
+    "firstTriggerInterval": -1,
+    "independentCharacterSource": 0,
+    "isDamageMissable": 0,
+    "isDurableBuff": 0,
+    "isFreezable": 0,
+    "isGroundBoundable": 0,
+    "isLevitatable": 0,
+    "isSilenceable": 0,
+    "isStunnable": 0,
+    "lifeTime": 0,
+    "lifeTimeType": 2,
+    "loadFromDB": 0,
+    "maxStackCnt": 1,
+    "maxValidStackCnt": -1,
+    "onEventPriority": 0,
+    "overrideEffectKey": "",
+    "overrideKey": "",
+    "overrideOnEventPriority": 0,
+    "overrideType": 0,
+    "priority": -1,
+    "priorityBBKeys": [],
+    "refreshRemainingTimeWhenStackMax": 0,
+    "remainingTimeKey": "",
+    "statusResistable": 2,
+    "stripBlackboardParamsWithBuffKey": 0,
+    "takeSnapshotWhenExtend": 0,
+    "templateKey": "enemy_muama_t[damage_resistance]",
+    "triggerCnt": 0,
+    "triggerInterval": -1,
+    "triggerLifeType": 0,
+    "waitFirstTriggerInterval": 1
+  },
+  "init": {
+    "attributes": {
+      "abnormalAntis": [],
+      "abnormalComboImmunes": [],
+      "abnormalCombos": [],
+      "abnormalFlags": [],
+      "abnormalImmunes": [],
+      "attributeModifiers": []
+    },
+    "audioSignal": "",
+    "blackboard": [],
+    "buffKey": "enemy_musnake_init_fire_button",
+    "clearAllStackCntWhenTimeUp": 0,
+    "disableOverride": 0,
+    "durationKey": "duration",
+    "enableInitDirectionFromSource": 0,
+    "firstTriggerInterval": -1,
+    "independentCharacterSource": 0,
+    "isDamageMissable": 0,
+    "isDurableBuff": 0,
+    "isFreezable": 0,
+    "isGroundBoundable": 0,
+    "isLevitatable": 0,
+    "isSilenceable": 0,
+    "isStunnable": 0,
+    "lifeTime": 0.5,
+    "lifeTimeType": 1,
+    "loadFromDB": 0,
+    "maxStackCnt": 1,
+    "maxValidStackCnt": -1,
+    "onEventPriority": 0,
+    "overrideEffectKey": "",
+    "overrideKey": "",
+    "overrideOnEventPriority": 0,
+    "overrideType": 0,
+    "priority": -1,
+    "priorityBBKeys": [],
+    "refreshRemainingTimeWhenStackMax": 0,
+    "remainingTimeKey": "",
+    "statusResistable": 2,
+    "stripBlackboardParamsWithBuffKey": 0,
+    "takeSnapshotWhenExtend": 0,
+    "templateKey": "enemy_musnake_init_fire_button",
+    "triggerCnt": 0,
+    "triggerInterval": -1,
+    "triggerLifeType": 0,
+    "waitFirstTriggerInterval": 1
+  },
+  "damage": [
+    {
+      "_targetType": "BUFF_OWNER",
+      "$type": "Torappu.Battle.Action.Nodes+CheckFirewallDamageSource"
+    },
+    {
+      "_filterDamageType": true,
+      "_damageMask": "PHYSICAL_AND_MAGICAL",
+      "_filterApplyWay": false,
+      "_applyWayFilter": "NONE",
+      "_filterModifierKey": false,
+      "_modifierKey": "",
+      "_isOneMinus": true,
+      "_isStackable": false,
+      "_isValidStackCnt": false,
+      "_cachedDeltaValueToBBKey": "",
+      "_customKey": "",
+      "$type": "Torappu.Battle.Action.Nodes+DamageScale"
+    }
+  ],
+  "initial": [
+    {
+      "_radiationSourceType": "SOURCE",
+      "_createForAllWalls": true,
+      "$type": "Torappu.Battle.Action.Nodes+CreateFirewallVulnerabilityButton"
+    }
+  ],
+  "collider": {
+    "m_AutoTiling": false,
+    "m_Density": 1,
+    "m_EdgeRadius": 0,
+    "m_Enabled": 1,
+    "m_GameObject": {
+      "m_FileID": 0,
+      "m_PathID": "2516089751650169617"
+    },
+    "m_IsTrigger": true,
+    "m_Material": {
+      "m_FileID": 0,
+      "m_PathID": "0"
+    },
+    "m_Offset": {
+      "x": 0,
+      "y": 0
+    },
+    "m_Size": {
+      "x": 7,
+      "y": 4
+    },
+    "m_SpriteTilingProperty": {
+      "adaptiveTiling": false,
+      "adaptiveTilingThreshold": 0,
+      "border": {
+        "w": 0,
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "drawMode": 0,
+      "newSize": {
+        "x": 0,
+        "y": 0
+      },
+      "oldSize": {
+        "x": 0,
+        "y": 0
+      },
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "m_UsedByComposite": false,
+    "m_UsedByEffector": false,
+    "componentType": "BoxCollider2D"
+  },
+  "body": {
+    "w": 7,
+    "h": 4,
+    "dx": 0,
+    "dy": 0
+  },
+  "defaults": {
+    "width": 7,
+    "height": 4,
+    "duration": 5,
+    "clicks": 3,
+    "resistance": 0.9,
+    "initialDelay": 0.5,
+    "initialSides": [
+      0,
+      1,
+      3
+    ]
+  },
+  "corroboration": {
+    "source": {
+      "publisher": "PRTS",
+      "revision": 441734,
+      "url": "https://prts.wiki/index.php?title=%E2%80%9C%E7%BB%88%E5%A7%8B%E2%80%9D&oldid=441734"
+    },
+    "initialSides": "BOTTOM, RIGHT, LEFT; TOP has no initial vulnerability in the canonical snake encounter"
+  },
+  "limits": [
+    "Wall geometry is committed at construction/explicit environment refresh; moving the body alone does not guess an environment rebuild. Teleport/refresh parity remains unverified.",
+    "Rectangle segment crossing uses point positions, strict interior endpoints and an explicit epsilon. Any remaining wall crossed applies the source nonstacking multiplier once after DEF/RES and before shields.",
+    "Direct placement checks use tile centers strictly inside the committed snake rectangle. Snake side breaks remove reduction, without borrowing Muama's separate three-tile directional release. Automatic conjures/forced movement are not inferred to perform direct-placement checks.",
+    "Native root BoxCollider2D maps to the existing huge-unit range body. Collision/targeting frame parity and the original visual shape remain separate.",
+    "The native all-walls action and revision-pinned first-hand snake research bind three initial sides after the source half-second buff. Local input generations and exact-instance cleanup preserve ownership; canonical stage integration is still required."
+  ]
+}
