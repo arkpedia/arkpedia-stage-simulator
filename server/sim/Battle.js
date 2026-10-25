@@ -1312,6 +1312,7 @@ export class Battle {
         unit.attackControlEpoch = (unit.attackControlEpoch ?? 0) + 1;
       if (f && (f.stun || f.freeze || f.sleep || f.levitate))
         unit.actionControlEpoch = (unit.actionControlEpoch ?? 0) + 1;
+      if (f?.silence) unit.silenceEpoch = (unit.silenceEpoch ?? 0) + 1;
       return applied;
     };
     const list = unit.buffs;

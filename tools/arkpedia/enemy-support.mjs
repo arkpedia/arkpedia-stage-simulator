@@ -133,6 +133,7 @@ export async function buildEnemySupport({ candidate = false } = {}) {
       ['brute', 'data/candidates/arkpedia-ch17-reviewed-brute.json'],
       ['flyer', 'data/candidates/arkpedia-ch17-reviewed-flyer.json'],
       ['bag', 'data/candidates/arkpedia-ch17-reviewed-bag.json'],
+      ['channelCarrier', 'data/candidates/arkpedia-ch17-reviewed-channel-carrier.json'],
       ['storyGuardian', 'data/candidates/arkpedia-ch16-reviewed-story-guardian.json'],
       ['rockbreaker', 'data/candidates/arkpedia-ch17-rockbreaker-contract.json'],
       ['shieldguard', 'data/candidates/arkpedia-ch16-reviewed-shieldguard.json'],

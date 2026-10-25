@@ -315,3 +315,56 @@ none may leave newly returned orphan buffs or later output. Both new desktop/
 phone scenarios pass startup, pause, restart and test-only access checks; the
 desktop17-10 and phone17-12 captures were inspected. Hosted checks for this exact
 Bag checkpoint remain separate from the completed earlier runs.
+
+## Stronger channel/carrying variants and normal-only waves
+
+The stronger caster and carrier have exact-record registrations, complete graphs
+for both base/strong pairs,40 indexed components, two projectiles, three templates
+and four prefab-bound clock receipts. Source comparisons resolve local references
+through original hierarchy/script identities; all eight non-visual caster and
+four carrier component shapes agree between variants. Collider radii agree and
+Spine playback remains1. This comparison grants no support without each record's
+own reviewed native/count/record claims. The carrier retains its Leak Source
+dependency gate.
+
+The original named x-4 range is the existing3x3 square, including its center and
+diagonals. Its complete source range table is retained with upstream commit,
+Git-blob hash and SHA256 verification; placement behavior stays source-backed.
+Carrier summon attempts now retire once per source life. The shared caster
+clears channel/DEF/movement state on retirement, rejects silence at admission,
+and interrupts its silenceable link even after a brief accepted forced silence.
+Canonical silence immunity still rejects ordinary applications. SP callbacks
+revalidate owner and marker state before another pulse. Born ordinary projectiles
+preserve current same-life ATK/modifiers; after source-object reuse they use a
+birth-deployment view. The same view fixes Flyer death blasts borrowing a new
+deployment's modifiers or identity after reuse. Native compiled/frame parity
+continues to be unclaimed.
+
+17-15 includes the canonical ALL-enabled n group (one normal War Caster) and
+excludes h/h2 Six-Star additions. Its38 counted bodies clear across three seeds.
+17-17 includes four NORMAL-enabled group1 Flyers while excluding the group2
+Six-Star Bag replacement. Its62 scheduled/60 counted bodies exercise natural
+stronger channels, Brute/Flyer reactions and Bag feeding at the unchanged300s
+no-operator timeout. The hidden-group compiler accepts explicitly reviewed
+default ALL/NORMAL enables while rejecting missing/ambiguous masks, optional
+normal enables and contradictory normal disables before mutation.
+
+The catalogue is622 entries,597 public and25 test-only. Candidate support is
+474/1,901; the inventory retains1,427 unsupported enemies and3,269 unbuilt combat
+stage records. Nine Chapter16/17 normal candidates remain unadmitted:
+16-9/12/13/16/17/18 and17-14/16/18. Remaining bosses, predefined Closure and the
+stronger War Caster's additional Leave skill require their own mechanics work.
+Operator-wide audit remains open; visual integration has not started.
+
+Bag checkpoint8507929e passed all thirteen hosted continuation jobs. Its full
+eight-shard Linux/Windows Node22/24 run40192086233 remains independently tracked;
+older green results do not certify this newer checkpoint.
+
+This checkpoint passes601 locally available continuation tests, including29
+channel/carrier source/runtime cases and88 stage/conditional cases. Both new
+desktop/phone scenarios pass startup, pause, restart and test-only rejection;
+the phone17-17 capture was inspected. Original graph/index/clock extraction
+independently reproduces all four prefabs. Hosted source reproduction includes
+this family alongside the prior five families; range-table verification uses
+the retained complete original bytes, SHA256 and upstream Git-blob identity.
+The four tracked locally unavailable tests remain hosted-run requirements.

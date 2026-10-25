@@ -14,12 +14,15 @@ import { pollutionBrute } from './chapter17-brute.js';
 import { storyGuardian } from './chapter16-story-guardian.js';
 import { pollutionFlyer } from './chapter17-flyer.js';
 import { pollutionBag } from './chapter17-bag.js';
+import {strongChannel,strongCarrier} from './chapter17-channel-carrier.js';
 
 const ABILITIES = Object.freeze({
   nativeDuckRun,
   ch17PollutionBrute: pollutionBrute,
   ch17PollutionFlyer: pollutionFlyer,
   ch17PollutionBag: pollutionBag,
+  ch17StrongChannel:strongChannel,
+  ch17StrongCarrier:strongCarrier,
   ch16StoryGuardian: storyGuardian,
   ...chapter16Abilities,
   blockMcreep,

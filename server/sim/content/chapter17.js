@@ -3,11 +3,12 @@
 import { COLS } from '../constants.js';
 import { canTargetAlly, areaSelectable, aggroCmp } from '../targeting.js';
 import markerReview from '../../../data/candidates/arkpedia-ch17-reviewed-marker.json' with { type: 'json' };
+import {captureEnemySource} from './enemy-source-view.js';
 const live = u => u?.alive && u.deployed && !u.hidden;
 const sameLife = (u, seq) => live(u) && u.deploySeq === seq;
 const sk = (r, key) => r.skills.find(s => s.prefabKey === key);
 const bb = (r, group, key) => r.talents.bb[`${group}.${key}`];
-const controlled = e => e.s.flags.stun || e.s.flags.sleep || e.s.flags.levitate || e.s.flags.disarm;
+const controlled = e => e.s.flags.stun || e.s.flags.freeze || e.s.flags.sleep || e.s.flags.levitate || e.s.flags.disarm;
 const dist = (a, z) => Math.hypot(a.x - z.x, a.y - z.y);
 const positionTile = u => [Math.round(u.y ?? u.tileR), Math.round(u.x ?? u.tileC)];
 const tileDistance = (a, z) => {
@@ -19,7 +20,7 @@ const opponents = (b, x, y, radius) => [...b.alliesInRadius(x, y, radius),
 const ops = b => b.allyUnits.filter(u => live(u) && u.kind === 'op');
 const hit = (b, s, t, amount, type = 'true', extra = {}) => b.dealDamage(s, t, { amount, type, isAttack: true, canDodge: false, tags: ['chapter17'], ...extra });
 const lock = (b, e, key) => b.addBuff(e, { key, persist: true, flags: { noMove: true, disarm: true } });
-const intrinsicControl = e => e.s.flags.stun || e.s.flags.sleep || e.s.flags.levitate;
+const intrinsicControl = e => e.s.flags.stun || e.s.flags.freeze || e.s.flags.sleep || e.s.flags.levitate;
 
 /** First contact with a circle, rather than distance to the segment's closest point. */
 export function beamIntersection(x, y, nx, ny, target, radius = 0.6) {
@@ -159,34 +160,58 @@ export function reverseDamage(r) {
 }
 
 export function deadSummon(r) {
-  return { death(c, b, e) { if (c.reason === 'killed') for (let i = 0; i < bb(r, 'DeadSummon', 'max_cnt'); i++) chapter17Environment(b).summon(e); } };
+  return {
+    spawn(b,e,a){
+      a.active=true;a.life=e.deploySeq;
+      b.on('battleEnd',()=>{a.active=false;},{owner:e});
+      b.on('removed',({unit})=>{if(unit===e)a.active=false;},{owner:e});
+    },
+    death(c,b,e,a){
+      if(!a.active||a.life!==e.deploySeq)return;a.active=false;
+      if(c.reason==='killed')for(let i=0;i<bb(r,'DeadSummon','max_cnt');i++)chapter17Environment(b).summon(e);
+    },
+  };
 }
 
 export function chargeRift(r) {
   const s = sk(r, 'ChargeRift');
   const end = (b, e, a) => { a.target = null; b.removeBuff(e, 'ch16:charge'); b.removeBuff(e, 'ch17:charge-def'); a.left = s.cooldown; };
   return {
-    spawn(b, e, a) { a.left = s.initCooldown; a.pulse = 0; e.profile.canTarget = u => !u.isFlying && !u.s.flags.liftoff; e.profile.deferHit = true; },
+    spawn(b, e, a) {
+      a.active=true;a.life=e.deploySeq;a.left=s.initCooldown;a.pulse=0;
+      a.retire=()=>{if(!a.active)return;a.active=false;end(b,e,a);};
+      e.profile.canTarget=u=>!u.isFlying&&!u.s.flags.liftoff;e.profile.deferHit=true;
+      b.on('battleEnd',a.retire,{owner:e});b.on('removed',({unit})=>{if(unit===e)a.retire();},{owner:e});
+    },
     tick(b, e, a, dt) {
+      if(!a.active)return;
+      if(!e.alive||!e.deployed||e.deploySeq!==a.life){a.retire();return;}
       if (a.target) {
-        if (!a.target.alive || a.target.cycle !== a.cycle || a.target.sp >= a.target.spCost || intrinsicControl(e) || e.actionControlEpoch !== a.epoch) { end(b, e, a); return; }
+        if (e.hidden || !a.target.alive || a.target.cycle !== a.cycle || a.target.sp >= a.target.spCost || intrinsicControl(e) || e.actionControlEpoch !== a.epoch
+          ||e.s.flags.silence||e.silenceEpoch!==a.silenceEpoch) { end(b, e, a); return; }
         a.elapsed += dt;
         // Projectile speed10, followed by native one-second repeat hits.
-        while (a.elapsed + 1e-9 >= a.next && a.next < s.bb.duration - 1e-9) { a.target.gainSp(s.bb.sp, e); a.next += 1; }
+        while (a.elapsed + 1e-9 >= a.next && a.next < s.bb.duration - 1e-9) {
+          const marker=a.target;marker.gainSp(s.bb.sp,e);a.next+=1;
+          if(!a.active||a.target!==marker)return;
+          if(!e.alive||!e.deployed||e.deploySeq!==a.life){a.retire();return;}
+          if(!marker.alive||marker.cycle!==a.cycle||marker.sp>=marker.spCost){end(b,e,a);return;}
+        }
         if (a.elapsed >= s.bb.duration - 1e-9 || a.target.sp >= a.target.spCost) end(b, e, a);
         return;
       }
       a.left -= dt;
-      if (a.left > 1e-9 || controlled(e)) return;
+      if (a.left > 1e-9 || e.hidden || controlled(e) || e.s.flags.silence) return;
       a.target = chapter17Environment(b).rifts.filter(t => t.alive && t.sp < t.spCost && dist(e, t) <= r.stats.rangeRadius).sort(aggroCmp)[0];
       if (a.target) { lock(b, e, 'ch16:charge'); b.addBuff(e, { key: 'ch17:charge-def', persist: true, mods: { defPct: s.bb.def } });
-        a.cycle = a.target.cycle; a.elapsed = 0; a.next = dist(e, a.target) / 10; void e.s; a.epoch = e.actionControlEpoch; }
+        a.cycle = a.target.cycle; a.elapsed = 0; a.next = dist(e, a.target) / 10; void e.s; a.epoch = e.actionControlEpoch;a.silenceEpoch=e.silenceEpoch; }
     },
     attack(c, b, e) {
+      const life=e.deploySeq,snapshot=captureEnemySource(e);
       for (const target of c.targets) b.addProjectile({ from: e, target, speed: 10, source: e, maxAge: 10,
-        onHit: c => { if (c.target) hit(b, e, c.target, e.s.atk, 'arts', { canDodge: true }); } });
+        onHit: c => { if(c.target){const source=e.deploySeq===life?e:snapshot;hit(b,source,c.target,source.s.atk,'arts',{canDodge:true});} } });
     },
-    death(c, b, e, a) { end(b, e, a); },
+    death(c, b, e, a) { a.retire(); },
   };
 }
 

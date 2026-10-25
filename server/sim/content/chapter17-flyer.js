@@ -3,6 +3,7 @@ import review from '../../../data/candidates/arkpedia-ch17-reviewed-flyer.json' 
 import {leakSourceTrace} from './chapter17-trace.js';
 import {sourceAbilityDelta} from './arkpedia-slow-down.js';
 import {areaSelectable} from '../targeting.js';
+import {captureEnemySource} from './enemy-source-view.js';
 const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
 const live=e=>e?.alive&&e.deployed&&!e.hidden;
 const controlled=e=>['stun','freeze','sleep','levitate','fear'].some(k=>e.s.flags[k]);
@@ -61,20 +62,20 @@ export function pollutionFlyer(r){
       if(t&&live(e)&&live(t)&&Math.hypot(t.x-e.x,t.y-e.y)<=d.contactRadius+1e-8)a.begin(t);
     },
     death(c,b,e,a){
-      const mode=a.mode,life=e.deploySeq,x=e.x,y=e.y,atk=e.s.atk;
+      const mode=a.mode,life=e.deploySeq,x=e.x,y=e.y,snapshot=captureEnemySource(e);
       const emit=c.reason==='killed'&&!e.s.flags.silence&&a.deathLife!==life;
       a.deathLife=life;a.detach();if(!emit)return;
       const state=bursts(b),scale=r.talents.bb[['DefaultBoom.atk_scale','S1Boom.atk_scale','S2Boom.atk_scale'][mode]];
       let task;task=b.after(d.blastLifetime,()=>{
         state.tasks.delete(task);if(!state.active)return;
-        const currentAtk=e.deploySeq===life?e.s.atk:atk;
-        const targets=[...b.allyUnits,...b.enemies.filter(u=>u.profile?.neutral)].filter(u=>live(u)&&!u.isFlying&&areaSelectable(e,u)
+        const source=e.deploySeq===life?e:snapshot,currentAtk=source.s.atk;
+        const targets=[...b.allyUnits,...b.enemies.filter(u=>u.profile?.neutral)].filter(u=>live(u)&&!u.isFlying&&areaSelectable(source,u)
           &&Math.hypot(u.x-x,u.y-y)<=d.blastRadius+(u.profile?.neutral?(u.mem.ch16BodyRadius??.1):.25)+1e-9);
         for(const u of new Set(targets)){
           if(!state.active)break;
-          b.dealDamage(e,u,{amount:currentAtk*scale,type:'phys',isAttack:false,canDodge:false,applyWay:'none',tags:['chapter17','flyer-blast']});
+          b.dealDamage(source,u,{amount:currentAtk*scale,type:'phys',isAttack:false,canDodge:false,applyWay:'none',tags:['chapter17','flyer-blast']});
         }
-        b.emit('ch17FlyerBlast',{source:e,mode,scale,x,y,targets});
+        b.emit('ch17FlyerBlast',{source,sourceLife:life,mode,scale,x,y,targets});
       },{holdsBattle:true});state.tasks.add(task);
     },
   };

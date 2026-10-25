@@ -142,10 +142,10 @@ test('Flyer admission rejects missing family evidence, changed records, componen
  }
 });
 
-test('a born blast cannot borrow ATK from a reused source deployment',()=>{
- const f=fixture(),hp=f.u.hp;f.b.kill(f.e,null);
- f.e.deploySeq++;f.e.base.atk=9999;f.e.markDirty();f.h.run(1.1);
- assert.equal(hp-f.u.hp,350);assert.equal(f.blasts.length,1);assert.deepEqual(f.b.errors,[]);
+test('a born blast cannot borrow ATK, modifiers or identity from a reused source deployment',()=>{
+ const f=fixture(),hp=f.u.hp,life=f.e.deploySeq;f.b.kill(f.e,null);
+ f.e.deploySeq++;f.e.base.atk=9999;f.e.markDirty();f.b.addBuff(f.e,{key:'fixture-new-life',persist:true,allowDead:true,mods:{dmgDealtMul:9}});f.h.run(1.1);
+ assert.equal(hp-f.u.hp,350);assert.equal(f.blasts.length,1);assert.equal(f.blasts[0].source.deploySeq,life);assert.deepEqual(f.b.errors,[]);
 });
 for(const status of ['hidden','sleep','untargetable'])test('death projectile excludes a current '+status+' victim',()=>{
  const f=fixture(),hp=f.u.hp;f.b.kill(f.e,null);

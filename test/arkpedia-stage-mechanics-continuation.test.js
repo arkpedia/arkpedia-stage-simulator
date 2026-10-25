@@ -16,6 +16,8 @@ const read = p => JSON.parse(bytes(p));
 const mvp = read('arkpedia-mvp.json'), index = read('arkpedia-stages.json');
 const hash = b => createHash('sha256').update(b).digest('hex');
 const specs = {
+  '17-15': {total:38,counts:{enemy_10201_muinf_2:18,enemy_10204_mudia_2:9,enemy_10208_mucow_2:3,enemy_10205_mufly_2:2,enemy_10207_mubrut_2:5,enemy_10210_muwiz:1},hidden:['h','h2'],included:['n']},
+  '17-17': {total:60,scheduled:62,counts:{enemy_10211_murad:2,enemy_10201_muinf_2:28,enemy_10205_mufly_2:16,enemy_10203_mumag_2:9,enemy_10207_mubrut_2:3,enemy_10209_mubag_2:4},hidden:['group2'],included:['group1'],reason:'timeout'},
   '17-10': { total:29, scheduled:30, counts:{enemy_10211_murad:1,enemy_10201_muinf:20,enemy_10208_mucow:2,enemy_10203_mumag:4,enemy_10209_mubag:3}, hidden:['hidden1'], reason:'timeout' },
   '17-12': { total:38, counts:{enemy_10208_mucow:6,enemy_10203_mumag:10,enemy_10205_mufly:16,enemy_10209_mubag:6}, hidden:[], reason:'timeout' },
   '17-11': { total:50, scheduled:52, counts:{enemy_10211_murad:2,enemy_10201_muinf:29,enemy_10204_mudia:3,enemy_10205_mufly:14,enemy_10207_mubrut:4}, hidden:[] },
@@ -57,7 +59,7 @@ for (const [code,spec] of Object.entries(specs)) {
     assert.equal(stage.canonicalData.repository,'arkpedia/arkpedia-data');
     assert.equal(stage.pathing.moveScale,.5);
     assert.deepEqual(stage.excludedHiddenGroups,spec.hidden);
-    assert.deepEqual(stage.includedHiddenGroups,[]);
+    assert.deepEqual(stage.includedHiddenGroups,spec.included??[]);
     const spawns=stageAdapter(stage).spawns;
     assert.equal(spawns.length,spec.scheduled??spec.total);
     for(const [key,n] of Object.entries(spec.counts))assert.equal(spawns.filter(s=>s.enemyKey===key).length,n,key);
@@ -85,7 +87,7 @@ for (const [code,spec] of Object.entries(specs)) {
     assert.equal(existsSync(refused),false);
   });
   for(const seed of [19,71,129])test(code+' seeded normal battle '+seed,()=>{
-    const b=battle(code,seed),born=[],hiddenSince=new Map(),hiddenDurations=[];let bruteArmed=false,bagConsumed=0,maxBagStacks=0;
+    const b=battle(code,seed),born=[],hiddenSince=new Map(),hiddenDurations=[];let bruteArmed=false,strongChannelled=false,bagConsumed=0,maxBagStacks=0;
     assert.equal(b.timeLimit,300);
     assert.equal(b.total,spec.total);
     if(spec.cap)b.timeLimit=spec.cap;
@@ -94,7 +96,8 @@ for (const [code,spec] of Object.entries(specs)) {
     while(!b.finished) {
       for(const[id,e]of b.stageDeviceActions??[])if(b.time<121&&e.state.canActivate())b.activateStageDevice(id);
       b.step();
-      bruteArmed ||= b.enemies.some(e=>e.defId==='enemy_10207_mubrut'&&e.mem.ab?.list.some(a=>a.mode===1));
+      bruteArmed ||= b.enemies.some(e=>e.defId.startsWith('enemy_10207_mubrut')&&e.mem.ab?.list.some(a=>a.mode===1));
+      strongChannelled ||= b.enemies.some(e=>e.defId==='enemy_10203_mumag_2'&&e.mem.ab?.list.some(a=>a.target));
       if(code==='17-13'){
         for(const e of born){
           if(!e.alive||e.defId!=='enemy_10204_mudia_2')continue;
@@ -119,6 +122,10 @@ for (const [code,spec] of Object.entries(specs)) {
     if(code==='17-8')assert.ok(bruteArmed,'natural Leak Source contact arms a real scheduled Brute');
     if(['17-5','17-6','17-11','17-12'].includes(code))assert.ok(born.some(e=>e.defId==='enemy_10205_mufly'&&e.mem.ch17FlyerMode===2),'scheduled Flyers find two real Leak Sources and finish both growth steps');
     if(['17-10','17-12'].includes(code)){assert.ok(bagConsumed>0,'scheduled Bags consume real natural sources');assert.equal(maxBagStacks,40);}
+    if(['17-15','17-17'].includes(code)){
+      assert.ok(bruteArmed);assert.ok(born.some(e=>e.defId==='enemy_10205_mufly_2'&&e.mem.ch17FlyerMode===2));
+      if(code==='17-17'){assert.ok(strongChannelled);assert.ok(bagConsumed>0);assert.equal(maxBagStacks,40);}
+    }
     if(code==='17-13'){
       assert.ok(hiddenDurations.length>0,'source teleports keep their hidden wait and reappear');
       assert.ok(hiddenDurations.every(t=>Math.abs(t-10)<=2*b.dt),'each original tunnel wait remains hidden for ten seconds');

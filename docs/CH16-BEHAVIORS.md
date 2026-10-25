@@ -984,3 +984,21 @@ suite passes499 available tests, and both new desktop/phone browser scenarios
 pass; the four locally unavailable tracked tests remain hosted-CI requirements.
 Native compiled/frame parity, the remaining mechanics backlog and the operator
 audit remain open. No art, model, chibi or effect ingestion is part of this work.
+
+The stronger channel caster/carrier now have separate exact-record admission
+claims, complete original family closure, named x-4 range and four bound clock
+receipts. Shared controller retirement, forced-silence interruption, SP callback
+invalidation and born-projectile source views have explicit lifecycle tests.
+The carrier's nine-tile square already matches the original range; its death
+summon is now one attempt per source life. Flyer born blasts also retain their
+original modifiers and identity after source-object reuse.
+
+17-15 includes one ALL-enabled n-group War Caster and excludes h/h2;38 counted
+bodies clear across three seeds.17-17 adds four explicitly NORMAL-enabled
+group1 Flyers and excludes the group2 Six-Star replacement, retaining62 scheduled
+and60 counted bodies. Natural stronger channels, Brute/Flyer reactions and Bag
+feeding run at the default300-second no-operator timeout. The catalogue is622
+entries,597 public and25 test-only; candidate support is474/1,901. The expanded
+local suite passes601 available cases; both new desktop/phone checks pass.
+Nine retained normal16/17 candidates remain unadmitted, and the complete
+operator mechanics audit still precedes art/models/chibis and effects.

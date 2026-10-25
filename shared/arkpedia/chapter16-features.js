@@ -16,6 +16,7 @@ import bruteReview from '../../data/candidates/arkpedia-ch17-reviewed-brute.json
 import guardianReview from '../../data/candidates/arkpedia-ch16-reviewed-story-guardian.json' with { type: 'json' };
 import flyerReview from '../../data/candidates/arkpedia-ch17-reviewed-flyer.json' with { type: 'json' };
 import bagReview from '../../data/candidates/arkpedia-ch17-reviewed-bag.json' with { type: 'json' };
+import channelCarrierReview from '../../data/candidates/arkpedia-ch17-reviewed-channel-carrier.json' with { type: 'json' };
 const MINER_TEXT = "Allied unit; recovers HP when within any Medic Operator's Attack Range";
 const groups = { TileEscapeShadowManager: ['times'], GetHeal: ['heal_scale'], FearLoseBlood: ['value'] };
 function minerCovered(r, n) {
@@ -72,6 +73,7 @@ function familyUnion(...features) {
     ability: r => features.map(f => f.ability(r)).find(Boolean) ?? null,
     explains: (text, r) => features.some(f => f.explains(text, r)),
     nativeClaim: (p, n) => features.map(f => f.nativeClaim(p, n)).find(Boolean) ?? null,
+    dependsOn:r=>[...new Set(features.flatMap(f=>f.dependsOn?.(r)??[]))],
     note: 'Separate source-bound experimental families sharing one native feature name.',
   };
 }
@@ -208,5 +210,8 @@ function chapter17Features() {
         ? { wrappers: proof.counts.enemyAbilityWrappers, active: proof.counts.activeGeneralOrCommonAbilities } : null,
       ...(key === 'enemy_10208_mucow' ? { dependsOn: () => ['enemy_10211_murad'] } : {}) });
   }
+  out['skill:ChargeRift']=familyUnion(out['skill:ChargeRift'],familyFeature(channelCarrierReview,'channelCarrier','ch17StrongChannel'));
+  out['talent:DeadSummon']=familyUnion(out['talent:DeadSummon'],{
+    ...familyFeature(channelCarrierReview,'channelCarrier','ch17StrongCarrier'),dependsOn:()=>['enemy_10211_murad']});
   return out;
 }

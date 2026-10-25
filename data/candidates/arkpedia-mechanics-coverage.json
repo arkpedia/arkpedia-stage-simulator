@@ -32,11 +32,11 @@
   },
   "summary": {
     "combatStageRecords": 3891,
-    "catalogueBattleRecords": 620,
-    "unbuiltCombatStageRecords": 3271,
+    "catalogueBattleRecords": 622,
+    "unbuiltCombatStageRecords": 3269,
     "canonicalEnemies": 1901,
-    "sourceBoundSupportedEnemies": 472,
-    "unsupportedCanonicalEnemies": 1429,
+    "sourceBoundSupportedEnemies": 474,
+    "unsupportedCanonicalEnemies": 1427,
     "targetOperatorForms": 431,
     "registeredOperatorForms": 431,
     "registeredSkills": 949,
@@ -57,9 +57,9 @@
   },
   "unbuiltStageGenericGates": {
     "stage-device-contract": 2146,
-    "enemy-mechanics": 3018,
+    "enemy-mechanics": 3012,
     "stage-token-contract": 618,
-    "conditional-stage-contract": 1451,
+    "conditional-stage-contract": 1449,
     "oversized-grid": 135,
     "missing-geometry": 86
   },
@@ -7146,15 +7146,6 @@
       ]
     },
     {
-      "id": "enemy_10203_mumag_2",
-      "stages": 7,
-      "reasons": [
-        "ability:Continuously channels at a Leak Marker in attack range, causing it to create Leak Sources and gaining increased DEF.",
-        "skill:ChargeRift",
-        "native-ability-wrappers:enemy_10203_mumag_2"
-      ]
-    },
-    {
       "id": "enemy_1127_sptrkg",
       "stages": 7,
       "reasons": [
@@ -8944,15 +8935,6 @@
         "talent:WarningTalent",
         "talent:Talent1",
         "native-abilities:enemy_10197_ublyb"
-      ]
-    },
-    {
-      "id": "enemy_10208_mucow_2",
-      "stages": 5,
-      "reasons": [
-        "ability:More likely to be attacked",
-        "ability:Creates a <Leak Source> nearby when defeated.",
-        "talent:DeadSummon"
       ]
     },
     {
@@ -27463,18 +27445,14 @@
     },
     {
       "id": "enemy_10203_mumag_2",
-      "policy": null,
-      "unresolved": [
-        "ability:Continuously channels at a Leak Marker in attack range, causing it to create Leak Sources and gaining increased DEF.",
-        "skill:ChargeRift",
-        "native-ability-wrappers:enemy_10203_mumag_2"
-      ],
+      "policy": "stats-attacks-and-features",
+      "unresolved": [],
       "native": {
         "enemy_10203_mumag_2": {
           "hierarchySha256": "2f21f592cf018b298b3d475eba23f147524c666e1efef7bbaef5e270255c9043",
           "enemyAbilityWrappers": 1,
           "activeGeneralOrCommonAbilities": 0,
-          "claimedWrappers": 0,
+          "claimedWrappers": 1,
           "claimedActive": 0
         }
       }
@@ -27612,12 +27590,8 @@
     },
     {
       "id": "enemy_10208_mucow_2",
-      "policy": null,
-      "unresolved": [
-        "ability:More likely to be attacked",
-        "ability:Creates a <Leak Source> nearby when defeated.",
-        "talent:DeadSummon"
-      ],
+      "policy": "stats-attacks-and-features",
+      "unresolved": [],
       "native": {
         "enemy_10208_mucow_2": {
           "hierarchySha256": "48195c1a5a0e82c4f4d30635fb34a0ed7ffdc9cf70c56f9ea64a4d72cda9c01f",
@@ -59286,26 +59260,18 @@
       "code": "17-14",
       "type": "main",
       "catalogue": "not-built",
-      "observedGenericGates": [
-        "enemy-mechanics"
-      ],
-      "unsupportedCanonicalEnemies": [
-        "enemy_10203_mumag_2",
-        "enemy_10208_mucow_2"
-      ]
+      "observedGenericGates": [],
+      "unsupportedCanonicalEnemies": []
     },
     {
       "id": "17-15",
       "code": "17-15",
       "type": "main",
-      "catalogue": "not-built",
+      "catalogue": "test-only",
       "observedGenericGates": [
-        "conditional-stage-contract",
-        "enemy-mechanics"
+        "conditional-stage-contract"
       ],
-      "unsupportedCanonicalEnemies": [
-        "enemy_10208_mucow_2"
-      ]
+      "unsupportedCanonicalEnemies": []
     },
     {
       "id": "17-15_six_star",
@@ -59313,12 +59279,9 @@
       "type": "main",
       "catalogue": "not-built",
       "observedGenericGates": [
-        "conditional-stage-contract",
-        "enemy-mechanics"
+        "conditional-stage-contract"
       ],
-      "unsupportedCanonicalEnemies": [
-        "enemy_10208_mucow_2"
-      ]
+      "unsupportedCanonicalEnemies": []
     },
     {
       "id": "17-16",
@@ -59336,14 +59299,11 @@
       "id": "17-17",
       "code": "17-17",
       "type": "main",
-      "catalogue": "not-built",
+      "catalogue": "test-only",
       "observedGenericGates": [
-        "conditional-stage-contract",
-        "enemy-mechanics"
+        "conditional-stage-contract"
       ],
-      "unsupportedCanonicalEnemies": [
-        "enemy_10203_mumag_2"
-      ]
+      "unsupportedCanonicalEnemies": []
     },
     {
       "id": "17-17_six_star",
@@ -59351,12 +59311,9 @@
       "type": "main",
       "catalogue": "not-built",
       "observedGenericGates": [
-        "conditional-stage-contract",
-        "enemy-mechanics"
+        "conditional-stage-contract"
       ],
-      "unsupportedCanonicalEnemies": [
-        "enemy_10203_mumag_2"
-      ]
+      "unsupportedCanonicalEnemies": []
     },
     {
       "id": "17-18",
@@ -59369,11 +59326,9 @@
       ],
       "unsupportedCanonicalEnemies": [
         "enemy_10201_muinf_2_a",
-        "enemy_10203_mumag_2",
         "enemy_10203_mumag_2_a",
         "enemy_10204_mudia_2_a",
         "enemy_10207_mubrut_2_a",
-        "enemy_10208_mucow_2",
         "enemy_1590_muama",
         "enemy_1591_mutwin",
         "enemy_1591_mutwin_2",
@@ -73503,7 +73458,6 @@
         "enemy-mechanics"
       ],
       "unsupportedCanonicalEnemies": [
-        "enemy_10203_mumag_2",
         "enemy_10206_muveg_2"
       ]
     },
@@ -73512,13 +73466,8 @@
       "code": "H17-2",
       "type": "sub",
       "catalogue": "not-built",
-      "observedGenericGates": [
-        "enemy-mechanics"
-      ],
-      "unsupportedCanonicalEnemies": [
-        "enemy_10203_mumag_2",
-        "enemy_10208_mucow_2"
-      ]
+      "observedGenericGates": [],
+      "unsupportedCanonicalEnemies": []
     },
     {
       "id": "h17-3",
@@ -73541,7 +73490,6 @@
         "enemy-mechanics"
       ],
       "unsupportedCanonicalEnemies": [
-        "enemy_10203_mumag_2",
         "enemy_10206_muveg_2",
         "enemy_1590_muama",
         "enemy_1591_mutwin",

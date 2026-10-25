@@ -25,3 +25,15 @@ test('no review, wrong partition, absent normal rune and ambiguous default disab
     change(s,e);assert.throws(()=>applyReviewedHiddenGroups(g,s,e));assert.deepEqual(g,before);
   }
 });
+
+test('17-17 explicit NORMAL group adds four Flyers while its Six-Star replacement stays excluded',()=>{
+ const s=JSON.parse(readFileSync(new URL('../data/candidates/arkpedia-stage-17-17-source.json',import.meta.url)));
+ const e={includedHiddenGroups:['group1'],excludedHiddenGroups:['group2']},g=structuredClone(s.geometry);
+ assert.equal(applyReviewedHiddenGroups(g,s,e),4);assert.equal(g.waves.flatMap(w=>w.spawns).reduce((n,p)=>n+p.count,0),62);
+ for(const change of [
+  s=>{s.rawLevel.runes.find(r=>r.difficultyMask==='NORMAL'&&r.key==='level_hidden_group_enable').difficultyMask='SIX_STAR';},
+  s=>{s.rawLevel.runes.find(r=>r.difficultyMask==='NORMAL'&&r.key==='level_hidden_group_enable').difficultyMask='HARD';},
+  s=>{s.rawLevel.runes.push({key:'level_hidden_group_disable',difficultyMask:'NORMAL',blackboard:[{key:'key',valueStr:'group1'}]});},
+  s=>{s.rawLevel.optionalRunes={unreviewed:[{key:'level_hidden_group_enable',difficultyMask:'NORMAL',blackboard:[{key:'key',valueStr:'group1'}]}]};},
+ ]){const changed=structuredClone(s),geometry=structuredClone(s.geometry);change(changed);assert.throws(()=>applyReviewedHiddenGroups(geometry,changed,e));assert.deepEqual(geometry,s.geometry);}
+});

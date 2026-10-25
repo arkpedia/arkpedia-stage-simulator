@@ -15,11 +15,11 @@ export function applyReviewedHiddenGroups(geometry, source, expected) {
   for (const group of groups) {
     const enables = [...defaults,...optional].filter(r => r.key === 'level_hidden_group_enable' && targets(r,group));
     if (included.includes(group)) {
-      if (!defaults.some(r => r.key === 'level_hidden_group_enable' && r.difficultyMask === 'ALL' && targets(r,group))
-        || enables.some(r => !['ALL','SIX_STAR'].includes(r.difficultyMask))
+      if (!defaults.some(r => r.key === 'level_hidden_group_enable' && ['ALL','NORMAL'].includes(r.difficultyMask) && targets(r,group))
+        || enables.some(r => !['ALL','NORMAL','SIX_STAR'].includes(r.difficultyMask))
         || optional.some(r => r.difficultyMask !== 'SIX_STAR' && targets(r,group))
         || defaults.some(r => r.key === 'level_hidden_group_disable' && r.difficultyMask !== 'SIX_STAR' && targets(r,group)))
-        throw Error('Included hidden group lacks an unambiguous normal ALL enable: '+group);
+        throw Error('Included hidden group lacks an unambiguous normal ALL/NORMAL enable: '+group);
     } else if (!enables.length || enables.some(r => r.difficultyMask !== 'SIX_STAR'))
       throw Error('Hidden group is not exclusively a source SIX_STAR option: '+group);
   }
