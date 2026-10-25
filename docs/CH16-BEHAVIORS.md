@@ -941,3 +941,16 @@ entries:597 public and12 test-only. No public entry was promoted.
 New hosted focused, full-repository and mechanical desktop/phone checks must be
 recorded separately after completion; no stage art/model/effects expansion is
 part of this mechanics checkpoint.
+
+16-14,16-15 and17-7 continue the same canonical mechanics pipeline with28,27
+and28 scheduled hostiles. Source-only Six-Star additions remain excluded:
+16-14's `raid4`,16-15's `group1`, and17-7's `h1`/`h2`.16-15 retains two independent
+tunnel actions and separate extra-route spaces; the route-only fixture releases
+both until120s and clears at315.3s with an explicit600s test limit. A separate
+test proves the unchanged300s game default times out that same fixture.16-14
+clears at279.3/270.2/245.17s across three seeds.17-7 clears at183.03s, while real
+marker pollution creates5/5/2 additional Rockbreaker bodies; those bodies hold
+battle completion and bring the live totals to33/33/30 without altering the28
+scheduled source hostiles. All29 continuation stage tests pass locally, including
+normal builder reproduction and mutated-source rejection. Hosted checks for the
+latest continuation are separate from the previously verified16-10/16-11 head.

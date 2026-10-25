@@ -18,6 +18,9 @@ const hash = b => createHash('sha256').update(b).digest('hex');
 const specs = {
   '16-10': { total:27, counts:{enemy_10120_uaghst_2:12,enemy_10126_rkbomb:8,enemy_10124_uashld:6,enemy_10127_rkmbst:1}, hidden:[] },
   '16-11': { total:28, counts:{enemy_10126_rkbomb:23,enemy_10127_rkmbst:5}, hidden:['raid4'] },
+  '16-14': { total:28, counts:{enemy_10124_uashld_2:2,enemy_10120_uaghst_2:21,enemy_10127_rkmbst_2:5}, hidden:['raid4'] },
+  '16-15': { total:27, counts:{enemy_10124_uashld_2:3,enemy_10120_uaghst_2:18,enemy_10122_uacann_2:3,enemy_10127_rkmbst_2:3}, hidden:['group1'], cap:600, clearsBefore:330 },
+  '17-7': { total:28, counts:{enemy_10206_muveg:6,enemy_10201_muinf:13,enemy_10202_mubow:3,enemy_10204_mudia:6}, hidden:['h1','h2'] },
 };
 const data = code => {
   const stage = read('arkpedia-stage-' + code + '.json');
@@ -31,7 +34,7 @@ function battle(code, seed=19) {
 for (const [code,spec] of Object.entries(specs)) {
   const stage=read('arkpedia-stage-'+code+'.json');
   const source=read('candidates/arkpedia-stage-'+code+'-source.json');
-  const review=read('candidates/arkpedia-ch16-reviewed-stage-'+code+'.json');
+  const review=read('candidates/arkpedia-'+(code.startsWith('17-')?'ch17':'ch16')+'-reviewed-stage-'+code+'.json');
   test(code+' normal source counts and test-only ownership stay separate from public admission',async()=>{
     assert.equal(index.stages.filter(s=>!s.testOnly).length,597);
     assert.throws(()=>resolveStage(index,code),/test-only/);
@@ -73,25 +76,36 @@ for (const [code,spec] of Object.entries(specs)) {
     assert.throws(()=>execFileSync(process.execPath,args,{stdio:'pipe'}),e=>/does not match its reviewed canonical source/.test(String(e.stderr)));
     assert.equal(existsSync(refused),false);
   });
-  for(const seed of [19,71,129])test(code+' default-cap seeded normal battle '+seed,()=>{
+  for(const seed of [19,71,129])test(code+' seeded normal battle '+seed,()=>{
     const b=battle(code,seed),born=[];
     assert.equal(b.timeLimit,300);
+    assert.equal(b.total,spec.total);
+    if(spec.cap)b.timeLimit=spec.cap;
     b.on('enemySpawn',({enemy})=>born.push(enemy));
     while(!b.finished) {
-      for(const[id,e]of b.stageDeviceActions)if(b.time<121&&e.state.canActivate())b.activateStageDevice(id);
+      for(const[id,e]of b.stageDeviceActions??[])if(b.time<121&&e.state.canActivate())b.activateStageDevice(id);
       b.step();
     }
-    assert.equal(b.result().reason,'cleared');assert.ok(b.time<280);
-    assert.equal(b.total,spec.total);assert.deepEqual(b.errors,[]);
-    const children=born.filter(e=>e.mem.ch16Branch);assert.ok(children.length>0);
-    assert.ok(children.every(e=>e.holdsBattle===false&&!e.counted&&e.mem.ch16Branch.route===0));
+    assert.equal(b.result().reason,'cleared');assert.ok(b.time<(spec.clearsBefore??280));
+    assert.equal(b.total,spec.total+born.filter(e=>e.mem.ch17RockbreakerParent).length);assert.deepEqual(b.errors,[]);
+    const children=born.filter(e=>e.mem.ch16Branch);
+    if(code.startsWith('16-'))assert.ok(children.length>0);
+    assert.ok(children.every(e=>e.holdsBattle===false&&!e.counted));
+    assert.deepEqual([...new Set(children.map(e=>e.mem.ch16Branch.route))].sort(),code==='16-15'?[0,1]:code.startsWith('16-')?[0]:[]);
     if(code==='16-10') {
       const phantoms=born.filter(e=>e.defId==='enemy_10120_uaghst_2');
       assert.equal(phantoms.length,12);
       assert.ok(phantoms.every(e=>e.mem.ab.list.length===1));
-    } else assert.ok(born.some(e=>e.defId==='enemy_10126_rkbomb'&&e.mem.ab.list.some(a=>a.changeMode&&a.mode===1)));
+    } else if(code==='16-11')assert.ok(born.some(e=>e.defId==='enemy_10126_rkbomb'&&e.mem.ab.list.some(a=>a.changeMode&&a.mode===1)));
+    if(code==='17-7')assert.ok(born.some(e=>e.mem.ch17RockbreakerParent),'natural marker pollution triggers a real split');
   });
 }
+
+test('16-15 route-only fixture retains the default 300-second timeout rather than raising the game cap',()=>{
+  const b=battle('16-15');
+  while(!b.finished){for(const[id,e]of b.stageDeviceActions)if(b.time<121&&e.state.canActivate())b.activateStageDevice(id);b.step();}
+  assert.equal(b.result().reason,'timeout');assert.equal(b.timeLimit,300);assert.deepEqual(b.errors,[]);
+});
 
 test('16-11 native branch preserves hidden ten-second wait and displaced reappearance',()=>{
   const b=battle('16-11');b.autoFinish=false;
@@ -123,6 +137,6 @@ test('branch control validation refuses malformed timing, unmatched appearance a
 });
 
 test('catalogue and candidate support check commands actually execute on Windows as well as Linux',()=>{
-  assert.match(execFileSync(process.execPath,['tools/arkpedia/stage-index.mjs','--check'],{encoding:'utf8'}),/Stage catalogue matches 609 entries/);
+  assert.match(execFileSync(process.execPath,['tools/arkpedia/stage-index.mjs','--check'],{encoding:'utf8'}),new RegExp('Stage catalogue matches '+index.stages.length+' entries'));
   assert.match(execFileSync(process.execPath,['tools/arkpedia/enemy-support.mjs','--candidate-ch16','--check'],{encoding:'utf8'}),/Enemy support matches/);
 });

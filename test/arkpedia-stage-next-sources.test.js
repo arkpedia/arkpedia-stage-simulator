@@ -25,7 +25,7 @@ for (const code of codes) test(`${code} retains canonical source evidence with a
   assert.equal(source.levelReceipt.files[`raw/levels/${code}.json`].sha256, lock.files.rawLevel.sha256);
   for (const key of ['geometry', 'conditional']) assert.equal(source.routeReceipt.outputs[lock.files[key].path], lock.files[key].sha256);
   assert.equal(source.rawLevel.options.moveMultiplier, .5);
-  if (['16-2', '16-3', '16-4', '16-5', '16-6', '16-7', '16-8', '16-10', '16-11', '17-2', '17-3', '17-4'].includes(code)) {
+  if (['16-2', '16-3', '16-4', '16-5', '16-6', '16-7', '16-8', '16-10', '16-11', '16-14', '16-15', '17-2', '17-3', '17-4', '17-7'].includes(code)) {
     assert.throws(() => resolveStage(index, code), /test-only/);
     assert.equal(resolveStage(index, code, { experimental: true }).testOnly, true);
   } else assert.throws(() => resolveStage(index, code, { experimental: true }), /Unknown stage/);
