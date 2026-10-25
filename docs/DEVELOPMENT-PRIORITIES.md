@@ -27,6 +27,11 @@ Mulberry's exact S2 build now has its level-three elemental-healing ratio and
 Medic aura, and all four 17-16 module builds compose in an internal field check.
 Ptilopsis's range mapping and the stage controls remain under review before
 stage admission; these helpers do not open public module selection.
+The three exact 17-16 tutorial scripts now have checksum-pinned source intake.
+The preset Viy body has a separate internal native-controller instance, and its
+literal EnsureMinSp(50) command targets only that captured deployment life.
+Dialog pausing/completion, hidden-card delivery and native initial FSM timing
+remain unconnected, so canonical 17-16 remains held.
 Rockbreaker's eligible split animation now consumes live `slow_down` elapsed
 work for both release and completion, rather than fixed world-time callbacks.
 The six selected infantry/caster/carrier Combat cooldowns and Brute's owned
@@ -1670,3 +1675,57 @@ multi-block JSON input, independently of the Node reference checks.
 The final expanded focused run passed all 1,584 locally available cases with
 the portable verifier. The four quarantined tests remain retained in Git and
 hosted CI, and all stage/public-module admission gates remain unchanged.
+
+## Exact 17-16 tutorial source, preset Viy and minimum-SP command
+
+The canonical stage references three scripts under Obt/Tutorial/Level using
+the internal main_17-15 identifier. Their exact UTF-8 bytes are now pinned by
+length, Git blob and SHA256 at the stage's existing ArknightsAssets upstream
+commit db6f9ef8. The intake also binds the canonical arkpedia stage source and
+lock. It retains all three original scripts, distinguishes dialog/camera/header
+instructions from mechanical commands, and preserves the seven full canonical
+action records and their wave/fragment/action locations. Native-source CI now
+reproduces this intake with --fetch --check.
+
+The first two scripts contain dialog and camera focus/reset commands. The third
+has is_tutorial=true and Battle.EnsureMinSp(charId="char_4226_veen", sp=50).
+It therefore cannot be flattened into cosmetic text or ignored. The existing
+stage source schedules DIALOG at fragment-relative 3 and 12 seconds, STORY at
+12.1 and the four hidden-card activations at 13/13.1/13.2/13.3. These timestamps
+are retained as action facts, not assumed to define dialog pause/release rules.
+
+An explicit internal preset adapter now constructs the exact E2/90,
+potential-six, trust-200, S3 rank-eight Viy from the retained native character,
+trait, talent and skill tables. It uses the existing approved Viy controller,
+source position (4,3) facing RIGHT and native occupied slot count one. The
+instance has a separate predefined control key, no selected player card and
+no captured payment or DP charge. Its private control uses the existing field
+skill entry point. Fresh-field, placement, duplicate and source-override guards
+apply before installation.
+
+The SP receiver authenticates that exact instance, entry identity, deployment
+life and skill runtime. It never searches for an arbitrary same-character body.
+It maps the source request to the existing silent SP-modification API rather
+than an ordinary gain event. This selected S3 has capacity 49 despite the
+literal source request of 50; the regular engine caps it at 49 and readies S3.
+A higher balance is preserved, an active timed skill refuses modification, and
+death, battle completion, replacement life/entry/skill or absent preset cancels
+the receiver. This capacity/active-skill policy is an explicit engine mapping,
+not compiled client proof. Initial BORN/FSM ordering, dialog pausing/completion,
+field UI, hidden-card activation, withdrawal/card regeneration and full stage
+integration/admission remain held.
+
+All 49 targeted tutorial and existing Viy cases passed, including ten new
+source/instance/lifecycle cases. The exact preset naturally stores native energy;
+the tutorial-readied S3 then emits real Arts shots and bounces and spends its
+source ammunition. Its tested control and source buffers are not generic kits
+or artificial damage events. The production intake also reproduced all three
+scripts and seven actions from a genuinely empty cache through pinned network
+fetches. Corrupt bytes, unsupported commands and changed source roles fail
+closed. The hosted portable-browser-fix continuation 40240005350 at 9f50695d
+completed all fifteen jobs successfully; full run 40237601264 remained live.
+The expanded focused run passed all 1,633 locally available cases. The new
+receiver also ran in real headless Edge: it constructed the separate one-slot
+preset, modified SP from 24 to the engine cap 49, and activated its real S3
+through the private control key with no simulator errors. This browser fixture
+does not connect the canonical dialog/card scheduler or admit the stage.

@@ -1,0 +1,480 @@
+{
+  "schemaVersion": 1,
+  "testOnly": true,
+  "admitted": false,
+  "scope": "Exact 17-16 tutorial scripts, commands, canonical action locations and predefines. No dialog clock, stage/card admission or client FSM parity.",
+  "inputs": {
+    "lock": {
+      "path": "data/arkpedia-predefined-tutorials.lock.json",
+      "sha256": "0830a4d05a81295392375b21bf93d282484344ea60939d75cadd76739a969b4b"
+    },
+    "stage": {
+      "path": "data/candidates/arkpedia-stage-17-16-source.json",
+      "sha256": "9f152c8905bed50f22385d46c6e6093b786f7f01622d51031ecb29a57612feb3"
+    },
+    "stageLock": {
+      "path": "data/arkpedia-canonical-stage-17-16.lock.json",
+      "sha256": "c5fc657f8b72bb90f58523ea8c99cb03ec04cd62e1560cea5100b97e48bf518d"
+    }
+  },
+  "source": {
+    "repository": "ArknightsAssets/ArknightsGamedata",
+    "commit": "db6f9ef8046ad17dbebe3ff1d0dd88844a5bc78c"
+  },
+  "scripts": {
+    "Obt/Tutorial/Level/main_17-15_a": {
+      "source": {
+        "path": "cn/gamedata/story/obt/tutorial/level/main_17-15_a.txt",
+        "bytes": 518,
+        "gitBlob": "d3c89d9ae3a89fb6cd370884308a591221c4e7e1",
+        "sha256": "9151b776ddd369232d61b00c650582ec8d85310e4b79886eb09c32254bb6f8f9"
+      },
+      "originalText": "[header(actId=\"main17\")]第17章演出关17-15a\n[camerafocusto(time=\"1\", scale=\"MID\", offsetX=3, offsetY=4)]\n[name=\"斯乔帕\", avatarId=\"char_4226_veen\"]我们已经不再属于第四集团军，这里没有人会再听从叶甫根尼的命令。\n[name=\"斯乔帕\", avatarId=\"char_4226_veen\"]“利沃诺夫号”的航向当然也不需要你们的指点。\n[name=\"斯乔帕\", avatarId=\"char_4226_veen\"]我用我的性命发誓，我要让“谢钦”……要让“自由民”，得到自由。\n[resetcamera]\n[end]",
+      "instructions": [
+        {
+          "kind": "header",
+          "actId": "main17"
+        },
+        {
+          "kind": "cameraFocus",
+          "duration": 1,
+          "scale": "MID",
+          "offsetX": 3,
+          "offsetY": 4
+        },
+        {
+          "kind": "dialogue",
+          "name": "斯乔帕",
+          "avatarId": "char_4226_veen",
+          "text": "我们已经不再属于第四集团军，这里没有人会再听从叶甫根尼的命令。"
+        },
+        {
+          "kind": "dialogue",
+          "name": "斯乔帕",
+          "avatarId": "char_4226_veen",
+          "text": "“利沃诺夫号”的航向当然也不需要你们的指点。"
+        },
+        {
+          "kind": "dialogue",
+          "name": "斯乔帕",
+          "avatarId": "char_4226_veen",
+          "text": "我用我的性命发誓，我要让“谢钦”……要让“自由民”，得到自由。"
+        },
+        {
+          "kind": "cameraReset"
+        },
+        {
+          "kind": "end"
+        }
+      ]
+    },
+    "Obt/Tutorial/Level/main_17-15_b": {
+      "source": {
+        "path": "cn/gamedata/story/obt/tutorial/level/main_17-15_b.txt",
+        "bytes": 900,
+        "gitBlob": "02fda0e10df6a95a11444c2973baf90c80cd42c0",
+        "sha256": "1a370f265ed825b758b1ad77b99b16999e1afdf6967ee1b7a61ae5a1f31ce7cf"
+      },
+      "originalText": "[header(actId=\"main17\")]第17章演出关17-15b\n[camerafocusto(time=\"1\", scale=\"MID\", offsetX=7, offsetY=4)]\n[name=\"战争术师\", avatarId=\"npc_10210_muwiza\"]你熟悉这里。你熟悉我们的行动模式，你曾是我们之中的一员——\n[name=\"战争术师\", avatarId=\"npc_10210_muwiza\"]……不，这不重要。“利沃诺夫号”必须继续前进。\n[name=\"战争术师\", avatarId=\"npc_10210_muwiza\"]到地狱里去与你的同伙们团聚吧，叛徒。而后，这里将由第四集团军全权接管。\n[camerafocusto(time=\"1\", scale=\"MID\", offsetX=3, offsetY=4)]\n[name=\"斯乔帕\", avatarId=\"char_4226_veen\"]“莫尔凡”不过是虚构的空间，你们最多只能重创我的意识，却杀不了我。\n[name=\"斯乔帕\", avatarId=\"char_4226_veen\"]究竟是谁去地狱，结果还未可知呢。\n[name=\"斯乔帕\", avatarId=\"char_4226_veen\"]别眨眼。\n[resetcamera]\n[end]",
+      "instructions": [
+        {
+          "kind": "header",
+          "actId": "main17"
+        },
+        {
+          "kind": "cameraFocus",
+          "duration": 1,
+          "scale": "MID",
+          "offsetX": 7,
+          "offsetY": 4
+        },
+        {
+          "kind": "dialogue",
+          "name": "战争术师",
+          "avatarId": "npc_10210_muwiza",
+          "text": "你熟悉这里。你熟悉我们的行动模式，你曾是我们之中的一员——"
+        },
+        {
+          "kind": "dialogue",
+          "name": "战争术师",
+          "avatarId": "npc_10210_muwiza",
+          "text": "……不，这不重要。“利沃诺夫号”必须继续前进。"
+        },
+        {
+          "kind": "dialogue",
+          "name": "战争术师",
+          "avatarId": "npc_10210_muwiza",
+          "text": "到地狱里去与你的同伙们团聚吧，叛徒。而后，这里将由第四集团军全权接管。"
+        },
+        {
+          "kind": "cameraFocus",
+          "duration": 1,
+          "scale": "MID",
+          "offsetX": 3,
+          "offsetY": 4
+        },
+        {
+          "kind": "dialogue",
+          "name": "斯乔帕",
+          "avatarId": "char_4226_veen",
+          "text": "“莫尔凡”不过是虚构的空间，你们最多只能重创我的意识，却杀不了我。"
+        },
+        {
+          "kind": "dialogue",
+          "name": "斯乔帕",
+          "avatarId": "char_4226_veen",
+          "text": "究竟是谁去地狱，结果还未可知呢。"
+        },
+        {
+          "kind": "dialogue",
+          "name": "斯乔帕",
+          "avatarId": "char_4226_veen",
+          "text": "别眨眼。"
+        },
+        {
+          "kind": "cameraReset"
+        },
+        {
+          "kind": "end"
+        }
+      ]
+    },
+    "Obt/Tutorial/Level/main_17-15_c": {
+      "source": {
+        "path": "cn/gamedata/story/obt/tutorial/level/main_17-15_c.txt",
+        "bytes": 102,
+        "gitBlob": "f1d05fb22bd63cb1fae0062bb62c863577f0548b",
+        "sha256": "dc7ac9daad353cebfa0943f95597dd4f09694718939524616856f2046dca2ad3"
+      },
+      "originalText": "[header(is_tutorial=true)]第17章演出关17-15c\n[Battle.EnsureMinSp(charId=\"char_4226_veen\", sp=50)]",
+      "instructions": [
+        {
+          "kind": "header",
+          "tutorial": true
+        },
+        {
+          "kind": "ensureMinSp",
+          "charId": "char_4226_veen",
+          "sp": 50
+        }
+      ]
+    }
+  },
+  "actions": [
+    {
+      "wave": 1,
+      "fragment": 0,
+      "index": 0,
+      "action": {
+        "actionType": "DIALOG",
+        "managedByScheduler": true,
+        "key": "Obt/Tutorial/Level/main_17-15_a",
+        "count": 1,
+        "preDelay": 3,
+        "interval": 1,
+        "routeIndex": 11,
+        "blockFragment": false,
+        "autoPreviewRoute": false,
+        "autoDisplayEnemyInfo": false,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      }
+    },
+    {
+      "wave": 1,
+      "fragment": 0,
+      "index": 4,
+      "action": {
+        "actionType": "DIALOG",
+        "managedByScheduler": true,
+        "key": "Obt/Tutorial/Level/main_17-15_b",
+        "count": 1,
+        "preDelay": 12,
+        "interval": 1,
+        "routeIndex": 15,
+        "blockFragment": false,
+        "autoPreviewRoute": false,
+        "autoDisplayEnemyInfo": false,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      }
+    },
+    {
+      "wave": 1,
+      "fragment": 0,
+      "index": 5,
+      "action": {
+        "actionType": "STORY",
+        "managedByScheduler": true,
+        "key": "Obt/Tutorial/Level/main_17-15_c",
+        "count": 1,
+        "preDelay": 12.1,
+        "interval": 1,
+        "routeIndex": 16,
+        "blockFragment": false,
+        "autoPreviewRoute": false,
+        "autoDisplayEnemyInfo": false,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      }
+    },
+    {
+      "wave": 1,
+      "fragment": 0,
+      "index": 6,
+      "action": {
+        "actionType": "ACTIVATE_PREDEFINED",
+        "managedByScheduler": true,
+        "key": "char_473_mberry#1",
+        "count": 1,
+        "preDelay": 13,
+        "interval": 1,
+        "routeIndex": 17,
+        "blockFragment": false,
+        "autoPreviewRoute": false,
+        "autoDisplayEnemyInfo": false,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      }
+    },
+    {
+      "wave": 1,
+      "fragment": 0,
+      "index": 7,
+      "action": {
+        "actionType": "ACTIVATE_PREDEFINED",
+        "managedByScheduler": true,
+        "key": "char_128_plosis#1",
+        "count": 1,
+        "preDelay": 13.1,
+        "interval": 1,
+        "routeIndex": 18,
+        "blockFragment": false,
+        "autoPreviewRoute": false,
+        "autoDisplayEnemyInfo": false,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      }
+    },
+    {
+      "wave": 1,
+      "fragment": 0,
+      "index": 8,
+      "action": {
+        "actionType": "ACTIVATE_PREDEFINED",
+        "managedByScheduler": true,
+        "key": "char_4023_rfalcn#1",
+        "count": 1,
+        "preDelay": 13.2,
+        "interval": 1,
+        "routeIndex": 19,
+        "blockFragment": false,
+        "autoPreviewRoute": false,
+        "autoDisplayEnemyInfo": false,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      }
+    },
+    {
+      "wave": 1,
+      "fragment": 0,
+      "index": 9,
+      "action": {
+        "actionType": "ACTIVATE_PREDEFINED",
+        "managedByScheduler": true,
+        "key": "char_488_buildr#1",
+        "count": 1,
+        "preDelay": 13.3,
+        "interval": 1,
+        "routeIndex": 20,
+        "blockFragment": false,
+        "autoPreviewRoute": false,
+        "autoDisplayEnemyInfo": false,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      }
+    }
+  ],
+  "predefines": {
+    "characterInsts": [
+      {
+        "position": {
+          "row": 4,
+          "col": 3
+        },
+        "direction": "RIGHT",
+        "hidden": false,
+        "alias": "char_4226_veen#1",
+        "uniEquipIds": null,
+        "showSpIllust": false,
+        "masterInfos": null,
+        "inst": {
+          "characterKey": "char_4226_veen",
+          "level": 90,
+          "phase": "PHASE_2",
+          "favorPoint": 100,
+          "potentialRank": 5
+        },
+        "skillIndex": 2,
+        "mainSkillLvl": 8,
+        "skinId": "",
+        "tmplId": null,
+        "overrideSkillBlackboard": null,
+        "overrideTalents": null
+      }
+    ],
+    "tokenInsts": {},
+    "characterCards": [
+      {
+        "hidden": true,
+        "alias": "char_488_buildr#1",
+        "uniEquipIds": [
+          {
+            "key": "uniequip_002_buildr",
+            "level": 3
+          }
+        ],
+        "showSpIllust": false,
+        "masterInfos": null,
+        "inst": {
+          "characterKey": "char_488_buildr",
+          "level": 80,
+          "phase": "PHASE_2",
+          "favorPoint": 50,
+          "potentialRank": 0
+        },
+        "skillIndex": 1,
+        "mainSkillLvl": 7,
+        "skinId": "",
+        "tmplId": null,
+        "overrideSkillBlackboard": null,
+        "overrideTalents": null
+      },
+      {
+        "hidden": true,
+        "alias": "char_4023_rfalcn#1",
+        "uniEquipIds": [
+          {
+            "key": "uniequip_002_rfalcn",
+            "level": 3
+          }
+        ],
+        "showSpIllust": false,
+        "masterInfos": null,
+        "inst": {
+          "characterKey": "char_4023_rfalcn",
+          "level": 80,
+          "phase": "PHASE_2",
+          "favorPoint": 50,
+          "potentialRank": 0
+        },
+        "skillIndex": 1,
+        "mainSkillLvl": 7,
+        "skinId": "",
+        "tmplId": null,
+        "overrideSkillBlackboard": null,
+        "overrideTalents": null
+      },
+      {
+        "hidden": true,
+        "alias": "char_128_plosis#1",
+        "uniEquipIds": [
+          {
+            "key": "uniequip_002_plosis",
+            "level": 3
+          }
+        ],
+        "showSpIllust": false,
+        "masterInfos": null,
+        "inst": {
+          "characterKey": "char_128_plosis",
+          "level": 80,
+          "phase": "PHASE_2",
+          "favorPoint": 50,
+          "potentialRank": 0
+        },
+        "skillIndex": 1,
+        "mainSkillLvl": 7,
+        "skinId": "",
+        "tmplId": null,
+        "overrideSkillBlackboard": null,
+        "overrideTalents": null
+      },
+      {
+        "hidden": true,
+        "alias": "char_473_mberry#1",
+        "uniEquipIds": [
+          {
+            "key": "uniequip_002_mberry",
+            "level": 3
+          }
+        ],
+        "showSpIllust": false,
+        "masterInfos": null,
+        "inst": {
+          "characterKey": "char_473_mberry",
+          "level": 80,
+          "phase": "PHASE_2",
+          "favorPoint": 50,
+          "potentialRank": 0
+        },
+        "skillIndex": 1,
+        "mainSkillLvl": 7,
+        "skinId": "",
+        "tmplId": null,
+        "overrideSkillBlackboard": null,
+        "overrideTalents": null
+      }
+    ],
+    "tokenCards": {}
+  }
+}
