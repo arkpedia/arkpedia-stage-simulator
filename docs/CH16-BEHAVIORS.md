@@ -583,3 +583,22 @@ pause/resume, control bounds and restart. Desktop/phone screenshots in
 node --test test/arkpedia-ch17-marker.test.js test/arkpedia-stage-17-3.test.js
 RENDER_E2E=1 CH17_QA_STAGE=17-3 CH17_QA_OUT=/tmp/codex-ch17-3-ui node --test test/arkpedia-ch17-ui.browser.test.js
 ```
+
+
+### Rockbreaker source retained; 17-4 stays unadmitted
+
+`extract-ch17-rockbreaker.py` now retains both base/stronger prefab graphs and
+three native templates from the existing pinned bundles. Targeted indexed
+extraction retains 22 components. Five source/gate checks pass. The native
+pollution action checks both in-progress and completed flags before forcibly
+triggering `SummonSelf`. Its Skill animation waits for the attack event. The
+summon action creates one hostile child with a permanent split flag, following
+the parent's remaining route without skipping its current checkpoint; it uses a
+0.5 random offset bound and does not hold wave scheduling. The parent receives
+the same permanent flag. The stronger prefab overrides the child enemy key.
+
+No Rockbreaker controller or timing approval is implied by extraction. Native
+Skill event timing, interruption semantics, child counting/routing and lifecycle
+integration still need implementation and parity tests. Both records remain
+unsupported, and 17-4 remains absent from the catalogue. This is the next active
+controller continuation, not an external blocker or request for authorization.
