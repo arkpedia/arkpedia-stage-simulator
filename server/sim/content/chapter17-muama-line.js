@@ -4,7 +4,8 @@ import contract from '../../../data/candidates/arkpedia-ch17-muama-line-contract
 import {canTargetAlly,sortAllyTargets} from '../targeting.js';
 import {beamIntersection} from './chapter17.js';
 import {captureEnemySource} from './enemy-source-view.js';
-const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b),outputs=new WeakMap();
+import {matchesChapter17MuamaRecord} from './chapter17-mutwin-stage-records.js';
+const outputs=new WeakMap();
 const live=u=>u?.alive&&u.deployed&&!u.hidden,ground=u=>live(u)&&u.kind!=='device'&&!u.isFlying;
 const intrinsic=e=>['stun','freeze','sleep','levitate','fear'].some(k=>e.s.flags[k]);
 const original=p=>live(p.owner)&&p.owner.deploySeq===p.ownerLife&&p.actor.valid();
@@ -55,9 +56,9 @@ function outputFor(b){
  return output;
 }
 
-export function installChapter17MuamaLine(b,e,{combat}={}){
- const proof=contract.enemies[e?.defId],r=e?.def?.raw;
- if(!proof||r?.key!==e.defId||r.prefabKey!==e.defId||!same(r.talents,proof.record.talents)||!same(r.skills,proof.record.skills)||!same(r.abilities,proof.record.abilities))throw Error('Unreviewed Muama line contract');
+export function installChapter17MuamaLine(b,e,{combat,stage}={}){
+ const proof=contract.enemies[e?.defId];
+ if(!matchesChapter17MuamaRecord(e,proof,stage))throw Error('Unreviewed Muama line contract');
  if(!combat?.valid()||e.mem.ch17MuamaCombat!==combat||combat.ownerLife!==e.deploySeq||Math.abs(e.deployedAt-b.time)>1e-9)throw Error('Muama lines require the fresh deployment combat actor');
  const life=e.deploySeq,old=e.mem.ch17MuamaLine;if(old?.active&&old.ownerLife===life)throw Error('A deployment may own only one Muama line controller');if(old?.active)old.stop();
  const output=outputFor(b),handles=[],skills=proof.skills;

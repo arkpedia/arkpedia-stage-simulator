@@ -8,7 +8,8 @@ the twins' internal HP-loss and native InstantKill rebirth/fake-death recovery.
 Saga and Ju wound finishers now use that explicit native kill path. Complete
 boss support remains held pending the incoming durability audit, source sequence
 dispatch review, canonical wave/branch/story integration, mechanical input
-routing and staged-record reviews.
+routing and remaining staged-record reviews. The exact 17-18 twin records now
+have an explicit internal stage selection, including their canonical room offset.
 
 The retained native components/canonical record supply the parameters and action
 graph. Supplemental first-hand [PRTS HP-loss research, revision 442170](https://prts.wiki/index.php?title=%E7%89%B9%E6%AE%8A%E6%9C%BA%E5%88%B6&oldid=442170)
@@ -1026,3 +1027,43 @@ Canonical room withdrawal/refund/order, branch/wave/story dispatch, staged room
 overrides, incoming durable-buff coverage and client/FSM timing still require
 review and integration. Source/support counts and all nine remaining normal-stage
 gates are unchanged. Art, models, chibis and effects remain after mechanics.
+
+## Exact 17-18 staged twin records
+
+The internal twin core now accepts the two exact 17-18 database-backed records
+only when the caller explicitly selects that stage. A separate source checker
+fetches the original level at the locked canonical commit, verifies its length
+and SHA-256, and compares it with the retained full level. It checks the complete
+base database receipt and binds the source/foundation hashes in a new staged
+record contract. The level's complete replacement blackboard keeps all numerical
+values and changes only DamageResistance.boss_room from (0,6,0) to (0,10,0).
+No active attribute, skill or other field override is discarded by this review.
+
+Combat, line attacks, Blink and lifecycle admission share the stage-aware record
+check. The stage selection requires the entire compiled staged record to match,
+including stats and count/life rules. An absent or different selection still
+rejects these altered records. The first twin snapshots its accepted room string
+before callbacks; later record mutation cannot rewrite its room action. The
+existing base-record factories and canonical catalogue records retain their
+original room string.
+
+Tests exercise both staged twins through rebirth, healing recovery, final death,
+the actual retained route's Blink checkpoint and the single first-room callback.
+They also reject changed records/source bytes, duplicate references, changed
+blackboards and missing room receivers, and verify composition rollback. The
+focused suite passed 1,200 cases; the final stage-specific suite passed seven
+cases, including one added rollback/admission check after that broad run.
+The source checker is now required by hosted native-source validation. All new
+receipt source bytes also survive Git normalization unchanged.
+
+The preceding d3c3f663 continuation's native-source, both focused platforms and
+all browser test steps succeeded. Its 16-14 job failed solely during GitHub's
+artifact upload after five service timeouts; the run is recorded as failed.
+The older full run 40217962392 at 5ee1f774 completed all eight Linux/Windows
+Node22/24 shards successfully. New-head verification remains separate.
+
+This completes the exact twin-record review, not room execution. Forced operator
+withdrawal/refund, camera/branch ordering, conditional boss-wave execution,
+story/input routing and remaining local enemy integration still gate 17-18.
+No enemy policy, stage admission or public promotion was granted. All nine
+remaining normal-stage gates and the mechanics-before-visuals order remain.

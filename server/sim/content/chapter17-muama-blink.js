@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import contract from '../../../data/candidates/arkpedia-ch17-muama-blink-contract.json' with {type:'json'};
 import {observeEnemyMove} from '../movement-observer.js';
+import {matchesChapter17MuamaRecord} from './chapter17-mutwin-stage-records.js';
 const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b),root=e=>[Math.round(e.y),Math.round(e.x)];
-export function installChapter17MuamaBlink(b,e,{combat,line}={}){
- const proof=contract.enemies[e?.defId],r=e?.def?.raw;
- if(!proof||r?.key!==e.defId||r.prefabKey!==e.defId||!same(r.talents,proof.record.talents)||!same(r.skills,proof.record.skills)||!same(r.abilities,proof.record.abilities))throw Error('Unreviewed Muama Blink contract');
+export function installChapter17MuamaBlink(b,e,{combat,line,stage}={}){
+ const proof=contract.enemies[e?.defId];
+ if(!matchesChapter17MuamaRecord(e,proof,stage))throw Error('Unreviewed Muama Blink contract');
  if(!combat?.valid()||!line?.valid()||e.mem.ch17MuamaCombat!==combat||e.mem.ch17MuamaLine!==line||Math.abs(e.deployedAt-b.time)>1e-9)throw Error('Muama Blink requires fresh matching combat and line actors');
  const life=e.deploySeq,old=e.mem.ch17MuamaBlink;if(old?.active&&old.ownerLife===life)throw Error('A deployment may own only one Muama Blink controller');if(old?.active)old.stop();
  const d=proof.defaults,handles=[];

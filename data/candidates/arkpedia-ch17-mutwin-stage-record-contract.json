@@ -1,0 +1,326 @@
+{
+  "schemaVersion": 1,
+  "testOnly": true,
+  "stage": "17-18",
+  "scope": "Exact internal staged twin records only; room execution and full stage admission remain held.",
+  "sources": {
+    "stage": {
+      "path": "data/candidates/arkpedia-stage-17-18-source.json",
+      "sha256": "0e77534d9d6aeafb2c0fc5f5ea27a01f9d5a3f5efb76131c027615b28690d4f1",
+      "bytes": 213019
+    },
+    "lock": {
+      "path": "data/arkpedia-canonical-stage-17-18.lock.json",
+      "sha256": "fbf937e8272e8402b97a1a4f1bce79698fe930ba43bcaa7aecc779bccc6d2a81",
+      "bytes": 1906
+    },
+    "foundation": {
+      "path": "data/candidates/arkpedia-ch17-mutwin-lifecycle-contract.json",
+      "sha256": "ae7f7abdc3ae57fbb7fa01b008fb8e3ae99863c31bf8db13be5e1dbc50f2d7ac",
+      "bytes": 37204
+    },
+    "records": {
+      "path": "data/candidates/arkpedia-enemy-records.canonical.json",
+      "sha256": "c69db59414b2fbd6c1a8327c9c22ddb21cfdaadc4e89a97a824679f61ec07b93",
+      "bytes": 2845573
+    },
+    "receipt": {
+      "path": "data/candidates/arkpedia-enemy-records.canonical.receipt.json",
+      "sha256": "c9cdf456320bf73203290856f5992f6b92de9e1383e069edcc04a3b2dd93389c",
+      "bytes": 385
+    }
+  },
+  "rawLevel": {
+    "path": "source/data/simulator/raw/levels/17-18.json",
+    "bytes": 94811,
+    "sha256": "f160478acec404b5b2b7f70add1b603f35c20e3afb735ecb180a4c48dc20e458"
+  },
+  "enemies": {
+    "enemy_1591_mutwin": {
+      "record": {
+        "key": "enemy_1591_mutwin",
+        "prefabKey": "enemy_1591_mutwin",
+        "name": "AMa-10 Isomer",
+        "level": 0,
+        "rank": "BOSS",
+        "applyWay": "RANGED",
+        "stats": {
+          "maxHp": 50000,
+          "atk": 600,
+          "def": 2000,
+          "res": 10,
+          "moveSpeed": 1,
+          "bat": 6,
+          "aspd": 100,
+          "rangeRadius": 2,
+          "rawRangeRadius": 2,
+          "blockCnt": 1,
+          "massLevel": 6,
+          "lpr": 2,
+          "hpRecoveryPerSec": 0,
+          "elementRes": 0,
+          "elementDmgRes": 0,
+          "hitRatePhys": 1,
+          "hitRateArts": 1,
+          "dmgType": "phys",
+          "dmgTypes": [
+            "phys"
+          ],
+          "motion": "WALK",
+          "immunities": {
+            "stun": false,
+            "silence": false,
+            "sleep": false,
+            "frozen": false,
+            "levitate": true
+          },
+          "otherImmunities": [
+            "feared",
+            "palsy",
+            "attract"
+          ],
+          "tauntLevel": 0
+        },
+        "abilities": [
+          {
+            "text": "Cannot move or be teleported.",
+            "format": "NORMAL"
+          },
+          {
+            "text": "ATK gradually increases when attacking the same target",
+            "format": "NORMAL"
+          },
+          {
+            "text": "When another AMa-10 Isomer is alive and not in coma, enters a coma when HP reaches 0 and begins regenerating; revives when HP reaches max.",
+            "format": "NORMAL"
+          },
+          {
+            "text": "[Firewall] Has a Firewall around its 8 surrounding tiles; takes greatly reduced Physical and Arts damage from outside the firewall. Allied units cannot be deployed inside the Firewall.",
+            "format": "NORMAL"
+          },
+          {
+            "text": "[Refresh] Periodically teleports to the target tile and refreshes the Firewall.",
+            "format": "NORMAL"
+          },
+          {
+            "text": "[Information Flood] Releases a 3-tile-wide flood of information in a direction, causing the first unit hit to be <$ba.stun>stunned</> and continuously take True damage for a period of time.",
+            "format": "NORMAL"
+          }
+        ],
+        "talents": {
+          "bb": {
+            "FakeDeath.target_hp_ratio": 1,
+            "FakeDeath.hp_ratio": 0.04,
+            "SameTargetAtkUp.atk": 100,
+            "SameTargetAtkUp.max_stack_cnt": 4,
+            "DamageResistance.damage_resistance": 0.9,
+            "Reborn.duration": 0.1,
+            "Reborn.hp_ratio": 0.02
+          },
+          "bbStr": {
+            "DamageResistance.boss_room": "(0,10,0)"
+          },
+          "groups": {
+            "FakeDeath": [
+              "hp_ratio",
+              "target_hp_ratio"
+            ],
+            "SameTargetAtkUp": [
+              "atk",
+              "max_stack_cnt"
+            ],
+            "DamageResistance": [
+              "boss_room",
+              "damage_resistance"
+            ],
+            "Reborn": [
+              "duration",
+              "hp_ratio"
+            ]
+          }
+        },
+        "skills": [
+          {
+            "prefabKey": "HorizontalLineAttack",
+            "priority": 0,
+            "cooldown": 40,
+            "initCooldown": 40,
+            "spCost": 0,
+            "bb": {
+              "value": 200,
+              "stun": 5
+            },
+            "bbStr": {}
+          },
+          {
+            "prefabKey": "VerticalLine",
+            "priority": 0,
+            "cooldown": 40,
+            "initCooldown": 20,
+            "spCost": 0,
+            "bb": {
+              "value": 200,
+              "stun": 5
+            },
+            "bbStr": {}
+          },
+          {
+            "prefabKey": "Blink",
+            "priority": 0,
+            "cooldown": 60,
+            "initCooldown": 20,
+            "spCost": 0,
+            "bb": {},
+            "bbStr": {}
+          }
+        ],
+        "notCountInTotal": false,
+        "tags": {}
+      },
+      "room": "(0,10,0)"
+    },
+    "enemy_1591_mutwin_2": {
+      "record": {
+        "key": "enemy_1591_mutwin_2",
+        "prefabKey": "enemy_1591_mutwin_2",
+        "name": "AMa-10 Isomer",
+        "level": 0,
+        "rank": "BOSS",
+        "applyWay": "RANGED",
+        "stats": {
+          "maxHp": 50000,
+          "atk": 600,
+          "def": 2000,
+          "res": 10,
+          "moveSpeed": 1,
+          "bat": 6,
+          "aspd": 100,
+          "rangeRadius": 2,
+          "rawRangeRadius": 2,
+          "blockCnt": 1,
+          "massLevel": 6,
+          "lpr": 2,
+          "hpRecoveryPerSec": 0,
+          "elementRes": 0,
+          "elementDmgRes": 0,
+          "hitRatePhys": 1,
+          "hitRateArts": 1,
+          "dmgType": "phys",
+          "dmgTypes": [
+            "phys"
+          ],
+          "motion": "WALK",
+          "immunities": {
+            "stun": false,
+            "silence": false,
+            "sleep": false,
+            "frozen": false,
+            "levitate": true
+          },
+          "otherImmunities": [
+            "feared",
+            "palsy",
+            "attract"
+          ],
+          "tauntLevel": 0
+        },
+        "abilities": [
+          {
+            "text": "Cannot move or be teleported.",
+            "format": "NORMAL"
+          },
+          {
+            "text": "ATK gradually increases when attacking the same target",
+            "format": "NORMAL"
+          },
+          {
+            "text": "When another AMa-10 Isomer is alive and not in coma, enters a coma when HP reaches 0 and begins regenerating; revives when HP reaches max.",
+            "format": "NORMAL"
+          },
+          {
+            "text": "[Firewall] Has a Firewall around its 8 surrounding tiles; takes greatly reduced Physical and Arts damage from outside the firewall. Allied units cannot be deployed inside the Firewall.",
+            "format": "NORMAL"
+          },
+          {
+            "text": "[Refresh] Periodically teleports to the target tile and refreshes the Firewall.",
+            "format": "NORMAL"
+          },
+          {
+            "text": "[Information Flood] Releases a 3-tile-wide flood of information in a direction, causing the first unit hit to be <$ba.stun>stunned</> and continuously take True damage for a period of time.",
+            "format": "NORMAL"
+          }
+        ],
+        "talents": {
+          "bb": {
+            "FakeDeath.target_hp_ratio": 1,
+            "FakeDeath.hp_ratio": 0.04,
+            "SameTargetAtkUp.atk": 100,
+            "SameTargetAtkUp.max_stack_cnt": 4,
+            "DamageResistance.damage_resistance": 0.9,
+            "Reborn.duration": 0.1,
+            "Reborn.hp_ratio": 0.02
+          },
+          "bbStr": {
+            "DamageResistance.boss_room": "(0,10,0)"
+          },
+          "groups": {
+            "FakeDeath": [
+              "hp_ratio",
+              "target_hp_ratio"
+            ],
+            "SameTargetAtkUp": [
+              "atk",
+              "max_stack_cnt"
+            ],
+            "DamageResistance": [
+              "boss_room",
+              "damage_resistance"
+            ],
+            "Reborn": [
+              "duration",
+              "hp_ratio"
+            ]
+          }
+        },
+        "skills": [
+          {
+            "prefabKey": "HorizontalLineAttack",
+            "priority": 0,
+            "cooldown": 40,
+            "initCooldown": 40,
+            "spCost": 0,
+            "bb": {
+              "value": 200,
+              "stun": 5
+            },
+            "bbStr": {}
+          },
+          {
+            "prefabKey": "VerticalLine",
+            "priority": 0,
+            "cooldown": 40,
+            "initCooldown": 20,
+            "spCost": 0,
+            "bb": {
+              "value": 200,
+              "stun": 5
+            },
+            "bbStr": {}
+          },
+          {
+            "prefabKey": "Blink",
+            "priority": 0,
+            "cooldown": 60,
+            "initCooldown": 20,
+            "spCost": 0,
+            "bb": {},
+            "bbStr": {}
+          }
+        ],
+        "notCountInTotal": false,
+        "tags": {}
+      },
+      "room": "(0,10,0)"
+    }
+  }
+}

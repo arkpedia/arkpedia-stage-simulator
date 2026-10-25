@@ -2,7 +2,8 @@
 import contract from '../../../data/candidates/arkpedia-ch17-mutwin-lifecycle-contract.json' with {type:'json'};
 import {currentFatalDamageReceipt} from '../damage.js';
 import {currentEnemyInstantKillReceipt,executeEnemyInstantKill} from '../enemy-instant-kill.js';
-const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b),registries=new WeakMap();
+import {matchesChapter17MuamaRecord} from './chapter17-mutwin-stage-records.js';
+const registries=new WeakMap();
 const freeze=value=>{if(value&&typeof value==='object'){for(const child of Object.values(value))freeze(child);Object.freeze(value);}return value;},roomActions=freeze(structuredClone(contract.roomFinish));
 function registryFor(b){
  let registry=registries.get(b);if(registry)return registry;
@@ -15,20 +16,20 @@ function registryFor(b){
   }
  }};registries.set(b,registry);return registry;
 }
-export function installChapter17MutwinLifecycle(b,e,{actions,finishRoom}={}){
+export function installChapter17MutwinLifecycle(b,e,{actions,finishRoom,stage}={}){
  const proof=contract.enemies[e?.defId],r=e?.def?.raw;
- if(!proof||r?.key!==e.defId||r.prefabKey!==e.defId||!same(r.talents,proof.record.talents)||!same(r.skills,proof.record.skills)||!same(r.abilities,proof.record.abilities))throw Error('Unreviewed twin lifecycle contract');
+ if(!matchesChapter17MuamaRecord(e,proof,stage))throw Error('Unreviewed twin lifecycle contract');
  if(proof.camera&&typeof finishRoom!=='function')throw Error('The first twin requires a canonical room/branch receiver');
  if(!actions?.active||!actions.combat?.valid()||e.mem.ch17MuamaActions!==actions||Math.abs(e.deployedAt-b.time)>1e-9)throw Error('Twin lifecycle requires fresh matching action composition');
  const life=e.deploySeq,old=e.mem.ch17MutwinLifecycle;if(old?.active&&old.ownerLife===life)throw Error('A deployment may own only one twin lifecycle');if(old?.active)old.stop();
  let registry=registryFor(b);const existing=registry.states.get(e.defId);if(existing?.valid())throw Error('Multiple copies of one twin require an aura override review');if(existing?.active)existing.stop();registry=registryFor(b);
- const d=proof.defaults,handles=[],seen=new WeakSet(),combat=actions.combat,line=actions.line,blink=actions.blink,originalBlinkEnabled=blink.enabled;
+ const d=proof.defaults,room=r.talents.bbStr['DamageResistance.boss_room'],handles=[],seen=new WeakSet(),combat=actions.combat,line=actions.line,blink=actions.blink,originalBlinkEnabled=blink.enabled;
  const flags={invulnerable:true,untargetable:true,unblockable:true,noMove:true,disarm:true};
  const state={active:true,owner:e,ownerLife:life,partnerKey:d.partner,phase:'active',partner:null,hold:null,heal:null,camera:null,roomCommitted:false,rebornUntil:null,rebirths:0,
   valid:()=>state.active&&!b.finished&&e.alive&&e.deployed&&e.deploySeq===life&&e.mem.ch17MuamaActions===actions&&actions.active&&line.active&&blink.active&&combat.valid(),
   room(){
    if(!proof.camera||state.roomCommitted||!state.active||b.finished||e.deploySeq!==life)return;
-   state.roomCommitted=true;finishRoom(Object.freeze({source:e,sourceLife:life,room:d.room,actions:roomActions}));
+   state.roomCommitted=true;finishRoom(Object.freeze({source:e,sourceLife:life,room,actions:roomActions}));
   },
   detachPartner(q=state.partner,finish=false){
    if(!q?.active)return;q.active=false;if(state.partner===q)state.partner=null;
