@@ -2,9 +2,10 @@
 
 Current continuation: the snake's HP phases, line attack, timeout, firewall and
 native hit body are composed as an internal candidate. AMa-10 and both twins now
-have source-bound ordinary attacks, target ATK ramps, immobility/teleport markers
-and x-4 firewall boundaries. Complete boss support remains held while the other
-boss skills/refresh/fake-death/reborn transitions, canonical wave/branch/story
+have source-bound ordinary attacks, target ATK ramps, immobility/teleport markers,
+x-4 firewall boundaries and internal three-lane line actors. Complete boss
+support remains held while refresh/fake-death/reborn transitions, source sequence
+dispatch review, canonical wave/branch/story
 integration, mechanical input routing and staged-record reviews are completed.
 
 The retained native components/canonical record supply the parameters and action
@@ -835,3 +836,44 @@ match Git's cleaned bytes locally, so no checksum tolerance or source weakening
 was introduced. The earlier full matrix run40206399907 at cd1180fc has now
 completed successfully across all eight Linux/Windows Node22/24 shards. New-head
 hosted validation remains separate. No art/models/effects work has begun.
+
+## AMa-10/twin three-lane line actors
+
+The internal line controller now handles both canonical skills for all three
+prefabs: horizontal rows and vertical columns, each with three parallel rays,
+first ground-body collision, physical initial damage, and a named fixed true
+damage parent with a separately owned derived stun. Native selectors, transport,
+impact actions and original Begin/Loop/End clocks are reproduced into a checked
+receipt. The three-lane and initial physical semantics also agree with the
+separately retained [PRTS observations, revision 441735](https://prts.wiki/index.php?title=AMa-10&oldid=441735).
+
+Ordinary attacks and ready line skills now share one admission point. This
+prevents a tick-order race that could repeatedly admit another ordinary attack
+before the skill sees its cooldown reach zero. Casting consumes a ready attack
+opportunity; ordinary cooldown continues, each skill resets its own cooldown at
+cast end, and equal ready line choices use seeded arbitration only when an
+action can actually begin. Blink must join this arbitration before boss support.
+
+Born output survives source death, retirement and object reuse with captured
+attribution/modifiers. Target reuse cannot inherit a parent. Same native keys
+replace prior parent/child ownership across casters; Muama and twin keys coexist.
+Damage rejection or shields do not suppress the separate parent, and stun
+immunity, child removal and hidden time do not erase or accelerate its world
+clock. Unrelated statuses retain their own ownership.
+
+The original native timeMode0 and sequence fields are retained, but playing each
+clip once in literal seconds remains a local dispatch mapping. Root-tile lane
+centers, axis direction and exact visual mount projection also need client/frame
+review. These limitations remain explicit; no claim of full boss parity or stage
+support follows from this candidate. Refresh, twins' fake-death/reborn, staged
+room overrides and canonical branch/story/wave integration remain open.
+
+All 1,049 locally available focused checks passed together, followed by 74
+ordinary/line cases after the final lifetime/control checks and source-note
+receipt update. The preceding checkpoint 184e63bf passed all 15 hosted
+continuation jobs, including native reproduction, both behavior platforms and
+all browser scenarios. Its full eight-shard Node22/24 Linux/Windows run
+40212773386 remains running at the latest observation; it has not been replaced.
+The new line source checker and behavior suite are included in continuation CI.
+Enemy/stage support counts and the nine remaining normal-stage gates are
+unchanged. Mechanics still precede all new art/models/chibis and effects.

@@ -17,7 +17,7 @@ export function installChapter17MuamaCombat(b,e){
  const inheritedNoAttack=old?.profile===e.profile&&e.profile.noAttack===true?old.originalNoAttack:e.profile.noAttack;
  if(old?.active&&old.ownerLife===life)throw Error('A deployment may own only one Muama combat controller');if(old?.active)old.stop();
  const d=proof.defaults,handles=[],profile=e.profile,oldNoAttack=inheritedNoAttack;
- const state={active:true,ownerLife:life,profile,originalNoAttack:oldNoAttack,suspended:false,pending:null,cooldown:0,buffs:[],wall:null,ramp:null,count:0,lastTarget:null,lastTargetLife:null,
+ const state={active:true,ownerLife:life,profile,originalNoAttack:oldNoAttack,suspended:false,actionBusy:null,pending:null,cooldown:0,buffs:[],wall:null,ramp:null,count:0,lastTarget:null,lastTargetLife:null,
   valid:()=>state.active&&!b.finished&&live(e)&&e.deploySeq===life,
   interrupt(){state.pending=null;},
   stop(){
@@ -33,7 +33,7 @@ export function installChapter17MuamaCombat(b,e){
    return sortAllyTargets(e,list);
   },
   begin(){
-   if(!state.valid()||state.suspended||state.pending||state.cooldown>1e-9||controlled(e))return false;
+   if(!state.valid()||state.suspended||state.actionBusy||state.pending||state.cooldown>1e-9||controlled(e))return false;
    const target=state.choices()[0];if(!target)return false;
    const epoch=e.attackControlEpoch,ctx={attacker:e,targets:[target],isSkill:false,profile};b.emit('beforeAttack',ctx);
    const selected=ctx.targets?.find(t=>state.choices().includes(t));
@@ -91,7 +91,7 @@ export function installChapter17MuamaCombat(b,e){
     q.age+=sourceAbilityDelta(e,Math.max(0,b.time-q.lastAt),true)*q.rate;q.lastAt=b.time;
     if(!q.released&&q.age+1e-7>=d.hit){q.released=true;state.release(q);if(!state.valid()||state.pending!==q)return;}
     if(q.age+1e-7>=d.duration)state.interrupt();
-   }else state.begin();
+   }else{state.readyAction?.();state.begin();}
   },{owner:state}),b.on('death',({unit})=>{if(unit===e)state.stop();},{owner:state}),
   b.on('removed',({unit})=>{if(unit===e)state.stop();},{owner:state}),b.on('battleEnd',()=>state.stop(),{owner:state}));
   return state;
