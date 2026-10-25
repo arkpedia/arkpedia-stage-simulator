@@ -10,6 +10,48 @@
 
 # Windows handoff — implementation stopped on MacBook
 
+## Windows continuation checkpoint (2026-10-25)
+
+Transferred via `transfer/windows-wip-21a6434c` at
+`3f8b4f9cb976e054280b59d8e84eedd4d52cc00a`; local continuation is
+`E:\Projects\arkpedia-stage-simulator`, branch `dev/windows-stage-continuation`.
+The MacBook has stopped implementation and its preview server.
+
+Local WIP now registers the exact Manglerbeast/Phantom families, shares M1Start
+with the existing Slug via separate source-bound claims, preserves the existing
+Infiltrator/Commander engagement registrations, and wires both runtime factories.
+The candidate support builder verifies all retained hashes and claims exactly
+one wrapper/active pair for each Manglerbeast and one active component for Phantom.
+Candidate support snapshots are regenerated; no new stages have been admitted.
+
+Fifty focused checks passed: Manglerbeast direct/source/mutation/automatic dispatch,
+Slug regression, Commander regression, existing engagement, and miner source actions.
+The Phantom registration test asserts that the nearest movement link and
+latest-deployed weapon target remain separate. The original direct test now
+checks damage on the selected weapon target. These changes are preserved on
+GitHub at `686ac33e8d1a59e43bdb9ff71f8a67c66d1de38b`. Hosted run 40177079011 completed
+successfully: **341 tests passed, zero failures/skips on each of Ubuntu and
+Windows, Node 24**. This includes both Phantom suites, the ground/lifecycle
+checks, source mutation gates, and the complete configured focused cohort.
+This is focused validation, not a new full-repository run.
+
+Local test limitation: Bitdefender quarantines the following benign simulator tests as a
+JavaScript miner application (quarantine metadata reports
+`GT:JS.Application.Miner.1.49A8D33B`):
+
+- `test/arkpedia-unharmful-spawn.test.js` (committed baseline)
+- `test/arkpedia-ch16-engagement-ground.test.js` (transferred WIP)
+- `test/arkpedia-ch16-phantom.test.js` (transferred WIP)
+- `test/arkpedia-ch16-family-registration.test.js` (new local WIP)
+
+Do not commit the resulting local deletions, disable antivirus, or claim a
+complete local run. The user cannot currently access the PC. Continue development
+here and use GitHub-hosted CI for affected tests; GitHub file APIs preserve/edit
+their source without executing quarantined files locally. Restore local files
+only after the user has reviewed the detections. Hosted run:
+https://github.com/arkpedia/arkpedia-stage-simulator-standalone/actions/runs/40177079011
+The public catalogue and generated stage admissions are unchanged.
+
 Checkout: `/Users/hyunmin/Projects/Arkpedia/arkpedia-stage-simulator`
 Branch: `feat/ch16-behaviors`
 HEAD (already pushed): `21a6434cbe0c09c4a5f5b13232cfce98016341d5`
