@@ -8,7 +8,7 @@
 // and the local command stays identical to CI.
 import { readdirSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 /** The test files assigned to one shard of a stable `test/*.test.js` sort. */
 export function testFilesForShard(total = 1, index = 0) {
@@ -18,10 +18,12 @@ export function testFilesForShard(total = 1, index = 0) {
     .filter((_, at) => at % n === i);
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const total = Math.max(1, Number(process.env.SHARD_TOTAL ?? 1));
   const index = Math.min(total - 1, Math.max(0, Number(process.env.SHARD_INDEX ?? 0)));
   const files = testFilesForShard(total, index).map(name => fileURLToPath(new URL(`../test/${name}`, import.meta.url)));
+  if (!files.length) throw new Error('No test files selected; refusing an empty test run');
+  console.log(`Selected ${files.length} test files (shard ${index + 1}/${total})`);
   const result = spawnSync(process.execPath, ['--test', '--test-timeout=180000', ...files], { stdio: 'inherit' });
   process.exit(result.status ?? 1);
 }
