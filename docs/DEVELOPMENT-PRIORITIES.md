@@ -21,8 +21,10 @@ admission, field UI integration, initial native FSM dispatch, withdrawal/card
 regeneration rules and S3 compatibility with that stage's enemy clocks remain
 gated. The exact hidden 17-16 Ptilopsis build now has an internal level-three
 module adapter. Poncirus's exact hidden build now has its level-three blocking
-module and strengthened HP talent too. Ptilopsis's range mapping, the other two
-modules and stage controls remain under review before stage admission.
+module and strengthened HP talent too. Kestrel's first-deployment module cost
+now uses captured card payments, with its sandbox-only SP effect excluded.
+Ptilopsis's range mapping, Mulberry's module and stage controls remain under
+review before stage admission.
 Rockbreaker's eligible split animation now consumes live `slow_down` elapsed
 work for both release and completion, rather than fixed world-time callbacks.
 The six selected infantry/caster/carrier Combat cooldowns and Brute's owned
@@ -1552,3 +1554,43 @@ continuation 40237592281 at the preceding Ptilopsis checkpoint 468ebfdc passed
 all 15 jobs, including both focused platforms, native reproduction and browser
 checks. Its full eight-shard run 40237601264 remained in progress when this
 Poncirus checkpoint was saved; no replacement full run was dispatched.
+
+## Exact hidden 17-16 Kestrel module and first-deployment cost
+
+An internal adapter now accepts only the canonical hidden Kestrel card's E2/80,
+potential-one, trust-100, S2 rank-seven, level-three module build. Complete
+module, hidden card and both retained native prefab records are bound by
+SHA256 receipts. It adds 180 HP, 30 ATK and 20 DEF while keeping the base 13-DP
+cost, ordinary critical talent and selected S2 mechanics. Public module/card
+selection and stage admission remain closed.
+
+The native first part supplies a hidden runtime_cost=-4 talent and a self-only
+card selector. The trait description specifies the first deployment. The
+adapter maps that rule to the existing selected card's deployment count and
+ordinary card-addition path: first deployment costs nine, the second 19 and
+later deployments 26, using the original 13-DP base for redeployment scaling.
+The existing immutable payment ledger owns the actual charge and refund cap;
+the module never permanently edits the base-cost stat. Failed, unaffordable or
+invalid-facing requests and deploying another card do not consume its first
+deployment. A successful free skill delivery does consume that deployment,
+captures zero payment and cannot mint a withdrawal refund.
+
+The second native part requires sandbox_1 before granting its +0.30 personal
+SP effect. Its parameters remain in the source-backed record, but the exact
+normal-stage adapter grants no sandbox SP or resource-inventory effect and
+rejects sandbox mode instead of claiming it is implemented. Ordinary automatic
+SP, personal recovery additions and S2's active SP lockout remain intact. This
+is an explicit mapping onto existing ordinary card/payment rules; compiled
+native card-state timing, hidden-card activation, first FSM dispatch and the
+sandbox resource system remain unverified or unsupported.
+
+All 37 targeted module, existing vanguard and withdrawal cases passed, including
+eight new module/card/mode checks. Supplemental
+[PRTS Kestrel data](https://prts.wiki/w/%E7%BA%A2%E9%9A%BC) corroborates the
+first-deployment restriction and Reclamation Algorithm talent scope. The pinned
+canonical card, module tables and retained native components remain the inputs.
+The expanded focused run passed all 1,571 locally available cases. Both the
+predefined table producer and native extraction reproduced with --check. At
+this checkpoint, Poncirus continuation 40238170817 and the preceding Ptilopsis
+full run 40237601264 remained live; neither result is being treated as success
+or replaced by another full dispatch.

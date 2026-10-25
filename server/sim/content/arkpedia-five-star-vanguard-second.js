@@ -4,6 +4,7 @@ import evidence from '../../../data/arkpedia-five-star-vanguard-second-prefabs.j
 import { absoluteRangeKeys, canTargetEnemy } from '../targeting.js';
 import { bodyInKeys } from '../body.js';
 import { enforceBlockCapacity } from '../ai.js';
+import{installKestrelStageModule,kestrelStageCostDelta}from'./arkpedia-kestrel-stage-module.js';
 
 const G = 'char_220_grani', E = 'char_401_elysm', W = 'char_496_wildmn', K = 'char_4023_rfalcn';
 const live = u => u?.alive && u.deployed && !u.hidden;
@@ -35,8 +36,9 @@ function form(b, u, begin, loop, end) {
 /** Original card additions apply to the already computed ordinary redeploy cost.
  * Native C# rounding/order is explicitly unrecovered in the source record. */
 export function adjustFiveStarVanguardSecondCost(b, id, ordinaryCost) {
+  const moduleDelta=kestrelStageCostDelta(b,id);
   if (!Number.isFinite(ordinaryCost)) return ordinaryCost;
-  let value = b._wildManeCardDiscounts?.get(id) ?? 0;
+  let value = (b._wildManeCardDiscounts?.get(id) ?? 0)+moduleDelta;
   const elysium = b.bench?.[E]?.unit;
   if (elysium?.alive && elysium.deployed && b.data.getChess(id)?.profession === 'SNIPER')
     value += elysium.def.talents[0]?.bb.value ?? 0;
@@ -159,6 +161,7 @@ export function installFiveStarVanguardSecond({ battle: b, unit: u, def }) {
   } else if (id === W) {
     b.on('deploy', ({ unit }) => { if (unit === u) wildManeCards(b, u, talent); }, { owner: u });
   } else if (id === K) {
+    if(def.raw.arkpedia.module&&def.raw.arkpedia.module!=='none')installKestrelStageModule(b,u,def);
     b.on('hit', ({ source, dmg }) => {
       if (source !== u || !dmg.isAttack || dmg.type !== 'phys') return;
       const scale = u.skill.active && def.skill.id === 'skchr_rfalcn_2' ? def.skill.bb['talent@prob_scaler'] : 1;
