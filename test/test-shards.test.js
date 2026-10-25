@@ -9,6 +9,8 @@ import { join } from 'node:path';
 import { testFilesForShard } from '../tools/run-tests.mjs';
 import { STAGE_SMOKE_GROUPS, publicSmokeStages, stageSmokeCases } from '../tools/stage-smoke.mjs';
 
+import { STAGE_FILE_GROUPS, fileBackedStages, stageFileCases } from '../tools/stage-files.mjs';
+
 const ALL = readdirSync(new URL('../test/', import.meta.url)).filter(name => name.endsWith('.test.js')).sort();
 
 for (const total of [2, 3, 5]) {
@@ -58,4 +60,15 @@ test('the real CLI executes fixtures and propagates failures, including paths wi
   } finally {
     rmSync(directory, { recursive: true, force: true });
   }
+});
+
+test('stage file groups cover every file-backed stage exactly once within bounded files', () => {
+  const groups = Array.from({ length: STAGE_FILE_GROUPS }, (_, group) => stageFileCases(group));
+  const seen = groups.flat();
+  assert.equal(seen.length, fileBackedStages.length);
+  assert.equal(new Set(seen).size, fileBackedStages.length);
+  assert.deepEqual([...seen].sort(), fileBackedStages);
+  assert.ok(groups.every(group => group.length > 0 && group.length <= Math.ceil(fileBackedStages.length / STAGE_FILE_GROUPS)));
+  assert.throws(() => stageFileCases(-1), RangeError);
+  assert.throws(() => stageFileCases(STAGE_FILE_GROUPS), RangeError);
 });
