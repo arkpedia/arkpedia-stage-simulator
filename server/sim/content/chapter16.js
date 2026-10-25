@@ -19,10 +19,8 @@ export function miner(r) {
       e.profile.friendly = true; e.profile.neutral = true; e.profile.noAttack = true;
       e.mem.ch16Miner = true;
       b.addBuff(e, { key: 'enemy_mcreep_self_mark', persist: true });
+      b.addBuff(e, { key: 'mark_neutral[effect]', persist: true });
       e.profile.meleeTarget = () => {
-        const link = e.mem.ch16Engagement;
-        if (link?.source.alive && link.source.deployed && !link.source.hidden
-          && link.source.deploySeq === link.sourceLife && e.deploySeq === link.targetLife) return link.source;
         return b.enemies.filter(u => u !== e && living(u) && !u.profile?.neutral && !u.profile?.friendly
           && !u.s.flags.sleep && !u.s.flags.stealth && !u.s.flags.camou
           // Native selector ignores TARGET_FREE, including the Rock Wall's

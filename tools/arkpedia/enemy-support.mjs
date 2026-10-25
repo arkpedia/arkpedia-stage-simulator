@@ -21,6 +21,24 @@ export function verifiedNative(evidence, prefabs, indexSha, templatePin) {
   }
   return evidence;
 }
+
+/** Keep the complete graph proof on the same inventory as the indexed components. */
+export function verifiedChapter16Devices(raw, inventoryRaw, enemyInventoryRaw, timingSource) {
+  const evidence = JSON.parse(raw), inventory = JSON.parse(inventoryRaw), enemies = JSON.parse(enemyInventoryRaw);
+  if (evidence.source.sha256 !== sha(inventoryRaw) || evidence.source.enemyInventory?.sha256 !== sha(enemyInventoryRaw)
+    || timingSource.inventory !== 'data/arkpedia-cn-enemy-native-source.json' || timingSource.sha256 !== sha(enemyInventoryRaw)
+    || JSON.stringify(evidence.tableSource) !== JSON.stringify(inventory.source.tableSource))
+    throw Error('Chapter 16 full graph and timing inventories disagree');
+  for (const row of evidence.source.bundles) {
+    const pinned = [...inventory.bundles, ...enemies.bundles].find(b => b.path === row.path);
+    if (pinned ? pinned.sha256 !== row.sha256 : row.manifestSha256 !== inventory.source.manifestSha256)
+      throw Error('Chapter 16 full graph bundle is not pinned: ' + row.path);
+  }
+  for (const row of [...Object.values(evidence.prefabs).flat(), ...Object.values(evidence.enemyPrefabs).flat(),
+    ...Object.values(evidence.globalPrefabs).flat(), ...Object.values(evidence.templates)])
+    if (sha(row.originalJson) !== row.sha256) throw Error('Chapter 16 full graph component checksum mismatch');
+  return evidence;
+}
 export async function buildEnemySupport({ candidate = false } = {}) {
   const recordsPath = candidate ? 'data/candidates/arkpedia-enemy-records.canonical.json' : 'data/arkpedia-enemy-records.json';
   const recordsRaw = await readFile(new URL(recordsPath, root)), indexRaw = await readFile(new URL('data/arkpedia-enemy-clock-source.json', root));
@@ -56,8 +74,13 @@ export async function buildEnemySupport({ candidate = false } = {}) {
     candidateSources.nativeAbilities10120 = { path: 'data/candidates/arkpedia-ch16-native-10120.json', sha256: sha(extra10120Raw) };
     const engagementRaw = await readFile(new URL('data/candidates/arkpedia-ch16-reviewed-engagement.json', root));
     const engagement = JSON.parse(engagementRaw);
+    if (engagement.nativeSource?.path !== candidateSources.nativeAbilities10120.path
+      || engagement.nativeSource.sha256 !== sha(extra10120Raw))
+      throw Error('Chapter 16 indexed engagement evidence differs from reviewed contract');
+    native.chapter16EngagementSha256 = sha(extra10120Raw);
     const deviceRaw = await readFile(new URL(engagement.deviceSource.path, root));
     if (sha(deviceRaw) !== engagement.deviceSource.sha256) throw Error('Chapter 16 engagement source differs from reviewed contract');
+    verifiedChapter16Devices(deviceRaw, inventoryRaw, await readFile(new URL('data/arkpedia-cn-enemy-native-source.json', root)), JSON.parse(indexRaw).source);
     native.chapter16DeviceSha256 = sha(deviceRaw);
     candidateSources.deviceEvidence = engagement.deviceSource;
     candidateSources.engagementContract = { path: 'data/candidates/arkpedia-ch16-reviewed-engagement.json', sha256: sha(engagementRaw) };

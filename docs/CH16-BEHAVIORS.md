@@ -339,3 +339,32 @@ routes without these declarations keep their previous behavior. Tests exercise
 both flags and shifted endpoints, while retaining full miner/facility integration.
 These changes do not implement the client's complete steering/inertia solver or
 claim captured-game frame parity.
+
+### Independent engagement and ordinary target acquisition
+
+The retained Army Infiltrator weapon selector has radius 1.0 and requires
+`mark_neutral[effect]`; its separate engagement circle uses 0.9. Both circles
+include the miner body at acquisition. The weapon now queries marked neutrals
+independently, including one outside engagement range, and a movement lock no
+longer forces either combatant's ordinary target. The literal neutral and army
+self-mark buffs are applied as retained by the original prefab graphs.
+
+Three regressions cover the different circles, independent soldier targeting
+and a miner's higher-taunt opponent while the original movement lock persists.
+The two soldier cases were also run against the prior implementation and failed
+there. All 121 focused checks pass after this correction; the real-app natural
+SP/keyboard/touch/restart test passes again, with desktop and phone screenshots
+inspected. Public and candidate support snapshots remain unchanged. The full
+23,055-test invocation above covers the preceding engine clock/navigation change;
+these additional controller checks are recorded separately.
+
+### Tightened engagement evidence gate
+
+The indexed Infiltrator evidence is now separately hash-bound and compared to a
+reviewed component snapshot. All 13 retained rows were checked byte-for-byte
+against the previously approved complete graph before adding this binding.
+Its timing index has zero enemy-ability wrappers and one active passive; the
+older two-wrapper overclaim is removed. A new wrapper, changed indexed content,
+or disagreement between the full graph and timing inventories fails admission.
+This changes candidate proof metadata and counts, not public support policies.
+

@@ -79,3 +79,42 @@ test('source or recipient removal clears both locks and permits a new engagement
     assert.equal((removeSource ? replacement : e).mem.mcTarget, removeSource ? m : replacement);
   }
 });
+
+test('ordinary weapon acquisition is separate from the smaller native engagement circle', () => {
+  const native = Object.entries(proof.enemyPrefabs).find(([key]) => key.includes(soldier))[1];
+  const by = new Map(native.map(row => [row.pathId, JSON.parse(row.originalJson)]));
+  const mode = [...by.values()].find(row => row._attack && row._combat);
+  const trigger = by.get(mode._attackTrigger.m_PathID), go = by.get(trigger.m_GameObject.m_PathID);
+  const components = go.m_Component.map(c => by.get(c.component.m_PathID)).filter(Boolean);
+  assert.equal(components.find(c => 'm_Radius' in c).m_Radius, 1);
+  assert.equal(components.find(c => '_buffKey' in c)._buffKey, 'mark_neutral[effect]');
+  const { h, spawn } = fixture(), e = spawn(soldier, 6), m = spawn(miner, 7.05), hp = m.hp;
+  h.run(.15);
+  assert.equal(e.mem.mcTarget, undefined, 'outside the 0.9 circle plus 0.1 miner body, before the first 0.3s engagement scan');
+  assert.ok(m.hp < hp, 'the independent radius-1 weapon still overlaps the miner body');
+  assert.equal(e.stats.attacks, 1);
+  assert.ok(e.findBuff('enemy_field_army_self_mark')); assert.ok(m.findBuff('mark_neutral[effect]'));
+  assert.deepEqual(h.b.errors, []);
+});
+
+test('engagement movement ownership does not force the ordinary weapon onto the locked miner', () => {
+  const { h, b, spawn } = fixture(), e = spawn(soldier, 6), original = spawn(miner, 6.8);
+  h.run(.31); assert.equal(e.mem.mcTarget, original);
+  const next = spawn(miner, 5.2), hits = [];
+  e.atkCd = 0;
+  b.on('damageFinal', c => { if (c.source === e) hits.push(c.target); });
+  h.run(.1);
+  assert.equal(e.mem.mcTarget, original); assert.ok(hits.includes(next));
+  assert.deepEqual(b.errors, []);
+});
+
+test('a miner also selects independently of its engagement when a higher-taunt enemy is in reach', () => {
+  const { h, b, spawn } = fixture(), e = spawn(soldier, 6), m = spawn(miner, 6.8);
+  h.run(.31); assert.equal(m.mem.ch16Engagement.source, e);
+  const other = spawn(soldier, 7.2), hits = [];
+  b.addBuff(other, { key: 'test:taunt', persist: true, mods: { taunt: 1 } }); m.atkCd = 0;
+  b.on('damageFinal', c => { if (c.source === m) hits.push(c.target); });
+  h.run(.1);
+  assert.equal(m.mem.ch16Engagement.source, e); assert.ok(hits.includes(other));
+  assert.deepEqual(b.errors, []);
+});

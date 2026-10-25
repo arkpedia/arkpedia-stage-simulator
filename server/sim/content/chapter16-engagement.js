@@ -1,22 +1,27 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // mainline16_g[block_mcreep] / block_mcreep[to_mcreep], retained in device-source.
+import { canTargetAlly, sortAllyTargets } from '../targeting.js';
 const live = u => u?.alive && u.deployed && !u.hidden;
 const distance = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
 export const MINER_BODY_RADIUS = .1;
 
-export function blockMcreep({ cnt, range, rangeAdd }) {
-  if (cnt !== 1 || !(range > 0) || !(rangeAdd >= 0)) throw Error('Unreviewed BlockMcreep parameters');
+export function blockMcreep({ cnt, range, rangeAdd, attackRange = 1, markArmy = false }) {
+  if (cnt !== 1 || !(range > 0) || !(rangeAdd >= 0) || !(attackRange > 0)) throw Error('Unreviewed BlockMcreep parameters');
   return {
     spawn(b, e, a) {
       a.scan = 0; a.engagement = null;
       // The table's applyWay NONE suppresses generic attacks; its retained
       // Default/Attack graph still performs physical melee against marked
-      // neutrals. Only the engagement target below enables that attack.
+      // neutrals. Its weapon selector is independent of the movement lock.
       e.profile.melee = true;
       e.profile.dmgType = 'phys';
+      if (markArmy) b.addBuff(e, { key: 'enemy_field_army_self_mark', persist: true });
       e.profile.meleeTarget = () => {
-        const link = a.engagement;
-        return link && live(link.target) && link.target.deploySeq === link.targetLife ? link.target : null;
+        const targets = b.enemies.filter(u => u !== e && live(u) && u.profile?.neutral
+          && u.findBuff('mark_neutral[effect]') && canTargetAlly(e, u, true)
+          && distance(e, u) <= attackRange + (u.mem.ch16BodyRadius ?? MINER_BODY_RADIUS) + 1e-9);
+        sortAllyTargets(e, targets);
+        return targets[0] ?? null;
       };
       a.release = () => {
         const link = a.engagement;

@@ -3,7 +3,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
-import { verifiedNative } from '../tools/arkpedia/enemy-support.mjs';
+import { verifiedNative, verifiedChapter16Devices } from '../tools/arkpedia/enemy-support.mjs';
 import { deriveEnemySupport, prefabPath } from '../shared/arkpedia/enemy-support.js';
 
 const read = name => JSON.parse(readFileSync(new URL(`../data/${name}`, import.meta.url)));
@@ -69,17 +69,41 @@ test('miner support refuses a changed native profession validator', () => {
 test('10120 BlockMcreep evidence and selector clear candidate support', () => {
   const records = read('candidates/arkpedia-enemy-records.canonical.json');
   const extra = read('candidates/arkpedia-ch16-native-10120.json');
+  const extraBytes = readFileSync(new URL('../data/candidates/arkpedia-ch16-native-10120.json', import.meta.url));
   verifiedNative(extra, index.prefabs, indexSha, templates);
   const deviceRaw = readFileSync(new URL('../data/candidates/arkpedia-ch16-device-source.json', import.meta.url));
   const native = { ...candidate, chapter16DeviceSha256: createHash('sha256').update(deviceRaw).digest('hex'),
+    chapter16EngagementSha256: createHash('sha256').update(extraBytes).digest('hex'),
     prefabs: { ...candidate.prefabs, ...extra.prefabs } };
   const support = deriveEnemySupport({ enemy_10120_uaghst: records.enemies.enemy_10120_uaghst }, index.prefabs, native);
   assert.equal(support.enemy_10120_uaghst.policy, 'stats-attacks-and-features');
   assert.deepEqual(support.enemy_10120_uaghst.reasons, []);
+  assert.equal(support.enemy_10120_uaghst.native.enemy_10120_uaghst.claimedWrappers, 0);
+  assert.equal(support.enemy_10120_uaghst.native.enemy_10120_uaghst.claimedActive, 1);
   const missing = deriveEnemySupport({ enemy_10120_uaghst: records.enemies.enemy_10120_uaghst }, index.prefabs,
     { ...native, chapter16DeviceSha256: null });
   assert.equal(missing.enemy_10120_uaghst.policy, null, 'native wrapper counts alone cannot approve the engagement');
   const changed = structuredClone(records.enemies.enemy_10120_uaghst);
   changed.levels[0].talents.bb['BlockMcreep.range_radius_add'] = .2;
   assert.equal(deriveEnemySupport({ enemy_10120_uaghst: changed }, index.prefabs, native).enemy_10120_uaghst.policy, null);
+  const changedNative = structuredClone(native);
+  changedNative.prefabs[prefabPath('enemy_10120_uaghst')][0].originalJson += ' ';
+  assert.equal(deriveEnemySupport({ enemy_10120_uaghst: records.enemies.enemy_10120_uaghst }, index.prefabs, changedNative)
+    .enemy_10120_uaghst.policy, null, 'changed indexed content cannot hide behind the old full-graph digest');
+  const changedIndex = structuredClone(index.prefabs);
+  changedIndex[prefabPath('enemy_10120_uaghst')].clockComponents.push({ pathId: 'unreviewed', fields: { _familyMask: 1, _trigger: {} } });
+  assert.equal(deriveEnemySupport({ enemy_10120_uaghst: records.enemies.enemy_10120_uaghst }, changedIndex, native)
+    .enemy_10120_uaghst.policy, null, 'a new wrapper cannot spend an overstated native claim');
+});
+
+test('the full device graph cannot overlay a different indexed-native inventory', () => {
+  const raw = readFileSync(new URL('../data/candidates/arkpedia-ch16-device-source.json', import.meta.url));
+  const inventory = readFileSync(new URL('../data/arkpedia-cn-native-source.json', import.meta.url));
+  const enemies = readFileSync(new URL('../data/arkpedia-cn-enemy-native-source.json', import.meta.url));
+  assert.doesNotThrow(() => verifiedChapter16Devices(raw, inventory, enemies, index.source));
+  assert.throws(() => verifiedChapter16Devices(raw, inventory, Buffer.concat([enemies, Buffer.from(' ')]), index.source), /inventories disagree/);
+  const badBundle = JSON.parse(raw); badBundle.source.bundles[0].sha256 = '0'.repeat(64);
+  assert.throws(() => verifiedChapter16Devices(JSON.stringify(badBundle), inventory, enemies, index.source), /not pinned/);
+  const changed = JSON.parse(raw); Object.values(changed.enemyPrefabs)[0][0].originalJson += ' ';
+  assert.throws(() => verifiedChapter16Devices(JSON.stringify(changed), inventory, enemies, index.source), /checksum mismatch/);
 });

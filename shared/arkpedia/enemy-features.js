@@ -16,11 +16,14 @@ import { CHAPTER16_FEATURES } from './chapter16-features.js';
 import engagement from '../../data/candidates/arkpedia-ch16-reviewed-engagement.json' with { type: 'json' };
 
 const blockMcreepCovered = (r, n) => r.key === engagement.blockMcreep.key
+  && Number.isFinite(r.stats.rawRangeRadius) && r.stats.rawRangeRadius > 0
   && sig(r, 'BlockMcreep', ['block_mcreep_cnt', 'range_radius', 'range_radius_add'])
   && r.talents.bb['BlockMcreep.block_mcreep_cnt'] === engagement.blockMcreep.count
   && r.talents.bb['BlockMcreep.range_radius'] === engagement.blockMcreep.range
   && r.talents.bb['BlockMcreep.range_radius_add'] === engagement.blockMcreep.rangeAdd
-  && n.$deviceEvidence?.() === engagement.deviceSource.sha256;
+  && n.$deviceEvidence?.() === engagement.deviceSource.sha256
+  && n.$engagementEvidence?.() === engagement.nativeSource.sha256
+  && JSON.stringify(n.$retained?.()) === JSON.stringify(engagement.native);
 
 /** The group's parameter keys are exactly `params`. */
 const sig = (r, g, params) => JSON.stringify(r.talents.groups[g] ?? null) === JSON.stringify([...params].sort());
@@ -225,10 +228,10 @@ export const ENEMY_FEATURES = Object.freeze({
   // Spawn traits.
   'ability:Cannot be blocked.': { covers: () => true, trait: { flags: { unblockable: true } }, note: 'unblockable for life' },
   'ability:Can fight 1 <Miner Guerrilla> at a time': { covers: blockMcreepCovered,
-    ability: r => ({ kind: 'blockMcreep', params: () => ({ cnt: r.talents.bb['BlockMcreep.block_mcreep_cnt'], range: r.talents.bb['BlockMcreep.range_radius'], rangeAdd: r.talents.bb['BlockMcreep.range_radius_add'] }) }),
+    ability: r => ({ kind: 'blockMcreep', params: () => ({ cnt: r.talents.bb['BlockMcreep.block_mcreep_cnt'], range: r.talents.bb['BlockMcreep.range_radius'], rangeAdd: r.talents.bb['BlockMcreep.range_radius_add'], attackRange: r.stats.rawRangeRadius, markArmy: r.key === engagement.blockMcreep.key }) }),
     note: 'BlockMcreep: every 0.3 s selects one nearest Miner Guerrilla and applies UNMOVABLE; one engagement at a time', nativeClaim: () => ({ active: 1 }) },
   'talent:BlockMcreep': { covers: blockMcreepCovered,
-    note: 'native BlockMcreep/SelectNearestMcreep pair; runtime lives on the ability line', nativeClaim: () => ({ wrappers: 2 }) },
+    note: 'native BlockMcreep/SelectNearestMcreep pair; runtime lives on the ability line' },
   'ability:<$ba.invisible>Invisible</>': { covers: () => true, trait: { flags: { stealth: true } },
     note: 'Invisible (ba.invisible): untargetable until revealed or blocked; blocking lifts it for the engine STEALTH_RESTORE window' },
   'ability:Attacks two targets simultaneously.': { covers: r => r.applyWay === 'RANGED' && r.stats.rangeRadius > 0, trait: { maxTargets: 2 }, note: 'two ranged targets per attack' },
