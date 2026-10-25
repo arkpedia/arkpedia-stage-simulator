@@ -7,11 +7,13 @@ import { resolve } from 'node:path';
 import { loadCanonicalEnemyTables } from './canonical-data.mjs';
 
 export const CANONICAL_STAGE_LOCKS = Object.freeze({
+  '16-2': '../../data/arkpedia-canonical-stage-16-2.lock.json',
   '16-3': '../../data/arkpedia-ch16-stage.lock.json',
   '16-4': '../../data/arkpedia-ch16-stage-16-4.lock.json',
   '16-5': '../../data/arkpedia-canonical-stage-16-5.lock.json',
   '16-6': '../../data/arkpedia-canonical-stage-16-6.lock.json',
   '16-7': '../../data/arkpedia-canonical-stage-16-7.lock.json',
+  '16-8': '../../data/arkpedia-canonical-stage-16-8.lock.json',
   '17-2': '../../data/arkpedia-canonical-stage-17-2.lock.json',
   '17-3': '../../data/arkpedia-canonical-stage-17-3.lock.json',
   '17-4': '../../data/arkpedia-canonical-stage-17-4.lock.json',

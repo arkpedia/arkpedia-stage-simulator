@@ -14,7 +14,7 @@ const lock = read('data/arkpedia-ch16-stage-16-4.lock.json');
 test('16-4 retains the complete checksum-verified canonical inputs and independent receipts', () => {
   assert.equal(source.admitted, false); assert.equal(source.testOnly, true);
   assert.equal(source.canonicalData.repository, 'arkpedia/arkpedia-data');
-  assert.equal(source.canonicalData.commit, '57ab0fc5df7ae27b04a0c84515301f1feb6cf7f2');
+  assert.equal(source.canonicalData.commit, '245d7c601ce3a4a42adcfb84faa1bd1123d507bb');
   assert.deepEqual(source.inputs, lock.files);
   assert.equal(source.routeReceipt.producer.commit, lock.producer.commit);
   assert.equal(source.routeReceipt.upstream.commit, lock.upstream.commit);

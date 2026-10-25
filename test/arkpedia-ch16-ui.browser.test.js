@@ -8,7 +8,7 @@ import { join } from 'node:path';
 const chrome = process.env.CHROME_PATH ?? '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const enabled = process.env.RENDER_E2E === '1' && existsSync(chrome);
 const stageCode = process.env.CH16_QA_STAGE ?? '16-3';
-if (!['16-3', '16-4', '16-5', '16-6'].includes(stageCode)) throw Error('Only reviewed test-only tunnel stages may run this QA');
+if (!['16-3', '16-4', '16-5', '16-6', '16-7'].includes(stageCode)) throw Error('Only reviewed test-only tunnel stages may run this QA');
 const out = process.env.CH16_QA_OUT ?? '/tmp/codex-ch16-ui';
 
 test(`test-only ${stageCode} tunnel command works with natural SP, keyboard, mobile layout and restart`,

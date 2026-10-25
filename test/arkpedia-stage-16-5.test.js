@@ -24,14 +24,14 @@ test('16-5 requires experimental mode and explicitly test-only canonical candida
   const d = structuredClone(mvp);
   await applyStage(d, index, '16-5', async () => ({ ok: true, json: async () => structuredClone(stage) }), { experimental: true });
   assert.doesNotThrow(() => assertRegularEnemies(d));
-  for (const change of [s => { s.testOnly = false; }, s => { delete s.enemyCatalogue; }, s => { s.code = '16-7'; }]) {
+  for (const change of [s => { s.testOnly = false; }, s => { delete s.enemyCatalogue; }, s => { s.code = '16-8'; }]) {
     const bad = data(); change(bad.stage); assert.throws(() => assertRegularEnemies(bad), /Unsupported/);
   }
   const missing = data(); delete missing.enemies.enemy_3010_mcreep;
   assert.throws(() => assertRegularEnemies(missing), /Missing canonical Miner/);
   assert.equal(stage.canonicalData.repository, 'arkpedia/arkpedia-data');
   assert.equal(stage.canonicalData.commit, '79e81a8a872b2ecc592647d81a864ccbf1f8ca06');
-  assert.equal(stage.chapter16Source.canonicalData.commit, '657f85cc032ae5da807135f536d3263c6b249ed7');
+  assert.equal(stage.chapter16Source.canonicalData.commit, '245d7c601ce3a4a42adcfb84faa1bd1123d507bb');
   assert.equal(stage.pathing.moveScale, .5);
   assert.equal(stageAdapter(stage).spawns.length, 26);
   assert.deepEqual(Object.keys(stage.enemies).sort(), review.expected.enemies.slice().sort());
@@ -51,13 +51,13 @@ test('16-5 builder review binds the complete source, native devices, skill and S
 });
 
 const build = (seed = 19, d = data()) => new StandardBattle(d, { operators: [defaultBuild(mvp.operators.char_122_beagle)] }, { seed });
-for (const seed of [19, 71, 129]) test(`16-5 source waves and both native tunnel actions clear without errors (seed ${seed})`, () => {
+for (const seed of [19, 71, 129]) test(`16-5 source waves and both tunnel actions clear after commands return to standby (seed ${seed})`, () => {
   const b = build(seed); b.life = 1000; b.setViewport('fullscreen-workspace');
   const born = [], attacks = new Set();
   b.on('enemySpawn', ({ enemy }) => born.push(enemy));
   b.on('attack', c => { if (c.targets.some(t => t.mem.ch16Miner)) attacks.add(c.attacker.defId); });
   for (let i = 0; i < Math.round(300 / b.dt) && !b.finished; i++) {
-    for (const [id, entry] of b.stageDeviceActions) if (entry.state.canActivate()) b.activateStageDevice(id);
+    for (const [id, entry] of b.stageDeviceActions) if (b.time < 121 && entry.state.canActivate()) b.activateStageDevice(id);
     b.step();
     for (const entry of b.stageDeviceActions.values()) { assert.ok(entry.state.total <= 5); assert.ok(entry.state.waiting <= 3); }
   }

@@ -24,14 +24,14 @@ test('16-4 requires experimental mode and explicitly test-only canonical candida
   const d = structuredClone(mvp);
   await applyStage(d, index, '16-4', async () => ({ ok: true, json: async () => structuredClone(stage) }), { experimental: true });
   assert.doesNotThrow(() => assertRegularEnemies(d));
-  for (const change of [s => { s.testOnly = false; }, s => { delete s.enemyCatalogue; }, s => { s.code = '16-7'; }]) {
+  for (const change of [s => { s.testOnly = false; }, s => { delete s.enemyCatalogue; }, s => { s.code = '16-8'; }]) {
     const bad = data(); change(bad.stage); assert.throws(() => assertRegularEnemies(bad), /Unsupported/);
   }
   const missing = data(); delete missing.enemies.enemy_3010_mcreep;
   assert.throws(() => assertRegularEnemies(missing), /Missing canonical Miner/);
   assert.equal(stage.canonicalData.repository, 'arkpedia/arkpedia-data');
   assert.equal(stage.canonicalData.commit, '79e81a8a872b2ecc592647d81a864ccbf1f8ca06');
-  assert.equal(stage.chapter16Source.canonicalData.commit, '57ab0fc5df7ae27b04a0c84515301f1feb6cf7f2');
+  assert.equal(stage.chapter16Source.canonicalData.commit, '245d7c601ce3a4a42adcfb84faa1bd1123d507bb');
   assert.equal(stage.pathing.moveScale, .5);
   assert.equal(stageAdapter(stage).spawns.length, 17);
   assert.deepEqual(Object.keys(stage.enemies).sort(), review.expected.enemies.slice().sort());

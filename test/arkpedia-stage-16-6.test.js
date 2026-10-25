@@ -23,12 +23,12 @@ test('16-6 requires experimental mode, exact canonical data, all scheduled miner
   const d = structuredClone(mvp);
   await applyStage(d, index, '16-6', async () => ({ ok: true, json: async () => structuredClone(stage) }), { experimental: true });
   assert.doesNotThrow(() => assertRegularEnemies(d));
-  for (const change of [s => { s.testOnly = false; }, s => { delete s.enemyCatalogue; }, s => { s.code = '16-7'; }]) {
+  for (const change of [s => { s.testOnly = false; }, s => { delete s.enemyCatalogue; }, s => { s.code = '16-8'; }]) {
     const bad = data(); change(bad.stage); assert.throws(() => assertRegularEnemies(bad), /Unsupported/);
   }
   assert.equal(stage.canonicalData.repository, 'arkpedia/arkpedia-data');
   assert.equal(stage.canonicalData.commit, '79e81a8a872b2ecc592647d81a864ccbf1f8ca06');
-  assert.equal(stage.chapter16Source.canonicalData.commit, '657f85cc032ae5da807135f536d3263c6b249ed7');
+  assert.equal(stage.chapter16Source.canonicalData.commit, '245d7c601ce3a4a42adcfb84faa1bd1123d507bb');
   assert.equal(stage.pathing.moveScale, .5);
   const spawns = stageAdapter(stage).spawns;
   assert.equal(spawns.length, 24); assert.equal(spawns.filter(s => s.enemyKey === 'enemy_3010_mcreep').length, 3);
@@ -58,7 +58,7 @@ for (const seed of [19, 71, 129]) test(`16-6 source waves, live volleys and nati
   assert.equal(born.filter(e => e.defId === 'enemy_10123_uareap').length, 2);
   assert.ok(launches.length >= 3); assert.ok(launches.every(c => c.target.mem.ch16Miner && c.count === 3));
   const miners = born.filter(e => e.mem.ch16Miner), scheduled = miners.filter(e => !e.mem.ch16Branch), branch = miners.filter(e => e.mem.ch16Branch);
-  assert.equal(scheduled.length, 3); assert.ok(scheduled.every(e => !e.counted && e.holdsBattle !== false));
+  assert.equal(scheduled.length, 3); assert.ok(scheduled.every(e => !e.counted && e.holdsBattle === false));
   assert.ok(branch.length > 0);
   for (const e of branch) {
     assert.equal(e.counted, false); assert.equal(e.holdsBattle, false);

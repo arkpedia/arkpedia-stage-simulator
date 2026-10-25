@@ -29,7 +29,7 @@ test('17-2 requires experimental mode and retains the exact canonical level/enem
   }
   assert.equal(stage.canonicalData.repository, 'arkpedia/arkpedia-data');
   assert.equal(stage.canonicalData.commit, '79e81a8a872b2ecc592647d81a864ccbf1f8ca06');
-  assert.equal(stage.chapter16Source.canonicalData.commit, '657f85cc032ae5da807135f536d3263c6b249ed7');
+  assert.equal(stage.chapter16Source.canonicalData.commit, '245d7c601ce3a4a42adcfb84faa1bd1123d507bb');
   assert.equal(stage.pathing.moveScale, .5); assert.equal(stageAdapter(stage).spawns.length, 28);
   assert.deepEqual(Object.keys(stage.enemies).sort(), review.expected.enemies.slice().sort());
   assert.deepEqual(stage.devices, []); assert.deepEqual(stage.excludedHiddenGroups, []);

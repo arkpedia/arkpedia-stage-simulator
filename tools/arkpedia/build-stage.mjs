@@ -34,16 +34,18 @@ const [source, geometry, playbackFile, mvp, records, support, tokenData] = await
 let chapter16Source = null, chapter16Review = null;
 if (args.candidate === 'ch16') {
   const stageReviews = {
+    '16-2': 'arkpedia-ch16-reviewed-stage-16-2.json',
     '16-3': 'arkpedia-ch16-reviewed-stage.json',
     '16-4': 'arkpedia-ch16-reviewed-stage-16-4.json',
     '16-5': 'arkpedia-ch16-reviewed-stage-16-5.json',
     '16-6': 'arkpedia-ch16-reviewed-stage-16-6.json',
+    '16-7': 'arkpedia-ch16-reviewed-stage-16-7.json',
     '17-2': 'arkpedia-ch17-reviewed-stage-17-2.json',
     '17-3': 'arkpedia-ch17-reviewed-stage-17-3.json',
     '17-4': 'arkpedia-ch17-reviewed-stage-17-4.json',
   };
-  if (source.code !== '16-2' && !Object.hasOwn(stageReviews, source.code)) throw Error('Candidate admission is reviewed only for test-only 16-2, 16-3, 16-4, 16-5, 16-6, 17-2, 17-3 and 17-4');
-  if (source.code !== '16-2') {
+  if (!Object.hasOwn(stageReviews, source.code)) throw Error('Candidate admission is reviewed only for test-only 16-2, 16-3, 16-4, 16-5, 16-6, 16-7, 17-2, 17-3 and 17-4');
+  {
     const reviewPath = stageReviews[source.code];
     chapter16Review = await read(new URL('../../data/candidates/' + reviewPath, import.meta.url));
     if (chapter16Review.code !== source.code || chapter16Review.testOnly !== true) throw Error('Missing test-only ' + source.code + ' review');
@@ -59,6 +61,17 @@ if (args.candidate === 'ch16') {
     if (chapter16Source.testOnly !== true || chapter16Source.stage.slug !== source.slug
       || chapter16Source.rawLevel.options.moveMultiplier !== chapter16Review.expected.moveMultiplier)
       throw Error('Unreviewed ' + source.code + ' level contract');
+    const groups = [...new Set(chapter16Source.conditional.filter(s => s.source === 'wave')
+      .map(s => s.condition?.hidden_group).filter(Boolean))].sort();
+    if (JSON.stringify(groups) !== JSON.stringify([...chapter16Review.expected.excludedHiddenGroups].sort()))
+      throw Error('Unreviewed excluded hidden groups for ' + source.code);
+    const runes = [...(chapter16Source.rawLevel.runes ?? []), ...Object.values(chapter16Source.rawLevel.optionalRunes ?? {}).flat()];
+    for (const group of groups) {
+      const enables = runes.filter(r => r.key === 'level_hidden_group_enable'
+        && r.blackboard?.some(bb => bb.key === 'key' && bb.valueStr === group));
+      if (!enables.length || enables.some(r => r.difficultyMask !== 'SIX_STAR'))
+        throw Error('Hidden group is not exclusively a source SIX_STAR option: ' + group);
+    }
   }
   const raw = await readFile(new URL('../../data/candidates/arkpedia-enemy-records.canonical.json', import.meta.url));
   if (createHash('sha256').update(raw).digest('hex') !== support.source.records.sha256)
@@ -153,6 +166,11 @@ const configured = id => {
   }
   return record;
 };
+for (const spawn of adapter.spawns) if (spawn.holdsBattle === false) {
+  const record = configured(spawn.enemyKey);
+  if (record.notCountInTotal !== true || record.stats.lpr !== 0)
+    throw Error('Unreviewed harmless spawn counter/life contract: ' + spawn.enemyKey);
+}
 const enemyIds = new Set();
 const addEnemy = id => {
   if (enemyIds.has(id)) return;

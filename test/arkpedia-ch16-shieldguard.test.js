@@ -5,9 +5,8 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { shieldguard } from '../server/sim/content/chapter16-shieldguard.js';
-import { frontlineCommander } from '../server/sim/content/chapter16-commander.js';
 import { installEnemyFeatures } from '../server/sim/content/arkpedia-enemy-features.js';
-import { attach, installFeatureDispatch } from '../server/sim/content/enemies.js';
+import { installFeatureDispatch } from '../server/sim/content/enemies.js';
 import { makeBattle, chessRec } from './helpers/battleHarness.js';
 import { verifiedNative, verifiedChapter16FamilyGraph } from '../tools/arkpedia/enemy-support.mjs';
 const bytes = p => readFileSync(new URL('../data/' + p, import.meta.url));
@@ -99,7 +98,7 @@ test('orders reduce post-mitigation physical/Arts damage immediately, excluding 
 
 test('real commander orders grant reduction without stacking, and removal restores incoming damage', () => {
   const { h, b, e } = fixture(); const c = h.spawn('enemy_10125_uacomd', { pos: [10, 9] });
-  attach(b, c, [frontlineCommander(records.enemy_10125_uacomd.levels[0])]); h.run(.3);
+  assert.equal(c.mem.ab.list.filter(a => a.disposeOrders).length, 1); h.run(.3);
   assert.ok(e.findBuff('enemy_uacomd_extra_power'));
   let hp = e.hp; b.dealDamage(null, e, { amount: 2000, type: 'phys' }); assert.equal(hp - e.hp, 300);
   b.kill(c, null); h.run(.3); assert.equal(e.findBuff('enemy_uacomd_extra_power'), null);

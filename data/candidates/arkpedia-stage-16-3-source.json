@@ -4,7 +4,7 @@
   "admitted": false,
   "canonicalData": {
     "repository": "arkpedia/arkpedia-data",
-    "commit": "84f3c8334db1c505429bce848147b32ca6a1cc20"
+    "commit": "245d7c601ce3a4a42adcfb84faa1bd1123d507bb"
   },
   "upstream": {
     "repository": "ArknightsAssets/ArknightsGamedata",
@@ -12,7 +12,7 @@
   },
   "producer": {
     "repository": "arkpedia/arkpedia",
-    "commit": "d350e0879826d22abd75d08ff8a8d1b1bf63875b"
+    "commit": "7c94fb8516030728586005b01e75620bfc9b4c3b"
   },
   "inputs": {
     "stage": {
@@ -22,13 +22,13 @@
     },
     "geometry": {
       "path": "source/data/stage-geometry/16-3.json",
-      "bytes": 15596,
-      "sha256": "ad2d177135b381b9df107ee38f5fbf8b29e0881c9a74c5ee5e60b2cde5be7d08"
+      "bytes": 9512,
+      "sha256": "961b2ef9b76ce3ffbb4b67c681ae7958bafc24225cad93fbeadfe8c5ac11ddf2"
     },
     "conditional": {
       "path": "source/data/stage-conditional/16-3.json",
-      "bytes": 624,
-      "sha256": "941ce38428a7f1de4798bccfee986bdd16e0822da1c72f1114f6985f1f4e3998"
+      "bytes": 486,
+      "sha256": "a86188f5a5e55456d480838497bdbc97cc1261fa0df2ea6305679005a6311101"
     },
     "devices": {
       "path": "source/data/stage-devices.json",
@@ -38,12 +38,12 @@
     "routeReceipt": {
       "path": "source/data/stage-route-source/16-3.json",
       "bytes": 943,
-      "sha256": "a25786b8bd097129c927a2a1e83b2e3fc33153d79ca4974edf21c12f5364574a"
+      "sha256": "045b38516e6fb575f29398f0b82f10bd0d019e659b7d1a044c05557dbd19f41b"
     },
     "manifest": {
       "path": "release/manifest.json",
-      "bytes": 3096795,
-      "sha256": "0a39f3f2baab841545ef5f199ea15a40ddba704baaa11084553b9271d81d6cb5"
+      "bytes": 3105177,
+      "sha256": "278c6e912597450ecea9582dbb9b89301d89451b6542eab6efab530093d2a60c"
     },
     "rawLevel": {
       "path": "source/data/simulator/raw/levels/16-3.json",
@@ -52,13 +52,13 @@
     },
     "levelReceipt": {
       "path": "source/data/simulator/stage-levels-source.json",
-      "bytes": 376,
-      "sha256": "0c8125318a1e66f5436c7cc06a11688f1ea4c59cbc884232b56313be92a28c6d"
+      "bytes": 7296,
+      "sha256": "cec7f6606e1b05a3c9cc42f673db13211be5c8adf71832756fb5749df9ab2837"
     }
   },
   "routeReceipt": {
     "schemaVersion": 1,
-    "scope": "Preview-only source geometry repair. No stage simulator admission or release pointer change.",
+    "scope": "Canonical simulator candidate inputs only. No simulator admission or release pointer change.",
     "upstream": {
       "repository": "ArknightsAssets/ArknightsGamedata",
       "commit": "db6f9ef8046ad17dbebe3ff1d0dd88844a5bc78c",
@@ -67,13 +67,13 @@
     },
     "producer": {
       "repository": "arkpedia/arkpedia",
-      "commit": "d350e0879826d22abd75d08ff8a8d1b1bf63875b",
+      "commit": "7c94fb8516030728586005b01e75620bfc9b4c3b",
       "entrypoint": "scripts/stage-pipeline/lib/encode.mjs",
       "rawEntrypoint": "scripts/imports/import-simulator-stage-levels.mjs"
     },
     "outputs": {
-      "source/data/stage-geometry/16-3.json": "ad2d177135b381b9df107ee38f5fbf8b29e0881c9a74c5ee5e60b2cde5be7d08",
-      "source/data/stage-conditional/16-3.json": "941ce38428a7f1de4798bccfee986bdd16e0822da1c72f1114f6985f1f4e3998"
+      "source/data/stage-geometry/16-3.json": "961b2ef9b76ce3ffbb4b67c681ae7958bafc24225cad93fbeadfe8c5ac11ddf2",
+      "source/data/stage-conditional/16-3.json": "a86188f5a5e55456d480838497bdbc97cc1261fa0df2ea6305679005a6311101"
     },
     "rawLevelPath": "source/data/simulator/raw/levels/16-3.json"
   },
@@ -84,10 +84,175 @@
       "commit": "db6f9ef8046ad17dbebe3ff1d0dd88844a5bc78c"
     },
     "files": {
+      "raw/levels/16-2.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_16-01.json",
+        "bytes": 54333,
+        "sha256": "07b43a75ec5d57fe3dd465f536c7e3832fc47350c5de8c2909951602a518d7ea"
+      },
       "raw/levels/16-3.json": {
         "path": "en/gamedata/levels/obt/main/level_main_16-02.json",
         "bytes": 54041,
         "sha256": "fa693b20c843694be0911ba668a910e63074170406cd8881be9fe87a068238c9"
+      },
+      "raw/levels/16-4.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_16-03.json",
+        "bytes": 45854,
+        "sha256": "3bb4e26ab6fb87bc81593973e17b8f6c2b6563777b30060dd422f2ebbe009f52"
+      },
+      "raw/levels/16-5.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_16-04.json",
+        "bytes": 37774,
+        "sha256": "5dd04fb47ffa1c0f38bbacaef9ed4ff320a6632a31246185297806de461d7041"
+      },
+      "raw/levels/16-6.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_16-05.json",
+        "bytes": 55173,
+        "sha256": "ee6bfa66bf4f00a91e19580ef102df55f440b5d5f81de949ae459d41cab1e328"
+      },
+      "raw/levels/16-7.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_16-06.json",
+        "bytes": 66072,
+        "sha256": "c0a9641fc4c2c22411cdfd256132bf9ed74881be7cce8b8d74fb7c7a626aff14"
+      },
+      "raw/levels/16-8.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_16-07.json",
+        "bytes": 51928,
+        "sha256": "3830f6dbbcc700f2f4053130c59fad2aaf0cd44f0666499de7dd5f240d7da5e9"
+      },
+      "raw/levels/16-9.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_16-08.json",
+        "bytes": 66129,
+        "sha256": "db30e61c3631bde964f43af0876e9730ad4c4a75049327fe6a5c2ae353e371cc"
+      },
+      "raw/levels/16-10.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_16-09.json",
+        "bytes": 48609,
+        "sha256": "7cac59ff6bee6f6cae33db8035624c6ffbd73f453debda2c9e00ff8c075f1866"
+      },
+      "raw/levels/16-11.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_16-10.json",
+        "bytes": 52281,
+        "sha256": "7f3f7e4069604fbba66ab23b0fe007cd04183ed3d57d28c1a1e7f3d80a4b821d"
+      },
+      "raw/levels/16-12.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_16-11.json",
+        "bytes": 40527,
+        "sha256": "71558b2656c75ccc75ffe89a736e76990dc1ba3c061546847461345319392a79"
+      },
+      "raw/levels/16-13.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_16-12.json",
+        "bytes": 102217,
+        "sha256": "4eb4d30493c755bbce31c960c63a5784077a25536b237c7164c5dc96d19ed1ae"
+      },
+      "raw/levels/16-14.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_16-13.json",
+        "bytes": 53837,
+        "sha256": "9b7b199cacfaab96b71e4156a2274a073bd3d936184bb4b21366741fa91d6557"
+      },
+      "raw/levels/16-15.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_16-14.json",
+        "bytes": 69474,
+        "sha256": "523e5afa3978ab736dcdef2964a6af850d445a9e11e0c2080ab34e9766a17a72"
+      },
+      "raw/levels/16-16.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_16-15.json",
+        "bytes": 118510,
+        "sha256": "36ed7eed736043129a3ffb44db16ee13e8d023d3069d44a5a78449a9296d59ed"
+      },
+      "raw/levels/16-17.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_16-16.json",
+        "bytes": 154290,
+        "sha256": "bc3993098948b338c120b722ee67c0b525635ea10ea297819c57015bcfed55c4"
+      },
+      "raw/levels/16-18.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_16-17.json",
+        "bytes": 106888,
+        "sha256": "cef3c8cb71a3eee2e84cccbc47c28a94070b017446277d086e048ef4a7e4da23"
+      },
+      "raw/levels/17-2.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_17-01.json",
+        "bytes": 29422,
+        "sha256": "7417b4718b171b9c15df980ba0129b8ddde4da9932c26c3ceb1d04d5f6200c9f"
+      },
+      "raw/levels/17-3.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_17-02.json",
+        "bytes": 39053,
+        "sha256": "6c61699981ab99505ac2f6db6129d61708dc63c41070e2591c64a33106fa70a1"
+      },
+      "raw/levels/17-4.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_17-03.json",
+        "bytes": 65984,
+        "sha256": "0719c5a6a3ae5b24bc511035d9175b69ca86fd753f3784135c45b68bdca2c613"
+      },
+      "raw/levels/17-5.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_17-04.json",
+        "bytes": 44456,
+        "sha256": "f5eefe628d6dac3b2dd650824eeb7fcb1797a37816aaa8f314995269d239833b"
+      },
+      "raw/levels/17-6.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_17-05.json",
+        "bytes": 43638,
+        "sha256": "02f0a4cefcb8aee16dd7bde42f989b2e5fac959d0b07c30e129c151d7c05c388"
+      },
+      "raw/levels/17-7.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_17-06.json",
+        "bytes": 50380,
+        "sha256": "605538949819b9b3d69d01745acc4977d93e08f0b153e23afc3009155ea8a2fb"
+      },
+      "raw/levels/17-8.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_17-07.json",
+        "bytes": 55613,
+        "sha256": "efb6311a0996467930141ca730649244ddef26e6a6ba4cd1143494abf6652d2b"
+      },
+      "raw/levels/17-9.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_17-08.json",
+        "bytes": 58902,
+        "sha256": "84e50793bf507811f4ff9020adcba1b0293927dc12cec515a811ab20914be7b5"
+      },
+      "raw/levels/17-10.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_17-09.json",
+        "bytes": 50971,
+        "sha256": "b1b58dee8a2654bc74b0e3633b82c553f5cc896c207b4aa6fd8352cf0e223c62"
+      },
+      "raw/levels/17-11.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_17-10.json",
+        "bytes": 41540,
+        "sha256": "6b698cde47d6389a5d3a0619044b20628a74dbedb325751f91f31a7f51926a00"
+      },
+      "raw/levels/17-12.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_17-11.json",
+        "bytes": 74041,
+        "sha256": "65df1a28127e8e9949d0da27444b0a021fb89a454ed133a2761d551b15671be5"
+      },
+      "raw/levels/17-13.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_17-12.json",
+        "bytes": 66420,
+        "sha256": "8cabbf2635e928b7dffee138d85244d6447fd02244ffdf2707a8cea8bf870007"
+      },
+      "raw/levels/17-14.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_17-13.json",
+        "bytes": 69256,
+        "sha256": "0e2d433f7945b2378d8a1a830400f3c8d8afa329161a489a7f8969b022353036"
+      },
+      "raw/levels/17-15.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_17-14.json",
+        "bytes": 45368,
+        "sha256": "a91bb95040c13db1ae131cf1c676122660ff42a6d33c68fe9b8cfe6103754c0b"
+      },
+      "raw/levels/17-16.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_17-15.json",
+        "bytes": 46991,
+        "sha256": "a1d6a96987f313cdb8bb407153929f9fdc17535e9aaa28e0edf4da3e8f6910e4"
+      },
+      "raw/levels/17-17.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_17-16.json",
+        "bytes": 101277,
+        "sha256": "ddef6a5f94468d39a7fc023fc8403e148432d1eefcb646809eb1b5c0187cbf92"
+      },
+      "raw/levels/17-18.json": {
+        "path": "en/gamedata/levels/obt/main/level_main_17-17.json",
+        "bytes": 94811,
+        "sha256": "f160478acec404b5b2b7f70add1b603f35c20e3afb735ecb180a4c48dc20e458"
       }
     }
   },

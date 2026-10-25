@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Candidate only: attaching this controller does not clear an admission gate.
 import { blockMcreep } from './chapter16-engagement.js';
+import review from '../../../data/candidates/arkpedia-ch16-reviewed-commander.json' with { type: 'json' };
 const KEY = 'enemy_uacomd_extra_power';
 const present = u => u?.alive && u.deployed;
 
@@ -57,6 +58,7 @@ function commandField(b) {
 }
 
 export function frontlineCommander(r) {
+  if (!Object.hasOwn(review.enemies, r.key) || r.prefabKey !== r.key) throw Error('Unreviewed Commander identity');
   const bb = r.talents.bb;
   const engagement = blockMcreep({ cnt: bb['BlockMcreep.block_mcreep_cnt'], range: bb['BlockMcreep.range_radius'],
     rangeAdd: bb['BlockMcreep.range_radius_add'], attackRange: r.stats.rawRangeRadius });

@@ -128,6 +128,7 @@ export async function buildEnemySupport({ candidate = false } = {}) {
       ['rockbreaker', 'data/candidates/arkpedia-ch17-rockbreaker-contract.json'],
       ['shieldguard', 'data/candidates/arkpedia-ch16-reviewed-shieldguard.json'],
       ['fortbreaker', 'data/candidates/arkpedia-ch16-reviewed-fortbreaker.json'],
+      ['commander', 'data/candidates/arkpedia-ch16-reviewed-commander.json'],
       ['artillery', 'data/candidates/arkpedia-ch16-reviewed-artillery.json'],
       ['patrol', 'data/candidates/arkpedia-ch16-reviewed-patrol.json'],
     ]) {

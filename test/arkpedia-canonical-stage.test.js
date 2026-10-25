@@ -91,7 +91,7 @@ test('release and producer output receipts must both include the exact stage inp
 });
 
 test('retained 16-3 canonical preview preserves miner waypoints without admitting the stage', () => {
-  assert.equal(candidate.canonicalData.commit, '84f3c8334db1c505429bce848147b32ca6a1cc20');
+  assert.equal(candidate.canonicalData.commit, '245d7c601ce3a4a42adcfb84faa1bd1123d507bb');
   assert.equal(candidate.upstream.commit, 'db6f9ef8046ad17dbebe3ff1d0dd88844a5bc78c');
   assert.equal(candidate.testOnly, true);
   assert.equal(candidate.admitted, false);

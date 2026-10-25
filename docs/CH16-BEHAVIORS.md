@@ -6,6 +6,12 @@ checksum-verified snapshot (1,901 enemies / 2,125 records), then derives candida
 support. The public enemy catalogue/support files and 597 public stages are
 unchanged. Nothing here promotes a stage to public or changes a production pointer.
 
+Stage inputs now pin `arkpedia-data@245d7c601ce3a4a42adcfb84faa1bd1123d507bb`
+with producer `arkpedia/arkpedia@7c94fb8516030728586005b01e75620bfc9b4c3b`.
+The latest route/harmless-wave continuation below supersedes earlier stage-input
+pins and route-only timing claims. Historical runs predate the corrected
+synthetic waits/teleports and are not current fidelity evidence.
+
 ## Controllers and integration
 
 The miner controller remains in `server/sim/content/chapter16.js`; the other five
@@ -53,7 +59,7 @@ action closure are rejected. Extraction never rewrites the reviewed contract.
 Variants need their own native evidence and review; they are not admitted by a
 base-prefab match.
 
-`16-2`, `16-3`, `16-4`, `16-5`, `16-6`, `17-2`, `17-3` and `17-4` are accepted by the experimental runtime candidate registry.
+`16-2`, `16-3`, `16-4`, `16-5`, `16-6`, `16-7`, `17-2`, `17-3` and `17-4` are accepted by the experimental runtime candidate registry.
 16-2 retains its 42 source spawns and four canonical records. 16-3 has 22 normal
 hostile spawns plus unmanaged miner summons, using four canonical records. 16-4
 has 17 normal hostiles and four canonical records. 17-2 has 28 normal hostiles
@@ -62,8 +68,9 @@ canonical records. 17-4 has 31 normal hostiles, one Leak Marker and four
 canonical records, plus source-triggered Rockbreaker children. 16-5 has 26 normal
 hostiles, two independent tunnel actions and four canonical records. 16-6 retains
 24 scheduled units (21 hostiles and three neutral miners), one tunnel and four
-canonical records. All eight
-require `?experimental=1`, remain `testOnly`, and verify the candidate support
+canonical records. 16-7 retains 36 scheduled units (26 hostiles and ten
+source-marked harmless miners), seven canonical records and native Commander
+orders. All nine require `?experimental=1`, remain `testOnly`, and verify the candidate support
 snapshot checksum. No other Chapter 16/17 stage is admitted by this review.
 
 ### Device continuation
@@ -764,3 +771,71 @@ evidence. Node 22 Ubuntu reported 180-second file-level timeouts in the long
 seeded full-match suites; those files now run separately with a bounded
 ten-minute deadline, retaining every seed and assertion. Other files retain
 the original three-minute deadline. Fresh hosted verification remains pending.
+
+
+### Commander, native route timing and canonical harmless wave flags
+
+Both Commander variants now clear exact candidate support with one native aura
+claim, without also attaching the generic Infiltrator engagement controller.
+Tests cover source ownership, overlapping providers, recipient deployment lives,
+source disappearance/silence, one-miner movement engagement and real six-round
+Fortbreaker volleys. The separate 16-7 review binds the complete canonical level,
+all seven enemy dependencies and each native family/device contract. Its two
+excluded groups are exactly `raid6A`/`raid6B`, enabled only by source SIX_STAR
+options. The builder now verifies every excluded hidden group against those
+native options; 17-4's existing SIX_STAR `hidden1` exclusion is recorded explicitly.
+
+An integration audit caught the synthetic path generator dropping native waits
+and treating APPEAR as walking. It now retains start/checkpoint waits (including
+deduplicated checkpoint anchors), MOVE offsets and teleport breaks, and refuses
+unsupported timing types. All affected test-only paths were regenerated; public
+stage files and all 597 public entries are unchanged. The retained 75-second
+Commander wait now keeps the aura active for Fortbreaker's delayed arrival.
+Three source-wave seeds exercise six-round volleys while ordered, then ordinary
+three-round volleys after the Commander leaves, clearing at 277.87–289.97 seconds
+within the unchanged default cap. Earlier 16-7 timeout observations used the
+broken generated paths and are superseded by this source-corrected run.
+
+The same audit found native `isUnharmfulAndAlwaysCountAsKilled` flags missing from
+geometry. The normal canonical producer now retains an explicit per-spawn
+`unharmful` field. Producer and data validators pass at 838 pages, 8,125 public
+files and 9,927 source records; preview `245d7c60…` binds producer `7c94fb85…`
+and the unchanged upstream `db6f9ef8…`. Its manifest SHA-256 is
+`278c6e912597450ecea9582dbb9b89301d89451b6542eab6efab530093d2a60c`.
+The consumer fetched and checksum-verified all ten retained source bundles,
+including an unadmitted 16-8. No source overlay or substitute repository is used.
+All nine admitted test-only builds were rebuilt normally from these inputs;
+16-2 now also binds its complete raw level and native movement scale.
+
+The scheduled harmless receipt crosses the adapter and spawn queue into only
+that unit's deployment. It does not globally classify miners, direct spawns or
+preplaced units. Tests compare exported flags to complete native actions for
+every admitted candidate and prove an unmarked spawn of the same enemy still
+holds battle. 16-2 can finish while source-marked miners remain alive after all 34 hostiles
+resolve; all eight scheduled miners retain their individual receipt. 16-6/16-7 retain all scheduled units while respecting
+their individual harmless flags. Native tunnel children retain their separate
+reviewed summon flag. Continuously releasing tunnel miners can sustain combat;
+16-5's clear scenario explicitly returns both tunnels to standby at 120 seconds,
+then clears at 196.27–244.6 seconds across three seeds. This is a deliberate
+player command sequence, not an engine time-limit exemption.
+
+Current focused validation passes 297/297. The preceding actual CI-entrypoint
+run passed two groups totaling 23,150 tests (23,137 passed, 13 skipped, no
+failures/cancellations); it predates the final trace-hit correction and this
+route/harmless-wave/Commander continuation. The final trace fix had a separate
+268-test pass. A new full run is required for the current continuation. All nine
+new stages remain explicitly test-only; captured native frame/render parity,
+stronger Fortbreaker extra talents, bosses and later stages remain unfinished.
+
+Real-app 16-7 QA passes natural SP, desktop keyboard, phone touch and restart;
+both current screenshots were viewed at `/tmp/codex-ch16-7-ui`. Canonical preview
+hosted validation `40169147140` passed; publish and propose jobs were skipped.
+
+The repaired Windows runner completed its seeded match tests, then exposed a
+second launcher issue: passing every absolute filename exceeded the Windows
+process command limit before the ordinary suite could start. The runner now
+uses bounded relative-path batches, preserves every selected file exactly once,
+reports launch errors and runs all batches before reporting failure. Partition,
+actual CLI-entry and launch-budget regressions pass. The Windows limit is
+specified by [CreateProcessW](https://learn.microsoft.com/en-us/windows/desktop/api/processthreadsapi/nf-processthreadsapi-createprocessw).
+Fresh hosted verification of the batched runner remains pending.

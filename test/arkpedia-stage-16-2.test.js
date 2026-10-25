@@ -35,3 +35,13 @@ test('16-2 retains all 42 spawns, four canonical records and runs through the na
   assert.deepEqual(b.errors, []);
   assert.ok(miners.length > 0); assert.ok(miners.every(e => e.profile.friendly));
 });
+
+test('16-2 can finish with source-marked harmless miners still alive after all hostiles resolve', () => {
+  const data = { ...structuredClone(mvp), stage: structuredClone(stage), enemies: structuredClone(stage.enemies) };
+  const b = new StandardBattle(data, { operators: [defaultBuild(mvp.operators.char_122_beagle)] }, { seed: 19 }); b.life = 1000;
+  const miners = []; b.on('enemySpawn', ({ enemy }) => { if (enemy.defId === 'enemy_3010_mcreep') miners.push(enemy); });
+  for (let i = 0; i < Math.round(300/b.dt) && !b.finished; i++) b.step();
+  assert.equal(b.result().reason, 'cleared'); assert.equal(b.total, 34);
+  assert.equal(miners.length, 8); assert.ok(miners.every(e => e.holdsBattle === false && !e.counted));
+  assert.ok(miners.some(e => e.alive)); assert.deepEqual(b.errors, []);
+});

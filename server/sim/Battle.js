@@ -752,7 +752,7 @@ export class Battle {
       const p = {
         time: Math.max(0, fin(s.time, 0)) + i * interval, enemyKey: s.enemyKey, routeIndex: s.routeIndex ?? 0, route: s.route ?? null,
         mods: s.mods ?? null, sourcePlayerId: s.sourcePlayerId ?? null, bounty: s.bounty ?? null, tag: s.tag ?? null,
-        ownerPlayerId: s.ownerPlayerId ?? null, pos: s.pos ?? null, seq: ++this._spawnSeq, countInTotal: s.countInTotal,
+        ownerPlayerId: s.ownerPlayerId ?? null, pos: s.pos ?? null, seq: ++this._spawnSeq, countInTotal: s.countInTotal, holdsBattle: s.holdsBattle,
       };
       p.counted = p.countInTotal ?? (!(def && def.notCountInTotal) && p.tag !== 'boss' && p.tag !== 'part');
       if (precount && p.counted) {
@@ -864,6 +864,7 @@ export class Battle {
       const end = this.grid.specialTiles('end')[0];
       if (end) e.route.legs.push({ t: 'move', r: end[0], c: end[1], final: true });
     }
+    if (opts.holdsBattle === false) e.holdsBattle = false;
     e.counted = opts.countInTotal ?? (!def.notCountInTotal && e.tag !== 'boss' && e.tag !== 'part');
     if (e.counted && !opts._precounted) {
       this.total++;

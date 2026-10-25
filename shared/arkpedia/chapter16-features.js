@@ -7,6 +7,7 @@ import reactionReview from '../../data/candidates/arkpedia-ch17-reviewed-reactio
 import rockbreakerReview from '../../data/candidates/arkpedia-ch17-rockbreaker-contract.json' with { type: 'json' };
 import shieldguardReview from '../../data/candidates/arkpedia-ch16-reviewed-shieldguard.json' with { type: 'json' };
 import artilleryReview from '../../data/candidates/arkpedia-ch16-reviewed-artillery.json' with { type: 'json' };
+import commanderReview from '../../data/candidates/arkpedia-ch16-reviewed-commander.json' with { type: 'json' };
 import fortbreakerReview from '../../data/candidates/arkpedia-ch16-reviewed-fortbreaker.json' with { type: 'json' };
 const MINER_TEXT = "Allied unit; recovers HP when within any Medic Operator's Attack Range";
 const groups = { TileEscapeShadowManager: ['times'], GetHeal: ['heal_scale'], FearLoseBlood: ['value'] };
@@ -39,6 +40,7 @@ function familyCovered(review, family, r, n) {
     && JSON.stringify(r.skills) === JSON.stringify(proof.skills)
     && JSON.stringify(n.$retained?.()) === JSON.stringify(proof.native);
 }
+export const commanderCovered = (r, n) => familyCovered(commanderReview, 'commander', r, n);
 export const fortbreakerCovered = (r, n) => familyCovered(fortbreakerReview, 'fortbreaker', r, n);
 export const shieldguardCovered = (r, n) => familyCovered(shieldguardReview, 'shieldguard', r, n);
 function familyFeature(review, family, kind) {
@@ -54,6 +56,7 @@ function familyFeature(review, family, kind) {
   };
 }
 export const CHAPTER16_FEATURES = {
+  'ability:Gives <@eb.key>orders</> to Army enemies on the field': familyFeature(commanderReview, 'commander', 'ch16Commander'),
   'skill:SkyProjectile': familyFeature(fortbreakerReview, 'fortbreaker', 'ch16Fortbreaker'),
   'talent:ExtraPower': familyFeature(shieldguardReview, 'shieldguard', 'ch16Shieldguard'),
   'talent:ProjectileBoomRange': familyFeature(artilleryReview, 'artillery', 'ch16LightArtillery'),

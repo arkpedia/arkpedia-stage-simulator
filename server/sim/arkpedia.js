@@ -354,12 +354,15 @@ export function stageAdapter(source) {
   let cursor = 0;
   const spawns = g.waves.flatMap((wave) => {
     const waveStart = cursor + (wave.pre_delay || 0);
+    for (const s of wave.spawns || []) if (s.unharmful != null && typeof s.unharmful !== 'boolean')
+      throw Error('Invalid canonical unharmful spawn flag');
     const out = (wave.spawns || []).flatMap((s) =>
       Array.from({ length: Math.max(1, s.count || 1) }, (_, i) => ({
         enemyKey: s.enemy_id,
         time: waveStart + (s.time || 0) + i * (s.interval || 0),
         routeIndex: s.route,
         ownerPlayerId: "arkpedia",
+        ...(s.unharmful === true ? { holdsBattle: false } : {}),
       })),
     );
     cursor = waveStart + (wave.duration || 0) + (wave.post_delay || 0);

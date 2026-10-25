@@ -28,7 +28,7 @@ test('16-3 is test-only, uses distinct verified stage/enemy snapshots, and ships
   const missing = data(); delete missing.enemies.enemy_3010_mcreep;
   assert.throws(() => assertRegularEnemies(missing), /Missing canonical Miner/);
   assert.equal(stage.canonicalData.commit, '79e81a8a872b2ecc592647d81a864ccbf1f8ca06');
-  assert.equal(stage.chapter16Source.canonicalData.commit, '84f3c8334db1c505429bce848147b32ca6a1cc20');
+  assert.equal(stage.chapter16Source.canonicalData.commit, '245d7c601ce3a4a42adcfb84faa1bd1123d507bb');
   assert.equal(stage.pathing.moveScale, .5);
   assert.equal(stageAdapter(stage).spawns.length, 22);
   assert.deepEqual(Object.keys(stage.enemies).sort(), review.expected.enemies.slice().sort());
