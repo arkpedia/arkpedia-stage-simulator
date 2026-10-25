@@ -72,7 +72,7 @@ export function verifiedChapter16Devices(raw, inventoryRaw, enemyInventoryRaw, t
       throw Error('Chapter 16 full graph bundle is not pinned: ' + row.path);
   }
   for (const row of [...Object.values(evidence.prefabs).flat(), ...Object.values(evidence.enemyPrefabs).flat(),
-    ...Object.values(evidence.globalPrefabs).flat(), ...Object.values(evidence.templates)])
+    ...Object.values(evidence.globalPrefabs).flat(), ...Object.values(evidence.skillPrefabs ?? {}).flat(), ...Object.values(evidence.templates)])
     if (sha(row.originalJson) !== row.sha256) throw Error('Chapter 16 full graph component checksum mismatch');
   return evidence;
 }

@@ -2,6 +2,7 @@
 // Native-backed chapter 17 controllers. No controller promotes a stage.
 import { COLS } from '../constants.js';
 import { canTargetAlly, areaSelectable, aggroCmp } from '../targeting.js';
+import markerReview from '../../../data/candidates/arkpedia-ch17-reviewed-marker.json' with { type: 'json' };
 const live = u => u?.alive && u.deployed && !u.hidden;
 const sameLife = (u, seq) => live(u) && u.deploySeq === seq;
 const sk = (r, key) => r.skills.find(s => s.prefabKey === key);
@@ -70,8 +71,21 @@ export function chapter17Environment(b) {
   };
   b.on('tick', ({ dt }) => {
     for (const marker of env.rifts) if (marker.alive && marker.nativeMarker) {
-      marker.sp = Math.min(marker.spCost, marker.sp + dt);
-      if (marker.sp >= marker.spCost - 1e-9 && env.summon()) { marker.sp = 0; marker.cycle++; }
+      marker.sp = Math.min(marker.spCost, marker.sp + dt * marker.spRecovery);
+      marker.scan += dt;
+      if (marker.scan < markerReview.defaults.retryInterval - 1e-9) continue;
+      marker.scan %= markerReview.defaults.retryInterval;
+      if (marker.sp < marker.spCost - 1e-9 || marker.resolving || b.time < marker.nextSummonAt - 1e-9) continue;
+      // trap_rift_t first requests the environment spawn; its successful
+      // result grants the flag required by the AUTO skill's trigger selector.
+      // An unsuccessful request cannot consume SP or start the one-second flag.
+      marker.resolving = true;
+      try {
+        if (env.summon()) {
+          marker.sp = 0; marker.cycle++;
+          marker.nextSummonAt = b.time + markerReview.defaults.summonFlagDuration;
+        }
+      } finally { marker.resolving = false; }
     }
     for (const beam of env.beams) {
       const dt0 = Math.min(dt, beam.life), nx = beam.x + beam.dx * 6 * dt0, ny = beam.y + beam.dy * 6 * dt0;
@@ -98,8 +112,13 @@ export function installChapter17Devices(b, devices) {
   if (!devices.some(d => d.key === 'trap_329_rift')) return null;
   const env = chapter17Environment(b);
   for (const d of devices) if (d.key === 'trap_329_rift') {
-    const marker = { nativeMarker: true, cycle: 0, alive: true, x: d.col, y: d.row, tileR: d.row, tileC: d.col, sp: d.initSp ?? 0,
-      spCost: d.spCost ?? 55, s: { taunt: 0 }, deploySeq: env.rifts.length + 1,
+    const defaults = markerReview.defaults;
+    const sp = d.initSp ?? defaults.initSp, spCost = d.spCost ?? defaults.spCost;
+    if (![sp, spCost].every(Number.isFinite) || sp < 0 || spCost <= 0 || sp > spCost) throw Error('Invalid native Leak Marker SP');
+    const marker = { nativeMarker: true, cycle: 0, alive: true, deployed: true, side: 'enemy', kind: 'device',
+      x: d.col, y: d.row, tileR: d.row, tileC: d.col, sp, spCost,
+      spRecovery: defaults.spPerSecond, scan: 0, nextSummonAt: 0, resolving: false,
+      s: { taunt: 0 }, deploySeq: env.rifts.length + 1,
       gainSp(n) { this.sp = Math.min(this.spCost, this.sp + n); } };
     env.rifts.push(marker);
   }
