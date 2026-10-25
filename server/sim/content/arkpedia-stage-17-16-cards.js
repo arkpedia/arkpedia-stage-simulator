@@ -12,6 +12,7 @@ const retained=JSON.stringify(source),owners=new WeakMap(),factories=[
 ];
 export function installStage17_16Cards(b,data,{tutorial=source}={}){
  if(JSON.stringify(tutorial)!==retained)throw Error('Unreviewed 17-16 predefined card source');
+ tutorial=structuredClone(tutorial);
  if(b.finished||b._endReq||b.time!==0||owners.has(b)||typeof b.data.registerChessRecords!=='function')throw Error('Predefined cards require a fresh battle data source');
  const rows=factories.map(([buildFor,recordFor])=>{
   const build=buildFor(),cards=tutorial.predefines.characterCards.filter(c=>c.inst.characterKey===build.id),actions=tutorial.actions.filter(r=>r.action.actionType==='ACTIVATE_PREDEFINED'&&r.action.key===cards[0]?.alias);

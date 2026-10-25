@@ -31,9 +31,10 @@ The three exact 17-16 tutorial scripts now have checksum-pinned source intake.
 The preset Viy body has a separate internal native-controller instance, and its
 literal EnsureMinSp(50) command targets only that captured deployment life.
 An explicit hidden-card action receiver now registers the four exact records
-and exposes each bench card only on its own literal activation action. Dialog
-pausing/completion, canonical fragment dispatch and native initial FSM timing
-remain unconnected, so canonical 17-16 remains held.
+and exposes each bench card only on its own literal activation action. An
+internal dialog receiver now owns combat suspension and per-instruction
+completion. Canonical fragment dispatch, presentation/UI completion and native
+initial FSM timing remain unconnected, so canonical 17-16 remains held.
 Rockbreaker's eligible split animation now consumes live `slow_down` elapsed
 work for both release and completion, rather than fixed world-time callbacks.
 The six selected infantry/caster/carrier Combat cooldowns and Brute's owned
@@ -1785,3 +1786,56 @@ that fresh-cache regression. The earlier failed run is not reported as success.
 The final expanded focused run passed all 1,645 locally available cases after
 the setup correction. The real-browser engine fixture also passed. The four
 quarantined tests remain in Git and continue to run in hosted validation.
+
+## Owned dialog suspension and source instruction completion
+
+Supplemental first-hand observation of the author's
+[17-16 clear recording](https://www.youtube.com/watch?v=Xk-Cg608sds) shows source
+dialog presentation at 1:18 and 1:23, with camera focus changing between speakers;
+normal HUD/card controls return at 1:28. The related
+[author's write-up](https://arknights-kouryaku.com/2026/10/17/17-16/) identifies
+the same fixed-team stage. This JP-client recording is supplemental evidence,
+not checksum-pinned CN dispatcher or exact frame-clock proof. The internal
+adapter explicitly maps DIALOG to suspended combat until source presentation
+instructions are acknowledged; canonical stage admission remains closed.
+
+Battle now supports distinct owner-held simulation suspensions. They may be
+acquired between ticks or during scheduled callbacks, before combat work.
+Suspension during scheduling defers remaining callbacks, spawns, DP, buffs,
+AI, SP, projectiles and tick/time advancement without replaying callbacks that
+already ran. Recurring schedules retain their next due time. Acquisition from
+late combat phases is rejected rather than allowing partial ticks to replay.
+Each receipt releases only its own hold, including when the same owner holds
+twice; stale releases cannot resume another session. Forced end clears holds,
+and runToEnd returns while held instead of spinning on a stationary game clock.
+
+The exact 17-16 dialog receiver accepts only the two retained DIALOG action
+records and the one STORY record. A dialog exposes the original camera-focus,
+dialogue and camera-reset instructions with opaque per-step completion receipts.
+The hold lasts through the final reset; completion of an old step cannot skip a
+new one. Overlapping different dialogs/story actions are rejected, duplicate
+delivery is idempotent, and stopping or ending a dialog releases only its own
+hold. The pure STORY instruction routes the literal EnsureMinSp command to the
+already-authenticated preset Viy receiver without opening a dialog or granting
+SP a second time on duplicate delivery. Card and dialog sources are detached
+after verification, preventing later caller edits from changing admitted action
+records or instructions.
+
+All 34 targeted dialog, card and tutorial cases passed. A composed fragment
+fixture suspends combat for both source dialogs, then reaches STORY at game
+time 12.1 and card deliveries at 13/13.1/13.2/13.3 without losing the original
+DIALOG offsets 3 and 12. Completion acknowledgements run outside combat time;
+the camera's retained one-second duration is a presentation descriptor, not a
+delay advanced by combat ticks. The expanded focused run passed all 1,657 local
+cases. The persistent real-browser fixture passed with all fourteen source
+presentation acknowledgements, SP modification, four delivered cards and their
+actual operator/cost/refund behavior.
+
+This is an explicit internal event/instruction mapping. Actual camera/dialog UI,
+native pause/release precision, initial FSM/BORN ordering and canonical wave
+dispatch remain unverified or unconnected. No source action was flattened or
+silently skipped, and no stage/module catalogue or predefined admission guard
+was widened. Preceding card continuation 40242630401 at 7041669b passed all
+fifteen hosted jobs; full run 40241359318 remained live at this checkpoint.
+
+The shared core and battle regression suites also passed all 37 cases.

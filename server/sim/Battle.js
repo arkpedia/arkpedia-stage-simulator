@@ -413,14 +413,18 @@ export class Battle {
   }
 
   step() {
-    if (this.finished || this._stepping) return; // re-entrant step() from a hook is a no-op
+    if (this.finished || this._stepping || this.simulationHeld) return; // re-entrant or held ticks do not advance
     // forceEnd() requested while stepping (content hook, repeated engine errors) is deferred to the end of the
     // current phase: the remaining phases are skipped and the result is built once, so nothing mutates it later.
     this._stepping = true;
     try {
       if (!this.started) this._phase('start', () => this.start());
       const dt = this.dt;
-      this._phase('scheduled', () => this._runScheduled());
+      this._phase('scheduled', () => {
+        this._simulationHoldBoundary = true;
+        try { this._runScheduled(); } finally { this._simulationHoldBoundary = false; }
+      });
+      if (this.simulationHeld && !this._endReq) return;
       this._phase('spawns', () => this._processSpawns());
       this._phase('dp', () => {
         for (const ps of this.players) {
@@ -483,6 +487,7 @@ export class Battle {
   _hardFinish(reason) {
     if (this.finished) return;
     this.finished = true;
+    this._simulationHolds?.clear();
     this.reason = reason === 'timeout' ? 'timeout' : 'forced';
     this._endReq = null;
     try { this._result = this._buildResult(); } catch { this._result = { time: this.time, reason: this.reason, perPlayer: {}, killed: this.killed, total: this.total, errors: this.errorCount }; }
@@ -492,7 +497,7 @@ export class Battle {
   /** Run until finished or `maxSeconds` of game time elapsed. Returns the result when finished. */
   runToEnd(maxSeconds = MAX_BATTLE_TIME) {
     const limit = this.time + maxSeconds;
-    while (!this.finished && this.time < limit) this.step();
+    while (!this.finished && !this.simulationHeld && this.time < limit) this.step();
     return this.finished ? this.result() : null;
   }
 
@@ -555,6 +560,7 @@ export class Battle {
   _finish(reason) {
     if (this.finished) return;
     this.finished = true;
+    this._simulationHolds?.clear();
     this.reason = reason;
     this._endReq = null;
     const res = this._buildResult();
@@ -700,6 +706,20 @@ export class Battle {
   // =============================================================================================================
   // scheduling
 
+  get simulationHeld() { return (this._simulationHolds?.size ?? 0) > 0; }
+
+  /** Owned suspension at a tick boundary. Source dialogs may acquire during
+   * scheduled callbacks, before any combat phase runs. Reject late acquisition
+   * rather than replaying a partially completed tick after release. */
+  acquireSimulationHold(owner) {
+    if (!owner || !['object', 'function'].includes(typeof owner)) throw Error('Simulation hold requires an owner');
+    if (this.finished || this._endReq || this._stepping && !this._simulationHoldBoundary)
+      throw Error('Simulation hold requires a live tick boundary');
+    const holds = this._simulationHolds ??= new Set(), token = { owner };
+    holds.add(token);
+    return Object.freeze({ get active() { return holds.has(token); }, release() { return holds.delete(token); } });
+  }
+
   after(seconds, fn, opts = {}) {
     const s = { due: this.time + Math.max(0, Number(seconds) || 0), fn, owner: opts.owner ?? null, interval: 0, seq: ++schedSeq, cancelled: false, holdsBattle: !!opts.holdsBattle };
     s.cancel = () => { s.cancelled = true; };
@@ -722,15 +742,16 @@ export class Battle {
     if (!due.length) { if (this._sched.some((s) => s.cancelled)) this._sched = this._sched.filter((s) => !s.cancelled); return; }
     due.sort((a, b) => a.due - b.due || a.seq - b.seq);
     for (const s of due) {
+      if (this.simulationHeld || this._endReq || this.finished) break;
       if (s.cancelled) continue;
       if (s.interval > 0) {
         let n = 0;
-        while (s.due <= now && !s.cancelled && n++ < 8) {
+        while (s.due <= now && !s.cancelled && !this.simulationHeld && !this._endReq && n++ < 8) {
           s.count++;
           this._safe(() => s.fn(this, s), 'every', s.owner);
           s.due += s.interval;
         }
-        if (s.due <= now) s.due = this.time + s.interval;
+        if (!this.simulationHeld && s.due <= now) s.due = this.time + s.interval;
       } else {
         s.cancelled = true;
         this._safe(() => s.fn(this, s), 'after', s.owner);

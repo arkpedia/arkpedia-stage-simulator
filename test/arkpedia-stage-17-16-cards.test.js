@@ -67,3 +67,7 @@ test('battle completion and replaced registrations or entries cannot deliver or 
  const{b,d}=fixture(),c=installStage17_16Cards(b,d);c.receive(action(K));b.bench[K]={...b.bench[K]};assert.throws(()=>c.receive(action(K)),/replaced/);
  const other=fixture(),o=installStage17_16Cards(other.b,other.d);other.b.data.raw.chess[K]={};assert.throws(()=>o.receive(action(K)),/replaced/);
 });
+test('the admitted activation source is detached from later caller edits',()=>{
+ const{b,d}=fixture(),input=structuredClone(source),c=installStage17_16Cards(b,d,{tutorial:input}),changed=input.actions.find(r=>r.action.key===K+'#1').action;changed.preDelay=0;
+ assert.throws(()=>c.receive(changed),/Unreviewed/);assert.equal(c.receive(action(K)).status,'activated');
+});
