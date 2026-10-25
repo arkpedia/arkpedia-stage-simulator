@@ -12,6 +12,7 @@ import slugReview from '../../data/candidates/arkpedia-ch16-reviewed-abnormal-sl
 import fortbreakerReview from '../../data/candidates/arkpedia-ch16-reviewed-fortbreaker.json' with { type: 'json' };
 import manglerbeastReview from '../../data/candidates/arkpedia-ch16-reviewed-manglerbeast.json' with { type: 'json' };
 import phantomReview from '../../data/candidates/arkpedia-ch16-reviewed-phantom.json' with { type: 'json' };
+import bruteReview from '../../data/candidates/arkpedia-ch17-reviewed-brute.json' with { type: 'json' };
 const MINER_TEXT = "Allied unit; recovers HP when within any Medic Operator's Attack Range";
 const groups = { TileEscapeShadowManager: ['times'], GetHeal: ['heal_scale'], FearLoseBlood: ['value'] };
 function minerCovered(r, n) {
@@ -73,6 +74,7 @@ function familyUnion(...features) {
 }
 export const phantomFeature = familyFeature(phantomReview, 'phantom', 'ch16ArmyPhantom');
 export const CHAPTER16_FEATURES = {
+  'ability:Next attack hits three times when affected by a <Leak Source>.': familyFeature(bruteReview, 'brute', 'ch17PollutionBrute'),
   'skill:M1Start': familyUnion(familyFeature(slugReview, 'abnormalSlug', 'ch16AbnormalSlug'),
     familyFeature(manglerbeastReview, 'manglerbeast', 'ch16Manglerbeast')),
   'talent:M0Shield': { covers: manglerbeastCovered, note: 'Manglerbeast shield and separate ASPD owned by M1Start controller.' },

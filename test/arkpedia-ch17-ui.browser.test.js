@@ -7,7 +7,7 @@ import { join } from 'node:path';
 const chrome = process.env.CHROME_PATH ?? '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const enabled = process.env.RENDER_E2E === '1' && existsSync(chrome);
 const stageCode = process.env.CH17_QA_STAGE ?? '17-2';
-assert.ok(['17-2', '17-3', '17-4'].includes(stageCode));
+assert.ok(['17-2', '17-3', '17-4', '17-7', '17-8', '17-9'].includes(stageCode));
 const out = process.env.CH17_QA_OUT ?? `/tmp/codex-ch${stageCode}-ui`;
 test(`experimental ${stageCode} renders and runs on desktop/phone, rejects public access, and restarts`,
   { skip: enabled ? false : 'set RENDER_E2E=1 with Chrome installed', timeout: 120000 }, async () => {
@@ -18,7 +18,7 @@ test(`experimental ${stageCode} renders and runs on desktop/phone, rejects publi
     mkdirSync(out, { recursive: true });
     try {
       browser = await puppeteer.launch({ executablePath: chrome, headless: true,
-        args: ['--no-first-run', '--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist', '--disable-background-timer-throttling', '--disable-renderer-backgrounding'] });
+        args: ['--no-first-run', process.platform === 'darwin' ? '--use-angle=metal' : '--use-angle=swiftshader', '--enable-gpu', '--ignore-gpu-blocklist', '--disable-background-timer-throttling', '--disable-renderer-backgrounding'] });
       const base = `http://127.0.0.1:${server.port}/arkpedia/`;
       const denied = await browser.newPage(); denied.on('pageerror', e => errors.push(e.message));
       await denied.goto(`${base}?stage=${stageCode}`, { waitUntil: 'domcontentloaded' });

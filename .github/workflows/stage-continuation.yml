@@ -56,3 +56,29 @@ jobs:
         with:
           name: stage-${{ matrix.stage }}-browser
           path: logs/stage-${{ matrix.stage }}/
+  chapter17-browser:
+    strategy:
+      fail-fast: false
+      matrix:
+        stage: ['17-8', '17-9']
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      RENDER_E2E: '1'
+      CHROME_PATH: /usr/bin/google-chrome
+      CH17_QA_STAGE: ${{ matrix.stage }}
+      CH17_QA_OUT: logs/stage-${{ matrix.stage }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: node tools/arkpedia/test-assets.mjs
+      - run: node --test test/arkpedia-ch17-ui.browser.test.js
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: stage-${{ matrix.stage }}-browser
+          path: logs/stage-${{ matrix.stage }}/

@@ -10,9 +10,11 @@ import { chapter16Abilities } from './chapter16.js';
 import { blockMcreep } from './chapter16-engagement.js';
 import { periodicDamage } from '../damage.js';
 import { nativeDuckRun } from './duck-run.js';
+import { pollutionBrute } from './chapter17-brute.js';
 
 const ABILITIES = Object.freeze({
   nativeDuckRun,
+  ch17PollutionBrute: pollutionBrute,
   ...chapter16Abilities,
   blockMcreep,
   reborn: params => rebornAbility(params),

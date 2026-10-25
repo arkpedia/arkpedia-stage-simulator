@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Direct candidate only. Registration stays held pending the remaining native
-// control/FSM and rate-boundary review; source retention alone grants no support.
+// Exact-record experimental controller. Native numeric callback/rate aliases
+// use the explicit reviewed local mapping; compiled/frame parity is unclaimed.
 import review from '../../../data/candidates/arkpedia-ch17-reviewed-brute.json' with { type: 'json' };
 import { canTargetAlly } from '../targeting.js';
 import { sourceAbilityDelta } from './arkpedia-slow-down.js';
@@ -85,6 +85,7 @@ export function pollutionBrute(r) {
         if (a.pending) a.finish(a.pending,false);
       };
       b.on('battleEnd',a.detach,{owner:e});
+      b.on('removed',({unit}) => { if (unit === e) a.detach(); },{owner:e});
     },
     tick(b, e, a, dt) {
       if (!a.active || !live(e)) {

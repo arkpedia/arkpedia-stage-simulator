@@ -75,27 +75,30 @@ database identities intentionally share the original prefab, with separate exact
 blackboard contracts (+400% and +300% movement speed). Nine source/behavior tests
 cover all database levels, automatic single attachment, unblockability/no attacks,
 accepted shielded/zero-HP-loss damage, control, cleanup and mutation refusal.
-Candidate combat support is now465/1,901; this does not admit any Integrated
+At that checkpoint candidate combat support was465/1,901; this does not admit any Integrated
 Strategies stage or certify its mode-specific reward/economy rules.
-Flyer, Brute and Bag native graphs are retained without controller admission.
+Flyer and Bag native graphs are retained without controller admission.
 Brute's original bound Skill events are0.833333313/1.266666651/1.666666627s,
 with a2.200000048s clip. A direct candidate now owns normal/enhanced cast clocks,
 retains the original target deployment across all hits, reads live ATK per hit,
-and cancels pending hits on control, source death and battle end. Twenty-one focused
+and cancels pending hits on control, source death and battle end. Twenty-three focused
 tests pass. Both original cast components mark `affectedBySlowDown=1`; the candidate
 now consumes live slowed elapsed time between markers, rather than scheduling
 fixed world-time callbacks. Reentrant death cannot release remaining markers.
 The timeMode0/maxAnimScale1 rate mapping samples BAT/interval with a cap of1,
 following existing native operator owners rather than the generic clip-fit
-fallback. This is still an explicit mapping, not recovered compiled behavior. It remains
-unregistered: the compiled FSM, cooldown reset event and ASPD/slow-down rate
-boundaries still need independent review. Candidate tests exercise the proposed
-contract; they do not resolve those source uncertainties or admit stages 17-8/9.
+fallback. This is still an explicit mapping, not recovered compiled behavior.
+The exact-record experimental review now registers both database variants.
+Automatic dispatch, no-target charge retention under silence, exact full-graph
+and record mutation refusal and wrapper-count checks pass. Callback3 maps to
+cast finish consistently with the existing native operator owners; its original
+switch-back action explicitly targets Combat with a fresh full cooldown. This
+admits source-bound experimental mechanics, not compiled/native-frame parity.
 Reading original event-clock bytes for mechanics is not a visual-model import.
 
-The five-stage continuation checks cover 16-10/11/14/15 and 17-7. The catalogue
-contains 612 entries (597 public and 15 test-only), with 611 file-backed stages.
-The full local file-backed load/fight sweep passes. Hosted validation found a
+The seven-stage continuation checks cover 16-10/11/14/15 and 17-7/8/9. The catalogue
+contains614 entries (597 public and17 test-only), with613 file-backed stages.
+The prior611-stage local file-backed load/fight sweep passes. Hosted validation found a
 stale one-tunnel browser expectation for two-tunnel 16-15 and a generic runner
 deadline shorter than the catalogue test's own deadline; both are corrected,
 without removing scenarios or changing the simulation's gameplay time cap.
@@ -114,3 +117,27 @@ the local rockbreaker's null skill list does not inherit SummonSelf, and the
 17-18 children are uncounted while retaining a life cost of1. Compilation alone
 grants no support or stage admission; dedicated source/native reviews and builder
 integration remain required for these stages.
+
+Brute integration adds normal17-8 (40 scheduled/counted hostiles) and17-9
+(22 counted hostiles plus one harmless Leak Source). Their optional Six-Star
+groups are excluded only after checking original default/optional enable runes.
+All42 continuation integration checks pass, including three seeds per stage,
+exact builder reproduction, mutated-source refusal and public/test-only gates.
+Original17-8 Leak Source contact arms scheduled Brutes naturally. Separate
+legally deployed guard fixtures exercise actual normal and three-packet enhanced
+combat, then retreat the explicitly HP-buffed guard and clear the original waves.
+The route-only17-9 fixture clears at300.7 seconds under an explicit330-second test
+cap; its separate default300-second timeout test passes. The gameplay cap is
+unchanged. Candidate support is467/1,901; the coverage report is regenerated.
+
+The remaining16-9 Guardian and fear-projectile graphs, all indexed components,
+templates and the explosion projectile are retained against the pinned native
+inventories. Source-only checks preserve the Guardian delayed self-HP-loss and
+miner fog marker, and the fear projectile's derived miner fear/disarm ending at
+full HP. No support is granted until their controllers and interactions exist.
+
+The expanded locally available focused suite ran431 tests:430 passed and one
+temporary-cache atomic rename was denied by the Windows sandbox. The affected
+canonical-stage file then passed5/5 with normal host filesystem access. The four
+quarantined test files remain excluded only from that local invocation; hosted
+CI runs the complete declared suite with those tracked files intact.

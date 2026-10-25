@@ -127,6 +127,7 @@ export async function buildEnemySupport({ candidate = false } = {}) {
     for (const [family, reviewPath] of [
       ['crossbow', 'data/candidates/arkpedia-ch16-reviewed-crossbow.json'],
       ['infantryBow', 'data/candidates/arkpedia-ch17-reviewed-reactions.json'],
+      ['brute', 'data/candidates/arkpedia-ch17-reviewed-brute.json'],
       ['rockbreaker', 'data/candidates/arkpedia-ch17-rockbreaker-contract.json'],
       ['shieldguard', 'data/candidates/arkpedia-ch16-reviewed-shieldguard.json'],
       ['fortbreaker', 'data/candidates/arkpedia-ch16-reviewed-fortbreaker.json'],

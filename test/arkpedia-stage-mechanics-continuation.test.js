@@ -21,6 +21,8 @@ const specs = {
   '16-14': { total:28, counts:{enemy_10124_uashld_2:2,enemy_10120_uaghst_2:21,enemy_10127_rkmbst_2:5}, hidden:['raid4'] },
   '16-15': { total:27, counts:{enemy_10124_uashld_2:3,enemy_10120_uaghst_2:18,enemy_10122_uacann_2:3,enemy_10127_rkmbst_2:3}, hidden:['group1'], cap:600, clearsBefore:330 },
   '17-7': { total:28, counts:{enemy_10206_muveg:6,enemy_10201_muinf:13,enemy_10202_mubow:3,enemy_10204_mudia:6}, hidden:['h1','h2'] },
+  '17-8': { total:40, counts:{enemy_10206_muveg:3,enemy_10201_muinf:24,enemy_10202_mubow:8,enemy_10207_mubrut:5}, hidden:['h2'] },
+  '17-9': { total:22, scheduled:23, counts:{enemy_10208_mucow:4,enemy_10211_murad:1,enemy_10202_mubow:10,enemy_10206_muveg:4,enemy_10207_mubrut:4}, hidden:['raid','raid5A','raid5B'], cap:330, clearsBefore:302 },
 };
 const data = code => {
   const stage = read('arkpedia-stage-' + code + '.json');
@@ -51,7 +53,7 @@ for (const [code,spec] of Object.entries(specs)) {
     assert.deepEqual(stage.excludedHiddenGroups,spec.hidden);
     assert.deepEqual(stage.includedHiddenGroups,[]);
     const spawns=stageAdapter(stage).spawns;
-    assert.equal(spawns.length,spec.total);
+    assert.equal(spawns.length,spec.scheduled??spec.total);
     for(const [key,n] of Object.entries(spec.counts))assert.equal(spawns.filter(s=>s.enemyKey===key).length,n,key);
     assert.deepEqual(Object.keys(stage.enemies).sort(),review.expected.enemies.slice().sort());
     if(code==='16-11') {
@@ -77,7 +79,7 @@ for (const [code,spec] of Object.entries(specs)) {
     assert.equal(existsSync(refused),false);
   });
   for(const seed of [19,71,129])test(code+' seeded normal battle '+seed,()=>{
-    const b=battle(code,seed),born=[];
+    const b=battle(code,seed),born=[];let bruteArmed=false;
     assert.equal(b.timeLimit,300);
     assert.equal(b.total,spec.total);
     if(spec.cap)b.timeLimit=spec.cap;
@@ -85,6 +87,7 @@ for (const [code,spec] of Object.entries(specs)) {
     while(!b.finished) {
       for(const[id,e]of b.stageDeviceActions??[])if(b.time<121&&e.state.canActivate())b.activateStageDevice(id);
       b.step();
+      bruteArmed ||= b.enemies.some(e=>e.defId==='enemy_10207_mubrut'&&e.mem.ab?.list.some(a=>a.mode===1));
     }
     assert.equal(b.result().reason,'cleared');assert.ok(b.time<(spec.clearsBefore??280));
     assert.equal(b.total,spec.total+born.filter(e=>e.mem.ch17RockbreakerParent).length);assert.deepEqual(b.errors,[]);
@@ -98,6 +101,7 @@ for (const [code,spec] of Object.entries(specs)) {
       assert.ok(phantoms.every(e=>e.mem.ab.list.length===1));
     } else if(code==='16-11')assert.ok(born.some(e=>e.defId==='enemy_10126_rkbomb'&&e.mem.ab.list.some(a=>a.changeMode&&a.mode===1)));
     if(code==='17-7')assert.ok(born.some(e=>e.mem.ch17RockbreakerParent),'natural marker pollution triggers a real split');
+    if(code==='17-8')assert.ok(bruteArmed,'natural Leak Source contact arms a real scheduled Brute');
   });
 }
 
@@ -105,6 +109,32 @@ test('16-15 route-only fixture retains the default 300-second timeout rather tha
   const b=battle('16-15');
   while(!b.finished){for(const[id,e]of b.stageDeviceActions)if(b.time<121&&e.state.canActivate())b.activateStageDevice(id);b.step();}
   assert.equal(b.result().reason,'timeout');assert.equal(b.timeLimit,300);assert.deepEqual(b.errors,[]);
+});
+
+test('17-9 source route-only fixture still times out at the default 300-second gameplay cap',()=>{
+  const b=battle('17-9');while(!b.finished)b.step();
+  assert.equal(b.result().reason,'timeout');assert.equal(b.timeLimit,300);assert.deepEqual(b.errors,[]);
+});
+
+for(const code of ['17-8','17-9'])test(code+' scheduled Brutes fight a legally placed guard with one shared attack receipt per cast',()=>{
+  const b=battle(code);b.timeLimit=330;
+  while(b.time<60)b.step();
+  const row=code==='17-8'?1:2;
+  assert.equal(b.placementError('char_122_beagle',row,9),null);
+  const guard=b.deployOperator('char_122_beagle',row,9,'LEFT');
+  // Explicit survivability fixture: preserve the original waves/attack output,
+  // then legally retreat this guard rather than holding the route forever.
+  b.addBuff(guard,{key:'brute-stage-survival-fixture',persist:true,mods:{hpFlat:1e6}});guard.hp=guard.s.maxHp;
+  const hits=[];b.on('ch17BruteHit',c=>hits.push(c));
+  while(b.time<210&&!b.finished)b.step();
+  assert.ok(hits.length>0);assert.ok(hits.every(c=>c.target===guard));
+  if(code==='17-8') {
+    const enhanced=hits.filter(c=>c.mode===1);assert.ok(enhanced.length>0);
+    const packets=new Map();for(const c of enhanced)packets.set(c.attackId,(packets.get(c.attackId)??0)+1);
+    assert.ok([...packets.values()].some(n=>n===3));assert.ok([...packets.values()].every(n=>n<=3));
+  }
+  b.retreatOperator('char_122_beagle');while(!b.finished)b.step();
+  assert.equal(b.result().reason,'cleared');assert.deepEqual(b.errors,[]);
 });
 
 test('16-11 native branch preserves hidden ten-second wait and displaced reappearance',()=>{

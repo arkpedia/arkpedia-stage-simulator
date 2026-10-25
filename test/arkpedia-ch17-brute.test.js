@@ -8,6 +8,8 @@ import {pollutionBrute} from '../server/sim/content/chapter17-brute.js';
 import {pollute} from '../server/sim/content/chapter17.js';
 import {applySourceSlowDown,NATIVE_SLOW_DOWN_CONTRACT} from '../server/sim/content/arkpedia-slow-down.js';
 import {attach,installFeatureDispatch} from '../server/sim/content/enemies.js';
+import {installEnemyFeatures} from '../server/sim/content/arkpedia-enemy-features.js';
+import {deriveEnemySupport,prefabPath} from '../shared/arkpedia/enemy-support.js';
 import {makeBattle,chessRec} from './helpers/battleHarness.js';
 import {verifiedNative,verifiedChapter16FamilyGraph} from '../tools/arkpedia/enemy-support.mjs';
 import {parseSkel} from '../tools/assets/skel.mjs';
@@ -16,12 +18,13 @@ const records=read('candidates/arkpedia-enemy-records.canonical.json').enemies;
 const review=read('candidates/arkpedia-ch17-reviewed-brute.json');
 const keys=Object.keys(review.enemies);
 const hash=b=>createHash('sha256').update(b).digest('hex');
-function fixture(key=keys[0]) {
-  const h=makeBattle({content:'generic',autoFinish:false,setup:installFeatureDispatch,
+function fixture(key=keys[0],automatic=false) {
+  const h=makeBattle({content:'generic',autoFinish:false,setup:automatic?installEnemyFeatures:installFeatureDispatch,
     defs:{enemies:{[key]:records[key].levels[0]},chess:{dummy:chessRec({id:'dummy',stats:{maxHp:1e6,atk:0,def:0,blockCnt:1}})}},
     units:[{chessId:'dummy',row:10,col:7}]});
   h.b.start();
-  const e=h.spawn(key,{pos:[10,7]}),a=pollutionBrute(records[key].levels[0]);attach(h.b,e,[a]);
+  const e=h.spawn(key,{pos:[10,7]}),a=automatic?e.mem.ab.list.find(a=>typeof a.contact==='function'):pollutionBrute(records[key].levels[0]);
+  if(!automatic)attach(h.b,e,[a]);
   e.base.moveSpeed=0;e.markDirty();
   const hits=[];h.b.on('ch17BruteHit',c=>hits.push({...c,time:h.b.time}));
   return{h,b:h.b,e,a,u:h.unit('dummy'),hits};
@@ -45,12 +48,23 @@ test('Brute exact source closure, indexed claims and original three-event clock 
     assert.equal(skel.exactDurations.Skill,review.defaults.enhancedDuration);
   }
   for(const rows of Object.values(read('candidates/arkpedia-ch17-brute-source.json').prefabs)) {
-    const attacks=rows.map(r=>JSON.parse(r.originalJson)).filter(n=>['Attack','Skill'].includes(n._animKey));
+    const nodes=rows.map(r=>JSON.parse(r.originalJson));
+    const attacks=nodes.filter(n=>['Attack','Skill'].includes(n._animKey));
     assert.equal(attacks.length,2);
     for(const attack of attacks) {
       assert.equal(attack._affectedBySlowDown,1);assert.equal(attack._timeMode,0);assert.equal(attack._maxAnimScale,1);
     }
+    const combo=attacks.find(a=>a._animKey==='Skill');
+    assert.equal(combo._additionalTimes,2);assert.equal(combo._waitAttackEventForAllAttacks,1);
+    assert.equal(combo._refreshInputTargetOnCheckSpell,0);assert.equal(combo._interuptIfTargetDead,0);
+    assert.ok(nodes.some(n=>n._runActionOnEvent===3&&n._buffs?.[0]?.templateKey==='enemy_mubrut_switch_back'));
   }
+  const graph=read('candidates/arkpedia-ch17-brute-source.json');
+  const actions=k=>JSON.parse(JSON.parse(graph.templates[k].originalJson).eventToActions._items[0].value.SerializedState);
+  const [restore,reset]=actions('enemy_mubrut_switch_back');
+  assert.equal(restore._restoreDefault,true);assert.equal(restore._restartFSM,false);
+  assert.equal(reset._abilityName,'Combat');assert.equal(reset._waitFirstPeriod,true);
+  assert.equal(reset._useNewPeriod,false);assert.equal(reset._useOriginalCooldown,false);assert.equal(reset._keepPassedTime,false);
 });
 for(const key of keys)test(key+' default melee waits for the real Attack event rather than dealing an immediate hit',()=>{
   const f=fixture(key),p=begin(f),hp=f.u.hp;
@@ -131,11 +145,33 @@ for(const event of ['death','battleEnd'])test(event+' cancels owned hits and rem
   assert.equal(f.e.mem.ch17PollutionReaction,undefined);assert.equal(f.e.findBuff('ch17:brute-cast'),null);
   assert.deepEqual(f.b.errors,[]);
 });
-test('unfinished rate/FSM review cannot be bypassed by retaining source or manually exercising the candidate',()=>{
+test('Brute candidate admission requires exact source, wrapper counts and complete record signatures',()=>{
   const support=read('candidates/arkpedia-ch16-enemy-support.json');
-  for(const key of keys)assert.equal(support.enemies[key].policy,null);
+  const native=read('candidates/arkpedia-ch17-brute-native.json'),index=read('arkpedia-enemy-clock-source.json');
+  const entries=Object.fromEntries(keys.map(key=>[key,records[key]]));
+  const evidence={...native,chapter16Families:{brute:{graphSha256:review.sources.graph.sha256}}};
+  for(const key of keys) {
+    assert.equal(support.enemies[key].policy,'stats-attacks-and-features');
+    assert.equal(deriveEnemySupport(entries,index.prefabs,evidence)[key].policy,'stats-attacks-and-features');
+    assert.equal(deriveEnemySupport(entries,index.prefabs,native)[key].policy,null);
+    const changed=structuredClone(evidence);changed.prefabs[prefabPath(key)][0].originalJson+=' ';
+    assert.equal(deriveEnemySupport(entries,index.prefabs,changed)[key].policy,null);
+    const wrong=structuredClone(entries);wrong[key].levels[0].talents.bb.extra=1;
+    assert.equal(deriveEnemySupport(wrong,index.prefabs,evidence)[key].policy,null);
+    const added=structuredClone(index.prefabs);added[prefabPath(key)].clockComponents.push({fields:{_familyMask:1,_trigger:{}}});
+    assert.equal(deriveEnemySupport(entries,added,evidence)[key].policy,null);
+  }
   for(const mutate of [r=>{r.abilities[0].text+=' changed';},r=>{r.prefabKey='enemy_10207_mubrut';}]) {
     const r=structuredClone(records[keys[1]].levels[0]);mutate(r);
     assert.throws(()=>pollutionBrute(r),/Unreviewed/);
   }
+});
+
+for(const key of keys)test(key+' automatically attaches one controller and preserves its armed mode without a blocker',()=>{
+  const f=fixture(key,true);assert.ok(f.a);assert.equal(f.e.mem.ab.list.filter(a=>typeof a.contact==='function').length,1);
+  f.u.base.blockCnt=0;f.u.markDirty();f.h.run(.1);pollute(f.b,f.e);
+  f.b.addBuff(f.e,{key:'fixture-silence',persist:true,flags:{silence:true}});
+  f.h.run(2);assert.equal(f.a.mode,1);assert.equal(f.hits.length,0);
+  f.u.base.blockCnt=1;f.u.markDirty();f.h.run(2.5);
+  assert.equal(f.hits.length,3);assert.equal(f.a.mode,0);assert.deepEqual(f.b.errors,[]);
 });
