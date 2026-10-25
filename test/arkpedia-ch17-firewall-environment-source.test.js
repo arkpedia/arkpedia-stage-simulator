@@ -6,6 +6,9 @@ import {createHash} from 'node:crypto';
 import {verifiedFirewallEnvironmentSource,FIREWALL_ENVIRONMENT_BUNDLE as pin} from '../tools/arkpedia/firewall-environment-source.mjs';
 const bytes=p=>readFileSync(new URL('../data/'+p,import.meta.url)),inventory=bytes('arkpedia-cn-native-source.json'),raw=bytes('candidates/arkpedia-ch17-firewall-environment-source.json');
 const g=verifiedFirewallEnvironmentSource(raw,inventory),components=Object.values(g.prefabs).flat().filter(c=>c.componentType==='MonoBehaviour').map(c=>JSON.parse(c.originalJson));
+test('byte-bound environment artifact uses LF on every platform before downstream receipt generation',()=>{
+ assert.equal(raw.includes(Buffer.from('\r\n')),false);
+});
 test('complete original environment closure pins all four firewall configurations without granting support',()=>{
  assert.equal(Object.keys(g.prefabs).length,2);assert.equal(Object.values(g.prefabs).flat().length,8);assert.equal(pin.bytes,168719);
  const config=components.find(c=>c._bossFirewallEffectConfigs)._bossFirewallEffectConfigs;

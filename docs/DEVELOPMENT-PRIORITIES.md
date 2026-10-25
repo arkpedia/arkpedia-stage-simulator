@@ -1,14 +1,11 @@
 # Development priorities
 
-Current continuation: snake HP-loss, recovery and injury now have a source-bound
-controller and contract. The HP-stage counter persists through healing; one large
-loss advances past crossed thresholds without queueing multiple challenges.
-Injury deals canonical 5% maximum-HP true damage at admission and holds action
-for 7 seconds without applying Stunned. Failed challenges heal canonical 20%
-through the ordinary heal pipeline. Both step and terminal interaction windows
-now own invulnerability and a separate ability-trigger predicate, rather than
-ordinary silence. The future complete actor must consume that predicate and
-the mandatory cast-interruption receipt. Full boss support remains held.
+Current continuation: the snake's HP phases, line attack, timeout, firewall and
+native hit body are composed as an internal candidate. AMa-10 and both twins now
+have source-bound ordinary attacks, target ATK ramps, immobility/teleport markers
+and x-4 firewall boundaries. Complete boss support remains held while the other
+boss skills/refresh/fake-death/reborn transitions, canonical wave/branch/story
+integration, mechanical input routing and staged-record reviews are completed.
 
 The retained native components/canonical record supply the parameters and action
 graph. Supplemental first-hand [PRTS HP-loss research, revision 442170](https://prts.wiki/index.php?title=%E7%89%B9%E6%AE%8A%E6%9C%BA%E5%88%B6&oldid=442170)
@@ -16,7 +13,7 @@ and [snake corrections, revision 441734](https://prts.wiki/index.php?title=%E2%8
 resolve persistent-stage, injury-onset and waiting semantics; their revision
 references and factual notes are pinned separately. This is not compiled client
 or captured frame proof. No alternate enemy/stage data or wiki timing replaces
-the canonical records. Attack/firewall/wave integration and the wider operator,
+the canonical records. Boss/wave integration and the wider operator,
 enemy and stage audits remain mechanics work before any new visual campaign.
 
 Owner direction, 2026-10-25: take over development on the Windows workspace and
@@ -787,3 +784,54 @@ the clock/source checks remain required. Full run40206399907 at cd1180fc is stil
 live, with six successful shards and two WindowsNode22 shards running at the
 latest observation; do not replace it while running. Stage/enemy counts and
 the nine remaining normal-stage gates are unchanged.
+
+## AMa-10/twin ordinary combat and x-4 boundary rules
+
+One shared candidate now owns the original ordinary Attack/Combat binding for
+AMa-10 and both twin prefabs. It retains the literal0.6333333253860474/2-second
+Muama release/tail and0.6000000238418579/1.5-second twin release/tail, original
+Arts versus Physical output, and speed10 target-tracking projectiles. Native
+maxAnimScale1 prevents high ASPD from compressing the whole clip below its
+source length. The existing sampled BAT/interval and affectedBySlowDown bridge
+is explicitly a local mapping, not recovered compiled timing. Selection uses
+the ordinary range/blocker/taunt/deployment rules; the captured target life is
+retained through windup and flight. Unborn releases are cancelled by control or
+source retirement; born projectiles retain their accepted source view after
+removal/reuse and cannot transfer to a new target deployment.
+
+The native SameTargetAtkUp component owns one attribute buff containing the
+accepted100..400 flat ATK addition, with its first layer before the first ordinary
+release. A changed target deployment starts at one layer, idle retains the
+previous accepted count, and damage prevention cannot manufacture a reset.
+Forged legacy attack observations grant nothing. The first-layer/persistent
+semantics are corroborated by separately pinned [first-hand PRTS research,
+revision441735](https://prts.wiki/index.php?title=AMa-10&oldid=441735); source
+parameters and serialized components still govern the implementation.
+
+The native environment's x-4 identity now binds to the complete retained named
+range table with its immutable Git blob/size/SHA256, and agrees with the prepared
+CN range record. Its three-by-three firewall owns incoming Physical/Arts scaling
+and direct-placement checks. Breaking a side releases its three boundary tiles,
+including its corners; another live adjacent side can still reduce a diagonal
+incoming shot. The center remains excluded. Native private-immobility parents
+and the exact immune_shu_blink/immune_yu_blink marker keys are owned by the source
+deployment. Explicit perimeter refresh restores boundaries, but automatic Blink
+and the twins' fake-death/reborn/room transitions are not implemented by this
+candidate. Canonical altered room strings will still require exact staged-record
+review, rather than broadening the base-record factory.
+
+All1009 locally available focused checks passed together after the receipt fix,
+including32 new ordinary-combat/source/lifecycle cases and the LF regression.
+A final profile-reuse case also verifies restoration of the source's no-attack
+override. None of these internal candidates grants public enemy or stage support.
+
+Hosted run40210032463 at1190e629 exposed a second CI issue after the parser
+dependency was installed: Python's Windows text output gave the environment
+artifact CRLF bytes, while Git checked it out as LF. Its graph was unchanged,
+but the downstream byte receipt was stale. The generator now writes explicit
+UTF-8 LF bytes and `--check` compares bytes, with a focused LF regression check.
+Dependent firewall/ordinary receipts were regenerated; all13 receipt inputs also
+match Git's cleaned bytes locally, so no checksum tolerance or source weakening
+was introduced. The earlier full matrix run40206399907 at cd1180fc has now
+completed successfully across all eight Linux/Windows Node22/24 shards. New-head
+hosted validation remains separate. No art/models/effects work has begun.

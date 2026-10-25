@@ -1,0 +1,1843 @@
+{
+  "schemaVersion": 1,
+  "testOnly": true,
+  "scope": "Muama/twin ordinary attack, target ATK ramp and source-bound three-by-three firewall only. Skills, refresh, twins fake-death/reborn, room behavior, enemy/stage admission remain separate.",
+  "sources": {
+    "foundation": {
+      "path": "data/candidates/arkpedia-ch17-snake-firewall-contract.json",
+      "sha256": "fab9cca61b1d5b027ae7a77e2a70a45d5d4ed3ae98ccd229363bb0105ae2bc22"
+    },
+    "graph": {
+      "path": "data/candidates/arkpedia-ch17-firewall-boss-source.json",
+      "sha256": "4c1dcad409a812cb001dc182ca804462ca3733f840b246dc0c6fdb02c2fbd244"
+    },
+    "indexed": {
+      "path": "data/candidates/arkpedia-ch17-firewall-boss-native.json",
+      "sha256": "b66124027d7a1463a715a1479b201b984e01fbea3d73b140ac33709f96a84eda"
+    },
+    "clock": {
+      "path": "data/candidates/arkpedia-ch17-firewall-boss-animation-source.json",
+      "sha256": "c6420b3c0fea3863e56f25b117ec6802f3e29c05bea006a8b8ed1aa3339b13a8"
+    },
+    "records": {
+      "path": "data/candidates/arkpedia-enemy-records.canonical.json",
+      "sha256": "c69db59414b2fbd6c1a8327c9c22ddb21cfdaadc4e89a97a824679f61ec07b93"
+    },
+    "environment": {
+      "path": "data/candidates/arkpedia-ch17-firewall-environment-source.json",
+      "sha256": "166d4e33056500b00ed07cb83297e3f812653a83d3f4123b0cf8680c9e67c9d2"
+    },
+    "ranges": {
+      "path": "data/candidates/arkpedia-ch17-channel-carrier-range-source.json",
+      "sha256": "5a72a972a017f2c254a9917eacdfc784535254eba9f6fd8c292641948612f3d2"
+    },
+    "cnRanges": {
+      "path": "data/arkpedia-cn-source.json",
+      "sha256": "fc4291af93add2391aede8b5a814135f3d092b319548141beba4ec44f4a2f941"
+    },
+    "notes": {
+      "path": "data/candidates/arkpedia-ch17-muama-mechanics-notes.json",
+      "sha256": "5496478a418c4272bba8b709ff0658b13e11c4a485b4fe060eec68b10cece1d4"
+    }
+  },
+  "range": {
+    "id": "x-4",
+    "direction": 1,
+    "grids": [
+      {
+        "row": 1,
+        "col": -1
+      },
+      {
+        "row": 1,
+        "col": 0
+      },
+      {
+        "row": 1,
+        "col": 1
+      },
+      {
+        "row": 0,
+        "col": -1
+      },
+      {
+        "row": 0,
+        "col": 0
+      },
+      {
+        "row": 0,
+        "col": 1
+      },
+      {
+        "row": -1,
+        "col": -1
+      },
+      {
+        "row": -1,
+        "col": 0
+      },
+      {
+        "row": -1,
+        "col": 1
+      }
+    ]
+  },
+  "enemies": {
+    "enemy_1590_muama": {
+      "record": {
+        "talents": {
+          "bb": {
+            "SameTargetAtkUp.atk": 100,
+            "SameTargetAtkUp.max_stack_cnt": 4,
+            "DamageResistance.damage_resistance": 0.9
+          },
+          "bbStr": {},
+          "groups": {
+            "SameTargetAtkUp": [
+              "atk",
+              "max_stack_cnt"
+            ],
+            "DamageResistance": [
+              "damage_resistance"
+            ]
+          }
+        },
+        "skills": [
+          {
+            "prefabKey": "HorizontalLineAttack",
+            "priority": 0,
+            "cooldown": 40,
+            "initCooldown": 40,
+            "spCost": 0,
+            "bb": {
+              "value": 120,
+              "stun": 8
+            },
+            "bbStr": {}
+          },
+          {
+            "prefabKey": "VerticalLine",
+            "priority": 0,
+            "cooldown": 40,
+            "initCooldown": 20,
+            "spCost": 0,
+            "bb": {
+              "value": 120,
+              "stun": 10
+            },
+            "bbStr": {}
+          },
+          {
+            "prefabKey": "Blink",
+            "priority": 0,
+            "cooldown": 60,
+            "initCooldown": 30,
+            "spCost": 0,
+            "bb": {},
+            "bbStr": {}
+          }
+        ],
+        "abilities": [
+          {
+            "text": "Cannot move or be teleported.",
+            "format": "NORMAL"
+          },
+          {
+            "text": "ATK gradually increases when attacking the same target",
+            "format": "NORMAL"
+          },
+          {
+            "text": "[Firewall] Has a Firewall around its 8 surrounding tiles; takes greatly reduced Physical and Arts damage from outside the firewall. Allied units cannot be deployed inside the Firewall.",
+            "format": "NORMAL"
+          },
+          {
+            "text": "[Refresh] Periodically teleports to the target tile and refreshes the Firewall.",
+            "format": "NORMAL"
+          },
+          {
+            "text": "[Information Flood] Releases a 3-tile-wide flood of information in a direction, causing the first unit hit to be <$ba.stun>stunned</> and continuously take True damage for a period of time.",
+            "format": "NORMAL"
+          }
+        ]
+      },
+      "attack": {
+        "_activeBuffs": [],
+        "_affectedBySlowDown": 1,
+        "_allowNoTarget": 0,
+        "_alwaysIncludeTarget": 1,
+        "_animKey": "Attack",
+        "_atkScale": 1,
+        "_atkScaleKey": "atk_scale",
+        "_attachPassiveBuffsOnDummy": 1,
+        "_attackType": 1,
+        "_checkFaceToFirstCastTargetDownAttack": 0,
+        "_cooldown": 0,
+        "_cooldownKey": "duration",
+        "_damageType": 2,
+        "_deliveryParaWhenReplaceActionNode": 0,
+        "_downAnimKey": "",
+        "_downEndAnimKey": "",
+        "_elementDamageType": 0,
+        "_emitToInputPosWhenTargetIsInvalid": 0,
+        "_emitToInputRootTileWhenTargetIsInvalid": 0,
+        "_endAnimKey": "Idle",
+        "_epDamageRatio": 0,
+        "_escapeTime": 0,
+        "_extraDamageType": 0,
+        "_extraProjectileKeys": [],
+        "_faceToDefault": 0,
+        "_faceToFirstCastTarget": 0,
+        "_faceToFront": 0,
+        "_faceToTarget": 1,
+        "_fireAttackFinishWhenProjectileInvalid": 0,
+        "_fireCreateProjectileEvent": 0,
+        "_forceAsDmgOrHealAbility": 0,
+        "_forceFaceToDirection": 0,
+        "_ignoreIfOwnerDead": 0,
+        "_ignorePalsyInterrupt": 0,
+        "_interruptAbilityOnDetach": 1,
+        "_interuptIfTargetDead": 0,
+        "_maxAnimScale": 1,
+        "_metadata": {
+          "blackboardPrefix": "",
+          "namedAsAlias": ""
+        },
+        "_minPostDelayWhenProjectileInvalid": 0,
+        "_mountGroup": {
+          "loopType": 0,
+          "mountPoints": []
+        },
+        "_mountPointType": 2,
+        "_notClearProjectileWhenCastEnd": 0,
+        "_onlyPlayEndAnimWhenIsLastAbility": 0,
+        "_preDelay": 0,
+        "_projectileDestination": 0,
+        "_projectileKey": "projectile_enemy_muama",
+        "_resetCdStrategy": 1,
+        "_selectTargetSource": 2,
+        "_selectTargetTiming": 0,
+        "_selector": {
+          "m_FileID": 0,
+          "m_PathID": "0"
+        },
+        "_timeMode": 0,
+        "_transferSource": 0,
+        "_upAnimKey": "",
+        "_upEndAnimKey": "",
+        "_useCachedAtkOnly": 0,
+        "_useDynamicAttackType": 0,
+        "_useMountGroup": 0,
+        "_waitForAnimEndWhenProjectileInvalid": 0,
+        "_waitForAttackEvent": 1,
+        "_waitForProjectileInvalid": 0,
+        "m_Enabled": 1,
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": "-4224763768772967716"
+        },
+        "m_Name": "",
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": "4156651312234227407"
+        }
+      },
+      "stack": {
+        "_attachPassiveBuffsOnDummy": 1,
+        "_buffs": [],
+        "_forceAsDmgOrHealAbility": 0,
+        "_ignoreIfOwnerDead": 0,
+        "_ignoreOwnerAsTarget": 1,
+        "_interruptAbilityOnDetach": 1,
+        "_metadata": {
+          "blackboardPrefix": "",
+          "namedAsAlias": ""
+        },
+        "_onlyApplyOnFirstSpell": 0,
+        "_selector": {
+          "m_FileID": 0,
+          "m_PathID": "0"
+        },
+        "_stackBuff": {
+          "attributes": {
+            "abnormalAntis": [],
+            "abnormalComboImmunes": [],
+            "abnormalCombos": [],
+            "abnormalFlags": [],
+            "abnormalImmunes": [],
+            "attributeModifiers": [
+              {
+                "attributeType": 1,
+                "fetchBaseValueFromSourceEntity": 0,
+                "formulaItem": 0,
+                "loadFromBlackboard": 1,
+                "value": 0
+              }
+            ]
+          },
+          "audioSignal": "",
+          "blackboard": [],
+          "buffKey": "enemy_muama_t",
+          "clearAllStackCntWhenTimeUp": 0,
+          "disableOverride": 0,
+          "durationKey": "duration",
+          "enableInitDirectionFromSource": 0,
+          "firstTriggerInterval": -1,
+          "independentCharacterSource": 0,
+          "isDamageMissable": 0,
+          "isDurableBuff": 0,
+          "isFreezable": 0,
+          "isGroundBoundable": 0,
+          "isLevitatable": 0,
+          "isSilenceable": 0,
+          "isStunnable": 0,
+          "lifeTime": 0,
+          "lifeTimeType": 2,
+          "loadFromDB": 0,
+          "maxStackCnt": 1,
+          "maxValidStackCnt": -1,
+          "onEventPriority": 0,
+          "overrideEffectKey": "",
+          "overrideKey": "",
+          "overrideOnEventPriority": 0,
+          "overrideType": 1,
+          "priority": -1,
+          "priorityBBKeys": [],
+          "refreshRemainingTimeWhenStackMax": 0,
+          "remainingTimeKey": "",
+          "statusResistable": 2,
+          "stripBlackboardParamsWithBuffKey": 0,
+          "takeSnapshotWhenExtend": 0,
+          "templateKey": "empty",
+          "triggerCnt": 0,
+          "triggerInterval": -1,
+          "triggerLifeType": 0,
+          "waitFirstTriggerInterval": 1
+        },
+        "_targetFamilyMask": 3,
+        "m_Enabled": 1,
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": "1818438326495134428"
+        },
+        "m_Name": "",
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": "-7008117226517666701"
+        }
+      },
+      "passive": [
+        {
+          "attributes": {
+            "abnormalAntis": [],
+            "abnormalComboImmunes": [],
+            "abnormalCombos": [],
+            "abnormalFlags": [
+              22
+            ],
+            "abnormalImmunes": [],
+            "attributeModifiers": []
+          },
+          "audioSignal": "",
+          "blackboard": [],
+          "buffKey": "enemy_muama_t[damage_resistance]",
+          "clearAllStackCntWhenTimeUp": 0,
+          "disableOverride": 0,
+          "durationKey": "duration",
+          "enableInitDirectionFromSource": 0,
+          "firstTriggerInterval": -1,
+          "independentCharacterSource": 0,
+          "isDamageMissable": 0,
+          "isDurableBuff": 0,
+          "isFreezable": 0,
+          "isGroundBoundable": 0,
+          "isLevitatable": 0,
+          "isSilenceable": 0,
+          "isStunnable": 0,
+          "lifeTime": 0,
+          "lifeTimeType": 2,
+          "loadFromDB": 0,
+          "maxStackCnt": 1,
+          "maxValidStackCnt": -1,
+          "onEventPriority": 0,
+          "overrideEffectKey": "",
+          "overrideKey": "",
+          "overrideOnEventPriority": 0,
+          "overrideType": 0,
+          "priority": -1,
+          "priorityBBKeys": [],
+          "refreshRemainingTimeWhenStackMax": 0,
+          "remainingTimeKey": "",
+          "statusResistable": 2,
+          "stripBlackboardParamsWithBuffKey": 0,
+          "takeSnapshotWhenExtend": 0,
+          "templateKey": "enemy_muama_t[damage_resistance]",
+          "triggerCnt": 0,
+          "triggerInterval": -1,
+          "triggerLifeType": 0,
+          "waitFirstTriggerInterval": 1
+        },
+        {
+          "attributes": {
+            "abnormalAntis": [],
+            "abnormalComboImmunes": [],
+            "abnormalCombos": [],
+            "abnormalFlags": [],
+            "abnormalImmunes": [],
+            "attributeModifiers": []
+          },
+          "audioSignal": "",
+          "blackboard": [],
+          "buffKey": "immune_yu_blink",
+          "clearAllStackCntWhenTimeUp": 0,
+          "disableOverride": 0,
+          "durationKey": "",
+          "enableInitDirectionFromSource": 0,
+          "firstTriggerInterval": -1,
+          "independentCharacterSource": 0,
+          "isDamageMissable": 0,
+          "isDurableBuff": 0,
+          "isFreezable": 0,
+          "isGroundBoundable": 0,
+          "isLevitatable": 0,
+          "isSilenceable": 0,
+          "isStunnable": 0,
+          "lifeTime": 0,
+          "lifeTimeType": 2,
+          "loadFromDB": 0,
+          "maxStackCnt": 1,
+          "maxValidStackCnt": -1,
+          "onEventPriority": 0,
+          "overrideEffectKey": "",
+          "overrideKey": "",
+          "overrideOnEventPriority": 0,
+          "overrideType": 0,
+          "priority": -1,
+          "priorityBBKeys": [],
+          "refreshRemainingTimeWhenStackMax": 0,
+          "remainingTimeKey": "",
+          "statusResistable": 2,
+          "stripBlackboardParamsWithBuffKey": 0,
+          "takeSnapshotWhenExtend": 0,
+          "templateKey": "empty",
+          "triggerCnt": 0,
+          "triggerInterval": -1,
+          "triggerLifeType": 0,
+          "waitFirstTriggerInterval": 1
+        },
+        {
+          "attributes": {
+            "abnormalAntis": [],
+            "abnormalComboImmunes": [],
+            "abnormalCombos": [],
+            "abnormalFlags": [],
+            "abnormalImmunes": [],
+            "attributeModifiers": []
+          },
+          "audioSignal": "",
+          "blackboard": [],
+          "buffKey": "immune_shu_blink",
+          "clearAllStackCntWhenTimeUp": 0,
+          "disableOverride": 0,
+          "durationKey": "",
+          "enableInitDirectionFromSource": 0,
+          "firstTriggerInterval": -1,
+          "independentCharacterSource": 0,
+          "isDamageMissable": 0,
+          "isDurableBuff": 0,
+          "isFreezable": 0,
+          "isGroundBoundable": 0,
+          "isLevitatable": 0,
+          "isSilenceable": 0,
+          "isStunnable": 0,
+          "lifeTime": 0,
+          "lifeTimeType": 2,
+          "loadFromDB": 0,
+          "maxStackCnt": 1,
+          "maxValidStackCnt": -1,
+          "onEventPriority": 0,
+          "overrideEffectKey": "",
+          "overrideKey": "",
+          "overrideOnEventPriority": 0,
+          "overrideType": 0,
+          "priority": -1,
+          "priorityBBKeys": [],
+          "refreshRemainingTimeWhenStackMax": 0,
+          "remainingTimeKey": "",
+          "statusResistable": 2,
+          "stripBlackboardParamsWithBuffKey": 0,
+          "takeSnapshotWhenExtend": 0,
+          "templateKey": "empty",
+          "triggerCnt": 0,
+          "triggerInterval": -1,
+          "triggerLifeType": 0,
+          "waitFirstTriggerInterval": 1
+        }
+      ],
+      "config": {
+        "bossId": "enemy_1590_muama",
+        "bottomWallEffect": "enemy_muama_range_01_down_start",
+        "firewallHeight": 0,
+        "firewallRangeId": "x-4",
+        "firewallWidth": 0,
+        "leftWallEffect": "enemy_muama_range_01_left_start",
+        "rightWallEffect": "enemy_muama_range_01_right_start",
+        "topWallEffect": "enemy_muama_range_01_up_start",
+        "vulnerabilityButtonDuration": 5,
+        "vulnerabilityRequiredClickCount": 3
+      },
+      "mover": {
+        "_addInertia": 0,
+        "_adjustSourceToTargetArcAngleBySourceFace": 0,
+        "_awayFromSourceAsDirection": 0,
+        "_clearTraceTargetWhenReached": 1,
+        "_comeBack": 0,
+        "_comeBackSpeedScale": 0.25,
+        "_delayAfterReached": 0,
+        "_delayToReachAfterHit": 0,
+        "_delayToStart": 0,
+        "_deltaSpeedPerSec": 0,
+        "_distance": 0,
+        "_drawFuncTurnAndWaveDebugLine": 0,
+        "_exactMatchCameraForward": 0,
+        "_finalSpeed": 0,
+        "_fixOnProjectileReached": 1,
+        "_fixProjectileHasReached": 0,
+        "_fixProjectileZWhenReached": 0,
+        "_flyToPredefinedLocation": 0,
+        "_flyToTargetLocationOnly": 0,
+        "_forceReachedWhenTimeup": 1,
+        "_forceResetToTargetPosWhenReached": 0,
+        "_forceUseTargetMountPoint": 0,
+        "_freezeRotationXY": 0,
+        "_freezeRotationZ": 0,
+        "_handleWithIBuildableTarget": 0,
+        "_moveType": 1,
+        "_moveTypeData": {
+          "data": []
+        },
+        "_onlyReachedInTime": 0,
+        "_predefinedLocation": 0,
+        "_randomOffset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "_resetToTargetPosWhenReached": 0,
+        "_resetToTracetargetMapPosV3": 0,
+        "_rotateToTarget": 1,
+        "_rotateToTargetOnDelayToStart": 0,
+        "_skipSmoothLerpDirection": 0,
+        "_sourceDirectionArcAngleRatio": 0,
+        "_sourceToTargetArcAngle": 0,
+        "_speed": 10,
+        "_turnSpeed": 0,
+        "_updateDelayTimeOnlyOnce": 0,
+        "_useDynamicSpeed": 0,
+        "_useSourceDirection": 0,
+        "_useSourceDirectionArcAngleWithRatio": 0,
+        "_useSourceDirectionRandomArcAngleStart": 0,
+        "_useSourceToTargetArcAngleWithRatio": 0,
+        "_useSourceToTargetRandomArcAngleStart": 0,
+        "_useStartToTarget": 0,
+        "_useTargetDirection": 0,
+        "m_Enabled": 1,
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": "-5771883946806203988"
+        },
+        "m_Name": "",
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": "-1429203677512073985"
+        }
+      },
+      "projectile": {
+        "_actionController": {
+          "_addExtraBuffsWhenReached": 0,
+          "_detachAllBuffsWhenStopped": 0,
+          "_detachAllExtraBuffsWhenStopped": 0,
+          "_detachBuffsWhenTargetLeave": 0,
+          "_dontAddBuffs": 0,
+          "_excludeAttachments": 0,
+          "_extraBuffsInTheEnd": [],
+          "_onlyAddBuffsToTargetOnce": 0,
+          "_onlyAddBuffsToTraceTarget": 0,
+          "_useExtraBuffsWhenStopHit": 0,
+          "_useSelfBlackboard": 0
+        },
+        "_allowZeroBlockCntLimit": 0,
+        "_alwaysHitTraceTargetInTheEnd": 1,
+        "_alwaysHitTraceTargetWhenReached": 0,
+        "_alwaysReachInTheEnd": 0,
+        "_bodyTransform": {
+          "m_FileID": 0,
+          "m_PathID": "2056674690478975404"
+        },
+        "_canHitSameTargetMultipleTimes": 0,
+        "_clearMainEffectWhenReached": 1,
+        "_containsChildrenBehaviours": 0,
+        "_eliminatableStatus": 0,
+        "_fireProjectileReachedEvent": 0,
+        "_fixDealHitTargetLeft": 1,
+        "_getLifeTimeFromBB": 0,
+        "_getMaxHitNumFromBB": 0,
+        "_hitNumType": 1,
+        "_keepAlreadyHitTime": -1,
+        "_lifeTime": 10,
+        "_lifeTimeType": 1,
+        "_limitedMaxHitNumToSourceBlockedCnt": 0,
+        "_mainEffect": "enemy_muama_attack_01_trail_01",
+        "_managedBySource": 0,
+        "_maxHitNum": 1,
+        "_maxHitNumBBKey": "",
+        "_movementAdjustableStatus": 0,
+        "_overrideAudioSignal": "",
+        "_projectileType": 0,
+        "_randomDelayToBorn": 0,
+        "_stopAfterFirstHit": 0,
+        "_stopAfterMaxHit": 1,
+        "_stopGraphicProjectileWhenClearMainEffect": 0,
+        "_stopWhenSourceInvalid": 0,
+        "m_Enabled": 1,
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": "-5771883946806203988"
+        },
+        "m_Name": "",
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": "-8797129986015012478"
+        }
+      },
+      "defaults": {
+        "hit": 0.6333333253860474,
+        "duration": 2,
+        "type": "arts",
+        "speed": 10,
+        "maxAge": 10,
+        "increment": 100,
+        "maxStacks": 4,
+        "resistance": 0.9
+      }
+    },
+    "enemy_1591_mutwin": {
+      "record": {
+        "talents": {
+          "bb": {
+            "FakeDeath.target_hp_ratio": 1,
+            "FakeDeath.hp_ratio": 0.04,
+            "SameTargetAtkUp.atk": 100,
+            "SameTargetAtkUp.max_stack_cnt": 4,
+            "DamageResistance.damage_resistance": 0.9,
+            "Reborn.duration": 0.1,
+            "Reborn.hp_ratio": 0.02
+          },
+          "bbStr": {
+            "DamageResistance.boss_room": "(0,6,0)"
+          },
+          "groups": {
+            "FakeDeath": [
+              "hp_ratio",
+              "target_hp_ratio"
+            ],
+            "SameTargetAtkUp": [
+              "atk",
+              "max_stack_cnt"
+            ],
+            "DamageResistance": [
+              "boss_room",
+              "damage_resistance"
+            ],
+            "Reborn": [
+              "duration",
+              "hp_ratio"
+            ]
+          }
+        },
+        "skills": [
+          {
+            "prefabKey": "HorizontalLineAttack",
+            "priority": 0,
+            "cooldown": 40,
+            "initCooldown": 40,
+            "spCost": 0,
+            "bb": {
+              "value": 200,
+              "stun": 5
+            },
+            "bbStr": {}
+          },
+          {
+            "prefabKey": "VerticalLine",
+            "priority": 0,
+            "cooldown": 40,
+            "initCooldown": 20,
+            "spCost": 0,
+            "bb": {
+              "value": 200,
+              "stun": 5
+            },
+            "bbStr": {}
+          },
+          {
+            "prefabKey": "Blink",
+            "priority": 0,
+            "cooldown": 60,
+            "initCooldown": 20,
+            "spCost": 0,
+            "bb": {},
+            "bbStr": {}
+          }
+        ],
+        "abilities": [
+          {
+            "text": "Cannot move or be teleported.",
+            "format": "NORMAL"
+          },
+          {
+            "text": "ATK gradually increases when attacking the same target",
+            "format": "NORMAL"
+          },
+          {
+            "text": "When another AMa-10 Isomer is alive and not in coma, enters a coma when HP reaches 0 and begins regenerating; revives when HP reaches max.",
+            "format": "NORMAL"
+          },
+          {
+            "text": "[Firewall] Has a Firewall around its 8 surrounding tiles; takes greatly reduced Physical and Arts damage from outside the firewall. Allied units cannot be deployed inside the Firewall.",
+            "format": "NORMAL"
+          },
+          {
+            "text": "[Refresh] Periodically teleports to the target tile and refreshes the Firewall.",
+            "format": "NORMAL"
+          },
+          {
+            "text": "[Information Flood] Releases a 3-tile-wide flood of information in a direction, causing the first unit hit to be <$ba.stun>stunned</> and continuously take True damage for a period of time.",
+            "format": "NORMAL"
+          }
+        ]
+      },
+      "attack": {
+        "_activeBuffs": [],
+        "_affectedBySlowDown": 1,
+        "_allowNoTarget": 0,
+        "_alwaysIncludeTarget": 1,
+        "_animKey": "Attack",
+        "_atkScale": 1,
+        "_atkScaleKey": "atk_scale",
+        "_attachPassiveBuffsOnDummy": 1,
+        "_attackType": 1,
+        "_checkFaceToFirstCastTargetDownAttack": 0,
+        "_cooldown": 0,
+        "_cooldownKey": "duration",
+        "_damageType": 1,
+        "_deliveryParaWhenReplaceActionNode": 0,
+        "_downAnimKey": "",
+        "_downEndAnimKey": "",
+        "_elementDamageType": 0,
+        "_emitToInputPosWhenTargetIsInvalid": 0,
+        "_emitToInputRootTileWhenTargetIsInvalid": 0,
+        "_endAnimKey": "Idle",
+        "_epDamageRatio": 0,
+        "_escapeTime": 0,
+        "_extraDamageType": 0,
+        "_extraProjectileKeys": [],
+        "_faceToDefault": 0,
+        "_faceToFirstCastTarget": 0,
+        "_faceToFront": 0,
+        "_faceToTarget": 1,
+        "_fireAttackFinishWhenProjectileInvalid": 0,
+        "_fireCreateProjectileEvent": 0,
+        "_forceAsDmgOrHealAbility": 0,
+        "_forceFaceToDirection": 0,
+        "_ignoreIfOwnerDead": 0,
+        "_ignorePalsyInterrupt": 0,
+        "_interruptAbilityOnDetach": 1,
+        "_interuptIfTargetDead": 0,
+        "_maxAnimScale": 1,
+        "_metadata": {
+          "blackboardPrefix": "",
+          "namedAsAlias": ""
+        },
+        "_minPostDelayWhenProjectileInvalid": 0,
+        "_mountGroup": {
+          "loopType": 0,
+          "mountPoints": []
+        },
+        "_mountPointType": 2,
+        "_notClearProjectileWhenCastEnd": 0,
+        "_onlyPlayEndAnimWhenIsLastAbility": 0,
+        "_preDelay": 0,
+        "_projectileDestination": 0,
+        "_projectileKey": "projectile_enemy_mutwin",
+        "_resetCdStrategy": 1,
+        "_selectTargetSource": 2,
+        "_selectTargetTiming": 0,
+        "_selector": {
+          "m_FileID": 0,
+          "m_PathID": "0"
+        },
+        "_timeMode": 0,
+        "_transferSource": 0,
+        "_upAnimKey": "",
+        "_upEndAnimKey": "",
+        "_useCachedAtkOnly": 0,
+        "_useDynamicAttackType": 0,
+        "_useMountGroup": 0,
+        "_waitForAnimEndWhenProjectileInvalid": 0,
+        "_waitForAttackEvent": 1,
+        "_waitForProjectileInvalid": 0,
+        "m_Enabled": 1,
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": "-2675283162116280825"
+        },
+        "m_Name": "",
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": "4156651312234227407"
+        }
+      },
+      "stack": {
+        "_attachPassiveBuffsOnDummy": 1,
+        "_buffs": [],
+        "_forceAsDmgOrHealAbility": 0,
+        "_ignoreIfOwnerDead": 0,
+        "_ignoreOwnerAsTarget": 1,
+        "_interruptAbilityOnDetach": 1,
+        "_metadata": {
+          "blackboardPrefix": "",
+          "namedAsAlias": ""
+        },
+        "_onlyApplyOnFirstSpell": 0,
+        "_selector": {
+          "m_FileID": 0,
+          "m_PathID": "0"
+        },
+        "_stackBuff": {
+          "attributes": {
+            "abnormalAntis": [],
+            "abnormalComboImmunes": [],
+            "abnormalCombos": [],
+            "abnormalFlags": [],
+            "abnormalImmunes": [],
+            "attributeModifiers": [
+              {
+                "attributeType": 1,
+                "fetchBaseValueFromSourceEntity": 0,
+                "formulaItem": 0,
+                "loadFromBlackboard": 1,
+                "value": 0
+              }
+            ]
+          },
+          "audioSignal": "",
+          "blackboard": [],
+          "buffKey": "enemy_muama_t",
+          "clearAllStackCntWhenTimeUp": 0,
+          "disableOverride": 0,
+          "durationKey": "duration",
+          "enableInitDirectionFromSource": 0,
+          "firstTriggerInterval": -1,
+          "independentCharacterSource": 0,
+          "isDamageMissable": 0,
+          "isDurableBuff": 0,
+          "isFreezable": 0,
+          "isGroundBoundable": 0,
+          "isLevitatable": 0,
+          "isSilenceable": 0,
+          "isStunnable": 0,
+          "lifeTime": 0,
+          "lifeTimeType": 2,
+          "loadFromDB": 0,
+          "maxStackCnt": 1,
+          "maxValidStackCnt": -1,
+          "onEventPriority": 0,
+          "overrideEffectKey": "",
+          "overrideKey": "",
+          "overrideOnEventPriority": 0,
+          "overrideType": 1,
+          "priority": -1,
+          "priorityBBKeys": [],
+          "refreshRemainingTimeWhenStackMax": 0,
+          "remainingTimeKey": "",
+          "statusResistable": 2,
+          "stripBlackboardParamsWithBuffKey": 0,
+          "takeSnapshotWhenExtend": 0,
+          "templateKey": "empty",
+          "triggerCnt": 0,
+          "triggerInterval": -1,
+          "triggerLifeType": 0,
+          "waitFirstTriggerInterval": 1
+        },
+        "_targetFamilyMask": 3,
+        "m_Enabled": 1,
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": "-1467978643120673273"
+        },
+        "m_Name": "",
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": "-7008117226517666701"
+        }
+      },
+      "passive": [
+        {
+          "attributes": {
+            "abnormalAntis": [],
+            "abnormalComboImmunes": [],
+            "abnormalCombos": [],
+            "abnormalFlags": [
+              22
+            ],
+            "abnormalImmunes": [],
+            "attributeModifiers": []
+          },
+          "audioSignal": "",
+          "blackboard": [],
+          "buffKey": "enemy_mutwin_t[damage_resistance]",
+          "clearAllStackCntWhenTimeUp": 0,
+          "disableOverride": 0,
+          "durationKey": "duration",
+          "enableInitDirectionFromSource": 0,
+          "firstTriggerInterval": -1,
+          "independentCharacterSource": 0,
+          "isDamageMissable": 0,
+          "isDurableBuff": 0,
+          "isFreezable": 0,
+          "isGroundBoundable": 0,
+          "isLevitatable": 0,
+          "isSilenceable": 0,
+          "isStunnable": 0,
+          "lifeTime": 0,
+          "lifeTimeType": 2,
+          "loadFromDB": 0,
+          "maxStackCnt": 1,
+          "maxValidStackCnt": -1,
+          "onEventPriority": 0,
+          "overrideEffectKey": "",
+          "overrideKey": "",
+          "overrideOnEventPriority": 0,
+          "overrideType": 0,
+          "priority": -1,
+          "priorityBBKeys": [],
+          "refreshRemainingTimeWhenStackMax": 0,
+          "remainingTimeKey": "",
+          "statusResistable": 2,
+          "stripBlackboardParamsWithBuffKey": 0,
+          "takeSnapshotWhenExtend": 0,
+          "templateKey": "enemy_muama_t[damage_resistance]",
+          "triggerCnt": 0,
+          "triggerInterval": -1,
+          "triggerLifeType": 0,
+          "waitFirstTriggerInterval": 1
+        },
+        {
+          "attributes": {
+            "abnormalAntis": [],
+            "abnormalComboImmunes": [],
+            "abnormalCombos": [],
+            "abnormalFlags": [
+              22
+            ],
+            "abnormalImmunes": [],
+            "attributeModifiers": []
+          },
+          "audioSignal": "",
+          "blackboard": [],
+          "buffKey": "enemy_mutwin_passiveBuff",
+          "clearAllStackCntWhenTimeUp": 0,
+          "disableOverride": 0,
+          "durationKey": "duration",
+          "enableInitDirectionFromSource": 0,
+          "firstTriggerInterval": -1,
+          "independentCharacterSource": 0,
+          "isDamageMissable": 0,
+          "isDurableBuff": 0,
+          "isFreezable": 0,
+          "isGroundBoundable": 0,
+          "isLevitatable": 0,
+          "isSilenceable": 0,
+          "isStunnable": 0,
+          "lifeTime": 0,
+          "lifeTimeType": 2,
+          "loadFromDB": 0,
+          "maxStackCnt": 1,
+          "maxValidStackCnt": -1,
+          "onEventPriority": 0,
+          "overrideEffectKey": "",
+          "overrideKey": "",
+          "overrideOnEventPriority": 0,
+          "overrideType": 0,
+          "priority": -1,
+          "priorityBBKeys": [],
+          "refreshRemainingTimeWhenStackMax": 0,
+          "remainingTimeKey": "",
+          "statusResistable": 2,
+          "stripBlackboardParamsWithBuffKey": 0,
+          "takeSnapshotWhenExtend": 0,
+          "templateKey": "empty",
+          "triggerCnt": 0,
+          "triggerInterval": -1,
+          "triggerLifeType": 0,
+          "waitFirstTriggerInterval": 1
+        },
+        {
+          "attributes": {
+            "abnormalAntis": [],
+            "abnormalComboImmunes": [],
+            "abnormalCombos": [],
+            "abnormalFlags": [],
+            "abnormalImmunes": [],
+            "attributeModifiers": []
+          },
+          "audioSignal": "",
+          "blackboard": [],
+          "buffKey": "immune_shu_blink",
+          "clearAllStackCntWhenTimeUp": 0,
+          "disableOverride": 0,
+          "durationKey": "",
+          "enableInitDirectionFromSource": 0,
+          "firstTriggerInterval": -1,
+          "independentCharacterSource": 0,
+          "isDamageMissable": 0,
+          "isDurableBuff": 0,
+          "isFreezable": 0,
+          "isGroundBoundable": 0,
+          "isLevitatable": 0,
+          "isSilenceable": 0,
+          "isStunnable": 0,
+          "lifeTime": 0,
+          "lifeTimeType": 2,
+          "loadFromDB": 0,
+          "maxStackCnt": 1,
+          "maxValidStackCnt": -1,
+          "onEventPriority": 0,
+          "overrideEffectKey": "",
+          "overrideKey": "",
+          "overrideOnEventPriority": 0,
+          "overrideType": 0,
+          "priority": -1,
+          "priorityBBKeys": [],
+          "refreshRemainingTimeWhenStackMax": 0,
+          "remainingTimeKey": "",
+          "statusResistable": 2,
+          "stripBlackboardParamsWithBuffKey": 0,
+          "takeSnapshotWhenExtend": 0,
+          "templateKey": "empty",
+          "triggerCnt": 0,
+          "triggerInterval": -1,
+          "triggerLifeType": 0,
+          "waitFirstTriggerInterval": 1
+        },
+        {
+          "attributes": {
+            "abnormalAntis": [],
+            "abnormalComboImmunes": [],
+            "abnormalCombos": [],
+            "abnormalFlags": [],
+            "abnormalImmunes": [],
+            "attributeModifiers": []
+          },
+          "audioSignal": "",
+          "blackboard": [],
+          "buffKey": "immune_yu_blink",
+          "clearAllStackCntWhenTimeUp": 0,
+          "disableOverride": 0,
+          "durationKey": "",
+          "enableInitDirectionFromSource": 0,
+          "firstTriggerInterval": -1,
+          "independentCharacterSource": 0,
+          "isDamageMissable": 0,
+          "isDurableBuff": 0,
+          "isFreezable": 0,
+          "isGroundBoundable": 0,
+          "isLevitatable": 0,
+          "isSilenceable": 0,
+          "isStunnable": 0,
+          "lifeTime": 0,
+          "lifeTimeType": 2,
+          "loadFromDB": 0,
+          "maxStackCnt": 1,
+          "maxValidStackCnt": -1,
+          "onEventPriority": 0,
+          "overrideEffectKey": "",
+          "overrideKey": "",
+          "overrideOnEventPriority": 0,
+          "overrideType": 0,
+          "priority": -1,
+          "priorityBBKeys": [],
+          "refreshRemainingTimeWhenStackMax": 0,
+          "remainingTimeKey": "",
+          "statusResistable": 2,
+          "stripBlackboardParamsWithBuffKey": 0,
+          "takeSnapshotWhenExtend": 0,
+          "templateKey": "empty",
+          "triggerCnt": 0,
+          "triggerInterval": -1,
+          "triggerLifeType": 0,
+          "waitFirstTriggerInterval": 1
+        }
+      ],
+      "config": {
+        "bossId": "enemy_1591_mutwin",
+        "bottomWallEffect": "enemy_mutwin_range_01_down_start",
+        "firewallHeight": 0,
+        "firewallRangeId": "x-4",
+        "firewallWidth": 0,
+        "leftWallEffect": "enemy_mutwin_range_01_left_start",
+        "rightWallEffect": "enemy_mutwin_range_01_right_start",
+        "topWallEffect": "enemy_mutwin_range_01_up_start",
+        "vulnerabilityButtonDuration": 5,
+        "vulnerabilityRequiredClickCount": 3
+      },
+      "mover": {
+        "_addInertia": 0,
+        "_adjustSourceToTargetArcAngleBySourceFace": 0,
+        "_awayFromSourceAsDirection": 0,
+        "_clearTraceTargetWhenReached": 1,
+        "_comeBack": 0,
+        "_comeBackSpeedScale": 0.25,
+        "_delayAfterReached": 0,
+        "_delayToReachAfterHit": 0,
+        "_delayToStart": 0,
+        "_deltaSpeedPerSec": 0,
+        "_distance": 0,
+        "_drawFuncTurnAndWaveDebugLine": 0,
+        "_exactMatchCameraForward": 0,
+        "_finalSpeed": 0,
+        "_fixOnProjectileReached": 1,
+        "_fixProjectileHasReached": 0,
+        "_fixProjectileZWhenReached": 0,
+        "_flyToPredefinedLocation": 0,
+        "_flyToTargetLocationOnly": 0,
+        "_forceReachedWhenTimeup": 1,
+        "_forceResetToTargetPosWhenReached": 0,
+        "_forceUseTargetMountPoint": 0,
+        "_freezeRotationXY": 0,
+        "_freezeRotationZ": 0,
+        "_handleWithIBuildableTarget": 0,
+        "_moveType": 1,
+        "_moveTypeData": {
+          "data": []
+        },
+        "_onlyReachedInTime": 0,
+        "_predefinedLocation": 0,
+        "_randomOffset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "_resetToTargetPosWhenReached": 0,
+        "_resetToTracetargetMapPosV3": 0,
+        "_rotateToTarget": 1,
+        "_rotateToTargetOnDelayToStart": 0,
+        "_skipSmoothLerpDirection": 0,
+        "_sourceDirectionArcAngleRatio": 0,
+        "_sourceToTargetArcAngle": 0,
+        "_speed": 10,
+        "_turnSpeed": 0,
+        "_updateDelayTimeOnlyOnce": 0,
+        "_useDynamicSpeed": 0,
+        "_useSourceDirection": 0,
+        "_useSourceDirectionArcAngleWithRatio": 0,
+        "_useSourceDirectionRandomArcAngleStart": 0,
+        "_useSourceToTargetArcAngleWithRatio": 0,
+        "_useSourceToTargetRandomArcAngleStart": 0,
+        "_useStartToTarget": 0,
+        "_useTargetDirection": 0,
+        "m_Enabled": 1,
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": "7412635626527015503"
+        },
+        "m_Name": "",
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": "-1429203677512073985"
+        }
+      },
+      "projectile": {
+        "_actionController": {
+          "_addExtraBuffsWhenReached": 0,
+          "_detachAllBuffsWhenStopped": 0,
+          "_detachAllExtraBuffsWhenStopped": 0,
+          "_detachBuffsWhenTargetLeave": 0,
+          "_dontAddBuffs": 0,
+          "_excludeAttachments": 0,
+          "_extraBuffsInTheEnd": [],
+          "_onlyAddBuffsToTargetOnce": 0,
+          "_onlyAddBuffsToTraceTarget": 0,
+          "_useExtraBuffsWhenStopHit": 0,
+          "_useSelfBlackboard": 0
+        },
+        "_allowZeroBlockCntLimit": 0,
+        "_alwaysHitTraceTargetInTheEnd": 1,
+        "_alwaysHitTraceTargetWhenReached": 0,
+        "_alwaysReachInTheEnd": 0,
+        "_bodyTransform": {
+          "m_FileID": 0,
+          "m_PathID": "-1039164780294028721"
+        },
+        "_canHitSameTargetMultipleTimes": 0,
+        "_clearMainEffectWhenReached": 1,
+        "_containsChildrenBehaviours": 0,
+        "_eliminatableStatus": 0,
+        "_fireProjectileReachedEvent": 0,
+        "_fixDealHitTargetLeft": 1,
+        "_getLifeTimeFromBB": 0,
+        "_getMaxHitNumFromBB": 0,
+        "_hitNumType": 1,
+        "_keepAlreadyHitTime": -1,
+        "_lifeTime": 10,
+        "_lifeTimeType": 1,
+        "_limitedMaxHitNumToSourceBlockedCnt": 0,
+        "_mainEffect": "enemy_mutwin_attack_01_trail_01",
+        "_managedBySource": 0,
+        "_maxHitNum": 1,
+        "_maxHitNumBBKey": "",
+        "_movementAdjustableStatus": 0,
+        "_overrideAudioSignal": "",
+        "_projectileType": 0,
+        "_randomDelayToBorn": 0,
+        "_stopAfterFirstHit": 0,
+        "_stopAfterMaxHit": 1,
+        "_stopGraphicProjectileWhenClearMainEffect": 0,
+        "_stopWhenSourceInvalid": 0,
+        "m_Enabled": 1,
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": "7412635626527015503"
+        },
+        "m_Name": "",
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": "-8797129986015012478"
+        }
+      },
+      "defaults": {
+        "hit": 0.6000000238418579,
+        "duration": 1.5,
+        "type": "phys",
+        "speed": 10,
+        "maxAge": 10,
+        "increment": 100,
+        "maxStacks": 4,
+        "resistance": 0.9
+      }
+    },
+    "enemy_1591_mutwin_2": {
+      "record": {
+        "talents": {
+          "bb": {
+            "FakeDeath.target_hp_ratio": 1,
+            "FakeDeath.hp_ratio": 0.04,
+            "SameTargetAtkUp.atk": 100,
+            "SameTargetAtkUp.max_stack_cnt": 4,
+            "DamageResistance.damage_resistance": 0.9,
+            "Reborn.duration": 0.1,
+            "Reborn.hp_ratio": 0.02
+          },
+          "bbStr": {
+            "DamageResistance.boss_room": "(0,6,0)"
+          },
+          "groups": {
+            "FakeDeath": [
+              "hp_ratio",
+              "target_hp_ratio"
+            ],
+            "SameTargetAtkUp": [
+              "atk",
+              "max_stack_cnt"
+            ],
+            "DamageResistance": [
+              "boss_room",
+              "damage_resistance"
+            ],
+            "Reborn": [
+              "duration",
+              "hp_ratio"
+            ]
+          }
+        },
+        "skills": [
+          {
+            "prefabKey": "HorizontalLineAttack",
+            "priority": 0,
+            "cooldown": 40,
+            "initCooldown": 40,
+            "spCost": 0,
+            "bb": {
+              "value": 200,
+              "stun": 5
+            },
+            "bbStr": {}
+          },
+          {
+            "prefabKey": "VerticalLine",
+            "priority": 0,
+            "cooldown": 40,
+            "initCooldown": 20,
+            "spCost": 0,
+            "bb": {
+              "value": 200,
+              "stun": 5
+            },
+            "bbStr": {}
+          },
+          {
+            "prefabKey": "Blink",
+            "priority": 0,
+            "cooldown": 60,
+            "initCooldown": 20,
+            "spCost": 0,
+            "bb": {},
+            "bbStr": {}
+          }
+        ],
+        "abilities": [
+          {
+            "text": "Cannot move or be teleported.",
+            "format": "NORMAL"
+          },
+          {
+            "text": "ATK gradually increases when attacking the same target",
+            "format": "NORMAL"
+          },
+          {
+            "text": "When another AMa-10 Isomer is alive and not in coma, enters a coma when HP reaches 0 and begins regenerating; revives when HP reaches max.",
+            "format": "NORMAL"
+          },
+          {
+            "text": "[Firewall] Has a Firewall around its 8 surrounding tiles; takes greatly reduced Physical and Arts damage from outside the firewall. Allied units cannot be deployed inside the Firewall.",
+            "format": "NORMAL"
+          },
+          {
+            "text": "[Refresh] Periodically teleports to the target tile and refreshes the Firewall.",
+            "format": "NORMAL"
+          },
+          {
+            "text": "[Information Flood] Releases a 3-tile-wide flood of information in a direction, causing the first unit hit to be <$ba.stun>stunned</> and continuously take True damage for a period of time.",
+            "format": "NORMAL"
+          }
+        ]
+      },
+      "attack": {
+        "_activeBuffs": [],
+        "_affectedBySlowDown": 1,
+        "_allowNoTarget": 0,
+        "_alwaysIncludeTarget": 1,
+        "_animKey": "Attack",
+        "_atkScale": 1,
+        "_atkScaleKey": "atk_scale",
+        "_attachPassiveBuffsOnDummy": 1,
+        "_attackType": 1,
+        "_checkFaceToFirstCastTargetDownAttack": 0,
+        "_cooldown": 0,
+        "_cooldownKey": "duration",
+        "_damageType": 1,
+        "_deliveryParaWhenReplaceActionNode": 0,
+        "_downAnimKey": "",
+        "_downEndAnimKey": "",
+        "_elementDamageType": 0,
+        "_emitToInputPosWhenTargetIsInvalid": 0,
+        "_emitToInputRootTileWhenTargetIsInvalid": 0,
+        "_endAnimKey": "Idle",
+        "_epDamageRatio": 0,
+        "_escapeTime": 0,
+        "_extraDamageType": 0,
+        "_extraProjectileKeys": [],
+        "_faceToDefault": 0,
+        "_faceToFirstCastTarget": 0,
+        "_faceToFront": 0,
+        "_faceToTarget": 1,
+        "_fireAttackFinishWhenProjectileInvalid": 0,
+        "_fireCreateProjectileEvent": 0,
+        "_forceAsDmgOrHealAbility": 0,
+        "_forceFaceToDirection": 0,
+        "_ignoreIfOwnerDead": 0,
+        "_ignorePalsyInterrupt": 0,
+        "_interruptAbilityOnDetach": 1,
+        "_interuptIfTargetDead": 0,
+        "_maxAnimScale": 1,
+        "_metadata": {
+          "blackboardPrefix": "",
+          "namedAsAlias": ""
+        },
+        "_minPostDelayWhenProjectileInvalid": 0,
+        "_mountGroup": {
+          "loopType": 0,
+          "mountPoints": []
+        },
+        "_mountPointType": 2,
+        "_notClearProjectileWhenCastEnd": 0,
+        "_onlyPlayEndAnimWhenIsLastAbility": 0,
+        "_preDelay": 0,
+        "_projectileDestination": 0,
+        "_projectileKey": "projectile_enemy_mutwin",
+        "_resetCdStrategy": 1,
+        "_selectTargetSource": 2,
+        "_selectTargetTiming": 0,
+        "_selector": {
+          "m_FileID": 0,
+          "m_PathID": "0"
+        },
+        "_timeMode": 0,
+        "_transferSource": 0,
+        "_upAnimKey": "",
+        "_upEndAnimKey": "",
+        "_useCachedAtkOnly": 0,
+        "_useDynamicAttackType": 0,
+        "_useMountGroup": 0,
+        "_waitForAnimEndWhenProjectileInvalid": 0,
+        "_waitForAttackEvent": 1,
+        "_waitForProjectileInvalid": 0,
+        "m_Enabled": 1,
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": "1777026051613420490"
+        },
+        "m_Name": "",
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": "4156651312234227407"
+        }
+      },
+      "stack": {
+        "_attachPassiveBuffsOnDummy": 1,
+        "_buffs": [],
+        "_forceAsDmgOrHealAbility": 0,
+        "_ignoreIfOwnerDead": 0,
+        "_ignoreOwnerAsTarget": 1,
+        "_interruptAbilityOnDetach": 1,
+        "_metadata": {
+          "blackboardPrefix": "",
+          "namedAsAlias": ""
+        },
+        "_onlyApplyOnFirstSpell": 0,
+        "_selector": {
+          "m_FileID": 0,
+          "m_PathID": "0"
+        },
+        "_stackBuff": {
+          "attributes": {
+            "abnormalAntis": [],
+            "abnormalComboImmunes": [],
+            "abnormalCombos": [],
+            "abnormalFlags": [],
+            "abnormalImmunes": [],
+            "attributeModifiers": [
+              {
+                "attributeType": 1,
+                "fetchBaseValueFromSourceEntity": 0,
+                "formulaItem": 0,
+                "loadFromBlackboard": 1,
+                "value": 0
+              }
+            ]
+          },
+          "audioSignal": "",
+          "blackboard": [],
+          "buffKey": "enemy_muama_t",
+          "clearAllStackCntWhenTimeUp": 0,
+          "disableOverride": 0,
+          "durationKey": "duration",
+          "enableInitDirectionFromSource": 0,
+          "firstTriggerInterval": -1,
+          "independentCharacterSource": 0,
+          "isDamageMissable": 0,
+          "isDurableBuff": 0,
+          "isFreezable": 0,
+          "isGroundBoundable": 0,
+          "isLevitatable": 0,
+          "isSilenceable": 0,
+          "isStunnable": 0,
+          "lifeTime": 0,
+          "lifeTimeType": 2,
+          "loadFromDB": 0,
+          "maxStackCnt": 1,
+          "maxValidStackCnt": -1,
+          "onEventPriority": 0,
+          "overrideEffectKey": "",
+          "overrideKey": "",
+          "overrideOnEventPriority": 0,
+          "overrideType": 1,
+          "priority": -1,
+          "priorityBBKeys": [],
+          "refreshRemainingTimeWhenStackMax": 0,
+          "remainingTimeKey": "",
+          "statusResistable": 2,
+          "stripBlackboardParamsWithBuffKey": 0,
+          "takeSnapshotWhenExtend": 0,
+          "templateKey": "empty",
+          "triggerCnt": 0,
+          "triggerInterval": -1,
+          "triggerLifeType": 0,
+          "waitFirstTriggerInterval": 1
+        },
+        "_targetFamilyMask": 3,
+        "m_Enabled": 1,
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": "4749959167943994314"
+        },
+        "m_Name": "",
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": "-7008117226517666701"
+        }
+      },
+      "passive": [
+        {
+          "attributes": {
+            "abnormalAntis": [],
+            "abnormalComboImmunes": [],
+            "abnormalCombos": [],
+            "abnormalFlags": [
+              22
+            ],
+            "abnormalImmunes": [],
+            "attributeModifiers": []
+          },
+          "audioSignal": "",
+          "blackboard": [],
+          "buffKey": "enemy_mutwin_passiveBuff",
+          "clearAllStackCntWhenTimeUp": 0,
+          "disableOverride": 0,
+          "durationKey": "duration",
+          "enableInitDirectionFromSource": 0,
+          "firstTriggerInterval": -1,
+          "independentCharacterSource": 0,
+          "isDamageMissable": 0,
+          "isDurableBuff": 0,
+          "isFreezable": 0,
+          "isGroundBoundable": 0,
+          "isLevitatable": 0,
+          "isSilenceable": 0,
+          "isStunnable": 0,
+          "lifeTime": 0,
+          "lifeTimeType": 2,
+          "loadFromDB": 0,
+          "maxStackCnt": 1,
+          "maxValidStackCnt": -1,
+          "onEventPriority": 0,
+          "overrideEffectKey": "",
+          "overrideKey": "",
+          "overrideOnEventPriority": 0,
+          "overrideType": 0,
+          "priority": -1,
+          "priorityBBKeys": [],
+          "refreshRemainingTimeWhenStackMax": 0,
+          "remainingTimeKey": "",
+          "statusResistable": 2,
+          "stripBlackboardParamsWithBuffKey": 0,
+          "takeSnapshotWhenExtend": 0,
+          "templateKey": "empty",
+          "triggerCnt": 0,
+          "triggerInterval": -1,
+          "triggerLifeType": 0,
+          "waitFirstTriggerInterval": 1
+        },
+        {
+          "attributes": {
+            "abnormalAntis": [],
+            "abnormalComboImmunes": [],
+            "abnormalCombos": [],
+            "abnormalFlags": [],
+            "abnormalImmunes": [],
+            "attributeModifiers": []
+          },
+          "audioSignal": "",
+          "blackboard": [],
+          "buffKey": "immune_shu_blink",
+          "clearAllStackCntWhenTimeUp": 0,
+          "disableOverride": 0,
+          "durationKey": "",
+          "enableInitDirectionFromSource": 0,
+          "firstTriggerInterval": -1,
+          "independentCharacterSource": 0,
+          "isDamageMissable": 0,
+          "isDurableBuff": 0,
+          "isFreezable": 0,
+          "isGroundBoundable": 0,
+          "isLevitatable": 0,
+          "isSilenceable": 0,
+          "isStunnable": 0,
+          "lifeTime": 0,
+          "lifeTimeType": 2,
+          "loadFromDB": 0,
+          "maxStackCnt": 1,
+          "maxValidStackCnt": -1,
+          "onEventPriority": 0,
+          "overrideEffectKey": "",
+          "overrideKey": "",
+          "overrideOnEventPriority": 0,
+          "overrideType": 0,
+          "priority": -1,
+          "priorityBBKeys": [],
+          "refreshRemainingTimeWhenStackMax": 0,
+          "remainingTimeKey": "",
+          "statusResistable": 2,
+          "stripBlackboardParamsWithBuffKey": 0,
+          "takeSnapshotWhenExtend": 0,
+          "templateKey": "empty",
+          "triggerCnt": 0,
+          "triggerInterval": -1,
+          "triggerLifeType": 0,
+          "waitFirstTriggerInterval": 1
+        },
+        {
+          "attributes": {
+            "abnormalAntis": [],
+            "abnormalComboImmunes": [],
+            "abnormalCombos": [],
+            "abnormalFlags": [],
+            "abnormalImmunes": [],
+            "attributeModifiers": []
+          },
+          "audioSignal": "",
+          "blackboard": [],
+          "buffKey": "immune_yu_blink",
+          "clearAllStackCntWhenTimeUp": 0,
+          "disableOverride": 0,
+          "durationKey": "",
+          "enableInitDirectionFromSource": 0,
+          "firstTriggerInterval": -1,
+          "independentCharacterSource": 0,
+          "isDamageMissable": 0,
+          "isDurableBuff": 0,
+          "isFreezable": 0,
+          "isGroundBoundable": 0,
+          "isLevitatable": 0,
+          "isSilenceable": 0,
+          "isStunnable": 0,
+          "lifeTime": 0,
+          "lifeTimeType": 2,
+          "loadFromDB": 0,
+          "maxStackCnt": 1,
+          "maxValidStackCnt": -1,
+          "onEventPriority": 0,
+          "overrideEffectKey": "",
+          "overrideKey": "",
+          "overrideOnEventPriority": 0,
+          "overrideType": 0,
+          "priority": -1,
+          "priorityBBKeys": [],
+          "refreshRemainingTimeWhenStackMax": 0,
+          "remainingTimeKey": "",
+          "statusResistable": 2,
+          "stripBlackboardParamsWithBuffKey": 0,
+          "takeSnapshotWhenExtend": 0,
+          "templateKey": "empty",
+          "triggerCnt": 0,
+          "triggerInterval": -1,
+          "triggerLifeType": 0,
+          "waitFirstTriggerInterval": 1
+        },
+        {
+          "attributes": {
+            "abnormalAntis": [],
+            "abnormalComboImmunes": [],
+            "abnormalCombos": [],
+            "abnormalFlags": [
+              22
+            ],
+            "abnormalImmunes": [],
+            "attributeModifiers": []
+          },
+          "audioSignal": "",
+          "blackboard": [],
+          "buffKey": "enemy_mutwin_t[damage_resistance]",
+          "clearAllStackCntWhenTimeUp": 0,
+          "disableOverride": 0,
+          "durationKey": "duration",
+          "enableInitDirectionFromSource": 0,
+          "firstTriggerInterval": -1,
+          "independentCharacterSource": 0,
+          "isDamageMissable": 0,
+          "isDurableBuff": 0,
+          "isFreezable": 0,
+          "isGroundBoundable": 0,
+          "isLevitatable": 0,
+          "isSilenceable": 0,
+          "isStunnable": 0,
+          "lifeTime": 0,
+          "lifeTimeType": 2,
+          "loadFromDB": 0,
+          "maxStackCnt": 1,
+          "maxValidStackCnt": -1,
+          "onEventPriority": 0,
+          "overrideEffectKey": "",
+          "overrideKey": "",
+          "overrideOnEventPriority": 0,
+          "overrideType": 0,
+          "priority": -1,
+          "priorityBBKeys": [],
+          "refreshRemainingTimeWhenStackMax": 0,
+          "remainingTimeKey": "",
+          "statusResistable": 2,
+          "stripBlackboardParamsWithBuffKey": 0,
+          "takeSnapshotWhenExtend": 0,
+          "templateKey": "enemy_muama_t[damage_resistance]",
+          "triggerCnt": 0,
+          "triggerInterval": -1,
+          "triggerLifeType": 0,
+          "waitFirstTriggerInterval": 1
+        }
+      ],
+      "config": {
+        "bossId": "enemy_1591_mutwin_2",
+        "bottomWallEffect": "enemy_mutwin_range_01_down_start",
+        "firewallHeight": 0,
+        "firewallRangeId": "x-4",
+        "firewallWidth": 0,
+        "leftWallEffect": "enemy_mutwin_range_01_left_start",
+        "rightWallEffect": "enemy_mutwin_range_01_right_start",
+        "topWallEffect": "enemy_mutwin_range_01_up_start",
+        "vulnerabilityButtonDuration": 5,
+        "vulnerabilityRequiredClickCount": 3
+      },
+      "mover": {
+        "_addInertia": 0,
+        "_adjustSourceToTargetArcAngleBySourceFace": 0,
+        "_awayFromSourceAsDirection": 0,
+        "_clearTraceTargetWhenReached": 1,
+        "_comeBack": 0,
+        "_comeBackSpeedScale": 0.25,
+        "_delayAfterReached": 0,
+        "_delayToReachAfterHit": 0,
+        "_delayToStart": 0,
+        "_deltaSpeedPerSec": 0,
+        "_distance": 0,
+        "_drawFuncTurnAndWaveDebugLine": 0,
+        "_exactMatchCameraForward": 0,
+        "_finalSpeed": 0,
+        "_fixOnProjectileReached": 1,
+        "_fixProjectileHasReached": 0,
+        "_fixProjectileZWhenReached": 0,
+        "_flyToPredefinedLocation": 0,
+        "_flyToTargetLocationOnly": 0,
+        "_forceReachedWhenTimeup": 1,
+        "_forceResetToTargetPosWhenReached": 0,
+        "_forceUseTargetMountPoint": 0,
+        "_freezeRotationXY": 0,
+        "_freezeRotationZ": 0,
+        "_handleWithIBuildableTarget": 0,
+        "_moveType": 1,
+        "_moveTypeData": {
+          "data": []
+        },
+        "_onlyReachedInTime": 0,
+        "_predefinedLocation": 0,
+        "_randomOffset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "_resetToTargetPosWhenReached": 0,
+        "_resetToTracetargetMapPosV3": 0,
+        "_rotateToTarget": 1,
+        "_rotateToTargetOnDelayToStart": 0,
+        "_skipSmoothLerpDirection": 0,
+        "_sourceDirectionArcAngleRatio": 0,
+        "_sourceToTargetArcAngle": 0,
+        "_speed": 10,
+        "_turnSpeed": 0,
+        "_updateDelayTimeOnlyOnce": 0,
+        "_useDynamicSpeed": 0,
+        "_useSourceDirection": 0,
+        "_useSourceDirectionArcAngleWithRatio": 0,
+        "_useSourceDirectionRandomArcAngleStart": 0,
+        "_useSourceToTargetArcAngleWithRatio": 0,
+        "_useSourceToTargetRandomArcAngleStart": 0,
+        "_useStartToTarget": 0,
+        "_useTargetDirection": 0,
+        "m_Enabled": 1,
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": "7412635626527015503"
+        },
+        "m_Name": "",
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": "-1429203677512073985"
+        }
+      },
+      "projectile": {
+        "_actionController": {
+          "_addExtraBuffsWhenReached": 0,
+          "_detachAllBuffsWhenStopped": 0,
+          "_detachAllExtraBuffsWhenStopped": 0,
+          "_detachBuffsWhenTargetLeave": 0,
+          "_dontAddBuffs": 0,
+          "_excludeAttachments": 0,
+          "_extraBuffsInTheEnd": [],
+          "_onlyAddBuffsToTargetOnce": 0,
+          "_onlyAddBuffsToTraceTarget": 0,
+          "_useExtraBuffsWhenStopHit": 0,
+          "_useSelfBlackboard": 0
+        },
+        "_allowZeroBlockCntLimit": 0,
+        "_alwaysHitTraceTargetInTheEnd": 1,
+        "_alwaysHitTraceTargetWhenReached": 0,
+        "_alwaysReachInTheEnd": 0,
+        "_bodyTransform": {
+          "m_FileID": 0,
+          "m_PathID": "-1039164780294028721"
+        },
+        "_canHitSameTargetMultipleTimes": 0,
+        "_clearMainEffectWhenReached": 1,
+        "_containsChildrenBehaviours": 0,
+        "_eliminatableStatus": 0,
+        "_fireProjectileReachedEvent": 0,
+        "_fixDealHitTargetLeft": 1,
+        "_getLifeTimeFromBB": 0,
+        "_getMaxHitNumFromBB": 0,
+        "_hitNumType": 1,
+        "_keepAlreadyHitTime": -1,
+        "_lifeTime": 10,
+        "_lifeTimeType": 1,
+        "_limitedMaxHitNumToSourceBlockedCnt": 0,
+        "_mainEffect": "enemy_mutwin_attack_01_trail_01",
+        "_managedBySource": 0,
+        "_maxHitNum": 1,
+        "_maxHitNumBBKey": "",
+        "_movementAdjustableStatus": 0,
+        "_overrideAudioSignal": "",
+        "_projectileType": 0,
+        "_randomDelayToBorn": 0,
+        "_stopAfterFirstHit": 0,
+        "_stopAfterMaxHit": 1,
+        "_stopGraphicProjectileWhenClearMainEffect": 0,
+        "_stopWhenSourceInvalid": 0,
+        "m_Enabled": 1,
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": "7412635626527015503"
+        },
+        "m_Name": "",
+        "m_Script": {
+          "m_FileID": 1,
+          "m_PathID": "-8797129986015012478"
+        }
+      },
+      "defaults": {
+        "hit": 0.6000000238418579,
+        "duration": 1.5,
+        "type": "phys",
+        "speed": 10,
+        "maxAge": 10,
+        "increment": 100,
+        "maxStacks": 4,
+        "resistance": 0.9
+      }
+    }
+  },
+  "limits": [
+    "Target ramp is admitted before a source-owned ordinary release, including its first stack. Target identity includes deployment; idle and damage prevention do not clear the accepted count.",
+    "TimeMode0 samples a capped BAT/interval rate, then uses the existing explicit affectedBySlowDown elapsed bridge. This local rate/control mapping is not compiled/frame proof.",
+    "Original target-tracking output uses the shared finite projectile system and live original-source ATK. A captured view prevents source reuse from changing born output; source retirement cancels only unborn releases.",
+    "The three-by-three native x-4 range agrees in the complete pinned named range table and prepared CN table. Broken sides release their three boundary tiles; a corner is released by either adjacent broken side, and the center remains excluded.",
+    "Named teleport-immunity markers and private immobility parents retain their source keys. No fake-death, skill, refresh, room-camera or public support policy is synthesized by these passives."
+  ]
+}

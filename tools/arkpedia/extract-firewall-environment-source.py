@@ -80,7 +80,9 @@ result = {'schemaVersion': 1, 'scope': 'Complete retained Chapter 17 boss/firewa
 target = ROOT / 'data/candidates/arkpedia-ch17-firewall-environment-source.json'
 text = json.dumps(result, ensure_ascii=False, indent=2) + '\n'
 if args.check:
-    assert target.read_text(encoding='utf-8') == text, 'Environment graph differs from original bundle'
+    assert target.read_bytes() == text.encode('utf-8'), 'Environment graph bytes differ from original bundle/canonical LF serialization'
 else:
-    target.write_text(text, encoding='utf-8')
+    # Downstream contracts pin artifact bytes. Windows text-mode newline
+    # translation must not create receipts that change when Git checks out LF.
+    target.write_bytes(text.encode('utf-8'))
 print('Verified two original environment graphs with', sum(map(len, prefabs.values())), 'components; no support admitted')

@@ -472,3 +472,20 @@ export function chapter17FirewallBlocksDeployment(b,row,col){
   if(!Number.isSafeInteger(row)||!Number.isSafeInteger(col))return false;
   return [...(b.chapter16?.firewalls??[])].some(wall=>wall.blocksDeployment?.(row,col)===true);
 }
+
+export const chapter17FirewallBounds=wall=>({x0:wall.sides[3].x,x1:wall.sides[1].x,y0:wall.sides[0].y,y1:wall.sides[2].y});
+/** Shared point-segment mapping. A corner crosses both adjacent walls. */
+export function crossedChapter17FirewallSides(wall,source,target){
+  const EPS=1e-9;
+  if(!wall.current()||![source?.x,source?.y,target?.x,target?.y].every(Number.isFinite))return[];
+  const r=chapter17FirewallBounds(wall),dx=target.x-source.x,dy=target.y-source.y,out=[];
+  for(const side of wall.sides){
+    if(side.broken)continue;const horizontal=side.index===0||side.index===2,delta=horizontal?dy:dx;
+    if(Math.abs(delta)<=EPS)continue;
+    const t=((horizontal?side.y:side.x)-(horizontal?source.y:source.x))/delta;
+    if(t<=EPS||t>=1-EPS)continue;
+    const q=(horizontal?source.x:source.y)+t*(horizontal?dx:dy);
+    if(q>=(horizontal?r.x0:r.y0)-EPS&&q<=(horizontal?r.x1:r.y1)+EPS)out.push(side.index);
+  }
+  return out;
+}
