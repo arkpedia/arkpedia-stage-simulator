@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "code": "17-4",
+  "testOnly": true,
+  "scope": "Experimental canonical Rockbreaker/marker integration. Native forced-control and spatial conventions remain candidate limits; no public admission.",
+  "sources": {
+    "stageSource": {
+      "path": "data/candidates/arkpedia-stage-17-4-source.json",
+      "sha256": "dcb99ab6b2b955b9e2714cdcdfec3d168616c40dd030742bf09b836459a323b1"
+    },
+    "reactions": {
+      "path": "data/candidates/arkpedia-ch17-reviewed-reactions.json",
+      "sha256": "f78b9aa3ce06cd289c09bc391b16d880dd7bd334d7da74d910a706017994d318"
+    },
+    "marker": {
+      "path": "data/candidates/arkpedia-ch17-reviewed-marker.json",
+      "sha256": "af519edde6d4888b2bb68d8eeb5daea46d6137ffe90f95101b2a5b1616c450b5"
+    },
+    "markerEvidence": {
+      "path": "data/candidates/arkpedia-ch17-marker-source.json",
+      "sha256": "78fc2c8253643ad901172eac0262e8211a1a6b9c79f9703e874538e21f608704"
+    },
+    "environment": {
+      "path": "data/candidates/arkpedia-ch16-action-source.json",
+      "sha256": "f54ddb0a56f4ac0c56253f67c162cc8a5ceca91713d81de18fad463b382e6338"
+    },
+    "inventory": {
+      "path": "data/arkpedia-cn-native-source.json",
+      "sha256": "b6e0cfbe21768b277e42cae0f6f4ae627ee69020898bcacb1b8e5ed05bee7655"
+    },
+    "enemyInventory": {
+      "path": "data/arkpedia-cn-enemy-native-source.json",
+      "sha256": "a6d2d82284f5b497e6fb4b0f55a1fb42d1b3d05c507c9b2c873808bd03ba1904"
+    },
+    "rockbreaker": {
+      "path": "data/candidates/arkpedia-ch17-rockbreaker-contract.json",
+      "sha256": "866b0fa09e986c87dc4aa99bc119ff232d55ad2ab6161216eee4f68c73975156"
+    }
+  },
+  "expected": {
+    "hostiles": 31,
+    "enemies": [
+      "enemy_10201_muinf",
+      "enemy_10203_mumag",
+      "enemy_10204_mudia",
+      "enemy_10211_murad"
+    ],
+    "excludedHiddenGroups": [],
+    "moveMultiplier": 0.5,
+    "devices": [
+      {
+        "key": "trap_329_rift",
+        "row": 3,
+        "col": 3
+      }
+    ],
+    "environment": "env_v073_mainline17_ctrl",
+    "markerSpCost": 55,
+    "markerInitSp": 0
+  }
+}

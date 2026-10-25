@@ -47,7 +47,8 @@ test('stronger Rockbreaker explicitly overrides its child identity instead of sp
   assert.ok(blackboards.some(bb => bb.key === 'enemy_key' && bb.valueStr === 'enemy_10204_mudia_2'));
 });
 
-test('source extraction cannot promote Rockbreaker or 17-4 without a separately implemented and reviewed controller', () => {
-  for (const key of ['enemy_10204_mudia', 'enemy_10204_mudia_2']) assert.equal(read('candidates/arkpedia-ch16-enemy-support.json').enemies[key].policy, null);
-  assert.throws(() => resolveStage(read('arkpedia-stages.json'), '17-4', { experimental: true }), /Unknown stage/);
+test('candidate Rockbreaker review cannot promote public records or bypass 17-4 experimental mode', () => {
+  for (const key of ['enemy_10204_mudia', 'enemy_10204_mudia_2']) assert.equal(read('arkpedia-enemy-support.json').enemies[key]?.policy ?? null, null);
+  assert.throws(() => resolveStage(read('arkpedia-stages.json'), '17-4'), /test-only/);
+  assert.equal(resolveStage(read('arkpedia-stages.json'), '17-4', { experimental: true }).testOnly, true);
 });

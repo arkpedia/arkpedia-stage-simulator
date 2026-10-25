@@ -53,12 +53,13 @@ action closure are rejected. Extraction never rewrites the reviewed contract.
 Variants need their own native evidence and review; they are not admitted by a
 base-prefab match.
 
-`16-2`, `16-3`, `16-4`, `17-2` and `17-3` are accepted by the experimental runtime candidate registry.
+`16-2`, `16-3`, `16-4`, `17-2`, `17-3` and `17-4` are accepted by the experimental runtime candidate registry.
 16-2 retains its 42 source spawns and four canonical records. 16-3 has 22 normal
 hostile spawns plus unmanaged miner summons, using four canonical records. 16-4
 has 17 normal hostiles and four canonical records. 17-2 has 28 normal hostiles
 and two canonical records. 17-3 has 24 normal hostiles, one Leak Marker and four
-canonical records. All five
+canonical records. 17-4 has 31 normal hostiles, one Leak Marker and four
+canonical records, plus source-triggered Rockbreaker children. All six
 require `?experimental=1`, remain `testOnly`, and verify the candidate support
 snapshot checksum. No other Chapter 16/17 stage is admitted by this review.
 
@@ -224,7 +225,7 @@ SHA-256. The builder refuses changed evidence or stage/geometry bytes. It verifi
 22 normal hostiles and the four-enemy dependency closure, excludes optional `raid`,
 and preserves the source's 0.5 movement multiplier. The stage retains separate
 canonical provenance for stage inputs (`84f3c833`) and enemy records (`79e81a8a`).
-The catalogue contains 602 entries: **597 public, five test-only**.
+The catalogue contains 603 entries: **597 public, six test-only**.
 
 Integration tests release three naturally summoned miners, traverse their exact
 fractional checkpoints, damage and destroy both facilities, and finish their
@@ -467,7 +468,7 @@ The consumer fetched and checksum-verified all eight inputs per stage. Every
 retained bundle remains `testOnly: true, admitted: false`. Seven checks cover
 their provenance and separation from builder/catalogue admission. 17-2 now has
 the separate experimental review below; 17-3 also has the marker review described
-below. The other four remain unbuilt/unindexed. Pending families include
+below, and 17-4 has the Rockbreaker review. The other three remain unbuilt/unindexed. Pending families include
 Shieldguard and Fortbreaker for the next chapter 16 maps, and the chapter 17
 split-controller family. Existing consumer stage/enemy pins stay
 immutable. `npm run test:arkpedia-ch16` includes the source-only intake checks.
@@ -585,20 +586,56 @@ RENDER_E2E=1 CH17_QA_STAGE=17-3 CH17_QA_OUT=/tmp/codex-ch17-3-ui node --test tes
 ```
 
 
-### Rockbreaker source retained; 17-4 stays unadmitted
+### Experimental Rockbreaker controller and 17-4
 
-`extract-ch17-rockbreaker.py` now retains both base/stronger prefab graphs and
-three native templates from the existing pinned bundles. Targeted indexed
-extraction retains 22 components. Five source/gate checks pass. The native
-pollution action checks both in-progress and completed flags before forcibly
-triggering `SummonSelf`. Its Skill animation waits for the attack event. The
-summon action creates one hostile child with a permanent split flag, following
-the parent's remaining route without skipping its current checkpoint; it uses a
-0.5 random offset bound and does not hold wave scheduling. The parent receives
-the same permanent flag. The stronger prefab overrides the child enemy key.
+`extract-ch17-rockbreaker.py` retains both complete prefab graphs, three native
+templates and 22 indexed components from the existing pinned bundles. The separate
+animation extractor verifies `refs/arts/enm_art_26.ab` against the immutable CN
+manifest and retains both original skeleton byte streams. Each SkeletonDataAsset
+path ID and external serialized-file binding is checked against the native prefab.
+Independent decoding verifies the Skill's exact 1.1666666269302368-second
+`OnAttack` event and two-second duration for both variants.
 
-No Rockbreaker controller or timing approval is implied by extraction. Native
-Skill event timing, interruption semantics, child counting/routing and lifecycle
-integration still need implementation and parity tests. Both records remain
-unsupported, and 17-4 remains absent from the catalogue. This is the next active
-controller continuation, not an external blocker or request for authorization.
+`chapter17-rockbreaker.js` implements one child per first successful pollution
+reaction. The native request interrupts the ordinary attack, clears palsy and
+ignores readiness/cooldown. The cast stops movement/ordinary attacks until its
+end. A new control epoch cancels pending release, including effects that expire
+between ticks. Successful release gives both parent and child the permanent
+split flag. The child keeps the variant's canonical full stats and the parent's
+remaining route, including the unconsumed wait/current checkpoint. It is a
+counted hostile and holds battle completion independently of the parent. Failed
+spawning does not consume the one-time split. Death/battle end retire the owned
+hook and schedules; born children survive their parent's death.
+
+The independent `arkpedia-ch17-rockbreaker-contract.json` binds exact records,
+all indexed native rows, full graph/template closure and original skeletons.
+Candidate feature dispatch installs the controller on both bodies; absent family
+proof, changed rows, extra wrappers and altered record signatures fail support.
+Default public records/support are unchanged. The candidate uses a seeded square
+centered on the current tile for the 0.5 random offset bound. Exact native spatial
+collision/offset conventions and forced-cast behavior under preexisting/new
+control remain explicit **candidate limitations**, not claims of captured parity.
+Silence/ordinary-attack disarm do not remove the nonsilenceable pollution listener.
+
+The separately reviewed canonical 17-4 contains 20 F-009, four Heterogeneous Fungi
+and seven Rockbreakers, plus one marker at row 3/column 3. The same distinct enemy
+and stage snapshots are retained. All three seeded stage runs clear at 202.5
+seconds with zero engine errors, six/seven real-beam-triggered children and
+correct total hostile counts of 37/38. A legally deployed guard exercises
+ordinary combat alongside the split path. SIX_STAR modifiers are excluded.
+17-4 is explicitly test-only and requires experimental mode; the catalogue is
+603 entries, **597 public and six test-only**. 16-5, 16-6 and 16-7 remain unadmitted.
+
+The focused controller/source/stage suite passes 217/217. Support, records,
+coverage and sharding checks pass 15 tests with one skip and no failures (16 total).
+Public/candidate support and the 603-entry index checks pass. Actual-app Chrome
+desktop/phone checks pass public rejection, playback, pause/resume, bounds and
+restart. Screenshots in `/tmp/codex-ch17-4-ui` were viewed.
+The simplified art and marker-display limitations described above remain.
+
+```sh
+.cache/map-env/bin/python tools/arkpedia/extract-ch17-rockbreaker.py --check
+.cache/map-env/bin/python tools/arkpedia/extract-ch17-rockbreaker-animation.py --check
+node --test test/arkpedia-ch17-rockbreaker-source.test.js test/arkpedia-ch17-rockbreaker.test.js test/arkpedia-stage-17-4.test.js
+RENDER_E2E=1 CH17_QA_STAGE=17-4 CH17_QA_OUT=/tmp/codex-ch17-4-ui node --test test/arkpedia-ch17-ui.browser.test.js
+```

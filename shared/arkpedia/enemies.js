@@ -10,7 +10,7 @@ export const REGULAR_ENEMIES = Object.freeze({ ...registry.enemies });
 export const REGULAR_ENEMY_SPAWNS = Object.freeze({ ...registry.spawns });
 
 export function assertRegularEnemies(data) {
-  const candidateMode = ['16-2', '16-3', '16-4', '17-2', '17-3'].includes(data.stage.code) && data.stage.testOnly === true && data.stage.enemyCatalogue === 'canonical-ch16-candidate-v1';
+  const candidateMode = ['16-2', '16-3', '16-4', '17-2', '17-3', '17-4'].includes(data.stage.code) && data.stage.testOnly === true && data.stage.enemyCatalogue === 'canonical-ch16-candidate-v1';
   const enemies = candidateMode ? candidate.enemies : REGULAR_ENEMIES;
   const spawns = candidateMode ? candidate.spawns : REGULAR_ENEMY_SPAWNS;
   for (const id of Object.keys(data.enemies)) {

@@ -24,7 +24,7 @@ test('17-2 requires experimental mode and retains the exact canonical level/enem
   const d = structuredClone(mvp);
   await applyStage(d, index, '17-2', async () => ({ ok: true, json: async () => structuredClone(stage) }), { experimental: true });
   assert.doesNotThrow(() => assertRegularEnemies(d));
-  for (const change of [s => { s.testOnly = false; }, s => { delete s.enemyCatalogue; }, s => { s.code = '17-4'; }]) {
+  for (const change of [s => { s.testOnly = false; }, s => { delete s.enemyCatalogue; }, s => { s.code = '17-5'; }]) {
     const bad = data(); change(bad.stage); assert.throws(() => assertRegularEnemies(bad), /Unsupported/);
   }
   assert.equal(stage.canonicalData.repository, 'arkpedia/arkpedia-data');

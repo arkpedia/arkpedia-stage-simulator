@@ -4,6 +4,7 @@
 import { COLS } from '../constants.js';
 import { chapter16Shadow } from './chapter16-shadow.js';
 import { mobileCrossbow } from './chapter16-crossbow.js';
+import { rockbreaker } from './chapter17-rockbreaker.js';
 import { pollutionInfantry, pollutionBowman } from './chapter17-pollution-reactions.js';
 
 const living = u => u?.alive && u.deployed && !u.hidden;
@@ -70,6 +71,6 @@ export function miner(r) {
   };
 }
 
-export const chapter16Abilities = { ch17PollutionInfantry: pollutionInfantry, ch17PollutionBowman: pollutionBowman,
+export const chapter16Abilities = { ch17PollutionInfantry: pollutionInfantry, ch17PollutionBowman: pollutionBowman, ch17Rockbreaker: rockbreaker,
   ch16MobileCrossbow: mobileCrossbow, ch16Miner: miner, ch16ReverseDamage: reverseDamage, ch16DeadSummon: deadSummon,
   ch16ChargeRift: chargeRift, ch16WarCaster: warCaster, ch16LeakSource: leakSource };

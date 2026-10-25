@@ -4,6 +4,7 @@
 import reviewed from '../../data/candidates/arkpedia-ch17-reviewed-contracts.json' with { type: 'json' };
 import crossbowReview from '../../data/candidates/arkpedia-ch16-reviewed-crossbow.json' with { type: 'json' };
 import reactionReview from '../../data/candidates/arkpedia-ch17-reviewed-reactions.json' with { type: 'json' };
+import rockbreakerReview from '../../data/candidates/arkpedia-ch17-rockbreaker-contract.json' with { type: 'json' };
 const MINER_TEXT = "Allied unit; recovers HP when within any Medic Operator's Attack Range";
 const groups = { TileEscapeShadowManager: ['times'], GetHeal: ['heal_scale'], FearLoseBlood: ['value'] };
 function minerCovered(r, n) {
@@ -26,6 +27,26 @@ const miner = { covers: minerCovered, ability: { kind: 'ch16Miner', params: r =>
   nativeClaim: (p, n) => n.Passive?.length === 1 ? { active: 1 } : null,
   explains: text => text === MINER_TEXT, note: 'Neutral miner: Medic range healing, fear blood loss and shadow suppression.' };
 export const CHAPTER16_FEATURES = {
+  'skill:SummonSelf': {
+    covers: (r, n) => {
+      const proof = rockbreakerReview.enemies[r.key];
+      return rockbreakerReview.testOnly === true && !!proof && r.prefabKey === r.key
+        && n.$familyEvidence?.('rockbreaker') === rockbreakerReview.sources.graph.sha256
+        && JSON.stringify(r.talents.groups) === JSON.stringify(proof.groups)
+        && JSON.stringify(r.talents.bb) === JSON.stringify(proof.bb)
+        && JSON.stringify(r.abilities) === JSON.stringify(proof.abilities)
+        && JSON.stringify(r.skills) === JSON.stringify(proof.skills)
+        && JSON.stringify(n.$retained?.()) === JSON.stringify(proof.native);
+    },
+    ability: r => rockbreakerReview.enemies[r.key] ? { kind: 'ch17Rockbreaker', params: () => r } : null,
+    explains: (text, r) => rockbreakerReview.enemies[r.key]?.abilities.some(a => a.text === text),
+    dependsOn: r => rockbreakerReview.enemies[r.key] ? [r.key] : [],
+    nativeClaim: (p, n) => {
+      const proof = Object.values(rockbreakerReview.enemies).find(p => JSON.stringify(n.$retained?.()) === JSON.stringify(p.native));
+      return proof ? { wrappers: proof.counts.enemyAbilityWrappers, active: proof.counts.activeGeneralOrCommonAbilities } : null;
+    },
+    note: 'Experimental native-event split; forced-control and placement conventions remain candidate limits.',
+  },
   'talent:ExtraPowerListener': {
     covers: (r, n) => {
       const proof = crossbowReview.enemies[r.key];
