@@ -19,7 +19,9 @@ import aklz4  # noqa: F401,E402
 import UnityPy  # noqa: E402
 parser=argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--check',action='store_true')
-parser.add_argument('--war-caster',action='store_true',help='Retain the separate War Caster modifier aliases')
+mode=parser.add_mutually_exclusive_group()
+mode.add_argument('--war-caster',action='store_true',help='Retain the separate War Caster modifier aliases')
+mode.add_argument('--firewall-boss',action='store_true',help='Retain the separate fatal-attempt and root-tile aliases')
 args=parser.parse_args()
 cache=ROOT/'.cache/arkpedia/cn-native-source'
 sha=lambda raw:hashlib.sha256(raw).hexdigest()
@@ -47,6 +49,7 @@ def normalize(value):
 
 wanted={0:'ON_BUFF_START',1:'ON_BUFF_FINISH',2:'ON_BUFF_TRIGGER',3:'ON_OWNER_KILLED',25:'ON_BUFF_DISABLE'}
 if args.war_caster:wanted={10:'ON_TAKE_DAMAGE',61:'ON_BEFORE_TARGET_APPLY_MODIFIER'}
+if args.firewall_boss:wanted={27:'ON_BEFORE_TRY_SET_HP_ZERO',44:'ON_OWNER_ROOT_TILE_CHANGED'}
 matches={key:[] for key in wanted}
 for obj in UnityPy.load(native_raw).objects:
     if obj.type.name!='MonoBehaviour':continue
@@ -82,6 +85,7 @@ out={'schemaVersion':1,'scope':'Serialized numeric buff-event alias facts only; 
 text=json.dumps(out,ensure_ascii=False,indent=2)+'\n'
 target=ROOT/'data/candidates/arkpedia-buff-event-alias-source.json'
 if args.war_caster:target=ROOT/'data/candidates/arkpedia-war-caster-event-alias-source.json'
+if args.firewall_boss:target=ROOT/'data/candidates/arkpedia-firewall-boss-event-alias-source.json'
 if args.check:assert target.read_text(encoding='utf8')==text,'Native/named alias evidence changed'
 else:target.write_text(text,encoding='utf8',newline='\n')
 print('Verified',len(events),'numeric buff-event aliases with',sum(len(e['witnesses']) for e in events.values()),'independent witnesses')

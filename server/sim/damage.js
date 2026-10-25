@@ -286,6 +286,19 @@ export function absorbShields(battle, target, amount, damageType = null, applica
 
 // A retained or fabricated event object is not a new native modifier attempt.
 const modifierReceipts = new WeakSet();
+// Keep the legacy observation object mutable, but retain a separate authentic
+// receipt for source controllers that must reject fabricated/replayed events.
+const hpZeroAttemptReceipts = new WeakMap();
+export const currentHpZeroAttemptReceipt = (ctx,battle) => {
+  const receipt=hpZeroAttemptReceipts.get(ctx);
+  return receipt?.battle===battle?receipt:null;
+};
+function observeHpZeroAttempt(battle,target,source,credit,dmg,amount,before) {
+  const life=target.deploySeq,ctx={unit:target,source,credit,dmg,amount,before};
+  hpZeroAttemptReceipts.set(ctx,Object.freeze({battle,unit:target,unitLife:life,source,credit,dmg,amount,before}));
+  try { battle.emit('hpZeroAttempt',ctx); } finally { hpZeroAttemptReceipts.delete(ctx); }
+  return retainsDamageLife(target,life);
+}
 export const isCurrentTargetModifierReceipt = ctx => modifierReceipts.has(ctx);
 function beforeTargetModifier(battle, source, credit, target, dmg, targetLife, outcome = 'accepted') {
   if (!battle._hooks.beforeTargetModifier) return true;
@@ -475,8 +488,8 @@ export function applyHpLoss(battle, source, target, amount, dmg, hpFloorReceipt 
     // persistent UNDEADABLE subsequently clamps it. This opt-in observation
     // is separate from beforeHpZero guards, whose existing post-floor order
     // and cancellation semantics remain unchanged.
-    if(nextHp<=0&&battle._hooks.hpZeroAttempt)
-      battle.emit('hpZeroAttempt',{unit:target,source:hs,credit:source,dmg,amount,before});
+    if(nextHp<=0&&battle._hooks.hpZeroAttempt
+      &&!observeHpZeroAttempt(battle,target,hs,source,dmg,amount,before))return 0;
     // Original UNDEADABLE affects fractional and fatal HP loss alike; it is
     // neither damage immunity nor protection against scripted removal.
     if (target.s.flags.undeadable)

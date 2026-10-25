@@ -515,3 +515,55 @@ permissions (no failures, cancellations or skips). The source-contract generator
 also reproduces the retained actions with `--check`; hosted source verification
 now runs this check. The four quarantined tracked tests remain unmodified in Git
 and required in hosted CI. Candidate enemy/stage counts remain unchanged.
+
+## Snake pre-floor terminal transition
+
+A separate native/named callback receipt corroborates event 27 as
+ON_BEFORE_TRY_SET_HP_ZERO (22 unchanged matches) and event 44 as
+ON_OWNER_ROOT_TILE_CHANGED (eight unchanged matches), retaining three independent
+witnesses for each. Default and War Caster alias receipts remain byte-identical.
+The latter event is a root-tile change, not a generic Blink-end callback.
+
+The terminal subsystem now attaches the retained non-silenceable UNDEADABLE
+parent and observes genuine pre-floor HP-set attempts. Its numeric 6 alias uses
+the existing pinned, explicitly version-limited status receipt. It coalesces the
+UNIQUE derived child once per active terminal transition, waits its original
+0.5 world seconds, then starts the source fifteen-click counter. A completed or
+expired terminal counter self-kills the original body and hands off the exact
+FinishCurrentWave action, including finishAndSkip, to a required canonical wave
+receiver. Native AlwaysNext permits that handoff after the kill, even if a kill
+observer revives the body. No route-exit/LP-loss event is substituted. The
+literal retained `enemy_musnak_before_dead` finish key is not silently corrected.
+
+HP-attempt observers keep their existing mutable observation object, while a
+separate transient immutable receipt authenticates the originating battle,
+recipient, deployment and amount. Fabricated observations, later replay and
+reentrant reuse of the same attempt cannot create another terminal child.
+Remaining HP work also stops if an observer removes or replaces the recipient's
+deployment, preventing an old lethal hit from assigning HP to a reused body.
+Existing post-floor zero guards retain their ordering and cancellation behavior.
+
+Pending tasks, counters, parent/child buffs and listeners retire by exact owned
+instance on death, removal, life reuse or battle end. Removing the parent cancels
+its derived child; a rejected/removed child can retry on a later genuine lethal
+attempt. Completion detaches before the handoff and cannot replay after receiver
+failure. UNIQUE coalescing, pre-floor callback order and cross-receiver wave
+handoff remain explicit local mappings, without compiled/frame parity claims.
+
+This subsystem remains unregistered as a complete enemy controller. HP-step
+admission/reset rules, Injured scheduling/effects, timeout/LP behavior, attacks,
+firewall/deployment geometry and actual canonical wave/branch advancement still
+need their full implementations before 17-18 can be admitted. No pending-spawn
+clear or no-op wave receiver is supplied as a replacement. All nine remaining
+normal-stage gates, operator/module audits and later visual phases remain open.
+
+Verification passes all 846 locally available focused mechanics checks, including
+28 terminal/source cases and the added affected HP-attempt consumers, in one
+run with no failures/cancellations/skips. A broader existing Makoto, Palamute,
+Hsgma2 and HP-attempt regression run passed 1,148 checks with two pre-existing
+asset-dependent skips and no failures. Both source contracts and all three
+event-alias modes independently reproduce. Hosted run 40199476136 passed all
+fifteen continuation jobs at 634c6a2b. Full run 40197258983 passed all eight
+Linux/Windows Node 22/24 shards at f5c7e5e2; that is a verified earlier baseline,
+not certification of the new damage-hook change. A new exact-head full run is
+required for this checkpoint.

@@ -1,0 +1,272 @@
+{
+  "schemaVersion": 1,
+  "testOnly": true,
+  "scope": "Source-bound snake pre-floor terminal admission, delayed final counter and self-kill/wave-finish handoff only. No HP-step, injury, timeout, attack, firewall, stage or enemy-support approval.",
+  "sources": {
+    "counter": {
+      "path": "data/candidates/arkpedia-ch17-snake-counter-contract.json",
+      "sha256": "dd9b720a275dc2329cccc457781308fd215ee919608f27d668faf317683a4058"
+    },
+    "graph": {
+      "path": "data/candidates/arkpedia-ch17-firewall-boss-source.json",
+      "sha256": "4c1dcad409a812cb001dc182ca804462ca3733f840b246dc0c6fdb02c2fbd244"
+    },
+    "indexed": {
+      "path": "data/candidates/arkpedia-ch17-firewall-boss-native.json",
+      "sha256": "b66124027d7a1463a715a1479b201b984e01fbea3d73b140ac33709f96a84eda"
+    },
+    "events": {
+      "path": "data/candidates/arkpedia-firewall-boss-event-alias-source.json",
+      "sha256": "4aaf0540d9373b577702b3901b5d9862ec5baca3e1a8c0c19ccb1a710241e905"
+    },
+    "status": {
+      "path": "data/arkpedia-makoto-status-source.json",
+      "sha256": "412176a1006ac8cdcaec98e1a52e04274b27aa7069043af58af1fc1e66e12d16"
+    }
+  },
+  "enemy": "enemy_1593_musnake",
+  "record": {
+    "groups": {
+      "TimeOut": [
+        "duration",
+        "interval",
+        "value"
+      ],
+      "StepKill": [
+        "enemy_musnake_heal_buff.hp_ratio",
+        "hp_ratio"
+      ],
+      "DamageResistance": [
+        "damage_resistance"
+      ]
+    },
+    "bb": {
+      "TimeOut.interval": 998,
+      "TimeOut.duration": 999,
+      "TimeOut.value": -50,
+      "StepKill.hp_ratio": 0.2,
+      "StepKill.enemy_musnake_heal_buff.hp_ratio": 0.2,
+      "DamageResistance.damage_resistance": 0.9
+    },
+    "skills": [
+      {
+        "prefabKey": "GlobalLineAttack",
+        "priority": 0,
+        "cooldown": 25,
+        "initCooldown": 15,
+        "spCost": 0,
+        "bb": {
+          "value": 300,
+          "stun": 10
+        },
+        "bbStr": {}
+      },
+      {
+        "prefabKey": "Injured",
+        "priority": 0,
+        "cooldown": 0,
+        "initCooldown": 0,
+        "spCost": 0,
+        "bb": {
+          "stun_duration": 7,
+          "hp_ratio": 0.05
+        },
+        "bbStr": {}
+      }
+    ],
+    "abilities": [
+      {
+        "text": "Becomes Invulnerable upon losing a certain amount of HP. Takes damage and becomes <$ba.stun>stunned</> if a special interaction is performed within this duration; otherwise recovers HP.",
+        "format": "NORMAL"
+      },
+      {
+        "text": "[Firewall] Has a Firewall around itself; takes greatly reduced Physical and Arts damage from outside the Firewall.",
+        "format": "NORMAL"
+      },
+      {
+        "text": "[Information Flood] Releases a flood of information in a fixed direction, causing the first unit hit to be <$ba.stun>stunned</> and continuously take True damage for a period of time.",
+        "format": "NORMAL"
+      },
+      {
+        "text": "[Halt Process] When a long time has passed in the battle, disappears and drains 50 Life Points.",
+        "format": "NORMAL"
+      },
+      {
+        "text": "Cannot be teleported",
+        "format": "NORMAL"
+      }
+    ]
+  },
+  "beforeDead": {
+    "attributes": {
+      "abnormalAntis": [],
+      "abnormalComboImmunes": [],
+      "abnormalCombos": [],
+      "abnormalFlags": [
+        6
+      ],
+      "abnormalImmunes": [],
+      "attributeModifiers": []
+    },
+    "audioSignal": "",
+    "blackboard": [],
+    "buffKey": "enemy_musnake_before_dead",
+    "clearAllStackCntWhenTimeUp": 0,
+    "disableOverride": 0,
+    "durationKey": "",
+    "enableInitDirectionFromSource": 0,
+    "firstTriggerInterval": -1,
+    "independentCharacterSource": 0,
+    "isDamageMissable": 0,
+    "isDurableBuff": 0,
+    "isFreezable": 0,
+    "isGroundBoundable": 0,
+    "isLevitatable": 0,
+    "isSilenceable": 0,
+    "isStunnable": 0,
+    "lifeTime": 0,
+    "lifeTimeType": 2,
+    "loadFromDB": 0,
+    "maxStackCnt": 1,
+    "maxValidStackCnt": -1,
+    "onEventPriority": 0,
+    "overrideEffectKey": "",
+    "overrideKey": "",
+    "overrideOnEventPriority": 0,
+    "overrideType": 0,
+    "priority": -1,
+    "priorityBBKeys": [],
+    "refreshRemainingTimeWhenStackMax": 0,
+    "remainingTimeKey": "",
+    "statusResistable": 2,
+    "stripBlackboardParamsWithBuffKey": 0,
+    "takeSnapshotWhenExtend": 0,
+    "templateKey": "enemy_musnake_before_dead",
+    "triggerCnt": 0,
+    "triggerInterval": -1,
+    "triggerLifeType": 0,
+    "waitFirstTriggerInterval": 1
+  },
+  "admission": [
+    {
+      "_buff": {
+        "attributes": {
+          "abnormalFlags": [
+            "INVINCIBLE",
+            "SKILL_NOT_ACTIVATABLE"
+          ],
+          "abnormalImmunes": [],
+          "abnormalAntis": [],
+          "abnormalCombos": [],
+          "abnormalComboImmunes": [],
+          "attributeModifiers": []
+        },
+        "buffKey": "enemy_musnake_during_click",
+        "loadFromDB": false,
+        "isDurableBuff": false,
+        "isDamageMissable": false,
+        "isSilenceable": false,
+        "isStunnable": false,
+        "isFreezable": false,
+        "isLevitatable": false,
+        "isGroundBoundable": false,
+        "statusResistable": "AUTOMATIC",
+        "templateKey": "enemy_musnake_during_click",
+        "disableOverride": false,
+        "overrideKey": null,
+        "overrideType": "UNIQUE",
+        "maxStackCnt": 1,
+        "refreshRemainingTimeWhenStackMax": false,
+        "clearAllStackCntWhenTimeUp": false,
+        "maxValidStackCnt": -1,
+        "independentCharacterSource": false,
+        "overrideEffectKey": "enemy_musnake_buff_01",
+        "overrideOnEventPriority": false,
+        "onEventPriority": "DEFAULT",
+        "audioSignal": null,
+        "lifeTimeType": "INFINITY",
+        "takeSnapshotWhenExtend": false,
+        "durationKey": null,
+        "remainingTimeKey": null,
+        "lifeTime": 0,
+        "triggerLifeType": "LIMITED",
+        "triggerCnt": 1,
+        "triggerInterval": 0.5,
+        "waitFirstTriggerInterval": true,
+        "firstTriggerInterval": -1,
+        "priority": -1,
+        "priorityBBKeys": [],
+        "stripBlackboardParamsWithBuffKey": false,
+        "blackboard": [],
+        "enableInitDirectionFromSource": false
+      },
+      "_buffOwner": "BUFF_OWNER",
+      "_useSpecialBuffSource": false,
+      "_specialBuffSource": "BUFF_SOURCE",
+      "_isDerivedBuff": true,
+      "_finishDerivedBuffIfParentFinish": true,
+      "_inherateSourceProjectileFromParentBuff": false,
+      "_hookEffectKeyFromSourceProjectile": false,
+      "$type": "Torappu.Battle.Action.Nodes+CreateBuff"
+    }
+  ],
+  "finish": [
+    {
+      "_buffKey": "enemy_musnak_before_dead",
+      "_loadFromBlackboard": false,
+      "_decCntIfStack": false,
+      "_updateOverrideMap": true,
+      "_targetType": "BUFF_OWNER",
+      "_checkBuffSource": false,
+      "_sourceType": "BUFF_SOURCE",
+      "_alsoClearNullSource": false,
+      "_finishHostBuff": false,
+      "_decCntKey": null,
+      "_decCnt": 1,
+      "$type": "Torappu.Battle.Action.Nodes+FinishBuffsById"
+    },
+    {
+      "$type": "Torappu.Battle.Action.Nodes+AlwaysNext"
+    },
+    {
+      "_targetType": "BUFF_OWNER",
+      "_killSource": true,
+      "_noSource": false,
+      "_withdrawIfRallyPoint": false,
+      "_resultIfInRallyPointMode": false,
+      "_skipReborn": false,
+      "_noReason": false,
+      "_markReachExit": false,
+      "_switchState": false,
+      "$type": "Torappu.Battle.Action.Nodes+InstantKill"
+    },
+    {
+      "$type": "Torappu.Battle.Action.Nodes+AlwaysNext"
+    },
+    {
+      "_finishAndSkip": true,
+      "_trackSourceAtNextWave": false,
+      "_trackSourceAtWaveDelta": 0,
+      "_trackAllManagedEnemiesAtNextWave": false,
+      "_sourceType": "BUFF_OWNER",
+      "$type": "Torappu.Battle.Action.Nodes+FinishCurrentWave"
+    },
+    {
+      "$type": "Torappu.Battle.Action.Nodes+AlwaysNext"
+    },
+    {
+      "_target": "BUFF_OWNER",
+      "_audioSignal": "ON_MUSNAKE_KILL_SELF",
+      "$type": "Torappu.Battle.Action.Nodes+PlayAudio"
+    }
+  ],
+  "status": {
+    "name": "UNDEADABLE",
+    "value": 6,
+    "versionLimit": "The reference labels its input as the current Android APK without a client version. Its enum end and numeric definitions agree with the pinned Makoto selectors and named P2/normal-Persona status branches. This does not prove identical client version, compiled flag behavior or game frames."
+  },
+  "limits": [
+    "The pre-floor HP-set callback and UNIQUE terminal-child coalescing are local engine mappings; compiled dispatch and frame parity are not claimed.",
+    "The finishWave receiver must implement the retained FinishCurrentWave action on an admitted canonical wave. This subsystem cannot admit a stage or replace it by force-clearing every pending spawn."
+  ]
+}
