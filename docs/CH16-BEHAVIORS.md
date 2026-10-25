@@ -368,3 +368,20 @@ older two-wrapper overclaim is removed. A new wrapper, changed indexed content,
 or disagreement between the full graph and timing inventories fails admission.
 This changes candidate proof metadata and counts, not public support policies.
 
+### Commander continuation (unadmitted)
+
+`chapter16-commander.js` implements a candidate global command aura and composes
+its native miner engagement with independent Attack/Combat clocks. The marked
+ground-unit filter, persistent hidden-owner aura, overlapping owners and
+source-owned removal are tested, including the real crossbow listener changing
+its radius under orders. Both commander variants' full graphs and 32 indexed
+components are retained from the existing checksum-pinned bundles. Six tests
+pass; neither variant is added to support. Native art/frame parity remains held.
+
+```sh
+.cache/map-env/bin/python tools/arkpedia/extract-ch16-commander.py --check
+.cache/map-env/bin/python tools/arkpedia/extract-enemy-native-abilities.py \
+  --prefab enemy_10125_uacomd --prefab enemy_10125_uacomd_2 \
+  --output data/candidates/arkpedia-ch16-commander-native.json --check
+node --test test/arkpedia-ch16-commander.test.js
+```
