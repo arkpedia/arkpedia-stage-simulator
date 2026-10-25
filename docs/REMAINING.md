@@ -48,6 +48,7 @@ The unsupported-enemy group is ranked by stage count. The current top families:
 ## Verification
 
 - Last baseline full repository suite (`7cc8d93e`): 23,011 tests, 23,000 passed, 0 failed, 11 skipped. Subsequent canonical-stage loader checks are additional focused tests, not a rerun of this baseline.
+- The `d9772edc` full local run exercised 23,021 tests: 22,936 passed, 11 failed, 63 cancelled, 11 skipped. The failures/cancellations came from denied localhost sockets (`listen EPERM`). All nine affected files were rerun with local socket permission: 123/123 passed. Later raw-level/tunnel additions have separate focused verification; this is not a claim of one completely green full-suite invocation at the later head.
 - `npm run check:arkpedia-enemies` and `npm run check:arkpedia-stages` are the registry gates.
 - GitHub-hosted matrix only; `test/arkpedia-ci-runners.test.js` guards the runner labels.
 

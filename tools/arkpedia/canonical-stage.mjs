@@ -10,11 +10,18 @@ export function validateCanonicalStageSnapshot(snapshot, lock) {
   if (lock.repository !== 'arkpedia/arkpedia-data' || lock.testOnly !== true)
     throw Error('Stage source must be a test-only canonical arkpedia-data snapshot');
   const records = Object.fromEntries(Object.entries(snapshot.files).map(([name, file]) => [name, JSON.parse(file.bytes)]));
-  const { manifest, routeReceipt, geometry, conditional, stage, devices } = records;
+  const { manifest, routeReceipt, geometry, conditional, stage, devices, rawLevel, levelReceipt } = records;
   if (stage.code !== lock.stage || manifest.generator !== lock.producer.commit
     || routeReceipt.producer.commit !== lock.producer.commit
     || routeReceipt.upstream.commit !== lock.upstream.commit)
     throw Error('Canonical stage provenance mismatch');
+  const rawSource = levelReceipt?.files?.[`raw/levels/${lock.stage}.json`];
+  if (!rawLevel?.options || !Array.isArray(rawLevel.routes) || !Array.isArray(rawLevel.waves)
+    || !lock.files.rawLevel || !rawSource) throw Error('Missing complete canonical level input');
+  if (levelReceipt.source.commit !== lock.upstream.commit || rawSource.sha256 !== lock.files.rawLevel.sha256
+    || routeReceipt.upstream.sha256 !== rawSource.sha256 || routeReceipt.upstream.path !== rawSource.path
+    || routeReceipt.rawLevelPath !== lock.files.rawLevel.path)
+    throw Error('Complete canonical level receipt mismatch');
   for (const [name, file] of Object.entries(lock.files)) {
     if (name === 'manifest') continue;
     if (!file.path.startsWith('source/') || manifest.sourceHashes[file.path.slice(7)] !== file.sha256)
@@ -33,7 +40,7 @@ export function validateCanonicalStageSnapshot(snapshot, lock) {
   return { schemaVersion: 1, testOnly: true, admitted: false,
     canonicalData: { repository: lock.repository, commit: lock.commit },
     upstream: lock.upstream, producer: lock.producer,
-    inputs: lock.files, routeReceipt, stage, geometry, conditional,
+    inputs: lock.files, routeReceipt, levelReceipt, rawLevel, stage, geometry, conditional,
     devices: devices[stage.geometryKey ?? stage.slug] ?? [] };
 }
 

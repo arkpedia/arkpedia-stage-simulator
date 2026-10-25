@@ -16,18 +16,27 @@ function fixture(change = () => {}) {
     geometry: { routes: [{ id: 'ordinary' }], extraRoutes: [{ id: 'miner' }] },
     conditional: [{ source: 'wave', route: 0 }, { source: 'branch', branch: 'miners', route: 0 }],
     devices: { '16-3': [{ key: 'trap_270_spawnp' }] },
+    rawLevel: { options: { moveMultiplier: .5 }, routes: [], waves: [] },
+    levelReceipt: { source: lock.upstream, files: {} },
     routeReceipt: { producer: lock.producer, upstream: lock.upstream, outputs: {} },
     manifest: { generator: lock.producer.commit, sourceHashes: {} } };
   change(records, lock);
   const files = {};
-  for (const name of ['stage', 'geometry', 'conditional', 'devices', 'routeReceipt', 'manifest']) {
-    const path = name === 'manifest' ? 'release/manifest.json' : `source/data/${name}.json`;
+  for (const name of ['stage', 'geometry', 'conditional', 'devices', 'rawLevel', 'levelReceipt', 'routeReceipt', 'manifest']) {
+    const path = name === 'manifest' ? 'release/manifest.json' : name === 'rawLevel'
+      ? 'source/data/simulator/raw/levels/16-3.json' : `source/data/${name}.json`;
     const bytes = Buffer.from(JSON.stringify(records[name]));
     const file = { path, bytes: bytes.length, sha256: sha(bytes) };
     files[name] = { bytes };
     lock.files[name] = file;
     if (name !== 'manifest') records.manifest.sourceHashes[path.slice(7)] = file.sha256;
     if (['geometry', 'conditional'].includes(name)) records.routeReceipt.outputs[path] = file.sha256;
+    if (name === 'rawLevel') {
+      const rawSource = { path: 'en/gamedata/levels/fixture.json', sha256: file.sha256 };
+      records.levelReceipt.files['raw/levels/16-3.json'] = rawSource;
+      records.routeReceipt.upstream = { ...records.routeReceipt.upstream, ...rawSource };
+      records.routeReceipt.rawLevelPath = path;
+    }
   }
   return { lock, snapshot: { files } };
 }
@@ -42,7 +51,7 @@ test('canonical stage loader verifies the whole snapshot and keeps route spaces 
     return { ok: true, arrayBuffer: async () => snapshot.files[name].bytes };
   };
   const bundle = await loadCanonicalStage({ lock, cacheDir, fetchImpl });
-  assert.equal(fetched.length, 6);
+  assert.equal(fetched.length, 8);
   assert.ok(fetched.every(url => url.includes(`/arkpedia/arkpedia-data/${lock.commit}/`)));
   assert.equal(bundle.geometry.routes[0].id, 'ordinary');
   assert.equal(bundle.geometry.extraRoutes[0].id, 'miner');
@@ -82,7 +91,7 @@ test('release and producer output receipts must both include the exact stage inp
 });
 
 test('retained 16-3 canonical preview preserves miner waypoints without admitting the stage', () => {
-  assert.equal(candidate.canonicalData.commit, 'e49aaf3cc8ab09c5730a3dd81cead2e1a6ae005d');
+  assert.equal(candidate.canonicalData.commit, '84f3c8334db1c505429bce848147b32ca6a1cc20');
   assert.equal(candidate.upstream.commit, 'db6f9ef8046ad17dbebe3ff1d0dd88844a5bc78c');
   assert.equal(candidate.testOnly, true);
   assert.equal(candidate.admitted, false);
@@ -94,4 +103,20 @@ test('retained 16-3 canonical preview preserves miner waypoints without admittin
   assert.equal(route.visitEveryCheckPoint, true);
   const offsets = route.checkpoints.filter(p => p.reachOffset).map(p => p.reachOffset);
   assert.deepEqual(offsets, [{ x: .46, y: 0 }, { x: -.46, y: -.01 }]);
+  assert.equal(candidate.rawLevel.options.moveMultiplier, .5);
+  const raid = Object.values(candidate.rawLevel.optionalRunes).flat().find(r => r.key === 'level_hidden_group_enable');
+  assert.equal(raid.difficultyMask, 'SIX_STAR');
+  assert.ok(raid.blackboard.some(b => b.valueStr === 'raid'));
+});
+
+test('complete level provenance is required independently of the compact geometry receipt', () => {
+  const missing = fixture(records => { delete records.rawLevel.options; });
+  assert.throws(() => validateCanonicalStageSnapshot(missing.snapshot, missing.lock), /Missing complete canonical level/);
+  const wrongUpstream = fixture(records => { records.levelReceipt.source = { commit: 'd'.repeat(40) }; });
+  assert.throws(() => validateCanonicalStageSnapshot(wrongUpstream.snapshot, wrongUpstream.lock), /level receipt mismatch/);
+  const other = fixture();
+  const receipt = JSON.parse(other.snapshot.files.levelReceipt.bytes);
+  receipt.files['raw/levels/16-3.json'].sha256 = '0'.repeat(64);
+  other.snapshot.files.levelReceipt.bytes = Buffer.from(JSON.stringify(receipt));
+  assert.throws(() => validateCanonicalStageSnapshot(other.snapshot, other.lock), /level receipt mismatch/);
 });

@@ -138,8 +138,8 @@ not independent captured-game frame parity or completed stage admission.
 The existing canonical 16-3 export retained original conditional wave indices
 10/14 after main-route deduplication and omitted its miner extra route. The
 producer correction is draft Arkpedia PR #763 at `5556df22`; the compiler-produced
-data preview is draft arkpedia-data PR #44 at
-`e49aaf3cc8ab09c5730a3dd81cead2e1a6ae005d`. Hosted data validation passed and
+data preview is draft arkpedia-data PR #44, now at
+`84f3c8334db1c505429bce848147b32ca6a1cc20`. Hosted data validation passed and
 publication was skipped. The preview uses current dev's normal compiler, so its
 generated page-prop/route changes are included; it is not a production release.
 
@@ -151,6 +151,44 @@ the result in `data/candidates/arkpedia-stage-16-3-source.json`, explicitly
 branch separately uses extra route 0 with exact reach offsets and traversal
 settings. This source refresh does not alter the enemy snapshot pin or admit
 16-3. Facility/tunnel integration and branch traversal still precede admission.
+
+The producer at `d350e087` now retains complete level bytes in
+`data/simulator/raw/levels/16-3.json`, with an independent upstream receipt in
+`stage-levels-source.json`. Its scheduled stage refresh is wired to the pinned
+EN checkout, verifies HEAD and clean tracked input bytes, and verifies the full
+selection before writing. Both normal content validators passed (838 pages,
+8,125 public files, 9,851 source records), as did hosted preview validation.
+The consumer verifies this receipt against both the release inventory and the
+route receipt's original-level hash. No local fallback level is accepted.
+
+The complete source is necessary: `options.moveMultiplier` is 0.5, and the
+`raid` hidden group is enabled by an optional SIX_STAR rune. It is not an
+unconditional normal-stage wave. Normal 16-3 has 22 hostile spawns; branch miners
+are unmanaged/unharmful summons. The generic pristine-hidden-group helper must
+not be used to admit this stage's optional raid enemies.
+
+### Hidden Tunnel continuation
+
+`chapter16-tunnel.js` implements the native summon, host counters, standby/advance
+command and independent born buffs, with a required branch-spawn callback. It is
+not installed in the stage adapter yet. Stage branch traversal and the manual UI
+action remain necessary before 16-3 can be built.
+
+The original `sktok_spawnp` graph is separately retained by
+`extract-ch16-tunnel-skill.py` from the checksum-pinned shared skill bundle.
+Eight controller/source-parity tests verify natural SP, the first 15-second
+summon, three waiting/five total limits, owner-filtered release, no recall on
+returning to standby, scheduled retry after a failed summon, source removal,
+and separate total/near finish actions. Removing a count manager does not
+invent removal of its independent stop buff. These run on the shared battle
+with canonical miner records and assert no swallowed hook/AI errors.
+SP recovery modifiers/locks use the owner's ordinary stats without changing the
+independent summon clock.
+
+```sh
+.cache/map-env/bin/python tools/arkpedia/extract-ch16-tunnel-skill.py --check
+node --test test/arkpedia-ch16-tunnel.test.js
+```
 
 ```sh
 node tools/arkpedia/canonical-stage.mjs
