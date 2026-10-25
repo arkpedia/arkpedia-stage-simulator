@@ -13,11 +13,13 @@ import { nativeDuckRun } from './duck-run.js';
 import { pollutionBrute } from './chapter17-brute.js';
 import { storyGuardian } from './chapter16-story-guardian.js';
 import { pollutionFlyer } from './chapter17-flyer.js';
+import { pollutionBag } from './chapter17-bag.js';
 
 const ABILITIES = Object.freeze({
   nativeDuckRun,
   ch17PollutionBrute: pollutionBrute,
   ch17PollutionFlyer: pollutionFlyer,
+  ch17PollutionBag: pollutionBag,
   ch16StoryGuardian: storyGuardian,
   ...chapter16Abilities,
   blockMcreep,

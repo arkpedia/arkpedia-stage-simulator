@@ -268,3 +268,50 @@ included in hosted Linux/Windows checks. The new stages pass independent builder
 reproduction, canonical-byte mutation rejection, public-access rejection and
 three seeded battle integrations each. No new enemy support is inferred from
 the Bag source audit; its runtime controller and stage admissions remain open.
+
+## Bag controller checkpoint
+
+The two Bag variants now register one exact-record test-only controller. Passive
+Arts pulses, source-owned contacts, the derived current flag, timed feeding and
+permanent ATK stacks have separate owners. Feeding grants ten stacks per complete
+cycle, consumes the current flag's source at10.5 seconds and holds the skill for
+11 seconds. Multiple cycles clamp at the canonical40-stack limit. Earned stacks
+survive interruption; source departure interrupts on the next pulse. Brief
+controls, death, battle end and source reuse cannot leave late source kills.
+Retiring an older contact cannot remove its replacement flag, and overlapping
+Bags retain their own contact parents. A rejected flag grants no feeding state.
+The pulse selects current all-motion bodies and reads live ATK; accepted feeding
+is non-silenceable and ignores slow_down. New skill admission honors the native
+silence wrapper. Cooldown start, callback ordering, collider and blackboard
+substitution remain explicit shared-engine mappings rather than compiled/frame
+parity claims.
+
+Stages17-10/17-12 retain30/38 scheduled bodies and29/38 counted hostiles.17-10's
+Six-Star hidden1 Bag remains excluded; normal hidden2 only displays enemy info,
+so it adds no hostile. No-operator300-second fixtures time out while scheduled
+Bags consume real recurring Leak Sources and reach40 stacks. Those timeouts are
+retained as expected gameplay outcomes, without increasing the game limit.
+Separate legal-sniper fixtures use explicit durability/output buffs to exercise
+ordinary operator selection, hits, kills and Bag retirement through combat.
+
+The catalogue is620 entries:597 public and23 test-only. Candidate support is
+472/1,901, with1,429 unsupported canonical enemies and3,271 unbuilt combat-stage
+records. Eleven of the34 retained Chapter16/17 normal candidates remain
+unadmitted:16-9/12/13/16/17/18 and17-14/15/16/17/18. Existing operator forms and
+skills still need their full mechanics audit before visual work begins.
+
+The28f5ffb1 tunnel checkpoint passed all eleven hosted continuation jobs. The
+older09f52106 full-repository checkpoint also completed all eight Linux/Windows,
+Node22/24 shards successfully. New Bag results require their own hosted run;
+neither older success proves the latest head.
+
+The final Bag controller passes35 dedicated runtime tests and the full locally
+available continuation suite passes559/559. The four locally unavailable tracked
+files remain unchanged and required on hosted runners. Source admission rejects
+missing family evidence, changed native strings, changed skills and added active
+components. Reentrant checks cover source death during flag admission, owner
+death during parent admission, and battle end during feeding-parent admission;
+none may leave newly returned orphan buffs or later output. Both new desktop/
+phone scenarios pass startup, pause, restart and test-only access checks; the
+desktop17-10 and phone17-12 captures were inspected. Hosted checks for this exact
+Bag checkpoint remain separate from the completed earlier runs.

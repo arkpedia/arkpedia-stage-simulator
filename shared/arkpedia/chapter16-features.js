@@ -15,6 +15,7 @@ import phantomReview from '../../data/candidates/arkpedia-ch16-reviewed-phantom.
 import bruteReview from '../../data/candidates/arkpedia-ch17-reviewed-brute.json' with { type: 'json' };
 import guardianReview from '../../data/candidates/arkpedia-ch16-reviewed-story-guardian.json' with { type: 'json' };
 import flyerReview from '../../data/candidates/arkpedia-ch17-reviewed-flyer.json' with { type: 'json' };
+import bagReview from '../../data/candidates/arkpedia-ch17-reviewed-bag.json' with { type: 'json' };
 const MINER_TEXT = "Allied unit; recovers HP when within any Medic Operator's Attack Range";
 const groups = { TileEscapeShadowManager: ['times'], GetHeal: ['heal_scale'], FearLoseBlood: ['value'] };
 function minerCovered(r, n) {
@@ -76,6 +77,9 @@ function familyUnion(...features) {
 }
 export const phantomFeature = familyFeature(phantomReview, 'phantom', 'ch16ArmyPhantom');
 export const CHAPTER16_FEATURES = {
+  'skill:AtkUp': familyFeature(bagReview,'bag','ch17PollutionBag'),
+  ...Object.fromEntries(['AoeDamage','ReachedAura'].map(name=>['talent:'+name,
+    {covers:(r,n)=>familyCovered(bagReview,'bag',r,n),note:'Bag aura, contacts and feeding are owned by its AtkUp family controller.'}])),
   'skill:Charge': familyFeature(flyerReview, 'flyer', 'ch17PollutionFlyer'),
   ...Object.fromEntries(['DefaultBoom','S1Boom','S2Boom'].map(name=>['talent:'+name,
     {covers:(r,n)=>familyCovered(flyerReview,'flyer',r,n),note:'Death projectile is owned by the two-charge Flyer family controller.'}])),

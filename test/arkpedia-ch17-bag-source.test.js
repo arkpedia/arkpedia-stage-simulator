@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Source constraints for the unfinished feeding controller; no admission grant.
+// Complete original source constraints, independent of runtime registration.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
@@ -10,16 +10,15 @@ const bytes=p=>readFileSync(new URL('../data/'+p,import.meta.url)),read=p=>JSON.
 const sha=b=>createHash('sha256').update(b).digest('hex');
 const g=read('candidates/arkpedia-ch17-bag-source.json');
 const actions=(key,event)=>JSON.parse(JSON.parse(g.templates[key].originalJson).eventToActions._items.find(e=>e.key===event).value.SerializedState);
-test('Bag full native/indexed/clock receipts reproduce while both runtime admissions remain held',()=>{
+test('Bag full native/indexed/clock receipts reproduce independently of runtime registration',()=>{
  const idx=read('arkpedia-enemy-clock-source.json');
  verifiedChapter16FamilyGraph(JSON.stringify(g),bytes('arkpedia-cn-native-source.json'),bytes('arkpedia-cn-enemy-native-source.json'),idx);
  verifiedNative(read('candidates/arkpedia-ch17-bag-native.json'),idx.prefabs,sha(bytes('arkpedia-enemy-clock-source.json')),read('arkpedia-mvp.json').behaviors.source);
  const clock=read('candidates/arkpedia-ch17-bag-animation-source.json');
  assert.equal(clock.source.graph.sha256,sha(bytes('candidates/arkpedia-ch17-bag-source.json')));
- const support=read('candidates/arkpedia-ch16-enemy-support.json');
  for(const[key,row]of Object.entries(clock.enemies)){
   const raw=Buffer.from(row.base64,'base64');assert.equal(sha(raw),row.sha256);assert.ok(parseSkel(raw).animations.length>0);
-  assert.equal(support.enemies[key].policy,null);
+  assert.equal(read('arkpedia-regular-enemies.json').enemies[key],undefined);
  }
 });
 test('feeding lifetime, skill duration and aura lifetime are separate native contracts',()=>{

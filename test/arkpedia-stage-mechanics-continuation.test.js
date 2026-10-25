@@ -16,6 +16,8 @@ const read = p => JSON.parse(bytes(p));
 const mvp = read('arkpedia-mvp.json'), index = read('arkpedia-stages.json');
 const hash = b => createHash('sha256').update(b).digest('hex');
 const specs = {
+  '17-10': { total:29, scheduled:30, counts:{enemy_10211_murad:1,enemy_10201_muinf:20,enemy_10208_mucow:2,enemy_10203_mumag:4,enemy_10209_mubag:3}, hidden:['hidden1'], reason:'timeout' },
+  '17-12': { total:38, counts:{enemy_10208_mucow:6,enemy_10203_mumag:10,enemy_10205_mufly:16,enemy_10209_mubag:6}, hidden:[], reason:'timeout' },
   '17-11': { total:50, scheduled:52, counts:{enemy_10211_murad:2,enemy_10201_muinf:29,enemy_10204_mudia:3,enemy_10205_mufly:14,enemy_10207_mubrut:4}, hidden:[] },
   '17-13': { total:72, counts:{enemy_10204_mudia_2:66,enemy_10201_muinf_2:3,enemy_10207_mubrut_2:3}, hidden:[] },
   '17-5': { total:18, scheduled:19, counts:{enemy_10201_muinf:14,enemy_10204_mudia:2,enemy_10205_mufly:2,enemy_10211_murad:1}, hidden:['raid','raid6A'], clearsBefore:293 },
@@ -83,11 +85,12 @@ for (const [code,spec] of Object.entries(specs)) {
     assert.equal(existsSync(refused),false);
   });
   for(const seed of [19,71,129])test(code+' seeded normal battle '+seed,()=>{
-    const b=battle(code,seed),born=[],hiddenSince=new Map(),hiddenDurations=[];let bruteArmed=false;
+    const b=battle(code,seed),born=[],hiddenSince=new Map(),hiddenDurations=[];let bruteArmed=false,bagConsumed=0,maxBagStacks=0;
     assert.equal(b.timeLimit,300);
     assert.equal(b.total,spec.total);
     if(spec.cap)b.timeLimit=spec.cap;
     b.on('enemySpawn',({enemy})=>born.push(enemy));
+    b.on('ch17BagConsumed',()=>bagConsumed++);b.on('ch17BagStack',({stacks})=>maxBagStacks=Math.max(maxBagStacks,stacks));
     while(!b.finished) {
       for(const[id,e]of b.stageDeviceActions??[])if(b.time<121&&e.state.canActivate())b.activateStageDevice(id);
       b.step();
@@ -100,7 +103,8 @@ for (const [code,spec] of Object.entries(specs)) {
         }
       }
     }
-    assert.equal(b.result().reason,'cleared');assert.ok(b.time<(spec.clearsBefore??280));
+    assert.equal(b.result().reason,spec.reason??'cleared');
+    if(spec.reason==='timeout')assert.equal(b.time,300);else assert.ok(b.time<(spec.clearsBefore??280));
     assert.equal(b.total,spec.total+born.filter(e=>e.mem.ch17RockbreakerParent).length);assert.deepEqual(b.errors,[]);
     const children=born.filter(e=>e.mem.ch16Branch);
     if(code.startsWith('16-'))assert.ok(children.length>0);
@@ -113,7 +117,8 @@ for (const [code,spec] of Object.entries(specs)) {
     } else if(code==='16-11')assert.ok(born.some(e=>e.defId==='enemy_10126_rkbomb'&&e.mem.ab.list.some(a=>a.changeMode&&a.mode===1)));
     if(code==='17-7')assert.ok(born.some(e=>e.mem.ch17RockbreakerParent),'natural marker pollution triggers a real split');
     if(code==='17-8')assert.ok(bruteArmed,'natural Leak Source contact arms a real scheduled Brute');
-    if(['17-5','17-6','17-11'].includes(code))assert.ok(born.some(e=>e.defId==='enemy_10205_mufly'&&e.mem.ch17FlyerMode===2),'scheduled Flyers find two real Leak Sources and finish both growth steps');
+    if(['17-5','17-6','17-11','17-12'].includes(code))assert.ok(born.some(e=>e.defId==='enemy_10205_mufly'&&e.mem.ch17FlyerMode===2),'scheduled Flyers find two real Leak Sources and finish both growth steps');
+    if(['17-10','17-12'].includes(code)){assert.ok(bagConsumed>0,'scheduled Bags consume real natural sources');assert.equal(maxBagStacks,40);}
     if(code==='17-13'){
       assert.ok(hiddenDurations.length>0,'source teleports keep their hidden wait and reappear');
       assert.ok(hiddenDurations.every(t=>Math.abs(t-10)<=2*b.dt),'each original tunnel wait remains hidden for ten seconds');
@@ -122,6 +127,24 @@ for (const [code,spec] of Object.entries(specs)) {
     }
   });
 }
+
+for(const code of ['17-10','17-12'])test(code+' legally deployed sniper attacks scheduled Bags and retires a killed feeding controller',()=>{
+  const id='char_124_kroos',b=new StandardBattle(data(code),{operators:[defaultBuild(mvp.operators[id])]},{seed:19});
+  b.life=1000;b.setViewport('fullscreen-workspace');
+  const killed=[];let hits=0;
+  b.on('death',c=>{if(c.unit.defId==='enemy_10209_mubag'&&c.killer?.side==='ally')killed.push(c.unit);});
+  b.on('damaged',c=>{if(c.source?.defId===id&&c.target.defId==='enemy_10209_mubag')hits++;});
+  while(b.time<150)b.step();
+  assert.equal(b.placementError(id,3,6),null);
+  const sniper=b.deployOperator(id,3,6,code==='17-10'?'RIGHT':'DOWN');assert.ok(sniper);
+  // Controlled durability/output fixture; targeting, attack clocks, damage and
+  // death ownership still use the actual legally deployed operator pipeline.
+  b.addBuff(sniper,{key:'bag-combat-fixture',persist:true,mods:{hpFlat:1e6,atkFlat:10000}});sniper.hp=sniper.s.maxHp;
+  while(!b.finished)b.step();
+  assert.ok(hits>0);assert.ok(killed.length>0);
+  for(const e of killed){const a=e.mem.ab.list.find(a=>a.contacts);assert.equal(a.active,false);assert.equal(a.phase,null);assert.equal(a.contacts.size,0);assert.equal(e.profile.nativeFlyingTrace,undefined);}
+  assert.equal(b.timeLimit,300);assert.deepEqual(b.errors,[]);
+});
 
 test('17-6 route-only fixture retains the unchanged 300-second game timeout',()=>{
   const b=battle('17-6');while(!b.finished)b.step();

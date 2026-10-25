@@ -54,7 +54,9 @@ if (args.candidate === 'ch16') {
     '17-7': 'arkpedia-ch17-reviewed-stage-17-7.json',
     '17-8': 'arkpedia-ch17-reviewed-stage-17-8.json',
     '17-9': 'arkpedia-ch17-reviewed-stage-17-9.json',
+    '17-10': 'arkpedia-ch17-reviewed-stage-17-10.json',
     '17-11': 'arkpedia-ch17-reviewed-stage-17-11.json',
+    '17-12': 'arkpedia-ch17-reviewed-stage-17-12.json',
     '17-13': 'arkpedia-ch17-reviewed-stage-17-13.json',
   };
   if (!Object.hasOwn(stageReviews, source.code)) throw Error('Candidate admission is reviewed only for test-only ' + Object.keys(stageReviews).join(', '));

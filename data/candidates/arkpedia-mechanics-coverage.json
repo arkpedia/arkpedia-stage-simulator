@@ -32,11 +32,11 @@
   },
   "summary": {
     "combatStageRecords": 3891,
-    "catalogueBattleRecords": 618,
-    "unbuiltCombatStageRecords": 3273,
+    "catalogueBattleRecords": 620,
+    "unbuiltCombatStageRecords": 3271,
     "canonicalEnemies": 1901,
-    "sourceBoundSupportedEnemies": 470,
-    "unsupportedCanonicalEnemies": 1431,
+    "sourceBoundSupportedEnemies": 472,
+    "unsupportedCanonicalEnemies": 1429,
     "targetOperatorForms": 431,
     "registeredOperatorForms": 431,
     "registeredSkills": 949,
@@ -57,9 +57,9 @@
   },
   "unbuiltStageGenericGates": {
     "stage-device-contract": 2146,
-    "enemy-mechanics": 3022,
+    "enemy-mechanics": 3018,
     "stage-token-contract": 618,
-    "conditional-stage-contract": 1452,
+    "conditional-stage-contract": 1451,
     "oversized-grid": 135,
     "missing-geometry": 86
   },
@@ -9900,18 +9900,6 @@
       ]
     },
     {
-      "id": "enemy_10209_mubag",
-      "stages": 4,
-      "reasons": [
-        "ability:Continuously deals Arts damage to surrounding allied units.",
-        "ability:When there is a <Leak Source> on the field, moves toward the nearest <Leak Source>; stops upon arrival for a period of time, gradually gaining ATK, and removes the <Leak Source> when the duration ends.",
-        "talent:AoeDamage",
-        "talent:ReachedAura",
-        "skill:AtkUp",
-        "native-ability-wrappers:enemy_10209_mubag"
-      ]
-    },
-    {
       "id": "enemy_1122_sphond_2_a",
       "stages": 4,
       "reasons": [
@@ -11042,18 +11030,6 @@
         "ability:Physical damage dealt to attacker temporarily increases and gains splash when affected by a <Leak Source>.",
         "talent:MuradPollut",
         "talent:ReverseDamage"
-      ]
-    },
-    {
-      "id": "enemy_10209_mubag_2",
-      "stages": 3,
-      "reasons": [
-        "ability:Continuously deals Arts damage to surrounding allied units.",
-        "ability:When there is a <Leak Source> on the field, moves toward the nearest <Leak Source>; stops upon arrival for a period of time, gradually gaining ATK, and removes the <Leak Source> when the duration ends.",
-        "talent:AoeDamage",
-        "talent:ReachedAura",
-        "skill:AtkUp",
-        "native-ability-wrappers:enemy_10209_mubag_2"
       ]
     },
     {
@@ -27654,42 +27630,28 @@
     },
     {
       "id": "enemy_10209_mubag",
-      "policy": null,
-      "unresolved": [
-        "ability:Continuously deals Arts damage to surrounding allied units.",
-        "ability:When there is a <Leak Source> on the field, moves toward the nearest <Leak Source>; stops upon arrival for a period of time, gradually gaining ATK, and removes the <Leak Source> when the duration ends.",
-        "talent:AoeDamage",
-        "talent:ReachedAura",
-        "skill:AtkUp",
-        "native-ability-wrappers:enemy_10209_mubag"
-      ],
+      "policy": "stats-attacks-and-features",
+      "unresolved": [],
       "native": {
         "enemy_10209_mubag": {
           "hierarchySha256": "42842d357126851fdfdc474038e01c27c2441ea0a83a446993eb9a52b52597c4",
           "enemyAbilityWrappers": 1,
           "activeGeneralOrCommonAbilities": 0,
-          "claimedWrappers": 0,
+          "claimedWrappers": 1,
           "claimedActive": 0
         }
       }
     },
     {
       "id": "enemy_10209_mubag_2",
-      "policy": null,
-      "unresolved": [
-        "ability:Continuously deals Arts damage to surrounding allied units.",
-        "ability:When there is a <Leak Source> on the field, moves toward the nearest <Leak Source>; stops upon arrival for a period of time, gradually gaining ATK, and removes the <Leak Source> when the duration ends.",
-        "talent:AoeDamage",
-        "talent:ReachedAura",
-        "skill:AtkUp",
-        "native-ability-wrappers:enemy_10209_mubag_2"
-      ],
+      "policy": "stats-attacks-and-features",
+      "unresolved": [],
       "native": {
         "enemy_10209_mubag_2": {
           "hierarchySha256": "5bcde9492881bfc519fd6686b926ed9250a51fbd4892e1eff706b2f9867b76cf",
           "enemyAbilityWrappers": 1,
           "activeGeneralOrCommonAbilities": 0,
-          "claimedWrappers": 0,
+          "claimedWrappers": 1,
           "claimedActive": 0
         }
       }
@@ -59255,14 +59217,11 @@
       "id": "17-10",
       "code": "17-10",
       "type": "main",
-      "catalogue": "not-built",
+      "catalogue": "test-only",
       "observedGenericGates": [
-        "conditional-stage-contract",
-        "enemy-mechanics"
+        "conditional-stage-contract"
       ],
-      "unsupportedCanonicalEnemies": [
-        "enemy_10209_mubag"
-      ]
+      "unsupportedCanonicalEnemies": []
     },
     {
       "id": "17-10_six_star",
@@ -59270,12 +59229,9 @@
       "type": "main",
       "catalogue": "not-built",
       "observedGenericGates": [
-        "conditional-stage-contract",
-        "enemy-mechanics"
+        "conditional-stage-contract"
       ],
-      "unsupportedCanonicalEnemies": [
-        "enemy_10209_mubag"
-      ]
+      "unsupportedCanonicalEnemies": []
     },
     {
       "id": "17-11",
@@ -59297,25 +59253,17 @@
       "id": "17-12",
       "code": "17-12",
       "type": "main",
-      "catalogue": "not-built",
-      "observedGenericGates": [
-        "enemy-mechanics"
-      ],
-      "unsupportedCanonicalEnemies": [
-        "enemy_10209_mubag"
-      ]
+      "catalogue": "test-only",
+      "observedGenericGates": [],
+      "unsupportedCanonicalEnemies": []
     },
     {
       "id": "17-12_six_star",
       "code": "17-12",
       "type": "main",
       "catalogue": "not-built",
-      "observedGenericGates": [
-        "enemy-mechanics"
-      ],
-      "unsupportedCanonicalEnemies": [
-        "enemy_10209_mubag"
-      ]
+      "observedGenericGates": [],
+      "unsupportedCanonicalEnemies": []
     },
     {
       "id": "17-13",
@@ -59343,8 +59291,7 @@
       ],
       "unsupportedCanonicalEnemies": [
         "enemy_10203_mumag_2",
-        "enemy_10208_mucow_2",
-        "enemy_10209_mubag_2"
+        "enemy_10208_mucow_2"
       ]
     },
     {
@@ -59395,8 +59342,7 @@
         "enemy-mechanics"
       ],
       "unsupportedCanonicalEnemies": [
-        "enemy_10203_mumag_2",
-        "enemy_10209_mubag_2"
+        "enemy_10203_mumag_2"
       ]
     },
     {
@@ -59409,8 +59355,7 @@
         "enemy-mechanics"
       ],
       "unsupportedCanonicalEnemies": [
-        "enemy_10203_mumag_2",
-        "enemy_10209_mubag_2"
+        "enemy_10203_mumag_2"
       ]
     },
     {
