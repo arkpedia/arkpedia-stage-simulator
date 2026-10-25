@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "scope": "Serialized numeric buff-event alias facts only; no compiled dispatch, frame parity or enemy/operator support.",
+  "source": {
+    "nativeInventory": {
+      "path": "data/arkpedia-cn-native-source.json",
+      "sha256": "b6e0cfbe21768b277e42cae0f6f4ae627ee69020898bcacb1b8e5ed05bee7655"
+    },
+    "manifestSha256": "d1ac02a61d98e6e4c772335bb85dc44da4794a0a8bc915354b6f9ffbc7ec1f35",
+    "nativeBundle": {
+      "path": "config/buff_template_holder.ab",
+      "bytes": 1963907,
+      "md5": "8d395a42a34fbbb5af1f2e4ad7d39ef8",
+      "sha256": "30bacb35c8962817931d8fd2cad66cd5a4455b86f6f34e21257829ff7f0fd0a3"
+    },
+    "namedTemplates": {
+      "repository": "Kengxxiao/ArknightsGameData_YoStar",
+      "commit": "57010cb5b2afea112cae57daa756b58676ba6850",
+      "path": "en_US/gamedata/battle/buff_template_data.json",
+      "sha256": "79dce42d1ffa76196984b80678422e0323e406f6a044f1a25b1de75e0c5b9d27"
+    }
+  },
+  "normalization": "Only the assembly suffix after the first comma in $type is removed. All other action fields and list order match exactly at the same template key.",
+  "events": {
+    "37": {
+      "name": "ON_OWNER_BLOCKEE_CHANGED",
+      "matchingTemplates": 5,
+      "witnesses": [
+        {
+          "template": "[g]cooperate_enemy_after_attack_harder[atk]",
+          "numeric": 37,
+          "name": "ON_OWNER_BLOCKEE_CHANGED",
+          "nativeActionsJson": "[{\"_decCntIfStack\":false,\"_updateOverrideMap\":true,\"$type\":\"Torappu.Battle.Action.Nodes+FinishBuff\"}]",
+          "namedActions": [
+            {
+              "$type": "Torappu.Battle.Action.Nodes+FinishBuff, Assembly-CSharp",
+              "_decCntIfStack": false,
+              "_updateOverrideMap": true
+            }
+          ]
+        },
+        {
+          "template": "enemy_dhsbr_passive",
+          "numeric": 37,
+          "name": "ON_OWNER_BLOCKEE_CHANGED",
+          "nativeActionsJson": "[{\"_targetType\":\"BUFF_OWNER\",\"_checkBlockedBySource\":false,\"_checkBlockedBySourceToken\":false,\"_sourceType\":\"BUFF_SOURCE\",\"_checkBlockedCount\":false,\"$type\":\"Torappu.Battle.Action.Nodes+CheckBlocked\"},{\"_updateOverrideMap\":true,\"$type\":\"Torappu.Battle.Action.Nodes+FinishDerivedBuff\"}]",
+          "namedActions": [
+            {
+              "$type": "Torappu.Battle.Action.Nodes+CheckBlocked, Assembly-CSharp",
+              "_targetType": "BUFF_OWNER",
+              "_checkBlockedBySource": false,
+              "_checkBlockedBySourceToken": false,
+              "_sourceType": "BUFF_SOURCE",
+              "_checkBlockedCount": false
+            },
+            {
+              "$type": "Torappu.Battle.Action.Nodes+FinishDerivedBuff, Assembly-CSharp",
+              "_updateOverrideMap": true
+            }
+          ]
+        },
+        {
+          "template": "enemy_dhxts_passive",
+          "numeric": 37,
+          "name": "ON_OWNER_BLOCKEE_CHANGED",
+          "nativeActionsJson": "[{\"_targetType\":\"BUFF_OWNER\",\"_checkBlockedBySource\":false,\"_checkBlockedBySourceToken\":false,\"_sourceType\":\"BUFF_SOURCE\",\"_checkBlockedCount\":false,\"$type\":\"Torappu.Battle.Action.Nodes+CheckBlocked\"},{\"_updateOverrideMap\":true,\"$type\":\"Torappu.Battle.Action.Nodes+FinishDerivedBuff\"}]",
+          "namedActions": [
+            {
+              "$type": "Torappu.Battle.Action.Nodes+CheckBlocked, Assembly-CSharp",
+              "_targetType": "BUFF_OWNER",
+              "_checkBlockedBySource": false,
+              "_checkBlockedBySourceToken": false,
+              "_sourceType": "BUFF_SOURCE",
+              "_checkBlockedCount": false
+            },
+            {
+              "$type": "Torappu.Battle.Action.Nodes+FinishDerivedBuff, Assembly-CSharp",
+              "_updateOverrideMap": true
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

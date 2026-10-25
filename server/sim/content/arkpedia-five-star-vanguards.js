@@ -2,6 +2,7 @@
 import { FIVE_STAR_VANGUARD_OPERATORS } from '../../../shared/arkpedia/five-star-vanguard-operators.js';
 import evidence from '../../../data/arkpedia-five-star-vanguard-prefabs.json' with { type: 'json' };
 import { absoluteRangeKeys } from '../targeting.js';
+import {installPoncirusStageModule} from './arkpedia-poncirus-stage-module.js';
 
 const live = u => u?.alive && u.deployed && !u.hidden;
 const robots = new Set(['char_285_medic2', 'char_286_cast3', 'char_376_therex',
@@ -136,10 +137,13 @@ export function installFiveStarVanguard({ battle: b, unit: u, def }) {
       else sync();
     }, { owner: u });
   } else if (id === 'char_488_buildr' && talent) {
-    b.on('deploy', ({ unit }) => {
-      if (unit !== u) return;
-      b.after(talent.interval, () => { if (live(u)) b.addBuff(u, {
-        key: 'poncirus:endurance', mods: { hpPct: talent.max_hp },
+    if(def.raw.arkpedia.module&&def.raw.arkpedia.module!=='none')installPoncirusStageModule(b,u,def);
+    b.on('deploy', ({ unit, move }) => {
+      if (unit !== u||move) return;
+      const life=u.deploySeq;
+      b.after(talent.interval, () => { if (!b.finished&&live(u)&&u.deploySeq===life) b.addBuff(u, {
+        key: 'poncirus:endurance', source:u,mods: { hpPct: talent.max_hp },
+        admit:()=>!b.finished&&live(u)&&u.deploySeq===life,
       }); }, { owner: u });
     }, { owner: u });
   } else if (id === 'char_261_sddrag' && talent)

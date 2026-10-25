@@ -20,8 +20,9 @@ adapter and an explicit separate instance/control adapter. Canonical 17-14
 admission, field UI integration, initial native FSM dispatch, withdrawal/card
 regeneration rules and S3 compatibility with that stage's enemy clocks remain
 gated. The exact hidden 17-16 Ptilopsis build now has an internal level-three
-module adapter; its range mapping and the other three modules remain under
-review before stage admission.
+module adapter. Poncirus's exact hidden build now has its level-three blocking
+module and strengthened HP talent too. Ptilopsis's range mapping, the other two
+modules and stage controls remain under review before stage admission.
 Rockbreaker's eligible split animation now consumes live `slow_down` elapsed
 work for both release and completion, rather than fixed world-time callbacks.
 The six selected infantry/caster/carrier Combat cooldowns and Brute's owned
@@ -1505,3 +1506,49 @@ The expanded focused run passed all 1,551 locally available cases. A final
 fourteenth module case additionally verifies that stopping an overwritten
 producer preserves its successor under the exact same map key; all 14 module
 cases passed. The four locally quarantined tests remain in Git and hosted CI.
+
+## Exact hidden 17-16 Poncirus module and deployment-owned talent timer
+
+The canonical hidden Poncirus card now has an internal E2/80, potential-one,
+trust-100, S2 rank-seven, level-three module adapter. The retained module and
+exact card records, complete native prefab and derived-buff template are each
+bound in full by SHA256 receipts. No public module, hidden card, dialog action
+or stage admission is enabled by this helper.
+
+Its source stats add 260 HP and 37 DEF. The trait grants one additive +8% ATK
+and DEF buff while the owner has a living, deployed, mutually linked blockee;
+multiple enemies do not multiply the bonus. Module and S2 percentages add in
+the same channel. Releasing the last enemy, enemy death, owner retirement or
+battle completion removes the owned derived buff. The exact selected talent
+grants +20% HP after 30 seconds, preserving the simulator's current HP-ratio
+behavior. The existing S2 still grants 11 DP on each selected-rank activation,
+with one DP per four seconds during its permanent second activation.
+
+Native event 37 is corroborated as ON_OWNER_BLOCKEE_CHANGED by five unchanged
+template matches against the pinned named source. Three independent witnesses
+are retained in a separate artifact. The existing alias-recovery producer now
+has a --blockee mode; native-source CI independently reproduces it. Only $type's
+assembly suffix is normalized, retaining every other action field and order.
+The simulator maps that event to its block/unblock notifications and tick
+reconciliation. Compiled client dispatch, FSM/frame parity and initial passive
+attachment ordering remain unproven; this is an internal mechanics adapter.
+
+The shared Poncirus endurance callback now captures its deployment life and
+revalidates it both before and during buff admission. An old timer cannot grant
+HP to a replaced life, including replacement inside a beforeBuff hook. Movement
+notifications do not start another deployment timer. This correction also
+applies to the existing module-free implementation. The module similarly
+authenticates its deployment and rejects reentrant retirement during derived
+buff admission.
+
+All 36 targeted Poncirus, existing vanguard and Ptilopsis module checks passed,
+including 11 new module/lifecycle cases. The table, original native extraction
+and blockee alias producers also independently reproduced with --check.
+Supplemental [PRTS Poncirus data](https://prts.wiki/w/%E9%9D%92%E6%9E%B3)
+agrees with the selected HP-talent and skill values; canonical records and
+retained native graphs remain the mechanical inputs.
+The expanded focused run passed all 1,563 locally available cases. Hosted
+continuation 40237592281 at the preceding Ptilopsis checkpoint 468ebfdc passed
+all 15 jobs, including both focused platforms, native reproduction and browser
+checks. Its full eight-shard run 40237601264 remained in progress when this
+Poncirus checkpoint was saved; no replacement full run was dispatched.
