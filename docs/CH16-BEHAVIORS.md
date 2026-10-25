@@ -53,14 +53,16 @@ action closure are rejected. Extraction never rewrites the reviewed contract.
 Variants need their own native evidence and review; they are not admitted by a
 base-prefab match.
 
-`16-2`, `16-3`, `16-4`, `16-5`, `17-2`, `17-3` and `17-4` are accepted by the experimental runtime candidate registry.
+`16-2`, `16-3`, `16-4`, `16-5`, `16-6`, `17-2`, `17-3` and `17-4` are accepted by the experimental runtime candidate registry.
 16-2 retains its 42 source spawns and four canonical records. 16-3 has 22 normal
 hostile spawns plus unmanaged miner summons, using four canonical records. 16-4
 has 17 normal hostiles and four canonical records. 17-2 has 28 normal hostiles
 and two canonical records. 17-3 has 24 normal hostiles, one Leak Marker and four
 canonical records. 17-4 has 31 normal hostiles, one Leak Marker and four
 canonical records, plus source-triggered Rockbreaker children. 16-5 has 26 normal
-hostiles, two independent tunnel actions and four canonical records. All seven
+hostiles, two independent tunnel actions and four canonical records. 16-6 retains
+24 scheduled units (21 hostiles and three neutral miners), one tunnel and four
+canonical records. All eight
 require `?experimental=1`, remain `testOnly`, and verify the candidate support
 snapshot checksum. No other Chapter 16/17 stage is admitted by this review.
 
@@ -714,3 +716,51 @@ unchanged. No production pointer, merge, publication or deployment is advanced.
 node --test test/arkpedia-ch16-shieldguard.test.js test/arkpedia-ch16-artillery.test.js test/arkpedia-ch16-patrol.test.js test/arkpedia-stage-16-5.test.js
 RENDER_E2E=1 CH16_QA_STAGE=16-5 CH16_QA_OUT=/tmp/codex-ch16-5-ui node --test test/arkpedia-ch16-ui.browser.test.js
 ```
+
+### Experimental Fortbreaker and 16-6
+
+Base Fortbreaker (`enemy_10123_uareap`) now has a candidate controller.
+The `_2` graph and shared weapon subset are retained and tested, but its
+canonical record additionally requires `AttackParam` and `KillBonusAura`, which
+remain unsupported. The support gate rejects `_2`; this checkpoint does not
+admit it or claim complete behavior for that record.
+The retained native prefab/projectile/template closure, indexed components and
+original skeleton bytes are bound by an independent review. The native Skill
+OnAttack event starts three rockets, or six when orders are present at cast
+start, at 0.2-second intervals. Rounds reselect ground targets, prioritizing
+previously unselected deployments. Each born rocket retains its launch target
+position and impacts after the native 0.6-second delay within radius 1.1.
+Born impacts survive source/target death and use live attack. The native final
+trace flag includes the still-valid original deployment even after it moves
+outside the static area; that receipt never transfers to a redeployment. Control interrupts
+unborn rounds. The normal homing weapon and blocker Combat retain independent
+cooldowns, while movement can engage three miners and block volume is three.
+Shared ordinary-attack animation and collider-edge models remain candidate
+limits; decoded native events are not captured game-frame parity.
+
+The separate 16-6 review binds canonical `arkpedia-data@657f85cc…` stage inputs
+and the Fortbreaker, Patrol Captain, device and engagement evidence. All 24
+scheduled source units remain: 21 counted hostiles and three neutral miners.
+The source's `raid` hidden group remains excluded. Scheduled miners keep their
+ordinary battle lifetime; only native tunnel children use the already reviewed
+harmless lifetime. Three route-only seeds clear at 286.8–288.57 seconds with
+live Fortbreaker volleys and no simulator errors. This is route/device
+integration evidence, not an operator strategy or captured native parity claim.
+The catalogue is now 605 entries: 597 public and eight explicitly test-only.
+
+Validation in this checkpoint: the focused controller/stage tests pass, both portable Fortbreaker
+extractors reproduce retained bytes with `--check`, default public support is
+unchanged, and candidate support/index checks pass. Real-app 16-6 verification passes desktop keyboard, phone touch and restart
+with natural SP. The first run reproduced an attack event crashing the fallback
+actor and freezing the animation loop. Supplying the common actor attack method
+fixes that failure; the exact same UI test passes and both screenshots were
+viewed (`/tmp/codex-ch16-6-ui`).
+
+Hosted CI inspection also found Windows shards returning without executing the
+test runner: a Unix-only main-module URL check did not match Windows paths.
+The runner now uses platform URL conversion, and a subprocess test exercises
+the actual CLI entry point. Earlier Windows green statuses are not unit-suite
+evidence. Node 22 Ubuntu reported 180-second file-level timeouts in the long
+seeded full-match suites; those files now run separately with a bounded
+ten-minute deadline, retaining every seed and assertion. Other files retain
+the original three-minute deadline. Fresh hosted verification remains pending.

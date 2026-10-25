@@ -37,11 +37,12 @@ if (args.candidate === 'ch16') {
     '16-3': 'arkpedia-ch16-reviewed-stage.json',
     '16-4': 'arkpedia-ch16-reviewed-stage-16-4.json',
     '16-5': 'arkpedia-ch16-reviewed-stage-16-5.json',
+    '16-6': 'arkpedia-ch16-reviewed-stage-16-6.json',
     '17-2': 'arkpedia-ch17-reviewed-stage-17-2.json',
     '17-3': 'arkpedia-ch17-reviewed-stage-17-3.json',
     '17-4': 'arkpedia-ch17-reviewed-stage-17-4.json',
   };
-  if (source.code !== '16-2' && !Object.hasOwn(stageReviews, source.code)) throw Error('Candidate admission is reviewed only for test-only 16-2, 16-3, 16-4, 16-5, 17-2, 17-3 and 17-4');
+  if (source.code !== '16-2' && !Object.hasOwn(stageReviews, source.code)) throw Error('Candidate admission is reviewed only for test-only 16-2, 16-3, 16-4, 16-5, 16-6, 17-2, 17-3 and 17-4');
   if (source.code !== '16-2') {
     const reviewPath = stageReviews[source.code];
     chapter16Review = await read(new URL('../../data/candidates/' + reviewPath, import.meta.url));
@@ -126,8 +127,11 @@ const stage = {
 };
 // The battle compiler and the supported-enemy gate are the same ones used by 0-1.
 const adapter = stageAdapter(stage);
-if (chapter16Review && adapter.spawns.length !== chapter16Review.expected.hostiles)
-  throw Error(source.code + ' normal hostile count differs from the reviewed source');
+if (chapter16Review && adapter.spawns.length !== (chapter16Review.expected.scheduledSpawns ?? chapter16Review.expected.hostiles))
+  throw Error(source.code + ' normal scheduled spawn count differs from the reviewed source');
+if (chapter16Review?.expected.countedHostiles != null
+  && adapter.spawns.filter(s => !records.enemies[s.enemyKey]?.levels[0]?.notCountInTotal).length !== chapter16Review.expected.countedHostiles)
+  throw Error(source.code + ' counted hostile total differs from the reviewed source');
 stage.fixedSquad = adapter.fixedSquad;
 // The level file owns each enemy's database level and any attribute overrides
 // (stage geometry `enemyConfigurations`); the catalogue is the source record.

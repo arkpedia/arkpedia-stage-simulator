@@ -8,7 +8,7 @@ import { join } from 'node:path';
 const chrome = process.env.CHROME_PATH ?? '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const enabled = process.env.RENDER_E2E === '1' && existsSync(chrome);
 const stageCode = process.env.CH16_QA_STAGE ?? '16-3';
-if (!['16-3', '16-4', '16-5'].includes(stageCode)) throw Error('Only reviewed test-only tunnel stages may run this QA');
+if (!['16-3', '16-4', '16-5', '16-6'].includes(stageCode)) throw Error('Only reviewed test-only tunnel stages may run this QA');
 const out = process.env.CH16_QA_OUT ?? '/tmp/codex-ch16-ui';
 
 test(`test-only ${stageCode} tunnel command works with natural SP, keyboard, mobile layout and restart`,
@@ -56,7 +56,7 @@ test(`test-only ${stageCode} tunnel command works with natural SP, keyboard, mob
           await page.waitForFunction(() => document.querySelector('#stage-actions button')?.getAttribute('aria-disabled') === 'false', { timeout: 45000 });
         } catch (error) {
           await page.screenshot({ path: join(out, 'charge-timeout.png') });
-          throw new Error(`Natural SP did not become ready: ${await page.$eval('.workspace', e => e.textContent)}`, { cause: error });
+          throw new Error(`Natural SP did not become ready (page errors: ${JSON.stringify(errors)}): ${await page.$eval('.workspace', e => e.textContent)}`, { cause: error });
         }
         await page.click('#pause');
         assert.match(await page.$eval(command, e => e.textContent), /1 waiting/);

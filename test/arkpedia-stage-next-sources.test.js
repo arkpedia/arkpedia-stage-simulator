@@ -25,14 +25,14 @@ for (const code of codes) test(`${code} retains canonical source evidence with a
   assert.equal(source.levelReceipt.files[`raw/levels/${code}.json`].sha256, lock.files.rawLevel.sha256);
   for (const key of ['geometry', 'conditional']) assert.equal(source.routeReceipt.outputs[lock.files[key].path], lock.files[key].sha256);
   assert.equal(source.rawLevel.options.moveMultiplier, .5);
-  if (['16-5', '17-2', '17-3', '17-4'].includes(code)) {
+  if (['16-5', '16-6', '17-2', '17-3', '17-4'].includes(code)) {
     assert.throws(() => resolveStage(index, code), /test-only/);
     assert.equal(resolveStage(index, code, { experimental: true }).testOnly, true);
   } else assert.throws(() => resolveStage(index, code, { experimental: true }), /Unknown stage/);
 });
 
 test('retaining the next canonical levels cannot bypass the builder stage-review gate', () => {
-  const source = read('candidates/arkpedia-stage-16-6-source.json'), dir = mkdtempSync(join(tmpdir(), 'next-stage-gate-'));
+  const source = read('candidates/arkpedia-stage-16-7-source.json'), dir = mkdtempSync(join(tmpdir(), 'next-stage-gate-'));
   const stage = join(dir, 'stage.json'), geometry = join(dir, 'geometry.json'), out = join(dir, 'out.json');
   writeFileSync(stage, JSON.stringify(source.stage)); writeFileSync(geometry, JSON.stringify(source.geometry));
   assert.throws(() => execFileSync(process.execPath, ['tools/arkpedia/build-stage.mjs', '--candidate', 'ch16', '--stage', stage,

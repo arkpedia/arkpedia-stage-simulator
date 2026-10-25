@@ -12,7 +12,7 @@
 // An enemy is supported only when every feature it uses is registered and
 // covered (shared/arkpedia/enemy-support.js).
 
-import { CHAPTER16_FEATURES, shieldguardCovered } from './chapter16-features.js';
+import { CHAPTER16_FEATURES, shieldguardCovered, fortbreakerCovered } from './chapter16-features.js';
 import patrolReview from '../../data/candidates/arkpedia-ch16-reviewed-patrol.json' with { type: 'json' };
 import engagement from '../../data/candidates/arkpedia-ch16-reviewed-engagement.json' with { type: 'json' };
 
@@ -231,7 +231,7 @@ export const ENEMY_FEATURES = Object.freeze({
   'ability:Can fight 1 <Miner Guerrilla> at a time': { covers: blockMcreepCovered,
     ability: r => ({ kind: 'blockMcreep', params: () => ({ cnt: r.talents.bb['BlockMcreep.block_mcreep_cnt'], range: r.talents.bb['BlockMcreep.range_radius'], rangeAdd: r.talents.bb['BlockMcreep.range_radius_add'], attackRange: r.stats.rawRangeRadius, markArmy: r.key === engagement.blockMcreep.key }) }),
     note: 'BlockMcreep: every 0.3 s selects one nearest Miner Guerrilla and applies UNMOVABLE; one engagement at a time', nativeClaim: () => ({ active: 1 }) },
-  'talent:BlockMcreep': { covers: (r, n) => blockMcreepCovered(r, n) || shieldguardCovered(r, n),
+  'talent:BlockMcreep': { covers: (r, n) => blockMcreepCovered(r, n) || shieldguardCovered(r, n) || fortbreakerCovered(r, n),
     note: 'native BlockMcreep/SelectNearestMcreep pair; runtime lives on the ability line' },
   'ability:<$ba.invisible>Invisible</>': { covers: () => true, trait: { flags: { stealth: true } },
     note: 'Invisible (ba.invisible): untargetable until revealed or blocked; blocking lifts it for the engine STEALTH_RESTORE window' },
