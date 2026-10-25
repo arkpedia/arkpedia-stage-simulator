@@ -6158,3 +6158,5 @@ Promoted the final 31 built stages public after smoke/data review. Catalogue **5
 Added a checksum-verified canonical loader pinned to `arkpedia/arkpedia-data` commit `79e81a8a872b2ecc592647d81a864ccbf1f8ca06`; `npm run sync:arkpedia-canonical` fetches and verifies the raw enemy database/handbook. Tests cover valid fetch, checksum corruption and missing snapshots.
 
 Added the canonical enemy-record compiler path: `npm run refresh:arkpedia-enemies` verifies the pinned arkpedia-data snapshot, compiles enemy records and writes only `data/candidates/arkpedia-enemy-records.canonical.json` plus a receipt. The reviewed public catalogue is untouched.
+
+Added the **Rock Wall** device contract (8000 HP, 300 DEF, 20 RES, obstacle) with an integration test. It does not admit 16-3 yet; the polluted facility, hidden tunnel and 10120 controller remain.

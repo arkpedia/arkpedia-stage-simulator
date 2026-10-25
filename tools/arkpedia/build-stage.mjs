@@ -16,6 +16,7 @@ import { readFile, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { basename, dirname, join } from 'node:path';
 import { createHash } from 'node:crypto';
+import { applyReviewedHiddenGroups } from './reviewed-hidden-groups.mjs';
 import { stageAdapter } from '../../server/sim/arkpedia.js';
 import { STAGE_TOKEN_UNITS } from '../../shared/arkpedia/stage-devices.js';
 import { mergePristineHiddenGroups } from '../../shared/arkpedia/stage-conditional.js';
@@ -28,12 +29,49 @@ for (const key of ['stage', 'geometry', 'out']) if (!args[key]) throw Error(`Mis
 const read = async file => JSON.parse(await readFile(file, 'utf8'));
 const [source, geometry, playbackFile, mvp, records, support, tokenData] = await Promise.all([
   read(args.stage), read(args.geometry), args.playback ? read(args.playback) : { playbackPaths: {} }, read(new URL('../../data/arkpedia-mvp.json', import.meta.url)),
-  read(new URL('../../data/arkpedia-enemy-records.json', import.meta.url)),
-  read(new URL('../../data/arkpedia-enemy-support.json', import.meta.url)), read(new URL('../../data/arkpedia-deployable-tokens.json', import.meta.url)),
+  read(new URL(args.candidate === 'ch16' ? '../../data/candidates/arkpedia-enemy-records.canonical.json' : '../../data/arkpedia-enemy-records.json', import.meta.url)),
+  read(new URL(args.candidate === 'ch16' ? '../../data/candidates/arkpedia-ch16-enemy-support.json' : '../../data/arkpedia-enemy-support.json', import.meta.url)), read(new URL('../../data/arkpedia-deployable-tokens.json', import.meta.url)),
 ]);
+let chapter16Source = null, chapter16Review = null;
+if (args.candidate === 'ch16') {
+  const stageReviews = {
+    '16-2': 'arkpedia-ch16-reviewed-stage-16-2.json',
+    '16-3': 'arkpedia-ch16-reviewed-stage.json',
+    '16-4': 'arkpedia-ch16-reviewed-stage-16-4.json',
+    '16-5': 'arkpedia-ch16-reviewed-stage-16-5.json',
+    '16-6': 'arkpedia-ch16-reviewed-stage-16-6.json',
+    '16-7': 'arkpedia-ch16-reviewed-stage-16-7.json',
+    '16-8': 'arkpedia-ch16-reviewed-stage-16-8.json',
+    '17-2': 'arkpedia-ch17-reviewed-stage-17-2.json',
+    '17-3': 'arkpedia-ch17-reviewed-stage-17-3.json',
+    '17-4': 'arkpedia-ch17-reviewed-stage-17-4.json',
+  };
+  if (!Object.hasOwn(stageReviews, source.code)) throw Error('Candidate admission is reviewed only for test-only 16-2, 16-3, 16-4, 16-5, 16-6, 16-7, 16-8, 17-2, 17-3 and 17-4');
+  {
+    const reviewPath = stageReviews[source.code];
+    chapter16Review = await read(new URL('../../data/candidates/' + reviewPath, import.meta.url));
+    if (chapter16Review.code !== source.code || chapter16Review.testOnly !== true) throw Error('Missing test-only ' + source.code + ' review');
+    for (const { path, sha256 } of Object.values(chapter16Review.sources)) {
+      const bytes = await readFile(new URL('../../' + path, import.meta.url));
+      if (createHash('sha256').update(bytes).digest('hex') !== sha256) throw Error('Chapter 16 stage review source changed: ' + path);
+    }
+    chapter16Source = await read(new URL('../../' + chapter16Review.sources.stageSource.path, import.meta.url));
+    for (const [key, file] of [['stage', args.stage], ['geometry', args.geometry], ...(args.conditional ? [['conditional', args.conditional]] : [])]) {
+      if (createHash('sha256').update(await readFile(file)).digest('hex') !== chapter16Source.inputs[key].sha256)
+        throw Error(source.code + ' input does not match its reviewed canonical source: ' + key);
+    }
+    if (chapter16Source.testOnly !== true || chapter16Source.stage.slug !== source.slug
+      || chapter16Source.rawLevel.options.moveMultiplier !== chapter16Review.expected.moveMultiplier)
+      throw Error('Unreviewed ' + source.code + ' level contract');
+    applyReviewedHiddenGroups(geometry, chapter16Source, chapter16Review.expected);
+  }
+  const raw = await readFile(new URL('../../data/candidates/arkpedia-enemy-records.canonical.json', import.meta.url));
+  if (createHash('sha256').update(raw).digest('hex') !== support.source.records.sha256)
+    throw Error('Candidate support was generated from another canonical snapshot');
+}
 const supportOperators = await read(new URL('../../data/arkpedia-support-operators.json', import.meta.url));
 const conditionalPath = args.conditional ?? join(dirname(args.geometry), '..', 'stage-conditional', basename(args.geometry));
-if (geometry.hasConditionalSpawns && existsSync(conditionalPath)) {
+if (!chapter16Source && geometry.hasConditionalSpawns && existsSync(conditionalPath)) {
   mergePristineHiddenGroups(geometry, JSON.parse(await readFile(conditionalPath, 'utf8')));
 }
 const paths = playbackFile.playbackPaths ?? playbackFile.paths ?? {};
@@ -49,7 +87,7 @@ for (const [index, route] of geometry.routes.entries()) {
 if (!Object.keys(paths).length) throw Error('Playback export has no paths and no route to synthesize');
 const devicePath = join(dirname(args.stage), '..', 'stage-devices.json');
 const baseSlug = source.slug.replace(/_(challenge_mode|six_star|adverse_environment)$/, '');
-const devices = existsSync(devicePath) ? (JSON.parse(await readFile(devicePath, 'utf8'))[source.geometryKey ?? baseSlug] ?? []) : [];
+const devices = chapter16Source?.devices ?? (existsSync(devicePath) ? (JSON.parse(await readFile(devicePath, 'utf8'))[source.geometryKey ?? baseSlug] ?? []) : []);
 const tokens = (geometry.suppliedUnits?.deployable_tokens ?? []).filter(t => t.count !== 0).map(t => {
   const spec = STAGE_TOKEN_UNITS[t.unit_id];
   if (!spec) throw Error(`Unsupported stage token: ${t.unit_id}`);
@@ -64,6 +102,7 @@ const supportForStage = Object.fromEntries(fixedCards
   .filter(card => !mvp.operators[card.unit_id] && supportOperators.operators[card.unit_id])
   .map(card => [card.unit_id, supportOperators.operators[card.unit_id]]));
 const stage = {
+  ...(args.candidate === 'ch16' ? { testOnly: true, enemyCatalogue: 'canonical-ch16-candidate-v1', canonicalData: records.canonicalData, upstream: records.upstream } : {}),
   code: source.code,
   name: source.name,
   description: source.description,
@@ -71,7 +110,11 @@ const stage = {
   mapTags: [],
   mapTagSource: null,
   geometry,
-  conditionalHandled: args.allowConditional === '1',
+  conditionalHandled: !!chapter16Source || args.allowConditional === '1',
+  ...(chapter16Source ? { chapter16Source: { testOnly: true, canonicalData: chapter16Source.canonicalData,
+    upstream: chapter16Source.upstream, inputs: chapter16Source.inputs, rawLevel: chapter16Source.rawLevel },
+    excludedHiddenGroups: chapter16Review.expected.excludedHiddenGroups,
+    ...(chapter16Review.expected.includedHiddenGroups ? { includedHiddenGroups: chapter16Review.expected.includedHiddenGroups } : {}) } : {}),
   devices,
   tokens,
   operators: Object.keys(supportForStage).length ? supportForStage : undefined,
@@ -81,7 +124,7 @@ const stage = {
     producer: 'Arkpedia stage browser / buildPlaybackPaths',
     stage: source.code,
     geometryHash: createHash('sha256').update(JSON.stringify(geometry)).digest('hex'),
-    moveScale: 0.65,
+    moveScale: chapter16Source?.rawLevel.options.moveMultiplier ?? 0.65,
     paths,
   },
   art: null,
@@ -90,6 +133,11 @@ const stage = {
 };
 // The battle compiler and the supported-enemy gate are the same ones used by 0-1.
 const adapter = stageAdapter(stage);
+if (chapter16Review && adapter.spawns.length !== (chapter16Review.expected.scheduledSpawns ?? chapter16Review.expected.hostiles))
+  throw Error(source.code + ' normal scheduled spawn count differs from the reviewed source');
+if (chapter16Review?.expected.countedHostiles != null
+  && adapter.spawns.filter(s => !records.enemies[s.enemyKey]?.levels[0]?.notCountInTotal).length !== chapter16Review.expected.countedHostiles)
+  throw Error(source.code + ' counted hostile total differs from the reviewed source');
 stage.fixedSquad = adapter.fixedSquad;
 // The level file owns each enemy's database level and any attribute overrides
 // (stage geometry `enemyConfigurations`); the catalogue is the source record.
@@ -111,6 +159,11 @@ const configured = id => {
   }
   return record;
 };
+for (const spawn of adapter.spawns) if (spawn.holdsBattle === false) {
+  const record = configured(spawn.enemyKey);
+  if (record.notCountInTotal !== true || record.stats.lpr !== 0)
+    throw Error('Unreviewed harmless spawn counter/life contract: ' + spawn.enemyKey);
+}
 const enemyIds = new Set();
 const addEnemy = id => {
   if (enemyIds.has(id)) return;
@@ -119,7 +172,11 @@ const addEnemy = id => {
   enemyIds.add(id);
   for (const child of support.enemies[id].spawns ?? []) addEnemy(child);
 };
+for (const device of devices) if (device.key === 'trap_329_rift') addEnemy('enemy_10211_murad');
+for (const device of devices) if (device.key === 'trap_270_spawnp') addEnemy('enemy_3010_mcreep');
 for (const spawn of adapter.spawns) addEnemy(spawn.enemyKey);
+if (chapter16Review && JSON.stringify([...enemyIds].sort()) !== JSON.stringify([...chapter16Review.expected.enemies].sort()))
+  throw Error(source.code + ' enemy dependency set differs from the reviewed source');
 stage.enemies = Object.fromEntries([...enemyIds].map(id => [id, configured(id)]));
 assertRegularEnemies({ ...mvp, enemies: stage.enemies, stage });
 await writeFile(args.out, JSON.stringify(stage, null, 1) + '\n');

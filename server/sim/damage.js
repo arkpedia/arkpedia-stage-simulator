@@ -394,6 +394,11 @@ export function dealDamage(battle, source, target, dmgIn) {
     const m = f(source, target, dmg); if (Number.isFinite(m) && m > 0) mul *= m;
   }
   mul *= type === 'phys' ? ts.physTakenMul : type === 'arts' ? ts.artsTakenMul : type === 'elemental' ? ts.elementalTakenMul : ts.trueTakenMul;
+  // Conditional incoming effects are per recipient, including sourceless
+  // damage. Never write their multiplier into a reusable DamageInfo packet.
+  if (battle._takenMultipliers?.size) for (const f of battle._takenMultipliers.values()) {
+    const m = f(hs, target, dmg); if (Number.isFinite(m) && m >= 0) mul *= m;
+  }
   mul *= flyingSanctuaryRatio(target.buffs, hs, type);
   final *= mul;
   // Fixed damage resistance is a final HP-damage cut, before shields. It is

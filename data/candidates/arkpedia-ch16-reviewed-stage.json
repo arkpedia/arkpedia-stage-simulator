@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "code": "16-3",
+  "testOnly": true,
+  "scope": "Retained-source and shared-battle integration approval for a test-only build. No public admission or captured-game parity claim.",
+  "sources": {
+    "stageSource": {
+      "path": "data/candidates/arkpedia-stage-16-3-source.json",
+      "sha256": "3ff5b5529c77951377aa42cdf4b9daec63ff2a36e21f425677a611542a68c24d"
+    },
+    "devices": {
+      "path": "data/candidates/arkpedia-ch16-device-source.json",
+      "sha256": "247f67e9b967857b8bf33546367e5877e365ce38fdbae7c609bda4a9a3258e64"
+    },
+    "tunnelSkill": {
+      "path": "data/candidates/arkpedia-ch16-tunnel-skill-source.json",
+      "sha256": "e5392e7f0a65f9acbb0ee4ec594191811c251ddf4fc42f27ec90d509deaeb648"
+    }
+  },
+  "expected": {
+    "hostiles": 22,
+    "enemies": [
+      "enemy_10120_uaghst",
+      "enemy_1108_uterer",
+      "enemy_1109_uabone",
+      "enemy_3010_mcreep"
+    ],
+    "excludedHiddenGroups": [
+      "raid"
+    ],
+    "branch": "mcreep_route",
+    "action": 0,
+    "extraRoute": 0,
+    "moveMultiplier": 0.5
+  }
+}

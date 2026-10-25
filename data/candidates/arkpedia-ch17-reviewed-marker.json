@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "testOnly": true,
+  "scope": "Source-backed experimental Leak Marker contract. No stage/public admission or captured native frame/render parity.",
+  "sources": {
+    "marker": {
+      "path": "data/candidates/arkpedia-ch17-marker-source.json",
+      "sha256": "78fc2c8253643ad901172eac0262e8211a1a6b9c79f9703e874538e21f608704"
+    },
+    "environment": {
+      "path": "data/candidates/arkpedia-ch16-action-source.json",
+      "sha256": "f54ddb0a56f4ac0c56253f67c162cc8a5ceca91713d81de18fad463b382e6338"
+    }
+  },
+  "defaults": {
+    "spCost": 55,
+    "initSp": 0,
+    "spPerSecond": 1,
+    "retryInterval": 0.009999999776482582,
+    "summonFlagDuration": 1
+  },
+  "native": {
+    "rewriteTileOptions": 0,
+    "sideType": 2,
+    "category": 2,
+    "invulnerableFlag": 5,
+    "withdrawable": 0,
+    "skillType": "AUTO",
+    "skillNeedsFlag": "trap_rift_s_flag",
+    "envKey": "env_v073_mainline17_ctrl",
+    "enemyKey": "enemy_10211_murad",
+    "unharmful": true
+  },
+  "unverified": [
+    "Original skill animation and native subframe timing; shared engine advances at its configured fixed timestep"
+  ]
+}

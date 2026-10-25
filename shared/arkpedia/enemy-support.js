@@ -29,6 +29,11 @@ export function nativeComponents(evidence, prefabKey) {
   }
   Object.defineProperty(out, '$ref', { value: ref => byId.get(String(ref?.m_PathID ?? ref)) ?? null });
   Object.defineProperty(out, '$template', { value: key => evidence?.templates?.[key] ?? null });
+  Object.defineProperty(out, '$actions', { value: () => evidence?.actions ?? null });
+  Object.defineProperty(out, '$deviceEvidence', { value: () => evidence?.chapter16DeviceSha256 ?? null });
+  Object.defineProperty(out, '$engagementEvidence', { value: () => evidence?.chapter16EngagementSha256 ?? null });
+  Object.defineProperty(out, '$familyEvidence', { value: name => evidence?.chapter16Families?.[name]?.graphSha256 ?? null });
+  Object.defineProperty(out, '$retained', { value: () => (evidence?.prefabs?.[prefabPath(prefabKey)] ?? []).map(c => c.originalJson) });
   return out;
 }
 

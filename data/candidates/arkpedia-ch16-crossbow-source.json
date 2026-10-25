@@ -1,0 +1,940 @@
+{
+ "schemaVersion": 1,
+ "scope": "Source evidence only; no behavior or admission approval.",
+ "source": {
+  "inventory": "data/arkpedia-cn-native-source.json",
+  "sha256": "b6e0cfbe21768b277e42cae0f6f4ae627ee69020898bcacb1b8e5ed05bee7655",
+  "enemyInventory": {
+   "path": "data/arkpedia-cn-enemy-native-source.json",
+   "sha256": "a6d2d82284f5b497e6fb4b0f55a1fb42d1b3d05c507c9b2c873808bd03ba1904"
+  },
+  "bundles": [
+   {
+    "path": "battle/enm_pfb_27.ab",
+    "bytes": 486948,
+    "md5": "0268b352b15c3136cda21fc9151928be",
+    "archive": "battle_enm_pfb_27.dat",
+    "url": "https://ak.hycdn.cn/assetbundle/official/Android/assets/26-09-22-07-47-20_6c71fa/battle_enm_pfb_27.dat",
+    "sha256": "fba01fdcbd9f2b70ecb81eb1afd7fe352ff395466878725479f350a760516a94"
+   },
+   {
+    "path": "battle/prefabs/[uc]projectiles.ab",
+    "bytes": 1833151,
+    "md5": "3847f49e8384d2cc9cfea1d56e0bf9bd",
+    "archive": "battle_prefabs_[uc]projectiles.dat",
+    "url": "https://ak.hycdn.cn/assetbundle/official/Android/assets/26-09-22-07-47-20_6c71fa/battle_prefabs_%5Buc%5Dprojectiles.dat",
+    "sha256": "f7a1858f6e213251d56d2883e4dcf410f48951a1b0efc565427da182275a0db3"
+   },
+   {
+    "path": "config/buff_template_holder.ab",
+    "bytes": 1963907,
+    "md5": "8d395a42a34fbbb5af1f2e4ad7d39ef8",
+    "archive": "config_buff_template_holder.dat",
+    "url": "https://ak.hycdn.cn/assetbundle/official/Android/assets/26-09-22-07-47-20_6c71fa/config_buff_template_holder.dat",
+    "sha256": "30bacb35c8962817931d8fd2cad66cd5a4455b86f6f34e21257829ff7f0fd0a3"
+   }
+  ]
+ },
+ "prefabs": {
+  "dyn/battle/prefabs/enemies/enemy_10121_uasnip.prefab": [
+   {
+    "pathId": "-8708252394589783845",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"7299299024597547227\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-1783581249600948005\"},\"m_LocalPosition\":{\"x\":-0.0,\"y\":-0.17000000178813934,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalScale\":{\"x\":0.11999999731779099,\"y\":0.11999999731779099,\"z\":0.11999999731779099}}",
+    "sha256": "539cd59836d7144abc257cf346a39a7de475d9bf5f94c7bf8b5a08ddf3b09d2c"
+   },
+   {
+    "pathId": "-8657723079270991653",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-2685776478278059813\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"5805591661951056091\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-8532988404761626405\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-3382196010343073573\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"7675832577073215707\"}}],\"m_IsActive\":true,\"m_Layer\":9,\"m_Name\":\"enemy_10121_uasnip\",\"m_Tag\":5}",
+    "sha256": "187eccaaf05999b3ff3c3ec2d7fdbc957277236cfafb3c79c92a3e1958972341"
+   },
+   {
+    "pathId": "-8626792947217729317",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"_animations\":[{\"animKey\":\"Default\",\"animName\":\"Default\",\"ignoreMissing\":1,\"loop\":0,\"speed\":1.0},{\"animKey\":\"Move\",\"animName\":\"Move\",\"ignoreMissing\":1,\"loop\":1,\"speed\":1.0},{\"animKey\":\"Die\",\"animName\":\"Die\",\"ignoreMissing\":1,\"loop\":0,\"speed\":1.0},{\"animKey\":\"Idle\",\"animName\":\"Idle\",\"ignoreMissing\":1,\"loop\":1,\"speed\":1.0},{\"animKey\":\"Attack\",\"animName\":\"Attack\",\"ignoreMissing\":1,\"loop\":0,\"speed\":1.0},{\"animKey\":\"Skill\",\"animName\":\"Skill\",\"ignoreMissing\":1,\"loop\":0,\"speed\":1.0}],\"_cacheBoundsCenter\":1,\"_enableShowDamageFlash\":1,\"_faceSwitcher\":{\"m_FileID\":0,\"m_PathID\":\"-563851902044210981\"},\"_headTransform\":{\"m_FileID\":0,\"m_PathID\":\"-5698293659503626021\"},\"_hitTransform\":{\"m_FileID\":0,\"m_PathID\":\"5575271137769617627\"},\"_mixSettings\":[],\"_muzzleTransform\":{\"m_FileID\":0,\"m_PathID\":\"7343242969429965019\"},\"_neverImmediatelyFaceSwitcher\":0,\"_resetSkinToInitial\":0,\"_shadowTransform\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_skeleton\":{\"m_FileID\":0,\"m_PathID\":\"8781093802408474843\"},\"_specialPoint0\":{\"m_FileID\":0,\"m_PathID\":\"1604863710642698459\"},\"_specialPoint1\":{\"m_FileID\":0,\"m_PathID\":\"-5079760234129458981\"},\"_specialPoint10\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint11\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint12\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint13\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint14\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint15\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint2\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint3\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint4\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint5\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint6\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint7\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint8\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint9\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_spineScale\":1.0,\"_spineSkins\":[],\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"4120499309544798427\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"6360585277869116281\"}}",
+    "sha256": "11627d90f922749a95baaef17d52ae2900755e945ca3eda6848e8fc201cfb151"
+   },
+   {
+    "pathId": "-8532988404761626405",
+    "componentType": "Rigidbody2D",
+    "originalJson": "{\"m_AngularDrag\":0.05000000074505806,\"m_BodyType\":0,\"m_CollisionDetection\":1,\"m_Constraints\":4,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-8657723079270991653\"},\"m_GravityScale\":0.0,\"m_Interpolate\":0,\"m_LinearDrag\":0.0,\"m_Mass\":1.0,\"m_Material\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Simulated\":true,\"m_SleepingMode\":0,\"m_UseAutoMass\":false,\"m_UseFullKinematicContacts\":false}",
+    "sha256": "837d3b28ceca7d8bbd06970bc63972439c6d8c2d5d4063b04917e43962e47542"
+   },
+   {
+    "pathId": "-8355859131844069157",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[{\"m_FileID\":0,\"m_PathID\":\"-5698293659503626021\"},{\"m_FileID\":0,\"m_PathID\":\"5575271137769617627\"},{\"m_FileID\":0,\"m_PathID\":\"7343242969429965019\"},{\"m_FileID\":0,\"m_PathID\":\"1604863710642698459\"},{\"m_FileID\":0,\"m_PathID\":\"-5079760234129458981\"}],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"8534913837473593563\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"8581809240548440283\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "335b5734038810dcc7f8de8728f86efcdde0da7ac3e1a373f168b9004806ea24"
+   },
+   {
+    "pathId": "-7712195836439889701",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-5079760234129458981\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"5767422419541162203\"}}],\"m_IsActive\":true,\"m_Layer\":0,\"m_Name\":\"SpecialPoint1\",\"m_Tag\":0}",
+    "sha256": "87a0dcb37d727b94093b5aa2c33eb1f9e7fd29f8424672d0ee46078cc81bf6e6"
+   },
+   {
+    "pathId": "-7472196698939918117",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"_attachPassiveBuffsOnDummy\":1,\"_buffs\":[{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"uasnip_t[power_listener]\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"duration\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":2,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"uasnip_t[power_listener]\",\"triggerCnt\":0,\"triggerInterval\":0.10000000149011612,\"triggerLifeType\":2,\"waitFirstTriggerInterval\":1}],\"_forceAsDmgOrHealAbility\":0,\"_ignoreIfOwnerDead\":0,\"_interruptAbilityOnDetach\":1,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"4245519468912441563\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"3800760148018415462\"}}",
+    "sha256": "2df2338dd6335e273c22503692ceda56580f21aad7ed2f4f45fc5b5ce0a09f10"
+   },
+   {
+    "pathId": "-7183454951386187557",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"2659754016036681947\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-279726920708327205\"}}],\"m_IsActive\":true,\"m_Layer\":19,\"m_Name\":\"ColliderHolder\",\"m_Tag\":0}",
+    "sha256": "69546c8809459b26e30afe271083442afd43db6da85501131a88da50bc02bdaf"
+   },
+   {
+    "pathId": "-7174483348327630629",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"_affectWhenNotRootTalent\":0,\"_applyBlackboardBySkill\":0,\"_applyStrBlackboardBySkill\":0,\"_applyTalentRange\":0,\"_applyTalentScale\":0,\"_attachInDummy\":0,\"_attackBlackboardModeIndex\":-1,\"_checkValidBySkillIndex\":[],\"_defaultModeIndex\":-1,\"_extraAttackBlackboardModeIndices\":[],\"_fromRawDataToSkill\":0,\"_influenceSkillBlackboard\":0,\"_overrideDefaultRangeId\":0,\"_overwriteParentRangeId\":0,\"_overwriteTalentKey\":\"\",\"_scaleCertainKeyFlag\":0,\"_scaleCertainKeyList\":[],\"_scaleCertainMode\":0,\"_scaleModeIndices\":[],\"_writeRangeIdToProjectileBlackboard\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"4245519468912441563\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-2726233351382997147\"}}",
+    "sha256": "e2b1bedd6523b6d2baa0891e8faab667edad2e76d81052a7ba08a273e028c8ef"
+   },
+   {
+    "pathId": "-7133113834254370597",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-1830765404048066341\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"2913468750430140635\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-2226273833973057317\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"6990943779523983579\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"438376821462857947\"}}],\"m_IsActive\":true,\"m_Layer\":12,\"m_Name\":\"Selector\",\"m_Tag\":0}",
+    "sha256": "d83c6e0252bf977f8c338777c9b4b2b62000ed9f9702b827503cfd54e850ca04"
+   },
+   {
+    "pathId": "-6599205639153583909",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-5698293659503626021\"}}],\"m_IsActive\":true,\"m_Layer\":9,\"m_Name\":\"HeadPoint\",\"m_Tag\":0}",
+    "sha256": "1cbfb780ebfb69b9b203823c421455bbf043176a26cd401a22c46398f5f7631a"
+   },
+   {
+    "pathId": "-6487734751540807461",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"_addIndexToSignalId\":1,\"_alwaysHideHp\":{\"isDefined\":0,\"value\":0},\"_alwaysHideSp\":{\"isDefined\":0,\"value\":0},\"_animatorHooker\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_attack\":{\"m_FileID\":0,\"m_PathID\":\"-1527371525711071013\"},\"_attackTrigger\":{\"m_FileID\":0,\"m_PathID\":\"438376821462857947\"},\"_bodyTransform\":{\"m_FileID\":0,\"m_PathID\":\"8426597119626508507\"},\"_combat\":{\"m_FileID\":0,\"m_PathID\":\"194784709565872347\"},\"_extraRangesToShow\":[],\"_generalAbilities\":[{\"m_FileID\":0,\"m_PathID\":\"-1764043716315383589\"}],\"_hideUIAttackRange\":0,\"_includeIndexZero\":1,\"_overrideDeadEffect\":\"\",\"_overrideStartEffect\":\"\",\"_rangeToShow\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_updateAttackRangeExtendByAttributeDirty\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-1270832962862188325\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"5390319429299248724\"}}",
+    "sha256": "21d0296ecb9ca01c6ee3bd1b74f6e0c8ed6167fe8b00d2e8964919d0a05599f4"
+   },
+   {
+    "pathId": "-5835628451420636965",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[{\"m_FileID\":0,\"m_PathID\":\"-1830765404048066341\"}],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"8426597119626508507\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-614128398436927269\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":-0.0,\"y\":-0.0,\"z\":-3.102349310779573e-08},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "acd788767d3c6a9750c512c59dbbe4732061a2abd28e5b8c13bcdcfff7c220a3"
+   },
+   {
+    "pathId": "-5698293659503626021",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"-8355859131844069157\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-6599205639153583909\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":4.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":-0.0,\"y\":-0.0,\"z\":-0.0},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "6a897319ddd5819afd955187d62857b9ad127c083716b854ffcb7fbc791dd15a"
+   },
+   {
+    "pathId": "-5556841457333110565",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"5575271137769617627\"}}],\"m_IsActive\":true,\"m_Layer\":9,\"m_Name\":\"HitPoint\",\"m_Tag\":0}",
+    "sha256": "4f4094ab109c2131ba20554664afcdb94495d964ef43ab9d5c213d121e8f89ea"
+   },
+   {
+    "pathId": "-5135432422684755749",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"7299299024597547227\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"3195575773346658523\"}}],\"m_IsActive\":true,\"m_Layer\":9,\"m_Name\":\"Shadow\",\"m_Tag\":0}",
+    "sha256": "938729760d158c3aad20e7c7edb1e0589409c2bf1927e08f9c5b6ee79a841d8a"
+   },
+   {
+    "pathId": "-5079760234129458981",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"-8355859131844069157\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-7712195836439889701\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.530389130115509,\"z\":0.5628204345703125},\"m_LocalRotation\":{\"w\":1.0,\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalScale\":{\"x\":3.7037034034729004,\"y\":3.7037034034729004,\"z\":3.7037034034729004}}",
+    "sha256": "ed124f1910625bf01e8a22d0a15bf682c791cc0cc64ef5c8b946a114279b99bf"
+   },
+   {
+    "pathId": "-4551127081068529445",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"boneName\":\"Muzzle\",\"followBoneRotation\":1,\"followLocalScale\":1,\"followSkeletonFlip\":1,\"followXYPosition\":1,\"followZPosition\":1,\"initializeOnAwake\":1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"6438044074099538139\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"8665825331570267470\"},\"maintainedAxisOrientation\":1,\"skeletonRenderer\":{\"m_FileID\":0,\"m_PathID\":\"8781093802408474843\"},\"useAppliedLocalScale\":0}",
+    "sha256": "3fe716b403cb5ab31fa5c1901bb18536e0358f3200dfe03cc040bc5b2c6700a1"
+   },
+   {
+    "pathId": "-4524660270900447013",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[{\"m_FileID\":0,\"m_PathID\":\"-3603952988340094757\"}],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"-2685776478278059813\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"4584919006168611035\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":-0.0,\"y\":-0.0,\"z\":-0.0},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "b90fd6c40a98a1adeb031b6ca58dd6c7641d5d37d2d3869aa494f78c5a7db4e1"
+   },
+   {
+    "pathId": "-4240543457897678629",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"8534913837473593563\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-563851902044210981\"}}],\"m_IsActive\":true,\"m_Layer\":9,\"m_Name\":\"FaceSwitcher\",\"m_Tag\":0}",
+    "sha256": "fd124fc348ee5ec2315a854898edf47ce3ac4ff45a2ec459ab5cfe80d23e8e36"
+   },
+   {
+    "pathId": "-3603952988340094757",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[{\"m_FileID\":0,\"m_PathID\":\"8426597119626508507\"}],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"-4524660270900447013\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-1270832962862188325\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":-0.0,\"y\":-0.0,\"z\":3.102349310779573e-08},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "2c68530778b9194780bdaa8638718ac4326ef4ca54995111ae3d2b4348b7a4ed"
+   },
+   {
+    "pathId": "-3382196010343073573",
+    "componentType": "CircleCollider2D",
+    "originalJson": "{\"m_Density\":1.0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-8657723079270991653\"},\"m_IsTrigger\":true,\"m_Material\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Offset\":{\"x\":0.0,\"y\":0.0},\"m_Radius\":0.10000000149011612,\"m_UsedByComposite\":false,\"m_UsedByEffector\":false}",
+    "sha256": "e4845eb91cc667b23447000ae632131864028743574bde5b06ccccfc361f4fde"
+   },
+   {
+    "pathId": "-2795549142698952485",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"4950859416558106843\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"4245519468912441563\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":-0.0,\"y\":-0.0,\"z\":-0.0},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "2ad42e96ffdf8a2a4d708c4435d5aa560a1826d0308e54062b3cbc7609d29dbc"
+   },
+   {
+    "pathId": "-2685776478278059813",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[{\"m_FileID\":0,\"m_PathID\":\"5803565102133410011\"},{\"m_FileID\":0,\"m_PathID\":\"-4524660270900447013\"},{\"m_FileID\":0,\"m_PathID\":\"7299299024597547227\"},{\"m_FileID\":0,\"m_PathID\":\"1404147218529843419\"},{\"m_FileID\":0,\"m_PathID\":\"2659754016036681947\"}],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-8657723079270991653\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "b256a5b45ea8c83c8b2c176a115839f26f554c76194882174c8523ee8e28948e"
+   },
+   {
+    "pathId": "-2572301766733203237",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"8426597119626508507\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"8284521149266000091\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":-0.0,\"y\":-0.0,\"z\":-3.102349310779573e-08},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "96c2e881b94a75e5e9f0ca9bbd278f47dbaac913a48b9e4b9286e0da8a36eb61"
+   },
+   {
+    "pathId": "-2226273833973057317",
+    "componentType": "CircleCollider2D",
+    "originalJson": "{\"m_Density\":1.0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-7133113834254370597\"},\"m_IsTrigger\":true,\"m_Material\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Offset\":{\"x\":0.0,\"y\":0.0},\"m_Radius\":1.0,\"m_UsedByComposite\":false,\"m_UsedByEffector\":false}",
+    "sha256": "a455c274b986eebe31beb5c437924085402c99f57eb1e9d930105c757b676a5a"
+   },
+   {
+    "pathId": "-1830765404048066341",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"-5835628451420636965\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-7133113834254370597\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":-0.0,\"y\":-0.0,\"z\":-0.0},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "7c8a1935b1a0cfa8a8cce6832b675b2a68fb05ae0a04fb0a6b14432141b5417a"
+   },
+   {
+    "pathId": "-1783581249600948005",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-8708252394589783845\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"8383755718626048219\"}}],\"m_IsActive\":true,\"m_Layer\":10,\"m_Name\":\"Sprite\",\"m_Tag\":0}",
+    "sha256": "10e3acc904cfbfac22302c67ce8246aa95f8c02e27b6c666983161e83a5e4851"
+   },
+   {
+    "pathId": "-1764043716315383589",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"_attachPassiveBuffsOnDummy\":1,\"_buffs\":[{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"enemy_field_army_self_mark\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"duration\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":2,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"empty\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"triggerLifeType\":0,\"waitFirstTriggerInterval\":1}],\"_forceAsDmgOrHealAbility\":0,\"_ignoreIfOwnerDead\":0,\"_interruptAbilityOnDetach\":1,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"Passive\"},\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"6506217813291104475\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"3800760148018415462\"}}",
+    "sha256": "467fa5b0d16a452bfad336fa3728e40ab6c16dd5df221273fa06a6c19faaa93c"
+   },
+   {
+    "pathId": "-1527371525711071013",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"_activeBuffs\":[],\"_affectedBySlowDown\":1,\"_allowNoTarget\":0,\"_alwaysIncludeTarget\":1,\"_animKey\":\"Attack\",\"_atkScale\":1.0,\"_atkScaleKey\":\"atk_scale_2\",\"_attachPassiveBuffsOnDummy\":1,\"_attackType\":1,\"_checkFaceToFirstCastTargetDownAttack\":0,\"_cooldown\":0.0,\"_cooldownKey\":\"duration\",\"_damageType\":1,\"_deliveryParaWhenReplaceActionNode\":0,\"_downAnimKey\":\"\",\"_downEndAnimKey\":\"\",\"_elementDamageType\":0,\"_emitToInputPosWhenTargetIsInvalid\":0,\"_emitToInputRootTileWhenTargetIsInvalid\":0,\"_endAnimKey\":\"Idle\",\"_epDamageRatio\":0.0,\"_escapeTime\":0.0,\"_extraDamageType\":0,\"_extraProjectileKeys\":[],\"_faceToDefault\":0,\"_faceToFirstCastTarget\":0,\"_faceToFront\":0,\"_faceToTarget\":1,\"_fireAttackFinishWhenProjectileInvalid\":0,\"_fireCreateProjectileEvent\":0,\"_forceAsDmgOrHealAbility\":0,\"_forceFaceToDirection\":0,\"_ignoreIfOwnerDead\":0,\"_ignorePalsyInterrupt\":0,\"_interruptAbilityOnDetach\":1,\"_interuptIfTargetDead\":0,\"_maxAnimScale\":1.0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_minPostDelayWhenProjectileInvalid\":0.0,\"_mountGroup\":{\"loopType\":0,\"mountPoints\":[]},\"_mountPointType\":2,\"_notClearProjectileWhenCastEnd\":0,\"_onlyPlayEndAnimWhenIsLastAbility\":0,\"_preDelay\":0.0,\"_projectileDestination\":0,\"_projectileKey\":\"projectile_enemy_uasnip\",\"_resetCdStrategy\":1,\"_selectTargetSource\":2,\"_selectTargetTiming\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_timeMode\":0,\"_transferSource\":0,\"_upAnimKey\":\"\",\"_upEndAnimKey\":\"\",\"_useCachedAtkOnly\":0,\"_useDynamicAttackType\":0,\"_useMountGroup\":0,\"_waitForAnimEndWhenProjectileInvalid\":0,\"_waitForAttackEvent\":1,\"_waitForProjectileInvalid\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-614128398436927269\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"4156651312234227407\"}}",
+    "sha256": "3026352c7de17a30ed4c9b6c5cd3a36e11265aa8038d162226903a65dc915d9f"
+   },
+   {
+    "pathId": "-1270832962862188325",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-3603952988340094757\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-6487734751540807461\"}}],\"m_IsActive\":true,\"m_Layer\":9,\"m_Name\":\"Default\",\"m_Tag\":0}",
+    "sha256": "67c8496127073ff3c5ee756adf08f6b88ce552d75cddcf64235cd5a2ac72198e"
+   },
+   {
+    "pathId": "-614128398436927269",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-5835628451420636965\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-1527371525711071013\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"6508652544688650459\"}}],\"m_IsActive\":true,\"m_Layer\":12,\"m_Name\":\"Attack\",\"m_Tag\":0}",
+    "sha256": "83eb512e5dee4d29319566e07fb719dad7f11b7180d38ca28b14dba2d7627a4e"
+   },
+   {
+    "pathId": "-563851902044210981",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"_defaultLOrR\":1,\"_switchTime\":0.15000000596046448,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-4240543457897678629\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-8154061065964361586\"}}",
+    "sha256": "0a21c45ccc340fbd5c4044bc3fef86484edbc6c34e98bf26d96477fbd92e0539"
+   },
+   {
+    "pathId": "-279726920708327205",
+    "componentType": "CapsuleCollider2D",
+    "originalJson": "{\"m_Density\":1.0,\"m_Direction\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-7183454951386187557\"},\"m_IsTrigger\":false,\"m_Material\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Offset\":{\"x\":0.0,\"y\":-0.10000002384185791},\"m_Size\":{\"x\":0.20000000298023224,\"y\":0.40000003576278687},\"m_UsedByComposite\":false,\"m_UsedByEffector\":false}",
+    "sha256": "cb7b6bb8adde3b886037b924787b9219c81db6f2367b8e8c5ae2811c06e8ed00"
+   },
+   {
+    "pathId": "194784709565872347",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"_activeBuffs\":[],\"_affectedBySlowDown\":1,\"_allowNoTarget\":0,\"_alwaysIncludeTarget\":1,\"_alwaysPutIncludeTargetFirst\":0,\"_animKey\":\"Skill\",\"_atkScale\":1.0,\"_atkScaleKey\":\"atk_scale\",\"_attachPassiveBuffsOnDummy\":1,\"_attackType\":1,\"_checkFaceToFirstCastTargetDownAttack\":0,\"_cooldown\":0.0,\"_cooldownKey\":\"duration\",\"_damageType\":1,\"_deliveryParaWhenReplaceActionNode\":0,\"_downAnimKey\":\"\",\"_downEndAnimKey\":\"\",\"_elementDamageType\":0,\"_endAnimKey\":\"Idle\",\"_epDamageRatio\":0.0,\"_escapeTime\":0.0,\"_extraDamageType\":0,\"_faceToDefault\":0,\"_faceToFirstCastTarget\":0,\"_faceToFront\":0,\"_faceToTarget\":1,\"_forceAsDmgOrHealAbility\":0,\"_forceFaceToDirection\":0,\"_ignoreIfOwnerDead\":0,\"_ignorePalsyInterrupt\":0,\"_interruptAbilityOnDetach\":1,\"_interuptIfTargetDead\":0,\"_maxAnimScale\":1.0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_onlyPlayEndAnimWhenIsLastAbility\":0,\"_preDelay\":0.0,\"_resetCdStrategy\":1,\"_selectTargetSource\":2,\"_selectTargetTiming\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_timeMode\":0,\"_upAnimKey\":\"\",\"_upEndAnimKey\":\"\",\"_useDynamicAttackType\":0,\"_waitForAttackEvent\":1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"8284521149266000091\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"4381884627089348317\"}}",
+    "sha256": "cc88f949e5feb1ab9f709a408883724d3a9e84c5e17ab258988633f0fac0194b"
+   },
+   {
+    "pathId": "438376821462857947",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"_abnormalFlags\":[],\"_buffKeys\":[\"uasnip_no_ally_nearby_able_attack\"],\"_checkContainBuffs\":1,\"_checkHasSp\":0,\"_checkNotAbnormalFlags\":0,\"_excludeBuffs\":0,\"_isAnd\":0,\"_keepTarget\":0,\"_minTargetNum\":1,\"_overrideSearchTargetTick\":-1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-7133113834254370597\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-3929017978179992571\"}}",
+    "sha256": "35b72f6f1dab6159f98b18e3a978566477a2bcf165126c38df2090374d5b40f1"
+   },
+   {
+    "pathId": "1118058698650679515",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[{\"m_FileID\":0,\"m_PathID\":\"4768318575855532251\"}],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"8426597119626508507\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"7802977944941164763\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":-0.0,\"y\":-0.0,\"z\":-3.102349310779573e-08},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "09e5e0b2982ff0b6daf70a6481ec2498d9d68e764210a6a99c026d126f25ed6b"
+   },
+   {
+    "pathId": "1404147218529843419",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"-2685776478278059813\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"7652058738526517467\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":-0.0,\"y\":-0.0,\"z\":-0.0},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "96127605934e6b8dee2271d594cf6a241654c90b6950d6185dde3e213a6e6189"
+   },
+   {
+    "pathId": "1604863710642698459",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"-8355859131844069157\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"4998081531135785179\"},\"m_LocalPosition\":{\"x\":0.13119255006313324,\"y\":1.675140142440796,\"z\":0.0},\"m_LocalRotation\":{\"w\":0.9753807783126831,\"x\":0.0,\"y\":0.0,\"z\":-0.2205273061990738},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "30b20a530223839b478a4edc335c45212cfda297abd2a79d05920a9fc92ada40"
+   },
+   {
+    "pathId": "1711578531379738843",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"4950859416558106843\"}}],\"m_IsActive\":true,\"m_Layer\":0,\"m_Name\":\"Talents\",\"m_Tag\":0}",
+    "sha256": "ef4eff8f2b24f8123ab7e8ad3aa2cb27da76d7f3692f7da4b81acf5392e0f4f4"
+   },
+   {
+    "pathId": "2659754016036681947",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"-2685776478278059813\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-7183454951386187557\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":-0.0,\"y\":-0.0,\"z\":-0.0},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "89e3eccfcae50cd335ffde9c9455dabb390caa9b92a37232357679b89ad6ecd3"
+   },
+   {
+    "pathId": "2888907354563475675",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"_attachEffects\":[],\"_castEffects\":[{\"_delayIfFirstAttack\":0.0,\"_directionType\":0,\"_effects\":[\"enemy_uasnip_skill_start_01\"],\"_endEvent\":3,\"_hookEffectAfterFirstAttack\":\"\",\"_oneshot\":1,\"_onlyOnce\":0,\"_startEvent\":2,\"_useFourDirectionalFace\":0}],\"_castTargetEffects\":[],\"_convertCastEndToAttachFinish\":0,\"_hitEffects\":[{\"_directionType\":0,\"_effects\":[\"enemy_uasnip_skill_hit_01\"],\"_endEvent\":3,\"_oneshot\":1,\"_onlyOnce\":0,\"_playIfNotInputTarget\":0,\"_playOnlyIfInputTarget\":0,\"_useFourDirectionalFace\":0,\"_useOwnerToTargetDirection\":0}],\"_inputTargetEffects\":[],\"_preDelayFactor\":0.0,\"_recalculatePlaybackSpeed\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"8284521149266000091\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-550693537895634864\"}}",
+    "sha256": "76a6e32c5e2c4cb58d5dc2bcf9ce3565f06da9e294401d79997d4bb2ed46b452"
+   },
+   {
+    "pathId": "2913468750430140635",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"_extendable\":0,\"_scaleble\":1,\"_useBlackboardRangeId\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-7133113834254370597\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"6185056810787956083\"}}",
+    "sha256": "75cd97d5ec9b2b4296e0023d9ac1114d86928842d2dfc14a84e5b176488b8d45"
+   },
+   {
+    "pathId": "3195575773346658523",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"_alwaysUseSpineOffset\":0,\"_attachOffset\":0.10000000149011612,\"_autoAttachToGround\":0,\"_boneToFollow\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_easeType\":1,\"_enableAdvanced\":0,\"_faceSwitcher\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_graphic\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_simpleFollow\":0,\"_simplyUseTileHeight\":0,\"_specialInit\":0,\"_sprite\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-5135432422684755749\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-2368896203154538901\"}}",
+    "sha256": "e8f029211684f9fbd96aadc1b954b6e1ee22372caf32f04a258940a86951101b"
+   },
+   {
+    "pathId": "4120499309544798427",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"5803565102133410011\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-8626792947217729317\"}}],\"m_IsActive\":true,\"m_Layer\":9,\"m_Name\":\"Graphic\",\"m_Tag\":0}",
+    "sha256": "cda7e7a8c95862dfe603c455784ae284240077eccdf0fda12e5da7dfa9ad87d3"
+   },
+   {
+    "pathId": "4245519468912441563",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-2795549142698952485\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-7174483348327630629\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-7472196698939918117\"}}],\"m_IsActive\":true,\"m_Layer\":12,\"m_Name\":\"ExtraPowerListener\",\"m_Tag\":0}",
+    "sha256": "c05ccab8a2b3efc2b3104845a1c91519dce8ee7efa029ef4d501214b91674f90"
+   },
+   {
+    "pathId": "4584919006168611035",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-4524660270900447013\"}}],\"m_IsActive\":true,\"m_Layer\":9,\"m_Name\":\"Modes\",\"m_Tag\":0}",
+    "sha256": "422f3c99e39a4ddbd7558142e9f8ed48f4b423755e2e3409c08832cbf80e879a"
+   },
+   {
+    "pathId": "4768318575855532251",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"1118058698650679515\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"6506217813291104475\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":-0.0,\"y\":-0.0,\"z\":-0.0},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "c73bdd8bc15238590af6f94c90e638679d389fb147951079f34204dc3722ecab"
+   },
+   {
+    "pathId": "4950859416558106843",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[{\"m_FileID\":0,\"m_PathID\":\"-2795549142698952485\"}],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"8426597119626508507\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"1711578531379738843\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":-0.0,\"y\":-0.0,\"z\":-3.102349310779573e-08},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "bf5495d2cf6b764131406bb652fd6abef312c14146ada7674e4df8cb2c59a28e"
+   },
+   {
+    "pathId": "4998081531135785179",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"1604863710642698459\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"8466892921157515483\"}}],\"m_IsActive\":true,\"m_Layer\":0,\"m_Name\":\"SpecialPoint0\",\"m_Tag\":0}",
+    "sha256": "c824c4b88429be4a4e2a02cdd2c0b65dd9077ebfb6e6b5e932ba2e4553839c84"
+   },
+   {
+    "pathId": "5575271137769617627",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"-8355859131844069157\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-5556841457333110565\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":1.8000001907348633,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":-0.0,\"y\":-0.0,\"z\":3.102349310779573e-08},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "aa1ccef6e0fce0b9ab5ceb8293c0ea0e294dab4edb18a1779a6768bc34e574b4"
+   },
+   {
+    "pathId": "5767422419541162203",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"boneName\":\"C_Eye\",\"followBoneRotation\":1,\"followLocalScale\":1,\"followSkeletonFlip\":1,\"followXYPosition\":1,\"followZPosition\":1,\"initializeOnAwake\":1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-7712195836439889701\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"8665825331570267470\"},\"maintainedAxisOrientation\":1,\"skeletonRenderer\":{\"m_FileID\":0,\"m_PathID\":\"8781093802408474843\"},\"useAppliedLocalScale\":0}",
+    "sha256": "a9dde6314538c583c33080256f61ee46a5d547d22e344e39abc5d674b4c53844"
+   },
+   {
+    "pathId": "5803565102133410011",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[{\"m_FileID\":0,\"m_PathID\":\"8534913837473593563\"}],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"-2685776478278059813\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"4120499309544798427\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":-0.20000000298023224,\"z\":-0.05999999865889549},\"m_LocalRotation\":{\"w\":0.9659258723258972,\"x\":-0.2588190734386444,\"y\":0.0,\"z\":0.0},\"m_LocalScale\":{\"x\":0.27000001072883606,\"y\":0.27000001072883606,\"z\":0.27000001072883606}}",
+    "sha256": "d0721a9b4f145bfdbfc8afddbbd3b630ae08e4e330af276547aa5de1e177c91e"
+   },
+   {
+    "pathId": "5805591661951056091",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"_halfBodyWidth\":0.20000000298023224,\"_maxSteeringForce\":10.0,\"_steeringFactor\":8.0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-8657723079270991653\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-7073810281583634641\"}}",
+    "sha256": "ec46d4eb14b2e92c920ca2d3882e0940b49ccd2f848eb7909c0aa88f12501fe5"
+   },
+   {
+    "pathId": "6438044074099538139",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"7343242969429965019\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-4551127081068529445\"}}],\"m_IsActive\":true,\"m_Layer\":0,\"m_Name\":\"Muzzle\",\"m_Tag\":0}",
+    "sha256": "12dc08fcf40ea8cc3fd2f187f40d06bf692bccc3cc7d2b020023c5de1f84f4e1"
+   },
+   {
+    "pathId": "6506217813291104475",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"4768318575855532251\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-1764043716315383589\"}}],\"m_IsActive\":true,\"m_Layer\":0,\"m_Name\":\"Passive\",\"m_Tag\":0}",
+    "sha256": "16ff5cf87cb6d8c962adbdd213d304d956b1db477d4e278b93f941ffac8a01cb"
+   },
+   {
+    "pathId": "6508652544688650459",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"_attachEffects\":[],\"_castEffects\":[{\"_delayIfFirstAttack\":0.0,\"_directionType\":0,\"_effects\":[\"enemy_uasnip_attack_start_01\"],\"_endEvent\":3,\"_hookEffectAfterFirstAttack\":\"\",\"_oneshot\":1,\"_onlyOnce\":0,\"_startEvent\":2,\"_useFourDirectionalFace\":0}],\"_castTargetEffects\":[],\"_convertCastEndToAttachFinish\":0,\"_hitEffects\":[],\"_inputTargetEffects\":[],\"_preDelayFactor\":0.0,\"_recalculatePlaybackSpeed\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-614128398436927269\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-550693537895634864\"}}",
+    "sha256": "a915d4091f3f6fcb308442be5ef22254404b7aa02f81af7bce7a062f07da197d"
+   },
+   {
+    "pathId": "6990943779523983579",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"_abilityInputTargetAsSortSource\":0,\"_abnormalCombo\":2,\"_abnormalFlag\":42,\"_checkUnitType\":0,\"_excludeAbnormalFlag\":46,\"_excludeOwner\":0,\"_excludeSomeAbnormalFlags\":0,\"_forceIgnoreCamouflage\":0,\"_ignoreAllyTargetFree\":0,\"_ignoreHealFree\":0,\"_ignoreHitRange\":0,\"_ignoreMotionMode\":0,\"_ignoreTargetFree\":0,\"_limitTargetNum\":1,\"_maxNum\":1,\"_maxTargetKey\":\"max_target\",\"_needProfessionMask\":0,\"_onlyIgnoreSomeOfTargetFreeCase\":0,\"_postFilter\":4,\"_professionMask\":0,\"_sortByTauntAtLast\":0,\"_targetCategory\":1,\"_targetMotion\":1,\"_targetSide\":2,\"_unitTypeMask\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-7133113834254370597\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"7080728813803358465\"}}",
+    "sha256": "02d7912b0ba39718b8fba0ee69fa12ad92e22f532953f775bfe98b0e8972ed60"
+   },
+   {
+    "pathId": "7299299024597547227",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[{\"m_FileID\":0,\"m_PathID\":\"-8708252394589783845\"}],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"-2685776478278059813\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-5135432422684755749\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":-0.0,\"y\":-0.0,\"z\":-0.0},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "cf71fe9e89abcff675cfa1ba02d37afdeb7678dbeb893203b30e9cc468ef7bc0"
+   },
+   {
+    "pathId": "7331704012445513947",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"8426597119626508507\"}}],\"m_IsActive\":true,\"m_Layer\":9,\"m_Name\":\"Body\",\"m_Tag\":0}",
+    "sha256": "71db75db6e5727e0d8a257c79fafcd18d78cb1a43cc64767a0238e3e3709ad60"
+   },
+   {
+    "pathId": "7343242969429965019",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"-8355859131844069157\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"6438044074099538139\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.530389130115509,\"z\":0.5628204345703125},\"m_LocalRotation\":{\"w\":0.9659258723258972,\"x\":0.2588190734386444,\"y\":-0.0,\"z\":-0.0},\"m_LocalScale\":{\"x\":3.7037034034729004,\"y\":3.7037034034729004,\"z\":3.7037034034729004}}",
+    "sha256": "44954198d23ed7e768b8199c5789af0387874085453c8519ad0ed8adb3627775"
+   },
+   {
+    "pathId": "7652058738526517467",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"1404147218529843419\"}}],\"m_IsActive\":true,\"m_Layer\":0,\"m_Name\":\"Effects\",\"m_Tag\":0}",
+    "sha256": "dd229cf57a4a5f50e4ecf6aeb116852d9fe375d5f8d63123677de5be561d8947"
+   },
+   {
+    "pathId": "7675832577073215707",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"_allowFalldownWhenReborn\":0,\"_alwaysCheckCurrentPoint\":0,\"_alwaysHideHp\":0,\"_alwaysShowHp\":0,\"_animator\":{\"m_FileID\":0,\"m_PathID\":\"-8626792947217729317\"},\"_blockVolume\":1,\"_bodyDirectionPolicy\":0,\"_canNotExit\":0,\"_commonAbilities\":[],\"_deadEffect\":\"\",\"_defaultBodyColor\":{\"a\":1.0,\"b\":1.0,\"g\":1.0,\"r\":1.0},\"_delayToBorn\":0.0,\"_disableBornTweenColor\":0,\"_disableRenderLocateRange\":0,\"_dontSetEnemyFaceByCursorWhenBorn\":0,\"_effectTransform\":{\"m_FileID\":0,\"m_PathID\":\"1404147218529843419\"},\"_groundBoundHeightZOffset\":0.10000000149011612,\"_height\":0.0,\"_hideBulletSpModes\":[],\"_hideShadowOnRecycle\":0,\"_hideShadowOnReset\":0,\"_hudPluginReplacePairs\":[],\"_idleWhenBorn\":0,\"_isFixedRotation\":0,\"_keepMoveAnimScale\":0,\"_locateRange\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_modes\":[{\"m_FileID\":0,\"m_PathID\":\"-6487734751540807461\"}],\"_onlyDelayToBornOnTileStart\":0,\"_overrideGraphicBound\":-1.0,\"_scaleMoveAnimationRange\":{\"x\":0.0,\"y\":0.0},\"_scaleMoveBySpeed\":0,\"_shadow\":{\"m_FileID\":0,\"m_PathID\":\"3195575773346658523\"},\"_showDebugName\":0,\"_showSpAsBulletMode\":0,\"_sideTypeIndex\":1,\"_specialBlockCondition\":{\"_buffKeyPairs\":[],\"_filterTags\":[],\"_type\":0},\"_spineLikeHeightUpdateRatio\":0.25,\"_startEffect\":\"\",\"_uiMountPoint\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_useMoveDirAsFaceDir\":0,\"_useSpecificDeadAnim\":0,\"_useSpecificReachExitAnim\":0,\"_useSpineLikeHeightUpdate\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-8657723079270991653\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-6629209555389654693\"}}",
+    "sha256": "4f5f8a74a792a492b4b108f6577330d3e5566edc68672a1073a4be65c0e01d64"
+   },
+   {
+    "pathId": "7802977944941164763",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"1118058698650679515\"}}],\"m_IsActive\":true,\"m_Layer\":10,\"m_Name\":\"GeneralAbilities\",\"m_Tag\":0}",
+    "sha256": "21acfec44dc935640dfd576f97dc125cc7c3115cced7e43ad058f9798d1f6f3e"
+   },
+   {
+    "pathId": "8284521149266000091",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-2572301766733203237\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"194784709565872347\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"2888907354563475675\"}}],\"m_IsActive\":true,\"m_Layer\":12,\"m_Name\":\"Combat\",\"m_Tag\":0}",
+    "sha256": "6db15ed226bee2afae230e6be2df4931568806854eb6afc923994315aeeba732"
+   },
+   {
+    "pathId": "8426597119626508507",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[{\"m_FileID\":0,\"m_PathID\":\"-2572301766733203237\"},{\"m_FileID\":0,\"m_PathID\":\"-5835628451420636965\"},{\"m_FileID\":0,\"m_PathID\":\"4950859416558106843\"},{\"m_FileID\":0,\"m_PathID\":\"1118058698650679515\"}],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"-3603952988340094757\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"7331704012445513947\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "2297f5d5d7a17691cbcf666e4076779d3c2e96e195fa15705def172b493e4d03"
+   },
+   {
+    "pathId": "8466892921157515483",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"boneName\":\"C_Weapon_1\",\"followBoneRotation\":1,\"followLocalScale\":1,\"followSkeletonFlip\":1,\"followXYPosition\":1,\"followZPosition\":1,\"initializeOnAwake\":1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"4998081531135785179\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"8665825331570267470\"},\"maintainedAxisOrientation\":1,\"skeletonRenderer\":{\"m_FileID\":0,\"m_PathID\":\"8781093802408474843\"},\"useAppliedLocalScale\":0}",
+    "sha256": "bb4fc21547ef56b30c2ed71b731940e5f64e91010bf91a4ad82fddcf5b7da184"
+   },
+   {
+    "pathId": "8534913837473593563",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[{\"m_FileID\":0,\"m_PathID\":\"-8355859131844069157\"}],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"5803565102133410011\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-4240543457897678629\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "773567aac83df5b7cb1d3c592e72a0b31531a2bb881e11fc5e310f3cb5da0aa6"
+   },
+   {
+    "pathId": "8581809240548440283",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-8355859131844069157\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-8773956972016174885\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-3036523016843495205\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"8781093802408474843\"}}],\"m_IsActive\":true,\"m_Layer\":9,\"m_Name\":\"Spine\",\"m_Tag\":0}",
+    "sha256": "8eb8db00e6345be7cb707766bbf9505ea1b28fbcf30bd34c135919032fd8018c"
+   },
+   {
+    "pathId": "8781093802408474843",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"_animationName\":\"Default\",\"addNormals\":0,\"calculateTangents\":0,\"clearStateOnDisable\":0,\"disableRenderingOnOverride\":1,\"fixDrawOrder\":0,\"immutableTriangles\":0,\"initialFlipX\":0,\"initialFlipY\":0,\"initialSkinName\":\"default\",\"loop\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"8581809240548440283\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"175525945580115722\"},\"maskInteraction\":0,\"maskMaterials\":{\"materialsInsideMask\":[],\"materialsMaskDisabled\":[],\"materialsOutsideMask\":[]},\"pmaVertexColors\":1,\"separatorSlotNames\":[],\"singleSubmesh\":0,\"skeletonDataAsset\":{\"m_FileID\":4,\"m_PathID\":\"-9034367137379112477\"},\"timeScale\":1.0,\"tintBlack\":0,\"updateWhenInvisible\":3,\"useClipping\":1,\"zSpacing\":0.0}",
+    "sha256": "a248f3a14dee9548bf46bcb4bb1bcbc22b9ad6e5210c3169fc2c2b821ef1b724"
+   }
+  ],
+  "dyn/battle/prefabs/enemies/enemy_10121_uasnip_2.prefab": [
+   {
+    "pathId": "-8867723193399098207",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"4415184361002386593\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"8231316028274197665\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":-0.0,\"y\":-0.0,\"z\":-0.0},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "726bdd872785496f50431603d699aeb53adecd11759e1a96438a1db5864a1c92"
+   },
+   {
+    "pathId": "-8530199085745552223",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"-1856251475200359263\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-1216197842954074975\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":1.8000001907348633,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":-0.0,\"y\":-0.0,\"z\":3.102349310779573e-08},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "0d1c4b19b500bf26e07b21e277a88e621793e52d68756c92f500b6633fb3f9b0"
+   },
+   {
+    "pathId": "-8314317346620881759",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"-1942340137062546271\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"8052983727928657057\"},\"m_LocalPosition\":{\"x\":-0.0,\"y\":-0.17000000178813934,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalScale\":{\"x\":0.11999999731779099,\"y\":0.11999999731779099,\"z\":0.11999999731779099}}",
+    "sha256": "45fb245f9fa330b29f12cca133706fb9381efce627d1f0d0df31d8a21e8cb48a"
+   },
+   {
+    "pathId": "-8142150960943840095",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"4392636520297743521\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-5085598445038320479\"}}],\"m_IsActive\":true,\"m_Layer\":9,\"m_Name\":\"Graphic\",\"m_Tag\":0}",
+    "sha256": "c88b2fd6fd14f26b5f7d60bb5a13cb3b8110996b0a243c7d96407b8bc98e50dc"
+   },
+   {
+    "pathId": "-8106767637910567775",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"4297557831272711329\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"401904177737385121\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":-0.0,\"y\":-0.0,\"z\":-0.0},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "bd51c59b4f83c77848834257beefe06dcb7fa21a10c83ce1cde232092e4007ed"
+   },
+   {
+    "pathId": "-7696951024571956063",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"_alwaysUseSpineOffset\":0,\"_attachOffset\":0.10000000149011612,\"_autoAttachToGround\":0,\"_boneToFollow\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_easeType\":1,\"_enableAdvanced\":0,\"_faceSwitcher\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_graphic\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_simpleFollow\":0,\"_simplyUseTileHeight\":0,\"_specialInit\":0,\"_sprite\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"4917550705168434337\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-2368896203154538901\"}}",
+    "sha256": "86a59a10de10eab635384f9547519cf6c0530c330f41675d30c6a85bcdcc4691"
+   },
+   {
+    "pathId": "-7623327694571092831",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"4415184361002386593\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-5889640490238851935\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-5779452718435056479\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-6759046373029428063\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"3328501293499040929\"}}],\"m_IsActive\":true,\"m_Layer\":9,\"m_Name\":\"enemy_10121_uasnip_2\",\"m_Tag\":5}",
+    "sha256": "78d574a55d3a14ef6b144d7976f856ce3745950d4b011cd68c3fcf486d3b984a"
+   },
+   {
+    "pathId": "-7170103257996442463",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"392577309703947425\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-4349017242715601759\"}}],\"m_IsActive\":true,\"m_Layer\":9,\"m_Name\":\"FaceSwitcher\",\"m_Tag\":0}",
+    "sha256": "8f0af5ee385e088efe9fc24f83c20cfd3b8d29aa537b7524d66c780f9e8cf779"
+   },
+   {
+    "pathId": "-6969509431987583839",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"_attachEffects\":[],\"_castEffects\":[{\"_delayIfFirstAttack\":0.0,\"_directionType\":0,\"_effects\":[\"enemy_uasnip_skill_start_01\"],\"_endEvent\":3,\"_hookEffectAfterFirstAttack\":\"\",\"_oneshot\":1,\"_onlyOnce\":0,\"_startEvent\":2,\"_useFourDirectionalFace\":0}],\"_castTargetEffects\":[],\"_convertCastEndToAttachFinish\":0,\"_hitEffects\":[{\"_directionType\":0,\"_effects\":[\"enemy_uasnip_skill_hit_01\"],\"_endEvent\":3,\"_oneshot\":1,\"_onlyOnce\":0,\"_playIfNotInputTarget\":0,\"_playOnlyIfInputTarget\":0,\"_useFourDirectionalFace\":0,\"_useOwnerToTargetDirection\":0}],\"_inputTargetEffects\":[],\"_preDelayFactor\":0.0,\"_recalculatePlaybackSpeed\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-4850315891248970591\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-550693537895634864\"}}",
+    "sha256": "4eebf134aeb580d0a0f94c3fc500913b2603d2bdd9e8b40a5be26dc259d45f50"
+   },
+   {
+    "pathId": "-6759046373029428063",
+    "componentType": "CircleCollider2D",
+    "originalJson": "{\"m_Density\":1.0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-7623327694571092831\"},\"m_IsTrigger\":true,\"m_Material\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Offset\":{\"x\":0.0,\"y\":0.0},\"m_Radius\":0.10000000149011612,\"m_UsedByComposite\":false,\"m_UsedByEffector\":false}",
+    "sha256": "9e08d97b58246a1779cab040dd134ee747eb893f573c445036a69ba77f7166b9"
+   },
+   {
+    "pathId": "-6720752380452256607",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[{\"m_FileID\":0,\"m_PathID\":\"7430185351655474337\"}],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"8582206462499046561\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"6662404013889504417\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":-0.0,\"y\":-0.0,\"z\":-3.102349310779573e-08},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "fbde6c6cc5e4827cfc0c9830963ec66699ff6648f01a036be0ff3d4cc74553b6"
+   },
+   {
+    "pathId": "-5957682283885542239",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"_abilityInputTargetAsSortSource\":0,\"_abnormalCombo\":2,\"_abnormalFlag\":42,\"_checkUnitType\":0,\"_excludeAbnormalFlag\":46,\"_excludeOwner\":0,\"_excludeSomeAbnormalFlags\":0,\"_forceIgnoreCamouflage\":0,\"_ignoreAllyTargetFree\":0,\"_ignoreHealFree\":0,\"_ignoreHitRange\":0,\"_ignoreMotionMode\":0,\"_ignoreTargetFree\":0,\"_limitTargetNum\":1,\"_maxNum\":1,\"_maxTargetKey\":\"max_target\",\"_needProfessionMask\":0,\"_onlyIgnoreSomeOfTargetFreeCase\":0,\"_postFilter\":4,\"_professionMask\":0,\"_sortByTauntAtLast\":0,\"_targetCategory\":1,\"_targetMotion\":1,\"_targetSide\":2,\"_unitTypeMask\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"7445405232151807137\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"7080728813803358465\"}}",
+    "sha256": "2eff3b8f57fb4f177c2a38870e0aed7dc5df35f7f6ff4e4efa3228db98c32bbc"
+   },
+   {
+    "pathId": "-5889640490238851935",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"_halfBodyWidth\":0.20000000298023224,\"_maxSteeringForce\":10.0,\"_steeringFactor\":8.0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-7623327694571092831\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-7073810281583634641\"}}",
+    "sha256": "4011e8d6aebfe428216687053c245b2b05bc3f83695ae7ac4cee2f649236871b"
+   },
+   {
+    "pathId": "-5779452718435056479",
+    "componentType": "Rigidbody2D",
+    "originalJson": "{\"m_AngularDrag\":0.05000000074505806,\"m_BodyType\":0,\"m_CollisionDetection\":1,\"m_Constraints\":4,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-7623327694571092831\"},\"m_GravityScale\":0.0,\"m_Interpolate\":0,\"m_LinearDrag\":0.0,\"m_Mass\":1.0,\"m_Material\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Simulated\":true,\"m_SleepingMode\":0,\"m_UseAutoMass\":false,\"m_UseFullKinematicContacts\":false}",
+    "sha256": "7a52af0ef429aa3523da42960fbb705e912246a6dfdb659de0a4fab63104b9f1"
+   },
+   {
+    "pathId": "-5379489609296427871",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"8582206462499046561\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-4850315891248970591\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":-0.0,\"y\":-0.0,\"z\":-3.102349310779573e-08},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "57573ab11c084225a9a3e55b0e16c07aa4fc88942d0d5bcaf3463d437eeca675"
+   },
+   {
+    "pathId": "-5085598445038320479",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"_animations\":[{\"animKey\":\"Default\",\"animName\":\"Default\",\"ignoreMissing\":1,\"loop\":0,\"speed\":1.0},{\"animKey\":\"Move\",\"animName\":\"Move\",\"ignoreMissing\":1,\"loop\":1,\"speed\":1.0},{\"animKey\":\"Die\",\"animName\":\"Die\",\"ignoreMissing\":1,\"loop\":0,\"speed\":1.0},{\"animKey\":\"Idle\",\"animName\":\"Idle\",\"ignoreMissing\":1,\"loop\":1,\"speed\":1.0},{\"animKey\":\"Attack\",\"animName\":\"Attack\",\"ignoreMissing\":1,\"loop\":0,\"speed\":1.0},{\"animKey\":\"Skill\",\"animName\":\"Skill\",\"ignoreMissing\":1,\"loop\":0,\"speed\":1.0}],\"_cacheBoundsCenter\":1,\"_enableShowDamageFlash\":1,\"_faceSwitcher\":{\"m_FileID\":0,\"m_PathID\":\"-4349017242715601759\"},\"_headTransform\":{\"m_FileID\":0,\"m_PathID\":\"5783467099136804001\"},\"_hitTransform\":{\"m_FileID\":0,\"m_PathID\":\"-8530199085745552223\"},\"_mixSettings\":[],\"_muzzleTransform\":{\"m_FileID\":0,\"m_PathID\":\"4644193080006100129\"},\"_neverImmediatelyFaceSwitcher\":0,\"_resetSkinToInitial\":0,\"_shadowTransform\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_skeleton\":{\"m_FileID\":0,\"m_PathID\":\"-3547181440772848479\"},\"_specialPoint0\":{\"m_FileID\":0,\"m_PathID\":\"-2332714234323254111\"},\"_specialPoint1\":{\"m_FileID\":0,\"m_PathID\":\"7342492117229913249\"},\"_specialPoint10\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint11\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint12\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint13\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint14\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint15\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint2\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint3\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint4\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint5\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint6\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint7\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint8\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint9\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_spineScale\":1.0,\"_spineSkins\":[],\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-8142150960943840095\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"6360585277869116281\"}}",
+    "sha256": "08ae3f55746bbda25cb123e2df89f478c0ac4b9e1949ef17afdfc4939cc46d20"
+   },
+   {
+    "pathId": "-4850315891248970591",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-5379489609296427871\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-3917280810813209439\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-6969509431987583839\"}}],\"m_IsActive\":true,\"m_Layer\":12,\"m_Name\":\"Combat\",\"m_Tag\":0}",
+    "sha256": "268f64f8ca6146722b601aa02b7ef90e0b82c2f11952ad95823c29879a42afe5"
+   },
+   {
+    "pathId": "-4580177905221876575",
+    "componentType": "CircleCollider2D",
+    "originalJson": "{\"m_Density\":1.0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"7445405232151807137\"},\"m_IsTrigger\":true,\"m_Material\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Offset\":{\"x\":0.0,\"y\":0.0},\"m_Radius\":1.0,\"m_UsedByComposite\":false,\"m_UsedByEffector\":false}",
+    "sha256": "495ee18ddcecbd4dbcb56fcb8691df1f12dc55f4852c1a469f0d7b9ce70263ef"
+   },
+   {
+    "pathId": "-4523402324576222047",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-116606348225067871\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"7226400888370709665\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"1641037322033841313\"}}],\"m_IsActive\":true,\"m_Layer\":12,\"m_Name\":\"Attack\",\"m_Tag\":0}",
+    "sha256": "bd7d23667561f01e4a35cff088e01b3a9c08164fe8dc6cd449fd88f4e9bf7c64"
+   },
+   {
+    "pathId": "-4367190955365088095",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"4297557831272711329\"}}],\"m_IsActive\":true,\"m_Layer\":10,\"m_Name\":\"GeneralAbilities\",\"m_Tag\":0}",
+    "sha256": "a53dc86fa57d689c5801693f7f8bd6fd22542202ec71ab214d5fc404a0222353"
+   },
+   {
+    "pathId": "-4349017242715601759",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"_defaultLOrR\":1,\"_switchTime\":0.15000000596046448,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-7170103257996442463\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-8154061065964361586\"}}",
+    "sha256": "71525493c3378a3f72ad192802f2cf58e49c37b277bb2760a90b2aea974ab096"
+   },
+   {
+    "pathId": "-4102509870797667167",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"_attachPassiveBuffsOnDummy\":1,\"_buffs\":[{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"enemy_field_army_self_mark\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"duration\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":2,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"empty\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"triggerLifeType\":0,\"waitFirstTriggerInterval\":1}],\"_forceAsDmgOrHealAbility\":0,\"_ignoreIfOwnerDead\":0,\"_interruptAbilityOnDetach\":1,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"Passive\"},\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"401904177737385121\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"3800760148018415462\"}}",
+    "sha256": "ad7bed436f703bd106439027fcaabbce45a2042365a536def96922554a37795f"
+   },
+   {
+    "pathId": "-3917280810813209439",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"_activeBuffs\":[],\"_affectedBySlowDown\":1,\"_allowNoTarget\":0,\"_alwaysIncludeTarget\":1,\"_alwaysPutIncludeTargetFirst\":0,\"_animKey\":\"Skill\",\"_atkScale\":1.0,\"_atkScaleKey\":\"atk_scale\",\"_attachPassiveBuffsOnDummy\":1,\"_attackType\":1,\"_checkFaceToFirstCastTargetDownAttack\":0,\"_cooldown\":0.0,\"_cooldownKey\":\"duration\",\"_damageType\":1,\"_deliveryParaWhenReplaceActionNode\":0,\"_downAnimKey\":\"\",\"_downEndAnimKey\":\"\",\"_elementDamageType\":0,\"_endAnimKey\":\"Idle\",\"_epDamageRatio\":0.0,\"_escapeTime\":0.0,\"_extraDamageType\":0,\"_faceToDefault\":0,\"_faceToFirstCastTarget\":0,\"_faceToFront\":0,\"_faceToTarget\":1,\"_forceAsDmgOrHealAbility\":0,\"_forceFaceToDirection\":0,\"_ignoreIfOwnerDead\":0,\"_ignorePalsyInterrupt\":0,\"_interruptAbilityOnDetach\":1,\"_interuptIfTargetDead\":0,\"_maxAnimScale\":1.0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_onlyPlayEndAnimWhenIsLastAbility\":0,\"_preDelay\":0.0,\"_resetCdStrategy\":1,\"_selectTargetSource\":2,\"_selectTargetTiming\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_timeMode\":0,\"_upAnimKey\":\"\",\"_upEndAnimKey\":\"\",\"_useDynamicAttackType\":0,\"_waitForAttackEvent\":1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-4850315891248970591\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"4381884627089348317\"}}",
+    "sha256": "9022111b6d92943bb85527b2aa5aa44efd98865b99a3a2f2e87e5702669e1d22"
+   },
+   {
+    "pathId": "-3876779576292391775",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"_attachPassiveBuffsOnDummy\":1,\"_buffs\":[{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"uasnip_t[power_listener]\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"duration\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":2,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"uasnip_t[power_listener]\",\"triggerCnt\":0,\"triggerInterval\":0.10000000149011612,\"triggerLifeType\":2,\"waitFirstTriggerInterval\":1}],\"_forceAsDmgOrHealAbility\":0,\"_ignoreIfOwnerDead\":0,\"_interruptAbilityOnDetach\":1,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"6124509184538657953\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"3800760148018415462\"}}",
+    "sha256": "db4af747fcf302f0f87cfd00606c4c1fa469774b8900d9d15d8760597f095755"
+   },
+   {
+    "pathId": "-3681112058043677535",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"150892402198660257\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"7584900803349398689\"}}],\"m_IsActive\":true,\"m_Layer\":9,\"m_Name\":\"Default\",\"m_Tag\":0}",
+    "sha256": "ff7ac12b276b98ad207018f39b207482297f87ee917a139face46ac7f619ffe9"
+   },
+   {
+    "pathId": "-3547181440772848479",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"_animationName\":\"Default\",\"addNormals\":0,\"calculateTangents\":0,\"clearStateOnDisable\":0,\"disableRenderingOnOverride\":1,\"fixDrawOrder\":0,\"immutableTriangles\":0,\"initialFlipX\":0,\"initialFlipY\":0,\"initialSkinName\":\"default\",\"loop\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"3459808735291458721\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"175525945580115722\"},\"maskInteraction\":0,\"maskMaterials\":{\"materialsInsideMask\":[],\"materialsMaskDisabled\":[],\"materialsOutsideMask\":[]},\"pmaVertexColors\":1,\"separatorSlotNames\":[],\"singleSubmesh\":0,\"skeletonDataAsset\":{\"m_FileID\":4,\"m_PathID\":\"3650150021481551407\"},\"timeScale\":1.0,\"tintBlack\":0,\"updateWhenInvisible\":3,\"useClipping\":1,\"zSpacing\":0.0}",
+    "sha256": "81b332c2124af470db9b13221e2531b4d2b60ce141e8d614eedfc1e35e10a1a2"
+   },
+   {
+    "pathId": "-2555048828930407263",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-971494844604070751\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"4295065692229682337\"}}],\"m_IsActive\":true,\"m_Layer\":19,\"m_Name\":\"ColliderHolder\",\"m_Tag\":0}",
+    "sha256": "e57efbd16f6182f32b0a9789656214f499e83b7482cecfb3793a20527439d796"
+   },
+   {
+    "pathId": "-2432291504508549983",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"-116606348225067871\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"7445405232151807137\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":-0.0,\"y\":-0.0,\"z\":-0.0},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "4fabae361d18c9db0ddd33f1c143dca87e89d593cec8596e523219c33977b27a"
+   },
+   {
+    "pathId": "-2332714234323254111",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"-1856251475200359263\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"7928432141197395105\"},\"m_LocalPosition\":{\"x\":0.23800921440124512,\"y\":1.7474693059921265,\"z\":0.0},\"m_LocalRotation\":{\"w\":0.9886517524719238,\"x\":0.0,\"y\":0.0,\"z\":-0.1502256989479065},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "b6d83634d36c6fc06aa6e317fcafc5ae674db899a1ec059d730ac94775a49724"
+   },
+   {
+    "pathId": "-2072721562526858079",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"boneName\":\"C_Eye\",\"followBoneRotation\":1,\"followLocalScale\":1,\"followSkeletonFlip\":1,\"followXYPosition\":1,\"followZPosition\":1,\"initializeOnAwake\":1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"2287998059465753761\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"8665825331570267470\"},\"maintainedAxisOrientation\":1,\"skeletonRenderer\":{\"m_FileID\":0,\"m_PathID\":\"-3547181440772848479\"},\"useAppliedLocalScale\":0}",
+    "sha256": "1097634d3e07b58b9b9d5931746ee795b31f2c76b552f3a055fabe2a22e41b04"
+   },
+   {
+    "pathId": "-1942340137062546271",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[{\"m_FileID\":0,\"m_PathID\":\"-8314317346620881759\"}],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"4415184361002386593\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"4917550705168434337\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":-0.0,\"y\":-0.0,\"z\":-0.0},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "6885768b12a62daa698e34e22971d529ed0d5f2f89c8d824105308b2f5947e59"
+   },
+   {
+    "pathId": "-1856251475200359263",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[{\"m_FileID\":0,\"m_PathID\":\"5783467099136804001\"},{\"m_FileID\":0,\"m_PathID\":\"-8530199085745552223\"},{\"m_FileID\":0,\"m_PathID\":\"4644193080006100129\"},{\"m_FileID\":0,\"m_PathID\":\"-2332714234323254111\"},{\"m_FileID\":0,\"m_PathID\":\"7342492117229913249\"}],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"392577309703947425\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"3459808735291458721\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "ad8f7ae1dc7db0992f235a75c9b4e933ae663c55cb6cdadcd76585150b560ab4"
+   },
+   {
+    "pathId": "-1216197842954074975",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-8530199085745552223\"}}],\"m_IsActive\":true,\"m_Layer\":9,\"m_Name\":\"HitPoint\",\"m_Tag\":0}",
+    "sha256": "2c49c151aca94052e4cb5abcea2c9c2bd02a4e3ccb6af015d3d9c820a767df40"
+   },
+   {
+    "pathId": "-1131806099581483871",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"boneName\":\"C_Weapon_1\",\"followBoneRotation\":1,\"followLocalScale\":1,\"followSkeletonFlip\":1,\"followXYPosition\":1,\"followZPosition\":1,\"initializeOnAwake\":1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"7928432141197395105\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"8665825331570267470\"},\"maintainedAxisOrientation\":1,\"skeletonRenderer\":{\"m_FileID\":0,\"m_PathID\":\"-3547181440772848479\"},\"useAppliedLocalScale\":0}",
+    "sha256": "ad0f0f1c7ed88632f656dfd8861be158c54a4ac7dcf54b086d7bad990d302111"
+   },
+   {
+    "pathId": "-971494844604070751",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"4415184361002386593\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-2555048828930407263\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":-0.0,\"y\":-0.0,\"z\":-0.0},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "8bf1ed02e3f6227e8e37a33730dbdf80fa0014a99c0ea5b9888b13b85fa2669e"
+   },
+   {
+    "pathId": "-688766268116745055",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"_abnormalFlags\":[],\"_buffKeys\":[\"uasnip_no_ally_nearby_able_attack\"],\"_checkContainBuffs\":1,\"_checkHasSp\":0,\"_checkNotAbnormalFlags\":0,\"_excludeBuffs\":0,\"_isAnd\":0,\"_keepTarget\":0,\"_minTargetNum\":1,\"_overrideSearchTargetTick\":-1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"7445405232151807137\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-3929017978179992571\"}}",
+    "sha256": "381c97e5dfec29e4d1055a92675dc4713805e6a357b529edececa31d4ad4cb9e"
+   },
+   {
+    "pathId": "-116606348225067871",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[{\"m_FileID\":0,\"m_PathID\":\"-2432291504508549983\"}],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"8582206462499046561\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-4523402324576222047\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":-0.0,\"y\":-0.0,\"z\":-3.102349310779573e-08},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "4f86fb45c4f864b346fdf87c59975307b051e05b0354a79e56d03118775b05a6"
+   },
+   {
+    "pathId": "150892402198660257",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[{\"m_FileID\":0,\"m_PathID\":\"8582206462499046561\"}],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"2691537520422241441\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-3681112058043677535\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":-0.0,\"y\":-0.0,\"z\":3.102349310779573e-08},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "31c55d40d86405a171ef9068cfb5ec2aeac63ea1b52c9ed011516d8feb8da56e"
+   },
+   {
+    "pathId": "274702070688203937",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"_affectWhenNotRootTalent\":0,\"_applyBlackboardBySkill\":0,\"_applyStrBlackboardBySkill\":0,\"_applyTalentRange\":0,\"_applyTalentScale\":0,\"_attachInDummy\":0,\"_attackBlackboardModeIndex\":-1,\"_checkValidBySkillIndex\":[],\"_defaultModeIndex\":-1,\"_extraAttackBlackboardModeIndices\":[],\"_fromRawDataToSkill\":0,\"_influenceSkillBlackboard\":0,\"_overrideDefaultRangeId\":0,\"_overwriteParentRangeId\":0,\"_overwriteTalentKey\":\"\",\"_scaleCertainKeyFlag\":0,\"_scaleCertainKeyList\":[],\"_scaleCertainMode\":0,\"_scaleModeIndices\":[],\"_writeRangeIdToProjectileBlackboard\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"6124509184538657953\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-2726233351382997147\"}}",
+    "sha256": "9a76f4ba2dee4201e01635c91ca2c1d96a3fb08a79f154891b09d347229237d6"
+   },
+   {
+    "pathId": "392577309703947425",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[{\"m_FileID\":0,\"m_PathID\":\"-1856251475200359263\"}],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"4392636520297743521\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-7170103257996442463\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "2b9c9415761a58b2d763386ac75d5dba907b9b96eeb6a68ff4b65c7abbbdbb06"
+   },
+   {
+    "pathId": "401904177737385121",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-8106767637910567775\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-4102509870797667167\"}}],\"m_IsActive\":true,\"m_Layer\":0,\"m_Name\":\"Passive\",\"m_Tag\":0}",
+    "sha256": "ee2609806b6a2b4191543ff029ae78f03fd132df62c74373f39094028e9731bc"
+   },
+   {
+    "pathId": "1046323666045256865",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"_extendable\":0,\"_scaleble\":1,\"_useBlackboardRangeId\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"7445405232151807137\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"6185056810787956083\"}}",
+    "sha256": "a2ab167d28cdc48cac1802084617d63507b364614dab979ef83a8ada3939975d"
+   },
+   {
+    "pathId": "1625089632539460769",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"boneName\":\"Muzzle\",\"followBoneRotation\":1,\"followLocalScale\":1,\"followSkeletonFlip\":1,\"followXYPosition\":1,\"followZPosition\":1,\"initializeOnAwake\":1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"8824083529623815329\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"8665825331570267470\"},\"maintainedAxisOrientation\":1,\"skeletonRenderer\":{\"m_FileID\":0,\"m_PathID\":\"-3547181440772848479\"},\"useAppliedLocalScale\":0}",
+    "sha256": "62c622b97feca22389602be9db95b6334ace082357ca7af7f472662908b7f722"
+   },
+   {
+    "pathId": "1641037322033841313",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"_attachEffects\":[],\"_castEffects\":[{\"_delayIfFirstAttack\":0.0,\"_directionType\":0,\"_effects\":[\"enemy_uasnip_attack_start_01\"],\"_endEvent\":3,\"_hookEffectAfterFirstAttack\":\"\",\"_oneshot\":1,\"_onlyOnce\":0,\"_startEvent\":2,\"_useFourDirectionalFace\":0}],\"_castTargetEffects\":[],\"_convertCastEndToAttachFinish\":0,\"_hitEffects\":[],\"_inputTargetEffects\":[],\"_preDelayFactor\":0.0,\"_recalculatePlaybackSpeed\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-4523402324576222047\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-550693537895634864\"}}",
+    "sha256": "7e55df4156f08fa5e7fdf751e66c9192aa17dfea1f219f5b430f8b9a85cc1599"
+   },
+   {
+    "pathId": "2287998059465753761",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"7342492117229913249\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-2072721562526858079\"}}],\"m_IsActive\":true,\"m_Layer\":0,\"m_Name\":\"SpecialPoint1\",\"m_Tag\":0}",
+    "sha256": "b4cb747f45da5ae7fbb168e67fa361bec3357f10cd964ca77ff74eba55ab82d8"
+   },
+   {
+    "pathId": "2691537520422241441",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[{\"m_FileID\":0,\"m_PathID\":\"150892402198660257\"}],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"4415184361002386593\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"7824005393668392097\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":-0.0,\"y\":-0.0,\"z\":-0.0},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "52760b13b4a8b5fffa74a3c2332462ac6587aba3b6aaf526520ab289c704e45a"
+   },
+   {
+    "pathId": "3328501293499040929",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"_allowFalldownWhenReborn\":0,\"_alwaysCheckCurrentPoint\":0,\"_alwaysHideHp\":0,\"_alwaysShowHp\":0,\"_animator\":{\"m_FileID\":0,\"m_PathID\":\"-5085598445038320479\"},\"_blockVolume\":1,\"_bodyDirectionPolicy\":0,\"_canNotExit\":0,\"_commonAbilities\":[],\"_deadEffect\":\"\",\"_defaultBodyColor\":{\"a\":1.0,\"b\":1.0,\"g\":1.0,\"r\":1.0},\"_delayToBorn\":0.0,\"_disableBornTweenColor\":0,\"_disableRenderLocateRange\":0,\"_dontSetEnemyFaceByCursorWhenBorn\":0,\"_effectTransform\":{\"m_FileID\":0,\"m_PathID\":\"-8867723193399098207\"},\"_groundBoundHeightZOffset\":0.10000000149011612,\"_height\":0.0,\"_hideBulletSpModes\":[],\"_hideShadowOnRecycle\":0,\"_hideShadowOnReset\":0,\"_hudPluginReplacePairs\":[],\"_idleWhenBorn\":0,\"_isFixedRotation\":0,\"_keepMoveAnimScale\":0,\"_locateRange\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_modes\":[{\"m_FileID\":0,\"m_PathID\":\"7584900803349398689\"}],\"_onlyDelayToBornOnTileStart\":0,\"_overrideGraphicBound\":-1.0,\"_scaleMoveAnimationRange\":{\"x\":0.0,\"y\":0.0},\"_scaleMoveBySpeed\":0,\"_shadow\":{\"m_FileID\":0,\"m_PathID\":\"-7696951024571956063\"},\"_showDebugName\":0,\"_showSpAsBulletMode\":0,\"_sideTypeIndex\":1,\"_specialBlockCondition\":{\"_buffKeyPairs\":[],\"_filterTags\":[],\"_type\":0},\"_spineLikeHeightUpdateRatio\":0.25,\"_startEffect\":\"\",\"_uiMountPoint\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_useMoveDirAsFaceDir\":0,\"_useSpecificDeadAnim\":0,\"_useSpecificReachExitAnim\":0,\"_useSpineLikeHeightUpdate\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-7623327694571092831\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-6629209555389654693\"}}",
+    "sha256": "ebd5402469ef3f1fddd65ce930b121fc16d88af8fbbaad33abba4a0ace00e778"
+   },
+   {
+    "pathId": "3459808735291458721",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-1856251475200359263\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-3084301332756020063\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-631776129862056799\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-3547181440772848479\"}}],\"m_IsActive\":true,\"m_Layer\":9,\"m_Name\":\"Spine\",\"m_Tag\":0}",
+    "sha256": "c734efb276ce77a763acd2bc71430a9c80ec2e17473663d583fdba678e545b85"
+   },
+   {
+    "pathId": "4295065692229682337",
+    "componentType": "CapsuleCollider2D",
+    "originalJson": "{\"m_Density\":1.0,\"m_Direction\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-2555048828930407263\"},\"m_IsTrigger\":false,\"m_Material\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Offset\":{\"x\":0.0,\"y\":-0.10000002384185791},\"m_Size\":{\"x\":0.20000000298023224,\"y\":0.40000003576278687},\"m_UsedByComposite\":false,\"m_UsedByEffector\":false}",
+    "sha256": "8fd077900881eac4820c80487d675e5c7252b6061cf67a1df1f1ad11a5e7716d"
+   },
+   {
+    "pathId": "4297557831272711329",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[{\"m_FileID\":0,\"m_PathID\":\"-8106767637910567775\"}],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"8582206462499046561\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-4367190955365088095\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":-0.0,\"y\":-0.0,\"z\":-3.102349310779573e-08},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "b90a293c332d80dd53351ba93b631c15901657b2fa75d52212bf60789139b340"
+   },
+   {
+    "pathId": "4392636520297743521",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[{\"m_FileID\":0,\"m_PathID\":\"392577309703947425\"}],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"4415184361002386593\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-8142150960943840095\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":-0.20000000298023224,\"z\":-0.05999999865889549},\"m_LocalRotation\":{\"w\":0.9659258723258972,\"x\":-0.2588190734386444,\"y\":0.0,\"z\":0.0},\"m_LocalScale\":{\"x\":0.27000001072883606,\"y\":0.27000001072883606,\"z\":0.27000001072883606}}",
+    "sha256": "fa41dbe45cf2c83e0495796c0a797f544883d1b04fde55c951dda9444aa525ed"
+   },
+   {
+    "pathId": "4415184361002386593",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[{\"m_FileID\":0,\"m_PathID\":\"4392636520297743521\"},{\"m_FileID\":0,\"m_PathID\":\"2691537520422241441\"},{\"m_FileID\":0,\"m_PathID\":\"-1942340137062546271\"},{\"m_FileID\":0,\"m_PathID\":\"-8867723193399098207\"},{\"m_FileID\":0,\"m_PathID\":\"-971494844604070751\"}],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-7623327694571092831\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "0d2776a2baf6cd0aca9da2fb82ac8a2e9f95d49e0529519dab283f52ad5a10b3"
+   },
+   {
+    "pathId": "4644193080006100129",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"-1856251475200359263\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"8824083529623815329\"},\"m_LocalPosition\":{\"x\":3.407900094985962,\"y\":1.6633999347686768,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":0.0,\"y\":0.0,\"z\":-6.083982206916971e-09},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "5ce4439d2393e964224f414c891bb18b3ac7e64f998c1ac187d0ef5f5364884a"
+   },
+   {
+    "pathId": "4917550705168434337",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-1942340137062546271\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-7696951024571956063\"}}],\"m_IsActive\":true,\"m_Layer\":9,\"m_Name\":\"Shadow\",\"m_Tag\":0}",
+    "sha256": "d3b054e30ca55a7993d2d593aad158eeadf7c58f9d15ff4362d7500ce5a4b400"
+   },
+   {
+    "pathId": "5783467099136804001",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"-1856251475200359263\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"7252554421730231457\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":4.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":-0.0,\"y\":-0.0,\"z\":-0.0},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "c6343c98dd6b62ed91fa91d2f0896246593c0ce7a036415f980024cd962e0e34"
+   },
+   {
+    "pathId": "6124509184538657953",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"7430185351655474337\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"274702070688203937\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-3876779576292391775\"}}],\"m_IsActive\":true,\"m_Layer\":12,\"m_Name\":\"ExtraPowerListener\",\"m_Tag\":0}",
+    "sha256": "234c53b1ca0ede3f600cab3612975325cac187e58a6909195ea7e46f959eef3b"
+   },
+   {
+    "pathId": "6662404013889504417",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-6720752380452256607\"}}],\"m_IsActive\":true,\"m_Layer\":0,\"m_Name\":\"Talents\",\"m_Tag\":0}",
+    "sha256": "4fa033c2e65dcf090802eb6f64012ab459aca05eb922cb551003f5f292ffed09"
+   },
+   {
+    "pathId": "7226400888370709665",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"_activeBuffs\":[],\"_affectedBySlowDown\":1,\"_allowNoTarget\":0,\"_alwaysIncludeTarget\":1,\"_animKey\":\"Attack\",\"_atkScale\":1.0,\"_atkScaleKey\":\"atk_scale_2\",\"_attachPassiveBuffsOnDummy\":1,\"_attackType\":1,\"_checkFaceToFirstCastTargetDownAttack\":0,\"_cooldown\":0.0,\"_cooldownKey\":\"duration\",\"_damageType\":1,\"_deliveryParaWhenReplaceActionNode\":0,\"_downAnimKey\":\"\",\"_downEndAnimKey\":\"\",\"_elementDamageType\":0,\"_emitToInputPosWhenTargetIsInvalid\":0,\"_emitToInputRootTileWhenTargetIsInvalid\":0,\"_endAnimKey\":\"Idle\",\"_epDamageRatio\":0.0,\"_escapeTime\":0.0,\"_extraDamageType\":0,\"_extraProjectileKeys\":[],\"_faceToDefault\":0,\"_faceToFirstCastTarget\":0,\"_faceToFront\":0,\"_faceToTarget\":1,\"_fireAttackFinishWhenProjectileInvalid\":0,\"_fireCreateProjectileEvent\":0,\"_forceAsDmgOrHealAbility\":0,\"_forceFaceToDirection\":0,\"_ignoreIfOwnerDead\":0,\"_ignorePalsyInterrupt\":0,\"_interruptAbilityOnDetach\":1,\"_interuptIfTargetDead\":0,\"_maxAnimScale\":1.0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_minPostDelayWhenProjectileInvalid\":0.0,\"_mountGroup\":{\"loopType\":0,\"mountPoints\":[]},\"_mountPointType\":2,\"_notClearProjectileWhenCastEnd\":0,\"_onlyPlayEndAnimWhenIsLastAbility\":0,\"_preDelay\":0.0,\"_projectileDestination\":0,\"_projectileKey\":\"projectile_enemy_uasnip\",\"_resetCdStrategy\":1,\"_selectTargetSource\":2,\"_selectTargetTiming\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_timeMode\":0,\"_transferSource\":0,\"_upAnimKey\":\"\",\"_upEndAnimKey\":\"\",\"_useCachedAtkOnly\":0,\"_useDynamicAttackType\":0,\"_useMountGroup\":0,\"_waitForAnimEndWhenProjectileInvalid\":0,\"_waitForAttackEvent\":1,\"_waitForProjectileInvalid\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-4523402324576222047\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"4156651312234227407\"}}",
+    "sha256": "9928f673f4e075a747681636e3857281770ce8f83fb03b3e133e7faff495469a"
+   },
+   {
+    "pathId": "7252554421730231457",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"5783467099136804001\"}}],\"m_IsActive\":true,\"m_Layer\":9,\"m_Name\":\"HeadPoint\",\"m_Tag\":0}",
+    "sha256": "5375f66be5f3172a4226935745ffa94368a313406e61999603be8833f4aa1911"
+   },
+   {
+    "pathId": "7342492117229913249",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"-1856251475200359263\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"2287998059465753761\"},\"m_LocalPosition\":{\"x\":0.4126049876213074,\"y\":2.8433029651641846,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":0.0,\"y\":0.0,\"z\":-7.985516958797234e-08},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "cc15a682b5208b2178c6dd3f710f3138b396ddcd847accd10d357bcfe14007af"
+   },
+   {
+    "pathId": "7430185351655474337",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"-6720752380452256607\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"6124509184538657953\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":-0.0,\"y\":-0.0,\"z\":-0.0},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "9018ba395258bdce4429908fb1081fea8b1a3ca1865a7b5bc08110325517d0e6"
+   },
+   {
+    "pathId": "7445405232151807137",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-2432291504508549983\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"1046323666045256865\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-4580177905221876575\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-5957682283885542239\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-688766268116745055\"}}],\"m_IsActive\":true,\"m_Layer\":12,\"m_Name\":\"Selector\",\"m_Tag\":0}",
+    "sha256": "00af0d950d571424c8084da23135c7dc4ba5bf4c4c64c441c0fdcb305665f936"
+   },
+   {
+    "pathId": "7584900803349398689",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"_addIndexToSignalId\":1,\"_alwaysHideHp\":{\"isDefined\":0,\"value\":0},\"_alwaysHideSp\":{\"isDefined\":0,\"value\":0},\"_animatorHooker\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_attack\":{\"m_FileID\":0,\"m_PathID\":\"7226400888370709665\"},\"_attackTrigger\":{\"m_FileID\":0,\"m_PathID\":\"-688766268116745055\"},\"_bodyTransform\":{\"m_FileID\":0,\"m_PathID\":\"8582206462499046561\"},\"_combat\":{\"m_FileID\":0,\"m_PathID\":\"-3917280810813209439\"},\"_extraRangesToShow\":[],\"_generalAbilities\":[{\"m_FileID\":0,\"m_PathID\":\"-4102509870797667167\"}],\"_hideUIAttackRange\":0,\"_includeIndexZero\":1,\"_overrideDeadEffect\":\"\",\"_overrideStartEffect\":\"\",\"_rangeToShow\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_updateAttackRangeExtendByAttributeDirty\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-3681112058043677535\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"5390319429299248724\"}}",
+    "sha256": "4187b7f34a7e0014a8797aead8db0ae5577aa2151d36cf18e93b8615d4420423"
+   },
+   {
+    "pathId": "7824005393668392097",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"2691537520422241441\"}}],\"m_IsActive\":true,\"m_Layer\":9,\"m_Name\":\"Modes\",\"m_Tag\":0}",
+    "sha256": "1e47410cab0b17a1705c011fba5c13c023b10dcf03f73f3d83800007b9e3cf8e"
+   },
+   {
+    "pathId": "7928432141197395105",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-2332714234323254111\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-1131806099581483871\"}}],\"m_IsActive\":true,\"m_Layer\":0,\"m_Name\":\"SpecialPoint0\",\"m_Tag\":0}",
+    "sha256": "71c3bffe2f8442b91f0ea37510da2f176f1c31ff0ca58c092be6792fb1a3ae14"
+   },
+   {
+    "pathId": "8028671121104782497",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"8582206462499046561\"}}],\"m_IsActive\":true,\"m_Layer\":9,\"m_Name\":\"Body\",\"m_Tag\":0}",
+    "sha256": "d5db85548a7134a22f172a4ecc373a77e3f9151e3119979dee9addd735414257"
+   },
+   {
+    "pathId": "8052983727928657057",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-8314317346620881759\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"1168910817881113761\"}}],\"m_IsActive\":true,\"m_Layer\":10,\"m_Name\":\"Sprite\",\"m_Tag\":0}",
+    "sha256": "1cf47a8b7aed60ce1bdb9a9300306dd30cc4889ea59109ce0c87478999c757d9"
+   },
+   {
+    "pathId": "8231316028274197665",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-8867723193399098207\"}}],\"m_IsActive\":true,\"m_Layer\":0,\"m_Name\":\"Effects\",\"m_Tag\":0}",
+    "sha256": "903ea905407c19136fbdf359bcbf0b6fd961d0eba0028de89787b6f292491447"
+   },
+   {
+    "pathId": "8582206462499046561",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[{\"m_FileID\":0,\"m_PathID\":\"-5379489609296427871\"},{\"m_FileID\":0,\"m_PathID\":\"-116606348225067871\"},{\"m_FileID\":0,\"m_PathID\":\"-6720752380452256607\"},{\"m_FileID\":0,\"m_PathID\":\"4297557831272711329\"}],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"150892402198660257\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"8028671121104782497\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "b53abe2a8945a605adc95d55fead4d9f025c27e3442ab0ff2c0bb62580541eda"
+   },
+   {
+    "pathId": "8824083529623815329",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"4644193080006100129\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"1625089632539460769\"}}],\"m_IsActive\":true,\"m_Layer\":0,\"m_Name\":\"Muzzle\",\"m_Tag\":0}",
+    "sha256": "a40d1e9814c6b638275c98e212d62eceb7f22a3670a360859dbf03ce04d64d2e"
+   }
+  ]
+ },
+ "projectiles": {
+  "dyn/battle/prefabs/[uc]projectiles/projectile_enemy_uasnip.prefab": [
+   {
+    "pathId": "-8868402059827099430",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"6910633604125214938\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-1405968366332753702\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-6604702862749284134\"}},{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-5239912936239871782\"}}],\"m_IsActive\":true,\"m_Layer\":14,\"m_Name\":\"projectile_enemy_uasnip\",\"m_Tag\":0}",
+    "sha256": "7293866511da535b875dc0b3f00474335db2fa87a2a434d633854d0e27c622b3"
+   },
+   {
+    "pathId": "-8085091302945601318",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"6910633604125214938\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-5314212638304712486\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":-0.0,\"y\":-0.0,\"z\":-0.0},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "cb7d2d7eca4bbf7db0a5726e91b4927a5367a2b89a8cfaedb1947c6ddc744910"
+   },
+   {
+    "pathId": "-6604702862749284134",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"_addInertia\":0,\"_adjustSourceToTargetArcAngleBySourceFace\":0,\"_awayFromSourceAsDirection\":0,\"_clearTraceTargetWhenReached\":1,\"_comeBack\":0,\"_comeBackSpeedScale\":0.25,\"_delayAfterReached\":0.0,\"_delayToReachAfterHit\":0.0,\"_delayToStart\":0.0,\"_deltaSpeedPerSec\":0.0,\"_distance\":0.0,\"_drawFuncTurnAndWaveDebugLine\":0,\"_exactMatchCameraForward\":0,\"_finalSpeed\":0.0,\"_fixOnProjectileReached\":1,\"_fixProjectileHasReached\":0,\"_fixProjectileZWhenReached\":0,\"_flyToPredefinedLocation\":0,\"_flyToTargetLocationOnly\":0,\"_forceReachedWhenTimeup\":1,\"_forceResetToTargetPosWhenReached\":0,\"_forceUseTargetMountPoint\":0,\"_freezeRotationXY\":0,\"_freezeRotationZ\":0,\"_handleWithIBuildableTarget\":0,\"_moveType\":1,\"_moveTypeData\":{\"data\":[]},\"_onlyReachedInTime\":0.0,\"_predefinedLocation\":0,\"_randomOffset\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"_resetToTargetPosWhenReached\":0,\"_resetToTracetargetMapPosV3\":0,\"_rotateToTarget\":1,\"_rotateToTargetOnDelayToStart\":0,\"_skipSmoothLerpDirection\":0,\"_sourceDirectionArcAngleRatio\":0.0,\"_sourceToTargetArcAngle\":0.0,\"_speed\":10.0,\"_turnSpeed\":0.0,\"_updateDelayTimeOnlyOnce\":0,\"_useDynamicSpeed\":0,\"_useSourceDirection\":0,\"_useSourceDirectionArcAngleWithRatio\":0,\"_useSourceDirectionRandomArcAngleStart\":0,\"_useSourceToTargetArcAngleWithRatio\":0,\"_useSourceToTargetRandomArcAngleStart\":0,\"_useStartToTarget\":0,\"_useTargetDirection\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-8868402059827099430\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-1429203677512073985\"}}",
+    "sha256": "6cdf4b48b2b12167fc41e9a4a08a16733a6e8d3cfecdeea75d2809c7210b6c83"
+   },
+   {
+    "pathId": "-5314212638304712486",
+    "componentType": "GameObject",
+    "originalJson": "{\"m_Component\":[{\"component\":{\"m_FileID\":0,\"m_PathID\":\"-8085091302945601318\"}}],\"m_IsActive\":true,\"m_Layer\":14,\"m_Name\":\"Body\",\"m_Tag\":0}",
+    "sha256": "cdf30c3946db0f352397d1d05061d50a93046e853ac6534ffc965acfdd93ead3"
+   },
+   {
+    "pathId": "-5239912936239871782",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"_alwaysPlayStartEffects\":0,\"_clearEffectsOnTileOnStop\":0,\"_clearHitEffectOnStop\":0,\"_clearPlayEffectOnStop\":0,\"_clearReachedEffectWhenStop\":0,\"_effectOnTrigger\":[],\"_effectsToTargetWhenStart\":[],\"_effectsToTileWhenStart\":[],\"_effectsWhenHit\":[\"enemy_uasnip_attack_hit_01\"],\"_effectsWhenReached\":[],\"_effectsWhenStart\":[],\"_effectsWhenStop\":[],\"_followTargetGround\":0,\"_forceReachTargetGround\":0,\"_mainEffectToReplace\":\"\",\"_onlyPlayHitEffectOnNotTraceTarget\":0,\"_onlyPlayHitEffectOnTraceTarget\":0,\"_onlyPlayHitEffectOnce\":0,\"_playStartEffectOnlyOnProjectile\":0,\"_repalceEffectsWhenHit\":[],\"_replaceHitEffectAfterFirstHit\":0,\"_replaceMainEffectWhenReach\":0,\"_setReachEffectOnProjectile\":0,\"_syncEffectScaleViaProjectile\":0,\"_useSourceFaceVector\":0,\"_useSourceFaceVectorOnHit\":0,\"_useSourceFaceVectorOnStart\":0,\"_useTraceTargetWhenReach\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-8868402059827099430\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"6834194400804168919\"}}",
+    "sha256": "1a0588a065bf4294c263bd2947d97833f8fd0ab9634743ce65c18b0f49f4a8d6"
+   },
+   {
+    "pathId": "-1405968366332753702",
+    "componentType": "MonoBehaviour",
+    "originalJson": "{\"_actionController\":{\"_addExtraBuffsWhenReached\":0,\"_detachAllBuffsWhenStopped\":0,\"_detachAllExtraBuffsWhenStopped\":0,\"_detachBuffsWhenTargetLeave\":0,\"_dontAddBuffs\":0,\"_excludeAttachments\":0,\"_extraBuffsInTheEnd\":[],\"_onlyAddBuffsToTargetOnce\":0,\"_onlyAddBuffsToTraceTarget\":0,\"_useExtraBuffsWhenStopHit\":0,\"_useSelfBlackboard\":0},\"_allowZeroBlockCntLimit\":0,\"_alwaysHitTraceTargetInTheEnd\":1,\"_alwaysHitTraceTargetWhenReached\":0,\"_alwaysReachInTheEnd\":0,\"_bodyTransform\":{\"m_FileID\":0,\"m_PathID\":\"-8085091302945601318\"},\"_canHitSameTargetMultipleTimes\":0,\"_clearMainEffectWhenReached\":1,\"_containsChildrenBehaviours\":0,\"_eliminatableStatus\":0,\"_fireProjectileReachedEvent\":0,\"_fixDealHitTargetLeft\":1,\"_getLifeTimeFromBB\":0,\"_getMaxHitNumFromBB\":0,\"_hitNumType\":1,\"_keepAlreadyHitTime\":-1.0,\"_lifeTime\":10.0,\"_lifeTimeType\":1,\"_limitedMaxHitNumToSourceBlockedCnt\":0,\"_mainEffect\":\"enemy_uasnip_attack_trail_01\",\"_managedBySource\":0,\"_maxHitNum\":1,\"_maxHitNumBBKey\":\"\",\"_movementAdjustableStatus\":0,\"_overrideAudioSignal\":\"\",\"_projectileType\":0,\"_randomDelayToBorn\":0.0,\"_stopAfterFirstHit\":0,\"_stopAfterMaxHit\":1,\"_stopGraphicProjectileWhenClearMainEffect\":0,\"_stopWhenSourceInvalid\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-8868402059827099430\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-8797129986015012478\"}}",
+    "sha256": "2236ed2f3f5065c571637b2f33d599751f810043b8699461d464384182647826"
+   },
+   {
+    "pathId": "6910633604125214938",
+    "componentType": "Transform",
+    "originalJson": "{\"m_Children\":[{\"m_FileID\":0,\"m_PathID\":\"-8085091302945601318\"}],\"m_Father\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-8868402059827099430\"},\"m_LocalPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalRotation\":{\"w\":1.0,\"x\":0.0,\"y\":0.0,\"z\":0.0},\"m_LocalScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}}",
+    "sha256": "e953bf3aedc63e878f698637d1242f34ae881b5af675076df4bce4467009a809"
+   }
+  ]
+ },
+ "templates": {
+  "empty": {
+   "originalJson": "{\"effectKey\":\"\",\"eventToActions\":{\"_items\":[]},\"onEventPriority\":0,\"templateKey\":\"empty\"}",
+   "sha256": "eca58ee7744db98ad540402d6e2b91af372ff277301d6fc85865f9a28851aeb6"
+  },
+  "uasnip_t[power_listener]": {
+   "originalJson": "{\"effectKey\":\"\",\"eventToActions\":{\"_items\":[{\"key\":2,\"value\":{\"SerializedObjectReferences\":[],\"SerializedState\":\"[{\\\"_conditionNode\\\":{\\\"_targetType\\\":\\\"BUFF_OWNER\\\",\\\"_buffKeys\\\":[\\\"enemy_uacomd_extra_power\\\"],\\\"isAND\\\":true,\\\"_loadFromBlackboard\\\":false,\\\"_checkBuffSource\\\":false,\\\"_buffSourceType\\\":\\\"BUFF_SOURCE\\\",\\\"_checkSourceHost\\\":false,\\\"$type\\\":\\\"Torappu.Battle.Action.Nodes+CheckContainsBuff\\\"},\\\"_succeedNodes\\\":[{\\\"_conditionNode\\\":{\\\"_targetType\\\":\\\"BUFF_OWNER\\\",\\\"_buffKeys\\\":[\\\"uacomd_t[extra_effect]\\\"],\\\"isAND\\\":true,\\\"_loadFromBlackboard\\\":false,\\\"_checkBuffSource\\\":false,\\\"_buffSourceType\\\":\\\"BUFF_SOURCE\\\",\\\"_checkSourceHost\\\":false,\\\"$type\\\":\\\"Torappu.Battle.Action.Nodes+CheckContainsBuff\\\"},\\\"_succeedNodes\\\":null,\\\"_failNodes\\\":[{\\\"_buff\\\":{\\\"attributes\\\":{\\\"abnormalFlags\\\":[],\\\"abnormalImmunes\\\":[],\\\"abnormalAntis\\\":[],\\\"abnormalCombos\\\":[],\\\"abnormalComboImmunes\\\":[],\\\"attributeModifiers\\\":[]},\\\"buffKey\\\":\\\"uacomd_t[extra_effect]\\\",\\\"loadFromDB\\\":false,\\\"isDurableBuff\\\":false,\\\"isDamageMissable\\\":false,\\\"isSilenceable\\\":false,\\\"isStunnable\\\":false,\\\"isFreezable\\\":false,\\\"isLevitatable\\\":false,\\\"isGroundBoundable\\\":false,\\\"statusResistable\\\":\\\"AUTOMATIC\\\",\\\"templateKey\\\":\\\"empty\\\",\\\"disableOverride\\\":false,\\\"overrideKey\\\":null,\\\"overrideType\\\":\\\"UNIQUE\\\",\\\"maxStackCnt\\\":1,\\\"refreshRemainingTimeWhenStackMax\\\":false,\\\"clearAllStackCntWhenTimeUp\\\":false,\\\"maxValidStackCnt\\\":-1,\\\"independentCharacterSource\\\":false,\\\"overrideEffectKey\\\":\\\"enemy_uasnip_buff_02\\\",\\\"overrideOnEventPriority\\\":false,\\\"onEventPriority\\\":\\\"DEFAULT\\\",\\\"audioSignal\\\":null,\\\"lifeTimeType\\\":\\\"INFINITY\\\",\\\"takeSnapshotWhenExtend\\\":false,\\\"durationKey\\\":null,\\\"remainingTimeKey\\\":null,\\\"lifeTime\\\":0.0,\\\"triggerLifeType\\\":\\\"IMMEDIATELY\\\",\\\"triggerCnt\\\":0,\\\"triggerInterval\\\":-1.0,\\\"waitFirstTriggerInterval\\\":true,\\\"firstTriggerInterval\\\":-1.0,\\\"priority\\\":-1,\\\"priorityBBKeys\\\":[],\\\"stripBlackboardParamsWithBuffKey\\\":false,\\\"blackboard\\\":[],\\\"enableInitDirectionFromSource\\\":false},\\\"_buffOwner\\\":\\\"BUFF_OWNER\\\",\\\"_useSpecialBuffSource\\\":false,\\\"_specialBuffSource\\\":\\\"BUFF_SOURCE\\\",\\\"_isDerivedBuff\\\":false,\\\"_finishDerivedBuffIfParentFinish\\\":false,\\\"_inherateSourceProjectileFromParentBuff\\\":false,\\\"_hookEffectKeyFromSourceProjectile\\\":false,\\\"$type\\\":\\\"Torappu.Battle.Action.Nodes+CreateBuff\\\"}],\\\"$type\\\":\\\"Torappu.Battle.Action.Nodes+IfElse\\\"},{\\\"_conditionsNode\\\":[{\\\"_targetType\\\":\\\"BUFF_OWNER\\\",\\\"_checkRangeId\\\":false,\\\"_rangeIdKey\\\":\\\"\\\",\\\"_rangeId\\\":\\\"\\\",\\\"_checkRadius\\\":true,\\\"_radiusKey\\\":\\\"radius_2\\\",\\\"_radius\\\":{\\\"_serializedValue\\\":4294967296},\\\"_checkSideType\\\":true,\\\"_targetSide\\\":\\\"ALLY\\\",\\\"_checkContainsBuff\\\":false,\\\"_buffKey\\\":\\\"\\\",\\\"_excludeTarget\\\":true,\\\"$type\\\":\\\"Torappu.Battle.Action.Nodes+CheckHasUnitInRange\\\"},{\\\"_targetType\\\":\\\"BUFF_OWNER\\\",\\\"_checkRangeId\\\":false,\\\"_rangeIdKey\\\":\\\"\\\",\\\"_rangeId\\\":\\\"\\\",\\\"_checkRadius\\\":true,\\\"_radiusKey\\\":\\\"radius_2\\\",\\\"_radius\\\":{\\\"_serializedValue\\\":4294967296},\\\"_checkSideType\\\":true,\\\"_targetSide\\\":\\\"NEUTRAL\\\",\\\"_checkContainsBuff\\\":true,\\\"_buffKey\\\":\\\"enemy_mcreep_self_mark\\\",\\\"_excludeTarget\\\":true,\\\"$type\\\":\\\"Torappu.Battle.Action.Nodes+CheckHasUnitInRange\\\"}],\\\"_succeedNodes\\\":[{\\\"_buffKey\\\":\\\"uasnip_no_ally_nearby_able_attack\\\",\\\"_loadFromBlackboard\\\":false,\\\"_decCntIfStack\\\":false,\\\"_updateOverrideMap\\\":true,\\\"_targetType\\\":\\\"BUFF_OWNER\\\",\\\"_checkBuffSource\\\":false,\\\"_sourceType\\\":\\\"BUFF_SOURCE\\\",\\\"_alsoClearNullSource\\\":false,\\\"_finishHostBuff\\\":false,\\\"_decCntKey\\\":null,\\\"_decCnt\\\":1,\\\"$type\\\":\\\"Torappu.Battle.Action.Nodes+FinishBuffsById\\\"}],\\\"_failNodes\\\":[{\\\"_targetType\\\":\\\"BUFF_OWNER\\\",\\\"_buffKeys\\\":[\\\"uasnip_no_ally_nearby_able_attack\\\"],\\\"isAND\\\":true,\\\"_loadFromBlackboard\\\":false,\\\"_checkBuffSource\\\":false,\\\"_buffSourceType\\\":\\\"BUFF_SOURCE\\\",\\\"_checkSourceHost\\\":false,\\\"$type\\\":\\\"Torappu.Battle.Action.Nodes+CheckContainsBuff\\\"},{\\\"$type\\\":\\\"Torappu.Battle.Action.Nodes+IfNot\\\"},{\\\"_buff\\\":{\\\"attributes\\\":{\\\"abnormalFlags\\\":[],\\\"abnormalImmunes\\\":[],\\\"abnormalAntis\\\":[],\\\"abnormalCombos\\\":[],\\\"abnormalComboImmunes\\\":[],\\\"attributeModifiers\\\":[]},\\\"buffKey\\\":\\\"uasnip_no_ally_nearby_able_attack\\\",\\\"loadFromDB\\\":false,\\\"isDurableBuff\\\":false,\\\"isDamageMissable\\\":false,\\\"isSilenceable\\\":false,\\\"isStunnable\\\":false,\\\"isFreezable\\\":false,\\\"isLevitatable\\\":false,\\\"isGroundBoundable\\\":false,\\\"statusResistable\\\":\\\"AUTOMATIC\\\",\\\"templateKey\\\":\\\"empty\\\",\\\"disableOverride\\\":false,\\\"overrideKey\\\":null,\\\"overrideType\\\":\\\"UNIQUE\\\",\\\"maxStackCnt\\\":1,\\\"refreshRemainingTimeWhenStackMax\\\":false,\\\"clearAllStackCntWhenTimeUp\\\":false,\\\"maxValidStackCnt\\\":-1,\\\"independentCharacterSource\\\":false,\\\"overrideEffectKey\\\":\\\"enemy_uasnip_buff_01\\\",\\\"overrideOnEventPriority\\\":false,\\\"onEventPriority\\\":\\\"DEFAULT\\\",\\\"audioSignal\\\":null,\\\"lifeTimeType\\\":\\\"INFINITY\\\",\\\"takeSnapshotWhenExtend\\\":false,\\\"durationKey\\\":null,\\\"remainingTimeKey\\\":null,\\\"lifeTime\\\":0.0,\\\"triggerLifeType\\\":\\\"IMMEDIATELY\\\",\\\"triggerCnt\\\":0,\\\"triggerInterval\\\":-1.0,\\\"waitFirstTriggerInterval\\\":true,\\\"firstTriggerInterval\\\":-1.0,\\\"priority\\\":-1,\\\"priorityBBKeys\\\":[],\\\"stripBlackboardParamsWithBuffKey\\\":false,\\\"blackboard\\\":[],\\\"enableInitDirectionFromSource\\\":false},\\\"_buffOwner\\\":\\\"BUFF_OWNER\\\",\\\"_useSpecialBuffSource\\\":false,\\\"_specialBuffSource\\\":\\\"BUFF_SOURCE\\\",\\\"_isDerivedBuff\\\":false,\\\"_finishDerivedBuffIfParentFinish\\\":false,\\\"_inherateSourceProjectileFromParentBuff\\\":false,\\\"_hookEffectKeyFromSourceProjectile\\\":false,\\\"$type\\\":\\\"Torappu.Battle.Action.Nodes+CreateBuff\\\"}],\\\"_isAnd\\\":false,\\\"$type\\\":\\\"Torappu.Battle.Action.Nodes+IfConditions\\\"}],\\\"_failNodes\\\":[{\\\"_buffKey\\\":\\\"uacomd_t[extra_effect]\\\",\\\"_loadFromBlackboard\\\":false,\\\"_decCntIfStack\\\":false,\\\"_updateOverrideMap\\\":true,\\\"_targetType\\\":\\\"BUFF_OWNER\\\",\\\"_checkBuffSource\\\":false,\\\"_sourceType\\\":\\\"BUFF_SOURCE\\\",\\\"_alsoClearNullSource\\\":false,\\\"_finishHostBuff\\\":false,\\\"_decCntKey\\\":null,\\\"_decCnt\\\":1,\\\"$type\\\":\\\"Torappu.Battle.Action.Nodes+FinishBuffsById\\\"},{\\\"$type\\\":\\\"Torappu.Battle.Action.Nodes+AlwaysNext\\\"},{\\\"_conditionsNode\\\":[{\\\"_targetType\\\":\\\"BUFF_OWNER\\\",\\\"_checkRangeId\\\":false,\\\"_rangeIdKey\\\":\\\"\\\",\\\"_rangeId\\\":\\\"\\\",\\\"_checkRadius\\\":true,\\\"_radiusKey\\\":\\\"radius_1\\\",\\\"_radius\\\":{\\\"_serializedValue\\\":4294967296},\\\"_checkSideType\\\":true,\\\"_targetSide\\\":\\\"ALLY\\\",\\\"_checkContainsBuff\\\":false,\\\"_buffKey\\\":\\\"\\\",\\\"_excludeTarget\\\":true,\\\"$type\\\":\\\"Torappu.Battle.Action.Nodes+CheckHasUnitInRange\\\"},{\\\"_targetType\\\":\\\"BUFF_OWNER\\\",\\\"_checkRangeId\\\":false,\\\"_rangeIdKey\\\":\\\"\\\",\\\"_rangeId\\\":\\\"\\\",\\\"_checkRadius\\\":true,\\\"_radiusKey\\\":\\\"radius_1\\\",\\\"_radius\\\":{\\\"_serializedValue\\\":4294967296},\\\"_checkSideType\\\":true,\\\"_targetSide\\\":\\\"NEUTRAL\\\",\\\"_checkContainsBuff\\\":true,\\\"_buffKey\\\":\\\"enemy_mcreep_self_mark\\\",\\\"_excludeTarget\\\":true,\\\"$type\\\":\\\"Torappu.Battle.Action.Nodes+CheckHasUnitInRange\\\"}],\\\"_succeedNodes\\\":[{\\\"_buffKey\\\":\\\"uasnip_no_ally_nearby_able_attack\\\",\\\"_loadFromBlackboard\\\":false,\\\"_decCntIfStack\\\":false,\\\"_updateOverrideMap\\\":true,\\\"_targetType\\\":\\\"BUFF_OWNER\\\",\\\"_checkBuffSource\\\":false,\\\"_sourceType\\\":\\\"BUFF_SOURCE\\\",\\\"_alsoClearNullSource\\\":false,\\\"_finishHostBuff\\\":false,\\\"_decCntKey\\\":null,\\\"_decCnt\\\":1,\\\"$type\\\":\\\"Torappu.Battle.Action.Nodes+FinishBuffsById\\\"}],\\\"_failNodes\\\":[{\\\"_targetType\\\":\\\"BUFF_OWNER\\\",\\\"_buffKeys\\\":[\\\"uasnip_no_ally_nearby_able_attack\\\"],\\\"isAND\\\":true,\\\"_loadFromBlackboard\\\":false,\\\"_checkBuffSource\\\":false,\\\"_buffSourceType\\\":\\\"BUFF_SOURCE\\\",\\\"_checkSourceHost\\\":false,\\\"$type\\\":\\\"Torappu.Battle.Action.Nodes+CheckContainsBuff\\\"},{\\\"$type\\\":\\\"Torappu.Battle.Action.Nodes+IfNot\\\"},{\\\"_buff\\\":{\\\"attributes\\\":{\\\"abnormalFlags\\\":[],\\\"abnormalImmunes\\\":[],\\\"abnormalAntis\\\":[],\\\"abnormalCombos\\\":[],\\\"abnormalComboImmunes\\\":[],\\\"attributeModifiers\\\":[]},\\\"buffKey\\\":\\\"uasnip_no_ally_nearby_able_attack\\\",\\\"loadFromDB\\\":false,\\\"isDurableBuff\\\":false,\\\"isDamageMissable\\\":false,\\\"isSilenceable\\\":false,\\\"isStunnable\\\":false,\\\"isFreezable\\\":false,\\\"isLevitatable\\\":false,\\\"isGroundBoundable\\\":false,\\\"statusResistable\\\":\\\"AUTOMATIC\\\",\\\"templateKey\\\":\\\"empty\\\",\\\"disableOverride\\\":false,\\\"overrideKey\\\":null,\\\"overrideType\\\":\\\"UNIQUE\\\",\\\"maxStackCnt\\\":1,\\\"refreshRemainingTimeWhenStackMax\\\":false,\\\"clearAllStackCntWhenTimeUp\\\":false,\\\"maxValidStackCnt\\\":-1,\\\"independentCharacterSource\\\":false,\\\"overrideEffectKey\\\":\\\"enemy_uasnip_buff_01\\\",\\\"overrideOnEventPriority\\\":false,\\\"onEventPriority\\\":\\\"DEFAULT\\\",\\\"audioSignal\\\":null,\\\"lifeTimeType\\\":\\\"INFINITY\\\",\\\"takeSnapshotWhenExtend\\\":false,\\\"durationKey\\\":null,\\\"remainingTimeKey\\\":null,\\\"lifeTime\\\":0.0,\\\"triggerLifeType\\\":\\\"IMMEDIATELY\\\",\\\"triggerCnt\\\":0,\\\"triggerInterval\\\":-1.0,\\\"waitFirstTriggerInterval\\\":true,\\\"firstTriggerInterval\\\":-1.0,\\\"priority\\\":-1,\\\"priorityBBKeys\\\":[],\\\"stripBlackboardParamsWithBuffKey\\\":false,\\\"blackboard\\\":[],\\\"enableInitDirectionFromSource\\\":false},\\\"_buffOwner\\\":\\\"BUFF_OWNER\\\",\\\"_useSpecialBuffSource\\\":false,\\\"_specialBuffSource\\\":\\\"BUFF_SOURCE\\\",\\\"_isDerivedBuff\\\":false,\\\"_finishDerivedBuffIfParentFinish\\\":false,\\\"_inherateSourceProjectileFromParentBuff\\\":false,\\\"_hookEffectKeyFromSourceProjectile\\\":false,\\\"$type\\\":\\\"Torappu.Battle.Action.Nodes+CreateBuff\\\"}],\\\"_isAnd\\\":false,\\\"$type\\\":\\\"Torappu.Battle.Action.Nodes+IfConditions\\\"}],\\\"$type\\\":\\\"Torappu.Battle.Action.Nodes+IfElse\\\"}]\"}}]},\"onEventPriority\":0,\"templateKey\":\"uasnip_t[power_listener]\"}",
+   "sha256": "1877535be584a4eecd73d584fc998398edc14e577644c8d09e53572e40609037"
+  }
+ }
+}

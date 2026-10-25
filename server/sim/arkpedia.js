@@ -257,6 +257,9 @@ import { catalogueFor, recordFor, fixedSquadBuilds } from "../../shared/arkpedia
 import { REGULAR_OPERATORS } from "../../shared/arkpedia/operators.js";
 import { assertRegularEnemies } from "../../shared/arkpedia/enemies.js";
 import { installEnemyFeatures } from "./content/arkpedia-enemy-features.js";
+import { installChapter17Devices } from './content/chapter17.js';
+import { installChapter16Structures } from './content/chapter16-structures.js';
+import { installChapter16Tunnels } from './content/chapter16-tunnel.js';
 import { STAGE_DEVICES, STAGE_TOKEN_UNITS, pulseTiles, artilleryTiles } from "../../shared/arkpedia/stage-devices.js";
 import { compileBuffTemplate } from "../../shared/arkpedia/behavior.js";
 import {
@@ -351,12 +354,15 @@ export function stageAdapter(source) {
   let cursor = 0;
   const spawns = g.waves.flatMap((wave) => {
     const waveStart = cursor + (wave.pre_delay || 0);
+    for (const s of wave.spawns || []) if (s.unharmful != null && typeof s.unharmful !== 'boolean')
+      throw Error('Invalid canonical unharmful spawn flag');
     const out = (wave.spawns || []).flatMap((s) =>
       Array.from({ length: Math.max(1, s.count || 1) }, (_, i) => ({
         enemyKey: s.enemy_id,
         time: waveStart + (s.time || 0) + i * (s.interval || 0),
         routeIndex: s.route,
         ownerPlayerId: "arkpedia",
+        ...(s.unharmful === true ? { holdsBattle: false } : {}),
       })),
     );
     cursor = waveStart + (wave.duration || 0) + (wave.post_delay || 0);
@@ -457,6 +463,9 @@ export class StandardBattle extends Battle {
     this.mvpStageTokens = new Map((data.stage.tokens ?? []).map(t => [t.unitId, t.count]));
     if (this.mvpStageDevices.length) this.on('tick', ({ dt }) => this._tickMvpStageDevices(dt));
     this._installUnitStageDevices(data.stage.devices ?? []);
+    installChapter16Structures(this);
+    installChapter16Tunnels(this, data.stage.devices ?? [], data.stage.chapter16Source);
+    installChapter17Devices(this, data.stage.devices ?? []);
     this._installPillarController();
     this._installHighTide(data.stage.tide);
     this._installDeepWater(data.stage.deepWater);
@@ -535,6 +544,7 @@ export class StandardBattle extends Battle {
     if (!fromSkill && !canDeployInViewport(this.viewport))
       return "Open the fullscreen workspace to deploy.";
     if (this.finished) return "Battle has ended.";
+    if (this.chapter16?.isShadow?.(row, col)) return "High-risk pollution blocks deployment on this tile.";
     if (!entry || entry.unit?.alive) return "Operator is unavailable.";
     if (!fromSkill && entry.readyAt > this.time) return "Operator is still redeploying.";
     if (this.deployedSlots() + this.deploymentSlotCost(id) > this.unitLimit)
@@ -579,6 +589,7 @@ export class StandardBattle extends Battle {
   deployToken(unitId, row, col) {
     const found = (this.stage.tokens ?? this.stage.raw?.tokens ?? []).find(t => t.unitId === unitId);
     if (!found) throw new Error('This stage has no such token.');
+    if (this.chapter16?.isShadow?.(row, col)) throw new Error('High-risk pollution blocks deployment on this tile.');
     const token = { ...(STAGE_TOKEN_UNITS[unitId] ?? {}), ...found };
     if ((this.mvpStageTokens.get(unitId) ?? 0) <= 0) throw new Error('No tokens remaining.');
     if (!this.grid.inRect(row, col) || (!this.grid.groundPassable(row, col, true)
@@ -1215,6 +1226,10 @@ export class StandardBattle extends Battle {
       unit.skill.activate("manual")
     );
   }
+  activateStageDevice(id) {
+    if (!canDeployInViewport(this.viewport) || this.finished) return false;
+    return this.stageDeviceActions?.get(id)?.state.activate() ?? false;
+  }
   // An owner-declared second field action (e.g. Hadiya's Equipment Adaptation).
   secondaryActionOperator(id) {
     if (!canDeployInViewport(this.viewport) || this.finished) return false;
@@ -1295,6 +1310,7 @@ export class StandardBattle extends Battle {
 
   _deploy(u, opts = {}) {
     const r = opts.tile ? opts.tile[0] : u.homeR, c = opts.tile ? opts.tile[1] : u.homeC;
+    if (this.chapter16?.isShadow?.(r, c)) { this.log(`high-risk pollution blocks deployment at ${r},${c}`); return false; }
     if (u.kind === 'op' && this._isFlooded(r, c) && !u.mem?.erosionImmune) { this.log(`high tide blocks deployment at ${r},${c}`); return false; }
     return super._deploy(u, opts);
   }
@@ -1348,7 +1364,8 @@ export class StandardBattle extends Battle {
       if (spec.platformDevice) { this.platformTiles ??= new Set(); this.platformTiles.add(`${d.row},${d.col}`); continue; }
       const e = this.spawnEnemy(`device:${d.key ?? d.name}`, { pos: [d.row, d.col], countInTotal: false,
         def: { key: d.key ?? d.name, name: d.name, applyWay: 'NONE', dmgType: 'none',
-          stats: { maxHp: spec.hp, hp: spec.hp, atk: spec.atk ?? 0, def: spec.def, res: spec.res ?? 0, moveSpeed: 0, bat: 1, rangeRadius: 0, blockCnt: spec.block, lpr: 0 } } });
+          stats: { maxHp: spec.hp, hp: spec.hp, atk: spec.atk ?? 0, def: spec.def, res: spec.res ?? 0, moveSpeed: 0, bat: 1, rangeRadius: 0, blockCnt: spec.block, lpr: 0,
+            immunities: spec.immunities } } });
       if (!e) continue;
       e.mem.stageUnitDevice = { ...spec, name: d.name, row: d.row, col: d.col, dir: d.dir ?? 'RIGHT', state: spec.pillar ? 'intact' : null };
       e.profile.noAttack = true; e.counted = false; e.lpr = 0; e.blockWeight = 0;

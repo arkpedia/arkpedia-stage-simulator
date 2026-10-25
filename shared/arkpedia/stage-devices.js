@@ -2,6 +2,8 @@
 // Reviewed stage devices. The source data only carries position and name; the
 // device parameters live here with their source descriptions.
 export const STAGE_DEVICES = Object.freeze({
+  'Hidden Tunnel': Object.freeze({ chapter16Tunnel: true }),
+  'Leak Marker': Object.freeze({ chapter17Marker: true }),
   'EP14 Mechanics Controller': Object.freeze({
     // PRTS: every unit on an Originium pollution tile loses 80% natural SP
     // recovery and takes 50 True environment damage per second (skill 1).
@@ -18,6 +20,15 @@ export const STAGE_DEVICES = Object.freeze({
   }),
   'Custom Floating Platform': Object.freeze({
     unit: Object.freeze({ hp: 100, atk: 0, def: 0, res: 0, block: 0, dpMax: 0, dp: 0, platformDevice: true }),
+  }),
+  // character_table.json trap_272_nomstn: 8000 HP, 300 DEF, 20 RES, block 0.
+  'Rock Wall': Object.freeze({
+    unit: Object.freeze({ hp: 8000, atk: 0, def: 300, res: 20, block: 0, dpMax: 0, dp: 0, obstacle: 'block', chapter16Structure: 'rock' }),
+  }),
+  // trap_271_fowstn: stats and x-2 field retained in ch16-device-source.
+  'Heavily Polluted Facility': Object.freeze({
+    unit: Object.freeze({ hp: 30000, atk: 0, def: 300, res: 50, block: 0, dpMax: 0, dp: 0, obstacle: 'block', chapter16Structure: 'facility',
+      immunities: Object.freeze({ stun: true, cold: true, frozen: true, silence: true, levitate: true, sleep: true }) }),
   }),
   'Tide Controller': Object.freeze({
     // Hidden static controller for Dossoles High Tide; the tide schedule and

@@ -12,6 +12,20 @@
 // An enemy is supported only when every feature it uses is registered and
 // covered (shared/arkpedia/enemy-support.js).
 
+import { CHAPTER16_FEATURES, abnormalSlugCovered, shieldguardCovered, fortbreakerCovered, commanderCovered } from './chapter16-features.js';
+import patrolReview from '../../data/candidates/arkpedia-ch16-reviewed-patrol.json' with { type: 'json' };
+import engagement from '../../data/candidates/arkpedia-ch16-reviewed-engagement.json' with { type: 'json' };
+
+const blockMcreepCovered = (r, n) => r.key === engagement.blockMcreep.key
+  && Number.isFinite(r.stats.rawRangeRadius) && r.stats.rawRangeRadius > 0
+  && sig(r, 'BlockMcreep', ['block_mcreep_cnt', 'range_radius', 'range_radius_add'])
+  && r.talents.bb['BlockMcreep.block_mcreep_cnt'] === engagement.blockMcreep.count
+  && r.talents.bb['BlockMcreep.range_radius'] === engagement.blockMcreep.range
+  && r.talents.bb['BlockMcreep.range_radius_add'] === engagement.blockMcreep.rangeAdd
+  && n.$deviceEvidence?.() === engagement.deviceSource.sha256
+  && n.$engagementEvidence?.() === engagement.nativeSource.sha256
+  && JSON.stringify(n.$retained?.()) === JSON.stringify(engagement.native);
+
 /** The group's parameter keys are exactly `params`. */
 const sig = (r, g, params) => JSON.stringify(r.talents.groups[g] ?? null) === JSON.stringify([...params].sort());
 const ELEMENT_TERMS = Object.freeze({ 'ba.dt.neural': 'neural', 'ba.dt.burning': 'burn', 'ba.dt.apoptosis': 'apoptosis', 'ba.dt.erosion': 'erosion' });
@@ -214,6 +228,11 @@ export const ENEMY_FEATURES = Object.freeze({
   'ability:Drains 1 Life Point when entering the Objective Point': { covers: r => r.stats.lpr === 1, note: 'the engine drains lpr Life Points on a leak' },
   // Spawn traits.
   'ability:Cannot be blocked.': { covers: () => true, trait: { flags: { unblockable: true } }, note: 'unblockable for life' },
+  'ability:Can fight 1 <Miner Guerrilla> at a time': { covers: (r, n) => blockMcreepCovered(r, n) || commanderCovered(r, n),
+    ability: r => r.key === engagement.blockMcreep.key ? ({ kind: 'blockMcreep', params: () => ({ cnt: r.talents.bb['BlockMcreep.block_mcreep_cnt'], range: r.talents.bb['BlockMcreep.range_radius'], rangeAdd: r.talents.bb['BlockMcreep.range_radius_add'], attackRange: r.stats.rawRangeRadius, markArmy: r.key === engagement.blockMcreep.key }) }) : null,
+    note: 'BlockMcreep: every 0.3 s selects one nearest Miner Guerrilla and applies UNMOVABLE; one engagement at a time', nativeClaim: (p, n) => JSON.stringify(n.$retained?.()) === JSON.stringify(engagement.native) ? { active: 1 } : null },
+  'talent:BlockMcreep': { covers: (r, n) => blockMcreepCovered(r, n) || shieldguardCovered(r, n) || fortbreakerCovered(r, n) || commanderCovered(r, n) || abnormalSlugCovered(r, n),
+    note: 'native BlockMcreep/SelectNearestMcreep pair; runtime lives on the ability line' },
   'ability:<$ba.invisible>Invisible</>': { covers: () => true, trait: { flags: { stealth: true } },
     note: 'Invisible (ba.invisible): untargetable until revealed or blocked; blocking lifts it for the engine STEALTH_RESTORE window' },
   'ability:Attacks two targets simultaneously.': { covers: r => r.applyWay === 'RANGED' && r.stats.rangeRadius > 0, trait: { maxTargets: 2 }, note: 'two ranged targets per attack' },
@@ -587,8 +606,15 @@ export const ENEMY_FEATURES = Object.freeze({
     note: 'passive stage beacon; pickup belongs to the Altar Keeper', nativeClaim: () => ({ active: 2 }) },
   // Ursus patrol: prioritize the named civilian/Talulah targets.
   'ability:Can use long-ranged weapons to attack <Ursus Civilians> and <Talulah, the Fighter>': {
-    covers: r => r.abilities.some(a => a.text === 'Can use long-ranged weapons to attack <Ursus Civilians> and <Talulah, the Fighter>'),
-    ability: { kind: 'namedPriority', params: () => ({ names: ['Ursus Civilian', 'Talulah'] }) }, note: 'named-target priority; otherwise normal targeting',
+    covers: r => r.abilities.some(a => a.text === 'Can use long-ranged weapons to attack <Ursus Civilians> and <Talulah, the Fighter>')
+      && (r.key !== patrolReview.enemy.key || r.prefabKey === patrolReview.enemy.prefabKey
+        && JSON.stringify(r.abilities) === JSON.stringify(patrolReview.enemy.abilities)
+        && JSON.stringify(r.talents.groups) === JSON.stringify(patrolReview.enemy.groups)
+        && JSON.stringify(r.talents.bb) === JSON.stringify(patrolReview.enemy.bb)
+        && JSON.stringify(r.skills) === JSON.stringify(patrolReview.enemy.skills)),
+    ability: r => r.key === patrolReview.enemy.key ? { kind: 'ch16PatrolCaptain', params: () => r }
+      : { kind: 'namedPriority', params: () => ({ names: ['Ursus Civilian', 'Talulah'] }) },
+    note: 'Native Patrol Captain marked-neutral projectile/Combat selectors; other family records retain their previous named priority.',
     explains: /^Can use long-ranged weapons to attack <Ursus Civilians> and <Talulah, the Fighter>$/ },
   // Witherer: a lingering corruption zone on death.
   'talent:PollutedDie': { covers: r => sig(r, 'PollutedDie', ['polluted_damage_high', 'polluted_damage_low', 'projectile_life_time', 'projectile_range'])
@@ -758,9 +784,9 @@ export const ENEMY_FEATURES = Object.freeze({
       || text === 'Initially has 100% Physical Dodge for a period of time'
       || text === 'Upon dropping below half HP for the first time, gains 100% Physical Dodge for a period of time' },
   // Rhine Defense: a one-hit Physical/Arts shield.
-  'talent:Shield': { covers: r => sig(r, 'Shield', ['block_damage_cnt', 'max_block_damage_cnt'])
-      && r.abilities.some(a => a.text === 'Blocks 1 instance of Physical or Arts damage'),
-    ability: { kind: 'hitShield', params: r => ({ count: r.talents.bb['Shield.max_block_damage_cnt'] }) },
+  'talent:Shield': { covers: (r, n) => abnormalSlugCovered(r, n) || (sig(r, 'Shield', ['block_damage_cnt', 'max_block_damage_cnt'])
+      && r.abilities.some(a => a.text === 'Blocks 1 instance of Physical or Arts damage')),
+    ability: r => Object.hasOwn(r.talents.bb, 'Shield.max_block_damage_cnt') ? { kind: 'hitShield', params: () => ({ count: r.talents.bb['Shield.max_block_damage_cnt'] }) } : null,
     note: 'blocks max_block_damage_cnt Physical/Arts hits', explains: /^Blocks 1 instance of Physical or Arts damage$/ },
   // Roar Knightclub: a timed flat DEF/RES buff declared by the record.
   'talent:buff': { covers: r => sig(r, 'buff', ['def', 'duration', 'magic_resistance'])
@@ -951,6 +977,7 @@ export const ENEMY_FEATURE_PATTERNS = Object.freeze([
 /** The registered feature for an id, exact or by pattern. */
 export function enemyFeature(id) {
   if (Object.hasOwn(ENEMY_FEATURES, id)) return ENEMY_FEATURES[id];
+  if (Object.hasOwn(CHAPTER16_FEATURES, id)) return CHAPTER16_FEATURES[id];
   if (!id.startsWith('ability:')) return null;
   const text = id.slice('ability:'.length);
   for (const p of ENEMY_FEATURE_PATTERNS) { const m = text.match(p.re); if (m) return p.make(m); }

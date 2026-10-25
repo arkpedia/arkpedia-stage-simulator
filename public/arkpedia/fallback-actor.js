@@ -18,6 +18,7 @@ export class FallbackActor {
     this.mode = 'idle';
   }
   deploy() {}
+  attack() {}
   update() {}
   die() {}
   setBase() {}
