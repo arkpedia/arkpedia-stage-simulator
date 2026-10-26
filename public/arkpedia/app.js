@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import { workspaceStagePreparation, createWorkspaceBattle } from "/sim/arkpedia-stage-entry.js";
-import { fixedStagePreparationHtml } from './fixed-stage-preparation.js';
+import { fixedStagePreparationHtml, presetStagePreparationHtml } from './fixed-stage-preparation.js';
 import {
   catalogueFor,
   defaultBuild,
@@ -12,8 +12,9 @@ import { maxedSupport } from "/shared/arkpedia/squad.js";
 import { StageRenderer } from "./renderer.js";
 import { absoluteRangeKeys } from "/sim/targeting.js";
 import { classNames, skillIconFile, operatorAssetName, skillDescriptionText, battleSkillLevel } from "/shared/arkpedia/battle-ui.js";
-import { swipeFacing } from "/shared/arkpedia/placement.js";
+import { swipeFacing, facingPickerLayout } from "/shared/arkpedia/placement.js";
 import { marcilBenchMana } from '/sim/content/arkpedia-marcil.js';
+import { canSpendDp } from '/sim/content/arkpedia-dp-budget.js';
 import { skillHud, skillSourceFor, ammunitionHud } from "/shared/arkpedia/skill-hud.js";
 import { battleHud } from "/shared/arkpedia/battle-hud.js";
 import { drawStageCommands } from './stage-commands.js';
@@ -82,7 +83,9 @@ try {
   throw error;
 }
 const catalogue = catalogueFor(data);
-const ops = Object.values(data.operators);
+const stagePreparation = workspaceStagePreparation(data, activeStage, { experimental });
+const fixedPreparation = stagePreparation?.selectable === false;
+const ops = Object.values(data.operators).filter(op => !stagePreparation?.excludedOperators?.includes(op.id));
 const rarityFolder = (op) => ["one", "two", "three", "four", "five", "six"][op.rarity - 1];
 const supportPortrait = (op) => {
   const initials = String(op.name).split(/\s+/).map(part => part[0]).join("").slice(0, 2).toUpperCase();
@@ -148,9 +151,11 @@ function skillDescription(level) {
 const builds = Object.fromEntries(ops.map((o) => [o.id, defaultBuild(o)]));
 const supportSkills = Object.fromEntries(ops.map((o) => [o.id, defaultBuild(o).skillId]));
 const rankLabel = (rank) => rank > 7 ? `M${rank - 7}` : `Rank ${rank}`;
-const stagePreparation = workspaceStagePreparation(data, activeStage, { experimental });
 const fixedSquad = data.stage.fixedSquad?.length ? data.stage.fixedSquad : null;
-const chosen = new Set(stagePreparation ? [] : fixedSquad ? fixedSquad.map(entry => entry.unit_id) : ops.slice(0, 5).map((o) => o.id));
+const stageEnemyTypes = data.stage.enemies?.by_rank
+  ? Object.values(data.stage.enemies.by_rank).reduce((count, rows) => count + rows.length, 0)
+  : Object.keys(data.stage.enemies ?? {}).length;
+const chosen = new Set(fixedPreparation ? [] : fixedSquad ? fixedSquad.map(entry => entry.unit_id) : ops.slice(0, 5).map((o) => o.id));
 let editing = ops[0].id,
   supportId = "",
   rosterQuery = "";
@@ -175,10 +180,10 @@ function prep() {
     ? `<label class="stage-picker">Stage <button type="button" id="stage-prev" aria-label="Previous stage">‹</button><input id="stage-search" type="search" placeholder="Find a stage" autocomplete="off" aria-label="Find a stage"><span id="stage-search-count" class="stage-search-count" role="status" aria-live="polite"></span><select id="stage-select" aria-label="Stages">${stageOptions}</select><button type="button" id="stage-next" aria-label="Next stage">›</button></label>`
     : '';
   app.innerHTML = `<div class="frame"><header class="topline"><div><p class="eyebrow">Arkpedia · prototype</p><h1>Stage simulator</h1></div><span class="muted">${escape(data.stage.code)} ${escape(data.stage.name)}</span></header>
- <div class="prep">${stagePicker}<section class="preview"><div class="stage-title"><span class="stage-code">${escape(data.stage.code)}</span><h2>${escape(data.stage.name)}</h2></div><p class="help">${escape(data.stage.description)}</p><p class="stage-meta">${Object.keys(data.stage.enemies ?? {}).length} enemy types · ${data.stage.geometry?.waves?.length ?? 0} waves · ${data.stage.battle?.max_life ?? '–'} life</p><div class="board" id="board"></div><div class="legend"><span class="spawn">Enemy entry</span><span class="goal">Defence objective</span><span>Raised tiles: ranged operators</span></div>
- ${fixedSquad ? `<p class="notice">This stage uses a fixed squad (${fixedSquad.length} operators); the squad choices below are ignored in battle.</p>` : ''}<div class="panel help"><h3>How to play</h3><p>${stagePreparation ? 'Open the battle workspace to control the stage-supplied operators.' : 'Choose your squad, then open the battle workspace.'} On mobile, rotate to landscape for battle. Drag an operator onto a tile, then choose its facing on the map. You can also select the operator and click a tile. Select a deployed operator to activate a ready skill or retreat.</p></div>
+ <div class="prep">${stagePicker}<section class="preview"><div class="stage-title"><span class="stage-code">${escape(data.stage.code)}</span><h2>${escape(data.stage.name)}</h2></div><p class="help">${escape(data.stage.description)}</p><p class="stage-meta">${stageEnemyTypes} enemy types · ${data.stage.geometry?.waves?.length ?? 0} waves · ${data.stage.battle?.max_life ?? '–'} life</p><div class="board" id="board"></div><div class="legend"><span class="spawn">Enemy entry</span><span class="goal">Defence objective</span><span>Raised tiles: ranged operators</span></div>
+ ${fixedSquad ? `<p class="notice">This stage uses a fixed squad (${fixedSquad.length} operators); the squad choices below are ignored in battle.</p>` : ''}<div class="panel help"><h3>How to play</h3><p>${fixedPreparation ? 'Open the battle workspace to control the stage-supplied operators.' : 'Choose your squad, then open the battle workspace.'} On mobile, rotate to landscape for battle. Drag an operator onto a tile, then choose its facing on the map. You can also select the operator and click a tile. Select a deployed operator to activate a ready skill or retreat.</p></div>
  ${stagePreparation ? '' : `<p class="notice">This first slice supports ${escape(data.stage.code)} and the ${ops.length} operators shown. Squad capacity is 12 + one distinct maxed support. Modules, other stages and the rest of the roster are still being built.</p>`}</section>
- <section class="panel">${stagePreparation ? fixedStagePreparationHtml(stagePreparation, data.operators) : `<h2>Prepare your squad</h2><p class="help">Select an operator to adjust their build.</p><label class="roster-search">Find an operator<input id="roster-search" type="search" placeholder="Name or class" value="${escape(rosterQuery)}" autocomplete="off" aria-controls="roster"></label><div class="roster" id="roster" aria-label="Available operators"><p class="roster-empty" hidden>No operators match this search.</p></div><div id="build"></div><label class="support">Support · optional, fully maxed<select id="support"><option value="">No support</option></select></label><div id="support-build"></div>`}<div class="prepare-actions"><button class="primary" id="start">Open battle workspace</button></div><p class="error" id="prep-error" role="status" aria-live="polite"></p></section></div>
+ <section class="panel">${fixedPreparation ? fixedStagePreparationHtml(stagePreparation, data.operators) : `${stagePreparation ? presetStagePreparationHtml(stagePreparation, data.operators) : ''}<h2>Prepare your squad</h2><p class="help">Select an operator to adjust their build.</p><label class="roster-search">Find an operator<input id="roster-search" type="search" placeholder="Name or class" value="${escape(rosterQuery)}" autocomplete="off" aria-controls="roster"></label><div class="roster" id="roster" aria-label="Available operators"><p class="roster-empty" hidden>No operators match this search.</p></div><div id="build"></div><label class="support">Support · optional, fully maxed<select id="support"><option value="">No support</option></select></label><div id="support-build"></div>`}<div class="prepare-actions"><button class="primary" id="start">Open battle workspace</button></div><p class="error" id="prep-error" role="status" aria-live="polite"></p></section></div>
  <footer>Combat engine from Stronghold Protocol · GPL-3.0-or-later. Unofficial fan simulator; timings are not yet verified frame-for-frame against the game.<div class="links"><a href="https://github.com/arkpedia/arkpedia-stage-simulator-standalone" target="_blank" rel="noreferrer">Simulator source</a><a href="https://github.com/arkpedia/arkpedia-sd-assets" target="_blank" rel="noreferrer">Chibi assets & credits</a></div></footer></div>`;
   renderer = new StageRenderer(
     document.querySelector("#board"),
@@ -226,7 +231,7 @@ function filterRoster() {
   document.querySelector('#roster .roster-empty').hidden = matched;
 }
 function renderPrep() {
-  if (stagePreparation) { document.querySelector('#start').disabled = loading; return; }
+  if (fixedPreparation) { document.querySelector('#start').disabled = loading; return; }
   const active = document.activeElement;
   const focusId = active?.id;
   const focusOperator = active?.classList.contains("roster-item") ? active.dataset.id : null;
@@ -318,7 +323,7 @@ async function start() {
   status.textContent = "Preparing battlefield…";
   try {
     await renderer.artReady;
-    selection = stagePreparation ? { operators: [], support: null } : {
+    selection = fixedPreparation ? { operators: [], support: null } : {
       operators: [...chosen].map((id) => builds[id]),
       support: supportId
         ? { id: supportId, skillId: supportSkills[supportId] }
@@ -328,7 +333,7 @@ async function start() {
     // skeletons stream in behind it. A missing/slow chibi shows as an invisible unit until it
     // arrives instead of leaving the whole simulator stuck on a loading counter.
     void renderer.preload(
-      stagePreparation ? stagePreparation.visible.map(p => p.build.id) : [...chosen, ...(supportId ? [supportId] : [])],
+      [...(fixedPreparation ? [] : [...chosen, ...(supportId ? [supportId] : [])]), ...(stagePreparation?.visible.map(p => p.build.id) ?? [])],
       () => {},
     ).catch((error) => console.error('chibi preload failed', error));
     battle = createWorkspaceBattle(data, selection, { entry: activeStage, experimental, seed: Date.now() >>> 0 });
@@ -405,6 +410,26 @@ async function start() {
         }
       };
       button.onclick = () => confirmFacing(button.dataset.facing);
+      // Touch placement follows a captured card drag. Commit its new facing
+      // gesture on pointer release; browsers need not synthesize a mouse click
+      // after that drag. Keyboard and mouse retain the normal click handler.
+      let tap = null;
+      button.onpointerdown = e => {
+        if (e.pointerType === 'mouse' || e.button !== 0 || !pending) return;
+        e.preventDefault(); e.stopPropagation();
+        tap = { id:e.pointerId, pending };
+        button.setPointerCapture(e.pointerId);
+        pending.dir = button.dataset.facing; drawHud();
+      };
+      button.onpointerup = e => {
+        if (!tap || tap.id !== e.pointerId) return;
+        e.preventDefault(); e.stopPropagation();
+        const original=tap; tap=null;
+        if (button.hasPointerCapture(e.pointerId)) button.releasePointerCapture(e.pointerId);
+        const r=button.getBoundingClientRect();
+        if (pending===original.pending&&e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom) confirmFacing(button.dataset.facing);
+      };
+      button.onpointercancel = button.onlostpointercapture = () => { tap=null; };
     }
     const handle = picker.querySelector(".facing-handle");
     // The portrait drop only opens this picker. A NEW gesture from its centre
@@ -920,7 +945,8 @@ function drawHud() {
     }
     const rarity = b.kind === 'operator' ? data.operators[id].rarity : 1;
     button.dataset.rarity = rarity;
-    button.classList.toggle('unavailable', !!alive || cool > 0 || (b.kind === 'summon' ? b.record.stats.cost : battle.cost(id)) > battle.dp || b.kind === 'summon' && (!b.owner.alive || b.stock <= 0));
+    const affordable = canSpendDp(battle, b.kind === 'summon' ? b.owner.ownerId : 'arkpedia', b.kind === 'summon' ? b.record.stats.cost : battle.cost(id));
+    button.classList.toggle('unavailable', !!alive || cool > 0 || !affordable || b.kind === 'summon' && (!b.owner.alive || b.stock <= 0));
     button.classList.toggle('deployed', !!alive);
     const copying = !!copyFlow?.active, eligible = copying && copyFlow.donorIds.includes(id);
     button.classList.toggle('copy-eligible', eligible);
@@ -1162,15 +1188,16 @@ function layoutFacing() {
     }
   }
   if (!pending) return;
-  const p = locate(pending.row, pending.col);
-  const radius = Math.max(85, Math.min(210, board.clientHeight*.32, p.s*2.15));
+  const shelfTop = workspace.querySelector('.deployment-wrap').offsetTop;
+  const layout = facingPickerLayout(locate(pending.row, pending.col), {width:board.clientWidth,height:board.clientHeight,shelfTop});
+  const p = layout.center, radius = layout.radius;
   picker.style.left = `${p.x}px`; picker.style.top = `${p.y}px`;
   picker.style.width = picker.style.height = `${radius*2}px`;
-  const shelfTop = workspace.querySelector('.deployment-wrap').offsetTop;
+  const handle=picker.querySelector('.facing-handle');handle.style.width=handle.style.height=handle.style.minHeight=`${layout.handleSize}px`;
   for (const [dir, dx, dy] of [['UP', 0, -.68], ['RIGHT', .68, 0], ['DOWN', 0, .68], ['LEFT', -.68, 0]]) {
     const button = picker.querySelector(`[data-facing="${dir}"]`);
-    button.style.left = `${Math.max(24,Math.min(board.clientWidth-24,p.x+radius*dx))-p.x+radius}px`;
-    button.style.top = `${Math.max(76,Math.min(shelfTop-26,p.y+radius*dy))-p.y+radius}px`;
+    button.style.left = `${radius+radius*dx}px`;
+    button.style.top = `${radius+radius*dy}px`;
   }
   cancel.style.left = `${Math.max(8, Math.min(board.clientWidth-72,p.x-radius*.8-60))}px`;
   cancel.style.top = `${Math.max(80, Math.min(workspace.querySelector('.deployment-wrap').offsetTop-64,p.y-radius*.65-30))}px`;

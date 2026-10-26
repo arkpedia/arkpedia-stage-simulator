@@ -2485,3 +2485,64 @@ failures/skips/cancellations, excluding only the four quarantined tracked files.
 It includes ten new exact-construction/source-mutation/exclusion/scope/control/
 natural-clear checks. The contract producer is included in hosted native-source
 reproduction. Fresh continuation validation of this checkpoint is required.
+
+### 17-14 actual workspace preparation, controls and restart
+
+Full run 40342411234 at 88698e13 completed successfully on all eight
+Linux/Windows Node 22/24 shards. It confirms the summon-selection harness fix;
+it predates the subsequent room receipt and 17-14 changes. Continuation
+40346817450 at 5235c064 failed only the 16-14 Chrome launch: no WS endpoint in
+30 seconds, before any simulator assertion. Its predecessor had the same launch
+failure. Hosted launch logging is now enabled for that existing browser case;
+no test assertion, gameplay timer or stage fixture was relaxed.
+
+The actual app now prepares and dispatches internal 17-14. Its immutable model
+shows exact stage-supplied Closure separately while preserving the selected
+squad/build/support editors. Closure is excluded from both roster and support
+options and is independently rejected by construction. Start and Restart use
+the same real dispatcher after explicit experimental/test-only catalogue
+resolution and exact source battle/geometry/device/pathing checks. The private
+loopback catalogue/data fixture serves the unmodified app; its only appended
+hook copies observations and cannot issue game commands. Production catalogue
+resolution still refuses 17-14, including experimental mode.
+
+Actual field input exposed two shared mechanics/UI faults. Renderer tile index
+assumptions omitted deployment buttons on 17-14's index-4 roads and index-6
+fence tiles and mislabeled its index-2 raised tiles. Fallback terrain heights,
+labels, colors and input affordances now use the source tile legend, matching
+engine terrain regardless of legend order. Source rank summaries also now show
+the five scheduled enemy types rather than counting summary object properties.
+
+Phone-facing arrows could be clamped underneath the central drag handle near
+the shelf. The complete picker now moves within the visible controls area,
+preserving spacing and keeping the actual deployment tile unchanged. Touch/pen
+facing commits on captured pointer release inside the same button and pending
+placement; dragging out cancels that tap. Keyboard/mouse clicks remain normal.
+Real touch input also exposed absent compatibility-click synthesis after a card
+drag; the pointer-release handler no longer depends on it. Card availability
+styling now uses the same source-aware DP budget as deployment, including
+Closure's legal negative-DP floor.
+
+The final 17-14 browser case passes on desktop and phone with real touch drags,
+facing taps and canceled taps, editable builds, distinct maxed support, the
+separate preset/module inspector, legal borrowing, natural S3 readiness and
+activation, command-center placement, and full restart of selected and preset
+state. Each deployment spends once; a canceled tap spends no DP. Private
+nonexperimental and normal public access are both refused. Preparation and
+active-field screenshots for both viewports were inspected.
+
+Four serial browser cases passed (regular 17-12, controlled Closure, 17-16
+preset/module cards, actual 17-14); a final two-case run also passed actual
+17-14 and the existing 16-14 natural-SP/keyboard/phone/tunnel/restart flow.
+The new case and screenshots are included in hosted continuation checks.
+Preset withdrawal/card regeneration, native initial FSM/dispatch/frame parity
+and remaining stage admissions are still held. No public promotion, art,
+models/chibis or effects campaign has begun.
+
+Final local validation: all 1,769 available focused mechanics cases pass with
+zero failures/skips/cancellations; only the four known quarantined files were
+excluded. All 30 additional shared summon/placement/facing/operator-control
+regressions pass. The final browser checks include the source DP-borrowing
+boundary, exactly one spend per touch deployment, and no spend on drag-out
+cancellation. `git diff --check` passes. Fresh hosted checks of this checkpoint
+remain required; earlier green full runs do not validate these later edits.

@@ -1,7 +1,21 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { spriteFacing } from "../shared/arkpedia/facing.js";
-import { swipeFacing } from "../shared/arkpedia/placement.js";
+import { swipeFacing, facingPickerLayout } from "../shared/arkpedia/placement.js";
+
+test('edge-facing controls stay above the shelf and outside the central drag handle',()=>{
+  for(const [width,height,shelfTop]of [[844,390,298],[1440,900,780],[1024,600,480]])
+    for(const [x,y]of [[30,80],[width-30,80],[438,shelfTop-48],[width-30,shelfTop-30]]){
+      const point={x,y,s:50},layout=facingPickerLayout(point,{width,height,shelfTop}),half=layout.handleSize/2;
+      assert.deepEqual(point,{x,y,s:50});
+      for(const [dx,dy]of [[1,0],[-1,0],[0,1],[0,-1]]){
+        const button={x:layout.center.x+dx*layout.spread,y:layout.center.y+dy*layout.spread};
+        assert.ok(button.x>=24-1e-8&&button.x<=width-24+1e-8);assert.ok(button.y>=76-1e-8&&button.y<=shelfTop-26+1e-8);
+        assert.ok(Math.abs(button.x-layout.center.x)>=half+22||Math.abs(button.y-layout.center.y)>=half+22,'44px arrow must not overlap the handle');
+        const dir=dx===1?'RIGHT':dx===-1?'LEFT':dy===1?'DOWN':'UP';assert.equal(swipeFacing(button,layout.center),dir);
+      }
+    }
+});
 import { StandardBattle } from "../server/sim/arkpedia.js";
 import data from "../data/arkpedia-mvp.json" with { type: "json" };
 import { defaultBuild } from "../shared/arkpedia/loadout.js";

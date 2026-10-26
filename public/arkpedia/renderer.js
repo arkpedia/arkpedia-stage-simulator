@@ -19,6 +19,7 @@ import { loadStageArt } from "./stage-art.js";
 import { loadGates } from "./gates.js";
 import { loadSkillParticles, SkillParticleLayer } from "./particles.js";
 import { FallbackActor } from "./fallback-actor.js";
+import { stageTileView } from './stage-tile-view.js';
 const P = globalThis.PIXI;
 const tileRangeStripes = rangeStripes();
 const models = createAssets({
@@ -82,28 +83,26 @@ export class StageRenderer {
     const g = data.stage.geometry;
     this.rect = { r0: 0, r1: g.rows - 1, c0: 0, c1: g.cols - 1 };
     this.tiles = [];
-    this.heightAt = (r, c) => (g.tileGrid[r]?.[c] === 1 ? 0.38 : 0);
+    this.heightAt = (r, c) => g.tileGrid[r]?.[c] === undefined ? 0 : stageTileView(g,r,c).height;
     for (let row = 0; row < g.rows; row++)
       for (let col = 0; col < g.cols; col++) {
-        const type = g.tileGrid[row][col];
+        const type = g.tileGrid[row][col], view = stageTileView(g,row,col);
         const height = this.heightAt(row, col);
-        const color = ["#172329", "#59666b", "#35464b", "#aa4b40", "#377787"][
-          type
-        ];
+        const color = view.color;
         const mesh = new THREE.Mesh(
           new THREE.BoxGeometry(0.97, 0.97, 0.18 + height),
           new THREE.MeshStandardMaterial({ color, roughness: 0.92 }),
         );
         mesh.position.set(col, row, (height - 0.18) / 2);
         this.scene.add(mesh);
-        this.tiles.push({ mesh, row, col, type, color });
-        if (type === 1 || type === 2) {
+        this.tiles.push({ mesh, row, col, type, color, raised:view.raised });
+        if (view.interactive) {
           const button = document.createElement("button");
           button.className = "tile-hit";
           button.type = "button";
           button.setAttribute(
             "aria-label",
-            `${type === 1 ? "Raised" : "Ground"} tile, row ${row + 1}, column ${col + 1}`,
+            `${view.raised ? "Raised" : "Ground"} tile, row ${row + 1}, column ${col + 1}`,
           );
           button.onclick = () => this.onPick(row, col);
           button.onfocus = () => {
@@ -655,7 +654,7 @@ export class StageRenderer {
     for (const t of this.tiles) {
       if (!t.button) continue;
       const label = operatorLabels.get(`${t.row},${t.col}`) ||
-        `${t.type === 1 ? "Raised" : "Ground"} tile, row ${t.row + 1}, column ${t.col + 1}`;
+        `${t.raised ? "Raised" : "Ground"} tile, row ${t.row + 1}, column ${t.col + 1}`;
       if (t.button.getAttribute("aria-label") !== label)
         t.button.setAttribute("aria-label", label);
     }

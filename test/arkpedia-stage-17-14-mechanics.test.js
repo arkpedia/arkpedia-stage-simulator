@@ -15,7 +15,36 @@ import {assertClosurEnemyCompatibility} from '../shared/arkpedia/closur-enemy-co
 import {assertCandidatePredefines} from '../tools/arkpedia/candidate-predefines.mjs';
 import {deployRegularSummon,regularSummonCards} from '../server/sim/content/arkpedia-summons.js';
 import {installClosurPredefined,CLOSUR_PREDEFINED_CONTRACT} from '../server/sim/content/arkpedia-closur-predefined.js';
+import {stage17_14Preparation} from '../server/sim/content/arkpedia-stage-17-14-mechanics.js';
+import {workspaceStagePreparation,createWorkspaceBattle} from '../server/sim/arkpedia-stage-entry.js';
+import {presetStagePreparationHtml} from '../public/arkpedia/fixed-stage-preparation.js';
 const GUARD='char_122_beagle',ID='char_4228_closur',selection=()=>({operators:[defaultBuild(base.operators[GUARD])]});
+const workspaceData=()=>({...structuredClone(base),stage:{...structuredClone(source.stage),testOnly:true,geometry:structuredClone(source.geometry),devices:structuredClone(source.devices),tokens:[],pathing:{moveScale:.5}}});
+const entry=Object.freeze({id:'17-14',testOnly:true});
+
+test('selectable preparation identifies the separate preset and source exclusion without replacing the chosen squad',()=>{
+ const p=workspaceStagePreparation(workspaceData(),entry,{experimental:true});
+ assert.equal(p.kind,'selected-with-preset');assert.equal(p.selectable,true);assert.equal(p.support,true);assert.deepEqual(p.excludedOperators,[ID]);assert.equal(p.visible.length,1);
+ const v=p.visible[0];assert.equal(v.build.id,ID);assert.equal(v.build.level,90);assert.equal(v.build.skillRank,10);assert.equal(v.build.moduleLevel,3);assert.equal(v.build.potential,1);assert.equal(v.build.trust,100);assert.equal(v.skillNumber,3);assert.deepEqual([v.row,v.col,v.dir],[3,3,'RIGHT']);
+ assert.ok(Object.isFrozen(p)&&Object.isFrozen(p.visible)&&Object.isFrozen(v)&&Object.isFrozen(v.build)&&Object.isFrozen(p.excludedOperators));
+ const html=presetStagePreparationHtml(p,{[ID]:{name:'Closure <script>'}});assert.ok(html.includes('Closure &lt;script&gt;'));assert.ok(html.includes('S3 M3'));assert.ok(html.includes('Module Lv 3'));assert.ok(html.includes('separately from your squad and support'));assert.ok(!html.includes('<select'));
+});
+
+test('workspace dispatch uses the selected squad and support while installing the separate exact source preset',()=>{
+ const s={...selection(),support:{id:'char_002_amiya',skillId:base.operators.char_002_amiya.skills[0].id}},b=createWorkspaceBattle(workspaceData(),s,{entry,experimental:true,seed:23});
+ assert.equal(b.seed,23);assert.equal(b.stageId,'17-14');assert.deepEqual(Object.keys(b.bench),[GUARD,'char_002_amiya']);assert.equal(b.deployedSlots(),1);assert.equal(b.dp,10);assert.equal(b.total,52);assert.ok(b.internalStageMechanics.closur.u.alive);assert.equal(s.operators.length,1);assert.deepEqual(b.errors,[]);
+ assert.throws(()=>createWorkspaceBattle(workspaceData(),{operators:[defaultBuild(base.operators[ID])]},{entry,experimental:true}),/excludes/);
+});
+
+test('17-14 workspace entry requires the explicit matching experimental entry and exact source stage mechanics',()=>{
+ for(const[e,experimental]of [[undefined,true],[entry,false],[{id:'17-14',testOnly:false},true],[{id:'17-16',testOnly:true},true]])assert.throws(()=>workspaceStagePreparation(workspaceData(),e,{experimental}),/explicit experimental|disagree/);
+ assert.throws(()=>workspaceStagePreparation(base,entry,{experimental:true}),/disagree/);
+ for(const change of [d=>d.stage.battle.initial_dp=99,d=>d.stage.geometry.tileGrid=[],d=>delete d.stage.devices,d=>d.stage.tokens.push('extra'),d=>d.stage.pathing.moveScale=1,d=>d.stage.fixedSquad=[{unit_id:'extra'}],d=>d.stage.testOnly=false]){
+  const d=workspaceData();change(d);assert.throws(()=>workspaceStagePreparation(d,entry,{experimental:true}),/workspace stage selection/);
+ }
+ const s=structuredClone(source);s.rawLevel.runes.pop();assert.throws(()=>stage17_14Preparation(workspaceData().stage,s),/stage source/);
+ assert.throws(()=>resolveStage(index,'17-14',{experimental:true}),/Unknown stage/);
+});
 
 test('17-14 mechanics contract reproduces its canonical routes, source schedule and clock dependencies',()=>{
  const p=stage17_14MechanicsPlan();

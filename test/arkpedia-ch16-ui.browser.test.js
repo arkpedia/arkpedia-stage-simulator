@@ -20,7 +20,7 @@ test(`test-only ${stageCode} tunnel command works with natural SP, keyboard, mob
     const errors = [];
     mkdirSync(out, { recursive: true });
     try {
-      browser = await puppeteer.launch({ executablePath: chrome, headless: true,
+      browser = await puppeteer.launch({ executablePath: chrome, headless: true, dumpio: process.env.CI === 'true',
         args: ['--no-first-run', process.platform === 'darwin' ? '--use-angle=metal' : '--use-angle=swiftshader', '--enable-gpu', '--ignore-gpu-blocklist',
           '--disable-background-timer-throttling', '--disable-renderer-backgrounding'] });
       let page = await browser.newPage();

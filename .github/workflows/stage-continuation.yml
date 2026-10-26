@@ -157,7 +157,7 @@ jobs:
         if: matrix.stage == '17-12'
         # Each file starts software WebGL browsers. Serial execution avoids
         # starving requestAnimationFrame and the app's capped simulation delta.
-        run: node --test --test-concurrency=1 test/arkpedia-stage-predefines.browser.test.js test/arkpedia-stage-tutorial.browser.test.js test/arkpedia-operator-controls.browser.test.js
+        run: node --test --test-concurrency=1 test/arkpedia-stage-predefines.browser.test.js test/arkpedia-stage-tutorial.browser.test.js test/arkpedia-operator-controls.browser.test.js test/arkpedia-stage-17-14-workspace.browser.test.js
       - uses: actions/upload-artifact@v4
         if: always() && matrix.stage == '17-12'
         with:
@@ -167,6 +167,7 @@ jobs:
             .cache/operator-controls-*.png
             .cache/closur-controls-*.png
             .cache/fixed-stage-preparation-*.png
+            .cache/stage17-14-*.png
       - uses: actions/upload-artifact@v4
         if: always()
         with:

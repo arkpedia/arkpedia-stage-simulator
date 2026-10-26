@@ -24,6 +24,16 @@ export function swipeFacing(point, origin, deadZone = 24) {
     deadZone,
   );
 }
+// Move the complete picker at screen edges. Clamping each direction separately
+// can put an arrow underneath its central drag handle on short phone screens.
+export function facingPickerLayout(point,{width,height,shelfTop}) {
+  const left=24,right=Math.max(left,width-24),top=76,bottom=Math.max(top,shelfTop-26);
+  const wanted=Math.max(85,Math.min(210,height*.32,point.s*2.15));
+  const spread=Math.max(0,Math.min(wanted*.68,(right-left)/2,(bottom-top)/2)),radius=spread/.68;
+  const clamp=(n,lo,hi)=>Math.max(lo,Math.min(hi,n));
+  return {radius,spread,handleSize:Math.min(72,Math.max(44,2*(spread-28))),
+    center:{x:clamp(point.x,left+spread,right-spread),y:clamp(point.y,top+spread,bottom-spread)}};
+}
 // Only the perimeter is stroked; adjacent range cells never get a dividing border.
 export function regionEdges(keys, rows, cols, stride = 21) {
   const cells = new Set(

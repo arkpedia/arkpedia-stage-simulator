@@ -27,7 +27,7 @@ test('workspace dispatch uses exact source construction and ignores supplied squ
 });
 
 test('workspace preparation does not mint catalogue admission or accept wrong fixed-stage entry flags',()=>{
- const d=workspaceData();for(const [entry,experimental]of [[undefined,true],[reviewEntry,false],[{id:'17-16',testOnly:false},true],[{id:'17-14',testOnly:true},true]])assert.throws(()=>workspaceStagePreparation(d,entry,{experimental}),/explicit experimental/);
+ const d=workspaceData();for(const [entry,experimental]of [[undefined,true],[reviewEntry,false],[{id:'17-16',testOnly:false},true],[{id:'17-14',testOnly:true},true]])assert.throws(()=>workspaceStagePreparation(d,entry,{experimental}),/explicit experimental|disagree/);
  assert.throws(()=>workspaceStagePreparation(base,reviewEntry,{experimental:true}),/disagree/);assert.throws(()=>resolveStage(index,'17-16',{experimental:true}),/Unknown stage/);
 });
 
