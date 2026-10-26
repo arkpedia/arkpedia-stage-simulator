@@ -1,0 +1,3226 @@
+{
+  "schemaVersion": 1,
+  "testOnly": true,
+  "admitted": false,
+  "frameParity": false,
+  "scope": "Exact internal 17-14 layout, one-wave schedule, selected squad plus preset Closure and existing source-clock mappings. No public enemy/operator/stage admission, preset withdrawal regeneration, compiled FSM or frame proof.",
+  "sources": {
+    "data/candidates/arkpedia-stage-17-14-source.json": {
+      "path": "data/candidates/arkpedia-stage-17-14-source.json",
+      "sha256": "845a18d55b962cd8b87988770936137062c8de471219cf8362fc5cc5a5b87327"
+    },
+    "data/arkpedia-canonical-stage-17-14.lock.json": {
+      "path": "data/arkpedia-canonical-stage-17-14.lock.json",
+      "sha256": "443dfa85371f418bcc27018dc1ffdba0de90596bcc37a14c9ed926432a20c627"
+    },
+    "data/candidates/arkpedia-ch16-enemy-support.json": {
+      "path": "data/candidates/arkpedia-ch16-enemy-support.json",
+      "sha256": "bbd2dc08358c1d9201ff80f2d91d67643113bb284d545177f6b9252f2198aa93"
+    },
+    "data/candidates/arkpedia-enemy-records.canonical.json": {
+      "path": "data/candidates/arkpedia-enemy-records.canonical.json",
+      "sha256": "c69db59414b2fbd6c1a8327c9c22ddb21cfdaadc4e89a97a824679f61ec07b93"
+    },
+    "data/candidates/arkpedia-ch17-reviewed-reactions.json": {
+      "path": "data/candidates/arkpedia-ch17-reviewed-reactions.json",
+      "sha256": "f78b9aa3ce06cd289c09bc391b16d880dd7bd334d7da74d910a706017994d318"
+    },
+    "data/candidates/arkpedia-ch17-infantry-bow-native.json": {
+      "path": "data/candidates/arkpedia-ch17-infantry-bow-native.json",
+      "sha256": "daac4f5f1199bc22f4d59d134f0c29ef3c26ea01984729d7fdff9658d126b41e"
+    },
+    "data/candidates/arkpedia-ch17-infantry-bow-source.json": {
+      "path": "data/candidates/arkpedia-ch17-infantry-bow-source.json",
+      "sha256": "3287403fdbb872d2a7996e870ee1c40fa98f7ad5798f9717a5c3cd4ea698264e"
+    },
+    "data/candidates/arkpedia-ch16-action-source.json": {
+      "path": "data/candidates/arkpedia-ch16-action-source.json",
+      "sha256": "f54ddb0a56f4ac0c56253f67c162cc8a5ceca91713d81de18fad463b382e6338"
+    },
+    "data/candidates/arkpedia-ch17-reviewed-channel-carrier.json": {
+      "path": "data/candidates/arkpedia-ch17-reviewed-channel-carrier.json",
+      "sha256": "4306ab11e9457bc4d940414ad2010c945fa9339b084e5ff7defccaab222d2147"
+    },
+    "data/candidates/arkpedia-ch17-channel-carrier-source.json": {
+      "path": "data/candidates/arkpedia-ch17-channel-carrier-source.json",
+      "sha256": "abebb812c4c812c7e5bccdf9907892e4cc43840dd4124ba0764f3b4f50057d78"
+    },
+    "data/candidates/arkpedia-ch17-channel-carrier-native.json": {
+      "path": "data/candidates/arkpedia-ch17-channel-carrier-native.json",
+      "sha256": "ad6b2421124f348a93df4b89645b792bef9ab109e542e6fac6b4230c7a4067cb"
+    },
+    "data/candidates/arkpedia-ch17-channel-carrier-animation-source.json": {
+      "path": "data/candidates/arkpedia-ch17-channel-carrier-animation-source.json",
+      "sha256": "c4c8f17c593be4867d9256d63ac00ff7a4cad822b93eb74436aab9c8b0055f96"
+    },
+    "data/candidates/arkpedia-ch17-channel-carrier-range-source.json": {
+      "path": "data/candidates/arkpedia-ch17-channel-carrier-range-source.json",
+      "sha256": "5a72a972a017f2c254a9917eacdfc784535254eba9f6fd8c292641948612f3d2"
+    },
+    "data/candidates/arkpedia-buff-event-alias-source.json": {
+      "path": "data/candidates/arkpedia-buff-event-alias-source.json",
+      "sha256": "df85c1d8ee05e0391c7be3854bb39632bdf5282b1f48b061c4e7af5b5397e407"
+    },
+    "data/candidates/arkpedia-ch17-reviewed-brute.json": {
+      "path": "data/candidates/arkpedia-ch17-reviewed-brute.json",
+      "sha256": "024da2cf32539640e533c1d85a8f5661b590360791ce37158c9d690e732ef6b8"
+    },
+    "data/candidates/arkpedia-ch17-brute-source.json": {
+      "path": "data/candidates/arkpedia-ch17-brute-source.json",
+      "sha256": "0c523af5301cfacdd91896e7d6df3bd0fe3bdc71b5650a5d66e0719fec1cbf28"
+    },
+    "data/candidates/arkpedia-ch17-brute-native.json": {
+      "path": "data/candidates/arkpedia-ch17-brute-native.json",
+      "sha256": "633bb01d960ad66d25360cce4af2f3b29225cce853cf9e7bffa63b59dd92fc59"
+    },
+    "data/candidates/arkpedia-ch17-brute-animation-source.json": {
+      "path": "data/candidates/arkpedia-ch17-brute-animation-source.json",
+      "sha256": "2cfde55c772233eaca65a1f8a53411311f965a8f393d38b77331ee845f0b0975"
+    },
+    "data/candidates/arkpedia-ch17-reviewed-bag.json": {
+      "path": "data/candidates/arkpedia-ch17-reviewed-bag.json",
+      "sha256": "1c83d6fda81637efe3a5cb896fe354f32188603ea5201f55ce185115f634dc11"
+    },
+    "data/candidates/arkpedia-ch17-bag-source.json": {
+      "path": "data/candidates/arkpedia-ch17-bag-source.json",
+      "sha256": "b1f77caed72360b08888b90b9fae2ee88f1adde51b71ab23dc0ed85e2daa620c"
+    },
+    "data/candidates/arkpedia-ch17-bag-native.json": {
+      "path": "data/candidates/arkpedia-ch17-bag-native.json",
+      "sha256": "c73bd70af84780a41156c83dfc27e7e8fa86fcb69afa2c5406d44de1deed5eb6"
+    },
+    "data/candidates/arkpedia-ch17-bag-animation-source.json": {
+      "path": "data/candidates/arkpedia-ch17-bag-animation-source.json",
+      "sha256": "966fd6f2d3cd769a5937470e26947324857b5580e46de1e9150d28185a8097a1"
+    },
+    "data/candidates/arkpedia-ch17-reviewed-marker.json": {
+      "path": "data/candidates/arkpedia-ch17-reviewed-marker.json",
+      "sha256": "af519edde6d4888b2bb68d8eeb5daea46d6137ffe90f95101b2a5b1616c450b5"
+    },
+    "data/candidates/arkpedia-ch17-marker-source.json": {
+      "path": "data/candidates/arkpedia-ch17-marker-source.json",
+      "sha256": "78fc2c8253643ad901172eac0262e8211a1a6b9c79f9703e874538e21f608704"
+    },
+    "data/candidates/arkpedia-ch17-attack-clock-contract.json": {
+      "path": "data/candidates/arkpedia-ch17-attack-clock-contract.json",
+      "sha256": "6cbb4b98ebcda9191dbf3efb31551c04d78ee8f78a3ed968eea491f5a3f84f5c"
+    },
+    "data/candidates/arkpedia-ch17-infantry-bow-animation-source.json": {
+      "path": "data/candidates/arkpedia-ch17-infantry-bow-animation-source.json",
+      "sha256": "f08aabc14e185ffacc328fd0aebd71952b5993377eaa05392c644217a3a609da"
+    },
+    "data/candidates/arkpedia-ch17-bag-feeding-contract.json": {
+      "path": "data/candidates/arkpedia-ch17-bag-feeding-contract.json",
+      "sha256": "e0d7d58350a8a37733abc2014702440819034d0f311815d8a39031349d1e2d1b"
+    }
+  },
+  "layout": {
+    "stage": {
+      "id": "17-14",
+      "tokens": [],
+      "rows": [
+        "############",
+        "#h#rSSEEA#Sh",
+        "#S#rErEr##S#",
+        "#S#rErErr#S#",
+        "#SrESSESSSS#",
+        "#SrBS#rSES##",
+        "#SSSSSSSSS#C",
+        "####h#h#####"
+      ],
+      "legend": {
+        "#": {
+          "height": "HIGH",
+          "build": "NONE",
+          "pass": "FLY",
+          "key": "tile_forbidden"
+        },
+        "h": {
+          "height": "LOW",
+          "build": "NONE",
+          "pass": "ALL",
+          "key": "tile_start"
+        },
+        "r": {
+          "height": "HIGH",
+          "build": "RANGED",
+          "pass": "FLY",
+          "key": "tile_wall"
+        },
+        "S": {
+          "height": "LOW",
+          "build": "NONE",
+          "pass": "ALL",
+          "key": "tile_floor"
+        },
+        "E": {
+          "height": "LOW",
+          "build": "MELEE",
+          "pass": "ALL",
+          "key": "tile_road"
+        },
+        "A": {
+          "height": "LOW",
+          "build": "NONE",
+          "pass": "ALL",
+          "key": "tile_end"
+        },
+        "B": {
+          "height": "LOW",
+          "build": "MELEE",
+          "pass": "FLY",
+          "key": "tile_fence_bound"
+        },
+        "C": {
+          "height": "HIGH",
+          "build": "NONE",
+          "pass": "FLY",
+          "key": "tile_flystart"
+        }
+      }
+    },
+    "rect": {
+      "r0": 0,
+      "r1": 7,
+      "c0": 0,
+      "c1": 11
+    },
+    "routes": [
+      {
+        "motion": "WALK",
+        "start": [
+          5,
+          7
+        ],
+        "end": [
+          1,
+          8
+        ],
+        "checkpoints": [
+          {
+            "type": "WAIT",
+            "pos": [
+              5,
+              7
+            ],
+            "time": 180
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              1,
+              8
+            ],
+            "time": 0
+          }
+        ]
+      },
+      {
+        "motion": "WALK",
+        "start": [
+          0,
+          0
+        ],
+        "end": [
+          0,
+          0
+        ],
+        "checkpoints": []
+      },
+      {
+        "motion": "WALK",
+        "start": [
+          5,
+          8
+        ],
+        "end": [
+          1,
+          8
+        ],
+        "checkpoints": [
+          {
+            "type": "WAIT",
+            "pos": [
+              5,
+              8
+            ],
+            "time": 150
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              1,
+              8
+            ],
+            "time": 0
+          }
+        ]
+      },
+      {
+        "motion": "WALK",
+        "start": [
+          6,
+          6
+        ],
+        "end": [
+          1,
+          8
+        ],
+        "checkpoints": [
+          {
+            "type": "WAIT",
+            "pos": [
+              6,
+              6
+            ],
+            "time": 180
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              1,
+              8
+            ],
+            "time": 0
+          }
+        ]
+      },
+      {
+        "motion": "WALK",
+        "start": [
+          6,
+          7
+        ],
+        "end": [
+          1,
+          8
+        ],
+        "checkpoints": [
+          {
+            "type": "WAIT",
+            "pos": [
+              6,
+              7
+            ],
+            "time": 180
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              1,
+              8
+            ],
+            "time": 0
+          }
+        ]
+      },
+      {
+        "motion": "WALK",
+        "start": [
+          1,
+          1
+        ],
+        "end": [
+          1,
+          8
+        ],
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "pos": [
+              4,
+              1
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              6,
+              1
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              6,
+              4
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              1,
+              4
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              1,
+              8
+            ],
+            "time": 0
+          }
+        ]
+      },
+      {
+        "motion": "WALK",
+        "start": [
+          1,
+          11
+        ],
+        "end": [
+          1,
+          8
+        ],
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "pos": [
+              1,
+              10
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              4,
+              10
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              4,
+              9
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              4,
+              7
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              6,
+              7
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              6,
+              9
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              4,
+              9
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              4,
+              7
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              6,
+              7
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              6,
+              9
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              4,
+              9
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              4,
+              6
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              1,
+              6
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              1,
+              8
+            ],
+            "time": 0
+          }
+        ]
+      },
+      {
+        "motion": "WALK",
+        "start": [
+          1,
+          11
+        ],
+        "end": [
+          1,
+          8
+        ],
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "pos": [
+              1,
+              10
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              4,
+              10
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              4,
+              9
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              4,
+              7
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              6,
+              7
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              6,
+              9
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              4,
+              9
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              4,
+              7
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              4,
+              6
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              1,
+              6
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              1,
+              8
+            ],
+            "time": 0
+          }
+        ]
+      },
+      {
+        "motion": "WALK",
+        "start": [
+          7,
+          4
+        ],
+        "end": [
+          1,
+          8
+        ],
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "pos": [
+              6,
+              5
+            ],
+            "time": 0
+          },
+          {
+            "type": "WAIT",
+            "pos": [
+              6,
+              5
+            ],
+            "time": 80
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              1,
+              4
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              1,
+              8
+            ],
+            "time": 0
+          }
+        ]
+      },
+      {
+        "motion": "WALK",
+        "start": [
+          7,
+          4
+        ],
+        "end": [
+          1,
+          8
+        ],
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "pos": [
+              6,
+              4
+            ],
+            "time": 0
+          },
+          {
+            "type": "WAIT",
+            "pos": [
+              6,
+              4
+            ],
+            "time": 80
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              1,
+              4
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              1,
+              8
+            ],
+            "time": 0
+          }
+        ]
+      },
+      {
+        "motion": "WALK",
+        "start": [
+          7,
+          4
+        ],
+        "end": [
+          1,
+          8
+        ],
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "pos": [
+              5,
+              4
+            ],
+            "time": 0
+          },
+          {
+            "type": "WAIT",
+            "pos": [
+              5,
+              4
+            ],
+            "time": 60
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              1,
+              4
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              1,
+              8
+            ],
+            "time": 0
+          }
+        ]
+      },
+      {
+        "motion": "FLY",
+        "start": [
+          6,
+          11
+        ],
+        "end": [
+          1,
+          8
+        ],
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "pos": [
+              6,
+              9
+            ],
+            "time": 0
+          },
+          {
+            "type": "WAIT",
+            "pos": [
+              6,
+              9
+            ],
+            "time": 10
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              6,
+              7
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              6,
+              4
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              1,
+              4
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              1,
+              8
+            ],
+            "time": 0
+          }
+        ]
+      },
+      {
+        "motion": "WALK",
+        "start": [
+          1,
+          1
+        ],
+        "end": [
+          1,
+          8
+        ],
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "pos": [
+              6,
+              1
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              6,
+              4
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              1,
+              4
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              1,
+              8
+            ],
+            "time": 0
+          }
+        ]
+      },
+      {
+        "motion": "WALK",
+        "start": [
+          1,
+          11
+        ],
+        "end": [
+          1,
+          8
+        ],
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "pos": [
+              1,
+              10
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              4,
+              10
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              4,
+              7
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              6,
+              7
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              6,
+              9
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              4,
+              9
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              4,
+              7
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              4,
+              6
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              1,
+              6
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              1,
+              8
+            ],
+            "time": 0
+          }
+        ]
+      },
+      {
+        "motion": "WALK",
+        "start": [
+          1,
+          11
+        ],
+        "end": [
+          1,
+          8
+        ],
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "pos": [
+              1,
+              10
+            ],
+            "time": 0
+          },
+          {
+            "type": "WAIT",
+            "pos": [
+              1,
+              10
+            ],
+            "time": 5
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              4,
+              10
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              4,
+              9
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              5,
+              9
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              5,
+              8
+            ],
+            "time": 0
+          },
+          {
+            "type": "WAIT",
+            "pos": [
+              5,
+              8
+            ],
+            "time": 150
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              1,
+              8
+            ],
+            "time": 0
+          }
+        ]
+      },
+      {
+        "motion": "WALK",
+        "start": [
+          1,
+          11
+        ],
+        "end": [
+          1,
+          8
+        ],
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "pos": [
+              1,
+              10
+            ],
+            "time": 0
+          },
+          {
+            "type": "WAIT",
+            "pos": [
+              1,
+              10
+            ],
+            "time": 5
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              4,
+              10
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              4,
+              9
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              5,
+              9
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              5.01,
+              8.21
+            ],
+            "time": 0
+          },
+          {
+            "type": "WAIT",
+            "pos": [
+              5.01,
+              8.21
+            ],
+            "time": 150
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              1,
+              8
+            ],
+            "time": 0
+          }
+        ]
+      },
+      {
+        "motion": "WALK",
+        "start": [
+          7,
+          4
+        ],
+        "end": [
+          1,
+          8
+        ],
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "pos": [
+              6,
+              4
+            ],
+            "time": 0
+          },
+          {
+            "type": "WAIT",
+            "pos": [
+              6,
+              4
+            ],
+            "time": 60
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              4,
+              4
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              1,
+              4
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              1,
+              5
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              1,
+              8
+            ],
+            "time": 0
+          }
+        ]
+      },
+      {
+        "motion": "WALK",
+        "start": [
+          7,
+          6
+        ],
+        "end": [
+          1,
+          8
+        ],
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "pos": [
+              6,
+              6
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              6,
+              7
+            ],
+            "time": 0
+          },
+          {
+            "type": "WAIT",
+            "pos": [
+              6,
+              7
+            ],
+            "time": 60
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              1,
+              8
+            ],
+            "time": 0
+          }
+        ]
+      },
+      {
+        "motion": "WALK",
+        "start": [
+          7,
+          4
+        ],
+        "end": [
+          1,
+          8
+        ],
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "pos": [
+              6,
+              4
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              6,
+              5
+            ],
+            "time": 0
+          },
+          {
+            "type": "WAIT",
+            "pos": [
+              6,
+              5
+            ],
+            "time": 60
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              5,
+              4
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              1,
+              4
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              1,
+              8
+            ],
+            "time": 0
+          }
+        ]
+      },
+      {
+        "motion": "WALK",
+        "start": [
+          7,
+          6
+        ],
+        "end": [
+          1,
+          8
+        ],
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "pos": [
+              6,
+              6
+            ],
+            "time": 0
+          },
+          {
+            "type": "WAIT",
+            "pos": [
+              6,
+              6
+            ],
+            "time": 60
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              6,
+              7
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              1,
+              8
+            ],
+            "time": 0
+          }
+        ]
+      },
+      {
+        "motion": "WALK",
+        "start": [
+          7,
+          6
+        ],
+        "end": [
+          1,
+          8
+        ],
+        "checkpoints": [
+          {
+            "type": "MOVE",
+            "pos": [
+              6,
+              6
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              6,
+              7
+            ],
+            "time": 0
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              5,
+              7
+            ],
+            "time": 0
+          },
+          {
+            "type": "WAIT",
+            "pos": [
+              5,
+              7
+            ],
+            "time": 60
+          },
+          {
+            "type": "MOVE",
+            "pos": [
+              1,
+              8
+            ],
+            "time": 0
+          }
+        ]
+      }
+    ],
+    "spawns": [
+      {
+        "enemyKey": "enemy_10203_mumag_2",
+        "time": 0,
+        "routeIndex": 0,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10208_mucow_2",
+        "time": 0,
+        "routeIndex": 2,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10203_mumag_2",
+        "time": 0,
+        "routeIndex": 3,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10203_mumag_2",
+        "time": 0,
+        "routeIndex": 4,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10201_muinf_2",
+        "time": 3,
+        "routeIndex": 5,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10201_muinf_2",
+        "time": 12,
+        "routeIndex": 6,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10201_muinf_2",
+        "time": 15,
+        "routeIndex": 6,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10201_muinf_2",
+        "time": 18,
+        "routeIndex": 6,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10201_muinf_2",
+        "time": 21,
+        "routeIndex": 6,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10201_muinf_2",
+        "time": 26,
+        "routeIndex": 5,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10201_muinf_2",
+        "time": 44,
+        "routeIndex": 6,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10201_muinf_2",
+        "time": 47,
+        "routeIndex": 6,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10201_muinf_2",
+        "time": 50,
+        "routeIndex": 6,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10201_muinf_2",
+        "time": 53,
+        "routeIndex": 6,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10207_mubrut_2",
+        "time": 54,
+        "routeIndex": 7,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10201_muinf_2",
+        "time": 67,
+        "routeIndex": 5,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10201_muinf_2",
+        "time": 82,
+        "routeIndex": 5,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10203_mumag_2",
+        "time": 95,
+        "routeIndex": 8,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10203_mumag_2",
+        "time": 98,
+        "routeIndex": 9,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10203_mumag_2",
+        "time": 100,
+        "routeIndex": 10,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10201_muinf_2",
+        "time": 113,
+        "routeIndex": 12,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10208_mucow_2",
+        "time": 113,
+        "routeIndex": 14,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10209_mubag_2",
+        "time": 115,
+        "routeIndex": 11,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10208_mucow_2",
+        "time": 116,
+        "routeIndex": 15,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10201_muinf_2",
+        "time": 120,
+        "routeIndex": 13,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10201_muinf_2",
+        "time": 123,
+        "routeIndex": 13,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10201_muinf_2",
+        "time": 126,
+        "routeIndex": 13,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10201_muinf_2",
+        "time": 129,
+        "routeIndex": 13,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10201_muinf_2",
+        "time": 132,
+        "routeIndex": 12,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10209_mubag_2",
+        "time": 144,
+        "routeIndex": 11,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10201_muinf_2",
+        "time": 147,
+        "routeIndex": 12,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10207_mubrut_2",
+        "time": 151,
+        "routeIndex": 13,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10201_muinf_2",
+        "time": 156,
+        "routeIndex": 12,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10207_mubrut_2",
+        "time": 161,
+        "routeIndex": 13,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10201_muinf_2",
+        "time": 165,
+        "routeIndex": 12,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10203_mumag_2",
+        "time": 180,
+        "routeIndex": 10,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10203_mumag_2",
+        "time": 180,
+        "routeIndex": 20,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10203_mumag_2",
+        "time": 188,
+        "routeIndex": 18,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10203_mumag_2",
+        "time": 188,
+        "routeIndex": 19,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10203_mumag_2",
+        "time": 192,
+        "routeIndex": 16,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10203_mumag_2",
+        "time": 192,
+        "routeIndex": 17,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10209_mubag_2",
+        "time": 197,
+        "routeIndex": 11,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10201_muinf_2",
+        "time": 198,
+        "routeIndex": 12,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10207_mubrut_2",
+        "time": 198,
+        "routeIndex": 13,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10207_mubrut_2",
+        "time": 201,
+        "routeIndex": 13,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10201_muinf_2",
+        "time": 205,
+        "routeIndex": 12,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10201_muinf_2",
+        "time": 212,
+        "routeIndex": 12,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10209_mubag_2",
+        "time": 215,
+        "routeIndex": 11,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10207_mubrut_2",
+        "time": 216,
+        "routeIndex": 13,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10201_muinf_2",
+        "time": 219,
+        "routeIndex": 12,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10207_mubrut_2",
+        "time": 220,
+        "routeIndex": 13,
+        "ownerPlayerId": "arkpedia"
+      },
+      {
+        "enemyKey": "enemy_10207_mubrut_2",
+        "time": 224,
+        "routeIndex": 13,
+        "ownerPlayerId": "arkpedia"
+      }
+    ]
+  },
+  "records": {
+    "enemy_10211_murad": {
+      "key": "enemy_10211_murad",
+      "prefabKey": "enemy_10211_murad",
+      "name": "Leak Source",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "NONE",
+      "stats": {
+        "maxHp": 100000,
+        "atk": 15,
+        "def": 0,
+        "res": 0,
+        "moveSpeed": 0,
+        "bat": 0.5,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": -1,
+        "blockCnt": 1,
+        "massLevel": 0,
+        "lpr": 0,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 1,
+        "hitRateArts": 1,
+        "dmgType": "none",
+        "dmgTypes": [
+          "none"
+        ],
+        "motion": "FLY",
+        "immunities": {
+          "stun": true,
+          "silence": true,
+          "sleep": true,
+          "frozen": true,
+          "levitate": true
+        },
+        "otherImmunities": [
+          "feared",
+          "palsy",
+          "attract"
+        ],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Cannot be attacked",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Not visible normally; increases ATK when it reveals itself.",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Periodically fires a ring of beams that cause the first allied unit hit to take continuous True damage for a period of time, with closer units taking higher damage more frequently. When a beam hits a target, it accelerates the process of revealing the source.",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Reveals itself after some time, firing more beams more frequently; leaves the field some time after revealing itself.",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Revealed when an Operator is deployed on its tile or the four adjacent tiles; during this period, beams only affect the earliest-deployed Operator nearby; leaves the field after some time and gives all allied Operators SP.",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "CheckAppear.enemy_murad_check_appear.duration": 5,
+          "CheckAppear.enemy_murad_check_appear.interval": 4,
+          "CheckAppear.enemy_murad_check_appear.sp": 8,
+          "CheckAppear.atk_scale": 8
+        },
+        "bbStr": {},
+        "groups": {
+          "CheckAppear": [
+            "atk_scale",
+            "enemy_murad_check_appear.duration",
+            "enemy_murad_check_appear.interval",
+            "enemy_murad_check_appear.sp"
+          ]
+        }
+      },
+      "skills": [
+        {
+          "prefabKey": "HideRoundLaser",
+          "priority": 0,
+          "cooldown": 6,
+          "initCooldown": 6,
+          "spCost": 0,
+          "bb": {
+            "projectileNum": 8,
+            "atk_scale": 1,
+            "endAngle": 315,
+            "startAngle": 0,
+            "max_atk_scale": 2,
+            "max_distance": 5,
+            "min_distance": 1,
+            "max_interval": 1.5,
+            "dot_duration": 5,
+            "interval": 1.5
+          },
+          "bbStr": {}
+        },
+        {
+          "prefabKey": "RoundLaser",
+          "priority": 0,
+          "cooldown": 4,
+          "initCooldown": 4,
+          "spCost": 0,
+          "bb": {
+            "projectileNum": 8,
+            "atk_scale": 8,
+            "endAngle": 315,
+            "startAngle": 0,
+            "max_atk_scale": 10,
+            "max_distance": 5,
+            "min_distance": 1,
+            "max_interval": 1,
+            "dot_duration": 5,
+            "interval": 1
+          },
+          "bbStr": {}
+        },
+        {
+          "prefabKey": "LevelUp",
+          "priority": 0,
+          "cooldown": 0,
+          "initCooldown": 0,
+          "spCost": 50,
+          "bb": {
+            "duration": 20,
+            "atk": 0.5
+          },
+          "bbStr": {}
+        }
+      ],
+      "sp": {
+        "type": "INCREASE_WITH_TIME",
+        "maxSp": 50,
+        "initSp": 0,
+        "increment": 1
+      },
+      "notCountInTotal": true,
+      "tags": {}
+    },
+    "enemy_10209_mubag_2": {
+      "key": "enemy_10209_mubag_2",
+      "prefabKey": "enemy_10209_mubag_2",
+      "name": "Dancing 'Rusalka'",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "NONE",
+      "stats": {
+        "maxHp": 37500,
+        "atk": 180,
+        "def": 100,
+        "res": 20,
+        "moveSpeed": 0.35,
+        "bat": 1,
+        "aspd": 100,
+        "rangeRadius": 2,
+        "rawRangeRadius": 2,
+        "blockCnt": 1,
+        "massLevel": 0,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 1,
+        "hitRateArts": 1,
+        "dmgType": "arts",
+        "dmgTypes": [
+          "arts"
+        ],
+        "motion": "FLY",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Flying unit.",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Continuously deals Arts damage to surrounding allied units.",
+          "format": "NORMAL"
+        },
+        {
+          "text": "When there is a <Leak Source> on the field, moves toward the nearest <Leak Source>; stops upon arrival for a period of time, gradually gaining ATK, and removes the <Leak Source> when the duration ends.",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "AoeDamage.interval": 1,
+          "AoeDamage.range_radius": 1.6,
+          "AoeDamage.atk_scale": 1,
+          "ReachedAura.duration": 10,
+          "ReachedAura.interval": 9999
+        },
+        "bbStr": {},
+        "groups": {
+          "AoeDamage": [
+            "atk_scale",
+            "interval",
+            "range_radius"
+          ],
+          "ReachedAura": [
+            "duration",
+            "interval"
+          ]
+        }
+      },
+      "skills": [
+        {
+          "prefabKey": "AtkUp",
+          "priority": 0,
+          "cooldown": 15,
+          "initCooldown": 0,
+          "spCost": 0,
+          "bb": {
+            "anim_duration": 11,
+            "max_stack_cnt": 40,
+            "atk": 0.07
+          },
+          "bbStr": {}
+        }
+      ],
+      "notCountInTotal": false,
+      "tags": {}
+    },
+    "enemy_10207_mubrut_2": {
+      "key": "enemy_10207_mubrut_2",
+      "prefabKey": "enemy_10207_mubrut_2",
+      "name": "Angry 'Shishiga'",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 12000,
+        "atk": 2100,
+        "def": 800,
+        "res": 25,
+        "moveSpeed": 0.5,
+        "bat": 6,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": -1,
+        "blockCnt": 1,
+        "massLevel": 3,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 1,
+        "hitRateArts": 1,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Next attack hits three times when affected by a <Leak Source>.",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": {}
+    },
+    "enemy_10203_mumag_2": {
+      "key": "enemy_10203_mumag_2",
+      "prefabKey": "enemy_10203_mumag_2",
+      "name": "Sanguine Heterogeneous Fungi",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 6250,
+        "atk": 130,
+        "def": 700,
+        "res": 10,
+        "moveSpeed": 0.6,
+        "bat": 5,
+        "aspd": 100,
+        "rangeRadius": 2.3,
+        "rawRangeRadius": 2.3,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 1,
+        "hitRateArts": 1,
+        "dmgType": "arts",
+        "dmgTypes": [
+          "arts"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": true,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Continuously channels at a Leak Marker in attack range, causing it to create Leak Sources and gaining increased DEF.",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [
+        {
+          "prefabKey": "ChargeRift",
+          "priority": 0,
+          "cooldown": 10,
+          "initCooldown": 5,
+          "spCost": 0,
+          "bb": {
+            "def": 2,
+            "sp": 1,
+            "duration": 15,
+            "hit_duration": 15
+          },
+          "bbStr": {}
+        }
+      ],
+      "notCountInTotal": false,
+      "tags": {}
+    },
+    "enemy_10201_muinf_2": {
+      "key": "enemy_10201_muinf_2",
+      "prefabKey": "enemy_10201_muinf_2",
+      "name": "Rampaging F-009",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 5000,
+        "atk": 300,
+        "def": 20,
+        "res": 20,
+        "moveSpeed": 1.2,
+        "bat": 2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": -1,
+        "blockCnt": 1,
+        "massLevel": 0,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 1,
+        "hitRateArts": 1,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Recovers HP when affected by a <Leak Source>.",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "MuradPollut.hp_ratio": 0.2
+        },
+        "bbStr": {},
+        "groups": {
+          "MuradPollut": [
+            "hp_ratio"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": {}
+    },
+    "enemy_10208_mucow_2": {
+      "key": "enemy_10208_mucow_2",
+      "prefabKey": "enemy_10208_mucow_2",
+      "name": "Roaming 'Likho'",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 100000,
+        "atk": 1200,
+        "def": 0,
+        "res": 0,
+        "moveSpeed": 0.3,
+        "bat": 4.2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": -1,
+        "blockCnt": 1,
+        "massLevel": 5,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 1,
+        "hitRateArts": 1,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": true,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 1
+      },
+      "abilities": [
+        {
+          "text": "More likely to be attacked",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Creates a <Leak Source> nearby when defeated.",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "DeadSummon.max_cnt": 1
+        },
+        "bbStr": {},
+        "groups": {
+          "DeadSummon": [
+            "max_cnt"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": {}
+    }
+  },
+  "clocks": {
+    "enemy_10201_muinf_2": {
+      "ordinary": {
+        "combatPathId": "6622971150239629340",
+        "rootPathId": "-8684805088870760420",
+        "native": [
+          "{\"_addIndexToSignalId\":1,\"_alwaysHideHp\":{\"isDefined\":0,\"value\":0},\"_alwaysHideSp\":{\"isDefined\":0,\"value\":0},\"_animatorHooker\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_attack\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_attackTrigger\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_bodyTransform\":{\"m_FileID\":0,\"m_PathID\":\"3726306689969192988\"},\"_combat\":{\"m_FileID\":0,\"m_PathID\":\"6622971150239629340\"},\"_extraRangesToShow\":[],\"_generalAbilities\":[],\"_hideUIAttackRange\":0,\"_includeIndexZero\":1,\"_overrideDeadEffect\":\"\",\"_overrideStartEffect\":\"\",\"_rangeToShow\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_updateAttackRangeExtendByAttributeDirty\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-6793701644802031588\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"5390319429299248724\"}}",
+          "{\"_activeBuffs\":[],\"_affectedBySlowDown\":1,\"_allowNoTarget\":0,\"_alwaysIncludeTarget\":1,\"_alwaysPutIncludeTargetFirst\":0,\"_animKey\":\"Attack\",\"_atkScale\":1.0,\"_atkScaleKey\":\"atk_scale\",\"_attachPassiveBuffsOnDummy\":1,\"_attackType\":1,\"_checkFaceToFirstCastTargetDownAttack\":0,\"_cooldown\":0.0,\"_cooldownKey\":\"duration\",\"_damageType\":1,\"_deliveryParaWhenReplaceActionNode\":0,\"_downAnimKey\":\"\",\"_downEndAnimKey\":\"\",\"_elementDamageType\":0,\"_endAnimKey\":\"Idle\",\"_epDamageRatio\":0.0,\"_escapeTime\":0.0,\"_extraDamageType\":0,\"_faceToDefault\":0,\"_faceToFirstCastTarget\":0,\"_faceToFront\":0,\"_faceToTarget\":1,\"_forceAsDmgOrHealAbility\":0,\"_forceFaceToDirection\":1,\"_ignoreIfOwnerDead\":0,\"_ignorePalsyInterrupt\":0,\"_interruptAbilityOnDetach\":1,\"_interuptIfTargetDead\":0,\"_maxAnimScale\":1.0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_onlyPlayEndAnimWhenIsLastAbility\":0,\"_preDelay\":0.0,\"_resetCdStrategy\":1,\"_selectTargetSource\":2,\"_selectTargetTiming\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_timeMode\":0,\"_upAnimKey\":\"\",\"_upEndAnimKey\":\"\",\"_useDynamicAttackType\":0,\"_waitForAttackEvent\":1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"3258778508747571228\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"4381884627089348317\"}}"
+        ],
+        "levels": {
+          "0": {
+            "applyWay": "MELEE",
+            "groups": {
+              "MuradPollut": [
+                "hp_ratio"
+              ]
+            },
+            "bb": {
+              "MuradPollut.hp_ratio": 0.2
+            },
+            "abilities": [
+              {
+                "text": "Recovers HP when affected by a <Leak Source>.",
+                "format": "NORMAL"
+              }
+            ],
+            "skills": []
+          }
+        },
+        "attack": {
+          "duration": 1.7999999523162842,
+          "hit": 0.36666667461395264,
+          "damageType": "phys"
+        }
+      },
+      "otherClocks": "Contact/death parents have no elapsed ability clock."
+    },
+    "enemy_10203_mumag_2": {
+      "ordinary": {
+        "combatPathId": "-3776282175530949411",
+        "rootPathId": "550754605306455261",
+        "native": [
+          "{\"_addIndexToSignalId\":1,\"_alwaysHideHp\":{\"isDefined\":0,\"value\":0},\"_alwaysHideSp\":{\"isDefined\":0,\"value\":0},\"_animatorHooker\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_attack\":{\"m_FileID\":0,\"m_PathID\":\"-3776282175530949411\"},\"_attackTrigger\":{\"m_FileID\":0,\"m_PathID\":\"-437581955576912675\"},\"_bodyTransform\":{\"m_FileID\":0,\"m_PathID\":\"5764047157273863389\"},\"_combat\":{\"m_FileID\":0,\"m_PathID\":\"-3776282175530949411\"},\"_extraRangesToShow\":[],\"_generalAbilities\":[],\"_hideUIAttackRange\":0,\"_includeIndexZero\":1,\"_overrideDeadEffect\":\"\",\"_overrideStartEffect\":\"\",\"_rangeToShow\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_updateAttackRangeExtendByAttributeDirty\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-8057951288992160547\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"5390319429299248724\"}}",
+          "{\"_activeBuffs\":[],\"_affectedBySlowDown\":1,\"_allowNoTarget\":0,\"_alwaysIncludeTarget\":1,\"_animKey\":\"Attack\",\"_atkScale\":1.0,\"_atkScaleKey\":\"atk_scale\",\"_attachPassiveBuffsOnDummy\":1,\"_attackType\":1,\"_checkFaceToFirstCastTargetDownAttack\":0,\"_cooldown\":0.0,\"_cooldownKey\":\"duration\",\"_damageType\":2,\"_deliveryParaWhenReplaceActionNode\":0,\"_downAnimKey\":\"\",\"_downEndAnimKey\":\"\",\"_elementDamageType\":0,\"_emitToInputPosWhenTargetIsInvalid\":0,\"_emitToInputRootTileWhenTargetIsInvalid\":0,\"_endAnimKey\":\"Idle\",\"_epDamageRatio\":0.0,\"_escapeTime\":0.0,\"_extraDamageType\":0,\"_extraProjectileKeys\":[],\"_faceToDefault\":0,\"_faceToFirstCastTarget\":0,\"_faceToFront\":0,\"_faceToTarget\":1,\"_fireAttackFinishWhenProjectileInvalid\":0,\"_fireCreateProjectileEvent\":0,\"_forceAsDmgOrHealAbility\":0,\"_forceFaceToDirection\":0,\"_ignoreIfOwnerDead\":0,\"_ignorePalsyInterrupt\":0,\"_interruptAbilityOnDetach\":1,\"_interuptIfTargetDead\":0,\"_maxAnimScale\":1.0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_minPostDelayWhenProjectileInvalid\":0.0,\"_mountGroup\":{\"loopType\":0,\"mountPoints\":[]},\"_mountPointType\":2,\"_notClearProjectileWhenCastEnd\":0,\"_onlyPlayEndAnimWhenIsLastAbility\":0,\"_preDelay\":0.0,\"_projectileDestination\":0,\"_projectileKey\":\"projectile_enemy_mumag\",\"_resetCdStrategy\":1,\"_selectTargetSource\":2,\"_selectTargetTiming\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_timeMode\":0,\"_transferSource\":0,\"_upAnimKey\":\"\",\"_upEndAnimKey\":\"\",\"_useCachedAtkOnly\":0,\"_useDynamicAttackType\":0,\"_useMountGroup\":0,\"_waitForAnimEndWhenProjectileInvalid\":0,\"_waitForAttackEvent\":1,\"_waitForProjectileInvalid\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-9065927854646123299\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"4156651312234227407\"}}"
+        ],
+        "levels": {
+          "0": {
+            "applyWay": "RANGED",
+            "groups": {},
+            "bb": {},
+            "abilities": [
+              {
+                "text": "Continuously channels at a Leak Marker in attack range, causing it to create Leak Sources and gaining increased DEF.",
+                "format": "NORMAL"
+              }
+            ],
+            "skills": [
+              {
+                "prefabKey": "ChargeRift",
+                "priority": 0,
+                "cooldown": 10,
+                "initCooldown": 5,
+                "spCost": 0,
+                "bb": {
+                  "def": 2,
+                  "sp": 1,
+                  "duration": 15,
+                  "hit_duration": 15
+                },
+                "bbStr": {}
+              }
+            ]
+          }
+        },
+        "attack": {
+          "duration": 1.3333333730697632,
+          "hit": 0.5333333611488342,
+          "damageType": "arts"
+        }
+      },
+      "otherClocks": "ChargeRift uses world time; source affectedBySlowDown=0."
+    },
+    "enemy_10208_mucow_2": {
+      "ordinary": {
+        "combatPathId": "-2778793732625526387",
+        "rootPathId": "861881285725000077",
+        "native": [
+          "{\"_addIndexToSignalId\":1,\"_alwaysHideHp\":{\"isDefined\":0,\"value\":0},\"_alwaysHideSp\":{\"isDefined\":0,\"value\":0},\"_animatorHooker\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_attack\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_attackTrigger\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_bodyTransform\":{\"m_FileID\":0,\"m_PathID\":\"-7678434270479773299\"},\"_combat\":{\"m_FileID\":0,\"m_PathID\":\"-2778793732625526387\"},\"_extraRangesToShow\":[],\"_generalAbilities\":[],\"_hideUIAttackRange\":0,\"_includeIndexZero\":1,\"_overrideDeadEffect\":\"\",\"_overrideStartEffect\":\"\",\"_rangeToShow\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_updateAttackRangeExtendByAttributeDirty\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-3133071327341047411\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"5390319429299248724\"}}",
+          "{\"_activeBuffs\":[],\"_affectedBySlowDown\":1,\"_allowNoTarget\":0,\"_alwaysIncludeTarget\":1,\"_alwaysPutIncludeTargetFirst\":0,\"_animKey\":\"Attack\",\"_atkScale\":1.0,\"_atkScaleKey\":\"atk_scale\",\"_attachPassiveBuffsOnDummy\":1,\"_attackType\":1,\"_checkFaceToFirstCastTargetDownAttack\":0,\"_cooldown\":0.0,\"_cooldownKey\":\"duration\",\"_damageType\":1,\"_deliveryParaWhenReplaceActionNode\":0,\"_downAnimKey\":\"\",\"_downEndAnimKey\":\"\",\"_elementDamageType\":0,\"_endAnimKey\":\"Idle\",\"_epDamageRatio\":0.0,\"_escapeTime\":0.0,\"_extraDamageType\":0,\"_faceToDefault\":0,\"_faceToFirstCastTarget\":0,\"_faceToFront\":0,\"_faceToTarget\":1,\"_forceAsDmgOrHealAbility\":0,\"_forceFaceToDirection\":0,\"_ignoreIfOwnerDead\":0,\"_ignorePalsyInterrupt\":0,\"_interruptAbilityOnDetach\":1,\"_interuptIfTargetDead\":0,\"_maxAnimScale\":1.0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_onlyPlayEndAnimWhenIsLastAbility\":0,\"_preDelay\":0.0,\"_resetCdStrategy\":1,\"_selectTargetSource\":2,\"_selectTargetTiming\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_timeMode\":0,\"_upAnimKey\":\"\",\"_upEndAnimKey\":\"\",\"_useDynamicAttackType\":0,\"_waitForAttackEvent\":1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"8574811677106966925\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"4381884627089348317\"}}"
+        ],
+        "levels": {
+          "0": {
+            "applyWay": "MELEE",
+            "groups": {
+              "DeadSummon": [
+                "max_cnt"
+              ]
+            },
+            "bb": {
+              "DeadSummon.max_cnt": 1
+            },
+            "abilities": [
+              {
+                "text": "More likely to be attacked",
+                "format": "NORMAL"
+              },
+              {
+                "text": "Creates a <Leak Source> nearby when defeated.",
+                "format": "NORMAL"
+              }
+            ],
+            "skills": []
+          }
+        },
+        "attack": {
+          "duration": 1.6666666269302368,
+          "hit": 0.800000011920929,
+          "damageType": "phys"
+        }
+      },
+      "otherClocks": "Contact/death parents have no elapsed ability clock."
+    },
+    "enemy_10207_mubrut_2": {
+      "native": [
+        "{\"_animationName\":\"Default\",\"addNormals\":0,\"calculateTangents\":0,\"clearStateOnDisable\":0,\"disableRenderingOnOverride\":1,\"fixDrawOrder\":0,\"immutableTriangles\":0,\"initialFlipX\":0,\"initialFlipY\":0,\"initialSkinName\":\"default\",\"loop\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-6847134428671780738\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"175525945580115722\"},\"maskInteraction\":0,\"maskMaterials\":{\"materialsInsideMask\":[],\"materialsMaskDisabled\":[],\"materialsOutsideMask\":[]},\"pmaVertexColors\":1,\"separatorSlotNames\":[],\"singleSubmesh\":0,\"skeletonDataAsset\":{\"m_FileID\":4,\"m_PathID\":\"-7756997042288307749\"},\"timeScale\":1.0,\"tintBlack\":0,\"updateWhenInvisible\":3,\"useClipping\":1,\"zSpacing\":0.0}",
+        "{\"_activeBuffs\":[],\"_addSpellCntToAllHitSignalId\":0,\"_addSpellCntToAllSignalId\":1,\"_addSpellCntToLastSignalId\":0,\"_additionalTimes\":2,\"_affectedBySlowDown\":1,\"_allowNoTarget\":0,\"_alwaysIncludeTarget\":1,\"_alwaysPutIncludeTargetFirst\":0,\"_animKey\":\"Skill\",\"_atkScale\":1.0,\"_atkScaleKey\":\"atk_scale\",\"_attachPassiveBuffsOnDummy\":1,\"_attackType\":1,\"_checkFaceToFirstCastTargetDownAttack\":0,\"_cooldown\":0.0,\"_cooldownKey\":\"duration\",\"_damageType\":1,\"_deliveryParaWhenReplaceActionNode\":0,\"_downAnimKey\":\"\",\"_downEndAnimKey\":\"\",\"_elementDamageType\":0,\"_endAnimKey\":\"Idle\",\"_epDamageRatio\":0.0,\"_escapeTime\":0.0,\"_extraDamageType\":0,\"_faceToDefault\":0,\"_faceToFirstCastTarget\":0,\"_faceToFront\":0,\"_faceToTarget\":1,\"_forceAsDmgOrHealAbility\":0,\"_forceFaceToDirection\":0,\"_ignoreIfOwnerDead\":0,\"_ignorePalsyInterrupt\":0,\"_interruptAbilityOnDetach\":1,\"_interuptIfTargetDead\":0,\"_maxAnimScale\":1.0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_minPostDelay\":0.0,\"_onlyFeedActiveBuffToFirstOne\":0,\"_onlyFeedActiveBuffToLastOne\":0,\"_onlyPlayEndAnimWhenIsLastAbility\":0,\"_onlyTrigAudioSignalForFirstHit\":0,\"_onlyTrigAudioSignalForFirstSpell\":0,\"_preDelay\":0.0,\"_refreshInputTargetOnCheckSpell\":0,\"_refreshInputTargetTrigger\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_refreshTimesOnCastStart\":0,\"_refreshTimesOnCheckAnotherSpell\":0,\"_resetCdStrategy\":1,\"_selectTargetSource\":2,\"_selectTargetTiming\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_splitDamage\":0,\"_timeMode\":0,\"_triggerDelta\":0.0,\"_upAnimKey\":\"\",\"_upEndAnimKey\":\"\",\"_useDynamicAttackType\":0,\"_waitAttackEventForAllAttacks\":1,\"_waitForAttackEvent\":1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"3148512204216064126\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-5349745400011864685\"}}",
+        "{\"_animations\":[{\"animKey\":\"Default\",\"animName\":\"Default\",\"ignoreMissing\":1,\"loop\":0,\"speed\":1.0},{\"animKey\":\"Move\",\"animName\":\"Move\",\"ignoreMissing\":1,\"loop\":1,\"speed\":1.0},{\"animKey\":\"Die\",\"animName\":\"Die\",\"ignoreMissing\":1,\"loop\":0,\"speed\":1.0},{\"animKey\":\"Idle\",\"animName\":\"Idle\",\"ignoreMissing\":1,\"loop\":1,\"speed\":1.0},{\"animKey\":\"Attack\",\"animName\":\"Attack\",\"ignoreMissing\":1,\"loop\":0,\"speed\":1.0},{\"animKey\":\"Skill\",\"animName\":\"Skill\",\"ignoreMissing\":1,\"loop\":0,\"speed\":1.0}],\"_cacheBoundsCenter\":1,\"_enableShowDamageFlash\":1,\"_faceSwitcher\":{\"m_FileID\":0,\"m_PathID\":\"319441480020711550\"},\"_headTransform\":{\"m_FileID\":0,\"m_PathID\":\"8056758304614766718\"},\"_hitTransform\":{\"m_FileID\":0,\"m_PathID\":\"-4073274081971873666\"},\"_mixSettings\":[],\"_muzzleTransform\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_neverImmediatelyFaceSwitcher\":0,\"_resetSkinToInitial\":0,\"_shadowTransform\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_skeleton\":{\"m_FileID\":0,\"m_PathID\":\"-8853627941473363842\"},\"_specialPoint0\":{\"m_FileID\":0,\"m_PathID\":\"4875998414082332798\"},\"_specialPoint1\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint10\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint11\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint12\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint13\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint14\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint15\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint2\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint3\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint4\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint5\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint6\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint7\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint8\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint9\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_spineScale\":1.0,\"_spineSkins\":[],\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-4075916165688928130\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"6360585277869116281\"}}",
+        "{\"_addIndexToSignalId\":1,\"_alwaysHideHp\":{\"isDefined\":0,\"value\":0},\"_alwaysHideSp\":{\"isDefined\":0,\"value\":0},\"_animatorHooker\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_attack\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_attackTrigger\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_bodyTransform\":{\"m_FileID\":0,\"m_PathID\":\"5009995766773569662\"},\"_combat\":{\"m_FileID\":0,\"m_PathID\":\"-7047426356414457730\"},\"_extraRangesToShow\":[],\"_generalAbilities\":[{\"m_FileID\":0,\"m_PathID\":\"1504289842615474302\"}],\"_hideUIAttackRange\":0,\"_includeIndexZero\":1,\"_overrideDeadEffect\":\"\",\"_overrideStartEffect\":\"\",\"_rangeToShow\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_updateAttackRangeExtendByAttributeDirty\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"5581230645886834814\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"5390319429299248724\"}}",
+        "{\"_defaultLOrR\":1,\"_switchTime\":0.15000000596046448,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-8073149614752540546\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-8154061065964361586\"}}",
+        "{\"_addIndexToSignalId\":1,\"_alwaysHideHp\":{\"isDefined\":0,\"value\":0},\"_alwaysHideSp\":{\"isDefined\":0,\"value\":0},\"_animatorHooker\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_attack\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_attackTrigger\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_bodyTransform\":{\"m_FileID\":0,\"m_PathID\":\"8805285146108024958\"},\"_combat\":{\"m_FileID\":0,\"m_PathID\":\"5156588918159693950\"},\"_extraRangesToShow\":[],\"_generalAbilities\":[],\"_hideUIAttackRange\":0,\"_includeIndexZero\":1,\"_overrideDeadEffect\":\"\",\"_overrideStartEffect\":\"\",\"_rangeToShow\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_updateAttackRangeExtendByAttributeDirty\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-8162099363353798530\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"5390319429299248724\"}}",
+        "{\"_attachPassiveBuffsOnDummy\":1,\"_buffs\":[{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"enemy_mubrut_skill_02_buff\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"duration\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":2,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"enemy_mubrut_skill_02_buff\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"empty\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"triggerLifeType\":0,\"waitFirstTriggerInterval\":1}],\"_forceAsDmgOrHealAbility\":0,\"_ignoreIfOwnerDead\":0,\"_interruptAbilityOnDetach\":1,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-6744253682034026370\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"3800760148018415462\"}}",
+        "{\"_alwaysUseSpineOffset\":0,\"_attachOffset\":0.10000000149011612,\"_autoAttachToGround\":0,\"_boneToFollow\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_easeType\":1,\"_enableAdvanced\":0,\"_faceSwitcher\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_graphic\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_simpleFollow\":0,\"_simplyUseTileHeight\":0,\"_specialInit\":0,\"_sprite\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-4410525231344789378\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-2368896203154538901\"}}",
+        "{\"_attachPassiveBuffsOnDummy\":1,\"_buffs\":[{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[{\"key\":\"mode\",\"value\":1.0,\"valueStr\":\"\"}],\"buffKey\":\"enemy_mubrut_t\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"duration\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":0,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"switch_mode_no_restore\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"triggerLifeType\":0,\"waitFirstTriggerInterval\":1}],\"_checkBuffEarlyFinish\":0,\"_enableUpdateCooldown\":0,\"_escapeTime\":0.0,\"_forceAsDmgOrHealAbility\":0,\"_ignoreIfOwnerDead\":0,\"_ignoreInfiniteBuffCooldown\":0,\"_interruptAbilityOnDetach\":1,\"_interuptIfTargetDead\":0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_passiveBuffs\":[],\"_preDelay\":0.0,\"_resetCdStrategy\":1,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_updateLifetimeWhenSpellStart\":0,\"_waitForAttackEvent\":0,\"_waitForCasting\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"4860889005841307774\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-4234909118878081699\"}}",
+        "{\"_allowFalldownWhenReborn\":1,\"_alwaysCheckCurrentPoint\":0,\"_alwaysHideHp\":0,\"_alwaysShowHp\":0,\"_animator\":{\"m_FileID\":0,\"m_PathID\":\"-3348879908213041026\"},\"_blockVolume\":1,\"_bodyDirectionPolicy\":0,\"_canNotExit\":0,\"_commonAbilities\":[],\"_deadEffect\":\"\",\"_defaultBodyColor\":{\"a\":1.0,\"b\":1.0,\"g\":1.0,\"r\":1.0},\"_delayToBorn\":0.0,\"_disableBornTweenColor\":0,\"_disableRenderLocateRange\":0,\"_dontSetEnemyFaceByCursorWhenBorn\":0,\"_effectTransform\":{\"m_FileID\":0,\"m_PathID\":\"-7058050210023024514\"},\"_groundBoundHeightZOffset\":0.10000000149011612,\"_height\":0.0,\"_hideBulletSpModes\":[],\"_hideShadowOnRecycle\":0,\"_hideShadowOnReset\":0,\"_hudPluginReplacePairs\":[],\"_idleWhenBorn\":0,\"_isFixedRotation\":0,\"_keepMoveAnimScale\":0,\"_locateRange\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_modes\":[{\"m_FileID\":0,\"m_PathID\":\"548629551882229886\"},{\"m_FileID\":0,\"m_PathID\":\"-3041469222872164226\"}],\"_onlyDelayToBornOnTileStart\":0,\"_overrideGraphicBound\":-1.0,\"_scaleMoveAnimationRange\":{\"x\":0.0,\"y\":0.0},\"_scaleMoveBySpeed\":0,\"_shadow\":{\"m_FileID\":0,\"m_PathID\":\"3985248208649377918\"},\"_showDebugName\":0,\"_showSpAsBulletMode\":0,\"_sideTypeIndex\":1,\"_specialBlockCondition\":{\"_buffKeyPairs\":[],\"_filterTags\":[],\"_type\":0},\"_spineLikeHeightUpdateRatio\":0.25,\"_startEffect\":\"\",\"_uiMountPoint\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_useMoveDirAsFaceDir\":0,\"_useSpecificDeadAnim\":0,\"_useSpecificReachExitAnim\":0,\"_useSpineLikeHeightUpdate\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"6964889025465079934\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-6629209555389654693\"}}",
+        "{\"_activeBuffs\":[],\"_affectedBySlowDown\":1,\"_allowNoTarget\":0,\"_alwaysIncludeTarget\":1,\"_alwaysPutIncludeTargetFirst\":0,\"_animKey\":\"Attack\",\"_atkScale\":1.0,\"_atkScaleKey\":\"atk_scale\",\"_attachPassiveBuffsOnDummy\":1,\"_attackType\":1,\"_checkFaceToFirstCastTargetDownAttack\":0,\"_cooldown\":0.0,\"_cooldownKey\":\"duration\",\"_damageType\":1,\"_deliveryParaWhenReplaceActionNode\":0,\"_downAnimKey\":\"\",\"_downEndAnimKey\":\"\",\"_elementDamageType\":0,\"_endAnimKey\":\"Idle\",\"_epDamageRatio\":0.0,\"_escapeTime\":0.0,\"_extraDamageType\":0,\"_faceToDefault\":0,\"_faceToFirstCastTarget\":0,\"_faceToFront\":0,\"_faceToTarget\":1,\"_forceAsDmgOrHealAbility\":0,\"_forceFaceToDirection\":0,\"_ignoreIfOwnerDead\":0,\"_ignorePalsyInterrupt\":0,\"_interruptAbilityOnDetach\":1,\"_interuptIfTargetDead\":0,\"_maxAnimScale\":1.0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_onlyPlayEndAnimWhenIsLastAbility\":0,\"_preDelay\":0.0,\"_resetCdStrategy\":1,\"_selectTargetSource\":2,\"_selectTargetTiming\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_timeMode\":0,\"_upAnimKey\":\"\",\"_upEndAnimKey\":\"\",\"_useDynamicAttackType\":0,\"_waitForAttackEvent\":1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"8159457431508080766\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"4381884627089348317\"}}"
+      ],
+      "feeding": null
+    },
+    "enemy_10209_mubag_2": {
+      "native": [
+        "{\"_activeBuffs\":[],\"_affectedBySlowDown\":1,\"_allowNoTarget\":0,\"_alwaysIncludeTarget\":1,\"_alwaysPutIncludeTargetFirst\":0,\"_animKey\":\"\",\"_atkScale\":1.0,\"_atkScaleKey\":\"atk_scale\",\"_attachPassiveBuffsOnDummy\":1,\"_attackType\":1,\"_checkFaceToFirstCastTargetDownAttack\":0,\"_cooldown\":0.0,\"_cooldownKey\":\"duration\",\"_damageType\":1,\"_deliveryParaWhenReplaceActionNode\":0,\"_downAnimKey\":\"\",\"_downEndAnimKey\":\"\",\"_elementDamageType\":0,\"_endAnimKey\":\"\",\"_epDamageRatio\":0.0,\"_escapeTime\":0.0,\"_extraDamageType\":0,\"_faceToDefault\":0,\"_faceToFirstCastTarget\":0,\"_faceToFront\":0,\"_faceToTarget\":1,\"_forceAsDmgOrHealAbility\":0,\"_forceFaceToDirection\":0,\"_ignoreIfOwnerDead\":0,\"_ignorePalsyInterrupt\":0,\"_interruptAbilityOnDetach\":1,\"_interuptIfTargetDead\":0,\"_maxAnimScale\":-1.0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_onlyPlayEndAnimWhenIsLastAbility\":0,\"_preDelay\":0.0,\"_resetCdStrategy\":1,\"_selectTargetSource\":2,\"_selectTargetTiming\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_timeMode\":0,\"_upAnimKey\":\"\",\"_upEndAnimKey\":\"\",\"_useDynamicAttackType\":0,\"_waitForAttackEvent\":1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"241334803500630082\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"4381884627089348317\"}}",
+        "{\"_allowFalldownWhenReborn\":1,\"_alwaysCheckCurrentPoint\":0,\"_alwaysHideHp\":0,\"_alwaysShowHp\":0,\"_animator\":{\"m_FileID\":0,\"m_PathID\":\"-1320101646735900606\"},\"_blockVolume\":1,\"_bodyDirectionPolicy\":0,\"_canNotExit\":0,\"_commonAbilities\":[],\"_deadEffect\":\"\",\"_defaultBodyColor\":{\"a\":1.0,\"b\":1.0,\"g\":1.0,\"r\":1.0},\"_delayToBorn\":0.0,\"_disableBornTweenColor\":0,\"_disableRenderLocateRange\":0,\"_dontSetEnemyFaceByCursorWhenBorn\":0,\"_effectTransform\":{\"m_FileID\":0,\"m_PathID\":\"-852493007173779390\"},\"_groundBoundHeightZOffset\":0.10000000149011612,\"_height\":0.25,\"_hideBulletSpModes\":[],\"_hideShadowOnRecycle\":0,\"_hideShadowOnReset\":0,\"_hudPluginReplacePairs\":[],\"_idleWhenBorn\":0,\"_isFixedRotation\":0,\"_keepMoveAnimScale\":0,\"_locateRange\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_modes\":[{\"m_FileID\":0,\"m_PathID\":\"-5667354597341527998\"}],\"_onlyDelayToBornOnTileStart\":0,\"_overrideGraphicBound\":-1.0,\"_scaleMoveAnimationRange\":{\"x\":0.0,\"y\":0.0},\"_scaleMoveBySpeed\":0,\"_shadow\":{\"m_FileID\":0,\"m_PathID\":\"-6321048884440793022\"},\"_showDebugName\":0,\"_showSpAsBulletMode\":0,\"_sideTypeIndex\":1,\"_specialBlockCondition\":{\"_buffKeyPairs\":[],\"_filterTags\":[],\"_type\":0},\"_spineLikeHeightUpdateRatio\":0.25,\"_startEffect\":\"\",\"_uiMountPoint\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_useMoveDirAsFaceDir\":0,\"_useSpecificDeadAnim\":0,\"_useSpecificReachExitAnim\":0,\"_useSpineLikeHeightUpdate\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"402439651792650306\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-6629209555389654693\"}}",
+        "{\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"241334803500630082\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"248012603862317511\"}}",
+        "{\"_invertedValidators\":[],\"_isAnd\":1,\"_targetOptions\":{\"abnormalCombo\":0,\"abnormalFlag\":0,\"checkUnitType\":0,\"containAbnormalFlag\":0,\"containSomeAbnormalFlags\":0,\"enableAdvancedOptions\":1,\"excludeAbnormalFlag\":0,\"excludeSomeAbnormalFlags\":0,\"ignoreAllyTargetFree\":1,\"ignoreHealFree\":0,\"ignoreMotionMode\":0,\"ignoreTargetFree\":1,\"ignoreTargetSide\":0,\"onlyIgnoreSomeOfTargetFreeCase\":0,\"professionMask\":0,\"purposeMask\":0,\"targetCategory\":1,\"targetMotion\":3,\"targetSide\":1,\"unitTypeMask\":0},\"_validators\":[{\"m_FileID\":0,\"m_PathID\":\"-3059953707916001214\"},{\"m_FileID\":0,\"m_PathID\":\"3476775757482557506\"}],\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-6104246160839016382\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-123704873734712737\"}}",
+        "{\"_distinctTargets\":0,\"_limitTargetNum\":1,\"_maxNum\":1,\"_maxNumBlackboardKey\":\"max_target\",\"_overrideSelector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_rangeSelectorsList\":[{\"m_FileID\":0,\"m_PathID\":\"321800000735281218\"}],\"_selectable\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-5111083402412490686\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-7478772901303009912\"}}",
+        "{\"_attachPassiveBuffsOnDummy\":1,\"_forceAsDmgOrHealAbility\":0,\"_ignoreIfOwnerDead\":0,\"_interruptAbilityOnDetach\":1,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-832654460155527102\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"4865767822664548221\"}}",
+        "{\"_alwaysUseSpineOffset\":0,\"_attachOffset\":0.10000000149011612,\"_autoAttachToGround\":0,\"_boneToFollow\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_easeType\":1,\"_enableAdvanced\":0,\"_faceSwitcher\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_graphic\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_simpleFollow\":0,\"_simplyUseTileHeight\":0,\"_specialInit\":0,\"_sprite\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-1407786282301063102\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-2368896203154538901\"}}",
+        "{\"_addEnemyIdToSignalId\":1,\"_castLikeAttack\":0,\"_checkParentActive\":0,\"_familyMask\":3,\"_ignoreSilence\":0,\"_immuneStunWhenAffecting\":0,\"_maxTriggerTime\":-1,\"_overwriteInitCooldown\":-1,\"_resetCdWaitFirstPeriod\":1,\"_resetMainAbilityCdWhenCastEnd\":0,\"_trigger\":{\"m_FileID\":0,\"m_PathID\":\"24655273544974402\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"2011877969722671170\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-5087399121287503180\"}}",
+        "{\"_addIndexToSignalId\":1,\"_alwaysHideHp\":{\"isDefined\":0,\"value\":0},\"_alwaysHideSp\":{\"isDefined\":0,\"value\":0},\"_animatorHooker\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_attack\":{\"m_FileID\":0,\"m_PathID\":\"-8604220620186648510\"},\"_attackTrigger\":{\"m_FileID\":0,\"m_PathID\":\"-7863858395708850110\"},\"_bodyTransform\":{\"m_FileID\":0,\"m_PathID\":\"-3663446985080242110\"},\"_combat\":{\"m_FileID\":0,\"m_PathID\":\"-6735041889634418622\"},\"_extraRangesToShow\":[],\"_generalAbilities\":[],\"_hideUIAttackRange\":0,\"_includeIndexZero\":1,\"_overrideDeadEffect\":\"\",\"_overrideStartEffect\":\"\",\"_rangeToShow\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_updateAttackRangeExtendByAttributeDirty\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-823466401447870398\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"5390319429299248724\"}}",
+        "{\"_loadFromBlackboard\":0,\"_reverse\":0,\"_targetId\":\"enemy_10211_murad\",\"_targetOptions\":{\"abnormalCombo\":0,\"abnormalFlag\":0,\"checkUnitType\":0,\"containAbnormalFlag\":0,\"containSomeAbnormalFlags\":0,\"enableAdvancedOptions\":1,\"excludeAbnormalFlag\":0,\"excludeSomeAbnormalFlags\":0,\"ignoreAllyTargetFree\":1,\"ignoreHealFree\":0,\"ignoreMotionMode\":0,\"ignoreTargetFree\":1,\"ignoreTargetSide\":0,\"onlyIgnoreSomeOfTargetFreeCase\":0,\"professionMask\":0,\"purposeMask\":0,\"targetCategory\":1,\"targetMotion\":3,\"targetSide\":1,\"unitTypeMask\":0},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-6104246160839016382\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"4228536478899308872\"}}",
+        "{\"_animations\":[{\"animKey\":\"Default\",\"animName\":\"Default\",\"ignoreMissing\":1,\"loop\":0,\"speed\":1.0},{\"animKey\":\"Move\",\"animName\":\"Move\",\"ignoreMissing\":1,\"loop\":1,\"speed\":1.0},{\"animKey\":\"Die\",\"animName\":\"Die\",\"ignoreMissing\":1,\"loop\":0,\"speed\":1.0},{\"animKey\":\"Idle\",\"animName\":\"Idle\",\"ignoreMissing\":1,\"loop\":1,\"speed\":1.0},{\"animKey\":\"Skill_Begin\",\"animName\":\"Skill_Begin\",\"ignoreMissing\":1,\"loop\":0,\"speed\":1.0},{\"animKey\":\"Skill_End\",\"animName\":\"Skill_End\",\"ignoreMissing\":1,\"loop\":0,\"speed\":1.0},{\"animKey\":\"Skill_Loop\",\"animName\":\"Skill_Loop\",\"ignoreMissing\":1,\"loop\":1,\"speed\":1.0}],\"_cacheBoundsCenter\":1,\"_enableShowDamageFlash\":1,\"_faceSwitcher\":{\"m_FileID\":0,\"m_PathID\":\"-8637771362926526\"},\"_headTransform\":{\"m_FileID\":0,\"m_PathID\":\"-5588331250887425982\"},\"_hitTransform\":{\"m_FileID\":0,\"m_PathID\":\"6758716172085428290\"},\"_mixSettings\":[],\"_muzzleTransform\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_neverImmediatelyFaceSwitcher\":0,\"_resetSkinToInitial\":0,\"_shadowTransform\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_skeleton\":{\"m_FileID\":0,\"m_PathID\":\"8698970676542046274\"},\"_specialPoint0\":{\"m_FileID\":0,\"m_PathID\":\"8522408390928826434\"},\"_specialPoint1\":{\"m_FileID\":0,\"m_PathID\":\"5562544294000918594\"},\"_specialPoint10\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint11\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint12\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint13\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint14\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint15\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint2\":{\"m_FileID\":0,\"m_PathID\":\"-8897560518967820222\"},\"_specialPoint3\":{\"m_FileID\":0,\"m_PathID\":\"4146512695845257282\"},\"_specialPoint4\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint5\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint6\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint7\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint8\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_specialPoint9\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_spineScale\":1.0,\"_spineSkins\":[],\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-637036630367469502\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"6360585277869116281\"}}",
+        "{\"_actions\":{\"SerializedObjectReferences\":[],\"SerializedState\":\"[]\"},\"_activeBuffs\":[],\"_affectedBySlowDown\":0,\"_allowNoTarget\":0,\"_alwaysIncludeTarget\":1,\"_animKey\":\"\",\"_attachPassiveBuffsOnDummy\":1,\"_attackType\":1,\"_checkFaceToFirstCastTargetDownAttack\":0,\"_cooldown\":0.0,\"_cooldownKey\":\"anim_duration\",\"_downAnimKey\":\"\",\"_downEndAnimKey\":\"\",\"_endAnimKey\":\"\",\"_escapeTime\":0.0,\"_faceToDefault\":0,\"_faceToFirstCastTarget\":0,\"_faceToFront\":0,\"_faceToTarget\":1,\"_forceAsDmgOrHealAbility\":0,\"_forceFaceToDirection\":0,\"_ignoreIfOwnerDead\":0,\"_ignorePalsyInterrupt\":0,\"_interruptAbilityOnDetach\":1,\"_interuptIfTargetDead\":0,\"_maxAnimScale\":-1.0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_onlyPlayEndAnimWhenIsLastAbility\":0,\"_preDelay\":0.0,\"_resetCdStrategy\":1,\"_selectTargetSource\":2,\"_selectTargetTiming\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_timeMode\":3,\"_upAnimKey\":\"\",\"_upEndAnimKey\":\"\",\"_useDynamicAttackType\":0,\"_waitForAttackEvent\":1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"2011877969722671170\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"2165892974539515790\"}}",
+        "{\"_defaultLOrR\":1,\"_switchTime\":0.15000000596046448,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-2395227253035696062\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-8154061065964361586\"}}",
+        "{\"_keepTarget\":0,\"_minTargetNum\":1,\"_overrideSearchTargetTick\":-1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"4666092878035812418\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"5739565485717287714\"}}",
+        "{\"_abilityInputTargetAsSortSource\":0,\"_abnormalCombo\":2,\"_abnormalFlag\":44,\"_checkUnitType\":0,\"_excludeAbnormalFlag\":44,\"_excludeOwner\":1,\"_excludeSomeAbnormalFlags\":0,\"_filterID\":\"enemy_10211_murad\",\"_forceIgnoreCamouflage\":0,\"_ignoreAllyTargetFree\":1,\"_ignoreHealFree\":0,\"_ignoreHitRange\":0,\"_ignoreMotionMode\":0,\"_ignoreTargetFree\":1,\"_limitTargetNum\":1,\"_maxNum\":1,\"_maxTargetKey\":\"max_target\",\"_needProfessionMask\":0,\"_onlyIgnoreSomeOfTargetFreeCase\":0,\"_postFilter\":11,\"_professionMask\":0,\"_sortByTauntAtLast\":0,\"_targetCategory\":1,\"_targetMotion\":3,\"_targetSide\":1,\"_unitTypeMask\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-2776419895293312958\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"3579891523335379677\"}}",
+        "{\"_buffs\":[\"enemy_mubag_kill_murad\"],\"_excludeKey\":1,\"_filterBuffSource\":1,\"_hostAsTarget\":0,\"_targetOptions\":{\"abnormalCombo\":0,\"abnormalFlag\":0,\"checkUnitType\":0,\"containAbnormalFlag\":0,\"containSomeAbnormalFlags\":0,\"enableAdvancedOptions\":1,\"excludeAbnormalFlag\":0,\"excludeSomeAbnormalFlags\":0,\"ignoreAllyTargetFree\":1,\"ignoreHealFree\":0,\"ignoreMotionMode\":0,\"ignoreTargetFree\":1,\"ignoreTargetSide\":0,\"onlyIgnoreSomeOfTargetFreeCase\":0,\"professionMask\":0,\"purposeMask\":0,\"targetCategory\":1,\"targetMotion\":3,\"targetSide\":1,\"unitTypeMask\":0},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-6104246160839016382\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"-5482140055134904783\"}}",
+        "{\"_attachPassiveBuffsOnDummy\":1,\"_buffs\":[{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"enemy_mubag_kill_murad\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"duration\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":2,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"enemy_mubag_kill_murad\",\"triggerCnt\":999999,\"triggerInterval\":999999.0,\"triggerLifeType\":1,\"waitFirstTriggerInterval\":1}],\"_createEffectOnDummy\":1,\"_effects\":[],\"_forceAsDmgOrHealAbility\":0,\"_ignoreIfOwnerDead\":0,\"_ignoreOwnerFakeDeath\":0,\"_interruptAbilityOnDetach\":1,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_onlyAddBuffOnceForEachTarget\":0,\"_passiveBuffs\":[],\"_removeBuffWhenAbilityDetached\":1,\"_removeBuffWhenTargetLeave\":1,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_selfOption\":2,\"_targetValidator\":{\"m_FileID\":0,\"m_PathID\":\"-7715396301198917566\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-6104246160839016382\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"9073738633337710967\"}}",
+        "{\"_attachPassiveBuffsOnDummy\":1,\"_defaultCooldownKey\":\"default_cooldown\",\"_defaultSearchCoolDown\":5.0,\"_defaultTileSelector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_enableForceTraceTile\":0,\"_enableTraceTarget\":1,\"_forceAsDmgOrHealAbility\":0,\"_forceTraceTarget\":0,\"_ignoreIfOwnerDead\":0,\"_interruptAbilityOnDetach\":1,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_removeTraceTargetWhenReached\":1,\"_removeTraceTileWhenReached\":1,\"_searchCoolDown\":1.0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_traceRandomOffset\":{\"x\":0.0,\"y\":0.0},\"_traceTargetSelectors\":{\"m_FileID\":0,\"m_PathID\":\"-6788297095489388478\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-2320877822362386366\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"1500679223111351292\"}}",
+        "{\"_attachPassiveBuffsOnDummy\":1,\"_buffs\":[{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"enemy_mubag_aoe_damage\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"duration\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":2,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"enemy_mubag_skill_01_buff\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"enemy_mubag_aoe_damage\",\"triggerCnt\":0,\"triggerInterval\":1.0,\"triggerLifeType\":2,\"waitFirstTriggerInterval\":1}],\"_forceAsDmgOrHealAbility\":0,\"_ignoreIfOwnerDead\":0,\"_interruptAbilityOnDetach\":1,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-5803322379156717502\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"3800760148018415462\"}}",
+        "{\"_animationName\":\"Default\",\"addNormals\":0,\"calculateTangents\":0,\"clearStateOnDisable\":0,\"disableRenderingOnOverride\":1,\"fixDrawOrder\":0,\"immutableTriangles\":0,\"initialFlipX\":0,\"initialFlipY\":0,\"initialSkinName\":\"default\",\"loop\":0,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"7933853181275668546\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"175525945580115722\"},\"maskInteraction\":0,\"maskMaterials\":{\"materialsInsideMask\":[],\"materialsMaskDisabled\":[],\"materialsOutsideMask\":[]},\"pmaVertexColors\":1,\"separatorSlotNames\":[],\"singleSubmesh\":0,\"skeletonDataAsset\":{\"m_FileID\":4,\"m_PathID\":\"-337499240068683267\"},\"timeScale\":1.0,\"tintBlack\":0,\"updateWhenInvisible\":3,\"useClipping\":1,\"zSpacing\":0.0}"
+      ],
+      "feeding": {
+        "combatPathId": "-6735041889634418622",
+        "combatOriginalJson": "{\"_attachPassiveBuffsOnDummy\":1,\"_forceAsDmgOrHealAbility\":0,\"_ignoreIfOwnerDead\":0,\"_interruptAbilityOnDetach\":1,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-832654460155527102\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"4865767822664548221\"}}",
+        "skillPathId": "-421330593335476158",
+        "skillOriginalJson": "{\"_actions\":{\"SerializedObjectReferences\":[],\"SerializedState\":\"[]\"},\"_activeBuffs\":[],\"_affectedBySlowDown\":0,\"_allowNoTarget\":0,\"_alwaysIncludeTarget\":1,\"_animKey\":\"\",\"_attachPassiveBuffsOnDummy\":1,\"_attackType\":1,\"_checkFaceToFirstCastTargetDownAttack\":0,\"_cooldown\":0.0,\"_cooldownKey\":\"anim_duration\",\"_downAnimKey\":\"\",\"_downEndAnimKey\":\"\",\"_endAnimKey\":\"\",\"_escapeTime\":0.0,\"_faceToDefault\":0,\"_faceToFirstCastTarget\":0,\"_faceToFront\":0,\"_faceToTarget\":1,\"_forceAsDmgOrHealAbility\":0,\"_forceFaceToDirection\":0,\"_ignoreIfOwnerDead\":0,\"_ignorePalsyInterrupt\":0,\"_interruptAbilityOnDetach\":1,\"_interuptIfTargetDead\":0,\"_maxAnimScale\":-1.0,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_onlyPlayEndAnimWhenIsLastAbility\":0,\"_preDelay\":0.0,\"_resetCdStrategy\":1,\"_selectTargetSource\":2,\"_selectTargetTiming\":0,\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"_timeMode\":3,\"_upAnimKey\":\"\",\"_upEndAnimKey\":\"\",\"_useDynamicAttackType\":0,\"_waitForAttackEvent\":1,\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"2011877969722671170\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"2165892974539515790\"}}",
+        "feeding": {
+          "attributes": {
+            "abnormalAntis": [],
+            "abnormalComboImmunes": [],
+            "abnormalCombos": [],
+            "abnormalFlags": [],
+            "abnormalImmunes": [],
+            "attributeModifiers": []
+          },
+          "audioSignal": "",
+          "blackboard": [],
+          "buffKey": "enemy_mubag_atk_up",
+          "clearAllStackCntWhenTimeUp": 0,
+          "disableOverride": 0,
+          "durationKey": "duration_atk_dur",
+          "enableInitDirectionFromSource": 0,
+          "firstTriggerInterval": -1,
+          "independentCharacterSource": 0,
+          "isDamageMissable": 0,
+          "isDurableBuff": 0,
+          "isFreezable": 0,
+          "isGroundBoundable": 0,
+          "isLevitatable": 0,
+          "isSilenceable": 0,
+          "isStunnable": 0,
+          "lifeTime": 10.5,
+          "lifeTimeType": 1,
+          "loadFromDB": 0,
+          "maxStackCnt": 1,
+          "maxValidStackCnt": -1,
+          "onEventPriority": 0,
+          "overrideEffectKey": "",
+          "overrideKey": "",
+          "overrideOnEventPriority": 0,
+          "overrideType": 0,
+          "priority": -1,
+          "priorityBBKeys": [],
+          "refreshRemainingTimeWhenStackMax": 0,
+          "remainingTimeKey": "",
+          "statusResistable": 2,
+          "stripBlackboardParamsWithBuffKey": 0,
+          "takeSnapshotWhenExtend": 0,
+          "templateKey": "enemy_mubag_atk_up",
+          "triggerCnt": 0,
+          "triggerInterval": 1,
+          "triggerLifeType": 2,
+          "waitFirstTriggerInterval": 1
+        },
+        "phaseDuration": 11
+      }
+    },
+    "enemy_10211_murad": {
+      "unselectable": true,
+      "scope": "Existing Leak Source invulnerable/untargetable receiver is excluded by real Closure target selection in every visible/contact phase; its native clocks are not admitted to slow_down."
+    }
+  },
+  "actions": [
+    {
+      "fragment": 0,
+      "actionIndex": 0,
+      "time": 0,
+      "action": {
+        "actionType": "SPAWN",
+        "managedByScheduler": true,
+        "key": "enemy_10203_mumag_2",
+        "count": 1,
+        "preDelay": 0,
+        "interval": 1,
+        "routeIndex": 0,
+        "blockFragment": false,
+        "autoPreviewRoute": false,
+        "autoDisplayEnemyInfo": false,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      }
+    },
+    {
+      "fragment": 0,
+      "actionIndex": 1,
+      "time": 0,
+      "action": {
+        "actionType": "DISPLAY_ENEMY_INFO",
+        "managedByScheduler": true,
+        "key": "enemy_10203_mumag_2",
+        "count": 1,
+        "preDelay": 0,
+        "interval": 1,
+        "routeIndex": 1,
+        "blockFragment": false,
+        "autoPreviewRoute": false,
+        "autoDisplayEnemyInfo": false,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      }
+    },
+    {
+      "fragment": 0,
+      "actionIndex": 2,
+      "time": 0,
+      "action": {
+        "actionType": "SPAWN",
+        "managedByScheduler": true,
+        "key": "enemy_10208_mucow_2",
+        "count": 1,
+        "preDelay": 0,
+        "interval": 1,
+        "routeIndex": 2,
+        "blockFragment": false,
+        "autoPreviewRoute": false,
+        "autoDisplayEnemyInfo": false,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      }
+    },
+    {
+      "fragment": 0,
+      "actionIndex": 3,
+      "time": 0,
+      "action": {
+        "actionType": "SPAWN",
+        "managedByScheduler": true,
+        "key": "enemy_10203_mumag_2",
+        "count": 1,
+        "preDelay": 0,
+        "interval": 1,
+        "routeIndex": 3,
+        "blockFragment": false,
+        "autoPreviewRoute": false,
+        "autoDisplayEnemyInfo": false,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      }
+    },
+    {
+      "fragment": 0,
+      "actionIndex": 4,
+      "time": 0,
+      "action": {
+        "actionType": "SPAWN",
+        "managedByScheduler": true,
+        "key": "enemy_10203_mumag_2",
+        "count": 1,
+        "preDelay": 0,
+        "interval": 1,
+        "routeIndex": 4,
+        "blockFragment": false,
+        "autoPreviewRoute": false,
+        "autoDisplayEnemyInfo": false,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      }
+    },
+    {
+      "fragment": 1,
+      "actionIndex": 0,
+      "time": 3,
+      "action": {
+        "actionType": "DISPLAY_ENEMY_INFO",
+        "managedByScheduler": true,
+        "key": "enemy_10208_mucow_2",
+        "count": 1,
+        "preDelay": 3,
+        "interval": 1,
+        "routeIndex": 5,
+        "blockFragment": false,
+        "autoPreviewRoute": false,
+        "autoDisplayEnemyInfo": false,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      }
+    },
+    {
+      "fragment": 1,
+      "actionIndex": 1,
+      "time": 3,
+      "action": {
+        "actionType": "SPAWN",
+        "managedByScheduler": true,
+        "key": "enemy_10201_muinf_2",
+        "count": 2,
+        "preDelay": 3,
+        "interval": 23,
+        "routeIndex": 6,
+        "blockFragment": false,
+        "autoPreviewRoute": true,
+        "autoDisplayEnemyInfo": false,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      }
+    },
+    {
+      "fragment": 1,
+      "actionIndex": 2,
+      "time": 12,
+      "action": {
+        "actionType": "SPAWN",
+        "managedByScheduler": true,
+        "key": "enemy_10201_muinf_2",
+        "count": 4,
+        "preDelay": 12,
+        "interval": 3,
+        "routeIndex": 7,
+        "blockFragment": false,
+        "autoPreviewRoute": true,
+        "autoDisplayEnemyInfo": false,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      }
+    },
+    {
+      "fragment": 2,
+      "actionIndex": 0,
+      "time": 44,
+      "action": {
+        "actionType": "SPAWN",
+        "managedByScheduler": true,
+        "key": "enemy_10201_muinf_2",
+        "count": 4,
+        "preDelay": 6,
+        "interval": 3,
+        "routeIndex": 8,
+        "blockFragment": false,
+        "autoPreviewRoute": false,
+        "autoDisplayEnemyInfo": false,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      }
+    },
+    {
+      "fragment": 2,
+      "actionIndex": 1,
+      "time": 54,
+      "action": {
+        "actionType": "SPAWN",
+        "managedByScheduler": true,
+        "key": "enemy_10207_mubrut_2",
+        "count": 1,
+        "preDelay": 16,
+        "interval": 1,
+        "routeIndex": 9,
+        "blockFragment": false,
+        "autoPreviewRoute": true,
+        "autoDisplayEnemyInfo": false,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      }
+    },
+    {
+      "fragment": 3,
+      "actionIndex": 0,
+      "time": 67,
+      "action": {
+        "actionType": "SPAWN",
+        "managedByScheduler": true,
+        "key": "enemy_10201_muinf_2",
+        "count": 2,
+        "preDelay": 3,
+        "interval": 15,
+        "routeIndex": 10,
+        "blockFragment": false,
+        "autoPreviewRoute": false,
+        "autoDisplayEnemyInfo": false,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      }
+    },
+    {
+      "fragment": 4,
+      "actionIndex": 0,
+      "time": 95,
+      "action": {
+        "actionType": "SPAWN",
+        "managedByScheduler": true,
+        "key": "enemy_10203_mumag_2",
+        "count": 1,
+        "preDelay": 3,
+        "interval": 1,
+        "routeIndex": 11,
+        "blockFragment": false,
+        "autoPreviewRoute": true,
+        "autoDisplayEnemyInfo": false,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      }
+    },
+    {
+      "fragment": 4,
+      "actionIndex": 1,
+      "time": 98,
+      "action": {
+        "actionType": "SPAWN",
+        "managedByScheduler": true,
+        "key": "enemy_10203_mumag_2",
+        "count": 1,
+        "preDelay": 6,
+        "interval": 1,
+        "routeIndex": 12,
+        "blockFragment": false,
+        "autoPreviewRoute": true,
+        "autoDisplayEnemyInfo": false,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      }
+    },
+    {
+      "fragment": 4,
+      "actionIndex": 2,
+      "time": 100,
+      "action": {
+        "actionType": "SPAWN",
+        "managedByScheduler": true,
+        "key": "enemy_10203_mumag_2",
+        "count": 1,
+        "preDelay": 8,
+        "interval": 1,
+        "routeIndex": 13,
+        "blockFragment": false,
+        "autoPreviewRoute": true,
+        "autoDisplayEnemyInfo": false,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      }
+    },
+    {
+      "fragment": 5,
+      "actionIndex": 0,
+      "time": 115,
+      "action": {
+        "actionType": "SPAWN",
+        "managedByScheduler": true,
+        "key": "enemy_10209_mubag_2",
+        "count": 1,
+        "preDelay": 5,
+        "interval": 1,
+        "routeIndex": 14,
+        "blockFragment": false,
+        "autoPreviewRoute": true,
+        "autoDisplayEnemyInfo": true,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      }
+    },
+    {
+      "fragment": 5,
+      "actionIndex": 1,
+      "time": 113,
+      "action": {
+        "actionType": "SPAWN",
+        "managedByScheduler": true,
+        "key": "enemy_10201_muinf_2",
+        "count": 2,
+        "preDelay": 3,
+        "interval": 19,
+        "routeIndex": 15,
+        "blockFragment": false,
+        "autoPreviewRoute": false,
+        "autoDisplayEnemyInfo": false,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      }
+    },
+    {
+      "fragment": 5,
+      "actionIndex": 2,
+      "time": 120,
+      "action": {
+        "actionType": "SPAWN",
+        "managedByScheduler": true,
+        "key": "enemy_10201_muinf_2",
+        "count": 4,
+        "preDelay": 10,
+        "interval": 3,
+        "routeIndex": 16,
+        "blockFragment": false,
+        "autoPreviewRoute": false,
+        "autoDisplayEnemyInfo": false,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      }
+    },
+    {
+      "fragment": 5,
+      "actionIndex": 3,
+      "time": 113,
+      "action": {
+        "actionType": "SPAWN",
+        "managedByScheduler": true,
+        "key": "enemy_10208_mucow_2",
+        "count": 1,
+        "preDelay": 3,
+        "interval": 1,
+        "routeIndex": 17,
+        "blockFragment": false,
+        "autoPreviewRoute": true,
+        "autoDisplayEnemyInfo": false,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      }
+    },
+    {
+      "fragment": 5,
+      "actionIndex": 4,
+      "time": 116,
+      "action": {
+        "actionType": "SPAWN",
+        "managedByScheduler": true,
+        "key": "enemy_10208_mucow_2",
+        "count": 1,
+        "preDelay": 6,
+        "interval": 1,
+        "routeIndex": 18,
+        "blockFragment": false,
+        "autoPreviewRoute": true,
+        "autoDisplayEnemyInfo": false,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      }
+    },
+    {
+      "fragment": 6,
+      "actionIndex": 0,
+      "time": 144,
+      "action": {
+        "actionType": "SPAWN",
+        "managedByScheduler": true,
+        "key": "enemy_10209_mubag_2",
+        "count": 1,
+        "preDelay": 3,
+        "interval": 1,
+        "routeIndex": 19,
+        "blockFragment": false,
+        "autoPreviewRoute": false,
+        "autoDisplayEnemyInfo": false,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      }
+    },
+    {
+      "fragment": 6,
+      "actionIndex": 1,
+      "time": 147,
+      "action": {
+        "actionType": "SPAWN",
+        "managedByScheduler": true,
+        "key": "enemy_10201_muinf_2",
+        "count": 3,
+        "preDelay": 6,
+        "interval": 9,
+        "routeIndex": 20,
+        "blockFragment": false,
+        "autoPreviewRoute": false,
+        "autoDisplayEnemyInfo": false,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      }
+    },
+    {
+      "fragment": 6,
+      "actionIndex": 2,
+      "time": 151,
+      "action": {
+        "actionType": "SPAWN",
+        "managedByScheduler": true,
+        "key": "enemy_10207_mubrut_2",
+        "count": 2,
+        "preDelay": 10,
+        "interval": 10,
+        "routeIndex": 21,
+        "blockFragment": false,
+        "autoPreviewRoute": false,
+        "autoDisplayEnemyInfo": false,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      }
+    },
+    {
+      "fragment": 7,
+      "actionIndex": 0,
+      "time": 192,
+      "action": {
+        "actionType": "SPAWN",
+        "managedByScheduler": true,
+        "key": "enemy_10203_mumag_2",
+        "count": 1,
+        "preDelay": 15,
+        "interval": 1,
+        "routeIndex": 22,
+        "blockFragment": false,
+        "autoPreviewRoute": true,
+        "autoDisplayEnemyInfo": false,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      }
+    },
+    {
+      "fragment": 7,
+      "actionIndex": 1,
+      "time": 192,
+      "action": {
+        "actionType": "SPAWN",
+        "managedByScheduler": true,
+        "key": "enemy_10203_mumag_2",
+        "count": 1,
+        "preDelay": 15,
+        "interval": 1,
+        "routeIndex": 23,
+        "blockFragment": false,
+        "autoPreviewRoute": true,
+        "autoDisplayEnemyInfo": false,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      }
+    },
+    {
+      "fragment": 7,
+      "actionIndex": 2,
+      "time": 188,
+      "action": {
+        "actionType": "SPAWN",
+        "managedByScheduler": true,
+        "key": "enemy_10203_mumag_2",
+        "count": 1,
+        "preDelay": 11,
+        "interval": 1,
+        "routeIndex": 24,
+        "blockFragment": false,
+        "autoPreviewRoute": true,
+        "autoDisplayEnemyInfo": false,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      }
+    },
+    {
+      "fragment": 7,
+      "actionIndex": 3,
+      "time": 188,
+      "action": {
+        "actionType": "SPAWN",
+        "managedByScheduler": true,
+        "key": "enemy_10203_mumag_2",
+        "count": 1,
+        "preDelay": 11,
+        "interval": 1,
+        "routeIndex": 25,
+        "blockFragment": false,
+        "autoPreviewRoute": true,
+        "autoDisplayEnemyInfo": false,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      }
+    },
+    {
+      "fragment": 7,
+      "actionIndex": 4,
+      "time": 180,
+      "action": {
+        "actionType": "SPAWN",
+        "managedByScheduler": true,
+        "key": "enemy_10203_mumag_2",
+        "count": 1,
+        "preDelay": 3,
+        "interval": 1,
+        "routeIndex": 26,
+        "blockFragment": false,
+        "autoPreviewRoute": true,
+        "autoDisplayEnemyInfo": false,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      }
+    },
+    {
+      "fragment": 7,
+      "actionIndex": 5,
+      "time": 180,
+      "action": {
+        "actionType": "SPAWN",
+        "managedByScheduler": true,
+        "key": "enemy_10203_mumag_2",
+        "count": 1,
+        "preDelay": 3,
+        "interval": 1,
+        "routeIndex": 27,
+        "blockFragment": false,
+        "autoPreviewRoute": true,
+        "autoDisplayEnemyInfo": false,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      }
+    },
+    {
+      "fragment": 8,
+      "actionIndex": 0,
+      "time": 198,
+      "action": {
+        "actionType": "SPAWN",
+        "managedByScheduler": true,
+        "key": "enemy_10201_muinf_2",
+        "count": 4,
+        "preDelay": 6,
+        "interval": 7,
+        "routeIndex": 28,
+        "blockFragment": false,
+        "autoPreviewRoute": false,
+        "autoDisplayEnemyInfo": false,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      }
+    },
+    {
+      "fragment": 8,
+      "actionIndex": 1,
+      "time": 197,
+      "action": {
+        "actionType": "SPAWN",
+        "managedByScheduler": true,
+        "key": "enemy_10209_mubag_2",
+        "count": 2,
+        "preDelay": 5,
+        "interval": 18,
+        "routeIndex": 29,
+        "blockFragment": false,
+        "autoPreviewRoute": false,
+        "autoDisplayEnemyInfo": false,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      }
+    },
+    {
+      "fragment": 8,
+      "actionIndex": 2,
+      "time": 198,
+      "action": {
+        "actionType": "SPAWN",
+        "managedByScheduler": true,
+        "key": "enemy_10207_mubrut_2",
+        "count": 2,
+        "preDelay": 6,
+        "interval": 3,
+        "routeIndex": 30,
+        "blockFragment": false,
+        "autoPreviewRoute": false,
+        "autoDisplayEnemyInfo": false,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      }
+    },
+    {
+      "fragment": 8,
+      "actionIndex": 3,
+      "time": 216,
+      "action": {
+        "actionType": "SPAWN",
+        "managedByScheduler": true,
+        "key": "enemy_10207_mubrut_2",
+        "count": 3,
+        "preDelay": 24,
+        "interval": 4,
+        "routeIndex": 31,
+        "blockFragment": false,
+        "autoPreviewRoute": false,
+        "autoDisplayEnemyInfo": false,
+        "isUnharmfulAndAlwaysCountAsKilled": false,
+        "hiddenGroup": null,
+        "randomSpawnGroupKey": null,
+        "randomSpawnGroupPackKey": null,
+        "randomType": "ALWAYS",
+        "refreshType": "ALWAYS",
+        "weight": 0,
+        "dontBlockWave": false,
+        "forceBlockWaveInBranch": false
+      }
+    }
+  ],
+  "battle": {
+    "max_life": 3,
+    "unit_limit": 9,
+    "initial_dp": 10,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1
+  },
+  "moveScale": 0.5,
+  "limits": [
+    "DISPLAY_ENEMY_INFO is retained presentation metadata, not a combat clock or a tutorial hold.",
+    "Leak Source retains the existing unselectable receiver mapping. This contract does not admit its native clocks to slow_down or resolve terminal kill credit."
+  ]
+}

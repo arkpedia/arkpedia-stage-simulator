@@ -9,6 +9,7 @@ import {prepareClosurCombat,CLOSUR_COMBAT_CONTRACT} from './arkpedia-closur-comb
 import {installClosurRoster,CLOSUR_ROSTER_CONTRACT} from './arkpedia-closur-roster.js';
 import {installClosurDeck} from './arkpedia-closur-deck.js';
 import {assertClosurEnemyCompatibility} from '../../../shared/arkpedia/closur-enemy-compatibility.js';
+import {assertStage17_14ClosurEnemies} from '../../../shared/arkpedia/stage17-14-mechanics.js';
 
 const retained=JSON.stringify(source),roles=new WeakMap();
 export const CLOSUR_PREDEFINED_CONTRACT=Object.freeze({
@@ -42,9 +43,10 @@ export function selectedClosurPredefined(input=source,{contract}={}){
  return{key:CLOSUR_PREDEFINED_KEY,build,record,row:p.position.row,col:p.position.col,dir:p.direction,deploymentSlotCost:root.data._occupiedRemainingCharacterCnt};
 }
 
-export function installClosurPredefined(b,{source:input=source,contract}={}){
+export function installClosurPredefined(b,{source:input=source,contract,candidateStage}={}){
  const entry=selectedClosurPredefined(input,{contract});
- assertClosurEnemyCompatibility(b.data.raw);
+ if(candidateStage!==undefined&&candidateStage!=='17-14')throw Error('Unreviewed predefined Closure enemy scope');
+ if(candidateStage==='17-14')assertStage17_14ClosurEnemies(b.data.raw);else assertClosurEnemyCompatibility(b.data.raw);
  if(b.finished||b._endReq||b.time!==0||!b.getPlayer('arkpedia')||b.bench[ID]
   ||roles.has(b)||b.predefinedOperators?.has(entry.key)||b.regularClosurRoster||b.regularDpFloors?.has('arkpedia')
   ||b.allyUnits.some(u=>u.defId===ID)||b.regularSummons?.has(`summon:${ID}`))

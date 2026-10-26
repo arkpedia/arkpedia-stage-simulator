@@ -2429,3 +2429,59 @@ excluding only the same four quarantined files retained in hosted CI.
 Hosted full run 40342411234 and continuation 40342413124 at 88698e13 were
 confirmed live during this work; they validate the preceding test-harness fix,
 not this subsequent room receipt change.
+
+### Exact internal 17-14 selected-squad composition
+
+Continuation 40343541771 at 2ec9d522 completed successfully. The preceding
+40342413124 failure was a Chrome process launch/WS-endpoint timeout before any
+16-14 simulator assertions; no gameplay timer was changed. Full run 40342411234
+at 88698e13 remains live at this checkpoint observation.
+
+`createStage17_14MechanicsBattle(data, selection, {seed})` now composes the
+canonical one-wave 52-enemy schedule, exact source geometry/routes, Leak Marker,
+and predeployed Closure with a validated selected squad. Its private one-use
+construction capability preserves ordinary loadout/support validation while
+excluding player/support Closure per the literal char_exclude rune. The preset
+and command-center deck install before the single battleStart, consume one
+field slot, and spend no player-card DP. Source initial DP/life/limit/move scale
+are 10/3/9/0.5; source maxPlayTime=0 uses Infinity rather than the ordinary
+300-second fallback. StandardBattle's public constructor cannot mint this path.
+
+The reproducible mechanics contract verifies the frozen stage input/lock and
+all selected enemy graph/clock receipts. It independently matches every raw
+spawn to the canonical geometry schedule, including count/interval-expanded
+fragment offsets and geometry's deduplicated route indices, then binds each
+route back to its specific original level route. The two DISPLAY_ENEMY_INFO
+actions remain retained presentation metadata and do not introduce a combat
+hold. There are 30 spawn entries / 52 units and no optional group or branch.
+
+Preset Closure can use an explicit internal enemy scope comprising exactly the
+six complete canonical records required by this stage. Infantry/channel/carrier
+ordinary casts and Brute casts consume their selected eligible slow_down clocks;
+ChargeRift and Bag feeding retain their verified world clocks, as do periodic
+parents. Leak Source retains the existing unselectable receiver mapping: the
+real S3 target selector cannot apply slow_down to it. This does not admit its
+native skill clocks or resolve its held terminal kill-credit mapping. The
+public stat-only Closure guard is unchanged; a stage-name option cannot admit
+an ordinary, incomplete, edited or enlarged enemy dictionary.
+
+Legal natural-command runs use unmodified source enemies/map and validated
+eight-operator builds, the preset command center, natural DP/SP, normal ready
+skill activations and ordinary redeployment. Seed 1 clears all 52 with three
+life points; seed 71 clears with 51 kills, one leak and two life points. Both
+finish after 300 seconds under the original zero-timeout contract. No forced
+kills, HP/stat/SP buffs, source edits or artificial clear calls are used. The
+ordinary 17-12 desktop/phone/public-refusal/restart browser case also passes.
+
+This is internal mechanics composition, **not 17-14 catalogue admission**.
+Preset withdrawal/card regeneration and native initial FSM/dispatch/frame
+parity remain held. The workspace dispatcher/UI still has no 17-14 entry; its
+next integration step must preserve selectable squad controls, show the separate
+preset and exclude Closure rather than reuse 17-16's nonselectable preparation.
+No public catalogue, operator/module promotion, art or effects were changed.
+
+The final expanded local focused cohort passes all 1,758 available cases, zero
+failures/skips/cancellations, excluding only the four quarantined tracked files.
+It includes ten new exact-construction/source-mutation/exclusion/scope/control/
+natural-clear checks. The contract producer is included in hosted native-source
+reproduction. Fresh continuation validation of this checkpoint is required.

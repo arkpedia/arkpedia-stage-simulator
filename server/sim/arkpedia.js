@@ -3,6 +3,7 @@
 import { stageAdapter } from "../../shared/arkpedia/stage-adapter.js";
 import { Battle } from "./Battle.js";
 import { prepareStage17_16Mechanics } from './content/arkpedia-stage-17-16-mechanics.js';
+import { prepareStage17_14Mechanics } from './content/arkpedia-stage-17-14-mechanics.js';
 import { currentPredefinedControl } from './content/arkpedia-predefined-controls.js';
 import { DataSource } from "./simdata.js";
 import { genericKit } from "./content/generic.js";
@@ -276,6 +277,15 @@ export { stageAdapter };
 // Only this module can mint and consume an internal construction capability.
 // Arbitrary options passed to StandardBattle cannot enable this path.
 const internalStageConstruction = new WeakMap();
+export function createStage17_14MechanicsBattle(data, selection, options = {}) {
+  if (!options || typeof options !== 'object' || Array.isArray(options) || Object.keys(options).some(k => k !== 'seed')) throw Error('Unsupported 17-14 construction options');
+  const { seed = 1 } = options;
+  if (!Number.isSafeInteger(seed) || seed < 0 || seed > 0xffffffff) throw Error('Invalid 17-14 seed');
+  const prepared = prepareStage17_14Mechanics(data, selection), capability = Object.freeze({ seed });
+  internalStageConstruction.set(capability, prepared);
+  try { return new StandardBattle(prepared.data, selection, capability); }
+  finally { internalStageConstruction.delete(capability); }
+}
 export function createStage17_16MechanicsBattle(data, options = {}) {
   if (!options || typeof options !== 'object' || Array.isArray(options) || Object.keys(options).some(k => k !== 'seed')) throw Error('Unsupported 17-16 construction options');
   const { seed = 1 } = options;
@@ -292,7 +302,7 @@ export class StandardBattle extends Battle {
     internalStageConstruction.delete(options);
     if (data.stage?.operators) data = { ...data, operators: { ...data.operators, ...data.stage.operators } };
     if (!internal) assertRegularEnemies(data);
-    const fixed = internal ? [] : fixedSquadBuilds(data);
+    const fixed = internal?.selectableSquad === true ? null : internal ? [] : fixedSquadBuilds(data);
     const squad = fixed ? null : prepareSquad(selection, catalogueFor(data));
     const builds = fixed ?? [
       ...squad.operators,
