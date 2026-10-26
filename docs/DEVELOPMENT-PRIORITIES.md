@@ -2395,3 +2395,14 @@ At the user's request, finish this step and pause for another computer.
 `docs/handoffs/2026-10-26-computer-transfer.md` is the current transfer guide.
 The overall mechanics-first goal remains unfinished; no stage admission,
 public promotion, merge or deployment was performed.
+
+### Resumed checkpoint validation
+
+The user resumed the goal after transfer preparation. Continuation run
+40270786718 at 91f3565a succeeded. Full run 40270786301 failed three
+summon-selection harness cases on Linux/Windows Node 22: the VM context did not
+provide `regularSummonOwnerEntry`, now used by the actual extracted selectedEntry
+handler. The test imports and injects the real resolver rather than stubbing it
+or weakening assertions. All 24 summon-selection/operator-control cases pass
+locally after the correction. A fresh full run is required; the failed run is
+not counted as green. The four quarantined local deletions remain uncommitted.

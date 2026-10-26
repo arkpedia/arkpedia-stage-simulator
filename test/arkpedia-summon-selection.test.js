@@ -9,7 +9,7 @@ import { defaultBuild } from '../shared/arkpedia/loadout.js';
 import { skillHud, skillSourceFor, ammunitionHud } from '../shared/arkpedia/skill-hud.js';
 import { flowingShapeDeck } from '../public/arkpedia/muelsyse-copy.js';
 import { summonCardId, summonUnitId } from '../shared/arkpedia/summons.js';
-import { selectedRegularSummon, summonPlacementError, deployRegularSummon,
+import { selectedRegularSummon, regularSummonOwnerEntry, summonPlacementError, deployRegularSummon,
   regularSummonCards, retreatRegularSummon } from '../server/sim/content/arkpedia-summons.js';
 
 // Exercise the actual native UI handlers against a real regular-stage battle.
@@ -25,7 +25,7 @@ function make(id) {
   const context = createContext({ battle, data: source, selected: summonCardId(id), selectedToken: null, pending: null,
     battleError: '', landscapeRequired: false, copyFlow: null, flowingShapeDeck, drawHud: () => {},
     icon: () => '', artwork: () => '', summonIcon: () => '',
-    summonUnitId, selectedRegularSummon, summonPlacementError, deployRegularSummon });
+    summonUnitId, selectedRegularSummon, regularSummonOwnerEntry, summonPlacementError, deployRegularSummon });
   runInContext(fn('selectedEntry', 'placementError') + fn('placementError', 'battleReadouts').split('const statIcon')[0]
     + fn('pick', 'summonDetails') + fn('confirmFacing', 'layoutFacing'), context);
   return { battle, context, pick: (row, col) => runInContext(`pick(${row},${col})`, context),
