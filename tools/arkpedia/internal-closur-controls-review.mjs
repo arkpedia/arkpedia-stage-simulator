@@ -8,7 +8,8 @@ export async function createClosurControlsReviewServer({origin}={}){
  const[rawApp,rawData]=await Promise.all(['public/arkpedia/app.js','data/arkpedia-mvp.json'].map(p=>readFile(new URL(p,root),'utf8')));
  const data=JSON.parse(rawData);let app=rawApp;
  const replace=(from,to,count)=>{if(app.split(from).length-1!==count)throw Error('Closure control review app boot changed');app=app.split(from).join(to);};
- replace('import { StandardBattle } from "/sim/arkpedia.js";',`import { StandardBattle } from "/sim/arkpedia.js";
+ replace('import { workspaceStagePreparation, createWorkspaceBattle } from "/sim/arkpedia-stage-entry.js";',`import { workspaceStagePreparation, createWorkspaceBattle } from "/sim/arkpedia-stage-entry.js";
+ import { StandardBattle } from '/sim/arkpedia.js';
  import {installClosurPredefined,CLOSUR_PREDEFINED_CONTRACT} from '/sim/content/arkpedia-closur-predefined.js';
  function createClosurControlsReviewBattle(data,selection){
   const b=new StandardBattle(data,{operators:[defaultBuild(data.operators.char_122_beagle)]},{seed:1});b.autoFinish=false;
@@ -16,7 +17,7 @@ export async function createClosurControlsReviewServer({origin}={}){
   b.closurControlsReview=installClosurPredefined(b,{contract:CLOSUR_PREDEFINED_CONTRACT});return b;
  }`,1);
  replace('({ entry: activeStage } = await applyStage(data, stageIndex, requested, fetch, { experimental }));',"activeStage={id:'closure-controls-review',testOnly:true};",1);
- replace('new StandardBattle(data, selection, { seed: Date.now() })','createClosurControlsReviewBattle(data, selection)',2);
+ replace('createWorkspaceBattle(data, selection, { entry: activeStage, experimental, seed: Date.now() >>> 0 })','createClosurControlsReviewBattle(data, selection)',2);
  data.stage.geometry.waves.forEach(w=>w.spawns=[]);data.enemies={};
  data.operators=Object.fromEntries(['char_122_beagle','char_4228_closur'].map(id=>[id,data.operators[id]]));
  data.sd={...data.sd,models:{}};data.skillEffects=null;

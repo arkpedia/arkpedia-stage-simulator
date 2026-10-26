@@ -2366,3 +2366,32 @@ succeeded and four were still running at the last snapshot. It has not been
 replaced or recorded as a completed successful run. Canonical stage integration,
 native room withdrawal/camera ordering and the wider mechanics audit still come
 before art, models/chibis or effects.
+
+### 2026-10-26 — preparation/entry checkpoint and computer transfer
+
+Continuation 40257327913 at d948a507 completed successfully. Full run
+40253842795 at 9cc3e192 also completed successfully on all eight Linux/Windows
+Node 22/24 shards, superseding the pending status recorded above.
+
+17-16 now has immutable source-owned preparation in the real app: only the
+starting Viy build is shown, player/support editors are absent, hidden cards
+stay hidden, and Start/Restart use the same guarded dispatcher. Ordinary stage
+squad validation remains unchanged. The loopback review supplies a validated
+private catalogue and exercises the unmodified resolver/preparation/dispatcher;
+the production catalogue still refuses 17-16, including experimental mode.
+
+The 13 construction/preparation tests and 46 ordinary battle/control/summon
+regressions passed. Final 17-16 and regular 17-12 desktop/phone browser cases
+passed; screenshots of both fixed preparation viewports were inspected. The
+combined run timed out once waiting for the Closure preparation button; its
+unchanged isolated rerun passed both viewports (one case, zero failures).
+Fresh final-head hosted validation remains required; do not present the older
+green runs as validation of this checkpoint.
+
+The final available local focused cohort passed all 1,743 cases, zero failures,
+skips or cancellations; only the four known quarantined files were excluded.
+
+At the user's request, finish this step and pause for another computer.
+`docs/handoffs/2026-10-26-computer-transfer.md` is the current transfer guide.
+The overall mechanics-first goal remains unfinished; no stage admission,
+public promotion, merge or deployment was performed.

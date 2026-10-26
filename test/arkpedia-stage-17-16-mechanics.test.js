@@ -6,7 +6,40 @@ import{StandardBattle,createStage17_16MechanicsBattle as create}from'../server/s
 import{selectedViyPredefined,VIY_PREDEFINED_KEY}from'../server/sim/content/arkpedia-viy-predefined.js';
 import{stage17_16SchedulePlan}from'../server/sim/content/arkpedia-stage-17-16-schedule.js';
 import{resolveStage}from'../shared/arkpedia/stages.js';import{assertCandidatePredefines}from'../tools/arkpedia/candidate-predefines.mjs';
+import{workspaceStagePreparation,createWorkspaceBattle}from'../server/sim/arkpedia-stage-entry.js';
+import{stage17_16Preparation}from'../server/sim/content/arkpedia-stage-17-16-mechanics.js';
+import{fixedStagePreparationHtml}from'../public/arkpedia/fixed-stage-preparation.js';
+import{defaultBuild}from'../shared/arkpedia/loadout.js';
 const ids=['char_473_mberry','char_128_plosis','char_4023_rfalcn','char_488_buildr'];
+function workspaceData(){return{...structuredClone(base),stage:{...structuredClone(source.stage),testOnly:true,geometry:structuredClone(source.geometry),devices:structuredClone(source.devices),tokens:[],pathing:{moveScale:source.rawLevel.options.moveMultiplier}}};}
+const reviewEntry=Object.freeze({id:'17-16',testOnly:true});
+
+test('fixed-stage preparation exposes only the source-deployed preset with no player or hidden-card selection',()=>{
+ const d=workspaceData(),p=workspaceStagePreparation(d,reviewEntry,{experimental:true});assert.equal(p.kind,'stage-supplied');assert.equal(p.selectable,false);assert.equal(p.support,false);assert.equal(p.hasReinforcements,true);assert.equal(p.visible.length,1);
+ const v=p.visible[0];assert.equal(v.build.id,'char_4226_veen');assert.equal(v.build.elite,2);assert.equal(v.build.level,90);assert.equal(v.build.potential,6);assert.equal(v.build.trust,200);assert.equal(v.build.skillRank,8);assert.equal(v.skillNumber,3);assert.equal(v.dir,'RIGHT');assert.deepEqual([v.row,v.col],[4,3]);
+ assert.ok(Object.isFrozen(p)&&Object.isFrozen(p.visible)&&Object.isFrozen(v)&&Object.isFrozen(v.build));for(const id of ids)assert.ok(!JSON.stringify(p).includes(id));
+ const html=fixedStagePreparationHtml(p,{char_4226_veen:{name:'Viy <script>'}});assert.ok(html.includes('Viy &lt;script&gt;'));assert.ok(html.includes('S3 M1'));assert.ok(html.includes('Already deployed'));assert.ok(!html.includes('<select'));for(const id of ids)assert.ok(!html.includes(id));
+});
+
+test('workspace dispatch uses exact source construction and ignores supplied squad/support fields for the nonselectable level',()=>{
+ const d=workspaceData(),selection={operators:[{id:'forged',stats:{maxHp:1e9}}],support:{id:'forged'}},b=createWorkspaceBattle(d,selection,{entry:reviewEntry,experimental:true,seed:23});
+ assert.equal(b.seed,23);assert.equal(b.stageId,'17-16');assert.equal(b.internalStageMechanics.admitted,false);assert.deepEqual(Object.keys(b.bench),[]);assert.equal(b.deployedSlots(),1);assert.equal(b.dp,10);assert.equal(b.allyUnits[0].defId,'char_4226_veen');assert.equal(selection.operators.length,1);assert.deepEqual(b.errors,[]);
+});
+
+test('workspace preparation does not mint catalogue admission or accept wrong fixed-stage entry flags',()=>{
+ const d=workspaceData();for(const [entry,experimental]of [[undefined,true],[reviewEntry,false],[{id:'17-16',testOnly:false},true],[{id:'17-14',testOnly:true},true]])assert.throws(()=>workspaceStagePreparation(d,entry,{experimental}),/explicit experimental/);
+ assert.throws(()=>workspaceStagePreparation(base,reviewEntry,{experimental:true}),/disagree/);assert.throws(()=>resolveStage(index,'17-16',{experimental:true}),/Unknown stage/);
+});
+
+test('fixed-stage preparation rejects edited level mechanics, hidden/selectable flags and source overrides before starting',()=>{
+ for(const change of [d=>d.stage.battle.initial_dp=99,d=>d.stage.geometry.tileGrid=[],d=>delete d.stage.devices,d=>d.stage.tokens.push('extra'),d=>d.stage.pathing.moveScale=1,d=>d.stage.fixedSquad=[{unit_id:'extra'}],d=>d.stage.testOnly=false]){const d=workspaceData();change(d);assert.throws(()=>workspaceStagePreparation(d,reviewEntry,{experimental:true}),/workspace stage selection/);}
+ for(const change of [s=>s.rawLevel.options.isPredefinedCardsSelectable=true,s=>s.rawLevel.predefines.characterCards[0].hidden=false,s=>s.rawLevel.predefines.characterInsts[0].skillIndex=0]){const s=structuredClone(source);change(s);assert.throws(()=>stage17_16Preparation(workspaceData().stage,s),/construction source/);}
+});
+
+test('ordinary workspace dispatch preserves selected squad validation and StandardBattle construction',()=>{
+ const id='char_122_beagle',selection={operators:[defaultBuild(base.operators[id])]},entry={id:'0-1'},b=createWorkspaceBattle(base,selection,{entry,seed:7});
+ assert.equal(workspaceStagePreparation(base,entry),null);assert.ok(b instanceof StandardBattle);assert.equal(b.internalStageMechanics,undefined);assert.deepEqual(Object.keys(b.bench),[id]);assert.equal(b.seed,7);assert.equal(b.dp,base.stage.battle.initial_dp);assert.throws(()=>createWorkspaceBattle(base,{operators:[]},{entry}),/Choose 1/);assert.deepEqual(b.errors,[]);
+});
 test('the exact internal constructor starts one unpaid preset with no selected or prematurely visible card',()=>{
  const b=create(base),m=b.internalStageMechanics,expected=selectedViyPredefined();assert.ok(b instanceof StandardBattle);assert.equal(b.stageId,'17-16');assert.ok(b.started);assert.equal(b.time,0);
  assert.equal(b.allyUnits.length,1);assert.equal(b.getPlayer('arkpedia').units.length,1);assert.equal(b.predefinedOperators.size,1);assert.equal(m.viy.key,VIY_PREDEFINED_KEY);assert.deepEqual(m.viy.build,expected.build);

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-import { StandardBattle } from "/sim/arkpedia.js";
+import { workspaceStagePreparation, createWorkspaceBattle } from "/sim/arkpedia-stage-entry.js";
+import { fixedStagePreparationHtml } from './fixed-stage-preparation.js';
 import {
   catalogueFor,
   defaultBuild,
@@ -147,8 +148,9 @@ function skillDescription(level) {
 const builds = Object.fromEntries(ops.map((o) => [o.id, defaultBuild(o)]));
 const supportSkills = Object.fromEntries(ops.map((o) => [o.id, defaultBuild(o).skillId]));
 const rankLabel = (rank) => rank > 7 ? `M${rank - 7}` : `Rank ${rank}`;
+const stagePreparation = workspaceStagePreparation(data, activeStage, { experimental });
 const fixedSquad = data.stage.fixedSquad?.length ? data.stage.fixedSquad : null;
-const chosen = new Set(fixedSquad ? fixedSquad.map(entry => entry.unit_id) : ops.slice(0, 5).map((o) => o.id));
+const chosen = new Set(stagePreparation ? [] : fixedSquad ? fixedSquad.map(entry => entry.unit_id) : ops.slice(0, 5).map((o) => o.id));
 let editing = ops[0].id,
   supportId = "",
   rosterQuery = "";
@@ -174,9 +176,9 @@ function prep() {
     : '';
   app.innerHTML = `<div class="frame"><header class="topline"><div><p class="eyebrow">Arkpedia · prototype</p><h1>Stage simulator</h1></div><span class="muted">${escape(data.stage.code)} ${escape(data.stage.name)}</span></header>
  <div class="prep">${stagePicker}<section class="preview"><div class="stage-title"><span class="stage-code">${escape(data.stage.code)}</span><h2>${escape(data.stage.name)}</h2></div><p class="help">${escape(data.stage.description)}</p><p class="stage-meta">${Object.keys(data.stage.enemies ?? {}).length} enemy types · ${data.stage.geometry?.waves?.length ?? 0} waves · ${data.stage.battle?.max_life ?? '–'} life</p><div class="board" id="board"></div><div class="legend"><span class="spawn">Enemy entry</span><span class="goal">Defence objective</span><span>Raised tiles: ranged operators</span></div>
- ${fixedSquad ? `<p class="notice">This stage uses a fixed squad (${fixedSquad.length} operators); the squad choices below are ignored in battle.</p>` : ''}<div class="panel help"><h3>How to play</h3><p>Choose your squad, then open the battle workspace. On mobile, rotate to landscape for battle. Drag an operator onto a tile, then choose its facing on the map. You can also select the operator and click a tile. Select a deployed operator to activate a ready skill or retreat.</p></div>
- <p class="notice">This first slice supports ${escape(data.stage.code)} and the ${ops.length} operators shown. Squad capacity is 12 + one distinct maxed support. Modules, other stages and the rest of the roster are still being built.</p></section>
- <section class="panel"><h2>Prepare your squad</h2><p class="help">Select an operator to adjust their build.</p><label class="roster-search">Find an operator<input id="roster-search" type="search" placeholder="Name or class" value="${escape(rosterQuery)}" autocomplete="off" aria-controls="roster"></label><div class="roster" id="roster" aria-label="Available operators"><p class="roster-empty" hidden>No operators match this search.</p></div><div id="build"></div><label class="support">Support · optional, fully maxed<select id="support"><option value="">No support</option></select></label><div id="support-build"></div><div class="prepare-actions"><button class="primary" id="start">Open battle workspace</button></div><p class="error" id="prep-error" role="status" aria-live="polite"></p></section></div>
+ ${fixedSquad ? `<p class="notice">This stage uses a fixed squad (${fixedSquad.length} operators); the squad choices below are ignored in battle.</p>` : ''}<div class="panel help"><h3>How to play</h3><p>${stagePreparation ? 'Open the battle workspace to control the stage-supplied operators.' : 'Choose your squad, then open the battle workspace.'} On mobile, rotate to landscape for battle. Drag an operator onto a tile, then choose its facing on the map. You can also select the operator and click a tile. Select a deployed operator to activate a ready skill or retreat.</p></div>
+ ${stagePreparation ? '' : `<p class="notice">This first slice supports ${escape(data.stage.code)} and the ${ops.length} operators shown. Squad capacity is 12 + one distinct maxed support. Modules, other stages and the rest of the roster are still being built.</p>`}</section>
+ <section class="panel">${stagePreparation ? fixedStagePreparationHtml(stagePreparation, data.operators) : `<h2>Prepare your squad</h2><p class="help">Select an operator to adjust their build.</p><label class="roster-search">Find an operator<input id="roster-search" type="search" placeholder="Name or class" value="${escape(rosterQuery)}" autocomplete="off" aria-controls="roster"></label><div class="roster" id="roster" aria-label="Available operators"><p class="roster-empty" hidden>No operators match this search.</p></div><div id="build"></div><label class="support">Support · optional, fully maxed<select id="support"><option value="">No support</option></select></label><div id="support-build"></div>`}<div class="prepare-actions"><button class="primary" id="start">Open battle workspace</button></div><p class="error" id="prep-error" role="status" aria-live="polite"></p></section></div>
  <footer>Combat engine from Stronghold Protocol · GPL-3.0-or-later. Unofficial fan simulator; timings are not yet verified frame-for-frame against the game.<div class="links"><a href="https://github.com/arkpedia/arkpedia-stage-simulator-standalone" target="_blank" rel="noreferrer">Simulator source</a><a href="https://github.com/arkpedia/arkpedia-sd-assets" target="_blank" rel="noreferrer">Chibi assets & credits</a></div></footer></div>`;
   renderer = new StageRenderer(
     document.querySelector("#board"),
@@ -185,7 +187,7 @@ function prep() {
   );
   document
     .querySelector("#support")
-    .addEventListener("change", (e) => { supportId = e.target.value; renderPrep(); });
+    ?.addEventListener("change", (e) => { supportId = e.target.value; renderPrep(); });
   document.querySelector("#stage-search")?.addEventListener("input", (e) => {
     const query = e.target.value.trim().toLowerCase(), options = [...document.querySelectorAll("#stage-select option")];
     for (const option of options) option.hidden = !!query && !option.textContent.toLowerCase().includes(query);
@@ -205,7 +207,7 @@ function prep() {
   });
   document.querySelector("#stage-select")?.addEventListener("change", (e) => { location.href = e.target.value; });
   document.querySelector("#start").addEventListener("click", start);
-  document.querySelector("#roster-search").addEventListener("input", (e) => {
+  document.querySelector("#roster-search")?.addEventListener("input", (e) => {
     rosterQuery = e.target.value;
     filterRoster();
   });
@@ -224,6 +226,7 @@ function filterRoster() {
   document.querySelector('#roster .roster-empty').hidden = matched;
 }
 function renderPrep() {
+  if (stagePreparation) { document.querySelector('#start').disabled = loading; return; }
   const active = document.activeElement;
   const focusId = active?.id;
   const focusOperator = active?.classList.contains("roster-item") ? active.dataset.id : null;
@@ -315,7 +318,7 @@ async function start() {
   status.textContent = "Preparing battlefield…";
   try {
     await renderer.artReady;
-    selection = {
+    selection = stagePreparation ? { operators: [], support: null } : {
       operators: [...chosen].map((id) => builds[id]),
       support: supportId
         ? { id: supportId, skillId: supportSkills[supportId] }
@@ -325,10 +328,10 @@ async function start() {
     // skeletons stream in behind it. A missing/slow chibi shows as an invisible unit until it
     // arrives instead of leaving the whole simulator stuck on a loading counter.
     void renderer.preload(
-      [...chosen, ...(supportId ? [supportId] : [])],
+      stagePreparation ? stagePreparation.visible.map(p => p.build.id) : [...chosen, ...(supportId ? [supportId] : [])],
       () => {},
     ).catch((error) => console.error('chibi preload failed', error));
-    battle = new StandardBattle(data, selection, { seed: Date.now() });
+    battle = createWorkspaceBattle(data, selection, { entry: activeStage, experimental, seed: Date.now() >>> 0 });
     selectedToken = null;
     speed = 1;
     showRoutes = false;
@@ -518,7 +521,7 @@ async function start() {
 function restart() {
   stageTutorial?.stop(); stageTutorial = null;
   workspace.querySelector("#deployment").innerHTML = "";
-  battle = new StandardBattle(data, selection, { seed: Date.now() });
+  battle = createWorkspaceBattle(data, selection, { entry: activeStage, experimental, seed: Date.now() >>> 0 });
   stageTutorial = bindStageTutorial(workspace, battle, {
     camera: (instruction, options) => renderer.presentTutorialCamera(instruction, options),
     onChange: () => drawHud(), onError: error => { battleError = error.message; console.error(error); },
