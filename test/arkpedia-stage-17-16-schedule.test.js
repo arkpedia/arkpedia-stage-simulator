@@ -2,14 +2,19 @@
 // Source-field integration with controlled enemy retirement, not a native clear.
 import test from'node:test';import assert from'node:assert/strict';import{readFileSync}from'node:fs';import{createHash}from'node:crypto';import{execFileSync}from'node:child_process';
 import base from'../data/arkpedia-mvp.json' with{type:'json'};import source from'../data/candidates/arkpedia-stage-17-16-source.json' with{type:'json'};
-import{StandardBattle}from'../server/sim/arkpedia.js';import{defaultBuild}from'../shared/arkpedia/loadout.js';import{sourceBoundRoutePath}from'../shared/arkpedia/stage-path.js';
+import{StandardBattle,createStage17_16MechanicsBattle}from'../server/sim/arkpedia.js';import{defaultBuild}from'../shared/arkpedia/loadout.js';import{sourceBoundRoutePath}from'../shared/arkpedia/stage-path.js';
 import{installViyPredefined}from'../server/sim/content/arkpedia-viy-predefined.js';import{installStage17_16Cards}from'../server/sim/content/arkpedia-stage-17-16-cards.js';import{installStage17_16Dialogs}from'../server/sim/content/arkpedia-stage-17-16-dialogs.js';
 import{installStage17_16Schedule as install,stage17_16SchedulePlan as plan}from'../server/sim/content/arkpedia-stage-17-16-schedule.js';
 const near=(a,b)=>assert.ok(Math.abs(a-b)<1e-6,`${a} != ${b}`);
 function fixture({park=true,schedule=true}={}){
+ if(schedule){
+  const b=createStage17_16MechanicsBattle(base),{viy,cards,dialogs,schedule:scheduler}=b.internalStageMechanics;b.setViewport('fullscreen-workspace');
+  b.addBuff(viy.unit,{key:'fixture:durability',mods:{hpFlat:1e6},persist:true});viy.unit.hp=viy.unit.s.maxHp;
+  if(park)b.on('enemySpawn',({enemy:e})=>{e.base.moveSpeed=0;e.markDirty();});return{b,viy,cards,dialogs,scheduler};
+ }
  const d=structuredClone(base),paths={};for(const[i,r]of source.geometry.routes.entries())if(source.geometry.waves.some(w=>w.spawns.some(s=>s.route===i)))paths[i]=sourceBoundRoutePath(r,source.rawLevel.routes);
- // The regular constructor still needs a selectable squad. Its unused Beagle
- // entry is fixture scaffolding; no canonical fixed-squad admission is claimed.
+ // Negative receiver-installation tests deliberately assemble receivers by
+ // hand. Positive integration above uses the exact internal constructor.
  d.enemies={};d.stage={...structuredClone(source.stage),geometry:{...structuredClone(source.geometry),waves:[],suppliedUnits:{}},pathing:{paths,moveScale:.5},devices:[]};
  const b=new StandardBattle(d,{operators:[defaultBuild(d.operators.char_122_beagle)]});b.setViewport('fullscreen-workspace');
  const viy=installViyPredefined(b);b.addBuff(viy.unit,{key:'fixture:durability',mods:{hpFlat:1e6},persist:true});viy.unit.hp=viy.unit.s.maxHp;

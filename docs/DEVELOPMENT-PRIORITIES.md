@@ -35,9 +35,10 @@ and exposes each bench card only on its own literal activation action. An
 internal dialog receiver now owns combat suspension and per-instruction
 completion. An internal source scheduler now composes all 21 ordered actions
 across two owned waves on source terrain/routes, waiting for managed enemies
-before advancing to wave two. Native scheduler/initial FSM timing, fixed-squad
-constructor admission and actual presentation/UI completion remain unverified
-or unconnected, so canonical 17-16 remains held.
+before advancing to wave two. A dedicated internal constructor now starts the
+exact preset and four hidden cards with no selectable squad or spare operator.
+Native scheduler/initial FSM timing, actual presentation/UI completion and
+canonical stage admission remain unverified or unconnected, so 17-16 stays held.
 Rockbreaker's eligible split animation now consumes live `slow_down` elapsed
 work for both release and completion, rather than fixed world-time callbacks.
 The six selected infantry/caster/carrier Combat cooldowns and Brute's owned
@@ -1955,3 +1956,70 @@ fresh complete Linux/Windows, Node 22/24 verification at this new checkpoint.
 The final expanded focused run passed all 1,678 locally available cases after
 the final ownership/error guards. The four quarantined tracked tests remain
 unchanged in Git for hosted execution.
+
+## Exact internal fixed-squad construction for 17-16
+
+createStage17_16MechanicsBattle now constructs the internal source field without
+an unused Beagle or any user-selected roster. It verifies the retained canonical
+source and schedule contract, binds the four already implemented operator
+snapshots by complete JSON digest, and uses their existing exact module-record
+factories. The preset Viy continues to use its independently selected native
+build. Caller catalogues, stage metadata and model dictionaries are detached;
+edits to selected operator records or unsupported construction options fail
+before a battle is exposed.
+
+The regular constructor accepts this path only through a one-use object identity
+minted in its own module and consumed from a private WeakMap. Passing an
+internal/test-only/layout flag to StandardBattle cannot acquire that identity.
+The ordinary enemy gate, selected-squad validation, candidate builder's
+predefined guard and stage resolver are unchanged. Public module selection and
+the public stage index are unchanged. The constructed battle exposes an explicit
+read-only internalStageMechanics descriptor marked testOnly and admitted=false.
+
+All four hidden definitions are registered before the preset is deployed, and
+the preset is present before the single battleStart event. It occupies one
+slot at row 4, column 3 facing RIGHT, has no player bench card and spends no DP.
+Construction starts with source DP 10, LP 3, slot limit 9 and fourteen reserved
+enemies, with an empty visible bench. Source deliveries subsequently expose
+only the four original hidden cards. The already-active preset is not deployed
+again by normal startup. This verifies regular-engine placement/ownership
+ordering; compiled native BORN/FSM dispatch remains a separate open item.
+
+The source maxPlayTime=0 now selects no ordinary 300-second limit for this
+internal field. A held first wave remains live past 300 seconds in a regression,
+with the three second-wave enemies still dormant. The shared engine's existing
+3,600-second hard safety ceiling remains; no unlimited native-clock parity is
+claimed. Ordinary StandardBattle time limits retain their previous behavior,
+and the shared RNG retains its existing zero-seed normalization.
+
+The pure stageAdapter function moved unchanged into shared/arkpedia/stage-adapter.js,
+with its original export retained from the regular engine. Both the stage builder
+and 17-16 source producer now import that pure module directly. This avoids
+making source reproduction load the runtime constructor and thereby import its
+own generated schedule artifact. The source contract still reproduces exactly;
+existing adapter, fixed-squad and stage-builder checks continue to pass.
+
+Positive source-schedule tests and the source-field browser fixture now use the
+actual internal constructor. Only negative receiver-installation tests retain
+manual scaffolding. Two additional Node seed runs and a real Edge run complete
+the unmodified internal field using natural DP, the two legal preset S3 casts,
+four original card deliveries and paid placements on native terrain. These runs
+do not add HP, change enemy speed, disable attacks, set SP directly or force-kill
+enemies. They finish with three LP and fourteen completed enemies. Completion
+includes source zero-LP caster exits; it is not reclassified as fourteen kills.
+Parked/boosted fixtures remain separately labelled where they isolate wave and
+departure clocks. This is stronger engine integration evidence, not compiled
+native timing, rendered UI or client-clear parity proof.
+
+The final focused run passed all 1,686 available local cases, including eight
+new constructor/natural-play checks. All three persistent real Edge checks
+passed without skips, and shared core/battle regressions passed all 37 cases.
+Preceding wave continuation 40246332963 at 47a20f07 passed all fifteen hosted
+jobs. Full run 40246338056 at that same checkpoint is live across all eight
+Linux/Windows, Node 22/24 shards; no replacement full run was dispatched.
+
+Actual camera/dialog presentation and completion input, source withdrawal/card
+regeneration rules, Ptilopsis native range/FSM binding, initial native dispatch
+and the remaining enemy/stage audits still gate canonical admission. All nine
+remaining Chapter 16/17 normal stages remain closed, and mechanics work remains
+ahead of stage art, models/chibis and effects.

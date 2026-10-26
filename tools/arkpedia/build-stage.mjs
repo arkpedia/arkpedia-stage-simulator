@@ -18,7 +18,7 @@ import { basename, dirname, join } from 'node:path';
 import { createHash } from 'node:crypto';
 import { applyReviewedHiddenGroups } from './reviewed-hidden-groups.mjs';
 import {assertCandidatePredefines} from './candidate-predefines.mjs';
-import { stageAdapter } from '../../server/sim/arkpedia.js';
+import { stageAdapter } from '../../shared/arkpedia/stage-adapter.js';
 import { STAGE_TOKEN_UNITS } from '../../shared/arkpedia/stage-devices.js';
 import { mergePristineHiddenGroups } from '../../shared/arkpedia/stage-conditional.js';
 import { syntheticRoutePath, sourceBoundRoutePath } from '../../shared/arkpedia/stage-path.js';

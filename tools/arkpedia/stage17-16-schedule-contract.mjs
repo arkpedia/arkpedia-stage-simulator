@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import{readFile}from'node:fs/promises';import{createHash}from'node:crypto';import assert from'node:assert/strict';
-import{writeJSONAtomic}from'./write-json.mjs';import{stageAdapter}from'../../server/sim/arkpedia.js';
+import{writeJSONAtomic}from'./write-json.mjs';import{stageAdapter}from'../../shared/arkpedia/stage-adapter.js';
 import{sourceBoundRoutePath}from'../../shared/arkpedia/stage-path.js';import{normalizeRoute}from'../../server/sim/simdata.js';
 const root=new URL('../../',import.meta.url),sources={},sha=b=>createHash('sha256').update(b).digest('hex');
 async function read(path){const raw=await readFile(new URL(path,root));sources[path]={path,sha256:sha(raw)};return JSON.parse(raw);}
