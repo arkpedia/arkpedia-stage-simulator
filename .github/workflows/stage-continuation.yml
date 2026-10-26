@@ -51,6 +51,7 @@ jobs:
       - name: Reproduce prefab-bound clocks and corroborate serialized buff event aliases
         run: |
           node tools/arkpedia/fortbreaker-clock-contract.mjs --check
+          node tools/arkpedia/shielded-enemy-clock-contract.mjs --check
           python tools/arkpedia/extract-enemy-family-clocks.py --family ch16-story-guardian --bundle refs/arts/enm_art_23.ab --check
           python tools/arkpedia/extract-enemy-family-clocks.py --family ch16-fear-projectile --bundle refs/arts/enm_art_23.ab --check
           python tools/arkpedia/extract-enemy-family-clocks.py --family ch17-brute --bundle refs/arts/enm_art_26.ab --check

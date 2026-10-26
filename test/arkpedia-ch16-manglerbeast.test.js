@@ -54,8 +54,10 @@ test('death/end cleanup removes owned speed/phase but preserves a foreign multip
 });
 test('mode-0 accelerated melee and mode-1 Combat use their independent clocks',()=>{
  const{h,e,a,u}=fixture(base,{block:1});h.run(.1);assert.equal(e.blockedBy,u);
- let hp=u.hp;e.profile.attackCooldowns.m0Combat=0;h.run(.04);assert.equal(hp-u.hp,1000);assert.ok(e.profile.attackCooldowns.m0Combat>1.3&&e.profile.attackCooldowns.m0Combat<1.6);
- assert.ok(e.profile.attackCooldowns.m0Attack>999999);a.changeMode();h.run(1.04);hp=u.hp;e.profile.attackCooldowns.m1Combat=0;h.run(.04);assert.equal(hp-u.hp,1000);assert.ok(e.profile.attackCooldowns.m1Combat>2.8);assert.deepEqual(h.b.errors,[]);
+ let hp=u.hp;e.profile.attackCooldowns.m0Combat=0;h.run(.04);assert.equal(u.hp,hp);assert.ok(e.profile.attackCooldowns.m0Combat>1.3&&e.profile.attackCooldowns.m0Combat<1.6);
+ assert.ok(e.profile.attackCooldowns.m0Attack>999999);h.run(.9);assert.equal(hp-u.hp,1000);
+ a.changeMode();h.run(1.04);hp=u.hp;e.profile.attackCooldowns.m1Combat=0;h.run(.04);assert.equal(u.hp,hp);assert.ok(e.profile.attackCooldowns.m1Combat>2.8);
+ h.run(.9);assert.equal(hp-u.hp,1000);assert.deepEqual(h.b.errors,[]);
 });
 test('Manglerbeast original graph/indexed evidence and skeleton bytes match independent reviewed hashes',()=>{
  const bytes=p=>fs.readFileSync(new URL('../'+p,import.meta.url)),hash=b=>createHash('sha256').update(b).digest('hex');

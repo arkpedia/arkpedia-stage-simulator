@@ -3,6 +3,7 @@
 // ordinary damage reduction does not consume that pool. The separate mode-0
 // ASPD buff persists if the shield alone is removed; mode exit retires both.
 import { blockMcreep } from './chapter16-engagement.js';
+import { shieldedClocks, installShieldedAttackClock, shieldedTransitionClock, advanceShieldedTransition } from './chapter16-shielded-clocks.js';
 import review from '../../../data/candidates/arkpedia-ch16-reviewed-manglerbeast.json' with { type: 'json' };
 const SHIELD = 'rkmbst_m0_t[shield]', SPEED = 'rkmbst_m0_t[atk_speed]';
 const marked = u => !!u?.findBuff('enemy_mcreep_self_mark');
@@ -14,6 +15,7 @@ export function abnormalManglerbeast(r) {
     || JSON.stringify(r.abilities) !== JSON.stringify(proof.abilities)
     || JSON.stringify(r.skills) !== JSON.stringify(proof.skills)) throw Error('Unreviewed Abnormal Manglerbeast contract');
   const bb = r.talents.bb, reduction = bb['M0Shield.damage_resistance'];
+  const clocks = shieldedClocks(r, 'manglerbeast');
   const engagement = blockMcreep({ cnt: bb['BlockMcreep.block_mcreep_cnt'], range: bb['BlockMcreep.range_radius'],
     rangeAdd: bb['BlockMcreep.range_radius_add'], attackRange: review.defaults.attackRange });
   return {
@@ -23,10 +25,12 @@ export function abnormalManglerbeast(r) {
       a.shield = b.addBuff(e, { key: SHIELD, persist: true, mods: { taunt: review.defaults.taunt } });
       a.speed = b.addBuff(e, { key: SPEED, persist: true, mods: { aspd: bb['M0Shield.attack_speed'] } });
       const valid = () => a.active && e.alive && e.deployed && e.deploySeq === life;
+      a.valid = valid;
       a.shieldLive = () => valid() && a.mode === 0 && !!a.shield && e.buffs.includes(a.shield);
       e.profile.canTarget = ground;
       e.profile.attackCooldowns = { m0Attack: 0, m0Combat: 0, m1Attack: 0, m1Combat: 0 };
       e.profile.attackMode = () => `m${a.mode}${e.blockedBy ? 'Combat' : 'Attack'}`;
+      installShieldedAttackClock(b, e, a, clocks);
       a.damageModifier = (source, target, dmg) => target === e && a.shieldLive() && !marked(source)
         && ['phys', 'arts'].includes(dmg.type) ? 1 - reduction : 1;
       b._takenMultipliers ??= new Map(); b._takenMultipliers.set(e, a.damageModifier);
@@ -37,14 +41,14 @@ export function abnormalManglerbeast(r) {
       };
       a.finishPhase = phase => {
         if (a.phase !== phase) return;
-        phase.task?.cancel(); a.phase = null; b.removeBuff(e, phase.hold);
+        a.phase = null; b.removeBuff(e, phase.hold);
       };
       a.changeMode = () => {
         if (!valid() || a.mode !== 0) return;
+        if (a.ordinary.pending) a.ordinary.finish(a.ordinary.pending);
         a.mode = 1; a.clearShield(); b.removeBuff(e, a.speed); a.speed = null; b.removeBuff(e, 'palsy'); e.atkStandUntil = -Infinity;
-        const phase = a.phase = { epoch: e.actionControlEpoch };
+        const phase = a.phase = shieldedTransitionClock(b, e, clocks);
         phase.hold = b.addBuff(e, { key: 'ch16:mangler-trans', persist: true, flags: { noMove: true, disarm: true } });
-        phase.task = b.after(review.defaults.transitionDuration, () => a.finishPhase(phase), { owner: e });
       };
       a.poolHook = b.on('damageFinal', c => {
         if (c.target !== e || !a.shieldLive() || !marked(c.source) || c.dmg.type !== 'phys' || !(c.amount > 0)) return;
@@ -55,17 +59,23 @@ export function abnormalManglerbeast(r) {
         if (c.target === e && valid() && a.phase && c.status === 'stun') c.cancel = true;
       }, { owner: e });
       a.detach = () => {
+        a.releaseAll();
         a.active = false; a.clearShield(); if (a.phase) a.finishPhase(a.phase);
+        if (a.ordinary.pending) a.ordinary.finish(a.ordinary.pending);
         if (a.speed) b.removeBuff(e, a.speed); a.speed = null; b.off(a.stunHook);
       };
       b.on('battleEnd', a.detach, { owner: e });
+      b.on('removed', ({ unit }) => { if (unit === e) a.detach(); }, { owner: e });
     },
     tick(b, e, a, dt) {
+      if (!a.valid()) { a.detach(); return; }
       engagement.tick(b, e, a, dt);
+      if (a.ordinary.pending) a.ordinary.advance(a.ordinary.pending);
       if (a.shield && !e.buffs.includes(a.shield)) a.clearShield();
       // Stun is immune during the forced transition. Other control changes
       // retire the local clip lock; the completed mode switch is permanent.
-      if (a.phase && (e.actionControlEpoch !== a.phase.epoch || e.s.flags.freeze || e.s.flags.sleep || e.s.flags.levitate)) a.finishPhase(a.phase);
+      if (a.phase && (e.actionControlEpoch !== a.phase.epoch || e.s.flags.freeze || e.s.flags.sleep || e.s.flags.levitate
+        || advanceShieldedTransition(b, e, a.phase, clocks))) a.finishPhase(a.phase);
     },
     death(c, b, e, a) { a.detach(); },
   };

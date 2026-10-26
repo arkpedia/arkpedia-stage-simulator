@@ -108,6 +108,35 @@ blockers. Retaining its graph and testing the common volley subset does not
 admit that record. Captured native frame/render and collider-edge parity remain
 held for both records.
 
+### Slug and Manglerbeast attack/transition clock continuation
+
+`shielded-enemy-clock-contract.mjs --check` reproduces selected clocks for both
+variants of each family from the existing hash-pinned full graphs, indexed
+components and original skeletons. It follows each entity's ordered `_modes`
+to its separate `_attack`/`_combat` component; mode zero uses A_Attack and mode
+one B_Attack. All sixteen ordinary components have TimeMode0, maxAnimScale1,
+affectedBySlowDown1, input-source2/selection-timing0, and waitForAttackEvent1.
+Both Slug skeletons bind OnAttack to 0.5333333611488342 seconds; both
+Manglerbeast skeletons bind it to 0.800000011920929. All attack clips last two
+seconds. The regular controller now releases one accepted physical attack at
+that original marker, retains the input deployment, holds movement through the
+clip and cancels unborn work on control, mode change or source retirement.
+Live same-life ATK is read at release. Its four independent mode/weapon
+cooldowns and pending clips consume eligible live slow_down; ordinary sampled
+BAT/interval playback is capped at one.
+
+Both original Trans clips last one second without OnAttack and have slowdown
+eligibility, no attack-event wait and maxAnimScale-1. Slug uses TimeMode1 (fixed
+playback); Manglerbeast uses TimeMode0 (sampled BAT/interval, uncapped). The
+Manglerbeast's mode-zero speed buff is retired before sampling the forced
+transition. These clocks now consume remaining eligible elapsed work rather
+than a fixed world-time callback. Existing shield, retaliation, pool, forced
+mode permanence and stun-protection rules remain separately tested. Source
+removal/reuse/end also retires owned miner links and prevents generic immediate
+attack fallback. Brief epoch-tracked controls are covered; Fear uses a sampled
+flag because the shared engine has no between-tick Fear epoch bridge. Native
+initial FSM, compiled/frame order and captured render parity remain unclaimed.
+
 ### Commander and per-action canonical level contracts
 
 `arkpedia-ch16-reviewed-commander.json` independently binds both Commander

@@ -150,20 +150,24 @@ test('candidate registration installs exactly one slug and rejects missing/alter
 });
 test('both modes use independent native Attack/Combat clocks and do not schedule M1Start on spawn',()=>{
   const {h,e,a,m}=fixture();m.x=7.8;m.hp=m.s.maxHp;h.run(.1);assert.equal(a.mode,0);assert.equal(a.phase,null);
-  e.profile.attackCooldowns.m0Attack=0;const hp=m.hp;h.run(.04);assert.equal(hp-m.hp,150);
+  e.profile.attackCooldowns.m0Attack=0;const hp=m.hp;h.run(.04);assert.equal(m.hp,hp);
   assert.ok(e.profile.attackCooldowns.m0Attack>1.8);assert.ok(e.profile.attackCooldowns.m0Combat>999999);
+  h.run(.6);assert.equal(hp-m.hp,150);
   // The forced mode switch is permanent and exposes its own ready clock;
   // finishing the clip does not copy the old mode's remaining cooldown.
   a.changeMode();h.run(1.04);e.profile.attackCooldowns.m1Attack=0;const before=m.hp;h.run(.04);
-  assert.equal(before-m.hp,150);assert.ok(e.profile.attackCooldowns.m1Attack>1.8);assert.ok(e.profile.attackCooldowns.m1Combat>999998);
+  assert.equal(m.hp,before);assert.ok(e.profile.attackCooldowns.m1Attack>1.8);assert.ok(e.profile.attackCooldowns.m1Combat>999998);
+  h.run(.6);assert.equal(before-m.hp,150);
   assert.equal(a.mode,1);assert.deepEqual(h.b.errors,[]);
 });
 
 test('real operator blocking selects each mode Combat clock without spending the unblocked Attack clock',()=>{
   const {h,e,a,u}=fixture(base,{block:1});h.run(.1);assert.equal(e.blockedBy,u);
-  let hp=u.hp;e.profile.attackCooldowns.m0Combat=0;h.run(.04);assert.equal(hp-u.hp,300);
+  let hp=u.hp;e.profile.attackCooldowns.m0Combat=0;h.run(.04);assert.equal(u.hp,hp);
   assert.ok(e.profile.attackCooldowns.m0Combat>1.8);assert.ok(e.profile.attackCooldowns.m0Attack>999999);
-  a.changeMode();h.run(1.04);hp=u.hp;e.profile.attackCooldowns.m1Combat=0;h.run(.04);assert.equal(hp-u.hp,300);
+  h.run(.6);assert.equal(hp-u.hp,300);
+  a.changeMode();h.run(1.04);hp=u.hp;e.profile.attackCooldowns.m1Combat=0;h.run(.04);assert.equal(u.hp,hp);
   assert.ok(e.profile.attackCooldowns.m1Combat>1.8);assert.ok(e.profile.attackCooldowns.m1Attack>999998);
+  h.run(.6);assert.equal(hp-u.hp,300);
   assert.deepEqual(h.b.errors,[]);
 });

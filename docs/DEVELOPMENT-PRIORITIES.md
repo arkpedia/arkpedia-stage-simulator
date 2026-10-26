@@ -1,5 +1,17 @@
 # Development priorities
 
+The user resumed development in this Windows session after the computer-transfer
+pause on 26 October. Priority remains all enemy/stage/operator/module mechanics,
+then stage art/models/enemy chibis, then effects. The latest Fortbreaker
+checkpoint (3b8c6101) passed continuation 40357665278, including Windows/Linux
+focused cohorts, source reproduction and all browser cases. Full 40353077124
+at its predecessor af35360e also passed all eight Linux/Windows Node22/24 shards;
+that older full run does not validate later Fortbreaker/shielded-clock edits.
+Internal 17-14 and 17-16 app preparation/dispatch are implemented, but production
+admission, preset withdrawal/card regeneration and remaining native FSM evidence
+are still held. The detailed older paragraphs below are chronological history;
+use the latest continuation entries and exact CI commit/run IDs for current state.
+
 Current continuation: the snake's HP phases, line attack, timeout, firewall and
 native hit body are composed as an internal candidate. AMa-10 and both twins now
 have source-bound ordinary attacks, target ATK ramps, immobility/teleport markers,
@@ -2584,3 +2596,43 @@ miner checks now finish with a normal-DP, naturally charged late Surtr S3M3
 deployment; no source stats, cooldown, waves or game timers were weakened.
 Fresh hosted continuation is started by the transfer push; the receiving session
 must check it and run full validation after the older full handle terminates.
+
+### Resumed here: original Slug and Manglerbeast clocks
+
+The user revoked the transfer pause and resumed this Windows session. Both
+Slug and Manglerbeast variants now use source-bound ordinary Attack/Combat
+markers instead of immediate generic damage. The new clock producer binds
+all sixteen casts through their ordered native mode references and verifies
+the original graph/index/skeleton hashes. Slug releases at 0.5333333611488342
+seconds and Manglerbeast at 0.800000011920929; all four original attack clips
+last two seconds. The accepted input deployment is retained, live ATK is read
+at release, and one accepted attack owns one receipt. Sampled ordinary playback
+is capped at one; pending work and four independent cooldowns consume live
+eligible slow_down. Control, forced mode change and retirement cancel unborn
+work and clear movement holds without falling back to generic immediate attacks.
+
+Both Trans clips last one second with no attack event. The Slug's TimeMode1
+uses fixed playback; Manglerbeast TimeMode0 samples uncapped BAT/interval after
+retiring its mode-zero speed buff. Both now consume eligible elapsed work,
+replacing the fixed world-time callback. Owned miner links, shields, phase and
+ordinary locks retire on removal/reuse/end. Existing physical pool, independent
+reduction/ASPD, source-free Slug retaliation, forced one-way mode and stun
+protection tests remain intact. Native initial FSM/frame parity is unclaimed;
+Fear is sampled because the shared engine has no between-tick Fear epoch bridge.
+
+Original hit timing changes 16-8's seeded miner encounters and route delay.
+The route-only diagnostic fixture retains its existing 600-second budget;
+the incidental old <410 bound is replaced by that existing budget. Clear times
+for seeds 19/71/129 are 284.13/521.47/314.10 seconds. Seed71 independently proves
+the unchanged 300-second default still times out. These high-LP route fixtures
+are not claims of an unmodified three-LP win. Other affected admitted-stage
+source/count/branch checks remain unchanged and pass.
+
+Validation: producer `--check` passes; all 207 related direct/source/stage checks
+pass, including 51 new clock/lifetime cases; all 1,837 locally available focused
+mechanics cases pass with zero failures/skips/cancellations. Actual 16-8 and
+16-11 desktop/phone browser checks pass serially with natural SP, tunnel queue,
+keyboard, layout and restart. `git diff --check` passes. Four quarantined tests
+remain unchanged in Git and excluded only locally. Fresh hosted continuation
+and full verification are required for this new checkpoint; the older full
+40353077124 and Fortbreaker continuation 40357665278 both finished successfully.
