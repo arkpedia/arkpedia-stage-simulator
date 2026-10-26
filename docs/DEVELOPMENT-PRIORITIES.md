@@ -2546,3 +2546,41 @@ regressions pass. The final browser checks include the source DP-borrowing
 boundary, exactly one spend per touch deployment, and no spend on drag-out
 cancellation. `git diff --check` passes. Fresh hosted checks of this checkpoint
 remain required; earlier green full runs do not validate these later edits.
+
+### Fortbreaker clock checkpoint and computer transfer
+
+The user requested finishing this step, writing a handoff, and continuing on
+another computer. The current step corrects the admitted base Fortbreaker's
+ordinary attacks and common volley clocks. Ordinary Attack/Combat now release
+at the original 0.7333333492279053 OnAttack marker; they no longer damage or
+launch a homing shot immediately when AI accepts a target. Attack reselects at
+release, while Combat retains the input deployment. Independent cooldowns and
+pending ordinary clips consume live eligible slow_down. Ordinary playback
+samples BAT/interval capped at one; the volley uses fixed TimeMode1 playback,
+independent of ASPD, with slowed unborn rounds and clip end. Born outputs keep
+world-time travel/impact delays, survive source death, and cannot borrow new
+source stats, damage ledger or victim lives after replacement/reentrant damage.
+The exact graph/skeleton clock producer is checked in continuation CI.
+
+Fortbreaker Mk-II's AttackParam/KillBonusAura remain unsupported; preset
+withdrawal/card regeneration and the remaining Chapter 16/17 admissions remain
+held. No source gap was filled from a talent name, generic client constant or
+unverified native dispatch assumption. Mechanics still precede all art/effects.
+
+Current transfer instructions and final validation are in
+`docs/handoffs/2026-10-26-fortbreaker-transfer.md`; that handoff supersedes the
+earlier preparation transfer snapshot. Continuation run 40353076508 at
+af35360e succeeded (including the actual 17-14 workspace browser check).
+Full run 40353077124 is the existing af35360e handle; check its final status,
+and distinguish it from validation of the subsequent Fortbreaker checkpoint.
+
+Final Fortbreaker validation: producer reproduction passes; 46 dedicated
+Fortbreaker/16-6/16-7 cases pass; all 1,786 locally available focused cases pass
+with zero failures/skips/cancellations; the existing 16-6 real desktop/phone
+browser flow passes. The four quarantined tracked files remain excluded only
+locally and are not staged. The source-correct ordinary attack hold exposed a
+16-7 route-fixture timeout. Its unchanged 300-second cap and ordered/unordered
+miner checks now finish with a normal-DP, naturally charged late Surtr S3M3
+deployment; no source stats, cooldown, waves or game timers were weakened.
+Fresh hosted continuation is started by the transfer push; the receiving session
+must check it and run full validation after the older full handle terminates.

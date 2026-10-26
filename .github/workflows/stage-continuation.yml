@@ -50,6 +50,7 @@ jobs:
           python tools/arkpedia/extract-enemy-native-abilities.py --prefab enemy_1590_muama --prefab enemy_1591_mutwin --prefab enemy_1591_mutwin_2 --prefab enemy_1593_musnake --output data/candidates/arkpedia-ch17-firewall-boss-native.json --check
       - name: Reproduce prefab-bound clocks and corroborate serialized buff event aliases
         run: |
+          node tools/arkpedia/fortbreaker-clock-contract.mjs --check
           python tools/arkpedia/extract-enemy-family-clocks.py --family ch16-story-guardian --bundle refs/arts/enm_art_23.ab --check
           python tools/arkpedia/extract-enemy-family-clocks.py --family ch16-fear-projectile --bundle refs/arts/enm_art_23.ab --check
           python tools/arkpedia/extract-enemy-family-clocks.py --family ch17-brute --bundle refs/arts/enm_art_26.ab --check

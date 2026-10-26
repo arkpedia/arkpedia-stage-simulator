@@ -79,6 +79,27 @@ projectile retains its 0.6000000238418579 delay, fixed target location,
 1.100000023841858 radius, source/target-invalid survival and final trace hit.
 Tests bind these fields directly to retained JSON and original skeleton bytes.
 
+`fortbreaker-clock-contract.mjs --check` now reproduces a separate exact clock
+contract from those pinned graphs and original skeletons. It follows the
+Attack/Combat references and the skill wrapper's same-GameObject sequence;
+the wrapper's `_trigger` is its selector, not the cast ability. Both ordinary
+casts have `_timeMode=0`, `_affectedBySlowDown=1`, `_maxAnimScale=1`.
+F_Attack selects at release (source 1/timing 1); F_Combat retains its input
+deployment (source 2/timing 0). Ordinary accepted attacks now hold movement and
+release at their original OnAttack marker rather than dealing immediate damage.
+The regular-engine BAT/interval playback mapping is capped at one and consumes
+live native slow_down, as do the independent ordinary cooldowns.
+
+F_Skill has `_timeMode=1`, the same slowdown eligibility, and a fixed playback
+rate independent of ASPD. Its unborn rounds and clip end now advance on that
+eligible cast clock; the wrapper's ten-second cooldown remains measured from
+cast end on world time. Born homing shots/static impacts retain their separate
+world clocks, same-life live ATK, and launch-source fallback after body reuse.
+Selected target lives and damage credit cannot transfer to replacement bodies,
+including replacement during an area-damage callback. Control, source removal
+and battle end discard unborn work. This is a source-bound regular-engine
+mapping, not compiled/native initial FSM or frame-order parity proof.
+
 The independent review registers only the behavior actually implemented. Base
 `enemy_10123_uareap` clears candidate support and is used by test-only 16-6.
 The `_2` canonical record also contains AttackParam and KillBonusAura groups;

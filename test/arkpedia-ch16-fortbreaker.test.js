@@ -9,11 +9,15 @@ import { installFeatureDispatch } from '../server/sim/content/enemies.js';
 import { installEnemyFeatures } from '../server/sim/content/arkpedia-enemy-features.js';
 import { makeBattle, chessRec } from './helpers/battleHarness.js';
 import { verifiedNative, verifiedChapter16FamilyGraph } from '../tools/arkpedia/enemy-support.mjs';
+import { applySourceSlowDown, NATIVE_SLOW_DOWN_CONTRACT } from '../server/sim/content/arkpedia-slow-down.js';
 const bytes = p => readFileSync(new URL('../data/' + p, import.meta.url));
 const read = p => JSON.parse(bytes(p));
 const records = read('candidates/arkpedia-enemy-records.canonical.json').enemies;
 const review = read('candidates/arkpedia-ch16-reviewed-fortbreaker.json');
 const key = 'enemy_10123_uareap', miner = 'enemy_3010_mcreep';
+const clock = read('candidates/arkpedia-ch16-fortbreaker-clock-contract.json');
+const slow = f => applySourceSlowDown(f.b, f.u, f.e, { key: 'fortbreaker-clock-fixture', increment: .5,
+  maxStrength: .5, maxStacks: 1, duration: 30, contract: NATIVE_SLOW_DOWN_CONTRACT });
 function fixture({ variant = false, quiet = true, block = 0 } = {}) {
   const id = key + (variant ? '_2' : '');
   const h = makeBattle({ content: 'generic', autoFinish: false, setup: b => { installFeatureDispatch(b); installEnemyFeatures(b); },
@@ -29,6 +33,7 @@ function fixture({ variant = false, quiet = true, block = 0 } = {}) {
   return { h, b: h.b, e, a, u, launches };
 }
 test('Fortbreaker full graph, indexed evidence and original skeleton bytes match reviewed hashes', () => {
+  for (const file of Object.values(clock.sources)) assert.equal(createHash('sha256').update(readFileSync(new URL('../' + file.path, import.meta.url))).digest('hex'), file.sha256);
   for (const file of Object.values(review.sources)) assert.equal(createHash('sha256').update(readFileSync(new URL('../' + file.path, import.meta.url))).digest('hex'), file.sha256);
   const index = read('arkpedia-enemy-clock-source.json');
   verifiedChapter16FamilyGraph(bytes('candidates/arkpedia-ch16-fortbreaker-source.json'), bytes('arkpedia-cn-native-source.json'), bytes('arkpedia-cn-enemy-native-source.json'), index);
@@ -106,9 +111,11 @@ test('unborn rounds reselect live targets; orders acquired after cast do not add
 });
 test('normal ranged attack uses its separate native homing projectile', () => {
   const { h, b, e, u } = fixture({ quiet: false }); const hp = u.hp;
-  h.run(.04); assert.equal(e.stats.attacks, 1); assert.equal(b.projectiles.list[0].speed, 10);
-  assert.equal(u.hp, hp); h.run(.2); assert.equal(hp-u.hp, e.s.atk);
-  assert.ok(e.profile.attackCooldowns.attack > 3); assert.equal(e.profile.attackCooldowns.combat, 0);
+  h.run(.04); assert.equal(e.stats.attacks, 1); assert.equal(b.projectiles.list.length, 0);
+  h.run(.66); assert.equal(u.hp, hp); assert.equal(b.projectiles.list.length, 0);
+  h.run(.08); assert.equal(b.projectiles.list[0].speed, 10); assert.equal(u.hp, hp);
+  h.run(.2); assert.equal(hp-u.hp, e.s.atk);
+  assert.ok(e.profile.attackCooldowns.attack > 2); assert.equal(e.profile.attackCooldowns.combat, 0);
 });
 
 test('both retained original skeletons reproduce the Skill and normal Attack/Combat event clocks', () => {
@@ -133,15 +140,103 @@ test('both retained original skeletons reproduce the Skill and normal Attack/Com
 test('only three-block operators can block; Combat and Attack have independent clocks', () => {
   for (const block of [1, 2, 3]) {
     const { h, b, e, u } = fixture({ block }); const hp = u.hp;
-    h.run(.1); e.profile.attackCooldowns = { attack: 0, combat: 0 }; h.run(.04); assert.equal(e.blockedBy === u, block === 3);
+    e.profile.noAttack = true; h.run(.1); e.profile.noAttack = false;
+    e.profile.attackCooldowns = { attack: 0, combat: 0 }; h.run(.04); assert.equal(e.blockedBy === u, block === 3);
     if (block === 3) {
-      assert.equal(hp-u.hp, e.s.atk); assert.equal(b.projectiles.list.length, 0);
-      assert.equal(e.profile.attackCooldowns.attack, 0); assert.ok(e.profile.attackCooldowns.combat > 3);
+      assert.equal(u.hp, hp); h.run(.6); assert.equal(u.hp, hp);
+      h.run(.15); assert.equal(hp-u.hp, e.s.atk); assert.equal(b.projectiles.list.length, 0);
+      assert.equal(e.profile.attackCooldowns.attack, 0); assert.ok(e.profile.attackCooldowns.combat > e.s.interval-1);
+      h.run(1.3); assert.equal(e.profile.sourceAttack.pending, null);
       b.retreat(u); const m = h.spawn(miner, { pos: [10, 7] }); m.base.moveSpeed = 0; m.markDirty();
       h.run(.04); assert.equal(e.stats.attacks, 2); assert.ok(e.profile.attackCooldowns.attack > 3);
     }
     assert.deepEqual(b.errors, []);
   }
+});
+
+for (const aspd of [900, -50]) test('ordinary native marker samples capped playback at ASPD delta ' + aspd, () => {
+  const f = fixture(); f.b.addBuff(f.e, { key: 'rate-fixture', persist: true, mods: { aspd } });
+  assert.equal(f.a.ordinary.begin([f.u]), true); const p = f.a.ordinary.pending;
+  assert.equal(p.rate, aspd > 0 ? 1 : .5);
+  const hp = f.u.hp; f.h.run(aspd > 0 ? .7 : 1.4); assert.equal(f.b.projectiles.list.length, 0); assert.equal(f.u.hp, hp);
+  f.h.run(aspd > 0 ? .1 : .2); assert.equal(p.released, true); f.h.run(.2); assert.equal(hp-f.u.hp, f.e.s.atk);
+  f.h.run(aspd > 0 ? 1.2 : 2.4); assert.equal(f.a.ordinary.pending, null); assert.deepEqual(f.b.errors, []);
+});
+
+test('ordinary clip and separate Attack/Combat cooldowns consume live slow_down', () => {
+  const f = fixture({ quiet: false }); f.h.run(.04); const p = f.a.ordinary.pending;
+  f.h.run(.3); const age = p.age, before = f.e.profile.attackCooldowns.attack; f.e.profile.attackCooldowns.combat = 6;
+  const buff = slow(f); f.h.run(.6); assert.ok(Math.abs(p.age-age-.3) <= f.b.dt);
+  assert.equal(p.released, false); assert.ok(Math.abs(f.e.profile.attackCooldowns.attack-before+.3) <= f.b.dt);
+  assert.ok(Math.abs(f.e.profile.attackCooldowns.combat-5.7) <= f.b.dt);
+  f.b.removeBuff(f.e, buff); f.h.run(.2); assert.equal(p.released, true); assert.deepEqual(f.b.errors, []);
+});
+
+test('ranged release reselects a live ground target rather than its dead input', () => {
+  const f = fixture(); f.a.ordinary.begin([f.u]); f.h.run(.3); f.b.kill(f.u, null);
+  const m = f.h.spawn(miner, { pos: [10, 7] }); m.base.moveSpeed = 0; m.markDirty(); const hp = m.hp;
+  f.h.run(.7); assert.equal(hp-m.hp, f.e.s.atk-m.s.def); assert.deepEqual(f.b.errors, []);
+});
+
+for (const invalid of ['death', 'reuse']) test('Combat input ' + invalid + ' cannot transfer its pending hit to a new blocker', () => {
+  const f = fixture({ block: 3 }); f.h.run(.1); f.e.profile.attackCooldowns = { attack: 0, combat: 0 }; f.h.run(.04);
+  assert.equal(f.a.ordinary.pending.mode, 'combat'); const hp = f.u.hp;
+  if (invalid === 'death') f.b.kill(f.u, null); else f.u.deploySeq++;
+  const m = f.h.spawn(miner, { pos: [10, 6.5] }); m.base.moveSpeed = 0; m.markDirty(); const mhp = m.hp;
+  f.h.run(1); assert.equal(f.u.hp, invalid === 'death' ? 0 : hp); assert.equal(m.hp, mhp); assert.equal(f.b.projectiles.list.length, 0);
+});
+
+for (const invalid of ['control', 'death', 'reuse', 'battleEnd']) test('ordinary pending ' + invalid + ' discards unborn output and movement hold', () => {
+  const f = fixture(); f.a.ordinary.begin([f.u]); f.h.run(.3); const hp = f.u.hp;
+  if (invalid === 'control') { const buff = f.b.addBuff(f.e, { key: 'brief', flags: { stun: true }, persist: true }); f.b.removeBuff(f.e, buff); }
+  else if (invalid === 'death') f.b.kill(f.e, null);
+  else if (invalid === 'reuse') f.e.deploySeq++;
+  else f.b.emit('battleEnd', {});
+  f.h.run(1); assert.equal(f.a.ordinary.pending, null); assert.equal(f.e.findBuff('ch16:fortbreaker-ordinary'), null);
+  assert.equal(f.u.hp, hp); assert.equal(f.b.projectiles.list.length, 0);
+  if (invalid === 'reuse') assert.equal(f.a.ordinary.begin([f.u]), false, 'retained port must reject replacement life');
+});
+
+for (const kind of ['ordinary', 'volley']) test('born ' + kind + ' cannot borrow replacement source stats or damage ledger', () => {
+  const f = fixture(); const hp = f.u.hp, atk = f.e.s.atk, stats = f.e.stats, oldDamage = stats.dmg;
+  if (kind === 'ordinary') { f.a.ordinary.begin([f.u]); f.h.run(.76); }
+  else { f.a.cast(); f.h.run(.9); }
+  f.e.deploySeq++; f.e.stats = { ...stats }; f.e.base.atk = 9999; f.e.markDirty();
+  f.b.addBuff(f.e, { key: 'new-life', persist: true, mods: { dmgDealtMul: 9 } });
+  f.h.run(.7); assert.equal(hp-f.u.hp, atk * (kind === 'ordinary' ? 1 : .7));
+  assert.equal(f.e.stats.dmg, oldDamage); assert.equal(stats.dmg-oldDamage, hp-f.u.hp);
+  assert.deepEqual(f.b.errors, []);
+});
+
+for (const aspd of [900, -50]) test('volley fixed playback ignores ASPD delta ' + aspd + ' while live slowdown delays unborn rounds', () => {
+  const f = fixture(); f.b.addBuff(f.e, { key: 'rate-fixture', persist: true, mods: { aspd } });
+  f.a.cast(); const p = f.a.pending; f.h.run(.4); const buff = slow(f);
+  f.h.run(.6); assert.equal(f.launches.length, 0); assert.ok(Math.abs(p.age-.7) <= f.b.dt + 1e-7, 'fixed skill age: ' + p.age);
+  f.b.removeBuff(f.e, buff); f.h.run(.2); assert.equal(f.launches.length, 1);
+  const hp = f.u.hp, second = slow(f); f.h.run(.6);
+  assert.equal(f.launches.length, 2); assert.equal(hp-f.u.hp, f.e.s.atk*.7, 'first born blast still uses its world delay');
+  f.b.removeBuff(f.e, second); f.h.run(.7); assert.equal(f.launches.length, 3);
+  f.h.run(.4); assert.equal(f.a.pending, null); assert.deepEqual(f.b.errors, []);
+});
+
+test('volley preempts the ordinary windup without releasing its unborn shot', () => {
+  const f = fixture(); f.a.ordinary.begin([f.u]); f.h.run(.3); f.a.cast();
+  assert.equal(f.a.ordinary.pending, null); assert.equal(f.e.findBuff('ch16:fortbreaker-ordinary'), null);
+  f.h.run(.8); assert.equal(f.b.projectiles.list.length, 0); assert.equal(f.launches.length, 0);
+  f.h.run(.1); assert.equal(f.launches.length, 1); assert.deepEqual(f.b.errors, []);
+});
+
+for (const replace of ['source', 'victim']) test('one static blast handles reentrant ' + replace + ' replacement between victims', () => {
+  const f = fixture(); const m = f.h.spawn(miner, { pos: [10, 6.5] }); m.base.moveSpeed = 0; m.markDirty();
+  f.a.cast(); f.h.run(.9); f.b.kill(f.e, null); const hp = m.hp, atk = f.e.s.atk;
+  let called = false;
+  f.b.on('damaged', ({ target }) => {
+    if (target !== f.u || called) return; called = true;
+    if (replace === 'source') { f.e.deploySeq++; f.e.base.atk = 9999; f.e.markDirty(); }
+    else m.deploySeq++;
+  });
+  f.h.run(.6); assert.equal(called, true);
+  assert.equal(hp-m.hp, replace === 'source' ? atk*.7-m.s.def : 0); assert.deepEqual(f.b.errors, []);
 });
 test('a completed volley preserves the ten-second cooldown from cast end', () => {
   const { h, a, launches } = fixture(); a.cast(); h.run(2.3);

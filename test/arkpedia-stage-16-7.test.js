@@ -47,20 +47,33 @@ test('16-7 review binds complete source and controller contracts; altered source
     '--geometry', geometry, '--out', out], { stdio: 'pipe' }), e => /does not match its reviewed canonical source/.test(String(e.stderr)));
   assert.equal(existsSync(out), false);
 });
-for (const seed of [19, 71, 129]) test(`16-7 source waves, live volleys and native miner branch clear within the default cap (seed ${seed})`, () => {
-  const b = new StandardBattle(data(), { operators: [defaultBuild(mvp.operators.char_122_beagle)] }, { seed });
+for (const seed of [19, 71, 129]) test(`16-7 source waves, live miner volleys and a naturally charged finisher clear within the default cap (seed ${seed})`, () => {
+  const finisher = 'char_350_surtr';
+  const b = new StandardBattle(data(), { operators: [defaultBuild(mvp.operators.char_122_beagle),
+    { ...defaultBuild(mvp.operators[finisher]), skillId: mvp.operators[finisher].skills[2].id, skillRank: 10 }] }, { seed });
   b.life = 1000; b.setViewport('fullscreen-workspace');
-  const born = [], launches = []; b.on('enemySpawn', ({ enemy }) => born.push(enemy)); b.on('ch16FortbreakerLaunch', c => launches.push(c));
+  // This remains a high-LP route/controller fixture, not a three-LP win claim.
+  // Source-correct ordinary clips keep the Fortbreaker on the road longer.
+  // After observing both ordered/unordered miner volleys, spend normal DP and
+  // natural SP on a player finisher rather than weakening the 300-second cap.
+  const born = [], launches = []; let deployed = false;
+  b.on('enemySpawn', ({ enemy }) => born.push(enemy)); b.on('ch16FortbreakerLaunch', c => launches.push({ ...c, time: b.time }));
   for (let i = 0; i < Math.round(300 / b.dt) && !b.finished; i++) {
     for (const [id, entry] of b.stageDeviceActions) if (entry.state.canActivate()) b.activateStageDevice(id);
+    if (b.time >= 260) {
+      if (!deployed && !b.placementError(finisher, 3, 5)) { assert.ok(b.deployOperator(finisher, 3, 5, 'RIGHT')); deployed = true; }
+      if (!b.bench[finisher].unit?.skill.active) b.activateOperator(finisher);
+    }
     b.step();
   }
   assert.deepEqual(b.errors, []); assert.equal(b.result().reason, 'cleared'); assert.equal(b.total, 26);
   assert.equal(born.filter(e => e.defId === 'enemy_10120_uaghst').length, 17);
   assert.equal(born.filter(e => e.defId === 'enemy_10125_uacomd').length, 1);
   assert.equal(born.filter(e => e.defId === 'enemy_10123_uareap').length, 1);
-  assert.ok(launches.length >= 3); assert.ok(launches.every(c => c.target.mem.ch16Miner)); assert.ok(launches.some(c => c.count === 6));
-  assert.ok(launches.some(c => c.count === 3), 'later volleys lose orders after Commander leaves');
+  const minerVolleys = launches.filter(c => c.time < 260);
+  assert.ok(minerVolleys.length >= 3); assert.ok(minerVolleys.every(c => c.target.mem.ch16Miner)); assert.ok(minerVolleys.some(c => c.count === 6));
+  assert.ok(minerVolleys.some(c => c.count === 3), 'later volleys lose orders after Commander leaves');
+  assert.equal(deployed, true); assert.ok(b.bench[finisher].unit.stats.dmg > 0);
   const miners = born.filter(e => e.mem.ch16Miner), scheduled = miners.filter(e => !e.mem.ch16Branch), branch = miners.filter(e => e.mem.ch16Branch);
   assert.equal(scheduled.length, 10); assert.ok(scheduled.every(e => !e.counted && e.holdsBattle === false));
   assert.ok(branch.length > 0);
