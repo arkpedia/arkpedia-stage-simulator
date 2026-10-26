@@ -6,6 +6,13 @@ import {startChapter17SnakeCounter} from './chapter17-boss-counter.js';
 import {attachSnakeInteractionWait} from './chapter17-snake-wait.js';
 import {executeEnemyInstantKill} from '../enemy-instant-kill.js';
 const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
+const waveReceipts=new WeakMap();
+// Valid only inside the actual native terminal continuation. A frozen or copied
+// intent supplied later cannot authorize changes to a scheduler's current wave.
+export function currentChapter17SnakeWaveFinishReceipt(intent,b){
+ const receipt=waveReceipts.get(intent);
+ return receipt?.battle===b&&receipt.source.deploySeq===receipt.sourceLife?receipt:null;
+}
 
 export function installChapter17SnakeTerminal(b,e,{finishWave}={}){
  const r=e?.def?.raw,p=contract.record;
@@ -52,7 +59,8 @@ export function installChapter17SnakeTerminal(b,e,{finishWave}={}){
      try{executeEnemyInstantKill(b,{source:e,buffOwner:e,action:contract.finish.find(n=>n.$type.endsWith('+InstantKill'))});}finally{
       // Native AlwaysNext continues the wave handoff after InstantKill, even
       // if its removal handlers retire this controller or revive the body.
-      try{finishWave(waveReceipt);}finally{phase.stop();}
+      waveReceipts.set(waveReceipt,Object.freeze({battle:b,...waveReceipt}));
+      try{finishWave(waveReceipt);}finally{waveReceipts.delete(waveReceipt);phase.stop();}
      }
     }});
     if(!valid()){q.counter?.cancel();phase.stop();}

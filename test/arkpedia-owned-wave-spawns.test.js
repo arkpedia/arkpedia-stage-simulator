@@ -3,6 +3,12 @@ import test from'node:test';import assert from'node:assert/strict';
 import{makeBattle,enemyRec}from'./helpers/battleHarness.js';
 const record=()=>enemyRec({key:'owned',hp:100,speed:0}),fixture=(opts={})=>makeBattle({content:'none',autoFinish:true,timeLimit:30,...opts});
 const spawn=(time=0)=>({time,enemyKey:'owned',def:record(),pos:[10,7]});
+
+test('reservation state is visible only to its exact battle, capability and owner',()=>{
+ const h=fixture(),g=fixture(),owner={},batch=h.b.reserveEnemySpawns([spawn()],owner);
+ assert.equal(h.b.enemySpawnReservationState(batch,owner),'dormant');assert.equal(h.b.enemySpawnReservationState({...batch},owner),null);assert.equal(h.b.enemySpawnReservationState(batch,{}),null);assert.equal(g.b.enemySpawnReservationState(batch,owner),null);
+ batch.activate();assert.equal(h.b.enemySpawnReservationState(batch,owner),'active');batch.cancel();assert.equal(h.b.enemySpawnReservationState(batch,owner),'cancelled');
+});
 test('dormant waves count immediately and hold a clear without spawning until their actual activation boundary',()=>{
  const h=fixture(),b=h.b,one=b.reserveEnemySpawns([spawn(1)],{}),two=b.reserveEnemySpawns([spawn(2)],{});
  assert.equal(b.total,2);h.run(5);assert.equal(b.finished,false);assert.equal(b.enemies.length,0);assert.equal(one.pendingCount,1);

@@ -5,7 +5,10 @@ import {chapter17BossBranchRecord} from './chapter17-boss-branch-records.js';
 import {installChapter17SnakeCore} from './chapter17-snake-core.js';
 import {pollutionBrute} from './chapter17-brute.js';
 import {attach,installFeatureDispatch} from './enemies.js';
-const owners=new WeakMap();
+const owners=new WeakMap(),snakes=new WeakMap();
+export function isChapter17BossBranchSnake(b,source,life){
+ const birth=snakes.get(b);return !!birth&&source?.deploySeq===life&&birth.enemy===source&&birth.enemyLife===life;
+}
 export function installChapter17BossBranch(b,{stage,finishWave}={}){
  const ending=()=>b.finished||!!b._endReq;
  if(stage!==contract.stage||ending()||typeof finishWave!=='function'||!Number.isFinite(b.life)
@@ -27,7 +30,7 @@ export function installChapter17BossBranch(b,{stage,finishWave}={}){
      e.route.cursorOffset={x:0,y:0};e.route.goal={x:entry.route.end[1],y:entry.route.end[0]};e.route.visitEveryCheckPoint=entry.native.visitEveryCheckPoint;e.route.nativeReachRadius=.05;
      e.mem.ch17BossBranch=Object.freeze({branch:contract.branch,index,extraRouteIndex:entry.extraRouteIndex,startedAt:state.startedAt});
      const receipt=Object.freeze({enemy:e,enemyLife:e.deploySeq,index,time:b.time});state.spawned.push(receipt);
-     if(index===0)installChapter17SnakeCore(b,e,{finishWave});
+     if(index===0){installChapter17SnakeCore(b,e,{finishWave});snakes.set(b,receipt);}
      else attach(b,e,[pollutionBrute(e.def.raw,{stage})]);
     }catch(error){state.stop();throw error;}
    },{owner:state,holdsBattle:true}));

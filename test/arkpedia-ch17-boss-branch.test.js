@@ -10,18 +10,80 @@ import {pollutionBrute} from '../server/sim/content/chapter17-brute.js';
 import {pollute} from '../server/sim/content/chapter17.js';
 import {chapter17BossCounterSnapshot as buttons,clickChapter17BossCounter as click} from '../server/sim/content/chapter17-boss-counter.js';
 import {reviewBossBranch} from '../tools/arkpedia/boss-branch-contract.mjs';
+import {installChapter17WaveFinish} from '../server/sim/content/chapter17-wave-finish.js';
+import {currentChapter17SnakeWaveFinishReceipt} from '../server/sim/content/chapter17-snake-terminal.js';
+import {installChapter17SnakeCore} from '../server/sim/content/chapter17-snake-core.js';
 const bytes=p=>readFileSync(new URL('../'+p,import.meta.url)),read=p=>JSON.parse(bytes(p));
 const contract=read('data/candidates/arkpedia-ch17-boss-branch-contract.json'),source=read('data/candidates/arkpedia-stage-17-18-source.json'),canonical=read('data/candidates/arkpedia-enemy-records.canonical.json').enemies,review=read('data/candidates/arkpedia-ch17-reviewed-brute.json');
 const snake='enemy_1593_musnake',brute='enemy_10207_mubrut_2_a';
-function fixture({autoFinish=false,operator=false}={}){
+function fixture({autoFinish=false,operator=false,finishWave}={}){
  const g=source.geometry,chars=g.tileLegend.map((_,i)=>String.fromCharCode(65+i));
  // Only canonical terrain is installed here. This fixture makes no claim to
  // room, story, device or complete stage admission.
  const stage={id:'internal-17-18-branch',rows:g.tileGrid.map(row=>row.map(i=>chars[i]).join('')),legend:Object.fromEntries(g.tileLegend.map((t,i)=>[chars[i],{height:t.height.toUpperCase(),build:t.deployable.toUpperCase(),pass:t.walkable?'ALL':t.flyable?'FLY':'NONE',key:t.key}]))};
  const h=makeBattle({stage,rect:{r0:0,r1:16,c0:0,c1:10},content:'none',autoFinish,timeLimit:1e6,defs:{chess:{branch_op:chessRec({id:'branch_op',stats:{maxHp:1e6,atk:0,def:0,blockCnt:3}})}},units:operator?[{chessId:'branch_op',row:11,col:7}]:[]});
  h.b.life=3;h.b.start();for(const u of h.allies())u.profile.noAttack=true;const waves=[];
- const branch=install(h.b,{stage:'17-18',finishWave:r=>waves.push(r)});return{h,b:h.b,branch,waves};
+ const branch=install(h.b,{stage:'17-18',finishWave:finishWave??(r=>waves.push(r))});return{h,b:h.b,branch,waves};
 }
+
+const reservedSpawn=time=>({time,enemyKey:'enemy_10201_muinf_2',def:canonical.enemy_10201_muinf_2.levels[0],pos:[12,7]});
+function ownedWave(b){const owner={},reservation=b.reserveEnemySpawns([reservedSpawn(0),reservedSpawn(100)],owner);reservation.activate();return{owner,reservation};}
+function finishSnake(f,e=f.branch.spawned[0].enemy){
+ f.b.dealDamage(null,e,{amount:e.s.maxHp*100,type:'true'});f.h.run(.6);const button=buttons(f.b).find(c=>c.kind==='final'&&c.owner===e.id)??buttons(f.b).find(c=>c.kind==='final');assert.ok(button);
+ for(let i=0;i<15;i++)assert.equal(click(f.b,button),true);
+}
+
+test('the actual branch snake skips only its active owned wave and preserves born bodies, later waves and branch work',()=>{
+ let receiver,captured;const advances=[];
+ const f=fixture({finishWave:intent=>{captured=intent;assert.ok(currentChapter17SnakeWaveFinishReceipt(intent,f.b));assert.equal(currentChapter17SnakeWaveFinishReceipt(intent,{}),null);assert.equal(receiver.receive({...intent}),false);assert.equal(receiver.receive(intent),true);assert.equal(receiver.receive(intent),false);}});
+ const wave=ownedWave(f.b),futureOwner={},future=f.b.reserveEnemySpawns([reservedSpawn(0)],futureOwner);
+ receiver=installChapter17WaveFinish(f.b,{stage:'17-18',waveIndex:2,...wave,advance:r=>advances.push(r)});f.h.step();const born=wave.reservation.spawned[0].unit,life=born.deploySeq;
+ f.branch.start();f.h.run(3.1);finishSnake(f);
+ assert.equal(advances.length,1);assert.equal(advances[0].cancelledSpawns,1);assert.equal(advances[0].waveIndex,2);assert.ok(Object.isFrozen(advances[0]));
+ assert.equal(f.b.enemySpawnReservationState(wave.reservation,wave.owner),'cancelled');assert.equal(wave.reservation.pendingCount,0);assert.equal(f.b.total,3);
+ assert.ok(born.alive);assert.equal(born.deploySeq,life);assert.equal(future.pendingCount,1);assert.equal(f.b.enemySpawnReservationState(future,futureOwner),'dormant');assert.equal(receiver.receive(captured),false);assert.equal(currentChapter17SnakeWaveFinishReceipt(captured,f.b),null);
+ f.h.run(6);assert.equal(f.branch.spawned.length,3);assert.ok(f.branch.spawned.slice(1).every(r=>r.enemy.alive));assert.equal(future.activate(),true);f.h.step();assert.equal(future.spawned.length,1);assert.deepEqual(f.b.errors,[]);
+});
+
+test('wave-finish admission authenticates active reservation ownership, stage scope and one receiver per wave',()=>{
+ const f=fixture(),g=fixture(),wave=ownedWave(f.b),foreign=ownedWave(g.b),owner={},dormant=f.b.reserveEnemySpawns([reservedSpawn(1)],owner),args={stage:'17-18',waveIndex:2,...wave,advance:()=>{}};
+ for(const patch of [{stage:'17-17'},{waveIndex:3},{owner:{}},{reservation:{...wave.reservation}},{...foreign},{owner,reservation:dormant},{advance:null}])assert.throws(()=>installChapter17WaveFinish(f.b,{...args,...patch}),/active owned/);
+ const receiver=installChapter17WaveFinish(f.b,args);assert.equal(receiver.receive(Object.freeze({source:{},sourceLife:1,action:{}})),false);assert.equal(wave.reservation.pendingCount,2);assert.throws(()=>installChapter17WaveFinish(f.b,args),/only one/);receiver.stop();assert.deepEqual(f.b.errors,[]);
+});
+
+test('a genuine terminal intent from an unregistered snake cannot skip the branch current wave',()=>{
+ const f=fixture(),wave=ownedWave(f.b),advances=[],receiver=installChapter17WaveFinish(f.b,{stage:'17-18',waveIndex:2,...wave,advance:r=>advances.push(r)});
+ const e=f.h.spawn(snake,{def:record('17-18',snake),pos:[12,7]});f.branch.spawned.push(Object.freeze({index:0,enemy:e,enemyLife:e.deploySeq}));installChapter17SnakeCore(f.b,e,{finishWave:r=>{assert.ok(currentChapter17SnakeWaveFinishReceipt(r,f.b));assert.equal(receiver.receive(r),false);}});finishSnake(f,e);
+ assert.equal(advances.length,0);assert.equal(wave.reservation.pendingCount,1);assert.equal(receiver.state().committed,false);assert.deepEqual(f.b.errors,[]);
+});
+
+for(const mode of ['stop','cancel','replace-life','end'])test('a real native handoff cannot mutate a stopped, cancelled, replaced or ended wave: '+mode,()=>{
+ let receiver;const advances=[],f=fixture({finishWave:r=>assert.equal(receiver.receive(r),false)}),wave=ownedWave(f.b);
+ receiver=installChapter17WaveFinish(f.b,{stage:'17-18',waveIndex:2,...wave,advance:r=>advances.push(r)});f.branch.start();f.h.run(3.1);const e=f.branch.spawned[0].enemy;
+ if(mode==='stop')receiver.stop();else if(mode==='cancel')wave.reservation.cancel();else f.b.on('kill',ctx=>{if(ctx.victim!==e)return;if(mode==='end')f.b.forceEnd('fixture');else e.deploySeq++;});
+ finishSnake(f);assert.equal(advances.length,0);assert.equal(receiver.state().committed,false);assert.equal(wave.reservation.pendingCount,mode==='cancel'?0:1);assert.deepEqual(f.b.errors,[]);
+});
+
+test('native AlwaysNext still skips the owned wave after a self-kill observer revival',()=>{
+ let receiver;const advances=[],f=fixture({finishWave:r=>assert.equal(receiver.receive(r),true)}),wave=ownedWave(f.b);
+ receiver=installChapter17WaveFinish(f.b,{stage:'17-18',waveIndex:2,...wave,advance:r=>advances.push(r)});f.branch.start();f.h.run(3.1);const e=f.branch.spawned[0].enemy;
+ f.b.on('kill',({victim})=>{if(victim===e)victim.hp=50;});finishSnake(f);assert.ok(e.alive);assert.equal(e.hp,50);assert.equal(advances.length,1);assert.equal(wave.reservation.pendingCount,0);assert.equal(receiver.state().committed,true);assert.deepEqual(f.b.errors,[]);
+});
+
+test('a deferred end during native kill admission cancels the wave receiver before scheduler mutation',()=>{
+ let receiver;const advances=[],f=fixture({finishWave:r=>assert.equal(receiver.receive(r),false)}),wave=ownedWave(f.b);
+ receiver=installChapter17WaveFinish(f.b,{stage:'17-18',waveIndex:2,...wave,advance:r=>advances.push(r)});f.branch.start();f.h.run(3.1);const e=f.branch.spawned[0].enemy;
+ f.b.dealDamage(null,e,{amount:e.s.maxHp*100,type:'true'});f.h.run(.6);const button=buttons(f.b).find(c=>c.kind==='final');for(let i=0;i<14;i++)assert.equal(click(f.b,button),true);
+ f.b.on('enemyInstantKill',ctx=>{if(ctx.unit===e)f.b.forceEnd('fixture');});f.b.after(0,()=>assert.equal(click(f.b,button),true));f.h.step();
+ assert.equal(f.b.finished,true);assert.equal(advances.length,0);assert.equal(receiver.state().committed,false);assert.equal(wave.reservation.pendingCount,1);assert.deepEqual(f.b.errors,[]);
+});
+
+test('an advance receiver failure retires the committed skip and cannot replay its native intent',()=>{
+ let receiver,intent;const f=fixture({finishWave:r=>{intent=r;receiver.receive(r);}}),wave=ownedWave(f.b);
+ receiver=installChapter17WaveFinish(f.b,{stage:'17-18',waveIndex:2,...wave,advance:()=>{throw Error('fixture advance');}});f.branch.start();f.h.run(3.1);const e=f.branch.spawned[0].enemy;
+ f.b.dealDamage(null,e,{amount:e.s.maxHp*100,type:'true'});f.h.run(.6);const button=buttons(f.b).find(c=>c.kind==='final');for(let i=0;i<14;i++)assert.equal(click(f.b,button),true);
+ assert.throws(()=>click(f.b,button),/fixture advance/);assert.equal(wave.reservation.pendingCount,0);assert.equal(receiver.state().committed,true);assert.equal(receiver.state().active,false);assert.equal(receiver.receive(intent),false);assert.equal(currentChapter17SnakeWaveFinishReceipt(intent,f.b),null);assert.deepEqual(f.b.errors,[]);
+});
 test('boss branch source receipt binds exact conditional actions, extra routes and isolated local records',()=>{
  for(const s of Object.values(contract.sources))assert.equal(createHash('sha256').update(bytes(s.path)).digest('hex'),s.sha256);
  assert.deepEqual(reviewBossBranch(source,canonical,review),{entries:contract.entries,records:contract.records});

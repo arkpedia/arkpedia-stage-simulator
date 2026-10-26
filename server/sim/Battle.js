@@ -47,6 +47,7 @@ import { toDataSource, normalizeRoute, normalizeStage, normalizeToken, normalize
 import { installContent, setupUnitKit } from './content/index.js';
 
 const DEFAULT_RECTS = { normal: GEO.NORMAL_RECT, unite: GEO.UNITE_RECT, boss: GEO.BOSS_RECT, hidden: GEO.BOSS_RECT };
+const enemySpawnReservations = new WeakMap();
 let hookSeq = 0;
 let schedSeq = 0;
 
@@ -789,7 +790,7 @@ export class Battle {
     const sort = () => this._pending.sort((a,b) => Number(!!a.dormant)-Number(!!b.dormant) || a.time-b.time || a.seq-b.seq);
     sort(); let state = 'dormant'; const thisBattle = this;
     const live = () => !this.finished && !this._endReq;
-    return Object.freeze({
+    const capability = Object.freeze({
       get pendingCount() { return pending.filter(p => thisBattle._pending.includes(p)).length; },
       get spawned() { return Object.freeze([...reservation.spawned]); },
       activate: () => {
@@ -808,6 +809,13 @@ export class Battle {
         this._pending = this._pending.filter(p => !own.has(p)); return true;
       },
     });
+    enemySpawnReservations.set(capability, { battle: this, owner, state: () => state });
+    return capability;
+  }
+
+  enemySpawnReservationState(capability, owner) {
+    const record = enemySpawnReservations.get(capability);
+    return record?.battle === this && record.owner === owner ? record.state() : null;
   }
 
   _queueSpawn(s, precount) {

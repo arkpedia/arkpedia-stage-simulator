@@ -12,6 +12,9 @@ routing and remaining staged-record reviews. The exact 17-18 twin records now
 have an explicit internal stage selection, including their canonical room offset.
 The canonical boss branch also has an explicit internal scheduler with its own
 extra routes and exact local Brute; room-to-branch ordering remains unconnected.
+Its snake can now hand off a callback-scoped native wave-finish receipt to an
+active owned-wave skip receiver. That receiver preserves other reservations and
+born bodies; the full canonical main-wave dispatcher is still unconnected.
 Ordinary operator withdrawals now share captured payment/refund accounting and
 an engine-owned entry point for future stage receivers. The room action's own
 withdrawal scope and timing remain under review.
@@ -2250,3 +2253,62 @@ been dispatched. Leak Source caller/source-credit review, native source intro/
 prep and initial FSM/camera/scheduler parity, preset withdrawal/card regeneration,
 canonical 17-14/17-16 integration and the remaining enemy/stage/operator audit
 still precede new art, models/chibis and effects.
+
+## Owned wave finish from the branch snake's native terminal continuation
+
+The snake's existing FinishCurrentWave intent now has an authenticated receipt
+only while its actual native terminal continuation invokes the receiver. The
+receipt is tied to the battle and captured deployment life, and is removed even
+if the callback throws. A copied/frozen object or a delayed replay cannot mint
+that authorization. Branch provenance uses a separate private birth receipt;
+editing the branch's public observation array cannot register another snake.
+The existing AlwaysNext behavior remains intact after self-kill observer revival.
+
+The new internal wave-finish adapter verifies the exact literal action digest:
+finishAndSkip=true, BUFF_OWNER, both tracking flags false and wave delta zero.
+It requires an already-active spawn reservation owned by this battle and the
+same owner object, an explicit 17-18 wave index and an advance callback. The
+engine now exposes reservation state only for that exact capability/battle/owner
+combination. A private per-reservation registry prevents duplicate receivers.
+Only the real registered branch snake's live callback can commit the operation.
+
+On commit the regular engine cancels only that reservation's unborn work and
+its corresponding precounts, then advances through the captured callback once.
+It does not clear the global pending queue, transfer/rewrite existing enemies,
+cancel other-wave reservations or cancel the branch's independent later spawns.
+Stopping a receiver alone does not skip anything. Deferred/finished battles,
+cancelled reservations and replaced source lives cannot advance. An exception
+from the advance callback leaves the skip committed rather than replayable.
+
+This is an explicit owned-scheduler mapping. Native scheduler/UI counter parity,
+the canonical current-wave selection/dispatcher and room-to-branch composition
+remain unverified or unconnected. It is not a canonical 17-18 constructor or
+clear. The camera/withdraw action's retained 2.5-second field alone still does
+not prove native withdrawal scope or asynchronous ordering, so no speculative
+withdrawal behavior has been installed and 17-18 stays unadmitted.
+
+Eleven added cases cover capability ownership, the real 15-click branch snake
+counter, preserved born/foreign/future/branch work, forged or replayed intents,
+duplicate receivers, stopped/cancelled waves, source life replacement, immediate
+and deferred end, revival and advance exceptions. All 96 targeted reservation/
+branch/terminal/twin cases passed, all 1,733 available focused mechanics cases
+passed, and core/battle checks passed 54. A final branch rerun passed 20 cases.
+The four quarantined test files remain unchanged in Git for hosted execution.
+
+Continuation 40254809392 at 14a55f4d failed one internal browser case: the
+command-center recovery wait exceeded 25 wall seconds. The other six internal
+browser scenarios passed. The workflow previously launched three software-WebGL
+browser files concurrently, while the app intentionally caps each frame's
+simulation delta. These files now run serially to avoid starving rendering;
+the source recovery duration, SP and gameplay clocks have not been shortened or
+injected. The recovery wait additionally asserts the unpaused state and reports
+the full read-only clock/mode/deadline snapshot on failure. Hosted confirmation
+of this correction is required; it is not recorded as a successful run.
+
+The exact serialized three-file command passed all seven local browser cases in
+201 seconds, including both desktop/phone command scenarios, the natural exact
+17-16 clear, source dialog/camera holds and cancellation/error cases. The runner
+policy check passed as well. Full run 40253842795 remains authoritatively live
+in unit/integration checks; six shards were still running at the last snapshot.
+No replacement full run was dispatched. This checkpoint's new continuation run
+must independently confirm the corrected hosted browser execution.

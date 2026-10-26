@@ -153,7 +153,9 @@ jobs:
       - run: node --test test/arkpedia-ch17-ui.browser.test.js
       - name: Verify internal preset, wave, tutorial and command UI
         if: matrix.stage == '17-12'
-        run: node --test test/arkpedia-stage-predefines.browser.test.js test/arkpedia-stage-tutorial.browser.test.js test/arkpedia-operator-controls.browser.test.js
+        # Each file starts software WebGL browsers. Serial execution avoids
+        # starving requestAnimationFrame and the app's capped simulation delta.
+        run: node --test --test-concurrency=1 test/arkpedia-stage-predefines.browser.test.js test/arkpedia-stage-tutorial.browser.test.js test/arkpedia-operator-controls.browser.test.js
       - uses: actions/upload-artifact@v4
         if: always() && matrix.stage == '17-12'
         with:
