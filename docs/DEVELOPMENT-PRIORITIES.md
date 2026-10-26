@@ -5,8 +5,12 @@ native hit body are composed as an internal candidate. AMa-10 and both twins now
 have source-bound ordinary attacks, target ATK ramps, immobility/teleport markers,
 x-4 firewall boundaries, internal three-lane line actors, checkpoint refresh and
 the twins' internal HP-loss and native InstantKill rebirth/fake-death recovery.
-Saga and Ju wound finishers now use that explicit native kill path. Complete
-boss support remains held pending the incoming durability audit, source sequence
+Saga and Ju wound finishers now use that explicit native kill path.
+AMa-10/twin firewall damage factors now bind their original parent buffs and
+literal Physical/Arts DamageScale action through a separate verified contract.
+This closes that parameter/action binding audit; native dispatcher/geometry and
+the wider durability audit remain open. Complete boss support remains held
+pending the incoming durability audit, source sequence
 dispatch review, canonical wave/branch/story integration, mechanical input
 routing and remaining staged-record reviews. The exact 17-18 twin records now
 have an explicit internal stage selection, including their canonical room offset.
@@ -2312,3 +2316,53 @@ policy check passed as well. Full run 40253842795 remains authoritatively live
 in unit/integration checks; six shards were still running at the last snapshot.
 No replacement full run was dispatched. This checkpoint's new continuation run
 must independently confirm the corrected hosted browser execution.
+
+## Source-bound AMa-10 and twin incoming firewall scaling
+
+The prior Muama controller's incoming firewall factor relied on a numeric field
+in the ordinary-combat contract. A separate reproducible durability contract now
+binds the full native damage-resistance template, both literal action nodes and
+all three original creator components and parent buffs. Event 10 is tied to
+ON_TAKE_DAMAGE by the existing independent native/named War Caster event-alias
+witnesses, not inferred from the numeric value. The action uses BUFF_OWNER,
+CheckFirewallDamageSource, Physical/Arts filtering, no apply-way filtering,
+one-minus scaling and isStackable=false. Each canonical record's ratio is 0.9.
+
+The runtime now verifies that complete contract digest, the exact selected
+damage parent and record ratio before installing combat. Its factor is captured
+from that source rather than the legacy numeric field alone. Mutated
+action filters, source selectors, native creator/template bytes, event labels,
+silence/attribute parent fields, duplicate/missing parents and record ratios
+cannot broaden admission. It contributes once through the existing owned
+incoming-multiplier port. This does not establish native cross-buff stacking,
+dispatch timing, collider/point-segment geometry or complete boss durability
+parity, and does not grant any enemy policy or canonical stage admission.
+
+For all three bosses, the damage matrix checks outside Physical/Arts reduction
+after DEF/RES, unreduced inside damage, true and elemental HP-damage bypasses,
+sourceless packets, control/silence independence, apply-way independence, reused
+input packets and damage restoration through a broken side. The source producer
+reproduces from pinned inputs and is checked in native-source CI. Five added
+cases brought the available focused suite to 1,738 passing cases; all 183
+Muama/line/blink/twin/staged-record/branch regression cases passed. A final
+38-case combat rerun includes the control/silence matrix. Regular 17-12 desktop/
+phone/public-refusal/restart UI and the hosted-runner policy check passed too.
+Four quarantined files remain unchanged in Git and retained in hosted suites.
+
+Corrected-browser continuation 40256056456 at bd185965 still failed the Closure
+recovery wall timeout; its other six internal browser cases passed. The new
+diagnostic showed battle time 8.3333, paused=false, no errors and readyAt=15.8.
+Thus the 25-wall-second limit expired before the native recovery deadline even
+with serial files. The source gameplay timer is unchanged. The test now allows
+90 wall seconds per recovery and checks its actual readyAt plus original
+OnStart event offset. It fails early if the world clock passes that activation
+deadline by 0.25 seconds without becoming active, and rejects activation before
+the source deadline. The test-level bound covers both desktop and phone runs.
+This final source-clock-aware browser case passed locally on both viewports;
+fresh hosted confirmation remains required.
+
+Full run 40253842795 remains live; four Linux/Windows Node 22/24 shards had
+succeeded and four were still running at the last snapshot. It has not been
+replaced or recorded as a completed successful run. Canonical stage integration,
+native room withdrawal/camera ordering and the wider mechanics audit still come
+before art, models/chibis or effects.

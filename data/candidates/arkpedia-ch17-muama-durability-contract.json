@@ -1,0 +1,224 @@
+{
+  "schemaVersion": 1,
+  "testOnly": true,
+  "frameParity": false,
+  "scope": "Exact three-boss firewall damage parent, literal ON_TAKE_DAMAGE actions and Physical/Arts scaling parameters. Existing regular-engine point-segment and incoming-multiplier mappings remain; no native dispatcher/geometry/stacking parity or stage admission.",
+  "sources": {
+    "data/candidates/arkpedia-ch17-muama-combat-contract.json": {
+      "path": "data/candidates/arkpedia-ch17-muama-combat-contract.json",
+      "sha256": "69663279e7cd31f398ec95cfdd20b83d6d67cf2129e2d504df254e305766cb07"
+    },
+    "data/candidates/arkpedia-ch17-firewall-boss-source.json": {
+      "path": "data/candidates/arkpedia-ch17-firewall-boss-source.json",
+      "sha256": "4c1dcad409a812cb001dc182ca804462ca3733f840b246dc0c6fdb02c2fbd244"
+    },
+    "data/candidates/arkpedia-war-caster-event-alias-source.json": {
+      "path": "data/candidates/arkpedia-war-caster-event-alias-source.json",
+      "sha256": "1880a5154c2fbc5b18fe5462bd9d925f07cf5ab8cdcdd046088671720031d768"
+    }
+  },
+  "event": {
+    "number": 10,
+    "name": "ON_TAKE_DAMAGE"
+  },
+  "template": {
+    "originalJson": "{\"effectKey\":\"\",\"eventToActions\":{\"_items\":[{\"key\":10,\"value\":{\"SerializedObjectReferences\":[],\"SerializedState\":\"[{\\\"_targetType\\\":\\\"BUFF_OWNER\\\",\\\"$type\\\":\\\"Torappu.Battle.Action.Nodes+CheckFirewallDamageSource\\\"},{\\\"_filterDamageType\\\":true,\\\"_damageMask\\\":\\\"PHYSICAL_AND_MAGICAL\\\",\\\"_filterApplyWay\\\":false,\\\"_applyWayFilter\\\":\\\"NONE\\\",\\\"_filterModifierKey\\\":false,\\\"_modifierKey\\\":\\\"\\\",\\\"_isOneMinus\\\":true,\\\"_isStackable\\\":false,\\\"_isValidStackCnt\\\":false,\\\"_cachedDeltaValueToBBKey\\\":\\\"\\\",\\\"_customKey\\\":\\\"\\\",\\\"$type\\\":\\\"Torappu.Battle.Action.Nodes+DamageScale\\\"}]\"}}]},\"onEventPriority\":0,\"templateKey\":\"enemy_muama_t[damage_resistance]\"}",
+    "sha256": "677792091405e71bbf8d3cd96eb7541fff616cee239791be584ad4fa493f9ba8"
+  },
+  "actions": [
+    {
+      "_targetType": "BUFF_OWNER",
+      "$type": "Torappu.Battle.Action.Nodes+CheckFirewallDamageSource"
+    },
+    {
+      "_filterDamageType": true,
+      "_damageMask": "PHYSICAL_AND_MAGICAL",
+      "_filterApplyWay": false,
+      "_applyWayFilter": "NONE",
+      "_filterModifierKey": false,
+      "_modifierKey": "",
+      "_isOneMinus": true,
+      "_isStackable": false,
+      "_isValidStackCnt": false,
+      "_cachedDeltaValueToBBKey": "",
+      "_customKey": "",
+      "$type": "Torappu.Battle.Action.Nodes+DamageScale"
+    }
+  ],
+  "enemies": {
+    "enemy_1590_muama": {
+      "parent": {
+        "attributes": {
+          "abnormalAntis": [],
+          "abnormalComboImmunes": [],
+          "abnormalCombos": [],
+          "abnormalFlags": [
+            22
+          ],
+          "abnormalImmunes": [],
+          "attributeModifiers": []
+        },
+        "audioSignal": "",
+        "blackboard": [],
+        "buffKey": "enemy_muama_t[damage_resistance]",
+        "clearAllStackCntWhenTimeUp": 0,
+        "disableOverride": 0,
+        "durationKey": "duration",
+        "enableInitDirectionFromSource": 0,
+        "firstTriggerInterval": -1,
+        "independentCharacterSource": 0,
+        "isDamageMissable": 0,
+        "isDurableBuff": 0,
+        "isFreezable": 0,
+        "isGroundBoundable": 0,
+        "isLevitatable": 0,
+        "isSilenceable": 0,
+        "isStunnable": 0,
+        "lifeTime": 0,
+        "lifeTimeType": 2,
+        "loadFromDB": 0,
+        "maxStackCnt": 1,
+        "maxValidStackCnt": -1,
+        "onEventPriority": 0,
+        "overrideEffectKey": "",
+        "overrideKey": "",
+        "overrideOnEventPriority": 0,
+        "overrideType": 0,
+        "priority": -1,
+        "priorityBBKeys": [],
+        "refreshRemainingTimeWhenStackMax": 0,
+        "remainingTimeKey": "",
+        "statusResistable": 2,
+        "stripBlackboardParamsWithBuffKey": 0,
+        "takeSnapshotWhenExtend": 0,
+        "templateKey": "enemy_muama_t[damage_resistance]",
+        "triggerCnt": 0,
+        "triggerInterval": -1,
+        "triggerLifeType": 0,
+        "waitFirstTriggerInterval": 1
+      },
+      "ratio": 0.9,
+      "creator": {
+        "pathId": "3816320769638515420",
+        "originalJson": "{\"_attachPassiveBuffsOnDummy\":1,\"_buffs\":[{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[22],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"enemy_muama_t[damage_resistance]\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"duration\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":2,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"enemy_muama_t[damage_resistance]\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"triggerLifeType\":0,\"waitFirstTriggerInterval\":1},{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"immune_yu_blink\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":2,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"empty\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"triggerLifeType\":0,\"waitFirstTriggerInterval\":1},{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"immune_shu_blink\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":2,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"empty\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"triggerLifeType\":0,\"waitFirstTriggerInterval\":1}],\"_forceAsDmgOrHealAbility\":0,\"_ignoreIfOwnerDead\":0,\"_interruptAbilityOnDetach\":1,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-4242251841103674660\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"3800760148018415462\"}}",
+        "sha256": "c9a8a5a9c3bda6341beda6aa0a036bf158c3d98829f3945e9241778211af5d23"
+      }
+    },
+    "enemy_1591_mutwin": {
+      "parent": {
+        "attributes": {
+          "abnormalAntis": [],
+          "abnormalComboImmunes": [],
+          "abnormalCombos": [],
+          "abnormalFlags": [
+            22
+          ],
+          "abnormalImmunes": [],
+          "attributeModifiers": []
+        },
+        "audioSignal": "",
+        "blackboard": [],
+        "buffKey": "enemy_mutwin_t[damage_resistance]",
+        "clearAllStackCntWhenTimeUp": 0,
+        "disableOverride": 0,
+        "durationKey": "duration",
+        "enableInitDirectionFromSource": 0,
+        "firstTriggerInterval": -1,
+        "independentCharacterSource": 0,
+        "isDamageMissable": 0,
+        "isDurableBuff": 0,
+        "isFreezable": 0,
+        "isGroundBoundable": 0,
+        "isLevitatable": 0,
+        "isSilenceable": 0,
+        "isStunnable": 0,
+        "lifeTime": 0,
+        "lifeTimeType": 2,
+        "loadFromDB": 0,
+        "maxStackCnt": 1,
+        "maxValidStackCnt": -1,
+        "onEventPriority": 0,
+        "overrideEffectKey": "",
+        "overrideKey": "",
+        "overrideOnEventPriority": 0,
+        "overrideType": 0,
+        "priority": -1,
+        "priorityBBKeys": [],
+        "refreshRemainingTimeWhenStackMax": 0,
+        "remainingTimeKey": "",
+        "statusResistable": 2,
+        "stripBlackboardParamsWithBuffKey": 0,
+        "takeSnapshotWhenExtend": 0,
+        "templateKey": "enemy_muama_t[damage_resistance]",
+        "triggerCnt": 0,
+        "triggerInterval": -1,
+        "triggerLifeType": 0,
+        "waitFirstTriggerInterval": 1
+      },
+      "ratio": 0.9,
+      "creator": {
+        "pathId": "-7361902877407334905",
+        "originalJson": "{\"_attachPassiveBuffsOnDummy\":1,\"_buffs\":[{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[22],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"enemy_mutwin_t[damage_resistance]\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"duration\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":2,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"enemy_muama_t[damage_resistance]\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"triggerLifeType\":0,\"waitFirstTriggerInterval\":1},{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"enemy_mutwin_move_camera\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"duration\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":2,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"enemy_mutwin_move_camera\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"triggerLifeType\":0,\"waitFirstTriggerInterval\":1}],\"_forceAsDmgOrHealAbility\":0,\"_ignoreIfOwnerDead\":0,\"_interruptAbilityOnDetach\":1,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"2911562984680107527\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"3800760148018415462\"}}",
+        "sha256": "383dde31a2c35c37666b4a442f34f068bd24dec53aeb1f1a38190785ea2581fc"
+      }
+    },
+    "enemy_1591_mutwin_2": {
+      "parent": {
+        "attributes": {
+          "abnormalAntis": [],
+          "abnormalComboImmunes": [],
+          "abnormalCombos": [],
+          "abnormalFlags": [
+            22
+          ],
+          "abnormalImmunes": [],
+          "attributeModifiers": []
+        },
+        "audioSignal": "",
+        "blackboard": [],
+        "buffKey": "enemy_mutwin_t[damage_resistance]",
+        "clearAllStackCntWhenTimeUp": 0,
+        "disableOverride": 0,
+        "durationKey": "duration",
+        "enableInitDirectionFromSource": 0,
+        "firstTriggerInterval": -1,
+        "independentCharacterSource": 0,
+        "isDamageMissable": 0,
+        "isDurableBuff": 0,
+        "isFreezable": 0,
+        "isGroundBoundable": 0,
+        "isLevitatable": 0,
+        "isSilenceable": 0,
+        "isStunnable": 0,
+        "lifeTime": 0,
+        "lifeTimeType": 2,
+        "loadFromDB": 0,
+        "maxStackCnt": 1,
+        "maxValidStackCnt": -1,
+        "onEventPriority": 0,
+        "overrideEffectKey": "",
+        "overrideKey": "",
+        "overrideOnEventPriority": 0,
+        "overrideType": 0,
+        "priority": -1,
+        "priorityBBKeys": [],
+        "refreshRemainingTimeWhenStackMax": 0,
+        "remainingTimeKey": "",
+        "statusResistable": 2,
+        "stripBlackboardParamsWithBuffKey": 0,
+        "takeSnapshotWhenExtend": 0,
+        "templateKey": "enemy_muama_t[damage_resistance]",
+        "triggerCnt": 0,
+        "triggerInterval": -1,
+        "triggerLifeType": 0,
+        "waitFirstTriggerInterval": 1
+      },
+      "ratio": 0.9,
+      "creator": {
+        "pathId": "-208780441792582710",
+        "originalJson": "{\"_attachPassiveBuffsOnDummy\":1,\"_buffs\":[{\"attributes\":{\"abnormalAntis\":[],\"abnormalComboImmunes\":[],\"abnormalCombos\":[],\"abnormalFlags\":[22],\"abnormalImmunes\":[],\"attributeModifiers\":[]},\"audioSignal\":\"\",\"blackboard\":[],\"buffKey\":\"enemy_mutwin_t[damage_resistance]\",\"clearAllStackCntWhenTimeUp\":0,\"disableOverride\":0,\"durationKey\":\"duration\",\"enableInitDirectionFromSource\":0,\"firstTriggerInterval\":-1.0,\"independentCharacterSource\":0,\"isDamageMissable\":0,\"isDurableBuff\":0,\"isFreezable\":0,\"isGroundBoundable\":0,\"isLevitatable\":0,\"isSilenceable\":0,\"isStunnable\":0,\"lifeTime\":0.0,\"lifeTimeType\":2,\"loadFromDB\":0,\"maxStackCnt\":1,\"maxValidStackCnt\":-1,\"onEventPriority\":0,\"overrideEffectKey\":\"\",\"overrideKey\":\"\",\"overrideOnEventPriority\":0,\"overrideType\":0,\"priority\":-1,\"priorityBBKeys\":[],\"refreshRemainingTimeWhenStackMax\":0,\"remainingTimeKey\":\"\",\"statusResistable\":2,\"stripBlackboardParamsWithBuffKey\":0,\"takeSnapshotWhenExtend\":0,\"templateKey\":\"enemy_muama_t[damage_resistance]\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"triggerLifeType\":0,\"waitFirstTriggerInterval\":1}],\"_forceAsDmgOrHealAbility\":0,\"_ignoreIfOwnerDead\":0,\"_interruptAbilityOnDetach\":1,\"_metadata\":{\"blackboardPrefix\":\"\",\"namedAsAlias\":\"\"},\"_selector\":{\"m_FileID\":0,\"m_PathID\":\"0\"},\"m_Enabled\":1,\"m_GameObject\":{\"m_FileID\":0,\"m_PathID\":\"-6554701191266604086\"},\"m_Name\":\"\",\"m_Script\":{\"m_FileID\":1,\"m_PathID\":\"3800760148018415462\"}}",
+        "sha256": "2d84ab93a9d1f28756f07354cdc9bd56c6a31d2246cdab819089e09bffb0abe8"
+      }
+    }
+  }
+}

@@ -4,7 +4,7 @@
 import test from'node:test';import assert from'node:assert/strict';import{existsSync,mkdirSync}from'node:fs';
 const chrome=process.env.CHROME_PATH??'/usr/bin/google-chrome',enabled=process.env.RENDER_E2E==='1'&&existsSync(chrome);
 
-test('preset Closure command-center placement, inspection, recovery and restart use the existing workspace',{skip:enabled?false:'set RENDER_E2E=1 with Chrome installed',timeout:120000},async()=>{
+test('preset Closure command-center placement, inspection, recovery and restart use the existing workspace',{skip:enabled?false:'set RENDER_E2E=1 with Chrome installed',timeout:240000},async()=>{
  const{startServer}=await import('../server/index.js'),{createClosurControlsReviewServer}=await import('../tools/arkpedia/internal-closur-controls-review.mjs'),puppeteer=(await import('puppeteer-core')).default;
  const s=await startServer({port:0,host:'127.0.0.1',quiet:true});let browser,fixture;
  try{
@@ -20,7 +20,14 @@ test('preset Closure command-center placement, inspection, recovery and restart 
    await page.click('#speed');await page.click('#pause');await page.waitForSelector('#field-command #retreat:not(:disabled)');await page.click('#pause');
    await page.screenshot({path:`.cache/closur-controls-${mobile?'phone':'desktop'}.png`});const restDp=(await read()).dp;await page.click('#field-command #retreat');state=await read();assert.equal(state.point.mode,'recharge');assert.equal(state.point.id,pointId);assert.equal(state.point.alive,true);assert.equal(state.dp,restDp);assert.equal(state.slots,1);
    await page.click(tile);await page.waitForSelector('#field-command #retreat:disabled');assert.ok((await page.$eval('#command',e=>e.textContent)).includes('Command center recovering'));assert.equal(await page.$('#field-command #skill'),null);
-   await page.click('#pause');assert.equal((await read()).paused,false);await page.waitForFunction(()=>__closurControlsReview.read().point?.mode==='active',{timeout:25000}).catch(async error=>{throw new Error('Command-center recovery timed out: '+JSON.stringify(await read()),{cause:error});});await page.click('#pause');state=await read();assert.equal(state.point.id,pointId);assert.equal(state.point.hp,state.point.maxHp);await page.waitForSelector('#field-command #retreat:not(:disabled)');
+   // Software rendering can run slower than wall time because the app caps
+   // frame delta. Check the literal world-clock recovery/OnStart deadline;
+   // a stalled transition fails shortly after that deadline, even on a fast host.
+   const activationAt=state.point.readyAt+state.point.activationDelay;
+   await page.click('#pause');assert.equal((await read()).paused,false);
+   const recovery=await page.waitForFunction(at=>{const r=__closurControlsReview.read();return r.point?.mode==='active'||r.time>at+.25?r:false;},{timeout:90000},activationAt).catch(async error=>{throw new Error('Command-center recovery timed out: '+JSON.stringify(await read()),{cause:error});});
+   const observed=await recovery.jsonValue();await recovery.dispose();assert.equal(observed.point.mode,'active');assert.ok(observed.time+1e-7>=activationAt);
+   await page.click('#pause');state=await read();assert.equal(state.point.mode,'active');assert.equal(state.point.id,pointId);assert.equal(state.point.hp,state.point.maxHp);await page.waitForSelector('#field-command #retreat:not(:disabled)');
    await page.click('#settings');await page.click('#restart');await page.waitForFunction(()=>__closurControlsReview.read().time===0&&__closurControlsReview.read().point===null);state=await read();assert.deepEqual(state.bench,['char_122_beagle']);assert.equal(state.slots,1);assert.ok(state.owner.alive);
    // Numeric unit IDs may restart; this card and its callbacks must still bind
    // the new battle's source instance rather than retaining the retired deck.

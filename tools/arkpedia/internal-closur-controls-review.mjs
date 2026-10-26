@@ -25,7 +25,7 @@ export async function createClosurControlsReviewServer({origin}={}){
   return{time:battle?.time,paused,selected,error:battleError,errors:[...(battle?.errors??[])],
    dp:battle?.dp,slots:battle?.deployedSlots(),bench:Object.keys(battle?.bench??{}),
    owner:f?{id:f.u.id,key:f.entry.key,alive:f.u.alive,sp:f.u.skill.spTotal,active:f.u.skill.active}:null,
-   point:p?{id:u.id,alive:u.alive,mode:p.mode,readyAt:p.readyAt,hp:u.hp,maxHp:u.s.maxHp,slots:u.deploymentSlotCost,skill:u.skill.noSkill,tile:[u.tileR,u.tileC]}:null};
+   point:p?{id:u.id,alive:u.alive,mode:p.mode,readyAt:p.readyAt,activationDelay:f.point.model(p).eventPayloads.Start.find(e=>e.name==='OnStart').time,hp:u.hp,maxHp:u.s.maxHp,slots:u.deploymentSlotCost,skill:u.skill.noSkill,tile:[u.tileR,u.tileC]}:null};
  }});`;
  return createPublicReviewServer({origin,app,data,hook});
 }

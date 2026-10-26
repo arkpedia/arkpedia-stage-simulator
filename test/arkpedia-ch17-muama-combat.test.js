@@ -7,6 +7,9 @@ import {makeBattle,chessRec} from './helpers/battleHarness.js';
 import {installChapter17MuamaCombat as install} from '../server/sim/content/chapter17-muama-combat.js';
 import {chapter17Environment,chapter17FirewallSnapshot as snapshot,clickChapter17Firewall as click,chapter17FirewallBlocksDeployment as blocked} from '../server/sim/content/chapter17.js';
 import {muamaCombatContract} from '../tools/arkpedia/muama-combat-contract.mjs';
+import {verifiedMuamaDurability} from '../server/sim/content/chapter17-muama-durability.js';
+import {execFileSync} from 'node:child_process';
+import durability from '../data/candidates/arkpedia-ch17-muama-durability-contract.json' with {type:'json'};
 const bytes=p=>readFileSync(new URL('../'+p,import.meta.url)),read=p=>JSON.parse(bytes(p));
 const contract=read('data/candidates/arkpedia-ch17-muama-combat-contract.json'),keys=Object.keys(contract.enemies),records=read('data/candidates/arkpedia-enemy-records.canonical.json').enemies;
 function fixture({key=keys[0],positions=[[10,5]],beforeInstall}={}){
@@ -19,6 +22,33 @@ function fixture({key=keys[0],positions=[[10,5]],beforeInstall}={}){
 }
 function nextShot(f){f.p.interrupt();f.p.cooldown=0;assert.equal(f.p.begin(),true);f.h.run(1);}
 function breakSide(f,source){chapter17Environment(f.b).expose(source);const input=snapshot(f.b)[0];for(let i=0;i<3;i++)assert.equal(click(f.b,input),true);return input;}
+
+test('durability source reproduces the full native action, original creators and independently witnessed take-damage alias',()=>{
+ for(const pin of Object.values(durability.sources))assert.equal(createHash('sha256').update(bytes(pin.path)).digest('hex'),pin.sha256);
+ execFileSync(process.execPath,['tools/arkpedia/muama-durability-contract.mjs','--check'],{stdio:'pipe'});
+ assert.equal(durability.event.number,10);assert.equal(durability.event.name,'ON_TAKE_DAMAGE');assert.equal(durability.actions[1]._damageMask,'PHYSICAL_AND_MAGICAL');assert.equal(durability.actions[1]._filterApplyWay,false);assert.equal(durability.actions[1]._isStackable,false);
+ for(const key of keys){const p=durability.enemies[key];assert.equal(createHash('sha256').update(p.creator.originalJson).digest('hex'),p.creator.sha256);const selected=verifiedMuamaDurability(key,records[key].levels[0],contract.enemies[key].passive);assert.equal(selected.ratio,.9);assert.ok(Object.isFrozen(selected)&&Object.isFrozen(selected.damageTypes));}
+});
+
+test('durability admission rejects changed actions, native creators, aliases, parent fields, duplicate parents and record ratios',()=>{
+ const key=keys[0],r=records[key].levels[0],parents=contract.enemies[key].passive;
+ for(const change of [s=>s.actions[1]._damageMask='ALL',s=>s.actions[1]._filterApplyWay=true,s=>s.actions[1]._isStackable=true,s=>s.actions[0]._targetType='TARGET',s=>s.template.originalJson+=' ',s=>s.event.name='ON_HIT',s=>s.enemies[key].creator.originalJson+=' ']){const s=structuredClone(durability);change(s);assert.throws(()=>verifiedMuamaDurability(key,r,parents,s),/action source/);}
+ for(const change of [p=>p[0].isSilenceable=1,p=>p[0].attributes.abnormalFlags=[],p=>p.push(structuredClone(p[0])),p=>p.shift()]){const p=structuredClone(parents);change(p);assert.throws(()=>verifiedMuamaDurability(key,r,p),/parent or ratio/);}
+ const changed=structuredClone(r);changed.talents.bb['DamageResistance.damage_resistance']=.5;assert.throws(()=>verifiedMuamaDurability(key,changed,parents),/parent or ratio/);
+});
+
+for(const key of keys)test(key+' scales only outside Physical/Arts damage after DEF/RES and does not mutate reused packets',()=>{
+ const f=fixture({key,positions:[[10,2],[10,5]]});f.p.suspended=true;const[outside,inside]=f.targets;
+ const hpDamage=(source,type,extra={})=>{const before=f.e.hp;f.b.dealDamage(source,f.e,{amount:3000,type,canDodge:false,...extra});return before-f.e.hp;};
+ const def=f.e.s.def,res=f.e.s.res,physical=Math.max(3000-def,150),arts=3000*(1-res/100);
+ assert.ok(Math.abs(hpDamage(outside,'phys')-physical*.1)<1e-6);assert.ok(Math.abs(hpDamage(outside,'arts')-arts*.1)<1e-6);
+ assert.ok(Math.abs(hpDamage(inside,'phys')-physical)<1e-6);assert.ok(Math.abs(hpDamage(inside,'arts')-arts)<1e-6);
+ for(const type of ['true','elemental'])assert.equal(hpDamage(outside,type),3000);
+ assert.equal(hpDamage(null,'phys'),physical);assert.equal(hpDamage(outside,'arts',{sourceless:true}),arts);
+ f.b.addBuff(f.e,{key:'fixture:control',flags:{silence:true,disarm:true,noCombat:true}});assert.ok(Math.abs(hpDamage(outside,'phys')-physical*.1)<1e-6);
+ const packet={amount:3000,type:'arts',canDodge:false,applyWay:'melee'},before=structuredClone(packet);let hp=f.e.hp;f.b.dealDamage(outside,f.e,packet);assert.ok(Math.abs(hp-f.e.hp-arts*.1)<1e-6);hp=f.e.hp;f.b.dealDamage(inside,f.e,packet);assert.ok(Math.abs(hp-f.e.hp-arts)<1e-6);assert.deepEqual(packet,before);
+ breakSide(f,outside);assert.equal(hpDamage(outside,'phys'),physical);assert.deepEqual(f.b.errors,[]);
+});
 
 test('shared combat contract reproduces all three native attack bindings, clocks, passives and independently pinned x-4 range',async()=>{
  assert.deepEqual(await muamaCombatContract(),contract);for(const s of Object.values(contract.sources))assert.equal(createHash('sha256').update(bytes(s.path)).digest('hex'),s.sha256);

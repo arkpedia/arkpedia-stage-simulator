@@ -7,12 +7,14 @@ import {ALLY_COLLIDER_RADIUS} from '../constants.js';
 import {sourceAbilityDelta} from './arkpedia-slow-down.js';
 import {captureEnemySource} from './enemy-source-view.js';
 import {matchesChapter17MuamaRecord} from './chapter17-mutwin-stage-records.js';
+import {verifiedMuamaDurability} from './chapter17-muama-durability.js';
 const live=u=>u?.alive&&u.deployed&&!u.hidden,noAttackOwners=new WeakMap();
 const controlled=e=>['stun','freeze','sleep','levitate','fear','disarm'].some(k=>e.s.flags[k])||(e.s.flags.tremble||e.s.flags.noCombat)&&!!e.blockedBy;
 export function installChapter17MuamaCombat(b,e,{stage}={}){
  const proof=contract.enemies[e?.defId];
  if(!matchesChapter17MuamaRecord(e,proof,stage))
   throw Error('Unreviewed Muama/twin combat contract');
+ const durability=verifiedMuamaDurability(e.defId,e.def.raw,proof.passive);
  if(b.finished||!live(e)||!Number.isFinite(e.deployedAt)||Math.abs(e.deployedAt-b.time)>1e-9)throw Error('Muama combat must attach to a fresh live deployment');
  const life=e.deploySeq,old=e.mem.ch17MuamaCombat;
  const previous=noAttackOwners.get(e.profile)??old;
@@ -75,7 +77,7 @@ export function installChapter17MuamaCombat(b,e,{stage}={}){
   },
   multiplier(source,target,dmg){
    if(!state.valid()||!state.wall.current()||state.buffs.some(buff=>!e.buffs.includes(buff))){state.stop();return 1;}
-   return target===e&&['phys','arts'].includes(dmg.type)&&crossedChapter17FirewallSides(state.wall,source,e).length?1-d.resistance:1;
+   return target===e&&durability.damageTypes.includes(dmg.type)&&crossedChapter17FirewallSides(state.wall,source,e).length?durability.factor:1;
   },
  };
  e.mem.ch17MuamaCombat=state;noAttackOwners.set(profile,state);profile.noAttack=true;
