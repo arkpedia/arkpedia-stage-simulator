@@ -41,6 +41,10 @@ The existing workspace now has an owned source-dialog presenter and camera
 completion port, with player input and combat animation time held through each
 step. Preset/card command panels now read the installed battle records and
 route skills through authenticated source control keys, including after restart.
+Summon inspectors now resolve the installed owner role too, including the
+separate Closure preset. Its command-center placement, recovery and restart
+controls are checked in a controlled workspace field; canonical 17-14 wave and
+entry integration remain open.
 Native camera/scheduler/initial FSM timing, source prep/entry and canonical stage
 admission remain unverified or unconnected, so 17-16 stays held.
 Rockbreaker's eligible split animation now consumes live `slow_down` elapsed
@@ -2198,3 +2202,51 @@ Hosted continuation 40253107154 at 494475cb completed successfully across all
 fifteen jobs. Full run 40249985241 at d5c80b17 also completed successfully across
 all eight Linux/Windows Node 22/24 shards. These successes cover their respective
 checkpoints; the new recipient change requires its own hosted run.
+
+## Installed summon-owner inspection and command-center controls
+
+The workspace's summon inspector and skill-icon paths no longer assume that a
+summoner has a player bench card. They resolve the deck's owner through the
+installed operator control and require the current registered deck record and
+owner identity. Token inspection also checks its live membership, actual owner
+and summon-card binding. Authenticated preset builds supply their exact record;
+ordinary summoned skills retain their existing token/owner runtime selection.
+Closure's command center still has no skill and does not gain an owner-skill
+button through this change. Existing delegated Mon3tr controls retain Kal'tsit's
+actual bench build and selected owner-skill record.
+
+The Closure deck exposes its controller's existing manual-rest readiness. The
+workspace disables Retreat during born/recharge states and enables it only for
+the current active point. Invalid retreat commands are displayed as workspace
+errors rather than escaping as uncaught browser exceptions. Manual rest still
+uses the same point, costs/refunds no DP, occupies no deployment slot and lets
+the existing native-bound recovery/OnStart sequence restore its HP and block.
+
+A loopback-only controlled empty-field harness installs the exact retained
+17-14 Closure preset through its existing source gate in the real app. The
+ordinary prep screen, empty 0-1 field and buildable grid are test scaffolding;
+this is not a canonical 17-14 constructor, clear or compatibility assertion.
+Models are omitted from that fixture and existing stage artwork stays in use.
+The harness has read-only observations and injects no HP, SP, cooldowns or deaths.
+Desktop and phone checks passed placement, token inspection, no invented skill
+button, disabled rest during recovery, same-point full-HP recovery and a fresh
+deck after restart. Both screenshots were visually inspected; CI retains them
+with the internal workspace artifact. Natural DP recovery is accounted for in
+the check rather than disabled in the fixture.
+
+Nine added ownership cases cover the real preset card/token, stale entry/life/
+skill/definition, foreign owner, changed token ownership/card binding and an
+ordinary Kal'tsit/Mon3tr deployment. The available focused suite passed 1,722
+cases, and the targeted summon/HUD/Closure regression checks passed 48. The
+regular 17-12 desktop/phone/public-refusal/restart browser check also passed.
+The existing 17-16 workspace regression passed too, including both preset S3
+activations, all four exact module cards, Kestrel's paid deployment/refund and
+a fresh preset control after restart. The CI runner-policy check passed.
+All four quarantined test files remain unchanged in Git for hosted execution.
+
+Preceding continuation 40253842254 at 9cc3e192 completed successfully. Its full
+Linux/Windows run 40253842795 remains in progress; no competing full run has
+been dispatched. Leak Source caller/source-credit review, native source intro/
+prep and initial FSM/camera/scheduler parity, preset withdrawal/card regeneration,
+canonical 17-14/17-16 integration and the remaining enemy/stage/operator audit
+still precede new art, models/chibis and effects.

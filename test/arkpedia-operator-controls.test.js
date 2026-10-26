@@ -5,7 +5,46 @@ import{StandardBattle,createStage17_16MechanicsBattle as create}from'../server/s
 import{defaultBuild,recordFor,catalogueFor}from'../shared/arkpedia/loadout.js';
 import{battleSkillLevel,skillDescriptionText}from'../shared/arkpedia/battle-ui.js';
 import{installClosurPredefined,CLOSUR_PREDEFINED_CONTRACT,CLOSUR_PREDEFINED_KEY}from'../server/sim/content/arkpedia-closur-predefined.js';
+import{regularSummonCards,selectedRegularSummon,regularSummonOwnerEntry,deployRegularSummon,retreatRegularSummon,summonPlacementError}from'../server/sim/content/arkpedia-summons.js';
+import{summonUnitId}from'../shared/arkpedia/summons.js';
+import{skillSourceFor}from'../shared/arkpedia/skill-hud.js';
 const ids=['char_473_mberry','char_128_plosis','char_4023_rfalcn','char_488_buildr'];
+
+function closurField(){
+ const d=structuredClone(base);d.stage.geometry.waves[0].spawns=[];
+ const b=new StandardBattle(d,{operators:[defaultBuild(d.operators.char_122_beagle)]});b.autoFinish=false;b.setViewport('fullscreen-workspace');b.grid.tiles=b.grid.tiles.map(t=>({...t,height:'LOW',build:'ALL',pass:'ALL'}));
+ const f=installClosurPredefined(b,{contract:CLOSUR_PREDEFINED_CONTRACT});return{b,f};
+}
+
+test('a preset command-center card and token inspect their actual owner without a player Closure card',()=>{
+ const{b,f}=closurField(),card=regularSummonCards(b).find(c=>c.owner===f.u),entry=regularSummonOwnerEntry(b,card);
+ assert.equal(entry.unit,f.u);assert.equal(entry.id,CLOSUR_PREDEFINED_KEY);assert.equal(entry.build.moduleLevel,3);assert.equal(b.bench.char_4228_closur,undefined);
+ const dp=b.dp,slots=b.deployedSlots(),token=deployRegularSummon(b,card.key,3,4),state=selectedRegularSummon(b,summonUnitId(token));
+ assert.equal(regularSummonOwnerEntry(b,state).record,f.u.def.raw);assert.equal(regularSummonOwnerEntry(b,state).unit,f.u);
+ assert.equal(b.dp,dp);assert.equal(b.deployedSlots(),slots);assert.equal(skillSourceFor(token),token);assert.equal(token.skill.noSkill,true);assert.deepEqual(b.errors,[]);
+ assert.equal(state.deck.canRetreat(token),false);for(let n=0;n<180&&!state.deck.canRetreat(token);n++)b.step();assert.equal(state.deck.canRetreat(token),true);
+ retreatRegularSummon(b,summonUnitId(token));assert.equal(state.deck.canRetreat(token),false);assert.equal(token.mem.closurPoint.mode,'recharge');assert.equal(token.alive,true);assert.equal(regularSummonOwnerEntry(b,state).unit,f.u);
+});
+
+test('ordinary summoner cards and an owned Mon3tr still resolve their actual bench build and delegated skill owner',()=>{
+ const d=structuredClone(base),id='char_003_kalts';d.stage.geometry.waves[0].spawns=[];const b=new StandardBattle(d,{operators:[defaultBuild(d.operators[id])]});b.autoFinish=false;b.setViewport('fullscreen-workspace');b.getPlayer('arkpedia').dp=99;
+ const tileFor=check=>{for(let r=b.rect.r0;r<=b.rect.r1;r++)for(let c=b.rect.c0;c<=b.rect.c1;c++)if(!check(r,c))return[r,c];throw Error('Missing legal test tile');};
+ const owner=b.deployOperator(id,...tileFor((r,c)=>b.placementError(id,r,c)),'RIGHT'),card=regularSummonCards(b).find(c=>c.owner===owner);assert.ok(card);
+ assert.equal(regularSummonOwnerEntry(b,card).build,b.bench[id].build);const token=deployRegularSummon(b,card.key,...tileFor((r,c)=>summonPlacementError(b,card.key,r,c))),state=selectedRegularSummon(b,summonUnitId(token));
+ assert.equal(regularSummonOwnerEntry(b,state).unit,owner);assert.equal(skillSourceFor(token),owner);assert.deepEqual(b.errors,[]);
+});
+
+for(const stale of ['map','life','skill','def','foreign','owner','token'])test('summon owner inspection rejects stale/foreign preset ownership: '+stale,()=>{
+ const{b,f}=closurField(),card=regularSummonCards(b).find(c=>c.owner===f.u),token=deployRegularSummon(b,card.key,3,4),state=selectedRegularSummon(b,summonUnitId(token));
+ if(stale==='map')b.predefinedOperators.set(CLOSUR_PREDEFINED_KEY,{...f.entry});
+ else if(stale==='life')f.u.deploySeq++;
+ else if(stale==='skill')f.u.skill={...f.u.skill};
+ else if(stale==='def')f.u.def={...f.u.def};
+ else if(stale==='foreign'){const other=closurField();state.owner=other.f.u;}
+ else if(stale==='owner')token.ownerUnit={...f.u};
+ else token.mem.regularSummonCard='summon:foreign';
+ assert.equal(regularSummonOwnerEntry(b,state),null);assert.deepEqual(b.errors,[]);
+});
 test('the source preset exposes its own authenticated field control without creating a player card',()=>{
  const b=create(base),m=b.internalStageMechanics;b.setViewport('fullscreen-workspace');const e=b.operatorEntry(m.viy.key);
  assert.ok(Object.isFrozen(e));assert.equal(e.unit,m.viy.unit);assert.equal(e.operatorId,'char_4226_veen');assert.equal(e.predefined,true);assert.equal(e.withdrawable,false);assert.equal(e.record,e.unit.def.raw);assert.equal(b.operatorControlId(e.unit),m.viy.key);

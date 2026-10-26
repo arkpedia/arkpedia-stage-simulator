@@ -167,6 +167,18 @@ export function selectedRegularSummon(battle, key) {
   return state ? { ...state, unit } : null;
 }
 
+// Read the actual installed operator role. A same-character player card is
+// not evidence that it owns this deck or this deployed token.
+export function regularSummonOwnerEntry(battle, state) {
+  const current = state && cardState(battle, state.key);
+  if (!current || current.owner !== state.owner || current.record !== state.record) return null;
+  if (state.unit && (state.unit.ownerUnit !== current.owner || !live(state.unit)
+    || state.unit.mem.regularSummonCard !== current.key || !battle.units.includes(state.unit))) return null;
+  const key = battle.operatorControlId?.(current.owner);
+  const entry = key && battle.operatorEntry(key);
+  return entry?.unit === current.owner && entry.operatorId === current.ownerId ? entry : null;
+}
+
 export function retreatRegularSummon(battle, key) {
   if (!canDeployInViewport(battle.viewport) || battle.finished || battle.simulationHeld) throw Error('Battle workspace is inactive.');
   const state = selectedRegularSummon(battle, key), token = state?.unit;

@@ -3,6 +3,31 @@
 // The normal prep screen is review scaffolding; native stage admission stays shut.
 import test from'node:test';import assert from'node:assert/strict';import{existsSync,mkdirSync}from'node:fs';
 const chrome=process.env.CHROME_PATH??'/usr/bin/google-chrome',enabled=process.env.RENDER_E2E==='1'&&existsSync(chrome);
+
+test('preset Closure command-center placement, inspection, recovery and restart use the existing workspace',{skip:enabled?false:'set RENDER_E2E=1 with Chrome installed',timeout:120000},async()=>{
+ const{startServer}=await import('../server/index.js'),{createClosurControlsReviewServer}=await import('../tools/arkpedia/internal-closur-controls-review.mjs'),puppeteer=(await import('puppeteer-core')).default;
+ const s=await startServer({port:0,host:'127.0.0.1',quiet:true});let browser,fixture;
+ try{
+  fixture=await createClosurControlsReviewServer({origin:`http://127.0.0.1:${s.port}`});browser=await puppeteer.launch({executablePath:chrome,headless:true,args:['--no-first-run','--no-sandbox','--enable-unsafe-swiftshader','--use-gl=angle','--use-angle=swiftshader','--disable-background-timer-throttling']});mkdirSync('.cache',{recursive:true});
+  for(const mobile of [false,true]){
+   const page=await browser.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));await page.setViewport(mobile?{width:844,height:390,isMobile:true,hasTouch:true}:{width:1440,height:900});await page.goto(fixture.origin+'/arkpedia/',{waitUntil:'domcontentloaded'});await page.waitForSelector('#start:not(:disabled)');await page.click('#start');await page.waitForSelector('.workspace #pause');
+   const read=()=>page.evaluate(()=>__closurControlsReview.read());let state=await read();assert.deepEqual(state.bench,['char_122_beagle']);assert.equal(state.slots,1);assert.equal(state.point,null);
+   await page.evaluate(()=>__closurControlsReview.read().errors.push('observation-copy'));assert.deepEqual((await read()).errors,[]);
+   const card='#deployment button[data-id="summon:char_4228_closur"]',tile='.tile-hit[aria-label*="row 4, column 5"]';
+   await page.waitForSelector(card);await page.click(card);assert.ok((await page.$eval('#command',e=>e.textContent)).includes('Closure'));assert.equal(await page.$('#field-command #skill'),null);
+   const dp=state.dp;await page.click(tile);await page.waitForFunction(()=>!!__closurControlsReview.read().point);state=await read();assert.equal(state.dp,dp);assert.equal(state.slots,1);assert.deepEqual(state.point.tile,[3,4]);assert.equal(state.point.skill,true);const pointId=state.point.id;
+   await page.click(tile);await page.waitForSelector('#command:not([hidden])');assert.equal(await page.$('#field-command #skill'),null);assert.ok((await page.$eval('#command',e=>e.textContent)).includes('0 deployment slots'));
+   await page.click('#speed');await page.click('#pause');await page.waitForSelector('#field-command #retreat:not(:disabled)');await page.click('#pause');
+   await page.screenshot({path:`.cache/closur-controls-${mobile?'phone':'desktop'}.png`});const restDp=(await read()).dp;await page.click('#field-command #retreat');state=await read();assert.equal(state.point.mode,'recharge');assert.equal(state.point.id,pointId);assert.equal(state.point.alive,true);assert.equal(state.dp,restDp);assert.equal(state.slots,1);
+   await page.click(tile);await page.waitForSelector('#field-command #retreat:disabled');assert.ok((await page.$eval('#command',e=>e.textContent)).includes('Command center recovering'));assert.equal(await page.$('#field-command #skill'),null);
+   await page.click('#pause');await page.waitForFunction(()=>__closurControlsReview.read().point?.mode==='active',{timeout:25000});await page.click('#pause');state=await read();assert.equal(state.point.id,pointId);assert.equal(state.point.hp,state.point.maxHp);await page.waitForSelector('#field-command #retreat:not(:disabled)');
+   await page.click('#settings');await page.click('#restart');await page.waitForFunction(()=>__closurControlsReview.read().time===0&&__closurControlsReview.read().point===null);state=await read();assert.deepEqual(state.bench,['char_122_beagle']);assert.equal(state.slots,1);assert.ok(state.owner.alive);
+   // Numeric unit IDs may restart; this card and its callbacks must still bind
+   // the new battle's source instance rather than retaining the retired deck.
+   await page.click(card);await page.click(tile);await page.waitForFunction(()=>!!__closurControlsReview.read().point);state=await read();assert.equal(state.point.mode,'born');assert.equal(state.dp,dp);assert.equal(state.slots,1);assert.equal(state.error,'');assert.deepEqual(state.errors,[]);assert.deepEqual(errors,[]);await page.close();
+  }
+ }finally{await browser?.close();await fixture?.close();await s.close();}
+});
 test('internal preset and module cards use the actual app command panels on desktop and phone',{skip:enabled?false:'set RENDER_E2E=1 with Chrome installed',timeout:240000},async()=>{
  const{startServer}=await import('../server/index.js'),{createStage17_16ReviewServer}=await import('../tools/arkpedia/internal-17-16-review.mjs'),puppeteer=(await import('puppeteer-core')).default,s=await startServer({port:0,host:'127.0.0.1',quiet:true});let browser,fixture;
  try{fixture=await createStage17_16ReviewServer({origin:`http://127.0.0.1:${s.port}`,geometryOnly:true});browser=await puppeteer.launch({executablePath:chrome,headless:true,args:['--no-first-run','--no-sandbox','--enable-unsafe-swiftshader','--use-gl=angle','--use-angle=swiftshader','--disable-background-timer-throttling']});mkdirSync('.cache',{recursive:true});

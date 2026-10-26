@@ -19,6 +19,7 @@ export function installClosurDeck(point) {
     get readyAt() { return point.readyAt; },
     deck: { own: () => point.own(), placementError: (r, c) => point.placementError(r, c),
       place: (r, c) => point.place(r, c),
+      canRetreat: token => point.point?.unit === token && point.current(point.point) && point.point.mode === 'active',
       retreat: token => {
         if (point.point?.unit !== token || !point.rest()) throw Error('Command center is already recovering.');
       } },

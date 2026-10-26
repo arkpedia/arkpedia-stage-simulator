@@ -23,7 +23,7 @@ import { requiresLandscape } from "/shared/arkpedia/viewport.js";
 import { flowingShapeDeck, FlowingShapeCopyInteraction } from './muelsyse-copy.js';
 import { summonUnitId } from "/shared/arkpedia/summons.js";
 import { regularSummonCards, selectedRegularSummon, summonPlacementError,
-  deployRegularSummon, retreatRegularSummon } from "/sim/content/arkpedia-summons.js";
+  deployRegularSummon, retreatRegularSummon, regularSummonOwnerEntry } from "/sim/content/arkpedia-summons.js";
 import { applyStage } from "/shared/arkpedia/stages.js";
 const escape = (s) =>
   String(s).replace(
@@ -104,7 +104,7 @@ function selectedEntry(id = selected) {
   if (entry) { const op = data.operators[entry.operatorId]; return { ...entry,
     name: op.name, icon: icon(op), art: artwork(op) }; }
   const state = battle && selectedRegularSummon(battle, id);
-  return state ? { ...state, kind: state.unit ? 'token' : 'summon', id,
+  return state ? { ...state, ownerEntry: regularSummonOwnerEntry(battle, state), kind: state.unit ? 'token' : 'summon', id,
     name: state.record.name, icon: summonIcon(state.tokenId), art: summonIcon(state.tokenId) } : null;
 }
 function placementError(id, row, col) {
@@ -612,6 +612,7 @@ function pick(row, col) {
 }
 function summonDetails(entry) {
   const unit = entry.unit, raw = entry.record.stats, stats = unit?.s;
+  const ownerEntry = entry.ownerEntry;
   const slots = unit?.deploymentSlotCost ?? entry.config.deploymentSlotCost;
   const ammunition = ammunitionHud(unit);
   const lifetime = unit?.skill.spec?.formCountdown ? skillHud(unit.skill) : null;
@@ -641,11 +642,11 @@ function summonDetails(entry) {
     <div class="meter hp"><span style="width:${Math.min(1, Math.max(0, hp / maxHp)) * 100}%"></span></div>
     <p class="sp-readout">${entry.stock} remaining · ${raw.cost} DP · ${slots} deployment slot${slots === 1 ? '' : 's'}</p>
     ${ammunition ? `<p class="sp-readout">${escape(ammunition.text)} collected</p>` : ''}${recovery}${lifetime ? `<p class="sp-readout">${escape(lifetime.text)}</p><div class="meter active"><span style="width:${lifetime.fraction * 100}%"></span></div>` : ''}<p class="skill-description">${entry.ownerId === 'char_003_kalts' ? 'Can be healed only by Kal’tsit. ' : entry.config.healFree ? 'Cannot receive ordinary healing. ' : ''}${entry.config.tacticalPoint ? 'Its tactical point stays in place while the reinforcement recovers. ' : ''}Leaves the field when its summoner is removed.</p>
-    ${copyDeck ? copyDetails : unit && skillSourceFor(unit) !== unit
-      ? operatorSkillDetails(battle.bench[entry.ownerId].build, skillSourceFor(unit))
-      : unit && !unit.skill.noSkill && entry.record.skill ? operatorSkillDetails(battle.bench[entry.ownerId].build, unit,
+    ${copyDeck ? copyDetails : ownerEntry && unit && skillSourceFor(unit) !== unit
+      ? operatorSkillDetails(ownerEntry.build, skillSourceFor(unit), null, ownerEntry.record)
+      : ownerEntry && unit && !unit.skill.noSkill && entry.record.skill ? operatorSkillDetails(ownerEntry.build, unit,
         data.tokens[entry.record.id].skills.find(s => s.id === entry.record.skill.skillId)
-          ?.levels[battle.bench[entry.ownerId].build.skillRank - 1]) : ''}`;
+          ?.levels[ownerEntry.build.skillRank - 1]) : ''}`;
 }
 function operatorDetails(build, unit, record = recordFor(build, data)) {
   const ammunition = ammunitionHud(unit);
@@ -942,13 +943,16 @@ function drawHud() {
   field.hidden = !unit || battle.finished || !!pending;
   if (b) {
     const skillUnit = skillSourceFor(unit);
+    const skillBuild = b.kind === 'operator' ? b.build : b.ownerEntry?.build;
     const hud = skillUnit ? skillHud(skillUnit.skill) : null;
-    const canActivate = !!(!battle.simulationHeld && (hud?.canActivate || hud?.canCancel)
+    const canActivate = !!(skillBuild && !battle.simulationHeld && (hud?.canActivate || hud?.canCancel)
       && (skillUnit.canAct || skillUnit.skill?.spec.allowAbnormalCast || (hud?.canCancel && skillUnit.skill?.spec.cancelWhileOwnSleep?.()))
       && !skillUnit.skill.silenceBlocked);
     if (command.controlBattle !== battle || command.controlUnit !== unit || command.controlRecord !== b.record
+      || command.controlOwnerRecord !== b.ownerEntry?.record
       || command.dataset.selection !== selected || command.dataset.alive !== String(!!unit)) {
       command.controlBattle = battle; command.controlUnit = unit; command.controlRecord = b.record;
+      command.controlOwnerRecord = b.ownerEntry?.record;
       operatorTab = 'skill';
       command.innerHTML = `<div class="operator-portrait"><img src="${b.art}" alt="${escape(b.name)} ${b.kind === 'operator' ? 'base artwork' : 'original avatar'}" draggable="false"></div>
         <button class="inspector-close" aria-label="Close operator details">×</button>
@@ -980,10 +984,13 @@ function drawHud() {
           selectTab(next); next.focus();
         };
       }
-      field.innerHTML = unit ? `<svg class="field-frame" aria-hidden="true" viewBox="-100 -100 200 200"><path d="M0 -95L95 0L0 95L-95 0Z"/></svg>${b.withdrawable === false ? '' : `<button id="retreat" aria-label="Retreat ${escape(b.name)}" title="Retreat"><svg aria-hidden="true" viewBox="0 0 32 32"><circle cx="19" cy="5" r="3"/><path d="M7 12l6-3 5 3 5 3h6M18 12l-5 7 7 3 3 7M13 19l-5 9M4 5h7M4 5l3-3M4 5l3 3"/></svg></button>`}${!skillUnit.skill.noSkill && skillUnit.skill.kind !== "passive" ? `<button id="skill" aria-label="Activate skill"><img src="${skillIcon(b.kind === 'operator' ? b.build : battle.bench[b.ownerId].build)}" alt=""><span class="field-sp"></span></button>` : ''}${unit.mem?.regularSecondaryAction ? `<button id="secondary" aria-label="${escape(unit.mem.regularSecondaryAction.label)}"><span class="secondary-label">${escape(unit.mem.regularSecondaryAction.label)}</span><span class="field-sp"></span></button>` : ''}` : '';
+      field.innerHTML = unit ? `<svg class="field-frame" aria-hidden="true" viewBox="-100 -100 200 200"><path d="M0 -95L95 0L0 95L-95 0Z"/></svg>${b.withdrawable === false ? '' : `<button id="retreat" aria-label="Retreat ${escape(b.name)}" title="Retreat"><svg aria-hidden="true" viewBox="0 0 32 32"><circle cx="19" cy="5" r="3"/><path d="M7 12l6-3 5 3 5 3h6M18 12l-5 7 7 3 3 7M13 19l-5 9M4 5h7M4 5l3-3M4 5l3 3"/></svg></button>`}${skillBuild && !skillUnit.skill.noSkill && skillUnit.skill.kind !== "passive" ? `<button id="skill" aria-label="Activate skill"><img src="${skillIcon(skillBuild)}" alt=""><span class="field-sp"></span></button>` : ''}${unit.mem?.regularSecondaryAction ? `<button id="secondary" aria-label="${escape(unit.mem.regularSecondaryAction.label)}"><span class="secondary-label">${escape(unit.mem.regularSecondaryAction.label)}</span><span class="field-sp"></span></button>` : ''}` : '';
       field.querySelector('#retreat')?.addEventListener('click', () => {
-        if (b.kind === 'token') retreatRegularSummon(battle, selected); else battle.retreatOperator(selected);
-        selected = null; drawHud();
+        try {
+          if (b.kind === 'token') retreatRegularSummon(battle, selected); else battle.retreatOperator(selected);
+          selected = null;
+        } catch (e) { battleError = e.message; }
+        drawHud();
       });
       field.querySelector('#secondary')?.addEventListener('click', () => {
         try { battle.secondaryActionOperator(selected); } catch (e) { battleError = e.message; }
@@ -1007,6 +1014,8 @@ function drawHud() {
       panel.innerHTML = copy;
       panel.scrollTop = scroll;
     }
+    const retreatButton = field.querySelector('#retreat');
+    if (retreatButton) retreatButton.disabled = battle.simulationHeld || (b.kind === 'token' && b.deck?.canRetreat?.(unit) === false);
     const secondaryButton = field.querySelector('#secondary'), secondary = unit?.mem?.regularSecondaryAction;
     if (secondaryButton && secondary) {
       const ready = unit.canAct && !unit.skill.silenceBlocked && secondary.available();
