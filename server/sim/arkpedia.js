@@ -3,6 +3,7 @@
 import { stageAdapter } from "../../shared/arkpedia/stage-adapter.js";
 import { Battle } from "./Battle.js";
 import { prepareStage17_16Mechanics } from './content/arkpedia-stage-17-16-mechanics.js';
+import { currentPredefinedControl } from './content/arkpedia-predefined-controls.js';
 import { DataSource } from "./simdata.js";
 import { genericKit } from "./content/generic.js";
 import { elem } from './content/enemies.js';
@@ -1123,10 +1124,9 @@ export class StandardBattle extends Battle {
   }
   activateOperator(id) {
     if (!canDeployInViewport(this.viewport) || this.finished || this.simulationHeld) return false;
-    const predefined = this.predefinedOperators?.get(id);
     let unit;
     if (typeof id === 'string' && id.startsWith('token:')) unit = selectedRegularSummon(this, id)?.unit;
-    else if (predefined) unit = predefined.unit?.deploySeq === predefined.life ? predefined.unit : null;
+    else if (this.predefinedOperators?.has(id) || typeof id === 'string' && id.startsWith('predefined:')) unit = currentPredefinedControl(this, id)?.unit;
     else unit = this.bench[id]?.unit;
     if (unit?.alive && unit.skill.active && unit.skill.spec.manualCancel) {
       // A skill that puts its own owner to sleep (Titi S2) stays stoppable while that sleep lasts.
@@ -1147,6 +1147,21 @@ export class StandardBattle extends Battle {
   activateStageDevice(id) {
     if (!canDeployInViewport(this.viewport) || this.finished || this.simulationHeld) return false;
     return this.stageDeviceActions?.get(id)?.state.activate() ?? false;
+  }
+  // Inspection consumes already selected battle records. It never calls the
+  // public loadout/module catalogue or creates a player card for a preset.
+  operatorEntry(id) {
+    const predefined = currentPredefinedControl(this, id);
+    if (predefined) return Object.freeze({ ...predefined, id, operatorId: predefined.build.id, kind: 'operator', withdrawable: false });
+    const entry = this.bench[id], record = entry && this.data.rawChess(id);
+    if (!entry || !record) return null;
+    const unit = entry.unit?.alive ? entry.unit : null;
+    return Object.freeze({ ...entry, id, operatorId: entry.build.id, record, unit, kind: 'operator', predefined: false, withdrawable: true });
+  }
+  operatorControlId(unit) {
+    if (unit?.kind !== 'op' || !unit.alive) return null;
+    const id = unit.mem.regularControlId ?? unit.defId;
+    return this.operatorEntry(id)?.unit === unit ? id : null;
   }
   // An owner-declared second field action (e.g. Hadiya's Equipment Adaptation).
   secondaryActionOperator(id) {

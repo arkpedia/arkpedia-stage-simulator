@@ -34,15 +34,16 @@ export function installViyPredefined(b,{source=tutorial}={}){
  b.addBuff(u,{key:'arkpedia:talent',mods:def.raw.arkpedia.modifiers,persist:true,allowDead:true});
  if(!b._deploy(u,{initial:true,tile:[entry.row,entry.col]}))throw Error('Predefined Viy deployment rejected');
  entry.unit=u;entry.life=u.deploySeq;entry.predefined=true;b.predefinedOperators??=new Map();b.predefinedOperators.set(entry.key,entry);
- roles.set(b,{entry,u,life:u.deploySeq,skill:u.skill});return entry;
+ roles.set(b,{entry,u,life:u.deploySeq,skill:u.skill,def:u.def});return entry;
 }
 function currentRole(b){
  const role=roles.get(b),u=role?.u;
  if(!role||b.finished||b._endReq||b.predefinedOperators?.get(VIY_PREDEFINED_KEY)!==role.entry||role.entry.unit!==u||role.entry.life!==role.life
-  ||!u.alive||!u.deployed||u.deploySeq!==role.life||!b.units.includes(u)||u.skill!==role.skill||u.skill.unit!==u||u.skill.id!=='skchr_veen_3')return null;
+  ||!u.alive||!u.deployed||u.deploySeq!==role.life||!b.units.includes(u)||u.skill!==role.skill||u.def!==role.def||u.skill.unit!==u||u.skill.id!=='skchr_veen_3')return null;
  return role;
 }
 export const hasCurrentViyPredefined=b=>!!currentRole(b);
+export function currentViyPredefined(b){const role=currentRole(b);return role?Object.freeze({key:VIY_PREDEFINED_KEY,build:role.entry.build,record:role.def.raw,unit:role.u,life:role.life,predefined:true}):null;}
 export function applyViyTutorialSp(b,{key=VIY_SP_TUTORIAL,source=tutorial}={}){
  if(JSON.stringify(source)!==retained||key!==VIY_SP_TUTORIAL)throw Error('Unreviewed Viy tutorial SP command');
  const role=currentRole(b);if(!role)return{status:'cancelled'};const u=role.u;

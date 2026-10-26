@@ -30,6 +30,18 @@ export function skillDescriptionText(level) {
   );
 }
 
+// Inspect the selected combat record while retaining descriptive catalogue
+// text omitted by older records. This does not admit a loadout or module.
+export function battleSkillLevel(record, fallback = null) {
+  const skill = record?.skill;
+  if (!skill) return null;
+  const spData = { ...fallback?.spData, ...skill.spData };
+  for (const key of ['spType', 'spCost', 'initSp', 'increment', 'maxChargeTime', 'levelUpCost'])
+    if (skill[key] !== undefined) spData[key] = skill[key];
+  return { ...fallback, ...skill, spData,
+    blackboard: skill.blackboard ?? (skill.bb ? Object.entries(skill.bb).map(([key, value]) => ({ key, value })) : fallback?.blackboard ?? []) };
+}
+
 // Clip diagonal stripes to the top face BEFORE projecting onto raised/ground tiles.
 export function rangeStripes() {
   const clip = (points, boundary, greater) => {

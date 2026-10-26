@@ -39,9 +39,10 @@ before advancing to wave two. A dedicated internal constructor now starts the
 exact preset and four hidden cards with no selectable squad or spare operator.
 The existing workspace now has an owned source-dialog presenter and camera
 completion port, with player input and combat animation time held through each
-step. Native camera/scheduler/initial FSM timing, preset/card command-panel
-integration and canonical stage admission remain unverified or unconnected, so
-17-16 stays held.
+step. Preset/card command panels now read the installed battle records and
+route skills through authenticated source control keys, including after restart.
+Native camera/scheduler/initial FSM timing, source prep/entry and canonical stage
+admission remain unverified or unconnected, so 17-16 stays held.
 Rockbreaker's eligible split animation now consumes live `slow_down` elapsed
 work for both release and completion, rather than fixed world-time callbacks.
 The six selected infantry/caster/carrier Combat cooldowns and Brute's owned
@@ -2087,3 +2088,71 @@ before a new full checkpoint verification. The four quarantined tracked tests
 remain unchanged in Git for hosted
 execution. Preset/card command-panel integration, native camera/scheduler/FSM
 timing and the other remaining mechanics still gate canonical stage admission.
+
+## Authenticated preset controls and module-record inspection
+
+StandardBattle now exposes frozen operator inspection descriptors and resolves a
+field body's current control key. Ordinary card skill execution retains its
+existing route. The exact installed Viy and Closure roles use private deployment
+ownership: their original map entry, body, life, skill and definition must still
+agree. An arbitrary predefinedOperators entry, matching character ID or copied
+entry cannot mint a control. Viy's literal tutorial-SP receiver now also rejects
+a replaced definition. Closure's existing explicit-installation and enemy-clock
+compatibility gates remain unchanged; its captured role does not admit 17-14.
+
+The actual workspace map selector and skill button now use the engine's current
+control key. A preset no longer falls through to its absent player bench card.
+It remains outside the deployment shelf, does not spend DP or acquire a player
+withdrawal/refund path, and does not display an unimplemented preset retreat
+command. Public module/loadout selection remains unchanged.
+
+The inspector now reads the already selected battle record instead of calling
+recordFor again on a module-bearing source build. This preserves the actual
+module HP/ATK/DEF, base range, selected traits/talents and module-level label.
+Skill inspection retains descriptive catalogue text when old combat records
+omit it, while taking SP fields and blackboards from the installed record;
+native selected text takes precedence when present. A missing skill remains
+missing. The public loadout validator still refuses these internal module
+builds, and all four ordinary module catalogues remain empty.
+
+Panel caching now includes the battle, unit and record identities. Keeping the
+same preset selected across restart cannot leave a skill listener capturing the
+previous battle's body. This complements the backend refusal of stale controls:
+the new panel actively binds the new source unit rather than merely rejecting
+the old button's request.
+
+An isolated loopback review boot exercises the existing app with the exact
+internal constructor. It replaces only the local in-memory stage boot and two
+constructor calls, with exact replacement-count guards. It exposes read-only
+observations, not battle mutation commands. Its ordinary prep roster remains
+fixture scaffolding, not a native fixed-stage introduction. The production app,
+stage resolver and stage index are not changed by this review transport; the
+browser test separately proves that the regular server still refuses 17-16 even
+with experimental=1. Geometry/actor fallbacks isolate mechanics from the later
+artwork phase.
+
+All twelve new unit checks passed, covering preset authenticity/lifetime loss,
+foreign entries, the four exact module stat triples, public module refusal,
+ordinary card control/withdrawal and selected skill metadata. The expanded local
+focused suite passed all 1,707 available cases; shared core/battle and
+summon/selection/copy regressions passed all 56 cases. The regular 17-12 browser
+regression passed desktop/phone startup, access refusal and restart.
+
+The internal actual-app review passed on desktop and phone using real tile,
+skill, dialogue, information-tab, deployment, facing, retreat and restart
+controls. It performs both original preset S3 casts with natural SP, completes
+the source dialogs, inspects all four module panels and deploys Kestrel for nine
+DP with a four-DP retreat refund. It then restarts while the preset is selected,
+waits for the new body's natural SP and successfully activates that body's
+skill. No stats, cooldowns, SP or enemy deaths are injected. Screenshots of both
+module panels were visually inspected and are retained with the hosted internal
+workspace artifact. This is command/control integration evidence, not native
+animation/frame parity or a completed client-parity stage admission.
+
+Preceding dialog continuation 40249981291 at d5c80b17 passed all fifteen hosted
+jobs. Full run 40249985241 at the same checkpoint remains live; its two completed
+Windows shards passed at the last check. No competing full run was dispatched.
+Four quarantined tests remain unchanged in Git. Native camera/scheduler/FSM
+dispatch, source intro/prep, preset withdrawal/card regeneration, source-owned
+summon panels and the remaining enemy/stage audits still gate canonical
+admission. Mechanics remain ahead of stage art, models/chibis and effects.

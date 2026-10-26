@@ -150,14 +150,16 @@ jobs:
       - run: npm ci --no-audit --no-fund
       - run: node tools/arkpedia/test-assets.mjs
       - run: node --test test/arkpedia-ch17-ui.browser.test.js
-      - name: Verify internal preset, wave and tutorial presentation
+      - name: Verify internal preset, wave, tutorial and command UI
         if: matrix.stage == '17-12'
-        run: node --test test/arkpedia-stage-predefines.browser.test.js test/arkpedia-stage-tutorial.browser.test.js
+        run: node --test test/arkpedia-stage-predefines.browser.test.js test/arkpedia-stage-tutorial.browser.test.js test/arkpedia-operator-controls.browser.test.js
       - uses: actions/upload-artifact@v4
         if: always() && matrix.stage == '17-12'
         with:
-          name: internal-17-16-tutorial
-          path: .cache/stage-tutorial-*.png
+          name: internal-17-16-workspace
+          path: |
+            .cache/stage-tutorial-*.png
+            .cache/operator-controls-*.png
       - uses: actions/upload-artifact@v4
         if: always()
         with:

@@ -10,7 +10,7 @@ import {
 import { maxedSupport } from "/shared/arkpedia/squad.js";
 import { StageRenderer } from "./renderer.js";
 import { absoluteRangeKeys } from "/sim/targeting.js";
-import { classNames, skillIconFile, operatorAssetName, skillDescriptionText } from "/shared/arkpedia/battle-ui.js";
+import { classNames, skillIconFile, operatorAssetName, skillDescriptionText, battleSkillLevel } from "/shared/arkpedia/battle-ui.js";
 import { swipeFacing } from "/shared/arkpedia/placement.js";
 import { marcilBenchMana } from '/sim/content/arkpedia-marcil.js';
 import { skillHud, skillSourceFor, ammunitionHud } from "/shared/arkpedia/skill-hud.js";
@@ -100,10 +100,9 @@ const summonIcon = id => {
   throw Error('Missing original summon avatar: ' + id);
 };
 function selectedEntry(id = selected) {
-  const entry = battle?.bench[id];
-  if (entry) return { ...entry, kind: 'operator', id, record: battle.data.rawChess(id),
-    name: data.operators[id].name, icon: icon(data.operators[id]),
-    art: artwork(data.operators[id]), unit: entry.unit?.alive ? entry.unit : null };
+  const entry = battle?.operatorEntry(id);
+  if (entry) { const op = data.operators[entry.operatorId]; return { ...entry,
+    name: op.name, icon: icon(op), art: artwork(op) }; }
   const state = battle && selectedRegularSummon(battle, id);
   return state ? { ...state, kind: state.unit ? 'token' : 'summon', id,
     name: state.record.name, icon: summonIcon(state.tokenId), art: summonIcon(state.tokenId) } : null;
@@ -554,7 +553,7 @@ async function exit() {
   document.querySelector("#start").focus();
 }
 function pick(row, col) {
-  if (!battle || battle.finished || landscapeRequired) return;
+  if (!battle || battle.finished || battle.simulationHeld || landscapeRequired) return;
   if (copyFlow?.active) return;
   if (selectedToken) {
     try { battle.deployToken(selectedToken, row, col); selectedToken = null; }
@@ -587,7 +586,7 @@ function pick(row, col) {
   }
   if (occupied) {
     selected = occupied.kind === 'token' || occupied.kind === 'device' && occupied.mem.regularSummonCard
-      ? summonUnitId(occupied) : occupied.defId;
+      ? summonUnitId(occupied) : battle.operatorControlId(occupied);
     pending = null;
     drawHud();
     return;
@@ -648,8 +647,7 @@ function summonDetails(entry) {
         data.tokens[entry.record.id].skills.find(s => s.id === entry.record.skill.skillId)
           ?.levels[battle.bench[entry.ownerId].build.skillRank - 1]) : ''}`;
 }
-function operatorDetails(build, unit) {
-  const record = recordFor(build, data);
+function operatorDetails(build, unit, record = recordFor(build, data)) {
   const ammunition = ammunitionHud(unit);
   const stats = unit?.s;
   const hp = unit?.hp ?? record.stats.maxHp;
@@ -657,19 +655,20 @@ function operatorDetails(build, unit) {
   const numbers = [
     ["ATK", stats?.atk ?? record.stats.atk],
     ["DEF", stats?.def ?? record.stats.def],
-    ["RES", stats?.res ?? record.stats.magicResistance],
+    ["RES", stats?.res ?? record.stats.res ?? record.stats.magicResistance],
     ["Block", stats?.blockCnt ?? record.stats.blockCnt],
   ];
-  return `<p class="operator-build">E${build.elite} · Lv ${build.level}${selection.support?.id === build.id ? " · Support" : ""}</p>
+  return `<p class="operator-build">E${build.elite} · Lv ${build.level}${build.module ? ` · Module Lv ${build.moduleLevel}` : ''}${selection.support?.id === build.id ? " · Support" : ""}</p>
     <dl class="operator-stats">${numbers.map(([label, value]) => `<div><dt>${label}</dt><dd>${Math.round(value)}</dd></div>`).join("")}</dl>
     <div class="hp-readout"><span>HP</span><strong>${Math.min(Math.ceil(hp), Math.round(maxHp))} / ${Math.round(maxHp)}</strong></div>
     <div class="meter hp"><span style="width:${Math.min(1, Math.max(0, hp / maxHp)) * 100}%"></span></div>
     ${ammunition ? `<p class="sp-readout">${escape(ammunition.text)}</p>` : ''}${rangeDiagram(record.rangeGrid)}`;
 }
-function operatorSkillDetails(build, unit, tokenLevel = null) {
+function operatorSkillDetails(build, unit, tokenLevel = null, record = null) {
   const mana = marcilBenchMana(battle, build.id);
   const hud = unit ? skillHud(unit.skill) : mana ? { ...mana, state: 'charging' } : null;
-  const level = tokenLevel ?? data.operators[build.id].skills.find((entry) => entry.id === build.skillId)?.levels[build.skillRank - 1];
+  const fallback = tokenLevel ?? data.operators[build.id].skills.find((entry) => entry.id === build.skillId)?.levels[build.skillRank - 1];
+  const level = record ? battleSkillLevel(record, fallback) : fallback;
   const recovery = build.id === 'char_4141_marcil' ? 'Mana' : {
     INCREASE_WITH_TIME: "Auto recovery",
     INCREASE_WHEN_ATTACK: "Offensive recovery",
@@ -693,9 +692,9 @@ function rangeDiagram(cells) {
 }
 function operatorTabContent(entry, unit) {
   if (entry.kind !== 'operator') return summonDetails(entry);
-  const record = recordFor(entry.build, data);
-  if (operatorTab === 'skill') return operatorSkillDetails(entry.build, unit) || '<p>No active skill.</p>';
-  if (operatorTab === 'trait') return `<h3>${escape(classNames[record.profession] ?? record.profession)}</h3><p class="skill-description">${skillDescription({ ...record.trait, description: record.trait?.overrideDescripton || record.trait?.description || data.operators[entry.id].description })}</p>`;
+  const record = entry.record;
+  if (operatorTab === 'skill') return operatorSkillDetails(entry.build, unit, null, record) || '<p>No active skill.</p>';
+  if (operatorTab === 'trait') return `<h3>${escape(classNames[record.profession] ?? record.profession)}</h3><p class="skill-description">${skillDescription({ ...record.trait, description: record.trait?.overrideDescripton || record.trait?.description || data.operators[entry.operatorId].description })}</p>`;
   return record.talents.filter(t => !t.isHideTalent).map(t => `<h3>${escape(t.name)}</h3><p class="skill-description">${skillDescription(t)}</p>`).join('') || '<p>No talent unlocked at this build.</p>';
 }
 function updateShelfTrack() {
@@ -944,10 +943,12 @@ function drawHud() {
   if (b) {
     const skillUnit = skillSourceFor(unit);
     const hud = skillUnit ? skillHud(skillUnit.skill) : null;
-    const canActivate = !!((hud?.canActivate || hud?.canCancel)
+    const canActivate = !!(!battle.simulationHeld && (hud?.canActivate || hud?.canCancel)
       && (skillUnit.canAct || skillUnit.skill?.spec.allowAbnormalCast || (hud?.canCancel && skillUnit.skill?.spec.cancelWhileOwnSleep?.()))
       && !skillUnit.skill.silenceBlocked);
-    if (command.dataset.selection !== selected || command.dataset.alive !== String(!!unit)) {
+    if (command.controlBattle !== battle || command.controlUnit !== unit || command.controlRecord !== b.record
+      || command.dataset.selection !== selected || command.dataset.alive !== String(!!unit)) {
+      command.controlBattle = battle; command.controlUnit = unit; command.controlRecord = b.record;
       operatorTab = 'skill';
       command.innerHTML = `<div class="operator-portrait"><img src="${b.art}" alt="${escape(b.name)} ${b.kind === 'operator' ? 'base artwork' : 'original avatar'}" draggable="false"></div>
         <button class="inspector-close" aria-label="Close operator details">×</button>
@@ -979,7 +980,7 @@ function drawHud() {
           selectTab(next); next.focus();
         };
       }
-      field.innerHTML = unit ? `<svg class="field-frame" aria-hidden="true" viewBox="-100 -100 200 200"><path d="M0 -95L95 0L0 95L-95 0Z"/></svg><button id="retreat" aria-label="Retreat ${escape(b.name)}" title="Retreat"><svg aria-hidden="true" viewBox="0 0 32 32"><circle cx="19" cy="5" r="3"/><path d="M7 12l6-3 5 3 5 3h6M18 12l-5 7 7 3 3 7M13 19l-5 9M4 5h7M4 5l3-3M4 5l3 3"/></svg></button>${!skillUnit.skill.noSkill && skillUnit.skill.kind !== "passive" ? `<button id="skill" aria-label="Activate skill"><img src="${skillIcon(b.kind === 'operator' ? b.build : battle.bench[b.ownerId].build)}" alt=""><span class="field-sp"></span></button>` : ''}${unit.mem?.regularSecondaryAction ? `<button id="secondary" aria-label="${escape(unit.mem.regularSecondaryAction.label)}"><span class="secondary-label">${escape(unit.mem.regularSecondaryAction.label)}</span><span class="field-sp"></span></button>` : ''}` : '';
+      field.innerHTML = unit ? `<svg class="field-frame" aria-hidden="true" viewBox="-100 -100 200 200"><path d="M0 -95L95 0L0 95L-95 0Z"/></svg>${b.withdrawable === false ? '' : `<button id="retreat" aria-label="Retreat ${escape(b.name)}" title="Retreat"><svg aria-hidden="true" viewBox="0 0 32 32"><circle cx="19" cy="5" r="3"/><path d="M7 12l6-3 5 3 5 3h6M18 12l-5 7 7 3 3 7M13 19l-5 9M4 5h7M4 5l3-3M4 5l3 3"/></svg></button>`}${!skillUnit.skill.noSkill && skillUnit.skill.kind !== "passive" ? `<button id="skill" aria-label="Activate skill"><img src="${skillIcon(b.kind === 'operator' ? b.build : battle.bench[b.ownerId].build)}" alt=""><span class="field-sp"></span></button>` : ''}${unit.mem?.regularSecondaryAction ? `<button id="secondary" aria-label="${escape(unit.mem.regularSecondaryAction.label)}"><span class="secondary-label">${escape(unit.mem.regularSecondaryAction.label)}</span><span class="field-sp"></span></button>` : ''}` : '';
       field.querySelector('#retreat')?.addEventListener('click', () => {
         if (b.kind === 'token') retreatRegularSummon(battle, selected); else battle.retreatOperator(selected);
         selected = null; drawHud();
@@ -993,12 +994,12 @@ function drawHud() {
           if (flowingShapeDeck(b) && skillUnit === unit) {
             if (copyFlow?.active) cancelPlacement();
             else { copyFlow = FlowingShapeCopyInteraction.open(b); pending = null; }
-          } else battle.activateOperator(skillUnit === unit && b.kind === 'token' ? summonUnitId(unit) : skillUnit.defId);
+          } else { const control = skillUnit === unit && b.kind === 'token' ? summonUnitId(unit) : battle.operatorControlId(skillUnit); if (control) battle.activateOperator(control); }
         } catch (e) { battleError = e.message; }
         drawHud();
       });
     }
-    command.querySelector('.command-stats').innerHTML = b.kind === 'operator' ? operatorDetails(b.build, unit) : '';
+    command.querySelector('.command-stats').innerHTML = b.kind === 'operator' ? operatorDetails(b.build, unit, b.record) : '';
     const copy = operatorTabContent(b, skillUnit);
     const panel = command.querySelector('.command-copy');
     if (panel.innerHTML !== copy) {

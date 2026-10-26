@@ -10,13 +10,19 @@ import {installClosurRoster,CLOSUR_ROSTER_CONTRACT} from './arkpedia-closur-rost
 import {installClosurDeck} from './arkpedia-closur-deck.js';
 import {assertClosurEnemyCompatibility} from '../../../shared/arkpedia/closur-enemy-compatibility.js';
 
-const retained=JSON.stringify(source);
+const retained=JSON.stringify(source),roles=new WeakMap();
 export const CLOSUR_PREDEFINED_CONTRACT=Object.freeze({
  scope:'Exact canonical 17-14 Closure instance, separate field control, module and command center',
  limits:'Internal explicit installation only. Stage admission, initial native FSM timing, manual withdrawal and card regeneration remain held.',
  frameParity:false,
 });
 export const CLOSUR_PREDEFINED_KEY='predefined:17-14:char_4228_closur:0';
+export function currentClosurPredefined(b){
+ const role=roles.get(b),u=role?.u,entry=role?.entry;
+ if(!role||b.finished||b._endReq||b.predefinedOperators?.get(CLOSUR_PREDEFINED_KEY)!==entry||entry.unit!==u||entry.life!==role.life
+  ||!u.alive||!u.deployed||u.deploySeq!==role.life||u.skill!==role.skill||u.def!==role.def||!b.units.includes(u))return null;
+ return Object.freeze({key:CLOSUR_PREDEFINED_KEY,build:entry.build,record:role.def.raw,unit:u,life:role.life,predefined:true});
+}
 
 export function selectedClosurPredefined(input=source,{contract}={}){
  if(contract!==CLOSUR_PREDEFINED_CONTRACT||JSON.stringify(input)!==retained)
@@ -40,7 +46,7 @@ export function installClosurPredefined(b,{source:input=source,contract}={}){
  const entry=selectedClosurPredefined(input,{contract});
  assertClosurEnemyCompatibility(b.data.raw);
  if(b.finished||b._endReq||b.time!==0||!b.getPlayer('arkpedia')||b.bench[ID]
-  ||b.predefinedOperators?.has(entry.key)||b.regularClosurRoster||b.regularDpFloors?.has('arkpedia')
+  ||roles.has(b)||b.predefinedOperators?.has(entry.key)||b.regularClosurRoster||b.regularDpFloors?.has('arkpedia')
   ||b.allyUnits.some(u=>u.defId===ID)||b.regularSummons?.has(`summon:${ID}`))
   throw Error('Predefined Closure requires a fresh separate stage instance');
  if(!b.grid.inRect(entry.row,entry.col)||b.unitAt(entry.row,entry.col)||b.tileReservation(entry.row,entry.col)||b.downOn(entry.row,entry.col)
@@ -58,5 +64,6 @@ export function installClosurPredefined(b,{source:input=source,contract}={}){
  installClosurDeck(prepared.point);
  entry.unit=u;entry.life=u.deploySeq;entry.predefined=true;
  b.predefinedOperators??=new Map();b.predefinedOperators.set(entry.key,entry);
+ roles.set(b,{entry,u,life:u.deploySeq,def:u.def,skill:u.skill});
  return{...prepared,entry,u};
 }
