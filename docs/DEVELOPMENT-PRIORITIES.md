@@ -57,6 +57,11 @@ interaction without admitting 17-14 or widening public enemy compatibility.
 The stronger War Caster's Leave action now uses the same literal native kill
 path, including its non-skipping rebirth flag and cancellation on a deferred
 battle-end request. Canonical wave sequencing remains a separate open item.
+Leak Source's two terminal graphs and their parent-buff creators now have a
+pinned contract. The explicit kill primitive accepts a separate BUFF_SOURCE
+recipient without treating it as the action source or kill-credit owner.
+Leak Source controller conversion remains held pending caller/source-credit
+review; the contract does not establish that missing runtime context.
 Removing a separate same-character operator body now leaves the player's card
 cooldown and captured payment untouched. Only the body selected by that card
 can start its redeployment cooldown; ordinary death and withdrawal still do so.
@@ -2156,3 +2161,40 @@ Four quarantined tests remain unchanged in Git. Native camera/scheduler/FSM
 dispatch, source intro/prep, preset withdrawal/card regeneration, source-owned
 summon panels and the remaining enemy/stage audits still gate canonical
 admission. Mechanics remain ahead of stage art, models/chibis and effects.
+
+## Leak Source terminal recipients and explicit buff-source selection
+
+The owner's mechanics-first order remains the project-wide scope: all enemy,
+stage and operator behavior, including modules, precedes stage art, models,
+enemy chibis and then special effects. The Chapter 16/17 backlog remains the
+current integration work, not a substitute for that broader audit.
+
+The new Leak Source terminal contract binds the retained full action source,
+native ability source and independently recovered buff-event aliases by SHA256.
+It preserves all three original templates and both original creator components.
+The level-up flag's ON_BUFF_FINISH action targets BUFF_OWNER; the contact
+trigger's eighth action targets BUFF_SOURCE. Both retain noSource=false and
+skipReborn=false. The contact parent is a derived buff on BUFF_OWNER with no
+special-source override. These graph facts identify recipients, but do not prove
+the native dispatcher's action-source/kill-credit context. Runtime conversion
+of Leak Source's two legacy retirement calls therefore remains open.
+
+The shared explicit InstantKill path now accepts a separate buffSource argument
+and exposes both buff identities on its authenticated admission receipt. A
+missing or retired buff source never falls back to the action source, selected
+target or buff owner. Kill credit continues to use only the explicit action
+source and literal noSource flag; killSource retains precedence. No Leak Source
+controller, public support declaration, stage admission or visual asset changed.
+
+Six new cases cover reproduction from every pinned input, distinct recipient
+and action-source credit, missing/dead/ally recipients, flag precedence, admitted
+rebirth, replaced deployment life and deferred battle-end cancellation. All 61
+targeted InstantKill/Bag/War Caster cases passed. The available focused suite
+passed 1,713 cases, and core/battle checks passed 54. The four quarantined files
+remain unchanged in Git and retained for hosted validation. The source contract
+also reproduces independently in the native-source CI job.
+
+Hosted continuation 40253107154 at 494475cb completed successfully across all
+fifteen jobs. Full run 40249985241 at d5c80b17 also completed successfully across
+all eight Linux/Windows Node 22/24 shards. These successes cover their respective
+checkpoints; the new recipient change requires its own hosted run.

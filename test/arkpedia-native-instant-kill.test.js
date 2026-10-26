@@ -6,6 +6,10 @@ import saga from '../data/arkpedia-saga-prefabs.json' with {type:'json'};
 import twins from '../data/candidates/arkpedia-ch17-mutwin-lifecycle-contract.json' with {type:'json'};
 import {executeEnemyInstantKill as execute,verifyEnemyInstantKill as verify,currentEnemyInstantKillReceipt as receipt} from '../server/sim/enemy-instant-kill.js';
 import {verifySagaInstantKillSource} from '../server/sim/content/arkpedia-saga.js';
+import {readFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+import {execFileSync} from 'node:child_process';
+import leakTerminal from '../data/candidates/arkpedia-leak-source-terminal-contract.json' with {type:'json'};
 const normal=saga.templates.cripple.eventToActions.ON_BUFF_TRIGGER[2],skip=twins.markFinish[0]._succeedNodes[0];
 function fixture({ranged=false}={}){
  const h=makeBattle({content:'none',autoFinish:false,defs:{enemies:{ik:enemyRec({key:'ik',hp:100,speed:0,atk:10,range:ranged?2:0})},chess:{op:chessRec({id:'op'})}},units:[{chessId:'op',row:10,col:4}]});h.b.start();
@@ -24,6 +28,54 @@ test('SOURCE and explicit BUFF_OWNER selection retain their literal recipient an
   const f=fixture(),action={...normal,_targetType:kind,_noSource:false};const victim=kind==='SOURCE'?f.source:f.e;
   execute(f.b,{source:f.source,target:kind==='SOURCE'?f.e:f.source,buffOwner:f.e,action});assert.equal(victim.alive,false);assert.equal(f.source.stats.kills,1);assert.deepEqual(f.b.errors,[]);
  }
+});
+
+test('Leak Source terminal contract reproduces its complete original graphs without claiming caller kill credit',()=>{
+ for(const pin of Object.values(leakTerminal.sources))assert.equal(createHash('sha256').update(readFileSync(new URL('../'+pin.path,import.meta.url))).digest('hex'),pin.sha256);
+ execFileSync(process.execPath,['tools/arkpedia/leak-source-terminal-contract.mjs','--check'],{stdio:'pipe'});
+ assert.equal(leakTerminal.runtimeIntegrated,false);assert.equal(leakTerminal.frameParity,false);
+ assert.equal(leakTerminal.terminal.finish.action._targetType,'BUFF_OWNER');assert.equal(leakTerminal.terminal.contact.action._targetType,'BUFF_SOURCE');
+ for(const entry of Object.values(leakTerminal.terminal)){
+  const template=leakTerminal.templates[entry.template];assert.equal(createHash('sha256').update(template.originalJson).digest('hex'),template.sha256);
+  const event=JSON.parse(template.originalJson).eventToActions._items.find(e=>e.key===entry.event);
+  assert.deepEqual(JSON.parse(event.value.SerializedState)[entry.index],entry.action);assert.equal(entry.action._noSource,false);assert.equal(entry.action._skipReborn,false);
+ }
+});
+
+test('BUFF_SOURCE selects a separate buff source body and gives only the explicitly supplied action source kill credit',()=>{
+ const f=fixture(),action=leakTerminal.terminal.contact.action;let credit,captured;
+ f.b.on('kill',c=>{credit=c.killer;});f.b.on('enemyInstantKill',ctx=>{captured=receipt(ctx,f.b);});
+ const result=execute(f.b,{source:f.op,target:f.source,buffOwner:f.source,buffSource:f.e,action});
+ assert.equal(result.status,'killed');assert.equal(f.e.alive,false);assert.ok(f.source.alive&&f.op.alive);assert.equal(credit,f.op);assert.equal(f.op.stats.kills,1);
+ assert.equal(captured.buffOwner,f.source);assert.equal(captured.buffSource,f.e);assert.equal(captured.source,f.op);assert.equal(captured.unit,f.e);assert.deepEqual(f.b.errors,[]);
+});
+
+test('an omitted or retired BUFF_SOURCE never falls back to SOURCE, TARGET or BUFF_OWNER',()=>{
+ const f=fixture(),action=leakTerminal.terminal.contact.action;
+ assert.equal(execute(f.b,{source:f.source,target:f.e,buffOwner:f.e,action}).status,'inactive');
+ assert.ok(f.e.alive&&f.source.alive);assert.equal(f.b.killed,0);
+ f.b.kill(f.e,null);assert.equal(execute(f.b,{source:f.source,target:f.source,buffOwner:f.source,buffSource:f.e,action}).status,'inactive');assert.ok(f.source.alive);
+ assert.throws(()=>execute(f.b,{source:f.source,buffSource:f.op,action}),/enemy recipient/);assert.ok(f.op.alive);assert.deepEqual(f.b.errors,[]);
+});
+
+test('BUFF_SOURCE preserves noSource and explicit killSource precedence independently of both buff identities',()=>{
+ const f=fixture(),action={...leakTerminal.terminal.contact.action,_noSource:true};let credit='unset';f.b.on('kill',c=>{credit=c.killer;});
+ execute(f.b,{source:f.op,target:f.source,buffOwner:f.source,buffSource:f.e,action});assert.equal(credit,null);assert.equal(f.op.stats.kills,0);assert.ok(f.source.alive);
+ const g=fixture();execute(g.b,{source:g.source,target:g.e,buffOwner:g.e,buffSource:g.e,action:{...action,_killSource:true}});assert.equal(g.source.alive,false);assert.ok(g.e.alive);assert.deepEqual([...f.b.errors,...g.b.errors],[]);
+});
+
+test('BUFF_SOURCE admits rebirth once and cannot retire a replacement deployment during its admission',()=>{
+ for(const replace of [false,true]){
+  const f=fixture();f.b.on('enemyInstantKill',ctx=>{assert.equal(receipt(ctx,f.b).buffSource,f.e);ctx.unit.hp=17;if(replace)ctx.unit.deploySeq++;else ctx.reborn=true;});
+  const result=execute(f.b,{source:f.op,buffOwner:f.source,buffSource:f.e,action:leakTerminal.terminal.contact.action});
+  assert.equal(result.status,replace?'retired':'reborn');assert.ok(f.e.alive&&f.source.alive);assert.equal(f.e.hp,17);assert.equal(f.b.killed,0);assert.deepEqual(f.b.errors,[]);
+ }
+});
+
+test('BUFF_SOURCE cancels on a deferred battle end and restores untouched pending HP',()=>{
+ const f=fixture(),hp=f.e.hp;let result;f.b.on('enemyInstantKill',()=>f.b.forceEnd());
+ f.b.after(0,()=>{result=execute(f.b,{source:f.op,buffOwner:f.source,buffSource:f.e,action:leakTerminal.terminal.contact.action});});f.b.step();
+ assert.equal(result.status,'cancelled');assert.equal(f.e.hp,hp);assert.ok(f.e.alive&&f.source.alive);assert.equal(f.b.killed,0);assert.ok(f.b.finished);assert.deepEqual(f.b.errors,[]);
 });
 test('native admission exposes a frozen battle/life/action receipt only during its actual dispatch',()=>{
  const f=fixture(),other=fixture();let captured,r;f.b.on('enemyInstantKill',ctx=>{captured=ctx;r=receipt(ctx,f.b);assert.equal(receipt(ctx,other.b),null);assert.ok(Object.isFrozen(r)&&Object.isFrozen(r.action));});
