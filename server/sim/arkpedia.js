@@ -450,6 +450,7 @@ export class StandardBattle extends Battle {
     if (!fromSkill && !canDeployInViewport(this.viewport))
       return "Open the fullscreen workspace to deploy.";
     if (this.finished) return "Battle has ended.";
+    if (!fromSkill && this.simulationHeld) return 'Stage presentation is in progress.';
     if (chapter17FirewallBlocksDeployment(this,row,col)) return "Firewall blocks deployment on this tile.";
     if (this.chapter16?.isShadow?.(row, col)) return "High-risk pollution blocks deployment on this tile.";
     if (!entry || entry.unit?.alive) return "Operator is unavailable.";
@@ -494,6 +495,7 @@ export class StandardBattle extends Battle {
     return unit;
   }
   deployToken(unitId, row, col) {
+    if (this.simulationHeld) throw Error('Stage presentation is in progress.');
     const found = (this.stage.tokens ?? this.stage.raw?.tokens ?? []).find(t => t.unitId === unitId);
     if (!found) throw new Error('This stage has no such token.');
     if (chapter17FirewallBlocksDeployment(this,row,col)) throw new Error('Firewall blocks deployment on this tile.');
@@ -1106,7 +1108,7 @@ export class StandardBattle extends Battle {
     return unit;
   }
   retreatOperator(id) {
-    if (!canDeployInViewport(this.viewport) || this.finished)
+    if (!canDeployInViewport(this.viewport) || this.finished || this.simulationHeld)
       throw new Error("Battle workspace is inactive.");
     const entry = this.bench[id];
     if (!this.withdrawOperator(entry?.unit)) throw new Error("Operator is not deployed.");
@@ -1120,7 +1122,7 @@ export class StandardBattle extends Battle {
     this.retreat(unit,{permanent:true});return true;
   }
   activateOperator(id) {
-    if (!canDeployInViewport(this.viewport) || this.finished) return false;
+    if (!canDeployInViewport(this.viewport) || this.finished || this.simulationHeld) return false;
     const predefined = this.predefinedOperators?.get(id);
     let unit;
     if (typeof id === 'string' && id.startsWith('token:')) unit = selectedRegularSummon(this, id)?.unit;
@@ -1143,12 +1145,12 @@ export class StandardBattle extends Battle {
     );
   }
   activateStageDevice(id) {
-    if (!canDeployInViewport(this.viewport) || this.finished) return false;
+    if (!canDeployInViewport(this.viewport) || this.finished || this.simulationHeld) return false;
     return this.stageDeviceActions?.get(id)?.state.activate() ?? false;
   }
   // An owner-declared second field action (e.g. Hadiya's Equipment Adaptation).
   secondaryActionOperator(id) {
-    if (!canDeployInViewport(this.viewport) || this.finished) return false;
+    if (!canDeployInViewport(this.viewport) || this.finished || this.simulationHeld) return false;
     const unit = this.bench[id]?.unit, action = unit?.mem.regularSecondaryAction;
     return !!(unit?.alive && action && unit.canAct && !unit.skill.silenceBlocked && action.available() && action.run());
   }

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import * as THREE from "/vendor/three.module.js";
 import { fitCamera, syncThreeCamera, pickTile } from "/js/render/projection.js";
+import { TutorialCamera } from './tutorial-camera.js';
 import { BattleActor } from "./battle-actor.js";
 import { HeartCandleActor } from "./heart-candle.js";
 import { loadTragodiaStageEffects } from "./tragodia-assets.js";
@@ -255,12 +256,24 @@ export class StageRenderer {
       height = Math.max(1, this.host.clientHeight);
     this.three.setSize(width, height, false);
     this.pixi.renderer.resize(width, height);
-    this.projection = fitCamera(
+    const fitted = fitCamera(
       this.rect,
       { width, height, padding: { top: this.host.classList.contains('battle-board') ? 60 : 12,
         bottom: this.host.classList.contains('battle-board') ? Math.min(145, height * .23) : 12, left: 8, right: 8 } },
       { tilt: 28, dist: 20, headroom: 1, margin: 0.2 },
     );
+    this.tutorialCamera ??= new TutorialCamera(fitted);
+    this.tutorialCamera.rebase(fitted);
+    this.projection = this.tutorialCamera.projection;
+    this.syncProjection();
+    this.render(this.currentBattle, 0, []);
+  }
+  presentTutorialCamera(instruction, options) {
+    if (this.destroyed || !this.tutorialCamera) throw Error('Tutorial stage camera is unavailable');
+    return this.tutorialCamera.present(instruction, options).then(() => { if (!this.destroyed) this.syncProjection(); });
+  }
+  syncProjection() {
+    const width = Math.max(1, this.host.clientWidth), height = Math.max(1, this.host.clientHeight);
     syncThreeCamera(this.projection, this.camera, width, height);
     for (const tile of this.tiles)
       if (tile.button) {
@@ -277,7 +290,6 @@ export class StageRenderer {
           clipPath: `polygon(${points.map((p) => `${((p.x - x) / width) * 100}% ${((p.y - y) / height) * 100}%`).join(",")})`,
         });
       }
-    this.render(this.currentBattle, 0, []);
   }
   pickAt(clientX, clientY) {
     const rect = this.host.getBoundingClientRect(),
@@ -435,6 +447,8 @@ export class StageRenderer {
     spine.zIndex = 2000;
   }
   clear() {
+    this.tutorialCamera?.cancel();
+    if (this.tutorialCamera && !this.destroyed) this.syncProjection();
     this.currentBattle = null;
     this.highlight();
     this.preview?.actor.destroy();
@@ -450,6 +464,7 @@ export class StageRenderer {
   }
   render(battle, dt, events, realDt = 0) {
     this.currentBattle = battle;
+    if (this.tutorialCamera?.advance(realDt)) this.syncProjection();
     // A non-actor effect pass may need the current visible Spine pose. Legacy
     // passes keep their existing update order unless they explicitly opt in.
     const nativePasses=this.nativeEffectPasses();

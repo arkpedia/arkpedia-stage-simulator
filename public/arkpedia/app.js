@@ -16,6 +16,8 @@ import { marcilBenchMana } from '/sim/content/arkpedia-marcil.js';
 import { skillHud, skillSourceFor, ammunitionHud } from "/shared/arkpedia/skill-hud.js";
 import { battleHud } from "/shared/arkpedia/battle-hud.js";
 import { drawStageCommands } from './stage-commands.js';
+import { bindStageTutorial } from './stage-tutorial.js';
+import { stepBattleFrame } from './battle-frame.js';
 import { interfaceAssetUrl } from "/shared/arkpedia/interface-assets.js";
 import { requiresLandscape } from "/shared/arkpedia/viewport.js";
 import { flowingShapeDeck, FlowingShapeCopyInteraction } from './muelsyse-copy.js';
@@ -53,6 +55,7 @@ let loading = false,
   landscapeRequired = false;
 let operatorTab = "skill";
 let copyFlow = null;
+let stageTutorial = null;
 const [response, stageResponse] = await Promise.all([
   fetch("/data/arkpedia-mvp.json"),
   fetch("/data/arkpedia-stages.json"),
@@ -363,6 +366,11 @@ async function start() {
     renderer.observer.observe(board);
     renderer.onPick = pick;
     renderer.controls.inert = false;
+    stageTutorial?.stop();
+    stageTutorial = bindStageTutorial(workspace, battle, {
+      camera: (instruction, options) => renderer.presentTutorialCamera(instruction, options),
+      onChange: () => drawHud(), onError: error => { battleError = error.message; console.error(error); },
+    });
     const picker = document.createElement("div");
     picker.className = "facing-picker";
     picker.hidden = true;
@@ -509,8 +517,13 @@ async function start() {
   }
 }
 function restart() {
+  stageTutorial?.stop(); stageTutorial = null;
   workspace.querySelector("#deployment").innerHTML = "";
   battle = new StandardBattle(data, selection, { seed: Date.now() });
+  stageTutorial = bindStageTutorial(workspace, battle, {
+    camera: (instruction, options) => renderer.presentTutorialCamera(instruction, options),
+    onChange: () => drawHud(), onError: error => { battleError = error.message; console.error(error); },
+  });
   battle.setViewport(landscapeRequired ? "preview" : viewport);
   paused = true;
   accumulator = 0;
@@ -521,6 +534,7 @@ function restart() {
   drawHud();
 }
 async function exit() {
+  stageTutorial?.stop(); stageTutorial = null;
   paused = true;
   battle?.setViewport("preview");
   viewport = "preview";
@@ -1210,7 +1224,7 @@ document.addEventListener("keydown", (e) => {
 
   if (
     !workspace ||
-    landscapeRequired ||
+    landscapeRequired || battle?.simulationHeld ||
     ["INPUT", "SELECT", "TEXTAREA"].includes(e.target.tagName)
   )
     return;
@@ -1248,14 +1262,10 @@ function tick(now) {
   let dt = 0,
     events = [];
   if (battle && !paused && !landscapeRequired && !battle.finished) {
-    accumulator += real * speed;
-    while (accumulator >= battle.dt && !battle.finished) {
-      battle.step();
-      accumulator -= battle.dt;
-      dt += battle.dt;
-    }
-    events = battle.drainEvents();
+    ({ accumulator, dt, events } = stepBattleFrame(battle, accumulator, real, speed));
   }
+  if (battle?.simulationHeld) accumulator = 0;
+  stageTutorial?.sync();
   renderer?.render(battle, dt, events, real);
   if (now - lastHud > 180) {
     drawHud();

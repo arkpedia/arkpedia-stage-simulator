@@ -37,8 +37,11 @@ completion. An internal source scheduler now composes all 21 ordered actions
 across two owned waves on source terrain/routes, waiting for managed enemies
 before advancing to wave two. A dedicated internal constructor now starts the
 exact preset and four hidden cards with no selectable squad or spare operator.
-Native scheduler/initial FSM timing, actual presentation/UI completion and
-canonical stage admission remain unverified or unconnected, so 17-16 stays held.
+The existing workspace now has an owned source-dialog presenter and camera
+completion port, with player input and combat animation time held through each
+step. Native camera/scheduler/initial FSM timing, preset/card command-panel
+integration and canonical stage admission remain unverified or unconnected, so
+17-16 stays held.
 Rockbreaker's eligible split animation now consumes live `slow_down` elapsed
 work for both release and completion, rather than fixed world-time callbacks.
 The six selected infantry/caster/carrier Combat cooldowns and Brute's owned
@@ -2023,3 +2026,64 @@ regeneration rules, Ptilopsis native range/FSM binding, initial native dispatch
 and the remaining enemy/stage audits still gate canonical admission. All nine
 remaining Chapter 16/17 normal stages remain closed, and mechanics work remains
 ahead of stage art, models/chibis and effects.
+
+## Owned tutorial presentation and held player input
+
+The workspace now binds an internal stage's dialog receiver to a native HTML
+modal presenter. Each retained speaker/name/text instruction uses textContent,
+keeps its avatar identity as metadata, and advances only through its captured
+completion receipt. Continue accepts keyboard or pointer/touch input. Held-key
+repeat cannot consume another line, Escape cannot bypass the source sequence,
+and the modal keeps background controls out of the focus/input path. Completion
+restores the prior focus. Replacing or stopping the presenter aborts unfinished
+presentation and ends the old internal stage rather than abandoning its hold.
+
+Camera instructions run through a renderer presentation port. The source's
+one-second focus commands interpolate outside combat time, including at doubled
+battle speed. Projection changes synchronize both Three/Pixi and the tile hit
+areas, and resizing rebases the viewport optics without discarding transition
+progress. The source reset restores the current fitted board camera before its
+receipt completes. Cancellation and late asynchronous results cannot acknowledge
+a different source step. A camera failure keeps the source receipt pending and
+provides an explicit End simulation action; external battle completion closes
+even that failed modal without requiring another acknowledgment.
+Only aborts belonging to the presenter's own cancelled signal are ignored;
+an independent camera AbortError follows the visible failure/cancel path too.
+
+This remains an explicit internal camera mapping: MID keeps the regular fitted
+board scale, offsets select source tile coordinates, and interpolation is linear.
+The closed client's zoom, easing, camera/line overlap and precise frame ordering
+are not proved by this bridge. No native camera parity or stage admission is
+claimed. The original source scale/duration/instruction records remain intact.
+
+Player-facing operator deployment, withdrawal, manual skills, stage-device and
+secondary actions, token placement and summon placement/retreat now reject an
+owned simulation hold before resources or deployment state can change. Explicit
+engine-owned operations retain their separate APIs. The workspace keyboard path
+also respects a hold. Previously its animation loop counted a full visual combat
+tick even when Battle.step returned without advancing; the shared frame helper
+now counts only completed ticks and drops held catch-up time. Camera presentation
+still receives its independent real-frame delta. Frame regressions prove that
+only completed pre-hold ticks advance, held frames contribute zero combat delta,
+and release resumes with fresh fractional frames rather than replaying the pause.
+
+The final focused run passed all 1,695 locally available cases, including nine
+new frame/camera/command checks. Summon/selection/copy, shared core/battle and
+projection regressions passed all 82 cases. Real Edge DOM checks pass on desktop
+and phone with the actual StageRenderer camera: all fourteen source presentation
+receipts complete, combat time remains fixed during both dialogs, reset returns
+to the fitted projection, and focus, repeat-key, Escape, cancellation and failed
+camera cleanup work. The fixture serves only its loopback HTML document and uses
+the real local modules; existing labelled geometric/actor fallbacks avoid
+downloading or asserting the later artwork phase. Desktop/phone screenshots
+were visually inspected and are retained in .cache and the hosted tutorial
+artifact. The regular 17-12 browser check also passes desktop/phone rendering,
+public access refusal and restart after the workspace/renderer changes.
+
+The preceding exact-constructor continuation 40247651584 at d82b35b8 passed all
+fifteen hosted jobs. Full run 40246338056 at 47a20f07 is now terminal success
+across all eight Linux/Windows, Node 22/24 shards. It was allowed to finish
+before a new full checkpoint verification. The four quarantined tracked tests
+remain unchanged in Git for hosted
+execution. Preset/card command-panel integration, native camera/scheduler/FSM
+timing and the other remaining mechanics still gate canonical stage admission.

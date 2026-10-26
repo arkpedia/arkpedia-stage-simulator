@@ -49,6 +49,7 @@ export function regularSummonCards(battle) {
 }
 
 export function summonPlacementError(battle, key, row, col) {
+  if (battle.simulationHeld) return 'Stage presentation is in progress.';
   const state = cardState(battle, key);
   if(state&&chapter17FirewallBlocksDeployment(battle,row,col))return 'Firewall blocks deployment on this tile.';
   if (state?.deck?.placementError) return state.deck.placementError(row, col);
@@ -167,7 +168,7 @@ export function selectedRegularSummon(battle, key) {
 }
 
 export function retreatRegularSummon(battle, key) {
-  if (!canDeployInViewport(battle.viewport) || battle.finished) throw Error('Battle workspace is inactive.');
+  if (!canDeployInViewport(battle.viewport) || battle.finished || battle.simulationHeld) throw Error('Battle workspace is inactive.');
   const state = selectedRegularSummon(battle, key), token = state?.unit;
   if (!live(token)) throw Error('Summon is not deployed.');
   if (state.deck?.retreat) { state.deck.retreat(token); return; }

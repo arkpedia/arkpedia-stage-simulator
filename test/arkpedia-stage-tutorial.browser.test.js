@@ -1,0 +1,53 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Real DOM/camera input; native zoom/easing/artwork parity is not asserted.
+import test from'node:test';import assert from'node:assert/strict';import{existsSync,mkdirSync}from'node:fs';
+const chrome=process.env.CHROME_PATH??'/usr/bin/google-chrome',enabled=process.env.RENDER_E2E==='1'&&existsSync(chrome);
+async function openDocument(page,port,body){
+ // Serve only this loopback fixture document; all modules/assets still use
+ // the actual local server. A JSON health document has no writable HTML DOM.
+ await page.setRequestInterception(true);const handle=request=>request.isNavigationRequest()&&request.frame()===page.mainFrame()?request.respond({status:200,contentType:'text/html',body}):request.continue();page.on('request',handle);
+ await page.goto(`http://127.0.0.1:${port}/__tutorial_fixture__`);
+}
+test('source tutorial DOM runs both camera/dialog sequences on desktop and phone without advancing combat',{skip:enabled?false:'set RENDER_E2E=1 with Chrome installed',timeout:120000},async()=>{
+ const{startServer}=await import('../server/index.js'),puppeteer=(await import('puppeteer-core')).default,s=await startServer({port:0,host:'127.0.0.1',quiet:true});let browser;
+ try{browser=await puppeteer.launch({executablePath:chrome,headless:true,args:['--no-first-run','--no-sandbox','--enable-unsafe-swiftshader','--use-gl=angle','--use-angle=swiftshader']});mkdirSync('.cache',{recursive:true});
+  for(const mobile of [false,true]){
+   const page=await browser.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));await page.setViewport(mobile?{width:844,height:390,isMobile:true,hasTouch:true}:{width:1280,height:800});
+   await openDocument(page,s.port,`<link rel="stylesheet" href="/arkpedia/style.css"><section class="workspace" id="workspace"><div class="battle-content"><div class="board battle-board" id="board" style="width:100vw;height:100dvh"><header class="battle-header"><button id="outside">Battle controls</button></header></div></div></section>`);
+   await page.addScriptTag({url:`http://127.0.0.1:${s.port}/vendor/pixi.min.js`});await page.addScriptTag({url:`http://127.0.0.1:${s.port}/vendor/pixi-spine.js`});
+   await page.evaluate(async()=>{
+    const[{createStage17_16MechanicsBattle},{StageRenderer},{bindStageTutorial},{stepBattleFrame},asset,canonical]=await Promise.all([import('/sim/arkpedia.js'),import('/arkpedia/renderer.js'),import('/arkpedia/stage-tutorial.js'),import('/arkpedia/battle-frame.js'),import('/data/arkpedia-mvp.json',{with:{type:'json'}}),import('/data/candidates/arkpedia-stage-17-16-source.json',{with:{type:'json'}})]);
+    const b=createStage17_16MechanicsBattle(asset.default);b.setViewport('fullscreen-workspace');const m=b.internalStageMechanics;
+    // Existing labelled geometric fallback keeps this a mechanics/presentation
+    // review without downloading or claiming the later artwork phase.
+    const data={...asset.default,sd:{models:{}},skillEffects:null,stage:{...canonical.default.stage,geometry:canonical.default.geometry,devices:[]}},renderer=new StageRenderer(document.querySelector('#board'),data,()=>{});
+    const fixture=window.fixture={b,m,renderer,changes:0,errors:[],first:false,outsideClicks:0};document.querySelector('#outside').onclick=()=>fixture.outsideClicks++;
+    fixture.presenter=bindStageTutorial(document.querySelector('#workspace'),b,{camera:(i,o)=>renderer.presentTutorialCamera(i,o),onChange:()=>fixture.changes++,onError:e=>fixture.errors.push(e.message)});
+    fixture.advanceToDialog=()=>{for(let n=0;n<10000&&!m.dialogs.state()&&!b.finished;n++){b.step();if(!fixture.first&&b.killed>=2&&m.schedule.state().wave===0&&m.viy.unit.skill.spTotal>=49)fixture.first=b.activateOperator(m.viy.key);}if(!m.dialogs.state())throw Error('Source dialog was not reached');document.querySelector('#outside').focus();fixture.presenter.sync();return b.time;};
+    let last=performance.now();fixture.alive=true;const draw=now=>{if(!fixture.alive)return;const real=Math.min(.1,(now-last)/1000);last=now;const combat=b.simulationHeld?stepBattleFrame(b,0,real,1):{dt:0,events:[]};fixture.presenter.sync();renderer.render(b,combat.dt,combat.events,real);fixture.frame=requestAnimationFrame(draw);};fixture.frame=requestAnimationFrame(draw);
+    fixture.cleanup=()=>{fixture.alive=false;cancelAnimationFrame(fixture.frame);fixture.presenter.stop();renderer.destroy();};
+   });
+   const firstTime=await page.evaluate(()=>fixture.advanceToDialog());await page.waitForSelector('.stage-tutorial[open][data-instruction="dialogue"]',{timeout:15000});
+   assert.deepEqual(await page.evaluate(()=>({time:fixture.b.time,held:fixture.b.simulationHeld,x:fixture.renderer.projection.tx,y:fixture.renderer.projection.ty,text:fixture.presenter.root.querySelector('p').textContent,source:fixture.m.dialogs.state().instruction.text})),{time:firstTime,held:true,x:3,y:4,...await page.evaluate(()=>({text:fixture.m.dialogs.state().instruction.text,source:fixture.m.dialogs.state().instruction.text}))});
+   await page.screenshot({path:`.cache/stage-tutorial-${mobile?'phone':'desktop'}.png`});await page.keyboard.press('Escape');assert.ok(await page.$eval('.stage-tutorial',e=>e.open));await page.mouse.click(5,5);assert.equal(await page.evaluate(()=>fixture.outsideClicks),0);
+   await page.focus('.stage-tutorial button');await page.keyboard.down('Enter');const index=await page.evaluate(()=>fixture.m.dialogs.state().index);await page.keyboard.down('Enter');assert.equal(await page.evaluate(()=>fixture.m.dialogs.state().index),index);await page.keyboard.up('Enter');
+   for(let n=0;n<3&&await page.$eval('.stage-tutorial',e=>e.open);n++){const old=await page.$eval('.stage-tutorial',e=>e.dataset.index);await page.click('.stage-tutorial button');await page.waitForFunction(index=>!fixture.presenter.root.open||fixture.presenter.root.dataset.index!==index,{},old);}
+   await page.waitForFunction(()=>!fixture.presenter.root.open);assert.equal(await page.evaluate(()=>fixture.changes),5);assert.equal(await page.evaluate(()=>fixture.b.time),firstTime);assert.equal(await page.evaluate(()=>document.activeElement.id),'outside');
+   const secondTime=await page.evaluate(()=>fixture.advanceToDialog());await page.waitForSelector('.stage-tutorial[open][data-instruction="dialogue"]');assert.equal(await page.evaluate(()=>fixture.renderer.projection.tx),7);
+   for(let n=0;n<6;n++){await page.waitForSelector('.stage-tutorial[open][data-instruction="dialogue"]');const old=await page.$eval('.stage-tutorial',e=>e.dataset.index);await page.click('.stage-tutorial button');await page.waitForFunction(index=>!fixture.presenter.root.open||fixture.presenter.root.dataset.index!==index,{},old);}
+   await page.waitForFunction(()=>!fixture.presenter.root.open);const final=await page.evaluate(()=>({changes:fixture.changes,time:fixture.b.time,held:fixture.b.simulationHeld,projection:fixture.renderer.projection.params(),base:fixture.renderer.tutorialCamera.base.params(),errors:fixture.errors}));
+   assert.equal(final.changes,14);assert.equal(final.time,secondTime);assert.equal(final.held,false);assert.deepEqual(final.projection,final.base);assert.deepEqual(final.errors,[]);assert.deepEqual(errors,[]);await page.evaluate(()=>fixture.cleanup());await page.close();
+  }
+ }finally{await browser?.close();await s.close();}
+});
+test('presentation cancellation and camera failures cannot acknowledge stale source steps or strand a modal',{skip:enabled?false:'set RENDER_E2E=1 with Chrome installed',timeout:60000},async()=>{
+ const{startServer}=await import('../server/index.js'),puppeteer=(await import('puppeteer-core')).default,s=await startServer({port:0,host:'127.0.0.1',quiet:true});let browser;
+ try{browser=await puppeteer.launch({executablePath:chrome,headless:true,args:['--no-first-run','--no-sandbox']});const page=await browser.newPage();await openDocument(page,s.port,'<section id="workspace"><button id="prior">Prior focus</button></section>');
+  await page.evaluate(async()=>{const[{createStage17_16MechanicsBattle},{bindStageTutorial},asset,source]=await Promise.all([import('/sim/arkpedia.js'),import('/arkpedia/stage-tutorial.js'),import('/data/arkpedia-mvp.json',{with:{type:'json'}}),import('/data/candidates/arkpedia-predefined-tutorial-source.json',{with:{type:'json'}})]);window.setup=mode=>{
+   const b=createStage17_16MechanicsBattle(asset.default),controller=b.internalStageMechanics.dialogs;controller.receive(source.default.actions[0].action);let resolve;const pending=new Promise(r=>resolve=r),errors=[];const presenter=bindStageTutorial(document.querySelector('#workspace'),b,{camera:()=>mode==='error'?Promise.reject(Error('fixture camera failure')):mode==='abort'?Promise.reject(new DOMException('fixture unowned abort','AbortError')):pending,onError:e=>errors.push(e.message)});document.querySelector('#prior').focus();presenter.sync();window.fixture={b,controller,presenter,resolve,errors};};setup('pending');});
+  await page.waitForSelector('dialog[open]');await page.evaluate(()=>{fixture.presenter.stop();fixture.resolve();});await page.waitForFunction(()=>!document.querySelector('dialog'));assert.deepEqual(await page.evaluate(()=>({held:fixture.b.simulationHeld,finished:fixture.b.finished,reason:fixture.b.reason,step:fixture.controller.state()})),{held:false,finished:true,reason:'forced',step:null});
+  await page.evaluate(()=>setup('error'));await page.waitForFunction(()=>document.querySelector('dialog button').textContent==='End simulation');assert.equal(await page.evaluate(()=>fixture.b.simulationHeld),true);await page.click('dialog button');assert.deepEqual(await page.evaluate(()=>({held:fixture.b.simulationHeld,finished:fixture.b.finished,open:fixture.presenter.root.open,errors:fixture.errors})),{held:false,finished:true,open:false,errors:['fixture camera failure']});await page.evaluate(()=>fixture.presenter.stop());
+  await page.evaluate(()=>setup('error'));await page.waitForFunction(()=>document.querySelector('dialog button').textContent==='End simulation');await page.evaluate(()=>{fixture.b.forceEnd();fixture.presenter.sync();});assert.equal(await page.$eval('dialog',e=>e.open),false);await page.evaluate(()=>fixture.presenter.stop());
+  await page.evaluate(()=>setup('abort'));await page.waitForFunction(()=>document.querySelector('dialog button').textContent==='End simulation');assert.deepEqual(await page.evaluate(()=>fixture.errors),['fixture unowned abort']);assert.equal(await page.evaluate(()=>fixture.b.simulationHeld),true);await page.click('dialog button');assert.equal(await page.evaluate(()=>fixture.b.reason),'forced');await page.evaluate(()=>fixture.presenter.stop());
+ }finally{await browser?.close();await s.close();}
+});
