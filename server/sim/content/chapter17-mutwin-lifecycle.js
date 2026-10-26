@@ -3,7 +3,13 @@ import contract from '../../../data/candidates/arkpedia-ch17-mutwin-lifecycle-co
 import {currentFatalDamageReceipt} from '../damage.js';
 import {currentEnemyInstantKillReceipt,executeEnemyInstantKill} from '../enemy-instant-kill.js';
 import {matchesChapter17MuamaRecord} from './chapter17-mutwin-stage-records.js';
-const registries=new WeakMap();
+const registries=new WeakMap(),roomReceipts=new WeakMap();
+// The intent is valid only during the actual parent/death continuation. A
+// retained copy cannot later authorize withdrawal, camera or branch changes.
+export function currentChapter17MutwinRoomFinishReceipt(intent,b){
+ const receipt=roomReceipts.get(intent);
+ return receipt?.battle===b&&receipt.source.deploySeq===receipt.sourceLife?receipt:null;
+}
 const freeze=value=>{if(value&&typeof value==='object'){for(const child of Object.values(value))freeze(child);Object.freeze(value);}return value;},roomActions=freeze(structuredClone(contract.roomFinish));
 function registryFor(b){
  let registry=registries.get(b);if(registry)return registry;
@@ -25,12 +31,16 @@ export function installChapter17MutwinLifecycle(b,e,{actions,finishRoom,stage}={
  let registry=registryFor(b);const existing=registry.states.get(e.defId);if(existing?.valid())throw Error('Multiple copies of one twin require an aura override review');if(existing?.active)existing.stop();registry=registryFor(b);
  const d=proof.defaults,room=r.talents.bbStr['DamageResistance.boss_room'],handles=[],seen=new WeakSet(),combat=actions.combat,line=actions.line,blink=actions.blink,originalBlinkEnabled=blink.enabled;
  const flags={invulnerable:true,untargetable:true,unblockable:true,noMove:true,disarm:true};
- const state={active:true,owner:e,ownerLife:life,partnerKey:d.partner,phase:'active',partner:null,hold:null,heal:null,camera:null,roomCommitted:false,rebornUntil:null,rebirths:0,
+ let roomCommitted=false;
+ function finishRoomFromParent(){
+  if(!proof.camera||roomCommitted||!state.active||b.finished||b._endReq||e.deploySeq!==life)return;
+  roomCommitted=true;
+  const intent=Object.freeze({source:e,sourceLife:life,room,actions:roomActions});
+  roomReceipts.set(intent,Object.freeze({battle:b,...intent}));
+  try{finishRoom(intent);}finally{roomReceipts.delete(intent);}
+ }
+ const state={active:true,owner:e,ownerLife:life,partnerKey:d.partner,phase:'active',partner:null,hold:null,heal:null,camera:null,get roomCommitted(){return roomCommitted;},rebornUntil:null,rebirths:0,
   valid:()=>state.active&&!b.finished&&e.alive&&e.deployed&&e.deploySeq===life&&e.mem.ch17MuamaActions===actions&&actions.active&&line.active&&blink.active&&combat.valid(),
-  room(){
-   if(!proof.camera||state.roomCommitted||!state.active||b.finished||e.deploySeq!==life)return;
-   state.roomCommitted=true;finishRoom(Object.freeze({source:e,sourceLife:life,room,actions:roomActions}));
-  },
   detachPartner(q=state.partner,finish=false){
    if(!q?.active)return;q.active=false;if(state.partner===q)state.partner=null;
    b.removeBuff(q.owner.owner,q.mark);b.removeBuff(e,q.child);
@@ -110,9 +120,9 @@ export function installChapter17MutwinLifecycle(b,e,{actions,finishRoom,stage}={
   },{owner:state,priority:100}),b.on('tick',()=>{
    if(!state.valid()){state.stop();return;}
    if(state.phase==='reborn'&&b.time+1e-9>=state.rebornUntil)state.enterFake();registry.sync();
-  },{owner:state,priority:200}),b.on('death',({unit})=>{if(unit!==e||e.deploySeq!==life)return;try{state.room();}finally{state.stop();}},{owner:state,priority:200}),
+  },{owner:state,priority:200}),b.on('death',({unit})=>{if(unit!==e||e.deploySeq!==life||e.alive||e.deployed||!e.removed)return;try{finishRoomFromParent();}finally{state.stop();}},{owner:state,priority:200}),
   b.on('battleEnd',()=>state.stop(),{owner:state}));
-  if(proof.camera){let camera;camera=b.addBuff(e,{key:proof.camera.buffKey,source:e,persist:true,admit:()=>state.valid(),onRemove:()=>{if(state.camera===camera)state.room();}});state.camera=camera;
+  if(proof.camera){let camera;camera=b.addBuff(e,{key:proof.camera.buffKey,source:e,persist:true,admit:()=>state.valid(),onRemove:()=>{if(state.camera===camera)finishRoomFromParent();}});state.camera=camera;
    if(!camera||!state.valid()){b.removeBuff(e,camera);throw Error('Twin room-finish parent admission failed');}}
   registry.sync();return state;
  }catch(error){state.stop();throw error;}

@@ -5,7 +5,7 @@ import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {makeBattle,chessRec} from './helpers/battleHarness.js';
 import {installChapter17MutwinCore as install} from '../server/sim/content/chapter17-mutwin-core.js';
-import {installChapter17MutwinLifecycle} from '../server/sim/content/chapter17-mutwin-lifecycle.js';
+import {installChapter17MutwinLifecycle,currentChapter17MutwinRoomFinishReceipt} from '../server/sim/content/chapter17-mutwin-lifecycle.js';
 import {currentFatalDamageReceipt} from '../server/sim/damage.js';
 import {mutwinLifecycleContract} from '../tools/arkpedia/mutwin-lifecycle-contract.mjs';
 import {chapter17Environment,chapter17FirewallSnapshot as snapshot,clickChapter17Firewall as click} from '../server/sim/content/chapter17.js';
@@ -96,6 +96,46 @@ test('only the first twin sends one immutable native camera/branch receipt on ac
 test('removing the actual native room parent runs its source finish once, while controller cleanup stays silent',()=>{
  const f=fixture();f.b.removeBuff(f.e,'enemy_mutwin_move_camera');assert.equal(f.rooms.length,1);f.b.kill(f.e,f.t);assert.equal(f.rooms.length,1);noErrors(f);
  const g=fixture();g.core.stop();assert.equal(g.rooms.length,0);assert.ok(g.e.alive);assert.equal(g.e.mem.ch17MutwinCore,undefined);noErrors(g);
+});
+
+for(const mode of ['death','parent'])test('room receipt authenticates only the live '+mode+' continuation and expires after return',()=>{
+ let f,captured,verified;
+ f=fixture({receiver:intent=>{
+  captured=intent;verified=currentChapter17MutwinRoomFinishReceipt(intent,f.b);
+  assert.equal(verified.source,f.e);assert.equal(verified.sourceLife,f.e.deploySeq);
+  assert.equal(verified.battle,f.b);assert.equal(verified.room,'(0,6,0)');
+  assert.equal(verified.actions,intent.actions);assert.ok(Object.isFrozen(verified));
+  assert.equal(currentChapter17MutwinRoomFinishReceipt({...intent},f.b),null);
+  assert.equal(currentChapter17MutwinRoomFinishReceipt(intent,{}),null);
+ }});
+ if(mode==='death')f.b.kill(f.e,f.t);else f.b.removeBuff(f.e,'enemy_mutwin_move_camera');
+ assert.ok(verified);assert.equal(currentChapter17MutwinRoomFinishReceipt(captured,f.b),null);
+ assert.equal(f.core.lifecycle.roomCommitted,true);
+ assert.throws(()=>{f.core.lifecycle.roomCommitted=false;},TypeError);
+ f.b.kill(f.e,f.t);assert.equal(f.rooms.length,1);noErrors(f);
+});
+
+test('forged death and copied room intents cannot authorize a room transition from a live twin',()=>{
+ const f=fixture();assert.equal(f.core.lifecycle.room,undefined);
+ const forged={source:f.e,sourceLife:f.e.deploySeq,room:'(0,6,0)',actions:contract.roomFinish};
+ assert.equal(currentChapter17MutwinRoomFinishReceipt(forged,f.b),null);
+ f.b.emit('death',{unit:f.e,reason:'killed'});
+ assert.equal(f.rooms.length,0);assert.equal(f.e.alive,true);noErrors(f);
+});
+
+test('a throwing room receiver cannot leave an authenticated receipt or repeat a committed handoff',()=>{
+ let captured,f;f=fixture({receiver:r=>{captured=r;assert.ok(currentChapter17MutwinRoomFinishReceipt(r,f.b));throw Error('room receiver failed');}});
+ f.b.kill(f.e,f.t);assert.ok(captured);
+ assert.equal(currentChapter17MutwinRoomFinishReceipt(captured,f.b),null);
+ assert.equal(f.rooms.length,1);assert.equal(f.core.lifecycle.active,false);
+ f.b.emit('death',{unit:f.e});assert.equal(f.rooms.length,1);
+ assert.ok(f.b.errors.some(e=>JSON.stringify(e).includes('room receiver failed')));
+});
+
+test('a room receipt stops authenticating immediately when its source life changes inside the receiver',()=>{
+ let captured,f;f=fixture({receiver:r=>{captured=r;assert.ok(currentChapter17MutwinRoomFinishReceipt(r,f.b));f.e.deploySeq++;assert.equal(currentChapter17MutwinRoomFinishReceipt(r,f.b),null);}});
+ f.b.removeBuff(f.e,'enemy_mutwin_move_camera');
+ assert.equal(f.rooms.length,1);assert.equal(currentChapter17MutwinRoomFinishReceipt(captured,f.b),null);noErrors(f);
 });
 test('HP loss during fake death can trigger another infinite rebirth without clearing the retained ATK record',()=>{
  const f=fixture(),state=fake(f);down(f);assert.equal(state.phase,'reborn');assert.equal(state.rebirths,2);f.h.runUntil(()=>state.phase==='fake',1);assert.equal(f.e.hp,1000);assert.ok(state.partner);noErrors(f);

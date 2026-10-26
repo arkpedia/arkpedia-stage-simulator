@@ -2406,3 +2406,26 @@ handler. The test imports and injects the real resolver rather than stubbing it
 or weakening assertions. All 24 summon-selection/operator-control cases pass
 locally after the correction. A fresh full run is required; the failed run is
 not counted as green. The four quarantined local deletions remain uncommitted.
+
+### Twin room handoff ownership prerequisite
+
+The first twin's retained camera/branch intent now has a callback-scoped receipt
+through `currentChapter17MutwinRoomFinishReceipt`. Only the actual room parent
+removal or a retired source body can issue it; a synthetic death event for a live
+body cannot authorize room work. The public lifecycle no longer exposes a room
+commit method, and its committed observation is read-only. A receipt is bound to
+the battle and source deployment, expires in finally after receiver return/error,
+and cannot be recreated by copying the frozen intent or replaying it later.
+
+Five new checks cover death/parent continuations, copied/foreign receipts,
+fabricated live-body death, receiver errors, one-shot commitment and source-life
+reuse. All 45 lifecycle checks and 103 combined lifecycle/branch/combat cases
+pass. The native camera/withdraw delay and scope remain unimplemented until
+proven; this prerequisite does not admit 17-18 or claim native room sequencing.
+
+The final available focused cohort passed 1,748 cases, zero failures/skips,
+excluding only the same four quarantined files retained in hosted CI.
+
+Hosted full run 40342411234 and continuation 40342413124 at 88698e13 were
+confirmed live during this work; they validate the preceding test-harness fix,
+not this subsequent room receipt change.
