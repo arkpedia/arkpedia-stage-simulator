@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,65);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,70);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -130,6 +130,22 @@ test('mode initialization binds general/combat/attack order and the canonical sw
  at(dedup,0x3f62e1e,'0x180004fe0');at(dedup,0x3f62e72,'0x180004b40');
  at(dedup,0x3f62e77,'esi');at(dedup,0x3f62e79,'0x183f62d00');
  assert.equal(init.equalsDispatch.metadataIdentityVerified,false);
+});
+
+test('finish effects bind UID-map removal, MarkFinish/OnFinish flags and delayed recycle queue after native completion',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),effects=c.modeSwitch.buffNotification.finishEffects;
+ const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ assert.deepEqual(effects.selectedFlags,{updateOverrideMap:true,delayToRecycle:true,immediatelyFinishEffect:false});assert.equal(effects.nativeQueueTimingVerified,false);
+ assert.deepEqual(effects.parameters.find(m=>m.name==='_FinishBuff').parameters.map(p=>p.name),['buff','updateOverrideMap','delayToRecycle','immediatelyFinishEffect']);
+ assert.deepEqual(effects.parameters.find(m=>m.name==='MarkFinish').parameters.map(p=>p.name),['updateOverrideMap']);
+ assert.deepEqual(effects.parameters.find(m=>m.name==='OnFinish').parameters.map(p=>p.name),['immediatelyFinishEffect']);
+ const remove=castMethod(c,'BuffContainer','_FinishAndRemoveBuff');at(remove,effects.uidMapRemoveCallRva,'0x184c53dd0');
+ at(remove,0x39d7c6d,'r9b, 1');at(remove,0x39d7c79,'r8d, r9b');at(remove,0x39d7c7d,'byte ptr [rsp + 0x20], 0');
+ at(remove,effects.finishBuffCallRva,'0x1839d7ce0');
+ const finish=castMethod(c,'BuffContainer','_FinishBuff');at(finish,effects.markFinishCallRva,'0x1839aaf00');at(finish,effects.onFinishCallRva,'0x1839ade40');
+ at(finish,0x39d7d8d,'0x1839d7e2d');at(finish,effects.queueRecycleCallRva,'0x1839805b0');
+ const group=castMethod(c,'OverrideGroup','Remove');at(group,0x39deff6,'0x1839df002');at(group,0x39deffd,'0x1839df770');
+ assert.ok(castMethod(c,'BattleController','RecycleBuffNextFrame'));assert.ok(castMethod(c,'OverrideGroup','_DoUpdateInternal'));
 });
 
 test('finished buff source binds reverse traversal and override cleanup after finish/remove',()=>{

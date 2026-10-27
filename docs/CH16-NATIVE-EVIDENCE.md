@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 65 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 70 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -1003,3 +1003,45 @@ active and is not replaced at this checkpoint.
 UID allocation/pool recycling, full finish/override effects, original ability
 data, live controller/FSM scheduling and stage geometry integration remain open.
 No enemy/stage support, source receipts or catalogue gates are changed.
+
+### Finish/remove effects and deferred recycle request
+
+The70-method artifact additionally retains BuffContainer._FinishBuff,
+Buff.MarkFinish/OnFinish, BattleController.RecycleBuffNextFrame and
+OverrideGroup._DoUpdateInternal. Metadata argument names bind the selected
+_FinishBuff call to updateOverrideMap=true, delayToRecycle=true and
+immediatelyFinishEffect=false. The complete native _FinishAndRemoveBuff path
+removes the matching list entry, removes the current instanceUid from the UID
+map, then performs those finish effects. It does not branch on the Boolean
+results of list or UID-map removal before finishing.
+
+`fearProjectileFinishAndRemoveBuff` composes that selected sequence. It samples
+UID again after list removal, marks finish with override-map updates enabled,
+then calls OnFinish without immediate effect termination. Only a true OnFinish
+result captures ObjectPtr<Buff> and submits it to the next-frame recycle queue.
+It does not reset the UID or recycle the object inline. Native queue processing
+timing remains explicitly unverified; queue/state/effect receivers remain
+mandatory callers. Removing UID-map registration alone does not invalidate an
+ObjectPtr whose cached UID still matches the buff object's UID.
+
+`fearProjectileOverrideGroupRemove` preserves the separate group member-removal
+Boolean: _DoUpdateInternal runs only on successful member removal. That callback
+uses the group's native member equality semantics; it does not substitute the
+primary buff list's UID-based matching rule.
+
+Tests cover failed list/map removal results, false/malformed OnFinish results,
+current UID resampling, selected flags, capture/queue order, recursion and
+owner-life cancellation at each callback. A composed concrete-pointer/list/
+finished-cleanup/group test removes registration, queues a still UID-valid
+pointer, then removes the member and updates its group; changing the object's
+UID later invalidates the queued pointer. The group/state/queue effects in this
+composition remain synthetic receivers rather than certified native pool and
+override-map execution.
+
+The focused native/fear/family/miner suite passes521 tests and the producer
+reproduces with --check. Continuation40521019928 atc40fdc78 has completed
+successfully, joining full40514426781 at55cb5385. These older hosted results
+do not claim validation of this newer checkpoint. Actual MarkFinish/OnFinish
+state/effects, group update, native queue execution, ability setup, complete
+controller scheduling and stage geometry remain open. Source/support/catalogue
+gates are unchanged.

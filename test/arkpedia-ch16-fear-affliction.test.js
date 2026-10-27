@@ -17,6 +17,7 @@ import {fearProjectileBuffIteration} from '../server/sim/content/chapter16-fear-
 import {fearProjectileBuffList} from '../server/sim/content/chapter16-fear-buff-list.js';
 import {fearProjectileBuffPointers} from '../server/sim/content/chapter16-fear-buff-pointer.js';
 import {fearProjectileFinishedBuffs} from '../server/sim/content/chapter16-fear-buff-cleanup.js';
+import {fearProjectileFinishAndRemoveBuff,fearProjectileOverrideGroupRemove} from '../server/sim/content/chapter16-fear-buff-finish.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
 import {fearProjectileSpell} from '../server/sim/content/chapter16-fear-spell.js';
@@ -53,6 +54,87 @@ test('mode initialization rejects invalid entries and delegates equality without
   isValid:x=>x!==null&&!x.invalid,equals:(left,right)=>{calls.push([left,right]);return left.id===right.id;}});
  assert.deepEqual(list,[a]);assert.deepEqual(calls,[[a,duplicate]]);
  assert.throws(()=>fearProjectileCollectModeAbilities({generalAbilities:[],combat:null,attack:null,isValid:()=>1,equals:()=>true}),/Boolean/);
+});
+
+function finishEffectFixture(overrides={}){
+ const f=fixture(),buff={uid:7},events=[],pointer={obj:buff,cachedUid:7};
+ const callers={owner:f.source,buff,removeFromList:b=>{assert.equal(b,buff);events.push('list');return false;},
+  readUid:b=>b.uid,removeUidRegistration:uid=>{assert.equal(uid,buff.uid);events.push('uid');return false;},
+  markFinish:(b,flags)=>{assert.equal(b,buff);assert.deepEqual(flags,{updateOverrideMap:true});events.push('mark');},
+  onFinish:(b,flags)=>{assert.equal(b,buff);assert.deepEqual(flags,{immediatelyFinishEffect:false});events.push('finish');return true;},
+  captureBuffPointer:b=>{assert.equal(b,buff);events.push('capture');return pointer;},
+  queueRecycleNextFrame:value=>{assert.equal(value,pointer);events.push('queue');},...overrides};
+ return{...f,buff,events,pointer,callers};
+}
+
+test('buff finish removes list/UID registration before mark and finish even when removal reports false',()=>{
+ const f=finishEffectFixture(),finish=fearProjectileFinishAndRemoveBuff(f.b,f.callers);
+ assert.equal(finish.run(),undefined);assert.equal(finish.run(),null);
+ assert.deepEqual(f.events,['list','uid','mark','finish','capture','queue']);assert.deepEqual(f.b.errors,[]);
+});
+
+test('OnFinish false skips pointer capture and next-frame recycling but preserves earlier finish effects',()=>{
+ const f=finishEffectFixture({onFinish:()=>false});assert.equal(fearProjectileFinishAndRemoveBuff(f.b,f.callers).run(),undefined);
+ assert.deepEqual(f.events,['list','uid','mark']);
+});
+
+test('finish samples the current UID after list removal instead of caching the earlier list key',()=>{
+ const f=finishEffectFixture();f.callers.removeFromList=()=>{f.buff.uid=8;};
+ f.callers.removeUidRegistration=uid=>{assert.equal(uid,8);f.events.push('uid8');};
+ assert.equal(fearProjectileFinishAndRemoveBuff(f.b,f.callers).run(),undefined);assert.equal(f.events[0],'uid8');
+});
+
+for(const point of ['removeFromList','readUid','removeUidRegistration','markFinish','onFinish','captureBuffPointer','queueRecycleNextFrame'])
+ for(const boundary of ['reuse','battleEnd','recursive'])test('buff finish guards '+boundary+' during '+point,()=>{
+  const f=finishEffectFixture();let finish;const original=f.callers[point];f.callers[point]=(...args)=>{
+   if(boundary==='reuse')f.source.deploySeq++;else if(boundary==='battleEnd')f.b.emit('battleEnd',{});else assert.equal(finish.run(),null);
+   return boundary==='recursive'?original(...args):undefined;
+  };
+  finish=fearProjectileFinishAndRemoveBuff(f.b,f.callers);assert.equal(finish.run(),boundary==='recursive'?undefined:null);
+  assert.equal(finish.run(),null);assert.deepEqual(f.b.errors,[]);
+ });
+
+test('malformed OnFinish results fail before capture/queue rather than becoming a recycle request',()=>{
+ const f=finishEffectFixture({onFinish:()=>undefined}),finish=fearProjectileFinishAndRemoveBuff(f.b,f.callers);
+ assert.throws(()=>finish.run(),/OnFinish Boolean/);assert.equal(f.events.includes('capture'),false);assert.equal(finish.run(),null);
+});
+
+for(const removed of [false,true])test('override group removal updates its internals only after member removal '+removed,()=>{
+ const f=fixture(),group={},buff={},events=[];
+ const effect=fearProjectileOverrideGroupRemove(f.b,{owner:f.source,group,buff,removeMember:(g,b)=>{
+  assert.equal(g,group);assert.equal(b,buff);events.push('remove');return removed;
+ },updateInternal:g=>{assert.equal(g,group);events.push('update');}});
+ assert.equal(effect.run(),undefined);assert.equal(effect.run(),null);assert.deepEqual(events,removed?['remove','update']:['remove']);
+});
+
+for(const point of ['removeMember','updateInternal'])for(const boundary of ['reuse','battleEnd','recursive'])
+ test('override group removal guards '+boundary+' during '+point,()=>{
+  const f=fixture();let effect;const callers={owner:f.source,group:{},buff:{},removeMember:()=>true,updateInternal:()=>{}};
+  const original=callers[point];callers[point]=(...args)=>{
+   if(boundary==='reuse')f.source.deploySeq++;else if(boundary==='battleEnd')f.b.emit('battleEnd',{});else assert.equal(effect.run(),null);
+   return boundary==='recursive'?original(...args):undefined;
+  };
+  effect=fearProjectileOverrideGroupRemove(f.b,callers);assert.equal(effect.run(),boundary==='recursive'?undefined:null);assert.equal(effect.run(),null);
+ });
+
+test('concrete cleanup removes registration before queuing a still UID-valid pointer and updating its override group',()=>{
+ const f=fixture(),buff={uid:7,priority:1,key:'g',finished:true},pointers=fearProjectileBuffPointers({readUid:b=>b.uid}),
+  list=fearProjectileBuffList(f.b,{owner:f.source,copyEntry:pointers.copy,isEntryValid:pointers.isValid,resolveEntry:pointers.lock,readPriority:b=>b.priority,readUid:b=>b.uid}),
+  uidMap=new Map([[7,buff]]),group={members:[buff]},queue=[],events=[];
+ list.add(pointers.capture(buff));
+ const cleanup=fearProjectileFinishedBuffs(f.b,{owner:f.source,openReverseIterator:()=>list.openReverseIterator(),isFinished:b=>b.finished,
+  finishAndRemoveBuff:b=>fearProjectileFinishAndRemoveBuff(f.b,{owner:f.source,buff:b,removeFromList:b=>{events.push('list');return list.remove(b);},
+   readUid:b=>b.uid,removeUidRegistration:uid=>{events.push('uid');return uidMap.delete(uid);},
+   markFinish:()=>events.push('mark'),onFinish:()=>{events.push('finish');assert.equal(uidMap.has(7),false);return true;},
+   captureBuffPointer:b=>pointers.capture(b),queueRecycleNextFrame:p=>{events.push('queue');queue.push(p);}}).run(),
+  readOverrideKey:b=>b.key,tryGetOverrideGroup:()=>({found:true,group}),
+  removeFromOverrideGroup:(g,b)=>fearProjectileOverrideGroupRemove(f.b,{owner:f.source,group:g,buff:b,
+   removeMember:(g,b)=>{events.push('group-remove');const index=g.members.indexOf(b);if(index<0)return false;g.members.splice(index,1);return true;},
+   updateInternal:()=>events.push('group-update')}).run(),clearInvalidElementsIfNotLoop:()=>list.clearInvalidElementsIfNotLoop()});
+ assert.equal(cleanup.run(),undefined);assert.deepEqual(events,['list','uid','mark','finish','queue','group-remove','group-update']);
+ assert.equal(list.count,0);assert.equal(uidMap.size,0);assert.equal(group.members.length,0);assert.equal(queue.length,1);
+ assert.equal(pointers.lock(queue[0]),buff,'removal from the UID map does not itself reset Buff.instanceUid');
+ buff.uid=8;assert.equal(pointers.lock(queue[0]),null);assert.equal(list.openCount,0);list.release();
 });
 
 test('forward and reverse buff iterators share one cached view with independent cursor positions',()=>{

@@ -335,6 +335,30 @@ result['modeSwitch']['buffNotification']['finishedCleanup'] = {
     'overrideLookupCallRva': 0x39d6ab7, 'groupRemoveCallRva': 0x39d6ad8,
     'sawNullBranchRva': 0x39d6a27, 'cleanupGateRva': 0x39d6b37,
 }
+finish_parameters = []
+for type_name, namespace, names in [('BuffContainer', '', ['_FinishBuff']),
+    ('Buff', 'Torappu.Battle', ['MarkFinish', 'OnFinish']), ('BattleController', 'Torappu.Battle', ['RecycleBuffNextFrame']),
+    ('OverrideGroup', '', ['_DoUpdateInternal'])]:
+    t = c['type_row'](type_name, namespace)
+    for name in names:
+        row = c['unique'](lambda r: r['name'] == name, t['methods'])
+        record = c['method'](t, row)
+        methods.append(record)
+        pos = v['method_start'] + row['index'] * 32
+        start, count = v['sint'](v['m'], pos + 12), struct.unpack_from('<H', v['m'], pos + 30)[0]
+        args = []
+        for index in range(count):
+            pp = v['uint'](v['m'], 88) + (start + index) * 12
+            args.append({'index': start + index, 'name': v['text'](v['uint'](v['m'], pp)), 'typeIndex': v['sint'](v['m'], pp + 8)})
+        finish_parameters.append({'type': type_name, 'name': name, 'entryRva': record['entryRva'], 'parameters': args})
+assert [p['name'] for p in finish_parameters[0]['parameters']] == ['buff', 'updateOverrideMap', 'delayToRecycle', 'immediatelyFinishEffect']
+result['modeSwitch']['buffNotification']['finishEffects'] = {
+    'parameters': finish_parameters,
+    'selectedFlags': {'updateOverrideMap': True, 'delayToRecycle': True, 'immediatelyFinishEffect': False},
+    'uidMapRemoveCallRva': 0x39d7c68, 'finishBuffCallRva': 0x39d7c88,
+    'markFinishCallRva': 0x39d7d73, 'onFinishCallRva': 0x39d7d86, 'queueRecycleCallRva': 0x39d7dfd,
+    'nativeQueueTimingVerified': False,
+}
 serialized = json.dumps(result, ensure_ascii=False, indent=1) + '\n'
 out = ROOT / 'data/candidates/arkpedia-windows-fear-self-death-source.json'
 if __name__ == '__main__':
