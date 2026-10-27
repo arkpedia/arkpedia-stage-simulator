@@ -20,11 +20,15 @@ for t, names in [
     (simple, ['get_limitedHitNum', 'GetMaxHitNum', 'get_needLifeTime', 'GetLifeTime',
               'get_stopWhenSourceInvalid', 'get_stopAfterFirstHit', 'get_stopAfterMaxHit']),
     (projectile, ['OnTick', 'ExtraCheckToFinish', 'OnHitTarget', 'DealHitTarget', '_DealHitTraceTarget',
-                  'OnProjectileReached', 'DealProjectileReached', 'StopMe']),
+                  'OnProjectileReached', 'DealProjectileReached', 'StopMe', 'get_source', 'get_ability']),
     (hit, ['OnProjectileReached', 'DealHitTarget']),
+    (c['type_row']('ActionController', ''), ['OnHitTarget', '_AttachBuffs', '_RunActions']),
+    (c['type_row']('AbilityAttachment', 'Torappu.Battle'), ['Apply']),
 ]:
     for name in names:
-        methods.append(c['method'](t, c['unique'](lambda r: r['name'] == name, t['methods'])))
+        rows = [r for r in t['methods'] if r['name'] == name]
+        assert rows
+        methods.extend(c['method'](t, row) for row in rows)
 
 # LifeType is an unsigned byte enum. Do not apply the signed int32 zigzag
 # decoder used for Entity.Event/AbnormalFlag to these raw byte defaults.
@@ -122,7 +126,8 @@ result = {
         'SimpleProjectile uses raw-byte LifeType: LIMITED=1 and INFINITY=2. get_limitedHitNum returns hitNumType !=2, so the original _maxHitNum=1 is not an active one-hit limit in this default configuration.',
         'GetMaxHitNum passes the serialized value, byte hitNumType and safety value128 to Misc.GetLifeValue<int>. The exact complete leaf returns the safety argument for INFINITY, zero for IMMEDIATELY and the supplied value otherwise. Blackboard and block-count overrides are separately retained; the CN prefab disables both.',
         'Projectile.OnTick combines finite lifetime expiry with the virtual stopWhenSourceInvalid condition before its finish path. The CN prefab has finite life10 and stopWhenSourceInvalid=false. Born projectile ownership must therefore not be inferred solely from source death.',
-        'Reached handling, trace-target end hit and HitBehaviour area selection/dispatch are retained in complete bodies. Cross-version field differences remain explicit. Buff/action execution, source identity reuse, reentrant impact ordering and event5 self-death still require integration tests before admission.'
+        'ActionController.OnHitTarget calls _AttachBuffs first, then AbilityAttachment.Apply, then _RunActions. The selected projectile enables active buffs, disables trace-target-only and once-only buff gates, and has no extra buff list. Damage/source-attribute evaluation remains a separate caller review; buff-before-damage ordering must not be reversed by a convenience explosion helper.',
+        'Reached handling, trace-target end hit and HitBehaviour area selection/dispatch are retained in complete bodies. Cross-version field differences remain explicit. Source identity reuse, reentrant impact ordering and event5 self-death still require integration tests before admission.'
     ]}
 serialized = json.dumps(result, ensure_ascii=False, indent=1) + '\n'
 out = ROOT / 'data/candidates/arkpedia-windows-fear-projectile-source.json'

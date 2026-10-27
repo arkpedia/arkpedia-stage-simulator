@@ -1,5 +1,45 @@
 # Development priorities
 
+### 27 October: ordered internal projectile impact receiver
+
+Previous checkpoint `80820cfd` made concrete source progress. Continuation
+`40485854598` at `7976aa09` is now terminal success across every job. Pushed the
+saved projectile checkpoint only after that success; its new continuation
+`40486733871` is live. Full matrix `40484748212` remains live at `5319bc8a` with
+all eight jobs running. Preserve both handles; do not restart on observation
+timeouts or cancel the continuation merely to push another checkpoint.
+
+Extended projectile source to 24 complete methods, including source/ability
+accessors, ActionController.OnHitTarget/_AttachBuffs/_RunActions and both
+AbilityAttachment.Apply overloads. The actual OnHitTarget call order is active
+buff attachment, ability attachments, then actions. Its selected prefab enables
+buffs and disables trace-only/once-only gates, with no extra-buff list. This is
+now asserted against complete native caller bodies, rather than ordering damage
+first for convenience.
+
+Added internal applyFearProjectileImpact with explicit source, attachment and
+action callbacks. It composes the reviewed affliction receiver before the
+caller phases, including unmarked recipients whose affliction parent finishes.
+It makes no ATK snapshot/live-value choice and does not invent a damage packet;
+those are still required from the eventual native controller. Recipient life
+and battle-end receipts prevent later callbacks from affecting a replacement
+deployment. The affliction manager exposes its existing active/end state so a
+reentrant or previously completed battle cannot admit a later impact.
+
+Eight impact cases cover actual buff-before-damage behavior, unmarked recipients,
+death/reuse/battle-end during admission, reuse during attachments, later impacts
+after battle end and an explicit retained dead source. These are internal action
+receiver tests, not launch/controller/frame-parity or stage support. All 166
+focused source/Fear/family/miner-clock/listener cases pass; all 36 Windows source
+checks pass, and the expanded projectile artifact reproduces with --check.
+
+Next finish damage-node generation/evaluation (including useCachedAtkOnly=false),
+source identity reuse, projectile delivery and event5 mode-switch/self-death
+integration, plus remaining selector/context and unmatched CN fields. Then admit
+only test-only16-9 through the exact source/support/receipt gates. Full Chapter16/
+17 and operator/module scope remains open. No merge, deploy or public promotion;
+four quarantined local test deletions remain unstaged.
+
 ### 27 October: projectile hit mode, safety count and independent source lifetime
 
 Previous checkpoint `7976aa09` made concrete source progress. Continuation

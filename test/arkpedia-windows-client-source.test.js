@@ -74,7 +74,7 @@ const castMethod=(c,type,name)=>{
 };
 
 test('fear projectile source pins complete native methods and exact original script references',()=>{
- const c=read(projectilePath);assert.equal(c.methods.length,17);
+ const c=read(projectilePath);assert.equal(c.methods.length,24);
  for(const p of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+p.path,import.meta.url))),p.sha256);
  for(const method of [...c.methods,c.lifeValueLeaf])for(const chunk of method.chunks){
   const raw=Buffer.from(chunk.base64,'base64');assert.equal(raw.length,chunk.endRva-chunk.beginRva);assert.equal(sha(raw),chunk.sha256);
@@ -84,6 +84,17 @@ test('fear projectile source pins complete native methods and exact original scr
  assert.equal(hit.scriptIdentity.m_ClassName,'HitBehaviour');assert.equal(hit.serializedFieldParity,false);
  assert.deepEqual(hit.unmatchedSerializedFields,{_exceptFlyCharacter:0});
  for(const field of ['runtimeDispatchVerified','frameParity','crossVersionParity'])assert.equal(c[field],false);
+});
+
+test('native impact attaches active buffs before attachments and action execution',()=>{
+ const c=read(projectilePath),code=instructions(castMethod(c,'ActionController','OnHitTarget'));
+ const order=[['ActionController','_AttachBuffs'],['AbilityAttachment','Apply'],['ActionController','_RunActions']];
+ const addresses=order.map(([type,name])=>new Set(c.methods.filter(m=>m.type===type&&m.name===name).map(m=>'0x'+(c.imageBase+m.entryRva).toString(16))));
+ const calls=addresses.map(set=>code.findIndex(i=>i.mnemonic==='call'&&set.has(i.operands)));
+ assert.ok(calls[0]>=0&&calls[0]<calls[1]&&calls[1]<calls[2]);
+ const native=JSON.parse(c.prefabScriptBridges[0].originalJson)._actionController;
+ assert.equal(native._dontAddBuffs,0);assert.equal(native._onlyAddBuffsToTraceTarget,0);assert.equal(native._onlyAddBuffsToTargetOnce,0);
+ assert.deepEqual(native._extraBuffsInTheEnd,[]);
 });
 
 test('raw byte LifeType and the complete two-return helper prevent a false single-target cap',()=>{

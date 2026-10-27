@@ -8,6 +8,7 @@ import { execFileSync } from 'node:child_process';
 import { makeBattle, enemyRec } from './helpers/battleHarness.js';
 import { compileStageLocalEnemy } from '../shared/arkpedia/enemy-records.js';
 import { fearProjectileAfflictions } from '../server/sim/content/chapter16-fear-affliction.js';
+import {applyFearProjectileImpact} from '../server/sim/content/chapter16-fear-impact.js';
 import { battle as minerBattle, keys as minerKeys } from './helpers/ch17Harness.js';
 import { chapter16Shadow } from '../server/sim/content/chapter16-shadow.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
@@ -24,6 +25,53 @@ function fixture({marked=true,full=false,local=false}={}){
 }
 function apply(f){const p=f.manager.apply(f.source,f.target);assert.ok(p);return p;}
 function assertClean(f){assert.equal(f.target.findBuff(parentKey),null);assert.equal(f.target.buffs.some(b=>b.key.startsWith('ch16:fearpj:')),false);assert.deepEqual(f.b.errors,[]);}
+
+test('impact runs the caller attachments and damage actions after Fear/Disarm admission',()=>{
+ const f=fixture(),order=[],hp=f.target.hp;
+ const ok=applyFearProjectileImpact(f.b,{source:f.source,target:f.target,
+  applyAttachments:({target})=>{assert.equal(target.s.flags.disarm,true);assert.equal(target.s.flags.fear,true);order.push('attachments');},
+  runActions:({source,target})=>{assert.equal(target.s.flags.disarm,true);order.push('damage');f.b.dealDamage(source,target,{amount:100,type:'arts',canDodge:false});}});
+ assert.equal(ok,true);assert.deepEqual(order,['attachments','damage']);assert.equal(f.target.hp,hp-100);
+ assert.deepEqual(f.b.errors,[]);
+});
+
+test('unmarked impact recipients still receive caller actions after the parent finishes',()=>{
+ const f=fixture({marked:false});let count=0;
+ assert.equal(applyFearProjectileImpact(f.b,{source:f.source,target:f.target,
+  applyAttachments:()=>{count++;},runActions:()=>{count++;}}),true);
+ assert.equal(count,2);assertClean(f);
+});
+
+for(const event of ['death','reuse','battleEnd'])test('impact '+event+' during buff admission prevents later output for that recipient life',()=>{
+ const f=fixture();let calls=0;
+ f.b.on('beforeBuff',c=>{if(c.unit!==f.target||c.buff.key!==parentKey)return;
+  if(event==='death')f.b.kill(f.target,null);else if(event==='reuse')f.target.deploySeq++;else f.b.emit('battleEnd',{});});
+ assert.equal(applyFearProjectileImpact(f.b,{source:f.source,target:f.target,
+  applyAttachments:()=>calls++,runActions:()=>calls++}),false);
+ assert.equal(calls,0);
+});
+
+test('impact revalidates the recipient after attachment callbacks before running damage actions',()=>{
+ const f=fixture();let calls=0;
+ assert.equal(applyFearProjectileImpact(f.b,{source:f.source,target:f.target,
+  applyAttachments:()=>{f.target.deploySeq++;},runActions:()=>calls++}),false);
+ assert.equal(calls,0);
+});
+
+test('a completed battle rejects later impacts even when the caller still holds live object references',()=>{
+ const f=fixture();f.b.emit('battleEnd',{});let calls=0;
+ assert.equal(applyFearProjectileImpact(f.b,{source:f.source,target:f.target,
+  applyAttachments:()=>calls++,runActions:()=>calls++}),false);
+ assert.equal(calls,0);assertClean(f);
+});
+
+test('born impact accepts an explicitly retained dead source and does not choose its damage packet',()=>{
+ const f=fixture();f.b.kill(f.source,null);let actionSource;
+ assert.equal(applyFearProjectileImpact(f.b,{source:f.source,target:f.target,
+  applyAttachments:()=>{},runActions:({source})=>{actionSource=source;}}),true);
+ assert.equal(actionSource,f.source);assert.equal(f.target.s.flags.disarm,true);
+ assert.throws(()=>applyFearProjectileImpact(f.b,{source:f.source,target:f.target,runActions:()=>{}}),/explicit/);
+});
 test('affliction producer reproduces native graph, alias receipt and exact derived-buff action contract',()=>{
  const c=read('data/candidates/arkpedia-ch16-fear-affliction-contract.json');assert.equal(c.testOnly,true);assert.equal(c.frameParity,false);
  for(const row of Object.values(c.sources))assert.equal(createHash('sha256').update(readFileSync(new URL('../'+row.path,import.meta.url))).digest('hex'),row.sha256);

@@ -17,6 +17,7 @@ export function fearProjectileAfflictions(b){
  const valid=p=>!ended&&!b.finished&&!b._endReq&&p.active&&receipts.get(p.target)===p&&present(p.target)&&p.target.deploySeq===p.life
   &&(!p.parent||p.target.buffs.includes(p.parent));
  const manager=b.chapter16FearAfflictions={
+  get active(){return !ended&&!b.finished&&!b._endReq;},
   apply(source,target){
    if(ended||b.finished||b._endReq||!source||!present(target))return null;
    const token=++seq,life=target.deploySeq,sourceView=captureEnemySource(source);admissions.set(target,token);
