@@ -24,7 +24,14 @@ Stage art/models/chibis and new effects remain deferred until mechanics finish.
 
 ## Controllers and integration
 
-The miner controller remains in `server/sim/content/chapter16.js`; the other five
+The miner controller composes `chapter16.js` with `chapter16-miner-listeners.js`
+and the shared native ordinary-cast owner. Its original physical Attack releases
+at 0.5666999816894531 seconds. The separate Fear listener samples every 0.3
+seconds, then creates a non-derived blood child with a full one-second first
+interval. Guardian's literal FinishBuff permanently ends that shadow-work root;
+existing tile suppression expires independently. Source reproduction and root/
+child lifecycle evidence are in `CH16-NATIVE-EVIDENCE.md`. Local 16-9 talent
+attachment remains unadmitted. The other five
 base-prefab controllers and their shared environment are in `chapter17.js`.
 
 | Prefab | Implemented behavior | Integration/parity checks |

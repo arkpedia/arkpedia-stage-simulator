@@ -1,5 +1,50 @@
 # Development priorities
 
+### 27 October: literal miner listener and Guardian shadow finish
+
+The previous goal turn made concrete progress at `f34d6946`. Hosted continuation
+`40462779332` passed every job, including independent source extraction,
+Linux/Windows focused cohorts and all actual-stage browser jobs. Full CI
+`40462779262` is still running at that source; preserve its handle. That run
+does not cover these later listener changes, so fresh full validation remains
+required after it terminates.
+
+The complete miner graph exposes two corrections to the old combined timer.
+The native Fear listener checks the named buff identity (including shared owned
+Fear status instances), rather than any unrelated raw Fear abnormal flag. It
+samples every 0.3 seconds and creates an independent,
+non-derived `mcreep_t[fear_blood]` child. That child waits its own full one-second
+first interval; repeated listener scans neither replace it nor reset its next
+pulse. Full HP skips a pulse without deleting the child. Fear removal is sampled
+by the root, which removes the named blood buff on its next scan. Finishing the
+listener alone does not finish its explicitly non-derived child.
+
+The shadow root checks the Guardian marker before Fear. Its success action is
+`FinishBuff`, so the same root never resumes when that marker disappears.
+Already-created tile suppression keeps its independent expiry. The former
+Guardian integration test incorrectly expected resumption; it now asserts the
+literal terminal action. Fear alone still pauses work without finishing that
+root, preserving full-HP fear-projectile recovery behavior.
+
+The new source producer verifies the original graph/index/inventory, retained
+event-2 alias and exact ordered actions. Runtime roots and blood children retain
+separate object receipts, admission tickets and captured source lives. Rejected
+or reentrant child creation, root/child replacement, source death/removal/reuse
+and battle end leave no orphan output or damage against a replacement life.
+Sleep and hidden recipients retain their world clocks; attempted damage still
+uses the shared damage admission rules, which reject sleeping/hidden targets.
+No native compiled damage/dispatcher parity is inferred from those engine rules.
+
+All 34 direct listener cases and the final combined 130 miner/listener/Guardian/
+affliction/behavior cases pass. The final broad invocation passes all 2,037
+available cases with no failures or skips, including the named-Fear regression
+cases. Actual 16-14 desktop/phone natural
+SP, keyboard, mobile layout and restart pass. Hosted
+continuation now reproduces the new listener contract. New local miner or stage
+support is not granted: absent local talent attachment and fear-projectile
+launch/event5/self-death ordering remain open, as do the remaining Chapter 16/17
+normal stages and operator/module audit. Art and effects remain later phases.
+
 ### 27 October: miner original attack and local-record damage semantics
 
 The previous goal checkpoint `1de50acb` made concrete progress, and its hosted

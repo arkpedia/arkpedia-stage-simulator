@@ -2,7 +2,6 @@
 // Candidate chapter 16/17 controllers. Parameters come from canonical enemy
 // records; native actions are retained in arkpedia-ch16-action-source.json.
 import { COLS } from '../constants.js';
-import { chapter16Shadow } from './chapter16-shadow.js';
 import { patrolCaptain } from './chapter16-patrol.js';
 import { frontlineCommander } from './chapter16-commander.js';
 import { abnormalSlug } from './chapter16-abnormal-slug.js';
@@ -16,11 +15,10 @@ import { rockbreaker } from './chapter17-rockbreaker.js';
 import { pollutionInfantry, pollutionBowman } from './chapter17-pollution-reactions.js';
 import {ordinaryAttackFromClock} from './chapter17-ordinary-attacks.js';
 import minerClock from '../../../data/candidates/arkpedia-ch16-miner-clock-contract.json' with {type:'json'};
+import {minerListeners} from './chapter16-miner-listeners.js';
 
 const living = u => u?.alive && u.deployed && !u.hidden;
-const bb = (r, group, key) => r.talents.bb[`${group}.${key}`];
 const flag = (b, e, key, flags, duration) => b.addBuff(e, { key, flags, duration, persist: duration == null, refresh: 'replace' });
-const damage = (b, source, target, amount, type = 'true') => b.dealDamage(source, target, { amount, type, canDodge: false, tags: ['chapter16'] });
 const operators = b => b.allyUnits.filter(u => living(u) && u.kind === 'op');
 
 import { reverseDamage, deadSummon, chargeRift, warCaster, leakSource } from './chapter17.js';
@@ -29,6 +27,7 @@ export { chapter17Environment as chapter16Environment, reverseDamage, deadSummon
 export function miner(r) {
   if(r.key!==minerClock.enemy||r.prefabKey!==minerClock.enemy)throw Error('Unreviewed miner runtime identity');
   const attack=ordinaryAttackFromClock(minerClock.cast,{tag:'chapter16',key:'ch16:miner-cast',memory:'ch16MinerAttack'});
+  const listeners=minerListeners(r);
   return {
     spawn(b, e, a) {
       e.profile.friendly = true; e.profile.neutral = true; e.profile.noAttack = true;
@@ -47,17 +46,21 @@ export function miner(r) {
       b.addBuff(e, { key: 'ch16:neutral-taunt', persist: true, mods: { taunt: -1 } });
       b.on('elementHit', c => { if (c.target === e) c.cancel = true; }, { owner: e });
       flag(b, e, 'ch16:neutral', { unblockable: true });
-      a.heal = 0; a.scan = 0; a.fear = null;
+      a.heal = 0;
       e.profile.attackCooldownAffectedBySlowDown=true;
       a.cast={};attack.spawn(b,e,a.cast);
+      a.listeners={};listeners.spawn(b,e,a.listeners);
     },
     tick(b, e, a, dt) {
       attack.tick(b,e,a.cast);
+      listeners.tick(b,e,a.listeners);
+      if(!a.listeners.valid())return;
       const row = Math.round(e.y), col = Math.round(e.x);
-      a.heal += dt; a.scan += dt;
+      a.heal += dt;
       if (a.heal >= 1 - 1e-9) {
         a.heal -= 1;
         for (const medic of operators(b)) {
+          if(!a.listeners.valid())break;
           if (medic.def.profession !== 'MEDIC') continue;
           if (medic.rangeChanged) b._refreshRange(medic);
           if (medic.rangeKeys?.includes(row * COLS + col)) {
@@ -67,26 +70,8 @@ export function miner(r) {
           }
         }
       }
-      if (a.scan >= 0.3 - 1e-9) {
-        a.scan -= 0.3;
-        if (e.s.flags.fear) { if (a.fear == null) a.fear = 0; }
-        else a.fear = null;
-        if (!e.s.flags.fear && !e.findBuff('gyegrd_a[exist]')) {
-          const env = chapter16Shadow(b);
-          for (let dr = -1; dr <= 1; dr++) for (let dc = -1; dc <= 1; dc++) {
-            env.suppressShadow(row + dr, col + dc, bb(r, 'TileEscapeShadowManager', 'times'));
-          }
-        }
-      }
-      if (a.fear != null) {
-        a.fear += dt;
-        if (a.fear >= 1 - 1e-9) {
-          a.fear -= 1;
-          if (e.hp < e.s.maxHp) damage(b, e, e, bb(r, 'FearLoseBlood', 'value'));
-        }
-      }
     },
-    death(c,b,e,a){attack.death(c,b,e,a.cast);},
+    death(c,b,e,a){attack.death(c,b,e,a.cast);listeners.death(c,b,e,a.listeners);},
   };
 }
 

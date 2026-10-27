@@ -112,12 +112,13 @@ test('global marked-miner presence survives source hiding and one provider death
  f.b.kill(second,null);f.h.run(.1);assert.equal(u.findBuff('gyegrd_a[exist]'),null);assert.deepEqual(f.b.errors,[]);
 });
 
-test('the actual miner controller cannot suppress fog while Guardian exists, then resumes after its retirement',()=>{
+test('the actual miner Guardian action finishes shadow work permanently for that source life',()=>{
  const f=fixture(),u=addMiner(f,[9,2]);attach(f.b,u,[minerController(records[miner].levels[0])]);
  const shadow=chapter16Shadow(f.b);shadow.setShadowSource(f.u,[[u.tileR,u.tileC]]);
  f.h.run(.4);assert.ok(u.findBuff('gyegrd_a[exist]'));assert.equal(shadow.isShadow(u.tileR,u.tileC),true);
  f.b.kill(f.e,null);f.h.run(.4);assert.equal(u.findBuff('gyegrd_a[exist]'),null);
- assert.equal(shadow.isShadow(u.tileR,u.tileC),false);assert.deepEqual(f.b.errors,[]);
+ assert.equal(shadow.isShadow(u.tileR,u.tileC),true,'Guardian FinishBuff does not resume after its marker retires');
+ assert.equal(u.findBuff('mcreep_t[work_espace_shadow]'),null);assert.deepEqual(f.b.errors,[]);
 });
 
 test('ordinary attacks capture a marked miner and wait for the original Attack02 marker',()=>{

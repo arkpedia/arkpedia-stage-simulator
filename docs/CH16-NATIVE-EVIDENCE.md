@@ -220,3 +220,18 @@ FearLoseBlood parameter. Native talent binders and empty ability blackboards are
 retained verbatim. They do not prove a default shadow duration or attachment of
 absent GetHeal/TileEscapeShadowManager groups. Local passive integration and 16-9
 admission remain held, and no new support follows from extraction.
+
+`miner-listener-contract.mjs --check` additionally binds the original event-2
+Fear listener, independent `mcreep_t[fear_blood]` child and shadow-work actions.
+The child explicitly has firstTriggerInterval 1, interval 1 and isDerivedBuff
+false; its root's 0.3-second sampling clock must not shorten that first interval.
+The full-HP filter skips the damage action without finishing the child. Guardian
+success executes FinishBuff on the shadow root; it does not pause/resume that
+root. Existing suppression expiry belongs to the environment, independently.
+Runtime receipts test root/child replacement, reentrant admission, source lives
+and independent world clocks. Shared sleeping/hidden damage admission remains a
+simulator mapping, not proof of compiled FixedValueDamage dispatch. These
+corrections grant no 16-9/local talent support or public promotion.
+Native CheckContainsBuff checks the named `fear` identity. Shared independently
+keyed Fear statuses retain that identity in their status field; unrelated raw
+Fear flags do not satisfy it. Both cases have direct regression checks.
