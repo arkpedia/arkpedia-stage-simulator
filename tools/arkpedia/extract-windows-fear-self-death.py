@@ -572,6 +572,29 @@ result['modeSwitch']['buffNotification']['resetLifetime'] = {
         'instructions': [{'rva': i.address - v['image_base'], 'size': i.size, 'mnemonic': i.mnemonic, 'operands': i.op_str} for i in life_ins]}]},
     'modifierEffectsVerified': False, 'fullResetEffectsVerified': False, 'liveLifetimePhaseVerified': False,
 }
+enemy_type = c['type_row']('Enemy', 'Torappu.Battle')
+for owner, name in [(buff, 'get_owner'), (enemy_type, 'get_massLevel')]:
+    methods.append(c['method'](owner, c['unique'](lambda r: r['name'] == name, owner['methods'])))
+load_rva = 0x39b4f26
+pos = v['offset'](v['image_base'] + load_rva)
+assert v['b'][pos:pos + 3] == bytes.fromhex('488b15')
+target = load_rva + 7 + struct.unpack_from('<i', v['b'], pos + 3)[0]
+usage = v['quad'](v['b'], v['offset'](v['image_base'] + target))
+assert usage >> 29 == 1
+type_index = (usage & 0x1ffffffe) >> 1
+tp = v['offset'](v['quad'](v['b'], v['type_table'] + type_index * 8))
+assert (v['uint'](v['b'], tp + 8) >> 16) & 255 == 18 and v['quad'](v['b'], tp) == enemy_type['index']
+levitate = c['unique'](lambda f: f['name'] == 'LEVITATE', c['enum'](c['type_row']('AbnormalFlag', 'Torappu'))['fields'])
+assert levitate['value'] == 25
+result['modeSwitch']['buffNotification']['lifetimeModifier'] = {
+    'ownerFirstCallRva': 0x39b4ee5, 'ownerFirstValidityCallRva': 0x39b4f0a, 'ownerSecondCallRva': 0x39b4f21,
+    'enemyTypeLoad': {'loadRva': load_rva, 'encodedUsage': usage, 'typeIndex': type_index, 'definitionIndex': enemy_type['index']},
+    'enemyValidityCallRva': 0x39b4f9c, 'levitate': levitate, 'levitateInputRva': 0x39b4fc6, 'containsCallRva': 0x39b4fcf,
+    'massLevelSlot': c['resolved_slot'](enemy_type, 198), 'massLevelInputRva': 0x39b4fdd, 'massLevelCallRva': 0x39b4fe5,
+    'massThresholdRva': 0x39b4fea, 'divisorInputRva': 0x39b500a, 'divisionCallRva': 0x39b501b, 'lifetimeWriteRva': 0x39b5020,
+    'division': {'entryRva': 0x5a3d680, 'chunks': c['code'](0x5a3d680)},
+    'nativeOwnerFlagEffectsVerified': False, 'liveModifierPhaseVerified': False,
+}
 pool = c['type_row']('ObjectPool`1', 'Torappu.ObjectPool')
 pool_methods = []
 for index in [147561, 147566, 147567, 147558, 147559, 147563, 147564, 147568, 147569]:

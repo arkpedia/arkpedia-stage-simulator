@@ -22,6 +22,11 @@ function divide(a,b){
  const magnitude=u64(quotient+1n)>>1n;
  return BigInt.asIntN(64,negative?-magnitude:magnitude);
 }
+export function fearProjectileDivideRaw(a,b){
+ for(const value of [a,b])if(typeof value!=='bigint'||value<minRaw||value>maxRaw)
+  throw new TypeError('Fear division requires signed Q32.32 raw values');
+ return divide(a,b);
+}
 export function fearProjectileWaitFrameCount(cachedDurationRaw,deltaPlayTime){
  if(typeof cachedDurationRaw!=='bigint'||cachedDurationRaw<minRaw||cachedDurationRaw>maxRaw)
   throw new TypeError('Fear wait duration requires a signed Q32.32 raw value');

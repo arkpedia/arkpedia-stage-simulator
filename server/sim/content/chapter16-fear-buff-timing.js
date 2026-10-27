@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Selected PeriodicTimer operations called by Buff.Reset. Inputs are native
 // signed Q32.32 values; scheduling and float/blackboard conversion stay explicit.
+import {fearProjectileDivideRaw} from './chapter16-fear-cast-wait.js';
 export function fearProjectileBuffTimer(timer){
  const raw=value=>{
   if(typeof value!=='bigint'||value<-(1n<<63n)||value>(1n<<63n)-1n)
@@ -114,6 +115,35 @@ export function fearProjectileResetBuffLifetime({buff,durationKey,tryGetDuration
     modifyLifeTimeFinally(buff);if(!active())return null;
     buff.m_remainingTime=raw(buff.m_lifeTime);
     buff.m_existingTime=0n;
+   }finally{running=false;}
+  },
+ });
+}
+
+// Default _ModifyLifeTimeFinally: levitation lasts half as long for an Enemy
+// with native massLevel>3. Type/Unity validity readers remain explicit.
+export function fearProjectileModifyBuffLifetime({buff,readOwner,isDestroyedOrNull,asEnemy,hasLevitate,readMassLevel,isActive}){
+ if(!buff||[readOwner,isDestroyedOrNull,asEnemy,hasLevitate,readMassLevel,isActive].some(fn=>typeof fn!=='function'))
+  throw new TypeError('Fear lifetime modifier requires native owner, type, flag and lifecycle callers');
+ const d=Object.getOwnPropertyDescriptor(buff,'m_lifeTime');
+ if(!d||!Object.hasOwn(d,'value')||!d.writable)throw new TypeError('Fear lifetime modifier requires a writable native lifetime field');
+ const boolean=value=>{if(typeof value!=='boolean')throw new TypeError('Fear lifetime modifier requires native Boolean results');return value;};
+ let running=false;
+ return Object.freeze({
+  run(){
+   if(running)return null;running=true;
+   try{
+    if(!boolean(isActive()))return null;
+    const first=readOwner();if(!boolean(isActive()))return null;
+    const destroyed= isDestroyedOrNull(first);if(!boolean(isActive()))return null;if(boolean(destroyed))return;
+    const second=readOwner();if(!boolean(isActive()))return null;
+    const enemy=asEnemy(second);if(!boolean(isActive()))return null;
+    const absent=isDestroyedOrNull(enemy);if(!boolean(isActive()))return null;if(boolean(absent))return;
+    const levitate=hasLevitate();if(!boolean(isActive()))return null;if(!boolean(levitate))return;
+    if(enemy==null)throw new TypeError('Fear lifetime modifier cannot read mass of a null Enemy');
+    const mass=readMassLevel(enemy);if(!boolean(isActive()))return null;
+    if(!Number.isInteger(mass)||mass<-(2**31)||mass>=2**31)throw new TypeError('Fear lifetime modifier requires native Int32 mass level');
+    if(mass>3)buff.m_lifeTime=fearProjectileDivideRaw(buff.m_lifeTime,2n<<32n);
    }finally{running=false;}
   },
  });

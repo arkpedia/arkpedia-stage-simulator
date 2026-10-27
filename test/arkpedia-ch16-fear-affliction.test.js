@@ -20,7 +20,7 @@ import {fearProjectileFinishedBuffs} from '../server/sim/content/chapter16-fear-
 import {fearProjectileFinishAndRemoveBuff,fearProjectileOverrideGroupRemove} from '../server/sim/content/chapter16-fear-buff-finish.js';
 import {fearProjectileBuffRecycleQueue,fearProjectileClearRuntimeData} from '../server/sim/content/chapter16-fear-buff-recycle.js';
 import {fearProjectileBuffIdentity,fearProjectileResetBuffLifecycle} from '../server/sim/content/chapter16-fear-buff-identity.js';
-import {fearProjectileBuffTimer,fearProjectileResetBuffTriggers,fearProjectileBuffDurationKey,fearProjectileResetBuffLifetime} from '../server/sim/content/chapter16-fear-buff-timing.js';
+import {fearProjectileBuffTimer,fearProjectileResetBuffTriggers,fearProjectileBuffDurationKey,fearProjectileResetBuffLifetime,fearProjectileModifyBuffLifetime} from '../server/sim/content/chapter16-fear-buff-timing.js';
 import {fearProjectileBuffRecyclePool,fearProjectileDefaultBuffPool} from '../server/sim/content/chapter16-fear-buff-pool.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
@@ -206,6 +206,58 @@ test('finish and native-frame queue use concrete buff recycle identity before th
  finish.run();queue.update();assert.equal(buff.instanceUid,1);assert.equal(buff.m_isValid,true);assert.equal(recycled,0);
  f.b.kill(f.source,null);frame=11;queue.update();assert.equal(recycled,1);assert.equal(buff.instanceUid,0);assert.equal(buff.m_isValid,false);assert.equal(p.lock(old),null);
  identity.allocate(buff);assert.equal(buff.instanceUid,2);assert.equal(p.lock(old),null);assert.equal(p.lock(p.capture(buff)),buff);queue.release();assert.deepEqual(f.b.errors,[]);
+});
+
+function lifetimeModifierFixture(overrides={}){
+ const buff={m_lifeTime:3n},enemy={mass:4},events=[];let active=true;
+ const callers={buff,readOwner:()=>{events.push('owner');return enemy;},isDestroyedOrNull:e=>{events.push('validity');return e==null;},
+  asEnemy:e=>{events.push('cast');return e;},hasLevitate:()=>{events.push('levitate');return true;},
+  readMassLevel:e=>{events.push('mass');return e.mass;},isActive:()=>active,...overrides};
+ const modifier=fearProjectileModifyBuffLifetime(callers);return{buff,enemy,events,modifier,set active(value){active=value;}};
+}
+
+test('heavy-enemy levitation modifier uses native rounded fixed-point division after repeated owner reads',()=>{
+ const f=lifetimeModifierFixture();f.modifier.run();assert.equal(f.buff.m_lifeTime,2n);
+ assert.deepEqual(f.events,['owner','validity','owner','cast','validity','levitate','mass']);
+ f.buff.m_lifeTime=-3n;f.modifier.run();assert.equal(f.buff.m_lifeTime,-2n);
+});
+
+test('levitation mass threshold is strict and unrelated buffs preserve their lifetime',()=>{
+ for(const mass of [0,3,4]){
+  const f=lifetimeModifierFixture();f.enemy.mass=mass;f.buff.m_lifeTime=10n<<32n;f.modifier.run();assert.equal(f.buff.m_lifeTime,(mass>3?5n:10n)<<32n);
+ }
+ const f=lifetimeModifierFixture({hasLevitate:()=>false});f.modifier.run();assert.equal(f.buff.m_lifeTime,3n);assert.equal(f.events.includes('mass'),false);
+});
+
+test('modifier short circuits absent initial owner and non-enemy second owner',()=>{
+ const f=lifetimeModifierFixture({readOwner:()=>null});f.modifier.run();assert.deepEqual(f.events,['validity']);
+ const g=lifetimeModifierFixture({asEnemy:()=>null});g.modifier.run();assert.equal(g.events.includes('levitate'),false);assert.equal(g.buff.m_lifeTime,3n);
+});
+
+test('modifier type check uses the second owner instead of the validity-probed first owner',()=>{
+ let f,reads=0;const second={mass:3};f=lifetimeModifierFixture({readOwner:()=>++reads===1?f.enemy:second});
+ f.modifier.run();assert.equal(reads,2);assert.equal(f.buff.m_lifeTime,3n);
+});
+
+test('lifetime Reset copies the concrete heavy-enemy modifier result into remaining time',()=>{
+ const f=lifetimeResetFixture();const modifier=fearProjectileModifyBuffLifetime({buff:f.buff,readOwner:()=>({mass:4}),isDestroyedOrNull:e=>e==null,
+  asEnemy:e=>e,hasLevitate:()=>true,readMassLevel:e=>e.mass,isActive:()=>true});
+ const reset=fearProjectileResetBuffLifetime({buff:f.buff,durationKey:'duration',tryGetDuration:()=>({found:true,valueRaw:10n<<32n}),readData:()=>f.data,
+  floatToRaw:()=>{throw Error('fallback');},modifyLifeTimeFinally:modifier.run,isActive:()=>true});
+ reset.run();assert.deepEqual(f.buff,{m_lifeTime:5n<<32n,m_remainingTime:5n<<32n,m_existingTime:0n});
+});
+
+test('modifier applies its native branch to negative lifetime sentinels without an invented exemption',()=>{
+ const f=lifetimeModifierFixture();f.buff.m_lifeTime=-(1n<<32n);f.modifier.run();assert.equal(f.buff.m_lifeTime,-(1n<<31n));
+});
+
+for(const point of ['readOwner','isDestroyedOrNull','asEnemy','hasLevitate','readMassLevel'])test('lifetime modifier stops after life invalidation during '+point,()=>{
+ let f;f=lifetimeModifierFixture({[point]:()=>{f.active=false;return undefined;}});assert.equal(f.modifier.run(),null);assert.equal(f.buff.m_lifeTime,3n);
+});
+
+test('lifetime modifier rejects recursive processing and allows a subsequent reset',()=>{
+ let f;f=lifetimeModifierFixture({hasLevitate:()=>{assert.equal(f.modifier.run(),null);return true;}});
+ f.modifier.run();assert.equal(f.buff.m_lifeTime,2n);f.modifier.run();assert.equal(f.buff.m_lifeTime,1n);
 });
 
 function lifetimeResetFixture(overrides={}){

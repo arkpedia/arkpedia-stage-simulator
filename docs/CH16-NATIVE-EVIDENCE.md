@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 93 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 95 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -1343,3 +1343,27 @@ data reads, reentry and lifecycle cancellation. All632 focused native/fear/famil
 miner tests pass and --check reproduces the93-method bundle. Full Reset,
 modifier effects, live lifecycle phases and full controller/stage integration
 remain open. Source/support/receipt/catalogue gates remain unchanged.
+
+### Final lifetime modifier for heavy-enemy levitation
+
+The95-method artifact additionally retains Buff.get_owner and Enemy.get_massLevel.
+The exact type metadata load in _ModifyLifeTimeFinally resolves to Enemy, and
+virtual slot198 resolves to get_massLevel. The abnormal attribute input25 is
+LEVITATE in the retained enum. The selected default path validates the first
+owner read, reads owner again for the Enemy cast, validates that Enemy, checks
+the buff's levitation flag, then divides lifetime by FP2 only for massLevel>3.
+The native FP division body is separately retained alongside the call binding.
+
+`fearProjectileModifyBuffLifetime` now implements that branch with explicit
+owner/type/Unity-validity/flag/mass readers. It uses the already reviewed native
+division algorithm through a shared signed-Q32.32 entry point, preserving native
+rounding rather than truncating BigInt division. It does not add an infinite-
+lifetime exemption or a general status-resistance rule. Recursion is rejected;
+invalidated lives stop after each external effect.
+
+Tests cover strict mass threshold, absent/non-enemy owners, missing levitation,
+two different owner reads, signed fractional rounding, negative sentinel input,
+reentry and cancellation. A composed lifetime Reset verifies the concrete
+modifier runs before remaining-time copying. All645 focused native/fear/family/
+miner tests pass. Full native owner/flag effects, Reset integration and live
+controller/stage phases remain open; support/catalogue gates are unchanged.

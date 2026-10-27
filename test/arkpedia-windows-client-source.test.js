@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,93);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,95);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -225,6 +225,20 @@ test('immediate recycle source enumerates stored pairs and pointer lists before 
  }
  at(q.outerMoveNext,0x4dd4158,'dword ptr [rbx + 0xc], eax');at(q.outerMoveNext,0x4dd41b6,'dword ptr [rbx + 0xc], eax');
  assert.ok(!instructions(m).some(i=>i.mnemonic==='call'&&i.operands==='0x183991a80'),'flush does not filter by current frame');
+});
+
+test('final lifetime modifier binds Enemy mass level and LEVITATE rather than generic status resistance',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.lifetimeModifier;
+ const m=castMethod(c,'Buff','_ModifyLifeTimeFinally'),at=(rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ at(q.ownerFirstCallRva,'0x1839b6ff0');at(q.ownerFirstValidityCallRva,'0x185ebec60');at(q.ownerSecondCallRva,'0x1839b6ff0');
+ at(q.enemyValidityCallRva,'0x185ebee90');assert.equal(q.enemyTypeLoad.definitionIndex,q.massLevelSlot.typeIndex);
+ assert.equal(q.massLevelSlot.type,'Enemy');assert.equal(q.massLevelSlot.slot,198);assert.equal(q.massLevelSlot.name,'get_massLevel');
+ assert.equal(q.levitate.name,'LEVITATE');assert.equal(q.levitate.value,25);at(q.levitateInputRva,'edx, 0x19');at(q.containsCallRva,'0x183f5f300');
+ at(q.massLevelInputRva,'ecx, 0xc6');at(q.massLevelCallRva,'0x1800057b0');at(q.massThresholdRva,'eax, 3');
+ at(q.divisorInputRva,'ecx, [rdx + 2]');at(q.divisionCallRva,'0x185a3d680');at(q.lifetimeWriteRva,'qword ptr [rdi + 0x70], rax');
+ for(const ch of q.division.chunks){const raw=Buffer.from(ch.base64,'base64');assert.equal(sha(raw),ch.sha256);assert.equal(raw.length,ch.endRva-ch.beginRva);}
+ assert.ok(castMethod(c,'Buff','get_owner'));assert.ok(castMethod(c,'Enemy','get_massLevel'));
+ assert.equal(q.nativeOwnerFlagEffectsVerified,false);assert.equal(q.liveModifierPhaseVerified,false);
 });
 
 test('Reset lifetime source binds captured duration lookup, infinity sentinel and post-modifier state copies',()=>{
