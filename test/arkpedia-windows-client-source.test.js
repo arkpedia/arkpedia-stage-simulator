@@ -227,6 +227,28 @@ test('immediate recycle source enumerates stored pairs and pointer lists before 
  assert.ok(!instructions(m).some(i=>i.mnemonic==='call'&&i.operands==='0x183991a80'),'flush does not filter by current frame');
 });
 
+test('Reset context pointers bind Wrap specializations to the retained UID constructor and Unity validity branches',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.resetContext.contextPointers,p=c.modeSwitch.buffNotification.pointer;
+ const ctor=p.canonicalMethods.find(m=>m.definition.name==='.ctor'),valid=p.canonicalMethods.find(m=>m.definition.name==='get_isValid'),lock=p.canonicalMethods.find(m=>m.definition.name==='Lock');
+ const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ assert.equal(q.canonicalWrap.definition.name,'Wrap');assert.equal(q.canonicalWrap.instantiations.method.arguments[0].name,'Object');assert.equal(q.canonicalWrap.entryRva,0x4035830);
+ at(q.canonicalWrap,q.wrapClearRva,'xmmword ptr [rcx], xmm0');at(q.canonicalWrap,q.wrapConstructorCallRva,'0x18477cc20');
+ for(const ch of q.canonicalWrap.chunks){const raw=Buffer.from(ch.base64,'base64');assert.equal(sha(raw),ch.sha256);assert.equal(raw.length,ch.endRva-ch.beginRva);}
+ assert.deepEqual(q.concreteWrapLoads.map(x=>[x.loadRva,x.specification.index,x.specification.instantiations.method.arguments[0].name]),[
+  [0x39b11dc,269317,'Entity'],[0x39b1203,269312,'Ability'],[0x39b122f,269319,'Projectile']]);
+ for(const load of q.concreteWrapLoads){assert.equal(load.encodedUsage>>>29,6);assert.equal(load.specification.nativeMapping,null);assert.equal(load.specification.definition.index,q.canonicalWrap.definition.index);
+  assert.ok(load.lineage.some(t=>t.name==='Object'&&t.namespace==='UnityEngine'));}
+ assert.equal(q.uidInterface.name,'IPtrObject');assert.equal(q.uidInterface.getter.name,'get_instanceUid');assert.equal(q.uidInterface.slot,0);
+ assert.equal(q.uidInterfaceLoads.length,3);assert.ok(q.uidInterfaceLoads.every(x=>x.encodedUsage>>>29===1));
+ at(ctor,q.constructorFirstUidCallRva,'0x180005250');at(ctor,q.constructorObjectWriteRva,'qword ptr [rdi], rbx');
+ at(ctor,q.constructorNullCheckCallRva,'0x185a445f0');at(ctor,q.constructorDestroyedUidWriteRva,'dword ptr [rdi + 8], eax');
+ at(ctor,q.constructorSecondUidCallRva,'0x180005250');at(ctor,q.constructorUidWriteRva,'dword ptr [rdi + 8], eax');
+ at(valid,q.validityObjectReadRva,'rdi, qword ptr [rbx]');at(valid,q.validityNullCheckCallRva,'0x185a445f0');
+ at(valid,q.validityObjectRereadRva,'r8, qword ptr [rbx]');at(valid,q.validityUidCallRva,'0x180005250');at(valid,q.validityCachedUidCompareRva,'eax, dword ptr [rbx + 8]');
+ at(lock,q.lockValidityCallRva,'0x1800b9be0');at(lock,q.lockObjectRereadRva,'rax, qword ptr [rbx]');
+ assert.equal(q.nativeUnityDestructionEffectsVerified,false);assert.equal(q.nativeContextUidDispatchVerified,false);assert.equal(q.liveContextPointersVerified,false);
+});
+
 test('Reset override source binds exact separators, independent card UID keys and container migration ordering',()=>{
  const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.resetOverride;
  const reset=castMethod(c,'Buff','Reset'),key=castMethod(c,'BuffData','GetOverrideKey');
@@ -243,6 +265,12 @@ test('Reset override source binds exact separators, independent card UID keys an
  const candidate=castMethod(c,'BuffContainer','GetOverrideKeyCandidate'),ensure=castMethod(c,'BuffContainer','EnsureOverrideIndependentKey');
  at(candidate,q.candidateStartsWithCallRva,'0x1850d7940');for(const rva of [q.candidateFoundDisposeCallRva,q.candidateExhaustedDisposeCallRva,q.candidateExceptionDisposeCallRva])at(candidate,rva,'0x180511a50');
  for(const [rva,target] of [[q.ensureTryGetCallRva,'0x184c0e320'],[q.ensureContainsCallRva,'0x184c0b160'],[q.ensureRemoveCallRva,'0x184cdd5f0'],[q.ensureAddCallRva,'0x184c0b0d0']])at(ensure,rva,target);
+ const bindings=q.containerBindings;assert.equal(bindings.mapField.name,'m_buffOverrideMap');assert.equal(bindings.mapField.offset,0x20);
+ assert.deepEqual(bindings.methodSpecifications.map(x=>x.specification.definition.name),['get_Keys','GetEnumerator','MoveNext','Dispose','TryGetValue','ContainsKey','Remove','Add']);
+ for(const binding of bindings.methodSpecifications){assert.equal(binding.encodedUsage>>>29,6);assert.equal(binding.specification.nativeMapping,null);
+  assert.deepEqual(binding.specification.instantiations.class.arguments.map(a=>a.name),['String','OverrideGroup']);}
+ at(candidate,bindings.mapReadRvas[0],'rcx, qword ptr [rbx + 0x20]');for(const rva of bindings.mapReadRvas.slice(1))at(ensure,rva,'rcx, qword ptr [rbx + 0x20]');
+ assert.equal(bindings.genericDictionaryEffectsVerified,false);assert.equal(bindings.nativeKeyEnumerationVerified,false);assert.equal(bindings.liveOverrideContainerVerified,false);
  assert.ok(c.methods.some(m=>m.type==='HGString'&&m.entryRva===0x1c5ab80));assert.ok(c.methods.some(m=>m.type==='HGString'&&m.entryRva===0x1c5a9d0));assert.ok(castMethod(c,'Character','get_cardUid'));
  assert.equal(q.nativeFormattingEffectsVerified,false);assert.equal(q.nativeOverrideContainerEffectsVerified,false);assert.equal(q.liveResetOverridePhaseVerified,false);
 });
@@ -282,7 +310,7 @@ test('Reset context source binds unboxed BuffConfig fallback, character audio vi
  at(reset,0x39b119f,'rcx, r15');at(reset,0x39b11cc,'rdx, qword ptr [rsp + 0x58]');at(reset,q.audioOverrideSetterCallRva,'0x1839b7b90');
  assert.deepEqual(q.parameters.map(p=>p.parameters.map(x=>x.name)),[
   ['config','container','source','ability','extraBlackboard','extraBlackboard2','sourceProjectile'],['signal','subSignal','newSignal','newSubsignal']]);
- for(const rva of q.pointerConstructorCalls)at(reset,rva,'0x184035830');
+ for(const rva of q.pointerWrapCalls)at(reset,rva,'0x184035830');
  for(const rva of q.pointerWrites)at(reset,rva,'xmmword ptr [rcx], xmm0');
  at(reset,q.capabilityDataReadRva,'rcx, qword ptr [r14 + 8]');
  for(const [i,offset] of [0x1e0,0x1e1,0x1e2,0x1e3,0x1e4,0x1e7].entries())at(reset,q.capabilityWrites[i],`byte ptr [rsi + 0x${offset.toString(16)}], al`);

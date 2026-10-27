@@ -1402,6 +1402,51 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
 
+### Reset Unity context pointers and override-container callers
+
+Reset's three pointer calls resolve to ObjectPtr.Wrap<Entity>, Wrap<Ability>
+and Wrap<Projectile>, not directly to the constructor. Method specifications
+269317/269312/269319 have no fabricated concrete native mapping. The independently
+mapped Object canonical Wrap specification212603 binds the actual shared body
+0x4035830, which clears its16-byte result and calls the retained constructor
+0x477cc20. All three context lineages reach UnityEngine.Object. The constructor's
+two UID calls and the validity getter's UID call bind IPtrObject.get_instanceUid,
+interface slot0, through their exact encoded metadata type loads.
+
+`fearProjectileContextPointers` implements the selected constructor, validity
+and Lock ordering with explicit UID/Unity/lifecycle receivers. Null or first
+UID0 captures a null pointer. A nonzero first UID stores the object before the
+Unity destruction check; a destroyed object therefore retains its reference but
+gets cached UID0. Otherwise construction samples UID again. Validity checks the
+initial object for destruction, rereads the by-reference obj slot, obtains its
+current UID, then rereads cachedUid. Lock rereads obj again after successful
+validity. There is no invented nonzero-UID or second-destruction gate.
+
+The override source additionally resolves all eight generic method-spec loads
+to Dictionary<string,OverrideGroup>, its KeyCollection and Enumerator. The
+actual map field is m_buffOverrideMap atoffset0x20. Concrete mappings remain null;
+generic storage/comparer/enumerator effects are not asserted from caller names.
+`fearProjectileOverrideContainer` supplies the retained caller behavior: return
+the first native StartsWith match, dispose on match/exhaustion/error, otherwise
+return the input key. Migration captures TryGetValue's out group, skips absent
+base or existing destination, rereads the map for each operation, ignores
+Remove's bool and then Adds the original group, including a null value.
+
+The composed Reset test now uses both adapters. It checks all three captured
+UIDs, invalidation after source UID replacement, and migration of the same
+override-group object to the character-specific key. Additional tests cover
+destroyed captures, second UID0, by-reference mutation between native calls,
+enumerator version exceptions/disposal, lifecycle invalidation, map replacement,
+ignored false removal and committed removal when Add fails. All876 focused
+native/fear/family/miner tests pass. The source producer reproduces143 ordinary
+methods plus the newly retained canonical Wrap body and metadata bindings.
+
+Continuation40551627273 at0ad5dc48 passed; full40550025781 at93014b95 remains
+active. Native Unity/UID dispatch, dictionary storage/culture/version effects,
+frame/cross-version parity and live controller/stage integration remain open.
+All source/support/receipt/catalogue gates remain unchanged and new stages are
+still test-only.
+
 ### Reset override keys and composed initialization pipeline
 
 The143-method artifact additionally retains BuffData.GetOverrideKey, both

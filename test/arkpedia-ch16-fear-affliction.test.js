@@ -15,7 +15,7 @@ import {fearProjectileAreaDelivery} from '../server/sim/content/chapter16-fear-a
 import {fearProjectileFlight} from '../server/sim/content/chapter16-fear-flight.js';
 import {fearProjectileBuffIteration} from '../server/sim/content/chapter16-fear-buff-iteration.js';
 import {fearProjectileBuffList} from '../server/sim/content/chapter16-fear-buff-list.js';
-import {fearProjectileBuffPointers} from '../server/sim/content/chapter16-fear-buff-pointer.js';
+import {fearProjectileBuffPointers,fearProjectileContextPointers} from '../server/sim/content/chapter16-fear-buff-pointer.js';
 import {fearProjectileFinishedBuffs} from '../server/sim/content/chapter16-fear-buff-cleanup.js';
 import {fearProjectileFinishAndRemoveBuff,fearProjectileOverrideGroupRemove} from '../server/sim/content/chapter16-fear-buff-finish.js';
 import {fearProjectileBuffRecycleQueue,fearProjectileClearRuntimeData} from '../server/sim/content/chapter16-fear-buff-recycle.js';
@@ -29,7 +29,7 @@ import {fearProjectileBuffPriority,fearProjectileUpdateBuffStack} from '../serve
 import {fearProjectileInitBuffStatus} from '../server/sim/content/chapter16-fear-buff-status.js';
 import {fearProjectileInitBuffFinalFlags} from '../server/sim/content/chapter16-fear-buff-final-flags.js';
 import {fearProjectileBuffConfig,fearProjectileResetBuffContext} from '../server/sim/content/chapter16-fear-buff-context.js';
-import {fearProjectileBuffOverrideKey,fearProjectileResetBuffOverride} from '../server/sim/content/chapter16-fear-buff-override.js';
+import {fearProjectileBuffOverrideKey,fearProjectileResetBuffOverride,fearProjectileOverrideContainer} from '../server/sim/content/chapter16-fear-buff-override.js';
 import {fearProjectileResetBuff} from '../server/sim/content/chapter16-fear-buff-reset.js';
 import {fearProjectileBuffRecyclePool,fearProjectileDefaultBuffPool} from '../server/sim/content/chapter16-fear-buff-pool.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
@@ -153,6 +153,116 @@ test('Reset context and config guard reentry before any lifecycle probe effects'
  config=fearProjectileBuffConfig({readData:()=>f.data,readTemplate:()=>f.template,isActive:()=>{configReentry=config.effectKey();return true;}});
  assert.equal(config.effectKey(),'template-effect');assert.equal(configReentry,null);
 });
+test('Unity context pointer capture samples UID twice with destruction checked between samples',()=>{
+ const obj={},events=[],uids=[7,9],p=fearProjectileContextPointers({readUid:value=>{events.push(['uid',value]);return uids.shift();},
+  isDestroyedOrNull:value=>{events.push(['null',value]);return false;},isActive:()=>true});
+ assert.deepEqual(p.capture(obj),{obj,cachedUid:9});assert.deepEqual(events,[['uid',obj],['null',obj],['uid',obj]]);
+});
+test('Unity context pointer null and first UID zero skip later reads; destroyed capture retains obj with cached UID zero',()=>{
+ const obj={},events=[],p=fearProjectileContextPointers({readUid:()=>{events.push('uid');return 0;},isDestroyedOrNull:()=>{throw Error('unexpected Unity read');},isActive:()=>true});
+ assert.deepEqual(p.capture(null),{obj:null,cachedUid:0});assert.deepEqual(events,[]);assert.deepEqual(p.capture(obj),{obj:null,cachedUid:0});assert.deepEqual(events,['uid']);
+ const q=fearProjectileContextPointers({readUid:()=>{events.push('live-uid');return 3;},isDestroyedOrNull:()=>true,isActive:()=>true});
+ assert.deepEqual(q.capture(obj),{obj,cachedUid:0});assert.deepEqual(events,['uid','live-uid']);
+});
+test('Unity context pointer second UID zero is preserved and not rejected by a later equal-UID validity check',()=>{
+ let uid=3;const obj={},p=fearProjectileContextPointers({readUid:()=>{const value=uid;uid=0;return value;},isDestroyedOrNull:()=>false,isActive:()=>true});
+ const ptr=p.capture(obj);assert.deepEqual(ptr,{obj,cachedUid:0});assert.equal(p.isValid(ptr),true);assert.equal(p.lock(ptr),obj);
+});
+test('Unity context pointer copy preserves values while destroyed or recycled objects fail validity and lock',()=>{
+ const obj={uid:5,destroyed:false},p=fearProjectileContextPointers({readUid:value=>value.uid,isDestroyedOrNull:value=>value==null||value.destroyed,isActive:()=>true});
+ const ptr=p.capture(obj),copy=p.copy(ptr);assert.notEqual(copy,ptr);assert.deepEqual(copy,ptr);assert.equal(p.isValid(ptr),true);
+ obj.destroyed=true;assert.equal(p.isValid(ptr),false);assert.equal(p.lock(ptr),null);obj.destroyed=false;obj.uid=6;
+ assert.equal(p.isValid(copy),false);assert.equal(p.lock(copy),null);
+});
+test('Unity context pointer validity rereads by-reference obj after Unity effects and cached UID after getter effects',()=>{
+ const first={},second={},ptr={obj:first,cachedUid:1},events=[];
+ const p=fearProjectileContextPointers({readUid:value=>{events.push(['uid',value]);ptr.cachedUid=7;return 7;},
+  isDestroyedOrNull:value=>{events.push(['null',value]);ptr.obj=second;return false;},isActive:()=>true});
+ assert.equal(p.isValid(ptr),true);assert.deepEqual(events,[['null',first],['uid',second]]);
+});
+test('Unity context pointer Lock rereads obj after validity and does not invent a second UID or null check',()=>{
+ const first={},second={},ptr={obj:first,cachedUid:4},events=[];
+ const p=fearProjectileContextPointers({readUid:value=>{events.push(['uid',value]);ptr.obj=second;return 4;},
+  isDestroyedOrNull:value=>{events.push(['null',value]);return false;},isActive:()=>true});
+ assert.equal(p.lock(ptr),second);assert.deepEqual(events,[['null',first],['uid',first]]);
+});
+test('Unity context pointer validity honors null before UID dispatch and fails null rereads after a false destruction result',()=>{
+ const events=[],p=fearProjectileContextPointers({readUid:()=>{throw Error('unexpected UID');},isDestroyedOrNull:value=>{events.push(value);return true;},isActive:()=>true});
+ assert.equal(p.isValid({obj:null,cachedUid:0}),false);assert.deepEqual(events,[null]);
+ const ptr={obj:{},cachedUid:0},q=fearProjectileContextPointers({readUid:()=>{throw Error('unexpected UID');},isDestroyedOrNull:()=>{ptr.obj=null;return false;},isActive:()=>true});
+ assert.throws(()=>q.isValid(ptr),/null native/);
+});
+for(const phase of ['first-uid','Unity','second-uid'])test('Unity context pointer capture cancels after lifecycle invalidation in '+phase,()=>{
+ let active=true,calls=0;const p=fearProjectileContextPointers({readUid:()=>{calls++;if(phase==='first-uid'||phase==='second-uid'&&calls===2)active=false;return 3;},
+  isDestroyedOrNull:()=>{if(phase==='Unity')active=false;return false;},isActive:()=>active});
+ assert.equal(p.capture({}),null);assert.equal(calls,phase==='second-uid'?2:1);
+});
+test('Unity context pointer guards reentry before lifecycle effects and releases the guard after getter failure',()=>{
+ let p,nested,fail=true;p=fearProjectileContextPointers({readUid:()=>{if(fail)throw Error('uid failure');return 1;},isDestroyedOrNull:()=>false,
+  isActive:()=>{nested=p.capture({});return true;}});
+ assert.throws(()=>p.capture({}),/uid failure/);fail=false;assert.equal(p.capture({}).cachedUid,1);assert.equal(nested,null);
+});
+
+function overrideContainerFixture(overrides={}){
+ const map=new Map([['other',{}],['fear^27',{id:27}],['fear^17',{id:17}]]),events=[],state={active:true,map};
+ const options={readGroups:()=>{events.push('read');return state.map;},isActive:()=>state.active,
+  openKeys:dictionary=>{const keys=[...dictionary.keys()];let index=-1;events.push('open');return{
+   moveNext:()=>{events.push('move');return++index<keys.length;},current:()=>{events.push('current');return keys[index];},dispose:()=>{events.push('dispose');}};},
+  startsWith:(candidate,prefix)=>{events.push(['prefix',candidate,prefix]);return candidate.startsWith(prefix);},
+  tryGetGroup:(dictionary,key)=>{events.push(['try',key]);return{found:dictionary.has(key),value:dictionary.get(key)??null};},
+  containsGroup:(dictionary,key)=>{events.push(['contains',key]);return dictionary.has(key);},
+  removeGroup:(dictionary,key)=>{events.push(['remove',key]);return dictionary.delete(key);},
+  addGroup:(dictionary,key,value)=>{events.push(['add',key,value]);if(dictionary.has(key))throw Error('duplicate key');dictionary.set(key,value);},...overrides};
+ const container=fearProjectileOverrideContainer(options);return{map,state,events,options,container};
+}
+
+test('override candidate selects the first native prefix match and disposes before returning, with fallback only after exhaustion',()=>{
+ const f=overrideContainerFixture();assert.equal(f.container.getOverrideKeyCandidate('fear^'),'fear^27');
+ assert.equal(f.events.at(-1),'dispose');assert.equal(f.events.filter(x=>x==='move').length,2);
+ assert.equal(f.container.getOverrideKeyCandidate('absent^'),'absent^');assert.equal(f.events.at(-1),'dispose');
+});
+for(const phase of ['move','current','prefix'])test('override candidate disposes its native enumerator on '+phase+' error',()=>{
+ const f=overrideContainerFixture(),open=f.options.openKeys;f.options.openKeys=map=>{const it=open(map);if(phase!=='prefix')it[phase==='move'?'moveNext':'current']=()=>{throw Error('enumerator failure');};return it;};
+ if(phase==='prefix')f.options.startsWith=()=>{throw Error('enumerator failure');};
+ const container=fearProjectileOverrideContainer(f.options);assert.throws(()=>container.getOverrideKeyCandidate('fear^'),/enumerator failure/);assert.equal(f.events.at(-1),'dispose');
+});
+test('override candidate does not swallow native dictionary version errors or turn them into a fallback',()=>{
+ const f=overrideContainerFixture();let disposed=0;f.options.openKeys=()=>({moveNext:()=>{throw Error('native dictionary changed');},current:()=>null,dispose:()=>{disposed++;}});
+ assert.throws(()=>fearProjectileOverrideContainer(f.options).getOverrideKeyCandidate('fear^'),/native dictionary changed/);assert.equal(disposed,1);
+});
+for(const phase of ['opening','comparison','disposal'])test('override candidate disposes but returns no key after lifecycle invalidation in '+phase,()=>{
+ const f=overrideContainerFixture(),open=f.options.openKeys;f.options.openKeys=map=>{const it=open(map),dispose=it.dispose;
+  if(phase==='opening')f.state.active=false;it.dispose=()=>{dispose();if(phase==='disposal')f.state.active=false;};return it;};
+ if(phase==='comparison')f.options.startsWith=()=>{f.state.active=false;return true;};
+ assert.equal(fearProjectileOverrideContainer(f.options).getOverrideKeyCandidate('fear^'),null);assert.equal(f.events.at(-1),'dispose');
+});
+test('override migration moves the same group only when the base exists and destination is absent',()=>{
+ const f=overrideContainerFixture(),group={id:'base'};f.map.set('fear^',group);
+ f.container.ensureOverrideIndependentKey('fear^','fear^39');assert.equal(f.map.has('fear^'),false);assert.equal(f.map.get('fear^39'),group);
+ assert.deepEqual(f.events.filter(Array.isArray),[['try','fear^'],['contains','fear^39'],['remove','fear^'],['add','fear^39',group]]);
+ const g=overrideContainerFixture();g.container.ensureOverrideIndependentKey('missing','new');assert.deepEqual(g.events,['read',['try','missing']]);
+ g.map.set('fear^',group);g.events.length=0;g.container.ensureOverrideIndependentKey('fear^','fear^17');assert.equal(g.map.get('fear^'),group);
+ assert.deepEqual(g.events,['read',['try','fear^'],'read',['contains','fear^17']]);
+});
+test('override migration rereads the map for every operation and ignores Remove false while preserving the original out group',()=>{
+ const original={},maps=[new Map([['base',original]]),new Map(),new Map(),new Map()],seen=[];let index=0;
+ const f=overrideContainerFixture({readGroups:()=>maps[index++],tryGetGroup:(map,key)=>{seen.push(map);return{found:true,value:map.get(key)};},
+  containsGroup:(map)=>{seen.push(map);return false;},removeGroup:map=>{seen.push(map);return false;},addGroup:(map,key,group)=>{seen.push(map);assert.equal(group,original);map.set(key,group);}});
+ f.container.ensureOverrideIndependentKey('base','new');assert.deepEqual(seen,maps);assert.equal(maps[3].get('new'),original);assert.equal(index,4);
+});
+test('override migration permits a null dictionary value and preserves completed removal when Add throws',()=>{
+ const f=overrideContainerFixture();f.map.set('base',null);f.container.ensureOverrideIndependentKey('base','new');assert.equal(f.map.get('new'),null);
+ f.map.set('base',{id:1});let calls=0;f.options.addGroup=()=>{calls++;throw Error('Add failed');};const c=fearProjectileOverrideContainer(f.options);
+ assert.throws(()=>c.ensureOverrideIndependentKey('base','other-key'),/Add failed/);assert.equal(f.map.has('base'),false);assert.equal(f.map.has('other-key'),false);
+ c.ensureOverrideIndependentKey('base','other-key');assert.equal(calls,1,'retry observes the committed removal rather than restoring the old entry');
+});
+test('override migration stops after removal invalidates the lifecycle and rejects recursive container entry',()=>{
+ const f=overrideContainerFixture();f.map.set('base',{});f.options.removeGroup=(map,key)=>{map.delete(key);f.state.active=false;return true;};
+ assert.equal(fearProjectileOverrideContainer(f.options).ensureOverrideIndependentKey('base','new'),null);assert.equal(f.map.has('base'),false);assert.equal(f.map.has('new'),false);
+ const g=overrideContainerFixture();let c,nested;g.options.isActive=()=>{nested=c.getOverrideKeyCandidate('fear^');return true;};c=fearProjectileOverrideContainer(g.options);
+ assert.equal(c.getOverrideKeyCandidate('fear^'),'fear^27');assert.equal(nested,null);
+});
+
 function buffOverrideFixture(overrides={}){
  const buff={overrideKey:'old'},data={disableOverride:false,overrideKey:null,buffKey:'fear',independentCharacterSource:true},source={},container={},events=[];
  const state={active:true,data};
@@ -233,6 +343,9 @@ function resetPipelineFixture(){
   m_started:true,m_isFinished:true,m_needRemove:true,m_isActuallyEnabled:true,m_isLateEnabled:true,m_isManuallyEnabled:true,m_isActuallyFinished:true,
   ...Object.fromEntries(['m_attributeAdditions','m_attributeMultipliers','m_attributeFinalAdditions','m_attributeFinalScalers'].map(k=>[k,Array(38).fill(99n)]))});
  const isActive=()=>f.state.active,readData=()=>f.state.data,compareIgnoreCase=(a,b)=>String(a).toLowerCase()===String(b).toLowerCase()?0:1;
+ for(const [index,obj] of [f.source,f.ability,f.sourceProjectile].entries())Object.assign(obj,{instanceUid:index+11,destroyed:false});
+ const pointers=fearProjectileContextPointers({readUid:value=>value.instanceUid,isDestroyedOrNull:value=>value==null||value.destroyed,isActive});
+ f.options.capturePointer=value=>pointers.capture(value);
  const pairs=fearProjectileBuffBlackboardPairs({entries,compareIgnoreCase,isActive});
  const reads=fearProjectileBuffBlackboardReads({entries,compareIgnoreCase,isActive});
  const blackboard=fearProjectileResetBuffBlackboard({first:[{key:'duration',value:6,valueStr:null},{key:'interval',value:2,valueStr:null}],second:null,
@@ -243,9 +356,14 @@ function resetPipelineFixture(){
  const triggers=fearProjectileResetBuffTriggers({buff,readData,getFpOrDefault:reads.getFpOrDefault,getIntOrDefault:reads.getIntOrDefault,
   timer:fearProjectileBuffTimer(timerState),setTriggerable:value=>{buff.triggerable=value;},isActive});
  const context=fearProjectileResetBuffContext(f.options);
+ const overrideGroup={members:[]};f.container.m_buffOverrideMap=new Map([['fear^',overrideGroup]]);
+ const nativeOverride=fearProjectileOverrideContainer({readGroups:()=>f.container.m_buffOverrideMap,isActive,
+  openKeys:map=>{const keys=map.keys();let current;return{moveNext:()=>{const next=keys.next();current=next.value;return!next.done;},current:()=>current,dispose:()=>{}};},
+  startsWith:(key,prefix)=>key.startsWith(prefix),tryGetGroup:(map,key)=>({found:map.has(key),value:map.get(key)??null}),
+  containsGroup:(map,key)=>map.has(key),removeGroup:(map,key)=>map.delete(key),addGroup:(map,key,value)=>{if(map.has(key))throw Error('duplicate key');map.set(key,value);}});
  const override=fearProjectileResetBuffOverride({buff,container:f.container,source:f.source,readData,isActive,asCharacter:value=>value,isDestroyedOrNull:value=>value==null,
   readCardUid:()=>17,formatKey:(_format,a,b)=>(a??'')+b,getOverrideKeyCandidate:()=>{throw Error('unexpected candidate');},
-  ensureOverrideIndependentKey:(_container,base,key)=>{phases.push(['ensure',base,key]);}});
+  ensureOverrideIndependentKey:(_container,base,key)=>{phases.push(['ensure',base,key]);nativeOverride.ensureOverrideIndependentKey(base,key);}});
  const status=fearProjectileInitBuffStatus({buff,readData,readAbnormalMask:()=>buff.abnormalFlagMask,readSlowDownTemplateKey:()=> 'slow-template',isActive});
  const final=fearProjectileInitBuffFinalFlags({buff,isActive,readBuffKey:()=>buff.key,readBreakKeys:record=>record.keys,
   openBreakIterator:()=>({moveNext:()=>false,current:()=>{throw Error('empty iterator');},dispose:()=>{phases.push('break-dispose');}}),
@@ -256,12 +374,12 @@ function resetPipelineFixture(){
   resetLifetime:phase('lifetime',durationKey=>fearProjectileResetBuffLifetime({buff,durationKey,tryGetDuration:reads.tryGetFP,readData,modifyLifeTimeFinally:()=>{},isActive}).run()),
   resetTriggers:phase('triggers',triggers.run),
   loadAttributes:phase('attributes',(attributes,stackCount)=>fearProjectileLoadBuffAttributes({buff,attributes,stackCount,tryGetFP:reads.tryGetFP,getBlackboardKey:id=>'attribute'+id,
-   readSource:()=>f.source,isDestroyedOrNull:value=>value==null,readSourceAttribute:()=>0n,captureSnapshot:()=>{},isActive}).run()),
+   readSource:()=>pointers.lock(buff.m_source),isDestroyedOrNull:value=>value==null,readSourceAttribute:()=>0n,captureSnapshot:()=>{},isActive}).run()),
   loadActions:phase('actions',dictionary=>fearProjectileLoadBuffActions({readActions:()=>actions,readDictionaryCount:()=>dictionary.length,
    readDictionaryEntry:index=>dictionary[index],readActionArray:entry=>entry.actions,isAssignable:()=>true,isActive}).run()),
   calculatePriority:phase('priority',config=>fearProjectileBuffPriority({buff,readData:()=>config.data,getFpOrDefault:reads.getFpOrDefault,isActive}).run()),
   resetOverride:phase('override',override.run),initializeStatus:phase('status',status.run),initializeFinalFlags:phase('final',final.run)};
- return{...f,buff,entries,actions,shield,timerState,phases,options,run:()=>fearProjectileResetBuff(options).run()};
+ return{...f,buff,entries,actions,shield,timerState,phases,options,pointers,overrideGroup,run:()=>fearProjectileResetBuff(options).run()};
 }
 
 test('composed default Reset binds blackboard duration, trigger timer, attributes, actions, priority and final flags in native order',()=>{
@@ -271,8 +389,11 @@ test('composed default Reset binds blackboard duration, trigger timer, attribute
  assert.equal(f.timerState.m_periodTime,2n<<32n);assert.equal(f.timerState.m_remainingTime,1n<<32n);assert.equal(f.buff.triggerable,true);
  assert.equal(f.buff.m_stackCnt,1);assert.equal(f.buff.m_refreshRemainingTimeWhenStackMax,true);assert.equal(f.buff.m_clearAllStackCntWhenTimeUp,false);
  assert.equal(f.buff.m_attributeAdditions[1],2n<<32n);assert.equal(f.buff.priority,2000);assert.equal(f.buff.overrideKey,'fear^17');
+ assert.equal(f.container.m_buffOverrideMap.has('fear^'),false);assert.equal(f.container.m_buffOverrideMap.get('fear^17'),f.overrideGroup);
  assert.equal(f.buff.m_isStatusResistable,true);assert.equal(f.buff.m_canSlowDown,true);assert.equal(f.buff.m_isEpBreakBuff,false);
  assert.equal(f.buff.hasShield,true);assert.equal(f.buff.m_shieldMask,5);assert.deepEqual(f.actions[10],[f.shield]);
+ assert.deepEqual([f.buff.m_source,f.buff.m_ability,f.buff.m_sourceProjectile].map(p=>p.cachedUid),[11,12,13]);
+ assert.equal(f.pointers.lock(f.buff.m_source),f.source);f.source.instanceUid++;assert.equal(f.pointers.lock(f.buff.m_source),null);
  assert.ok(f.actions.every((value,index)=>index===10||value===null));assert.equal(f.buff.m_started,false);assert.equal(f.buff.m_isFinished,false);assert.deepEqual(f.buff.m_derivedBuffs,[]);
 });
 

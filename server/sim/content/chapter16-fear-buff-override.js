@@ -48,3 +48,49 @@ export function fearProjectileResetBuffOverride({buff,source,container,readData,
   },
  });
 }
+
+// Selected BuffContainer callers over Dictionary<string,OverrideGroup>.
+// Comparer, key-enumerator/version and dictionary storage effects stay native
+// receivers; do not replace StartsWith with a guessed JS culture comparison.
+export function fearProjectileOverrideContainer({readGroups,openKeys,startsWith,tryGetGroup,containsGroup,removeGroup,addGroup,isActive}){
+ if([readGroups,openKeys,startsWith,tryGetGroup,containsGroup,removeGroup,addGroup,isActive].some(fn=>typeof fn!=='function'))
+  throw new TypeError('Fear override container requires native dictionary, enumeration, string and lifecycle callers');
+ let running=false;const cancelled=Symbol('cancelled');
+ const check=()=>{if(!boolean(isActive()))throw cancelled;};
+ const invoke=(fn,...args)=>{const value=fn(...args);check();return value;};
+ const groups=()=>nonnull(invoke(readGroups));
+ const run=fn=>{
+  if(running)return null;running=true;
+  try{check();return fn();}catch(error){if(error===cancelled)return null;throw error;}finally{running=false;}
+ };
+ return Object.freeze({
+  getOverrideKeyCandidate:key=>run(()=>{
+   nullableString(key);const dictionary=groups(),iterator=openKeys(dictionary);
+   let result=key;
+   try{
+    // An acquired enumerator must be disposed even if opening it ended this
+    // lifecycle. There is no disposal until acquisition has succeeded.
+    check();
+    if(!iterator||['moveNext','current','dispose'].some(name=>typeof iterator[name]!=='function'))
+     throw new TypeError('Fear override candidate requires a disposable native key enumerator');
+    while(boolean(invoke(()=>iterator.moveNext()))){
+     const candidate=nonnull(invoke(()=>iterator.current()));nullableString(candidate);
+     if(boolean(invoke(startsWith,candidate,key))){result=candidate;break;}
+    }
+   }finally{if(iterator&&typeof iterator.dispose==='function')iterator.dispose();}
+   check();return result;
+  }),
+  ensureOverrideIndependentKey:(base,key)=>run(()=>{
+   nullableString(base);nullableString(key);
+   const found=invoke(tryGetGroup,groups(),base);
+   if(!found||typeof found.found!=='boolean'||!Object.hasOwn(found,'value'))throw new TypeError('Fear override container requires native TryGetValue found/out results');
+   if(!found.found)return;
+   // Capture the original out slot, even when it is null. The field is read
+   // afresh before each dictionary operation, not captured for the sequence.
+   const group=found.value??null;
+   if(boolean(invoke(containsGroup,groups(),key)))return;
+   invoke(removeGroup,groups(),base); // Native caller ignores Remove's bool.
+   invoke(addGroup,groups(),key,group);
+  }),
+ });
+}

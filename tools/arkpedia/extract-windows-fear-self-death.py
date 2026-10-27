@@ -938,11 +938,57 @@ result['modeSwitch']['buffNotification']['resetContext'] = {
     'audioSourceValidityCallRva': 0x39b10f1, 'audioCharacterCastCallRva': 0x39b1108,
     'audioSignalsReadRva': 0x39b113d, 'audioSubsignalGetterCallRva': 0x39b116f,
     'audioHookCallRva': 0x39b11bf, 'audioOverrideSetterCallRva': 0x39b11d7,
-    'pointerConstructorCalls': [0x39b11eb, 0x39b1217, 0x39b1243],
+    'pointerWrapCalls': [0x39b11eb, 0x39b1217, 0x39b1243],
     'pointerWrites': [0x39b11fb, 0x39b1227, 0x39b1253], 'capabilityDataReadRva': 0x39b125b,
     'capabilityWrites': [0x39b1274, 0x39b127e, 0x39b1288, 0x39b1292, 0x39b129c, 0x39b12a6],
     'nativeAudioSignalArrayValuesVerified': False, 'nativeCharacterAudioEffectsVerified': False,
     'nativeContextPointerCapturesVerified': False, 'liveResetContextPhaseVerified': False,
+}
+wrap_spec = priority['specification'](212603)
+assert wrap_spec['declaringType'] == 'ObjectPtr' and wrap_spec['definition']['name'] == 'Wrap'
+assert wrap_spec['instantiations']['method']['arguments'][0]['name'] == 'Object'
+wrap_pointer = v['quad'](v['b'], priority['pointer_table'] + wrap_spec['nativeMapping']['methodPointerIndex'] * 8)
+assert wrap_pointer - v['image_base'] == 0x4035830
+wrap_loads = []
+for load_rva, index, name in [(0x39b11dc, 269317, 'Entity'), (0x39b1203, 269312, 'Ability'), (0x39b122f, 269319, 'Projectile')]:
+    pos = v['offset'](v['image_base'] + load_rva)
+    assert v['b'][pos:pos + 3] == bytes.fromhex('4c8b05')
+    target = load_rva + 7 + struct.unpack_from('<i', v['b'], pos + 3)[0]
+    usage = v['quad'](v['b'], v['offset'](v['image_base'] + target))
+    assert usage >> 29 == 6 and (usage & 0x1ffffffe) >> 1 == index
+    spec = priority['specification'](index)
+    assert spec['definition'] == wrap_spec['definition'] and spec['nativeMapping'] is None
+    arg = spec['instantiations']['method']['arguments'][0]
+    assert arg['name'] == name
+    lineage = [{'index': t['index'], 'name': t['name'], 'namespace': t['namespace']} for t in c['lineage'](v['types'][arg['typeIndex']])]
+    assert {'name': 'Object', 'namespace': 'UnityEngine'} in [{'name': t['name'], 'namespace': t['namespace']} for t in lineage]
+    wrap_loads.append({'loadRva': load_rva, 'encodedUsage': usage, 'specification': spec, 'lineage': lineage})
+ptr_interface = c['type_row']('IPtrObject', 'Torappu')
+uid_getter = c['unique'](lambda r: r['name'] == 'get_instanceUid', ptr_interface['methods'])
+uid_slot = struct.unpack_from('<H', v['m'], v['method_start'] + uid_getter['index'] * 32 + 28)[0]
+assert uid_slot == 0
+uid_interface_loads = []
+for load_rva in [0x477cc5d, 0x477ccb3, 0x477cdf0]:
+    pos = v['offset'](v['image_base'] + load_rva)
+    assert v['b'][pos:pos + 3] == bytes.fromhex('488b15')
+    target = load_rva + 7 + struct.unpack_from('<i', v['b'], pos + 3)[0]
+    usage = v['quad'](v['b'], v['offset'](v['image_base'] + target))
+    assert usage >> 29 == 1
+    ti = (usage & 0x1ffffffe) >> 1
+    tp = v['offset'](v['quad'](v['b'], v['type_table'] + ti * 8))
+    assert (v['uint'](v['b'], tp + 8) >> 16) & 255 == 18 and v['quad'](v['b'], tp) == ptr_interface['index']
+    uid_interface_loads.append({'loadRva': load_rva, 'encodedUsage': usage, 'typeIndex': ti})
+result['modeSwitch']['buffNotification']['resetContext']['contextPointers'] = {
+    'canonicalWrap': {**wrap_spec, 'entryRva': wrap_pointer - v['image_base'], 'chunks': c['code'](wrap_pointer - v['image_base'])},
+    'concreteWrapLoads': wrap_loads, 'uidInterface': {'index': ptr_interface['index'], 'name': ptr_interface['name'], 'getter': uid_getter, 'slot': uid_slot},
+    'uidInterfaceLoads': uid_interface_loads, 'wrapClearRva': 0x403583c, 'wrapConstructorCallRva': 0x4035847,
+    'constructorFirstUidCallRva': 0x477cc69, 'constructorObjectWriteRva': 0x477cc75,
+    'constructorNullCheckCallRva': 0x477cc9a, 'constructorDestroyedUidWriteRva': 0x477cca5,
+    'constructorSecondUidCallRva': 0x477ccbf, 'constructorUidWriteRva': 0x477ccc4,
+    'validityObjectReadRva': 0x477cdbc, 'validityNullCheckCallRva': 0x477cdd2,
+    'validityObjectRereadRva': 0x477cde8, 'validityUidCallRva': 0x477cdf9, 'validityCachedUidCompareRva': 0x477cdfe,
+    'lockValidityCallRva': 0x477cafc, 'lockObjectRereadRva': 0x477cb05,
+    'nativeUnityDestructionEffectsVerified': False, 'nativeContextUidDispatchVerified': False, 'liveContextPointersVerified': False,
 }
 override_container = c['type_row']('BuffContainer', '')
 for owner, names in [(data_type, ['GetOverrideKey']), (override_container, ['GetOverrideKeyCandidate', 'EnsureOverrideIndependentKey']),
@@ -1021,6 +1067,24 @@ result['modeSwitch']['buffNotification']['resetPipeline'] = {
     'statusInitCallRva': 0x39b1b24, 'statusWriteRva': 0x39b1b33, 'slowdownWriteRva': 0x39b1be9,
     'elementalBreakCallRva': 0x39b1bf2, 'elementalBreakWriteRva': 0x39b1bf9, 'shieldSourceCallRva': 0x39b1c02,
     'fullResetEffectsVerified': False, 'liveResetPipelineVerified': False,
+}
+override_bindings = []
+for load_rva, index, name in [(0x39c1bdd, 228013, 'get_Keys'), (0x39c1bf2, 237458, 'GetEnumerator'),
+    (0x39c1c30, 235914, 'MoveNext'), (0x39c1c65, 235913, 'Dispose'), (0x39c0666, 228012, 'TryGetValue'),
+    (0x39c0687, 228009, 'ContainsKey'), (0x39c06a3, 228011, 'Remove'), (0x39c06bb, 228007, 'Add')]:
+    pos = v['offset'](v['image_base'] + load_rva)
+    assert v['b'][pos:pos + 3] in [bytes.fromhex('488b15'), bytes.fromhex('4c8b05'), bytes.fromhex('4c8b0d')]
+    target = load_rva + 7 + struct.unpack_from('<i', v['b'], pos + 3)[0]
+    usage = v['quad'](v['b'], v['offset'](v['image_base'] + target))
+    assert usage >> 29 == 6 and (usage & 0x1ffffffe) >> 1 == index
+    spec = priority['specification'](index)
+    assert spec['definition']['name'] == name and spec['nativeMapping'] is None
+    assert [a['name'] for a in spec['instantiations']['class']['arguments']] == ['String', 'OverrideGroup']
+    override_bindings.append({'loadRva': load_rva, 'encodedUsage': usage, 'specification': spec})
+result['modeSwitch']['buffNotification']['resetOverride']['containerBindings'] = {
+    'mapField': c['unique'](lambda f: f['name'] == 'm_buffOverrideMap', c['fields'](override_container)),
+    'methodSpecifications': override_bindings, 'mapReadRvas': [0x39c1bd0, 0x39c0659, 0x39c067e, 0x39c069a, 0x39c06b2],
+    'genericDictionaryEffectsVerified': False, 'nativeKeyEnumerationVerified': False, 'liveOverrideContainerVerified': False,
 }
 pool = c['type_row']('ObjectPool`1', 'Torappu.ObjectPool')
 pool_methods = []

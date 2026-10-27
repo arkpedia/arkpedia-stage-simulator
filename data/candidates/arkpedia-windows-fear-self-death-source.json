@@ -89087,7 +89087,7 @@
     "audioSubsignalGetterCallRva": 60494191,
     "audioHookCallRva": 60494271,
     "audioOverrideSetterCallRva": 60494295,
-    "pointerConstructorCalls": [
+    "pointerWrapCalls": [
      60494315,
      60494359,
      60494403
@@ -89109,7 +89109,361 @@
     "nativeAudioSignalArrayValuesVerified": false,
     "nativeCharacterAudioEffectsVerified": false,
     "nativeContextPointerCapturesVerified": false,
-    "liveResetContextPhaseVerified": false
+    "liveResetContextPhaseVerified": false,
+    "contextPointers": {
+     "canonicalWrap": {
+      "index": 212603,
+      "definition": {
+       "index": 21146,
+       "name": "Wrap",
+       "token": 100684443
+      },
+      "declaringType": "ObjectPtr",
+      "declaringTypeIndex": 1323,
+      "instantiations": {
+       "method": {
+        "index": 73,
+        "arguments": [
+         {
+          "namespace": "System",
+          "name": "Object",
+          "typeIndex": 37078,
+          "typeBits": 1835008
+         }
+        ]
+       }
+      },
+      "nativeMapping": {
+       "methodPointerIndex": 192813,
+       "invokerIndex": 35685,
+       "adjustorThunkIndex": -1
+      },
+      "entryRva": 67328048,
+      "chunks": [
+       {
+        "beginRva": 67328048,
+        "endRva": 67328085,
+        "unwindRva": 119936336,
+        "sha256": "54328bf622435aad093cda71de40e9668990ec99f82f7acf6399f5537ec80d9d",
+        "base64": "QFNIg+wgD1fASIvZDxEBTYtAOE2LQAjo1HN0AEiLw0iDxCBbww==",
+        "instructions": [
+         {
+          "rva": 67328048,
+          "mnemonic": "push",
+          "operands": "rbx"
+         },
+         {
+          "rva": 67328050,
+          "mnemonic": "sub",
+          "operands": "rsp, 0x20"
+         },
+         {
+          "rva": 67328054,
+          "mnemonic": "xorps",
+          "operands": "xmm0, xmm0"
+         },
+         {
+          "rva": 67328057,
+          "mnemonic": "mov",
+          "operands": "rbx, rcx"
+         },
+         {
+          "rva": 67328060,
+          "mnemonic": "movups",
+          "operands": "xmmword ptr [rcx], xmm0"
+         },
+         {
+          "rva": 67328063,
+          "mnemonic": "mov",
+          "operands": "r8, qword ptr [r8 + 0x38]"
+         },
+         {
+          "rva": 67328067,
+          "mnemonic": "mov",
+          "operands": "r8, qword ptr [r8 + 8]"
+         },
+         {
+          "rva": 67328071,
+          "mnemonic": "call",
+          "operands": "0x18477cc20"
+         },
+         {
+          "rva": 67328076,
+          "mnemonic": "mov",
+          "operands": "rax, rbx"
+         },
+         {
+          "rva": 67328079,
+          "mnemonic": "add",
+          "operands": "rsp, 0x20"
+         },
+         {
+          "rva": 67328083,
+          "mnemonic": "pop",
+          "operands": "rbx"
+         },
+         {
+          "rva": 67328084,
+          "mnemonic": "ret",
+          "operands": ""
+         }
+        ]
+       }
+      ]
+     },
+     "concreteWrapLoads": [
+      {
+       "loadRva": 60494300,
+       "encodedUsage": 3221764107,
+       "specification": {
+        "index": 269317,
+        "definition": {
+         "index": 21146,
+         "name": "Wrap",
+         "token": 100684443
+        },
+        "declaringType": "ObjectPtr",
+        "declaringTypeIndex": 1323,
+        "instantiations": {
+         "method": {
+          "index": 422,
+          "arguments": [
+           {
+            "namespace": "Torappu.Battle",
+            "name": "Entity",
+            "typeIndex": 9044,
+            "typeBits": 1179648
+           }
+          ]
+         }
+        },
+        "nativeMapping": null
+       },
+       "lineage": [
+        {
+         "index": 9044,
+         "name": "Entity",
+         "namespace": "Torappu.Battle"
+        },
+        {
+         "index": 8926,
+         "name": "BObject",
+         "namespace": "Torappu.Battle"
+        },
+        {
+         "index": 10214,
+         "name": "VisualObject",
+         "namespace": "Torappu.Battle"
+        },
+        {
+         "index": 42196,
+         "name": "MonoBehaviour",
+         "namespace": "UnityEngine"
+        },
+        {
+         "index": 42183,
+         "name": "Behaviour",
+         "namespace": "UnityEngine"
+        },
+        {
+         "index": 42186,
+         "name": "Component",
+         "namespace": "UnityEngine"
+        },
+        {
+         "index": 42219,
+         "name": "Object",
+         "namespace": "UnityEngine"
+        },
+        {
+         "index": 37078,
+         "name": "Object",
+         "namespace": "System"
+        }
+       ]
+      },
+      {
+       "loadRva": 60494339,
+       "encodedUsage": 3221764097,
+       "specification": {
+        "index": 269312,
+        "definition": {
+         "index": 21146,
+         "name": "Wrap",
+         "token": 100684443
+        },
+        "declaringType": "ObjectPtr",
+        "declaringTypeIndex": 1323,
+        "instantiations": {
+         "method": {
+          "index": 1752,
+          "arguments": [
+           {
+            "namespace": "Torappu.Battle",
+            "name": "Ability",
+            "typeIndex": 8742,
+            "typeBits": 1179648
+           }
+          ]
+         }
+        },
+        "nativeMapping": null
+       },
+       "lineage": [
+        {
+         "index": 8742,
+         "name": "Ability",
+         "namespace": "Torappu.Battle"
+        },
+        {
+         "index": 9035,
+         "name": "FriendComponent",
+         "namespace": ""
+        },
+        {
+         "index": 42196,
+         "name": "MonoBehaviour",
+         "namespace": "UnityEngine"
+        },
+        {
+         "index": 42183,
+         "name": "Behaviour",
+         "namespace": "UnityEngine"
+        },
+        {
+         "index": 42186,
+         "name": "Component",
+         "namespace": "UnityEngine"
+        },
+        {
+         "index": 42219,
+         "name": "Object",
+         "namespace": "UnityEngine"
+        },
+        {
+         "index": 37078,
+         "name": "Object",
+         "namespace": "System"
+        }
+       ]
+      },
+      {
+       "loadRva": 60494383,
+       "encodedUsage": 3221764111,
+       "specification": {
+        "index": 269319,
+        "definition": {
+         "index": 21146,
+         "name": "Wrap",
+         "token": 100684443
+        },
+        "declaringType": "ObjectPtr",
+        "declaringTypeIndex": 1323,
+        "instantiations": {
+         "method": {
+          "index": 507,
+          "arguments": [
+           {
+            "namespace": "Torappu.Battle",
+            "name": "Projectile",
+            "typeIndex": 9558,
+            "typeBits": 1179648
+           }
+          ]
+         }
+        },
+        "nativeMapping": null
+       },
+       "lineage": [
+        {
+         "index": 9558,
+         "name": "Projectile",
+         "namespace": "Torappu.Battle"
+        },
+        {
+         "index": 8926,
+         "name": "BObject",
+         "namespace": "Torappu.Battle"
+        },
+        {
+         "index": 10214,
+         "name": "VisualObject",
+         "namespace": "Torappu.Battle"
+        },
+        {
+         "index": 42196,
+         "name": "MonoBehaviour",
+         "namespace": "UnityEngine"
+        },
+        {
+         "index": 42183,
+         "name": "Behaviour",
+         "namespace": "UnityEngine"
+        },
+        {
+         "index": 42186,
+         "name": "Component",
+         "namespace": "UnityEngine"
+        },
+        {
+         "index": 42219,
+         "name": "Object",
+         "namespace": "UnityEngine"
+        },
+        {
+         "index": 37078,
+         "name": "Object",
+         "namespace": "System"
+        }
+       ]
+      }
+     ],
+     "uidInterface": {
+      "index": 1321,
+      "name": "IPtrObject",
+      "getter": {
+       "index": 21145,
+       "name": "get_instanceUid",
+       "token": 100684442
+      },
+      "slot": 0
+     },
+     "uidInterfaceLoads": [
+      {
+       "loadRva": 74959965,
+       "encodedUsage": 536974331,
+       "typeIndex": 51709
+      },
+      {
+       "loadRva": 74960051,
+       "encodedUsage": 536974331,
+       "typeIndex": 51709
+      },
+      {
+       "loadRva": 74960368,
+       "encodedUsage": 536974331,
+       "typeIndex": 51709
+      }
+     ],
+     "wrapClearRva": 67328060,
+     "wrapConstructorCallRva": 67328071,
+     "constructorFirstUidCallRva": 74959977,
+     "constructorObjectWriteRva": 74959989,
+     "constructorNullCheckCallRva": 74960026,
+     "constructorDestroyedUidWriteRva": 74960037,
+     "constructorSecondUidCallRva": 74960063,
+     "constructorUidWriteRva": 74960068,
+     "validityObjectReadRva": 74960316,
+     "validityNullCheckCallRva": 74960338,
+     "validityObjectRereadRva": 74960360,
+     "validityUidCallRva": 74960377,
+     "validityCachedUidCompareRva": 74960382,
+     "lockValidityCallRva": 74959612,
+     "lockObjectRereadRva": 74959621,
+     "nativeUnityDestructionEffectsVerified": false,
+     "nativeContextUidDispatchVerified": false,
+     "liveContextPointersVerified": false
+    }
    },
    "resetOverride": {
     "dataFields": [
@@ -89219,7 +89573,301 @@
     "ensureAddCallRva": 60557002,
     "nativeFormattingEffectsVerified": false,
     "nativeOverrideContainerEffectsVerified": false,
-    "liveResetOverridePhaseVerified": false
+    "liveResetOverridePhaseVerified": false,
+    "containerBindings": {
+     "mapField": {
+      "index": 61241,
+      "name": "m_buffOverrideMap",
+      "typeIndex": 9916,
+      "offset": 32,
+      "typeData": 6574068328,
+      "typeBits": 1376257
+     },
+     "methodSpecifications": [
+      {
+       "loadRva": 60562397,
+       "encodedUsage": 3221681499,
+       "specification": {
+        "index": 228013,
+        "definition": {
+         "index": 224833,
+         "name": "get_Keys",
+         "token": 100675115
+        },
+        "declaringType": "Dictionary`2",
+        "declaringTypeIndex": 38171,
+        "instantiations": {
+         "class": {
+          "index": 4102,
+          "arguments": [
+           {
+            "namespace": "System",
+            "name": "String",
+            "typeIndex": 36784,
+            "typeBits": 917504
+           },
+           {
+            "namespace": "",
+            "name": "OverrideGroup",
+            "typeIndex": 8930,
+            "typeBits": 1179648
+           }
+          ]
+         }
+        },
+        "nativeMapping": null
+       }
+      },
+      {
+       "loadRva": 60562418,
+       "encodedUsage": 3221700389,
+       "specification": {
+        "index": 237458,
+        "definition": {
+         "index": 224888,
+         "name": "GetEnumerator",
+         "token": 100675170
+        },
+        "declaringType": "KeyCollection",
+        "declaringTypeIndex": 38168,
+        "instantiations": {
+         "class": {
+          "index": 4102,
+          "arguments": [
+           {
+            "namespace": "System",
+            "name": "String",
+            "typeIndex": 36784,
+            "typeBits": 917504
+           },
+           {
+            "namespace": "",
+            "name": "OverrideGroup",
+            "typeIndex": 8930,
+            "typeBits": 1179648
+           }
+          ]
+         }
+        },
+        "nativeMapping": null
+       }
+      },
+      {
+       "loadRva": 60562480,
+       "encodedUsage": 3221697301,
+       "specification": {
+        "index": 235914,
+        "definition": {
+         "index": 224903,
+         "name": "MoveNext",
+         "token": 100675185
+        },
+        "declaringType": "Enumerator",
+        "declaringTypeIndex": 38167,
+        "instantiations": {
+         "class": {
+          "index": 4102,
+          "arguments": [
+           {
+            "namespace": "System",
+            "name": "String",
+            "typeIndex": 36784,
+            "typeBits": 917504
+           },
+           {
+            "namespace": "",
+            "name": "OverrideGroup",
+            "typeIndex": 8930,
+            "typeBits": 1179648
+           }
+          ]
+         }
+        },
+        "nativeMapping": null
+       }
+      },
+      {
+       "loadRva": 60562533,
+       "encodedUsage": 3221697299,
+       "specification": {
+        "index": 235913,
+        "definition": {
+         "index": 224902,
+         "name": "Dispose",
+         "token": 100675184
+        },
+        "declaringType": "Enumerator",
+        "declaringTypeIndex": 38167,
+        "instantiations": {
+         "class": {
+          "index": 4102,
+          "arguments": [
+           {
+            "namespace": "System",
+            "name": "String",
+            "typeIndex": 36784,
+            "typeBits": 917504
+           },
+           {
+            "namespace": "",
+            "name": "OverrideGroup",
+            "typeIndex": 8930,
+            "typeBits": 1179648
+           }
+          ]
+         }
+        },
+        "nativeMapping": null
+       }
+      },
+      {
+       "loadRva": 60556902,
+       "encodedUsage": 3221681497,
+       "specification": {
+        "index": 228012,
+        "definition": {
+         "index": 224859,
+         "name": "TryGetValue",
+         "token": 100675141
+        },
+        "declaringType": "Dictionary`2",
+        "declaringTypeIndex": 38171,
+        "instantiations": {
+         "class": {
+          "index": 4102,
+          "arguments": [
+           {
+            "namespace": "System",
+            "name": "String",
+            "typeIndex": 36784,
+            "typeBits": 917504
+           },
+           {
+            "namespace": "",
+            "name": "OverrideGroup",
+            "typeIndex": 8930,
+            "typeBits": 1179648
+           }
+          ]
+         }
+        },
+        "nativeMapping": null
+       }
+      },
+      {
+       "loadRva": 60556935,
+       "encodedUsage": 3221681491,
+       "specification": {
+        "index": 228009,
+        "definition": {
+         "index": 224845,
+         "name": "ContainsKey",
+         "token": 100675127
+        },
+        "declaringType": "Dictionary`2",
+        "declaringTypeIndex": 38171,
+        "instantiations": {
+         "class": {
+          "index": 4102,
+          "arguments": [
+           {
+            "namespace": "System",
+            "name": "String",
+            "typeIndex": 36784,
+            "typeBits": 917504
+           },
+           {
+            "namespace": "",
+            "name": "OverrideGroup",
+            "typeIndex": 8930,
+            "typeBits": 1179648
+           }
+          ]
+         }
+        },
+        "nativeMapping": null
+       }
+      },
+      {
+       "loadRva": 60556963,
+       "encodedUsage": 3221681495,
+       "specification": {
+        "index": 228011,
+        "definition": {
+         "index": 224857,
+         "name": "Remove",
+         "token": 100675139
+        },
+        "declaringType": "Dictionary`2",
+        "declaringTypeIndex": 38171,
+        "instantiations": {
+         "class": {
+          "index": 4102,
+          "arguments": [
+           {
+            "namespace": "System",
+            "name": "String",
+            "typeIndex": 36784,
+            "typeBits": 917504
+           },
+           {
+            "namespace": "",
+            "name": "OverrideGroup",
+            "typeIndex": 8930,
+            "typeBits": 1179648
+           }
+          ]
+         }
+        },
+        "nativeMapping": null
+       }
+      },
+      {
+       "loadRva": 60556987,
+       "encodedUsage": 3221681487,
+       "specification": {
+        "index": 228007,
+        "definition": {
+         "index": 224840,
+         "name": "Add",
+         "token": 100675122
+        },
+        "declaringType": "Dictionary`2",
+        "declaringTypeIndex": 38171,
+        "instantiations": {
+         "class": {
+          "index": 4102,
+          "arguments": [
+           {
+            "namespace": "System",
+            "name": "String",
+            "typeIndex": 36784,
+            "typeBits": 917504
+           },
+           {
+            "namespace": "",
+            "name": "OverrideGroup",
+            "typeIndex": 8930,
+            "typeBits": 1179648
+           }
+          ]
+         }
+        },
+        "nativeMapping": null
+       }
+      }
+     ],
+     "mapReadRvas": [
+      60562384,
+      60556889,
+      60556926,
+      60556954,
+      60556978
+     ],
+     "genericDictionaryEffectsVerified": false,
+     "nativeKeyEnumerationVerified": false,
+     "liveOverrideContainerVerified": false
+    }
    },
    "resetPipeline": {
     "stackFields": [
