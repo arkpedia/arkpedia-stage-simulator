@@ -22,8 +22,9 @@ import {fearProjectileBuffRecycleQueue,fearProjectileClearRuntimeData} from '../
 import {fearProjectileBuffIdentity,fearProjectileResetBuffLifecycle} from '../server/sim/content/chapter16-fear-buff-identity.js';
 import {fearProjectileBuffTimer,fearProjectileResetBuffTriggers,fearProjectileBuffDurationKey,fearProjectileResetBuffLifetime,fearProjectileModifyBuffLifetime} from '../server/sim/content/chapter16-fear-buff-timing.js';
 import {fearProjectileResetBuffBlackboard,fearProjectileBuffPrefixAssignments,fearProjectileBuffBlackboardWrites,fearProjectileBuffBlackboardReads,fearProjectileBuffBlackboardPairs} from '../server/sim/content/chapter16-fear-buff-blackboard.js';
-import {fearProjectileFloatToRaw,fearProjectileFloorToInt} from '../server/sim/content/chapter16-fear-fixed-values.js';
+import {fearProjectileFloatToRaw,fearProjectileFloorToInt,fearProjectileMultiplyRaw} from '../server/sim/content/chapter16-fear-fixed-values.js';
 import {fearProjectileLoadBuffActions} from '../server/sim/content/chapter16-fear-buff-actions.js';
+import {fearProjectileLoadBuffAttributes} from '../server/sim/content/chapter16-fear-buff-attributes.js';
 import {fearProjectileBuffRecyclePool,fearProjectileDefaultBuffPool} from '../server/sim/content/chapter16-fear-buff-pool.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
@@ -209,6 +210,89 @@ test('finish and native-frame queue use concrete buff recycle identity before th
  finish.run();queue.update();assert.equal(buff.instanceUid,1);assert.equal(buff.m_isValid,true);assert.equal(recycled,0);
  f.b.kill(f.source,null);frame=11;queue.update();assert.equal(recycled,1);assert.equal(buff.instanceUid,0);assert.equal(buff.m_isValid,false);assert.equal(p.lock(old),null);
  identity.allocate(buff);assert.equal(buff.instanceUid,2);assert.equal(p.lock(old),null);assert.equal(p.lock(p.capture(buff)),buff);queue.release();assert.deepEqual(f.b.errors,[]);
+});
+
+function attributeLoadingFixture(overrides={}){
+ const buff={attributeMask:99n,abnormalFlagMask:99n,abnormalImmuneMask:99n,abnormalAntiMask:99n,abnormalComboMask:99n,abnormalComboImmuneMask:99n,
+  ...Object.fromEntries(['m_attributeAdditions','m_attributeFinalAdditions','m_attributeMultipliers','m_attributeFinalScalers'].map(key=>[key,Array(39).fill(99n)])),snapshot:'old'};
+ const attributes={abnormalFlags:[33],abnormalImmunes:[0],abnormalAntis:null,abnormalCombos:[1],abnormalComboImmunes:[],attributeModifiers:[]},events=[],source={id:'source'};
+ let active=true;
+ const loader=fearProjectileLoadBuffAttributes({buff,attributes,stackCount:1,tryGetFP:()=>({found:false,valueRaw:0n}),getBlackboardKey:id=>'attribute'+id,
+  readSource:()=>source,isDestroyedOrNull:s=>s==null,readSourceAttribute:()=>10n<<32n,captureSnapshot:s=>{events.push(['snapshot',s]);buff.snapshot=s;},isActive:()=>active,...overrides});
+ return{buff,attributes,events,source,loader,set active(value){active=value;}};
+}
+const attributeModifier=(formulaItem,value=2,extra={})=>({attributeType:1,formulaItem,value,loadFromBlackboard:false,fetchBaseValueFromSourceEntity:false,...extra});
+
+test('attribute loading clears exactly38 entries and rebuilds independent status masks before snapshot',()=>{
+ const f=attributeLoadingFixture();f.loader.run();
+ assert.equal(f.buff.abnormalFlagMask,1n<<33n);assert.equal(f.buff.abnormalImmuneMask,1n);assert.equal(f.buff.abnormalAntiMask,0n);
+ assert.equal(f.buff.abnormalComboMask,2n);assert.equal(f.buff.abnormalComboImmuneMask,0n);assert.equal(f.buff.attributeMask,0n);
+ for(const key of ['m_attributeAdditions','m_attributeFinalAdditions','m_attributeMultipliers']){
+  assert.ok(f.buff[key].slice(0,38).every(v=>v===0n));assert.equal(f.buff[key][38],99n);
+ }
+ assert.ok(f.buff.m_attributeFinalScalers.slice(0,38).every(v=>v===1n<<32n));assert.equal(f.buff.m_attributeFinalScalers[38],99n);
+ assert.equal(f.buff.snapshot,f.source);assert.deepEqual(f.events,[['snapshot',f.source]]);
+});
+
+test('abnormal masks apply native low-six-bit shift semantics and deduplicate repeated flags',()=>{
+ const f=attributeLoadingFixture();f.attributes.abnormalFlags=[-1,64,65,65];f.loader.run();assert.equal(f.buff.abnormalFlagMask,(1n<<63n)|3n);
+});
+
+for(const[formula,target,expected]of [[0,'m_attributeAdditions',2n],[1,'m_attributeMultipliers',2n],[2,'m_attributeFinalAdditions',2n],[3,'m_attributeFinalScalers',2n]])
+ test('ordinary attribute formula '+formula+' uses its selected accumulator',()=>{
+  const f=attributeLoadingFixture();f.attributes.attributeModifiers=[attributeModifier(formula)];f.loader.run();
+  assert.equal(f.buff[target][1],expected<<32n);assert.equal(f.buff.attributeMask,2n);
+ });
+
+for(const[formula,target,expected]of [[0,'m_attributeAdditions',12n<<32n],[1,'m_attributeAdditions',20n<<32n],
+ [2,'m_attributeFinalAdditions',12n<<32n],[3,'m_attributeFinalAdditions',5n<<32n]])
+ test('source-fetched attribute formula '+formula+' routes converted source contribution correctly',()=>{
+  const f=attributeLoadingFixture();f.attributes.attributeModifiers=[attributeModifier(formula,formula===3?-0.5:2,{fetchBaseValueFromSourceEntity:true})];f.loader.run();
+  assert.equal(f.buff[target][1],expected);assert.equal(f.buff.attributeMask,2n);
+ });
+
+test('stack count scales the modifier before negative final-scaler normalization and scalers multiply',()=>{
+ const f=attributeLoadingFixture({stackCount:2});f.attributes.attributeModifiers=[attributeModifier(3,-0.25),attributeModifier(3,0.25)];f.loader.run();
+ assert.equal(f.buff.m_attributeFinalScalers[1],1n<<30n);
+});
+
+test('missing blackboard attribute rereads the configured default after lookup effects',()=>{
+ let f;const modifier=attributeModifier(0,2,{loadFromBlackboard:true});
+ f=attributeLoadingFixture({tryGetFP:()=>{modifier.value=5;return{found:false,valueRaw:0n};}});f.attributes.attributeModifiers=[modifier];f.loader.run();
+ assert.equal(f.buff.m_attributeAdditions[1],5n<<32n);
+});
+
+test('attribute accumulation preserves signed64 wrap and native multiplication floors fractional products',()=>{
+ assert.equal(fearProjectileMultiplyRaw(-1n,1n<<31n),-1n);assert.equal(fearProjectileMultiplyRaw((1n<<63n)-1n,2n<<32n),-2n);
+ let calls=0;const f=attributeLoadingFixture({tryGetFP:()=>({found:true,valueRaw:++calls===1?(1n<<63n)-1n:1n})});
+ f.attributes.attributeModifiers=[attributeModifier(0,0,{loadFromBlackboard:true}),attributeModifier(0,0,{loadFromBlackboard:true})];f.loader.run();
+ assert.equal(f.buff.m_attributeAdditions[1],-(1n<<63n));
+});
+
+test('missing source skips source-fetched modifiers and does not erase a prior snapshot',()=>{
+ const f=attributeLoadingFixture({readSource:()=>null,readSourceAttribute:()=>{throw Error('source');}});
+ f.attributes.attributeModifiers=[attributeModifier(0,2,{fetchBaseValueFromSourceEntity:true})];f.loader.run();
+ assert.equal(f.buff.m_attributeAdditions[1],0n);assert.equal(f.buff.attributeMask,0n);assert.equal(f.buff.snapshot,'old');
+});
+
+test('unknown formula writes no accumulator but preserves native attribute-mask bit behavior',()=>{
+ const f=attributeLoadingFixture();f.attributes.attributeModifiers=[attributeModifier(99,2,{attributeType:70})];f.loader.run();assert.equal(f.buff.attributeMask,1n<<6n);
+});
+
+test('short attribute arrays retain earlier status writes and partial initialization on bounds failure',()=>{
+ const f=attributeLoadingFixture();f.buff.m_attributeAdditions.length=1;assert.throws(()=>f.loader.run(),/attribute index/);
+ assert.equal(f.buff.abnormalFlagMask,1n<<33n);assert.equal(f.buff.m_attributeAdditions[0],0n);assert.equal(f.buff.m_attributeFinalScalers[0],1n<<32n);
+});
+
+for(const point of ['getBlackboardKey','tryGetFP','readSource','isDestroyedOrNull','readSourceAttribute','captureSnapshot'])
+ test('attribute loader stops after lifecycle invalidation during '+point,()=>{
+  let f;f=attributeLoadingFixture({[point]:()=>{f.active=false;return undefined;}});
+  f.attributes.attributeModifiers=[attributeModifier(0,2,{loadFromBlackboard:true,fetchBaseValueFromSourceEntity:true})];assert.equal(f.loader.run(),null);assert.equal(f.loader.run(),null);
+ });
+
+test('attribute loader rejects recursive work and retries after an external lookup exception',()=>{
+ let f,fail=true;f=attributeLoadingFixture({tryGetFP:()=>{assert.equal(f.loader.run(),null);if(fail)throw Error('lookup');return{found:true,valueRaw:3n<<32n};}});
+ f.attributes.attributeModifiers=[attributeModifier(0,2,{loadFromBlackboard:true})];assert.throws(()=>f.loader.run(),/lookup/);fail=false;f.loader.run();assert.equal(f.buff.m_attributeAdditions[1],3n<<32n);
 });
 
 function actionLoadingFixture(overrides={}){

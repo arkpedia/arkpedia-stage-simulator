@@ -751,6 +751,41 @@ result['modeSwitch']['buffNotification']['actionLoading'] = {
         'instructions': [{'rva': i.address - v['image_base'], 'size': i.size, 'mnemonic': i.mnemonic, 'operands': i.op_str} for i in convert_ins]}]},
     'nativeDictionaryEffectsVerified': False, 'nativeArrayAssignabilityVerified': False, 'liveActionLoadingPhaseVerified': False,
 }
+for name in ['_LoadAttributesModifier', '_CalcAbnormalMask', '_CalcAbnormalCombo']:
+    methods.append(c['method'](buff, c['unique'](lambda r: r['name'] == name, buff['methods'])))
+attribute_math = []
+for rva, length, expected in [(0x5a3b800, 47, ['mov', 'mov', 'sar', 'mov', 'sar', 'shl', 'add', 'imul', 'imul', 'imul', 'shr', 'add', 'add', 'ret']),
+                               (0x4175da0, 5, ['lea', 'ret']), (0x51df0b0, 7, ['cmp', 'setge', 'ret'])]:
+    pos = v['offset'](v['image_base'] + rva)
+    raw = v['b'][pos:pos + length]
+    decoded = list(Cs(CS_ARCH_X86, CS_MODE_64).disasm(raw, v['image_base'] + rva))
+    assert [i.mnemonic for i in decoded] == expected and sum(i.size for i in decoded) == length
+    attribute_math.append({'entryRva': rva, 'chunks': [{'beginRva': rva, 'endRva': rva + length, 'unwindRva': None,
+        'boundary': 'Reviewed complete straight-line FP scalar leaf without branches or calls', 'base64': base64.b64encode(raw).decode(), 'sha256': v['sha'](raw),
+        'instructions': [{'rva': i.address - v['image_base'], 'size': i.size, 'mnemonic': i.mnemonic, 'operands': i.op_str} for i in decoded]}]})
+attribute_math.append({'entryRva': 0x1f632f0, 'chunks': c['code'](0x1f632f0)})
+result['modeSwitch']['buffNotification']['attributeLoading'] = {
+    'dataFields': c['fields'](c['type_row']('AttributeModifierData', 'Torappu')),
+    'modifierFields': c['fields'](c['type_row']('AttributeModifier', '')),
+    'formulaType': c['enum'](v['types'][c['unique'](lambda f: f['name'] == 'formulaItem', c['fields'](c['type_row']('AttributeModifier', '')))['typeData']]), 'math': attribute_math,
+    'flagMaskCalls': [0x39b4550, 0x39b45c7, 0x39b463e], 'comboMaskCalls': [0x39b46b5, 0x39b472c],
+    'clearMaskCallRva': 0x39b47a1, 'arrayCountRva': 0x39b485c,
+    'arrayZeroWrites': [0x39b47ec, 0x39b480c, 0x39b4830], 'scalerOneWriteRva': 0x39b4857,
+    'defaultConversionCallRva': 0x39b48c3, 'blackboardLookupCallRva': 0x39b493a, 'stackMultiplyCallRva': 0x39b499f,
+    'sourceLockCallRva': 0x39b49c3, 'sourceValidityCallRva': 0x39b49e8, 'sourceAttributeCallRva': 0x39b4a1b,
+    'accumulateCallRva': 0x39b4b00, 'attributeBitRva': 0x39b4b37, 'scalerMultiplyCallRva': 0x39b4bf6,
+    'snapshotSourceLockCallRva': 0x39b4c7e, 'snapshotCallRva': 0x39b4ccc,
+    'maskFlagBitRva': 0x39b30b5, 'maskComboBitRva': 0x39b2e85,
+    'nativeSourceSnapshotEffectsVerified': False, 'nativeModifierCollectionVerified': False, 'liveAttributePhaseVerified': False,
+}
+pos = v['offset'](v['image_base'] + 0x39b47a6)
+assert v['b'][pos:pos + 4] == bytes.fromhex('f30f1035')
+target = 0x39b47a6 + 8 + struct.unpack_from('<i', v['b'], pos + 4)[0]
+cp = v['offset'](v['image_base'] + target)
+one_raw = v['b'][cp:cp + 4]
+assert one_raw.hex() == '0000803f'
+result['modeSwitch']['buffNotification']['attributeLoading']['initialScalerConstant'] = {
+    'loadRva': 0x39b47a6, 'targetRva': target, 'hex': one_raw.hex(), 'value': struct.unpack('<f', one_raw)[0]}
 pool = c['type_row']('ObjectPool`1', 'Torappu.ObjectPool')
 pool_methods = []
 for index in [147561, 147566, 147567, 147558, 147559, 147563, 147564, 147568, 147569]:

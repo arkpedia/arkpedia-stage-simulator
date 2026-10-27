@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,114);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,117);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -225,6 +225,23 @@ test('immediate recycle source enumerates stored pairs and pointer lists before 
  }
  at(q.outerMoveNext,0x4dd4158,'dword ptr [rbx + 0xc], eax');at(q.outerMoveNext,0x4dd41b6,'dword ptr [rbx + 0xc], eax');
  assert.ok(!instructions(m).some(i=>i.mnemonic==='call'&&i.operands==='0x183991a80'),'flush does not filter by current frame');
+});
+
+test('attribute loader source binds status masks,38 entries, source conversion and snapshot ordering',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.attributeLoading;
+ const m=castMethod(c,'Buff','_LoadAttributesModifier'),at=(method,rva,args)=>assert.ok(instructions(method).some(i=>i.rva===rva&&i.operands===args));
+ for(const rva of q.flagMaskCalls)at(m,rva,'0x1839b2f10');for(const rva of q.comboMaskCalls)at(m,rva,'0x1839b2ce0');
+ at(m,q.clearMaskCallRva,'0x1839b7b00');at(m,q.arrayCountRva,'ebx, 0x26');
+ for(const rva of q.arrayZeroWrites)assert.ok(instructions(m).some(i=>i.rva===rva&&i.mnemonic==='mov'));
+ at(m,q.scalerOneWriteRva,'qword ptr [rdi + rsi*8 + 0x20], rax');at(m,q.defaultConversionCallRva,'0x185a3da20');
+ at(m,q.blackboardLookupCallRva,'0x182167390');at(m,q.stackMultiplyCallRva,'0x185a3b800');at(m,q.sourceLockCallRva,'0x18477cad0');
+ at(m,q.sourceValidityCallRva,'0x185ebec60');at(m,q.sourceAttributeCallRva,'0x183957db0');at(m,q.accumulateCallRva,'0x184175da0');
+ at(m,q.attributeBitRva,'rbx, rcx');at(m,q.scalerMultiplyCallRva,'0x185a3b800');at(m,q.snapshotSourceLockCallRva,'0x18477cad0');at(m,q.snapshotCallRva,'0x1806d3aa0');
+ at(castMethod(c,'Buff','_CalcAbnormalMask'),q.maskFlagBitRva,'r14, rax');at(castMethod(c,'Buff','_CalcAbnormalCombo'),q.maskComboBitRva,'r14, rax');
+ assert.deepEqual(q.formulaType.fields.map(f=>[f.name,f.value]),[['ADDITION',0],['MULTIPLIER',1],['FINAL_ADDITION',2],['FINAL_SCALER',3]]);
+ assert.equal(q.initialScalerConstant.hex,'0000803f');assert.equal(q.initialScalerConstant.value,1);
+ for(const code of q.math)for(const ch of code.chunks){const raw=Buffer.from(ch.base64,'base64');assert.equal(sha(raw),ch.sha256);assert.equal(raw.length,ch.endRva-ch.beginRva);}
+ assert.equal(q.nativeSourceSnapshotEffectsVerified,false);assert.equal(q.nativeModifierCollectionVerified,false);assert.equal(q.liveAttributePhaseVerified,false);
 });
 
 test('buff action loader source binds104 cleared slots, separate dictionary reads and identity event conversion',()=>{

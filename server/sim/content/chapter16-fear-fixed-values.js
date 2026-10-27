@@ -16,3 +16,9 @@ export function fearProjectileFloorToInt(value){
  if(!Number.isFinite(floor)||floor<-(2**31)||floor>=2**31)return-(2**31);
  return floor===0?0:floor;
 }
+
+export function fearProjectileMultiplyRaw(a,b){
+ for(const value of [a,b])if(typeof value!=='bigint'||value<-(1n<<63n)||value>(1n<<63n)-1n)
+  throw new TypeError('Fear FP multiplication requires signed Q32.32 values');
+ return BigInt.asIntN(64,(a*b)>>32n);
+}

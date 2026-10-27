@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 114 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 117 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -1315,6 +1315,37 @@ focused native/fear/family/miner tests pass; --check reproduces the114-method
 bundle. Continuation40542047673 atcd06bdff passed; existing full40540699414 at
 e8664584 is still active. Full Reset, native dictionary/array type effects and
 live controller/stage integration remain open. All gates remain intact.
+
+### Attribute arrays, abnormal masks and modifier formulas
+
+The117-method artifact additionally retains _LoadAttributesModifier,
+_CalcAbnormalMask and _CalcAbnormalCombo. FormulaItemType is resolved from the
+actual modifier field, avoiding an ambiguous same-named enum. The initial scaler
+constant is pinned as float1. Complete reviewed FP multiply/add/comparison leaves
+and the negative-scaler conversion body are retained separately.
+
+`fearProjectileLoadBuffAttributes` rebuilds the five independent abnormal masks
+with native low-six-bit shift semantics, clears the attribute mask and resets
+38 entries of additions/final-additions/multipliers to zero and final-scalers to
+one. It loads modifier values from the selected blackboard key when configured,
+rereads the default after unsuccessful lookup, applies signed stack scaling and
+routes all four formulas to their selected accumulators. Negative final scalers
+become1+value; nonnegative values remain factors. Contributions accumulate with
+signed64 wrap and native Q32.32 multiplication.
+
+Source-fetched formulas use the native source attribute: additions add it,
+multipliers multiply it into an addition, and final-scalers multiply it into a
+final addition. Invalid source pointers skip those modifiers entirely. A final
+source snapshot callback follows all modifiers and is skipped for invalid
+sources without inventing snapshot clearing. Native source/blackboard key/
+snapshot effects remain explicit receivers.
+
+Tests cover all formulas with/without source, stacks/scaler products, enum masks,
+exact clear extent, lookup mutation/fallback, fixed-point floor and overflow,
+invalid sources, unknown formula mask behavior, partial array failures, reentry,
+retry and lifecycle cancellation. All746 focused native/fear/family/miner tests
+pass. Full Reset, native source snapshot effects and live controller/stage
+integration remain open; all source/support/receipt/catalogue gates are intact.
 
 ### ClearRunTimeData default cleanup ordering
 
