@@ -60,6 +60,73 @@ import {fearProjectileDataPairListGrowth} from '../server/sim/content/chapter16-
 import {fearProjectileBuffDataClone} from '../server/sim/content/chapter16-fear-buff-data-clone.js';
 import {fearProjectileBuffDataConstructor,fearProjectileAttributeDataConstructor} from '../server/sim/content/chapter16-fear-buff-data-constructor.js';
 import {fearProjectileAttributeModifierConstructor,fearProjectileAttributeModifierClone,fearProjectileAttributeDataClone} from '../server/sim/content/chapter16-fear-attribute-data-clone.js';
+import {fearProjectileTargetCasting,fearProjectileCheckCastingFinished} from '../server/sim/content/chapter16-fear-target-casting.js';
+
+function targetCastingFixture(){
+ const events=[],owner={uid:1,alive:true,destroyed:false},target={uid:2,alive:true,destroyed:false},selector={},pointers=fearProjectileContextPointers({readUid:value=>value.uid,isDestroyedOrNull:value=>value==null||value.destroyed===true,isActive:()=>true}),
+  ability={m_isCasting:true,m_owner:pointers.capture(owner),_ignoreIfOwnerDead:false,m_castTargets:[pointers.capture(target)],selector},actions={},buffs={},attachments={},
+  finishOptions={readCasting:value=>value.m_isCasting,copyOwnerPointer:value=>pointers.copy(value.m_owner),readIgnoreIfOwnerDead:value=>value._ignoreIfOwnerDead,
+   validOwnerAndAlive:(pointer,ignore)=>{const value=pointers.lock(pointer);return value!=null&&(ignore||value.alive);},finishIfNot:(value,reason,resetCd)=>{events.push(['finish',reason,resetCd]);value.m_isCasting=false;}},
+  options={readTargets:value=>value.m_castTargets,readCount:list=>list.length,readPointer:(list,index)=>{if(index>=list.length)throw RangeError('native target list bounds');return list[index];},copyPointer:pointers.copy,
+   validAndAlive:pointer=>{const value=pointers.lock(pointer);return value!=null&&value.alive;},lockPointer:pointers.lock,castOnTarget:(...args)=>{events.push(['cast',...args]);return false;},
+   readSelector:value=>{events.push('selector');return value.selector;},isValidUnity:value=>value!=null&&!value.destroyed,notifySelector:(...args)=>events.push(['notify',...args]),checkFinished:fearProjectileCheckCastingFinished(finishOptions)};
+ return{events,owner,target,selector,pointers,ability,actions,buffs,attachments,finishOptions,options,run:()=>fearProjectileTargetCasting(options)(ability,actions,buffs,attachments)};
+}
+test('target casting skips dead/stale pointers, forwards all effect inputs and ignores a void cast return',()=>{
+ const f=targetCastingFixture(),dead={uid:3,alive:false,destroyed:false},stale={uid:4,alive:true,destroyed:false};f.ability.m_castTargets=[{obj:stale,cachedUid:99},f.pointers.capture(dead),f.pointers.capture(f.target)];assert.equal(f.run(),true);
+ assert.deepEqual(f.events,[['cast',f.ability,f.target,f.actions,f.buffs,f.attachments],'selector','selector',['notify',f.selector,f.target]]);
+});
+test('target casting returns false for empty/all-invalid lists without selector or finish queries',()=>{
+ const f=targetCastingFixture();f.options.checkFinished=()=>{throw Error('unexpected finish check');};f.ability.m_castTargets=[];assert.equal(f.run(),false);f.ability.m_castTargets=[{obj:null,cachedUid:0}];assert.equal(f.run(),false);assert.deepEqual(f.events,[]);
+ f.ability.m_castTargets=null;assert.throws(f.run,/null native object/);
+});
+test('target casting rereads the selected list after validity instead of locking the first pointer',()=>{
+ const f=targetCastingFixture(),next={uid:3,alive:true,destroyed:false};f.options.validAndAlive=pointer=>{assert.equal(pointer.obj,f.target);f.ability.m_castTargets=[f.pointers.capture(next)];return true;};assert.equal(f.run(),true);assert.equal(f.events[0][2],next);
+});
+test('target casting forwards a nullable lock result after successful pointer validation',()=>{
+ const f=targetCastingFixture();f.options.lockPointer=()=>null;assert.equal(f.run(),true);assert.equal(f.events[0][2],null);assert.deepEqual(f.events.at(-1),['notify',f.selector,null]);
+});
+test('target casting validates one selector then rereads it for notification',()=>{
+ const f=targetCastingFixture(),next={};f.options.isValidUnity=value=>{assert.equal(value,f.selector);f.ability.selector=next;return true;};assert.equal(f.run(),true);assert.deepEqual(f.events.at(-1),['notify',next,f.target]);
+ const g=targetCastingFixture();g.ability.selector=null;assert.equal(g.run(),true);assert.deepEqual(g.events.filter(e=>e==='selector'),['selector']);assert.equal(g.events.some(e=>Array.isArray(e)&&e[0]==='notify'),false);
+});
+test('target casting rejects a disappearing selector after validity without issuing notification',()=>{
+ const f=targetCastingFixture();f.options.isValidUnity=()=>{f.ability.selector=null;return true;};assert.throws(f.run,/null native object/);assert.equal(f.events[0][0],'cast');
+});
+test('target casting stops after finish and does not reread targets cleared by the cast callback',()=>{
+ const f=targetCastingFixture();f.ability.m_castTargets.push(f.pointers.capture({uid:3,alive:true,destroyed:false}));f.options.castOnTarget=()=>{f.events.push('cast');f.ability.m_isCasting=false;f.ability.m_castTargets=null;};assert.equal(f.run(),true);assert.equal(f.events.filter(e=>e==='cast').length,1);
+});
+test('target casting refreshes the target list and live count for the next iteration',()=>{
+ const f=targetCastingFixture(),next={uid:3,alive:true,destroyed:false};f.options.castOnTarget=(_ability,target)=>{f.events.push(['cast',target]);if(target===f.target)f.ability.m_castTargets=[f.pointers.capture(f.target),f.pointers.capture(next)];};assert.equal(f.run(),true);assert.deepEqual(f.events.filter(e=>Array.isArray(e)&&e[0]==='cast').map(e=>e[1]),[f.target,next]);
+});
+test('target casting copies pointer records and preserves casts before selector getter errors',()=>{
+ const f=targetCastingFixture(),stored=f.ability.m_castTargets[0];f.options.validAndAlive=pointer=>{assert.notEqual(pointer,stored);assert.equal(pointer.obj,stored.obj);return true;};const error=Error('selector getter');f.options.readSelector=()=>{throw error;};assert.throws(f.run,actual=>actual===error);assert.equal(f.events[0][0],'cast');
+});
+for(const phase of ['validAndAlive','castOnTarget','notifySelector','checkFinished'])test('target casting propagates '+phase+' errors without retrying',()=>{
+ const f=targetCastingFixture(),error=Error(phase);let count=0;f.options[phase]=()=>{count++;throw error;};assert.throws(f.run,actual=>actual===error);assert.equal(count,1);
+});
+test('casting finish check returns early for an idle ability and finishes an invalid owner without resetting cooldown',()=>{
+ const f=targetCastingFixture();f.ability.m_isCasting=false;f.finishOptions.copyOwnerPointer=()=>{throw Error('unexpected owner read');};assert.equal(fearProjectileCheckCastingFinished(f.finishOptions)(f.ability),true);assert.deepEqual(f.events,[]);
+ const g=targetCastingFixture(),check=fearProjectileCheckCastingFinished(g.finishOptions);assert.equal(check(g.ability),false);g.owner.alive=false;assert.equal(check(g.ability),true);assert.deepEqual(g.events,[['finish',2,false]]);assert.equal(check(g.ability),true);assert.equal(g.events.length,1);
+});
+test('casting finish check captures the owner before reading the ignore-death flag and respects that flag',()=>{
+ const f=targetCastingFixture();f.owner.alive=false;f.ability._ignoreIfOwnerDead=true;assert.equal(fearProjectileCheckCastingFinished(f.finishOptions)(f.ability),false);
+ const original=f.ability.m_owner;f.finishOptions.readIgnoreIfOwnerDead=value=>{value.m_owner={obj:null,cachedUid:0};return true;};f.finishOptions.validOwnerAndAlive=(pointer,ignore)=>{assert.notEqual(pointer,original);assert.equal(pointer.obj,f.owner);assert.equal(ignore,true);return true;};assert.equal(fearProjectileCheckCastingFinished(f.finishOptions)(f.ability),false);
+});
+test('casting finish check ignores the Boolean FinishIfNot result and preserves its receiver effects',()=>{
+ const f=targetCastingFixture();f.owner.alive=false;f.finishOptions.finishIfNot=(ability,reason,reset)=>{assert.equal(ability,f.ability);assert.equal(reason,2);assert.equal(reset,false);return false;};assert.equal(fearProjectileCheckCastingFinished(f.finishOptions)(f.ability),true);assert.equal(f.ability.m_isCasting,true);
+});
+test('target casting supports nested casts with independent target indices and success flags',()=>{
+ const f=targetCastingFixture(),innerTarget={uid:9,alive:true,destroyed:false},inner={...f.ability,m_castTargets:[f.pointers.capture(innerTarget)]};let cast;
+ f.options.castOnTarget=(ability,target)=>{f.events.push(['cast',ability,target]);if(ability===f.ability)assert.equal(cast(inner,f.actions,f.buffs,f.attachments),true);};cast=fearProjectileTargetCasting(f.options);assert.equal(cast(f.ability,f.actions,f.buffs,f.attachments),true);
+ assert.deepEqual(f.events.filter(e=>Array.isArray(e)&&e[0]==='cast').map(e=>e[2]),[f.target,innerTarget]);assert.deepEqual(f.events.filter(e=>Array.isArray(e)&&e[0]==='notify').map(e=>e[2]),[innerTarget,f.target]);
+});
+test('single-spell continuation uses target casting and suppresses event5 when casting ends during target effects',()=>{
+ for(const stop of [false,true]){const f=targetCastingFixture(),battle=fixture();f.options.castOnTarget=()=>{f.events.push('cast');if(stop)f.ability.m_isCasting=false;};
+  const spell=fearProjectileSpell(battle.b,{owner:battle.source,onSpellStart:f.run,isCasting:()=>f.ability.m_isCasting,emitSpellEnd:()=>f.events.push('event5'),mayBeginPostDelay:()=>true,beginPostDelay:()=>f.events.push('post')});
+  assert.deepEqual(spell.run(),{started:true,spellEnd:!stop,postDelay:!stop});assert.equal(f.events.includes('event5'),!stop);assert.equal(f.events.includes('post'),!stop);assert.equal(spell.run(),null);
+ }
+});
 
 function attributeDataCloneFixture(){
  const zero=()=>({abnormalFlags:null,abnormalImmunes:null,abnormalAntis:null,abnormalCombos:null,abnormalComboImmunes:null,attributeModifiers:null}),modifier=(value=1/3)=>({attributeType:2,formulaItem:3,value,loadFromBlackboard:false,fetchBaseValueFromSourceEntity:true}),

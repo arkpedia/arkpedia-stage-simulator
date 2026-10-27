@@ -20,6 +20,21 @@ function settingsFixture(){
  return{...f,settings:{version:f.pin.version,source:f.pin.source,file}};
 }
 
+test('target casting source binds complete loop/check bodies, selector notification and nested pointer-list metadata',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-target-casting-source.json'),parent=read('data/candidates/arkpedia-windows-cast-lifecycle-source.json');assert.equal(c.methods.length,2);assert.deepEqual(c.methods[0],parent.methods.find(m=>m.index===54713));
+ for(const source of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+source.path,import.meta.url))),source.sha256);
+ for(const method of c.methods)for(const chunk of method.chunks){const raw=Buffer.from(chunk.base64,'base64');assert.equal(sha(raw),chunk.sha256);assert.equal(raw.length,chunk.endRva-chunk.beginRva);}
+ assert.deepEqual(c.fields.map(f=>[f.name,f.offset]),[['m_castTargets',208],['_ignoreIfOwnerDead',200],['m_owner',72],['m_isCasting',88]]);
+ assert.deepEqual(c.virtualSlots.map(s=>[s.slot,s.name]),[[15,'get_selector'],[62,'FinishIfNot'],[75,'OnCastOnTarget'],[23,'OnCastedOnTarget']]);assert.equal(c.selectorType.definitionIndex,9969);assert.equal(c.selectorType.name,'TargetSelector');
+ assert.deepEqual(c.signatures.map(s=>s.parameters.map(p=>p.name)),[['actions','buffs','attachments'],['target','actions','buffs','attachments'],['reason','resetCd'],['target']]);assert.deepEqual(c.signatures.map(s=>s.returnKind),[2,1,2,1]);
+ for(const load of c.metadataLoads){assert.equal(load.encodedUsage>>>29,6);assert.equal((load.encodedUsage&0x1ffffffe)>>>1,load.specification.index);assert.equal(load.specification.nativeMapping,null);if(load.specification.index===242455)assert.deepEqual(load.specification.nestedArgument,{definitionIndex:1324,name:'ObjectPtr`1',argumentTypeIndex:9044});}
+ const at=(method,rva,args)=>assert.ok(instructions(c.methods[method]).some(i=>i.rva===rva&&i.operands===args),'Target casting instruction '+rva.toString(16)),q=c.targetCasting;
+ for(const [key,args]of [['targetsReadRva','rax, qword ptr [rbx + 0xd0]'],['countReadRva','edx, dword ptr [rcx + 0x18]'],['firstItemCallRva','0x184519d80'],['validAndAliveCallRva','0x183f4ed80'],['targetsRereadRva','rdx, qword ptr [rbx + 0xd0]'],['secondItemCallRva','0x184519d80'],['lockCallRva','0x18477cad0'],['castFlagWriteRva','r14b, 1'],['castCallRva','0x18002e120'],['firstSelectorCallRva','0x1800057b0'],['selectorValidityCallRva','0x185ebee90'],['secondSelectorCallRva','0x1800057b0'],['notifySelectorCallRva','0x180005620'],['finishedCallRva','0x183908800'],['nextTargetsReadRva','rax, qword ptr [rbx + 0xd0]']])at(0,q[key],args);
+ const f=c.finished;assert.equal(f.finishReason,2);assert.equal(f.resetCd,false);for(const [key,args]of [['castingReadRva','eax, byte ptr [rbx + 0x58]'],['ownerCopyRva','xmm0, xmmword ptr [rbx + 0x48]'],['ignoreOwnerDeadReadRva','edx, byte ptr [rbx + 0xc8]'],['ownerValidityCallRva','0x183f4f050'],['resetCooldownArgumentRva','r9d, r9d'],['finishReasonRva','r8d, [rcx - 0x3c]'],['finishCallRva','0x18000ea20']])at(1,f[key],args);
+ assert.ok(q.validAndAliveCallRva<q.targetsRereadRva&&q.lockCallRva<q.castCallRva&&q.castCallRva<q.notifySelectorCallRva&&q.notifySelectorCallRva<q.finishedCallRva);
+ for(const key of ['runtimeDispatchVerified','frameParity','crossVersionParity','nativeTargetListEffectsVerified','nativePointerAndValidityEffectsVerified','nativeSelectorAndFinishEffectsVerified','liveTargetCastingVerified'])assert.equal(c[key],false);assert.equal(c.testOnly,true);
+});
+
 test('buff activation context binds event0 target to owner and preserves the complete target dispatch table',()=>{
  const c=read('data/candidates/arkpedia-windows-fear-context-source.json');assert.equal(c.methods.length,9);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);

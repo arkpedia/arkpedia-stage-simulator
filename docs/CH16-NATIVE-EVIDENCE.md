@@ -1402,6 +1402,41 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
 
+### Standard target-cast loop and finish checks
+
+`extract-windows-fear-target-casting.py --check` reproduces a separate selected
+binding from the pinned Windows client and unchanged cast-lifecycle bundle.
+It retains complete AbilityStandard.DoCastOnTargets and CheckFinished bodies,
+their fields, virtual slots/signatures and concrete metadata usages. A bounded
+nested-type check binds List<ObjectPtr<Entity>> without relaxing the shared
+direct-type reader. The selector getter is bound to TargetSelector, whose
+OnCastedOnTarget slot23 receives the notification.
+
+`fearProjectileTargetCasting` samples live list counts, copies and validates
+each pointer through ValidAndAlive, rereads the target list for a fresh indexed
+pointer, locks it and invokes OnCastOnTarget with the action/buff/attachment
+inputs. The cast flag is set before that virtual call and its void result is
+ignored. A selector is sampled for Unity validity, then reread for notification.
+CheckFinished follows notification; a finished cast stops without another target
+read. Invalid target entries skip casting, notification and the finish check.
+Nested casts retain independent loop positions and result flags.
+
+`fearProjectileCheckCastingFinished` returns true for an idle ability. While
+casting, it copies the owner pointer before reading _ignoreIfOwnerDead and
+invokes the corresponding ValidAndAlive overload. An invalid owner triggers
+FinishIfNot(reason2,resetCd=false) and returns true regardless of that receiver's
+Boolean result. Its native finish/state effects remain explicit.
+
+Tests cover stale/dead pointers, target-list and selector replacement, nullable
+lock results, preserved casts on later errors, nested calls and early finish.
+The single-spell continuation now composes the target loop: target effects that
+end casting suppress event5/post-delay, while an ordinary successful cast
+continues to them. All1376 focused native/fear/family/miner tests and evidence
+reproduction pass. The RangedAttack projectile-construction receiver, full
+OnSpellStart, initial FSM, native virtual/generic/runtime effects and stage/frame
+parity remain open. Source/support/receipt/catalogue gates and stage registries
+are unchanged; new stages stay test-only and this checkpoint stays local.
+
 ### Self-death graph through immunity admission and enablement
 
 The checked eight-node self-death graph now composes CreateBuff, BuffDB inline
