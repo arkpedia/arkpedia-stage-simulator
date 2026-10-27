@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,203);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,208);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -531,6 +531,17 @@ test('context snapshot source binds distinct capture/push orders and closed refe
   'rcx, qword ptr [rdi + 0x48]','rcx, qword ptr [rdi + 0x58]'].entries())at(duplicate,q.pushFieldReads[index],args);
  for(const [index,target]of ['0x184be7ef0','0x184be7ef0','0x184be7ef0','0x18490b650','0x18490b820','0x184be7ef0','0x184be7ef0','0x18490b650','0x18490b790','0x184be7ef0'].entries())at(duplicate,q.pushCalls[index],target);
  assert.equal(q.nativeContextStackEffectsVerified,false);assert.equal(q.nativeNestedValueCopiesVerified,false);assert.equal(q.liveContextSnapshotsVerified,false);
+});
+
+test('target getter source binds raw container ownership and six by-reference pointer Lock tails',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.newBuff.targetGetters;
+ assert.deepEqual(q.methods.map(m=>[m.type,m.name]),[['Buff','get_owner'],['Buff','get_source'],['BuffContainer','get_owner'],['Modifier','get_source'],['Modifier','get_target'],['Ability','get_owner'],['Projectile','get_source'],['Projectile','get_traceTarget']]);
+ assert.deepEqual(q.fields.map(f=>[f.type,f.name,f.offset]),[['Buff','m_container',16],['Buff','m_source',24],['BuffContainer','<owner>k__BackingField',16],['Ability','m_owner',72],['Projectile','m_source',240],['Projectile','m_traceTarget',272]]);
+ assert.equal(q.lockSpecification.index,253210);assert.equal(q.lockSpecification.nativeMapping,null);assert.equal(q.lockSpecification.instantiations.class.arguments[0].name,'Entity');assert.equal(q.lockLoads.length,6);assert.ok(q.lockLoads.every(load=>(load.encodedUsage>>>29)===6&&((load.encodedUsage&0x1ffffffe)>>>1)===253210));
+ const method=(type,name)=>c.methods.find(m=>m.type===type&&m.name===name),at=(type,name,rva,args)=>assert.ok(instructions(method(type,name)).some(i=>i.rva===rva&&i.operands===args));
+ at('Buff','get_owner',q.buffContainerReadRva,'rcx, qword ptr [rbx + 0x10]');at('Buff','get_owner',q.containerOwnerTailRva,'0x1839d8230');at('BuffContainer','get_owner',q.containerOwnerReadRva,'rax, qword ptr [rbx + 0x10]');
+ for(const [type,name,addressRva,tailRva,args]of [['Buff','get_source',q.buffSourceAddressRva,q.buffSourceLockTailRva,'rcx, [rbx + 0x18]'],['Modifier','get_source',q.modifierSourceAddressRva,q.modifierSourceLockTailRva,'rcx, rbx'],['Modifier','get_target',q.modifierTargetAddressRva,q.modifierTargetLockTailRva,'rcx, [rbx + 0x10]'],['Ability','get_owner',q.abilityOwnerAddressRva,q.abilityOwnerLockTailRva,'rcx, [rbx + 0x48]'],['Projectile','get_source',q.projectileSourceAddressRva,q.projectileSourceLockTailRva,'rcx, [rbx + 0xf0]'],['Projectile','get_traceTarget',q.projectileTraceAddressRva,q.projectileTraceLockTailRva,'rcx, [rbx + 0x110]']]){at(type,name,addressRva,args);at(type,name,tailRva,'0x18477cad0');}
+ for(const name of ['nativeHotfixAndClassInitializationVerified','nativeConcretePointerLockDispatchVerified','liveTargetGettersVerified'])assert.equal(q[name],false);
 });
 
 test('action target source partitions the entire unwind region into decoded code and eleven checked RVA entries',()=>{

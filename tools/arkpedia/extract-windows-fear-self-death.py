@@ -2101,6 +2101,48 @@ result['modeSwitch']['buffNotification']['newBuff']['predicateNodes'] = {
     'nativeAttributeQueryEffectsVerified': False, 'livePredicateNodeDispatchVerified': False,
 }
 context_stack_canonical = []
+target_getter_methods = []
+for type_index, name, entry in [(8933, 'get_owner', 0x39b6ff0), (8933, 'get_source', 0x39b7460),
+    (8931, 'get_owner', 0x39d8230), (9524, 'get_source', 0x671d50), (9524, 'get_target', 0x671f30),
+    (8742, 'get_owner', 0x3911530), (9558, 'get_source', 0x67e3d0), (9558, 'get_traceTarget', 0x67e6f0)]:
+    t = v['types'][type_index]
+    row = c['unique'](lambda r: r['name'] == name, t['methods'])
+    record = c['method'](t, row)
+    assert record['entryRva'] == entry
+    if not any(m['index'] == row['index'] and m['image'] == record['image'] for m in methods):
+        methods.append(record)
+    target_getter_methods.append({'typeIndex': type_index, 'type': t['name'], 'name': name, 'index': row['index'], 'entryRva': entry})
+target_getter_fields = []
+for type_index, name, offset in [(8933, 'm_container', 16), (8933, 'm_source', 24), (8931, '<owner>k__BackingField', 16),
+    (8742, 'm_owner', 72), (9558, 'm_source', 240), (9558, 'm_traceTarget', 272)]:
+    t = v['types'][type_index]
+    field = c['unique'](lambda f: f['name'] == name, c['fields'](t))
+    assert field['offset'] == offset
+    target_getter_fields.append({'typeIndex': type_index, 'type': t['name'], **field})
+result['modeSwitch']['buffNotification']['newBuff']['targetGetters'] = {
+    'methods': target_getter_methods, 'fields': target_getter_fields,
+    'buffContainerReadRva': 0x39b7044, 'containerOwnerTailRva': 0x39b7054, 'containerOwnerReadRva': 0x39d826b,
+    'buffSourceAddressRva': 0x39b74c7, 'buffSourceLockTailRva': 0x39b74d0,
+    'modifierSourceAddressRva': 0x671dbd, 'modifierSourceLockTailRva': 0x671dc8,
+    'modifierTargetAddressRva': 0x671f9d, 'modifierTargetLockTailRva': 0x671fa9,
+    'abilityOwnerAddressRva': 0x391157f, 'abilityOwnerLockTailRva': 0x3911588,
+    'projectileSourceAddressRva': 0x67e41f, 'projectileSourceLockTailRva': 0x67e42b,
+    'projectileTraceAddressRva': 0x67e73f, 'projectileTraceLockTailRva': 0x67e74b,
+    'nativeHotfixAndClassInitializationVerified': False, 'nativeConcretePointerLockDispatchVerified': False, 'liveTargetGettersVerified': False,
+}
+target_lock_specification = priority['specification'](253210)
+assert target_lock_specification['declaringType'] == 'ObjectPtr`1' and target_lock_specification['definition']['name'] == 'Lock'
+assert target_lock_specification['nativeMapping'] is None
+assert target_lock_specification['instantiations']['class']['arguments'][0]['typeIndex'] == 9044
+target_lock_loads = []
+for rva in [0x39b74c0, 0x671db6, 0x671f96, 0x3911578, 0x67e418, 0x67e738]:
+    pos = v['offset'](v['image_base'] + rva)
+    assert v['b'][pos:pos + 3] == bytes.fromhex('488b15')
+    address = rva + 7 + struct.unpack_from('<i', v['b'], pos + 3)[0]
+    usage = v['quad'](v['b'], v['offset'](v['image_base'] + address))
+    assert usage >> 29 == 6 and (usage & 0x1ffffffe) >> 1 == 253210
+    target_lock_loads.append({'loadRva': rva, 'encodedUsage': usage})
+result['modeSwitch']['buffNotification']['newBuff']['targetGetters'].update({'lockSpecification': target_lock_specification, 'lockLoads': target_lock_loads})
 target_region = c['unique'](lambda region: region[0] == 0xced380, v['runtime'])
 assert target_region == (0xced380, 0xced5c0, 0x7261558)
 assert v['families'][v['parent'](target_region)] == [target_region]

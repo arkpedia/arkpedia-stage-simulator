@@ -48,6 +48,26 @@ import {fearProjectileContextStructValues} from '../server/sim/content/chapter16
 import {fearProjectileActionUtil,FEAR_ACTION_SOURCE_FROM_BUFF} from '../server/sim/content/chapter16-fear-action-util.js';
 import {fearProjectilePredicateNodes} from '../server/sim/content/chapter16-fear-predicate-nodes.js';
 import {fearProjectileActionTargets} from '../server/sim/content/chapter16-fear-action-targets.js';
+import {fearProjectileActionTargetGetters} from '../server/sim/content/chapter16-fear-target-getters.js';
+
+test('native target getters lock stored pointers and leave the container owner as its direct reference',()=>{
+ const entity={uid:7},pointers=fearProjectileContextPointers({readUid:value=>value.uid,isDestroyedOrNull:value=>value==null||value.destroyed===true,isActive:()=>true}),
+  ptr=()=>({obj:entity,cachedUid:7}),getters=fearProjectileActionTargetGetters({lockPointer:pointers.lock}),buff={m_container:{'<owner>k__BackingField':entity},m_source:ptr()},
+  modifier={m_source:ptr(),m_target:ptr()},ability={m_owner:ptr()},projectile={m_source:ptr(),m_traceTarget:ptr()},calls=[()=>getters.readBuffSource(buff),()=>getters.readModifierSource(modifier),()=>getters.readModifierTarget(modifier),()=>getters.readAbilityOwner(ability),()=>getters.readProjectileSource(projectile),()=>getters.readProjectileTraceTarget(projectile)];
+ for(const call of calls)assert.equal(call(),entity);entity.uid=8;for(const call of calls)assert.equal(call(),null);assert.equal(getters.readBuffOwner(buff),entity);
+ entity.uid=7;entity.destroyed=true;for(const call of calls)assert.equal(call(),null);assert.equal(getters.readBuffOwner(buff),entity);
+});
+test('native target getters keep pointer-field views live across replacement during Lock',()=>{
+ for(const [method,field]of [['readBuffSource','m_source'],['readModifierSource','m_source'],['readModifierTarget','m_target'],['readAbilityOwner','m_owner'],['readProjectileSource','m_source'],['readProjectileTraceTarget','m_traceTarget']]){
+  const first={},second={},record={[field]:{obj:first,cachedUid:1}},getters=fearProjectileActionTargetGetters({lockPointer:ref=>{
+   assert.equal(ref.obj,first);assert.equal(ref.cachedUid,1);record[field]={obj:second,cachedUid:2};assert.equal(ref.cachedUid,2);return ref.obj;
+  }});assert.equal(getters[method](record),second);
+ }
+});
+test('native buff owner getter rejects missing containers and returns a nullable stored owner without locking',()=>{
+ const getters=fearProjectileActionTargetGetters({lockPointer:()=>{throw Error('unexpected pointer lock');}});
+ assert.equal(getters.readBuffOwner({m_container:{'<owner>k__BackingField':null}}),null);assert.throws(()=>getters.readBuffOwner({m_container:null}),/null native object/);assert.throws(()=>getters.readBuffOwner(null),/null native object/);
+});
 
 function actionTargetFixture(){
  const ref={value:{target:{id:0},source:{id:1},buff:{source:{id:2},owner:{id:3}},modifier:{target:{id:4},source:{id:5}},mainTarget:{id:6},mainBuff:{source:{id:7}},projectile:{source:{id:8},trace:{id:9}},ability:{owner:{id:10}}}},
@@ -336,12 +356,14 @@ for(const blocked of ['none','LEVITATE','FROZEN','STUNNED','SLEEPING'])test('che
   {f,g,snapshots,prior}=managedActionContextFixture(),events=[],attributes={m_abnormalFlagsCounter:Array(44).fill(0),m_abnormalImmuneCounter:Array(44).fill(0),m_abnormalAntiCounter:Array(44).fill(0),m_abnormalComboMgr:{m_abnormalFlagMask:0n}},
   status=fearProjectileAttributeStatus({attributes,isActive:()=>true});
  if(flags.has(blocked))attributes.m_abnormalFlagsCounter[flags.get(blocked)]=1;
- const unexpected=()=>{throw Error('unexpected self-death target path');},selector=fearProjectileActionTargets({readBuffOwner:buff=>{assert.equal(buff,f.buff);return f.options.readOwner(buff);},
-  readBuffSource:unexpected,readModifierSource:unexpected,readModifierTarget:unexpected,isValidUnity:unexpected,readProjectileSource:unexpected,readProjectileTraceTarget:unexpected,readAbilityOwner:unexpected}),
+ f.buff.m_container={'<owner>k__BackingField':f.owner};f.buff.m_source={obj:f.source,cachedUid:f.source.uid};
+ const pointers=fearProjectileContextPointers({readUid:value=>value.uid,isDestroyedOrNull:value=>value==null||value.destroyed===true,isActive:()=>true}),getters=fearProjectileActionTargetGetters({lockPointer:pointers.lock}),
+  selector=fearProjectileActionTargets({...getters,isValidUnity:value=>value!=null&&!value.destroyed}),
   predicates=fearProjectilePredicateNodes({getEntity:selector.getEntity,isDestroyedOrNull:entity=>entity==null||entity.destroyed===true,
   readAttributes:entity=>{assert.equal(entity,f.owner);return attributes;},readBlackboardInt:()=>{throw Error('unexpected graph blackboard lookup');},
   queryFlag:(actual,flag)=>{assert.equal(actual,attributes);events.push([...flags].find(pair=>pair[1]===flag)[0]);return status.getAbnormalFlag(flag);},
   queryCombo:(actual,combo)=>{assert.equal(actual,attributes);assert.equal(combo,combos.get('SLEEPING'));events.push('SLEEPING');return blocked==='SLEEPING';}});
+ f.options.readOwner=getters.readBuffOwner;f.options.readSource=getters.readBuffSource;
  f.buff.m_actions[0]=native.actions.map(raw=>{
   const kind=raw.$type.split('+').at(-1),node={...raw,allowedSource:63,condition:kind==='AlwaysNext'?0:1};
   if(kind==='CheckAbnormalFlag'){node._targetType=targets.get(raw._targetType);node._abnormalFlag=flags.get(raw._abnormalFlag);node.execute=(...args)=>predicates.executeFlag(node,...args);}

@@ -1402,6 +1402,33 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
 
+### Target getters and by-reference Entity pointer fields
+
+The208-method ordinary bundle adds five complete getters: Modifier source/
+target, Ability owner, and Projectile source/traceTarget. Existing Buff source/
+owner and BuffContainer owner bodies are retained unchanged. All six pointer
+tails bind concrete ObjectPtr<Entity>.Lock specification253210 through checked
+metadata loads; it still has no invented concrete native mapping. Default Buff
+owner instead reads m_container at+0x10 and the container's stored owner at+0x10,
+without pointer locking. Field metadata binds Buff.m_source(+0x18), Ability.
+m_owner(+0x48) and Projectile.m_source/m_traceTarget(+0xf0/+0x110).
+
+`fearProjectileActionTargetGetters` implements these default field paths. Its
+pointer getters pass a live view of the containing struct field to Lock, so
+updates during lock callbacks are visible to later obj/cachedUid reads. They
+do not make a detached pointer copy. The container owner remains a direct
+nullable reference. Getter hotfixes and class initialization remain unverified.
+
+Tests compose the getters with the reviewed Context ObjectPtr lock logic for
+valid, recycled-UID and destroyed objects, and test pointer-field replacement
+during Lock plus nullable/missing containers. The checked self-death graph now
+uses these buff source/owner getters in both buff dispatch and target selection.
+Concrete runtime generic dispatch, native Unity/UID interfaces and full live
+controller/stage/frame parity remain open. Source/support/receipt/catalogue
+gates are unchanged; this checkpoint stays local outside pending upload scope.
+
+All1216 focused native/fear/family/miner tests and evidence reproduction pass.
+
 ### Reviewed target-selector switch and embedded jump table
 
 The203 ordinary methods remain unchanged. The complete GetActionTarget PE
