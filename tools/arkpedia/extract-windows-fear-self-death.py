@@ -385,6 +385,84 @@ result['modeSwitch']['buffNotification']['recycleQueue'] = {
     'nativeTickPhaseVerified': False, 'poolRecycleEffectsVerified': False,
     'listMoveNext': {'entryRva': 0x4dd3240, 'chunks': c['code'](0x4dd3240), 'concreteContextVerified': False},
 }
+for name in ['OnAllocate', 'OnRecycle', 'set_instanceUid']:
+    methods.append(c['method'](buff, c['unique'](lambda r: r['name'] == name, buff['methods'])))
+pool = c['type_row']('ObjectPool`1', 'Torappu.ObjectPool')
+pool_methods = []
+for index in [147561, 147566, 147567]:
+    spec = priority['specification'](index)
+    assert spec['declaringTypeIndex'] == pool['index']
+    pointer = v['quad'](v['b'], priority['pointer_table'] + spec['nativeMapping']['methodPointerIndex'] * 8)
+    pool_methods.append({**spec, 'entryRva': pointer - v['image_base'], 'chunks': c['code'](pointer - v['image_base'])})
+result['modeSwitch']['buffNotification']['poolIdentity'] = {
+    'uidField': c['unique'](lambda f: f['name'] == '<instanceUid>k__BackingField', c['fields'](buff)),
+    'counterField': c['unique'](lambda f: f['name'] == 's_globalCounter', c['fields'](buff)),
+    'validityField': c['unique'](lambda f: f['name'] == 'm_isValid', c['fields'](buff)),
+    'allocateCounterIncrementRva': 0x39ab87b, 'allocateCounterWriteRva': 0x39ab884,
+    'allocateUidWriteRva': 0x39ab8ca, 'allocateValidityWriteRva': 0x39ab8d5,
+    'recycleUidSetterCallRva': 0x39afb7f, 'recycleValidityWriteRva': 0x39afb84,
+    'canonicalPoolMethods': pool_methods, 'poolMembershipVerified': False, 'liveAllocationPolicyVerified': False,
+}
+pool_module = c['module']('Assembly-CSharp.dll')
+module_pos = v['offset'](v['image_base'] + pool_module['rva'])
+pool_token = v['uint'](v['m'], v['type_start'] + pool['index'] * 88 + 84)
+range_count = v['quad'](v['b'], module_pos + 64)
+range_pos = v['offset'](v['quad'](v['b'], module_pos + 72))
+range_index, rgctx_begin, rgctx_length, bound_token = c['unique'](lambda row: row[3] == pool_token,
+    [(n, *struct.unpack_from('<Iii', v['b'], range_pos + n * 12)[1:], v['uint'](v['b'], range_pos + n * 12)) for n in range(range_count)])
+assert rgctx_length == 29
+definition_count = v['quad'](v['b'], module_pos + 80)
+assert 0 <= rgctx_begin < rgctx_begin + rgctx_length <= definition_count
+definition_pos = v['offset'](v['quad'](v['b'], module_pos + 88))
+bindings = []
+for slot, expected_type, expected_method in [(19, 'HashSet`1', 'Remove'), (20, 'ObjectPool`1', '_RecycleInternal'),
+                                             (26, 'Stack`1', 'Push'), (18, 'ObjectPool`1', '_SendNotification')]:
+    pos = definition_pos + (rgctx_begin + slot) * 16
+    raw = v['b'][pos:pos + 16]
+    assert v['uint'](v['b'], pos) == 3
+    data_pos = v['offset'](v['quad'](v['b'], pos + 8))
+    spec_index = v['sint'](v['b'], data_pos)
+    definition, class_inst, method_inst = struct.unpack_from('<iii', v['b'], priority['spec_start'] + spec_index * 12)
+    owner_type, row = c['unique'](lambda pair: pair[1]['index'] == definition,
+        [(t, r) for t in v['types'] for r in t['methods']])
+    assert owner_type['name'] == expected_type and row['name'] == expected_method
+    assert class_inst == 5644 and method_inst == -1
+    # The argument is VAR generic parameter248, not a typedef. Do not use the
+    # direct-type specification decoder to invent a class name for that index.
+    inst_pos = v['offset'](v['quad'](v['b'], inst_table + class_inst * 8))
+    assert v['quad'](v['b'], inst_pos) == 1
+    args_pos = v['offset'](v['quad'](v['b'], inst_pos + 8))
+    arg_pos = v['offset'](v['quad'](v['b'], args_pos))
+    arg_bits = v['uint'](v['b'], arg_pos + 8)
+    assert (arg_bits >> 16) & 255 == 19 and v['quad'](v['b'], arg_pos) == 248
+    bindings.append({'slot': slot, 'kind': 3, 'definitionBase64': base64.b64encode(raw).decode(), 'sha256': v['sha'](raw),
+        'dataRva': v['address'](data_pos) - v['image_base'], 'dataHex': v['b'][data_pos:data_pos + 8].hex(),
+        'methodSpecificationIndex': spec_index, 'definition': row, 'declaringTypeIndex': owner_type['index'],
+        'declaringType': owner_type['name'], 'classInstantiationIndex': class_inst, 'genericArgumentKind': 19,
+        'genericParameterIndex': 248})
+assert not any(row['name'] == 'Equals' for row in buff['methods'])
+result['modeSwitch']['buffNotification']['poolIdentity']['staticRecycleContext'] = {
+    'moduleRva': pool_module['rva'], 'typeToken': pool_token, 'rangeIndex': range_index,
+    'begin': rgctx_begin, 'length': rgctx_length, 'definitionStride': 16, 'bindings': bindings,
+    'concreteRuntimeContextVerified': False,
+}
+notify_rva = 0x477ba87
+notify_pos = v['offset'](v['image_base'] + notify_rva)
+assert v['b'][notify_pos:notify_pos + 3] == bytes.fromhex('488b15')
+notify_target = notify_rva + 7 + struct.unpack_from('<i', v['b'], notify_pos + 3)[0]
+notify_usage = v['quad'](v['b'], v['offset'](v['image_base'] + notify_target))
+assert notify_usage >> 29 == 1
+notify_type_index = (notify_usage & 0x1ffffffe) >> 1
+notify_type_pos = v['offset'](v['quad'](v['b'], v['type_table'] + notify_type_index * 8))
+assert (v['uint'](v['b'], notify_type_pos + 8) >> 16) & 255 == 18
+notify_type = v['types'][v['quad'](v['b'], notify_type_pos)]
+assert notify_type['name'] == 'IReusable' and notify_type['namespace'] == 'Torappu.ObjectPool'
+notify_slots = [{**row, 'slot': struct.unpack_from('<H', v['m'], v['method_start'] + row['index'] * 32 + 28)[0]}
+                for row in notify_type['methods']]
+assert [(row['slot'], row['name']) for row in notify_slots] == [(0, 'OnAllocate'), (1, 'OnRecycle')]
+result['modeSwitch']['buffNotification']['poolIdentity']['notificationInterface'] = {
+    'loadRva': notify_rva, 'targetRva': notify_target, 'encodedUsage': notify_usage, 'typeIndex': notify_type_index,
+    'definitionIndex': notify_type['index'], 'namespace': notify_type['namespace'], 'name': notify_type['name'], 'slots': notify_slots}
 serialized = json.dumps(result, ensure_ascii=False, indent=1) + '\n'
 out = ROOT / 'data/candidates/arkpedia-windows-fear-self-death-source.json'
 if __name__ == '__main__':

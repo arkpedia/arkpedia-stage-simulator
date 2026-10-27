@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 75 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 78 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -1088,3 +1088,50 @@ producer reproduces with --check. Continuation40524700297 at5be7b022 has
 completed successfully; full40524709132 at that same head remains active and
 is not replaced. Full fear/controller/stage integration, ability setup and
 geometry remain open. No source/support/receipt or catalogue gate changes.
+
+### Buff identity allocation and selected pool recycling
+
+The78-method artifact adds Buff.OnAllocate, OnRecycle and set_instanceUid.
+OnAllocate increments UInt32 s_globalCounter, writes that result to the buff UID,
+then sets m_isValid atoffset0x1ef. OnRecycle writes UID0 through the setter before
+clearing m_isValid. Counter overflow does not skip0. The static counter is
+distinct from the per-object instanceUid and is not reset per owner/battle.
+
+`fearProjectileBuffIdentity` implements these default writes on explicit mutable
+field projections with one supplied shared counter. It does not infer buff
+finished/enabled state or initialize the rest of Buff.Reset. Tests cover shared
+counter use across adapters and reused bodies, UInt32 wrap, initial UID0 pointer
+rejection, stale pointers after reallocation, malformed/immutable projections
+and recycling without reading or changing the global counter.
+
+Three mapped Object canonical pool bodies retain Recycle, _RecycleInternal and
+_SendNotification. Static ObjectPool generic-context ranges resolve slot19 to
+HashSet.Remove, slot26 to Stack.Push and slot18 to _SendNotification, with slot20
+binding _RecycleInternal. The raw16-byte RGCTX definitions and their method-spec
+records are retained. Their argument is generic VAR parameter248; that index is
+not misinterpreted as a typedef/name by the direct-type decoder. The notification
+interface resolves to IReusable, with OnAllocate slot0 and OnRecycle slot1.
+Concrete runtime context and live allocation/force-reuse policy remain false.
+
+`fearProjectileBuffRecyclePool` composes the selected default Buff recycle path
+with supplied using-set/unused-stack projections. Null or untracked objects
+return false. Successful HashSet removal precedes Stack.Push and OnRecycle;
+there is no rollback of those mutations if notification throws. Removing the
+using membership first also rejects a recursive duplicate while permitting
+recycling of another tracked buff. Default Buff equality remains reference
+identity; generic/custom comparer behavior is not claimed.
+
+Tests cover null/foreign objects, order visible inside notification, recursive
+duplicate and other-object recycling, stack order and notification exceptions.
+The queue/pool/concrete-identity composition queues duplicate pointer values but
+recycles once, clears UID/validity, and prevents the remaining old pointer from
+reaching the pool again. A separate composed null-Lock case reaches the concrete
+pool's null gate and returns false without a notification. The focused
+native/fear/family/miner suite passes551 tests and the source producer reproduces
+with --check. Continuation40526665820 ata3b466e0 completed successfully;
+full40524709132 at5be7b022 remains active and is not replaced.
+
+These are selected default pool/identity projections, not certified native live
+pool construction, allocation, force reuse, state-reset effects or battle-end
+flush. Full ability/controller/stage integration and existing source/support/
+receipt/catalogue gates remain unchanged.

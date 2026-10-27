@@ -19,6 +19,8 @@ import {fearProjectileBuffPointers} from '../server/sim/content/chapter16-fear-b
 import {fearProjectileFinishedBuffs} from '../server/sim/content/chapter16-fear-buff-cleanup.js';
 import {fearProjectileFinishAndRemoveBuff,fearProjectileOverrideGroupRemove} from '../server/sim/content/chapter16-fear-buff-finish.js';
 import {fearProjectileBuffRecycleQueue} from '../server/sim/content/chapter16-fear-buff-recycle.js';
+import {fearProjectileBuffIdentity} from '../server/sim/content/chapter16-fear-buff-identity.js';
+import {fearProjectileBuffRecyclePool} from '../server/sim/content/chapter16-fear-buff-pool.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
 import {fearProjectileSpell} from '../server/sim/content/chapter16-fear-spell.js';
@@ -55,6 +57,94 @@ test('mode initialization rejects invalid entries and delegates equality without
   isValid:x=>x!==null&&!x.invalid,equals:(left,right)=>{calls.push([left,right]);return left.id===right.id;}});
  assert.deepEqual(list,[a]);assert.deepEqual(calls,[[a,duplicate]]);
  assert.throws(()=>fearProjectileCollectModeAbilities({generalAbilities:[],combat:null,attack:null,isValid:()=>1,equals:()=>true}),/Boolean/);
+});
+
+test('buff recycle pool removes using membership and pushes the unused stack before notifying recycle',()=>{
+ const buff={},usingBuffs=new Set([buff]),unusedBuffs=[];let calls=0,pool;
+ pool=fearProjectileBuffRecyclePool({usingBuffs,unusedBuffs,onRecycle:value=>{
+  assert.equal(value,buff);assert.equal(usingBuffs.has(buff),false);assert.deepEqual(unusedBuffs,[buff]);assert.equal(pool.recycle(buff),false);calls++;
+ }});
+ assert.equal(pool.recycle(buff),true);assert.equal(calls,1);assert.equal(pool.recycle(buff),false);assert.equal(calls,1);
+});
+
+test('buff recycle pool rejects null and foreign objects without changing either collection or calling the receiver',()=>{
+ const tracked={},usingBuffs=new Set([tracked,null]),unusedBuffs=[],pool=fearProjectileBuffRecyclePool({usingBuffs,unusedBuffs,onRecycle:()=>{throw Error('foreign notification');}});
+ assert.equal(pool.recycle(null),false);assert.equal(pool.recycle({}),false);assert.deepEqual([...usingBuffs],[tracked,null]);assert.deepEqual(unusedBuffs,[]);
+});
+
+test('recycle notification can recycle another tracked object in native stack order',()=>{
+ const a={},b={},usingBuffs=new Set([a,b]),unusedBuffs=[],events=[];let pool;
+ pool=fearProjectileBuffRecyclePool({usingBuffs,unusedBuffs,onRecycle:value=>{events.push(value);if(value===a)assert.equal(pool.recycle(b),true);}});
+ assert.equal(pool.recycle(a),true);assert.deepEqual(events,[a,b]);assert.equal(usingBuffs.size,0);assert.equal(unusedBuffs.pop(),b);assert.equal(unusedBuffs.pop(),a);
+});
+
+test('recycle exceptions leave the using removal and unused push committed and block a duplicate notification',()=>{
+ const buff={},usingBuffs=new Set([buff]),unusedBuffs=[];let calls=0;
+ const pool=fearProjectileBuffRecyclePool({usingBuffs,unusedBuffs,onRecycle:()=>{calls++;throw Error('recycle notification');}});
+ assert.throws(()=>pool.recycle(buff),/recycle notification/);assert.equal(usingBuffs.size,0);assert.deepEqual(unusedBuffs,[buff]);
+ assert.equal(pool.recycle(buff),false);assert.equal(calls,1);
+});
+
+test('native-frame recycling composes pool membership and concrete UID invalidation for duplicate queued pointers',()=>{
+ const f=fixture(),counter={value:0},identity=fearProjectileBuffIdentity({counter}),buff={instanceUid:0,m_isValid:false},p=fearProjectileBuffPointers({readUid:b=>b.instanceUid});
+ identity.allocate(buff);const saved=p.capture(buff),usingBuffs=new Set([buff]),unusedBuffs=[];let notifications=0,frame=10;
+ const pool=fearProjectileBuffRecyclePool({usingBuffs,unusedBuffs,onRecycle:b=>{identity.recycle(b);notifications++;}});
+ const queue=fearProjectileBuffRecycleQueue(f.b,{readFixedFrame:()=>frame,copyPointer:p.copy,isPointerValid:p.isValid,lockPointer:p.lock,recycleBuff:pool.recycle});
+ queue.enqueue(saved);queue.enqueue(saved);queue.update();assert.equal(notifications,0);frame=11;queue.update();
+ assert.equal(notifications,1);assert.equal(usingBuffs.size,0);assert.deepEqual(unusedBuffs,[buff]);assert.equal(buff.instanceUid,0);assert.equal(buff.m_isValid,false);
+ assert.equal(p.lock(saved),null);assert.equal(queue.pendingCount,0);queue.release();
+});
+
+test('queue passes a null Lock result to the concrete pool, whose native null gate returns false',()=>{
+ const f=fixture(),unusedBuffs=[],usingBuffs=new Set(),pool=fearProjectileBuffRecyclePool({usingBuffs,unusedBuffs,onRecycle:()=>{throw Error('null recycled');}});let frame=10;
+ const queue=fearProjectileBuffRecycleQueue(f.b,{readFixedFrame:()=>frame,copyPointer:x=>x,isPointerValid:()=>true,lockPointer:()=>null,recycleBuff:pool.recycle});
+ queue.enqueue({});frame=11;queue.update();assert.deepEqual(unusedBuffs,[]);assert.equal(queue.pendingCount,0);queue.release();
+});
+
+test('buff allocation identity uses one supplied global UInt32 counter across adapters and recycled bodies',()=>{
+ const counter={value:40},first=fearProjectileBuffIdentity({counter}),second=fearProjectileBuffIdentity({counter}),
+  a={instanceUid:0,m_isValid:false},b={instanceUid:0,m_isValid:false};
+ first.allocate(a);assert.deepEqual(a,{instanceUid:41,m_isValid:true});second.allocate(b);assert.equal(b.instanceUid,42);
+ first.recycle(a);assert.deepEqual(a,{instanceUid:0,m_isValid:false});assert.equal(counter.value,42);
+ second.allocate(a);assert.equal(a.instanceUid,43);assert.equal(a.m_isValid,true);assert.equal(counter.value,43);
+});
+
+test('native buff counter wrap does not silently skip UID zero',()=>{
+ const counter={value:0xffffffff},identity=fearProjectileBuffIdentity({counter}),buff={instanceUid:7,m_isValid:true},p=fearProjectileBuffPointers({readUid:b=>b.instanceUid});
+ identity.allocate(buff);assert.equal(counter.value,0);assert.deepEqual(buff,{instanceUid:0,m_isValid:true});assert.equal(p.isValid(p.capture(buff)),false);
+ identity.allocate(buff);assert.equal(buff.instanceUid,1);assert.equal(p.lock(p.capture(buff)),buff);
+});
+
+test('recycle clears UID and native validity independently of finished/enabled state without advancing the counter',()=>{
+ const counter={value:12},identity=fearProjectileBuffIdentity({counter}),buff={instanceUid:9,m_isValid:true,finished:false,isEnabled:true};
+ identity.recycle(buff);assert.deepEqual(buff,{instanceUid:0,m_isValid:false,finished:false,isEnabled:true});assert.equal(counter.value,12);
+ identity.recycle(buff);assert.equal(counter.value,12);assert.equal(buff.instanceUid,0);
+});
+
+test('recycled old pointers cannot lock a later allocation of the same buff body',()=>{
+ const counter={value:0},identity=fearProjectileBuffIdentity({counter}),buff={instanceUid:0,m_isValid:false},p=fearProjectileBuffPointers({readUid:b=>b.instanceUid});
+ identity.allocate(buff);const saved=p.capture(buff);assert.equal(p.lock(saved),buff);identity.recycle(buff);assert.equal(p.lock(saved),null);
+ identity.allocate(buff);assert.equal(buff.instanceUid,2);assert.equal(p.lock(saved),null);assert.equal(p.lock(p.capture(buff)),buff);
+});
+
+test('buff identity requires mutable data fields and validates the shared counter before allocating',()=>{
+ assert.throws(()=>fearProjectileBuffIdentity({counter:{value:-1}}),/UInt32/);
+ const counter={value:7},identity=fearProjectileBuffIdentity({counter}),buff={instanceUid:0,m_isValid:false};
+ assert.throws(()=>identity.allocate(Object.freeze({...buff})),/writable native data/);assert.equal(counter.value,7);
+ counter.value=NaN;assert.throws(()=>identity.allocate(buff),/UInt32/);assert.deepEqual(buff,{instanceUid:0,m_isValid:false});
+ identity.recycle(buff);assert.deepEqual(buff,{instanceUid:0,m_isValid:false},'OnRecycle does not read the static counter');
+});
+
+test('finish and native-frame queue use concrete buff recycle identity before the same body can be allocated again',()=>{
+ const f=fixture(),counter={value:0},identity=fearProjectileBuffIdentity({counter}),buff={instanceUid:0,m_isValid:false},p=fearProjectileBuffPointers({readUid:b=>b.instanceUid});
+ identity.allocate(buff);const old=p.capture(buff);let frame=10,recycled=0;
+ const queue=fearProjectileBuffRecycleQueue(f.b,{readFixedFrame:()=>frame,copyPointer:p.copy,isPointerValid:p.isValid,lockPointer:p.lock,
+  recycleBuff:b=>{assert.equal(b,buff);identity.recycle(b);recycled++;}});
+ const finish=fearProjectileFinishAndRemoveBuff(f.b,{owner:f.source,buff,removeFromList:()=>true,readUid:b=>b.instanceUid,removeUidRegistration:()=>true,
+  markFinish:()=>{},onFinish:()=>true,captureBuffPointer:p.capture,queueRecycleNextFrame:queue.enqueue});
+ finish.run();queue.update();assert.equal(buff.instanceUid,1);assert.equal(buff.m_isValid,true);assert.equal(recycled,0);
+ f.b.kill(f.source,null);frame=11;queue.update();assert.equal(recycled,1);assert.equal(buff.instanceUid,0);assert.equal(buff.m_isValid,false);assert.equal(p.lock(old),null);
+ identity.allocate(buff);assert.equal(buff.instanceUid,2);assert.equal(p.lock(old),null);assert.equal(p.lock(p.capture(buff)),buff);queue.release();assert.deepEqual(f.b.errors,[]);
 });
 
 function recycleQueueFixture(overrides={}){

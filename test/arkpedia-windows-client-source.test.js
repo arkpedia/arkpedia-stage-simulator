@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,75);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,78);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -130,6 +130,36 @@ test('mode initialization binds general/combat/attack order and the canonical sw
  at(dedup,0x3f62e1e,'0x180004fe0');at(dedup,0x3f62e72,'0x180004b40');
  at(dedup,0x3f62e77,'esi');at(dedup,0x3f62e79,'0x183f62d00');
  assert.equal(init.equalsDispatch.metadataIdentityVerified,false);
+});
+
+test('buff pool identity source binds the shared counter and UID/validity allocation and recycle writes',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),identity=c.modeSwitch.buffNotification.poolIdentity;
+ assert.equal(identity.counterField.name,'s_globalCounter');assert.equal(identity.counterField.offset,0);assert.equal((identity.counterField.typeBits>>>16)&255,9);
+ assert.equal(identity.uidField.offset,0x208);assert.equal(identity.validityField.name,'m_isValid');assert.equal(identity.validityField.offset,0x1ef);
+ assert.equal(identity.poolMembershipVerified,false);assert.equal(identity.liveAllocationPolicyVerified,false);
+ const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ const allocate=castMethod(c,'Buff','OnAllocate');at(allocate,identity.allocateCounterIncrementRva,'ebx');
+ at(allocate,identity.allocateCounterWriteRva,'dword ptr [rax], ebx');at(allocate,identity.allocateUidWriteRva,'dword ptr [rdi + 0x208], ebx');
+ at(allocate,identity.allocateValidityWriteRva,'byte ptr [rdi + 0x1ef], 1');
+ const recycle=castMethod(c,'Buff','OnRecycle');at(recycle,identity.recycleUidSetterCallRva,'0x1839b7df0');
+ at(recycle,0x39afb7a,'edx, edx');at(recycle,identity.recycleValidityWriteRva,'byte ptr [rbx + 0x1ef], 0');
+ assert.ok(castMethod(c,'Buff','set_instanceUid'));
+ for(const method of identity.canonicalPoolMethods)for(const ch of method.chunks){
+  const raw=Buffer.from(ch.base64,'base64');assert.equal(sha(raw),ch.sha256);assert.equal(raw.length,ch.endRva-ch.beginRva);
+ }
+ const context=identity.staticRecycleContext;assert.equal(context.definitionStride,16);assert.equal(context.length,29);assert.equal(context.concreteRuntimeContextVerified,false);
+ assert.deepEqual(context.bindings.map(row=>[row.slot,row.declaringType,row.definition.name]),[
+  [19,'HashSet`1','Remove'],[20,'ObjectPool`1','_RecycleInternal'],[26,'Stack`1','Push'],[18,'ObjectPool`1','_SendNotification']]);
+ for(const binding of context.bindings){
+  const raw=Buffer.from(binding.definitionBase64,'base64');assert.equal(raw.length,16);assert.equal(sha(raw),binding.sha256);
+  assert.equal(raw.readUInt32LE(0),3);assert.equal(binding.genericArgumentKind,19);assert.equal(binding.genericParameterIndex,248);
+  assert.equal(Buffer.from(binding.dataHex,'hex').readInt32LE(0),binding.methodSpecificationIndex);
+ }
+ assert.deepEqual(identity.notificationInterface.slots.map(row=>[row.slot,row.name]),[[0,'OnAllocate'],[1,'OnRecycle']]);
+ assert.deepEqual([identity.notificationInterface.namespace,identity.notificationInterface.name],['Torappu.ObjectPool','IReusable']);
+ const recyclePool=identity.canonicalPoolMethods.find(m=>m.definition.name==='Recycle'),internal=identity.canonicalPoolMethods.find(m=>m.definition.name==='_RecycleInternal');
+ at(recyclePool,0x477b64b,'0x18477b6a2');at(recyclePool,0x477b661,'r8, qword ptr [r9 + 0x98]');
+ at(internal,0x477b9fc,'rax, qword ptr [r9 + 0xd0]');at(internal,0x477ba0d,'r8d, 1');at(internal,0x477ba1d,'rax, qword ptr [rcx + 0x90]');
 });
 
 test('delayed recycle source binds UInt32 exact-frame buckets and a second frame sample before removal',()=>{
