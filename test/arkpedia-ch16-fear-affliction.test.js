@@ -13,13 +13,61 @@ import {fearProjectileHitLedger} from '../server/sim/content/chapter16-fear-deli
 import {fearProjectileLifetime} from '../server/sim/content/chapter16-fear-clock.js';
 import {fearProjectileAreaDelivery} from '../server/sim/content/chapter16-fear-area.js';
 import {fearProjectileFlight} from '../server/sim/content/chapter16-fear-flight.js';
-import {fearProjectileTargetVerifier} from '../server/sim/content/chapter16-fear-targets.js';
+import {fearProjectileTargetVerifier,fearProjectileSourceMotion} from '../server/sim/content/chapter16-fear-targets.js';
 import {fearProjectileReached,fearProjectileMotionStep,fearProjectileMountReference,fearProjectileTraceMotion} from '../server/sim/content/chapter16-fear-movement.js';
 import { battle as minerBattle, keys as minerKeys } from './helpers/ch17Harness.js';
 import { chapter16Shadow } from '../server/sim/content/chapter16-shadow.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
 const parentKey='feawpj_a[mcreep_fear]';
 const fpOne=1n<<32n;
+test('source motion uses current native motion while alive-or-dying and captured motion afterward',()=>{
+ const f=fixture(),ref=fearProjectileEntityReference(f.b,f.source);let motion=1,valid=true;
+ const snapshot=fearProjectileSourceMotion(f.b,{source:f.source,resolveSource:ref.resolveEntity,
+  readMotionMode:()=>motion,isValidAndAliveOrDying:()=>valid});
+ assert.equal(snapshot.capturedMotionMode,1);motion=0;assert.equal(snapshot.readSourceMotionMode(),0);
+ // Merely setting local alive=false does not substitute for the native predicate.
+ f.source.alive=false;assert.equal(snapshot.readSourceMotionMode(),0);
+ valid=false;assert.equal(snapshot.readSourceMotionMode(),1);motion=2;assert.equal(snapshot.readSourceMotionMode(),1);
+ f.source.deploySeq++;assert.equal(snapshot.readSourceMotionMode(),1);ref.release();snapshot.release();
+});
+
+test('missing source snapshot yields native fallback motion2 without reading another entity',()=>{
+ const f=fixture();const snapshot=fearProjectileSourceMotion(f.b,{source:null,resolveSource:()=>null,
+  readMotionMode:()=>{throw Error('no source');},isValidAndAliveOrDying:()=>{throw Error('no source');}});
+ assert.equal(snapshot.readSourceMotionMode(),2);snapshot.release();assert.equal(snapshot.readSourceMotionMode(),null);
+});
+
+for(const boundary of ['reuse','removed','battleEnd'])test('source motion lookup rejects '+boundary+' during the native motion read',()=>{
+ const f=fixture(),ref=fearProjectileEntityReference(f.b,f.source);let armed=false;
+ const snapshot=fearProjectileSourceMotion(f.b,{source:f.source,resolveSource:ref.resolveEntity,
+  isValidAndAliveOrDying:()=>true,readMotionMode:()=>{
+   if(armed){if(boundary==='reuse')f.source.deploySeq++;else if(boundary==='removed')f.b.emit('removed',{unit:f.source});else f.b.emit('battleEnd',{});}
+   return armed?0:1;
+  }});
+ armed=true;assert.equal(snapshot.readSourceMotionMode(),null);
+ assert.equal(snapshot.readSourceMotionMode(),boundary==='battleEnd'?null:1);snapshot.release();ref.release();assert.deepEqual(f.b.errors,[]);
+});
+
+test('source motion cannot use a replacement resolved between validity and the live read',()=>{
+ const f=fixture();let replacement=false,reads=0;
+ const snapshot=fearProjectileSourceMotion(f.b,{source:f.source,resolveSource:()=>replacement?f.target:f.source,
+  readMotionMode:()=>{reads++;return 1;},isValidAndAliveOrDying:()=>{replacement=true;return true;}});
+ assert.equal(snapshot.readSourceMotionMode(),null);assert.equal(reads,1);
+ assert.equal(snapshot.readSourceMotionMode(),1);snapshot.release();
+});
+
+test('arrival eligibility consumes the source motion snapshot after its source becomes invalid',()=>{
+ const f=fixture();let motion=1,valid=true,seen=[];
+ const snapshot=fearProjectileSourceMotion(f.b,{source:f.source,resolveSource:()=>f.source,
+  readMotionMode:()=>motion,isValidAndAliveOrDying:()=>valid});
+ const verifier=fearProjectileTargetVerifier(f.b,{sourceSide:2,readMotionMode:()=>0,readCategory:()=>1,readSide:()=>1,
+  isTargetFree:()=>false,isAllyTargetFree:()=>false,readSourceMotionMode:snapshot.readSourceMotionMode,
+  isStillMotionTargetFree:(_target,{sourceMotion})=>{seen.push(sourceMotion);return sourceMotion!==0;}});
+ motion=0;assert.equal(verifier.verifyTarget(f.target),true);
+ valid=false;assert.equal(verifier.verifyTarget(f.target),false);assert.deepEqual(seen,[0,1]);
+ verifier.release();snapshot.release();
+});
+
 function targetVerifierFixture(overrides={}){
  const f=fixture(),calls=[];
  const verifier=fearProjectileTargetVerifier(f.b,{sourceSide:2,

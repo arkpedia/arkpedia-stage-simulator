@@ -407,7 +407,7 @@ test('ordinary projectile initialization resets its fixed-point lifetime clock b
 });
 
 test('arrival-area evidence binds the authored circle and explicit nested field differences',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-area-source.json');assert.equal(c.methods.length,29);
+ const c=read('data/candidates/arkpedia-windows-fear-area-source.json');assert.equal(c.methods.length,30);
  for(const p of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+p.path,import.meta.url))),p.sha256);
  for(const m of [...c.methods,c.layerMaskLeaf])for(const ch of m.chunks){
   const raw=Buffer.from(ch.base64,'base64');assert.equal(raw.length,ch.endRva-ch.beginRva);assert.equal(sha(raw),ch.sha256);
@@ -424,6 +424,32 @@ test('arrival-area evidence binds the authored circle and explicit nested field 
  assert.deepEqual(hit.unmatchedSerializedFields,{_exceptFlyCharacter:0});assert.equal(hit.serializedFieldParity,false);
  assert.deepEqual(c.unmatchedTargetOptions,{ignoreMotionMode:0});assert.equal(c.targetOptionParity,false);
  for(const field of ['runtimeDispatchVerified','frameParity','crossVersionParity'])assert.equal(c[field],false);
+});
+
+test('source motion snapshot retains live alive-or-dying lookup and independent initialization fallback',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-area-source.json'),snapshot=c.sourceMotionSnapshot;
+ assert.equal(snapshot.concreteContextVerified,false);
+ assert.equal(snapshot.snapshotType.name,'SourceSnapshot');assert.equal(snapshot.snapshotType.fields[0].name,'sourceMotionMode');
+ assert.equal(snapshot.snapshotType.allocationLoadRva,0x787917);assert.equal(snapshot.snapshotType.encodedUsage>>>29,1);
+ assert.deepEqual(snapshot.concreteSpecifications.map(s=>[s.callerLoadRva,s.declaringType,s.definition.name]),[
+  [0x7878fb,'PtrObjRef`1','.ctor'],[0x787a5c,'BattleUtil','ValidAndAliveOrDying'],[0x787ab7,'PtrObjRef`1','Get']]);
+ for(const spec of snapshot.concreteSpecifications){
+  assert.equal(spec.nativeMapping,null);assert.equal(Object.values(spec.instantiations)[0].arguments[0].name,'Entity');
+ }
+ for(const m of snapshot.canonicalBodies)for(const ch of m.chunks){
+  const raw=Buffer.from(ch.base64,'base64');assert.equal(sha(raw),ch.sha256);assert.equal(raw.length,ch.endRva-ch.beginRva);
+ }
+ assert.deepEqual(snapshot.aliveOrDyingSlots.map(s=>[s.slot,s.name,s.declaringType]),[
+  [39,'get_aliveOrDying','Entity'],[39,'get_aliveOrDying','Entity'],[39,'get_aliveOrDying','Character']]);
+ const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ const init=castMethod(c,'TargetOptions','_InitSourceSnapshot');
+ at(init,0x787947,'0x183a29e20');at(init,0x78794c,'dword ptr [rdi + 0x10], eax');
+ const lookup=castMethod(c,'TargetOptions','_TryGetSourceMotionMode');
+ at(lookup,0x787a66,'0x183f4ec20');at(lookup,0x787a78,'dword ptr [rbx], 2');
+ at(lookup,0x787a89,'eax, dword ptr [rax + 0x10]');at(lookup,0x787ac3,'0x1847b7720');at(lookup,0x787ad2,'0x183a29e20');
+ const validity=snapshot.canonicalBodies.find(m=>m.definition.name==='ValidAndAliveOrDying');
+ at(validity,0x3f4ecb7,'0x1847b7720');at(validity,0x3f4ed0c,'rax, qword ptr [rdx + 0x3a8]');
+ const hit=castMethod(c,'HitBehaviour','Init');at(hit,0xa7377f,'0x18067e3d0');at(hit,0xa73795,'0x180787580');
 });
 
 test('arrival verification retains motion/category and source-relative advanced gates',()=>{

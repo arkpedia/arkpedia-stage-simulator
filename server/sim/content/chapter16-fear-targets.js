@@ -2,6 +2,52 @@
 // Selected arrival TargetOptions only, after collider/layer/validity selection.
 // Readers must expose native side, category, motion and target-free semantics;
 // simulator flags or source death alone do not establish those mappings.
+export function fearProjectileSourceMotion(b,{source,resolveSource,readMotionMode,isValidAndAliveOrDying}){
+ if([resolveSource,readMotionMode,isValidAndAliveOrDying].some(fn=>typeof fn!=='function')||
+  (source!=null&&!Number.isInteger(source.deploySeq)))
+  throw new TypeError('Fear source motion requires an explicit native reference, motion and alive-or-dying predicate');
+ const life=source?.deploySeq;
+ let snapshot=2,ended=false,reading=false,endHandle=null;
+ const release=()=>{ended=true;if(endHandle)b.off(endHandle);endHandle=null;};
+ const active=()=>{if(!ended&&(b.finished||b._endReq))release();return!ended;};
+ const mode=unit=>{
+  const value=readMotionMode(unit);
+  if(!Number.isInteger(value)||value<-2147483648||value>2147483647)
+   throw new TypeError('Fear source motion requires a native Int32 motion mode');
+  return value;
+ };
+ if(active())endHandle=b.on('battleEnd',release);
+ try{
+  if(source&&active()){
+   snapshot=mode(source);
+   if(source.deploySeq!==life)throw new Error('Fear source motion changed identity during snapshot capture');
+  }
+ }catch(error){release();throw error;}
+ return Object.freeze({
+  get capturedMotionMode(){return snapshot;},
+  readSourceMotionMode(){
+   if(reading||!active())return null;
+   reading=true;
+   try{
+    const current=resolveSource();if(!active())return null;
+    if(!current||current!==source||current.deploySeq!==life)return snapshot;
+    const valid=isValidAndAliveOrDying(current);if(!active())return null;
+    if(typeof valid!=='boolean')throw new TypeError('Fear source motion requires a native Boolean alive-or-dying result');
+    if(!valid)return snapshot;
+    // Native ValidAndAliveOrDying resolves the PtrObjRef, then the successful
+    // caller gets it again. Reentrant local readers cannot donate a new life.
+    const resolved=resolveSource();if(!active())return null;
+    if(resolved!==current||current.deploySeq!==life)return null;
+    const value=mode(current);
+    if(!active()||current.deploySeq!==life)return null;
+    const unchanged=resolveSource()===current;
+    return active()&&unchanged&&current.deploySeq===life?value:null;
+   }finally{reading=false;}
+  },
+  release,
+ });
+}
+
 export function fearProjectileTargetVerifier(b,{sourceSide,readMotionMode,readCategory,readSide,
  isTargetFree,isAllyTargetFree,readSourceMotionMode,isStillMotionTargetFree}){
  const readers=[readMotionMode,readCategory,readSide,isTargetFree,isAllyTargetFree,

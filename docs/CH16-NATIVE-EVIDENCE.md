@@ -365,7 +365,7 @@ parity.
 
 ### Arrival overlap and dispatch
 
-`extract-windows-fear-area.py --check` retains 29 complete methods covering the
+`extract-windows-fear-area.py --check` retains 30 complete methods covering the
 range/query/filter pipeline, enemy physics and map conversion, together with
 the exact layer-mask tail-jump leaf, the `List<Entity>.Sort` call
 specification and the original circle/collider/transform graph. Authored local
@@ -443,3 +443,17 @@ Character motion-target-free bodies are retained. Actual native state readers,
 source snapshot construction, hotfix/runtime dispatch, layer query and scene
 mapping remain integration obligations. The internal verifier does not convert
 generic simulator hidden/untargetable flags into an asserted native receipt.
+
+The source-motion input now has a separate internal `fearProjectileSourceMotion`
+composition. Native initialization allocates the metadata-bound `SourceSnapshot`
+and stores changeable motion before retaining it beside a `PtrObjRef<Entity>`.
+Lookup calls `ValidAndAliveOrDying` on that reference: the successful path uses
+current changeable motion; the unsuccessful path uses captured motion, or mode2
+when there is no snapshot. This predicate differs from the damage action's
+`ObjectPtr<Entity>` UID validity rule. Canonical generic constructor/Get/validity
+bodies and the actual concrete Entity usage sites are retained, with concrete
+generic context still unverified. Tests distinguish local alive flags from the
+explicit native predicate, exercise fallback and missing-source behavior, reject
+replacement/removal during a read, and feed live/captured motion into arrival
+eligibility. Native PtrObjRef registry, alive-or-dying and motion state readers
+remain explicit integration inputs rather than guessed local flag mappings.

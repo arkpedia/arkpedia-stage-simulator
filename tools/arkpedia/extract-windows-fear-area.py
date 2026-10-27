@@ -19,7 +19,7 @@ for name, namespace, names in [
     ('CircleRange', 'Torappu.Battle', ['get_radius', 'FetchColliders', 'InitCollidersIfNot', 'UpdateExtend']),
     ('Box2dPhysicsUtil', 'Torappu.Battle', ['FindTargets_DISPOSE', '_OverlapCollider', 'CheckOverlap', 'GetWorldRadius']),
     ('TargetOptions', 'Torappu.Battle', ['Init', 'VerifyTargetWithoutCheckingTargetSide', '_VerifyAdvanced',
-        '_TryGetSourceMotionMode']),
+        '_TryGetSourceMotionMode', '_InitSourceSnapshot']),
     ('BattleUtil', 'Torappu.Battle', ['GetLayerMask', 'VerifyTarget', 'CheckProfessionMask']),
     ('Entity', 'Torappu.Battle', ['OnProjectileSelectTargets', 'get_isTargetFree',
         'get_isAllyTargetFree', 'get_changeableMotionMode', 'isStillMotionTargetFreeWithImmuneFlag',
@@ -172,6 +172,40 @@ motion_free_dispatch = {'entryRva': 0x158d0, 'chunks': c['code'](0x158d0),
     'slots': [c['resolved_slot'](c['type_row'](name, 'Torappu.Battle'), 84)
               for name in ['Entity', 'Enemy', 'Character']]}
 assert all(row['name'] == 'isStillMotionTargetFreeWithImmuneFlag' for row in motion_free_dispatch['slots'])
+snapshot_load = 0x787917
+pos = v['offset'](base + snapshot_load)
+assert b[pos:pos + 3] == bytes.fromhex('488b0d')
+slot = snapshot_load + 7 + struct.unpack_from('<i', b, pos + 3)[0]
+snapshot_usage = v['quad'](b, v['offset'](base + slot))
+assert snapshot_usage >> 29 == 1
+snapshot_type_index = (snapshot_usage & 0x1ffffffe) >> 1
+tp = v['offset'](v['quad'](b, v['type_table'] + snapshot_type_index * 8))
+assert (v['uint'](b, tp + 8) >> 16) & 255 == 0x12
+snapshot_type = v['types'][v['quad'](b, tp)]
+source_motion = {'concreteContextVerified': False, 'concreteSpecifications': [], 'canonicalBodies': [],
+    'snapshotType': {'index': snapshot_type['index'], 'name': snapshot_type['name'],
+                     'fields': c['fields'](snapshot_type), 'allocationLoadRva': snapshot_load,
+                     'encodedUsage': snapshot_usage, 'nativeTypeIndex': snapshot_type_index},
+    'aliveOrDyingSlots': [c['resolved_slot'](c['type_row'](name, 'Torappu.Battle'), 39)
+                         for name in ['Entity', 'Enemy', 'Character']]}
+assert source_motion['snapshotType']['name'] == 'SourceSnapshot'
+assert [f['name'] for f in source_motion['snapshotType']['fields']] == ['sourceMotionMode']
+for load_rva, name in [(0x7878fb, '.ctor'), (0x787a5c, 'ValidAndAliveOrDying'), (0x787ab7, 'Get')]:
+    pos = v['offset'](base + load_rva)
+    assert b[pos:pos + 3] in [bytes.fromhex('4c8b05'), bytes.fromhex('488b15')]
+    slot = load_rva + 7 + struct.unpack_from('<i', b, pos + 3)[0]
+    encoded = v['quad'](b, v['offset'](base + slot))
+    assert encoded >> 29 == 6
+    spec = priority['specification']((encoded & 0x1ffffffe) >> 1)
+    assert spec['definition']['name'] == name
+    assert next(iter(spec['instantiations'].values()))['arguments'][0]['name'] == 'Entity'
+    assert spec['nativeMapping'] is None
+    source_motion['concreteSpecifications'].append({**spec, 'callerLoadRva': load_rva, 'encodedUsage': encoded})
+for index, rva in [(151158, 0x47b7990), (207899, 0x3f4ec20), (151162, 0x47b7720)]:
+    spec = priority['specification'](index)
+    assert v['quad'](b, priority['pointer_table'] + spec['nativeMapping']['methodPointerIndex'] * 8) == base + rva
+    assert spec['definition'] == source_motion['concreteSpecifications'][len(source_motion['canonicalBodies'])]['definition']
+    source_motion['canonicalBodies'].append({**spec, 'entryRva': rva, 'chunks': c['code'](rva)})
 
 result = {
     'schemaVersion': 1,
@@ -188,6 +222,7 @@ result = {
     'queryLimit': 128,
     'componentQueries': component_queries,
     'motionTargetFreeDispatch': motion_free_dispatch,
+    'sourceMotionSnapshot': source_motion,
     'minerColliderOwnership': {'prefab': miner_prefab, 'geometry': miner_geometry,
         'entityBinding': entity_binding, 'entityScript': entity_script,
         'enemyLineage': [{'name': t['name'], 'namespace': t['namespace'], 'index': t['index']}
