@@ -28,6 +28,7 @@ import {fearProjectileLoadBuffAttributes} from '../server/sim/content/chapter16-
 import {fearProjectileBuffPriority,fearProjectileUpdateBuffStack} from '../server/sim/content/chapter16-fear-buff-priority.js';
 import {fearProjectileInitBuffStatus} from '../server/sim/content/chapter16-fear-buff-status.js';
 import {fearProjectileInitBuffFinalFlags} from '../server/sim/content/chapter16-fear-buff-final-flags.js';
+import {fearProjectileBuffConfig,fearProjectileResetBuffContext} from '../server/sim/content/chapter16-fear-buff-context.js';
 import {fearProjectileBuffRecyclePool,fearProjectileDefaultBuffPool} from '../server/sim/content/chapter16-fear-buff-pool.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
@@ -40,6 +41,116 @@ import { chapter16Shadow } from '../server/sim/content/chapter16-shadow.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
 const parentKey='feawpj_a[mcreep_fear]';
 const fpOne=1n<<32n;
+
+function buffContextFixture(overrides={}){
+ const log=[],buff={},data={buffKey:'fear',overrideEffectKey:'',overrideOnEventPriority:false,enableInitDirectionFromSource:true,audioSignal:'fear-audio',
+  isDurableBuff:true,isDamageMissable:false,isSilenceable:true,isStunnable:false,isFreezable:true,isLevitatable:false};
+ const template={effectKey:'template-effect',onEventPriority:-7},source={},ability={},sourceProjectile={},container={};
+ const state={active:true,data,template};
+ const readData=()=>{log.push('data');return state.data;},isActive=()=>state.active;
+ const config=fearProjectileBuffConfig({readData,readTemplate:()=>{log.push('template');return state.template;},isActive});
+ const options={buff,container,source,ability,sourceProjectile,readData,config,isActive,
+  isDestroyedOrNull:()=>{log.push('source-validity');return false;},asCharacter:value=>{log.push('character-cast');return value;},
+  readAudioSignals:()=>{log.push('signals');return['start','trigger','finish'];},
+  tryHookAudio:(...args)=>{log.push(['audio',...args.slice(0,3)]);return false;},
+  capturePointer:(value,kind)=>{log.push(['pointer',kind,value]);return {value,kind};},...overrides};
+ return{log,buff,data,template,state,source,ability,sourceProjectile,container,options,run:()=>fearProjectileResetBuffContext(options).run()};
+}
+
+test('Reset context composes template fallback, audio hooks, pointer captures and initial capability fields',()=>{
+ const f=buffContextFixture();f.run();
+ assert.equal(f.buff.m_data,f.data);assert.equal(f.buff.m_container,f.container);assert.equal(f.buff.key,'fear');
+ assert.equal(f.buff.effectKey,'template-effect');assert.equal(f.buff.onEventPriority,-7);assert.equal(f.buff.enableInitDirectionFromSource,true);
+ assert.deepEqual(f.log.filter(x=>typeof x==='string'),['data','data','data','template','data','data','template','data','source-validity','character-cast','signals','data']);
+ assert.deepEqual(f.log.filter(Array.isArray).map(x=>x.slice(0,2)),[['audio',f.source],['audio',f.source],['audio',f.source],['pointer','source'],['pointer','ability'],['pointer','projectile']]);
+ assert.deepEqual([f.buff.m_source.value,f.buff.m_ability.value,f.buff.m_sourceProjectile.value],[f.source,f.ability,f.sourceProjectile]);
+ assert.deepEqual(['isDurableBuff','isDamageMissable','isSilenceable','isStunnable','isFreezable','isLevitatable'].map(x=>f.buff['m_'+x]),[true,false,true,false,true,false]);
+});
+
+for(const key of [null,'',' ','override'])test('BuffConfig preserves nullable/empty/whitespace effect override '+JSON.stringify(key),()=>{
+ const f=buffContextFixture();f.data.overrideEffectKey=key;f.template.effectKey=null;f.data.overrideOnEventPriority=true;f.data.onEventPriority=-(2**31);
+ assert.equal(f.options.config.effectKey(),key==null||key===''?null:key);assert.equal(f.options.config.onEventPriority(),-(2**31));
+ assert.equal(f.log.filter(x=>x==='template').length,key==null||key===''?1:0);
+});
+
+test('BuffConfig successful effect override rereads data; event priority retains its one captured data object',()=>{
+ let count=0;const first={overrideEffectKey:'first',overrideOnEventPriority:true,onEventPriority:4},second={overrideEffectKey:'second'};
+ const c=fearProjectileBuffConfig({readData:()=>++count===1?first:second,readTemplate:()=>{throw Error('unexpected template');},isActive:()=>true});
+ assert.equal(c.effectKey(),'second');assert.equal(count,2);count=0;assert.equal(c.onEventPriority(),4);assert.equal(count,1);
+});
+
+test('BuffConfig missing template fails only when its corresponding fallback is selected',()=>{
+ const f=buffContextFixture();f.state.template=null;assert.throws(()=>f.options.config.effectKey(),/null native/);
+ f.data.overrideEffectKey='override';assert.equal(f.options.config.effectKey(),'override');
+ assert.throws(()=>f.options.config.onEventPriority(),/null native/);f.data.overrideOnEventPriority=true;f.data.onEventPriority=0;
+ assert.equal(f.options.config.onEventPriority(),0);
+});
+
+for(const branch of ['empty','null','destroyed','not-character'])test('Reset skips audio receivers for '+branch+' but still captures every context pointer',()=>{
+ const f=buffContextFixture();if(branch==='empty')f.data.audioSignal='';if(branch==='null')f.data.audioSignal=null;
+ if(branch==='destroyed')f.options.isDestroyedOrNull=()=>true;if(branch==='not-character')f.options.asCharacter=()=>null;
+ f.options.readAudioSignals=()=>{throw Error('unexpected signals');};f.run();
+ assert.equal(f.buff.m_source.value,f.source);assert.equal(f.buff.m_sourceProjectile.value,f.sourceProjectile);
+ if(branch==='empty'||branch==='null')assert.ok(!f.log.includes('source-validity'));
+ if(branch==='destroyed')assert.ok(!f.log.includes('character-cast'));
+});
+
+test('Reset audio first successful hook uses newSubsignal, stops traversal and retains the original source as receiver',()=>{
+ const f=buffContextFixture(),castResult={},calls=[];f.options.asCharacter=()=>castResult;
+ f.options.tryHookAudio=(receiver,signal,sub,out)=>{
+  calls.push([receiver,signal,sub,out.newSignal,out.newSubsignal]);
+  if(signal==='start'){out.newSignal='ignored-signal';out.newSubsignal='previous-out';f.buff.audioSignal='changed';return false;}
+  out.newSignal='also-ignored';out.newSubsignal=null;return true;
+ };f.run();
+ assert.deepEqual(calls,[[f.source,'start','fear-audio',null,null],[f.source,'trigger','changed','ignored-signal','previous-out']]);
+ assert.equal(f.buff.audioSignal,null);assert.equal(f.buff.m_source.value,f.source);
+});
+
+test('Reset audio captures one signal array while retaining native indexed traversal',()=>{
+ const f=buffContextFixture(),signals=['start'],seen=[];let reads=0;
+ f.options.readAudioSignals=()=>{reads++;return signals;};
+ f.options.tryHookAudio=(_source,signal)=>{seen.push(signal);if(signal==='start')signals.push('later');return false;};f.run();
+ assert.equal(reads,1);assert.deepEqual(seen,['start','later']);
+});
+
+test('Reset captures all pointers before rereading one data object for the six capabilities',()=>{
+ const f=buffContextFixture(),replacement={...f.data,isDurableBuff:false};
+ f.options.capturePointer=(value,kind)=>{assert.equal(f.buff.m_isDurableBuff,undefined);if(kind==='projectile')f.state.data=replacement;return{value,kind};};
+ f.run();assert.equal(f.buff.m_data,f.data);assert.equal(f.buff.m_isDurableBuff,false);
+});
+
+test('Reset null initial data preserves native data/container writes before the first dereference fails',()=>{
+ const f=buffContextFixture();f.state.data=null;assert.throws(f.run,/null native/);
+ assert.equal(f.buff.m_data,null);assert.equal(f.buff.m_container,f.container);assert.equal(f.buff.key,undefined);
+});
+
+test('Reset audio errors preserve earlier writes, leave pointers untouched and permit retry',()=>{
+ const f=buffContextFixture();let fail=true;
+ f.options.tryHookAudio=()=>{if(fail)throw Error('audio failure');return false;};
+ const context=fearProjectileResetBuffContext(f.options);assert.throws(()=>context.run(),/audio failure/);
+ assert.equal(f.buff.audioSignal,'fear-audio');assert.equal(f.buff.m_source,undefined);fail=false;context.run();assert.equal(f.buff.m_source.value,f.source);
+});
+
+for(const phase of ['config','audio','source-pointer','capabilities'])test('Reset context stops after lifecycle invalidation in '+phase,()=>{
+ const f=buffContextFixture();
+ if(phase==='config')f.options.config={...f.options.config,effectKey:()=>{f.state.active=false;return'late';}};
+ if(phase==='audio')f.options.tryHookAudio=(_s,_k,_sub,out)=>{out.newSubsignal='late';f.state.active=false;return true;};
+ if(phase==='source-pointer')f.options.capturePointer=()=>{f.state.active=false;return'late';};
+ if(phase==='capabilities')Object.defineProperty(f.buff,'m_isDurableBuff',{set(value){assert.equal(value,true);f.state.active=false;},configurable:true});
+ assert.equal(f.run(),null);
+ if(phase==='config')assert.equal(f.buff.effectKey,undefined);
+ if(phase==='audio')assert.equal(f.buff.audioSignal,'fear-audio');
+ if(phase==='source-pointer')assert.equal(f.buff.m_source,undefined);
+ if(phase==='capabilities')assert.equal(f.buff.m_isDamageMissable,undefined);
+ assert.equal(f.buff.m_isLevitatable,undefined);
+});
+
+test('Reset context and config guard reentry before any lifecycle probe effects',()=>{
+ const f=buffContextFixture();let context,config,contextReentry,configReentry;
+ f.options.isActive=()=>{contextReentry=context.run();return true;};context=fearProjectileResetBuffContext(f.options);context.run();assert.equal(contextReentry,null);
+ config=fearProjectileBuffConfig({readData:()=>f.data,readTemplate:()=>f.template,isActive:()=>{configReentry=config.effectKey();return true;}});
+ assert.equal(config.effectKey(),'template-effect');assert.equal(configReentry,null);
+});
 test('original fear modes initialize general before shared combat/attack and retain one shared ranged ability',()=>{
  const source=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),graph=source.modeSwitch.graph;
  const resolve=ref=>ref.m_PathID==='0'?null:ref.m_PathID;

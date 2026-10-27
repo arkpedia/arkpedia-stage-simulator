@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 129 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 135 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -1401,6 +1401,43 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 124-method bundle. Continuation40545156330 at3b7defc7 passed; existing
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
+
+### Reset configuration, source context and audio-hook ordering
+
+The135-method artifact additionally retains BuffConfig.GetEffectKey and
+GetOnEventPriority, Buff's audio getter/setter and effect setter, and
+Character.TryHookAudio. BuffConfig is a value type: metadata's boxed offsets16
+and24 correspond to unboxed template/data offsets0 and8. Effect override uses
+String.IsNullOrEmpty; whitespace is an override. The nonempty branch rereads
+config.data before returning its override. Event priority uses the override
+Boolean, otherwise the template's signed Int32 priority.
+
+Reset's audio cast resolves to Character, and its original source receiver's
+virtual slot106 resolves to TryHookAudio(signal,subSignal,out newSignal,
+out newSubsignal). It captures AudioSignals.SIGNALS_WITH_BUFF once, rereads the
+buff's audio subsignal before each attempt, and stops at the first true return.
+It installs only newSubsignal; newSignal is not installed. The two output slots
+are initialized once and reused across failed attempts. Source, ability and
+projectile pointer construction then occur in that order, followed by one data
+read supplying the six initial durability/miss/control capability fields.
+
+`fearProjectileBuffConfig` and `fearProjectileResetBuffContext` compose these
+selected default branches. Source validity, Character casting, signal-array
+retrieval, virtual audio effects and pointer construction remain explicit
+receivers. The implementation does not substitute the plain Buff ObjectPtr
+adapter for the Entity/Ability/Projectile contexts. It preserves earlier writes
+on errors, rejects reentry, and stops after lifecycle invalidation at external
+effects. It neither clears later Reset state nor changes pool UID validity.
+
+Tests cover nullable/empty/whitespace overrides, missing fallback templates,
+repeated data reads, skipped audio branches, original virtual receiver identity,
+shared outputs, first successful audio replacement, pointer/capability ordering,
+partial failure/retry, reentry and lifecycle cancellation. All815 focused
+native/fear/family/miner tests pass, and --check reproduces the135-method bundle.
+Continuation40547363172 at8efd48d9 passed; full40540699414 ate8664584 remained
+active when rechecked. Full Reset composition, native audio/pointer effects and
+live controller/stage integration remain open. Source/support/receipt/catalogue
+gates are unchanged; all new stages remain test-only.
 
 ### Final elemental-break and shield-source flags
 

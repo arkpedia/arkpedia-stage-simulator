@@ -886,6 +886,64 @@ result['modeSwitch']['buffNotification']['finalFlagInitialization'] = {
     'shieldFields': [c['unique'](lambda f: f['name'] == name, c['fields'](shield_type)) for name in ['_showShieldUI', '_damageMask']],
     'nativeBreakDatabaseEffectsVerified': False, 'nativeShieldCastEffectsVerified': False, 'liveFinalFlagsPhaseVerified': False,
 }
+buff_config = c['type_row']('BuffConfig', 'Torappu.Battle')
+character = c['type_row']('Character', 'Torappu.Battle')
+for owner, names in [(buff_config, ['GetEffectKey', 'GetOnEventPriority']),
+                     (buff, ['get_audioSignal', 'set_audioSignal', 'set_effectKey']), (character, ['TryHookAudio'])]:
+    for name in names:
+        methods.append(c['method'](owner, c['unique'](lambda r: r['name'] == name, owner['methods'])))
+context_loads = []
+for load_rva, expected in [(0x39b10fe, character), (0x39b1116, c['type_row']('AudioSignals', 'Torappu.Battle'))]:
+    pos = v['offset'](v['image_base'] + load_rva)
+    assert v['b'][pos:pos + 3] in [bytes.fromhex('488b15'), bytes.fromhex('488b05')]
+    target = load_rva + 7 + struct.unpack_from('<i', v['b'], pos + 3)[0]
+    usage = v['quad'](v['b'], v['offset'](v['image_base'] + target))
+    assert usage >> 29 == 1
+    ti = (usage & 0x1ffffffe) >> 1
+    tp = v['offset'](v['quad'](v['b'], v['type_table'] + ti * 8))
+    assert (v['uint'](v['b'], tp + 8) >> 16) & 255 == 18 and v['quad'](v['b'], tp) == expected['index']
+    context_loads.append({'loadRva': load_rva, 'encodedUsage': usage, 'typeIndex': ti,
+                          'definitionIndex': expected['index'], 'name': expected['name']})
+config_fields = c['fields'](buff_config)
+assert [(f['name'], f['offset']) for f in config_fields] == [('template', 16), ('data', 24)]
+template_type = v['types'][config_fields[0]['typeData']]
+assert template_type['name'] == 'BuffTemplate'
+context_capabilities = ['isDurableBuff', 'isDamageMissable', 'isSilenceable', 'isStunnable', 'isFreezable', 'isLevitatable']
+context_parameters = []
+for owner, name in [(buff, 'Reset'), (character, 'TryHookAudio')]:
+    row = c['unique'](lambda r: r['name'] == name, owner['methods'])
+    pos = v['method_start'] + row['index'] * 32
+    start, count = v['sint'](v['m'], pos + 12), struct.unpack_from('<H', v['m'], pos + 30)[0]
+    args = []
+    for index in range(count):
+        pp = v['uint'](v['m'], 88) + (start + index) * 12
+        args.append({'name': v['text'](v['uint'](v['m'], pp)), 'typeIndex': v['sint'](v['m'], pp + 8)})
+    context_parameters.append({'type': owner['name'], 'method': name, 'parameters': args})
+assert [p['name'] for p in context_parameters[0]['parameters']] == ['config', 'container', 'source', 'ability', 'extraBlackboard', 'extraBlackboard2', 'sourceProjectile']
+assert [p['name'] for p in context_parameters[1]['parameters']] == ['signal', 'subSignal', 'newSignal', 'newSubsignal']
+audio_slot = c['resolved_slot'](character, 106)
+assert audio_slot['name'] == 'TryHookAudio' and audio_slot['entryRva'] == 0x7f2970
+result['modeSwitch']['buffNotification']['resetContext'] = {
+    'configFields': config_fields, 'unboxedConfigFieldOffsets': {'template': 0, 'data': 8},
+    'templateFields': [c['unique'](lambda f: f['name'] == name, c['fields'](template_type)) for name in ['effectKey', 'onEventPriority']],
+    'dataFields': [c['unique'](lambda f: f['name'] == name, c['fields'](data_type)) for name in
+                   ['buffKey', 'overrideEffectKey', 'overrideOnEventPriority', 'onEventPriority', 'audioSignal', 'enableInitDirectionFromSource', *context_capabilities]],
+    'buffFields': [c['unique'](lambda f: f['name'] == name, c['fields'](buff)) for name in
+                   ['m_data', 'm_container', 'm_source', 'm_ability', 'm_sourceProjectile', *['m_' + name for name in context_capabilities]]],
+    'parameters': context_parameters, 'metadataLoads': context_loads, 'audioVirtualSlot': audio_slot,
+    'audioSignalsField': c['unique'](lambda f: f['name'] == 'SIGNALS_WITH_BUFF', c['fields'](c['type_row']('AudioSignals', 'Torappu.Battle'))),
+    'dataWriteRva': 0x39b0f09, 'containerWriteRva': 0x39b0f19, 'keyWriteRva': 0x39b0f86,
+    'effectConfigCallRva': 0x39b0fa3, 'effectSetterCallRva': 0x39b0fb1, 'directionWriteRva': 0x39b1017,
+    'priorityConfigCallRva': 0x39b1033, 'priorityWriteRva': 0x39b1087, 'audioInitialSetterCallRva': 0x39b10b4,
+    'audioSourceValidityCallRva': 0x39b10f1, 'audioCharacterCastCallRva': 0x39b1108,
+    'audioSignalsReadRva': 0x39b113d, 'audioSubsignalGetterCallRva': 0x39b116f,
+    'audioHookCallRva': 0x39b11bf, 'audioOverrideSetterCallRva': 0x39b11d7,
+    'pointerConstructorCalls': [0x39b11eb, 0x39b1217, 0x39b1243],
+    'pointerWrites': [0x39b11fb, 0x39b1227, 0x39b1253], 'capabilityDataReadRva': 0x39b125b,
+    'capabilityWrites': [0x39b1274, 0x39b127e, 0x39b1288, 0x39b1292, 0x39b129c, 0x39b12a6],
+    'nativeAudioSignalArrayValuesVerified': False, 'nativeCharacterAudioEffectsVerified': False,
+    'nativeContextPointerCapturesVerified': False, 'liveResetContextPhaseVerified': False,
+}
 pool = c['type_row']('ObjectPool`1', 'Torappu.ObjectPool')
 pool_methods = []
 for index in [147561, 147566, 147567, 147558, 147559, 147563, 147564, 147568, 147569]:

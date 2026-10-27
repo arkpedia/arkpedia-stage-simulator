@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,129);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,135);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -225,6 +225,34 @@ test('immediate recycle source enumerates stored pairs and pointer lists before 
  }
  at(q.outerMoveNext,0x4dd4158,'dword ptr [rbx + 0xc], eax');at(q.outerMoveNext,0x4dd41b6,'dword ptr [rbx + 0xc], eax');
  assert.ok(!instructions(m).some(i=>i.mnemonic==='call'&&i.operands==='0x183991a80'),'flush does not filter by current frame');
+});
+
+test('Reset context source binds unboxed BuffConfig fallback, character audio virtual dispatch and ordered pointer/flag captures',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.resetContext;
+ const reset=castMethod(c,'Buff','Reset'),effect=castMethod(c,'BuffConfig','GetEffectKey'),priority=castMethod(c,'BuffConfig','GetOnEventPriority');
+ const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args),`${m.type}.${m.name} ${rva.toString(16)} ${args}`);
+ assert.deepEqual(q.configFields.map(f=>[f.name,f.offset]),[['template',16],['data',24]]);
+ assert.deepEqual(q.unboxedConfigFieldOffsets,{template:0,data:8});
+ assert.deepEqual(q.templateFields.map(f=>[f.name,f.offset]),[['effectKey',0x18],['onEventPriority',0x20]]);
+ at(effect,0x85fa12,'rcx, qword ptr [rcx + 0x58]');at(effect,0x85fa18,'0x1850d34b0');
+ at(effect,0x85fa21,'rax, qword ptr [rbx]');at(effect,0x85fa33,'rax, qword ptr [rbx + 8]');at(effect,0x85fa3c,'rax, qword ptr [rax + 0x58]');
+ at(priority,0x85fa5d,'byte ptr [rax + 0x60], 0');at(priority,0x85fa63,'eax, dword ptr [rax + 0x64]');at(priority,0x85fa73,'eax, dword ptr [rax + 0x20]');
+ at(reset,q.dataWriteRva,'qword ptr [rsi + 0x68], rdx');at(reset,q.containerWriteRva,'qword ptr [rcx], rbx');
+ at(reset,q.effectConfigCallRva,'0x18085fa00');at(reset,q.effectSetterCallRva,'0x1839b7c30');at(reset,q.priorityConfigCallRva,'0x18085fa50');
+ at(reset,q.directionWriteRva,'byte ptr [rsi + 0x248], bl');at(reset,q.priorityWriteRva,'dword ptr [rsi + 0x24c], ebx');
+ at(reset,q.audioInitialSetterCallRva,'0x1839b7b90');at(reset,q.audioSourceValidityCallRva,'0x185ebee90');
+ assert.deepEqual(q.metadataLoads.map(x=>x.name),['Character','AudioSignals']);assert.equal(q.audioSignalsField.name,'SIGNALS_WITH_BUFF');assert.equal(q.audioSignalsField.offset,0);
+ assert.equal(q.audioVirtualSlot.slot,106);assert.equal(q.audioVirtualSlot.name,'TryHookAudio');assert.equal(q.audioVirtualSlot.entryRva,0x7f2970);
+ at(reset,q.audioSignalsReadRva,'rdi, qword ptr [rax]');at(reset,q.audioSubsignalGetterCallRva,'0x1839b6560');at(reset,q.audioHookCallRva,'r10');
+ at(reset,0x39b119f,'rcx, r15');at(reset,0x39b11cc,'rdx, qword ptr [rsp + 0x58]');at(reset,q.audioOverrideSetterCallRva,'0x1839b7b90');
+ assert.deepEqual(q.parameters.map(p=>p.parameters.map(x=>x.name)),[
+  ['config','container','source','ability','extraBlackboard','extraBlackboard2','sourceProjectile'],['signal','subSignal','newSignal','newSubsignal']]);
+ for(const rva of q.pointerConstructorCalls)at(reset,rva,'0x184035830');
+ for(const rva of q.pointerWrites)at(reset,rva,'xmmword ptr [rcx], xmm0');
+ at(reset,q.capabilityDataReadRva,'rcx, qword ptr [r14 + 8]');
+ for(const [i,offset] of [0x1e0,0x1e1,0x1e2,0x1e3,0x1e4,0x1e7].entries())at(reset,q.capabilityWrites[i],`byte ptr [rsi + 0x${offset.toString(16)}], al`);
+ assert.ok(castMethod(c,'Character','TryHookAudio'));assert.ok(castMethod(c,'Buff','get_audioSignal'));assert.ok(castMethod(c,'Buff','set_audioSignal'));assert.ok(castMethod(c,'Buff','set_effectKey'));
+ for(const key of ['nativeAudioSignalArrayValuesVerified','nativeCharacterAudioEffectsVerified','nativeContextPointerCapturesVerified','liveResetContextPhaseVerified'])assert.equal(q[key],false);
 });
 
 test('final flag source binds elemental-break iterator disposal and first visible BlockDamage on ON_TAKE_DAMAGE',()=>{
