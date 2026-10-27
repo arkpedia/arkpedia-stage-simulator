@@ -1,5 +1,44 @@
 # Development priorities
 
+### 27 October: default-mode miner listeners and zero-duration local output
+
+Checkpoint `633562fc` was concrete progress. Its continuation `40481804780` now
+passes native-source reproduction, focused Ubuntu and all browsers except the
+still-running 17-12 job; focused Windows is also still running. Full run
+`40477137676` has six passing matrix jobs and two live Windows Node22 jobs.
+Neither observation timeout nor a newer checkpoint authorizes restarting it.
+
+Resolved the timer updater's usage6 value as an actual Il2CppMethodSpec, not a
+method-definition index. It names Torappu.MathUtil.Max with a single System.Single
+argument. The retained generic body calls the separately bound mscorlib Single
+CompareTo implementation and preserves the larger existing/new timer. The shadow
+predicate loads an exact float32 0.001 threshold. Its state is shadow only when
+the timer is below that threshold, the tile is shadow-capable, and permanent
+escape is absent. A missing duration's zero cannot shorten another timer.
+
+The three exact CN talent components are beneath the single default UnitMode,
+via retained transform/GameObject paths. They are mode0 talents, not roots;
+`_defaultModeIndex=-1` does not change the transform ownership. Actual slot6 binds
+Unit._InitUnitModes to UnitMode.InitOnce, then _InitTalents calls SetParentMode.
+The producer now retains 28 complete methods plus the shared generic maximum,
+its exact native specification/type argument, threshold bytes and transform routes.
+
+Added an internal `stageLocalMinerListeners` receiver for the exact local key,
+prefab and literal FearLoseBlood.value=0 blackboard. It shares the reviewed
+listener lifecycle but uses duration zero for the absent times parameter. It
+does not borrow canonical DB talents or register a complete controller. Five
+local cases cover retained listeners without fog suppression, existing-timer
+preservation, Fear immunity/guardian finish, zero-value named-Fear blood pulses,
+strict parameter rejection and deployment retirement. All 115 combined source,
+listener, family, Fear-affliction and stage-local compilation cases pass.
+
+Next integrate the exact local miner controller with its attack/heal/neutral
+actions and source gate, then finish fear-projectile selector and self-death/
+projectile lifecycle review before stage16-9 admission. Full Chapter16/17 and
+operator/module scope remains open; cross-version/runtime/frame parity is not
+claimed. Keep new stages test-only, four quarantined deletions unstaged and no
+merge/deployment/public promotion.
+
 ### 27 October: native miner assignment and missing-duration path
 
 The preceding website clarification was not simulator progress. Revalidated the

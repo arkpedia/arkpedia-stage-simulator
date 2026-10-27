@@ -10,6 +10,20 @@ export function minerListeners(record){
  const value=record.talents.bb['FearLoseBlood.value'],duration=record.talents.bb['TileEscapeShadowManager.times'];
  if(record.key!=='enemy_3010_mcreep'||record.prefabKey!==record.key||!Number.isFinite(value)||value<0||!(duration>0))
   throw Error('Unreviewed ordinary miner listener parameters');
+ return listeners(value,duration);
+}
+
+// Internal stage-local action receiver only. The controller/support gate remains
+// closed. Missing times uses the native action's zero fallback, never DB talents.
+export function stageLocalMinerListeners(record){
+ const bb=record.talents?.bb;
+ if(record.key!=='enemy_3010_mcreep_a'||record.prefabKey!=='enemy_3010_mcreep'
+  ||!bb||Object.keys(bb).length!==1||bb['FearLoseBlood.value']!==0)
+  throw Error('Unreviewed stage-local miner listener parameters');
+ return listeners(0,0);
+}
+
+function listeners(value,duration){
  return{
   spawn(b,e,a){
    const life=e.deploySeq;a.active=true;a.blood=null;a.handles=[];e.mem.ch16MinerListeners=a;

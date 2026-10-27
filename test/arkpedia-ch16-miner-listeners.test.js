@@ -6,11 +6,63 @@ import {createHash} from 'node:crypto';
 import {execFileSync} from 'node:child_process';
 import {battle,keys} from './helpers/ch17Harness.js';
 import {chapter16Shadow} from '../server/sim/content/chapter16-shadow.js';
+import {stageLocalMinerListeners} from '../server/sim/content/chapter16-miner-listeners.js';
+import {compileStageLocalEnemy} from '../shared/arkpedia/enemy-records.js';
+import {makeBattle} from './helpers/battleHarness.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
 const contract=read('data/candidates/arkpedia-ch16-miner-listener-contract.json');
 const bloodKey=contract.blood.buffKey,listenerKey=contract.listener.buff.buffKey,shadowKey=contract.shadow.buff.buffKey;
 function fixture(){const f=battle(keys[0]);f.state=f.e.mem.ch16MinerListeners;f.env=chapter16Shadow(f.b);f.tile=10*21+6;return f;}
 function feared(f){f.e.hp=2000;assert.equal(f.b.applyStatus(f.e,'fear',{duration:30}),true);f.h.runUntil(()=>!!f.state.blood,1);return f.state.blood;}
+
+function localFixture(){
+ const ref=read('data/candidates/arkpedia-stage-16-9-source.json').rawLevel.enemyDbRefs.find(r=>r.useDb===false);
+ const record=compileStageLocalEnemy(ref,{damageType:'PHYSIC'}),receiver=stageLocalMinerListeners(record);
+ const h=makeBattle({content:'generic',autoFinish:false,defs:{enemies:{[record.key]:record}}});
+ h.b.start();const e=h.spawn(record.key,{pos:[10,6]}),state={};
+ e.profile.noAttack=true;e.base.moveSpeed=0;e.markDirty();receiver.spawn(h.b,e,state);
+ h.b.on('tick',()=>receiver.tick(h.b,e,state));
+ return{h,b:h.b,e,state,record,env:chapter16Shadow(h.b)};
+}
+
+test('stage-local miner keeps its mode listeners without borrowing canonical shadow duration',()=>{
+ const f=localFixture();assert.ok(f.state.listener);assert.ok(f.state.shadow);
+ f.env.setShadowSource(f.e,[[10,6]]);assert.equal(f.env.isShadow(10,6),true);
+ f.h.run(.65);assert.equal(f.env.isShadow(10,6),true);assert.equal(f.state.blood,null);
+ assert.ok(f.state.nextShadow>f.b.time,'zero duration does not omit the recurring listener');
+ assert.deepEqual(f.b.errors,[]);
+});
+
+test('zero-duration local shadow output cannot shorten another existing suppression',()=>{
+ const f=localFixture();f.env.setShadowSource(f.e,[[10,6]]);f.env.suppressShadow(10,6,2);
+ const key=10*21+6,until=f.env.shadowSuppressedUntil.get(key);
+ f.h.run(.65);assert.equal(f.env.shadowSuppressedUntil.get(key),until);assert.equal(f.env.isShadow(10,6),false);
+ f.h.run(1.5);assert.equal(f.env.isShadow(10,6),true);assert.deepEqual(f.b.errors,[]);
+});
+
+test('local Fear immunity and guardian finish preserve the independent listener ownership',()=>{
+ const f=localFixture();f.e.hp=6000;assert.equal(f.b.applyStatus(f.e,'fear',{duration:30}),false);
+ f.b.addBuff(f.e,{key:'gyegrd_a[exist]',persist:true});f.h.run(.35);
+ assert.equal(f.state.shadow,null);assert.ok(f.state.listener);assert.equal(f.state.blood,null);assert.equal(f.e.hp,6000);
+ f.b.removeBuff(f.e,'gyegrd_a[exist]');f.h.run(.65);assert.equal(f.state.shadow,null);
+});
+
+test('a literal named fear buff still owns a zero-value local blood clock without HP loss',()=>{
+ const f=localFixture();f.e.hp=6000;f.b.addBuff(f.e,{key:'fear',persist:true});
+ f.h.run(.35);assert.ok(f.state.blood);const blood=f.state.blood;
+ f.h.run(2.1);assert.equal(f.e.hp,6000);assert.equal(f.state.blood,blood);
+ f.b.removeBuff(f.e,'fear');f.h.run(.35);assert.equal(f.state.blood,null);assert.deepEqual(f.b.errors,[]);
+});
+
+test('local listener rejects altered parameter contracts and detaches when its deployment ends',()=>{
+ const f=localFixture();
+ for(const change of [r=>r.key='enemy_3010_mcreep',r=>r.talents.bb['FearLoseBlood.value']=200,
+  r=>r.talents.bb['TileEscapeShadowManager.times']=.5]){
+  const r=structuredClone(f.record);change(r);assert.throws(()=>stageLocalMinerListeners(r),/Unreviewed/);
+ }
+ f.e.deploySeq++;f.h.run(.35);assert.equal(f.state.active,false);assert.equal(f.state.listener,null);assert.equal(f.state.shadow,null);
+ assert.deepEqual(f.b.errors,[]);
+});
 test('literal listener recipe reproduces graph, aliases, independent first interval and terminal shadow finish',()=>{
  for(const pin of Object.values(contract.sources))assert.equal(createHash('sha256').update(readFileSync(new URL('../'+pin.path,import.meta.url))).digest('hex'),pin.sha256);
  assert.equal(contract.blood.firstTriggerInterval,1);assert.equal(contract.blood.triggerInterval,1);

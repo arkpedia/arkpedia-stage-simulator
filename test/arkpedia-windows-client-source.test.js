@@ -71,15 +71,51 @@ const castMethod=(c,type,name)=>{
 };
 
 test('miner talent evidence pins complete native methods and exact source inputs without admission',()=>{
- const c=read(minerTalentsPath);assert.equal(c.methods.length,24);
+ const c=read(minerTalentsPath);assert.equal(c.methods.length,28);
  for(const p of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+p.path,import.meta.url))),p.sha256);
- for(const method of c.methods)for(const chunk of method.chunks){
+ for(const method of [...c.methods,c.genericTimerMaximum])for(const chunk of method.chunks){
   const raw=Buffer.from(chunk.base64,'base64');assert.equal(raw.length,chunk.endRva-chunk.beginRva);assert.equal(sha(raw),chunk.sha256);
   assert.ok(chunk.unwindRva>0);assert.ok(chunk.instructions.length>0);
  }
  for(const field of ['runtimeDispatchVerified','frameParity','crossVersionParity'])assert.equal(c[field],false);
  assert.equal(read('data/candidates/arkpedia-ch16-enemy-support.json').enemies.enemy_3010_mcreep_a,undefined);
  assert.equal(read('data/arkpedia-stages.json').stages.some(s=>s.code==='16-9'),false);
+});
+
+test('miner timer maximum resolves the actual generic method specification and float threshold',()=>{
+ const c=read(minerTalentsPath),max=c.genericTimerMaximum;
+ assert.equal(max.type,'MathUtil');assert.equal(max.name,'Max');assert.equal(max.encodedUsage>>>29,6);
+ assert.equal((max.encodedUsage&0x1ffffffe)>>>1,max.methodSpecIndex);
+ assert.equal(max.classInstantiation,-1);assert.equal(max.typeArgument.name,'System.Single');
+ assert.equal((max.typeArgument.typeBits>>>16)&255,12);
+ const code=instructions(max),compare=c.methods.find(m=>m.entryRva===0x51d7130);
+ assert.equal(compare.type,'Single');assert.equal(compare.name,'CompareTo');assert.equal(compare.image,'mscorlib.dll');
+ assert.ok(code.some(i=>i.mnemonic==='call'&&i.operands==='0x'+(c.imageBase+compare.entryRva).toString(16)));
+ assert.ok(code.some(i=>i.mnemonic==='js'&&i.operands==='0x18400df1b'));
+ assert.equal(c.shadowThreshold.hex,'6f12833a');assert.equal(c.shadowThreshold.value,Math.fround(.001));
+ const state=instructions(castMethod(c,'Mainline16Manager','_isShadowTileInShadowState'));
+ assert.ok(state.some(i=>i.rva===0x60067a&&i.mnemonic==='comiss'&&i.operands==='xmm1, xmm0'));
+ assert.ok(state.some(i=>i.rva===0x60067d&&i.mnemonic==='jbe'&&i.operands==='0x1806006db'));
+});
+
+test('miner talents follow the exact default-mode transform hierarchy and mode attachment setter',()=>{
+ const c=read(minerTalentsPath),g=read('data/candidates/arkpedia-ch16-miner-source.json');
+ const rows=Object.fromEntries(Object.values(g.prefabs)[0].map(r=>[r.pathId,JSON.parse(r.originalJson)]));
+ assert.deepEqual(c.minerModeTalents.map(t=>t.name),['FearLoseBlood','GetHeal','TileEscapeShadowManager']);
+ for(const t of c.minerModeTalents){
+  assert.equal(t.defaultModeIndex,-1);assert.equal(t.modeIndex,0);
+  assert.equal(rows[t.gameObjectPathId].m_Name,t.name);
+  for(let i=0;i<t.transformPathIds.length;i++){
+   const transform=rows[t.transformPathIds[i]];assert.equal(transform.m_GameObject.m_PathID,t.gameObjectPathIds[i]);
+   if(i+1<t.transformPathIds.length)assert.equal(transform.m_Father.m_PathID,t.transformPathIds[i+1]);
+  }
+  assert.ok(rows[t.gameObjectPathIds.at(-1)].m_Component.some(ref=>ref.component.m_PathID===t.nearestModeComponentPathId));
+ }
+ const slot=c.modeInitializationSlot;assert.equal(slot.slot,6);assert.equal(slot.name,'InitOnce');
+ const once=instructions(castMethod(c,'UnitMode','InitOnce')),collect=castMethod(c,'UnitMode','_InitTalents');
+ assert.ok(once.some(i=>i.mnemonic==='call'&&i.operands==='0x'+(c.imageBase+collect.entryRva).toString(16)));
+ const setter=castMethod(c,'BasicTalent','SetParentMode');
+ assert.ok(instructions(collect).some(i=>i.mnemonic==='call'&&i.operands==='0x'+(c.imageBase+setter.entryRva).toString(16)));
 });
 
 test('native miner duration reads the exact times literal with a zero fallback and forwards the result',()=>{
