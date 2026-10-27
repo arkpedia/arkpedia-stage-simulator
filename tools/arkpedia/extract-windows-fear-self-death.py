@@ -1818,6 +1818,53 @@ result['modeSwitch']['buffNotification']['newBuff']['managedValueStacks'] = {
     'nativeTypedValueCopiesVerified': False, 'nativeArrayResizeVerified': False,
     'nativePointerSpecializationVerified': False, 'liveValueStackStorageVerified': False,
 }
+# Decode only Stack<ObjectPtr<Object>>'s selected nested canonical signature.
+# Do not broaden the shared direct-type specification reader.
+pointer_stack_inst_table = v['offset'](v['quad'](v['b'], v['registration'] + 24))
+pointer_stack_inst = v['offset'](v['quad'](v['b'], pointer_stack_inst_table + 12499 * 8))
+assert v['quad'](v['b'], pointer_stack_inst) == 1
+pointer_stack_args = v['offset'](v['quad'](v['b'], pointer_stack_inst + 8))
+pointer_stack_arg = v['offset'](v['quad'](v['b'], pointer_stack_args))
+pointer_stack_bits = v['uint'](v['b'], pointer_stack_arg + 8)
+assert (pointer_stack_bits >> 16) & 255 == 21
+pointer_stack_generic = v['offset'](v['quad'](v['b'], pointer_stack_arg))
+pointer_stack_definition = v['offset'](v['quad'](v['b'], pointer_stack_generic))
+assert v['quad'](v['b'], pointer_stack_definition) == 1324
+assert v['types'][1324]['name'] == 'ObjectPtr`1'
+assert (v['uint'](v['b'], pointer_stack_definition + 8) >> 16) & 255 == 17
+pointer_stack_object_inst = v['offset'](v['quad'](v['b'], pointer_stack_generic + 8))
+assert v['quad'](v['b'], pointer_stack_object_inst) == 1
+pointer_stack_object_args = v['offset'](v['quad'](v['b'], pointer_stack_object_inst + 8))
+pointer_stack_object = v['offset'](v['quad'](v['b'], pointer_stack_object_args))
+assert v['quad'](v['b'], pointer_stack_object) == 37078 and v['types'][37078]['name'] == 'Object'
+assert (v['uint'](v['b'], pointer_stack_object + 8) >> 16) & 255 == 28
+pointer_stack_methods = []
+for index, expected_definition, expected_entry in [(174542, 225124, 0x490a5c0), (174543, 225125, 0x490acc0),
+    (174544, 225127, 0x490b6c0), (174545, 225128, 0x490b2a0)]:
+    definition, class_inst, method_inst = struct.unpack_from('<iii', v['b'], priority['spec_start'] + index * 12)
+    assert (definition, class_inst, method_inst) == (expected_definition, 12499, -1)
+    row = c['unique'](lambda r: r['index'] == definition, v['types'][38203]['methods'])
+    assert v['types'][38203]['name'] == 'Stack`1'
+    mapping = priority['mapping'][index]
+    entry = v['quad'](v['b'], priority['pointer_table'] + mapping['methodPointerIndex'] * 8) - v['image_base']
+    assert entry == expected_entry
+    pointer_stack_methods.append({'index': index, 'definition': row, 'declaringType': 'Stack`1', 'declaringTypeIndex': 38203,
+        'classInstantiation': class_inst, 'methodInstantiation': method_inst,
+        'nativeMapping': mapping, 'entryRva': entry, 'chunks': c['code'](entry)})
+result['modeSwitch']['buffNotification']['newBuff']['managedPointerStack'] = {
+    'canonicalMethods': pointer_stack_methods, 'valueWidth': 16, 'classInstantiation': 12499,
+    'nestedSignature': {'definitionIndex': 1324, 'name': 'ObjectPtr`1', 'typeBits': pointer_stack_bits,
+        'typeHex': v['b'][pointer_stack_arg:pointer_stack_arg + 16].hex(),
+        'definitionTypeHex': v['b'][pointer_stack_definition:pointer_stack_definition + 16].hex(),
+        'argument': {'typeIndex': 37078, 'name': 'Object', 'kind': 28,
+            'typeHex': v['b'][pointer_stack_object:pointer_stack_object + 16].hex()}},
+    'popVersionRva': 0x490ad17, 'popSizeRva': 0x490ad1e, 'popCopyRva': 0x490ad32,
+    'popClearRva': 0x490ad4c, 'popReturnCopyRva': 0x490ad54,
+    'pushTemporaryCopyRva': 0x490b6eb, 'pushResizeCallRva': 0x490b701,
+    'resizeCallRva': 0x490b2e7, 'resizeArrayReloadRva': 0x490b2ea, 'resizeSizeReloadRva': 0x490b2f3,
+    'nativeConcreteContextDispatchVerified': False, 'nativeArrayResizeVerified': False,
+    'nativeGcBarrierVerified': False, 'livePointerStackStorageVerified': False,
+}
 context_stack_canonical = []
 for index in [24503, 24504, 24505, 24506, 24513, 24514, 24515, 24509, 24510, 24511, 24517, 24518, 24519]:
     spec = priority['specification'](index)

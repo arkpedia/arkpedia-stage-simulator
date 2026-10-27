@@ -1402,6 +1402,35 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
 
+### Managed ObjectPtr stack storage and composed action guards
+
+Four additional canonical specifications retain complete Stack<ObjectPtr<Object>>
+Peek, Pop, Push and PushWithResize bodies. A selected nested-signature decoder
+checks class instantiation12499, ObjectPtr definition1324 as a value type, and
+System.Object definition37078 as the reference argument. The direct-type reader
+is unchanged; the selected type records are retained as raw hex alongside the
+native mappings. The202 ordinary methods and all earlier evidence are unchanged.
+
+`fearProjectileManagedPointerStacks` supplies16-byte pointer-value storage
+through the selected managed value-stack implementation. Push copies pointer
+fields before resize; Pop increments version and reduces count, saves the
+pointer value, clears the original slot to null object/zero UID, then returns
+a separate copy. Pointer locks still validate saved UIDs against live objects.
+The canonical signature does not certify concrete runtime RGCTX dispatch.
+
+Action dispatch tests now compose all ten context fields with managed storage:
+six pointer stacks, two class-reference stacks, Modifier and AttackInfo stacks.
+Snapshot capture, frame duplication, four setters and guard disposal run through
+those receivers. Normal, thrown, cancelled and nested actions restore outer
+frames; stale UID locks return null without changing stored identity; repeated
+empty disposal leaves versions unchanged. Clearing assertions distinguish
+pointer/reference/Modifier slots from retained AttackInfo bytes. Copy/default
+receivers and Array.Resize allocation remain explicit, and GC barriers and live
+controller/stage integration remain unverified. All1163 focused native/fear/
+family/miner tests pass. Source/support/receipt/catalogue gates remain unchanged;
+new stages remain test-only. This checkpoint stays local outside pending upload
+authorization.
+
 ### Managed Modifier and AttackInfo stack storage
 
 The202 ordinary methods remain unchanged. Eight additional canonical

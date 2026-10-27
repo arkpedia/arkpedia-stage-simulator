@@ -43,7 +43,68 @@ import {fearProjectileBuffAttributeProvider} from '../server/sim/content/chapter
 import {fearProjectileRunBuffActions} from '../server/sim/content/chapter16-fear-buff-run-actions.js';
 import {fearProjectileContextGuards} from '../server/sim/content/chapter16-fear-context-guard.js';
 import {fearProjectileContextSnapshots} from '../server/sim/content/chapter16-fear-context-snapshot.js';
-import {fearProjectileContextPointerStacks,fearProjectileContextValueStacks,fearProjectileManagedReferenceStacks,fearProjectileManagedValueStacks} from '../server/sim/content/chapter16-fear-context-stacks.js';
+import {fearProjectileContextPointerStacks,fearProjectileContextValueStacks,fearProjectileManagedReferenceStacks,fearProjectileManagedValueStacks,fearProjectileManagedPointerStacks} from '../server/sim/content/chapter16-fear-context-stacks.js';
+
+test('managed ObjectPtr storage captures pointer fields before resizing and clears references before returning Pop copies',()=>{
+ const obj={uid:7},pointer={obj,cachedUid:7},storage={_array:[],_size:0,_version:0},
+  copyPointer=value=>({obj:value.obj,cachedUid:value.cachedUid}),api=fearProjectileManagedPointerStacks({copyPointer,resizeArray:(stack,length)=>{
+   assert.equal(length,4);pointer.cachedUid=9;stack._array=Array.from({length},()=>({obj:null,cachedUid:0}));
+  }});
+ api.push(storage,pointer);assert.equal(storage._array[0].cachedUid,7);assert.equal(api.peek(storage).obj,obj);
+ const result=api.pop(storage);assert.deepEqual(result,{obj,cachedUid:7});assert.deepEqual(storage._array[0],{obj:null,cachedUid:0});
+ assert.equal(storage._size,0);assert.equal(storage._version,2);result.cachedUid=20;assert.equal(storage._array[0].cachedUid,0);assert.throws(()=>api.pop(storage),/empty/);
+});
+
+function managedActionContextFixture(){
+ const f=actionDispatchFixture(),g=contextGuardsFixture(),pointers=fearProjectileContextPointers({readUid:value=>value.uid,
+  isDestroyedOrNull:value=>value==null||value.destroyed===true,isActive:()=>true}),
+  resizeArray=(stack,length)=>{const old=stack._array;stack._array=Array.from({length},(_,i)=>i<old.length?old[i]:null);},
+  ptr=fearProjectileManagedPointerStacks({copyPointer:pointers.copy,resizeArray}),refs=fearProjectileManagedReferenceStacks({resizeArray}),
+  mf=managedValueFixture('Modifier'),af=managedValueFixture('AttackInfo'),modifier=fearProjectileManagedValueStacks({...mf.options,resizeArray}),attack=fearProjectileManagedValueStacks({...af.options,resizeArray}),
+  pointerFields=new Set(['m_source','m_target','m_buff','m_projectile','m_tile','m_mainBuff']),
+  wrap=(api,defaultValue,copyValue)=>fearProjectileContextValueStacks({readCount:api.count,peekStored:api.peek,popStored:api.pop,defaultValue,copyValue}),
+  pointerContext=fearProjectileContextPointerStacks({readCount:ptr.count,peekStored:ptr.peek,popStored:ptr.pop,pushStored:ptr.push,wrapPointer:pointers.capture,copyPointer:pointers.copy,lockPointer:pointers.lock}),
+  refContext=wrap(refs,()=>null,value=>value),modifierContext=wrap(modifier,mf.options.defaultValue,mf.options.copyValue),attackContext=wrap(attack,af.options.defaultValue,af.options.copyValue);
+ for(const [index,field]of g.fields.entries()){
+  const value=g.context[field][0];value.uid=index+1;const stack={field,_array:[],_size:0,_version:0};g.context[field]=stack;
+  if(pointerFields.has(field))pointerContext.push(stack,value);
+  else if(field==='m_modifier')modifier.push(stack,mf.value);
+  else if(field==='m_atkInfo')attack.push(stack,af.value);
+  else refs.push(stack,value);
+ }
+ for(const [index,value]of [f.source,f.owner,f.buff,f.owner.tile].entries())value.uid=100+index;
+ const snapshots=fearProjectileContextSnapshots({context:g.context,
+  peekReference:stack=>pointerFields.has(stack.field)?pointerContext.getValue(stack):refContext.getValue(stack),peekModifier:modifierContext.getValue,peekAttackInfo:attackContext.getValue,
+  copyModifier:mf.options.copyValue,copyAttackInfo:af.options.copyValue,pushPointer:pointerContext.push,pushReferenceValue:refs.push,pushModifier:modifier.push,pushAttackInfo:attack.push});
+ Object.assign(g.options,{isActive:()=>f.state.active,duplicateAll:()=>snapshots.duplicateAll(),popPointer:pointerContext.pop,pushPointer:pointerContext.push,
+  popValue:stack=>stack.field==='m_modifier'?modifierContext.pop(stack):stack.field==='m_atkInfo'?attackContext.pop(stack):refContext.pop(stack)});
+ const guards=g.adapter();Object.assign(f.options,{readContext:()=>g.context,beginChangeGuard:guards.begin,setBuff:guards.setBuff,setSource:guards.setSource,
+  setTarget:guards.setTarget,setTile:guards.setTile,disposeGuard:guards.dispose,runActionArray:()=>snapshots.takeSnapshot(),copySnapshot:snapshots.copySnapshot});
+ return{f,g,snapshots,guards,pointerFields,prior:snapshots.takeSnapshot()};
+}
+for(const mode of ['success','exception','cancel','nested'])test('action context uses managed storage through '+mode+' and restores every outer frame',()=>{
+ const {f,g,snapshots,guards,pointerFields,prior}=managedActionContextFixture();
+ f.options.runActionArray=()=>{
+  assert.ok(g.fields.every(field=>g.context[field]._size===2));
+  if(mode==='exception')throw Error('action failed');
+  if(mode==='nested'){
+   const guard=guards.begin(g.context),target={uid:200};assert.ok(g.fields.every(field=>g.context[field]._size===3));guards.setTarget(guard,target);
+   assert.equal(snapshots.takeSnapshot().target,target);guards.dispose(guard);assert.equal(snapshots.takeSnapshot().target,f.owner);
+  }
+  const result=snapshots.takeSnapshot();if(mode==='cancel')f.state.active=false;return result;
+ };
+ if(mode==='exception')assert.throws(()=>f.adapter().run(24,true),/action failed/);
+ else{const result=f.adapter().run(24,true);if(mode==='cancel')assert.equal(result,null);else{assert.equal(result.source,f.source);assert.equal(result.target,f.owner);assert.equal(result.buff,f.buff);assert.equal(result.tile,f.owner.tile);}}
+ assert.ok(g.fields.every(field=>g.context[field]._size===1));assert.deepEqual(snapshots.takeSnapshot(),prior);
+ for(const field of g.fields){const stack=g.context[field];if(pointerFields.has(field))assert.deepEqual(stack._array[1],{obj:null,cachedUid:0});
+  else if(field==='m_modifier')assert.equal(stack._array[1].owner,null);else if(field==='m_atkInfo')assert.equal(stack._array[1].raw[0],7);else assert.equal(stack._array[1],null);}
+ guards.dispose({m_context:g.context});const versions=g.fields.map(field=>g.context[field]._version);guards.dispose({m_context:g.context});assert.deepEqual(g.fields.map(field=>g.context[field]._version),versions);
+ const empty=snapshots.takeSnapshot();assert.equal(empty.source,null);assert.equal(empty.ability,null);assert.ok(empty.modifier.raw.every(v=>v===0));assert.ok(empty.atkInfo.raw.every(v=>v===0));
+});
+test('managed pointer storage retains stale UID fields while context locking rejects a recycled source',()=>{
+ const {f,g,snapshots,prior}=managedActionContextFixture();f.options.runActionArray=()=>{f.source.uid++;assert.equal(g.context.m_source._array[1].cachedUid,100);return snapshots.takeSnapshot();};
+ const result=f.adapter().run(24,true);assert.equal(result.source,null);assert.deepEqual(snapshots.takeSnapshot(),prior);assert.deepEqual(g.context.m_source._array[1],{obj:null,cachedUid:0});
+});
 
 const managedValueFixture=specialization=>{
  const owner=specialization==='Modifier'?{}:undefined,keys=specialization==='Modifier'?[]:undefined,

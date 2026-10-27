@@ -31,11 +31,11 @@ export function fearProjectileManagedReferenceStacks({resizeArray}){
  });
 }
 
-// Selected native Stack<Modifier>/Stack<AttackInfo> storage. Copy/default
+// Selected native Stack<Modifier>/Stack<AttackInfo>/Stack<ObjectPtr> storage. Copy/default
 // receivers implement typed value semantics, including embedded references;
 // they must not substitute a recursive clone for the native struct layout.
 export function fearProjectileManagedValueStacks({specialization,resizeArray,copyValue,defaultValue}){
- if(!['Modifier','AttackInfo'].includes(specialization))throw new TypeError('Fear managed value stack requires a reviewed specialization');
+ if(!['Modifier','AttackInfo','ObjectPtr'].includes(specialization))throw new TypeError('Fear managed value stack requires a reviewed specialization');
  if([resizeArray,copyValue,defaultValue].some(fn=>typeof fn!=='function'))throw new TypeError('Fear managed value stack requires typed copy/default and native Array.Resize callers');
  const array=stack=>nonnull(nonnull(stack)._array);
  const index=(value,storage)=>{if((value>>>0)>=storage.length)throw new RangeError('Fear managed stack array bounds');return value;};
@@ -52,7 +52,7 @@ export function fearProjectileManagedValueStacks({specialization,resizeArray,cop
    nonnull(stack);const size=stack._size,storage=array(stack),at=top(size,storage);
    stack._version=(stack._version+1)|0;stack._size=at;
    const value=copyValue(storage[index(at,storage)]);
-   if(specialization==='Modifier'){storage[index(at,storage)]=defaultValue();return copyValue(value);}
+   if(specialization!=='AttackInfo'){storage[index(at,storage)]=defaultValue();return copyValue(value);}
    return value;
   },
   push(stack,value){
@@ -61,6 +61,11 @@ export function fearProjectileManagedValueStacks({specialization,resizeArray,cop
    storage[size]=copyValue(value);stack._version=(stack._version+1)|0;stack._size=(size+1)|0;
   },pushWithResize,
  });
+}
+
+export function fearProjectileManagedPointerStacks({resizeArray,copyPointer}){
+ return fearProjectileManagedValueStacks({specialization:'ObjectPtr',resizeArray,copyValue:copyPointer,
+  defaultValue:()=>({obj:null,cachedUid:0})});
 }
 
 // Default reference-shared ContextPtrStack operations. Pointer construction,

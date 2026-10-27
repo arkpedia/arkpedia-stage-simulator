@@ -533,6 +533,22 @@ test('context snapshot source binds distinct capture/push orders and closed refe
  assert.equal(q.nativeContextStackEffectsVerified,false);assert.equal(q.nativeNestedValueCopiesVerified,false);assert.equal(q.liveContextSnapshotsVerified,false);
 });
 
+test('managed pointer stack source binds the nested ObjectPtr<Object> canonical signature and complete sixteen-byte storage bodies',()=>{
+ const q=read('data/candidates/arkpedia-windows-fear-self-death-source.json').modeSwitch.buffNotification.newBuff.managedPointerStack;
+ assert.equal(q.valueWidth,16);assert.equal(q.classInstantiation,12499);assert.equal(q.nestedSignature.definitionIndex,1324);assert.equal(q.nestedSignature.name,'ObjectPtr`1');
+ assert.equal((q.nestedSignature.typeBits>>>16)&255,21);assert.deepEqual([q.nestedSignature.argument.typeIndex,q.nestedSignature.argument.kind,q.nestedSignature.argument.name],[37078,28,'Object']);
+ for(const hex of [q.nestedSignature.typeHex,q.nestedSignature.definitionTypeHex,q.nestedSignature.argument.typeHex])assert.equal(Buffer.from(hex,'hex').length,16);
+ assert.deepEqual(q.canonicalMethods.map(m=>[m.index,m.definition.name,m.entryRva]),[[174542,'Peek',0x490a5c0],[174543,'Pop',0x490acc0],[174544,'Push',0x490b6c0],[174545,'PushWithResize',0x490b2a0]]);
+ for(const method of q.canonicalMethods){assert.equal(method.classInstantiation,12499);assert.equal(method.methodInstantiation,-1);assert.ok(method.nativeMapping);
+  for(const chunk of method.chunks){const bytes=Buffer.from(chunk.base64,'base64');assert.equal(bytes.length,chunk.endRva-chunk.beginRva);assert.equal(sha(bytes),chunk.sha256);}}
+ const at=(entry,rva,args)=>assert.ok(instructions(q.canonicalMethods.find(m=>m.entryRva===entry)).some(i=>i.rva===rva&&i.operands===args));
+ at(0x490acc0,q.popVersionRva,'dword ptr [rbx + 0x1c]');at(0x490acc0,q.popSizeRva,'dword ptr [rbx + 0x18], esi');
+ at(0x490acc0,q.popCopyRva,'xmm0, xmmword ptr [rdi + rax*8]');at(0x490acc0,q.popClearRva,'xmmword ptr [rcx], xmm1');at(0x490acc0,q.popReturnCopyRva,'xmm0, xmmword ptr [rsp + 0x20]');
+ at(0x490b6c0,q.pushTemporaryCopyRva,'xmmword ptr [rsp + 0x20], xmm0');at(0x490b6c0,q.pushResizeCallRva,'qword ptr [rax + 8]');
+ at(0x490b2a0,q.resizeCallRva,'qword ptr [rax + 8]');at(0x490b2a0,q.resizeArrayReloadRva,'rcx, qword ptr [rbx + 0x10]');at(0x490b2a0,q.resizeSizeReloadRva,'rax, dword ptr [rbx + 0x18]');
+ for(const name of ['nativeConcreteContextDispatchVerified','nativeArrayResizeVerified','nativeGcBarrierVerified','livePointerStackStorageVerified'])assert.equal(q[name],false);
+});
+
 test('managed value stack source binds Modifier clearing and AttackInfo copies to separate canonical bodies',()=>{
  const q=read('data/candidates/arkpedia-windows-fear-self-death-source.json').modeSwitch.buffNotification.newBuff.managedValueStacks;
  assert.deepEqual(q.specializations.map(s=>[s.specialization,s.valueWidth,s.clearOnPop,s.canonicalMethods.map(m=>m.index)]),[
