@@ -18,6 +18,7 @@ import {fearProjectileBuffList} from '../server/sim/content/chapter16-fear-buff-
 import {fearProjectileBuffPointers} from '../server/sim/content/chapter16-fear-buff-pointer.js';
 import {fearProjectileFinishedBuffs} from '../server/sim/content/chapter16-fear-buff-cleanup.js';
 import {fearProjectileFinishAndRemoveBuff,fearProjectileOverrideGroupRemove} from '../server/sim/content/chapter16-fear-buff-finish.js';
+import {fearProjectileBuffRecycleQueue} from '../server/sim/content/chapter16-fear-buff-recycle.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
 import {fearProjectileSpell} from '../server/sim/content/chapter16-fear-spell.js';
@@ -54,6 +55,91 @@ test('mode initialization rejects invalid entries and delegates equality without
   isValid:x=>x!==null&&!x.invalid,equals:(left,right)=>{calls.push([left,right]);return left.id===right.id;}});
  assert.deepEqual(list,[a]);assert.deepEqual(calls,[[a,duplicate]]);
  assert.throws(()=>fearProjectileCollectModeAbilities({generalAbilities:[],combat:null,attack:null,isValid:()=>1,equals:()=>true}),/Boolean/);
+});
+
+function recycleQueueFixture(overrides={}){
+ const f=fixture(),events=[],pointers=fearProjectileBuffPointers({readUid:b=>b.uid});let frame=10,reads=0;
+ const callers={readFixedFrame:()=>{reads++;return frame;},copyPointer:pointers.copy,isPointerValid:pointers.isValid,lockPointer:pointers.lock,
+  recycleBuff:buff=>events.push(buff),...overrides};
+ const queue=fearProjectileBuffRecycleQueue(f.b,callers);
+ return{...f,queue,pointers,events,get frame(){return frame;},set frame(value){frame=value;},get reads(){return reads;}};
+}
+
+test('buff recycle queue processes only the exact next native frame and skips invalid pointers',()=>{
+ const f=recycleQueueFixture(),buff={uid:7};f.queue.enqueue(f.pointers.capture(buff));f.queue.enqueue(f.pointers.capture(null));
+ assert.equal(f.queue.pendingCount,2);assert.equal(f.queue.update(),undefined);assert.deepEqual(f.events,[]);
+ f.frame=12;f.queue.update();assert.equal(f.queue.pendingCount,2,'skipping frame11 does not catch up its bucket');
+ f.frame=11;f.queue.update();assert.deepEqual(f.events,[buff]);assert.equal(f.queue.pendingCount,0);f.queue.release();
+});
+
+test('next-frame queue keys wrap as native UInt32 rather than signed Int32 or float time',()=>{
+ const f=recycleQueueFixture(),buff={uid:7};f.frame=0xffffffff;f.queue.enqueue(f.pointers.capture(buff));f.frame=0;
+ f.queue.update();assert.deepEqual(f.events,[buff]);assert.equal(f.queue.pendingCount,0);f.queue.release();
+});
+
+test('queue stores pointer values and owner retirement does not cancel a battle-scoped pending recycle',()=>{
+ const f=recycleQueueFixture(),buff={uid:7},pointer={obj:buff,cachedUid:7};f.queue.enqueue(pointer);pointer.obj=null;pointer.cachedUid=0;
+ f.b.kill(f.source,null);f.frame=11;f.queue.update();assert.deepEqual(f.events,[buff]);f.queue.release();assert.deepEqual(f.b.errors,[]);
+});
+
+test('recycling can enqueue a future-frame pointer without changing the enumerated list',()=>{
+ let f;const a={uid:1},b={uid:2};f=recycleQueueFixture({recycleBuff:buff=>{f.events.push(buff);if(buff===a)f.queue.enqueue(f.pointers.capture(b));}});
+ f.queue.enqueue(f.pointers.capture(a));f.frame=11;f.queue.update();assert.deepEqual(f.events,[a]);assert.equal(f.queue.pendingCount,1);
+ f.frame=12;f.queue.update();assert.deepEqual(f.events,[a,b]);assert.equal(f.queue.pendingCount,0);f.queue.release();
+});
+
+test('mutation of the currently enumerated recycle bucket throws and leaves its bucket for later checking',()=>{
+ let f;const a={uid:1},b={uid:2};let changed=false;
+ f=recycleQueueFixture({recycleBuff:buff=>{
+  f.events.push(buff);if(!changed){changed=true;a.uid=3;f.frame=10;f.queue.enqueue(f.pointers.capture(b));f.frame=11;}
+ }});
+ f.queue.enqueue(f.pointers.capture(a));f.frame=11;assert.throws(()=>f.queue.update(),/changed during enumeration/);
+ assert.equal(f.queue.pendingCount,2);assert.deepEqual(f.events,[a]);f.queue.update();assert.deepEqual(f.events,[a,b]);assert.equal(f.queue.pendingCount,0);f.queue.release();
+});
+
+test('bucket removal resamples the frame counter after recycling instead of reusing the lookup frame',()=>{
+ let f;const a={uid:1},b={uid:2};f=recycleQueueFixture({recycleBuff:buff=>{f.events.push(buff);f.frame=12;}});
+ f.queue.enqueue(f.pointers.capture(a));f.frame=11;f.queue.enqueue(f.pointers.capture(b));f.queue.update();
+ assert.deepEqual(f.events,[a]);assert.equal(f.queue.pendingCount,1,'frame12 bucket was removed by the fresh frame sample');f.queue.release();
+});
+
+test('pool receives Lock null when a pointer changes between separate validity and lock operations',()=>{
+ const f=recycleQueueFixture({isPointerValid:()=>true,lockPointer:()=>null});f.queue.enqueue(f.pointers.capture({uid:7}));f.frame=11;
+ f.queue.update();assert.deepEqual(f.events,[null]);f.queue.release();
+});
+
+test('pool exceptions preserve the current bucket and permit a later nonrecursive retry',()=>{
+ let fail=true;const f=recycleQueueFixture({recycleBuff:()=>{if(fail)throw Error('pool failure');}});f.queue.enqueue(f.pointers.capture({uid:7}));f.frame=11;
+ assert.throws(()=>f.queue.update(),/pool failure/);assert.equal(f.queue.pendingCount,1);fail=false;f.queue.update();assert.equal(f.queue.pendingCount,0);f.queue.release();
+});
+
+test('invalid native frame values fail before enqueueing and do not hold the reentry guard',()=>{
+ const f=recycleQueueFixture();for(const frame of [-1,2**32,NaN,1.5]){f.frame=frame;assert.throws(()=>f.queue.enqueue(f.pointers.capture({uid:7})),/UInt32 fixedFrameCnt/);}
+ assert.equal(f.queue.pendingCount,0);f.frame=10;f.queue.enqueue(f.pointers.capture({uid:7}));assert.equal(f.queue.pendingCount,1);f.queue.release();
+});
+
+test('recursive enqueue and update callbacks cannot duplicate acquisition or recycling',()=>{
+ let f,checkingEnqueue=true;f=recycleQueueFixture({copyPointer:pointer=>{if(checkingEnqueue)assert.equal(f.queue.enqueue(pointer),null);return f.pointers.copy(pointer);},
+  recycleBuff:buff=>{assert.equal(f.queue.update(),null);f.events.push(buff);}});
+ f.queue.enqueue(f.pointers.capture({uid:7}));checkingEnqueue=false;f.frame=11;f.queue.update();assert.equal(f.events.length,1);assert.equal(f.queue.pendingCount,0);f.queue.release();
+});
+
+for(const point of ['readFixedFrame','copyPointer','isPointerValid','lockPointer','recycleBuff'])test('recycle queue cancels battle end during '+point,()=>{
+ const f=fixture();let frame=10,stop=false;
+ const p=fearProjectileBuffPointers({readUid:b=>b.uid}),base={readFixedFrame:()=>frame,copyPointer:p.copy,isPointerValid:p.isValid,lockPointer:p.lock,recycleBuff:()=>{}},callers={};
+ for(const [name,fn]of Object.entries(base))callers[name]=(...args)=>{if(stop&&name===point)f.b.emit('battleEnd',{});return fn(...args);};
+ const queue=fearProjectileBuffRecycleQueue(f.b,callers);queue.enqueue(p.capture({uid:7}));frame=11;stop=true;
+ assert.equal(queue.update(),null);assert.equal(queue.pendingCount,0);assert.equal(queue.enqueue(p.capture({uid:8})),null);assert.deepEqual(f.b.errors,[]);
+});
+
+test('finish path queues a captured buff value for native frame+1 without recycling it during finish',()=>{
+ const f=fixture(),buff={uid:7},p=fearProjectileBuffPointers({readUid:b=>b.uid});let frame=20,recycled=0,queued;
+ const queue=fearProjectileBuffRecycleQueue(f.b,{readFixedFrame:()=>frame,copyPointer:p.copy,isPointerValid:p.isValid,lockPointer:p.lock,
+  recycleBuff:b=>{assert.equal(b,buff);recycled++;b.uid=0;}});
+ const finish=fearProjectileFinishAndRemoveBuff(f.b,{owner:f.source,buff,removeFromList:()=>false,readUid:b=>b.uid,removeUidRegistration:()=>false,
+  markFinish:()=>{},onFinish:()=>true,captureBuffPointer:p.capture,queueRecycleNextFrame:pointer=>{queued=pointer;queue.enqueue(pointer);}});
+ assert.equal(finish.run(),undefined);assert.equal(recycled,0);queue.update();assert.equal(recycled,0);assert.equal(p.lock(queued),buff);
+ frame=21;queue.update();assert.equal(recycled,1);assert.equal(p.lock(queued),null);assert.equal(queue.pendingCount,0);queue.release();
 });
 
 function finishEffectFixture(overrides={}){

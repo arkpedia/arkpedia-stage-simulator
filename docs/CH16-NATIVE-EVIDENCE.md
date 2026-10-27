@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 70 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 75 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -1045,3 +1045,46 @@ do not claim validation of this newer checkpoint. Actual MarkFinish/OnFinish
 state/effects, group update, native queue execution, ability setup, complete
 controller scheduling and stage geometry remain open. Source/support/catalogue
 gates are unchanged.
+
+### Native-frame delayed buff recycling
+
+The75-method artifact adds BattleController.get_fixedFrameCnt,
+_UpdateDelayToRecycleBuffContainer, _RecycleBuffContainerImmediatelly, OnTick
+and ManualFrameTick. The frame counter and recycle-container key are UInt32;
+the container is Torappu.ListDict, not a generic Dictionary type. Enqueue
+samples fixedFrameCnt and appends an ObjectPtr value under frame+1, wrapping
+UInt32. Update looks up only the current frame, tests each pointer's validity,
+locks valid pointers and passes the result to the buff pool. It samples
+fixedFrameCnt again before removing a bucket. The List enumerator's complete
+MoveNext body retains version checks, including the completion path.
+
+`fearProjectileBuffRecycleQueue` composes that selected keyed queue with explicit
+native frame/pointer/pool callers. It does not infer frame numbers from elapsed
+float time or process earlier buckets when a frame was skipped. Recycling can
+enqueue another pointer into a future frame; adding to the currently enumerated
+bucket instead produces the native list-version failure and leaves the bucket
+for a later validity check. Pool exceptions do not silently discard the bucket.
+The pool receives Lock's result without an invented second null branch. Native
+pool null handling remains the pool caller's responsibility.
+
+Tests cover exact-frame lookup, UInt32 wrap, copied pointer values, owner
+retirement without cancelling the battle-scoped queue, invalid pointers,
+separate validity/Lock calls, future enqueue, same-list mutation, exceptions,
+reentry, malformed frame readers and battle-end cancellation. A composed finish
+test queues a captured pointer for frame+1, prohibits inline recycling and
+verifies that the later pool receiver's UID reset invalidates that pointer.
+The fresh removal-frame sample is tested independently of the lookup sample.
+
+The default OnTick body retains its counter increment at0x397e39f and subsequent
+queue-update call at0x397eb79; ManualFrameTick retains dispatch to OnTick. This
+static call chain does not certify the simulator's live tick-phase alignment.
+Native pool/recycle effects, immediate battle-end flush, complete ListDict
+context behavior and original live scheduling remain unverified. The local
+queue's battle-end release is cancellation safety, not a claim of native flush
+parity.
+
+The focused native/fear/family/miner suite passes538 tests and the75-method
+producer reproduces with --check. Continuation40524700297 at5be7b022 has
+completed successfully; full40524709132 at that same head remains active and
+is not replaced. Full fear/controller/stage integration, ability setup and
+geometry remain open. No source/support/receipt or catalogue gate changes.

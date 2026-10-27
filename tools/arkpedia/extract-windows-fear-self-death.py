@@ -359,6 +359,32 @@ result['modeSwitch']['buffNotification']['finishEffects'] = {
     'markFinishCallRva': 0x39d7d73, 'onFinishCallRva': 0x39d7d86, 'queueRecycleCallRva': 0x39d7dfd,
     'nativeQueueTimingVerified': False,
 }
+battle_controller = c['type_row']('BattleController', 'Torappu.Battle')
+for name in ['get_fixedFrameCnt', '_UpdateDelayToRecycleBuffContainer', '_RecycleBuffContainerImmediatelly', 'OnTick', 'ManualFrameTick']:
+    methods.append(c['method'](battle_controller, c['unique'](lambda r: r['name'] == name, battle_controller['methods'])))
+queue_field = c['unique'](lambda f: f['name'] == 'm_delayToRecycleBuffContainer', c['fields'](battle_controller))
+queue_generic_pos = v['offset'](queue_field['typeData'])
+queue_definition_pos = v['offset'](v['quad'](v['b'], queue_generic_pos))
+queue_type = v['types'][v['quad'](v['b'], queue_definition_pos)]
+assert queue_type['name'] == 'ListDict`2' and queue_type['namespace'] == 'Torappu'
+queue_inst_pos = v['offset'](v['quad'](v['b'], queue_generic_pos + 8))
+assert v['quad'](v['b'], queue_inst_pos) == 2
+queue_args_pos = v['offset'](v['quad'](v['b'], queue_inst_pos + 8))
+queue_key_pos = v['offset'](v['quad'](v['b'], queue_args_pos))
+assert (v['uint'](v['b'], queue_key_pos + 8) >> 16) & 255 == 9
+result['modeSwitch']['buffNotification']['recycleQueue'] = {
+    'frameField': c['unique'](lambda f: f['name'] == 's_fixedFrameCnt', c['fields'](battle_controller)),
+    'queueField': queue_field, 'poolField': c['unique'](lambda f: f['name'] == 'm_buffPool', c['fields'](battle_controller)),
+    'containerType': {'index': queue_type['index'], 'namespace': queue_type['namespace'], 'name': queue_type['name']},
+    'keyTypeHex': v['b'][queue_key_pos:queue_key_pos + 16].hex(), 'keyTypeBits': v['uint'](v['b'], queue_key_pos + 8),
+    'enqueueFrameCallRva': 0x398066e, 'enqueueNextFrameRva': 0x398068e,
+    'updateFrameCallRva': 0x398ee03, 'updateLookupCallRva': 0x398ee25,
+    'pointerValidityCallRva': 0x398eeab, 'pointerLockCallRva': 0x398eec7, 'poolRecycleCallRva': 0x398eee2,
+    'removalFrameCallRva': 0x398ef38, 'removeBucketCallRva': 0x398ef4e,
+    'nativeTickCounterIncrementRva': 0x397e39f, 'nativeTickQueueCallRva': 0x397eb79, 'manualTickDispatchRva': 0x397b651,
+    'nativeTickPhaseVerified': False, 'poolRecycleEffectsVerified': False,
+    'listMoveNext': {'entryRva': 0x4dd3240, 'chunks': c['code'](0x4dd3240), 'concreteContextVerified': False},
+}
 serialized = json.dumps(result, ensure_ascii=False, indent=1) + '\n'
 out = ROOT / 'data/candidates/arkpedia-windows-fear-self-death-source.json'
 if __name__ == '__main__':

@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,70);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,75);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -130,6 +130,27 @@ test('mode initialization binds general/combat/attack order and the canonical sw
  at(dedup,0x3f62e1e,'0x180004fe0');at(dedup,0x3f62e72,'0x180004b40');
  at(dedup,0x3f62e77,'esi');at(dedup,0x3f62e79,'0x183f62d00');
  assert.equal(init.equalsDispatch.metadataIdentityVerified,false);
+});
+
+test('delayed recycle source binds UInt32 exact-frame buckets and a second frame sample before removal',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.recycleQueue;
+ assert.equal(q.frameField.name,'s_fixedFrameCnt');assert.equal(q.frameField.offset,0x14);assert.equal((q.frameField.typeBits>>>16)&255,9);
+ assert.equal(q.queueField.offset,0x20);assert.equal(q.poolField.offset,0x90);assert.equal((q.keyTypeBits>>>16)&255,9);
+ assert.deepEqual([q.containerType.namespace,q.containerType.name],['Torappu','ListDict`2']);
+ assert.equal(q.nativeTickPhaseVerified,false);assert.equal(q.poolRecycleEffectsVerified,false);
+ const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ const enqueue=castMethod(c,'BattleController','RecycleBuffNextFrame');at(enqueue,q.enqueueFrameCallRva,'0x183991a80');
+ at(enqueue,q.enqueueNextFrameRva,'edx, [rdi + 1]');
+ const update=castMethod(c,'BattleController','_UpdateDelayToRecycleBuffContainer');at(update,q.updateFrameCallRva,'0x183991a80');
+ at(update,q.updateLookupCallRva,'0x1844fb910');at(update,0x398ee2c,'0x18398ef63');
+ at(update,q.pointerValidityCallRva,'0x18477cd80');at(update,q.pointerLockCallRva,'0x18477cad0');
+ at(update,q.poolRecycleCallRva,'0x18477b630');at(update,q.removalFrameCallRva,'0x183991a80');at(update,q.removeBucketCallRva,'0x1844f9650');
+ const tick=castMethod(c,'BattleController','OnTick');at(tick,q.nativeTickCounterIncrementRva,'dword ptr [rcx + 0x14]');
+ at(tick,q.nativeTickQueueCallRva,'0x18398ed00');assert.ok(q.nativeTickCounterIncrementRva<q.nativeTickQueueCallRva);
+ at(castMethod(c,'BattleController','ManualFrameTick'),q.manualTickDispatchRva,'0x18397e260');
+ for(const ch of q.listMoveNext.chunks){const raw=Buffer.from(ch.base64,'base64');assert.equal(sha(raw),ch.sha256);assert.equal(raw.length,ch.endRva-ch.beginRva);}
+ at(q.listMoveNext,0x4dd3258,'dword ptr [rbx + 0xc], eax');at(q.listMoveNext,0x4dd32b8,'0x184dd32c1');
+ assert.ok(castMethod(c,'BattleController','_RecycleBuffContainerImmediatelly'));
 });
 
 test('finish effects bind UID-map removal, MarkFinish/OnFinish flags and delayed recycle queue after native completion',()=>{
