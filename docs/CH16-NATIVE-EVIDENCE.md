@@ -399,3 +399,25 @@ transform. Tests pin the script identity, component ownership, generic method
 specifications and those native call/storage sites. Runtime scene transforms,
 layer eligibility and Unity overlap boundary tolerance remain unverified; the
 shared engine's assumed collider radii are not substituted as native proof.
+
+### Selected flight composition
+
+`fearProjectileFlight` now joins the raw Q32.32 lifetime, 3D trace motion,
+arrival query and hit ledger behind explicit native-input callers. Expiry runs
+before motion and can force only the saved trace recipient. Arrival reserves
+its reached guard, performs the area callbacks, then resets current time with
+`EnsureLifeTime(0)` and clears the trace reference before requesting deferred
+completion. The retained `FP.op_Subtraction`/`FastSub` leaf establishes that
+reset as signed64 `lifeTime - remainingTime`, not a new ten-second lifetime.
+Completion and the next expiry check may race; either path can stop the flight
+only once. The completion caller must defer its callback and provide cancellation.
+
+Tests cover the full supplied-input flight through arrival and real affliction/
+damage after source retirement, expiry before movement, lost trace identity,
+elimination, recursive callbacks, battle-end cancellation and competing stop
+paths. The selected composition owns its internal observers and cancels its
+pending completion on release; externally supplied source/mount references
+remain their caller's responsibility. Native raw delta production, actual
+coordinate transforms, physics query/target filters, concrete scheduler timing,
+cast launch and initial FSM integration remain required before stage16-9
+admission. No new stage, enemy support receipt or public catalogue entry follows.

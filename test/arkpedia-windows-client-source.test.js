@@ -353,7 +353,8 @@ test('native lifetime arithmetic binds Q32.32 constants, complete integer leaves
  assert.equal(clock.oneRaw,'4294967296');assert.equal(clock.selectedLifeRaw,'42949672960');
  assert.deepEqual(clock.constants.map(k=>[k.hex,k.float32]),[['0000804f',2**32],['0000802f',2**-32]]);
  assert.deepEqual(clock.leaves.map(m=>[m.role,m.aliases.map(r=>r.name)]),[
-  ['add',['op_Addition','FastAdd']],['fromInt',['op_Implicit']],['multiply',['op_Multiply','FastMul']]]);
+  ['add',['op_Addition','FastAdd']],['subtract',['op_Subtraction','FastSub']],
+  ['fromInt',['op_Implicit']],['multiply',['op_Multiply','FastMul']]]);
  for(const m of clock.leaves){
   assert.equal(m.image,'Torappu.Common.dll');
   for(const ch of m.chunks){
@@ -379,6 +380,19 @@ test('native lifetime arithmetic binds Q32.32 constants, complete integer leaves
  assert.ok(instructions(castMethod(c,'BasicMovement','GetTimeScale')).some(i=>i.operands==='rax, qword ptr [rbx + 0x90]'));
  const native=JSON.parse(c.prefabScriptBridges[0].originalJson);
  assert.equal(native._lifeTimeType,1);assert.equal(native._lifeTime,10);assert.equal(native._getLifeTimeFromBB,0);
+});
+
+test('native arrival ensures remaining lifetime by subtraction before clearing the trace reference',()=>{
+ const c=read(projectilePath),movement=read('data/candidates/arkpedia-windows-fear-movement-source.json');
+ const sub=c.clockArithmetic.leaves.find(m=>m.role==='subtract');assert.equal(sub.entryRva,0x5a3b9a0);
+ assert.deepEqual(instructions(sub).map(i=>[i.mnemonic,i.operands]),[
+  ['sub','rcx, rdx'],['mov','rax, rcx'],['ret','']]);
+ const ensure=instructions(castMethod(movement,'Projectile','EnsureLifeTime'));
+ for(const [rva,args]of [[0x678573,'rdi, qword ptr [rsi + 0x98]'],
+  [0x678591,'0x185a3b9a0'],[0x67859f,'0x18067e7c0'],[0x6785c6,'rcx, [rsi + 0x110]']])
+  assert.ok(ensure.some(i=>i.rva===rva&&i.operands===args));
+ const advanced=JSON.parse(movement.component.originalJson);
+ assert.equal(advanced._delayAfterReached,0);assert.equal(advanced._clearTraceTargetWhenReached,1);
 });
 
 test('ordinary projectile initialization resets its fixed-point lifetime clock before behaviour setup',()=>{

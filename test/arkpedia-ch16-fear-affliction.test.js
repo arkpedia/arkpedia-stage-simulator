@@ -12,12 +12,137 @@ import {applyFearProjectileImpact,fearProjectileDamageAction,fearProjectileSourc
 import {fearProjectileHitLedger} from '../server/sim/content/chapter16-fear-delivery.js';
 import {fearProjectileLifetime} from '../server/sim/content/chapter16-fear-clock.js';
 import {fearProjectileAreaDelivery} from '../server/sim/content/chapter16-fear-area.js';
+import {fearProjectileFlight} from '../server/sim/content/chapter16-fear-flight.js';
 import {fearProjectileReached,fearProjectileMotionStep,fearProjectileMountReference,fearProjectileTraceMotion} from '../server/sim/content/chapter16-fear-movement.js';
 import { battle as minerBattle, keys as minerKeys } from './helpers/ch17Harness.js';
 import { chapter16Shadow } from '../server/sim/content/chapter16-shadow.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
 const parentKey='feawpj_a[mcreep_fear]';
 const fpOne=1n<<32n;
+function flightFixture(overrides={}){
+ const f=fixture(),events=[];let completion=null,cancellations=0;
+ f.target.nativeUid=1;
+ const options={from:{x:0,y:0,z:0},initialTarget:{x:1,y:0,z:0},
+  resolveTargetPosition:()=>{events.push('position');return{x:1,y:0,z:0};},resolveTraceTarget:()=>f.target,
+  area:{queryOverlaps:()=>{events.push('query');return[f.target];},resolveEntity:u=>u,readUid:u=>u.nativeUid,
+   isCandidate:()=>true,verifyTarget:()=>true,deterministic:true,resolveSource:()=>f.source,
+   onSelected:()=>events.push('selected')},
+  runHit:({forced})=>events.push(forced?'forced':'hit'),onStopped:()=>events.push('stop'),
+  scheduleCompletion:callback=>{events.push('schedule');completion=callback;return()=>{cancellations++;};},...overrides};
+ const flight=fearProjectileFlight(f.b,options);
+ return{...f,flight,events,complete:()=>completion?.(),get cancellations(){return cancellations;}};
+}
+
+test('flight composes movement, one arrival and trace clearing before deferred completion',()=>{
+ const f=flightFixture(),result=f.flight.advance(fpOne/10n,fpOne);
+ assert.deepEqual(result.motion,{x:1,y:0,z:0,reached:true});
+ assert.deepEqual(result.delivery,{selected:1,attempted:1,hits:1});
+ assert.deepEqual(f.events,['position','query','selected','hit','schedule']);
+ assert.equal(f.flight.ended,false);assert.equal(f.flight.reached,true);assert.equal(f.flight.traceCleared,true);
+ assert.equal(f.flight.elapsedRaw,10n*fpOne);assert.equal(f.flight.count,1);
+ assert.equal(f.complete(),true);assert.equal(f.complete(),false);assert.equal(f.flight.stop(),false);
+ assert.equal(f.cancellations,1);assert.deepEqual(f.events,['position','query','selected','hit','schedule','stop']);
+});
+
+test('arrival lifetime reset lets the next expiry win without another area or forced trace hit',()=>{
+ const f=flightFixture();f.flight.advance(fpOne/10n,fpOne);
+ assert.equal(f.flight.advance(0n,fpOne).expired,true);assert.equal(f.flight.ended,true);
+ assert.equal(f.complete(),false);assert.equal(f.flight.count,1);assert.equal(f.cancellations,1);
+ assert.equal(f.events.filter(e=>e==='query').length,1);assert.equal(f.events.includes('forced'),false);
+});
+
+test('flight expiry precedes movement and forces only the saved trace recipient',()=>{
+ const f=flightFixture();const result=f.flight.advance(10n*fpOne,fpOne);
+ assert.equal(result.expired,true);assert.equal(f.flight.reached,false);assert.equal(f.flight.traceCleared,false);
+ assert.deepEqual(f.events,['forced','stop']);assert.deepEqual(f.flight.position,{x:0,y:0,z:0});
+ assert.equal(f.flight.advance(fpOne,fpOne),null);assert.equal(f.flight.count,1);
+});
+
+test('eliminating a flight suppresses terminal damage and does not synthesize arrival',()=>{
+ const f=flightFixture();assert.equal(f.flight.stop({eliminated:true}),true);
+ assert.deepEqual(f.events,['stop']);assert.equal(f.flight.count,0);assert.equal(f.flight.ended,true);
+});
+
+test('battle end cancels pending flight completion and all later callbacks',()=>{
+ const f=flightFixture();f.flight.advance(fpOne/10n,fpOne);f.b.emit('battleEnd',{});
+ assert.equal(f.cancellations,1);assert.equal(f.complete(),false);assert.equal(f.flight.advance(fpOne,fpOne),null);
+ assert.equal(f.events.includes('stop'),false);assert.equal(f.flight.ended,true);assert.deepEqual(f.b.errors,[]);
+});
+
+test('flight cancellation from the area query prevents hits, trace clearing and completion scheduling',()=>{
+ const f=flightFixture();
+ f.flight.release();assert.equal(f.flight.advance(fpOne/10n,fpOne),null);assert.deepEqual(f.events,[]);
+ const g=fixture(),events=[];g.target.nativeUid=1;
+ const flight=fearProjectileFlight(g.b,{from:{x:0,y:0,z:0},initialTarget:{x:1,y:0,z:0},
+  resolveTargetPosition:()=>null,resolveTraceTarget:()=>g.target,
+  area:{queryOverlaps:()=>{g.b.emit('battleEnd',{});return[g.target];},resolveEntity:u=>u,
+   readUid:u=>u.nativeUid,isCandidate:()=>true,verifyTarget:()=>true,deterministic:true,
+   resolveSource:()=>g.source,onSelected:()=>events.push('selected')},
+  runHit:()=>events.push('hit'),onStopped:()=>events.push('stop'),scheduleCompletion:()=>{events.push('schedule');return()=>{};}});
+ flight.advance(fpOne/10n,fpOne);assert.deepEqual(events,[]);assert.equal(flight.traceCleared,false);assert.equal(flight.ended,true);
+});
+
+test('recursive flight advancement and stopping cannot duplicate arrival or final output',()=>{
+ let f;f=flightFixture({runHit:()=>{
+  f.events.push('hit');assert.equal(f.flight.advance(fpOne,fpOne),null);
+  assert.equal(f.flight.stop(),true);assert.equal(f.flight.stop(),false);
+ }});
+ f.flight.advance(fpOne/10n,fpOne);
+ assert.deepEqual(f.events,['position','query','selected','hit','stop']);
+ assert.equal(f.flight.count,1);assert.equal(f.flight.ended,true);assert.equal(f.flight.traceCleared,false);
+});
+
+test('selected flight rejects a same-stack completion scheduler and closes its lifecycle',()=>{
+ const f=flightFixture({scheduleCompletion:callback=>{callback();return()=>{};}});
+ assert.throws(()=>f.flight.advance(fpOne/10n,fpOne),/must defer/);
+ assert.equal(f.flight.ended,true);assert.equal(f.flight.advance(fpOne,fpOne),null);assert.equal(f.events.includes('stop'),false);
+});
+
+test('native lifetime ensure sets signed remaining time without same-stack expiry',()=>{
+ let expires=0;const clock=fearProjectileLifetime({isBattleActive:()=>true,onExpire:()=>expires++});
+ clock.advance(fpOne,fpOne);assert.equal(clock.ensureLifeTime(2n*fpOne),true);
+ assert.equal(clock.elapsedRaw,8n*fpOne);assert.equal(clock.advance(fpOne,fpOne).expired,false);
+ assert.equal(clock.ensureLifeTime(0n),true);assert.equal(expires,0);
+ assert.equal(clock.advance(0n,0n).expired,true);assert.equal(expires,1);assert.equal(clock.ensureLifeTime(fpOne),false);
+ const wrap=fearProjectileLifetime({isBattleActive:()=>true,onExpire:()=>{}});
+ wrap.ensureLifeTime(-(1n<<63n));assert.equal(wrap.elapsedRaw,BigInt.asIntN(64,10n*fpOne+(1n<<63n)));
+});
+
+test('flight arrival still afflicts and damages once after its launch source retires',()=>{
+ const f=fixture();f.source.base.atk=175;f.source.markDirty();f.target.nativeUid=1;
+ const source=fearProjectileSourceReference(f.b,f.source),trace=fearProjectileEntityReference(f.b,f.target);
+ const damage=fearProjectileDamageAction(f.b,source);let completion,notifications=0;
+ const flight=fearProjectileFlight(f.b,{from:{x:0,y:0,z:0},initialTarget:{x:1,y:0,z:0},
+  resolveTargetPosition:()=>null,resolveTraceTarget:trace.resolveEntity,
+  area:{queryOverlaps:()=>[f.target,f.target],resolveEntity:u=>u,readUid:u=>u.nativeUid,
+   isCandidate:()=>true,verifyTarget:()=>true,deterministic:true,resolveSource:source.resolveSource,
+   onSelected:()=>notifications++},
+  runHit:({target})=>applyFearProjectileImpact(f.b,{source:f.source,target,applyAttachments:()=>{},runActions:damage}),
+  onStopped:()=>{},scheduleCompletion:callback=>{completion=callback;return()=>{};}});
+ f.b.kill(f.source,null);const hp=f.target.hp;
+ flight.advance(fpOne/10n,fpOne);assert.equal(hp-f.target.hp,175);assert.ok(f.target.findBuff(parentKey));
+ assert.equal(notifications,0);completion();assert.equal(flight.count,1);assert.equal(hp-f.target.hp,175);
+ source.release();trace.release();assert.deepEqual(f.b.errors,[]);
+});
+
+test('lost trace reference preserves last position but cannot force-hit a recycled target',()=>{
+ const f=fixture(),trace=fearProjectileEntityReference(f.b,f.target),mount=fearProjectileMountReference(f.b,f.target,()=>({x:1000,y:0,z:0}));
+ let hits=0;const flight=fearProjectileFlight(f.b,{from:{x:0,y:0,z:0},initialTarget:{x:1000,y:0,z:0},
+  resolveTargetPosition:mount.resolvePosition,resolveTraceTarget:trace.resolveEntity,
+  area:{queryOverlaps:()=>[],resolveEntity:u=>u,readUid:()=>1,isCandidate:()=>true,
+   verifyTarget:()=>true,deterministic:true,resolveSource:()=>null,onSelected:()=>{}},
+  runHit:()=>hits++,onStopped:()=>{},scheduleCompletion:()=>()=>{}});
+ f.target.deploySeq++;const step=flight.advance(fpOne,fpOne);assert.equal(step.motion.x,10);
+ assert.equal(flight.advance(9n*fpOne,fpOne).expired,true);assert.equal(hits,0);
+ trace.release();mount.release();assert.deepEqual(f.b.errors,[]);
+});
+
+test('lifetime ensure rejects reentrant clock mutations through the lifecycle reader',()=>{
+ let clock;clock=fearProjectileLifetime({isBattleActive:()=>{
+  assert.equal(clock.ensureLifeTime(0n),false);assert.equal(clock.advance(fpOne,fpOne),null);return true;
+ },onExpire:()=>{}});
+ assert.equal(clock.ensureLifeTime(fpOne),true);assert.equal(clock.elapsedRaw,9n*fpOne);
+});
 function areaFixture(f,units,overrides={}){
  return fearProjectileAreaDelivery(f.b,{queryOverlaps:()=>units.map(unit=>({unit})),resolveEntity:c=>c.unit,
   readUid:u=>u.nativeUid,isCandidate:()=>true,verifyTarget:()=>true,deterministic:true,

@@ -39509,6 +39509,54 @@
    {
     "image": "Torappu.Common.dll",
     "type": "FP",
+    "role": "subtract",
+    "aliases": [
+     {
+      "index": 196224,
+      "name": "op_Subtraction",
+      "token": 100663978
+     },
+     {
+      "index": 196226,
+      "name": "FastSub",
+      "token": 100663980
+     }
+    ],
+    "entryRva": 94615968,
+    "chunks": [
+     {
+      "beginRva": 94615968,
+      "endRva": 94615975,
+      "unwindRva": null,
+      "boundary": "Reviewed complete straight-line integer arithmetic leaf through ret; no calls, branches or stack changes",
+      "sha256": "41f90767fc355fd6a85b8e971cd542284fdbd7bdcbc50a5c9623852c9eae35ea",
+      "base64": "SCvKSIvBww==",
+      "instructions": [
+       {
+        "rva": 94615968,
+        "size": 3,
+        "mnemonic": "sub",
+        "operands": "rcx, rdx"
+       },
+       {
+        "rva": 94615971,
+        "size": 3,
+        "mnemonic": "mov",
+        "operands": "rax, rcx"
+       },
+       {
+        "rva": 94615974,
+        "size": 1,
+        "mnemonic": "ret",
+        "operands": ""
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "image": "Torappu.Common.dll",
+    "type": "FP",
     "role": "fromInt",
     "aliases": [
      {

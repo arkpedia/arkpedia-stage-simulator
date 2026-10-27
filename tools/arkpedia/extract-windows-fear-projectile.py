@@ -77,6 +77,7 @@ for name, rva in [('AsFloat', 0x5a3ad10), ('op_Implicit', 0x5a3da20)]:
 clock_leaves = []
 for rva, size, role, expected in [
     (0x4175da0, 5, 'add', [('lea', 'rax, [rcx + rdx]'), ('ret', '')]),
+    (0x5a3b9a0, 7, 'subtract', [('sub', 'rcx, rdx'), ('mov', 'rax, rcx'), ('ret', '')]),
     (0x5a3da10, 8, 'fromInt', [('movsxd', 'rax, ecx'), ('shl', 'rax, 0x20'), ('ret', '')]),
     (0x5a3b800, 47, 'multiply', [
         ('mov', 'r8d, edx'), ('mov', 'r9d, ecx'), ('sar', 'rdx, 0x20'),
@@ -88,6 +89,7 @@ for rva, size, role, expected in [
     rows = [row for row in fp['methods'] if
         v['quad'](b, table + ((row['token'] & 0xffffff) - 1) * 8) == v['image_base'] + rva]
     assert [row['name'] for row in rows] == {'add': ['op_Addition', 'FastAdd'],
+        'subtract': ['op_Subtraction', 'FastSub'],
         'fromInt': ['op_Implicit'], 'multiply': ['op_Multiply', 'FastMul']}[role]
     p = v['offset'](v['image_base'] + rva)
     raw = b[p:p + size]

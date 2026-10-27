@@ -24,12 +24,23 @@ function asFloat(value){
 export function fearProjectileLifetime({isBattleActive,onExpire}){
  if(typeof isBattleActive!=='function'||typeof onExpire!=='function')
   throw new TypeError('Fear clock requires explicit lifecycle and expiry callers');
- let elapsed=0n,ended=false,advancing=false;
+ let elapsed=0n,ended=false,advancing=false,ensuring=false;
  const active=()=>{if(!ended&&!isBattleActive())ended=true;return!ended;};
  return Object.freeze({
   get elapsedRaw(){return elapsed;},
+  ensureLifeTime(remainingRaw){
+   if(ended||advancing||ensuring)return false;
+   ensuring=true;
+   try{
+    if(!active())return false;
+    // Projectile.EnsureLifeTime sets currentTime = lifeTime - remainingTime;
+    // selected arrival delay is zero. This changes the next expiry check, not
+    // an immediate StopMe dispatch from inside the arrival callback.
+    elapsed=BigInt.asIntN(64,life-raw(remainingRaw));return true;
+   }finally{ensuring=false;}
+  },
   advance(deltaRaw,movementScaleRaw){
-   if(ended||advancing)return null;
+   if(ended||advancing||ensuring)return null;
    advancing=true;
    try{
     if(!active())return null;
