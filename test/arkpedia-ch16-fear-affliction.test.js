@@ -20,6 +20,7 @@ import {fearProjectileFinishedBuffs} from '../server/sim/content/chapter16-fear-
 import {fearProjectileFinishAndRemoveBuff,fearProjectileOverrideGroupRemove} from '../server/sim/content/chapter16-fear-buff-finish.js';
 import {fearProjectileBuffRecycleQueue,fearProjectileClearRuntimeData} from '../server/sim/content/chapter16-fear-buff-recycle.js';
 import {fearProjectileBuffIdentity,fearProjectileResetBuffLifecycle} from '../server/sim/content/chapter16-fear-buff-identity.js';
+import {fearProjectileBuffTimer} from '../server/sim/content/chapter16-fear-buff-timing.js';
 import {fearProjectileBuffRecyclePool,fearProjectileDefaultBuffPool} from '../server/sim/content/chapter16-fear-buff-pool.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
@@ -205,6 +206,46 @@ test('finish and native-frame queue use concrete buff recycle identity before th
  finish.run();queue.update();assert.equal(buff.instanceUid,1);assert.equal(buff.m_isValid,true);assert.equal(recycled,0);
  f.b.kill(f.source,null);frame=11;queue.update();assert.equal(recycled,1);assert.equal(buff.instanceUid,0);assert.equal(buff.m_isValid,false);assert.equal(p.lock(old),null);
  identity.allocate(buff);assert.equal(buff.instanceUid,2);assert.equal(p.lock(old),null);assert.equal(p.lock(p.capture(buff)),buff);queue.release();assert.deepEqual(f.b.errors,[]);
+});
+
+test('buff timer Reset replaces stale timing with either immediate or delayed first-trigger state',()=>{
+ const state={m_periodTime:999n,m_remainingTime:-99n},timer=fearProjectileBuffTimer(state),period=(1n<<32n)+1n;
+ timer.reset(period,true);assert.equal(state.m_periodTime,period);assert.equal(state.m_remainingTime,period);
+ timer.reset(period,false);assert.equal(state.m_remainingTime,0n);assert.equal(state.m_periodTime,period);
+ timer.reset(-1n,true);assert.equal(state.m_periodTime,0n);assert.equal(state.m_remainingTime,0n);
+});
+
+test('invalid buff timer uses negative one second for both fields and can be reset for reuse',()=>{
+ const state={m_periodTime:0n,m_remainingTime:0n},timer=fearProjectileBuffTimer(state);timer.markInvalid();
+ assert.deepEqual(state,{m_periodTime:-(1n<<32n),m_remainingTime:-(1n<<32n)});
+ timer.reset(10n<<32n,true);assert.deepEqual(state,{m_periodTime:10n<<32n,m_remainingTime:10n<<32n});
+});
+
+test('buff timer first-delay override caps at the period but preserves negative and sub-tick values',()=>{
+ const state={m_periodTime:0n,m_remainingTime:0n},timer=fearProjectileBuffTimer(state);timer.reset(3n<<32n,true);
+ timer.setRemainingTime(5n<<32n);assert.equal(state.m_remainingTime,3n<<32n);
+ timer.setRemainingTime(1n);assert.equal(state.m_remainingTime,1n);
+ timer.setRemainingTime(-1n);assert.equal(state.m_remainingTime,-1n);
+ timer.setRemainingTime(-(1n<<63n));assert.equal(state.m_remainingTime,-(1n<<63n));
+ timer.markInvalid();timer.setRemainingTime(0n);assert.equal(state.m_remainingTime,-(1n<<32n));
+});
+
+test('buff timer preserves signed64 precision and rejects malformed raw values before mutation',()=>{
+ const state={m_periodTime:0n,m_remainingTime:0n},timer=fearProjectileBuffTimer(state),max=(1n<<63n)-1n;
+ timer.reset(max,true);timer.setRemainingTime(max-1n);assert.equal(state.m_remainingTime,max-1n);
+ for(const value of [1,NaN,1n<<63n,-(1n<<63n)-1n]){
+  assert.throws(()=>timer.reset(value,false),/Q32.32/);assert.throws(()=>timer.setRemainingTime(value),/Q32.32/);
+ }
+ assert.equal(state.m_periodTime,max);assert.equal(state.m_remainingTime,max-1n);
+ assert.throws(()=>timer.reset(0n,1),/Boolean initial-wait/);assert.equal(state.m_periodTime,max);
+});
+
+test('pool reallocation resets lifecycle and its retained timer object without changing the new UID',()=>{
+ const identity=fearProjectileBuffIdentity({counter:{value:0}});
+ const pool=fearProjectileDefaultBuffPool({createBuff:()=>({...resetBuffBody(),m_triggerTimer:{m_periodTime:999n,m_remainingTime:888n}}),onAllocate:identity.allocate,onRecycle:identity.recycle});
+ const buff=pool.allocate(),timerState=buff.m_triggerTimer,timer=fearProjectileBuffTimer(timerState);
+ timer.markInvalid();pool.recycle(buff);assert.equal(pool.allocate(),buff);fearProjectileResetBuffLifecycle(buff);timer.reset(1n<<32n,false);
+ assert.equal(buff.instanceUid,2);assert.equal(buff.m_triggerTimer,timerState);assert.equal(timerState.m_remainingTime,0n);assert.equal(buff.m_isFinished,false);
 });
 
 const resetFlagNames=['m_started','m_isFinished','m_needRemove','m_isActuallyEnabled','m_isLateEnabled','m_isManuallyEnabled','m_isActuallyFinished'];

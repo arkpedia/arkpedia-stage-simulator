@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,85);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,88);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -225,6 +225,21 @@ test('immediate recycle source enumerates stored pairs and pointer lists before 
  }
  at(q.outerMoveNext,0x4dd4158,'dword ptr [rbx + 0xc], eax');at(q.outerMoveNext,0x4dd41b6,'dword ptr [rbx + 0xc], eax');
  assert.ok(!instructions(m).some(i=>i.mnemonic==='call'&&i.operands==='0x183991a80'),'flush does not filter by current frame');
+});
+
+test('Reset timing source binds PeriodicTimer invalidation, initial wait and signed min/max operations',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.resetTiming;
+ const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ assert.deepEqual(q.timerFields.map(f=>[f.name,f.offset]),[['m_periodTime',0x10],['m_remainingTime',0x18]]);
+ const reset=castMethod(c,'Buff','Reset');at(reset,q.markInvalidCallRva,'0x181c5d670');at(reset,q.resetCallRva,'0x181c5d990');at(reset,q.setRemainingCallRva,'0x181c5dbb0');
+ const timerReset=castMethod(c,'PeriodicTimer','Reset');at(timerReset,q.resetMaxCallRva,'0x185a5c940');
+ at(timerReset,q.resetPeriodWriteRva,'qword ptr [rsi + 0x10], rax');at(timerReset,q.resetRemainingWriteRva,'qword ptr [rsi + 0x18], rax');
+ const invalid=castMethod(c,'PeriodicTimer','MarkInvalid');at(invalid,q.invalidRemainingWriteRva,'qword ptr [rbx + 0x18], rax');at(invalid,q.invalidPeriodWriteRva,'qword ptr [rbx + 0x10], rax');
+ at(invalid,0x1c5d6ac,'ecx, [rdx - 1]');at(invalid,0x1c5d6af,'0x185a3da10');
+ const remaining=castMethod(c,'PeriodicTimer','SetRemainingTime');at(remaining,q.remainingMinCallRva,'0x185a5ca50');at(remaining,q.remainingWriteRva,'qword ptr [rsi + 0x18], rax');
+ for(const m of q.math)for(const ch of m.chunks){const raw=Buffer.from(ch.base64,'base64');assert.equal(sha(raw),ch.sha256);assert.equal(raw.length,ch.endRva-ch.beginRva);}
+ assert.equal(instructions(q.math[2])[1].mnemonic,'setg');assert.equal(instructions(q.math[3])[1].mnemonic,'setl');
+ assert.equal(q.fullResetEffectsVerified,false);assert.equal(q.liveTimerSchedulingVerified,false);
 });
 
 test('Reset source binds lifecycle clearing independently of allocation UID and validity',()=>{

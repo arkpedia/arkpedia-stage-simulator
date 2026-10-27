@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 85 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 88 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -1263,3 +1263,27 @@ All599 focused native/fear/family/miner tests pass and --check reproduces the
 blackboard, timing, action and attribute effects, live lifecycle phases and full
 controller/stage integration remain open. No support or catalogue admission
 follows from the selected lifecycle block.
+
+### Buff.Reset PeriodicTimer operations
+
+The88-method artifact additionally retains the specific FP PeriodicTimer.Reset
+overload called by Buff.Reset, MarkInvalid and SetRemainingTime. Separate native
+math records retain their signed min/max calls and complete seven-byte signed
+Int64 comparison leaves. Reviewed leaf extraction does not weaken the shared
+native-code reader. The Reset call binds the interval and initial-wait flag;
+the later optional first-interval override calls SetRemainingTime.
+
+`fearProjectileBuffTimer` projects these operations onto the retained period and
+remaining-time fields using signed64 Q32.32 BigInts. Reset chooses max(0,period)
+and starts remaining time at that period or zero according to the wait flag.
+MarkInvalid writes negative one second to both fields. SetRemainingTime chooses
+min(requested,period), preserving negative values rather than inventing a zero
+floor. No float conversion or scheduling phase is inferred.
+
+Tests cover stale state replacement, delayed/immediate first trigger, invalidation
+and subsequent reuse, period capping, negative/sub-tick values, full signed64
+precision, invalid input and pooled-body/timer identity retention. All605 focused
+native/fear/family/miner tests pass and --check reproduces the88-method bundle.
+Buff-specific blackboard interval/count setup, trigger configuration, lifetime
+adjustments, timer advancement, full Reset and controller/stage integration remain
+open. Existing source/support/receipt/catalogue gates are unchanged.

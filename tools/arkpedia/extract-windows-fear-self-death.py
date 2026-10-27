@@ -479,6 +479,31 @@ result['modeSwitch']['buffNotification']['resetLifecycle'] = {
     'derivedClearArrayCallRva': 0x39b1372,
     'fullResetEffectsVerified': False, 'liveResetPhaseVerified': False,
 }
+timer = c['type_row']('PeriodicTimer', 'Torappu')
+for name, rva in [('Reset', 0x1c5d990), ('MarkInvalid', 0x1c5d670), ('SetRemainingTime', 0x1c5dbb0)]:
+    methods.append(c['method'](timer, c['unique'](lambda r: r['name'] == name and v['pointer'](r) - v['image_base'] == rva, timer['methods'])))
+timer_math = []
+for rva in [0x5a5c940, 0x5a5ca50]:
+    timer_math.append({'entryRva': rva, 'chunks': c['code'](rva)})
+for rva, expected in [(0x51df0c0, '483bca0f9fc0c3'), (0x51df0f0, '483bca0f9cc0c3')]:
+    pos = v['offset'](v['image_base'] + rva)
+    raw = v['b'][pos:pos + 7]
+    assert raw.hex() == expected
+    decoded = list(Cs(CS_ARCH_X86, CS_MODE_64).disasm(raw, v['image_base'] + rva))
+    assert [i.mnemonic for i in decoded] == ['cmp', 'setg' if rva == 0x51df0c0 else 'setl', 'ret']
+    assert sum(i.size for i in decoded) == len(raw)
+    timer_math.append({'entryRva': rva, 'chunks': [{'beginRva': rva, 'endRva': rva + len(raw), 'unwindRva': None,
+        'boundary': 'Reviewed complete signed Int64 comparison leaf; no stack changes, calls or branches',
+        'base64': base64.b64encode(raw).decode(), 'sha256': v['sha'](raw),
+        'instructions': [{'rva': i.address - v['image_base'], 'size': i.size, 'mnemonic': i.mnemonic, 'operands': i.op_str} for i in decoded]}]})
+result['modeSwitch']['buffNotification']['resetTiming'] = {
+    'timerFields': c['fields'](timer), 'math': timer_math,
+    'markInvalidCallRva': 0x39b1769, 'resetCallRva': 0x39b1822, 'setRemainingCallRva': 0x39b18b8,
+    'resetMaxCallRva': 0x1c5da15, 'resetPeriodWriteRva': 0x1c5da21, 'resetRemainingWriteRva': 0x1c5da63,
+    'invalidRemainingWriteRva': 0x1c5d6b4, 'invalidPeriodWriteRva': 0x1c5d6b8,
+    'remainingMinCallRva': 0x1c5dc03, 'remainingWriteRva': 0x1c5dc0d,
+    'fullResetEffectsVerified': False, 'liveTimerSchedulingVerified': False,
+}
 pool = c['type_row']('ObjectPool`1', 'Torappu.ObjectPool')
 pool_methods = []
 for index in [147561, 147566, 147567, 147558, 147559, 147563, 147564, 147568, 147569]:
