@@ -808,6 +808,55 @@ result['modeSwitch']['buffNotification']['priorityAndStack'] = {
     'stackMaskCallRva': 0x39b34fe, 'stackDirtyCallRva': 0x39b3511,
     'nativeOwnerDirtyEffectsVerified': False, 'livePriorityPhaseVerified': False, 'liveStackPhaseVerified': False,
 }
+for name in ['_InitIsStatusResistable', '_AutoCalcIsStatusResistable', '_InitCanSlowDown']:
+    methods.append(c['method'](buff, c['unique'](lambda r: r['name'] == name, buff['methods'])))
+status_arrays = []
+for load_rva, reference_index, expected in [(0x39b5ee7, 18, [0, 16, 43, 41]), (0x39b5f39, 8, [0, 16, 23, 43])]:
+    pos = v['offset'](v['image_base'] + load_rva)
+    assert v['b'][pos:pos + 3] == bytes.fromhex('488b15')
+    target = load_rva + 7 + struct.unpack_from('<i', v['b'], pos + 3)[0]
+    usage = v['quad'](v['b'], v['offset'](v['image_base'] + target))
+    assert usage >> 29 == 4 and (usage & 0x1ffffffe) >> 1 == reference_index
+    assert reference_index * 8 + 8 <= v['uint'](v['m'], 188)
+    ti, local_index = struct.unpack_from('<ii', v['m'], v['uint'](v['m'], 184) + reference_index * 8)
+    tp = v['offset'](v['quad'](v['b'], v['type_table'] + ti * 8))
+    assert (v['uint'](v['b'], tp + 8) >> 16) & 255 == 18
+    owner = v['types'][v['quad'](v['b'], tp)]
+    assert owner['name'] == '<PrivateImplementationDetails>'
+    field = owner['fields'][local_index]
+    default_ti, di = v['defaults'][field['index']]
+    dp = v['uint'](v['m'], 72) + di
+    raw = v['m'][dp:dp + 16]
+    values = list(struct.unpack('<iiii', raw))
+    assert values == expected
+    flags = c['enum'](c['type_row']('AbnormalFlag', 'Torappu'))
+    status_arrays.append({'loadRva': load_rva, 'encodedUsage': usage, 'referenceIndex': reference_index,
+        'declaringTypeIndex': owner['index'], 'field': field, 'defaultTypeIndex': default_ti,
+        'defaultDataOffset': dp, 'hex': raw.hex(), 'sha256': v['sha'](raw), 'values': values,
+        'names': [c['unique'](lambda f: f['value'] == value, flags['fields'])['name'] for value in values]})
+status_field = c['unique'](lambda f: f['name'] == 'statusResistable', c['fields'](c['type_row']('BuffData', 'Torappu')))
+switch_type = v['types'][status_field['typeData']]
+assert switch_type['name'] == 'StatusResistable'
+switch_values = []
+for name, expected in [('NO', 0), ('YES', 1), ('AUTOMATIC', 2)]:
+    field = c['unique'](lambda f: f['name'] == name, switch_type['fields'])
+    ti, di = v['defaults'][field['index']]
+    tp = v['offset'](v['quad'](v['b'], v['type_table'] + ti * 8))
+    assert (v['uint'](v['b'], tp + 8) >> 16) & 255 == 5
+    dp = v['uint'](v['m'], 72) + di
+    assert v['m'][dp] == expected
+    switch_values.append({**field, 'defaultTypeIndex': ti, 'defaultFileOffset': dp, 'encodedHex': v['m'][dp:dp + 1].hex(), 'value': expected})
+config_type = c['type_row']('BattleMiscConfigs', 'Torappu')
+result['modeSwitch']['buffNotification']['statusInitialization'] = {
+    'staticArrays': status_arrays, 'statusField': status_field, 'switchEnum': {'typeIndex': switch_type['index'], 'name': switch_type['name'], 'fields': switch_values},
+    'autoArrayField': c['unique'](lambda f: f['name'] == 'ABFLAGS_IS_AUTO_STATUS_RESISTABLE', c['fields'](buff)),
+    'slowDownConfigField': c['unique'](lambda f: f['name'] == 'slowDownTemplateKey', c['fields'](config_type)),
+    'modeReadRva': 0x39b3e1c, 'autoMaskCallRva': 0x39b3f11, 'autoBitTestRva': 0x39b3f35, 'autoPositiveBranchRva': 0x39b3f38,
+    'standaloneAutoMaskCallRva': 0x39b2c60, 'standaloneAutoBitTestRva': 0x39b2c84,
+    'slowDownConfigLoadRva': 0x39b3a92, 'slowDownStringCompareTailRva': 0x39b3aa6,
+    'stringInequality': {'entryRva': 0x50d90f0, 'chunks': c['code'](0x50d90f0)},
+    'nativeConfigEffectsVerified': False, 'liveStatusPhaseVerified': False,
+}
 pool = c['type_row']('ObjectPool`1', 'Torappu.ObjectPool')
 pool_methods = []
 for index in [147561, 147566, 147567, 147558, 147559, 147563, 147564, 147568, 147569]:

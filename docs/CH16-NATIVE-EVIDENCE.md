@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 121 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 124 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -1374,6 +1374,33 @@ verifies stack-scaled modifiers and dirty-mask notification before calculating
 priority. All761 focused native/fear/family/miner tests pass; --check reproduces
 the121-method evidence bundle. Native owner dirty effects, full Reset and live
 controller/stage integration remain open. All existing gates remain intact.
+
+### Status resistance and slowdown initialization
+
+The124-method artifact additionally retains _InitIsStatusResistable,
+_AutoCalcIsStatusResistable and _InitCanSlowDown. Exact initializer field-reference
+usages resolve through the metadata FieldRef table to private16-byte constants.
+The automatic-resistance array is [0,16,43,41]: STUNNED, FROZEN, DOZE, ATTRACTED.
+The separate resistable array is [0,16,23,43]: STUNNED, FROZEN, COLD, DOZE.
+The StatusResistable byte enum is retained through a bounded unsigned-byte
+decoder, leaving the shared signed-Int32 enum reader unchanged.
+
+`fearProjectileInitBuffStatus` handles NO/YES/AUTOMATIC and unknown byte values.
+Automatic mode snapshots the flag count, reloads the flag array and abnormal mask
+per iteration, and preserves the signed-positive TEST/JG bit predicate. It writes
+the resulting status-resistance flag before slowdown initialization. Only a
+resistable buff reads its current template and the configured slowDownTemplateKey;
+native nullable ordinal inequality excludes that exact template from slowdown.
+The config field binding and complete String.op_Inequality body are retained.
+
+Tests cover exact automatic flags, nonautomatic statuses, explicit/unknown modes,
+nullable/case-sensitive template exclusion, live flag-array reads, bit63 behavior,
+partial writes on config failure, reentry, retry and cancellation. An attribute-
+mask/status composition verifies the status decision uses the initialized mask.
+All775 focused native/fear/family/miner tests pass; --check reproduces the
+124-method bundle. Continuation40545156330 at3b7defc7 passed; existing
+full40540699414 ate8664584 is still active. Native config effects, full Reset
+and live controller/stage integration remain open; all gates remain unchanged.
 
 ### ClearRunTimeData default cleanup ordering
 

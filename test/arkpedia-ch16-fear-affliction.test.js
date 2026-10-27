@@ -26,6 +26,7 @@ import {fearProjectileFloatToRaw,fearProjectileFloorToInt,fearProjectileMultiply
 import {fearProjectileLoadBuffActions} from '../server/sim/content/chapter16-fear-buff-actions.js';
 import {fearProjectileLoadBuffAttributes} from '../server/sim/content/chapter16-fear-buff-attributes.js';
 import {fearProjectileBuffPriority,fearProjectileUpdateBuffStack} from '../server/sim/content/chapter16-fear-buff-priority.js';
+import {fearProjectileInitBuffStatus} from '../server/sim/content/chapter16-fear-buff-status.js';
 import {fearProjectileBuffRecyclePool,fearProjectileDefaultBuffPool} from '../server/sim/content/chapter16-fear-buff-pool.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
@@ -211,6 +212,68 @@ test('finish and native-frame queue use concrete buff recycle identity before th
  finish.run();queue.update();assert.equal(buff.instanceUid,1);assert.equal(buff.m_isValid,true);assert.equal(recycled,0);
  f.b.kill(f.source,null);frame=11;queue.update();assert.equal(recycled,1);assert.equal(buff.instanceUid,0);assert.equal(buff.m_isValid,false);assert.equal(p.lock(old),null);
  identity.allocate(buff);assert.equal(buff.instanceUid,2);assert.equal(p.lock(old),null);assert.equal(p.lock(p.capture(buff)),buff);queue.release();assert.deepEqual(f.b.errors,[]);
+});
+
+function statusInitFixture(overrides={}){
+ const buff={m_isStatusResistable:false,m_canSlowDown:false},data={statusResistable:2,templateKey:'custom'},events=[];let mask=0n,active=true;
+ const init=fearProjectileInitBuffStatus({buff,readData:()=>data,readAbnormalMask:()=>{events.push('mask');return mask;},
+  readSlowDownTemplateKey:()=>{events.push('config');return'slowdown';},isActive:()=>active,...overrides});
+ return{buff,data,events,init,set mask(value){mask=value;},set active(value){active=value;}};
+}
+
+test('automatic status resistance uses its exact static flags, excluding other resistable statuses',()=>{
+ for(const[flag,expected]of [[0,true],[16,true],[43,true],[41,true],[23,false],[33,false],[25,false]]){
+  const f=statusInitFixture();f.mask=1n<<BigInt(flag);f.init.run();assert.equal(f.buff.m_isStatusResistable,expected,String(flag));assert.equal(f.buff.m_canSlowDown,expected);
+ }
+});
+
+test('status mode NO/YES and unknown byte values avoid the automatic mask scan',()=>{
+ for(const[mode,expected]of [[0,false],[1,true],[3,false],[255,false]]){
+  const f=statusInitFixture({readAbnormalMask:()=>{throw Error('automatic mask');}});f.data.statusResistable=mode;f.init.run();
+  assert.equal(f.buff.m_isStatusResistable,expected);assert.equal(f.buff.m_canSlowDown,expected);
+ }
+});
+
+test('slowdown eligibility excludes only the exact configured template with ordinal nullable-string equality',()=>{
+ for(const[template,excluded,expected]of [['slowdown','slowdown',false],['SLOWDOWN','slowdown',true],[null,null,false],['',null,true]]){
+  const f=statusInitFixture({readSlowDownTemplateKey:()=>excluded});f.data.statusResistable=1;f.data.templateKey=template;f.init.run();
+  assert.equal(f.buff.m_isStatusResistable,true);assert.equal(f.buff.m_canSlowDown,expected);
+ }
+});
+
+test('automatic flag scan snapshots count but reloads the native enum array and mask each iteration',()=>{
+ let reads=0;const f=statusInitFixture({readAutomaticFlags:()=>++reads===1?[5]:[5,16]});f.mask=1n<<16n;f.init.run();
+ assert.equal(f.buff.m_isStatusResistable,false);assert.equal(reads,2);
+ let arrays=0;const g=statusInitFixture({readAutomaticFlags:()=>++arrays===1?[5,6]:[16,0]});g.mask=1n<<16n;g.init.run();assert.equal(g.buff.m_isStatusResistable,true);
+});
+
+test('automatic flag scan preserves the signed-positive native bit test and array bounds failure',()=>{
+ const f=statusInitFixture({readAutomaticFlags:()=>[63]});f.mask=1n<<63n;f.init.run();assert.equal(f.buff.m_isStatusResistable,false);
+ let reads=0;const g=statusInitFixture({readAutomaticFlags:()=>++reads===1?[0,1]:[]});assert.throws(()=>g.init.run(),/flag index/);
+});
+
+test('status initialization preserves the status write when slowdown config lookup fails',()=>{
+ const f=statusInitFixture({readSlowDownTemplateKey:()=>{throw Error('config');}});f.data.statusResistable=1;
+ assert.throws(()=>f.init.run(),/config/);assert.equal(f.buff.m_isStatusResistable,true);assert.equal(f.buff.m_canSlowDown,false);
+});
+
+test('status initialization skips all config reads when resistance is false',()=>{
+ const f=statusInitFixture({readSlowDownTemplateKey:()=>{throw Error('config');}});f.mask=1n<<33n;f.init.run();assert.equal(f.buff.m_isStatusResistable,false);
+});
+
+for(const point of ['readData','readAbnormalMask','readAutomaticFlags','readSlowDownTemplateKey'])test('status initialization stops invalidation during '+point,()=>{
+ let f;f=statusInitFixture({[point]:()=>{f.active=false;return undefined;}});f.mask=1n;assert.equal(f.init.run(),null);assert.equal(f.init.run(),null);
+});
+
+test('status initialization guards recursive data reads and works after an exception',()=>{
+ let f,fail=true;f=statusInitFixture({readData:()=>{assert.equal(f.init.run(),null);if(fail)throw Error('data');return f.data;}});
+ assert.throws(()=>f.init.run(),/data/);fail=false;f.mask=1n;f.init.run();assert.equal(f.buff.m_canSlowDown,true);
+});
+
+test('status initialization composes with concrete abnormal masks rather than hardcoded status names',()=>{
+ const f=attributeLoadingFixture();f.attributes.abnormalFlags=[43];f.loader.run();const buff=f.buff;
+ fearProjectileInitBuffStatus({buff,readData:()=>({statusResistable:2,templateKey:'effect'}),readAbnormalMask:()=>buff.abnormalFlagMask,
+  readSlowDownTemplateKey:()=> 'slowdown',isActive:()=>true}).run();assert.equal(buff.m_isStatusResistable,true);assert.equal(buff.m_canSlowDown,true);
 });
 
 function priorityFixture(overrides={}){

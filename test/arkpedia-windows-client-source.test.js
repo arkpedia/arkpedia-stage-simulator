@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,121);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,124);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -225,6 +225,22 @@ test('immediate recycle source enumerates stored pairs and pointer lists before 
  }
  at(q.outerMoveNext,0x4dd4158,'dword ptr [rbx + 0xc], eax');at(q.outerMoveNext,0x4dd41b6,'dword ptr [rbx + 0xc], eax');
  assert.ok(!instructions(m).some(i=>i.mnemonic==='call'&&i.operands==='0x183991a80'),'flush does not filter by current frame');
+});
+
+test('status initialization source binds private static arrays, byte switch and configured slowdown exclusion',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.statusInitialization;
+ assert.deepEqual(q.staticArrays.map(a=>a.values),[[0,16,43,41],[0,16,23,43]]);
+ assert.deepEqual(q.staticArrays[0].names,['STUNNED','FROZEN','DOZE','ATTRACTED']);
+ for(const a of q.staticArrays){assert.equal(sha(Buffer.from(a.hex,'hex')),a.sha256);assert.equal(a.field.name.length,64);assert.equal(a.encodedUsage>>>29,4);}
+ assert.equal(q.autoArrayField.offset,8);assert.equal(q.statusField.offset,0x27);assert.equal(q.slowDownConfigField.name,'slowDownTemplateKey');assert.equal(q.slowDownConfigField.offset,0x30);
+ assert.deepEqual(q.switchEnum.fields.map(f=>[f.name,f.value]),[['NO',0],['YES',1],['AUTOMATIC',2]]);
+ const init=castMethod(c,'Buff','_InitIsStatusResistable'),auto=castMethod(c,'Buff','_AutoCalcIsStatusResistable'),slow=castMethod(c,'Buff','_InitCanSlowDown');
+ const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ at(init,q.modeReadRva,'edx, byte ptr [rcx + 0x27]');at(init,q.autoMaskCallRva,'0x1839b63e0');at(init,q.autoBitTestRva,'rdi, rdx');at(init,q.autoPositiveBranchRva,'0x1839b3f6f');
+ at(auto,q.standaloneAutoMaskCallRva,'0x1839b63e0');at(auto,q.standaloneAutoBitTestRva,'rdi, rdx');
+ at(slow,q.slowDownConfigLoadRva,'rdx, qword ptr [rdx + 0x30]');at(slow,q.slowDownStringCompareTailRva,'0x1850d90f0');
+ for(const ch of q.stringInequality.chunks){const raw=Buffer.from(ch.base64,'base64');assert.equal(sha(raw),ch.sha256);assert.equal(raw.length,ch.endRva-ch.beginRva);}
+ assert.equal(q.nativeConfigEffectsVerified,false);assert.equal(q.liveStatusPhaseVerified,false);
 });
 
 test('priority/stack source binds auto sign,1000 scale, FP rounding and over-cap early return',()=>{
