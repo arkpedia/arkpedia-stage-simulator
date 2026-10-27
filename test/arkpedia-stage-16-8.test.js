@@ -43,14 +43,30 @@ function advance(b,seconds){for(let i=0;i<Math.round(seconds/b.dt)&&!b.finished;
   // feeding new miners to the surviving enemies indefinitely.
   for(const[id,e]of b.stageDeviceActions)if(b.time<121&&e.state.canActivate())b.activateStageDevice(id);b.step();
 }}
-for(const seed of[19,71,129])test(`16-8 extended route-only clear exercises live slug transitions and canonical branch offsets (seed ${seed})`,()=>{
-  const b=battle(seed);b.timeLimit=600;const born=[];b.on('enemySpawn',({enemy})=>born.push(enemy));advance(b,600);
+for(const seed of[19,71,129])test(`16-8 extended route-only clear preserves damage-driven slug transitions and canonical branch offsets (seed ${seed})`,()=>{
+  const b=battle(seed);b.timeLimit=600;const born=[],shieldDamage=new Map();b.on('enemySpawn',({enemy})=>born.push(enemy));
+  // Observe delivered physical miner damage before the shield consumes it.
+  // Accepted casts may be cancelled before the original miner OnAttack marker;
+  // proximity alone must not force a hit or a mode transition.
+  b.on('damageFinal',c=>{
+    if(c.target.defId!=='enemy_10126_rkbomb'||!c.source?.findBuff('enemy_mcreep_self_mark')||c.dmg.type!=='phys'||!(c.amount>0))return;
+    const ability=c.target.mem.ab.list.find(a=>a.changeMode);
+    if(ability.mode===0)shieldDamage.set(c.target,(shieldDamage.get(c.target)??0)+c.amount);
+  },{priority:100});
+  advance(b,600);
   // Native marker timing changes miner/slug encounters and their route delay.
   // Keep the existing 600-second diagnostic budget, not the old immediate-hit
   // controller's incidental <410 completion bound. The game default stays 300.
   assert.equal(b.result().reason,'cleared');assert.ok(b.time<600);assert.equal(b.total,35);assert.deepEqual(b.errors,[]);
   const slugs=born.filter(e=>e.defId==='enemy_10126_rkbomb');assert.equal(slugs.length,12);
-  assert.ok(slugs.some(e=>e.mem.ab.list.some(a=>a.changeMode&&a.mode===1)),'native miner attacks break at least one shield');
+  const record=stage.enemies.enemy_10126_rkbomb,initialPool=record.stats.maxHp*record.talents.bb['Shield.init_shield_hp_ratio'];
+  for(const slug of slugs){
+    const damage=shieldDamage.get(slug)??0,ability=slug.mem.ab.list.find(a=>a.changeMode);
+    assert.equal(ability.mode,damage>=initialPool?1:0,'only enough delivered native miner damage breaks the shield');
+    assert.equal(ability.pool,Math.max(0,initialPool-damage));
+  }
+  if(seed===71)assert.equal(shieldDamage.size,0,'the corrected marker leaves no delivered miner/slug hit in this seeded route-only encounter');
+  else assert.ok(slugs.some(e=>e.mem.ab.list.some(a=>a.changeMode&&a.mode===1)),'other seeded encounters still exercise real shield breaks');
   const miners=born.filter(e=>e.mem.ch16Branch);assert.ok(miners.length>0);
   for(const e of miners){assert.equal(e.counted,false);assert.equal(e.holdsBattle,false);assert.equal(e.mem.ch16Branch.route,0);
     assert.ok(Math.abs(e.spawnX-8)<=.4&&Math.abs(e.spawnY-2)<=.4);assert.equal(e.route.visitEveryCheckPoint,false);

@@ -1,5 +1,58 @@
 # Development priorities
 
+### 27 October: official Windows native code intake and event5 binding
+
+The previous goal checkpoint `e9bb61cb` made concrete progress. Its hosted
+continuation `40464406230` passed every job. Full run `40462779262` at older
+miner-clock source `f34d6946` is now terminal: four shard-0 jobs passed, while
+all four shard-1 jobs failed the same 16-8 seed-71 assertion. Every failed shard's
+log was inspected. That assertion assumed a shield break in a route-only
+encounter even after the miner's immediate hit was replaced by its actual native
+marker. The real stage clears, but seed 71 delivers no miner/slug hit. Seeds 19
+and 129 still produce real shield breaks. The test now accounts for delivered
+physical miner damage and verifies every slug's remaining shield pool and mode;
+it retains actual transition coverage in those other seeds. The previously
+omitted 16-8 file is now in the focused cohort. No stage data, damage, clock or
+game timeout was changed to satisfy this test. Fresh full CI is required.
+
+The old Mac client binary is absent locally, and `E:\Arknights` is empty. The
+official Global site exposes a signed Yostar launcher and a per-file public game
+manifest. Static archive inspection of the Valid-signed launcher discovered the
+ordinary read-only manifest/CDN requests; the launcher was never run or installed.
+The pinned `042.0.0` manifest contains 3,122 files, but intake retrieves only
+`GameAssembly.dll` and `global-metadata.dat`, not the complete game or an APK.
+Both files match publisher size/CRC64-XZ and retained SHA256; the frozen manifest
+has its own byte/hash pin. `windows-client-source.mjs --fetch` reproduces this
+limited intake directly from the frozen public manifest, without launcher auth,
+installation, game execution or changing AV settings.
+
+The static x64/v29 reader now binds the actual Assembly-CSharp code-gen module,
+method-token table, metadata registration/type/field tables and PE chained-unwind
+ranges. The fear projectile's serialized BuffToOwner `_runActionOnEvent` field
+resolves to `AbilityStandard.Event`, whose default values prove event5 is
+`ON_SPELL_END`. The native field offset is 0x30, and the ordinary compiled OnEvent
+handler compares that field before calling `_AddBuffs`. Its xLua override path is
+retained rather than assumed absent. Chained hot/cold ranges are necessary: the
+first PE unwind range alone truncates this handler. Complete selected handler,
+AddBuffs, cast lifecycle and `_DoCast.MoveNext` chunks are retained with hashes
+for the next dispatch/ordering review. This is concrete code evidence, not a
+claim of runtime hotfix/frame parity or blanket Global/CN version equivalence.
+
+All 2,057 available focused cases pass, including the repaired six-case 16-8
+cohort and fourteen source-intake/negative/gate cases. Direct combined stage/
+miner/slug/source checks pass 64 cases. Static extraction reproduces with
+`--check`. Hosted native-source now independently fetches the two pinned native
+files and reproduces the compiled/metadata evidence. The four quarantined files
+remain unstaged deletions only locally. No enemy/support/stage admission follows.
+
+Next: review the retained coroutine and cast lifecycle to bind ON_SPELL_END
+emission/launch/self-death ordering without inventing OnAttack in the event-free
+fear skeleton. Use the newly available compiled initialization/talent methods
+to resolve local 16-9 talent attachment and the absent Mk-II groups. The complete
+remaining normal-stage, controller and operator/module audit remains required
+before art/models/chibis/effects. Keep new stages test-only; no merge/deploy/public
+promotion is authorized by this source intake.
+
 ### 27 October: literal miner listener and Guardian shadow finish
 
 The previous goal turn made concrete progress at `f34d6946`. Hosted continuation

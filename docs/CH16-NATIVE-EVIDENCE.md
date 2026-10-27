@@ -235,3 +235,32 @@ corrections grant no 16-9/local talent support or public promotion.
 Native CheckContainsBuff checks the named `fear` identity. Shared independently
 keyed Fear statuses retain that identity in their status field; unrelated raw
 Fear flags do not satisfy it. Both cases have direct regression checks.
+
+### Static official Windows ability-event evidence
+
+`data/arkpedia-global-windows-client-source.json` pins the official Global
+`042.0.0` per-file manifest and only two native evidence files. The manifest is
+406,719 bytes with SHA256
+`7af358a88b66a04c07be860acc183645e0fb5d18f92189af6912ef0ba4259203`.
+GameAssembly.dll is 141,715,432 bytes, CRC64/XZ `7563353330346910567`, SHA256
+`496be6f7bfe29f4b42c2a62269199e6fed697183086be773885fbe26474d8a26`.
+global-metadata.dat is 43,133,088 bytes, CRC64/XZ `3409403955085546068`, SHA256
+`e3d37e4949b83c519c6dc7e2372da7675d17bd5979cebbbb8358b2581b819b11`.
+The [official site](https://www.arknights.global/) supplies the launcher link
+through its public download API. Static inspection of its Valid Yostar signature
+and archive supplies provenance; neither launcher nor game was executed or
+installed. Reproduction uses the frozen public manifest and direct file URLs.
+
+`extract-windows-ability-events.py --check` verifies both native hashes, binds
+the exact Assembly-CSharp image/token table and metadata registration, resolves
+the wrapper field's actual native enum type/offset, and retains complete method
+chunks through chained PE unwind records. Event5 is `ON_SPELL_END` in
+`Torappu.Battle.AbilityStandard.Event`. The default
+`Torappu.Battle.Abilities.BuffToOwner.OnEvent` compares the event against its
+0x30 field and calls `_AddBuffs`; the fear prefab's extraCondition 0 and
+onlyRunOnce 0 are retained explicitly. The handler's xLua override branch is
+also retained. The code evidence includes selected coroutine/cast lifecycle
+methods for further emission/order review. Raw code extraction does not itself
+prove the runtime hotfix state, native frame order, Global/CN version parity,
+fear launch/death sequencing, local talent selection or new enemy/stage support.
+The event-free fear skeleton still receives no invented OnAttack marker.
