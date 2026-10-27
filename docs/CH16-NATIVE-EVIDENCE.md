@@ -565,3 +565,29 @@ the ordering. This is a selected continuation with explicit launch, event5 and
 post-delay callers. Initial target selection, actual mode-switch/self-death
 receivers, full coroutine completion/interrupt handling, native mount/query
 inputs and stage support receipts remain integration obligations.
+
+### Self-death template action conditions
+
+`extract-windows-fear-self-death.py --check` retains the original
+`fearpj_m0_t[switch_to_die]` template and eleven complete default node/runner
+methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
+BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
+buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
+
+The native runner exits when a default previous-success execution condition
+fails. Consequently a failed early control check or mode-switch action stops
+before later effects. AlwaysNext has condition0 and returns true; its position
+immediately after CreateBuff permits InstantKill when that action returns false.
+An action's return value is not automatically the same as a buff admission
+receipt. The immunity node's exact original data remains retained, including
+infinite lifetime and STUNNED/FROZEN/LEVITATE plus SLEEPING immunity.
+
+`fearProjectileSelfDeath` ports this selected action order with explicit native
+state/effect callers and independent captured BUFF_OWNER/TARGET lives. Tests
+cover each early control rejection, mode-switch failure, CreateBuff false,
+context separation, recursion, owner reuse and battle end. InstantKill receives
+all original option switches, including killSource=false and noSource=false;
+the helper does not invent a kill-credit source. Buff activation/context binding,
+actual mode/FSM, immunity creation, native kill reason/credit/reborn behavior and
+full event5 integration remain required before an enemy support receipt or
+stage admission is granted.

@@ -20,6 +20,35 @@ function settingsFixture(){
  return{...f,settings:{version:f.pin.version,source:f.pin.source,file}};
 }
 
+test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,11);
+ for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
+ assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
+ for(const m of c.methods)for(const ch of m.chunks){
+  const raw=Buffer.from(ch.base64,'base64');assert.equal(sha(raw),ch.sha256);assert.equal(raw.length,ch.endRva-ch.beginRva);
+ }
+ assert.deepEqual(c.actions.map(a=>a.$type.split('+').at(-1)),['CheckAbnormalFlag','CheckAbnormalFlag','CheckAbnormalFlag',
+  'CheckAbnormalCombo','SwitchMode','CreateBuff','AlwaysNext','InstantKill']);
+ for(const a of c.actions.slice(0,4)){assert.equal(a._targetType,'BUFF_OWNER');assert.equal(a._isUnset,true);}
+ assert.deepEqual(c.actions.slice(0,3).map(a=>a._abnormalFlag),['LEVITATE','FROZEN','STUNNED']);
+ assert.equal(c.actions[3]._abnormalCombo,'SLEEPING');assert.equal(c.actions[4]._targetType,'TARGET');
+ assert.equal(c.actions[4]._modeIndex,1);assert.equal(c.actions[4]._restartFSM,true);
+ assert.equal(c.actions[5]._buffOwner,'BUFF_OWNER');assert.equal(c.actions[5]._buff.buffKey,'fearpj_die[immunes]');
+ assert.deepEqual(c.actions[5]._buff.attributes.abnormalImmunes,['STUNNED','FROZEN','LEVITATE']);
+ assert.deepEqual(c.actions[5]._buff.attributes.abnormalComboImmunes,['SLEEPING']);
+ assert.equal(c.actions[5]._buff.lifeTimeType,'INFINITY');assert.equal(c.actions[5]._isDerivedBuff,false);
+ assert.equal(c.actions[7]._targetType,'TARGET');assert.equal(c.actions[7]._killSource,false);assert.equal(c.actions[7]._noSource,false);
+ const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ at(castMethod(c,'ActionNode','get_executeCondition'),0xce995b,'eax, [rcx + 1]');
+ at(castMethod(c,'AlwaysNext','get_executeCondition'),0xd32cac,'eax, eax');
+ at(castMethod(c,'AlwaysNext','Execute'),0xd32b63,'al, 1');
+ const run=c.methods.find(m=>m.entryRva===0xe44890);
+ at(run,0xe449d1,'0x180e43d80');at(run,0xe449d8,'0x180e44a7d');at(run,0xe44a7d,'al, al');
+ const check=castMethod(c,'ActionUtil','CheckExecute');
+ at(check,0xe43def,'0x180e43e19');at(check,0xe43df4,'0x180e43e0b');at(check,0xe43e19,'al, 1');
+ for(const key of ['runtimeDispatchVerified','frameParity','crossVersionParity'])assert.equal(c[key],false);
+});
+
 test('Unity settings intake binds one bounded file to the same frozen publisher manifest',()=>{
  const f=settingsFixture();assert.deepEqual(verifyWindowsSettingsManifest(f.pin,f.settings,f.raw),f.manifest);
  for(const invalid of ['path','size','crc','sha','version','source','unbounded']){

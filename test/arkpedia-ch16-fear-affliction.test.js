@@ -16,6 +16,7 @@ import {fearProjectileFlight} from '../server/sim/content/chapter16-fear-flight.
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
 import {fearProjectileSpell} from '../server/sim/content/chapter16-fear-spell.js';
+import {fearProjectileSelfDeath} from '../server/sim/content/chapter16-fear-self-death.js';
 import {fearProjectileTargetVerifier,fearProjectileSourceMotion} from '../server/sim/content/chapter16-fear-targets.js';
 import {fearProjectileReached,fearProjectileMotionStep,fearProjectileMountReference,fearProjectileTraceMotion} from '../server/sim/content/chapter16-fear-movement.js';
 import { battle as minerBattle, keys as minerKeys } from './helpers/ch17Harness.js';
@@ -23,6 +24,60 @@ import { chapter16Shadow } from '../server/sim/content/chapter16-shadow.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
 const parentKey='feawpj_a[mcreep_fear]';
 const fpOne=1n<<32n;
+function selfDeathFixture(overrides={}){
+ const f=fixture(),events=[];
+ const action=fearProjectileSelfDeath(f.b,{buffOwner:f.source,target:f.source,
+  readAbnormalFlag:(_unit,flag)=>{events.push(flag);return false;},
+  readAbnormalCombo:(_unit,combo)=>{events.push(combo);return false;},
+  switchMode:(_unit,options)=>{events.push(options);return true;},
+  createImmunityBuff:()=>{events.push('immunity');return true;},instantKill:(_unit,options)=>{events.push(options);return true;},...overrides});
+ return{...f,action,events};
+}
+
+test('self-death action order switches mode then creates immunity before invoking explicit kill semantics',()=>{
+ const f=selfDeathFixture();assert.equal(f.action.run(),true);
+ assert.deepEqual(f.events.slice(0,4),['LEVITATE','FROZEN','STUNNED','SLEEPING']);
+ assert.deepEqual(f.events[4],{modeIndex:1,loadModeFromBlackboard:false,restoreDefault:false,restartFSM:true});
+ assert.equal(f.events[5],'immunity');assert.deepEqual(f.events[6],{killSource:false,noSource:false,
+  withdrawIfRallyPoint:false,resultIfInRallyPointMode:false,skipReborn:false,noReason:false,markReachExit:false,switchState:false});
+ assert.equal(f.action.run(),null);
+});
+
+for(const flag of ['LEVITATE','FROZEN','STUNNED','SLEEPING'])test('failed '+flag+' unset check stops before mode switch and never reaches AlwaysNext',()=>{
+ const f=selfDeathFixture({readAbnormalFlag:(_unit,key)=>key===flag,readAbnormalCombo:(_unit,key)=>key===flag});
+ assert.equal(f.action.run(),false);assert.deepEqual(f.events,[]);
+});
+
+test('a failed mode switch stops before immunity and kill',()=>{
+ const f=selfDeathFixture({switchMode:()=>false});assert.equal(f.action.run(),false);
+ assert.deepEqual(f.events,['LEVITATE','FROZEN','STUNNED','SLEEPING']);
+});
+
+test('AlwaysNext after immunity creation permits kill even when that creation fails',()=>{
+ const f=selfDeathFixture({createImmunityBuff:()=>{f.events.push('rejected immunity');return false;}});
+ assert.equal(f.action.run(),true);assert.equal(f.events[5],'rejected immunity');assert.equal(f.events[6].killSource,false);
+});
+
+test('self-death action preserves separate BUFF_OWNER and TARGET contexts',()=>{
+ const f=fixture(),events=[];
+ const action=fearProjectileSelfDeath(f.b,{buffOwner:f.source,target:f.target,
+  readAbnormalFlag:unit=>{assert.equal(unit,f.source);return false;},
+  readAbnormalCombo:unit=>{assert.equal(unit,f.source);return false;},
+  switchMode:unit=>{assert.equal(unit,f.target);events.push('mode');return true;},
+  createImmunityBuff:unit=>{assert.equal(unit,f.source);events.push('immunity');return true;},
+  instantKill:unit=>{assert.equal(unit,f.target);events.push('kill');return true;}});
+ assert.equal(action.run(),true);assert.deepEqual(events,['mode','immunity','kill']);
+});
+
+for(const boundary of ['reuse','battleEnd','recursive'])test('self-death action guards '+boundary+' during mode switching',()=>{
+ let f;f=selfDeathFixture({switchMode:()=>{
+  if(boundary==='reuse')f.source.deploySeq++;else if(boundary==='battleEnd')f.b.emit('battleEnd',{});
+  else assert.equal(f.action.run(),null);return true;
+ }});
+ assert.equal(f.action.run(),boundary==='recursive'?true:null);
+ assert.equal(f.events.includes('immunity'),boundary==='recursive');assert.deepEqual(f.b.errors,[]);
+});
+
 function spellFixture(overrides={}){
  const f=fixture(),events=[];
  const spell=fearProjectileSpell(f.b,{owner:f.source,onSpellStart:()=>{events.push('start');return true;},
