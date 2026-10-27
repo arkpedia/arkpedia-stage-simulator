@@ -32,6 +32,7 @@ import {fearProjectileBuffConfig,fearProjectileResetBuffContext} from '../server
 import {fearProjectileBuffOverrideKey,fearProjectileResetBuffOverride,fearProjectileOverrideContainer} from '../server/sim/content/chapter16-fear-buff-override.js';
 import {fearProjectileResetBuff} from '../server/sim/content/chapter16-fear-buff-reset.js';
 import {fearProjectileNewBuff} from '../server/sim/content/chapter16-fear-buff-new.js';
+import {fearProjectileAttributeStatus,fearProjectileBuffAdmission,fearProjectileComboFlag} from '../server/sim/content/chapter16-fear-buff-admission.js';
 import {fearProjectileBuffRecyclePool,fearProjectileDefaultBuffPool} from '../server/sim/content/chapter16-fear-buff-pool.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
@@ -44,6 +45,107 @@ import { chapter16Shadow } from '../server/sim/content/chapter16-shadow.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
 const parentKey='feawpj_a[mcreep_fear]';
 const fpOne=1n<<32n;
+
+function admissionFixture(){
+ const attributes={m_abnormalFlagsCounter:Array(64).fill(0),m_abnormalImmuneCounter:Array(64).fill(0),m_abnormalAntiCounter:Array(64).fill(0),m_abnormalComboMgr:{m_abnormalFlagMask:0n}},
+  owner={isEnemy:true,destroyed:false,motion:0,levitating:false,attributes},data={attributes:{abnormalFlags:[0,16]}},events=[],state={active:true};
+ const isActive=()=>state.active,query=attrs=>fearProjectileAttributeStatus({attributes:attrs,isActive});
+ const options={isActive,readFlags:input=>{events.push('flags');return input.attributes.abnormalFlags;},isNullOrEmpty:flags=>flags==null||flags.length===0,
+  containsFlag:(flags,flag)=>{events.push(['contains',flag]);return flags.includes(flag);},
+  openFlags:flags=>{let index=-1;events.push('open');return{moveNext:()=>{events.push('move');return++index<flags.length;},current:()=>flags[index],dispose:()=>{events.push('dispose');}};},
+  readOwnerAttributes:()=>{events.push('attributes');return owner.attributes;},getAbnormalAnti:(attrs,flag)=>{events.push(['anti',flag]);return query(attrs).getAbnormalAnti(flag);},
+  getAbnormalFlag:(attrs,flag)=>{events.push(['flag',flag]);return query(attrs).getAbnormalFlag(flag);},readOwner:()=>{events.push('owner');return owner;},
+  asEnemy:value=>{events.push('cast');return value?.isEnemy?value:null;},isDestroyedOrNull:value=>{events.push('Unity');return value==null||value.destroyed;},
+  readRawMotionMode:value=>{events.push('motion');return value.motion;},readIsLevitate:value=>{events.push('levitate');return value.levitating;},
+  readStatusResistable:buff=>{events.push('resistable');return buff.m_isStatusResistable;}};
+ return{attributes,owner,data,events,state,options,query,gates:()=>fearProjectileBuffAdmission(options)};
+}
+
+test('combo getter uses the native signed mask and wrapped shift, including bit63 signed positivity',()=>{
+ const manager={m_abnormalFlagMask:(1n<<62n)|1n};assert.equal(fearProjectileComboFlag(manager,0),true);assert.equal(fearProjectileComboFlag(manager,64),true);
+ assert.equal(fearProjectileComboFlag(manager,62),true);assert.equal(fearProjectileComboFlag(manager,63),false);manager.m_abnormalFlagMask=-(1n<<63n);
+ assert.equal(fearProjectileComboFlag(manager,63),false);assert.equal(fearProjectileComboFlag(manager,-1),false);manager.m_abnormalFlagMask=-1n;
+ assert.equal(fearProjectileComboFlag(manager,30),true);assert.throws(()=>fearProjectileComboFlag({m_abnormalFlagMask:1n<<63n},0),/signed Int64/);
+});
+test('default Attributes combo fallback reads the retained combo mask after direct flags are suppressed',()=>{
+ const f=admissionFixture();f.attributes.m_abnormalFlagsCounter[25]=1;f.attributes.m_abnormalImmuneCounter[25]=1;
+ assert.equal(f.query(f.attributes).getAbnormalFlag(25),false);f.attributes.m_abnormalComboMgr.m_abnormalFlagMask=1n<<25n;
+ assert.equal(f.query(f.attributes).getAbnormalFlag(25),true);
+});
+
+for(const count of [-32768,-1,0,1,32767])test('native abnormal-anti counter tests signed positivity for '+count,()=>{
+ const f=admissionFixture();f.attributes.m_abnormalAntiCounter[25]=count;assert.equal(f.query(f.attributes).getAbnormalAnti(25),count>0);
+});
+test('native abnormal flag uses positive active count only without positive immunity, then delegates combo fallback',()=>{
+ const f=admissionFixture(),calls=[];f.attributes.m_abnormalFlagsCounter[25]=1;
+ const query=fearProjectileAttributeStatus({attributes:f.attributes,readComboFlag:(manager,flag)=>{calls.push([manager,flag]);return true;},isActive:()=>true});
+ assert.equal(query.getAbnormalFlag(25),true);assert.deepEqual(calls,[]);f.attributes.m_abnormalImmuneCounter[25]=1;
+ assert.equal(query.getAbnormalFlag(25),true,'positive immunity falls through to the combo manager rather than hard-coding false');assert.deepEqual(calls,[[f.attributes.m_abnormalComboMgr,25]]);
+ f.attributes.m_abnormalFlagsCounter=null;assert.equal(query.getAbnormalFlag(25),true,'positive immunity skips the direct active-count array');
+});
+test('negative active or immune counters are not truthy native flags, and positive direct flags skip missing combo state',()=>{
+ const f=admissionFixture();f.attributes.m_abnormalFlagsCounter[25]=-1;assert.equal(f.query(f.attributes).getAbnormalFlag(25),false);
+ f.attributes.m_abnormalFlagsCounter[25]=1;f.attributes.m_abnormalImmuneCounter[25]=-1;f.attributes.m_abnormalComboMgr=null;
+ assert.equal(f.query(f.attributes).getAbnormalFlag(25),true);f.attributes.m_abnormalFlagsCounter[25]=0;assert.throws(()=>f.query(f.attributes).getAbnormalFlag(25),/null native/);
+});
+test('native counter queries check Int16 values and real array bounds instead of wrapping enum indexes',()=>{
+ const f=admissionFixture(),query=f.query(f.attributes);assert.throws(()=>query.getAbnormalAnti(-1),/outside/);assert.throws(()=>query.getAbnormalFlag(64),/outside/);
+ f.attributes.m_abnormalAntiCounter[0]=32768;assert.throws(()=>query.getAbnormalAnti(0),/signed Int16/);
+});
+test('native flag combo fallback propagates errors, cancels invalid lives and releases its reentry guard',()=>{
+ const f=admissionFixture();let active=true,fail=true,query,nested;query=fearProjectileAttributeStatus({attributes:f.attributes,isActive:()=>active,
+  readComboFlag:()=>{nested=query.getAbnormalFlag(0);if(fail)throw Error('combo failure');active=false;return true;}});
+ assert.throws(()=>query.getAbnormalFlag(0),/combo failure/);fail=false;assert.equal(query.getAbnormalFlag(0),null);assert.equal(nested,null);
+});
+for(const flags of [null,[]])test('empty incoming status lists bypass anti enumeration and Enemy levitation checks',()=>{
+ const f=admissionFixture();f.data.attributes.abnormalFlags=flags;const gate=f.gates();assert.equal(gate.passesAbnormalAnti(f.data),true);assert.equal(gate.passesLevitate(f.data),true);
+ assert.deepEqual(f.events,['flags','flags']);
+});
+test('abnormal anti scans in native order, short-circuits the first resisted flag and disposes before returning false',()=>{
+ const f=admissionFixture();f.data.attributes.abnormalFlags=[0,16,25];f.attributes.m_abnormalAntiCounter[16]=1;
+ assert.equal(f.gates().passesAbnormalAnti(f.data),false);assert.deepEqual(f.events.filter(Array.isArray),[['anti',0],['anti',16]]);assert.equal(f.events.at(-1),'dispose');
+});
+test('abnormal anti rereads owner attributes on every flag and preserves native enumeration/version errors',()=>{
+ const f=admissionFixture(),next={...f.attributes,m_abnormalAntiCounter:Array(64).fill(0)};next.m_abnormalAntiCounter[16]=1;let reads=0;
+ f.options.readOwnerAttributes=()=>++reads===1?f.attributes:next;assert.equal(f.gates().passesAbnormalAnti(f.data),false);assert.equal(reads,2);
+ f.options.openFlags=()=>({moveNext:()=>{throw Error('native list changed');},current:()=>0,dispose:()=>{f.events.push('disposed-error');}});
+ assert.throws(()=>f.gates().passesAbnormalAnti(f.data),/native list changed/);assert.equal(f.events.at(-1),'disposed-error');
+});
+for(const phase of ['opening','query','disposal'])test('abnormal anti disposes and cancels on lifecycle invalidation during '+phase,()=>{
+ const f=admissionFixture(),open=f.options.openFlags;f.options.openFlags=flags=>{const it=open(flags),dispose=it.dispose;
+  if(phase==='opening')f.state.active=false;it.dispose=()=>{dispose();if(phase==='disposal')f.state.active=false;};return it;};
+ if(phase==='query')f.options.getAbnormalAnti=()=>{f.state.active=false;return true;};assert.equal(f.gates().passesAbnormalAnti(f.data),null);assert.equal(f.events.at(-1),'dispose');
+});
+for(const mode of ['not-levitate','new','repeat','force-repeat','force-only','flying','non-enemy','destroyed'])test('levitation admission handles '+mode+' using the original Enemy and raw motion mode',()=>{
+ const f=admissionFixture();f.data.attributes.abnormalFlags=mode==='not-levitate'?[0]:mode==='force-only'?[36]:mode==='force-repeat'?[25,36]:[25];
+ if(['repeat','force-repeat'].includes(mode))f.owner.levitating=true;if(mode==='flying')f.owner.motion=1;if(mode==='non-enemy')f.owner.isEnemy=false;if(mode==='destroyed')f.owner.destroyed=true;
+ assert.equal(f.gates().passesLevitate(f.data),!['repeat','flying','non-enemy','destroyed'].includes(mode));
+ if(['not-levitate','force-only'].includes(mode))assert.ok(!f.events.includes('owner'));
+ if(mode==='new')assert.ok(!f.events.some(e=>Array.isArray(e)&&e[1]===36));
+});
+test('levitation admission rereads incoming flags for FORCE_LEVITATE and uses the original owner after a successful type gate',()=>{
+ const f=admissionFixture();f.data.attributes.abnormalFlags=[25];f.options.asEnemy=()=>({other:true});f.options.readRawMotionMode=value=>{assert.equal(value,f.owner);return 0;};
+ f.options.readIsLevitate=value=>{assert.equal(value,f.owner);f.data.attributes.abnormalFlags=[25,36];return true;};assert.equal(f.gates().passesLevitate(f.data),true);
+});
+test('status anti reads owner counters only for status-resistable buffs and honors the counter/combo query',()=>{
+ const f=admissionFixture(),gate=f.gates();assert.equal(gate.passesStatusAnti({m_isStatusResistable:false}),true);assert.deepEqual(f.events,['resistable']);
+ f.attributes.m_abnormalFlagsCounter[30]=1;assert.equal(gate.passesStatusAnti({m_isStatusResistable:true}),false);
+ f.attributes.m_abnormalImmuneCounter[30]=1;assert.equal(gate.passesStatusAnti({m_isStatusResistable:true}),true);
+ f.options.getAbnormalFlag=()=>true;assert.equal(f.gates().passesStatusAnti({m_isStatusResistable:true}),false);
+});
+test('NewBuff consumes concrete admission gates before allocation and after Reset, without promoting rejected statuses',()=>{
+ for(const blocked of ['anti','levitate','status','none']){
+  const f=admissionFixture(),n=newBuffFixture();Object.assign(n.owner,f.owner);n.source.attributes=f.attributes;n.buff.m_isStatusResistable=true;
+  if(blocked==='anti')f.attributes.m_abnormalAntiCounter[0]=1;
+  if(blocked==='levitate'){f.data.attributes.abnormalFlags=[25];n.owner.levitating=true;}
+  if(blocked==='status')f.attributes.m_abnormalFlagsCounter[30]=1;
+  f.options.readOwner=()=>n.owner;f.options.readOwnerAttributes=()=>n.owner.attributes;const gates=f.gates();Object.assign(n.options,{
+   readInputData:()=>f.data,passesAbnormalAnti:gates.passesAbnormalAnti,passesLevitate:gates.passesLevitate,passesStatusAnti:gates.passesStatusAnti,
+   hasFlag:(attributes,flag)=>f.query(attributes).getAbnormalFlag(flag)});
+  assert.equal(n.run(),blocked==='none'?n.buff:null);assert.equal(n.events.includes('allocate'),!['anti','levitate'].includes(blocked));
+  assert.equal(n.recycled.length,blocked==='status'?1:0);assert.equal(n.map.size,blocked==='none'?1:0);
+ }
+});
 
 function newBuffFixture(){
  const buff={instanceUid:7,m_started:false,finished:false,overrideKey:''},container={},source={attributes:{flags:new Set()}},owner={inited:true,attributes:{flags:new Set()}},
@@ -472,17 +574,19 @@ function resetPipelineFixture(){
 }
 
 test('NewBuff composes concrete pool allocation, Reset and pointer capture before activation and recycles an early status rejection',()=>{
- const f=resetPipelineFixture(),n=newBuffFixture(),identity=fearProjectileBuffIdentity({counter:{value:70}});
+ const f=resetPipelineFixture(),n=newBuffFixture(),a=admissionFixture(),identity=fearProjectileBuffIdentity({counter:{value:70}});
  Object.assign(f.buff,{instanceUid:0,m_isValid:false});f.data.disableOverride=true;f.data.independentCharacterSource=false;
  let created=0;const pool=fearProjectileDefaultBuffPool({createBuff:()=>++created===100?f.buff:structuredClone(f.buff),onAllocate:identity.allocate,onRecycle:identity.recycle});
- const pointers=fearProjectileBuffPointers({readUid:value=>value.instanceUid});f.source.attributes={flags:new Set()};
+ const pointers=fearProjectileBuffPointers({readUid:value=>value.instanceUid});Object.assign(n.owner,a.owner);f.source.attributes=a.attributes;
+ a.options.readOwner=()=>n.owner;a.options.readOwnerAttributes=()=>n.owner.attributes;const gates=a.gates();
  Object.assign(n.options,{container:f.container,source:f.source,ability:f.ability,sourceProjectile:f.sourceProjectile,
   readInputData:()=>f.data,readInput:()=>({template:f.template,data:f.data}),readPool:()=>pool,allocateBuff:value=>value.allocate(),recycleBuff:(value,buff)=>value.recycle(buff),
+  passesAbnormalAnti:gates.passesAbnormalAnti,passesLevitate:gates.passesLevitate,passesStatusAnti:gates.passesStatusAnti,hasFlag:(attributes,flag)=>a.query(attributes).getAbnormalFlag(flag),
   resetBuff:(buff,config,context)=>{assert.equal(buff,f.buff);assert.equal(config.data,f.data);assert.equal(context.source,f.source);f.run();},
   captureBuffPointer:pointers.capture,readFinished:buff=>buff.m_isFinished,onStart:buff=>{assert.equal(n.map.get(71),buff);assert.equal(pointers.lock(n.list[0]),buff);assert.equal(buff.m_lifeTime,6n<<32n);buff.m_started=true;}});
  assert.equal(fearProjectileNewBuff(n.options).run(),f.buff);assert.equal(f.buff.instanceUid,71);assert.equal(pool.usingCount,1);assert.equal(f.buff.enabled,true);
  assert.equal(f.buff.m_isStatusResistable,true);assert.equal(f.buff.hasShield,true);assert.equal(f.buff.priority,2000);
- const prior=n.list[0];n.list.length=0;n.map.clear();pool.recycle(f.buff);n.options.passesStatusAnti=()=>false;assert.equal(fearProjectileNewBuff(n.options).run(),null);
+ const prior=n.list[0];n.list.length=0;n.map.clear();pool.recycle(f.buff);a.attributes.m_abnormalFlagsCounter[30]=1;assert.equal(fearProjectileNewBuff(n.options).run(),null);
  assert.equal(pool.usingCount,0);assert.equal(f.buff.instanceUid,0);assert.equal(f.buff.m_isValid,false);assert.equal(pointers.isValid(prior),false);
  assert.equal(n.list.length,0,'status rejection adds no registration');assert.equal(n.map.size,0);
 });

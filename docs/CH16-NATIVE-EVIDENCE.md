@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 156 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 161 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -1401,6 +1401,48 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 124-method bundle. Continuation40545156330 at3b7defc7 passed; existing
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
+
+### Native abnormal-status queries and NewBuff admission gates
+
+The161-method artifact additionally retains Attributes.GetAbnormalFlag and
+GetAbnormalAnti, Entity's raw-changeable-motion and levitation getters, and
+AbnormalComboManager.GetAbnormalFlag. The three counter fields at0x20/0x28/0x30
+are verified SZARRAYs of signed Int16 values. Anti queries test counter>0.
+Flag queries use a positive active counter only when the immunity counter is
+nonpositive; otherwise they fall through to the combo manager, rather than
+unconditionally returning false for immunity.
+
+The combo manager getter reads signed Int64 m_abnormalFlagMask at0x28, shifts
+using the enum's low six bits, and applies TEST/SETG. Its bit63 result therefore
+does not count as positive. `fearProjectileComboFlag` and
+`fearProjectileAttributeStatus` implement these selected queries, with real
+counter-array bounds and signed values. This binds querying the combo mask,
+not the manager's complete update/combination lifecycle.
+
+`fearProjectileBuffAdmission` now supplies the three retained default gates.
+Abnormal anti treats null/empty incoming flags as pass; otherwise it rereads
+the flags, enumerates in native order, obtains current owner attributes for each
+flag, stops on the first positive anti query, and disposes on rejection,
+exhaustion or error. Status resistance queries owner flag30 only when the buff
+is status-resistable. Incoming LEVITATE25 requires an Enemy cast of the original
+owner, a non-destroyed Unity object and raw MotionMode.WALK0. An already
+levitating Enemy additionally requires incoming FORCE_LEVITATE36, using a fresh
+flag-list read. FORCE_LEVITATE alone does not imply LEVITATE for this gate.
+
+Tests cover signed counters, immunity/combo fallthrough, bit63/shift behavior,
+array bounds, native enumeration errors/disposal, repeated owner reads,
+non-enemies, destroyed owners, raw flying mode, repeat/forced levitation,
+changed incoming lists and lifecycle invalidation. NewBuff tests use the concrete
+queries/gates for rejection before allocation and for status rejection after
+Reset. The pool/Reset/NewBuff composition also uses them, including real
+counter-driven recycling without registration. All934 focused tests pass;
+the161-method bundle reproduces with --check.
+
+Continuation40554907726 atb437ef5e and full40550025781 at93014b95 both passed.
+Native flag-list storage/version effects, combo-mask update lifecycle,
+override-group/activation internals, cross-version/frame parity and live enemy/
+controller/stage integration remain open. Source/support/receipt/catalogue gates
+are unchanged; all new stages remain test-only.
 
 ### NewBuff registration and activation order
 

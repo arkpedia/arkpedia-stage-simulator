@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,156);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,161);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -225,6 +225,34 @@ test('immediate recycle source enumerates stored pairs and pointer lists before 
  }
  at(q.outerMoveNext,0x4dd4158,'dword ptr [rbx + 0xc], eax');at(q.outerMoveNext,0x4dd41b6,'dword ptr [rbx + 0xc], eax');
  assert.ok(!instructions(m).some(i=>i.mnemonic==='call'&&i.operands==='0x183991a80'),'flush does not filter by current frame');
+});
+
+test('native admission source binds signed Int16 counters, combo fallback and Enemy raw-WALK levitation',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.newBuff.admissionGates;
+ const anti=castMethod(c,'BuffContainer','_CheckThroughBuffAbnormalAnti'),levitate=castMethod(c,'BuffContainer','_CheckThroughLevitateBuffCondition'),status=castMethod(c,'BuffContainer','_CheckThroughBuffStatusResistableAnti');
+ const flagQuery=castMethod(c,'Attributes','GetAbnormalFlag'),antiQuery=castMethod(c,'Attributes','GetAbnormalAnti');
+ const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ assert.equal(q.enemyTypeLoad.name,'Enemy');assert.equal(q.enemyTypeLoad.encodedUsage>>>29,1);
+ assert.deepEqual(q.flags.map(f=>[f.name,f.value]),[['LEVITATE',25],['ANTI_STATUS_RESISTABLE',30],['FORCE_LEVITATE',36]]);
+ assert.deepEqual(q.counterFields.map(f=>[f.name,f.offset,f.elementKind]),[['m_abnormalFlagsCounter',0x20,6],['m_abnormalImmuneCounter',0x28,6],['m_abnormalAntiCounter',0x30,6]]);
+ for(const field of q.counterFields){assert.equal((field.typeBits>>>16)&255,29);assert.equal(Buffer.from(field.elementTypeHex,'hex').length,16);}
+ assert.equal(q.comboField.name,'m_abnormalComboMgr');assert.equal(q.comboField.offset,0x38);assert.equal(q.comboType.name,'AbnormalComboManager');
+ assert.equal(q.comboMaskField.name,'m_abnormalFlagMask');assert.equal(q.comboMaskField.offset,0x28);assert.equal((q.comboMaskField.typeBits>>>16)&255,10);
+ const combo=castMethod(c,'AbnormalComboManager','GetAbnormalFlag');at(combo,q.comboMaskReadRva,'rbx, qword ptr [rbx + 0x28]');
+ at(combo,q.comboMaskShiftRva,'rdx, cl');at(combo,q.comboMaskTestRva,'rbx, rdx');at(combo,q.comboSignedPositiveRva,'al');
+ assert.equal(q.rawMotionField.name,'m_changeableMotionMode');assert.equal(q.rawMotionField.offset,0x94);assert.equal(q.motionEnum.fields.find(f=>f.name==='WALK').value,0);
+ at(anti,q.antiEmptyCallRva,'0x183f62450');at(anti,q.antiGetEnumeratorCallRva,'0x18458dc20');at(anti,q.antiMoveNextCallRva,'0x184dd9f70');
+ at(anti,q.antiCurrentReadRva,'edi, dword ptr [rsp + 0x50]');at(anti,q.antiOwnerAttributesCallRva,'0x1839d8080');at(anti,q.antiQueryCallRva,'0x1839576e0');
+ for(const rva of [q.antiRejectDisposeCallRva,q.antiExhaustedDisposeCallRva,q.antiExceptionDisposeCallRva])at(anti,rva,'0x180511a50');
+ at(levitate,q.levitateEmptyCallRva,'0x183f62450');at(levitate,q.levitateContainsCallRva,'0x183f5f300');at(levitate,q.levitateOwnerSelectRva,'rbx, rsi');
+ at(levitate,q.levitateNullCallRva,'0x185ebec60');at(levitate,q.rawMotionCallRva,'0x183a2ee10');at(levitate,q.alreadyLevitateCallRva,'0x183a2cf50');at(levitate,q.forceLevitateTailRva,'0x183f5f300');
+ at(status,q.statusResistableCallRva,'0x1839b6bc0');at(status,q.statusOwnerAttributesCallRva,'0x1839d8080');at(status,q.statusAntiQueryCallRva,'0x1839579e0');
+ at(flagQuery,q.flagImmuneArrayReadRva,'rcx, qword ptr [rbx + 0x28]');at(flagQuery,q.flagImmuneCountCompareRva,'word ptr [rcx + rax*2 + 0x20], 0');
+ at(flagQuery,q.flagActiveArrayReadRva,'rcx, qword ptr [rbx + 0x20]');at(flagQuery,q.flagActiveCountCompareRva,'word ptr [rcx + rax*2 + 0x20], 0');
+ at(flagQuery,q.flagComboReadRva,'rcx, qword ptr [rbx + 0x38]');at(flagQuery,q.flagComboTailRva,'0x183995ef0');
+ at(antiQuery,q.antiCounterReadRva,'rbx, qword ptr [rbx + 0x30]');at(antiQuery,q.antiCounterCompareRva,'word ptr [rbx + rax*2 + 0x20], 0');
+ assert.ok(castMethod(c,'AbnormalComboManager','GetAbnormalFlag'));assert.ok(castMethod(c,'Entity','get_rawChangeableMotionMode'));assert.ok(castMethod(c,'Entity','get_isLevitate'));
+ assert.equal(q.nativeFlagEnumerationVerified,false);assert.equal(q.nativeComboEffectsVerified,false);assert.equal(q.liveAdmissionGatesVerified,false);
 });
 
 test('NewBuff source binds cleanup, pool/reset, pre-activation registration and post-activation override ordering',()=>{

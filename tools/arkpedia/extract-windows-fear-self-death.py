@@ -1149,6 +1149,54 @@ result['modeSwitch']['buffNotification']['newBuff'] = {
     'nativeOverrideGroupEffectsVerified': False, 'liveNewBuffPhaseVerified': False,
 }
 pool_methods = []
+attributes_type = c['type_row']('Attributes', 'Torappu.Battle')
+combo_field = c['unique'](lambda f: f['name'] == 'm_abnormalComboMgr', c['fields'](attributes_type))
+combo_type = v['types'][combo_field['typeData']]
+for owner, names in [(attributes_type, ['GetAbnormalFlag', 'GetAbnormalAnti']),
+                     (entity, ['get_rawChangeableMotionMode', 'get_isLevitate']), (combo_type, ['GetAbnormalFlag'])]:
+    for name in names:
+        row = c['unique'](lambda r: r['name'] == name, owner['methods'])
+        if not any(m['index'] == row['index'] and m['image'] == 'Assembly-CSharp.dll' for m in methods):
+            methods.append(c['method'](owner, row))
+gate_load_rva = 0x39d7041
+pos = v['offset'](v['image_base'] + gate_load_rva)
+assert v['b'][pos:pos + 3] == bytes.fromhex('488b15')
+target = gate_load_rva + 7 + struct.unpack_from('<i', v['b'], pos + 3)[0]
+usage = v['quad'](v['b'], v['offset'](v['image_base'] + target))
+assert usage >> 29 == 1
+ti = (usage & 0x1ffffffe) >> 1
+tp = v['offset'](v['quad'](v['b'], v['type_table'] + ti * 8))
+assert (v['uint'](v['b'], tp + 8) >> 16) & 255 == 18 and v['quad'](v['b'], tp) == enemy_type['index']
+counter_fields = []
+for name in ['m_abnormalFlagsCounter', 'm_abnormalImmuneCounter', 'm_abnormalAntiCounter']:
+    field = c['unique'](lambda f: f['name'] == name, c['fields'](attributes_type))
+    assert (field['typeBits'] >> 16) & 255 == 29
+    ep = v['offset'](field['typeData'])
+    assert (v['uint'](v['b'], ep + 8) >> 16) & 255 == 6  # IL2CPP_TYPE_I2
+    counter_fields.append({**field, 'elementTypeHex': v['b'][ep:ep + 16].hex(), 'elementKind': 6})
+raw_motion_field = c['unique'](lambda f: f['name'] == 'm_changeableMotionMode', c['fields'](entity))
+motion_enum = c['enum'](v['types'][raw_motion_field['typeData']])
+combo_mask_field = c['unique'](lambda f: f['name'] == 'm_abnormalFlagMask', c['fields'](combo_type))
+assert combo_mask_field['offset'] == 0x28 and (combo_mask_field['typeBits'] >> 16) & 255 == 10
+result['modeSwitch']['buffNotification']['newBuff']['admissionGates'] = {
+    'enemyTypeLoad': {'loadRva': gate_load_rva, 'encodedUsage': usage, 'typeIndex': ti, 'definitionIndex': enemy_type['index'], 'name': enemy_type['name']},
+    'flags': [c['unique'](lambda f: f['value'] == value, new_flags['fields']) for value in [25, 30, 36]],
+    'counterFields': counter_fields, 'comboField': combo_field, 'comboType': {'index': combo_type['index'], 'name': combo_type['name']},
+    'comboMaskField': combo_mask_field, 'comboMaskReadRva': 0x3995f24, 'comboMaskShiftRva': 0x3995f38,
+    'comboMaskTestRva': 0x3995f3b, 'comboSignedPositiveRva': 0x3995f43,
+    'rawMotionField': raw_motion_field, 'motionEnum': motion_enum,
+    'antiEmptyCallRva': 0x39d6d6c, 'antiGetEnumeratorCallRva': 0x39d6d9f, 'antiMoveNextCallRva': 0x39d6ddc,
+    'antiCurrentReadRva': 0x39d6de5, 'antiOwnerAttributesCallRva': 0x39d6dee, 'antiQueryCallRva': 0x39d6e04,
+    'antiRejectDisposeCallRva': 0x39d6e17, 'antiExhaustedDisposeCallRva': 0x39d6e38, 'antiExceptionDisposeCallRva': 0x39d6e4b,
+    'levitateEmptyCallRva': 0x39d6ffb, 'levitateContainsCallRva': 0x39d7025, 'levitateOwnerCallRva': 0x39d703c,
+    'levitateOwnerSelectRva': 0x39d7091, 'levitateNullCallRva': 0x39d70b7, 'rawMotionCallRva': 0x39d70ca,
+    'alreadyLevitateCallRva': 0x39d70d8, 'forceLevitateTailRva': 0x39d7104,
+    'statusResistableCallRva': 0x39d6ef0, 'statusOwnerAttributesCallRva': 0x39d6efe, 'statusAntiQueryCallRva': 0x39d6f12,
+    'flagImmuneArrayReadRva': 0x3957a19, 'flagImmuneCountCompareRva': 0x3957a29,
+    'flagActiveArrayReadRva': 0x3957a31, 'flagActiveCountCompareRva': 0x3957a3f, 'flagComboReadRva': 0x3957a54, 'flagComboTailRva': 0x3957a6c,
+    'antiCounterReadRva': 0x3957714, 'antiCounterCompareRva': 0x3957729,
+    'nativeFlagEnumerationVerified': False, 'nativeComboEffectsVerified': False, 'liveAdmissionGatesVerified': False,
+}
 for index in [147561, 147566, 147567, 147558, 147559, 147563, 147564, 147568, 147569]:
     spec = priority['specification'](index)
     assert spec['declaringTypeIndex'] == pool['index']
