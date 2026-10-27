@@ -22,6 +22,7 @@ import {fearProjectileBuffRecycleQueue,fearProjectileClearRuntimeData} from '../
 import {fearProjectileBuffIdentity,fearProjectileResetBuffLifecycle} from '../server/sim/content/chapter16-fear-buff-identity.js';
 import {fearProjectileBuffTimer,fearProjectileResetBuffTriggers,fearProjectileBuffDurationKey,fearProjectileResetBuffLifetime,fearProjectileModifyBuffLifetime} from '../server/sim/content/chapter16-fear-buff-timing.js';
 import {fearProjectileResetBuffBlackboard,fearProjectileBuffPrefixAssignments,fearProjectileBuffBlackboardWrites,fearProjectileBuffBlackboardReads} from '../server/sim/content/chapter16-fear-buff-blackboard.js';
+import {fearProjectileFloatToRaw,fearProjectileFloorToInt} from '../server/sim/content/chapter16-fear-fixed-values.js';
 import {fearProjectileBuffRecyclePool,fearProjectileDefaultBuffPool} from '../server/sim/content/chapter16-fear-buff-pool.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
@@ -209,10 +210,46 @@ test('finish and native-frame queue use concrete buff recycle identity before th
  identity.allocate(buff);assert.equal(buff.instanceUid,2);assert.equal(p.lock(old),null);assert.equal(p.lock(p.capture(buff)),buff);queue.release();assert.deepEqual(f.b.errors,[]);
 });
 
+test('native float-to-FP scalar conversion preserves float32 scaling and signed truncation',()=>{
+ assert.equal(fearProjectileFloatToRaw(1.2),0x133333400n);assert.equal(fearProjectileFloatToRaw(-1.2),-0x133333400n);
+ assert.equal(fearProjectileFloatToRaw(2**-32),1n);assert.equal(fearProjectileFloatToRaw(-(2**-32)),-1n);
+ assert.equal(fearProjectileFloatToRaw(2**-33),0n);assert.equal(fearProjectileFloatToRaw(-(2**-33)),0n);
+ assert.equal(fearProjectileFloatToRaw(-0),0n);assert.equal(fearProjectileFloatToRaw(2147483520),9223371487098961920n);
+});
+
+test('native float-to-FP conversion uses signed64 indefinite for NaN and overflowing float results',()=>{
+ for(const value of [NaN,Infinity,-Infinity,2**31,Number.MAX_VALUE])assert.equal(fearProjectileFloatToRaw(value),-(1n<<63n));
+ assert.equal(fearProjectileFloatToRaw(-(2**31)),-(1n<<63n));
+});
+
+test('native Int32 conversion floors the stored float rather than truncating or rounding fractions',()=>{
+ for(const[value,expected]of [[1.5,1],[-1.5,-2],[0.5,0],[-0.5,-1],[2.9,2],[-2.1,-3],[-0,0],[-1.00000001,-1]])
+  assert.equal(fearProjectileFloorToInt(value),expected,String(value));
+ assert.equal(Object.is(fearProjectileFloorToInt(-0),-0),false);
+});
+
+test('native Int32 conversion handles float32 range boundaries and indefinite results',()=>{
+ assert.equal(fearProjectileFloorToInt(2147483520),2147483520);
+ for(const value of [2147483647,2**31,-2147483904,Infinity,-Infinity,NaN])assert.equal(fearProjectileFloorToInt(value),-(2**31));
+});
+
+test('default blackboard numeric conversions feed Reset without conversion stand-ins',()=>{
+ const entries=[{key:'duration',value:1.5,valueStr:null},{key:'trig_cnt',value:-0.5,valueStr:null}],compareIgnoreCase=(a,b)=>a===b?0:1;
+ const reads=fearProjectileBuffBlackboardReads({entries,compareIgnoreCase,isActive:()=>true});
+ assert.deepEqual(reads.tryGetFP('duration'),{found:true,valueRaw:3n<<31n});assert.equal(reads.getIntOrDefault('trig_cnt',99),-1);
+ const buff={m_lifeTime:99n,m_remainingTime:98n,m_existingTime:97n};
+ fearProjectileResetBuffLifetime({buff,durationKey:'duration',tryGetDuration:reads.tryGetFP,readData:()=>({lifeTimeType:1}),modifyLifeTimeFinally:()=>{},isActive:()=>true}).run();
+ assert.equal(buff.m_remainingTime,3n<<31n);
+ const target={m_triggerCnt:99},timerState={m_periodTime:99n,m_remainingTime:98n};
+ fearProjectileResetBuffTriggers({buff:target,readData:()=>({triggerLifeType:1,triggerCnt:2,triggerInterval:0.25,waitFirstTriggerInterval:true,firstTriggerInterval:0}),
+  getFpOrDefault:reads.getFpOrDefault,getIntOrDefault:reads.getIntOrDefault,timer:fearProjectileBuffTimer(timerState),setTriggerable:()=>{},isActive:()=>true}).run();
+ assert.equal(target.m_triggerCnt,-1);assert.equal(timerState.m_periodTime,1n<<30n);
+});
+
 function blackboardReadsFixture(overrides={}){
  const entries=[],events=[];let active=true;
  const readers=fearProjectileBuffBlackboardReads({entries,compareIgnoreCase:(a,b,ignore)=>{events.push(['compare',a,b,ignore]);return a?.toLowerCase()===b.toLowerCase()?0:1;},
-  floatToRaw:n=>{events.push(['fp',n]);return BigInt(Math.trunc(n*2**32));},roundToInt:n=>{events.push(['round',n]);return Math.trunc(n);},isActive:()=>active,...overrides});
+  floatToRaw:n=>{events.push(['fp',n]);return fearProjectileFloatToRaw(n);},floorToInt:n=>{events.push(['floor',n]);return fearProjectileFloorToInt(n);},isActive:()=>active,...overrides});
  return{entries,events,readers,set active(value){active=value;}};
 }
 
@@ -226,7 +263,7 @@ test('missing/null/empty numeric keys return zero out values and FP conversion s
   assert.deepEqual(f.readers.tryGetNumber(key),{found:false,value:0});assert.deepEqual(f.readers.tryGetFP(key),{found:false,valueRaw:0n});
   assert.deepEqual(f.readers.tryGetInt(key),{found:false,value:0});
  }
- assert.equal(f.events.filter(e=>e[0]==='fp').length,3);assert.equal(f.events.some(e=>e[0]==='round'),false);
+ assert.equal(f.events.filter(e=>e[0]==='fp').length,3);assert.equal(f.events.some(e=>e[0]==='floor'),false);
 });
 
 test('default getters preserve their supplied fallback and selected default branch ignores the hotfix-only bool',()=>{
@@ -242,8 +279,8 @@ test('numeric lookup rereads the value after the numeric predicate instead of ke
  const f=blackboardReadsFixture({entries});assert.deepEqual(f.readers.tryGetNumber('x'),{found:true,value:7});assert.equal(reads,3);
 });
 
-test('Int32 getter delegates rounding of the stored float32 and does not truncate inside the reader',()=>{
- let seen;const f=blackboardReadsFixture({roundToInt:value=>{seen=value;return 7;}});f.entries.push({key:'x',value:6.7,valueStr:null});
+test('Int32 getter delegates floor conversion of the stored float32 to the instrumented receiver',()=>{
+ let seen;const f=blackboardReadsFixture({floorToInt:value=>{seen=value;return 7;}});f.entries.push({key:'x',value:6.7,valueStr:null});
  assert.deepEqual(f.readers.tryGetInt('x'),{found:true,value:7});assert.equal(seen,Math.fround(6.7));
 });
 

@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import {fearProjectileBuffDurationKey} from './chapter16-fear-buff-timing.js';
+import {fearProjectileFloatToRaw,fearProjectileFloorToInt} from './chapter16-fear-fixed-values.js';
 
 // Selected default Blackboard numeric reads on a List<DataPair> projection.
-// Native culture comparison, FP conversion and integer rounding stay explicit.
-export function fearProjectileBuffBlackboardReads({entries,compareIgnoreCase,floatToRaw,roundToInt,isActive}){
- if(!Array.isArray(entries)||[compareIgnoreCase,floatToRaw,roundToInt,isActive].some(fn=>typeof fn!=='function'))
+// Native culture comparison stays explicit; scalar conversions use the retained
+// x64 result paths unless instrumented native receivers are supplied.
+export function fearProjectileBuffBlackboardReads({entries,compareIgnoreCase,floatToRaw=fearProjectileFloatToRaw,floorToInt=fearProjectileFloorToInt,isActive}){
+ if(!Array.isArray(entries)||[compareIgnoreCase,floatToRaw,floorToInt,isActive].some(fn=>typeof fn!=='function'))
   throw new TypeError('Fear blackboard reads require native list, comparison, conversion and lifecycle callers');
  let running=false;const cancelled=Symbol('cancelled');
  const active=()=>{const value=isActive();if(typeof value!=='boolean')throw new TypeError('Fear blackboard reads require Boolean lifecycle validity');return value;};
@@ -37,7 +39,7 @@ export function fearProjectileBuffBlackboardReads({entries,compareIgnoreCase,flo
     return kind==='fp'?Object.freeze({found:result.found,valueRaw}):result.found?valueRaw:raw(fallback);
    }
    if(!result.found)return kind==='int'?Object.freeze({found:false,value:0}):int(fallback);
-   const rounded=roundToInt(result.value);check();const value=int(rounded);
+   const floored=floorToInt(result.value);check();const value=int(floored);
    return kind==='int'?Object.freeze({found:true,value}):value;
   }catch(error){if(error===cancelled)return null;throw error;}
   finally{running=false;}

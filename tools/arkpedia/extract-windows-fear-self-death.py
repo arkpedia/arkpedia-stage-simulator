@@ -690,8 +690,34 @@ result['modeSwitch']['buffNotification']['blackboardReads'] = {
     'fpNumberCallRva': 0x2167406, 'fpConversionCallRva': 0x216742e, 'fpOutWriteRva': 0x2167438,
     'fpDefaultNumberCallRva': 0x21668f1, 'fpDefaultConversionCallRva': 0x2166919,
     'intNumberCallRva': 0x2167589, 'intMissingOutWriteRva': 0x2167592,
-    'intRoundCallRva': 0x21675e7, 'intConversionRva': 0x21675f1, 'intOutWriteRva': 0x21675f5,
+    'intFloorCallRva': 0x21675e7, 'intConversionRva': 0x21675f1, 'intOutWriteRva': 0x21675f5,
     'intDefaultTryCallRva': 0x21669fb, 'nativeNumberConversionVerified': False, 'liveReadPhaseVerified': False,
+}
+floor_rva = 0x4d00c4
+pos = v['offset'](v['image_base'] + floor_rva)
+floor_raw = v['b'][pos:pos + 176]
+floor_ins = list(Cs(CS_ARCH_X86, CS_MODE_64).disasm(floor_raw, v['image_base'] + floor_rva))
+assert len(floor_ins) == 44 and sum(i.size for i in floor_ins) == len(floor_raw) and floor_ins[-1].mnemonic == 'ret'
+assert [(i.address - v['image_base'], i.mnemonic, i.op_str) for i in floor_ins if i.mnemonic in ['subsd', 'ret', 'jmp']] == [
+    (0x4d010a, 'jmp', '0x1804e7ed0'), (0x4d0130, 'jmp', '0x1804d0173'), (0x4d0135, 'jmp', '0x1804d0173'),
+    (0x4d016b, 'subsd', 'xmm0, qword ptr [rip + 0x5dfa105]'), (0x4d0173, 'ret', '')]
+constants = []
+for load_rva, size, expected in [(0x4d0128, 8, -1.0), (0x4d016b, 8, 1.0), (0x5a3da20, 4, 4294967296.0)]:
+    pos = v['offset'](v['image_base'] + load_rva)
+    ins = next(Cs(CS_ARCH_X86, CS_MODE_64).disasm(v['b'][pos:pos + 16], v['image_base'] + load_rva))
+    target = load_rva + ins.size + struct.unpack_from('<i', v['b'], pos + ins.size - 4)[0]
+    cp = v['offset'](v['image_base'] + target)
+    raw = v['b'][cp:cp + size]
+    value = struct.unpack('<d' if size == 8 else '<f', raw)[0]
+    assert value == expected
+    constants.append({'loadRva': load_rva, 'targetRva': target, 'hex': raw.hex(), 'value': value})
+result['modeSwitch']['buffNotification']['blackboardReads']['scalarConversions'] = {
+    'floor': {'entryRva': floor_rva, 'chunks': [{'beginRva': floor_rva, 'endRva': floor_rva + len(floor_raw), 'unwindRva': None,
+        'boundary': 'Reviewed complete floor scalar body, including finite branches and explicit external NaN tail',
+        'base64': base64.b64encode(floor_raw).decode(), 'sha256': v['sha'](floor_raw),
+        'instructions': [{'rva': i.address - v['image_base'], 'size': i.size, 'mnemonic': i.mnemonic, 'operands': i.op_str} for i in floor_ins]}]},
+    'floatToFP': {'entryRva': 0x5a3da20, 'chunks': c['code'](0x5a3da20)}, 'constants': constants,
+    'selectedScalarResultVerified': True, 'nativeExceptionStateVerified': False, 'nanTailEffectsVerified': False,
 }
 pool = c['type_row']('ObjectPool`1', 'Torappu.ObjectPool')
 pool_methods = []

@@ -2,6 +2,7 @@
 // Selected PeriodicTimer operations called by Buff.Reset. Inputs are native
 // signed Q32.32 values; scheduling and float/blackboard conversion stay explicit.
 import {fearProjectileDivideRaw} from './chapter16-fear-cast-wait.js';
+import {fearProjectileFloatToRaw} from './chapter16-fear-fixed-values.js';
 export function fearProjectileBuffTimer(timer){
  const raw=value=>{
   if(typeof value!=='bigint'||value<-(1n<<63n)||value>(1n<<63n)-1n)
@@ -33,7 +34,7 @@ export function fearProjectileBuffTimer(timer){
 
 // Trigger portion of Buff.Reset. The caller supplies native data/blackboard
 // reads, float conversion, validity and the retained PeriodicTimer receivers.
-export function fearProjectileResetBuffTriggers({buff,readData,getFpOrDefault,getIntOrDefault,floatToRaw,timer,setTriggerable,isActive}){
+export function fearProjectileResetBuffTriggers({buff,readData,getFpOrDefault,getIntOrDefault,floatToRaw=fearProjectileFloatToRaw,timer,setTriggerable,isActive}){
  if(!buff||[readData,getFpOrDefault,getIntOrDefault,floatToRaw,setTriggerable,isActive].some(fn=>typeof fn!=='function')||
   !timer||['reset','markInvalid','setRemainingTime'].some(key=>typeof timer[key]!=='function'))
   throw new TypeError('Fear trigger reset requires native data, blackboard, conversion and lifecycle callers');
@@ -82,7 +83,7 @@ export function fearProjectileBuffDurationKey(value){
  return value;
 }
 
-export function fearProjectileResetBuffLifetime({buff,durationKey,tryGetDuration,readData,floatToRaw,modifyLifeTimeFinally,isActive}){
+export function fearProjectileResetBuffLifetime({buff,durationKey,tryGetDuration,readData,floatToRaw=fearProjectileFloatToRaw,modifyLifeTimeFinally,isActive}){
  if(!buff||typeof durationKey!=='string'||[tryGetDuration,readData,floatToRaw,modifyLifeTimeFinally,isActive].some(fn=>typeof fn!=='function'))
   throw new TypeError('Fear lifetime reset requires the captured duration key and native duration/lifecycle callers');
  const raw=value=>{if(typeof value!=='bigint'||value<-(1n<<63n)||value>(1n<<63n)-1n)throw new TypeError('Fear lifetime reset requires signed Q32.32 values');return value;};

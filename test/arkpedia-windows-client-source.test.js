@@ -227,6 +227,16 @@ test('immediate recycle source enumerates stored pairs and pointer lists before 
  assert.ok(!instructions(m).some(i=>i.mnemonic==='call'&&i.operands==='0x183991a80'),'flush does not filter by current frame');
 });
 
+test('blackboard scalar conversion source binds floor finite branches and exact scalar constants',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.blackboardReads.scalarConversions;
+ assert.deepEqual(q.constants.map(v=>v.value),[-1,1,4294967296]);assert.equal(q.selectedScalarResultVerified,true);
+ assert.equal(q.nativeExceptionStateVerified,false);assert.equal(q.nanTailEffectsVerified,false);
+ for(const m of [q.floor,q.floatToFP])for(const ch of m.chunks){const raw=Buffer.from(ch.base64,'base64');assert.equal(sha(raw),ch.sha256);assert.equal(raw.length,ch.endRva-ch.beginRva);}
+ assert.equal(instructions(q.floor).length,44);assert.equal(instructions(q.floor).at(-1).rva,0x4d0173);
+ assert.ok(instructions(q.floor).some(i=>i.rva===0x4d016b&&i.mnemonic==='subsd'));
+ assert.deepEqual(instructions(q.floatToFP).map(i=>i.mnemonic),['mulss','cvttss2si','ret']);
+});
+
 test('blackboard numeric read source binds numeric filtering and found/out conversion ordering',()=>{
  const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.blackboardReads;
  const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
@@ -235,7 +245,7 @@ test('blackboard numeric read source binds numeric filtering and found/out conve
  const fp=castMethod(c,'Blackboard','TryGetFP');at(fp,q.fpNumberCallRva,'0x182167b50');at(fp,q.fpConversionCallRva,'0x185a3da20');at(fp,q.fpOutWriteRva,'qword ptr [rbx], rax');
  const fpDefault=castMethod(c,'Blackboard','GetFpOrDefault');at(fpDefault,q.fpDefaultNumberCallRva,'0x182167b50');at(fpDefault,q.fpDefaultConversionCallRva,'0x185a3da20');
  const integer=castMethod(c,'Blackboard','TryGetInt');at(integer,q.intNumberCallRva,'0x182167b50');at(integer,q.intMissingOutWriteRva,'dword ptr [rbx], 0');
- at(integer,q.intRoundCallRva,'0x1804d00c4');at(integer,q.intConversionRva,'eax, xmm0');at(integer,q.intOutWriteRva,'dword ptr [rbx], eax');
+ at(integer,q.intFloorCallRva,'0x1804d00c4');at(integer,q.intConversionRva,'eax, xmm0');at(integer,q.intOutWriteRva,'dword ptr [rbx], eax');
  at(castMethod(c,'Blackboard','GetIntOrDefault'),q.intDefaultTryCallRva,'0x182167520');
  const predicate=castMethod(c,'DataPair','get_isNumericValue');assert.ok(instructions(predicate).some(i=>i.mnemonic==='jmp'&&i.operands==='0x1850d34b0'));
  assert.equal(q.nativeNumberConversionVerified,false);assert.equal(q.liveReadPhaseVerified,false);

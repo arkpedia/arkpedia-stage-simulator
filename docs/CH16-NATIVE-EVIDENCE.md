@@ -1237,6 +1237,32 @@ pair operations. All693 focused native/fear/family/miner tests pass and --check
 reproduces the113-method bundle. Full native conversions, list versioning, full
 Reset and live controller/stage integration remain open; all gates are intact.
 
+### Concrete FP conversion and floor-to-Int32 results
+
+Further review identifies the TryGetInt callee at4d00c4 as a floor scalar path,
+not nearest-integer rounding or truncation. The complete176-byte body has44
+instructions, retains its finite branches and external NaN tail, and uses exact
+double constants-1 and1. The FP(float) leaf multiplies float32 by4294967296
+then converts with CVTTSS2SI. These constants and complete leaf bytes are now
+retained in the113-method artifact's separate scalar-conversion records.
+
+`fearProjectileFloatToRaw` implements float32 multiply and signed truncation,
+including x64's signed64 indefinite result for NaN/overflow. The integer helper
+first narrows to float32, floors that value as double, then projects CVTTSD2SI's
+Int32 result, including its indefinite result. These are now the default scalar
+receivers for the blackboard reads and Reset lifetime/trigger conversions.
+Instrumentation may still supply native receivers. The integer receiver and
+source key are renamed floorToInt/intFloorCallRva to express the verified path.
+
+Tests cover positive/negative fractional values, float32-before-floor behavior,
+sub-tick FP values, signed range boundaries, NaN/infinities, indefinite results
+and negative zero. A default-conversion read/lifetime/trigger composition needs
+no conversion stand-ins. All699 focused native/fear/family/miner tests pass and
+--check reproduces the113-method evidence. Floating-point exception/CRT NaN
+diagnostic effects and live runtime floating-point mode are not certified.
+Culture comparison, full Reset, controller/stage integration and existing
+source/support/receipt/catalogue gates remain unchanged.
+
 ### ClearRunTimeData default cleanup ordering
 
 Static direct-call review locates immediate delayed-buff recycling inside
