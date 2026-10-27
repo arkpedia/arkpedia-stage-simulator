@@ -483,7 +483,7 @@ test('buff action dispatch source binds context guard setup, owner virtual slots
  at(q.aliveSlotReadRva,'rax, qword ptr [rdx + 0x398]');at(q.aliveVirtualCallRva,'rax');at(q.tileOwnerCallRva,'0x1839b6ff0');
  at(q.tileSlotReadRva,'rax, qword ptr [rdx + 0x458]');at(q.tileVirtualCallRva,'rax');at(q.setTileCallRva,'0x1839eb470');
  at(q.actionsCaptureRva,'rdi, qword ptr [rbx + 0xa0]');at(q.eventIdentityCallRva,'0x1828a66d0');at(q.eventBoundsRva,'edx, dword ptr [rdi + 0x18]');
- at(q.blackboardReadRva,'r9, qword ptr [rbx + 0xa8]');at(q.instantTrueRva,'r8d, 1');at(q.runArrayCallRva,'0x180e44600');
+ at(q.blackboardReadRva,'r9, qword ptr [rbx + 0xa8]');at(q.fromBuffSourceTypeRva,'r8d, 1');at(q.runArrayCallRva,'0x180e44600');
  at(q.firstResultCopyRva,'xmmword ptr [rcx], xmm0');at(q.normalDisposeCallRva,'0x180005a80');at(q.exceptionDisposeCallRva,'0x180005a80');at(q.returnCopyRva,'xmmword ptr [rsi], xmm0');
  assert.equal(q.nativeGuardEffectsVerified,false);assert.equal(q.nativeActionArrayExecutionVerified,false);assert.equal(q.nativeSnapshotCopyVerified,false);assert.equal(q.liveRunActionsVerified,false);
 });
@@ -531,6 +531,25 @@ test('context snapshot source binds distinct capture/push orders and closed refe
   'rcx, qword ptr [rdi + 0x48]','rcx, qword ptr [rdi + 0x58]'].entries())at(duplicate,q.pushFieldReads[index],args);
  for(const [index,target]of ['0x184be7ef0','0x184be7ef0','0x184be7ef0','0x18490b650','0x18490b820','0x184be7ef0','0x184be7ef0','0x18490b650','0x18490b790','0x184be7ef0'].entries())at(duplicate,q.pushCalls[index],target);
  assert.equal(q.nativeContextStackEffectsVerified,false);assert.equal(q.nativeNestedValueCopiesVerified,false);assert.equal(q.liveContextSnapshotsVerified,false);
+});
+
+test('action utility source binds FROM_BUFF integer flags, node virtual slots and by-reference snapshot execution',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.newBuff.actionUtil;
+ assert.deepEqual(q.sourceTypes.fields.map(f=>[f.name,f.value]),[['NONE',0],['FROM_BUFF',1],['FROM_ABILITY',2],['FROM_PROJECTILE',4],['FROM_BATTLE_AVG',8],['FROM_ENVIRONMENT',16],['FROM_VALIDATOR',32],['ALL',63]]);
+ assert.deepEqual(q.executeConditions.fields.map(f=>[f.name,f.value]),[['ALWAYS',0],['PREVIOUS_SUCCEED',1],['PREVIOUS_FAILED',2]]);
+ assert.deepEqual(q.nodeSlots.map(m=>[m.name,m.virtualSlot]),[['get_allowedSource',4],['get_executeCondition',5],['Execute',6]]);
+ assert.deepEqual(q.parameters.map(m=>[m.methodIndex,m.parameters.map(p=>p.name)]),[[89084,['nextAction','lastOneIsSucceed']],[89085,['actions','sourceType','blackboard','snapshot']],[89086,['actions','sourceType','blackboard']]]);
+ assert.equal(q.parameters[1].parameters[1].typeData,12106);assert.equal(q.parameters[1].parameters[3].typeData,8956);assert.equal(q.parameters[1].parameters[3].typeBits,0x20110000);
+ const empty=q.emptyCollection;assert.equal(empty.encodedUsage>>>29,6);assert.equal((empty.encodedUsage&0x1ffffffe)>>>1,258790);assert.equal(empty.concreteSpecification.nativeMapping,null);assert.equal(empty.canonicalSpecification.index,208287);assert.equal(empty.entryRva,0x3f62450);
+ for(const chunk of empty.chunks){const bytes=Buffer.from(chunk.base64,'base64');assert.equal(bytes.length,chunk.endRva-chunk.beginRva);assert.equal(sha(bytes),chunk.sha256);}
+ const method=index=>c.methods.find(m=>m.index===index&&m.type==='ActionUtil'),at=(index,rva,args)=>assert.ok(instructions(method(index)).some(i=>i.rva===rva&&i.operands===args));
+ at(89084,q.conditionGetterCallRva,'rax');at(89086,q.runBattleReadCallRva,'0x1848f5cb0');at(89086,q.runContextReadCallRva,'0x183990ea0');at(89086,q.captureCallRva,'0x1839ed9a0');
+ at(89086,q.captureFirstCopyRva,'xmmword ptr [rcx - 0x80], xmm0');at(89086,q.runIntoCallRva,'0x180e44890');at(89086,q.returnFirstCopyRva,'xmmword ptr [rbx], xmm0');
+ at(89085,q.emptyCallRva,'0x183f62450');at(89085,q.countCallRva,'0x180005250');at(89085,q.nodeReadCallRva,'0x1800053d0');at(89085,q.allowedGetterCallRva,'r8');
+ at(89085,q.sourceMaskAndRva,'eax, ebp');at(89085,q.sourceMaskCompareRva,'eax, ebp');at(89085,q.conditionCallRva,'0x180e43d80');at(89085,q.executeCallRva,'0x1800322d0');at(89085,q.resultReadRva,'r14d, al');
+ at(89085,q.reportAllowedGetterCallRva,'0x1800057b0');at(89085,q.reportCallRva,'0x185a36870');
+ const run=c.modeSwitch.buffNotification.newBuff.runActions;assert.equal(run.fromBuffSourceTypeRva,0x39b5586);assert.equal(Object.hasOwn(run,'instantTrueRva'),false);
+ for(const name of ['nativeHotfixAndClassInitializationVerified','nativeCollectionAndVirtualDispatchVerified','nativeActionNodeEffectsVerified','liveActionUtilVerified'])assert.equal(q[name],false);
 });
 
 test('context value source binds complete Modifier and AttackInfo instance fields, closed references and primitive widths',()=>{

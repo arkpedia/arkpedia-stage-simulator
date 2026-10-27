@@ -121834,7 +121834,7 @@
      "eventIdentityCallRva": 60511580,
      "eventBoundsRva": 60511597,
      "blackboardReadRva": 60511615,
-     "instantTrueRva": 60511622,
+     "fromBuffSourceTypeRva": 60511622,
      "runArrayCallRva": 60511641,
      "firstResultCopyRva": 60511654,
      "normalDisposeCallRva": 60511797,
@@ -132043,6 +132043,432 @@
      "nativePaddingAndByteEncodingVerified": false,
      "nativeGcAndPointerAddressEffectsVerified": false,
      "liveTypedContextValuesVerified": false
+    },
+    "actionUtil": {
+     "parameters": [
+      {
+       "methodIndex": 89084,
+       "name": "CheckExecute",
+       "parameters": [
+        {
+         "index": 83192,
+         "name": "nextAction",
+         "typeIndex": 34811,
+         "typeData": 12108,
+         "typeBits": 1179648
+        },
+        {
+         "index": 83193,
+         "name": "lastOneIsSucceed",
+         "typeIndex": 38773,
+         "typeData": 36824,
+         "typeBits": 2147614720
+        }
+       ]
+      },
+      {
+       "methodIndex": 89085,
+       "name": "RunActions",
+       "parameters": [
+        {
+         "index": 83194,
+         "name": "actions",
+         "typeIndex": 15320,
+         "typeData": 6573022712,
+         "typeBits": 1376256
+        },
+        {
+         "index": 83195,
+         "name": "sourceType",
+         "typeIndex": 81157,
+         "typeData": 12106,
+         "typeBits": 2148597760
+        },
+        {
+         "index": 83196,
+         "name": "blackboard",
+         "typeIndex": 38671,
+         "typeData": 3918,
+         "typeBits": 1179648
+        },
+        {
+         "index": 83197,
+         "name": "snapshot",
+         "typeIndex": 27715,
+         "typeData": 8956,
+         "typeBits": 537985024
+        }
+       ]
+      },
+      {
+       "methodIndex": 89086,
+       "name": "RunActions",
+       "parameters": [
+        {
+         "index": 83198,
+         "name": "actions",
+         "typeIndex": 15320,
+         "typeData": 6573022712,
+         "typeBits": 1376256
+        },
+        {
+         "index": 83199,
+         "name": "sourceType",
+         "typeIndex": 81157,
+         "typeData": 12106,
+         "typeBits": 2148597760
+        },
+        {
+         "index": 83200,
+         "name": "blackboard",
+         "typeIndex": 38671,
+         "typeData": 3918,
+         "typeBits": 1179648
+        }
+       ]
+      }
+     ],
+     "nodeSlots": [
+      {
+       "index": 84013,
+       "name": "get_allowedSource",
+       "token": 100747310,
+       "virtualSlot": 4
+      },
+      {
+       "index": 84014,
+       "name": "get_executeCondition",
+       "token": 100747311,
+       "virtualSlot": 5
+      },
+      {
+       "index": 84015,
+       "name": "Execute",
+       "token": 100747312,
+       "virtualSlot": 6
+      }
+     ],
+     "sourceTypes": {
+      "typeIndex": 12106,
+      "name": "SourceType",
+      "fields": [
+       {
+        "index": 95889,
+        "name": "NONE",
+        "typeIndex": 81158,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20683784,
+        "encodedHex": "00",
+        "value": 0
+       },
+       {
+        "index": 95890,
+        "name": "FROM_BUFF",
+        "typeIndex": 81158,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20683785,
+        "encodedHex": "02",
+        "value": 1
+       },
+       {
+        "index": 95891,
+        "name": "FROM_ABILITY",
+        "typeIndex": 81158,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20683786,
+        "encodedHex": "04",
+        "value": 2
+       },
+       {
+        "index": 95892,
+        "name": "FROM_PROJECTILE",
+        "typeIndex": 81158,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20683787,
+        "encodedHex": "08",
+        "value": 4
+       },
+       {
+        "index": 95893,
+        "name": "FROM_BATTLE_AVG",
+        "typeIndex": 81158,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20683788,
+        "encodedHex": "10",
+        "value": 8
+       },
+       {
+        "index": 95894,
+        "name": "FROM_ENVIRONMENT",
+        "typeIndex": 81158,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20683789,
+        "encodedHex": "20",
+        "value": 16
+       },
+       {
+        "index": 95895,
+        "name": "FROM_VALIDATOR",
+        "typeIndex": 81158,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20683790,
+        "encodedHex": "40",
+        "value": 32
+       },
+       {
+        "index": 95896,
+        "name": "ALL",
+        "typeIndex": 81158,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20683791,
+        "encodedHex": "7e",
+        "value": 63
+       }
+      ]
+     },
+     "executeConditions": {
+      "typeIndex": 12107,
+      "name": "ExecuteCondition",
+      "fields": [
+       {
+        "index": 95898,
+        "name": "ALWAYS",
+        "typeIndex": 81156,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20683792,
+        "encodedHex": "00",
+        "value": 0
+       },
+       {
+        "index": 95899,
+        "name": "PREVIOUS_SUCCEED",
+        "typeIndex": 81156,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20683793,
+        "encodedHex": "02",
+        "value": 1
+       },
+       {
+        "index": 95900,
+        "name": "PREVIOUS_FAILED",
+        "typeIndex": 81156,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20683794,
+        "encodedHex": "04",
+        "value": 2
+       }
+      ]
+     },
+     "emptyCollection": {
+      "loadRva": 14960936,
+      "encodedUsage": 3221743053,
+      "concreteSpecification": {
+       "index": 258790,
+       "definition": {
+        "index": 195680,
+        "name": "IsNullOrEmpty",
+        "token": 100663434
+       },
+       "declaringType": "CollectionExtensions",
+       "declaringTypeIndex": 34236,
+       "instantiations": {
+        "method": {
+         "index": 6506,
+         "arguments": [
+          {
+           "namespace": "Torappu.Battle.Action",
+           "name": "ActionNode",
+           "typeIndex": 12108,
+           "typeBits": 1179648
+          }
+         ]
+        }
+       },
+       "nativeMapping": null
+      },
+      "canonicalSpecification": {
+       "index": 208287,
+       "definition": {
+        "index": 195680,
+        "name": "IsNullOrEmpty",
+        "token": 100663434
+       },
+       "declaringType": "CollectionExtensions",
+       "declaringTypeIndex": 34236,
+       "instantiations": {
+        "method": {
+         "index": 73,
+         "arguments": [
+          {
+           "namespace": "System",
+           "name": "Object",
+           "typeIndex": 37078,
+           "typeBits": 1835008
+          }
+         ]
+        }
+       },
+       "nativeMapping": {
+        "methodPointerIndex": 190034,
+        "invokerIndex": 35870,
+        "adjustorThunkIndex": -1
+       }
+      },
+      "entryRva": 66462800,
+      "chunks": [
+       {
+        "beginRva": 66462800,
+        "endRva": 66462870,
+        "unwindRva": 119936336,
+        "sha256": "47d1ec4e3de51eb7f25fc2d74554a2123d60e6657105298592ec573df6633b8d",
+        "base64": "QFNIg+wgSIvZSIXJdQiwAUiDxCBbw0iLQjhIiwD2gDIBAAABdQhIi8jocuRT/DPJTIvDSIvQ6MUtCvyFwA+UwEiDxCBbww==",
+        "instructions": [
+         {
+          "rva": 66462800,
+          "mnemonic": "push",
+          "operands": "rbx"
+         },
+         {
+          "rva": 66462802,
+          "mnemonic": "sub",
+          "operands": "rsp, 0x20"
+         },
+         {
+          "rva": 66462806,
+          "mnemonic": "mov",
+          "operands": "rbx, rcx"
+         },
+         {
+          "rva": 66462809,
+          "mnemonic": "test",
+          "operands": "rcx, rcx"
+         },
+         {
+          "rva": 66462812,
+          "mnemonic": "jne",
+          "operands": "0x183f62466"
+         },
+         {
+          "rva": 66462814,
+          "mnemonic": "mov",
+          "operands": "al, 1"
+         },
+         {
+          "rva": 66462816,
+          "mnemonic": "add",
+          "operands": "rsp, 0x20"
+         },
+         {
+          "rva": 66462820,
+          "mnemonic": "pop",
+          "operands": "rbx"
+         },
+         {
+          "rva": 66462821,
+          "mnemonic": "ret",
+          "operands": ""
+         },
+         {
+          "rva": 66462822,
+          "mnemonic": "mov",
+          "operands": "rax, qword ptr [rdx + 0x38]"
+         },
+         {
+          "rva": 66462826,
+          "mnemonic": "mov",
+          "operands": "rax, qword ptr [rax]"
+         },
+         {
+          "rva": 66462829,
+          "mnemonic": "test",
+          "operands": "byte ptr [rax + 0x132], 1"
+         },
+         {
+          "rva": 66462836,
+          "mnemonic": "jne",
+          "operands": "0x183f6247e"
+         },
+         {
+          "rva": 66462838,
+          "mnemonic": "mov",
+          "operands": "rcx, rax"
+         },
+         {
+          "rva": 66462841,
+          "mnemonic": "call",
+          "operands": "0x1804a08f0"
+         },
+         {
+          "rva": 66462846,
+          "mnemonic": "xor",
+          "operands": "ecx, ecx"
+         },
+         {
+          "rva": 66462848,
+          "mnemonic": "mov",
+          "operands": "r8, rbx"
+         },
+         {
+          "rva": 66462851,
+          "mnemonic": "mov",
+          "operands": "rdx, rax"
+         },
+         {
+          "rva": 66462854,
+          "mnemonic": "call",
+          "operands": "0x180005250"
+         },
+         {
+          "rva": 66462859,
+          "mnemonic": "test",
+          "operands": "eax, eax"
+         },
+         {
+          "rva": 66462861,
+          "mnemonic": "sete",
+          "operands": "al"
+         },
+         {
+          "rva": 66462864,
+          "mnemonic": "add",
+          "operands": "rsp, 0x20"
+         },
+         {
+          "rva": 66462868,
+          "mnemonic": "pop",
+          "operands": "rbx"
+         },
+         {
+          "rva": 66462869,
+          "mnemonic": "ret",
+          "operands": ""
+         }
+        ]
+       }
+      ]
+     },
+     "conditionGetterCallRva": 14958059,
+     "runBattleReadCallRva": 14960237,
+     "runContextReadCallRva": 14960256,
+     "captureCallRva": 14960284,
+     "captureFirstCopyRva": 14960323,
+     "runIntoCallRva": 14960444,
+     "returnFirstCopyRva": 14960475,
+     "emptyCallRva": 14960946,
+     "countCallRva": 14961004,
+     "nodeReadCallRva": 14961032,
+     "allowedGetterCallRva": 14961086,
+     "sourceMaskAndRva": 14961089,
+     "sourceMaskCompareRva": 14961091,
+     "conditionCallRva": 14961105,
+     "executeCallRva": 14961137,
+     "resultReadRva": 14961142,
+     "reportAllowedGetterCallRva": 14961187,
+     "reportCallRva": 14961272,
+     "nativeHotfixAndClassInitializationVerified": false,
+     "nativeCollectionAndVirtualDispatchVerified": false,
+     "nativeActionNodeEffectsVerified": false,
+     "liveActionUtilVerified": false
     },
     "contextStackOperations": {
      "canonicalMethods": [

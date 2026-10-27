@@ -1686,7 +1686,7 @@ result['modeSwitch']['buffNotification']['newBuff']['runActions'] = {
     'aliveSlotReadRva': 0x39b54db, 'aliveVirtualCallRva': 0x39b54ec, 'tileOwnerCallRva': 0x39b54fc,
     'tileSlotReadRva': 0x39b5521, 'tileVirtualCallRva': 0x39b5532, 'setTileCallRva': 0x39b5546,
     'actionsCaptureRva': 0x39b554b, 'eventIdentityCallRva': 0x39b555c, 'eventBoundsRva': 0x39b556d,
-    'blackboardReadRva': 0x39b557f, 'instantTrueRva': 0x39b5586, 'runArrayCallRva': 0x39b5599,
+    'blackboardReadRva': 0x39b557f, 'fromBuffSourceTypeRva': 0x39b5586, 'runArrayCallRva': 0x39b5599,
     'firstResultCopyRva': 0x39b55a6, 'normalDisposeCallRva': 0x39b5635, 'exceptionDisposeCallRva': 0x39b564f, 'returnCopyRva': 0x39b5672,
     'nativeGuardEffectsVerified': False, 'nativeActionArrayExecutionVerified': False, 'nativeSnapshotCopyVerified': False, 'liveRunActionsVerified': False,
 }
@@ -2021,6 +2021,56 @@ result['modeSwitch']['buffNotification']['newBuff']['contextStructLayouts'] = {
     'fpType': {'typeIndex': 34370, 'name': 'FP', 'namespace': 'Torappu', 'instanceFields': fp_instance_fields},
     'nativePaddingAndByteEncodingVerified': False, 'nativeGcAndPointerAddressEffectsVerified': False,
     'liveTypedContextValuesVerified': False,
+}
+action_util_parameters = []
+for index, expected_names in [(89084, ['nextAction', 'lastOneIsSucceed']),
+    (89085, ['actions', 'sourceType', 'blackboard', 'snapshot']), (89086, ['actions', 'sourceType', 'blackboard'])]:
+    row = c['unique'](lambda r: r['index'] == index, util['methods'])
+    pos = v['method_start'] + index * 32
+    start, count = v['sint'](v['m'], pos + 12), struct.unpack_from('<H', v['m'], pos + 30)[0]
+    arguments = []
+    for n in range(count):
+        pp = v['uint'](v['m'], 88) + (start + n) * 12
+        type_index = v['sint'](v['m'], pp + 8)
+        tp = v['offset'](v['quad'](v['b'], v['type_table'] + type_index * 8))
+        arguments.append({'index': start + n, 'name': v['text'](v['uint'](v['m'], pp)), 'typeIndex': type_index,
+            'typeData': v['quad'](v['b'], tp), 'typeBits': v['uint'](v['b'], tp + 8)})
+    assert [p['name'] for p in arguments] == expected_names
+    action_util_parameters.append({'methodIndex': index, 'name': row['name'], 'parameters': arguments})
+assert action_util_parameters[1]['parameters'][1]['typeData'] == 12106
+assert action_util_parameters[1]['parameters'][3]['typeData'] == action_snapshot_type['index']
+assert action_util_parameters[1]['parameters'][3]['typeBits'] == 0x20110000
+action_node_slots = []
+for name, expected_slot in [('get_allowedSource', 4), ('get_executeCondition', 5), ('Execute', 6)]:
+    row = c['unique'](lambda r: r['name'] == name, base_node['methods'])
+    slot = struct.unpack_from('<H', v['m'], v['method_start'] + row['index'] * 32 + 28)[0]
+    assert slot == expected_slot
+    action_node_slots.append({**row, 'virtualSlot': slot})
+empty_spec = priority['specification'](258790)
+empty_canonical = priority['specification'](208287)
+assert empty_spec['definition']['index'] == empty_canonical['definition']['index'] == 195680
+assert empty_spec['nativeMapping'] is None and empty_spec['instantiations']['method']['arguments'][0]['name'] == 'ActionNode'
+assert empty_canonical['instantiations']['method']['arguments'][0]['name'] == 'Object'
+empty_entry = v['quad'](v['b'], priority['pointer_table'] + empty_canonical['nativeMapping']['methodPointerIndex'] * 8) - v['image_base']
+assert empty_entry == 0x3f62450
+empty_load_rva = 0xe44928
+empty_load_pos = v['offset'](v['image_base'] + empty_load_rva)
+assert v['b'][empty_load_pos:empty_load_pos + 3] == bytes.fromhex('488b15')
+empty_load_target = empty_load_rva + 7 + struct.unpack_from('<i', v['b'], empty_load_pos + 3)[0]
+empty_usage = v['quad'](v['b'], v['offset'](v['image_base'] + empty_load_target))
+assert empty_usage >> 29 == 6 and (empty_usage & 0x1ffffffe) >> 1 == 258790
+result['modeSwitch']['buffNotification']['newBuff']['actionUtil'] = {
+    'parameters': action_util_parameters, 'nodeSlots': action_node_slots,
+    'sourceTypes': c['enum'](v['types'][12106]), 'executeConditions': c['enum'](v['types'][12107]),
+    'emptyCollection': {'loadRva': empty_load_rva, 'encodedUsage': empty_usage, 'concreteSpecification': empty_spec, 'canonicalSpecification': empty_canonical, 'entryRva': empty_entry, 'chunks': c['code'](empty_entry)},
+    'conditionGetterCallRva': 0xe43deb, 'runBattleReadCallRva': 0xe4466d, 'runContextReadCallRva': 0xe44680,
+    'captureCallRva': 0xe4469c, 'captureFirstCopyRva': 0xe446c3, 'runIntoCallRva': 0xe4473c, 'returnFirstCopyRva': 0xe4475b,
+    'emptyCallRva': 0xe44932, 'countCallRva': 0xe4496c, 'nodeReadCallRva': 0xe44988,
+    'allowedGetterCallRva': 0xe449be, 'sourceMaskAndRva': 0xe449c1, 'sourceMaskCompareRva': 0xe449c3,
+    'conditionCallRva': 0xe449d1, 'executeCallRva': 0xe449f1, 'resultReadRva': 0xe449f6,
+    'reportAllowedGetterCallRva': 0xe44a23, 'reportCallRva': 0xe44a78,
+    'nativeHotfixAndClassInitializationVerified': False, 'nativeCollectionAndVirtualDispatchVerified': False,
+    'nativeActionNodeEffectsVerified': False, 'liveActionUtilVerified': False,
 }
 context_stack_canonical = []
 for index in [24503, 24504, 24505, 24506, 24513, 24514, 24515, 24509, 24510, 24511, 24517, 24518, 24519]:

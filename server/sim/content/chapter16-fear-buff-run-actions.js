@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Default Buff._RunActions. Context guard effects, ActionUtil execution and
 // mixed reference/value Snapshot copies remain explicit native receivers.
+import {FEAR_ACTION_SOURCE_FROM_BUFF} from './chapter16-fear-action-util.js';
 export function fearProjectileRunBuffActions({buff,readContext,beginChangeGuard,setBuff,readSource,setSource,readOwner,
  setTarget,readAlive,readRootTile,setTile,runActionArray,copySnapshot,disposeGuard,isActive}){
  if(!buff||[readContext,beginChangeGuard,setBuff,readSource,setSource,readOwner,setTarget,readAlive,readRootTile,setTile,
@@ -26,7 +27,7 @@ export function fearProjectileRunBuffActions({buff,readContext,beginChangeGuard,
     if(!Array.isArray(actions))throw new TypeError('Fear buff action dispatch requires native event action arrays');
     if(event<0||event>=actions.length)throw new RangeError('Fear buff event is outside the native action array');
     const board=buff.m_blackboard,selected=actions[event];
-    const snapshot=invoke(runActionArray,selected,true,board);
+    const snapshot=invoke(runActionArray,selected,FEAR_ACTION_SOURCE_FROM_BUFF,board);
     result=invoke(copySnapshot,snapshot);
    }finally{if(guard!=null)disposeGuard(guard);}
    check();return invoke(copySnapshot,result);

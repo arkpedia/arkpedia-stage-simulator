@@ -45,6 +45,48 @@ import {fearProjectileContextGuards} from '../server/sim/content/chapter16-fear-
 import {fearProjectileContextSnapshots} from '../server/sim/content/chapter16-fear-context-snapshot.js';
 import {fearProjectileContextPointerStacks,fearProjectileContextValueStacks,fearProjectileManagedReferenceStacks,fearProjectileManagedValueStacks,fearProjectileManagedPointerStacks,fearProjectileManagedArrayResize,fearProjectileManagedArrayCopy,fearProjectileNativeArrayFastCopy} from '../server/sim/content/chapter16-fear-context-stacks.js';
 import {fearProjectileContextStructValues} from '../server/sim/content/chapter16-fear-context-values.js';
+import {fearProjectileActionUtil,FEAR_ACTION_SOURCE_FROM_BUFF} from '../server/sim/content/chapter16-fear-action-util.js';
+
+function actionUtilFixture(){
+ const events=[],context={value:1},battle={context},board={},options={readBattle:()=>{events.push('battle');return battle;},readContext:()=>{events.push('context');return context;},
+  takeSnapshot:()=>{events.push('capture');return{value:context.value};},copySnapshot:value=>{events.push('copy');return{...value};},
+  readCount:actions=>{events.push(['count',actions.length]);return actions.length;},readNode:(actions,index)=>{events.push(['node',index]);return actions[index];},
+  readAllowedSource:node=>{events.push(['allowed',node.id]);return node.allowed;},readExecuteCondition:node=>{events.push(['condition',node.id]);return node.condition;},
+  executeNode:(node,blackboard,sourceType,ref)=>{assert.equal(blackboard,board);events.push(['execute',node.id,sourceType]);ref.value.value++;return node.result;},
+  reportSourceMismatch:(...args)=>events.push(['mismatch',...args])};
+ return{events,context,battle,board,options,api:()=>fearProjectileActionUtil(options)};
+}
+test('action utility captures and copies context even for null/empty actions, without entering a node',()=>{
+ const f=actionUtilFixture(),api=f.api();assert.deepEqual(api.run(null,1,f.board),{value:1});assert.deepEqual(f.events,['battle','context','capture','copy','copy']);
+ f.events.length=0;assert.deepEqual(api.run([],1,f.board),{value:1});assert.deepEqual(f.events,['battle','context','capture','copy',['count',0],'copy']);
+ assert.equal(api.runInto(null,1,f.board,null),true);
+});
+test('action utility source masks require every requested bit and reread allowed-source metadata for diagnostics',()=>{
+ assert.equal(FEAR_ACTION_SOURCE_FROM_BUFF,1);
+ const f=actionUtilFixture(),node={id:'node',condition:0,result:true},ref={value:{value:0}};let reads=0;
+ f.options.readAllowedSource=()=>++reads===1?1:2;assert.equal(f.api().runInto([node],3,f.board,ref),false);assert.equal(reads,2);assert.deepEqual(f.events.at(-1),['mismatch',node,3,2]);assert.equal(ref.value.value,0);
+ assert.equal(f.events.some(e=>Array.isArray(e)&&e[0]==='condition'),false);f.options.readAllowedSource=()=>0;assert.equal(f.api().runInto([node],0,f.board,ref),true);assert.equal(ref.value.value,1);
+});
+test('action utility conditions stop on unmet/unknown conditions and ALWAYS recovers a prior failed action',()=>{
+ const f=actionUtilFixture(),first={id:'first',allowed:63,condition:1,result:false},next={id:'next',allowed:63,condition:1,result:true},ref={value:{value:0}};
+ assert.equal(f.api().runInto([first,next],1,f.board,ref),false);assert.equal(ref.value.value,1);
+ next.condition=2;assert.equal(f.api().runInto([first,next],1,f.board,ref),true);assert.equal(ref.value.value,3);
+ next.condition=0;assert.equal(f.api().runInto([first,next],1,f.board,ref),true);assert.equal(ref.value.value,5);
+ next.condition=99;assert.equal(f.api().runInto([next],1,f.board,ref),false);assert.equal(ref.value.value,5);
+ assert.equal(f.api().checkExecute({...next,condition:2},true),false);
+});
+test('action utility rereads live collection counts after effects and supports recursive calls with separate snapshot refs',()=>{
+ const f=actionUtilFixture(),first={id:'first',allowed:1,condition:0,result:true},second={id:'second',allowed:1,condition:0,result:true},actions=[first],execute=f.options.executeNode;
+ f.options.executeNode=(node,...args)=>{if(node===first)actions.push(second);return execute(node,...args);};assert.deepEqual(f.api().run(actions,1,f.board),{value:3});assert.ok(f.events.some(e=>Array.isArray(e)&&e[0]==='node'&&e[1]===1));
+ let api,nested;f.options.executeNode=(node,board,source,ref)=>{if(node===first){nested=api.run([second],source,board);ref.value={value:20};return true;}return execute(node,board,source,ref);};
+ api=f.api();assert.deepEqual(api.run([first],1,f.board),{value:20});assert.deepEqual(nested,{value:2});assert.equal(f.context.value,1);
+});
+test('action utility wrapper returns the mutated snapshot after false results and preserves exceptions for outer cleanup',()=>{
+ const f=actionUtilFixture(),node={id:'failed',allowed:1,condition:1,result:false};assert.deepEqual(f.api().run([node],1,f.board),{value:2});
+ f.options.executeNode=(_node,_board,_source,ref)=>{ref.value.value=99;throw Error('node failure');};const ref={value:{value:0}};
+ assert.throws(()=>f.api().runInto([node],1,f.board,ref),/node failure/);assert.equal(ref.value.value,99);
+ f.options.readBattle=()=>null;assert.throws(()=>f.api().run([],1,f.board),/null native object/);
+});
 
 test('native context struct defaults are fresh zero values rather than constructor or EMPTY constants',()=>{
  const values=fearProjectileContextStructValues(),a=values.zeroModifier(),b=values.zeroModifier(),attack=values.zeroAttackInfo();
@@ -221,10 +263,28 @@ function managedActionContextFixture(){
   copyModifier:mf.options.copyValue,copyAttackInfo:af.options.copyValue,pushPointer:pointerContext.push,pushReferenceValue:refs.push,pushModifier:modifier.push,pushAttackInfo:attack.push});
  Object.assign(g.options,{isActive:()=>f.state.active,duplicateAll:()=>snapshots.duplicateAll(),popPointer:pointerContext.pop,pushPointer:pointerContext.push,
   popValue:stack=>stack.field==='m_modifier'?modifierContext.pop(stack):stack.field==='m_atkInfo'?attackContext.pop(stack):refContext.pop(stack)});
- const guards=g.adapter();Object.assign(f.options,{readContext:()=>g.context,beginChangeGuard:guards.begin,setBuff:guards.setBuff,setSource:guards.setSource,
-  setTarget:guards.setTarget,setTile:guards.setTile,disposeGuard:guards.dispose,runActionArray:()=>snapshots.takeSnapshot(),copySnapshot:snapshots.copySnapshot});
- return{f,g,snapshots,guards,pointerFields,prior:snapshots.takeSnapshot()};
+ const guards=g.adapter(),actionUtil=fearProjectileActionUtil({readBattle:()=>({context:g.context}),readContext:battle=>battle.context,takeSnapshot:()=>snapshots.takeSnapshot(),copySnapshot:snapshots.copySnapshot,
+  readCount:actions=>actions.length,readNode:(actions,index)=>actions[index],readAllowedSource:node=>node.allowedSource,readExecuteCondition:node=>node.condition,
+  executeNode:(node,board,sourceType,ref)=>node.execute(board,sourceType,ref),reportSourceMismatch:()=>{throw Error('unexpected native action source mismatch');}});
+ f.buff.m_actions[24]=[];Object.assign(f.options,{readContext:()=>g.context,beginChangeGuard:guards.begin,setBuff:guards.setBuff,setSource:guards.setSource,
+  setTarget:guards.setTarget,setTile:guards.setTile,disposeGuard:guards.dispose,runActionArray:actionUtil.run,copySnapshot:snapshots.copySnapshot});
+ return{f,g,snapshots,guards,actionUtil,pointerFields,prior:snapshots.takeSnapshot()};
 }
+test('native action utility executes FROM_BUFF nodes through complete context copies and preserves ALWAYS recovery',()=>{
+ const {f,g,snapshots,prior}=managedActionContextFixture(),calls=[],node=(id,condition,result,amount)=>({allowedSource:1,condition,execute:(board,sourceType,ref)=>{
+  assert.equal(board,f.buff.m_blackboard);assert.equal(sourceType,1);assert.ok(g.fields.every(field=>g.context[field]._size===2));calls.push(id);ref.value.modifier.m_value+=amount;return result;
+ }});
+ f.buff.m_actions[24]=[node('failed',1,false,1n),node('always',0,true,2n),node('resumed',1,true,3n)];
+ const result=f.adapter().run(24,true);assert.deepEqual(calls,['failed','always','resumed']);assert.equal(result.modifier.m_value,13n);assert.equal(result.source,f.source);assert.equal(result.target,f.owner);
+ assert.deepEqual(snapshots.takeSnapshot(),prior);assert.ok(g.fields.every(field=>g.context[field]._size===1));
+});
+for(const mode of ['throw','cancel'])test('native action utility completes outer guard cleanup after node '+mode,()=>{
+ const {f,g,snapshots,prior}=managedActionContextFixture(),calls=[];f.buff.m_actions[24]=[{allowedSource:1,condition:1,execute:(_board,_source,ref)=>{
+  calls.push('first');ref.value.atkInfo.atk=100n;if(mode==='throw')throw Error('native node failed');f.state.active=false;return true;
+ }},{allowedSource:1,condition:1,execute:()=>{calls.push('second');return true;}}];
+ if(mode==='throw')assert.throws(()=>f.adapter().run(24,true),/native node failed/);else assert.equal(f.adapter().run(24,true),null);
+ assert.deepEqual(calls,mode==='throw'?['first']:['first','second']);assert.deepEqual(snapshots.takeSnapshot(),prior);assert.ok(g.fields.every(field=>g.context[field]._size===1));
+});
 for(const mode of ['success','exception','cancel','nested','deep-nested'])test('action context uses managed storage through '+mode+' and restores every outer frame',()=>{
  const {f,g,snapshots,guards,pointerFields,prior}=managedActionContextFixture();
  f.options.runActionArray=()=>{
@@ -588,12 +648,12 @@ function actionDispatchFixture(){
   readSource:()=>{events.push('source');return source;},setSource:(guard,value)=>{events.push('set-source');guard.context.source=value;},
   readOwner:()=>{events.push('owner');return owner;},setTarget:(guard,value)=>{events.push('target');guard.context.target=value;},
   readAlive:value=>{events.push('alive');return value.alive;},readRootTile:value=>{events.push('tile');return value.tile;},setTile:(guard,value)=>{events.push('set-tile');guard.context.tile=value;},
-  runActionArray:(actions,instant,board)=>{events.push('run');assert.equal(instant,true);assert.equal(board,buff.m_blackboard);return{...context,modifier:{m_value:1n},atkInfo:{atk:2n},actions};},
+  runActionArray:(actions,sourceType,board)=>{events.push('run');assert.equal(sourceType,1);assert.equal(board,buff.m_blackboard);return{...context,modifier:{m_value:1n},atkInfo:{atk:2n},actions};},
   copySnapshot:value=>{events.push('copy');return{...value,modifier:{...value.modifier},atkInfo:{...value.atkInfo}};},
   disposeGuard:guard=>{events.push('dispose');for(const key of Object.keys(guard.context))delete guard.context[key];Object.assign(guard.context,guard.previous);}};
  return{context,owner,source,buff,events,state,options,adapter:()=>fearProjectileRunBuffActions(options)};
 }
-test('buff action dispatch configures context, invokes instant actions and copies the result around guard disposal',()=>{
+test('buff action dispatch configures context, invokes FROM_BUFF actions and copies the result around guard disposal',()=>{
  const f=actionDispatchFixture(),prior={...f.context},result=f.adapter().run(24,true);
  assert.equal(result.buff,f.buff);assert.equal(result.source,f.source);assert.equal(result.target,f.owner);assert.equal(result.tile,f.owner.tile);assert.equal(result.actions,f.buff.m_actions[24]);
  assert.deepEqual(f.context,prior);assert.deepEqual(f.events,['context','begin','buff','source','set-source','owner','target','owner','alive','owner','tile','set-tile','run','copy','dispose','copy']);
@@ -642,7 +702,7 @@ test('nested buff action guards restore their own prior context before the outer
 });
 test('concrete enable/disable events compose native buff action dispatch and owner targeting',()=>{
  const f=actionDispatchFixture(),enabled=buffEnabledFixture(),dispatched=[];Object.assign(enabled.buff,f.buff);f.options.buff=enabled.buff;
- f.options.runActionArray=(actions,instant,board)=>{assert.equal(instant,true);assert.equal(board,enabled.buff.m_blackboard);assert.equal(f.context.target,f.owner);dispatched.push(actions);return{modifier:{},atkInfo:{}};};
+ f.options.runActionArray=(actions,sourceType,board)=>{assert.equal(sourceType,1);assert.equal(board,enabled.buff.m_blackboard);assert.equal(f.context.target,f.owner);dispatched.push(actions);return{modifier:{},atkInfo:{}};};
  enabled.options.runActions=(buff,event,target)=>{assert.equal(buff,enabled.buff);f.adapter().run(event,target);};
  enabled.adapter().set(true);enabled.adapter().set(false);assert.deepEqual(dispatched,[f.buff.m_actions[24],null]);assert.equal(f.events.filter(x=>x==='dispose').length,2);
 });

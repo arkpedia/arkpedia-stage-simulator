@@ -1402,6 +1402,44 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
 
+### ActionUtil execution and FROM_BUFF source correction
+
+The203 ordinary methods remain unchanged. New bindings retain ActionUtil's
+three signatures, SourceType/ExecuteCondition enum constants, and ActionNode
+virtual slots4/5/6 for allowed source, condition and Execute. The four-argument
+RunActions snapshot parameter has exact type bits0x20110000 (by-reference bit29)
+and Snapshot type8956. The concrete ActionNode IsNullOrEmpty specification258790
+shares Object canonical208287 at0x3f62450; its complete body checks null or
+count==0. The concrete specification still has no invented native mapping.
+
+This review corrects the earlier Boolean/instant interpretation at Buff's
+call0x39b5599: the input is SourceType.FROM_BUFF, integer1. The source pin is
+renamed from instantTrueRva to fromBuffSourceTypeRva at the same instruction;
+the retained bytes and earlier ordinary bodies are unchanged. The buff adapter
+and its callback tests now pass and require the integer enum value.
+
+`fearProjectileActionUtil` implements default CheckExecute and both RunActions
+overloads. It checks the full requested source mask, resamples allowed source
+for mismatch diagnostics, and applies ALWAYS/PREVIOUS_SUCCEED/PREVIOUS_FAILED
+conditions. An unmet or unknown condition stops execution; ALWAYS can execute
+after a failed node and restore success. Collection counts are reread after
+effects, and node execution receives blackboard, SourceType and a by-reference
+snapshot receiver. Nested calls retain independent local snapshot receivers.
+The value-returning overload reads battle/context and copies a snapshot before
+entering the collection, even when actions are null/empty. It returns a copy of
+the final snapshot, including changes made before a false loop result.
+
+Tests compose this utility with complete context field copies, managed stacks,
+resize/fast-copy, buff source/owner targeting and guard disposal. Failed actions
+followed by ALWAYS recover in order; thrown actions unwind; synchronous action
+execution finishes before outer lifecycle cancellation restores all guard
+frames. Native battle lookup, class initialization/hotfixes, virtual/collection
+dispatch, diagnostics and concrete action-node effects remain explicit and
+unverified for live controller/stage integration. All1197 focused native/fear/
+family/miner tests pass. No source/support/receipt/catalogue gate changes or
+stage promotion follow; this checkpoint remains local outside pending upload
+authorization.
+
 ### Complete Modifier and AttackInfo field projections
 
 The203 ordinary methods and earlier byte evidence remain unchanged. A new
@@ -1731,7 +1769,7 @@ receiver rather than treating the result as a flat reference object.
 optionally sets the owner target, then reads a fresh owner for alive status.
 Living owners cause another owner read and root-tile assignment. It captures
 the event action array, checks bounds, reads blackboard and runs the selected
-array with instant=true, including null action entries. A value-copy receiver
+array with SourceType.FROM_BUFF(1), including null action entries. A value-copy receiver
 captures the result before guard disposal and copies it again on return.
 All errors/cancellations after a guard is returned dispose that guard; a null
 or throwing creation has no fabricated disposal. Nested invocations retain
