@@ -18,9 +18,13 @@ for name, namespace, names in [
     ('HitBehaviour', 'Torappu.Battle.Projectiles', ['Init', 'OnProjectileReached', 'DealHitTarget']),
     ('CircleRange', 'Torappu.Battle', ['get_radius', 'FetchColliders', 'InitCollidersIfNot', 'UpdateExtend']),
     ('Box2dPhysicsUtil', 'Torappu.Battle', ['FindTargets_DISPOSE', '_OverlapCollider', 'CheckOverlap', 'GetWorldRadius']),
-    ('TargetOptions', 'Torappu.Battle', ['Init', 'VerifyTargetWithoutCheckingTargetSide']),
-    ('BattleUtil', 'Torappu.Battle', ['GetLayerMask']),
-    ('Entity', 'Torappu.Battle', ['OnProjectileSelectTargets']),
+    ('TargetOptions', 'Torappu.Battle', ['Init', 'VerifyTargetWithoutCheckingTargetSide', '_VerifyAdvanced',
+        '_TryGetSourceMotionMode']),
+    ('BattleUtil', 'Torappu.Battle', ['GetLayerMask', 'VerifyTarget', 'CheckProfessionMask']),
+    ('Entity', 'Torappu.Battle', ['OnProjectileSelectTargets', 'get_isTargetFree',
+        'get_isAllyTargetFree', 'get_changeableMotionMode', 'isStillMotionTargetFreeWithImmuneFlag',
+        'isMotionTargetFreeWithImmuneFlag']),
+    ('Character', 'Torappu.Battle', ['isStillMotionTargetFreeWithImmuneFlag']),
     ('Enemy', 'Torappu.Battle', ['_InitPhysics', 'get_ColliderRadius']),
     ('Map', 'Torappu.Battle', ['WorldToMapPositionV3']),
 ]:
@@ -163,6 +167,11 @@ assert entity_binding['componentSha256'] == miner_geometry['entity']['sha256']
 assert (entity_script['m_ClassName'], entity_script['m_Namespace']) == ('Enemy', 'Torappu.Battle')
 enemy = c['type_row']('Enemy', 'Torappu.Battle')
 assert any(t['name'] == 'Entity' and t['namespace'] == 'Torappu.Battle' for t in c['lineage'](enemy))
+motion_free_dispatch = {'entryRva': 0x158d0, 'chunks': c['code'](0x158d0),
+    'metadataIdentityVerified': False,
+    'slots': [c['resolved_slot'](c['type_row'](name, 'Torappu.Battle'), 84)
+              for name in ['Entity', 'Enemy', 'Character']]}
+assert all(row['name'] == 'isStillMotionTargetFreeWithImmuneFlag' for row in motion_free_dispatch['slots'])
 
 result = {
     'schemaVersion': 1,
@@ -178,6 +187,7 @@ result = {
     'deterministicSort': {**sort, 'callerLoadRva': load, 'encodedUsage': usage, 'parameterCount': 0, 'concreteContextVerified': False},
     'queryLimit': 128,
     'componentQueries': component_queries,
+    'motionTargetFreeDispatch': motion_free_dispatch,
     'minerColliderOwnership': {'prefab': miner_prefab, 'geometry': miner_geometry,
         'entityBinding': entity_binding, 'entityScript': entity_script,
         'enemyLineage': [{'name': t['name'], 'namespace': t['namespace'], 'index': t['index']}
@@ -188,7 +198,8 @@ result = {
         'FindTargets_DISPOSE obtains a side layer mask, queries actual collider overlaps, resolves entities, checks native validity and selectability, deduplicates by instanceUid, then runs TargetOptions.VerifyTargetWithoutCheckingTargetSide and an optional predicate before adding each UID/entity. Collection stops at128 before optional deterministic List<Entity>.Sort; sorting all possible targets before truncation would change selection. Concrete generic comparer dispatch remains unverified.',
         'HitBehaviour.OnProjectileReached performs its overlap query only when onlyCheckHitWhenReachTarget is enabled. It notifies a still-valid source through Entity.OnProjectileSelectTargets when the found count is positive, then forwards each candidate to DealHitTarget. Selected ignoreCamouflage=true disables that extra rejection; exceptSource, exceptTraceTarget and onlyTraceTarget are false. Native layer masks, target geometry, dynamic range scaling and current target options remain integration obligations.',
         'The original nested TargetOptions contains ignoreMotionMode=0 absent from the Windows struct. CircleRange._useBlackboardRangeId=0 and HitBehaviour._exceptFlyCharacter=0 also have no matching Windows fields. None of these zero-valued differences proves inertness or full layout/runtime parity.',
-        'The query uses same-component GetComponent<Entity>, not parent lookup. The original miner root contains the script-bound Enemy, Rigidbody2D and enabled radius0.1 trigger; its child collision capsule has only a Transform and CapsuleCollider2D, so attached-rigidbody ancestry alone does not make that child an Entity hit body. Enemy._InitPhysics reads the root circle radius into its main-trigger radius field. This does not prove runtime transform scale or Unity physics boundary tolerance.'
+        'The query uses same-component GetComponent<Entity>, not parent lookup. The original miner root contains the script-bound Enemy, Rigidbody2D and enabled radius0.1 trigger; its child collision capsule has only a Transform and CapsuleCollider2D, so attached-rigidbody ancestry alone does not make that child an Entity hit body. Enemy._InitPhysics reads the root circle radius into its main-trigger radius field. This does not prove runtime transform scale or Unity physics boundary tolerance.',
+        'VerifyTargetWithoutCheckingTargetSide first calls BattleUtil.VerifyTarget for motion/category, then _VerifyAdvanced. Advanced target-free checks depend on retained source side and source motion snapshot; the motion-target-free trampoline dispatches slot84 with flags44 and combo2. Entity and Character implement distinct motion comparisons. A zero profession mask is accepted by CheckProfessionMask only through its explicit accept-zero argument. Native source snapshot, abnormal state and runtime target-side/layer mappings are not supplied by a ground-only point-distance filter.'
     ]}
 serialized = json.dumps(result, ensure_ascii=False, indent=1) + '\n'
 out = ROOT / 'data/candidates/arkpedia-windows-fear-area-source.json'

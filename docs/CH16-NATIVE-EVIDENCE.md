@@ -365,7 +365,7 @@ parity.
 
 ### Arrival overlap and dispatch
 
-`extract-windows-fear-area.py --check` retains 19 complete methods covering the
+`extract-windows-fear-area.py --check` retains 29 complete methods covering the
 range/query/filter pipeline, enemy physics and map conversion, together with
 the exact layer-mask tail-jump leaf, the `List<Entity>.Sort` call
 specification and the original circle/collider/transform graph. Authored local
@@ -421,3 +421,25 @@ remain their caller's responsibility. Native raw delta production, actual
 coordinate transforms, physics query/target filters, concrete scheduler timing,
 cast launch and initial FSM integration remain required before stage16-9
 admission. No new stage, enemy support receipt or public catalogue entry follows.
+
+### Selected arrival eligibility
+
+`fearProjectileTargetVerifier` ports the selected arrival option branches after
+the actual collider/layer/validity query. It requires native motion/category and
+side readers, a captured source side, target-free readers and a source-motion
+snapshot reader. Ground/category masks run first. A nonzero source side enables
+the distinct opposing-target and same-side target-free checks; source retirement
+does not erase that captured side. The motion-dependent check forwards native
+flags44/combo2 to the supplied slot84 semantics. The retained trampoline and
+metadata distinguish Entity/Enemy's implementation from Character's override.
+The selected zero profession mask passes the native helper's explicit accept-zero
+branch; disabled unit-type, purpose and extra abnormal filters are not enabled.
+
+Tests cover opposing and same-side target-free states, zero source side, motion/
+category rejection, missing native values, replacement and battle end during a
+reader, recursion and area dispatch after source retirement. Complete native
+basic/advanced filters, source motion lookup, profession helper and Entity and
+Character motion-target-free bodies are retained. Actual native state readers,
+source snapshot construction, hotfix/runtime dispatch, layer query and scene
+mapping remain integration obligations. The internal verifier does not convert
+generic simulator hidden/untargetable flags into an asserted native receipt.

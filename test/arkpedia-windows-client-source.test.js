@@ -407,7 +407,7 @@ test('ordinary projectile initialization resets its fixed-point lifetime clock b
 });
 
 test('arrival-area evidence binds the authored circle and explicit nested field differences',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-area-source.json');assert.equal(c.methods.length,19);
+ const c=read('data/candidates/arkpedia-windows-fear-area-source.json');assert.equal(c.methods.length,29);
  for(const p of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+p.path,import.meta.url))),p.sha256);
  for(const m of [...c.methods,c.layerMaskLeaf])for(const ch of m.chunks){
   const raw=Buffer.from(ch.base64,'base64');assert.equal(raw.length,ch.endRva-ch.beginRva);assert.equal(sha(raw),ch.sha256);
@@ -424,6 +424,34 @@ test('arrival-area evidence binds the authored circle and explicit nested field 
  assert.deepEqual(hit.unmatchedSerializedFields,{_exceptFlyCharacter:0});assert.equal(hit.serializedFieldParity,false);
  assert.deepEqual(c.unmatchedTargetOptions,{ignoreMotionMode:0});assert.equal(c.targetOptionParity,false);
  for(const field of ['runtimeDispatchVerified','frameParity','crossVersionParity'])assert.equal(c[field],false);
+});
+
+test('arrival verification retains motion/category and source-relative advanced gates',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-area-source.json');
+ const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ const verify=castMethod(c,'TargetOptions','VerifyTargetWithoutCheckingTargetSide');
+ at(verify,0x7877a1,'0x1808779e0');at(verify,0x7877c6,'0x180787af0');
+ const basic=castMethod(c,'BattleUtil','VerifyTarget');
+ at(basic,0x877a3d,'0x183a29e20');at(basic,0x877a42,'eax, 0x1f');
+ at(basic,0x877a4f,'edi, edx');at(basic,0x877a7e,'esi, eax');
+ const advanced=castMethod(c,'TargetOptions','_VerifyAdvanced');
+ for(const [rva,args]of [[0x787b40,'byte ptr [rbx + 0xc], sil'],[0x787b66,'eax, dword ptr [rbx + 0x38]'],
+  [0x787b8a,'0x183a2d970'],[0x787ba2,'0x180787a00'],[0x787bab,'ecx, 0x54'],
+  [0x787bbb,'r8d, [rcx - 0x28]'],[0x787bb7,'r9d, [rcx - 0x52]'],[0x787bbf,'0x1800158d0'],
+  [0x787c44,'0x183a2c460'],[0x787d9d,'0x180874850']])at(advanced,rva,args);
+ const profession=castMethod(c,'BattleUtil','CheckProfessionMask');
+ at(profession,0x87489a,'sil, sil');at(profession,0x87489f,'ebx, ebx');at(profession,0x8748a3,'al, 1');
+ const dispatch=c.motionTargetFreeDispatch;
+ assert.equal(dispatch.metadataIdentityVerified,false);
+ assert.deepEqual(dispatch.slots.map(s=>[s.type,s.slot,s.declaringType,s.name]),[
+  ['Entity',84,'Entity','isStillMotionTargetFreeWithImmuneFlag'],
+  ['Enemy',84,'Entity','isStillMotionTargetFreeWithImmuneFlag'],
+  ['Character',84,'Character','isStillMotionTargetFreeWithImmuneFlag']]);
+ for(const ch of dispatch.chunks)assert.equal(sha(Buffer.from(ch.base64,'base64')),ch.sha256);
+ const native=JSON.parse(c.prefabScriptBridges[1].originalJson)._targetOptions;
+ assert.equal(native.enableAdvancedOptions,1);assert.equal(native.targetMotion,1);assert.equal(native.targetCategory,1);
+ for(const key of ['checkUnitType','ignoreTargetFree','ignoreAllyTargetFree','onlyIgnoreSomeOfTargetFreeCase',
+  'excludeSomeAbnormalFlags','containSomeAbnormalFlags','purposeMask','professionMask'])assert.equal(native[key],0);
 });
 
 test('native area query filters and caps before deterministic sorting and source notification before hits',()=>{

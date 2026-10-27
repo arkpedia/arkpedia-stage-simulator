@@ -13,12 +13,73 @@ import {fearProjectileHitLedger} from '../server/sim/content/chapter16-fear-deli
 import {fearProjectileLifetime} from '../server/sim/content/chapter16-fear-clock.js';
 import {fearProjectileAreaDelivery} from '../server/sim/content/chapter16-fear-area.js';
 import {fearProjectileFlight} from '../server/sim/content/chapter16-fear-flight.js';
+import {fearProjectileTargetVerifier} from '../server/sim/content/chapter16-fear-targets.js';
 import {fearProjectileReached,fearProjectileMotionStep,fearProjectileMountReference,fearProjectileTraceMotion} from '../server/sim/content/chapter16-fear-movement.js';
 import { battle as minerBattle, keys as minerKeys } from './helpers/ch17Harness.js';
 import { chapter16Shadow } from '../server/sim/content/chapter16-shadow.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
 const parentKey='feawpj_a[mcreep_fear]';
 const fpOne=1n<<32n;
+function targetVerifierFixture(overrides={}){
+ const f=fixture(),calls=[];
+ const verifier=fearProjectileTargetVerifier(f.b,{sourceSide:2,
+  readMotionMode:()=>{calls.push('motion');return 0;},readCategory:()=>{calls.push('category');return 1;},
+  readSide:()=>{calls.push('side');return 1;},isTargetFree:()=>{calls.push('free');return false;},
+  isAllyTargetFree:()=>{calls.push('allyFree');return false;},
+  readSourceMotionMode:()=>{calls.push('sourceMotion');return 1;},
+  isStillMotionTargetFree:(_target,args)=>{calls.push(args);return false;},...overrides});
+ return{...f,verifier,calls};
+}
+
+test('selected arrival verifier evaluates motion/category then source-relative target-free rules',()=>{
+ const f=targetVerifierFixture();assert.equal(f.verifier.verifyTarget(f.target),true);
+ assert.deepEqual(f.calls,['motion','category','side','free','sourceMotion',{flags:44,combo:2,sourceMotion:1},'allyFree']);
+ f.verifier.release();assert.equal(f.verifier.verifyTarget(f.target),false);
+});
+for(const [key,value]of [['readMotionMode',1],['readMotionMode',2],['readCategory',0],['isTargetFree',true],['isStillMotionTargetFree',true]])
+test('selected arrival verifier rejects '+key+'='+value,()=>{
+ const f=targetVerifierFixture({[key]:()=>value});assert.equal(f.verifier.verifyTarget(f.target),false);f.verifier.release();
+});
+
+test('ally-target-free rejects the same side but does not reject another side',()=>{
+ const same=targetVerifierFixture({readSide:()=>2,isAllyTargetFree:()=>true});
+ assert.equal(same.verifier.verifyTarget(same.target),false);
+ assert.equal(same.calls.includes('free'),false);assert.equal(same.calls.includes('sourceMotion'),false);same.verifier.release();
+ const other=targetVerifierFixture({isAllyTargetFree:()=>true});assert.equal(other.verifier.verifyTarget(other.target),true);other.verifier.release();
+});
+
+test('native source-side zero skips source-relative advanced free gates',()=>{
+ const f=targetVerifierFixture({sourceSide:0,isTargetFree:()=>{throw Error('unreached');},
+  isAllyTargetFree:()=>{throw Error('unreached');}});
+ assert.equal(f.verifier.verifyTarget(f.target),true);assert.deepEqual(f.calls,['motion','category']);f.verifier.release();
+});
+
+test('target verifier rejects missing native state values instead of treating them as targetable',()=>{
+ for(const key of ['readMotionMode','readCategory','readSide','readSourceMotionMode','isTargetFree','isAllyTargetFree','isStillMotionTargetFree']){
+  const f=targetVerifierFixture({[key]:()=>undefined});assert.throws(()=>f.verifier.verifyTarget(f.target),/native/);f.verifier.release();
+ }
+});
+
+for(const boundary of ['reuse','battleEnd','recursive'])test('target verification guards '+boundary+' during a native reader',()=>{
+ let f;f=targetVerifierFixture({isTargetFree:()=>{
+  if(boundary==='reuse')f.target.deploySeq++;
+  else if(boundary==='battleEnd')f.b.emit('battleEnd',{});
+  else assert.equal(f.verifier.verifyTarget(f.target),false);
+  return false;
+ }});
+ assert.equal(f.verifier.verifyTarget(f.target),boundary==='recursive');f.verifier.release();assert.deepEqual(f.b.errors,[]);
+});
+
+test('area delivery uses the selected verifier after source retirement without skipping its captured side rules',()=>{
+ let blocked=false;const f=targetVerifierFixture({isTargetFree:()=>blocked});f.target.nativeUid=1;
+ f.b.kill(f.source,null);let hits=0;
+ const area=areaFixture(f,[f.target],{verifyTarget:f.verifier.verifyTarget,resolveSource:()=>null,
+  hitTarget:()=>{hits++;return true;}});
+ blocked=true;assert.deepEqual(area.deliver(),{selected:0,attempted:0,hits:0});assert.equal(hits,0);
+ assert.equal(f.verifier.verifyTarget(f.target),false);blocked=false;assert.equal(f.verifier.verifyTarget(f.target),true);
+ f.verifier.release();
+});
+
 function flightFixture(overrides={}){
  const f=fixture(),events=[];let completion=null,cancellations=0;
  f.target.nativeUid=1;
