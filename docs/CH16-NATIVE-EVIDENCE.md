@@ -347,3 +347,18 @@ recursive stop/hit calls, source retirement with cached damage, recycled trace
 bodies, elimination and reentrant battle end. This is a selected hit/stop port;
 the FP lifetime clock, deferred stop scheduling, area-selection caller and full
 launcher integration remain held. No additional enemy or stage support follows.
+
+The selected lifetime clock now has a source-bound Q32.32 arithmetic port.
+Retained `FP` multiply/add/integer-conversion leaves, float constants and
+`FP.AsFloat` establish signed64 wrapping, 32 fractional bits and integer-to-
+float32 rounding before scale conversion. Ordinary `_InitInline` resets current
+time to zero; movement slot 14 supplies the lifetime/behaviour delta scale.
+`fearProjectileLifetime` takes explicit raw input delta and movement scale,
+accumulates with that arithmetic and expires at raw `42949672960` before a
+movement result is returned. Its expiry guard latches before the stop callback.
+Tests compose the clock with motion and terminal damage, including a one-raw-unit
+boundary that float seconds would round early, pause/slowdown, signed64 wrapping,
+float halfway rounding, recursive dispatch and cancellation. The engine-to-native
+raw input-delta mapping, deferred stop scheduler, area selection and full launch
+registration remain unverified. This port grants no stage admission or frame
+parity.

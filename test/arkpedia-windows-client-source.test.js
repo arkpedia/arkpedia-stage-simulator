@@ -74,7 +74,7 @@ const castMethod=(c,type,name)=>{
 };
 
 test('fear projectile source pins complete native methods and exact original script references',()=>{
- const c=read(projectilePath);assert.equal(c.methods.length,61);
+ const c=read(projectilePath);assert.equal(c.methods.length,66);
  for(const p of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+p.path,import.meta.url))),p.sha256);
  for(const method of [...c.methods,c.lifeValueLeaf,c.expiryComparisonLeaf])for(const chunk of method.chunks){
   const raw=Buffer.from(chunk.base64,'base64');assert.equal(raw.length,chunk.endRva-chunk.beginRva);assert.equal(sha(raw),chunk.sha256);
@@ -343,6 +343,53 @@ test('forced final trace hit keeps deduplication before the cap and count increm
  at('OnHitTarget',0x67a3ec,'0x18067c390');at('OnHitTarget',0x67a412,'0x1806a16e0');
  assert.equal(c.fields.Projectile.find(f=>f.name==='m_targetsAlreadyHit').offset,0x150);
  assert.equal(c.fields.Projectile.find(f=>f.name==='m_keepAlreadyHitTime').offset,0xb0);
+});
+
+test('native lifetime arithmetic binds Q32.32 constants, complete integer leaves and float conversion order',()=>{
+ const c=read(projectilePath),clock=c.clockArithmetic;
+ assert.equal(clock.rawSignedBits,64);assert.equal(clock.fractionalBits,32);
+ assert.equal(clock.storageField.name,'_serializedValue');assert.equal(clock.storageField.typeName,'System.Int64');
+ assert.equal(clock.storageField.unboxedOffset,0);
+ assert.equal(clock.oneRaw,'4294967296');assert.equal(clock.selectedLifeRaw,'42949672960');
+ assert.deepEqual(clock.constants.map(k=>[k.hex,k.float32]),[['0000804f',2**32],['0000802f',2**-32]]);
+ assert.deepEqual(clock.leaves.map(m=>[m.role,m.aliases.map(r=>r.name)]),[
+  ['add',['op_Addition','FastAdd']],['fromInt',['op_Implicit']],['multiply',['op_Multiply','FastMul']]]);
+ for(const m of clock.leaves){
+  assert.equal(m.image,'Torappu.Common.dll');
+  for(const ch of m.chunks){
+   const raw=Buffer.from(ch.base64,'base64');assert.equal(raw.length,ch.endRva-ch.beginRva);assert.equal(sha(raw),ch.sha256);
+   assert.equal(ch.unwindRva,null);let cursor=ch.beginRva;
+   for(const i of ch.instructions){assert.equal(i.rva,cursor);cursor+=i.size;}
+   assert.equal(cursor,ch.endRva);assert.equal(ch.instructions.at(-1).mnemonic,'ret');
+  }
+ }
+ const mul=instructions(clock.leaves.find(m=>m.role==='multiply'));
+ assert.deepEqual(mul.filter(i=>['sar','shr','shl'].includes(i.mnemonic)).map(i=>i.operands),[
+  'rdx, 0x20','rcx, 0x20','rax, 0x20','r8, 0x20']);
+ const asFloat=castMethod(c,'FP','AsFloat');assert.equal(asFloat.image,'Torappu.Common.dll');
+ const convert=instructions(asFloat);
+ const integerConversion=convert.findIndex(i=>i.mnemonic==='cvtsi2ss'&&i.operands==='xmm0, rbx');
+ const scaleConversion=convert.findIndex(i=>i.rva===0x5a3ad55);
+ assert.ok(integerConversion>=0&&integerConversion<scaleConversion);
+ const tick=instructions(castMethod(c,'Projectile','OnTick'));
+ for(const [rva,target] of [[0x67ae9b,'0x185a3b800'],[0x67aef3,'0x184175da0'],[0x67b05b,'0x185a3b800']])
+  assert.ok(tick.some(i=>i.rva===rva&&i.mnemonic==='call'&&i.operands===target));
+ assert.equal(clock.movementScaleSlot.slot,14);assert.equal(clock.movementScaleSlot.declaringType,'BasicMovement');
+ assert.equal(clock.movementScaleSlot.name,'GetTimeScale');assert.equal(clock.movementScaleField.offset,0x90);
+ assert.ok(instructions(castMethod(c,'BasicMovement','GetTimeScale')).some(i=>i.operands==='rax, qword ptr [rbx + 0x90]'));
+ const native=JSON.parse(c.prefabScriptBridges[0].originalJson);
+ assert.equal(native._lifeTimeType,1);assert.equal(native._lifeTime,10);assert.equal(native._getLifeTimeFromBB,0);
+});
+
+test('ordinary projectile initialization resets its fixed-point lifetime clock before behaviour setup',()=>{
+ const c=read(projectilePath),init=castMethod(c,'Projectile','_InitInline');
+ const root=c.methods.find(m=>m.type==='Projectile'&&m.name==='Init'&&m.entryRva===c.preprocessing.rootInitEntryRva);
+ assert.ok(instructions(root).some(i=>i.rva===0x678ce9&&i.operands==='0x18067ccc0'));
+ const code=instructions(init);
+ assert.ok(code.some(i=>i.rva===0x67cde4&&i.mnemonic==='xor'&&i.operands==='ecx, ecx'));
+ assert.ok(code.some(i=>i.rva===0x67cde6&&i.operands==='0x185a3da10'));
+ assert.ok(code.some(i=>i.rva===0x67cdf4&&i.operands==='0x18067e7c0'));
+ assert.ok(instructions(castMethod(c,'Projectile','set_currentTime')).some(i=>i.operands==='qword ptr [rdi + 0x158], rbx'));
 });
 
 test('native projectile source lock checks cached UID and destroyed/null state across allocation and recycling',()=>{

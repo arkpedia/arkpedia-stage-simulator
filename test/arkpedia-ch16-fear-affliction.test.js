@@ -10,11 +10,86 @@ import { compileStageLocalEnemy } from '../shared/arkpedia/enemy-records.js';
 import { fearProjectileAfflictions } from '../server/sim/content/chapter16-fear-affliction.js';
 import {applyFearProjectileImpact,fearProjectileDamageAction,fearProjectileSourceReference,fearProjectileEntityReference} from '../server/sim/content/chapter16-fear-impact.js';
 import {fearProjectileHitLedger} from '../server/sim/content/chapter16-fear-delivery.js';
+import {fearProjectileLifetime} from '../server/sim/content/chapter16-fear-clock.js';
 import {fearProjectileReached,fearProjectileMotionStep,fearProjectileMountReference,fearProjectileTraceMotion} from '../server/sim/content/chapter16-fear-movement.js';
 import { battle as minerBattle, keys as minerKeys } from './helpers/ch17Harness.js';
 import { chapter16Shadow } from '../server/sim/content/chapter16-shadow.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
 const parentKey='feawpj_a[mcreep_fear]';
+const fpOne=1n<<32n;
+test('native clock expires at the Q32.32 boundary rather than rounded float seconds',()=>{
+ let expires=0;const clock=fearProjectileLifetime({isBattleActive:()=>true,onExpire:()=>expires++});
+ assert.equal(clock.elapsedRaw,0n);
+ assert.equal(clock.advance(5n*fpOne-1n,fpOne).expired,false);
+ assert.equal(clock.advance(5n*fpOne,fpOne).expired,false);
+ assert.equal(clock.elapsedRaw,10n*fpOne-1n);assert.equal(expires,0);
+ const final=clock.advance(1n,fpOne);assert.equal(final.expired,true);assert.equal(expires,1);
+ assert.equal(final.elapsedRaw,10n*fpOne);assert.equal('effectiveDt' in final,false);
+ assert.equal(clock.advance(fpOne,fpOne),null);assert.equal(expires,1);
+});
+
+test('movement scale affects lifetime and motion delta through fixed-point multiplication',()=>{
+ const clock=fearProjectileLifetime({isBattleActive:()=>true,onExpire:()=>{}});
+ const paused=clock.advance(fpOne,0n);assert.equal(paused.elapsedRaw,0n);assert.equal(paused.effectiveDt,0);
+ const slow=clock.advance(fpOne,fpOne/2n);assert.equal(slow.elapsedRaw,fpOne/2n);assert.equal(slow.effectiveDt,.5);
+ for(let i=0;i<9;i++)assert.equal(clock.advance(fpOne,fpOne).expired,false);
+ assert.equal(clock.advance(fpOne,fpOne/2n).expired,true);
+});
+
+test('Q32.32 multiply truncates fractional raw bits and wraps signed64 arithmetic',()=>{
+ const clock=fearProjectileLifetime({isBattleActive:()=>true,onExpire:()=>{}});
+ assert.equal(clock.advance(1n,fpOne/2n).deltaRaw,0n);
+ const wrapped=clock.advance((1n<<63n)-1n,2n*fpOne);
+ assert.equal(wrapped.deltaRaw,-2n);assert.equal(wrapped.elapsedRaw,-2n);
+ assert.equal(wrapped.effectiveDt,-(2**-31));clock.release();
+});
+
+test('raw signed64 to float32 conversion avoids double rounding at a halfway boundary',()=>{
+ const clock=fearProjectileLifetime({isBattleActive:()=>true,onExpire:()=>{}});
+ const raw=-((1n<<62n)+(1n<<38n)+1n),step=clock.advance(raw,fpOne);
+ assert.equal(step.effectiveDt,-1073741952);
+ assert.notEqual(step.effectiveDt,Math.fround(Number(raw)*2**-32));clock.release();
+});
+
+test('clock rejects non-raw inputs and prevents recursive or post-end expiry callbacks',()=>{
+ let clock,active=true,recursive,expires=0;
+ clock=fearProjectileLifetime({isBattleActive:()=>{recursive=clock.advance(fpOne,fpOne);return active;},
+  onExpire:()=>{expires++;assert.equal(clock.advance(fpOne,fpOne),null);}});
+ assert.throws(()=>clock.advance(1,fpOne),/Q32/);assert.throws(()=>clock.advance(1n<<63n,fpOne),/Q32/);
+ assert.equal(clock.advance(10n*fpOne,fpOne).expired,true);assert.equal(recursive,null);assert.equal(expires,1);
+ active=false;assert.equal(clock.advance(fpOne,fpOne),null);
+});
+
+test('clock lifecycle cancellation is permanent and expiry exceptions cannot repeat stop dispatch',()=>{
+ let active=false,expires=0;
+ const cancelled=fearProjectileLifetime({isBattleActive:()=>active,onExpire:()=>expires++});
+ assert.equal(cancelled.advance(fpOne,fpOne),null);active=true;
+ assert.equal(cancelled.advance(10n*fpOne,fpOne),null);assert.equal(cancelled.elapsedRaw,0n);
+ const failed=fearProjectileLifetime({isBattleActive:()=>true,onExpire:()=>{expires++;throw Error('stop callback');}});
+ assert.throws(()=>failed.advance(10n*fpOne,fpOne),/stop callback/);
+ assert.equal(failed.advance(fpOne,fpOne),null);assert.equal(expires,1);
+});
+
+test('lifetime expiry stops before movement and applies only the final saved-target hit',()=>{
+ const f=fixture();f.source.base.atk=125;f.source.markDirty();
+ const source=fearProjectileSourceReference(f.b,f.source),target=fearProjectileEntityReference(f.b,f.target);
+ const damage=fearProjectileDamageAction(f.b,source);let moves=0,arrivals=0,stops=0;
+ const ledger=fearProjectileHitLedger(f.b,{resolveTraceTarget:target.resolveEntity,
+  runHit:({target})=>applyFearProjectileImpact(f.b,{source:f.source,target,applyAttachments:()=>{},runActions:damage}),
+  onStopped:()=>stops++});
+ const trace=fearProjectileTraceMotion({from:{x:0,y:0,z:1},initialTarget:{x:1000,y:0,z:1},
+  resolveTargetPosition:()=>null,isBattleActive:source.isBattleActive});
+ const clock=fearProjectileLifetime({isBattleActive:source.isBattleActive,onExpire:()=>ledger.stop()});
+ f.b.kill(f.source,null);const hp=f.target.hp;
+ for(let i=0;i<10;i++){
+  const step=clock.advance(fpOne,fpOne);
+  if(!step.expired){moves++;if(trace.advance(step.effectiveDt)?.reached)arrivals++;}
+ }
+ assert.equal(moves,9);assert.equal(arrivals,0);assert.equal(stops,1);assert.equal(ledger.count,1);
+ assert.equal(trace.position.x,90);assert.equal(hp-f.target.hp,125);assert.deepEqual(f.b.errors,[]);
+ trace.release();target.release();source.release();
+});
+
 test('forced trace hit bypasses the 128 normal-hit cap once without an area-arrival dispatch',()=>{
  const f=fixture(),trace={deploySeq:999},hits=[];let stops=0;
  const ledger=fearProjectileHitLedger(f.b,{runHit:event=>hits.push(event),resolveTraceTarget:()=>trace,onStopped:()=>stops++});

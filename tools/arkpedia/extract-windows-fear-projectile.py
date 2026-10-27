@@ -24,7 +24,7 @@ for t, names in [
                   'OnProjectileReached', 'DealProjectileReached', 'StopMe', 'get_source', 'get_ability',
                   'Init', 'RegisterActions', 'OnProjectileStop', 'get_traceTarget', 'get_hasHitTraceTarget',
                   'get_alwaysHitTraceTarget', 'CheckTargetAlreadyHitAndUpdate', 'CheckTargetAlreadyHit',
-                  'UpdateAlreadyHit', 'GetKeepAlreadyHitTime']),
+                  'UpdateAlreadyHit', 'GetKeepAlreadyHitTime', '_InitInline', 'set_currentTime']),
     (hit, ['OnProjectileReached', 'DealHitTarget']),
     (c['type_row']('ActionController', ''), ['OnHitTarget', '_AttachBuffs', '_RunActions', 'Init', 'RegisterActions']),
     (c['type_row']('Ability', 'Torappu.Battle'), ['PreprocessActionsForProjectile', 'get_owner']),
@@ -35,6 +35,7 @@ for t, names in [
     (c['type_row']('ApplyDamage', ''), ['PreprocessForProjectile', 'CreateDamageModifier', 'Execute', '.ctor']),
     (c['type_row']('BattleUtil', 'Torappu.Battle'), ['CalculateDamageBySource', 'CalculateDamageByAtkNoSource']),
     (c['type_row']('BObject', 'Torappu.Battle'), ['OnAllocate', 'OnRecycle', 'DestroyMe']),
+    (c['type_row']('BasicMovement', 'Torappu.Battle'), ['GetTimeScale']),
 ]:
     for name in names:
         rows = [r for r in t['methods'] if r['name'] == name]
@@ -67,6 +68,57 @@ expiry_compare = {'image': 'Torappu.Common.dll', 'type': owner['name'], **compar
                 'sha256': v['sha'](compare_raw), 'base64': base64.b64encode(compare_raw).decode(),
                 'instructions': [{'rva': i.address - v['image_base'], 'size': i.size,
                                   'mnemonic': i.mnemonic, 'operands': i.op_str} for i in decoded]}]}
+
+fp = c['type_row']('FP', 'Torappu')
+for name, rva in [('AsFloat', 0x5a3ad10), ('op_Implicit', 0x5a3da20)]:
+    row = c['unique'](lambda r: r['name'] == name and
+        v['quad'](b, table + ((r['token'] & 0xffffff) - 1) * 8) == v['image_base'] + rva, fp['methods'])
+    methods.append(c['method'](fp, row, 'Torappu.Common.dll'))
+clock_leaves = []
+for rva, size, role, expected in [
+    (0x4175da0, 5, 'add', [('lea', 'rax, [rcx + rdx]'), ('ret', '')]),
+    (0x5a3da10, 8, 'fromInt', [('movsxd', 'rax, ecx'), ('shl', 'rax, 0x20'), ('ret', '')]),
+    (0x5a3b800, 47, 'multiply', [
+        ('mov', 'r8d, edx'), ('mov', 'r9d, ecx'), ('sar', 'rdx, 0x20'),
+        ('mov', 'rax, rdx'), ('sar', 'rcx, 0x20'), ('shl', 'rax, 0x20'),
+        ('add', 'rax, r8'), ('imul', 'rax, rcx'), ('imul', 'r8, r9'),
+        ('imul', 'rdx, r9'), ('shr', 'r8, 0x20'), ('add', 'rax, r8'),
+        ('add', 'rax, rdx'), ('ret', '')]),
+]:
+    rows = [row for row in fp['methods'] if
+        v['quad'](b, table + ((row['token'] & 0xffffff) - 1) * 8) == v['image_base'] + rva]
+    assert [row['name'] for row in rows] == {'add': ['op_Addition', 'FastAdd'],
+        'fromInt': ['op_Implicit'], 'multiply': ['op_Multiply', 'FastMul']}[role]
+    p = v['offset'](v['image_base'] + rva)
+    raw = b[p:p + size]
+    decoded = list(Cs(CS_ARCH_X86, CS_MODE_64).disasm(raw, v['image_base'] + rva))
+    assert [(i.mnemonic, i.op_str) for i in decoded] == expected
+    assert sum(i.size for i in decoded) == len(raw)
+    clock_leaves.append({'image': 'Torappu.Common.dll', 'type': 'FP', 'role': role, 'aliases': rows, 'entryRva': rva,
+        'chunks': [{'beginRva': rva, 'endRva': rva + size, 'unwindRva': None,
+                    'boundary': 'Reviewed complete straight-line integer arithmetic leaf through ret; no calls, branches or stack changes',
+                    'sha256': v['sha'](raw), 'base64': base64.b64encode(raw).decode(),
+                    'instructions': [{'rva': i.address - v['image_base'], 'size': i.size,
+                                      'mnemonic': i.mnemonic, 'operands': i.op_str} for i in decoded]}]})
+clock_constants = []
+for load, value in [(0x5a3da20, float(1 << 32)), (0x5a3ad55, 2.0 ** -32)]:
+    p = v['offset'](v['image_base'] + load)
+    assert b[p:p + 4] == bytes.fromhex('f30f5905')
+    constant_rva = load + 8 + struct.unpack_from('<i', b, p + 4)[0]
+    p = v['offset'](v['image_base'] + constant_rva)
+    raw = b[p:p + 4]
+    assert struct.unpack('<f', raw)[0] == value
+    clock_constants.append({'callerLoadRva': load, 'valueRva': constant_rva,
+                            'hex': raw.hex(), 'float32': value})
+raw_storage = c['unique'](lambda f: f['name'] == '_serializedValue', c['fields'](fp))
+raw_type = v['types'][raw_storage['typeData']]
+assert (raw_type['namespace'], raw_type['name']) == ('System', 'Int64') and raw_storage['offset'] == 16
+clock_arithmetic = {'rawSignedBits': 64, 'fractionalBits': 32, 'oneRaw': str(1 << 32),
+    'storageField': {**raw_storage, 'unboxedOffset': 0, 'typeName': 'System.Int64'},
+    'selectedLifeRaw': str(10 << 32), 'leaves': clock_leaves, 'constants': clock_constants,
+    'movementScaleSlot': c['resolved_slot'](c['type_row']('AdvancedMovement', 'Torappu.Battle.Projectiles'), 14),
+    'movementScaleField': c['unique'](lambda f: f['name'] == '<moveScale>k__BackingField',
+                                     c['fields'](c['type_row']('BasicMovement', 'Torappu.Battle')))}
 
 source_load = 0x67e418
 p = v['offset'](v['image_base'] + source_load)
@@ -245,6 +297,7 @@ result = {
     'preprocessing': preprocessing,
     'damageNodeSlot': c['resolved_slot'](c['type_row']('RangedAttack', 'Torappu.Battle.Abilities'), 106),
     'methods': methods, 'lifeValueLeaf': leaf, 'expiryComparisonLeaf': expiry_compare, 'prefabScriptBridges': bridges,
+    'clockArithmetic': clock_arithmetic,
     'stopSlots': [c['resolved_slot'](simple, slot) for slot in [40, 41, 42, 43, 44, 51, 52, 53]],
     'resolvedSlots': [c['resolved_slot'](simple, slot) for slot in [38, 39, 40, 41, 42, 43]],
     'review': [
@@ -257,7 +310,8 @@ result = {
         'The ordinary birth chain is RangedAttack.CreateProjectile -> BattleController.CreateProjectile -> Projectile.Init at 0x678950 -> ActionController.Init -> ability virtual slot45 GetProjectileActions. In the default event0 branch RangedAttack passes its existing m_actions list through slot65 Ability.PreprocessActionsForProjectile before returning that same list. The preprocessor obtains ability.owner and invokes IDamageOrHealSourceNode slot1 on matching nodes. Ordinary ActionController.RegisterActions appends lists without preprocessing; explicit Projectile.RegisterActions has a separate boolean-gated preprocessing path using projectile.source. A per-projectile immutable damage-node cache is not proven by this path.',
         'Reached handling, trace-target end hit and HitBehaviour area selection/dispatch are retained in complete bodies. Cross-version field differences remain explicit. Source identity reuse, reentrant impact ordering and event5 self-death still require integration tests before admission.',
         'OnTick compares currentTime with lifeTime through the separately image-bound signed FP greater-or-equal leaf before ticking behaviours. The default ExtraCheckToFinish returns true. StopMe marks m_isStopped before virtual slot51 OnProjectileStop, then calls BObject.DestroyMe. OnProjectileStop skips forced trace/reach work for eliminated projectiles, otherwise checks alwaysHitTraceTargetInTheEnd before the separate alwaysReachInTheEnd branch. The selected prefab enables the former and disables the latter: finite expiry must not invent an area-arrival dispatch.',
-        '_DealHitTraceTarget checks m_hasHitTraceTarget and the saved reference, then sets the trace-hit flag before calling DealHitTarget with its force argument true. DealHitTarget first calls CheckTargetAlreadyHitAndUpdate even on the forced path; only the normal max-hit comparison is bypassed. New targets are reserved in the already-hit dictionary before the normal cap check. OnHitTarget also updates that dictionary before behaviours/actions; hit count increments only after the hit callback returns. Thus a cap-rejected attempt can still suppress a subsequent forced hit on that same identity. The selected negative keepAlreadyHitTime retains the per-identity record throughout the projectile lifetime.'
+        '_DealHitTraceTarget checks m_hasHitTraceTarget and the saved reference, then sets the trace-hit flag before calling DealHitTarget with its force argument true. DealHitTarget first calls CheckTargetAlreadyHitAndUpdate even on the forced path; only the normal max-hit comparison is bypassed. New targets are reserved in the already-hit dictionary before the normal cap check. OnHitTarget also updates that dictionary before behaviours/actions; hit count increments only after the hit callback returns. Thus a cap-rejected attempt can still suppress a subsequent forced hit on that same identity. The selected negative keepAlreadyHitTime retains the per-identity record throughout the projectile lifetime.',
+        'The native FP clock uses signed Q32.32, with separately bound float constants 2^32 and 2^-32. Its exact complete multiply leaf implements signed product shifted by32 with 64-bit wrapping, while the add leaf wraps signed64 addition. FP.AsFloat first converts the raw signed64 value to float32, then multiplies by float32 2^-32. OnTick scales its input delta by movement.GetTimeScale for lifetime accumulation; AdvancedMovement slot14 resolves to BasicMovement.GetTimeScale and its moveScale field. The exact selected life10 is raw42949672960. Native battle input-delta production and concrete scheduler/frame dispatch remain separate from this arithmetic evidence.'
     ]}
 serialized = json.dumps(result, ensure_ascii=False, indent=1) + '\n'
 out = ROOT / 'data/candidates/arkpedia-windows-fear-projectile-source.json'
