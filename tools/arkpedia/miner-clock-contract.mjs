@@ -50,13 +50,20 @@ const stage=JSON.parse(await read('data/candidates/arkpedia-stage-16-9-source.js
 const refs=stage.rawLevel.enemyDbRefs.filter(r=>r.useDb===false);assert.equal(refs.length,1);
 const local=compileStageLocalEnemy(refs[0],{damageType:'PHYSIC'});
 assert.equal(local.prefabKey,id);assert.deepEqual(local.talents.bb,{'FearLoseBlood.value':0});
+const attachment=JSON.parse(await read('data/candidates/arkpedia-windows-miner-talents-source.json'));
+assert.equal(attachment.sources['data/candidates/arkpedia-ch16-miner-source.json'].sha256,sha(graphRaw));
+assert.deepEqual(attachment.minerModeTalents.map(t=>t.name),['FearLoseBlood','GetHeal','TileEscapeShadowManager']);
+for(const t of attachment.minerModeTalents){assert.equal(t.modeIndex,0);assert.equal(t.nearestModeComponentPathId,mode.pathId);}
+assert.equal(attachment.literals.find(l=>l.instructionRva===0xdd1871).value,'times');
+assert.equal(attachment.genericTimerMaximum.name,'Max');assert.equal(attachment.genericTimerMaximum.typeArgument.name,'System.Single');
+for(const key of ['runtimeDispatchVerified','frameParity','crossVersionParity'])assert.equal(attachment[key],false);
 const result={schemaVersion:1,testOnly:true,frameParity:false,sources,enemy:id,
  bodyPathId:body.pathId,modePathId:mode.pathId,animatorPathId:animator.pathId,alias,
  cast:{pathId:cast.pathId,originalJson:cast.originalJson,hit:parsed.eventPayloads.Attack[0].time,
   duration:parsed.exactDurations.Attack,damageType:'phys'},talentBindings,
  local:{stage:'16-9',record:local},
  limits:['Original prefab/animator/skeleton references bind the physical Attack and its JSON OnAttack marker. The simulator uses sampled capped TimeMode0 playback, current eligible slowdown, captured input deployments and owned movement holds. Initial FSM and compiled frame ordering remain unproven.',
- 'The local definition uses the physical native Attack, not a NO_DAMAGE handbook surrogate. It contains only FearLoseBlood.value=0. Native talent components have empty parameter blackboards and no explicit fallback for absent GetHeal/TileEscapeShadowManager; local talent attachment, passive healing/shadow behavior and full 16-9 integration remain held. This contract grants no local enemy or stage support.']};
+ 'The local definition uses the physical native Attack, not a NO_DAMAGE handbook surrogate. It contains only FearLoseBlood.value=0. Exact transform routes place all three talents beneath mode0; retained native assignment and mode attachment explain why absent parameter groups do not omit them. The internal local controller uses the shared attack/heal/neutral actions and zero times fallback, preserving existing suppression. Cross-version/runtime/frame parity, feature/support registration and full 16-9 integration remain held. This contract grants no local enemy or stage support.']};
 const out=new URL('data/candidates/arkpedia-ch16-miner-clock-contract.json',root);
 if(process.argv.includes('--check'))assert.deepEqual(JSON.parse(await readFile(out,'utf8')),result);else await writeJSONAtomic(out,result);
 console.log('Verified miner original attack clock, native talent bindings and isolated 16-9 physical record');

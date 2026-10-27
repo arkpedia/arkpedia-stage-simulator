@@ -1,5 +1,40 @@
 # Development priorities
 
+### 27 October: internal complete stage-local miner composition
+
+Previous checkpoint `1a61d694` made concrete runtime and source progress. Hosted
+continuation `40482499892` has reproduced its native evidence successfully and
+passed all browsers except the live 17-12 job; both focused platform jobs are
+still live. Its predecessor `40481804780` was superseded/cancelled by the next
+continuation push, not reported as a passing run. Full `40477137676` still has
+six passing matrix jobs and two live Windows Node22 jobs; preserve its handle.
+
+Added internal `stageLocalMiner(record)` direct attachment. It requires structural
+equality to the complete literal stage16-9 record retained by the reproducible
+miner clock contract. It shares ordinary miner attack, neutral/passive and Medic
+healing actions, composing the separately reviewed local zero-duration listeners.
+It is not added to the feature dispatch registry or support report and cannot
+admit stage16-9. The clock producer now pins the native talent evidence and checks
+its exact mode ownership and missing-duration binding before retaining the local
+record. No canonical talents or attributes are copied into that local record.
+
+Ten new controller cases cover the actual local 500-ATK physical attack/marker,
+neutral flags/marks/taunt, elemental cancellation, Fear immunity, absent-duration
+shadow behavior, independent multiple-Medic healing, strict source-record guard,
+and death/reuse/removal/battle-end retirement. Healing now rechecks the native
+full-HP filter before each Medic action and rejects a source retired by an earlier
+healing callback. Both ordinary and local miners use that corrected shared path.
+All 160 focused source/controller/listener/engagement/Fear/local-record checks
+pass. The broader available Chapter16 suite also passes all 2,084 cases in
+148.6 seconds. The four known quarantined test deletions remain excluded locally
+and unstaged; hosted validation covers the committed copies.
+
+Next finish the fear-projectile selector and event5/self-death/projectile lifetime
+semantics, then integrate the exact local miner and projectile into test-only
+stage16-9 through the source/support/receipt gates. Full remaining Chapter16/17
+controllers/stages and operator/module audit remain required. No runtime/frame
+or cross-version parity is claimed; no simulator merge, deploy or public promotion.
+
 ### 27 October: default-mode miner listeners and zero-duration local output
 
 Checkpoint `633562fc` was concrete progress. Its continuation `40481804780` now

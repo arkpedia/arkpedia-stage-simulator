@@ -26,6 +26,10 @@
     "data/candidates/arkpedia-stage-16-9-source.json": {
       "path": "data/candidates/arkpedia-stage-16-9-source.json",
       "sha256": "8c890a3e70474047cc9d4e7a099a8ad3f653010450bb9e52fda0b710eb4cdf22"
+    },
+    "data/candidates/arkpedia-windows-miner-talents-source.json": {
+      "path": "data/candidates/arkpedia-windows-miner-talents-source.json",
+      "sha256": "299af02c266f239b7b9fecfd9e4d1cb0215bcd5c049f267a59df00141dc6e80b"
     }
   },
   "enemy": "enemy_3010_mcreep",
@@ -143,6 +147,6 @@
   },
   "limits": [
     "Original prefab/animator/skeleton references bind the physical Attack and its JSON OnAttack marker. The simulator uses sampled capped TimeMode0 playback, current eligible slowdown, captured input deployments and owned movement holds. Initial FSM and compiled frame ordering remain unproven.",
-    "The local definition uses the physical native Attack, not a NO_DAMAGE handbook surrogate. It contains only FearLoseBlood.value=0. Native talent components have empty parameter blackboards and no explicit fallback for absent GetHeal/TileEscapeShadowManager; local talent attachment, passive healing/shadow behavior and full 16-9 integration remain held. This contract grants no local enemy or stage support."
+    "The local definition uses the physical native Attack, not a NO_DAMAGE handbook surrogate. It contains only FearLoseBlood.value=0. Exact transform routes place all three talents beneath mode0; retained native assignment and mode attachment explain why absent parameter groups do not omit them. The internal local controller uses the shared attack/heal/neutral actions and zero times fallback, preserving existing suppression. Cross-version/runtime/frame parity, feature/support registration and full 16-9 integration remain held. This contract grants no local enemy or stage support."
   ]
 }

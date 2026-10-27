@@ -15,7 +15,7 @@ import { rockbreaker } from './chapter17-rockbreaker.js';
 import { pollutionInfantry, pollutionBowman } from './chapter17-pollution-reactions.js';
 import {ordinaryAttackFromClock} from './chapter17-ordinary-attacks.js';
 import minerClock from '../../../data/candidates/arkpedia-ch16-miner-clock-contract.json' with {type:'json'};
-import {minerListeners} from './chapter16-miner-listeners.js';
+import {minerListeners,stageLocalMinerListeners} from './chapter16-miner-listeners.js';
 
 const living = u => u?.alive && u.deployed && !u.hidden;
 const flag = (b, e, key, flags, duration) => b.addBuff(e, { key, flags, duration, persist: duration == null, refresh: 'replace' });
@@ -26,8 +26,20 @@ export { chapter17Environment as chapter16Environment, reverseDamage, deadSummon
 
 export function miner(r) {
   if(r.key!==minerClock.enemy||r.prefabKey!==minerClock.enemy)throw Error('Unreviewed miner runtime identity');
+  return minerController(r,minerListeners(r));
+}
+
+// Internal direct attachment; no feature registration or stage admission.
+export function stageLocalMiner(r) {
+  const equal=(a,b)=>a===b||a!==null&&b!==null&&typeof a==='object'&&typeof b==='object'
+    &&Array.isArray(a)===Array.isArray(b)&&Object.keys(a).length===Object.keys(b).length
+    &&Object.keys(a).every(key=>Object.hasOwn(b,key)&&equal(a[key],b[key]));
+  if(!equal(r,minerClock.local.record))throw Error('Unreviewed stage-local miner record');
+  return minerController(r,stageLocalMinerListeners(r));
+}
+
+function minerController(r,listeners) {
   const attack=ordinaryAttackFromClock(minerClock.cast,{tag:'chapter16',key:'ch16:miner-cast',memory:'ch16MinerAttack'});
-  const listeners=minerListeners(r);
   return {
     spawn(b, e, a) {
       e.profile.friendly = true; e.profile.neutral = true; e.profile.noAttack = true;
@@ -60,7 +72,10 @@ export function miner(r) {
       if (a.heal >= 1 - 1e-9) {
         a.heal -= 1;
         for (const medic of operators(b)) {
-          if(!a.listeners.valid())break;
+          // The native HP filter runs for each aura recipient before ATK is
+          // copied. Earlier healing may fill HP or retire another source.
+          if(!a.listeners.valid()||e.hp/e.s.maxHp>=1)break;
+          if(!living(medic))continue;
           if (medic.def.profession !== 'MEDIC') continue;
           if (medic.rangeChanged) b._refreshRange(medic);
           if (medic.rangeKeys?.includes(row * COLS + col)) {

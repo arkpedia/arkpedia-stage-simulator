@@ -6,6 +6,10 @@ import {createHash} from 'node:crypto';
 import {execFileSync} from 'node:child_process';
 import {battle,keys} from './helpers/ch17Harness.js';
 import {applySourceSlowDown,NATIVE_SLOW_DOWN_CONTRACT} from '../server/sim/content/arkpedia-slow-down.js';
+import {stageLocalMiner} from '../server/sim/content/chapter16.js';
+import {attach,installFeatureDispatch} from '../server/sim/content/enemies.js';
+import {makeBattle,enemyRec,chessRec} from './helpers/battleHarness.js';
+import {chapter16Shadow} from '../server/sim/content/chapter16-shadow.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
 const contract=read('data/candidates/arkpedia-ch16-miner-clock-contract.json');
 function fixture(){
@@ -16,6 +20,73 @@ function fixture(){
  assert.ok(f.a);return f;
 }
 const begin=f=>{assert.equal(f.a.begin([f.u]),true);return f.a.pending;};
+
+function localFixture({medics=false}={}){
+ const record=structuredClone(contract.local.record);
+ const chess=medics?Object.fromEntries([['medic',400,'MEDIC'],['second',150,'MEDIC'],['caster',999,'CASTER']]
+  .map(([id,atk,profession])=>[id,chessRec({id,profession,stats:{atk,blockCnt:0},rangeGrid:[[0,0],[0,1],[0,2],[0,3]]})])):{};
+ const h=makeBattle({content:'generic',autoFinish:false,setup:installFeatureDispatch,
+  defs:{enemies:{[record.key]:record,hostile:enemyRec({key:'hostile',maxHp:1e6,atk:0,def:0,moveSpeed:0})},chess},
+  kits:Object.fromEntries(Object.keys(chess).map(id=>[id,()=>({trait:{noAttack:true},skill:{kind:'instant',trigger:'NEVER'}})])),
+  units:Object.keys(chess).map((chessId,i)=>({chessId,row:10,col:5-i}))});
+ h.b.start();const e=h.spawn(record.key,{pos:[10,6]});attach(h.b,e,[stageLocalMiner(record)]);
+ e.base.moveSpeed=0;e.markDirty();
+ return{h,b:h.b,e,a:e.mem.ch16MinerAttack,record};
+}
+
+test('stage-local miner composes neutral marks, elemental immunity and its own zero-duration listeners',()=>{
+ const f=localFixture(),env=chapter16Shadow(f.b);env.setShadowSource(f.e,[[10,6]]);
+ assert.equal(f.e.profile.friendly,true);assert.equal(f.e.profile.neutral,true);
+ assert.equal(f.e.s.flags.unblockable,true);assert.ok(f.e.findBuff('enemy_mcreep_self_mark'));
+ assert.ok(f.e.findBuff('mark_neutral[effect]'));assert.equal(f.e.s.taunt,-1);
+ assert.equal(f.e.s.maxHp,12000);assert.equal(f.e.s.atk,500);assert.ok(f.e.def.immune.has('feared'));
+ const c={target:f.e,cancel:false};f.b.emit('elementHit',c);assert.equal(c.cancel,true);
+ f.h.run(.65);assert.equal(env.isShadow(10,6),true);assert.ok(f.e.mem.ch16MinerListeners.shadow);
+ assert.deepEqual(f.b.errors,[]);
+});
+
+test('stage-local miner AI uses its physical native attack against a hostile enemy',()=>{
+ const f=localFixture(),hostile=f.h.spawn('hostile',{pos:[10,6.8]});hostile.profile.noAttack=true;
+ const hp=hostile.hp;f.e.atkCd=0;
+ f.h.runUntil(()=>!!f.a.pending,1);assert.equal(f.a.pending.targets[0].unit,hostile);
+ f.h.run(.5);assert.equal(hostile.hp,hp);f.h.run(.15);assert.equal(hp-hostile.hp,500);
+ assert.deepEqual(f.b.errors,[]);
+});
+
+test('stage-local miner receives each in-range Medic ATK once per second without a catalogue heal scale',()=>{
+ const f=localFixture({medics:true});f.e.hp=1000;
+ f.h.run(.8);assert.equal(f.e.hp,1000);f.h.run(.25);assert.equal(f.e.hp,1550);
+ f.h.run(1);assert.equal(f.e.hp,2100);assert.deepEqual(f.b.errors,[]);
+});
+
+test('miner healing rechecks full HP before the next Medic aura action',()=>{
+ const f=localFixture({medics:true}),heals=[];f.e.hp=f.e.s.maxHp-100;
+ f.b.on('heal',c=>{if(c.target===f.e)heals.push(c.source);});
+ f.h.run(1.05);assert.equal(f.e.hp,f.e.s.maxHp);assert.equal(heals.length,1);
+ f.h.run(1);assert.equal(heals.length,1,'full HP skips the next sampled healing action');
+});
+
+test('miner healing rejects a later Medic retired by an earlier healing callback',()=>{
+ const f=localFixture({medics:true}),second=f.h.unit('second');assert.ok(second);f.e.hp=1000;
+ f.b.on('heal',c=>{if(c.target===f.e&&c.source===f.h.unit('medic'))second.deployed=false;});
+ f.h.run(1.05);assert.equal(f.e.hp,1400);assert.deepEqual(f.b.errors,[]);
+});
+
+for(const event of ['death','reuse','removed','battleEnd'])test('stage-local miner '+event+' retires attack and listener ownership together',()=>{
+ const f=localFixture(),target=f.h.spawn('hostile',{pos:[10,8]});target.profile.noAttack=true;
+ assert.equal(f.a.begin([target]),true);const hp=target.hp;
+ if(event==='death')f.b.kill(f.e,null);else if(event==='reuse')f.e.deploySeq++;
+ else if(event==='removed'){f.e.deployed=false;f.b.emit('removed',{unit:f.e});}else f.b.emit('battleEnd',{});
+ f.h.run(.7);assert.equal(target.hp,hp);assert.equal(f.a.active,false);assert.equal(f.a.pending,null);
+ assert.equal(f.e.mem.ch16MinerListeners.active,false);assert.deepEqual(f.b.errors,[]);
+});
+
+test('stage-local miner factory rejects altered records and leaves the supplied source untouched',()=>{
+ const r=structuredClone(contract.local.record),before=structuredClone(r);stageLocalMiner(r);assert.deepEqual(r,before);
+ for(const change of [r=>r.stats.atk=501,r=>r.prefabKey='enemy_3010_mcreep_a',r=>r.talents.bb['TileEscapeShadowManager.times']=3]){
+  const r=structuredClone(before);change(r);assert.throws(()=>stageLocalMiner(r),/Unreviewed stage-local/);
+ }
+});
 test('miner full graph, prefab-bound JSON clocks and isolated local record reproduce',()=>{
  assert.equal(contract.testOnly,true);assert.equal(contract.frameParity,false);
  for(const pin of Object.values(contract.sources))assert.equal(createHash('sha256').update(readFileSync(new URL('../'+pin.path,import.meta.url))).digest('hex'),pin.sha256);
