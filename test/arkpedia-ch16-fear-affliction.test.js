@@ -43,7 +43,42 @@ import {fearProjectileBuffAttributeProvider} from '../server/sim/content/chapter
 import {fearProjectileRunBuffActions} from '../server/sim/content/chapter16-fear-buff-run-actions.js';
 import {fearProjectileContextGuards} from '../server/sim/content/chapter16-fear-context-guard.js';
 import {fearProjectileContextSnapshots} from '../server/sim/content/chapter16-fear-context-snapshot.js';
-import {fearProjectileContextPointerStacks,fearProjectileContextValueStacks} from '../server/sim/content/chapter16-fear-context-stacks.js';
+import {fearProjectileContextPointerStacks,fearProjectileContextValueStacks,fearProjectileManagedReferenceStacks} from '../server/sim/content/chapter16-fear-context-stacks.js';
+
+test('managed reference storage grows from four, doubles, clears popped references and preserves object identity',()=>{
+ const capacities=[],storage={_array:[],_size:0,_version:0},api=fearProjectileManagedReferenceStacks({resizeArray:(stack,length)=>{
+  capacities.push(length);stack._array=Array.from({length},(_,i)=>stack._array[i]??null);
+ }}),values=Array.from({length:9},()=>({}));
+ for(const value of values)api.push(storage,value);
+ assert.deepEqual(capacities,[4,8,16]);assert.equal(api.count(storage),9);assert.equal(storage._version,9);
+ for(const value of values.toReversed()){assert.equal(api.peek(storage),value);assert.equal(api.pop(storage),value);assert.equal(storage._array[storage._size],null);}
+ assert.equal(storage._version,18);assert.throws(()=>api.pop(storage),/empty/);assert.throws(()=>api.peek(storage),/empty/);assert.equal(storage._version,18);
+});
+test('managed reference resize uses the replacement array and post-allocation count, retaining failures before insertion',()=>{
+ const old=[{}],fresh=[null,null,null],value={},storage={_array:old,_size:1,_version:5},api=fearProjectileManagedReferenceStacks({resizeArray:(stack,length)=>{
+  assert.equal(length,2);stack._array=fresh;stack._size=2;stack._version=8;
+ }});
+ api.push(storage,value);assert.equal(fresh[2],value);assert.equal(old.length,1);assert.equal(storage._size,3);assert.equal(storage._version,9);
+ const broken={_array:[],_size:0,_version:0},failure=fearProjectileManagedReferenceStacks({resizeArray:stack=>{stack._array=[null];throw Error('allocation failed');}});
+ assert.throws(()=>failure.push(broken,value),/allocation failed/);assert.deepEqual(broken,{_array:[null],_size:0,_version:0});
+ const invalid=fearProjectileManagedReferenceStacks({resizeArray:stack=>{stack._array=[null];stack._size=-1;}});
+ assert.throws(()=>invalid.pushWithResize(broken,value),/array bounds/);assert.equal(broken._version,0);
+});
+test('managed reference Pop mutates count/version before loading and clearing the captured array',()=>{
+ const value={},storage={_size:1,_version:2147483647},original=[value];
+ storage._array=new Proxy(original,{get(target,key){if(key==='0'){assert.equal(storage._size,0);assert.equal(storage._version,-2147483648);storage._array=[{}];}return Reflect.get(target,key);}});
+ const api=fearProjectileManagedReferenceStacks({resizeArray:()=>{throw Error('unexpected resize');}});
+ assert.equal(api.pop(storage),value);assert.equal(original[0],null);assert.notEqual(storage._array[0],null);
+ const bad={_array:[null],_size:-1,_version:3};assert.throws(()=>api.pop(bad),/empty/);assert.equal(bad._version,3);
+ assert.throws(()=>api.peek({_array:null,_size:0}),/null native receiver/);
+});
+test('reference context stacks use managed storage defaults and preserve popped state on later consumer failure',()=>{
+ const storage={_array:[null,null],_size:0,_version:0},native=fearProjectileManagedReferenceStacks({resizeArray:()=>{throw Error('unexpected resize');}}),
+  options={readCount:native.count,peekStored:native.peek,popStored:native.pop,defaultValue:()=>null,copyValue:value=>value},context=fearProjectileContextValueStacks(options),value={destroyed:true,uid:0};
+ assert.equal(context.pop(storage),null);assert.equal(storage._version,0);native.push(storage,value);assert.equal(context.getValue(storage),value);
+ assert.throws(()=>fearProjectileContextValueStacks({...options,copyValue:()=>{throw Error('consumer failed');}}).pop(storage),/consumer failed/);
+ assert.equal(storage._size,0);assert.equal(storage._version,2);assert.equal(storage._array[0],null);assert.equal(context.peek(storage),null);
+});
 import {fearProjectileBuffRecyclePool,fearProjectileDefaultBuffPool} from '../server/sim/content/chapter16-fear-buff-pool.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';

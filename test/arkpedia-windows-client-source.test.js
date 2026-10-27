@@ -533,6 +533,19 @@ test('context snapshot source binds distinct capture/push orders and closed refe
  assert.equal(q.nativeContextStackEffectsVerified,false);assert.equal(q.nativeNestedValueCopiesVerified,false);assert.equal(q.liveContextSnapshotsVerified,false);
 });
 
+test('managed reference stack source retains complete canonical storage bodies and mutation ordering',()=>{
+ const q=read('data/candidates/arkpedia-windows-fear-self-death-source.json').modeSwitch.buffNotification.newBuff.managedReferenceStack;
+ assert.deepEqual(q.canonicalMethods.map(m=>[m.index,m.definition.name,m.entryRva]),[[174660,'Peek',0x490a400],[174661,'Pop',0x490a6b0],[174662,'Push',0x490b650],[174663,'PushWithResize',0x490b470]]);
+ for(const method of q.canonicalMethods)for(const chunk of method.chunks){const bytes=Buffer.from(chunk.base64,'base64');assert.equal(bytes.length,chunk.endRva-chunk.beginRva);assert.equal(sha(bytes),chunk.sha256);}
+ const at=(entry,rva,args)=>assert.ok(instructions(q.canonicalMethods.find(m=>m.entryRva===entry)).some(i=>i.rva===rva&&i.operands===args));
+ assert.deepEqual(q.nativeInstructionFieldOffsets,{_array:16,_size:24,_version:28});
+ at(0x490a6b0,q.popVersionIncrementRva,'dword ptr [rdi + 0x1c]');at(0x490a6b0,q.popSizeWriteRva,'dword ptr [rdi + 0x18], esi');
+ at(0x490a6b0,q.popValueReadRva,'rdi, qword ptr [rbx + rax*8 + 0x20]');at(0x490a6b0,q.popClearRva,'qword ptr [rcx], 0');
+ at(0x490b470,0x490b495,'edx, 4');at(0x490b470,0x490b49f,'edx, edx');at(0x490b470,q.resizeCallRva,'qword ptr [rax + 8]');
+ at(0x490b470,q.resizeArrayReloadRva,'rcx, qword ptr [rbx + 0x10]');at(0x490b470,q.resizeSizeReloadRva,'rax, dword ptr [rbx + 0x18]');
+ for(const name of ['nativeArrayResizeVerified','nativeGcBarrierVerified','nativePointerAndValueSpecializationsVerified','liveContextStorageVerified'])assert.equal(q[name],false);
+});
+
 test('context stack source binds canonical pointer/value bodies and RGCTX Peek/Wrap/count/storage/lock methods',()=>{
  const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.newBuff.contextStackOperations;
  assert.deepEqual(q.canonicalMethods.map(m=>m.index),[24503,24504,24505,24506,24513,24514,24515,24509,24510,24511,24517,24518,24519]);

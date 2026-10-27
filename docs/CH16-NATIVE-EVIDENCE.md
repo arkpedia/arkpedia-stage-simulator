@@ -1402,6 +1402,30 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
 
+### Managed reference stack storage
+
+The202 ordinary methods remain unchanged. Four additional canonical
+Stack<Object> specifications retain complete Peek, Pop, Push and PushWithResize
+bodies. Native instructions establish array/size/version offsets16/24/28;
+uninflated generic metadata offsets are not used as inflated layout proof.
+
+`fearProjectileManagedReferenceStacks` supplies reference storage to the
+existing value-context helpers. Empty Peek/Pop throws at this lower layer,
+while the context wrapper still returns null before entering it. Pop increments
+the signed Int32 version and reduces size before reading the captured array,
+then clears the popped reference. Push uses captured size on the fitting path;
+resize requests capacity4 from zero or doubled Int32 capacity, then reloads
+both array and size after the explicit byref Array.Resize caller. It preserves
+partial allocation failures and performs unsigned bounds checks.
+
+Tests cover growth across three capacities, identity retention, reference
+clearing, version wrap, changed storage after resize, failed allocation,
+invalid counts, Pop ordering and context empty/default composition. All1146
+focused native/fear/family/miner tests pass. Native Array.Resize allocation,
+GC barriers, pointer/value-struct specializations and live controller/stage
+integration remain unverified; source/support/receipt/catalogue gates are
+unchanged. This checkpoint remains local outside the pending upload scope.
+
 ### Context pointer/value stack operations
 
 The202-method ordinary bundle now also retains thirteen mapped canonical

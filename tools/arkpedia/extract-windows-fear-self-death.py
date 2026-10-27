@@ -1774,6 +1774,24 @@ result['modeSwitch']['buffNotification']['newBuff']['contextSnapshots'] = {
     'pushCalls': [0x39ede51, 0x39edef6, 0x39edf9b, 0x39ee040, 0x39ee144, 0x39ee1e8, 0x39ee28c, 0x39ee330, 0x39ee3ee, 0x39ee48e],
     'nativeContextStackEffectsVerified': False, 'nativeNestedValueCopiesVerified': False, 'liveContextSnapshotsVerified': False,
 }
+managed_reference_stack = []
+for index, expected_name, expected_entry in [(174660, 'Peek', 0x490a400), (174661, 'Pop', 0x490a6b0),
+    (174662, 'Push', 0x490b650), (174663, 'PushWithResize', 0x490b470)]:
+    spec = priority['specification'](index)
+    assert spec['declaringType'] == 'Stack`1' and spec['definition']['name'] == expected_name
+    assert spec['instantiations']['class']['arguments'][0]['name'] == 'Object'
+    entry = v['quad'](v['b'], priority['pointer_table'] + spec['nativeMapping']['methodPointerIndex'] * 8) - v['image_base']
+    assert entry == expected_entry
+    managed_reference_stack.append({**spec, 'entryRva': entry, 'chunks': c['code'](entry)})
+result['modeSwitch']['buffNotification']['newBuff']['managedReferenceStack'] = {
+    'canonicalMethods': managed_reference_stack,
+    'nativeInstructionFieldOffsets': {'_array': 0x10, '_size': 0x18, '_version': 0x1c},
+    'popVersionIncrementRva': 0x490a6f4, 'popSizeWriteRva': 0x490a6fb,
+    'popValueReadRva': 0x490a705, 'popClearRva': 0x490a71b,
+    'resizeCallRva': 0x490b4b7, 'resizeArrayReloadRva': 0x490b4ba, 'resizeSizeReloadRva': 0x490b4c3,
+    'nativeArrayResizeVerified': False, 'nativeGcBarrierVerified': False,
+    'nativePointerAndValueSpecializationsVerified': False, 'liveContextStorageVerified': False,
+}
 context_stack_canonical = []
 for index in [24503, 24504, 24505, 24506, 24513, 24514, 24515, 24509, 24510, 24511, 24517, 24518, 24519]:
     spec = priority['specification'](index)
