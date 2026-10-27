@@ -27,6 +27,7 @@ test('native engagement includes the miner collider at acquisition and uses the 
   assert.deepEqual(start[0]._buff.attributes.abnormalFlags, ['UNMOVABLE']);
   assert.equal(start[2]._additionKey, 'range_radius_add');
   const { h, spawn } = fixture(), e = spawn(soldier, 6), m = spawn(miner, 6.95);
+  m.profile.meleeTarget=()=>null; // Isolate engagement holds from independent cast holds.
   h.run(.31);
   assert.equal(e.mem.mcTarget, m, 'the 0.9 selector touches the miner 0.1 body collider');
   assert.ok(e.s.flags.noMove && m.s.flags.noMove);
@@ -54,11 +55,24 @@ test('one miner has one owner, nearest selection uses continuous distance rather
   assert.equal(d.mem.blockedMcreepBy, undefined, 'a diagonal outside the circle is not a target');
 });
 
+test('engagement release preserves an independently accepted miner attack hold until its clip finishes',()=>{
+  const {h,spawn}=fixture(),e=spawn(soldier,6),m=spawn(miner,6.8);
+  h.run(.31);const attack=m.mem.ch16MinerAttack,p=attack.pending;
+  assert.ok(p);assert.equal(m.mem.blockedMcreepBy,e.id);
+  m.x=7.01;h.run(.31);
+  assert.equal(m.mem.blockedMcreepBy,undefined);assert.equal(e.mem.mcTarget,null);
+  assert.equal(m.findBuff(`ch16:engagement-target:${e.id}`),null);
+  assert.equal(attack.pending,p);assert.ok(m.buffs.includes(p.hold));assert.ok(m.s.flags.noMove);
+  h.runUntil(()=>attack.pending!==p,2);
+  assert.equal(m.buffs.includes(p.hold),false);assert.equal(!!m.s.flags.noMove,false);
+  assert.deepEqual(h.b.errors,[]);
+});
+
 test('the pair exchanges ordinary melee attacks on each canonical attack clock', () => {
   const { h, b, spawn } = fixture(), e = spawn(soldier, 6), m = spawn(miner, 6.8);
   const hits = [];
   b.on('damageFinal', c => { if (c.dmg.isAttack) hits.push({ source: c.source, target: c.target, type: c.dmg.type }); });
-  const hp = [e.hp, m.hp]; h.run(.5);
+  const hp = [e.hp, m.hp]; h.run(.7);
   assert.ok(e.hp < hp[0] && m.hp < hp[1]);
   assert.equal(e.stats.attacks, 1); assert.equal(m.stats.attacks, 1);
   assert.ok(hits.some(c => c.source === e && c.target === m && c.type === 'phys'));
@@ -111,10 +125,16 @@ test('engagement movement ownership does not force the ordinary weapon onto the 
 test('a miner also selects independently of its engagement when a higher-taunt enemy is in reach', () => {
   const { h, b, spawn } = fixture(), e = spawn(soldier, 6), m = spawn(miner, 6.8);
   h.run(.31); assert.equal(m.mem.ch16Engagement.source, e);
+  const accepted=m.mem.ch16MinerAttack.pending;
+  assert.equal(accepted.targets[0].unit,e);
   const other = spawn(soldier, 7.2), hits = [];
   b.addBuff(other, { key: 'test:taunt', persist: true, mods: { taunt: 1 } }); m.atkCd = 0;
   b.on('damageFinal', c => { if (c.source === m) hits.push(c.target); });
-  h.run(.1);
+  h.run(.1);assert.equal(m.mem.ch16MinerAttack.pending,accepted,'an accepted native clip retains its input');
+  h.runUntil(()=>m.mem.ch16MinerAttack.pending!==accepted,2);
+  h.runUntil(()=>!!m.mem.ch16MinerAttack.pending,1);
+  assert.equal(m.mem.ch16MinerAttack.pending.targets[0].unit,other);
+  h.run(.7);
   assert.equal(m.mem.ch16Engagement.source, e); assert.ok(hits.includes(other));
   assert.deepEqual(b.errors, []);
 });

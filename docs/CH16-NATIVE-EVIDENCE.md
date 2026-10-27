@@ -204,3 +204,19 @@ before finishing the parent/children. Shared status semantics and independent
 owned keys are explicit simulator mappings; native launch, event5/self-death
 dispatch, initial FSM and compiled frame ordering remain unproven. The fear enemy
 is still unsupported and 16-9 unadmitted. No OnAttack marker has been fabricated.
+
+The miner now has a complete 66-object prefab graph and six-template closure,
+independently reproducible from `battle/enm_pfb_28.ab` (SHA256
+`91cf955ce4dd2a7b04ea6411fc748844c9b8520e421fcaabe57eca9930b09358`). The actual
+external CAB/pathID binds its JSON skeleton in `refs/arts/enm_art_23.ab`; bundle
+number equality is not assumed. `miner-clock-contract.mjs --check` resolves the
+single mode's physical Attack, animator alias and original marker at
+0.5666999816894531 seconds, with duration 1.5333000421524048 seconds. The ordinary
+runtime uses a captured-life cast owner and live slowdown; fixed-tick dispatch
+remains an explicit simulator mapping, not compiled frame proof.
+
+The source-bound local 16-9 record is physical and retains only its own zero
+FearLoseBlood parameter. Native talent binders and empty ability blackboards are
+retained verbatim. They do not prove a default shadow duration or attachment of
+absent GetHeal/TileEscapeShadowManager groups. Local passive integration and 16-9
+admission remain held, and no new support follows from extraction.

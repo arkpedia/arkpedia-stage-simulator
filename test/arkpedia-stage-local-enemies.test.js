@@ -11,10 +11,10 @@ const canonical=read('candidates/arkpedia-enemy-records.canonical.json').enemies
 
 test('16-9 local miner compiles its literal zero-fear contract without inheriting catalogue talents',()=>{
   const ref=locals('16-9')[0],before=structuredClone(ref);
-  const r=compileStageLocalEnemy(ref,{damageType:'NO_DAMAGE'});
+  const r=compileStageLocalEnemy(ref,{damageType:'PHYSIC'});
   assert.equal(r.key,'enemy_3010_mcreep_a');assert.equal(r.prefabKey,'enemy_3010_mcreep');
   assert.equal(r.stats.maxHp,12000);assert.equal(r.stats.atk,500);assert.equal(r.stats.def,150);
-  assert.equal(r.stats.moveSpeed,.7);assert.equal(r.stats.bat,3);assert.equal(r.stats.dmgType,'none');
+  assert.equal(r.stats.moveSpeed,.7);assert.equal(r.stats.bat,3);assert.equal(r.stats.dmgType,'phys');
   assert.deepEqual(r.talents.bb,{'FearLoseBlood.value':0});
   assert.deepEqual(r.talents.groups,{FearLoseBlood:['value']});assert.deepEqual(r.skills,[]);
   assert.equal(r.notCountInTotal,true);assert.equal(r.stats.lpr,0);assert.ok(r.stats.otherImmunities.includes('feared'));
@@ -49,7 +49,7 @@ test('local compiler rejects database-backed refs, missing source attributes and
   for(const change of [r=>r.useDb=true,r=>r.useDb=undefined,r=>r.level=1,
     r=>delete r.overwrittenData,r=>r.overwrittenData.prefabKey.m_defined=false,
     r=>r.overwrittenData.attributes.maxHp.m_defined=false,r=>r.overwrittenData.attributes.atk.m_value=NaN]) {
-    const r=structuredClone(local);change(r);assert.throws(()=>compileStageLocalEnemy(r,{damageType:'NO_DAMAGE'}));
+    const r=structuredClone(local);change(r);assert.throws(()=>compileStageLocalEnemy(r,{damageType:'PHYSIC'}));
   }
   for(const damageType of [undefined,'phys','unknown'])assert.throws(()=>compileStageLocalEnemy(local,{damageType}),/reviewed native damage type/);
 });

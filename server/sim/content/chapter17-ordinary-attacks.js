@@ -10,6 +10,11 @@ const controlled=e=>['stun','freeze','sleep','levitate','fear','disarm'].some(k=
 
 export function chapter17OrdinaryAttack(record){
  const timing=chapter17AttackEvents(record);if(!timing)return null;
+ return ordinaryAttackFromClock(timing);
+}
+
+// Shared cast ownership; callers must independently bind their native clock.
+export function ordinaryAttackFromClock(timing,{tag='chapter17',key='ch17:ordinary-cast',memory='ch17OrdinaryAttack'}={}){
  return{
   spawn(b,e,a){
    const life=e.deploySeq;
@@ -24,7 +29,11 @@ export function chapter17OrdinaryAttack(record){
     const p={targets:targets.map(unit=>({unit,life:unit.deploySeq})),epoch:e.attackControlEpoch,age:0,startedAt:b.time,lastAt:b.time,
      rate:e.s.interval>0?Math.min(1,e.base.bat/e.s.interval):1,released:false,attackId:++b._attackSeq,deferred};
     a.pending=p;e.lastAttackAt=b.time;e.stats.attacks++;e.atkCd=e.s.interval;
-    p.hold=b.addBuff(e,{key:`ch17:ordinary-cast:${life}`,persist:true,flags:{noMove:true}});
+    p.hold=b.addBuff(e,{key:`${key}:${life}`,persist:true,flags:{noMove:true}});
+    // beforeBuff may retire this life or replace the cast before addBuff returns.
+    if(!p.hold||a.pending!==p||!valid()||controlled(e)||p.epoch!==e.attackControlEpoch){
+     b.removeBuff(e,p.hold);a.finish(p);return false;
+    }
     return true;
    };
    a.advance=p=>{
@@ -38,7 +47,7 @@ export function chapter17OrdinaryAttack(record){
       if(!current())return;
       b._ev(['atk',e.id,target.id,'none']);
       if(!p.deferred)b.dealDamage(e,target,{amount:e.s.atk*(e.profile?.atkScale??1),type:timing.damageType,isAttack:true,
-       attackId:p.attackId,canDodge:true,applyWay:'melee',tags:['chapter17','ordinary-native-event']});
+       attackId:p.attackId,canDodge:true,applyWay:'melee',tags:[tag,'ordinary-native-event']});
      }
      // Channel-caster Attack handlers launch their source-bound speed-ten shot
      // here, at OnAttack, rather than when AI first accepts the input target.
@@ -47,7 +56,7 @@ export function chapter17OrdinaryAttack(record){
     if(!current()||p.age+1e-7>=timing.duration)a.finish(p);
    };
    a.detach=()=>{if(!a.active)return;a.active=false;if(a.pending)a.finish(a.pending);for(const h of a.handles)b.off(h);a.handles=[];};
-   e.profile.sourceAttack=a;e.mem.ch17OrdinaryAttack=a;
+   e.profile.sourceAttack=a;e.mem[memory]=a;
    a.handles.push(b.on('removed',({unit})=>{if(unit===e)a.detach();},{owner:e}),b.on('battleEnd',a.detach,{owner:e}));
   },
   tick(b,e,a){if(!a.active)return;if(!a.attached())a.detach();else if(a.pending)a.advance(a.pending);},

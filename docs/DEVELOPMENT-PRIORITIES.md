@@ -1,5 +1,46 @@
 # Development priorities
 
+### 27 October: miner original attack and local-record damage semantics
+
+The previous goal checkpoint `1de50acb` made concrete progress, and its hosted
+continuation `40460448124` now passed. Full CI `40457533148` also passed all eight
+Linux/Windows Node 22/24 shards at the older crossbow source `1e9509f7`. That
+result does not cover later Patrol, affliction or miner changes; a fresh full
+run is required at this checkpoint, without cancelling the completed evidence.
+
+The miner's complete 66-object native graph and six-template closure now
+reproduce from checksum-verified `battle/enm_pfb_28.ab`. Its actual external CAB
+and skeletonData reference bind the JSON skeleton in `refs/arts/enm_art_23.ab`.
+The original physical Attack has one OnAttack at `0.5666999816894531` seconds
+and exact duration `1.5333000421524048`; its single mode has no Combat ability.
+The ordinary miner now uses this clock through the shared ordinary-cast owner,
+with capped TimeMode0 playback, eligible live slowdown, captured target lives
+and an owned movement hold. Control, source retirement/reuse, target retirement/
+reuse and battle end prevent stale output. Movement-hold admission also checks
+reentrant source retirement or rejection before allowing the cast to proceed.
+An actual hostile-enemy selection test exercises the normal miner AI path.
+
+The isolated 16-9 miner is physical, correcting the provisional NO_DAMAGE fixture.
+It still owns only `FearLoseBlood.value=0`; no canonical talent is inherited.
+The full graph retains the exact GetHeal, TileEscapeShadowManager and
+FearLoseBlood talent binding components. Their parameter blackboards are empty
+and provide no explicit serialized fallback for absent local groups. This
+checkpoint does not assume those groups attach to the local miner or invent a
+shadow duration. Local passive/talent attachment and runtime integration remain
+held for source review. No support record or 16-9 catalogue entry is added.
+
+The direct miner cohort passes 27 cases; the final miner/local-record/affliction
+cohort passes 64. The existing Chapter 17 ordinary-cast cohort also passes after
+sharing the cast owner. Actual 16-5 desktop/phone natural-SP, keyboard and restart
+passes. The final available broad cohort passes all 2,003 cases with no failures
+or skips. Engagement/contact ownership checks isolate independent attack holds,
+and an integration case verifies that releasing a link preserves an accepted
+miner clip until its own completion. Hosted continuation now independently fetches/reproduces the miner graph,
+original animation and clock contract. The four quarantined files remain absent
+only locally and must not be staged as deletions. Native initial FSM/compiled
+frame parity, fear-projectile launch/death ordering, remaining normal stages and
+operator/module audit remain open; art and effects remain later phases.
+
 ### 27 October: fear-projectile derived affliction receiver
 
 The previous goal turn made concrete progress at `96948d3e`. Its hosted

@@ -141,6 +141,7 @@ for (const key of [commander, commander + '_2']) test(`${key} supplies real six-
 test('Commander movement engages only one miner and releases both participants on source death', () => {
   const { h, b, spawn } = fixture(); const { e, a } = spawn(commander, 10, 7);
   const first = spawn('enemy_3010_mcreep', 10, 7.3).e, second = spawn('enemy_3010_mcreep', 10, 7.5).e;
+  first.profile.meleeTarget=second.profile.meleeTarget=()=>null; // Movement-link ownership only.
   h.run(.61); assert.equal(a.engagements.size, 1); assert.equal(first.mem.blockedMcreepBy, e.id);
   assert.equal(second.mem.blockedMcreepBy, undefined); assert.ok(e.s.flags.noMove);
   b.kill(e, null); assert.equal(a.engagements.size, 0); assert.equal(first.mem.blockedMcreepBy, undefined);

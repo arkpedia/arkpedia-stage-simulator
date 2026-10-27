@@ -14,6 +14,8 @@ import { lightArtillery } from './chapter16-artillery.js';
 import { mobileCrossbow } from './chapter16-crossbow.js';
 import { rockbreaker } from './chapter17-rockbreaker.js';
 import { pollutionInfantry, pollutionBowman } from './chapter17-pollution-reactions.js';
+import {ordinaryAttackFromClock} from './chapter17-ordinary-attacks.js';
+import minerClock from '../../../data/candidates/arkpedia-ch16-miner-clock-contract.json' with {type:'json'};
 
 const living = u => u?.alive && u.deployed && !u.hidden;
 const bb = (r, group, key) => r.talents.bb[`${group}.${key}`];
@@ -25,6 +27,8 @@ import { reverseDamage, deadSummon, chargeRift, warCaster, leakSource } from './
 export { chapter17Environment as chapter16Environment, reverseDamage, deadSummon, chargeRift, warCaster, leakSource, pollute, beamIntersection } from './chapter17.js';
 
 export function miner(r) {
+  if(r.key!==minerClock.enemy||r.prefabKey!==minerClock.enemy)throw Error('Unreviewed miner runtime identity');
+  const attack=ordinaryAttackFromClock(minerClock.cast,{tag:'chapter16',key:'ch16:miner-cast',memory:'ch16MinerAttack'});
   return {
     spawn(b, e, a) {
       e.profile.friendly = true; e.profile.neutral = true; e.profile.noAttack = true;
@@ -44,8 +48,11 @@ export function miner(r) {
       b.on('elementHit', c => { if (c.target === e) c.cancel = true; }, { owner: e });
       flag(b, e, 'ch16:neutral', { unblockable: true });
       a.heal = 0; a.scan = 0; a.fear = null;
+      e.profile.attackCooldownAffectedBySlowDown=true;
+      a.cast={};attack.spawn(b,e,a.cast);
     },
     tick(b, e, a, dt) {
+      attack.tick(b,e,a.cast);
       const row = Math.round(e.y), col = Math.round(e.x);
       a.heal += dt; a.scan += dt;
       if (a.heal >= 1 - 1e-9) {
@@ -79,6 +86,7 @@ export function miner(r) {
         }
       }
     },
+    death(c,b,e,a){attack.death(c,b,e,a.cast);},
   };
 }
 

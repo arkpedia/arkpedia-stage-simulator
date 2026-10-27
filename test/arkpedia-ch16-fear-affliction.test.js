@@ -14,7 +14,7 @@ const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
 const parentKey='feawpj_a[mcreep_fear]';
 function fixture({marked=true,full=false,local=false}={}){
  const ref=read('data/candidates/arkpedia-stage-16-9-source.json').rawLevel.enemyDbRefs.find(r=>r.useDb===false);
- const targetRec=local?compileStageLocalEnemy(ref,{damageType:'NO_DAMAGE'}):enemyRec({key:'recipient',maxHp:1000,atk:0,moveSpeed:0});
+ const targetRec=local?compileStageLocalEnemy(ref,{damageType:'PHYSIC'}):enemyRec({key:'recipient',maxHp:1000,atk:0,moveSpeed:0});
  const h=makeBattle({content:'generic',autoFinish:false,defs:{enemies:{source:enemyRec({key:'source',atk:0,moveSpeed:0}),[targetRec.key]:targetRec}}});
  h.b.start();const source=h.spawn('source',{pos:[10,6]}),target=h.spawn(targetRec.key,{pos:[10,7]});
  for(const u of [source,target]){u.profile.noAttack=true;u.base.moveSpeed=0;u.markDirty();}

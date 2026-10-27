@@ -70,7 +70,9 @@ test('three movement engagements still use one independently selected weapon tar
 });
 
 test('release radius uses the same center rule independently for each linked miner', () => {
-  const { h, e, a, spawn } = fixture(); const miners = [.3, .5, .7].map(d => spawn(6 + d)); h.run(.91);
+  const { h, e, a, spawn } = fixture(); const miners = [.3, .5, .7].map(d => spawn(6 + d));
+  for(const m of miners)m.profile.meleeTarget=()=>null; // Movement links, independently of native cast holds.
+  h.run(.91);
   miners[0].x = 6.99; miners[1].x = 7.01; h.run(.31);
   assert.equal(a.engagements.size, 2); assert.equal(miners[0].mem.blockedMcreepBy, e.id);
   assert.equal(miners[1].mem.blockedMcreepBy, undefined); assert.ok(!miners[1].s.flags.noMove);
@@ -78,6 +80,7 @@ test('release radius uses the same center rule independently for each linked min
 
 for (const stop of ['death', 'battleEnd']) test(`${stop} retires every movement link and its owned marker`, () => {
   const { h, b, e, a, spawn } = fixture(); const miners = [.3, .5, .7].map(d => spawn(6 + d));
+  for(const m of miners)m.profile.meleeTarget=()=>null;
   h.run(.91); b.addBuff(e, { key: 'enemy_uacomd_extra_power', persist: true }); h.run(.11);
   assert.ok(e.findBuff('uashld_a[extra_effect_core]'));
   if (stop === 'death') b.kill(e, null); else b.emit('battleEnd', {});

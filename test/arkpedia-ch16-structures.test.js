@@ -64,6 +64,7 @@ test('contact stops miners using collider overlap, preserves overlapping owners 
   const { b, run, spawn, structures } = fixture([device('rock', 4, 4), device('rock', 4, 5)]);
   const m = spawn('enemy_3010_mcreep', 4.5, 4), edge = spawn('enemy_3010_mcreep', 3.11, 4);
   const outside = spawn('enemy_3010_mcreep', 3.09, 4);
+  for(const miner of [m,edge,outside])miner.profile.meleeTarget=()=>null; // Contact holds only.
   run(.05);
   assert.ok(m.s.flags.noMove && edge.s.flags.noMove);
   assert.equal(!!outside.s.flags.noMove, false);
@@ -81,6 +82,8 @@ test('miner attacks a target-free Rock Wall and its received damage scales after
   assert.equal(canTargetEnemy({ tileR: 4, tileC: 3 }, rock), false);
   const hp = rock.hp;
   run(.5);
+  assert.equal(rock.hp,hp,'the original miner marker has not released at 0.5 seconds');
+  run(.2);
   assert.equal(rock.hp, hp - 1000, '(500 ATK - 300 DEF) × 5, through the normal attack clock');
   const before = rock.hp;
   b.dealDamage(m, rock, { amount: 100, type: 'true', canDodge: false });
