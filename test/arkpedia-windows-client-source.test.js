@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,62);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,65);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -130,6 +130,26 @@ test('mode initialization binds general/combat/attack order and the canonical sw
  at(dedup,0x3f62e1e,'0x180004fe0');at(dedup,0x3f62e72,'0x180004b40');
  at(dedup,0x3f62e77,'esi');at(dedup,0x3f62e79,'0x183f62d00');
  assert.equal(init.equalsDispatch.metadataIdentityVerified,false);
+});
+
+test('finished buff source binds reverse traversal and override cleanup after finish/remove',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),cleanup=c.modeSwitch.buffNotification.finishedCleanup;
+ const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ const check=castMethod(c,'BuffContainer','_CheckFinishedBuffs');assert.equal(cleanup.concreteContextVerified,false);
+ at(check,cleanup.reverseIteratorCallRva,'0x184d96d10');at(check,cleanup.finishRemoveCallRva,'0x1839d7a50');
+ at(check,cleanup.firstOverrideKeyCallRva,'0x1839b6f70');at(check,cleanup.secondOverrideKeyCallRva,'0x1839b6f70');
+ at(check,cleanup.overrideLookupCallRva,'0x184c0e320');at(check,cleanup.groupRemoveCallRva,'0x1839defb0');
+ at(check,cleanup.sawNullBranchRva,'r15b, 1');at(check,cleanup.cleanupGateRva,'0x1839d6c7d');
+ for(const method of cleanup.canonicalReverseMethods)for(const ch of method.chunks){
+  const raw=Buffer.from(ch.base64,'base64');assert.equal(sha(raw),ch.sha256);assert.equal(raw.length,ch.endRva-ch.beginRva);
+ }
+ const find=name=>cleanup.canonicalReverseMethods.find(m=>m.definition.name===name);
+ const move=find('MoveNext');assert.equal(move.entryRva,0x4aa4460);
+ assert.deepEqual(instructions(move).map(i=>[i.mnemonic,i.operands]),[['mov','eax, dword ptr [rcx + 0x18]'],['dec','eax'],
+  ['mov','dword ptr [rcx + 0x18], eax'],['shr','eax, 0x1f'],['xor','al, 1'],['ret','']]);
+ at(find('GetInversedEnumerator'),0x4d96d64,'word ptr [rbx + 0x20], ax');at(find('GetInversedEnumerator'),0x4d96d6b,'0x184d96db5');
+ at(find('.ctor'),0x4aa45c3,'dword ptr [rbx + 0x18], eax');
+ assert.ok(castMethod(c,'BuffContainer','_FinishAndRemoveBuff'));assert.ok(castMethod(c,'OverrideGroup','Remove'));
 });
 
 test('buff ObjectPtr source separates null/UID identity from enabled or finished state and retains both constructor samples',()=>{

@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 62 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 65 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -958,3 +958,48 @@ Native UID allocation/pool recycling and actual buff state/effect callers still
 require integration. Finished-buff removal/override-group effects and complete
 fear/controller/stage scheduling remain open; no support or catalogue gate is
 relaxed by these pointer identity tests.
+
+### Reverse iteration and finished-buff cleanup ordering
+
+The artifact retains seven Object canonical reverse-iterator methods, including
+GetInversedEnumerator, disposal, current, construction and reset. Backward
+MoveNext is a reviewed complete14-byte six-instruction leaf that decrements its
+Int32 cursor and tests the sign bit, with no stack changes, calls or branches.
+It is retained locally without weakening the generic PE/unwind reader. The
+ordinary count becomes65 with _FinishAndRemoveBuff, get_overrideKey and
+OverrideGroup.Remove. Native concrete generic context/pool parity remains false.
+
+`fearProjectileBuffIteration` and the sorted list expose reverse iterators using
+the same UInt16 counter and cached buffer as forward cursors. Reverse cursors
+start at the snapshot count and decrement before reading the last entry. Forward
+and reverse cursors retain independent positions while sharing snapshot
+visibility; the first later outer traversal refreshes after all cursors close.
+
+`fearProjectileFinishedBuffs` ports the selected _CheckFinishedBuffs pass.
+It walks backward, records null pointer entries, and calls finish/remove only
+for a currently finished nonnull buff. It reads overrideKey after that effect,
+checks null/empty, then reads it again for the override-group lookup. A successful
+lookup requires a nonnull group and runs its remove effect. The iterator closes
+before invalid-element cleanup, which runs only if the traversal saw null.
+Exceptions/cancellation still dispose the cursor and skip later cleanup/effects.
+Native finish/pool, dictionary lookup and group mutation remain explicit callers.
+
+Tests cover reverse/forward shared views, reverse order, both override-key
+samples, group misses/null results, finish exceptions, owner reuse/battle end,
+recursion and disposal. A pointer/list/cleanup composition removes finished
+entries while an outer forward cursor retains its old view and correctly defers
+invalid-entry pruning until the outer cursor closes. A dispatch-to-cleanup test
+adds a buff during an event, excludes it from that active traversal, closes the
+dispatch cursor, opens a fresh reverse cleanup view, then removes the newly
+finished buffs in reverse order. These use synthetic buff state/effect callers,
+not a claim that native pool/override-group execution is integrated.
+
+The focused native/fear/family/miner suite passes486 tests and the source
+producer reproduces with --check. Full40514426781 at55cb5385 has completed
+successfully. Continuation40521019928 atc40fdc78 has passed native-source,
+Windows focused and all stage-browser jobs; its Ubuntu focused job remains
+active and is not replaced at this checkpoint.
+
+UID allocation/pool recycling, full finish/override effects, original ability
+data, live controller/FSM scheduling and stage geometry integration remain open.
+No enemy/stage support, source receipts or catalogue gates are changed.

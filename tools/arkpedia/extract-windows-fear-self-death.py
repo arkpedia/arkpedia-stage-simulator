@@ -300,6 +300,41 @@ result['modeSwitch']['buffNotification']['pointer'] = {
     'concreteSpecifications': [priority['specification'](i) for i in [253182, 253183, 253185]],
     'buffLineage': buff_lineage, 'concreteContextVerified': False,
 }
+reverse_methods = []
+for index in [38623, 38626, 16860, 16861, 16865, 16859, 16863]:
+    spec = priority['specification'](index)
+    pointer = v['quad'](v['b'], priority['pointer_table'] + spec['nativeMapping']['methodPointerIndex'] * 8)
+    rva = pointer - v['image_base']
+    if index == 16861:
+        assert rva == 0x4aa4460
+        pos = v['offset'](pointer)
+        raw = v['b'][pos:pos + 14]
+        assert raw.hex() == '8b4118ffc8894118c1e81f3401c3'
+        decoded = list(Cs(CS_ARCH_X86, CS_MODE_64).disasm(raw, pointer))
+        assert [(i.mnemonic, i.op_str) for i in decoded] == [
+            ('mov', 'eax, dword ptr [rcx + 0x18]'), ('dec', 'eax'), ('mov', 'dword ptr [rcx + 0x18], eax'),
+            ('shr', 'eax, 0x1f'), ('xor', 'al, 1'), ('ret', '')]
+        assert sum(i.size for i in decoded) == len(raw)
+        chunks = [{'beginRva': rva, 'endRva': rva + len(raw), 'unwindRva': None,
+            'boundary': 'Reviewed complete six-instruction backward MoveNext leaf; no stack changes, calls or branches',
+            'base64': base64.b64encode(raw).decode(), 'sha256': v['sha'](raw),
+            'instructions': [{'rva': i.address - v['image_base'], 'size': i.size, 'mnemonic': i.mnemonic,
+                              'operands': i.op_str} for i in decoded]}]
+    else:
+        chunks = c['code'](rva)
+    reverse_methods.append({**spec, 'entryRva': rva, 'chunks': chunks})
+for type_name, namespace, names in [('BuffContainer', '', ['_FinishAndRemoveBuff']),
+                                    ('Buff', 'Torappu.Battle', ['get_overrideKey']), ('OverrideGroup', '', ['Remove'])]:
+    t = c['type_row'](type_name, namespace)
+    for name in names:
+        methods.append(c['method'](t, c['unique'](lambda r: r['name'] == name, t['methods'])))
+result['modeSwitch']['buffNotification']['finishedCleanup'] = {
+    'canonicalReverseMethods': reverse_methods, 'concreteContextVerified': False,
+    'reverseIteratorCallRva': 0x39d6938, 'finishRemoveCallRva': 0x39d6a6d,
+    'firstOverrideKeyCallRva': 0x39d6a77, 'secondOverrideKeyCallRva': 0x39d6a97,
+    'overrideLookupCallRva': 0x39d6ab7, 'groupRemoveCallRva': 0x39d6ad8,
+    'sawNullBranchRva': 0x39d6a27, 'cleanupGateRva': 0x39d6b37,
+}
 serialized = json.dumps(result, ensure_ascii=False, indent=1) + '\n'
 out = ROOT / 'data/candidates/arkpedia-windows-fear-self-death-source.json'
 if __name__ == '__main__':

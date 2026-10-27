@@ -71,6 +71,7 @@ export function fearProjectileBuffList(b,{owner,copyEntry,isEntryValid,resolveEn
    }finally{mutating=false;}
   },
   openIterator(){return active()?iteration.openIterator():null;},
+  openReverseIterator(){return active()?iteration.openReverseIterator():null;},
   get count(){return active()?entries.length:0;},
   get openCount(){return iteration.openCount;},
   release,

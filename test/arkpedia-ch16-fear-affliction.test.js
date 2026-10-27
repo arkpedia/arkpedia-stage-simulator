@@ -16,6 +16,7 @@ import {fearProjectileFlight} from '../server/sim/content/chapter16-fear-flight.
 import {fearProjectileBuffIteration} from '../server/sim/content/chapter16-fear-buff-iteration.js';
 import {fearProjectileBuffList} from '../server/sim/content/chapter16-fear-buff-list.js';
 import {fearProjectileBuffPointers} from '../server/sim/content/chapter16-fear-buff-pointer.js';
+import {fearProjectileFinishedBuffs} from '../server/sim/content/chapter16-fear-buff-cleanup.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
 import {fearProjectileSpell} from '../server/sim/content/chapter16-fear-spell.js';
@@ -52,6 +53,98 @@ test('mode initialization rejects invalid entries and delegates equality without
   isValid:x=>x!==null&&!x.invalid,equals:(left,right)=>{calls.push([left,right]);return left.id===right.id;}});
  assert.deepEqual(list,[a]);assert.deepEqual(calls,[[a,duplicate]]);
  assert.throws(()=>fearProjectileCollectModeAbilities({generalAbilities:[],combat:null,attack:null,isValid:()=>1,equals:()=>true}),/Boolean/);
+});
+
+test('forward and reverse buff iterators share one cached view with independent cursor positions',()=>{
+ const f=buffIterationFixture(),forward=f.iteration.openIterator();f.entries.splice(0,2,'new');
+ const reverse=f.iteration.openReverseIterator();assert.equal(f.iteration.openCount,2);
+ assert.throws(()=>reverse.current(),/no current/);assert.equal(reverse.moveNext(),true);assert.equal(reverse.current(),'b');
+ assert.equal(forward.moveNext(),true);assert.equal(forward.current(),'a');assert.equal(reverse.moveNext(),true);assert.equal(reverse.current(),'a');
+ assert.equal(reverse.moveNext(),false);assert.throws(()=>reverse.current(),/no current/);reverse.dispose();forward.dispose();
+ const fresh=f.iteration.openReverseIterator();assert.equal(fresh.moveNext(),true);assert.equal(fresh.current(),'new');assert.equal(fresh.moveNext(),false);
+ fresh.dispose();f.iteration.release();
+});
+
+function finishedBuffFixture(overrides={}){
+ const f=fixture(),events=[],buffs=[{id:'first',finished:true,key:'group'},null,{id:'active',finished:false,key:'group'},
+  {id:'empty',finished:true,key:''},{id:'last',finished:true,key:'group'}],group={};
+ const callers={owner:f.source,openReverseIterator:()=>{
+  events.push('open');let index=buffs.length;return{moveNext:()=>--index>=0,current:()=>buffs[index],dispose:()=>events.push('dispose')};
+ },isFinished:buff=>buff.finished,finishAndRemoveBuff:buff=>events.push('finish:'+buff.id),
+ readOverrideKey:buff=>{events.push('key:'+buff.id);return buff.key;},tryGetOverrideGroup:key=>{events.push('lookup:'+key);return{found:true,group};},
+ removeFromOverrideGroup:(value,buff)=>{assert.equal(value,group);events.push('group:'+buff.id);},
+ clearInvalidElementsIfNotLoop:()=>events.push('prune'),...overrides};
+ return{...f,buffs,group,events,callers};
+}
+
+test('finished buff cleanup traverses backward, updates groups after finish and prunes null entries after disposal',()=>{
+ const f=finishedBuffFixture(),cleanup=fearProjectileFinishedBuffs(f.b,f.callers);
+ assert.equal(cleanup.run(),undefined);assert.equal(cleanup.run(),null);
+ assert.deepEqual(f.events,['open','finish:last','key:last','key:last','lookup:group','group:last',
+  'finish:empty','key:empty','finish:first','key:first','key:first','lookup:group','group:first','dispose','prune']);
+ assert.deepEqual(f.b.errors,[]);
+});
+
+test('finished cleanup does not prune an all-valid list merely because it removed finished entries',()=>{
+ const f=finishedBuffFixture();f.buffs.splice(0,5,{id:'finished',finished:true,key:null});
+ assert.equal(fearProjectileFinishedBuffs(f.b,f.callers).run(),undefined);assert.deepEqual(f.events,['open','finish:finished','key:finished','dispose']);
+});
+
+test('override lookup uses a second key sample after finish and the first null-or-empty test',()=>{
+ const f=finishedBuffFixture();f.buffs.splice(0,5,{id:'changing',finished:true,key:'before'});let samples=0;
+ f.callers.finishAndRemoveBuff=buff=>{buff.key='after';};
+ f.callers.readOverrideKey=buff=>++samples===1?buff.key:'lookup-key';
+ f.callers.tryGetOverrideGroup=key=>{assert.equal(key,'lookup-key');return{found:false,group:null};};
+ assert.equal(fearProjectileFinishedBuffs(f.b,f.callers).run(),undefined);assert.equal(samples,2);assert.deepEqual(f.events,['open','dispose']);
+});
+
+test('finish exceptions close the reverse iterator and skip null-entry pruning',()=>{
+ const f=finishedBuffFixture({finishAndRemoveBuff:()=>{throw Error('finish effect');}}),cleanup=fearProjectileFinishedBuffs(f.b,f.callers);
+ assert.throws(()=>cleanup.run(),/finish effect/);assert.deepEqual(f.events,['open','dispose']);assert.equal(cleanup.run(),null);
+});
+
+test('a successful override lookup with a null group fails rather than dropping its remove effect',()=>{
+ const f=finishedBuffFixture({tryGetOverrideGroup:()=>({found:true,group:null})});
+ assert.throws(()=>fearProjectileFinishedBuffs(f.b,f.callers).run(),/cannot be null/);assert.equal(f.events.at(-1),'dispose');assert.equal(f.events.includes('prune'),false);
+});
+
+for(const point of ['isFinished','finishAndRemoveBuff','readOverrideKey','tryGetOverrideGroup','removeFromOverrideGroup','clearInvalidElementsIfNotLoop'])
+ for(const boundary of ['reuse','battleEnd','recursive'])test('finished buff pass guards '+boundary+' during '+point,()=>{
+  const f=finishedBuffFixture();let cleanup;const original=f.callers[point];f.callers[point]=(...args)=>{
+   if(boundary==='reuse')f.source.deploySeq++;else if(boundary==='battleEnd')f.b.emit('battleEnd',{});else assert.equal(cleanup.run(),null);
+   return boundary==='recursive'?original(...args):undefined;
+  };
+  cleanup=fearProjectileFinishedBuffs(f.b,f.callers);assert.equal(cleanup.run(),boundary==='recursive'?undefined:null);
+  assert.equal(cleanup.run(),null);assert.ok(f.events.includes('dispose'));assert.deepEqual(f.b.errors,[]);
+ });
+
+test('finished cleanup composes concrete pointers and sorted list without changing an outer forward snapshot',()=>{
+ const f=fixture(),pointers=fearProjectileBuffPointers({readUid:b=>b.uid}),list=fearProjectileBuffList(f.b,{owner:f.source,copyEntry:pointers.copy,
+  isEntryValid:pointers.isValid,resolveEntry:pointers.lock,readPriority:b=>b.priority,readUid:b=>b.uid});
+ const active={uid:1,priority:10,finished:false},done={uid:2,priority:5,finished:true};
+ list.add(pointers.capture(active));list.add(pointers.capture(done));list.add(pointers.capture(null));const outer=list.openIterator(),events=[];
+ const cleanup=()=>fearProjectileFinishedBuffs(f.b,{owner:f.source,openReverseIterator:()=>list.openReverseIterator(),isFinished:b=>b.finished,
+  finishAndRemoveBuff:b=>{events.push(b.uid);list.remove(b);},readOverrideKey:()=>'',tryGetOverrideGroup:()=>{throw Error('empty key');},
+  removeFromOverrideGroup:()=>{throw Error('empty key');},clearInvalidElementsIfNotLoop:()=>list.clearInvalidElementsIfNotLoop()}).run();
+ assert.equal(cleanup(),undefined);assert.deepEqual(events,[2]);assert.equal(list.count,2,'invalid entry remains while outer cursor is open');
+ const saved=[];while(outer.moveNext())saved.push(outer.current());assert.deepEqual(saved,[active,done,null]);outer.dispose();
+ assert.equal(cleanup(),undefined);assert.equal(list.count,1);assert.equal(list.openCount,0);list.release();
+});
+
+test('mode dispatch closes its old snapshot before finished cleanup refreshes and removes newly finished buffs',()=>{
+ const f=fixture(),pointers=fearProjectileBuffPointers({readUid:b=>b.uid}),list=fearProjectileBuffList(f.b,{owner:f.source,copyEntry:pointers.copy,
+  isEntryValid:pointers.isValid,resolveEntry:pointers.lock,readPriority:b=>b.priority,readUid:b=>b.uid});
+ const a={id:'a',uid:1,priority:10,action:true},b={id:'b',uid:2,priority:5,action:false},c={id:'c',uid:3,priority:0,finished:true},
+  added={id:'added',uid:4,priority:7,action:true},events=[];
+ for(const buff of [a,b,c])list.add(pointers.capture(buff));
+ const cleanup=()=>fearProjectileFinishedBuffs(f.b,{owner:f.source,openReverseIterator:()=>list.openReverseIterator(),isFinished:b=>!!b.finished,
+  finishAndRemoveBuff:b=>{events.push('finish:'+b.id);list.remove(b);},readOverrideKey:()=>'',tryGetOverrideGroup:()=>{throw Error('empty key');},
+  removeFromOverrideGroup:()=>{throw Error('empty key');},clearInvalidElementsIfNotLoop:()=>list.clearInvalidElementsIfNotLoop()}).run();
+ const dispatch=()=>fearProjectileBuffModeChange(f.b,{owner:f.source,openIterator:()=>list.openIterator(),isFinishedOrDisabled:b=>!!b.finished,
+  isActionValid:b=>!!b.action,runActions:b=>{events.push('run:'+b.id);if(b===a){a.finished=true;list.add(pointers.capture(added));}},
+  checkFinishedBuffs:()=>{assert.equal(list.openCount,0);cleanup();}}).run();
+ assert.equal(dispatch(),true);assert.deepEqual(events,['run:a','finish:c','finish:a']);assert.equal(list.count,2);assert.equal(list.openCount,0);
+ events.length=0;assert.equal(dispatch(),true);assert.deepEqual(events,['run:added']);assert.equal(list.count,2);list.release();
 });
 
 test('buff ObjectPtr capture rejects null and initial zero UID before storing an object',()=>{

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Selected forward DoubleBufferedList iteration. Inputs are already ordered
+// Selected forward/backward DoubleBufferedList iteration. Inputs are ordered
 // native ObjectPtr entries; sorting, UID locking and buff effects are separate.
 export function fearProjectileBuffIteration(b,{owner,readInternalEntries,copyEntry,resolveEntry}){
  if(!owner||!Number.isInteger(owner.deploySeq)||[readInternalEntries,copyEntry,resolveEntry].some(fn=>typeof fn!=='function'))
@@ -16,8 +16,7 @@ export function fearProjectileBuffIteration(b,{owner,readInternalEntries,copyEnt
   endHandle=b.on('battleEnd',release);
   removeHandle=b.on('removed',({unit})=>{if(unit===owner)release();});
  }
- return Object.freeze({
-  openIterator(){
+ const open=reverse=>{
    if(opening||!active())return null;
    opening=true;const previous=count;count=(count+1)&0xffff;
    try{
@@ -32,9 +31,9 @@ export function fearProjectileBuffIteration(b,{owner,readInternalEntries,copyEnt
      }
      buffer=copies;
     }
-    let index=-1,disposed=false,reading=false;
+    let index=reverse?buffer.length:-1,disposed=false,reading=false;
     const cursor=Object.freeze({
-     moveNext(){if(disposed||!active())return false;index=(index+1)|0;return index<buffer.length;},
+     moveNext(){if(disposed||!active())return false;index=(index+(reverse?-1:1))|0;return reverse?index>=0:index<buffer.length;},
      current(){
       if(reading||disposed||!active())return null;
       if(index<0||index>=buffer.length)throw new RangeError('Fear buff iterator has no current entry');
@@ -52,7 +51,10 @@ export function fearProjectileBuffIteration(b,{owner,readInternalEntries,copyEnt
     cursors.add(cursor);return cursor;
    }catch(error){if(active())count=(count-1)&0xffff;throw error;}
    finally{opening=false;}
-  },
+ };
+ return Object.freeze({
+  openIterator:()=>open(false),
+  openReverseIterator:()=>open(true),
   get openCount(){return count;},
   release,
  });
