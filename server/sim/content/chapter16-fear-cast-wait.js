@@ -1,7 +1,41 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Selected attack-event wait with interuptIfTargetDead=false. Native duration /
-// deltaPlayTime -> RoundToInt frame conversion and coroutine resumes are caller
-// inputs; this component does not manufacture an animation event or launch.
+// Selected attack-event wait with interuptIfTargetDead=false. Frame conversion
+// uses supplied native duration/deltaPlayTime; coroutine resumes remain caller
+// inputs. This component does not manufacture an animation event or launch.
+const minRaw=-(1n<<63n),maxRaw=(1n<<63n)-1n,one=1n<<32n,mask=(1n<<64n)-1n;
+const u64=value=>BigInt.asUintN(64,value);
+// Literal integer path of FP.op_Division, including its extra quotient bit and
+// reserved overflow values. A direct JS seconds division loses these steps.
+function divide(a,b){
+ if(b===0n)return-one;
+ const negative=(a<0n)!==(b<0n);
+ let remainder=u64(a<0n?-a:a),divider=u64(b<0n?-b:b),quotient=0n,bit=33;
+ while((divider&15n)===0n&&bit>=4){divider>>=4n;bit-=4;}
+ while(remainder!==0n&&bit>=0){
+  const shift=Math.min(64-remainder.toString(2).length,bit);
+  remainder=u64(remainder<<BigInt(shift));bit-=shift;
+  const portion=remainder/divider;remainder%=divider;
+  quotient=u64(quotient+u64(portion<<BigInt(bit)));
+  if((portion&u64(~(mask>>BigInt(bit))))!==0n)return negative?minRaw+2n:maxRaw-1n;
+  remainder=u64(remainder<<1n);bit--;
+ }
+ const magnitude=u64(quotient+1n)>>1n;
+ return BigInt.asIntN(64,negative?-magnitude:magnitude);
+}
+export function fearProjectileWaitFrameCount(cachedDurationRaw,deltaPlayTime){
+ if(typeof cachedDurationRaw!=='bigint'||cachedDurationRaw<minRaw||cachedDurationRaw>maxRaw)
+  throw new TypeError('Fear wait duration requires a signed Q32.32 raw value');
+ const scaled=Math.fround(Math.fround(deltaPlayTime)*2**32);
+ if(!Number.isFinite(deltaPlayTime)||!Number.isFinite(scaled)||scaled<-(2**63)||scaled>=2**63)
+  throw new TypeError('Fear wait requires a finite native float32 deltaPlayTime convertible to FP');
+ const divisor=BigInt(Math.trunc(scaled)),ratio=divide(cachedDurationRaw,divisor);
+ const fraction=BigInt.asUintN(32,ratio);
+ let rounded=BigInt.asIntN(64,ratio&(-one));
+ if(fraction>one/2n||(fraction===one/2n&&(rounded&one)!==0n))rounded=BigInt.asIntN(64,rounded+one);
+ // MathUtil.RoundToInt returns the signed low32 after the arithmetic shift.
+ return Math.max(1,Number(BigInt.asIntN(32,rounded>>32n)));
+}
+
 export function fearProjectileAttackWait(b,{owner,frameCount,isCastActive,subscribeAttackEvent,onReady}){
  if(!owner||!Number.isInteger(owner.deploySeq)||!Number.isInteger(frameCount)||frameCount<1||frameCount>0x7fffffff||
   [isCastActive,subscribeAttackEvent,onReady].some(fn=>typeof fn!=='function'))

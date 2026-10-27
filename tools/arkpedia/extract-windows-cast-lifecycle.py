@@ -188,6 +188,11 @@ for t, prefixes in [(easy, ['<WaitForNextEvent>', '<OnWaitForPreDelay>', '<OnWai
 for name, token in [('FP', 0x60002b2), ('FP', 0x60002c9), ('FP', 0x60002d0), ('MathUtil', 0x600022e)]:
     t = type_row(name, 'Torappu')
     selected.append(method(t, unique(lambda r: r['token'] == token, t['methods']), 'Torappu.Common.dll'))
+fp_type = type_row('FP', 'Torappu')
+for name in ['Round', '.cctor']:
+    selected.append(method(fp_type, unique(lambda r: r['name'] == name, fp_type['methods']), 'Torappu.Common.dll'))
+battle_controller = type_row('BattleController', 'Torappu.Battle')
+selected.append(method(battle_controller, unique(lambda r: r['name'] == 'get_deltaPlayTime', battle_controller['methods'])))
 spine_data = type_row('SkeletonData', 'Spine')
 selected.append(method(spine_data, unique(lambda r: r['name'] == 'FindAnimation', spine_data['methods']), 'spine-unity.dll'))
 
@@ -272,6 +277,10 @@ result = {'schemaVersion': 1,
                                                                    (ranged, [75, 80, 87, 116])] for slot in slots],
           'prefabScriptBridges': bridges,
           'eventWaitDelegateBindings': wait_delegates,
+          'waitFrameArithmetic': {'fractionalBits': 32, 'fractionalHalfRaw': str(1 << 31),
+              'divisionOverflowPositiveRaw': str((1 << 63) - 2),
+              'divisionOverflowNegativeRaw': str(-(1 << 63) + 2),
+              'divisionByZeroRaw': str(-(1 << 32)), 'fpFields': fields(fp_type)},
           'virtualHelpers': [{'entryRva': rva, 'chunks': code(rva)} for rva in [0x57b0, 0x1cf10]],
           'methods': selected,
           'review': [

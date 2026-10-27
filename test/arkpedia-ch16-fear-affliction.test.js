@@ -14,7 +14,7 @@ import {fearProjectileLifetime} from '../server/sim/content/chapter16-fear-clock
 import {fearProjectileAreaDelivery} from '../server/sim/content/chapter16-fear-area.js';
 import {fearProjectileFlight} from '../server/sim/content/chapter16-fear-flight.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
-import {fearProjectileAttackWait} from '../server/sim/content/chapter16-fear-cast-wait.js';
+import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
 import {fearProjectileTargetVerifier,fearProjectileSourceMotion} from '../server/sim/content/chapter16-fear-targets.js';
 import {fearProjectileReached,fearProjectileMotionStep,fearProjectileMountReference,fearProjectileTraceMotion} from '../server/sim/content/chapter16-fear-movement.js';
 import { battle as minerBattle, keys as minerKeys } from './helpers/ch17Harness.js';
@@ -22,6 +22,33 @@ import { chapter16Shadow } from '../server/sim/content/chapter16-shadow.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
 const parentKey='feawpj_a[mcreep_fear]';
 const fpOne=1n<<32n;
+test('cast wait frame conversion rounds FP quotient ties to even and clamps to one',()=>{
+ for(const [raw,expected]of [[fpOne,1],[3n*fpOne/2n,2],[5n*fpOne/2n,2],[7n*fpOne/2n,4],
+  [0n,1],[-5n*fpOne/2n,1]])assert.equal(fearProjectileWaitFrameCount(raw,1),expected);
+ assert.equal(fearProjectileWaitFrameCount(fpOne,1/30),30);
+ assert.equal(fearProjectileWaitFrameCount(3n*fpOne,1/30),90);
+ assert.equal(fearProjectileWaitFrameCount(fpOne,.25),4);
+ assert.equal(fearProjectileWaitFrameCount(fpOne,0),1);
+ assert.equal(fearProjectileWaitFrameCount(fpOne,Number.MIN_VALUE),1);
+});
+
+test('FP division raw rounding can change a later halfway frame decision',()=>{
+ assert.equal(fearProjectileWaitFrameCount(5n*fpOne,2),2);
+ assert.equal(fearProjectileWaitFrameCount(5n*fpOne+1n,2),3);
+ assert.equal(fearProjectileWaitFrameCount(5n*fpOne-1n,2),2);
+ // One division overflow result rounds through signed64 and low32 conversion.
+ assert.equal(fearProjectileWaitFrameCount((1n<<63n)-1n,2**-32),1);
+ for(const raw of [1,1n<<63n,-(1n<<63n)-1n])assert.throws(()=>fearProjectileWaitFrameCount(raw,.1),/Q32.32/);
+ for(const delta of [NaN,Infinity,2**31])assert.throws(()=>fearProjectileWaitFrameCount(fpOne,delta),/deltaPlayTime/);
+});
+
+test('computed native count drives timeout without using the visual clip duration',()=>{
+ const count=fearProjectileWaitFrameCount(fpOne,.25),f=castWaitFixture({frameCount:count});
+ assert.equal(count,4);assert.equal(f.wait.resume().waiting,true);
+ for(let i=1;i<count;i++)assert.equal(f.wait.resume().waiting,true);
+ assert.deepEqual(f.wait.resume(),{waiting:false,cause:'timeout'});assert.equal(f.wait.framesWaited,4);
+});
+
 function castWaitFixture(overrides={}){
  const f=fixture(),events=[];let receive=()=>{},unsubscribed=0;
  const wait=fearProjectileAttackWait(f.b,{owner:f.source,frameCount:3,isCastActive:()=>true,

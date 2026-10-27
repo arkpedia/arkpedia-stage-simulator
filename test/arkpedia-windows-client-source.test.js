@@ -862,7 +862,7 @@ test('native enemy initialization retains explicit talent validity and attachmen
  assert.ok(update.some(i=>i.mnemonic==='jmp'&&i.operands==='0x'+(c.imageBase+state.entryRva).toString(16)));
 });
 test('cast evidence resolves common-library tokens in their own image and preserves every native chunk',()=>{
- const c=read(castPath);assert.equal(c.methods.length,43);
+ const c=read(castPath);assert.equal(c.methods.length,46);
  for(const p of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+p.path,import.meta.url))),p.sha256);
  assert.deepEqual(c.codeGenModules.map(m=>m.name),['Assembly-CSharp.dll','Torappu.Common.dll','spine-unity.dll']);
  for(const method of [...c.methods,...c.virtualHelpers])for(const chunk of method.chunks){
@@ -873,6 +873,27 @@ test('cast evidence resolves common-library tokens in their own image and preser
  const leaf=castMethod(c,'FP','op_Implicit');assert.equal(leaf.chunks.length,1);assert.equal(leaf.chunks[0].unwindRva,null);
  assert.deepEqual(instructions(leaf).map(i=>i.mnemonic),['mulss','cvttss2si','ret']);
 });
+test('cast frame conversion binds rounded division, FP ties-to-even and reserved saturation values',()=>{
+ const c=read(castPath),a=c.waitFrameArithmetic;
+ assert.equal(a.fractionalBits,32);assert.equal(a.fractionalHalfRaw,'2147483648');
+ assert.equal(a.divisionOverflowPositiveRaw,'9223372036854775806');assert.equal(a.divisionOverflowNegativeRaw,'-9223372036854775806');
+ assert.equal(a.divisionByZeroRaw,'-4294967296');
+ const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ const init=castMethod(c,'FP','.cctor');
+ at(init,0x5a3d005,'rax, 0x7ffffffffffffffe');at(init,0x5a3d00f,'qword ptr [rcx + 0x10], rax');
+ at(init,0x5a3d021,'rax, 0x8000000000000002');at(init,0x5a3d02b,'qword ptr [rcx + 0x18], rax');
+ const divide=castMethod(c,'FP','op_Division');
+ at(divide,0x5a3d783,'r14');at(divide,0x5a3d7b0,'rax, [r15 + 1]');at(divide,0x5a3d7b4,'rax, 1');
+ at(divide,0x5a3d845,'rax, 0xffffffff00000000');
+ const round=castMethod(c,'FP','Round');
+ at(round,0x5a3c89c,'rdi, rcx');at(round,0x5a3c8a3,'rbx, 0x20');at(round,0x5a3c8a8,'0x185a3c8db');
+ at(castMethod(c,'MathUtil','RoundToInt'),0x5a42ac8,'rbx, 0x20');
+ const waiter=castMethod(c,'<WaitWhileForFixedSeconds>d__6','MoveNext');
+ for(const [rva,args]of [[0x396bd38,'0x183991370'],[0x396bd5a,'0x185a3da20'],
+  [0x396bd68,'0x185a3d680'],[0x396bd8f,'0x185a42a50'],[0x396bd96,'eax, esi']])at(waiter,rva,args);
+ at(castMethod(c,'BattleController','get_deltaPlayTime'),0x3991401,'0x185a3ad10');
+});
+
 test('cast event wait binds its selected predicate, mandatory initial yield and handler cleanup',()=>{
  const c=read('data/candidates/arkpedia-windows-cast-lifecycle-source.json');
  assert.deepEqual(c.eventWaitDelegateBindings.map(r=>[r.callerLoadRva,r.name]),[

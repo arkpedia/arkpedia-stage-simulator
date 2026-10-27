@@ -517,7 +517,20 @@ recursive calls, owner reuse/removal, cast interruption and cancellation during
 registration. A supplied-input composition launches one flight from timeout
 readiness and retains its affliction/damage after subsequent source removal.
 The wait count derives from cached ability duration and native deltaPlayTime;
-the event-free clip's visual duration is not substituted for that clock. Exact
-duration conversion, coroutine scheduling, the full cast/launch sequence and
+the event-free clip's visual duration is not substituted for that clock. Actual
+cached-duration/input sampling, coroutine scheduling, the full cast/launch sequence and
 event5 self-death ordering remain required integration evidence. No synthetic
 OnAttack marker, enemy support receipt or stage admission is added.
+
+The timeout conversion now has an internal `fearProjectileWaitFrameCount` port.
+It consumes signed Q32.32 cached duration and the actual float deltaPlayTime,
+performs float32-to-FP conversion, the native unsigned long-division loop with
+its extra rounding bit and reserved overflow values, then FP ties-to-even
+rounding, signed low32 conversion and the minimum-one-frame clamp. Division by
+zero preserves the native raw-minus-one result before that clamp. Tests cover
+quarter/30fps inputs, exact halfway counts, one-raw-unit division-rounding edges,
+overflow, invalid inputs and a computed-count event-free wait. Complete FP.Round,
+FP static initialization and BattleController.get_deltaPlayTime are retained
+alongside the earlier division/float conversion/MathUtil.RoundToInt bodies.
+Actual cached-duration production and battle coroutine scheduling remain caller
+integration obligations; no visual-clip duration is substituted for attack time.
