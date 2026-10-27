@@ -1177,3 +1177,35 @@ Actual native constructor/Reset data effects, live pool phase/initialization,
 full ability/controller/stage integration, battle-end flushing and geometry
 remain unverified. Static selected allocation behavior does not relax existing
 source/support/receipt/catalogue gates.
+
+### Explicit immediate delayed-buff recycling
+
+The retained controller `_RecycleBuffContainerImmediatelly` enumerates every
+stored ListDict pair and its pointer list, independently of fixedFrameCnt.
+Seven exact metadata loads bind the concrete nested UInt32 / List<ObjectPtr<Buff>>
+signatures for the emptiness check and both enumerators. Their concrete method
+specifications have no native mapping. The separately retained shared outer
+MoveNext checks its List version on both normal and terminal traversal; the
+existing inner MoveNext does likewise. This bounded nested signature decoder
+does not change the general direct-type specification reader.
+
+`flushImmediately` now provides the explicit selected queue cleanup operation.
+It visits buckets in stored insertion order, copies each pointer value, tests
+validity, independently locks it and passes that result to the selected pool.
+The queue clears only after successful traversal. Exceptions retain all buckets,
+while already completed recycle effects stay committed. A new bucket changes
+the outer version; appending to the current list changes its inner version;
+appending to a later existing list is visible when its enumeration begins.
+Both traversal entry points reject recursive traversal. Local battleEnd still
+cancels outstanding work rather than guessing the controller cleanup phase.
+
+Tests compose the operation with the default pool and UID receivers, including
+duplicate pointers across different frame buckets, fresh UID after reallocation,
+skipped-frame cleanup, stored order, null Lock, exceptions/retry, inner and outer
+mutation, later-list mutation and local lifecycle cancellation. All573 focused
+native/fear/family/miner tests pass; the81-method evidence bundle reproduces
+with --check. The prior full40524709132 at5be7b022 completed successfully.
+Full40533531161 and continuation40533531826 check d74e28a3 independently.
+
+Native controller cleanup timing, Reset effects and full controller/stage
+integration remain open. No source/support/receipt/catalogue gate changed.

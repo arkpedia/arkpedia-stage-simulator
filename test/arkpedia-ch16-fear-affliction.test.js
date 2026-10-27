@@ -215,6 +215,76 @@ function recycleQueueFixture(overrides={}){
  return{...f,queue,pointers,events,get frame(){return frame;},set frame(value){frame=value;},get reads(){return reads;}};
 }
 
+test('immediate recycling visits all buckets in insertion order without reading the frame',()=>{
+ const f=recycleQueueFixture(),a={uid:1},b={uid:2},c={uid:3};
+ f.frame=99;f.queue.enqueue(f.pointers.capture(a));f.frame=10;f.queue.enqueue(f.pointers.capture(b));
+ f.frame=99;f.queue.enqueue(f.pointers.capture(c));f.queue.enqueue(f.pointers.capture(null));
+ const reads=f.reads;f.frame=NaN;f.queue.flushImmediately();
+ assert.equal(f.reads,reads);assert.deepEqual(f.events,[a,c,b]);assert.equal(f.queue.pendingCount,0);
+ f.queue.flushImmediately();assert.deepEqual(f.events,[a,c,b]);f.queue.release();
+});
+
+test('immediate recycle and default pool clear identities once across duplicate pointers',()=>{
+ const f=fixture(),identity=fearProjectileBuffIdentity({counter:{value:0}}),p=fearProjectileBuffPointers({readUid:b=>b.instanceUid});
+ const pool=fearProjectileDefaultBuffPool({createBuff:()=>({instanceUid:0,m_isValid:false}),onAllocate:identity.allocate,onRecycle:identity.recycle});
+ let frame=10;const queue=fearProjectileBuffRecycleQueue(f.b,{readFixedFrame:()=>frame,copyPointer:p.copy,isPointerValid:p.isValid,lockPointer:p.lock,recycleBuff:pool.recycle});
+ const a=pool.allocate(),old=p.capture(a);queue.enqueue(old);frame=20;queue.enqueue(old);
+ queue.flushImmediately();assert.equal(pool.usingCount,0);assert.equal(pool.availableUnusedCount,100);assert.equal(p.lock(old),null);
+ assert.equal(pool.allocate(),a);assert.equal(a.instanceUid,2);assert.equal(p.lock(old),null);queue.release();
+});
+
+test('immediate flush passes a separately invalidated Lock result to the pool',()=>{
+ const f=recycleQueueFixture({isPointerValid:()=>true,lockPointer:()=>null});
+ f.queue.enqueue(f.pointers.capture({uid:1}));f.queue.flushImmediately();assert.deepEqual(f.events,[null]);f.queue.release();
+});
+
+test('immediate pool failure retains all buckets and committed earlier recycle effects',()=>{
+ let f,fail=true;const a={uid:1},b={uid:2};f=recycleQueueFixture({recycleBuff:buff=>{
+  if(buff===b&&fail)throw Error('flush failure');f.events.push(buff);buff.uid=0;
+ }});
+ f.queue.enqueue(f.pointers.capture(a));f.frame=20;f.queue.enqueue(f.pointers.capture(b));
+ assert.throws(()=>f.queue.flushImmediately(),/flush failure/);assert.equal(f.queue.pendingCount,2);assert.deepEqual(f.events,[a]);
+ fail=false;f.queue.flushImmediately();assert.deepEqual(f.events,[a,b]);assert.equal(f.queue.pendingCount,0);f.queue.release();
+});
+
+test('immediate flush rejects new outer buckets after completing the current bucket',()=>{
+ let f,changed=false;const a={uid:1},b={uid:2},c={uid:3};f=recycleQueueFixture({recycleBuff:buff=>{
+  f.events.push(buff);if(!changed){changed=true;f.frame=20;f.queue.enqueue(f.pointers.capture(c));}
+ }});
+ f.queue.enqueue(f.pointers.capture(a));f.queue.enqueue(f.pointers.capture(b));
+ assert.throws(()=>f.queue.flushImmediately(),/bucket list changed/);assert.deepEqual(f.events,[a,b]);assert.equal(f.queue.pendingCount,3);f.queue.release();
+});
+
+test('immediate flush rejects mutation even on the final inner MoveNext',()=>{
+ let f;const a={uid:1};f=recycleQueueFixture({recycleBuff:buff=>f.queue.enqueue(f.pointers.capture(buff))});
+ f.queue.enqueue(f.pointers.capture(a));assert.throws(()=>f.queue.flushImmediately(),/recycle list changed/);
+ assert.equal(f.queue.pendingCount,2);f.queue.release();
+});
+
+test('immediate flush sees changes to a later existing bucket when it opens that list',()=>{
+ let f;const a={uid:1},b={uid:2},c={uid:3};f=recycleQueueFixture({recycleBuff:buff=>{
+  f.events.push(buff);if(buff===a){f.frame=20;f.queue.enqueue(f.pointers.capture(c));}
+ }});
+ f.queue.enqueue(f.pointers.capture(a));f.frame=20;f.queue.enqueue(f.pointers.capture(b));
+ f.queue.flushImmediately();assert.deepEqual(f.events,[a,b,c]);assert.equal(f.queue.pendingCount,0);f.queue.release();
+});
+
+test('immediate and timed traversals reject recursive traversal across both entry points',()=>{
+ let f;f=recycleQueueFixture({recycleBuff:buff=>{
+  assert.equal(f.queue.update(),null);assert.equal(f.queue.flushImmediately(),null);f.events.push(buff);
+ }});
+ f.queue.enqueue(f.pointers.capture({uid:1}));f.queue.flushImmediately();f.queue.enqueue(f.pointers.capture({uid:2}));
+ f.frame=11;f.queue.update();assert.equal(f.events.length,2);f.queue.release();
+});
+
+for(const point of ['copyPointer','isPointerValid','lockPointer','recycleBuff'])test('immediate flush cancels local battle end during '+point,()=>{
+ const f=fixture();let stop=false;const p=fearProjectileBuffPointers({readUid:b=>b.uid});
+ const base={readFixedFrame:()=>10,copyPointer:p.copy,isPointerValid:p.isValid,lockPointer:p.lock,recycleBuff:()=>{}},callers={};
+ for(const[name,fn]of Object.entries(base))callers[name]=(...args)=>{if(stop&&name===point)f.b.emit('battleEnd',{});return fn(...args);};
+ const q=fearProjectileBuffRecycleQueue(f.b,callers);q.enqueue(p.capture({uid:1}));stop=true;
+ assert.equal(q.flushImmediately(),null);assert.equal(q.pendingCount,0);assert.equal(q.flushImmediately(),null);assert.deepEqual(f.b.errors,[]);
+});
+
 test('buff recycle queue processes only the exact next native frame and skips invalid pointers',()=>{
  const f=recycleQueueFixture(),buff={uid:7};f.queue.enqueue(f.pointers.capture(buff));f.queue.enqueue(f.pointers.capture(null));
  assert.equal(f.queue.pendingCount,2);assert.equal(f.queue.update(),undefined);assert.deepEqual(f.events,[]);

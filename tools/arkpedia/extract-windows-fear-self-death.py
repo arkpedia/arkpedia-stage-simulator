@@ -385,6 +385,63 @@ result['modeSwitch']['buffNotification']['recycleQueue'] = {
     'nativeTickPhaseVerified': False, 'poolRecycleEffectsVerified': False,
     'listMoveNext': {'entryRva': 0x4dd3240, 'chunks': c['code'](0x4dd3240), 'concreteContextVerified': False},
 }
+# Decode only the selected nested List/KeyValuePair/ObjectPtr signatures. The
+# general direct-type reader is deliberately unchanged.
+def flush_argument(pointer, depth=0):
+    assert depth <= 4
+    pos = v['offset'](pointer)
+    data, bits = v['quad'](v['b'], pos), v['uint'](v['b'], pos + 8)
+    kind = (bits >> 16) & 255
+    record = {'kind': kind, 'typeBits': bits}
+    if kind in [17, 18]:
+        assert data < len(v['types'])
+        t = v['types'][data]
+        return {**record, 'typeIndex': data, 'namespace': t['namespace'], 'name': t['name']}
+    if kind == 9:
+        return {**record, 'name': 'UInt32'}
+    assert kind == 21
+    generic = v['offset'](data)
+    definition = flush_argument(v['quad'](v['b'], generic), depth + 1)
+    assert definition['name'] in ['List`1', 'KeyValuePair`2', 'ObjectPtr`1']
+    instance = v['offset'](v['quad'](v['b'], generic + 8))
+    count = v['quad'](v['b'], instance)
+    assert count == (2 if definition['name'] == 'KeyValuePair`2' else 1)
+    args = v['offset'](v['quad'](v['b'], instance + 8))
+    return {**record, 'definition': definition, 'arguments': [flush_argument(v['quad'](v['b'], args + i * 8), depth + 1) for i in range(count)]}
+
+flush_bindings = []
+for load_rva, expected in [(0x398e330, 258725), (0x398e355, 242227), (0x398e3a0, 231699),
+                           (0x398e3c9, 242404), (0x398e410, 231747), (0x398e479, 231746), (0x398e4bc, 231698)]:
+    pos = v['offset'](v['image_base'] + load_rva)
+    assert v['b'][pos:pos + 3] in [bytes.fromhex('488b15'), bytes.fromhex('4c8b05')]
+    target = load_rva + 7 + struct.unpack_from('<i', v['b'], pos + 3)[0]
+    usage = v['quad'](v['b'], v['offset'](v['image_base'] + target))
+    assert usage >> 29 == 6 and (usage & 0x1ffffffe) >> 1 == expected
+    definition, class_inst, method_inst = struct.unpack_from('<iii', v['b'], priority['spec_start'] + expected * 12)
+    owner, method = c['unique'](lambda pair: pair[1]['index'] == definition, [(t, r) for t in v['types'] for r in t['methods']])
+    instances = {}
+    for label, index in [('class', class_inst), ('method', method_inst)]:
+        if index < 0:
+            continue
+        table = v['offset'](v['quad'](v['b'], v['registration'] + 24))
+        instance = v['offset'](v['quad'](v['b'], table + index * 8))
+        assert v['quad'](v['b'], instance) == 1
+        args = v['offset'](v['quad'](v['b'], instance + 8))
+        instances[label] = {'index': index, 'argument': flush_argument(v['quad'](v['b'], args))}
+    assert priority['mapping'].get(expected) is None
+    flush_bindings.append({'loadRva': load_rva, 'encodedUsage': usage, 'specificationIndex': expected,
+        'declaringTypeIndex': owner['index'], 'declaringType': owner['name'], 'definition': method,
+        'instantiations': instances, 'nativeMapping': None})
+result['modeSwitch']['buffNotification']['recycleQueue']['immediateFlush'] = {
+    'bindings': flush_bindings,
+    'outerGetEnumeratorCallRva': 0x398e361, 'outerMoveNextCallRva': 0x398e3af,
+    'innerGetEnumeratorCallRva': 0x398e3d8, 'innerMoveNextCallRva': 0x398e41c,
+    'pointerValidityCallRva': 0x398e43b, 'pointerLockCallRva': 0x398e457,
+    'poolRecycleCallRva': 0x398e472, 'clearVersionIncrementRva': 0x398e4fe, 'clearCountRva': 0x398e505,
+    'outerMoveNext': {'entryRva': 0x4dd4140, 'chunks': c['code'](0x4dd4140), 'concreteContextVerified': False},
+    'getEnumerator': {'entryRva': 0x4511980, 'chunks': c['code'](0x4511980), 'concreteContextVerified': False},
+    'nativeCleanupPhaseVerified': False,
+}
 for name in ['OnAllocate', 'OnRecycle', 'set_instanceUid']:
     methods.append(c['method'](buff, c['unique'](lambda r: r['name'] == name, buff['methods'])))
 pool = c['type_row']('ObjectPool`1', 'Torappu.ObjectPool')

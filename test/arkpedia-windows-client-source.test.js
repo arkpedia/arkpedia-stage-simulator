@@ -203,6 +203,30 @@ test('delayed recycle source binds UInt32 exact-frame buckets and a second frame
  assert.ok(castMethod(c,'BattleController','_RecycleBuffContainerImmediatelly'));
 });
 
+test('immediate recycle source enumerates stored pairs and pointer lists before clearing the queue',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.recycleQueue.immediateFlush;
+ const m=castMethod(c,'BattleController','_RecycleBuffContainerImmediatelly');
+ const at=(method,rva,args)=>assert.ok(instructions(method).some(i=>i.rva===rva&&i.operands===args));
+ at(m,q.outerGetEnumeratorCallRva,'0x184511980');at(m,q.outerMoveNextCallRva,'0x184dd4140');
+ at(m,q.innerGetEnumeratorCallRva,'0x184511980');at(m,q.innerMoveNextCallRva,'0x184dd3240');
+ at(m,q.pointerValidityCallRva,'0x18477cd80');at(m,q.pointerLockCallRva,'0x18477cad0');at(m,q.poolRecycleCallRva,'0x18477b630');
+ at(m,q.clearVersionIncrementRva,'dword ptr [rcx + 0x1c]');at(m,q.clearCountRva,'dword ptr [rcx + 0x18], r14d');
+ assert.ok(q.poolRecycleCallRva<q.clearVersionIncrementRva);assert.equal(q.nativeCleanupPhaseVerified,false);
+ assert.deepEqual(q.bindings.map(b=>b.specificationIndex),[258725,242227,231699,242404,231747,231746,231698]);
+ assert.deepEqual(q.bindings.map(b=>b.definition.name),['IsNullOrEmpty','GetEnumerator','MoveNext','GetEnumerator','MoveNext','Dispose','Dispose']);
+ for(const b of q.bindings){assert.equal(b.nativeMapping,null);assert.equal((b.encodedUsage&0x1ffffffe)>>>1,b.specificationIndex);}
+ const shape=a=>a.kind===21?[a.definition.name,...a.arguments.map(shape)]:a.name;
+ const pair=['KeyValuePair`2','UInt32',['List`1',['ObjectPtr`1','Buff']]];
+ for(const i of [0,1,2,6])assert.deepEqual(shape(Object.values(q.bindings[i].instantiations)[0].argument),pair);
+ for(const i of [3,4,5])assert.deepEqual(shape(q.bindings[i].instantiations.class.argument),['ObjectPtr`1','Buff']);
+ for(const code of [q.outerMoveNext,q.getEnumerator]){
+  assert.equal(code.concreteContextVerified,false);
+  for(const ch of code.chunks){const raw=Buffer.from(ch.base64,'base64');assert.equal(sha(raw),ch.sha256);assert.equal(raw.length,ch.endRva-ch.beginRva);}
+ }
+ at(q.outerMoveNext,0x4dd4158,'dword ptr [rbx + 0xc], eax');at(q.outerMoveNext,0x4dd41b6,'dword ptr [rbx + 0xc], eax');
+ assert.ok(!instructions(m).some(i=>i.mnemonic==='call'&&i.operands==='0x183991a80'),'flush does not filter by current frame');
+});
+
 test('finish effects bind UID-map removal, MarkFinish/OnFinish flags and delayed recycle queue after native completion',()=>{
  const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),effects=c.modeSwitch.buffNotification.finishEffects;
  const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
