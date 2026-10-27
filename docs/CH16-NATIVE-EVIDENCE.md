@@ -497,3 +497,27 @@ code/hotfixes never override them or that CN uses the same settings. Tests pin
 the source chain, named indices, query defaults, selected mask and matching
 prefab layer roles while keeping runtime/cross-version/frame flags false.
 Hosted native-source validation fetches and reproduces this bounded file.
+
+### Bounded attack-event wait
+
+`fearProjectileAttackWait` ports the selected wait-for-attack-event branch with
+`_interuptIfTargetDead=0`. It receives the native converted positive frame count
+and explicit coroutine resumes. Initial resume registers Entity.Event19 and
+yields at index0; later resumes finish on a received event or increment/check
+the bounded count. An event during registration still cannot bypass that first
+yield. Handler removal and receipt clearing precede the readiness callback.
+The selected `_interruptAbilityOnDetach=1` is reflected by cancellation when its
+owner life is removed, alongside an explicit cast-active reader and battle-end
+cleanup. Target death does not add an interruption condition.
+
+The native delegate usage sites distinguish `_CheckNotReceiveEvent` from the
+target-alive predicate and bind `_OnReceiveEvent` for both registration and
+removal. Tests cover event-free timeout, event resumption, initial yield,
+recursive calls, owner reuse/removal, cast interruption and cancellation during
+registration. A supplied-input composition launches one flight from timeout
+readiness and retains its affliction/damage after subsequent source removal.
+The wait count derives from cached ability duration and native deltaPlayTime;
+the event-free clip's visual duration is not substituted for that clock. Exact
+duration conversion, coroutine scheduling, the full cast/launch sequence and
+event5 self-death ordering remain required integration evidence. No synthetic
+OnAttack marker, enemy support receipt or stage admission is added.

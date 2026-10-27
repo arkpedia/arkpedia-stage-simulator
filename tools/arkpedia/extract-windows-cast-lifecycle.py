@@ -244,6 +244,19 @@ for path_id in ['4729572091462136098', '-4003912029476114142', '-284701352297105
                     'matchedSerializedFields': mapped, 'unmatchedSerializedFields': unmatched,
                     'serializedFieldParity': not unmatched})
 
+wait_delegates = []
+for load_rva, expected in [(0xc30803, '_CheckNotReceiveEvent'),
+                          (0xc30866, '_CheckNotReceiveEventAndTargetAlive'),
+                          (0xc307af, '_OnReceiveEvent'), (0xc306c7, '_OnReceiveEvent')]:
+    pos = v['offset'](base + load_rva)
+    assert b[pos:pos + 3] == bytes.fromhex('4c8b05')
+    slot = load_rva + 7 + struct.unpack_from('<i', b, pos + 3)[0]
+    usage = quad(b, v['offset'](base + slot))
+    assert usage >> 29 == 3
+    index = (usage & 0x1ffffffe) >> 1
+    row = unique(lambda r: r['index'] == index and r['name'] == expected, easy['methods'])
+    wait_delegates.append({'callerLoadRva': load_rva, 'encodedUsage': usage, 'type': easy['name'], **row})
+
 result = {'schemaVersion': 1,
           'scope': 'Static default cast/wait evidence only; no runtime hotfix, frame or cross-version parity and no enemy/stage admission.',
           'runtimeDispatchVerified': False, 'frameParity': False, 'crossVersionParity': False,
@@ -258,6 +271,7 @@ result = {'schemaVersion': 1,
           'resolvedSlots': [resolved_slot(t, slot) for t, slots in [(enemy, [102, 103]), (single_spine, [45, 46, 60]),
                                                                    (ranged, [75, 80, 87, 116])] for slot in slots],
           'prefabScriptBridges': bridges,
+          'eventWaitDelegateBindings': wait_delegates,
           'virtualHelpers': [{'entryRva': rva, 'chunks': code(rva)} for rva in [0x57b0, 0x1cf10]],
           'methods': selected,
           'review': [

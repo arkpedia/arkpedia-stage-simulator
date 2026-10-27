@@ -14,6 +14,7 @@ import {fearProjectileLifetime} from '../server/sim/content/chapter16-fear-clock
 import {fearProjectileAreaDelivery} from '../server/sim/content/chapter16-fear-area.js';
 import {fearProjectileFlight} from '../server/sim/content/chapter16-fear-flight.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
+import {fearProjectileAttackWait} from '../server/sim/content/chapter16-fear-cast-wait.js';
 import {fearProjectileTargetVerifier,fearProjectileSourceMotion} from '../server/sim/content/chapter16-fear-targets.js';
 import {fearProjectileReached,fearProjectileMotionStep,fearProjectileMountReference,fearProjectileTraceMotion} from '../server/sim/content/chapter16-fear-movement.js';
 import { battle as minerBattle, keys as minerKeys } from './helpers/ch17Harness.js';
@@ -21,6 +22,82 @@ import { chapter16Shadow } from '../server/sim/content/chapter16-shadow.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
 const parentKey='feawpj_a[mcreep_fear]';
 const fpOne=1n<<32n;
+function castWaitFixture(overrides={}){
+ const f=fixture(),events=[];let receive=()=>{},unsubscribed=0;
+ const wait=fearProjectileAttackWait(f.b,{owner:f.source,frameCount:3,isCastActive:()=>true,
+  subscribeAttackEvent:({owner,event,onEvent})=>{
+   assert.equal(owner,f.source);assert.equal(event,19);receive=onEvent;events.push('subscribe');
+   return()=>{unsubscribed++;events.push('unsubscribe');};
+  },onReady:({cause})=>events.push(cause),...overrides});
+ return{...f,events,wait,receive:()=>receive(),get unsubscribed(){return unsubscribed;}};
+}
+
+test('event-free selected cast reaches its bounded wait limit without inventing an attack event',()=>{
+ const f=castWaitFixture();assert.deepEqual(f.wait.resume(),{waiting:true,index:0,frameCount:3});
+ assert.deepEqual(f.wait.resume(),{waiting:true,index:1,frameCount:3});
+ assert.deepEqual(f.wait.resume(),{waiting:true,index:2,frameCount:3});
+ assert.deepEqual(f.wait.resume(),{waiting:false,cause:'timeout'});
+ assert.deepEqual(f.events,['subscribe','unsubscribe','timeout']);assert.equal(f.wait.resume(),null);
+ assert.equal(f.unsubscribed,1);
+});
+
+test('attack event releases the wait on resumption and unsubscribes before readiness',()=>{
+ const f=castWaitFixture();f.wait.resume();f.receive();f.receive();
+ assert.deepEqual(f.wait.resume(),{waiting:false,cause:'event'});f.receive();assert.equal(f.wait.resume(),null);
+ assert.deepEqual(f.events,['subscribe','unsubscribe','event']);assert.equal(f.wait.framesWaited,0);
+});
+
+test('event received during subscription still yields before the bounded wait can finish',()=>{
+ let unsubscribed=0;const f=castWaitFixture({frameCount:1,subscribeAttackEvent:({onEvent})=>{onEvent();return()=>unsubscribed++;}});
+ assert.equal(f.wait.resume().waiting,true);assert.deepEqual(f.events,[]);
+ assert.deepEqual(f.wait.resume(),{waiting:false,cause:'event'});assert.equal(unsubscribed,1);
+});
+
+test('selected target death does not cancel the wait or fabricate readiness before timeout',()=>{
+ const f=castWaitFixture({frameCount:1});f.wait.resume();f.b.kill(f.target,null);
+ assert.deepEqual(f.wait.resume(),{waiting:false,cause:'timeout'});assert.deepEqual(f.events,['subscribe','unsubscribe','timeout']);
+});
+
+for(const boundary of ['ownerReuse','ownerRemoval','battleEnd','castInactive'])test('cast wait cancels on '+boundary+' without launch readiness',()=>{
+ let active=true;const f=castWaitFixture({isCastActive:()=>active});f.wait.resume();
+ if(boundary==='ownerReuse')f.source.deploySeq++;
+ else if(boundary==='ownerRemoval')f.b.emit('removed',{unit:f.source});
+ else if(boundary==='battleEnd')f.b.emit('battleEnd',{});else active=false;
+ assert.equal(f.wait.resume(),null);f.receive();assert.equal(f.wait.resume(),null);
+ assert.equal(f.unsubscribed,1);assert.deepEqual(f.events,['subscribe','unsubscribe']);assert.deepEqual(f.b.errors,[]);
+});
+
+test('reentrant cast resumes cannot skip the initial yield or duplicate readiness',()=>{
+ let f;f=castWaitFixture({frameCount:1,isCastActive:()=>{assert.equal(f.wait.resume(),null);return true;},
+  onReady:()=>{assert.equal(f.wait.resume(),null);f.events.push('ready');}});
+ f.wait.resume();f.wait.resume();assert.deepEqual(f.events,['subscribe','unsubscribe','ready']);
+});
+
+test('battle end inside event subscription immediately disposes the returned registration',()=>{
+ let f,disposed=0;f=castWaitFixture({subscribeAttackEvent:()=>{f.b.emit('battleEnd',{});return()=>disposed++;}});
+ assert.equal(f.wait.resume(),null);assert.equal(disposed,1);assert.equal(f.wait.resume(),null);assert.deepEqual(f.events,[]);
+});
+
+test('bounded cast readiness can create one independent flight which survives later owner removal',()=>{
+ const f=fixture();f.source.base.atk=175;f.source.markDirty();f.target.nativeUid=1;
+ const source=fearProjectileSourceReference(f.b,f.source),damage=fearProjectileDamageAction(f.b,source);
+ let flight,births=0;
+ const wait=fearProjectileAttackWait(f.b,{owner:f.source,frameCount:1,isCastActive:()=>true,
+  subscribeAttackEvent:()=>()=>{},onReady:()=>{
+   births++;
+   flight=fearProjectileFlight(f.b,{from:{x:0,y:0,z:0},initialTarget:{x:1,y:0,z:0},
+    resolveTargetPosition:()=>null,resolveTraceTarget:()=>f.target,
+    area:{queryOverlaps:()=>[f.target],resolveEntity:u=>u,readUid:u=>u.nativeUid,
+     isCandidate:()=>true,verifyTarget:()=>true,deterministic:true,resolveSource:source.resolveSource,onSelected:()=>{}},
+    runHit:({target})=>applyFearProjectileImpact(f.b,{source:f.source,target,applyAttachments:()=>{},runActions:damage}),
+    onStopped:()=>{},scheduleCompletion:()=>()=>{}});
+  }});
+ wait.resume();assert.equal(flight,undefined);wait.resume();assert.equal(births,1);
+ f.b.kill(f.source,null);const hp=f.target.hp;flight.advance(fpOne/10n,fpOne);
+ assert.equal(hp-f.target.hp,175);assert.ok(f.target.findBuff(parentKey));assert.equal(wait.resume(),null);
+ assert.equal(births,1);flight.release();source.release();assert.deepEqual(f.b.errors,[]);
+});
+
 test('enemy arrival query includes the configured ally and neutral layers',()=>{
  const layerIndices={ALLY:8,ENEMY:9,NEUTRAL:28};
  assert.deepEqual(fearProjectileArrivalLayerMask({sourceSide:2,layerIndices}),{sideMask:5,layerMask:(1<<8)|(1<<28)});

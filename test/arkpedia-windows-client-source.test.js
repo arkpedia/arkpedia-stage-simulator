@@ -873,6 +873,28 @@ test('cast evidence resolves common-library tokens in their own image and preser
  const leaf=castMethod(c,'FP','op_Implicit');assert.equal(leaf.chunks.length,1);assert.equal(leaf.chunks[0].unwindRva,null);
  assert.deepEqual(instructions(leaf).map(i=>i.mnemonic),['mulss','cvttss2si','ret']);
 });
+test('cast event wait binds its selected predicate, mandatory initial yield and handler cleanup',()=>{
+ const c=read('data/candidates/arkpedia-windows-cast-lifecycle-source.json');
+ assert.deepEqual(c.eventWaitDelegateBindings.map(r=>[r.callerLoadRva,r.name]),[
+  [0xc30803,'_CheckNotReceiveEvent'],[0xc30866,'_CheckNotReceiveEventAndTargetAlive'],
+  [0xc307af,'_OnReceiveEvent'],[0xc306c7,'_OnReceiveEvent']]);
+ for(const binding of c.eventWaitDelegateBindings){
+  assert.equal(binding.encodedUsage>>>29,3);assert.equal((binding.encodedUsage&0x1ffffffe)>>>1,binding.index);
+ }
+ const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ const next=castMethod(c,'<WaitForNextEvent>d__15','MoveNext');
+ at(next,0xc307e2,'byte ptr [rdi + 0x111], 0');at(next,0xc307f0,'0x180c30859');
+ at(next,0xc306f4,'0x184305c20');at(next,0xc30702,'byte ptr [rdi + 0x120], 0');
+ const waiter=castMethod(c,'<WaitWhileForFixedSeconds>d__6','MoveNext');
+ at(waiter,0x396bd99,'rbx, qword ptr [rsp + 0x40]');at(waiter,0x396bda1,'dword ptr [rdi + 0x34], 0');
+ at(waiter,0x396bda8,'0x18396bdd3');at(waiter,0x396bdca,'rax');
+ at(waiter,0x396bdce,'0x18396be22');at(waiter,0x396bdd0,'dword ptr [rdi + 0x34]');
+ const graph=read('data/candidates/arkpedia-ch16-fear-projectile-source.json');
+ const rows=graph.prefabs['dyn/battle/prefabs/enemies/enemy_10128_fearpj.prefab'];
+ const native=JSON.parse(rows.find(r=>r.pathId==='4729572091462136098').originalJson);
+ assert.equal(native._waitForAttackEvent,1);assert.equal(native._interuptIfTargetDead,0);assert.equal(native._interruptAbilityOnDetach,1);
+});
+
 test('bounded wait uses the actual entity attack-event enum, FP fields and fixed-point waiter',()=>{
  const c=read(castPath);
  assert.equal(c.entityEvent.fields.find(f=>f.name==='ON_ATTACK_EVENT').value,19);
