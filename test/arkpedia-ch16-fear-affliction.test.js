@@ -59,6 +59,63 @@ import {fearProjectileDataPairLists} from '../server/sim/content/chapter16-fear-
 import {fearProjectileDataPairListGrowth} from '../server/sim/content/chapter16-fear-blackboard-list-growth.js';
 import {fearProjectileBuffDataClone} from '../server/sim/content/chapter16-fear-buff-data-clone.js';
 import {fearProjectileBuffDataConstructor,fearProjectileAttributeDataConstructor} from '../server/sim/content/chapter16-fear-buff-data-constructor.js';
+import {fearProjectileAttributeModifierConstructor,fearProjectileAttributeModifierClone,fearProjectileAttributeDataClone} from '../server/sim/content/chapter16-fear-attribute-data-clone.js';
+
+function attributeDataCloneFixture(){
+ const zero=()=>({abnormalFlags:null,abnormalImmunes:null,abnormalAntis:null,abnormalCombos:null,abnormalComboImmunes:null,attributeModifiers:null}),modifier=(value=1/3)=>({attributeType:2,formulaItem:3,value,loadFromBlackboard:false,fetchBaseValueFromSourceEntity:true}),
+  source={abnormalFlags:[1,2],abnormalImmunes:[],abnormalAntis:null,abnormalCombos:[3],abnormalComboImmunes:[4],attributeModifiers:[modifier(),modifier(7)]},target=zero(),events=[],modifiers=[],
+  modifierOptions={allocateModifier:()=>{const value={};modifiers.push(value);events.push('allocate-modifier');return value;},initializeModifier:fearProjectileAttributeModifierConstructor({objectConstructor:()=>events.push('modifier-base')})},
+  options={allocateData:()=>{events.push('allocate-data');return target;},initializeData:fearProjectileAttributeDataConstructor({objectConstructor:()=>events.push('data-base')}),
+   isNullOrEmpty:(value,kind)=>{events.push(['probe',kind]);return value==null||value.length===0;},allocateStatusList:kind=>{events.push(['allocate-list',kind]);return[];},initializeStatusList:(to,from,kind)=>{events.push(['copy-list',kind]);to.push(...from);},
+   allocateModifierArray:count=>{events.push(['allocate-array',count]);return Array(count).fill(null);},cloneModifier:fearProjectileAttributeModifierClone(modifierOptions),canStoreModifier:()=>true,
+   writeBarrier:(_target,key)=>events.push(['barrier',key])};
+ return{zero,modifier,source,target,events,modifiers,modifierOptions,options,api:()=>fearProjectileAttributeDataClone(options)};
+}
+function composeAttributeDataClone(f){const nested=attributeDataCloneFixture();f.source.attributes=nested.source;f.options.cloneAttributes=nested.api();return nested;}
+test('AttributeModifier constructor writes its default before base construction, and clone copies the five typed fields',()=>{
+ const f=attributeDataCloneFixture(),source=f.modifier(),target={other:'keep'};fearProjectileAttributeModifierConstructor({objectConstructor:value=>{assert.equal(value.loadFromBlackboard,true);}})(target);assert.equal(target.other,'keep');
+ const clone=fearProjectileAttributeModifierClone(f.modifierOptions)(source);assert.deepEqual(clone,{...source,value:Math.fround(source.value)});assert.notEqual(clone,source);assert.deepEqual(f.events,['allocate-modifier','modifier-base']);
+});
+test('AttributeModifier clone constructs before source access and reads its Single field once',()=>{
+ const f=attributeDataCloneFixture();assert.throws(()=>fearProjectileAttributeModifierClone(f.modifierOptions)(null),/null native object/);assert.deepEqual(f.events,['allocate-modifier','modifier-base']);
+ const source=f.modifier();let reads=0;Object.defineProperty(source,'value',{get(){reads++;return 1/3;}});fearProjectileAttributeModifierClone(f.modifierOptions)(source);assert.equal(reads,1);
+});
+test('AttributeModifierData clone detaches nonempty status lists and modifier entries while preserving empty defaults',()=>{
+ const f=attributeDataCloneFixture();assert.equal(f.api()(f.source),f.target);for(const key of ['abnormalFlags','abnormalCombos','abnormalComboImmunes']){assert.deepEqual(f.target[key],f.source[key]);assert.notEqual(f.target[key],f.source[key]);}
+ assert.equal(f.target.abnormalImmunes,null);assert.equal(f.target.abnormalAntis,null);assert.notEqual(f.target.attributeModifiers,f.source.attributeModifiers);assert.notEqual(f.target.attributeModifiers[0],f.source.attributeModifiers[0]);assert.equal(f.target.attributeModifiers[0].value,Math.fround(1/3));assert.equal(f.source.attributeModifiers[0].value,1/3);
+});
+test('AttributeModifierData empty fields preserve constructor defaults without list or array allocation',()=>{
+ const f=attributeDataCloneFixture(),sentinel={};for(const key of Object.keys(f.source))f.source[key]=[];f.options.initializeData=target=>{for(const key of Object.keys(target))target[key]=sentinel;};f.api()(f.source);assert.ok(Object.values(f.target).every(value=>value===sentinel));assert.equal(f.events.some(e=>Array.isArray(e)&&e[0].startsWith('allocate-')),false);
+});
+test('AttributeModifierData captures status lists after probing but before allocation',()=>{
+ const f=attributeDataCloneFixture(),capture=[8],later=[9],probe=f.options.isNullOrEmpty;let first=true;f.options.isNullOrEmpty=(value,kind)=>{if(first){first=false;f.source.abnormalFlags=capture;}return probe(value,kind);};
+ const allocate=f.options.allocateStatusList;f.options.allocateStatusList=kind=>{f.source.abnormalFlags=later;return allocate(kind);};const init=f.options.initializeStatusList;let copied=false;f.options.initializeStatusList=(to,from,kind)=>{if(!copied){copied=true;assert.equal(from,capture);}init(to,from,kind);};f.api()(f.source);assert.deepEqual(f.target.abnormalFlags,capture);
+});
+test('AttributeModifierData status constructor failure retains earlier published lists',()=>{
+ const f=attributeDataCloneFixture(),error=Error('list constructor');f.source.abnormalImmunes=[5];let count=0;const copy=f.options.initializeStatusList;f.options.initializeStatusList=(...args)=>{if(++count===2)throw error;copy(...args);};
+ assert.throws(()=>f.api()(f.source),actual=>actual===error);assert.deepEqual(f.target.abnormalFlags,[1,2]);assert.equal(f.target.abnormalImmunes,null);assert.equal(f.target.attributeModifiers,null);
+});
+test('AttributeModifierData array length is captured before allocation but source storage is reread after publication',()=>{
+ const f=attributeDataCloneFixture(),next=[f.modifier(9)];f.options.writeBarrier=(_target,key)=>{if(key==='attributeModifiers')f.source.attributeModifiers=next;};f.api()(f.source);assert.equal(f.target.attributeModifiers.length,2);assert.equal(f.target.attributeModifiers[0].value,9);assert.equal(f.target.attributeModifiers[1],null);
+});
+test('AttributeModifierData captures the destination array before entry cloning and refreshes it for the next entry',()=>{
+ const f=attributeDataCloneFixture(),replacement=[null,null],clone=f.options.cloneModifier;let original;f.options.cloneModifier=entry=>{if(original==null){original=f.target.attributeModifiers;f.target.attributeModifiers=replacement;}return clone(entry);};
+ f.api()(f.source);assert.equal(original[0].value,Math.fround(1/3));assert.equal(original[1],null);assert.equal(replacement[0],null);assert.equal(replacement[1].value,7);
+});
+test('AttributeModifierData checks compatibility before destination bounds after cloning',()=>{
+ const f=attributeDataCloneFixture();f.options.allocateModifierArray=()=>[];f.options.canStoreModifier=()=>false;assert.throws(()=>f.api()(f.source),/array type mismatch/);assert.equal(f.modifiers.length,1);
+ const g=attributeDataCloneFixture();g.options.allocateModifierArray=()=>[];assert.throws(()=>g.api()(g.source),/outside the native destination array/);assert.equal(g.modifiers.length,1);
+});
+test('AttributeModifierData refreshes the source array after each stored entry and retains earlier writes on bounds failure',()=>{
+ const f=attributeDataCloneFixture();f.source.attributeModifiers=[f.modifier(1)];f.options.writeBarrier=(_target,key)=>{if(key===0)f.source.attributeModifiers=[f.modifier(1),f.modifier(2)];};assert.throws(()=>f.api()(f.source),/outside the native destination array/);assert.equal(f.target.attributeModifiers[0].value,1);assert.equal(f.modifiers.length,2);
+});
+test('AttributeModifierData allows null clone results without a compatibility call but rejects null source entries',()=>{
+ const f=attributeDataCloneFixture();f.options.cloneModifier=()=>null;f.options.canStoreModifier=()=>{throw Error('unexpected null cast');};f.api()(f.source);assert.deepEqual(f.target.attributeModifiers,[null,null]);
+ const g=attributeDataCloneFixture();g.source.attributeModifiers=[null];assert.throws(()=>g.api()(g.source),/null native object/);assert.equal(g.modifiers.length,0);
+});
+for(const phase of ['initializeData','allocateStatusList','allocateModifierArray','cloneModifier'])test('AttributeModifierData propagates '+phase+' errors with prior publications retained',()=>{
+ const f=attributeDataCloneFixture(),error=Error(phase);f.options[phase]=()=>{throw error;};assert.throws(()=>f.api()(f.source),actual=>actual===error);if(phase==='cloneModifier')assert.equal(f.target.attributeModifiers.length,2);if(phase==='allocateModifierArray'||phase==='cloneModifier')assert.deepEqual(f.target.abnormalFlags,[1,2]);
+});
 
 function buffDataConstructorFixture(){
  const events=[],created=[],defaults={statusResistable:2,templateKey:'empty',maxStackCnt:1,maxValidStackCnt:-1,lifeTimeType:1,triggerInterval:-1,waitFirstTriggerInterval:true,firstTriggerInterval:-1,priority:-1},
@@ -146,11 +203,12 @@ for(const phase of ['allocateData','initializeData','cloneAttributes','clonePrio
  const f=buffDataCloneFixture(),error=Error(phase);f.options[phase]=()=>{throw error;};assert.throws(()=>f.clone()(f.source),actual=>actual===error);if(phase==='initializeBlackboard'){assert.equal(f.target.blackboard,null);assert.equal(f.target.buffKey,f.source.buffKey);}
 });
 for(const empty of [false,true])test('BuffDB clone/merge composes typed DataPair storage and growth with '+(empty?'null':'populated')+' source blackboard',()=>{
- const f=buffDataCloneFixture(),m=f.lists;composeBuffDataConstructor(f);f.source.templateKey='empty';if(empty)f.source.blackboard=null;const original=f.source.blackboard;m.options.addWithResize=m.growth().addWithResize;const storage=m.api(),out={value:null},template={},
+ const f=buffDataCloneFixture(),m=f.lists;composeBuffDataConstructor(f);const nested=composeAttributeDataClone(f);f.source.templateKey='empty';if(empty)f.source.blackboard=null;const original=f.source.blackboard;m.options.addWithResize=m.growth().addWithResize;const storage=m.api(),out={value:null},template={},
   merge=fearProjectileBlackboardMerge({allocateList:()=>({_items:null,_size:0,_version:0}),initializeList:storage.initialize,readCount:storage.readCount,readItem:storage.getItem,setItem:storage.setItem,addItem:storage.add,
    compareIgnoreCase:(a,b)=>a.toLowerCase()===b.toLowerCase()?0:1}),database=fearProjectileBuffDatabase({tryGetBuffData:(_key,ref)=>{ref.value=f.source;return true;},tryGetTemplate:(key,ref)=>{assert.equal(key,'empty');ref.value=template;return true;},deepClone:f.clone(),mergeBlackboard:merge});
  assert.equal(database.tryGetKey('key',out,m.list([m.pair('atk',2),m.pair('HP',3)])),true);assert.equal(out.value.template,template);assert.equal(out.value.data,f.target);assert.notEqual(out.value.data,f.source);assert.equal(out.value.data.blackboard._size,2);
  assert.deepEqual([storage.getItem(f.target.blackboard,0),storage.getItem(f.target.blackboard,1)],[m.pair('atk',2),m.pair('HP',3)]);assert.equal(f.source.blackboard,original);if(original!=null){assert.equal(original._size,1);assert.equal(storage.getItem(original,0).value,1);}
+ assert.equal(f.target.attributes,nested.target);assert.notEqual(f.target.attributes.abnormalFlags,f.source.attributes.abnormalFlags);assert.notEqual(f.target.attributes.attributeModifiers[0],f.source.attributes.attributeModifiers[0]);assert.equal(f.source.attributes.attributeModifiers[0].value,1/3);
 });
 
 function dataPairGrowthFixture(){

@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,222);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,225);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -531,6 +531,20 @@ test('context snapshot source binds distinct capture/push orders and closed refe
   'rcx, qword ptr [rdi + 0x48]','rcx, qword ptr [rdi + 0x58]'].entries())at(duplicate,q.pushFieldReads[index],args);
  for(const [index,target]of ['0x184be7ef0','0x184be7ef0','0x184be7ef0','0x18490b650','0x18490b820','0x184be7ef0','0x184be7ef0','0x18490b650','0x18490b790','0x184be7ef0'].entries())at(duplicate,q.pushCalls[index],target);
  assert.equal(q.nativeContextStackEffectsVerified,false);assert.equal(q.nativeNestedValueCopiesVerified,false);assert.equal(q.liveContextSnapshotsVerified,false);
+});
+
+test('AttributeModifierData source binds status-list constructors and partial modifier-array copying',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.newBuff.attributeDataClone;
+ assert.deepEqual(q.methods.map(m=>[m.type,m.index,m.entryRva]),[['AttributeModifierData',28600,0x2161640],['AttributeModifier',28603,0x2161b50],['AttributeModifier',28604,0x2161d10]]);
+ assert.deepEqual(q.dataFields.map(f=>[f.name,f.offset]),[['abnormalFlags',16],['abnormalImmunes',24],['abnormalAntis',32],['abnormalCombos',40],['abnormalComboImmunes',48],['attributeModifiers',56]]);
+ assert.deepEqual(q.modifierFields.map(f=>[f.name,f.offset]),[['attributeType',16],['formulaItem',20],['value',24],['loadFromBlackboard',28],['fetchBaseValueFromSourceEntity',29]]);
+ assert.deepEqual(q.listLoads.map(l=>l.specification.index),[242571,242571,242571,242568,242568]);for(const load of q.listLoads){assert.equal(load.encodedUsage>>>29,6);assert.equal((load.encodedUsage&0x1ffffffe)>>>1,load.specification.index);assert.equal(load.specification.definition.name,'.ctor');assert.equal(load.specification.nativeMapping,null);assert.equal(load.specification.instantiations.class.arguments[0].typeIndex,load.specification.index===242571?34285:34286);}
+ const at=(index,rva,args)=>assert.ok(instructions(c.methods.find(m=>m.index===index)).some(i=>i.rva===rva&&i.operands===args),'Attribute data clone instruction '+rva.toString(16));
+ for(const row of q.statusLists){at(28600,row.probeRva,'0x183f62450');const offset=q.dataFields.find(f=>f.name===row.field).offset;at(28600,row.captureRva,'rdi, qword ptr [rbp + 0x'+offset.toString(16)+']');at(28600,row.allocateCallRva,'0x180410630');at(28600,row.constructorCallRva,'0x1845199a0');at(28600,row.writeRva,'qword ptr [rcx], rbx');assert.ok(row.probeRva<row.captureRva&&row.captureRva<row.allocateCallRva&&row.constructorCallRva<row.writeRva);}
+ for(const [key,args]of [['allocateDataCallRva','0x180410630'],['arrayProbeCallRva','0x183f62450'],['arrayAllocateCallRva','0x180410010'],['arrayPublishRva','qword ptr [r13 + 0x38], rax'],['arraySourceRereadRva','rax, qword ptr [rbp + 0x38]'],['destinationCaptureRva','r14, qword ptr [r13 + 0x38]'],['entryReadRva','rdi, qword ptr [rax + r15*8 + 0x20]'],['compatibilityCallRva','0x18040ffa0'],['destinationBoundsRva','esi, dword ptr [r14 + 0x18]'],['entryStoreRva','qword ptr [rcx], rbx'],['entryBarrierCallRva','0x18040ff90'],['nextSourceReadRva','rax, qword ptr [rbp + 0x38]']])at(28600,q[key],args);
+ at(28603,q.modifierAllocateCallRva,'0x180410630');at(28603,q.modifierDefaultWriteRva,'byte ptr [rbx + 0x1c], 1');at(28603,q.modifierBaseCallRva,'0x180511a50');at(28604,q.modifierConstructorDefaultRva,'byte ptr [rbx + 0x1c], 1');at(28604,q.modifierConstructorBaseRva,'0x180511a50');
+ for(const [index,field]of q.modifierFields.entries()){at(28603,q.modifierCopyReads[index],'eax, '+(index<3?'dword':'byte')+' ptr [rdi + 0x'+field.offset.toString(16)+']');at(28603,q.modifierCopyWrites[index],(index<3?'dword':'byte')+' ptr [rbx + 0x'+field.offset.toString(16)+'], '+(index<3?'eax':'al'));}
+ for(const name of ['nativeStatusListConstructionVerified','nativeArrayAllocationAndStoreChecksVerified','nativeHotfixDispatchVerified','nativeWriteBarrierEffectsVerified','liveAttributeDataCloneVerified'])assert.equal(q[name],false);
 });
 
 test('BuffData constructor source binds defaults, empty template literal and late base construction',()=>{

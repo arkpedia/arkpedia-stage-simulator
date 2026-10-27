@@ -2101,6 +2101,43 @@ result['modeSwitch']['buffNotification']['newBuff']['predicateNodes'] = {
     'nativeAttributeQueryEffectsVerified': False, 'livePredicateNodeDispatchVerified': False,
 }
 context_stack_canonical = []
+attribute_clone_methods = []
+for ti, index, entry in [(3916, 28600, 0x2161640), (3915, 28603, 0x2161b50), (3915, 28604, 0x2161d10)]:
+    t = v['types'][ti]
+    row = c['unique'](lambda r: r['index'] == index, t['methods'])
+    record = c['method'](t, row)
+    assert record['entryRva'] == entry and not any(m['index'] == index for m in methods)
+    methods.append(record)
+    attribute_clone_methods.append({'typeIndex': ti, 'type': t['name'], **row, 'entryRva': entry})
+attribute_list_loads = []
+for rva, index, ti in [(0x216178b, 242571, 34285), (0x21617dc, 242571, 34285), (0x216182d, 242571, 34285), (0x216187e, 242568, 34286), (0x21618cf, 242568, 34286)]:
+    pos = v['offset'](v['image_base'] + rva)
+    assert v['b'][pos:pos + 3] == bytes.fromhex('4c8b05')
+    address = rva + 7 + struct.unpack_from('<i', v['b'], pos + 3)[0]
+    usage = v['quad'](v['b'], v['offset'](v['image_base'] + address))
+    assert usage >> 29 == 6 and (usage & 0x1ffffffe) >> 1 == index
+    spec = priority['specification'](index)
+    assert spec['declaringType'] == 'List`1' and spec['definition']['name'] == '.ctor' and spec['nativeMapping'] is None
+    assert spec['instantiations']['class']['arguments'][0]['typeIndex'] == ti
+    attribute_list_loads.append({'loadRva': rva, 'encodedUsage': usage, 'specification': spec})
+attribute_array_field = c['unique'](lambda f: f['name'] == 'attributeModifiers', c['fields'](v['types'][3916]))
+assert (attribute_array_field['typeBits'] >> 16) & 255 == 29
+attribute_element_type = v['offset'](attribute_array_field['typeData'])
+assert v['quad'](v['b'], attribute_element_type) == 3915 and (v['uint'](v['b'], attribute_element_type + 8) >> 16) & 255 == 18
+result['modeSwitch']['buffNotification']['newBuff']['attributeDataClone'] = {
+    'methods': attribute_clone_methods, 'dataFields': [f for f in c['fields'](v['types'][3916]) if not f['typeBits'] & 16],
+    'modifierFields': [f for f in c['fields'](v['types'][3915]) if not f['typeBits'] & 16], 'listLoads': attribute_list_loads,
+    'statusLists': [{'field': field, 'probeRva': probe, 'captureRva': capture, 'allocateCallRva': alloc, 'constructorCallRva': ctor, 'writeRva': write} for field, probe, capture, alloc, ctor, write in [
+        ('abnormalFlags', 0x2161766, 0x2161776, 0x216177a, 0x2161798, 0x21617a4), ('abnormalImmunes', 0x21617b7, 0x21617c7, 0x21617cb, 0x21617e9, 0x21617f5),
+        ('abnormalAntis', 0x2161808, 0x2161818, 0x216181c, 0x216183a, 0x2161846), ('abnormalCombos', 0x2161859, 0x2161869, 0x216186d, 0x216188b, 0x2161897),
+        ('abnormalComboImmunes', 0x21618aa, 0x21618ba, 0x21618be, 0x21618dc, 0x21618e8)]],
+    'allocateDataCallRva': 0x2161702, 'arrayProbeCallRva': 0x21618fb, 'arrayAllocateCallRva': 0x216191f, 'arrayPublishRva': 0x2161927, 'arraySourceRereadRva': 0x2161934,
+    'destinationCaptureRva': 0x2161959, 'entryReadRva': 0x2161972, 'compatibilityCallRva': 0x2161a5b, 'destinationBoundsRva': 0x2161a65, 'entryStoreRva': 0x2161a76, 'entryBarrierCallRva': 0x2161a79, 'nextSourceReadRva': 0x2161a7e,
+    'modifierAllocateCallRva': 0x2161b95, 'modifierDefaultWriteRva': 0x2161bc4, 'modifierBaseCallRva': 0x2161bcb,
+    'modifierCopyReads': [0x2161bf2, 0x2161bf8, 0x2161bfe, 0x2161c04, 0x2161c0b], 'modifierCopyWrites': [0x2161bf5, 0x2161bfb, 0x2161c01, 0x2161c08, 0x2161c0f],
+    'modifierConstructorDefaultRva': 0x2161d37, 'modifierConstructorBaseRva': 0x2161d3e,
+    'nativeStatusListConstructionVerified': False, 'nativeArrayAllocationAndStoreChecksVerified': False, 'nativeHotfixDispatchVerified': False, 'nativeWriteBarrierEffectsVerified': False, 'liveAttributeDataCloneVerified': False,
+}
 data_constructors = []
 for ti, index, entry in [(3923, 28665, 0x225d300), (3916, 28601, 0x2161af0)]:
     t = v['types'][ti]

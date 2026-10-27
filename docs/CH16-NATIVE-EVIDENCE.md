@@ -1402,6 +1402,38 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
 
+### Nested attribute-data and modifier clones
+
+The225-method bundle adds complete AttributeModifierData.DeepClone and
+AttributeModifier.DeepClone/constructor bodies. All222 prior method records and
+earlier evidence remain unchanged. Metadata binds five status-list fields,
+the AttributeModifier reference array and its five scalar fields. Concrete
+List<AbnormalFlag/AbnormalCombo> constructor usages remain unmapped metadata
+specifications, separately from their retained shared native call target.
+
+`fearProjectileAttributeDataClone` constructs the outer record, probes each
+status list, captures its current value before allocating and constructing a
+copy, then publishes it with a barrier. Empty fields preserve constructor
+defaults. Modifier storage is allocated and published before entries are cloned.
+Each iteration captures the destination before cloning, checks nonnull clone
+compatibility before destination bounds, stores the entry, then rereads the
+source array. Failures retain earlier lists, arrays, entries and allocation
+effects. Null clone results are stored without a compatibility call; null source
+entries abort before nested allocation.
+
+`fearProjectileAttributeModifierConstructor` sets loadFromBlackboard true before
+Object construction. Its clone constructs first, then copies the two Int32
+fields, Single value and two Boolean fields in native order. Tests cover nested
+storage independence, empty defaults, callback-driven list/array replacement,
+partial copies, compatibility/bounds order and constructor/copy errors. BuffDB
+clone/merge compositions now use the concrete attribute and modifier adapters
+alongside constructor, blackboard merge and typed list growth adapters.
+Native status-list construction, runtime allocation/store checks, barriers and
+hotfix effects remain explicit or unverified; full controller/stage/frame parity
+is still open. Existing source/support/receipt/catalogue gates are unchanged,
+new stages remain test-only. All1355 focused native/fear/family/miner tests pass.
+This checkpoint stays local.
+
 ### BuffData constructor defaults and late base call
 
 The222-method bundle adds complete default BuffData and AttributeModifierData
