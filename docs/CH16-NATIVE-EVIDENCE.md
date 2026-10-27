@@ -365,8 +365,9 @@ parity.
 
 ### Arrival overlap and dispatch
 
-`extract-windows-fear-area.py --check` retains 16 complete range/query/filter
-methods, the exact layer-mask tail-jump leaf, the `List<Entity>.Sort` call
+`extract-windows-fear-area.py --check` retains 19 complete methods covering the
+range/query/filter pipeline, enemy physics and map conversion, together with
+the exact layer-mask tail-jump leaf, the `List<Entity>.Sort` call
 specification and the original circle/collider/transform graph. Authored local
 radius is 1 with zero offset and unit root scale. Runtime range scaling, target
 body geometry and actual overlap order remain separate from those authored
@@ -385,3 +386,16 @@ recursive calls and battle-end cancellation. This does not supply the actual
 physics query, scene/layer mappings, dynamic range scale, concrete native sort
 context or full launcher. Enemy/stage support and public catalogue gates remain
 unchanged.
+
+The actual generic query resolves `Component.GetComponent<Entity>` on each
+collider, rather than searching its parent. The checksummed original miner root
+has the script-bound `Enemy` (whose native lineage includes `Entity`), a
+`Rigidbody2D` and an enabled radius-0.1 trigger. The child collision holder has
+only a Transform and CapsuleCollider2D; its attachment to the root rigidbody
+does not make it a same-object Entity. Retained `_InitPhysics` reads the root
+circle's radius, converts it to FP and stores the field returned by the default
+collider-radius getter. `Map.WorldToMapPositionV3` calls the anchor's inverse
+transform. Tests pin the script identity, component ownership, generic method
+specifications and those native call/storage sites. Runtime scene transforms,
+layer eligibility and Unity overlap boundary tolerance remain unverified; the
+shared engine's assumed collider radii are not substituted as native proof.

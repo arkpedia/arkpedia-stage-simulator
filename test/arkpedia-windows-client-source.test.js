@@ -393,7 +393,7 @@ test('ordinary projectile initialization resets its fixed-point lifetime clock b
 });
 
 test('arrival-area evidence binds the authored circle and explicit nested field differences',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-area-source.json');assert.equal(c.methods.length,16);
+ const c=read('data/candidates/arkpedia-windows-fear-area-source.json');assert.equal(c.methods.length,19);
  for(const p of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+p.path,import.meta.url))),p.sha256);
  for(const m of [...c.methods,c.layerMaskLeaf])for(const ch of m.chunks){
   const raw=Buffer.from(ch.base64,'base64');assert.equal(raw.length,ch.endRva-ch.beginRva);assert.equal(sha(raw),ch.sha256);
@@ -433,6 +433,38 @@ test('native area query filters and caps before deterministic sorting and source
  const native=JSON.parse(c.prefabScriptBridges[1].originalJson);
  assert.equal(native._onlyCheckHitWhenReachTarget,1);assert.equal(native._ignoreCamouflage,1);
  for(const field of ['_exceptSource','_exceptTraceTarget','_onlyTraceTarget'])assert.equal(native[field],0);
+});
+
+test('native overlap resolves Entity on the collider itself and miner root owns the trigger',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-area-source.json');
+ assert.deepEqual(c.componentQueries.map(q=>[q.callerLoadRva,q.declaringType,q.definition.name,
+  q.instantiations.method.arguments[0].name]),[
+  [0x731c53,'Component','GetComponent','Entity'],
+  [0x81152d,'Component','GetComponent','Rigidbody2D'],
+  [0x8115e3,'Component','GetComponent','Collider2D']]);
+ for(const query of c.componentQueries){assert.equal(query.encodedUsage>>>29,6);assert.equal(query.concreteContextVerified,false);}
+ const owner=c.minerColliderOwnership,g=owner.geometry;
+ for(const row of Object.values(g))assert.equal(sha(row.originalJson),row.sha256);
+ const native=Object.fromEntries(Object.entries(g).map(([key,row])=>[key,JSON.parse(row.originalJson)]));
+ assert.equal(owner.entityScript.m_ClassName,'Enemy');assert.equal(owner.entityScript.m_Namespace,'Torappu.Battle');
+ assert.equal(owner.entityBinding.componentSha256,g.entity.sha256);
+ assert.ok(owner.enemyLineage.some(t=>t.name==='Entity'&&t.namespace==='Torappu.Battle'));
+ for(const key of ['trigger','rigidbody','entity'])assert.equal(native[key].m_GameObject.m_PathID,g.root.pathId);
+ assert.equal(native.root.m_Layer,28);assert.equal(native.trigger.m_Radius,Math.fround(.1));
+ assert.equal(native.trigger.m_IsTrigger,true);assert.equal(native.trigger.m_Enabled,1);
+ assert.deepEqual(native.trigger.m_Offset,{x:0,y:0});
+ assert.equal(native.collisionTransform.m_Father.m_PathID,g.transform.pathId);
+ assert.deepEqual(new Set(native.collisionHolder.m_Component.map(r=>r.component.m_PathID)),
+  new Set([g.collisionTransform.pathId,g.collisionCapsule.pathId]));
+ assert.equal(owner.worldGeometryVerified,false);assert.equal(owner.physicsOverlapParity,false);
+ const init=instructions(castMethod(c,'Enemy','_InitPhysics'));
+ assert.ok(init.some(i=>i.rva===0x81168d&&i.operands==='0x185f1e240'));
+ assert.ok(init.some(i=>i.rva===0x8116ae&&i.operands==='0x185a3da20'));
+ assert.ok(init.some(i=>i.rva===0x8116b8&&i.operands==='qword ptr [rsi + 0x3f0], rax'));
+ assert.ok(instructions(castMethod(c,'Enemy','get_ColliderRadius')).some(i=>
+  i.rva===0x813974&&i.operands==='rax, qword ptr [rbx + 0x3f0]'));
+ assert.ok(instructions(castMethod(c,'Map','WorldToMapPositionV3')).some(i=>
+  i.rva===0x63bba4&&i.operands==='0x185ece320'));
 });
 
 test('native projectile source lock checks cached UID and destroyed/null state across allocation and recycling',()=>{

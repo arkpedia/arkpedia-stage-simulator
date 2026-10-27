@@ -21,6 +21,8 @@ for name, namespace, names in [
     ('TargetOptions', 'Torappu.Battle', ['Init', 'VerifyTargetWithoutCheckingTargetSide']),
     ('BattleUtil', 'Torappu.Battle', ['GetLayerMask']),
     ('Entity', 'Torappu.Battle', ['OnProjectileSelectTargets']),
+    ('Enemy', 'Torappu.Battle', ['_InitPhysics', 'get_ColliderRadius']),
+    ('Map', 'Torappu.Battle', ['WorldToMapPositionV3']),
 ]:
     t = c['type_row'](name, namespace)
     for name in names:
@@ -105,6 +107,63 @@ assert sort['instantiations']['class']['arguments'][0]['name'] == 'Entity'
 mp = v['method_start'] + sort['definition']['index'] * 32
 assert struct.unpack_from('<H', v['m'], mp + 30)[0] == 0
 
+# Bind the query's actual generic usage, rather than inferring parent lookup
+# from Unity's attached-rigidbody relationship.
+component_queries = []
+for caller, load_rva, expected in [
+    ('FindTargets_DISPOSE', 0x731c53, 'Entity'),
+    ('Enemy._InitPhysics', 0x81152d, 'Rigidbody2D'),
+    ('Enemy._InitPhysics', 0x8115e3, 'Collider2D'),
+]:
+    p = v['offset'](base + load_rva)
+    assert b[p:p + 3] == bytes.fromhex('488b15')
+    slot = load_rva + 7 + struct.unpack_from('<i', b, p + 3)[0]
+    encoded = v['quad'](b, v['offset'](base + slot))
+    assert encoded >> 29 == 6
+    spec = priority['specification']((encoded & 0x1ffffffe) >> 1)
+    assert spec['declaringType'] == 'Component' and spec['definition']['name'] == 'GetComponent'
+    assert spec['instantiations']['method']['arguments'][0]['name'] == expected
+    component_queries.append({**spec, 'caller': caller, 'callerLoadRva': load_rva,
+                              'encodedUsage': encoded, 'concreteContextVerified': False})
+
+miner_path = 'data/candidates/arkpedia-ch16-miner-source.json'
+miner = json.loads((ROOT / miner_path).read_bytes())
+miner_prefab = 'dyn/battle/prefabs/enemies/enemy_3010_mcreep.prefab'
+miner_rows = miner['prefabs'][miner_prefab]
+miner_geometry = {}
+for role, path_id, kind in [
+    ('root', '5644796134861044698', 'GameObject'),
+    ('transform', '5122364892917791706', 'Transform'),
+    ('trigger', '4604174670646148058', 'CircleCollider2D'),
+    ('rigidbody', '8259759216037133274', 'Rigidbody2D'),
+    ('collisionHolder', '8685857770053630938', 'GameObject'),
+    ('collisionTransform', '7561822508265110490', 'Transform'),
+    ('collisionCapsule', '-8609449613250790438', 'CapsuleCollider2D'),
+    ('entity', '3577167244923435994', 'MonoBehaviour'),
+]:
+    row = c['unique'](lambda r: r['pathId'] == path_id, miner_rows)
+    assert row['componentType'] == kind and v['sha'](row['originalJson'].encode()) == row['sha256']
+    miner_geometry[role] = row
+native = {key: json.loads(row['originalJson']) for key, row in miner_geometry.items()}
+root_id = miner_geometry['root']['pathId']
+assert native['root']['m_Layer'] == 28
+assert native['trigger']['m_GameObject']['m_PathID'] == root_id
+assert native['rigidbody']['m_GameObject']['m_PathID'] == root_id
+assert native['entity']['m_GameObject']['m_PathID'] == root_id
+assert native['trigger']['m_Radius'] == 0.10000000149011612
+assert native['trigger']['m_Offset'] == {'x': 0, 'y': 0}
+assert native['trigger']['m_IsTrigger'] and native['trigger']['m_Enabled'] == 1
+assert native['collisionTransform']['m_Father']['m_PathID'] == miner_geometry['transform']['pathId']
+assert {r['component']['m_PathID'] for r in native['collisionHolder']['m_Component']} == {
+    miner_geometry['collisionTransform']['pathId'], miner_geometry['collisionCapsule']['pathId']}
+entity_binding = c['unique'](lambda r: r['prefab'] == miner_prefab and
+    r['componentPathId'] == miner_geometry['entity']['pathId'], bindings['bindings'])
+entity_script = json.loads(bindings['scripts'][entity_binding['scriptPathId']]['originalJson'])
+assert entity_binding['componentSha256'] == miner_geometry['entity']['sha256']
+assert (entity_script['m_ClassName'], entity_script['m_Namespace']) == ('Enemy', 'Torappu.Battle')
+enemy = c['type_row']('Enemy', 'Torappu.Battle')
+assert any(t['name'] == 'Entity' and t['namespace'] == 'Torappu.Battle' for t in c['lineage'](enemy))
+
 result = {
     'schemaVersion': 1,
     'scope': 'Static original arrival collider and native query pipeline; no physics/frame/cross-version parity or admission.',
@@ -112,17 +171,24 @@ result = {
     'nativeFiles': v['pin']['files'], 'imageBase': base, 'metadataVersion': 29,
     'sources': {p: {'path': p, 'sha256': v['sha']((ROOT / p).read_bytes())} for p in [
         'data/arkpedia-global-windows-client-source.json', graph_path, binding_path,
-        'data/candidates/arkpedia-windows-filter-priority-source.json']},
+        'data/candidates/arkpedia-windows-filter-priority-source.json', miner_path]},
     'prefabScriptBridges': bridges, 'geometry': geometry, 'targetOptionFields': option_fields,
     'unmatchedTargetOptions': unmatched_options, 'targetOptionParity': False,
     'methods': methods, 'layerMaskLeaf': layer_leaf,
     'deterministicSort': {**sort, 'callerLoadRva': load, 'encodedUsage': usage, 'parameterCount': 0, 'concreteContextVerified': False},
     'queryLimit': 128,
+    'componentQueries': component_queries,
+    'minerColliderOwnership': {'prefab': miner_prefab, 'geometry': miner_geometry,
+        'entityBinding': entity_binding, 'entityScript': entity_script,
+        'enemyLineage': [{'name': t['name'], 'namespace': t['namespace'], 'index': t['index']}
+                         for t in c['lineage'](enemy)],
+        'worldGeometryVerified': False, 'physicsOverlapParity': False},
     'review': [
         'The original arrival range is a CircleRange on the same root as an enabled trigger CircleCollider2D: local radius1, offset0 and unit root scale. This is authored local geometry, not proof of final runtime world radius, target-body geometry or collider ordering.',
         'FindTargets_DISPOSE obtains a side layer mask, queries actual collider overlaps, resolves entities, checks native validity and selectability, deduplicates by instanceUid, then runs TargetOptions.VerifyTargetWithoutCheckingTargetSide and an optional predicate before adding each UID/entity. Collection stops at128 before optional deterministic List<Entity>.Sort; sorting all possible targets before truncation would change selection. Concrete generic comparer dispatch remains unverified.',
         'HitBehaviour.OnProjectileReached performs its overlap query only when onlyCheckHitWhenReachTarget is enabled. It notifies a still-valid source through Entity.OnProjectileSelectTargets when the found count is positive, then forwards each candidate to DealHitTarget. Selected ignoreCamouflage=true disables that extra rejection; exceptSource, exceptTraceTarget and onlyTraceTarget are false. Native layer masks, target geometry, dynamic range scaling and current target options remain integration obligations.',
-        'The original nested TargetOptions contains ignoreMotionMode=0 absent from the Windows struct. CircleRange._useBlackboardRangeId=0 and HitBehaviour._exceptFlyCharacter=0 also have no matching Windows fields. None of these zero-valued differences proves inertness or full layout/runtime parity.'
+        'The original nested TargetOptions contains ignoreMotionMode=0 absent from the Windows struct. CircleRange._useBlackboardRangeId=0 and HitBehaviour._exceptFlyCharacter=0 also have no matching Windows fields. None of these zero-valued differences proves inertness or full layout/runtime parity.',
+        'The query uses same-component GetComponent<Entity>, not parent lookup. The original miner root contains the script-bound Enemy, Rigidbody2D and enabled radius0.1 trigger; its child collision capsule has only a Transform and CapsuleCollider2D, so attached-rigidbody ancestry alone does not make that child an Entity hit body. Enemy._InitPhysics reads the root circle radius into its main-trigger radius field. This does not prove runtime transform scale or Unity physics boundary tolerance.'
     ]}
 serialized = json.dumps(result, ensure_ascii=False, indent=1) + '\n'
 out = ROOT / 'data/candidates/arkpedia-windows-fear-area-source.json'
