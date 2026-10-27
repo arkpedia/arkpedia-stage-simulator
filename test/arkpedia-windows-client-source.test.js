@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,219);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,220);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -531,6 +531,17 @@ test('context snapshot source binds distinct capture/push orders and closed refe
   'rcx, qword ptr [rdi + 0x48]','rcx, qword ptr [rdi + 0x58]'].entries())at(duplicate,q.pushFieldReads[index],args);
  for(const [index,target]of ['0x184be7ef0','0x184be7ef0','0x184be7ef0','0x18490b650','0x18490b820','0x184be7ef0','0x184be7ef0','0x18490b650','0x18490b790','0x184be7ef0'].entries())at(duplicate,q.pushCalls[index],target);
  assert.equal(q.nativeContextStackEffectsVerified,false);assert.equal(q.nativeNestedValueCopiesVerified,false);assert.equal(q.liveContextSnapshotsVerified,false);
+});
+
+test('BuffData.DeepClone source binds the complete Windows field layout and distinct nested-copy phases',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.newBuff.buffDataClone,m=c.methods.find(m=>m.index===q.methodIndex);assert.equal(m.type,'BuffData');assert.equal(m.name,'DeepClone');assert.equal(m.entryRva,0x225cbc0);
+ assert.equal(q.fields.length,37);assert.equal(q.scalarCopies.length,34);assert.deepEqual(new Set(q.fields.map(f=>f.name)),new Set([...q.scalarCopies.map(f=>f.field),'attributes','priorityBBKeys','blackboard']));
+ assert.equal(q.fields.some(f=>f.name==='isGroundBoundable'||f.name==='remainingTimeKey'),false);assert.deepEqual(q.scalarCopies.filter(f=>f.kind==='byte').map(f=>[f.field,f.offset]),[['statusResistable',39],['lifeTimeType',112],['triggerLifeType',132]]);
+ for(const copy of q.scalarCopies){const read=instructions(m).find(i=>i.rva===copy.readRva),write=instructions(m).find(i=>i.rva===copy.writeRva);assert.equal(q.fields.find(f=>f.name===copy.field).offset,copy.offset);assert.ok(read.operands.endsWith('[rdi + 0x'+copy.offset.toString(16)+']'));assert.equal(write.mnemonic,'mov');assert.ok(copy.readRva<copy.writeRva);}
+ const at=(rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args),'BuffData.DeepClone instruction '+rva.toString(16));
+ for(const [key,args]of [['allocateCallRva','0x180410630'],['attributeCloneCallRva','0x182161640'],['attributeWriteRva','qword ptr [rbx + 0x10], rax'],['priorityKeysReadRva','rcx, qword ptr [rdi + 0xa0]'],['priorityCloneCallRva','0x1835dd780'],['priorityCastCallRva','0x18040ffa0'],['priorityCastFailureRva','0x18040ffd0'],['priorityKeysWriteRva','qword ptr [rcx], rax'],['blackboardProbeReadRva','rcx, qword ptr [rdi + 0xb0]'],['blackboardProbeCallRva','0x183f62450'],['blackboardCaptureRva','rsi, qword ptr [rdi + 0xb0]'],['blackboardAllocateCallRva','0x180410630'],['blackboardCopyCallRva','0x182167de0'],['blackboardWriteRva','qword ptr [rcx], rdi']])at(q[key],args);
+ assert.ok(q.attributeWriteRva<q.scalarCopies[0].readRva&&q.priorityKeysWriteRva<q.scalarCopies.at(-2).readRva&&q.scalarCopies.at(-1).writeRva<q.blackboardProbeReadRva);assert.ok(q.blackboardCaptureRva<q.blackboardAllocateCallRva&&q.blackboardAllocateCallRva<q.blackboardCopyCallRva);
+ for(const name of ['nativeConstructorEffectsVerified','nativeAttributeCloneEffectsVerified','nativeArrayCloneAndCastVerified','nativeBlackboardCopyVerified','liveBuffDataCloneVerified'])assert.equal(q[name],false);
 });
 
 test('DataPair list growth source binds specialized bodies, RGCTX dispatch and copy/publication order',()=>{

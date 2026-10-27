@@ -57,6 +57,61 @@ import {fearProjectileBuffDatabase} from '../server/sim/content/chapter16-fear-b
 import {fearProjectileBlackboardMerge} from '../server/sim/content/chapter16-fear-blackboard-merge.js';
 import {fearProjectileDataPairLists} from '../server/sim/content/chapter16-fear-blackboard-list.js';
 import {fearProjectileDataPairListGrowth} from '../server/sim/content/chapter16-fear-blackboard-list-growth.js';
+import {fearProjectileBuffDataClone} from '../server/sim/content/chapter16-fear-buff-data-clone.js';
+
+function buffDataCloneFixture(){
+ const evidence=JSON.parse(readFileSync(new URL('../data/candidates/arkpedia-windows-fear-self-death-source.json',import.meta.url),'utf8')).modeSwitch.buffNotification.newBuff.buffDataClone,
+  source={attributes:{flags:['stun']},priorityBBKeys:['duration'],blackboard:null},target={},events=[],lists=dataPairGrowthFixture();
+ for(const [index,field]of evidence.scalarCopies.entries())source[field.field]=field.kind==='bool'?true:field.kind==='byte'?255:field.kind==='string'?'source:'+field.field:field.kind==='float'?1/3:index-17;
+ source.blackboard=lists.list([lists.pair('ATK',1)]);
+ const options={allocateData:()=>{events.push('allocate-data');return target;},initializeData:value=>{assert.equal(value,target);events.push('initialize-data');value.blackboard=null;},
+  cloneAttributes:value=>{events.push('attributes');assert.equal(value,source.attributes);return{flags:[...value.flags]};},clonePriorityKeys:value=>{events.push('keys');return value.slice();},castPriorityKeys:value=>{events.push('cast');return value;},
+  isNullOrEmpty:value=>{events.push('probe');return value==null||value._size===0;},allocateBlackboard:()=>{events.push('allocate-board');return{_items:null,_size:0,_version:0};},
+  initializeBlackboard:(value,from)=>{events.push('copy-board');value._items=from._items.slice(0,from._size).map(pair=>({...pair}));value._size=from._size;},writeBarrier:(_target,field)=>events.push(['barrier',field])};
+ return{evidence,source,target,events,lists,options,clone:()=>fearProjectileBuffDataClone(options)};
+}
+test('BuffData.DeepClone copies exactly the pinned layout with typed scalars and detached nested storage',()=>{
+ const f=buffDataCloneFixture();f.source.isGroundBoundable=true;f.source.remainingTimeKey='other-version';assert.equal(f.clone()(f.source),f.target);
+ for(const field of f.evidence.scalarCopies)assert.equal(f.target[field.field],field.kind==='float'?Math.fround(f.source[field.field]):f.source[field.field]);
+ assert.deepEqual(f.target.attributes,f.source.attributes);assert.notEqual(f.target.attributes,f.source.attributes);assert.notEqual(f.target.attributes.flags,f.source.attributes.flags);assert.deepEqual(f.target.priorityBBKeys,f.source.priorityBBKeys);assert.notEqual(f.target.priorityBBKeys,f.source.priorityBBKeys);
+ assert.notEqual(f.target.blackboard,f.source.blackboard);assert.notEqual(f.target.blackboard._items[0],f.source.blackboard._items[0]);assert.equal('isGroundBoundable'in f.target,false);assert.equal('remainingTimeKey'in f.target,false);assert.equal(Object.keys(f.target).length,37);
+});
+test('BuffData.DeepClone allocates and initializes before dereferencing source attributes',()=>{
+ const f=buffDataCloneFixture();assert.throws(()=>f.clone()(null),/null native object/);assert.deepEqual(f.events,['allocate-data','initialize-data']);
+ const g=buffDataCloneFixture();g.source.attributes=null;assert.throws(()=>g.clone()(g.source),/null native object/);assert.deepEqual(g.events,['allocate-data','initialize-data']);assert.equal(g.target.buffKey,undefined);
+});
+test('BuffData.DeepClone rereads later scalar fields after earlier reference barriers',()=>{
+ const f=buffDataCloneFixture();f.options.writeBarrier=(_target,field)=>{if(field==='attributes')f.source.buffKey='after-attributes';if(field==='buffKey')f.source.templateKey='after-key';};f.clone()(f.source);
+ assert.equal(f.target.buffKey,'after-attributes');assert.equal(f.target.templateKey,'after-key');
+});
+for(const state of ['null input','null cloned array','failed cast'])test('BuffData.DeepClone priority-key branch preserves '+state,()=>{
+ const f=buffDataCloneFixture();if(state==='null input')f.source.priorityBBKeys=null;if(state==='null cloned array')f.options.clonePriorityKeys=()=>null;if(state==='failed cast')f.options.castPriorityKeys=()=>null;
+ if(state==='failed cast'){assert.throws(()=>f.clone()(f.source),/failed native array cast/);assert.equal(f.target.priorityBBKeys,undefined);assert.equal(f.events.includes('probe'),false);}
+ else{f.clone()(f.source);assert.equal(f.target.priorityBBKeys,null);assert.equal(f.events.includes('cast'),false);if(state==='null input')assert.equal(f.events.includes('keys'),false);}
+});
+test('BuffData.DeepClone copies suffix flags after priority cloning and preserves constructor blackboard for empty sources',()=>{
+ const f=buffDataCloneFixture(),defaultBoard={};f.source.blackboard=f.lists.list([]);f.source.stripBlackboardParamsWithBuffKey=false;f.source.enableInitDirectionFromSource=false;
+ f.options.initializeData=value=>{value.blackboard=defaultBoard;};f.options.clonePriorityKeys=value=>{f.source.stripBlackboardParamsWithBuffKey=true;f.source.enableInitDirectionFromSource=true;return value.slice();};
+ f.clone()(f.source);assert.equal(f.target.stripBlackboardParamsWithBuffKey,true);assert.equal(f.target.enableInitDirectionFromSource,true);assert.equal(f.target.blackboard,defaultBoard);assert.equal(f.events.includes('allocate-board'),false);
+});
+test('BuffData.DeepClone captures the current blackboard after probing but before allocation',()=>{
+ const f=buffDataCloneFixture(),captured=f.lists.list([f.lists.pair('captured')]),later=f.lists.list([f.lists.pair('later')]);f.options.isNullOrEmpty=()=>{f.source.blackboard=captured;return false;};
+ f.options.allocateBlackboard=()=>{f.source.blackboard=later;return{};};f.options.initializeBlackboard=(to,from)=>{assert.equal(from,captured);to.copied=true;};f.clone()(f.source);assert.equal(f.target.blackboard.copied,true);
+});
+test('BuffData.DeepClone permits a null nested attribute clone and keeps published copies after barrier failure',()=>{
+ const f=buffDataCloneFixture();f.options.cloneAttributes=()=>null;f.clone()(f.source);assert.equal(f.target.attributes,null);
+ const g=buffDataCloneFixture(),error=Error('barrier');g.options.writeBarrier=(_target,field)=>{if(field==='blackboard')throw error;};assert.throws(()=>g.clone()(g.source),actual=>actual===error);assert.notEqual(g.target.blackboard,g.source.blackboard);assert.equal(g.target.blackboard._size,1);
+});
+for(const phase of ['allocateData','initializeData','cloneAttributes','clonePriorityKeys','initializeBlackboard'])test('BuffData.DeepClone propagates '+phase+' failure without returning a partial clone',()=>{
+ const f=buffDataCloneFixture(),error=Error(phase);f.options[phase]=()=>{throw error;};assert.throws(()=>f.clone()(f.source),actual=>actual===error);if(phase==='initializeBlackboard'){assert.equal(f.target.blackboard,null);assert.equal(f.target.buffKey,f.source.buffKey);}
+});
+for(const empty of [false,true])test('BuffDB clone/merge composes typed DataPair storage and growth with '+(empty?'null':'populated')+' source blackboard',()=>{
+ const f=buffDataCloneFixture(),m=f.lists;f.source.templateKey='empty';if(empty)f.source.blackboard=null;const original=f.source.blackboard;m.options.addWithResize=m.growth().addWithResize;const storage=m.api(),out={value:null},template={},
+  merge=fearProjectileBlackboardMerge({allocateList:()=>({_items:null,_size:0,_version:0}),initializeList:storage.initialize,readCount:storage.readCount,readItem:storage.getItem,setItem:storage.setItem,addItem:storage.add,
+   compareIgnoreCase:(a,b)=>a.toLowerCase()===b.toLowerCase()?0:1}),database=fearProjectileBuffDatabase({tryGetBuffData:(_key,ref)=>{ref.value=f.source;return true;},tryGetTemplate:(key,ref)=>{assert.equal(key,'empty');ref.value=template;return true;},deepClone:f.clone(),mergeBlackboard:merge});
+ assert.equal(database.tryGetKey('key',out,m.list([m.pair('atk',2),m.pair('HP',3)])),true);assert.equal(out.value.template,template);assert.equal(out.value.data,f.target);assert.notEqual(out.value.data,f.source);assert.equal(out.value.data.blackboard._size,2);
+ assert.deepEqual([storage.getItem(f.target.blackboard,0),storage.getItem(f.target.blackboard,1)],[m.pair('atk',2),m.pair('HP',3)]);assert.equal(f.source.blackboard,original);if(original!=null){assert.equal(original._size,1);assert.equal(storage.getItem(original,0).value,1);}
+});
 
 function dataPairGrowthFixture(){
  const f=dataPairListFixture(),allocations=[],elementClass={typeBits:-2146369536,flags132:0},arrayClass={rank:1,elementClass},unexpected=()=>{throw Error('unexpected DataPair array conversion');},

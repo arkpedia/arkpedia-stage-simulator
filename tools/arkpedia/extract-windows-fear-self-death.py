@@ -2101,6 +2101,44 @@ result['modeSwitch']['buffNotification']['newBuff']['predicateNodes'] = {
     'nativeAttributeQueryEffectsVerified': False, 'livePredicateNodeDispatchVerified': False,
 }
 context_stack_canonical = []
+data_clone_row = c['unique'](lambda r: r['index'] == 28664, data_type['methods'])
+data_clone_record = c['method'](data_type, data_clone_row)
+assert data_clone_record['entryRva'] == 0x225cbc0 and not any(m['index'] == 28664 for m in methods)
+methods.append(data_clone_record)
+data_clone_fields = [f for f in c['fields'](data_type) if not f['typeBits'] & 16]
+assert len(data_clone_fields) == 37
+clone_scalar_sites = []
+clone_instructions = [i for chunk in data_clone_record['chunks'] for i in chunk['instructions']]
+for name, kind, read_rva, write_rva in [
+    ('buffKey', 'string', 0x225cd4c, 0x225cd54), ('loadFromDB', 'bool', 0x225cd5c, 0x225cd64), ('isDurableBuff', 'bool', 0x225cd67, 0x225cd6b),
+    ('isDamageMissable', 'bool', 0x225cd6e, 0x225cd72), ('isSilenceable', 'bool', 0x225cd75, 0x225cd79), ('isStunnable', 'bool', 0x225cd7c, 0x225cd80),
+    ('isFreezable', 'bool', 0x225cd83, 0x225cd87), ('isLevitatable', 'bool', 0x225cd8a, 0x225cd8e), ('statusResistable', 'byte', 0x225cd91, 0x225cd95),
+    ('templateKey', 'string', 0x225cd98, 0x225cd9c), ('disableOverride', 'bool', 0x225cda5, 0x225cdad), ('overrideKey', 'string', 0x225cdb0, 0x225cdb4),
+    ('overrideType', 'int', 0x225cdbc, 0x225cdc3), ('maxStackCnt', 'int', 0x225cdc6, 0x225cdc9), ('refreshRemainingTimeWhenStackMax', 'bool', 0x225cdcc, 0x225cdd0),
+    ('clearAllStackCntWhenTimeUp', 'bool', 0x225cdd3, 0x225cdd7), ('maxValidStackCnt', 'int', 0x225cdda, 0x225cddd), ('independentCharacterSource', 'bool', 0x225cde0, 0x225cde4),
+    ('overrideEffectKey', 'string', 0x225cde7, 0x225cdeb), ('overrideOnEventPriority', 'bool', 0x225cdf3, 0x225cdfb), ('onEventPriority', 'int', 0x225cdfe, 0x225ce01),
+    ('audioSignal', 'string', 0x225ce04, 0x225ce08), ('lifeTimeType', 'byte', 0x225ce10, 0x225ce18), ('takeSnapshotWhenExtend', 'bool', 0x225ce1b, 0x225ce1f),
+    ('durationKey', 'string', 0x225ce22, 0x225ce26), ('lifeTime', 'float', 0x225ce2e, 0x225ce34), ('triggerLifeType', 'byte', 0x225ce3a, 0x225ce41),
+    ('triggerCnt', 'int', 0x225ce47, 0x225ce4d), ('triggerInterval', 'float', 0x225ce53, 0x225ce59), ('waitFirstTriggerInterval', 'bool', 0x225ce5f, 0x225ce66),
+    ('firstTriggerInterval', 'float', 0x225ce6c, 0x225ce72), ('priority', 'int', 0x225ce78, 0x225ce7e),
+    ('stripBlackboardParamsWithBuffKey', 'bool', 0x225ced0, 0x225ced7), ('enableInitDirectionFromSource', 'bool', 0x225cedd, 0x225cee4)]:
+    field = c['unique'](lambda f: f['name'] == name, data_clone_fields)
+    read = c['unique'](lambda i: i['rva'] == read_rva, clone_instructions)
+    write = c['unique'](lambda i: i['rva'] == write_rva, clone_instructions)
+    width = 'qword' if kind == 'string' else 'byte' if kind in ['bool', 'byte'] else 'dword'
+    register = 'rdx' if kind == 'string' else 'eax'
+    assert read['operands'] == f'{register}, {width} ptr [rdi + 0x{field["offset"]:x}]'
+    assert write['mnemonic'] == 'mov' and read_rva < write_rva
+    clone_scalar_sites.append({'field': name, 'kind': kind, 'offset': field['offset'], 'readRva': read_rva, 'writeRva': write_rva})
+assert len(clone_scalar_sites) == 34
+result['modeSwitch']['buffNotification']['newBuff']['buffDataClone'] = {
+    'methodIndex': 28664, 'fields': data_clone_fields, 'scalarCopies': clone_scalar_sites,
+    'allocateCallRva': 0x225cc38, 'attributeCloneCallRva': 0x225cd37, 'attributeWriteRva': 0x225cd3f,
+    'priorityKeysReadRva': 0x225ce84, 'priorityCloneCallRva': 0x225ce92, 'priorityCastCallRva': 0x225ceac, 'priorityCastFailureRva': 0x225cf72, 'priorityKeysWriteRva': 0x225cec8,
+    'blackboardProbeReadRva': 0x225cef1, 'blackboardProbeCallRva': 0x225cef8, 'blackboardCaptureRva': 0x225cf08, 'blackboardAllocateCallRva': 0x225cf0f,
+    'blackboardCopyCallRva': 0x225cf25, 'blackboardWriteRva': 0x225cf34,
+    'nativeConstructorEffectsVerified': False, 'nativeAttributeCloneEffectsVerified': False, 'nativeArrayCloneAndCastVerified': False, 'nativeBlackboardCopyVerified': False, 'liveBuffDataCloneVerified': False,
+}
 blackboard_growth_bodies = []
 for index, definition, name, entry in [(117464, 224983, 'AddWithResize', 0x451b700), (117474, 224998, 'EnsureCapacity', 0x450f350), (117528, 224970, 'set_Capacity', 0x4519de0)]:
     spec = priority['specification'](index)

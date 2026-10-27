@@ -1402,6 +1402,36 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
 
+### BuffData.DeepClone field identity and nested storage
+
+The220-method bundle adds the complete default BuffData.DeepClone body. All219
+prior ordinary records and earlier evidence remain unchanged. Metadata and
+instruction pins bind the exact37-field Windows layout,34 scalar/reference
+copies, attribute cloning, priority-array cloning/cast and optional blackboard
+construction. No fields absent from that pinned layout are silently copied.
+
+`fearProjectileBuffDataClone` allocates and invokes the constructor receiver
+before reading source attributes. It delegates attribute cloning, copies typed
+Boolean/byte-enum/Int32/Single fields in native order, and preserves nullable
+string references with their barrier calls. Priority keys are cloned and cast
+when present; null clone results remain null and failed casts abort before
+later phases. The suffix flags are read after priority cloning. Blackboard
+emptiness is probed, then the current source blackboard is captured before
+allocation and passed to the copy constructor. Empty blackboards preserve the
+constructor's destination default instead of sharing or assigning the source.
+
+Tests cover source-field changes at earlier barriers, null attributes, nullable
+attribute clone results, scalar widths, missing cross-version fields, priority
+cast/clone failures, blackboard capture timing and earlier copies retained after
+exceptions. BuffDB now composes this clone adapter with MergeTo, typed DataPair
+storage and growth for both populated and null source blackboards. Database
+source storage remains unchanged by the external merge. Constructor, nested
+attribute clone, array clone/cast and blackboard constructor effects remain
+explicit receivers; full controller/stage/frame parity is still unverified.
+All1327 focused native/fear/family/miner tests pass. All existing source/support/
+receipt/catalogue gates are unchanged and new stages remain test-only. This
+checkpoint stays local.
+
 ### List<DataPair> capacity growth and publication order
 
 All219 ordinary method records and all prior evidence remain unchanged. A new
