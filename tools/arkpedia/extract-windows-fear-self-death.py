@@ -1368,6 +1368,60 @@ result['modeSwitch']['buffNotification']['newBuff']['enabledUpdate'] = {
     'enableSetMeAsTargetRva': 0x39b5d7f, 'enableEventInputRva': 0x39b5d8b,
     'nativeModifierStorageVerified': False, 'nativeEnabledActionsVerified': False, 'liveEnabledUpdateVerified': False,
 }
+modifier_interface = c['type_row']('IAttributesModifier', '')
+modifier_slots = []
+for expected_slot, name in enumerate(['get_attributeMask', 'get_abnormalFlagMask', 'get_abnormalImmuneMask',
+    'get_abnormalAntiMask', 'get_abnormalComboMask', 'get_abnormalComboImmuneMask']):
+    row = c['unique'](lambda r: r['name'] == name, modifier_interface['methods'])
+    slot = struct.unpack_from('<H', v['m'], v['method_start'] + row['index'] * 32 + 28)[0]
+    assert slot == expected_slot
+    modifier_slots.append({**row, 'virtualSlot': slot})
+modifier_specs = []
+for load_rva, index, name in [(0x3957087, 237211, 'Add'), (0x3958607, 237214, 'Remove')]:
+    pos = v['offset'](v['image_base'] + load_rva)
+    assert v['b'][pos:pos + 3] == bytes.fromhex('4c8b05')
+    target = load_rva + 7 + struct.unpack_from('<i', v['b'], pos + 3)[0]
+    usage = v['quad'](v['b'], v['offset'](v['image_base'] + target))
+    assert usage >> 29 == 6 and (usage & 0x1ffffffe) >> 1 == index
+    spec = priority['specification'](index)
+    assert spec['declaringType'] == 'HashSet`1' and spec['definition']['name'] == name and spec['nativeMapping'] is None
+    assert spec['instantiations']['class']['arguments'][0]['typeIndex'] == modifier_interface['index']
+    modifier_specs.append({'loadRva': load_rva, 'encodedUsage': usage, 'specification': spec})
+modifier_type_loads = []
+for load_rva in [0x39570ae, 0x39570c0, 0x39570d5, 0x395716b, 0x3957183, 0x39571b4,
+                  0x395862e, 0x3958640, 0x3958655, 0x39586eb, 0x3958703, 0x3958734]:
+    pos = v['offset'](v['image_base'] + load_rva)
+    assert v['b'][pos:pos + 3] == bytes.fromhex('488b15')
+    target = load_rva + 7 + struct.unpack_from('<i', v['b'], pos + 3)[0]
+    usage = v['quad'](v['b'], v['offset'](v['image_base'] + target))
+    assert usage >> 29 == 1
+    ti = (usage & 0x1ffffffe) >> 1
+    tp = v['offset'](v['quad'](v['b'], v['type_table'] + ti * 8))
+    assert (v['uint'](v['b'], tp + 8) >> 16) & 255 == 18 and v['quad'](v['b'], tp) == modifier_interface['index']
+    modifier_type_loads.append({'loadRva': load_rva, 'encodedUsage': usage, 'typeIndex': ti, 'definitionIndex': modifier_interface['index']})
+modifier_targets = []
+for owner, name, entry in [(combo_type, 'PushMask', 0x3996140), (combo_type, 'PopMask', 0x3995fe0),
+    (attributes_type, 'MarkAttributeDirty', 0x3957e90), (attributes_type, '_CalculateAbnormalDirtyByModifier', 0x3958e30)]:
+    row = c['unique'](lambda r: r['name'] == name, owner['methods'])
+    assert v['pointer'](row) - v['image_base'] == entry
+    modifier_targets.append({'type': owner['name'], 'name': name, 'index': row['index'], 'entryRva': entry})
+result['modeSwitch']['buffNotification']['newBuff']['modifierMutation'] = {
+    'fields': [c['unique'](lambda f: f['name'] == name, c['fields'](attributes_type)) for name in
+        ['m_abnormalFlagModifiers', 'm_attributeModifiers', 'm_abnormalFlagsCounter', 'm_abnormalImmuneCounter', 'm_abnormalAntiCounter', 'm_abnormalComboMgr']],
+    'interface': {'name': modifier_interface['name'], 'index': modifier_interface['index'], 'slots': modifier_slots, 'typeLoads': modifier_type_loads},
+    'setSpecifications': modifier_specs, 'targets': modifier_targets,
+    'addSetCallRva': 0x3957091, 'addNullModifierTestRva': 0x3957096,
+    'addMaskCalls': [0x39570bb, 0x39570d0, 0x39570e4, 0x395717e, 0x3957195, 0x39571c0],
+    'addCounterWrites': [0x3957119, 0x395713c, 0x395715f], 'addFlagLimitRva': 0x3957166,
+    'addComboCaptureRva': 0x3957177, 'pushComboCallRva': 0x39571af, 'addAttributeSetCallRva': 0x3957205,
+    'addAttributeLimitRva': 0x395720c, 'addDirtyCallRva': 0x395721e, 'addDirtyLimitRva': 0x3957228, 'addAbnormalDirtyTailRva': 0x3957251,
+    'removeSetCallRva': 0x3958611, 'removeNullModifierTestRva': 0x3958616,
+    'removeMaskCalls': [0x395863b, 0x3958650, 0x3958664, 0x39586fe, 0x3958715, 0x3958740],
+    'removeCounterWrites': [0x3958699, 0x39586bc, 0x39586df], 'removeFlagLimitRva': 0x39586e6,
+    'removeComboCaptureRva': 0x39586f7, 'popComboCallRva': 0x395872f, 'removeAttributeSetCallRva': 0x3958785,
+    'removeAttributeLimitRva': 0x395878c, 'removeDirtyCallRva': 0x395879e, 'removeDirtyLimitRva': 0x39587a8, 'removeAbnormalDirtyTailRva': 0x39587d1,
+    'nativeSetEqualityVerified': False, 'nativeComboMutationVerified': False, 'nativeDirtyPropagationVerified': False, 'liveModifierMutationVerified': False,
+}
 for index in [147561, 147566, 147567, 147558, 147559, 147563, 147564, 147568, 147569]:
     spec = priority['specification'](index)
     assert spec['declaringTypeIndex'] == pool['index']

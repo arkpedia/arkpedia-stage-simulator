@@ -1402,6 +1402,42 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
 
+### Attribute modifier registration and removal
+
+The177-method source bundle now also binds AddModifier/RemoveModifier's exact
+HashSet<IAttributesModifier> Add/Remove specifications, all twelve interface
+type loads and six interface getter slots. Concrete generic mappings remain
+null. Field metadata binds the overall abnormal-modifier set, per-attribute
+sets, three signed Int16 counter arrays and combo manager. Caller anchors bind
+the44-flag and38-attribute loops, separate dirty pass, PushMask/PopMask and
+_CalculateAbnormalDirtyByModifier tail. These do not certify set equality,
+combo mutation or dirty propagation effects.
+
+`fearProjectileAttributeModifiers` performs the overall set operation before
+checking a null modifier. Only changed abnormal membership loads immune,
+anti and flag masks and updates the44 counter entries, in flag/immune/anti
+order per index, wrapping signed16 bits. It captures the combo manager before
+loading combo and combo-immune masks. Regardless of membership change, it then
+loads the current attribute mask, updates each selected per-attribute set,
+marks affected attributes dirty in a separate pass, and calculates abnormal
+dirty state. Duplicate adds and missing removes therefore retain the native
+per-attribute/dirty effects. Removal reads live masks; it does not invent a
+snapshot of the original registration. Reentrant calls remain independent.
+
+Tests cover changed/unchanged membership, both loop boundaries, mask/getter
+ordering, captured combo receivers, live per-attribute arrays, changed removal
+masks, signed counter overflow, partial null/bounds failures, nested registration,
+callback failure and lifecycle cancellation. Concrete enable/disable composition
+now updates counters observed by native abnormal-status and anti queries.
+All1031 focused native/fear/family/miner tests pass; --check reproduces the
+177-method bundle. This checkpoint is local. Continuation40558189633 at
+approved0524e2b1 passed on attempt2; full40558578137 remains active.
+
+Native HashSet equality/storage, combo PushMask/PopMask recalculation, actual
+dirty propagation, action execution, snapshots, OnBuffExtend and full controller/
+stage/frame integration remain open. Source/support/receipt/catalogue gates are
+unchanged and all new stages remain test-only.
+
 ### Buff manual, actual and late activation
 
 The177-method bundle additionally retains _UpdateIsEnabledIfNotFinished,

@@ -328,6 +328,33 @@ test('enabled source preserves finished/manual/actual/late fields, suppression o
  assert.equal(q.nativeModifierStorageVerified,false);assert.equal(q.nativeEnabledActionsVerified,false);assert.equal(q.liveEnabledUpdateVerified,false);
 });
 
+test('modifier mutation source binds interface slots, concrete membership specifications, Int16 counters and dirty ordering',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.newBuff.modifierMutation,
+  add=castMethod(c,'Attributes','AddModifier'),remove=castMethod(c,'Attributes','RemoveModifier');
+ const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args),`${rva.toString(16)} ${args}`);
+ assert.deepEqual(q.fields.map(f=>[f.name,f.offset]),[['m_abnormalFlagModifiers',0x10],['m_attributeModifiers',0x18],['m_abnormalFlagsCounter',0x20],
+  ['m_abnormalImmuneCounter',0x28],['m_abnormalAntiCounter',0x30],['m_abnormalComboMgr',0x38]]);
+ assert.equal(q.interface.name,'IAttributesModifier');assert.deepEqual(q.interface.slots.map(s=>[s.name,s.virtualSlot]),[
+  ['get_attributeMask',0],['get_abnormalFlagMask',1],['get_abnormalImmuneMask',2],['get_abnormalAntiMask',3],['get_abnormalComboMask',4],['get_abnormalComboImmuneMask',5]]);
+ assert.equal(q.interface.typeLoads.length,12);for(const load of q.interface.typeLoads){assert.equal(load.encodedUsage>>>29,1);assert.equal(load.definitionIndex,q.interface.index);}
+ assert.deepEqual(q.setSpecifications.map(s=>s.specification.index),[237211,237214]);for(const s of q.setSpecifications){assert.equal(s.encodedUsage>>>29,6);
+  assert.equal(s.specification.declaringType,'HashSet`1');assert.equal(s.specification.nativeMapping,null);assert.equal(s.specification.instantiations.class.arguments[0].name,'IAttributesModifier');}
+ assert.deepEqual(q.targets.map(t=>[t.name,t.entryRva]),[['PushMask',0x3996140],['PopMask',0x3995fe0],['MarkAttributeDirty',0x3957e90],['_CalculateAbnormalDirtyByModifier',0x3958e30]]);
+ at(add,q.addSetCallRva,'0x18434f3f0');at(add,q.addNullModifierTestRva,'r15, r15');
+ for(const rva of q.addMaskCalls)at(add,rva,'0x180005250');for(const rva of q.addCounterWrites)at(add,rva,'word ptr [rax + rcx*2 + 0x20]');
+ for(const rva of q.addCounterWrites)assert.equal(instructions(add).find(i=>i.rva===rva).mnemonic,'inc');
+ at(add,q.addFlagLimitRva,'edx, 0x2c');at(add,q.addComboCaptureRva,'rbx, qword ptr [rsi + 0x38]');at(add,q.pushComboCallRva,'0x183996140');
+ at(add,q.addAttributeSetCallRva,'0x18434f3f0');at(add,q.addAttributeLimitRva,'ebx, 0x26');at(add,q.addDirtyCallRva,'0x183957e90');
+ at(add,q.addDirtyLimitRva,'ebp, 0x26');at(add,q.addAbnormalDirtyTailRva,'0x183958e30');
+ at(remove,q.removeSetCallRva,'0x18436f4c0');at(remove,q.removeNullModifierTestRva,'r15, r15');
+ for(const rva of q.removeMaskCalls)at(remove,rva,'0x180005250');for(const rva of q.removeCounterWrites)at(remove,rva,'word ptr [rax + rcx*2 + 0x20]');
+ for(const rva of q.removeCounterWrites)assert.equal(instructions(remove).find(i=>i.rva===rva).mnemonic,'dec');
+ at(remove,q.removeFlagLimitRva,'edx, 0x2c');at(remove,q.removeComboCaptureRva,'rbx, qword ptr [rsi + 0x38]');at(remove,q.popComboCallRva,'0x183995fe0');
+ at(remove,q.removeAttributeSetCallRva,'0x18436f4c0');at(remove,q.removeAttributeLimitRva,'ebx, 0x26');at(remove,q.removeDirtyCallRva,'0x183957e90');
+ at(remove,q.removeDirtyLimitRva,'ebp, 0x26');at(remove,q.removeAbnormalDirtyTailRva,'0x183958e30');
+ assert.equal(q.nativeSetEqualityVerified,false);assert.equal(q.nativeComboMutationVerified,false);assert.equal(q.nativeDirtyPropagationVerified,false);assert.equal(q.liveModifierMutationVerified,false);
+});
+
 test('native admission source binds signed Int16 counters, combo fallback and Enemy raw-WALK levitation',()=>{
  const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.newBuff.admissionGates;
  const anti=castMethod(c,'BuffContainer','_CheckThroughBuffAbnormalAnti'),levitate=castMethod(c,'BuffContainer','_CheckThroughLevitateBuffCondition'),status=castMethod(c,'BuffContainer','_CheckThroughBuffStatusResistableAnti');

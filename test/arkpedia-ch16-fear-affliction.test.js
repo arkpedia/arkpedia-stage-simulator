@@ -35,6 +35,7 @@ import {fearProjectileNewBuff} from '../server/sim/content/chapter16-fear-buff-n
 import {fearProjectileAttributeStatus,fearProjectileBuffAdmission,fearProjectileComboFlag} from '../server/sim/content/chapter16-fear-buff-admission.js';
 import {fearProjectileEnsureOverrideGroup,fearProjectileOverrideGroup} from '../server/sim/content/chapter16-fear-buff-group.js';
 import {fearProjectileBuffEnabled} from '../server/sim/content/chapter16-fear-buff-enabled.js';
+import {fearProjectileAttributeModifiers} from '../server/sim/content/chapter16-fear-buff-modifiers.js';
 import {fearProjectileBuffRecyclePool,fearProjectileDefaultBuffPool} from '../server/sim/content/chapter16-fear-buff-pool.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
@@ -47,6 +48,87 @@ import { chapter16Shadow } from '../server/sim/content/chapter16-shadow.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
 const parentKey='feawpj_a[mcreep_fear]';
 const fpOne=1n<<32n;
+
+function modifierFixture(){
+ const attributes={m_abnormalFlagModifiers:new Set(),m_attributeModifiers:Array.from({length:38},()=>new Set()),
+  m_abnormalFlagsCounter:Array(44).fill(0),m_abnormalImmuneCounter:Array(44).fill(0),m_abnormalAntiCounter:Array(44).fill(0),m_abnormalComboMgr:{}},
+  modifier={masks:[5n,2n,4n,8n,16n,32n]},events=[],state={active:true};
+ const options={attributes,isActive:()=>state.active,addToSet:(set,value)=>{events.push('add-set');const absent=!set.has(value);set.add(value);return absent;},
+  removeFromSet:(set,value)=>{events.push('remove-set');return set.delete(value);},readMask:(value,slot)=>{events.push(['mask',slot]);return value.masks[slot];},
+  pushCombo:(manager,combo,immune)=>events.push(['push',manager,combo,immune]),popCombo:(manager,combo,immune)=>events.push(['pop',manager,combo,immune]),
+  markAttributeDirty:(attrs,index)=>{assert.equal(attrs,attributes);events.push(['dirty',index]);},
+  calculateAbnormalDirty:(attrs,value)=>{assert.equal(attrs,attributes);assert.equal(value,modifier);events.push('abnormal-dirty');}};
+ return{attributes,modifier,events,state,options,adapter:()=>fearProjectileAttributeModifiers(options)};
+}
+test('modifier addition applies abnormal counters, combo masks, per-attribute sets and then dirty propagation',()=>{
+ const f=modifierFixture();f.adapter().add(f.modifier);
+ assert.equal(f.attributes.m_abnormalFlagsCounter[1],1);assert.equal(f.attributes.m_abnormalImmuneCounter[2],1);assert.equal(f.attributes.m_abnormalAntiCounter[3],1);
+ assert.equal(f.attributes.m_attributeModifiers[0].has(f.modifier),true);assert.equal(f.attributes.m_attributeModifiers[2].has(f.modifier),true);
+ assert.deepEqual(f.events,['add-set',['mask',2],['mask',3],['mask',1],['mask',4],['mask',5],['push',f.attributes.m_abnormalComboMgr,16n,32n],
+  ['mask',0],'add-set','add-set',['dirty',0],['dirty',2],'abnormal-dirty']);
+ f.events.length=0;f.adapter().remove(f.modifier);assert.equal(f.attributes.m_abnormalFlagsCounter[1],0);assert.equal(f.attributes.m_abnormalImmuneCounter[2],0);assert.equal(f.attributes.m_abnormalAntiCounter[3],0);
+ assert.equal(f.attributes.m_attributeModifiers[0].size,0);assert.equal(f.attributes.m_abnormalFlagModifiers.size,0);assert.ok(f.events.some(x=>Array.isArray(x)&&x[0]==='pop'));
+});
+for(const method of ['add','remove'])test(method+' with unchanged abnormal membership still mutates attribute sets and dirties matching attributes',()=>{
+ const f=modifierFixture();if(method==='add')f.attributes.m_abnormalFlagModifiers.add(f.modifier);
+ f.adapter()[method](f.modifier);assert.deepEqual(f.events.filter(x=>Array.isArray(x)&&x[0]==='mask'),[['mask',0]]);
+ assert.deepEqual(f.events.filter(x=>Array.isArray(x)&&x[0]==='dirty'),[['dirty',0],['dirty',2]]);assert.equal(f.events.at(-1),'abnormal-dirty');
+ assert.equal(f.attributes.m_abnormalFlagsCounter[1],0);
+});
+test('modifier masks process 44 abnormal flags and 38 attributes, excluding all higher bits',()=>{
+ const f=modifierFixture();f.modifier.masks=[(1n<<37n)|(1n<<38n)|(1n<<63n),(1n<<43n)|(1n<<44n)|(1n<<63n),0n,0n,0n,0n];
+ f.adapter().add(f.modifier);assert.equal(f.attributes.m_abnormalFlagsCounter[43],1);assert.equal(f.attributes.m_abnormalFlagsCounter.filter(x=>x!==0).length,1);
+ assert.equal(f.attributes.m_attributeModifiers[37].has(f.modifier),true);assert.deepEqual(f.events.filter(x=>Array.isArray(x)&&x[0]==='dirty'),[['dirty',37]]);
+});
+test('modifier counter increments and decrements wrap signed Int16 rather than clamping',()=>{
+ const f=modifierFixture();f.attributes.m_abnormalFlagsCounter[1]=32767;f.adapter().add(f.modifier);assert.equal(f.attributes.m_abnormalFlagsCounter[1],-32768);
+ f.adapter().remove(f.modifier);assert.equal(f.attributes.m_abnormalFlagsCounter[1],32767);
+ const query=fearProjectileAttributeStatus({attributes:f.attributes,isActive:()=>true});assert.equal(query.getAbnormalAnti(3),false);
+});
+test('modifier mutation captures combo receiver before live mask getters and reads attribute mask afterward',()=>{
+ const f=modifierFixture(),old=f.attributes.m_abnormalComboMgr,replacement={},read=f.options.readMask;
+ f.options.readMask=(value,slot)=>{if(slot===4){f.attributes.m_abnormalComboMgr=replacement;value.masks[0]=8n;}return read(value,slot);};
+ f.adapter().add(f.modifier);assert.ok(f.events.some(x=>Array.isArray(x)&&x[0]==='push'&&x[1]===old));assert.equal(f.attributes.m_attributeModifiers[3].has(f.modifier),true);
+ assert.equal(f.attributes.m_attributeModifiers[0].size,0);
+});
+test('modifier removal uses masks at removal time instead of inventing registration snapshots',()=>{
+ const f=modifierFixture();f.adapter().add(f.modifier);f.modifier.masks=[0n,4n,0n,0n,0n,0n];f.adapter().remove(f.modifier);
+ assert.equal(f.attributes.m_abnormalFlagsCounter[1],1);assert.equal(f.attributes.m_abnormalFlagsCounter[2],-1);assert.equal(f.attributes.m_attributeModifiers[0].has(f.modifier),true);
+});
+test('modifier null input fails after the overall set operation, retaining its side effect',()=>{
+ const f=modifierFixture();assert.throws(()=>f.adapter().add(null),/null native/);assert.equal(f.attributes.m_abnormalFlagModifiers.has(null),true);assert.deepEqual(f.events,['add-set']);
+});
+test('modifier mutation retains earlier counter writes on bounds failure and checks null combo after both getters',()=>{
+ const f=modifierFixture();f.attributes.m_abnormalImmuneCounter=[];assert.throws(()=>f.adapter().add(f.modifier),/outside/);
+ assert.equal(f.attributes.m_abnormalFlagsCounter[1],1);assert.equal(f.events.some(x=>Array.isArray(x)&&x[0]==='push'),false);
+ const g=modifierFixture();g.attributes.m_abnormalComboMgr=null;assert.throws(()=>g.adapter().add(g.modifier),/null native/);
+ assert.deepEqual(g.events.filter(x=>Array.isArray(x)&&x[0]==='mask'),[['mask',2],['mask',3],['mask',1],['mask',4],['mask',5]]);
+});
+test('modifier per-attribute set mutations all precede dirty calls and reread the set array after effects',()=>{
+ const f=modifierFixture(),old=f.attributes.m_attributeModifiers,replacement=Array.from({length:38},()=>new Set()),add=f.options.addToSet;
+ f.options.addToSet=(set,value)=>{const result=add(set,value);if(set===old[0])f.attributes.m_attributeModifiers=replacement;return result;};
+ f.options.markAttributeDirty=(_attrs,index)=>{assert.equal(old[0].has(f.modifier),true);assert.equal(replacement[2].has(f.modifier),true);f.events.push(['dirty',index]);};
+ f.adapter().add(f.modifier);assert.equal(old[2].size,0);assert.equal(replacement[2].has(f.modifier),true);
+});
+test('nested modifier registration does not double abnormal counts, while each invocation propagates dirty state',()=>{
+ const f=modifierFixture(),read=f.options.readMask;let adapter,nested=false;
+ f.options.readMask=(value,slot)=>{if(!nested){nested=true;adapter.add(value);}return read(value,slot);};adapter=f.adapter();adapter.add(f.modifier);
+ assert.equal(f.attributes.m_abnormalFlagsCounter[1],1);assert.equal(f.events.filter(x=>x==='abnormal-dirty').length,2);
+});
+test('modifier mutation stops on lifecycle invalidation and keeps completed set changes on callback failure',()=>{
+ const f=modifierFixture(),add=f.options.addToSet;f.options.addToSet=(...args)=>{const result=add(...args);f.state.active=false;return result;};
+ assert.equal(f.adapter().add(f.modifier),null);assert.equal(f.attributes.m_abnormalFlagModifiers.has(f.modifier),true);assert.deepEqual(f.events,['add-set']);
+ const g=modifierFixture();g.options.markAttributeDirty=()=>{throw Error('dirty failure');};assert.throws(()=>g.adapter().add(g.modifier),/dirty failure/);
+ assert.equal(g.attributes.m_attributeModifiers[2].has(g.modifier),true);assert.equal(g.events.includes('abnormal-dirty'),false);
+});
+test('concrete enable/disable registration changes abnormal status and anti queries through native counters',()=>{
+ const f=modifierFixture(),enabled=buffEnabledFixture();f.modifier=enabled.buff;enabled.buff.masks=[0n,2n,0n,8n,0n,0n];
+ f.options.calculateAbnormalDirty=()=>{};enabled.options.readAttributes=()=>f.attributes;
+ enabled.options.addModifier=(_attrs,buff)=>f.adapter().add(buff);enabled.options.removeModifier=(_attrs,buff)=>f.adapter().remove(buff);
+ const query=fearProjectileAttributeStatus({attributes:f.attributes,readComboFlag:()=>false,isActive:()=>true});
+ enabled.adapter().set(true);assert.equal(query.getAbnormalFlag(1),true);assert.equal(query.getAbnormalAnti(3),true);
+ enabled.adapter().set(false);assert.equal(query.getAbnormalFlag(1),false);assert.equal(query.getAbnormalAnti(3),false);
+});
 
 function buffEnabledFixture(){
  const buff={m_isFinished:false,m_isActuallyEnabled:false,m_isLateEnabled:false,m_isManuallyEnabled:false,
