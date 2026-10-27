@@ -3586,3 +3586,35 @@ retirement. Allocation/zeroing and native Object/string/barrier effects remain
 explicit receivers; action-list construction by the ability's own initialization,
 native impact dispatch, hotfixes and live/frame/cross-version parity remain
 open. No stage, support, receipt or public catalogue gate changed.
+
+## Attack-data action-list checkpoint
+
+The test-only `chapter16-fear-projectile-attack-data.js` adapter follows default
+AbstractBasicAttack.DoSetData (79497, RVA 0xbd3550), CreateDamageNode (80974,
+RVA 0xc1d570), AlwaysNext's constructor (85489, RVA 0xd32bb0), BattleUtil
+MergeScale (68588, RVA 0x876e30), and RangedAttack's damage/extra-damage getters.
+The extractor retains complete native bodies, concrete slots 105/106/107/111/112,
+fields, signatures, direct base/blackboard method identities, the exact
+ep_damage_ratio literal and fallback Single 1, and existing signed FP math
+evidence. Fear's source-bound settings have scale 1, ordinary Arts damage,
+extra damage type 0, elemental type 0 and elemental ratio 0.
+
+DoSetData copies Options before base setup, initializes configured FP scales,
+then conditionally merges the blackboard attack scale and clamps the elemental
+ratio. With a null blackboard it keeps configured values without those clamps.
+It clears the existing list, adds optional extra damage and AlwaysNext, adds
+ordinary damage, publishes the elemental type, and conditionally adds AlwaysNext
+and elemental damage. Destinations captured before getters/constructors stay
+captured; later destinations and scale/type fields are read again where the
+native body reads them. CreateDamageNode publishes m_damageNode before its
+barrier and returns a fresh field read afterward. MergeScale performs native
+signed FP multiplication followed by a zero maximum, including overflow.
+
+All 1,567 focused tests and extractor/Fear/miner contracts pass. The long Fear
+birth test now obtains its shared node through data setup and action-list
+construction instead of assigning that list directly, before preprocessing,
+birth, source retirement and later impact. Tests also cover optional branches,
+blackboard loss, callback mutations, list replacement, null publication and
+FP overflow. Base AbilityStandard data setup, native Options/blackboard/list
+effects, elemental-node internals, hotfixes and live/frame/cross-version parity
+remain explicit/unverified. No stage or enemy admission gate changed.

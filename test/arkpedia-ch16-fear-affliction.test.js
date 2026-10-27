@@ -72,6 +72,69 @@ import {fearProjectileActionControllerInit,fearProjectileRegisterActions} from '
 import {fearProjectileRangedActions,fearProjectileActiveBuffs,fearProjectilePreprocessActions,fearProjectilePreprocessDamage} from '../server/sim/content/chapter16-fear-projectile-action-provider.js';
 import {fearProjectileAttachmentFamilyGroup,fearProjectileAbilityAttachments,fearProjectileEntityAttachments} from '../server/sim/content/chapter16-fear-projectile-attachments.js';
 import {fearProjectileActionNodeConstructor,fearProjectileDamageNodeConstructors,fearProjectileNewDamageNode,fearProjectileRangedDamageNode,fearProjectileDamageNodeProperties} from '../server/sim/content/chapter16-fear-projectile-damage-node.js';
+import {fearProjectileAttackDataProperties,fearProjectileMergeAttackScale,fearProjectileCreateDamageNode,fearProjectileAlwaysNextConstructor,fearProjectileBasicAttackData} from '../server/sim/content/chapter16-fear-projectile-attack-data.js';
+
+function projectileAttackDataFixture(){
+ const construction=projectileDamageNodeFixture(),events=[],ability={...construction.ability,_atkScale:1,_atkScaleKey:'atk_scale',_epDamageRatio:0,_elementDamageType:0,_damageType:2,_extraDamageType:0,m_actions:['old']},owner={},board=new Map(),data={blackboard:board,familyGroup:0},
+  options={copyOptions:value=>({...value}),baseDoSetData:(value,selected,copied)=>{assert.equal(selected,owner);assert.notEqual(copied,data);assert.equal(copied.blackboard,board);value.board=copied.blackboard;events.push('base');},
+   readBlackboard:value=>value.board,readBlackboardFloat:(value,key,fallback)=>{events.push(['bb',key,fallback]);return value.has(key)?value.get(key):fallback;},
+   clearList:list=>{events.push('clear');list.length=0;},...fearProjectileAttackDataProperties,
+   createDamageNode:fearProjectileCreateDamageNode({newDamageNode:construction.make,writeBarrier:(...args)=>events.push(['barrier',...args])}),
+   addAction:(list,node)=>{events.push(['add',node]);list.push(node);},allocateAlwaysNext:()=>({kind:'always-next'}),
+   constructAlwaysNext:fearProjectileAlwaysNextConstructor({baseActionConstructor:construction.constructorOptions.baseActionConstructor}),
+   createElementDamageNode:(_ability,type,scale)=>({kind:'element',type,scale})};
+ return{construction,events,ability,owner,board,data,options,run:()=>fearProjectileBasicAttackData(options)(ability,owner,data)};
+}
+test('attack data clears reused actions and builds the ordinary shared damage node through its native wrapper',()=>{
+ const f=projectileAttackDataFixture(),list=f.ability.m_actions;f.run();assert.equal(f.ability.m_actions,list);assert.equal(list.length,1);assert.equal(list[0],f.ability.m_damageNode);
+ assert.equal(list[0]._damageType,2);assert.equal(list[0].m_atkScale,1n<<32n);assert.equal(f.ability.m_elementDamageType,0);assert.equal(list[0].m_cachedAtk,-(1n<<32n));
+ assert.deepEqual(f.events.filter(e=>Array.isArray(e)&&e[0]==='bb'),[['bb','atk_scale',1],['bb','ep_damage_ratio',0]]);
+});
+test('blackboard attack scale merges native FP values and clamps negative scale and elemental ratio',()=>{
+ const f=projectileAttackDataFixture();f.ability._atkScale=1.5;f.board.set('atk_scale',2);f.board.set('ep_damage_ratio',-2);f.run();assert.equal(f.ability.m_atkScale,3n*(1n<<32n));assert.equal(f.ability.m_epDamageRatio,0n);
+ f.board.set('atk_scale',-2);f.run();assert.equal(f.ability.m_atkScale,0n);assert.equal(f.ability.m_actions[0].m_atkScale,0n);
+});
+test('null blackboard preserves configured negative values rather than applying blackboard-only clamps',()=>{
+ const f=projectileAttackDataFixture();f.options.baseDoSetData=value=>{value.board=null;};f.ability._atkScale=-1;f.ability._epDamageRatio=-2;f.options.readBlackboardFloat=()=>{throw Error('unexpected lookup');};f.run();
+ assert.equal(f.ability.m_atkScale,-(1n<<32n));assert.equal(f.ability.m_epDamageRatio,-2n*(1n<<32n));
+});
+test('optional extra and elemental damage actions retain AlwaysNext separators and final ordinary damage identity',()=>{
+ const f=projectileAttackDataFixture();f.ability._extraDamageType=3;f.ability._elementDamageType=2;f.ability._epDamageRatio=.5;f.run();const list=f.ability.m_actions;
+ assert.equal(list.length,5);assert.equal(list[0]._damageType,3);assert.equal(list[1].kind,'always-next');assert.equal(list[2]._damageType,2);assert.equal(list[2],f.ability.m_damageNode);assert.equal(list[3].kind,'always-next');assert.deepEqual(list[4],{kind:'element',type:2,scale:1n<<31n});
+});
+test('extra damage getter is sampled twice and list destination is captured before its second call',()=>{
+ const f=projectileAttackDataFixture(),old=f.ability.m_actions,replacement=[];let reads=0;
+ f.options.readExtraDamageType=()=>{if(++reads===1)return 3;f.ability.m_actions=replacement;return 0;};f.run();
+ assert.equal(old.length,1);assert.equal(old[0]._damageType,0);assert.equal(replacement[0].kind,'always-next');assert.equal(replacement[1]._damageType,2);assert.equal(reads,2);
+});
+test('ordinary action list is captured before its damage-type getter mutates the ability',()=>{
+ const f=projectileAttackDataFixture(),old=f.ability.m_actions,replacement=[];f.options.readDamageType=()=>{f.ability.m_actions=replacement;return 7;};f.run();assert.equal(old[0]._damageType,7);assert.deepEqual(replacement,[]);
+});
+test('element creation rereads ratio, type and list after the separator constructor',()=>{
+ const f=projectileAttackDataFixture(),old=f.ability.m_actions,replacement=[];f.ability._elementDamageType=2;f.ability._epDamageRatio=1;
+ f.options.constructAlwaysNext=()=>{f.ability.m_elementDamageType=4;f.ability.m_epDamageRatio=3n;f.ability.m_actions=replacement;};f.run();
+ assert.equal(old.length,2);assert.equal(old[1].kind,'always-next');assert.deepEqual(replacement,[{kind:'element',type:4,scale:3n}]);
+});
+test('loss of a fresh blackboard fails after configured scale writes and before clearing prior actions',()=>{
+ const f=projectileAttackDataFixture();let reads=0;f.options.readBlackboard=()=>++reads===1?f.board:null;assert.throws(f.run,/null native object/);assert.equal(f.ability.m_atkScale,1n<<32n);assert.deepEqual(f.ability.m_actions,['old']);
+});
+test('null destination fails only after ordinary node creation and publication',()=>{
+ const f=projectileAttackDataFixture();f.options.readDamageType=()=>{f.ability.m_actions=null;return 2;};f.options.createDamageNode=(ability,type,scale)=>{ability.m_damageNode={type,scale};return ability.m_damageNode;};
+ // The pre-getter list was captured and still accepts this node.
+ const old=f.ability.m_actions;f.run();assert.equal(old[0],f.ability.m_damageNode);
+ const g=projectileAttackDataFixture();g.options.clearList=()=>{g.ability.m_actions=null;};assert.throws(g.run,/null native object/);assert.equal(g.ability.m_damageNode._damageType,2);
+});
+test('damage publication returns a fresh field after the barrier and allows a null virtual result',()=>{
+ const ability={},replacement={};const create=fearProjectileCreateDamageNode({newDamageNode:()=>null,writeBarrier:(value,key,node)=>{assert.equal(node,null);assert.equal(value[key],null);value[key]=replacement;}});
+ assert.equal(create(ability,2,0n),replacement);assert.equal(ability.m_damageNode,replacement);
+});
+test('attack scale uses signed raw multiplication before zero clamp, including overflow',()=>{
+ const one=1n<<32n;assert.equal(fearProjectileMergeAttackScale(2n*one,3n*one),6n*one);assert.equal(fearProjectileMergeAttackScale(-one,one),0n);assert.equal(fearProjectileMergeAttackScale((1n<<63n)-1n,2n*one),0n);
+});
+test('attack data requires explicit receivers and preserves typed scalar boundaries',()=>{
+ for(const fn of [fearProjectileBasicAttackData,fearProjectileCreateDamageNode,fearProjectileAlwaysNextConstructor])assert.throws(()=>fn({}),/callers/);
+ const f=projectileAttackDataFixture();f.options.readDamageType=()=>1.5;assert.throws(f.run,/Int32/);assert.throws(()=>fearProjectileMergeAttackScale(1,1n),/Q32.32/);
+});
 
 function projectileDamageNodeFixture(){
  const events=[],ability={_useCachedAtkOnly:false,_transferSource:false,_attackType:1,_useDynamicAttackType:false},allocated=[],
@@ -5988,8 +6051,12 @@ test('bounded wait, controller/factory birth and Init, event5 self-death and ind
  Object.assign(start.mount,{mapPosition:{x:0,y:0},height:0});Object.assign(start.ability,{uid:13,damageMissFlag:false});
  const damageSettings=read('data/candidates/arkpedia-windows-fear-projectile-damage-node-source.json').fearComponent.selectedFields,construction=projectileDamageNodeFixture();
  Object.assign(start.ability,{_useCachedAtkOnly:Boolean(damageSettings._useCachedAtkOnly),_transferSource:Boolean(damageSettings._transferSource),_attackType:damageSettings._attackType,_useDynamicAttackType:Boolean(damageSettings._useDynamicAttackType)});
- const sharedDamage=construction.make(start.ability,damageSettings._damageType,fearProjectileFloatToRaw(damageSettings._atkScale));assert.equal(sharedDamage.m_cachedAtk,-fpOne);assert.equal(sharedDamage._damageType,2);assert.equal(sharedDamage._applyWay,2);
- Object.assign(start.ability,{board:{},_activeBuffs:[],m_actions:[sharedDamage]});provider.options.castDamageNode=value=>value===sharedDamage?value:null;
+ const attackData=projectileAttackDataFixture(),attackSettings=read('data/candidates/arkpedia-windows-fear-projectile-attack-data-source.json').fearComponent.selectedFields;
+ Object.assign(start.ability,attackSettings,{m_actions:[],_activeBuffs:[]});attackData.options.baseDoSetData=(ability,owner,options)=>{assert.equal(owner,f.source);ability.board=options.blackboard;};
+ attackData.options.createDamageNode=fearProjectileCreateDamageNode({newDamageNode:construction.make,writeBarrier:()=>{}});
+ fearProjectileBasicAttackData(attackData.options)(start.ability,f.source,{blackboard:new Map()});
+ const sharedDamage=start.ability.m_damageNode;assert.equal(sharedDamage.m_cachedAtk,-fpOne);assert.equal(sharedDamage._damageType,2);assert.equal(sharedDamage._applyWay,2);assert.deepEqual(start.ability.m_actions,[sharedDamage]);
+ provider.options.castDamageNode=value=>value===sharedDamage?value:null;
  provider.options.readOwner=ability=>start.pointers.lock(ability.m_owner);provider.damageOptions.readAtkRaw=owner=>fearProjectileFloatToRaw(owner.s.atk);
  const preprocessDamage=fearProjectilePreprocessDamage(provider.damageOptions);
  provider.options.preprocessNode=(node,owner)=>{preprocessDamage(node,owner);damage=fearProjectileDamageAction(f.b,{...source,cachedAtk:Math.fround(Number(node.m_cachedAtk)/2**32)});};

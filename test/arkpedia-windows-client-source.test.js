@@ -20,6 +20,22 @@ function settingsFixture(){
  return{...f,settings:{version:f.pin.version,source:f.pin.source,file}};
 }
 
+test('attack-data source binds scale loading, action ordering, node publication and elemental gates',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-projectile-attack-data-source.json'),parent=read('data/candidates/arkpedia-windows-fear-self-death-source.json');
+ assert.deepEqual(c.methods.map(m=>[m.index,m.entryRva]),[[79497,0xbd3550],[80974,0xc1d570],[85489,0xd32bb0],[68588,0x876e30],[79988,0xbfce20],[79989,0xbfcee0]]);
+ for(const source of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+source.path,import.meta.url))),source.sha256);
+ for(const m of c.methods)for(const chunk of m.chunks){const raw=Buffer.from(chunk.base64,'base64');assert.equal(sha(raw),chunk.sha256);assert.equal(raw.length,chunk.endRva-chunk.beginRva);}
+ assert.deepEqual(c.math,parent.modeSwitch.buffNotification.resetTiming.math.filter(row=>[0x5a5c940,0x51df0c0].includes(row.entryRva)));
+ assert.deepEqual(c.virtualSlots.map(row=>[row.slot,row.name]),[[105,'CreateDamageNode'],[106,'NewDamageNode'],[107,'CreateElementDamageNode'],[111,'get_damageType'],[112,'get_extraDamageType']]);assert.deepEqual(c.signatures[0].parameters.map(row=>row.name),['owner','options']);
+ assert.equal(c.ratioKey.value,'ep_damage_ratio');assert.equal(c.ratioKey.encodedUsage>>>29,5);assert.equal(c.ratioKey.sha256,sha(c.ratioKey.value));
+ assert.deepEqual(c.fields.map(f=>[f.name,f.offset]),[['_atkScale',456],['_atkScaleKey',464],['_epDamageRatio',480],['m_atkScale',488],['m_epDamageRatio',496],['m_actions',504],['_elementDamageType',476],['m_elementDamageType',512],['m_damageNode',440],['_damageType',544],['_extraDamageType',564]]);
+ const graph=read('data/candidates/arkpedia-ch16-fear-projectile-source.json'),component=graph.prefabs[c.fearComponent.prefab].find(row=>row.pathId===c.fearComponent.pathId);assert.equal(sha(component.originalJson),c.fearComponent.sha256);for(const [key,value]of Object.entries(c.fearComponent.selectedFields))assert.equal(JSON.parse(component.originalJson)[key],value);
+ const at=(method,rva,operands)=>assert.ok(instructions(c.methods[method]).some(i=>i.rva===rva&&i.operands===operands),'Attack data instruction '+rva.toString(16));
+ for(const [rva,operands]of [[0xbd3610,'0x183909480'],[0xbd3646,'qword ptr [rsi + 0x1e8], rax'],[0xbd3654,'qword ptr [rsi + 0x1f0], rax'],[0xbd36a2,'0x182166630'],[0xbd36d1,'0x180876e30'],[0xbd36d8,'qword ptr [rsi + 0x1e8], rax'],[0xbd370a,'0x182166630'],[0xbd3749,'0x185a5c940'],[0xbd377d,'0x1851ce000'],[0xbd37a7,'rax'],[0xbd37dd,'rax'],[0xbd37f1,'0x18002d260'],[0xbd380c,'0x1804fc090'],[0xbd3835,'0x180d32bb0'],[0xbd3850,'0x1804fc090'],[0xbd3881,'rax'],[0xbd38b6,'r10'],[0xbd38cf,'0x1804fc090'],[0xbd38da,'dword ptr [rsi + 0x200], eax'],[0xbd3916,'0x1851df0c0'],[0xbd3943,'0x180d32bb0'],[0xbd3980,'0x18002d260'],[0xbd3997,'0x1804fc090']])at(0,rva,operands);
+ for(const [rva,operands]of [[0xc1d5e6,'rax'],[0xc1d5eb,'qword ptr [rdi + 0x1b8], rax'],[0xc1d5f9,'0x18040ff90'],[0xc1d5fe,'rax, qword ptr [rdi + 0x1b8]']])at(1,rva,operands);at(2,0xd32bda,'0x180ce98c0');at(3,0x876ebd,'0x185a3b800');at(3,0x876ef2,'0x185a5c940');at(4,0xbfce5c,'eax, dword ptr [rbx + 0x220]');at(5,0xbfcf1c,'eax, dword ptr [rbx + 0x234]');
+ assert.equal(c.testOnly,true);for(const key of ['runtimeDispatchVerified','frameParity','crossVersionParity','nativeBaseDataEffectsVerified','nativeOptionsCopyEffectsVerified','nativeBlackboardEffectsVerified','nativeCollectionAndElementEffectsVerified','hotfixDispatchVerified','liveAttackDataVerified'])assert.equal(c[key],false);
+});
+
 test('damage construction source retains ordinary/cached branches, constructor order and canonical Fear settings',()=>{
  const c=read('data/candidates/arkpedia-windows-fear-projectile-damage-node-source.json'),parent=read('data/candidates/arkpedia-windows-fear-projectile-source.json');
  assert.deepEqual(c.methods.map(m=>[m.index,m.entryRva]),[[80008,0xbfbab0],[80975,0xc1df30],[86251,0xd7a420],[84017,0xce98c0],[86259,0xd79770],[79987,0xbfcdc0],[79489,0xbd4050],[79490,0xbd41e0]]);
