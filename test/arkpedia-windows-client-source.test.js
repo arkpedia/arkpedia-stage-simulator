@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,216);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,218);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -531,6 +531,18 @@ test('context snapshot source binds distinct capture/push orders and closed refe
   'rcx, qword ptr [rdi + 0x48]','rcx, qword ptr [rdi + 0x58]'].entries())at(duplicate,q.pushFieldReads[index],args);
  for(const [index,target]of ['0x184be7ef0','0x184be7ef0','0x184be7ef0','0x18490b650','0x18490b820','0x184be7ef0','0x184be7ef0','0x18490b650','0x18490b790','0x184be7ef0'].entries())at(duplicate,q.pushCalls[index],target);
  assert.equal(q.nativeContextStackEffectsVerified,false);assert.equal(q.nativeNestedValueCopiesVerified,false);assert.equal(q.liveContextSnapshotsVerified,false);
+});
+
+test('BuffDB source distinguishes inline identity from cloned database data and post-publication merge',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.newBuff.buffDatabase;
+ assert.deepEqual(q.methods.map(m=>[m.index,m.entryRva]),[[68624,0x8789a0],[68623,0x878790]]);
+ assert.deepEqual(q.dataFields.map(f=>[f.name,f.offset]),[['buffKey',24],['loadFromDB',32],['templateKey',40],['blackboard',176]]);
+ assert.deepEqual(q.receivers.map(m=>[m.type,m.name,m.index,m.entryRva,m.parameters.map(p=>p.name)]),[['BuffDBUtil','TryGetTemplate',68626,0x878ac0,['key','template']],['BuffData','DeepClone',28664,0x225cbc0,[]],['Blackboard','MergeTo',28620,0x2166d70,['to','from']]]);
+ const at=(index,rva,args)=>assert.ok(instructions(c.methods.find(m=>m.index===index)).some(i=>i.rva===rva&&i.operands===args),'BuffDB instruction '+rva.toString(16));
+ for(const [key,args]of [['inlineFlagReadRva','byte ptr [rbx + 0x20], cl'],['inlineTemplateKeyReadRva','rcx, qword ptr [rbx + 0x28]'],['inlineTemplateCallRva','0x180878ac0'],['inlineFailureClearRva','xmmword ptr [rdi], xmm0'],['inlinePublishRva','xmmword ptr [rdi], xmm0'],['externalBoardReadRva','r8, qword ptr [rbx + 0xb0]'],['databaseKeyReadRva','rcx, qword ptr [rbx + 0x18]'],['databaseOverloadCallRva','0x180878790']])at(68624,q[key],args);
+ for(const [key,args]of [['dataLookupCallRva','r10'],['templateKeyReadRva','rcx, qword ptr [rcx + 0x28]'],['templateCallRva','0x180878ac0'],['cloneSourceReadRva','rcx, qword ptr [rsp + 0x30]'],['cloneCallRva','0x18225cbc0'],['publishRva','xmmword ptr [rbx], xmm0'],['externalBoardNullCheckRva','rbp, rbp'],['mergeBoardReadRva','rax, qword ptr [rax + 0xb0]'],['mergeCallRva','0x182166d70'],['mergeDataRereadRva','rcx, qword ptr [rbx + 8]'],['mergeBoardWriteRva','qword ptr [rcx], rdx'],['databaseFailureClearRva','xmmword ptr [rbx], xmm0']])at(68623,q[key],args);
+ assert.ok(q.templateCallRva<q.cloneCallRva&&q.cloneCallRva<q.publishRva&&q.publishRva<q.mergeCallRva&&q.mergeCallRva<q.mergeDataRereadRva);
+ for(const name of ['nativeDatabaseAndTemplateEffectsVerified','nativeDeepCloneEffectsVerified','nativeBlackboardMergeEffectsVerified','liveBuffDatabaseVerified'])assert.equal(q[name],false);
 });
 
 test('Entity.AddBuff source binds data lookup, two config copies and container dispatch',()=>{

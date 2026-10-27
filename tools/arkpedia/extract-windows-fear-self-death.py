@@ -2101,6 +2101,40 @@ result['modeSwitch']['buffNotification']['newBuff']['predicateNodes'] = {
     'nativeAttributeQueryEffectsVerified': False, 'livePredicateNodeDispatchVerified': False,
 }
 context_stack_canonical = []
+buff_db_methods = []
+for index, entry in [(68624, 0x8789a0), (68623, 0x878790)]:
+    t = v['types'][10272]
+    row = c['unique'](lambda r: r['index'] == index, t['methods'])
+    record = c['method'](t, row)
+    assert record['entryRva'] == entry and not any(m['index'] == index for m in methods)
+    methods.append(record)
+    buff_db_methods.append({'index': index, 'name': row['name'], 'entryRva': entry})
+buff_db_receivers = []
+for ti, index, entry in [(10272, 68626, 0x878ac0), (3923, 28664, 0x225cbc0), (3918, 28620, 0x2166d70)]:
+    t = v['types'][ti]
+    row = c['unique'](lambda r: r['index'] == index, t['methods'])
+    assert v['pointer'](row) == v['image_base'] + entry
+    pos = v['method_start'] + index * 32
+    start, count = v['sint'](v['m'], pos + 12), struct.unpack_from('<H', v['m'], pos + 30)[0]
+    args = []
+    for n in range(count):
+        pp = v['uint'](v['m'], 88) + (start + n) * 12
+        args.append({'name': v['text'](v['uint'](v['m'], pp)), 'typeIndex': v['sint'](v['m'], pp + 8)})
+    buff_db_receivers.append({'typeIndex': ti, 'type': t['name'], **row, 'entryRva': entry, 'parameters': args})
+buff_db_fields = []
+for name, offset in [('buffKey', 0x18), ('loadFromDB', 0x20), ('templateKey', 0x28), ('blackboard', 0xb0)]:
+    f = c['unique'](lambda f: f['name'] == name, c['fields'](v['types'][3923]))
+    assert f['offset'] == offset
+    buff_db_fields.append(f)
+result['modeSwitch']['buffNotification']['newBuff']['buffDatabase'] = {
+    'methods': buff_db_methods, 'receivers': buff_db_receivers, 'dataFields': buff_db_fields,
+    'inlineFlagReadRva': 0x8789f9, 'inlineTemplateKeyReadRva': 0x8789fe, 'inlineTemplateCallRva': 0x878a0a, 'inlineFailureClearRva': 0x878a16, 'inlinePublishRva': 0x878a5d,
+    'externalBoardReadRva': 0x878a72, 'databaseKeyReadRva': 0x878a7c, 'databaseOverloadCallRva': 0x878a83,
+    'dataLookupCallRva': 0x87887a, 'templateKeyReadRva': 0x8788a5, 'templateCallRva': 0x8788b1, 'cloneSourceReadRva': 0x8788be, 'cloneCallRva': 0x8788d3,
+    'publishRva': 0x878908, 'externalBoardNullCheckRva': 0x878910, 'mergeBoardReadRva': 0x87891e, 'mergeCallRva': 0x878935,
+    'mergeDataRereadRva': 0x87893a, 'mergeBoardWriteRva': 0x87894f, 'databaseFailureClearRva': 0x87897a,
+    'nativeDatabaseAndTemplateEffectsVerified': False, 'nativeDeepCloneEffectsVerified': False, 'nativeBlackboardMergeEffectsVerified': False, 'liveBuffDatabaseVerified': False,
+}
 entity_add_buff_methods = []
 for index, entry in [(57965, 0x3a174d0), (57964, 0x3a17370), (57828, 0x3a295e0)]:
     row = c['unique'](lambda r: r['index'] == index, entity['methods'])

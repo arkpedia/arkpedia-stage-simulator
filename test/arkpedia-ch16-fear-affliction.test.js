@@ -53,6 +53,57 @@ import {fearProjectileSwitchModeNode} from '../server/sim/content/chapter16-fear
 import {fearProjectileInstantKillNode,fearProjectileEntitySuicide} from '../server/sim/content/chapter16-fear-instant-kill-node.js';
 import {fearProjectileCreateBuffNode} from '../server/sim/content/chapter16-fear-create-buff-node.js';
 import {fearProjectileEntityAddBuff,fearProjectileEntityBuffContainer} from '../server/sim/content/chapter16-fear-entity-add-buff.js';
+import {fearProjectileBuffDatabase} from '../server/sim/content/chapter16-fear-buff-db.js';
+
+function buffDatabaseFixture(){
+ const source={templateKey:'source-template',blackboard:[{key:'original'}]},inline={loadFromDB:false,templateKey:'inline-template',buffKey:'database-key',blackboard:[]},cloned={blackboard:[{key:'clone'}]},template={},out={value:{template:{},data:{}}},events=[],
+  options={tryGetBuffData:(key,result)=>{events.push(['data',key]);assert.equal(result.value,null);result.value=source;return true;},
+   tryGetTemplate:(key,result)=>{events.push(['template',key]);assert.equal(result.value,null);result.value=template;return true;},deepClone:data=>{assert.equal(data,source);events.push('clone');return cloned;},
+   mergeBlackboard:(board,external)=>{events.push(['merge',board.value,external]);board.value=[...board.value,...external];}};
+ return{source,inline,cloned,template,out,events,options,api:()=>fearProjectileBuffDatabase(options)};
+}
+test('BuffDB inline lookup retains data identity and does not clone or merge its blackboard',()=>{
+ const f=buffDatabaseFixture();assert.equal(f.api().tryGetData(f.inline,f.out),true);assert.deepEqual(f.out.value,{template:f.template,data:f.inline});assert.deepEqual(f.events,[['template','inline-template']]);
+});
+test('BuffDB data overload reads external blackboard before database key and forwards to key lookup',()=>{
+ const f=buffDatabaseFixture();f.inline.loadFromDB=true;Object.defineProperty(f.inline,'blackboard',{get(){f.inline.buffKey='changed';return[];}});
+ assert.equal(f.api().tryGetData(f.inline,f.out),true);assert.deepEqual(f.events[0],['data','changed']);assert.equal(f.out.value.data,f.cloned);assert.notEqual(f.out.value.data,f.source);
+});
+for(const phase of ['data','template'])test('BuffDB '+phase+' lookup failure clears both config references without clone or merge',()=>{
+ const f=buffDatabaseFixture();f.options[phase==='data'?'tryGetBuffData':'tryGetTemplate']=(_key,result)=>{result.value={};return false;};
+ assert.equal(f.api().tryGetKey('key',f.out,[]),false);assert.deepEqual(f.out.value,{template:null,data:null});assert.equal(f.events.includes('clone'),false);assert.equal(f.events.some(e=>Array.isArray(e)&&e[0]==='merge'),false);
+});
+test('BuffDB inline failure clears config, while a nullable successful template is preserved',()=>{
+ const f=buffDatabaseFixture();f.options.tryGetTemplate=()=>false;assert.equal(f.api().tryGetData(f.inline,f.out),false);assert.deepEqual(f.out.value,{template:null,data:null});
+ f.options.tryGetTemplate=()=>true;assert.equal(f.api().tryGetData(f.inline,f.out),true);assert.deepEqual(f.out.value,{template:null,data:f.inline});
+});
+test('BuffDB clones after template lookup, publishes before merge and leaves source blackboard unchanged',()=>{
+ const f=buffDatabaseFixture(),external=[{key:'external'}];f.options.mergeBlackboard=(board,actual)=>{assert.equal(actual,external);assert.equal(f.out.value.data,f.cloned);assert.equal(f.out.value.template,f.template);board.value=['merged'];};
+ assert.equal(f.api().tryGetKey(null,f.out,external),true);assert.deepEqual(f.events,[['data',null],['template','source-template'],'clone']);assert.deepEqual(f.cloned.blackboard,['merged']);assert.deepEqual(f.source.blackboard,[{key:'original'}]);
+});
+test('BuffDB rereads lookup data after template lookup and output data after blackboard merge',()=>{
+ const f=buffDatabaseFixture(),replacement={templateKey:'later'},published={},target={};let dataRef;
+ f.options.tryGetBuffData=(_key,out)=>{dataRef=out;out.value=f.source;return true;};f.options.tryGetTemplate=(_key,out)=>{dataRef.value=replacement;out.value=f.template;return true;};
+ f.options.deepClone=data=>{assert.equal(data,replacement);return published;};f.options.mergeBlackboard=(board)=>{assert.equal(board.value,undefined);f.out.value={template:null,data:target};board.value='merged';};
+ assert.equal(f.api().tryGetKey('key',f.out,[]),true);assert.equal(target.blackboard,'merged');assert.equal(published.blackboard,undefined);
+});
+test('BuffDB keeps published clone and prior blackboard on merge failure',()=>{
+ const f=buffDatabaseFixture(),original=f.cloned.blackboard,error=Error('merge');f.options.mergeBlackboard=board=>{board.value=[];throw error;};
+ assert.throws(()=>f.api().tryGetKey('key',f.out,[]),actual=>actual===error);assert.equal(f.out.value.data,f.cloned);assert.equal(f.cloned.blackboard,original);
+});
+test('BuffDB requires nonnull found data, permits a null clone without external board, and checks clone only for merge',()=>{
+ const f=buffDatabaseFixture();f.options.tryGetBuffData=()=>true;assert.throws(()=>f.api().tryGetKey('key',f.out,null),/null native object/);
+ const g=buffDatabaseFixture();g.options.deepClone=()=>null;assert.equal(g.api().tryGetKey('key',g.out,null),true);assert.deepEqual(g.out.value,{template:g.template,data:null});assert.throws(()=>g.api().tryGetKey('key',g.out,[]),/null native object/);
+});
+test('BuffDB requires Boolean results and propagates lookup and clone failures before publishing',()=>{
+ for(const phase of ['tryGetBuffData','tryGetTemplate','deepClone']){const f=buffDatabaseFixture(),prior=f.out.value,error=Error(phase);f.options[phase]=()=>{throw error;};assert.throws(()=>f.api().tryGetKey('key',f.out,null),actual=>actual===error);assert.equal(f.out.value,prior);}
+ const f=buffDatabaseFixture();f.options.tryGetTemplate=()=>1;assert.throws(()=>f.api().tryGetData(f.inline,f.out),/Boolean lookup/);assert.throws(()=>f.api().tryGetData(null,f.out),/null native object/);
+});
+test('BuffDB nested inline lookups retain independent template output cells',()=>{
+ const f=buffDatabaseFixture(),innerTemplate={},outerTemplate={},inner={value:null};let api,nested=false;
+ f.options.tryGetTemplate=(_key,result)=>{if(!nested){nested=true;assert.equal(api.tryGetData(f.inline,inner),true);result.value=outerTemplate;}else result.value=innerTemplate;return true;};api=f.api();
+ assert.equal(api.tryGetData(f.inline,f.out),true);assert.equal(inner.value.template,innerTemplate);assert.equal(f.out.value.template,outerTemplate);
+});
 
 function entityAddBuffFixture(){
  const container={},entity={'<buffContainer>k__BackingField':container},data={},config={template:{},data:{}},args=[{},{},{},{},{},'effect'],events=[],created={},
@@ -1862,12 +1913,17 @@ test('NewBuff consumes concrete admission gates before allocation and after Rese
 
 for(const outcome of ['admit','abnormal rejection','status rejection'])test('CreateBuff reaches NewBuff registration through Entity.AddBuff with '+outcome,()=>{
  const action=createBuffNodeFixture(),native=newBuffFixture();action.owner['<buffContainer>k__BackingField']=native.container;action.source.attributes=native.source.attributes;
+ const graph=JSON.parse(readFileSync(new URL('../data/candidates/arkpedia-ch16-fear-projectile-source.json',import.meta.url),'utf8')),proof=graph.templates.empty,
+  retained=JSON.parse(readFileSync(new URL('../data/candidates/arkpedia-windows-fear-self-death-source.json',import.meta.url),'utf8')),data=retained.actions.find(node=>node.$type.endsWith('+CreateBuff'))._buff,template=JSON.parse(proof.originalJson);
+ assert.equal(createHash('sha256').update(proof.originalJson).digest('hex'),proof.sha256);assert.equal(template.templateKey,'empty');assert.equal(data.templateKey,'empty');assert.equal(data.loadFromDB,false);action.options.readBuffData=()=>data;
+ const unexpected=()=>{throw Error('unexpected database/clone/merge for inline immunity');},database=fearProjectileBuffDatabase({tryGetBuffData:unexpected,deepClone:unexpected,mergeBlackboard:unexpected,
+  tryGetTemplate:(key,out)=>{assert.equal(key,template.templateKey);out.value=template;return true;}});
  if(outcome==='abnormal rejection')native.options.passesAbnormalAnti=()=>false;
  if(outcome==='status rejection')native.options.passesStatusAnti=()=>false;
- const admission=fearProjectileEntityAddBuff({tryGetBuff:(data,result)=>{assert.equal(data,action.data);result.value={template:native.state.input.template,data};return true;},
+ const admission=fearProjectileEntityAddBuff({tryGetBuff:database.tryGetData,
   raiseMissingConfig:()=>{throw Error('unexpected config failure');},readContainer:fearProjectileEntityBuffContainer,
   newBuff:(container,config,source,ability,extraBlackboard,extraBlackboard2,sourceProjectile,customOverrideEffectKey)=>{
-   assert.equal(container,native.container);assert.equal(config.data,action.data);assert.equal(source,action.source);assert.equal(ability,action.ability);assert.equal(extraBlackboard,action.copy);assert.equal(extraBlackboard2,null);
+   assert.equal(container,native.container);assert.equal(config.data,data);assert.equal(config.template,template);assert.equal(source,action.source);assert.equal(ability,action.ability);assert.equal(extraBlackboard,action.copy);assert.equal(extraBlackboard2,null);
    native.state.input=config;return fearProjectileNewBuff({...native.options,source,ability,extraBlackboard,extraBlackboard2,sourceProjectile,customOverrideEffectKey}).run();
   }});
  action.options.addBuff=admission.addData;assert.equal(action.run(),true);

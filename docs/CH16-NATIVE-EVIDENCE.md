@@ -1402,6 +1402,35 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
 
+### BuffDBUtil inline identity and cloned database entries
+
+The218-method bundle adds both complete BuffDBUtil.TryGetBuff overloads. All216
+prior bodies and earlier evidence remain unchanged. New bindings pin BuffData's
+buffKey/loadFromDB/templateKey/blackboard fields and identify the TryGetTemplate,
+BuffData.DeepClone and Blackboard.MergeTo receivers. Instruction sites preserve
+inline template lookup, zero-config failure, database source lookup, template
+lookup, clone, publication and the later external-blackboard merge separately.
+
+`fearProjectileBuffDatabase` preserves inline BuffData identity and returns its
+resolved template without cloning or merging. Database-backed data captures the
+external blackboard before the key and invokes the key overload. That overload
+looks up source data and its template, rereads the source after template lookup,
+clones it, and publishes the config before merging external blackboard values.
+The merge receives a by-reference local blackboard, then the output data is
+reread for the final write. Failures clear both config references only on the
+native false-result paths; exceptions preserve earlier publication/effects.
+Each nested lookup owns independent data/template output cells.
+
+The CreateBuff -> Entity.AddBuff -> NewBuff composition now uses the retained
+self-death immunity BuffData and the SHA-256-checked `empty` template from the
+original projectile graph. Its inline path uses the new lookup adapter for
+successful admission, abnormal rejection and recycled status rejection. Native
+database/singleton/template loading, DeepClone and MergeTo effects remain
+explicit receivers, not inferred runtime proof. All1272 focused native/fear/
+family/miner tests pass. Full controller/stage/frame
+parity remains open. All source/support/receipt/catalogue gates are unchanged;
+new stages remain test-only and this checkpoint stays local.
+
 ### Entity.AddBuff overloads and container admission bridge
 
 The216-method bundle adds both complete Entity.AddBuff overloads and the
