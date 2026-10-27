@@ -48,3 +48,70 @@ export function fearProjectileEnsureOverrideGroup({buff,readGroups,readOverrideK
   },
  });
 }
+
+// Default OverrideGroup add/update dispatch. Queue storage/comparison and Buff
+// duration, snapshot, stack and enable effects remain explicit native receivers.
+// Calls may reenter: each update keeps its own selected-member flag.
+export function fearProjectileOverrideGroup({group,readQueue,isQueueEmpty,readQueueCount,readQueueItem,addQueue,
+ extendRemainingTime,fillRemainingTime,takeSnapshot,readData,readBlackboard,assignBlackboard,
+ fillRemainingTimeWhenStackMax,addStack,readIsFinished,setIsEnabled,isActive}){
+ const callers=[readQueue,isQueueEmpty,readQueueCount,readQueueItem,addQueue,extendRemainingTime,fillRemainingTime,
+  takeSnapshot,readData,readBlackboard,assignBlackboard,fillRemainingTimeWhenStackMax,addStack,readIsFinished,setIsEnabled,isActive];
+ if(!group||callers.some(fn=>typeof fn!=='function'))throw new TypeError('Fear group dispatch requires native group, queue, buff and lifecycle callers');
+ const boolean=value=>{if(typeof value!=='boolean')throw new TypeError('Fear group dispatch requires native Boolean results');return value;};
+ const int=value=>{if(!Number.isInteger(value)||value<-(2**31)||value>=2**31)throw new TypeError('Fear group dispatch requires native Int32 fields');return value;};
+ const nonnull=value=>{if(value==null)throw new TypeError('Fear group dispatch dereferenced a null native object');return value;};
+ const cancelled=Symbol('cancelled');
+ const check=()=>{if(!boolean(isActive()))throw cancelled;};
+ const invoke=(fn,...args)=>{const value=fn(...args);check();return value;};
+ const queue=()=>nonnull(invoke(readQueue,group));
+ const front=()=>nonnull(invoke(readQueueItem,queue(),0));
+ const enqueue=(q,incoming)=>{invoke(addQueue,nonnull(q),incoming);return true;};
+ const capFront=()=>{front().m_maxValidStackCnt=int(group.m_maxValidStackCnt);check();};
+ return Object.freeze({
+  add(incoming){
+   try{
+    check();const type=int(group.m_type);
+    if(type===0)return enqueue(queue(),incoming);
+    if(type===2)return boolean(invoke(isQueueEmpty,queue()))?enqueue(queue(),incoming):false;
+    if(type===3||type===4){
+     const empty=boolean(invoke(isQueueEmpty,queue())),current=invoke(readQueue,group);
+     if(empty)return enqueue(current,incoming);
+     const first=nonnull(invoke(readQueueItem,nonnull(current),0));
+     if(type===4){invoke(extendRemainingTime,first,incoming);return false;}
+     invoke(fillRemainingTime,first,incoming);
+     const data=nonnull(invoke(readData,front()));
+     if(!boolean(data.takeSnapshotWhenExtend))return false;
+     invoke(takeSnapshot,front());
+     if(invoke(readBlackboard,front())==null)return false;
+     const destination=front();nonnull(incoming);
+     const board=nonnull(invoke(readBlackboard,destination)),source=invoke(readBlackboard,incoming);
+     invoke(assignBlackboard,board,source);return false;
+    }
+    if(type!==1)return false;
+    if(boolean(invoke(isQueueEmpty,queue()))){enqueue(queue(),incoming);capFront();return true;}
+    if(int(group.m_maxStackCnt)>=0){
+     const next=(int(front().m_stackCnt)+1)|0;
+     if(next>int(group.m_maxStackCnt)){
+      if(int(front().m_stackCnt)!==int(group.m_maxStackCnt))return false;
+      if(!boolean(front().m_refreshRemainingTimeWhenStackMax))return false;
+      capFront();invoke(fillRemainingTimeWhenStackMax,front(),incoming);return false;
+     }
+    }
+    capFront();invoke(addStack,front(),incoming);return false;
+   }catch(error){if(error===cancelled)return null;throw error;}
+  },
+  update(){
+   try{
+    check();if(int(invoke(readQueueCount,queue()))===0)return;
+    let current=queue(),selected=false,index=0;
+    while(index<int(invoke(readQueueCount,current))){
+     const member=nonnull(invoke(readQueueItem,queue(),index));let enabled=false;
+     if(!selected&&!boolean(invoke(readIsFinished,member))){selected=true;enabled=true;}
+     invoke(setIsEnabled,member,enabled);
+     current=queue();index=(index+1)|0;
+    }
+   }catch(error){if(error===cancelled)return null;throw error;}
+  },
+ });
+}

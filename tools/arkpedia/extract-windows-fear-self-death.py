@@ -1252,6 +1252,49 @@ result['modeSwitch']['buffNotification']['newBuff']['ensureOverrideGroup'] = {
     'mapRereadRva': 0x39c0564, 'newKeyGetterCallRva': 0x39c0568, 'addGroupCallRva': 0x39c0584,
     'nativeQueueConstructionVerified': False, 'nativeGroupConstructionVerified': False, 'liveEnsureGroupPhaseVerified': False,
 }
+for name in ['_DoAddInternal', '_DoUpdateInternal']:
+    row = c['unique'](lambda r: r['name'] == name, group_type['methods'])
+    if not any(m['index'] == row['index'] and m['image'] == 'Assembly-CSharp.dll' for m in methods):
+        methods.append(c['method'](group_type, row))
+dispatch_specs = []
+for load_rva, index, name, entry in [(0x39df38c, 253541, 'get_isEmpty', 0x450c4c0),
+    (0x39df3ad, 253539, 'get_Item', 0x44db610), (0x39df741, 253536, 'Add', 0x47b40e0),
+    (0x39df7bd, 253540, 'get_count', 0x41fcd50)]:
+    pos = v['offset'](v['image_base'] + load_rva)
+    assert v['b'][pos:pos + 3] in [bytes.fromhex('488b15'), bytes.fromhex('4c8b05')]
+    target = load_rva + 7 + struct.unpack_from('<i', v['b'], pos + 3)[0]
+    usage = v['quad'](v['b'], v['offset'](v['image_base'] + target))
+    assert usage >> 29 == 6 and (usage & 0x1ffffffe) >> 1 == index
+    spec = priority['specification'](index)
+    assert spec['declaringType'] == 'PriorityQueue`1' and spec['definition']['name'] == name and spec['nativeMapping'] is None
+    assert spec['instantiations']['class']['arguments'][0]['name'] == 'Buff'
+    dispatch_specs.append({'loadRva': load_rva, 'encodedUsage': usage, 'specification': spec, 'callerEntryRva': entry})
+dispatch_callees = []
+for name, entry in [('_ExtendRemainingTime', 0x39b3540), ('_FillRemainingTime', 0x39b3810),
+    ('TakeSnapshotToBuffAttribute', 0x39b1cb0), ('_FillRemainingTimeWhenStackMax', 0x39b3730), ('_AddStack', 0x39b2a80)]:
+    row = c['unique'](lambda r: r['name'] == name, buff['methods'])
+    retained = c['method'](buff, row)
+    assert retained['entryRva'] == entry
+    if not any(m['index'] == row['index'] and m['image'] == 'Assembly-CSharp.dll' for m in methods):
+        methods.append(retained)
+    dispatch_callees.append({'name': name, 'index': row['index'], 'entryRva': entry})
+result['modeSwitch']['buffNotification']['newBuff']['overrideGroupDispatch'] = {
+    'queueSpecifications': dispatch_specs, 'buffCallees': dispatch_callees,
+    'snapshotField': c['unique'](lambda f: f['name'] == 'takeSnapshotWhenExtend', c['fields'](data_type)),
+    'typeReadRva': 0x39df354, 'defaultAddCallRva': 0x39df74b, 'uniqueEmptyCallRva': 0x39df53a,
+    'extendTimeEmptyCallRva': 0x39df393, 'extendTimeQueueRereadRva': 0x39df398, 'extendTimeCallRva': 0x39df3cd,
+    'extendEmptyCallRva': 0x39df3f3, 'extendQueueRereadRva': 0x39df3f8, 'fillCallRva': 0x39df42d,
+    'snapshotFlagReadRva': 0x39df463, 'snapshotCallRva': 0x39df496, 'blackboardNullTestRva': 0x39df4bf, 'assignCallRva': 0x39df514,
+    'stackEmptyCallRva': 0x39df566, 'stackMaxTestRva': 0x39df573, 'stackReadRva': 0x39df5a1,
+    'stackIncrementRva': 0x39df5a7, 'stackCompareRva': 0x39df5a9, 'stackAtMaxCompareRva': 0x39df5d9,
+    'refreshFlagReadRva': 0x39df609, 'refreshCapWriteRva': 0x39df63d, 'refreshCallRva': 0x39df670,
+    'incrementCapWriteRva': 0x39df6a9, 'addStackCallRva': 0x39df6dc, 'stackAddCallRva': 0x39df701, 'firstCapWriteRva': 0x39df725,
+    'updateInitialQueueReadRva': 0x39df7a1, 'updateInitialCountCallRva': 0x39df7c4, 'updateLoopQueueReadRva': 0x39df7d1,
+    'updateLiveCountCallRva': 0x39df7fa, 'updateItemQueueReadRva': 0x39df803, 'updateItemCallRva': 0x39df815,
+    'updateFinishedCallRva': 0x39df82c, 'updateSelectedWriteRva': 0x39df835, 'updateEnabledCallRva': 0x39df84b,
+    'updateQueueAfterSetterRva': 0x39df850,
+    'nativeQueueOrderingVerified': False, 'nativeBuffMergeEffectsVerified': False, 'liveGroupDispatchVerified': False,
+}
 for index in [147561, 147566, 147567, 147558, 147559, 147563, 147564, 147568, 147569]:
     spec = priority['specification'](index)
     assert spec['declaringTypeIndex'] == pool['index']

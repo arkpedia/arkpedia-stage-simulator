@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,162);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,168);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -246,6 +246,32 @@ test('EnsureOverrideGroup source binds populated-queue bypass, STACK blackboard 
  at(q.newMaxStackWriteRva,'dword ptr [rbx + 0x1c], eax');at(q.newMaxValidWriteRva,'dword ptr [rbx + 0x20], eax');
  at(q.mapRereadRva,'rbx, qword ptr [rbp + 0x20]');at(q.newKeyGetterCallRva,'0x1839b6f70');at(q.addGroupCallRva,'0x184c0b0d0');
  assert.ok(castMethod(c,'Buff','get_blackboard'));assert.equal(q.nativeQueueConstructionVerified,false);assert.equal(q.nativeGroupConstructionVerified,false);assert.equal(q.liveEnsureGroupPhaseVerified,false);
+});
+
+test('override group source distinguishes all merge modes and live first-unfinished activation',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.newBuff.overrideGroupDispatch;
+ const add=castMethod(c,'OverrideGroup','_DoAddInternal'),update=castMethod(c,'OverrideGroup','_DoUpdateInternal');
+ const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args),`${rva.toString(16)} ${args}`);
+ assert.equal(q.snapshotField.name,'takeSnapshotWhenExtend');assert.equal(q.snapshotField.offset,0x71);
+ assert.deepEqual(q.queueSpecifications.map(s=>s.specification.index),[253541,253539,253536,253540]);
+ for(const s of q.queueSpecifications){assert.equal(s.encodedUsage>>>29,6);assert.equal(s.specification.nativeMapping,null);
+  assert.equal(s.specification.declaringType,'PriorityQueue`1');assert.equal(s.specification.instantiations.class.arguments[0].name,'Buff');}
+ for(const s of q.buffCallees)assert.equal(castMethod(c,'Buff',s.name).entryRva,s.entryRva);
+ at(add,q.typeReadRva,'ecx, dword ptr [rbx + 0x18]');at(add,q.defaultAddCallRva,'0x1847b40e0');at(add,q.uniqueEmptyCallRva,'0x18450c4c0');
+ at(add,q.extendTimeEmptyCallRva,'0x18450c4c0');at(add,q.extendTimeQueueRereadRva,'rcx, qword ptr [rbx + 0x10]');at(add,q.extendTimeCallRva,'0x1839b3540');
+ at(add,q.extendEmptyCallRva,'0x18450c4c0');at(add,q.extendQueueRereadRva,'rcx, qword ptr [rbx + 0x10]');at(add,q.fillCallRva,'0x1839b3810');
+ at(add,q.snapshotFlagReadRva,'byte ptr [rax + 0x71], 0');at(add,q.snapshotCallRva,'0x1839b1cb0');at(add,q.blackboardNullTestRva,'qword ptr [rax + 0xa8], 0');at(add,q.assignCallRva,'0x1821653b0');
+ at(add,q.stackEmptyCallRva,'0x18450c4c0');at(add,q.stackMaxTestRva,'dword ptr [rbx + 0x1c], 0');at(add,q.stackReadRva,'eax, dword ptr [rax + 0x8c]');
+ at(add,q.stackIncrementRva,'eax');at(add,q.stackCompareRva,'eax, dword ptr [rbx + 0x1c]');at(add,q.stackAtMaxCompareRva,'dword ptr [rax + 0x8c], ecx');
+ at(add,q.refreshFlagReadRva,'byte ptr [rax + 0x94], 0');
+ for(const rva of [q.refreshCapWriteRva,q.incrementCapWriteRva,q.firstCapWriteRva])at(add,rva,'dword ptr [rax + 0x90], ecx');
+ at(add,q.refreshCallRva,'0x1839b3730');at(add,q.addStackCallRva,'0x1839b2a80');at(add,q.stackAddCallRva,'0x1847b40e0');
+ at(update,q.updateInitialQueueReadRva,'rcx, qword ptr [rdi + 0x10]');at(update,q.updateInitialCountCallRva,'0x1841fcd50');
+ at(update,q.updateLoopQueueReadRva,'rax, qword ptr [rdi + 0x10]');at(update,q.updateLiveCountCallRva,'0x1841fcd50');
+ at(update,q.updateItemQueueReadRva,'rcx, qword ptr [rdi + 0x10]');at(update,q.updateItemCallRva,'0x1844db610');
+ at(update,q.updateFinishedCallRva,'0x1839b6b00');at(update,q.updateSelectedWriteRva,'bpl, 1');at(update,q.updateEnabledCallRva,'0x1839b7e80');
+ at(update,q.updateQueueAfterSetterRva,'rax, qword ptr [rdi + 0x10]');
+ assert.equal(q.nativeQueueOrderingVerified,false);assert.equal(q.nativeBuffMergeEffectsVerified,false);assert.equal(q.liveGroupDispatchVerified,false);
 });
 
 test('native admission source binds signed Int16 counters, combo fallback and Enemy raw-WALK levitation',()=>{

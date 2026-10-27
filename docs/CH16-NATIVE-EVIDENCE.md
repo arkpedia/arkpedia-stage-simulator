@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 162 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 168 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -1401,6 +1401,43 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 124-method bundle. Continuation40545156330 at3b7defc7 passed; existing
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
+
+### Override-group merge dispatch and live activation selection
+
+The168-method bundle retains complete OverrideGroup._DoAddInternal and
+_DoUpdateInternal bodies, plus Buff duration-extension/fill, snapshot, capped
+refresh and stack-add callees. Exact metadata loads bind PriorityQueue<Buff>
+isEmpty, indexer, Add and count specifications; their concrete native mappings
+remain null. The snapshot-on-extend field is BuffData.takeSnapshotWhenExtend
+at0x71. These records do not certify queue storage/comparison or callee effects.
+
+`fearProjectileOverrideGroup` dispatches DEFAULT to enqueue, UNIQUE to enqueue
+only when empty, EXTEND_TIME to extend the front duration, and EXTEND to fill
+the front duration with optional snapshot then whole-pair blackboard assignment.
+STACK admits the first buff with the group's valid-stack cap. Later additions
+delegate stack addition below the maximum (or with a negative unlimited maximum),
+refresh only exactly at the maximum with the refresh flag, and reject above it.
+The count-plus-one comparison wraps as signed Int32 before testing the maximum.
+Each native front lookup remains distinct across receiver effects.
+
+Update enables the first unfinished queue member, disables finished prefixes
+and every subsequent member, and skips later finished getters after selection.
+It captures each count receiver but rereads the queue for the indexed item and
+after each setter. Each nested call keeps a separate selection flag; no new
+reentry suppression is introduced. Lifecycle cancellation and receiver failures
+retain completed mutations. NewBuff composition exercises all five modes,
+registration before merge, finish/remove on rejection, and activation only on
+successful insertion. EXTEND also composes concrete whole-pair assignment.
+
+All980 focused native/fear/family/miner tests pass. The source producer's --check
+reproduces168 methods. This checkpoint and the preceding group-initialization
+checkpoint remain local. Approved0524e2b1 is on the remote development branch;
+full40558578137 and continuation40558189633 are still in progress at that SHA.
+Older continuation40554907726 atb437ef5e and full40550025781 at93014b95 passed.
+
+Native queue ordering, concrete duration/stack/enable effects, full activation
+and live controller/stage/frame integration remain open. Source/support/receipt
+gates are unchanged, and all new stages remain test-only.
 
 ### Override-group initialization and stack limits
 

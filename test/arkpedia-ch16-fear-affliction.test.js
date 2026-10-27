@@ -33,7 +33,7 @@ import {fearProjectileBuffOverrideKey,fearProjectileResetBuffOverride,fearProjec
 import {fearProjectileResetBuff} from '../server/sim/content/chapter16-fear-buff-reset.js';
 import {fearProjectileNewBuff} from '../server/sim/content/chapter16-fear-buff-new.js';
 import {fearProjectileAttributeStatus,fearProjectileBuffAdmission,fearProjectileComboFlag} from '../server/sim/content/chapter16-fear-buff-admission.js';
-import {fearProjectileEnsureOverrideGroup} from '../server/sim/content/chapter16-fear-buff-group.js';
+import {fearProjectileEnsureOverrideGroup,fearProjectileOverrideGroup} from '../server/sim/content/chapter16-fear-buff-group.js';
 import {fearProjectileBuffRecyclePool,fearProjectileDefaultBuffPool} from '../server/sim/content/chapter16-fear-buff-pool.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
@@ -46,6 +46,110 @@ import { chapter16Shadow } from '../server/sim/content/chapter16-shadow.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
 const parentKey='feawpj_a[mcreep_fear]';
 const fpOne=1n<<32n;
+
+function groupDispatchFixture(type=0,members=[]){
+ const group={m_type:type,m_queue:members,m_maxStackCnt:3,m_maxValidStackCnt:2},events=[],state={active:true};
+ const effect=name=>(...args)=>events.push([name,...args]);
+ const options={group,isActive:()=>state.active,readQueue:value=>value.m_queue,isQueueEmpty:queue=>queue.length===0,
+  readQueueCount:queue=>queue.length,readQueueItem:(queue,index)=>queue[index],addQueue:(queue,value)=>queue.push(value),
+  extendRemainingTime:effect('extend'),fillRemainingTime:effect('fill'),takeSnapshot:effect('snapshot'),readData:value=>value.m_data,
+  readBlackboard:value=>value.m_blackboard,assignBlackboard:effect('assign'),fillRemainingTimeWhenStackMax:effect('refresh'),
+  addStack:effect('stack'),readIsFinished:value=>value.finished,setIsEnabled:(value,enabled)=>{events.push(['enable',value,enabled]);value.enabled=enabled;}};
+ return{group,events,state,options,adapter:()=>fearProjectileOverrideGroup(options)};
+}
+const groupMember=(extra={})=>({finished:false,m_stackCnt:1,m_refreshRemainingTimeWhenStackMax:true,
+ m_data:{takeSnapshotWhenExtend:false},m_blackboard:[],...extra});
+
+for(const type of [0,1,2,3,4])test('empty override mode '+type+' admits the incoming buff; only STACK assigns a valid-stack cap',()=>{
+ const incoming=groupMember(),f=groupDispatchFixture(type);assert.equal(f.adapter().add(incoming),true);
+ assert.deepEqual(f.group.m_queue,[incoming]);assert.equal(incoming.m_maxValidStackCnt,type===1?2:undefined);assert.deepEqual(f.events,[]);
+});
+test('DEFAULT enqueues a second buff while UNIQUE rejects it and unknown types never touch the queue',()=>{
+ const old=groupMember(),incoming=groupMember(),a=groupDispatchFixture(0,[old]),b=groupDispatchFixture(2,[old]);
+ assert.equal(a.adapter().add(incoming),true);assert.equal(b.adapter().add(incoming),false);assert.deepEqual(b.group.m_queue,[old]);
+ const unknown=groupDispatchFixture(99);unknown.options.readQueue=()=>{throw Error('unexpected queue');};assert.equal(unknown.adapter().add(incoming),false);
+});
+test('EXTEND_TIME delegates only duration extension; EXTEND fills time and checks the current front snapshot flag',()=>{
+ const old=groupMember(),incoming=groupMember(),a=groupDispatchFixture(4,[old]),b=groupDispatchFixture(3,[old]);
+ assert.equal(a.adapter().add(incoming),false);assert.deepEqual(a.events,[['extend',old,incoming]]);
+ assert.equal(b.adapter().add(incoming),false);assert.deepEqual(b.events,[['fill',old,incoming]]);
+});
+test('EXTEND rereads the front after fill and snapshot, then assigns whole blackboard pairs from the incoming buff',()=>{
+ const first=groupMember(),snapshotTarget=groupMember({m_data:{takeSnapshotWhenExtend:true}}),destination=groupMember(),incoming=groupMember(),f=groupDispatchFixture(3,[first]);
+ f.options.fillRemainingTime=(old,value)=>{assert.equal(old,first);assert.equal(value,incoming);f.group.m_queue=[snapshotTarget];};
+ f.options.takeSnapshot=value=>{assert.equal(value,snapshotTarget);f.group.m_queue=[destination];};
+ assert.equal(f.adapter().add(incoming),false);assert.deepEqual(f.events,[['assign',destination.m_blackboard,incoming.m_blackboard]]);
+});
+test('EXTEND checks destination board before its final front reread and keeps snapshot effects on a null board',()=>{
+ const old=groupMember({m_data:{takeSnapshotWhenExtend:true},m_blackboard:null}),f=groupDispatchFixture(3,[old]);
+ assert.equal(f.adapter().add(groupMember()),false);assert.deepEqual(f.events.map(x=>x[0]),['fill','snapshot']);
+});
+for(const type of [2,3,4])test('empty check in mode '+type+' rereads the queue before enqueueing',()=>{
+ const f=groupDispatchFixture(type),old=f.group.m_queue,newQueue=[],incoming=groupMember();
+ f.options.isQueueEmpty=queue=>{assert.equal(queue,old);f.group.m_queue=newQueue;return true;};
+ assert.equal(f.adapter().add(incoming),true);assert.deepEqual(old,[]);assert.deepEqual(newQueue,[incoming]);
+});
+test('STACK enforces its cap, permits negative unlimited caps and preserves Int32 overflow before comparison',()=>{
+ for(const [count,limit,expected] of [[1,3,'stack'],[3,3,'refresh'],[4,3,null],[1,-1,'stack'],[2147483647,3,'stack']]){
+  const old=groupMember({m_stackCnt:count}),f=groupDispatchFixture(1,[old]);f.group.m_maxStackCnt=limit;
+  assert.equal(f.adapter().add(groupMember()),false);assert.deepEqual(f.events.map(x=>x[0]),expected?[expected]:[]);
+  assert.equal(old.m_maxValidStackCnt,expected?2:undefined);
+ }
+ const old=groupMember({m_stackCnt:3,m_refreshRemainingTimeWhenStackMax:false}),f=groupDispatchFixture(1,[old]);
+ assert.equal(f.adapter().add(groupMember()),false);assert.deepEqual(f.events,[]);assert.equal(old.m_maxValidStackCnt,undefined);
+});
+test('STACK cap and effect each peek the current front rather than retaining the comparison receiver',()=>{
+ const members=Array.from({length:3},()=>groupMember()),f=groupDispatchFixture(1,[members[0]]);let reads=0;
+ const incoming=groupMember();f.options.readQueueItem=()=>members[reads++];assert.equal(f.adapter().add(incoming),false);
+ assert.equal(reads,3);assert.equal(members[0].m_maxValidStackCnt,undefined);assert.equal(members[1].m_maxValidStackCnt,2);
+ assert.deepEqual(f.events,[['stack',members[2],incoming]]);
+});
+test('group update enables only the first unfinished member and skips all later finished getters',()=>{
+ const members=[groupMember({finished:true}),groupMember(),groupMember()],f=groupDispatchFixture(0,members),queried=[];
+ f.options.readIsFinished=value=>{queried.push(value);return value.finished;};f.adapter().update();
+ assert.deepEqual(members.map(x=>x.enabled),[false,true,false]);assert.deepEqual(queried,members.slice(0,2));
+});
+test('group update rereads count and queue after setters, retaining selection even if the enabled member finishes',()=>{
+ const first=groupMember(),later=groupMember(),f=groupDispatchFixture(0,[first]),queries=[];
+ f.options.readIsFinished=value=>{queries.push(value);return value.finished;};
+ f.options.setIsEnabled=(member,enabled)=>{member.enabled=enabled;if(member===first){first.finished=true;f.group.m_queue=[first,later];}};
+ f.adapter().update();assert.equal(first.enabled,true);assert.equal(later.enabled,false);assert.deepEqual(queries,[first]);
+});
+test('group update permits nested native updates with separate selected flags',()=>{
+ const first=groupMember(),second=groupMember(),f=groupDispatchFixture(0,[first,second]);let nested=false,adapter;
+ f.options.setIsEnabled=(member,enabled)=>{f.events.push([member,enabled]);if(!nested){nested=true;first.finished=true;adapter.update();}};
+ adapter=f.adapter();adapter.update();assert.deepEqual(f.events,[[first,true],[first,false],[second,true],[second,false]]);
+});
+test('group update captures each count receiver but rereads the queue for the indexed item',()=>{
+ const first=groupMember(),replacement=groupMember(),old=[first],current=[replacement],f=groupDispatchFixture(0,old),counts=[];
+ f.options.readQueueCount=queue=>{counts.push(queue);if(counts.length===2)f.group.m_queue=current;return queue.length;};
+ f.adapter().update();assert.deepEqual(counts,[old,old,current]);assert.equal(first.enabled,undefined);assert.equal(replacement.enabled,true);
+});
+test('group add permits native nested insertion while its queue receiver is running',()=>{
+ const f=groupDispatchFixture(0),outer=groupMember(),inner=groupMember();let adapter,nested=false;
+ f.options.addQueue=(queue,value)=>{queue.push(value);if(!nested){nested=true;assert.equal(adapter.add(inner),true);}};
+ adapter=f.adapter();assert.equal(adapter.add(outer),true);assert.deepEqual(f.group.m_queue,[outer,inner]);
+});
+test('EXTEND composes concrete whole-pair assignment after snapshot effects',()=>{
+ const old=groupMember({m_data:{takeSnapshotWhenExtend:true},m_blackboard:[{key:'duration',value:1,valueStr:null}]}),
+  incoming=groupMember({m_blackboard:[{key:'duration',value:4,valueStr:'raw'},{key:'x',value:2,valueStr:null}]}),f=groupDispatchFixture(3,[old]);
+ f.options.takeSnapshot=value=>{assert.equal(value.m_blackboard[0].value,1);f.events.push(['snapshot']);};
+ f.options.assignBlackboard=(destination,source)=>fearProjectileBuffBlackboardPairs({entries:destination,
+  compareIgnoreCase:(a,b)=>a.toLowerCase()===b.toLowerCase()?0:1,isActive:()=>true}).assign(source);
+ assert.equal(f.adapter().add(incoming),false);assert.deepEqual(old.m_blackboard,incoming.m_blackboard);
+ assert.notEqual(old.m_blackboard[0],incoming.m_blackboard[0]);assert.equal(f.events.at(-1)[0],'snapshot');
+});
+test('group update checks the queue again after the last setter, and an empty initial queue returns immediately',()=>{
+ const f=groupDispatchFixture(0,[groupMember()]);f.options.setIsEnabled=()=>{f.group.m_queue=null;};assert.throws(()=>f.adapter().update(),/null native/);
+ const empty=groupDispatchFixture();let reads=0;empty.options.readQueue=()=>{reads++;return[];};empty.adapter().update();assert.equal(reads,1);
+});
+test('group dispatch preserves completed effects on lifecycle invalidation or receiver errors',()=>{
+ const first=groupMember(),f=groupDispatchFixture(1,[first]);f.options.addStack=()=>{first.m_stackCnt++;f.state.active=false;};
+ assert.equal(f.adapter().add(groupMember()),null);assert.equal(first.m_stackCnt,2);assert.equal(first.m_maxValidStackCnt,2);
+ const g=groupDispatchFixture(0,[groupMember(),groupMember()]);let setters=0;
+ g.options.setIsEnabled=(value,enabled)=>{value.enabled=enabled;if(++setters===1)throw Error('enable failure');};
+ assert.throws(()=>g.adapter().update(),/enable failure/);assert.equal(setters,1);assert.equal(g.group.m_queue[0].enabled,true);
+});
 
 function ensureGroupFixture(){
  const buff={overrideKey:'key',data:{overrideType:1,maxStackCnt:7,maxValidStackCnt:3},board:new Map()},events=[],created=[],state={active:true,map:new Map()};
@@ -117,9 +221,21 @@ test('NewBuff uses concrete EnsureOverrideGroup and blackboard readers before in
  f.buff=n.buff;n.buff.overrideKey='key';n.buff.data={overrideType:1,maxStackCnt:7,maxValidStackCnt:6};n.buff.board=entries;f.options.buff=n.buff;
  const reads=fearProjectileBuffBlackboardReads({entries,compareIgnoreCase:(a,b)=>a===b?0:1,isActive:()=>true});
  f.options.getIntOrDefault=(board,key,fallback,include)=>{assert.equal(board,entries);return reads.getIntOrDefault(key,fallback,include);};const ensure=fearProjectileEnsureOverrideGroup(f.options);
- Object.assign(n.options,{ensureOverrideGroup:()=>ensure.run(),readGroupQueue:group=>group.m_queue,addToGroup:(group,buff)=>{
-  assert.equal(group.m_type,1);assert.equal(group.m_maxStackCnt,3);assert.equal(group.m_maxValidStackCnt,2);group.m_queue.push(buff);return true;}});
- assert.equal(n.run(),n.buff);assert.equal(f.state.map.get('key').m_queue[0],n.buff);assert.ok(n.events.includes('group-update'));
+ const dispatch=group=>{const d=groupDispatchFixture();d.options.group=group;return d.adapter();};
+ Object.assign(n.options,{ensureOverrideGroup:()=>ensure.run(),readGroupQueue:group=>group.m_queue,
+  addToGroup:(group,buff)=>dispatch(group).add(buff),updateGroup:group=>dispatch(group).update()});
+ assert.equal(n.run(),n.buff);const group=f.state.map.get('key');assert.equal(group.m_queue[0],n.buff);
+ assert.equal(group.m_type,1);assert.equal(group.m_maxStackCnt,3);assert.equal(group.m_maxValidStackCnt,2);assert.equal(n.buff.m_maxValidStackCnt,2);assert.equal(n.buff.enabled,true);
+});
+
+for(const type of [0,1,2,3,4])test('NewBuff composes mode '+type+' with registration, merge rejection and delegated finish removal',()=>{
+ const n=newBuffFixture(),old=groupMember(),d=groupDispatchFixture(type,[old]);n.buff.overrideKey='shared';
+ Object.assign(n.options,{ensureOverrideGroup:()=>d.group,readGroupQueue:group=>group.m_queue,
+  addToGroup:(_group,buff)=>d.adapter().add(buff),updateGroup:()=>d.adapter().update()});
+ assert.equal(n.run(),type===0?n.buff:null);assert.equal(n.map.has(7),type===0);assert.equal(n.events.includes('finish-remove'),type!==0);
+ assert.deepEqual(n.recycled,[]);assert.equal(d.group.m_queue[0],old);
+ if(type===0){assert.equal(d.group.m_queue[1],n.buff);assert.equal(old.enabled,true);assert.equal(n.buff.enabled,false);}
+ else{assert.equal(d.group.m_queue.length,1);assert.equal(d.events.some(x=>x[0]==='enable'),false);}
 });
 
 function admissionFixture(){
