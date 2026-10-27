@@ -38,6 +38,7 @@ import {fearProjectileBuffEnabled} from '../server/sim/content/chapter16-fear-bu
 import {fearProjectileAttributeModifiers,fearProjectileAbnormalDirty,fearProjectileMarkAttributeDirty} from '../server/sim/content/chapter16-fear-buff-modifiers.js';
 import {fearProjectileBuffCombos,FEAR_COMBO_FLAG_MASKS} from '../server/sim/content/chapter16-fear-buff-combos.js';
 import {fearProjectileRuntimeSnapshot,fearProjectileTakeBuffSnapshot} from '../server/sim/content/chapter16-fear-buff-snapshot.js';
+import {fearProjectileAttributeValues} from '../server/sim/content/chapter16-fear-attribute-values.js';
 import {fearProjectileBuffRecyclePool,fearProjectileDefaultBuffPool} from '../server/sim/content/chapter16-fear-buff-pool.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
@@ -50,6 +51,76 @@ import { chapter16Shadow } from '../server/sim/content/chapter16-shadow.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
 const parentKey='feawpj_a[mcreep_fear]';
 const fpOne=1n<<32n;
+
+function attributeValuesFixture(count=38){
+ const encode=value=>{const bytes=Buffer.alloc(40);bytes.writeBigInt64LE(value);return bytes;},decode=bytes=>new DataView(bytes.buffer,bytes.byteOffset,bytes.byteLength).getBigInt64(0,true),
+  attributes={m_attributeModifiers:Array(count).fill(null),m_rawData:Array.from({length:count},()=>encode(100n*fpOne)),m_cachedData:Array.from({length:count},()=>encode(7n*fpOne)),
+   m_dirtyMask:1n,m_dataRange:Array.from({length:count},()=>({minRaw:-1000n*fpOne,maxRaw:1000n*fpOne})),m_overrideDataRange:Array.from({length:count},()=>({hasValue:false,value:null}))},
+  events=[],state={active:true};
+ const options={attributes,isActive:()=>state.active,openModifiers:set=>{let index=-1;events.push('open');return{moveNext:()=>++index<set.length,current:()=>set[index],dispose:()=>events.push('dispose')};},
+  getModifierValue:(modifier,index,out)=>{events.push('provider');return modifier(index,out);},decodeBaseValue:bytes=>{events.push('base');return decode(bytes);},
+  decodeCachedValue:bytes=>{events.push('cached');return decode(bytes);},encodeValue:value=>{events.push('encode');return encode(value);}};
+ return{attributes,events,state,options,encode,decode,adapter:()=>fearProjectileAttributeValues(options)};
+}
+test('attribute evaluator sums provider additions/multipliers/final additions and multiplies final scalers in native order',()=>{
+ const f=attributeValuesFixture();f.attributes.m_rawData[0]=f.encode(10n*fpOne);
+ f.attributes.m_attributeModifiers[0]=[(_index,out)=>{Object.assign(out,{addition:3n*fpOne,multiplier:fpOne/2n,finalAddition:4n*fpOne,finalScaler:2n*fpOne});return true;},
+  (_index,out)=>{Object.assign(out,{addition:2n*fpOne,multiplier:-fpOne/4n,finalAddition:fpOne,finalScaler:fpOne/2n});return true;}];
+ assert.equal(f.adapter().getValue(0),95n*fpOne/4n);assert.equal(f.attributes.m_dirtyMask,0n);assert.equal(f.decode(f.attributes.m_cachedData[0]),95n*fpOne/4n);
+ assert.deepEqual(f.events,['open','provider','provider','dispose','base','encode']);f.events.length=0;assert.equal(f.adapter().getValue(0),95n*fpOne/4n);assert.deepEqual(f.events,['cached']);
+});
+test('attribute evaluator ignores false provider results but reuses the same four native out fields',()=>{
+ const f=attributeValuesFixture();let first;
+ f.attributes.m_attributeModifiers[0]=[(_index,out)=>{first=out;Object.assign(out,{addition:31n*fpOne,multiplier:0n,finalAddition:0n,finalScaler:fpOne});return false;},
+  (_index,out)=>{assert.equal(out,first);return true;}];assert.equal(f.adapter().getValue(0),131n*fpOne);
+});
+test('attribute evaluator clamps a negative summed multiplier before final addition and final scaling',()=>{
+ const f=attributeValuesFixture();f.attributes.m_attributeModifiers[0]=[(_index,out)=>{Object.assign(out,{addition:50n*fpOne,multiplier:-2n*fpOne,finalAddition:5n*fpOne,finalScaler:2n*fpOne});return true;}];
+ assert.equal(f.adapter().getValue(0),10n*fpOne);
+});
+test('attribute evaluator respects nullable range overrides and native upper-then-lower clamp order',()=>{
+ for(const [min,max,expected]of [[0n,20n,20n],[200n,50n,200n]]){
+  const f=attributeValuesFixture();f.attributes.m_overrideDataRange[0]={hasValue:true,value:{minRaw:min*fpOne,maxRaw:max*fpOne}};
+  assert.equal(f.adapter().getValue(0),expected*fpOne);
+ }
+ const f=attributeValuesFixture();let reads=0;
+ f.attributes.m_overrideDataRange[0]={get hasValue(){return++reads===2;},value:{minRaw:900n*fpOne,maxRaw:30n*fpOne}};
+ assert.equal(f.adapter().getValue(0),30n*fpOne);assert.equal(reads,2);
+});
+test('attribute evaluator preserves signed dirty-bit positivity including bit63',()=>{
+ const f=attributeValuesFixture(64);f.attributes.m_dirtyMask=-(1n<<63n);f.options.decodeBaseValue=()=>{throw Error('unexpected evaluation');};
+ assert.equal(f.adapter().getValue(63),7n*fpOne);assert.equal(f.attributes.m_dirtyMask,-(1n<<63n));assert.deepEqual(f.events,['cached']);
+});
+test('clean attribute reads copy cached bytes and round through native ties-to-even FP conversion',()=>{
+ const f=attributeValuesFixture();f.attributes.m_dirtyMask=0n;f.attributes.m_cachedData[0]=f.encode(5n*fpOne/2n);
+ f.options.decodeCachedValue=bytes=>{f.attributes.m_cachedData[0].fill(0);return f.decode(bytes);};assert.equal(f.adapter().getValueRoundToInt(0),2);
+});
+test('attribute evaluation disposes enumeration before clearing dirty state and retains it on provider failure',()=>{
+ const f=attributeValuesFixture();f.attributes.m_attributeModifiers[0]=[()=>{throw Error('provider failed');}];
+ assert.throws(()=>f.adapter().getValue(0),/provider failed/);assert.deepEqual(f.events,['open','provider','dispose']);assert.equal(f.attributes.m_dirtyMask,1n);
+ const g=attributeValuesFixture();g.attributes.m_attributeModifiers[0]=[];g.options.decodeBaseValue=()=>{assert.equal(g.attributes.m_dirtyMask,0n);throw Error('base failed');};
+ assert.throws(()=>g.adapter().getValue(0),/base failed/);assert.deepEqual(g.events,['open','dispose']);assert.equal(g.attributes.m_dirtyMask,0n);
+});
+test('attribute evaluation marks cache dirty using current state after nested provider mutations',()=>{
+ const f=attributeValuesFixture();f.attributes.m_attributeModifiers[0]=[()=>{f.attributes.m_dirtyMask|=4n;return false;}];
+ assert.equal(f.adapter().getValue(0),100n*fpOne);assert.equal(f.attributes.m_dirtyMask,4n);
+});
+test('attribute evaluation captures cache destination before conversion and detaches the encoded byte buffer',()=>{
+ const f=attributeValuesFixture(),old=f.attributes.m_cachedData,newCache=Array.from({length:38},()=>f.encode(9n)),shared=f.encode(100n*fpOne);
+ f.options.encodeValue=()=>{f.attributes.m_cachedData=newCache;return shared;};assert.equal(f.adapter().getValue(0),100n*fpOne);
+ shared.fill(0);assert.equal(f.decode(old[0]),100n*fpOne);assert.equal(f.decode(newCache[0]),9n);
+});
+test('attribute evaluator preserves mutation ordering on null cache failure and lifecycle cancellation',()=>{
+ const f=attributeValuesFixture();f.attributes.m_cachedData=null;assert.throws(()=>f.adapter().getValue(0),/null native array/);assert.equal(f.events.at(-1),'encode');assert.equal(f.attributes.m_dirtyMask,0n);
+ const g=attributeValuesFixture();g.attributes.m_attributeModifiers[0]=[()=>{g.state.active=false;return false;}];
+ assert.equal(g.adapter().getValue(0),null);assert.equal(g.events.at(-1),'dispose');assert.equal(g.attributes.m_dirtyMask,1n);
+});
+test('stat snapshot composes concrete dirty evaluation, cached reads and native rounded integer fields',()=>{
+ const f=attributeValuesFixture(),snapshot=runtimeSnapshotFixture(),values=f.adapter();f.attributes.m_dirtyMask=(1n<<38n)-1n;
+ snapshot.options.readFp=(attrs,index)=>{assert.equal(attrs,f.attributes);return values.getValue(index);};snapshot.options.readInt=(attrs,index)=>{assert.equal(attrs,f.attributes);return values.getValueRoundToInt(index);};
+ snapshot.adapter().run(f.attributes);assert.equal(f.decode(snapshot.snapshot.atk),100n*fpOne);assert.equal(f.decode(snapshot.snapshot.cost),100n);
+ assert.equal(f.attributes.m_dirtyMask&((1n<<0n)|(1n<<21n)),0n);
+});
 
 function runtimeSnapshotFixture(){
  const snapshot={},attributes={},events=[],state={active:true};

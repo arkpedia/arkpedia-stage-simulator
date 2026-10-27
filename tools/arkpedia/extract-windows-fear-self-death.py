@@ -1544,6 +1544,77 @@ result['modeSwitch']['buffNotification']['newBuff']['statSnapshot'] = {
     'attributeIndices': [0, 1, 2, 3, 4, 5, 7, 8, 21], 'valueByteLengths': [40, 40, 40, 40, 20, 20, 40, 40, 20],
     'nativeObscuredValueConversionVerified': False, 'nativeSnapshotPointerDispatchVerified': False, 'liveStatSnapshotVerified': False,
 }
+calculate_row = c['unique'](lambda r: r['name'] == '_CalculateAttributeValue', attributes_type['methods'])
+methods.append(c['method'](attributes_type, calculate_row))
+value_specs = []
+for load_rva, index, name in [(0x3959190, 237213, 'GetEnumerator'), (0x39591e0, 233318, 'MoveNext'), (0x3959355, 233317, 'Dispose')]:
+    pos = v['offset'](v['image_base'] + load_rva)
+    assert v['b'][pos:pos + 3] in [bytes.fromhex('4c8b05'), bytes.fromhex('488b15')]
+    target = load_rva + 7 + struct.unpack_from('<i', v['b'], pos + 3)[0]
+    usage = v['quad'](v['b'], v['offset'](v['image_base'] + target))
+    assert usage >> 29 == 6 and (usage & 0x1ffffffe) >> 1 == index
+    spec = priority['specification'](index)
+    assert spec['definition']['name'] == name and spec['nativeMapping'] is None
+    assert spec['instantiations']['class']['arguments'][0]['name'] == 'IAttributesModifier'
+    value_specs.append({'loadRva': load_rva, 'encodedUsage': usage, 'specification': spec})
+provider_load = 0x3959212
+pos = v['offset'](v['image_base'] + provider_load)
+assert v['b'][pos:pos + 3] == bytes.fromhex('488b1d')
+target = provider_load + 7 + struct.unpack_from('<i', v['b'], pos + 3)[0]
+usage = v['quad'](v['b'], v['offset'](v['image_base'] + target))
+assert usage >> 29 == 1
+provider_ti = (usage & 0x1ffffffe) >> 1
+provider_pos = v['offset'](v['quad'](v['b'], v['type_table'] + provider_ti * 8))
+assert (v['uint'](v['b'], provider_pos + 8) >> 16) & 255 == 21
+provider_generic = v['offset'](v['quad'](v['b'], provider_pos))
+provider_definition_pos = v['offset'](v['quad'](v['b'], provider_generic))
+provider_type = v['types'][v['quad'](v['b'], provider_definition_pos)]
+assert provider_type['name'] == 'IAttributesDataProvider`1'
+provider_inst = v['offset'](v['quad'](v['b'], provider_generic + 8))
+assert v['quad'](v['b'], provider_inst) == 1
+provider_args = v['offset'](v['quad'](v['b'], provider_inst + 8))
+provider_arg = v['offset'](v['quad'](v['b'], provider_args))
+assert (v['uint'](v['b'], provider_arg + 8) >> 16) & 255 == 17
+provider_attribute = v['types'][v['quad'](v['b'], provider_arg)]
+assert provider_attribute['name'] == 'AttributeType'
+provider_row = c['unique'](lambda r: r['name'] == 'GetValue', provider_type['methods'])
+provider_method_pos = v['method_start'] + provider_row['index'] * 32
+assert struct.unpack_from('<H', v['m'], provider_method_pos + 28)[0] == 0
+start, count = v['sint'](v['m'], provider_method_pos + 12), struct.unpack_from('<H', v['m'], provider_method_pos + 30)[0]
+provider_parameters = []
+for index in range(count):
+    pp = v['uint'](v['m'], 88) + (start + index) * 12
+    provider_parameters.append({'name': v['text'](v['uint'](v['m'], pp)), 'typeIndex': v['sint'](v['m'], pp + 8)})
+assert [p['name'] for p in provider_parameters] == ['attributeType', 'addition', 'multiplier', 'finalAddition', 'finalScaler']
+value_constants = []
+for load_rva in [0x395912c, 0x3959154]:
+    pos = v['offset'](v['image_base'] + load_rva)
+    assert v['b'][pos:pos + 4] == bytes.fromhex('f30f1005')
+    target = load_rva + 8 + struct.unpack_from('<i', v['b'], pos + 4)[0]
+    data = v['b'][v['offset'](v['image_base'] + target):v['offset'](v['image_base'] + target) + 4]
+    assert data.hex() == '0000803f'
+    value_constants.append({'loadRva': load_rva, 'valueRva': target, 'hex': data.hex(), 'value': 1.0})
+result['modeSwitch']['buffNotification']['newBuff']['attributeValues'] = {
+    'fields': [c['unique'](lambda f: f['name'] == name, c['fields'](attributes_type)) for name in
+        ['m_attributeModifiers', 'm_rawData', 'm_dataRange', 'm_cachedData', 'm_overrideDataRange', 'm_dirtyMask']],
+    'enumerationSpecifications': value_specs, 'initialConstants': value_constants,
+    'provider': {'loadRva': provider_load, 'encodedUsage': usage, 'typeIndex': provider_ti, 'typeName': provider_type['name'],
+        'definitionIndex': provider_type['index'], 'argument': {'name': provider_attribute['name'], 'index': provider_attribute['index'], 'typeHex': v['b'][provider_arg:provider_arg + 16].hex()},
+        'method': {**provider_row, 'virtualSlot': 0, 'parameters': provider_parameters}},
+    'clamp': {'entryRva': 0x5a5c4a0, 'chunks': c['code'](0x5a5c4a0)},
+    'getDirtyCaptureRva': 0x3957de9, 'getDirtySignedTestRva': 0x3957e00, 'getDirtySignedBranchRva': 0x3957e03,
+    'getCacheConversionCallRva': 0x3957e4e, 'getCalculateTailRva': 0x3957e7a,
+    'roundGetValueCallRva': 0x3957d73, 'roundTailRva': 0x3957d9f,
+    'enumeratorCallRva': 0x395919f, 'moveNextCallRva': 0x39591ef, 'providerCallRva': 0x39592ac,
+    'sumCalls': [0x39592da, 0x39592f2, 0x395930a], 'scalerProductCallRva': 0x3959322,
+    'normalDisposeCallRva': 0x395935f, 'exceptionDisposeCallRva': 0x3959384,
+    'dirtyClearRva': 0x39593d7, 'baseReadCallRva': 0x3959403,
+    'baseAdditionCallRva': 0x3959429, 'nonnegativeMultiplierCallRva': 0x395945b,
+    'multiplierProductCallRva': 0x3959469, 'finalAdditionCallRva': 0x3959477, 'finalProductCallRva': 0x3959485,
+    'lowerOverrideReadRva': 0x39594d6, 'upperOverrideReadRva': 0x3959590, 'clampCallRva': 0x395960f,
+    'cacheCaptureRva': 0x3959617, 'cacheEncodeCallRva': 0x3959629, 'cacheCopyWrites': [0x3959640, 0x3959649, 0x3959653],
+    'nativeProviderDispatchVerified': False, 'nativeRangeStorageVerified': False, 'nativeValueConversionVerified': False, 'liveAttributeValuesVerified': False,
+}
 for index in [147561, 147566, 147567, 147558, 147559, 147563, 147564, 147568, 147569]:
     spec = priority['specification'](index)
     assert spec['declaringTypeIndex'] == pool['index']

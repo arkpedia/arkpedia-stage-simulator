@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,189);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,190);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -428,6 +428,30 @@ test('stat snapshot source binds native field layout, source locking and nine FP
   'xmmword ptr [rdi + 0x78], xmm1','xmmword ptr [rdi + 0xa0], xmm0','xmmword ptr [rdi + 0xb4], xmm0',
   'xmmword ptr [rdi + 0xc8], xmm1','xmmword ptr [rdi + 0xf0], xmm1','xmmword ptr [rdi + 0x118], xmm0'].entries())at(m,q.firstCopyWrites[index],operands);
  assert.equal(q.nativeObscuredValueConversionVerified,false);assert.equal(q.nativeSnapshotPointerDispatchVerified,false);assert.equal(q.liveStatSnapshotVerified,false);
+});
+
+test('attribute evaluation source binds reusable provider outputs, exact formula and cache/range ordering',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.newBuff.attributeValues,
+  calc=castMethod(c,'Attributes','_CalculateAttributeValue'),get=castMethod(c,'Attributes','GetValue'),round=castMethod(c,'Attributes','GetValueRoundToInt');
+ const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args),`${rva.toString(16)} ${args}`);
+ assert.deepEqual(q.fields.map(f=>[f.name,f.offset]),[['m_attributeModifiers',0x18],['m_rawData',0x40],['m_dataRange',0x48],['m_cachedData',0x50],['m_overrideDataRange',0x58],['m_dirtyMask',0x60]]);
+ assert.deepEqual(q.enumerationSpecifications.map(s=>s.specification.index),[237213,233318,233317]);for(const s of q.enumerationSpecifications){assert.equal(s.encodedUsage>>>29,6);assert.equal(s.specification.nativeMapping,null);assert.equal(s.specification.instantiations.class.arguments[0].name,'IAttributesModifier');}
+ assert.equal(q.provider.encodedUsage>>>29,1);assert.equal(q.provider.typeName,'IAttributesDataProvider`1');assert.equal(q.provider.argument.name,'AttributeType');
+ assert.equal(q.provider.method.name,'GetValue');assert.equal(q.provider.method.virtualSlot,0);
+ assert.deepEqual(q.provider.method.parameters.map(p=>p.name),['attributeType','addition','multiplier','finalAddition','finalScaler']);
+ assert.deepEqual(q.initialConstants.map(x=>[x.hex,x.value]),[['0000803f',1],['0000803f',1]]);
+ at(get,q.getDirtyCaptureRva,'rbx, qword ptr [rsi + 0x60]');at(get,q.getDirtySignedTestRva,'rbx, rdx');at(get,q.getDirtySignedBranchRva,'0x183957e63');assert.equal(instructions(get).find(i=>i.rva===q.getDirtySignedBranchRva).mnemonic,'jg');
+ at(get,q.getCacheConversionCallRva,'0x185a45a80');at(get,q.getCalculateTailRva,'0x183959030');at(round,q.roundGetValueCallRva,'0x183957db0');at(round,q.roundTailRva,'0x185a42a50');
+ at(calc,q.enumeratorCallRva,'0x184353640');at(calc,q.moveNextCallRva,'0x184dde4d0');at(calc,q.providerCallRva,'r10');
+ for(const rva of q.sumCalls)at(calc,rva,'0x184175da0');at(calc,q.scalerProductCallRva,'0x185a3b800');
+ at(calc,q.normalDisposeCallRva,'0x180511a50');at(calc,q.exceptionDisposeCallRva,'0x180511a50');at(calc,q.dirtyClearRva,'qword ptr [r13 + 0x60], r8');
+ at(calc,q.baseReadCallRva,'0x185a45410');at(calc,q.baseAdditionCallRva,'0x184175da0');at(calc,q.nonnegativeMultiplierCallRva,'0x185a5c940');
+ at(calc,q.multiplierProductCallRva,'0x185a3b800');at(calc,q.finalAdditionCallRva,'0x184175da0');at(calc,q.finalProductCallRva,'0x185a3b800');
+ at(calc,q.lowerOverrideReadRva,'rdx, qword ptr [r13 + 0x58]');at(calc,q.upperOverrideReadRva,'rdx, qword ptr [r13 + 0x58]');at(calc,q.clampCallRva,'0x185a5c4a0');
+ at(calc,q.cacheCaptureRva,'rdi, qword ptr [r13 + 0x50]');at(calc,q.cacheEncodeCallRva,'0x185a45a50');
+ at(calc,q.cacheCopyWrites[0],'xmmword ptr [rdi + rcx*8 + 0x20], xmm0');at(calc,q.cacheCopyWrites[1],'xmmword ptr [rdi + rcx*8 + 0x30], xmm1');at(calc,q.cacheCopyWrites[2],'qword ptr [rdi + rcx*8 + 0x40], xmm0');
+ at(q.clamp,0x5a5c4f2,'0x1851df0c0');at(q.clamp,0x5a5c51b,'0x1851df0f0');
+ assert.equal(q.nativeProviderDispatchVerified,false);assert.equal(q.nativeRangeStorageVerified,false);assert.equal(q.nativeValueConversionVerified,false);assert.equal(q.liveAttributeValuesVerified,false);
 });
 
 test('native admission source binds signed Int16 counters, combo fallback and Enemy raw-WALK levitation',()=>{

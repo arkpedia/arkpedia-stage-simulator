@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 189 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 190 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -1401,6 +1401,45 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 124-method bundle. Continuation40545156330 at3b7defc7 passed; existing
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
+
+### Native attribute evaluation and cached reads
+
+The190-method bundle adds Attributes._CalculateAttributeValue. Exact metadata
+loads bind HashSet<IAttributesModifier> enumeration and closed
+IAttributesDataProvider<AttributeType>.GetValue slot0 with four output parameters:
+addition, multiplier, finalAddition and finalScaler. The two original float
+constants are1.0. Caller anchors bind signed dirty checks, disposal paths,
+dirty clearing, formula operations, independent range-override reads, clamp,
+cache capture and40-byte encoded writes. The complete clamp body applies the
+upper limit before the lower limit, including inverted ranges.
+
+`fearProjectileAttributeValues` implements cached GetValue, calculation and
+GetValueRoundToInt. Clean reads copy the cached obscured value before decoding.
+Only a signed-positive dirty-bit test selects calculation; bit63 retains native
+signed behavior. Calculation initializes addition/finalAddition0 and
+multiplier/finalScaler1, enumerates providers with shared output storage, and
+accumulates only true results. False calls can still change output storage seen
+by later calls. It disposes enumeration, clears the current dirty bit, then
+computes ((base+addition)*max(0,multiplier)+finalAddition)*finalScaler with native
+signed FP arithmetic. Lower and upper bounds each read current override/default
+range projections. Cache storage is captured before encoding and checked after
+that call; encoded bytes are copied into the captured array. RoundToInt uses
+the retained native ties-to-even conversion.
+
+Tests cover all four accumulators, false-result output reuse, negative
+multipliers, overrides/inverted ranges, signed bit63, clean-copy/rounded reads,
+disposal, failures before/after dirty clearing, nested dirty changes, cache
+replacement during encoding and lifecycle cancellation. Runtime snapshots now
+compose concrete evaluation/cached reads and rounded integer attributes.
+All1079 focused native/fear/family/miner tests pass; --check reproduces190
+complete methods. This checkpoint is local. Approved0524e2b1's continuation
+passed on attempt2; original full40558578137 remains active.
+
+Concrete buff provider dispatch, native HashSet iteration/equality, obscured
+conversion/decryption, native range storage, actions, effect refresh, full
+snapshot consumption and controller/stage/frame integration remain open.
+Source/support/receipt/catalogue gates remain unchanged and all new stages
+remain test-only.
 
 ### Native source-stat snapshot copies
 
