@@ -27,6 +27,7 @@ import {fearProjectileLoadBuffActions} from '../server/sim/content/chapter16-fea
 import {fearProjectileLoadBuffAttributes} from '../server/sim/content/chapter16-fear-buff-attributes.js';
 import {fearProjectileBuffPriority,fearProjectileUpdateBuffStack} from '../server/sim/content/chapter16-fear-buff-priority.js';
 import {fearProjectileInitBuffStatus} from '../server/sim/content/chapter16-fear-buff-status.js';
+import {fearProjectileInitBuffFinalFlags} from '../server/sim/content/chapter16-fear-buff-final-flags.js';
 import {fearProjectileBuffRecyclePool,fearProjectileDefaultBuffPool} from '../server/sim/content/chapter16-fear-buff-pool.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
@@ -212,6 +213,76 @@ test('finish and native-frame queue use concrete buff recycle identity before th
  finish.run();queue.update();assert.equal(buff.instanceUid,1);assert.equal(buff.m_isValid,true);assert.equal(recycled,0);
  f.b.kill(f.source,null);frame=11;queue.update();assert.equal(recycled,1);assert.equal(buff.instanceUid,0);assert.equal(buff.m_isValid,false);assert.equal(p.lock(old),null);
  identity.allocate(buff);assert.equal(buff.instanceUid,2);assert.equal(p.lock(old),null);assert.equal(p.lock(p.capture(buff)),buff);queue.release();assert.deepEqual(f.b.errors,[]);
+});
+
+function finalFlagFixture(overrides={}){
+ const buff={m_isEpBreakBuff:false,hasShield:true,m_shieldMask:99},records=[{keys:['buff']}],actions=Array(104).fill(null),events=[];
+ actions[10]=[{kind:'block',show:true,mask:3}];let index=-1,disposed=0,active=true;
+ const iterator={moveNext:()=>{events.push('next');return++index<records.length;},current:()=>({value:records[index]}),dispose:()=>{events.push('dispose');disposed++;}};
+ const init=fearProjectileInitBuffFinalFlags({buff,openBreakIterator:()=>iterator,readBreakKeys:record=>record.keys,readBuffKey:()=>{events.push('key');return'buff';},
+  readActions:()=>actions,asBlockDamage:node=>{events.push('cast');return node.kind==='block'?node:null;},readShowShieldUI:node=>node.show,
+  readDamageMask:node=>node.mask,isActive:()=>active,...overrides});
+ return{buff,records,actions,events,iterator,init,get disposed(){return disposed;},set active(value){active=value;}};
+}
+
+test('final flags identify the break key and first visible BlockDamage without executing actions',()=>{
+ const f=finalFlagFixture();f.actions[10]=[null,{kind:'other'},{kind:'block',show:false,mask:1},{kind:'block',show:true,mask:3},{kind:'block',show:true,mask:7}];
+ f.init.run();assert.equal(f.buff.m_isEpBreakBuff,true);assert.equal(f.buff.hasShield,true);assert.equal(f.buff.m_shieldMask,3);assert.equal(f.disposed,1);
+ assert.equal(f.events.filter(e=>e==='cast').length,3,'null action is skipped and later visible blocks are not visited');
+});
+
+test('break membership is exact and enumerates records until the first matching key',()=>{
+ const f=finalFlagFixture();f.records.splice(0,1,{keys:['BUFF']},{keys:['buff']},{keys:null});f.init.run();
+ assert.equal(f.buff.m_isEpBreakBuff,true);assert.equal(f.events.filter(e=>e==='key').length,2);assert.equal(f.disposed,1);
+});
+
+test('absent break membership and empty shield nodes clear flags while preserving the previous mask',()=>{
+ const f=finalFlagFixture();f.records.length=0;f.actions[10]=null;f.init.run();
+ assert.equal(f.buff.m_isEpBreakBuff,false);assert.equal(f.buff.hasShield,false);assert.equal(f.buff.m_shieldMask,99);assert.equal(f.disposed,1);
+});
+
+test('elemental-break lookup reads the buff key before rejecting a missing key list and disposes on error',()=>{
+ const f=finalFlagFixture();f.records[0].keys=null;assert.throws(()=>f.init.run(),/nonnull native key list/);
+ assert.ok(f.events.includes('key'));assert.equal(f.disposed,1);assert.equal(f.buff.hasShield,true,'shield setup has not begun');
+});
+
+test('missing break record fails before buff-key lookup and still disposes its iterator',()=>{
+ const f=finalFlagFixture();f.records[0]=null;assert.throws(()=>f.init.run(),/record cannot be null/);assert.equal(f.events.includes('key'),false);assert.equal(f.disposed,1);
+});
+
+test('elemental-break scan disposes before writing its result and does not continue after disposal invalidation',()=>{
+ let f;f=finalFlagFixture({openBreakIterator:()=>({moveNext:()=>true,current:()=>({value:{keys:['buff']}}),dispose:()=>{
+  assert.equal(f.buff.m_isEpBreakBuff,false);f.active=false;
+ }})});assert.equal(f.init.run(),null);assert.equal(f.buff.m_isEpBreakBuff,false);assert.equal(f.buff.hasShield,true);
+});
+
+test('elemental-break opening invalidation disposes any returned handle without interpreting a stale result',()=>{
+ let f;f=finalFlagFixture({openBreakIterator:()=>{f.active=false;return f.iterator;}});assert.equal(f.init.run(),null);assert.equal(f.disposed,1);
+ let g;g=finalFlagFixture({openBreakIterator:()=>{g.active=false;return undefined;}});assert.equal(g.init.run(),null);
+});
+
+test('shield mask getter failure preserves hasShield true and the previous mask',()=>{
+ const f=finalFlagFixture({readDamageMask:()=>{throw Error('mask');}});assert.throws(()=>f.init.run(),/mask/);
+ assert.equal(f.buff.m_isEpBreakBuff,true);assert.equal(f.buff.hasShield,true);assert.equal(f.buff.m_shieldMask,99);
+});
+
+test('shield node scan follows the live collection after casting effects',()=>{
+ let f;f=finalFlagFixture({asBlockDamage:node=>{f.actions[10].length=1;return null;}});f.actions[10].push({kind:'block',show:true,mask:7});
+ f.init.run();assert.equal(f.buff.hasShield,false);assert.equal(f.buff.m_shieldMask,99);
+});
+
+for(const point of ['readBreakKeys','readBuffKey','readActions','asBlockDamage','readShowShieldUI','readDamageMask'])test('final flags stop invalidation during '+point,()=>{
+ let f;f=finalFlagFixture({[point]:()=>{f.active=false;return undefined;}});assert.equal(f.init.run(),null);assert.equal(f.init.run(),null);assert.equal(f.disposed,1);
+});
+
+test('final flag setup guards recursion while classifying shield actions',()=>{
+ let f;f=finalFlagFixture({asBlockDamage:node=>{assert.equal(f.init.run(),null);return node;}});f.init.run();assert.equal(f.buff.hasShield,true);
+});
+
+test('loaded action table composes with shield discovery in the final Reset flags',()=>{
+ const f=finalFlagFixture(),shield={kind:'block',show:true,mask:5},nodes=[shield],dictionary=[{key:10,value:{action:nodes}}];
+ fearProjectileLoadBuffActions({readActions:()=>f.actions,readDictionaryCount:()=>dictionary.length,readDictionaryEntry:i=>dictionary[i],readActionArray:c=>c.action,
+  isAssignable:()=>true,isActive:()=>true}).run();f.init.run();assert.equal(f.actions[10],nodes);assert.equal(f.buff.hasShield,true);assert.equal(f.buff.m_shieldMask,5);
 });
 
 function statusInitFixture(overrides={}){

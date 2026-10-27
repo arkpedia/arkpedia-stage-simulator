@@ -857,6 +857,35 @@ result['modeSwitch']['buffNotification']['statusInitialization'] = {
     'stringInequality': {'entryRva': 0x50d90f0, 'chunks': c['code'](0x50d90f0)},
     'nativeConfigEffectsVerified': False, 'liveStatusPhaseVerified': False,
 }
+for owner, name in [(buff, '_InitIsEpBreakBuff'), (buff, '_InitShieldSource'), (buff, 'set_hasShield'),
+                    (c['type_row']('BlockDamage', ''), 'get_showShieldUI'), (c['type_row']('BlockDamage', ''), 'get_damageMask')]:
+    methods.append(c['method'](owner, c['unique'](lambda r: r['name'] == name, owner['methods'])))
+shield_type = c['type_row']('BlockDamage', '')
+load_rva = 0x39b40a7
+pos = v['offset'](v['image_base'] + load_rva)
+assert v['b'][pos:pos + 3] == bytes.fromhex('488b15')
+target = load_rva + 7 + struct.unpack_from('<i', v['b'], pos + 3)[0]
+usage = v['quad'](v['b'], v['offset'](v['image_base'] + target))
+assert usage >> 29 == 1
+ti = (usage & 0x1ffffffe) >> 1
+tp = v['offset'](v['quad'](v['b'], v['type_table'] + ti * 8))
+assert (v['uint'](v['b'], tp + 8) >> 16) & 255 == 18 and v['quad'](v['b'], tp) == shield_type['index']
+damage_event = c['unique'](lambda f: f['name'] == 'ON_TAKE_DAMAGE', event['fields'])
+default_ti, di = v['defaults'][damage_event['index']]
+dp = v['uint'](v['m'], 72) + di
+assert v['m'][dp] == 20
+result['modeSwitch']['buffNotification']['finalFlagInitialization'] = {
+    'breakDatabaseSpecification': priority['specification'](254454),
+    'breakGetEnumeratorCallRva': 0x39b3bc3, 'breakMoveNextCallRva': 0x39b3bfd, 'breakCurrentCallRva': 0x39b3c88,
+    'breakBuffKeysReadRva': 0x39b3ca0, 'breakKeyCallRva': 0x39b3ca9, 'breakContainsCallRva': 0x39b3cc4,
+    'breakFoundDisposeCallRva': 0x39b3ce2, 'breakExhaustedDisposeCallRva': 0x39b3d1a, 'breakExceptionDisposeCallRva': 0x39b3d37,
+    'shieldTypeLoad': {'loadRva': load_rva, 'encodedUsage': usage, 'typeIndex': ti, 'definitionIndex': shield_type['index'], 'name': shield_type['name']},
+    'shieldEvent': {**damage_event, 'defaultTypeIndex': default_ti, 'defaultFileOffset': dp, 'encodedHex': '14', 'value': 10},
+    'shieldClearCallRva': 0x39b403b, 'shieldEventInputRva': 0x39b4047, 'shieldUIGetterCallRva': 0x39b4106,
+    'shieldSetCallRva': 0x39b411d, 'shieldMaskGetterCallRva': 0x39b4127, 'shieldMaskWriteRva': 0x39b412c,
+    'shieldFields': [c['unique'](lambda f: f['name'] == name, c['fields'](shield_type)) for name in ['_showShieldUI', '_damageMask']],
+    'nativeBreakDatabaseEffectsVerified': False, 'nativeShieldCastEffectsVerified': False, 'liveFinalFlagsPhaseVerified': False,
+}
 pool = c['type_row']('ObjectPool`1', 'Torappu.ObjectPool')
 pool_methods = []
 for index in [147561, 147566, 147567, 147558, 147559, 147563, 147564, 147568, 147569]:

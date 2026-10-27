@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,124);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,129);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -225,6 +225,22 @@ test('immediate recycle source enumerates stored pairs and pointer lists before 
  }
  at(q.outerMoveNext,0x4dd4158,'dword ptr [rbx + 0xc], eax');at(q.outerMoveNext,0x4dd41b6,'dword ptr [rbx + 0xc], eax');
  assert.ok(!instructions(m).some(i=>i.mnemonic==='call'&&i.operands==='0x183991a80'),'flush does not filter by current frame');
+});
+
+test('final flag source binds elemental-break iterator disposal and first visible BlockDamage on ON_TAKE_DAMAGE',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.finalFlagInitialization;
+ const elemental=castMethod(c,'Buff','_InitIsEpBreakBuff'),shield=castMethod(c,'Buff','_InitShieldSource');
+ const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ assert.equal(q.breakDatabaseSpecification.instantiations.class.arguments[0].name,'EPBreakBuffDB');assert.equal(q.breakDatabaseSpecification.nativeMapping,null);
+ at(elemental,q.breakGetEnumeratorCallRva,'r8');at(elemental,q.breakMoveNextCallRva,'0x180005250');at(elemental,q.breakCurrentCallRva,'rax');
+ at(elemental,q.breakBuffKeysReadRva,'rdi, qword ptr [rdi + 0x18]');at(elemental,q.breakKeyCallRva,'0x1839b6cc0');at(elemental,q.breakContainsCallRva,'0x1845220d0');
+ for(const rva of [q.breakFoundDisposeCallRva,q.breakExhaustedDisposeCallRva,q.breakExceptionDisposeCallRva])at(elemental,rva,'0x180005a80');
+ assert.equal(q.shieldTypeLoad.name,'BlockDamage');assert.equal(q.shieldEvent.name,'ON_TAKE_DAMAGE');assert.equal(q.shieldEvent.value,10);
+ at(shield,q.shieldClearCallRva,'0x1839b7d60');at(shield,q.shieldEventInputRva,'ecx, 0xa');at(shield,q.shieldUIGetterCallRva,'0x180d95600');
+ at(shield,q.shieldSetCallRva,'0x1839b7d60');at(shield,q.shieldMaskGetterCallRva,'0x180d955a0');at(shield,q.shieldMaskWriteRva,'dword ptr [r14 + 0x268], eax');
+ assert.deepEqual(q.shieldFields.map(f=>[f.name,f.offset]),[['_showShieldUI',0x38],['_damageMask',0x14]]);
+ assert.ok(castMethod(c,'BlockDamage','get_showShieldUI'));assert.ok(castMethod(c,'BlockDamage','get_damageMask'));assert.ok(castMethod(c,'Buff','set_hasShield'));
+ assert.equal(q.nativeBreakDatabaseEffectsVerified,false);assert.equal(q.nativeShieldCastEffectsVerified,false);assert.equal(q.liveFinalFlagsPhaseVerified,false);
 });
 
 test('status initialization source binds private static arrays, byte switch and configured slowdown exclusion',()=>{

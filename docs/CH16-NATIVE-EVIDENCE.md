@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 124 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 129 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -1401,6 +1401,31 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 124-method bundle. Continuation40545156330 at3b7defc7 passed; existing
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
+
+### Final elemental-break and shield-source flags
+
+The129-method artifact additionally retains _InitIsEpBreakBuff, _InitShieldSource,
+set_hasShield and BlockDamage's showShieldUI/damageMask getters. The selected
+database singleton specification binds EPBreakBuffDB without inventing a native
+mapping. The break scan checks each enumerated record's key list against the
+current buff key and disposes on first match, exhaustion and exception. The buff
+key is read before a missing key list fails. Native database/iterator effects
+remain explicit receivers.
+
+`fearProjectileInitBuffFinalFlags` preserves that scan and its disposal ordering
+before writing m_isEpBreakBuff. Shield initialization clears hasShield, retaining
+the prior mask, then scans event10/ON_TAKE_DAMAGE's action-node array. Null nodes
+are skipped before casting. The first BlockDamage whose showShieldUI getter is
+true sets hasShield before reading/writing its mask; later actions are ignored.
+No action executes during this discovery. Native casts/getters remain explicit.
+
+Tests cover exact key membership, first-match/exhausted/error disposal, opening
+and disposal invalidation, missing records/lists, null and nonshield nodes,
+first-visible shield, live action changes, partial mask-getter failure, reentry
+and lifecycle cancellation. An action-loading/final-flags composition discovers
+the installed shield array. All793 focused native/fear/family/miner tests pass
+and --check reproduces the129-method bundle. Full Reset, native database/cast
+effects and live controller/stage integration remain open; all gates are intact.
 
 ### ClearRunTimeData default cleanup ordering
 
