@@ -132470,6 +132470,655 @@
      "nativeActionNodeEffectsVerified": false,
      "liveActionUtilVerified": false
     },
+    "predicateNodes": {
+     "fields": {
+      "CheckAbnormalFlag": [
+       {
+        "index": 98928,
+        "name": "_abnormalFlag",
+        "typeIndex": 30835,
+        "offset": 16,
+        "typeData": 34285,
+        "typeBits": 2148597761
+       },
+       {
+        "index": 98929,
+        "name": "_targetType",
+        "typeIndex": 91891,
+        "offset": 20,
+        "typeData": 12109,
+        "typeBits": 2148597761
+       },
+       {
+        "index": 98930,
+        "name": "_isUnset",
+        "typeIndex": 38774,
+        "offset": 24,
+        "typeData": 36824,
+        "typeBits": 2147614721
+       },
+       {
+        "index": 98931,
+        "name": "_abnormalFlagKey",
+        "typeIndex": 70184,
+        "offset": 32,
+        "typeData": 36784,
+        "typeBits": 917505
+       }
+      ],
+      "CheckAbnormalCombo": [
+       {
+        "index": 98954,
+        "name": "_abnormalCombo",
+        "typeIndex": 30829,
+        "offset": 16,
+        "typeData": 34286,
+        "typeBits": 2148597761
+       },
+       {
+        "index": 98955,
+        "name": "_targetType",
+        "typeIndex": 91891,
+        "offset": 20,
+        "typeData": 12109,
+        "typeBits": 2148597761
+       },
+       {
+        "index": 98956,
+        "name": "_isUnset",
+        "typeIndex": 38774,
+        "offset": 24,
+        "typeData": 36824,
+        "typeBits": 2147614721
+       }
+      ]
+     },
+     "targetTypes": {
+      "typeIndex": 12109,
+      "name": "ActionTargetType",
+      "fields": [
+       {
+        "index": 95902,
+        "name": "TARGET",
+        "typeIndex": 91893,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20683795,
+        "encodedHex": "00",
+        "value": 0
+       },
+       {
+        "index": 95903,
+        "name": "SOURCE",
+        "typeIndex": 91893,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20683796,
+        "encodedHex": "02",
+        "value": 1
+       },
+       {
+        "index": 95904,
+        "name": "BUFF_SOURCE",
+        "typeIndex": 91893,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20683797,
+        "encodedHex": "04",
+        "value": 2
+       },
+       {
+        "index": 95905,
+        "name": "BUFF_OWNER",
+        "typeIndex": 91893,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20683798,
+        "encodedHex": "06",
+        "value": 3
+       },
+       {
+        "index": 95906,
+        "name": "MODIFIER_TARGET",
+        "typeIndex": 91893,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20683799,
+        "encodedHex": "08",
+        "value": 4
+       },
+       {
+        "index": 95907,
+        "name": "MODIFIER_SOURCE",
+        "typeIndex": 91893,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20683800,
+        "encodedHex": "0a",
+        "value": 5
+       },
+       {
+        "index": 95908,
+        "name": "MAIN_TARGET",
+        "typeIndex": 91893,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20683801,
+        "encodedHex": "0c",
+        "value": 6
+       },
+       {
+        "index": 95909,
+        "name": "MAINBUFF_SOURCE",
+        "typeIndex": 91893,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20683802,
+        "encodedHex": "0e",
+        "value": 7
+       },
+       {
+        "index": 95910,
+        "name": "PROJECTILE_SOURCE",
+        "typeIndex": 91893,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20683803,
+        "encodedHex": "10",
+        "value": 8
+       },
+       {
+        "index": 95911,
+        "name": "PROJECTILE_TRACETARGET",
+        "typeIndex": 91893,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20683804,
+        "encodedHex": "12",
+        "value": 9
+       },
+       {
+        "index": 95912,
+        "name": "ABILITY_OWNER",
+        "typeIndex": 91893,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20683805,
+        "encodedHex": "14",
+        "value": 10
+       }
+      ]
+     },
+     "abnormalFlags": {
+      "typeIndex": 34285,
+      "name": "AbnormalFlag",
+      "fields": [
+       {
+        "index": 283655,
+        "name": "STUNNED",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739425,
+        "encodedHex": "00",
+        "value": 0
+       },
+       {
+        "index": 283656,
+        "name": "SP_RECOVER_STOPPED",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739426,
+        "encodedHex": "02",
+        "value": 1
+       },
+       {
+        "index": 283657,
+        "name": "TARGET_FREE",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739427,
+        "encodedHex": "04",
+        "value": 2
+       },
+       {
+        "index": 283658,
+        "name": "BLOCK_FREE",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739428,
+        "encodedHex": "06",
+        "value": 3
+       },
+       {
+        "index": 283659,
+        "name": "HIDDEN",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739429,
+        "encodedHex": "08",
+        "value": 4
+       },
+       {
+        "index": 283660,
+        "name": "INVINCIBLE",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739430,
+        "encodedHex": "0a",
+        "value": 5
+       },
+       {
+        "index": 283661,
+        "name": "UNDEADABLE",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739431,
+        "encodedHex": "0c",
+        "value": 6
+       },
+       {
+        "index": 283662,
+        "name": "HEAL_FREE",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739432,
+        "encodedHex": "0e",
+        "value": 7
+       },
+       {
+        "index": 283663,
+        "name": "UNBALANCE_IMMUNE",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739433,
+        "encodedHex": "10",
+        "value": 8
+       },
+       {
+        "index": 283664,
+        "name": "INVISIBLE",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739434,
+        "encodedHex": "12",
+        "value": 9
+       },
+       {
+        "index": 283665,
+        "name": "UNUSED_PLACEHOLDER_2",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739435,
+        "encodedHex": "1c",
+        "value": 14
+       },
+       {
+        "index": 283666,
+        "name": "ALLY_TARGET_FREE",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739436,
+        "encodedHex": "1e",
+        "value": 15
+       },
+       {
+        "index": 283667,
+        "name": "UNUSED_PLACEHOLDER_1",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739437,
+        "encodedHex": "14",
+        "value": 10
+       },
+       {
+        "index": 283668,
+        "name": "DISARMED",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739438,
+        "encodedHex": "16",
+        "value": 11
+       },
+       {
+        "index": 283669,
+        "name": "SILENCED",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739439,
+        "encodedHex": "18",
+        "value": 12
+       },
+       {
+        "index": 283670,
+        "name": "UNMOVABLE",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739440,
+        "encodedHex": "1a",
+        "value": 13
+       },
+       {
+        "index": 283671,
+        "name": "FROZEN",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739441,
+        "encodedHex": "20",
+        "value": 16
+       },
+       {
+        "index": 283672,
+        "name": "CAMOUFLAGE",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739442,
+        "encodedHex": "22",
+        "value": 17
+       },
+       {
+        "index": 283673,
+        "name": "FORCE_DISARMED",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739443,
+        "encodedHex": "24",
+        "value": 18
+       },
+       {
+        "index": 283674,
+        "name": "STUNNED_NO_AMPLIFY_DAMAGE",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739444,
+        "encodedHex": "26",
+        "value": 19
+       },
+       {
+        "index": 283675,
+        "name": "DISABLE_COMBAT",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739445,
+        "encodedHex": "28",
+        "value": 20
+       },
+       {
+        "index": 283676,
+        "name": "ELEMENT_FREE_ALL",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739446,
+        "encodedHex": "2a",
+        "value": 21
+       },
+       {
+        "index": 283677,
+        "name": "UNMOVABLE_PRIVATE",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739447,
+        "encodedHex": "2c",
+        "value": 22
+       },
+       {
+        "index": 283678,
+        "name": "COLD",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739448,
+        "encodedHex": "2e",
+        "value": 23
+       },
+       {
+        "index": 283679,
+        "name": "SKILL_NOT_ACTIVATABLE",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739449,
+        "encodedHex": "30",
+        "value": 24
+       },
+       {
+        "index": 283680,
+        "name": "LEVITATE",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739450,
+        "encodedHex": "32",
+        "value": 25
+       },
+       {
+        "index": 283681,
+        "name": "DURANCE",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739451,
+        "encodedHex": "34",
+        "value": 26
+       },
+       {
+        "index": 283682,
+        "name": "NOT_WITHDRAWABLE",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739452,
+        "encodedHex": "36",
+        "value": 27
+       },
+       {
+        "index": 283683,
+        "name": "OUT_OF_GROUND",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739453,
+        "encodedHex": "38",
+        "value": 28
+       },
+       {
+        "index": 283684,
+        "name": "SP_MODIFY_STOPPED",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739454,
+        "encodedHex": "3a",
+        "value": 29
+       },
+       {
+        "index": 283685,
+        "name": "ANTI_STATUS_RESISTABLE",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739455,
+        "encodedHex": "3c",
+        "value": 30
+       },
+       {
+        "index": 283686,
+        "name": "DISARMED_COMBAT",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739456,
+        "encodedHex": "3e",
+        "value": 31
+       },
+       {
+        "index": 283687,
+        "name": "TOWER_TARGET_FREE",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739457,
+        "encodedHex": "40",
+        "value": 32
+       },
+       {
+        "index": 283688,
+        "name": "FEARED",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739458,
+        "encodedHex": "42",
+        "value": 33
+       },
+       {
+        "index": 283689,
+        "name": "SKILL_ACTIVABLE_IN_ABNORMAL",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739459,
+        "encodedHex": "44",
+        "value": 34
+       },
+       {
+        "index": 283690,
+        "name": "MOTION_TARGET_FREE",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739460,
+        "encodedHex": "46",
+        "value": 35
+       },
+       {
+        "index": 283691,
+        "name": "FORCE_LEVITATE",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739461,
+        "encodedHex": "48",
+        "value": 36
+       },
+       {
+        "index": 283692,
+        "name": "BUFF_ADD_CAN_BE_CANCELED_IF_DEFENSE",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739462,
+        "encodedHex": "4a",
+        "value": 37
+       },
+       {
+        "index": 283693,
+        "name": "DEFENSE_BUFF_ADD_IF_CANCELABLE_BUFF",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739463,
+        "encodedHex": "4c",
+        "value": 38
+       },
+       {
+        "index": 283694,
+        "name": "PALSY",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739464,
+        "encodedHex": "4e",
+        "value": 39
+       },
+       {
+        "index": 283695,
+        "name": "PALSYING",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739465,
+        "encodedHex": "50",
+        "value": 40
+       },
+       {
+        "index": 283696,
+        "name": "ATTRACTED",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739466,
+        "encodedHex": "52",
+        "value": 41
+       },
+       {
+        "index": 283697,
+        "name": "FEARED_PRIVATE",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739467,
+        "encodedHex": "54",
+        "value": 42
+       },
+       {
+        "index": 283698,
+        "name": "DOZE",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739468,
+        "encodedHex": "56",
+        "value": 43
+       },
+       {
+        "index": 283699,
+        "name": "E_NUM",
+        "typeIndex": 30838,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739469,
+        "encodedHex": "58",
+        "value": 44
+       }
+      ]
+     },
+     "abnormalCombos": {
+      "typeIndex": 34286,
+      "name": "AbnormalCombo",
+      "fields": [
+       {
+        "index": 283701,
+        "name": "SLEEPING",
+        "typeIndex": 30831,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739470,
+        "encodedHex": "00",
+        "value": 0
+       },
+       {
+        "index": 283702,
+        "name": "SHELTERING",
+        "typeIndex": 30831,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739471,
+        "encodedHex": "02",
+        "value": 1
+       },
+       {
+        "index": 283703,
+        "name": "E_NUM",
+        "typeIndex": 30831,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20739472,
+        "encodedHex": "04",
+        "value": 2
+       }
+      ]
+     },
+     "targetResolver": {
+      "declaringType": "Nodes",
+      "definition": {
+       "index": 84019,
+       "name": "GetActionTarget",
+       "token": 100747316
+      },
+      "entryRva": 13554560,
+      "bodyVerified": false,
+      "readerStatus": "Incomplete native chunk disassembly"
+     },
+     "flagTargetReadRva": 13840835,
+     "flagResolveCallRva": 13840844,
+     "flagValidityCallRva": 13840881,
+     "flagKeyReadRva": 13840890,
+     "flagEmptyCallRva": 13840896,
+     "flagFallbackReadRva": 13840915,
+     "flagCurrentKeyReadRva": 13840922,
+     "flagBlackboardReadRva": 13840938,
+     "flagInverseReadRva": 13840945,
+     "flagAttributesCallRva": 13840959,
+     "flagQueryCallRva": 13840977,
+     "flagInvertRva": 13840982,
+     "comboResolveCallRva": 13840376,
+     "comboValidityCallRva": 13840413,
+     "comboInverseReadRva": 13840422,
+     "comboAttributesCallRva": 13840436,
+     "comboValueReadRva": 13840446,
+     "comboQueryCallRva": 13840455,
+     "comboInvertRva": 13840460,
+     "alwaysTrueRva": 13839203,
+     "alwaysConditionZeroRva": 13839532,
+     "nativeEntitySelectionVerified": false,
+     "nativeUnityAndBlackboardEffectsVerified": false,
+     "nativeAttributeQueryEffectsVerified": false,
+     "livePredicateNodeDispatchVerified": false
+    },
     "contextStackOperations": {
      "canonicalMethods": [
       {

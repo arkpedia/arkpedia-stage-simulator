@@ -2072,6 +2072,34 @@ result['modeSwitch']['buffNotification']['newBuff']['actionUtil'] = {
     'nativeHotfixAndClassInitializationVerified': False, 'nativeCollectionAndVirtualDispatchVerified': False,
     'nativeActionNodeEffectsVerified': False, 'liveActionUtilVerified': False,
 }
+predicate_fields = {}
+for name, expected in [('CheckAbnormalFlag', [('_abnormalFlag', 16), ('_targetType', 20), ('_isUnset', 24), ('_abnormalFlagKey', 32)]),
+    ('CheckAbnormalCombo', [('_abnormalCombo', 16), ('_targetType', 20), ('_isUnset', 24)])]:
+    predicate_fields[name] = [f for f in fields[name] if not f['typeBits'] & 16]
+    assert [(f['name'], f['offset']) for f in predicate_fields[name]] == expected
+target_resolver = c['unique'](lambda r: r['name'] == 'GetActionTarget', nodes['methods'])
+assert v['pointer'](target_resolver) - v['image_base'] == 0xced380
+try:
+    c['code'](0xced380)
+except AssertionError as error:
+    assert str(error) == 'Incomplete native chunk disassembly'
+    target_reader_status = str(error)
+else:
+    raise AssertionError('Review newly readable target resolver before changing its evidence gate')
+result['modeSwitch']['buffNotification']['newBuff']['predicateNodes'] = {
+    'fields': predicate_fields, 'targetTypes': c['enum'](v['types'][12109]),
+    'abnormalFlags': c['enum'](v['types'][34285]), 'abnormalCombos': c['enum'](v['types'][34286]),
+    'targetResolver': {'declaringType': 'Nodes', 'definition': target_resolver, 'entryRva': 0xced380, 'bodyVerified': False, 'readerStatus': target_reader_status},
+    'flagTargetReadRva': 0xd331c3, 'flagResolveCallRva': 0xd331cc, 'flagValidityCallRva': 0xd331f1,
+    'flagKeyReadRva': 0xd331fa, 'flagEmptyCallRva': 0xd33200, 'flagFallbackReadRva': 0xd33213,
+    'flagCurrentKeyReadRva': 0xd3321a, 'flagBlackboardReadRva': 0xd3322a,
+    'flagInverseReadRva': 0xd33231, 'flagAttributesCallRva': 0xd3323f, 'flagQueryCallRva': 0xd33251, 'flagInvertRva': 0xd33256,
+    'comboResolveCallRva': 0xd32ff8, 'comboValidityCallRva': 0xd3301d, 'comboInverseReadRva': 0xd33026,
+    'comboAttributesCallRva': 0xd33034, 'comboValueReadRva': 0xd3303e, 'comboQueryCallRva': 0xd33047, 'comboInvertRva': 0xd3304c,
+    'alwaysTrueRva': 0xd32b63, 'alwaysConditionZeroRva': 0xd32cac,
+    'nativeEntitySelectionVerified': False, 'nativeUnityAndBlackboardEffectsVerified': False,
+    'nativeAttributeQueryEffectsVerified': False, 'livePredicateNodeDispatchVerified': False,
+}
 context_stack_canonical = []
 for index in [24503, 24504, 24505, 24506, 24513, 24514, 24515, 24509, 24510, 24511, 24517, 24518, 24519]:
     spec = priority['specification'](index)

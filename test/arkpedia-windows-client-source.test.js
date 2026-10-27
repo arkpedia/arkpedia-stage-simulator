@@ -533,6 +533,22 @@ test('context snapshot source binds distinct capture/push orders and closed refe
  assert.equal(q.nativeContextStackEffectsVerified,false);assert.equal(q.nativeNestedValueCopiesVerified,false);assert.equal(q.liveContextSnapshotsVerified,false);
 });
 
+test('predicate node source binds entity validity, blackboard fallback and distinct flag/combo read ordering',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.newBuff.predicateNodes;
+ assert.deepEqual(q.fields.CheckAbnormalFlag.map(f=>[f.name,f.offset]),[['_abnormalFlag',16],['_targetType',20],['_isUnset',24],['_abnormalFlagKey',32]]);
+ assert.deepEqual(q.fields.CheckAbnormalCombo.map(f=>[f.name,f.offset]),[['_abnormalCombo',16],['_targetType',20],['_isUnset',24]]);
+ assert.equal(q.targetTypes.fields.find(f=>f.name==='BUFF_OWNER').value,3);assert.ok(q.abnormalFlags.fields.some(f=>f.name==='LEVITATE'&&f.value===25));assert.ok(q.abnormalCombos.fields.some(f=>f.name==='SLEEPING'));
+ assert.equal(q.targetResolver.definition.index,84019);assert.equal(q.targetResolver.definition.name,'GetActionTarget');assert.equal(q.targetResolver.entryRva,0xced380);assert.equal(q.targetResolver.bodyVerified,false);assert.equal(q.targetResolver.readerStatus,'Incomplete native chunk disassembly');
+ assert.equal(c.methods.some(m=>m.entryRva===q.targetResolver.entryRva),false);
+ const method=type=>c.methods.find(m=>m.type===type&&m.name==='Execute'),at=(type,rva,args)=>assert.ok(instructions(method(type)).some(i=>i.rva===rva&&i.operands===args));
+ at('CheckAbnormalFlag',q.flagTargetReadRva,'edx, dword ptr [rbx + 0x14]');at('CheckAbnormalFlag',q.flagResolveCallRva,'0x180ced380');at('CheckAbnormalFlag',q.flagValidityCallRva,'0x185ebec60');
+ at('CheckAbnormalFlag',q.flagKeyReadRva,'rcx, qword ptr [rbx + 0x20]');at('CheckAbnormalFlag',q.flagEmptyCallRva,'0x1850d34b0');at('CheckAbnormalFlag',q.flagFallbackReadRva,'r8d, dword ptr [rbx + 0x10]');at('CheckAbnormalFlag',q.flagCurrentKeyReadRva,'rdx, qword ptr [rbx + 0x20]');at('CheckAbnormalFlag',q.flagBlackboardReadRva,'0x182166990');
+ at('CheckAbnormalFlag',q.flagInverseReadRva,'ebx, byte ptr [rbx + 0x18]');at('CheckAbnormalFlag',q.flagAttributesCallRva,'0x183a29330');at('CheckAbnormalFlag',q.flagQueryCallRva,'0x1839579e0');at('CheckAbnormalFlag',q.flagInvertRva,'al, bl');
+ at('CheckAbnormalCombo',q.comboResolveCallRva,'0x180ced380');at('CheckAbnormalCombo',q.comboValidityCallRva,'0x185ebec60');at('CheckAbnormalCombo',q.comboInverseReadRva,'esi, byte ptr [rbx + 0x18]');at('CheckAbnormalCombo',q.comboAttributesCallRva,'0x183a29330');at('CheckAbnormalCombo',q.comboValueReadRva,'edx, dword ptr [rbx + 0x10]');at('CheckAbnormalCombo',q.comboQueryCallRva,'0x183957750');at('CheckAbnormalCombo',q.comboInvertRva,'al, sil');at('AlwaysNext',q.alwaysTrueRva,'al, 1');
+ assert.ok(instructions(c.methods.find(m=>m.type==='AlwaysNext'&&m.name==='get_executeCondition')).some(i=>i.rva===q.alwaysConditionZeroRva&&i.operands==='eax, eax'));
+ for(const name of ['nativeEntitySelectionVerified','nativeUnityAndBlackboardEffectsVerified','nativeAttributeQueryEffectsVerified','livePredicateNodeDispatchVerified'])assert.equal(q[name],false);
+});
+
 test('action utility source binds FROM_BUFF integer flags, node virtual slots and by-reference snapshot execution',()=>{
  const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.newBuff.actionUtil;
  assert.deepEqual(q.sourceTypes.fields.map(f=>[f.name,f.value]),[['NONE',0],['FROM_BUFF',1],['FROM_ABILITY',2],['FROM_PROJECTILE',4],['FROM_BATTLE_AVG',8],['FROM_ENVIRONMENT',16],['FROM_VALIDATOR',32],['ALL',63]]);

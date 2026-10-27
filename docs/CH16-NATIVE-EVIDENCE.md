@@ -1402,6 +1402,41 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
 
+### Abnormal predicate nodes through ActionUtil
+
+The203 ordinary bodies remain unchanged. New bindings retain instance fields,
+ActionTargetType/AbnormalFlag/AbnormalCombo enum values and the exact call/read
+sites for CheckAbnormalFlag, CheckAbnormalCombo and AlwaysNext. Target selection
+resolves to Nodes.GetActionTarget, definition84019 at0xced380. Its shared strict
+reader rejects complete chunk disassembly, so no body is retained or certified;
+the producer pins that rejection and leaves its selection gate false. The
+shared reader is unchanged.
+
+`fearProjectilePredicateNodes` selects the entity and checks Unity validity
+before inversion or attribute queries. Invalid entities return false even when
+_isUnset is true. The flag path uses its literal enum for null/empty keys;
+nonempty keys require blackboard access, capture the fallback flag, reread the
+key and pass the native true argument to the explicit Int32 reader. It samples
+inversion after blackboard effects and before the attributes getter. The combo
+path also captures inversion before attributes, but reads its combo enum after
+that getter. Both XOR the Boolean query result with captured inversion.
+AlwaysNext's default Execute returns true without dereferencing its inputs.
+
+Tests cover these read orders, whitespace keys, failed/null receivers and query
+errors. A composed action test consumes the retained eight-node self-death
+template and metadata enum mappings through ActionUtil, complete context copies,
+managed stacks and guard disposal. Native attribute flag counters are used for
+the three literal flag checks. Each LEVITATE/FROZEN/STUNNED/SLEEPING condition
+stops the chain at its matching predicate; the clear path reaches mode/immunity/
+kill receivers even when immunity creation returns false, through AlwaysNext.
+Entity selection, combo/blackboard/Unity internals, virtual class dispatch and
+the three downstream action effects remain explicit receivers. These tests do
+not certify a live controller or stage. Source/support/receipt/catalogue gates
+are unchanged; new stages remain test-only and this checkpoint stays local
+outside pending upload authorization.
+
+All1208 focused native/fear/family/miner tests pass for this predicate checkpoint.
+
 ### ActionUtil execution and FROM_BUFF source correction
 
 The203 ordinary methods remain unchanged. New bindings retain ActionUtil's

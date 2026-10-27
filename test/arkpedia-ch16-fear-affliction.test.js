@@ -46,6 +46,40 @@ import {fearProjectileContextSnapshots} from '../server/sim/content/chapter16-fe
 import {fearProjectileContextPointerStacks,fearProjectileContextValueStacks,fearProjectileManagedReferenceStacks,fearProjectileManagedValueStacks,fearProjectileManagedPointerStacks,fearProjectileManagedArrayResize,fearProjectileManagedArrayCopy,fearProjectileNativeArrayFastCopy} from '../server/sim/content/chapter16-fear-context-stacks.js';
 import {fearProjectileContextStructValues} from '../server/sim/content/chapter16-fear-context-values.js';
 import {fearProjectileActionUtil,FEAR_ACTION_SOURCE_FROM_BUFF} from '../server/sim/content/chapter16-fear-action-util.js';
+import {fearProjectilePredicateNodes} from '../server/sim/content/chapter16-fear-predicate-nodes.js';
+
+function predicateNodeFixture(){
+ const attributes={},entity={attributes},events=[],ref={value:{}},node={_targetType:3,_abnormalFlag:25,_abnormalCombo:0,_isUnset:false,_abnormalFlagKey:''},
+  options={getEntity:(snapshot,target)=>{assert.equal(snapshot,ref);events.push(['target',target]);return entity;},isDestroyedOrNull:value=>{events.push('validity');return value==null||value.destroyed===true;},
+   readAttributes:value=>{events.push('attributes');return value.attributes;},readBlackboardInt:(board,key,fallback,flag)=>{events.push(['blackboard',board,key,fallback,flag]);return 7;},
+   queryFlag:(attrs,flag)=>{assert.equal(attrs,attributes);events.push(['flag',flag]);return true;},queryCombo:(attrs,combo)=>{assert.equal(attrs,attributes);events.push(['combo',combo]);return true;}};
+ return{attributes,entity,events,ref,node,options,api:()=>fearProjectilePredicateNodes(options)};
+}
+test('predicate nodes reject invalid entities before reading inversion or querying attributes',()=>{
+ const f=predicateNodeFixture();f.entity.destroyed=true;Object.defineProperty(f.node,'_isUnset',{get(){throw Error('unexpected inversion');}});
+ assert.equal(f.api().executeFlag(f.node,null,1,f.ref),false);assert.equal(f.api().executeCombo(f.node,null,1,f.ref),false);assert.deepEqual(f.events,[['target',3],'validity',['target',3],'validity']);
+});
+test('flag predicate uses literal flags for null/empty keys and performs blackboard lookup for whitespace keys',()=>{
+ const f=predicateNodeFixture();for(const key of [null,'']){f.node._abnormalFlagKey=key;assert.equal(f.api().executeFlag(f.node,null,1,f.ref),true);}
+ assert.equal(f.events.some(e=>Array.isArray(e)&&e[0]==='blackboard'),false);const board={};f.node._abnormalFlagKey=' ';f.node._isUnset=true;
+ assert.equal(f.api().executeFlag(f.node,board,1,f.ref),false);assert.ok(f.events.some(e=>Array.isArray(e)&&e[0]==='blackboard'&&e[1]===board&&e[2]===' '&&e[3]===25&&e[4]===true));
+ assert.throws(()=>f.api().executeFlag(f.node,null,1,f.ref),/null native object/);
+});
+test('flag predicate rereads the key after capturing fallback and captures inversion after blackboard effects',()=>{
+ const f=predicateNodeFixture(),board={};f.node._abnormalFlagKey='probe';Object.defineProperty(f.node,'_abnormalFlag',{get(){f.node._abnormalFlagKey='current';return 8;}});
+ f.options.readBlackboardInt=(actual,key,fallback,flag)=>{assert.equal(actual,board);assert.equal(key,'current');assert.equal(fallback,8);assert.equal(flag,true);f.node._isUnset=true;return 9;};
+ f.options.queryFlag=(_attrs,flag)=>{assert.equal(flag,9);return false;};assert.equal(f.api().executeFlag(f.node,board,1,f.ref),true);
+});
+test('predicate nodes capture inversion before attributes, but only combo rereads its enum after the attributes getter',()=>{
+ const f=predicateNodeFixture();f.options.readAttributes=()=>{f.node._isUnset=true;f.node._abnormalFlag=9;return f.attributes;};
+ assert.equal(f.api().executeFlag(f.node,null,1,f.ref),true);assert.deepEqual(f.events.at(-1),['flag',25]);
+ const g=predicateNodeFixture();g.options.readAttributes=()=>{g.node._isUnset=true;g.node._abnormalCombo=1;return g.attributes;};
+ assert.equal(g.api().executeCombo(g.node,null,1,g.ref),true);assert.deepEqual(g.events.at(-1),['combo',1]);
+});
+test('predicate node query failures propagate and default AlwaysNext executes without reading context',()=>{
+ const f=predicateNodeFixture();f.options.queryCombo=()=>{throw Error('combo query failed');};assert.throws(()=>f.api().executeCombo(f.node,null,1,f.ref),/combo query failed/);
+ f.entity.attributes=null;assert.throws(()=>f.api().executeFlag(f.node,null,1,f.ref),/null native object/);assert.equal(f.api().executeAlwaysNext(null,null,null,null),true);
+});
 
 function actionUtilFixture(){
  const events=[],context={value:1},battle={context},board={},options={readBattle:()=>{events.push('battle');return battle;},readContext:()=>{events.push('context');return context;},
@@ -270,6 +304,27 @@ function managedActionContextFixture(){
   setTarget:guards.setTarget,setTile:guards.setTile,disposeGuard:guards.dispose,runActionArray:actionUtil.run,copySnapshot:snapshots.copySnapshot});
  return{f,g,snapshots,guards,actionUtil,pointerFields,prior:snapshots.takeSnapshot()};
 }
+for(const blocked of ['none','LEVITATE','FROZEN','STUNNED','SLEEPING'])test('checked self-death graph runs predicate nodes through ActionUtil with blocked state '+blocked,()=>{
+ const native=JSON.parse(readFileSync(new URL('../data/candidates/arkpedia-windows-fear-self-death-source.json',import.meta.url),'utf8')),
+  evidence=native.modeSwitch.buffNotification.newBuff.predicateNodes,toMap=record=>new Map(record.fields.map(f=>[f.name,f.value])),flags=toMap(evidence.abnormalFlags),combos=toMap(evidence.abnormalCombos),targets=toMap(evidence.targetTypes),
+  {f,g,snapshots,prior}=managedActionContextFixture(),events=[],attributes={m_abnormalFlagsCounter:Array(44).fill(0),m_abnormalImmuneCounter:Array(44).fill(0),m_abnormalAntiCounter:Array(44).fill(0),m_abnormalComboMgr:{m_abnormalFlagMask:0n}},
+  status=fearProjectileAttributeStatus({attributes,isActive:()=>true});
+ if(flags.has(blocked))attributes.m_abnormalFlagsCounter[flags.get(blocked)]=1;
+ const predicates=fearProjectilePredicateNodes({getEntity:(ref,target)=>{assert.equal(ref.value.buff,f.buff);assert.equal(target,targets.get('BUFF_OWNER'));return f.owner;},isDestroyedOrNull:entity=>entity==null||entity.destroyed===true,
+  readAttributes:entity=>{assert.equal(entity,f.owner);return attributes;},readBlackboardInt:()=>{throw Error('unexpected graph blackboard lookup');},
+  queryFlag:(actual,flag)=>{assert.equal(actual,attributes);events.push([...flags].find(pair=>pair[1]===flag)[0]);return status.getAbnormalFlag(flag);},
+  queryCombo:(actual,combo)=>{assert.equal(actual,attributes);assert.equal(combo,combos.get('SLEEPING'));events.push('SLEEPING');return blocked==='SLEEPING';}});
+ f.buff.m_actions[0]=native.actions.map(raw=>{
+  const kind=raw.$type.split('+').at(-1),node={...raw,allowedSource:63,condition:kind==='AlwaysNext'?0:1};
+  if(kind==='CheckAbnormalFlag'){node._targetType=targets.get(raw._targetType);node._abnormalFlag=flags.get(raw._abnormalFlag);node.execute=(...args)=>predicates.executeFlag(node,...args);}
+  else if(kind==='CheckAbnormalCombo'){node._targetType=targets.get(raw._targetType);node._abnormalCombo=combos.get(raw._abnormalCombo);node.execute=(...args)=>predicates.executeCombo(node,...args);}
+  else if(kind==='AlwaysNext')node.execute=predicates.executeAlwaysNext;
+  else node.execute=(_board,sourceType)=>{assert.equal(sourceType,1);if(kind==='SwitchMode'){assert.equal(raw._modeIndex,1);events.push('mode');return true;}if(kind==='CreateBuff'){events.push('immunity');return false;}assert.equal(kind,'InstantKill');events.push('kill');return false;};
+  return node;
+ });
+ const result=f.adapter().run(0,true),checks=['LEVITATE','FROZEN','STUNNED','SLEEPING'];assert.equal(result.target,f.owner);
+ assert.deepEqual(events,blocked==='none'?[...checks,'mode','immunity','kill']:checks.slice(0,checks.indexOf(blocked)+1));assert.deepEqual(snapshots.takeSnapshot(),prior);assert.ok(g.fields.every(field=>g.context[field]._size===1));
+});
 test('native action utility executes FROM_BUFF nodes through complete context copies and preserves ALWAYS recovery',()=>{
  const {f,g,snapshots,prior}=managedActionContextFixture(),calls=[],node=(id,condition,result,amount)=>({allowedSource:1,condition,execute:(board,sourceType,ref)=>{
   assert.equal(board,f.buff.m_blackboard);assert.equal(sourceType,1);assert.ok(g.fields.every(field=>g.context[field]._size===2));calls.push(id);ref.value.modifier.m_value+=amount;return result;
