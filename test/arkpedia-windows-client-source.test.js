@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,200);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,202);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -510,6 +510,27 @@ test('context guard source binds allocation, fresh setter contexts and ordered p
  at(dispose,q.disposeContextCaptureRva,'rbx, qword ptr [rcx + 0x10]');
  for(const [index,target]of ['0x184be7e60','0x184be7e60','0x184be7e60','0x184be81a0','0x184be8210','0x184be7e60','0x184be7e60','0x184be81a0','0x184be8320','0x184be7e60'].entries())at(dispose,q.disposePopCalls[index],target);
  assert.equal(q.nativeGuardAllocationVerified,false);assert.equal(q.nativeContextDuplicationVerified,false);assert.equal(q.nativeContextStackEffectsVerified,false);assert.equal(q.liveContextGuardsVerified,false);
+});
+
+test('context snapshot source binds distinct capture/push orders and closed reference/value stack methods',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.newBuff.contextSnapshots,
+  capture=castMethod(c,'Context','TakeSnapshot'),duplicate=castMethod(c,'Context','_DuplicateAll');
+ const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args),`${rva.toString(16)} ${args}`);
+ assert.deepEqual(q.stackSpecifications.map(s=>[s.method,s.bindings.length]),[['TakeSnapshot',10],['_DuplicateAll',10]]);
+ for(const [index,row]of q.stackSpecifications.entries())for(const binding of row.bindings){assert.equal(binding.encodedUsage>>>29,6);assert.equal(binding.specification.definition.name,index===0?'get_value':'Push');}
+ assert.deepEqual(q.stackSpecifications[0].bindings.map(b=>b.specification.instantiations.class.arguments[0].name),['Entity','Entity','Buff','Ability','Modifier','Projectile','Tile','AttackInfo','Entity','Buff']);
+ assert.deepEqual(q.stackSpecifications[1].bindings.map(b=>b.specification.instantiations.class.arguments[0].name),['Entity','Entity','Buff','Ability','Modifier','Projectile','Tile','Entity','AttackInfo','Buff']);
+ for(const [index,args]of ['rcx, qword ptr [rdi + 0x10]','rcx, qword ptr [rdi + 0x18]','rcx, qword ptr [rdi + 0x20]','rcx, qword ptr [rdi + 0x28]',
+  'rdx, qword ptr [rdi + 0x30]','rcx, qword ptr [rdi + 0x38]','rcx, qword ptr [rdi + 0x40]','rdx, qword ptr [rdi + 0x48]',
+  'rcx, qword ptr [rdi + 0x50]','rcx, qword ptr [rdi + 0x58]'].entries())at(capture,q.captureFieldReads[index],args);
+ for(const [index,target]of ['0x18432a930','0x18432a930','0x18432a930','0x18432a930','0x184be8410','0x18432a930','0x18432a930','0x184be83c0','0x18432a930','0x18432a930'].entries())at(capture,q.captureCalls[index],target);
+ at(capture,q.captureModifierCopyRva,'xmmword ptr [rcx], xmm0');at(capture,q.captureAttackCopyRva,'xmmword ptr [rbx + 0xc0], xmm0');
+ at(duplicate,q.duplicateCaptureCallRva,'0x1839ed9a0');at(duplicate,q.duplicateFirstCopyRva,'xmmword ptr [rbx], xmm0');
+ for(const [index,args]of ['rcx, qword ptr [rdi + 0x10]','rcx, qword ptr [rdi + 0x18]','rcx, qword ptr [rdi + 0x20]','rcx, qword ptr [rdi + 0x28]',
+  'r9, qword ptr [rdi + 0x30]','rcx, qword ptr [rdi + 0x38]','rcx, qword ptr [rdi + 0x40]','rcx, qword ptr [rdi + 0x50]',
+  'rcx, qword ptr [rdi + 0x48]','rcx, qword ptr [rdi + 0x58]'].entries())at(duplicate,q.pushFieldReads[index],args);
+ for(const [index,target]of ['0x184be7ef0','0x184be7ef0','0x184be7ef0','0x18490b650','0x18490b820','0x184be7ef0','0x184be7ef0','0x18490b650','0x18490b790','0x184be7ef0'].entries())at(duplicate,q.pushCalls[index],target);
+ assert.equal(q.nativeContextStackEffectsVerified,false);assert.equal(q.nativeNestedValueCopiesVerified,false);assert.equal(q.liveContextSnapshotsVerified,false);
 });
 
 test('native admission source binds signed Int16 counters, combo fallback and Enemy raw-WALK levitation',()=>{

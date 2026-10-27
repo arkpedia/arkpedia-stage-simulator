@@ -42,6 +42,7 @@ import {fearProjectileAttributeValues} from '../server/sim/content/chapter16-fea
 import {fearProjectileBuffAttributeProvider} from '../server/sim/content/chapter16-fear-buff-provider.js';
 import {fearProjectileRunBuffActions} from '../server/sim/content/chapter16-fear-buff-run-actions.js';
 import {fearProjectileContextGuards} from '../server/sim/content/chapter16-fear-context-guard.js';
+import {fearProjectileContextSnapshots} from '../server/sim/content/chapter16-fear-context-snapshot.js';
 import {fearProjectileBuffRecyclePool,fearProjectileDefaultBuffPool} from '../server/sim/content/chapter16-fear-buff-pool.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
@@ -54,6 +55,66 @@ import { chapter16Shadow } from '../server/sim/content/chapter16-shadow.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
 const parentKey='feawpj_a[mcreep_fear]';
 const fpOne=1n<<32n;
+
+function contextSnapshotsFixture(){
+ const guard=contextGuardsFixture(),context=guard.context,events=[];context.m_modifier[0]={m_value:1n,customKeys:{}};context.m_atkInfo[0]={atk:2n};
+ const peek=(stack,kind)=>{events.push(['peek-'+kind,stack.field]);return stack.at(-1);},push=(stack,value,kind)=>{events.push(['push-'+kind,stack.field]);stack.push(value);};
+ const options={context,peekReference:stack=>peek(stack,'ref'),peekModifier:stack=>peek(stack,'modifier'),peekAttackInfo:stack=>peek(stack,'attack'),
+  copyModifier:value=>({...value}),copyAttackInfo:value=>({...value}),pushPointer:(stack,value)=>push(stack,value,'pointer'),
+  pushReferenceValue:(stack,value)=>push(stack,value,'ref-value'),pushModifier:(stack,value)=>push(stack,value,'modifier'),pushAttackInfo:(stack,value)=>push(stack,value,'attack')};
+ return{guard,context,events,options,adapter:()=>fearProjectileContextSnapshots(options)};
+}
+test('context capture preserves native peek order and copies nested values while keeping reference fields',()=>{
+ const f=contextSnapshotsFixture(),snapshot=f.adapter().takeSnapshot();
+ assert.deepEqual(f.events.map(e=>e[1]),['m_source','m_target','m_buff','m_ability','m_modifier','m_projectile','m_tile','m_atkInfo','m_mainTarget','m_mainBuff']);
+ assert.equal(snapshot.source,f.context.m_source[0]);assert.equal(snapshot.mainTarget,f.context.m_mainTarget[0]);
+ assert.notEqual(snapshot.modifier,f.context.m_modifier[0]);assert.equal(snapshot.modifier.customKeys,f.context.m_modifier[0].customKeys);assert.notEqual(snapshot.atkInfo,f.context.m_atkInfo[0]);
+});
+test('context capture copies Modifier and AttackInfo before later peeks can mutate their backing values',()=>{
+ const f=contextSnapshotsFixture(),peek=f.options.peekReference;
+ f.options.peekReference=stack=>{if(stack.field==='m_projectile')f.context.m_modifier[0].m_value=9n;if(stack.field==='m_mainTarget')f.context.m_atkInfo[0].atk=10n;return peek(stack);};
+ const snapshot=f.adapter().takeSnapshot();assert.equal(snapshot.modifier.m_value,1n);assert.equal(snapshot.atkInfo.atk,2n);
+});
+test('context duplication captures one snapshot and pushes pointer/reference-value/value stacks in native order',()=>{
+ const f=contextSnapshotsFixture(),snapshot=f.adapter().duplicateAll();
+ assert.deepEqual(f.events.filter(e=>e[0].startsWith('push')),[["push-pointer","m_source"],["push-pointer","m_target"],["push-pointer","m_buff"],
+  ["push-ref-value","m_ability"],["push-modifier","m_modifier"],["push-pointer","m_projectile"],["push-pointer","m_tile"],
+  ["push-ref-value","m_mainTarget"],["push-attack","m_atkInfo"],["push-pointer","m_mainBuff"]]);
+ assert.ok(f.guard.fields.every(field=>f.context[field].length===2));assert.equal(snapshot.target,f.context.m_target[0]);
+ assert.notEqual(snapshot.modifier,f.context.m_modifier[1]);assert.notEqual(snapshot.atkInfo,f.context.m_atkInfo[1]);
+ f.context.m_modifier[1].m_value=99n;assert.equal(snapshot.modifier.m_value,1n);assert.equal(f.context.m_modifier[0].m_value,1n);
+});
+test('context duplication rereads each destination stack but retains values captured before the first push',()=>{
+ const f=contextSnapshotsFixture(),oldTarget=f.context.m_target,replacement=[{}],push=f.options.pushPointer;replacement.field='new-target';
+ f.options.pushPointer=(stack,value)=>{push(stack,value);if(stack.field==='m_source')f.context.m_target=replacement;};
+ const snapshot=f.adapter().duplicateAll();assert.equal(oldTarget.length,1);assert.equal(replacement.length,2);assert.equal(replacement[1],oldTarget[0]);assert.equal(snapshot.target,oldTarget[0]);
+});
+test('context duplication captures a Push receiver before copying its value argument',()=>{
+ const f=contextSnapshotsFixture(),old=f.context.m_source,replacement=[{}],copy=f.options.copyModifier;replacement.field='replacement';let copies=0;
+ f.options.copyModifier=value=>{if(++copies===3)f.context.m_source=replacement;return copy(value);};
+ f.adapter().duplicateAll();assert.equal(old.length,2);assert.equal(replacement.length,1);
+});
+test('context snapshots allow null reference values but fail on null stack storage',()=>{
+ const f=contextSnapshotsFixture();f.context.m_source[0]=null;assert.equal(f.adapter().duplicateAll().source,null);assert.equal(f.context.m_source[1],null);
+ const g=contextSnapshotsFixture();g.context.m_target=null;assert.throws(()=>g.adapter().takeSnapshot(),/null native/);assert.deepEqual(g.events,[['peek-ref','m_source']]);
+});
+test('context duplication retains earlier pushes when a later native push fails',()=>{
+ const f=contextSnapshotsFixture(),push=f.options.pushPointer;
+ f.options.pushPointer=(stack,value)=>{if(stack.field==='m_buff')throw Error('push failure');return push(stack,value);};
+ assert.throws(()=>f.adapter().duplicateAll(),/push failure/);assert.equal(f.context.m_source.length,2);assert.equal(f.context.m_target.length,2);assert.equal(f.context.m_buff.length,1);assert.equal(f.context.m_mainBuff.length,1);
+});
+test('context snapshot copies detach both nested value records without cloning reference fields',()=>{
+ const f=contextSnapshotsFixture(),first=f.adapter().takeSnapshot(),second=f.adapter().copySnapshot(first);first.modifier.m_value=8n;first.atkInfo.atk=9n;
+ assert.equal(second.modifier.m_value,1n);assert.equal(second.atkInfo.atk,2n);assert.equal(second.source,first.source);
+});
+test('buff dispatch composes concrete context duplication, guard changes, snapshot capture and restoration',()=>{
+ const f=actionDispatchFixture(),s=contextSnapshotsFixture(),snapshots=s.adapter();s.guard.options.duplicateAll=()=>snapshots.duplicateAll();const guards=s.guard.adapter(),prior=s.guard.fields.map(field=>s.context[field][0]);
+ Object.assign(f.options,{readContext:()=>s.context,beginChangeGuard:context=>guards.begin(context),setBuff:(guard,value)=>guards.setBuff(guard,value),
+  setSource:(guard,value)=>guards.setSource(guard,value),setTarget:(guard,value)=>guards.setTarget(guard,value),setTile:(guard,value)=>guards.setTile(guard,value),
+  disposeGuard:guard=>guards.dispose(guard),runActionArray:()=>snapshots.takeSnapshot(),copySnapshot:value=>snapshots.copySnapshot(value)});
+ const result=f.adapter().run(24,true);assert.equal(result.source,f.source);assert.equal(result.target,f.owner);assert.equal(result.buff,f.buff);assert.equal(result.tile,f.owner.tile);
+ assert.ok(s.guard.fields.every((field,index)=>s.context[field].length===1&&s.context[field][0]===prior[index]));assert.equal(result.modifier.m_value,1n);
+});
 
 function contextGuardsFixture(){
  const fields=['m_source','m_target','m_buff','m_ability','m_modifier','m_projectile','m_tile','m_mainTarget','m_atkInfo','m_mainBuff'],context={},events=[],guards=[],state={active:true};

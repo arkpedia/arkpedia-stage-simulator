@@ -1735,6 +1735,45 @@ result['modeSwitch']['buffNotification']['newBuff']['contextGuards'] = {
     'disposePopCalls': [0x39ea98a, 0x39ea9a3, 0x39ea9bc, 0x39ea9d5, 0x39ea9f3, 0x39eaa08, 0x39eaa1d, 0x39eaa32, 0x39eaa4c, 0x39eaa69],
     'nativeGuardAllocationVerified': False, 'nativeContextDuplicationVerified': False, 'nativeContextStackEffectsVerified': False, 'liveContextGuardsVerified': False,
 }
+context_snapshot_methods = []
+for name, entry in [('TakeSnapshot', 0x39ed9a0), ('_DuplicateAll', 0x39edc70)]:
+    row = c['unique'](lambda r: r['name'] == name, action_context_type['methods'])
+    retained = c['method'](action_context_type, row)
+    assert retained['entryRva'] == entry
+    if not any(m['index'] == row['index'] and m['image'] == 'Assembly-CSharp.dll' for m in methods):
+        methods.append(retained)
+    context_snapshot_methods.append(retained)
+snapshot_stack_specs = []
+for method, expected_name in zip(context_snapshot_methods, ['get_value', 'Push']):
+    bindings = []
+    for chunk in method['chunks']:
+        for instruction in chunk['instructions']:
+            if instruction['mnemonic'] != 'mov' or '[rip +' not in instruction['operands']:
+                continue
+            load_rva = instruction['rva']
+            pos = v['offset'](v['image_base'] + load_rva)
+            if v['b'][pos:pos + 3] not in [bytes.fromhex('488b15'), bytes.fromhex('4c8b05')]:
+                continue
+            target = load_rva + 7 + struct.unpack_from('<i', v['b'], pos + 3)[0]
+            usage = v['quad'](v['b'], v['offset'](v['image_base'] + target))
+            if usage >> 29 != 6:
+                continue
+            spec = priority['specification']((usage & 0x1ffffffe) >> 1)
+            assert spec['definition']['name'] == expected_name
+            assert spec['declaringType'] in ['ContextPtrStack`1', 'ContextValueStack`1', 'Stack`1']
+            bindings.append({'loadRva': load_rva, 'encodedUsage': usage, 'specification': spec})
+    assert len(bindings) == 10
+    snapshot_stack_specs.append({'method': method['name'], 'bindings': bindings})
+result['modeSwitch']['buffNotification']['newBuff']['contextSnapshots'] = {
+    'stackSpecifications': snapshot_stack_specs,
+    'captureFieldReads': [0x39eda33, 0x39eda5a, 0x39eda82, 0x39edaaa, 0x39edad2, 0x39edb5f, 0x39edb8a, 0x39edbb5, 0x39edbf9, 0x39edc20],
+    'captureCalls': [0x39eda47, 0x39eda6e, 0x39eda96, 0x39edabe, 0x39edaeb, 0x39edb73, 0x39edb9e, 0x39edbce, 0x39edc09, 0x39edc30],
+    'captureModifierCopyRva': 0x39edb00, 'captureAttackCopyRva': 0x39edbdd,
+    'duplicateCaptureCallRva': 0x39edd1a, 'duplicateFirstCopyRva': 0x39edd37,
+    'pushFieldReads': [0x39edda8, 0x39ede59, 0x39edefe, 0x39edfa3, 0x39ee048, 0x39ee14c, 0x39ee1f0, 0x39ee294, 0x39ee338, 0x39ee3f6],
+    'pushCalls': [0x39ede51, 0x39edef6, 0x39edf9b, 0x39ee040, 0x39ee144, 0x39ee1e8, 0x39ee28c, 0x39ee330, 0x39ee3ee, 0x39ee48e],
+    'nativeContextStackEffectsVerified': False, 'nativeNestedValueCopiesVerified': False, 'liveContextSnapshotsVerified': False,
+}
 for index in [147561, 147566, 147567, 147558, 147559, 147563, 147564, 147568, 147569]:
     spec = priority['specification'](index)
     assert spec['declaringTypeIndex'] == pool['index']

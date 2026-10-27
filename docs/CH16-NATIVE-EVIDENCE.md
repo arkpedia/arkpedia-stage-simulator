@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 200 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 202 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -1401,6 +1401,41 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 124-method bundle. Continuation40545156330 at3b7defc7 passed; existing
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
+
+### Context snapshot capture and frame duplication
+
+The202-method bundle adds complete Context.TakeSnapshot and _DuplicateAll.
+The contextSnapshots record binds all twenty closed stack getter/Push
+specifications, field loads and calls. Capture reads source, target, buff,
+ability, modifier, projectile, tile, attack info, main target and main buff.
+Duplication pushes main target before attack info instead. Reference-valued
+Ability/Entity frames use the underlying Stack Push; Modifier/AttackInfo use
+their value-specialized Push bodies. Native storage/copy effects remain open.
+
+`fearProjectileContextSnapshots` captures those ten fields in native order,
+copying Modifier and AttackInfo immediately after their stack reads. Snapshot
+copying preserves the eight reference identities and delegates the two nested
+value copies. Duplication captures once before any Push, copies the result,
+then reads each current destination stack before copying that Push's argument.
+It preserves partial pushes on failure. These synchronous context operations
+finish once entered so outer guard cleanup can restore a completed frame after
+lifecycle cancellation; they do not add cancellation inside a native stack call.
+
+Tests cover distinct capture/push ordering, immediate value copies, preserved
+reference identities, changed destination stacks, captured Push receivers,
+null reference values, missing stack storage and partial Push failures. Buff
+dispatch now composes concrete duplication, guard controls, snapshot capture
+and return-copy ordering around restoration, with explicit native stack/value
+receivers. The fixture adapters do not certify native pointer locking or nested
+value-copy behavior. All1130 focused native/fear/family/miner tests pass;
+--check reproduces202 complete methods. This checkpoint remains local.
+
+Hosted full40558578137 at approved0524e2b1 passed; continuation40558189633
+passed on attempt2. Approval to upload the accumulated checkpoints through
+14d116d2 is pending; this newer snapshot checkpoint is outside that upload.
+Native context stack/value effects, action-array execution and full controller/
+stage/frame integration remain open. Source/support/receipt/catalogue gates
+remain unchanged and all new stages remain test-only.
 
 ### Context guard initialization, replacement and disposal
 
