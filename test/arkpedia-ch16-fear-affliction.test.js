@@ -61,6 +61,106 @@ import {fearProjectileBuffDataClone} from '../server/sim/content/chapter16-fear-
 import {fearProjectileBuffDataConstructor,fearProjectileAttributeDataConstructor} from '../server/sim/content/chapter16-fear-buff-data-constructor.js';
 import {fearProjectileAttributeModifierConstructor,fearProjectileAttributeModifierClone,fearProjectileAttributeDataClone} from '../server/sim/content/chapter16-fear-attribute-data-clone.js';
 import {fearProjectileTargetCasting,fearProjectileCheckCastingFinished} from '../server/sim/content/chapter16-fear-target-casting.js';
+import {fearProjectileSpellStart} from '../server/sim/content/chapter16-fear-spell-start.js';
+
+function spellStartFixture(){
+ const f=targetCastingFixture(),stack=()=>({_array:Array(8).fill(null),_size:0,_version:0}),
+  context=()=>({m_ability:stack(),m_source:stack(),m_mainTarget:stack()}),ctx=context(),
+  references=fearProjectileManagedReferenceStacks({resizeArray:()=>{throw Error('unexpected reference resize');}}),
+  sources=fearProjectileContextPointerStacks({readCount:value=>value._size,peekStored:value=>value._array[value._size-1],
+   popStored:value=>{if(!value._size)throw Error('empty source');const result=value._array[--value._size];value._array[value._size]=null;return result;},
+   pushStored:(value,pointer)=>{value._array[value._size++]=f.pointers.copy(pointer);},wrapPointer:f.pointers.capture,copyPointer:f.pointers.copy,lockPointer:f.pointers.lock});
+ Object.assign(f.ability,{context:ctx,m_inputTarget:{value:f.pointers.capture(f.target)},m_isDmgOrHealAbility:true,spellCnt:0});
+ const start={copyOwnerPointer:value=>f.pointers.copy(value.m_owner),readIgnoreIfOwnerDead:value=>value._ignoreIfOwnerDead,
+  validOwnerAndAlive:f.finishOptions.validOwnerAndAlive,lockOwner:value=>f.pointers.lock(value.m_owner),
+  canSpell:(owner,ability,reason)=>{assert.equal(owner,f.owner);assert.equal(ability,f.ability);assert.equal(reason.value,0);return true;},finishIfNot:f.finishOptions.finishIfNot,
+  readContext:value=>value.context,pushReference:references.push,popReference:references.pop,pushSource:sources.push,popSource:sources.pop,
+  getBuffs:()=>{f.events.push('buffs');return f.buffs;},getAttachments:()=>{f.events.push('attachments');return f.attachments;},
+  getActions:(_ability,event)=>{assert.equal(event,4);f.events.push('actions');return f.actions;},onEvent:(ability,event,runAction)=>{assert.equal(ability,f.ability);assert.equal(event,4);assert.equal(runAction,false);f.events.push('event4');},
+  isValidUnity:value=>value!=null&&!value.destroyed,copyInputTargetPointer:value=>f.pointers.copy(value.m_inputTarget.value),lockPointer:f.pointers.lock,
+  onOwnerSpell:(owner,ability)=>{assert.equal(owner,f.owner);assert.equal(ability,f.ability);assert.equal(references.peek(ctx.m_ability),f.ability);assert.equal(sources.getValue(ctx.m_source),f.owner);assert.equal(references.peek(ctx.m_mainTarget),f.target);f.events.push('owner-spell');},
+  onlyFirstAudio:()=>true,readSpellCount:value=>value.spellCnt,emitAudio:()=>f.events.push('audio'),castTargets:fearProjectileTargetCasting(f.options),
+  readDamageOrHeal:value=>value.m_isDmgOrHealAbility,allowNoTarget:()=>false,onOutput:()=>f.events.push('output'),onOutputEach:()=>f.events.push('output-each'),
+  noTarget:(ability,actions,buffs,attachments)=>{assert.deepEqual([ability,actions,buffs,attachments],[f.ability,f.actions,f.buffs,f.attachments]);f.events.push('no-target');return false;}};
+ return{...f,ctx,context,references,sources,start,runStart:()=>fearProjectileSpellStart(start)(f.ability)};
+}
+
+test('spell start composes native target casting and context stacks before single-spell event5/post-delay',()=>{
+ const f=spellStartFixture(),battle=fixture(),spell=fearProjectileSpell(battle.b,{owner:battle.source,onSpellStart:f.runStart,isCasting:()=>f.ability.m_isCasting,
+  emitSpellEnd:()=>f.events.push('event5'),mayBeginPostDelay:()=>true,beginPostDelay:()=>f.events.push('post')});
+ assert.deepEqual(spell.run(),{started:true,spellEnd:true,postDelay:true});
+ assert.deepEqual(f.events.map(e=>Array.isArray(e)?e[0]:e),['buffs','attachments','actions','event4','owner-spell','audio','cast','selector','selector','notify','output','output-each','event5','post']);
+ for(const value of Object.values(f.ctx)){assert.equal(value._size,0);assert.ok(value._array.every(x=>x==null));}
+});
+
+test('spell start validates copied owner before locking a fresh owner and rejects before context access',()=>{
+ const f=spellStartFixture(),stored=f.ability.m_owner;f.start.readIgnoreIfOwnerDead=()=>{f.ability.m_owner={obj:null,cachedUid:0};return false;};
+ f.start.validOwnerAndAlive=pointer=>{assert.notEqual(pointer,stored);assert.equal(pointer.obj,f.owner);return true;};assert.throws(f.runStart,/null native object/);assert.deepEqual(f.events,[]);
+ const g=spellStartFixture();g.owner.alive=false;g.start.readContext=()=>{throw Error('unexpected context');};assert.equal(g.runStart(),false);assert.deepEqual(g.events,[['finish',2,false]]);
+ const h=spellStartFixture();h.start.canSpell=(_owner,_ability,reason)=>{reason.value=4;return false;};h.start.readContext=()=>{throw Error('unexpected context');};assert.equal(h.runStart(),false);assert.deepEqual(h.events,[['finish',4,false]]);
+});
+
+test('spell start samples context separately for ability/source push and source/ability pop',()=>{
+ const f=spellStartFixture(),contexts=Array.from({length:6},f.context);let read=0;
+ f.start.readContext=()=>contexts[read++];f.start.onOwnerSpell=()=>{};
+ f.references.push(contexts[3].m_mainTarget,'prior-main');f.sources.push(contexts[4].m_source,f.owner);f.references.push(contexts[5].m_ability,'prior-ability');
+ assert.equal(f.runStart(),true);assert.equal(read,6);assert.equal(contexts[0].m_ability._size,1);assert.equal(contexts[1].m_source._size,1);assert.equal(contexts[2].m_mainTarget._size,1);
+ assert.equal(contexts[3].m_mainTarget._size,0);assert.equal(contexts[4].m_source._size,0);assert.equal(contexts[5].m_ability._size,0);
+});
+
+test('spell start captures payloads before event4 and keeps their identities through target and fallback callbacks',()=>{
+ const f=spellStartFixture(),original=[f.actions,f.buffs,f.attachments];f.start.onEvent=()=>{f.actions={};f.buffs={};f.attachments={};};f.start.onOwnerSpell=()=>{};
+ f.start.castTargets=(ability,...payload)=>{assert.equal(ability,f.ability);assert.deepEqual(payload,original);return false;};
+ f.start.noTarget=(ability,...payload)=>{assert.equal(ability,f.ability);assert.deepEqual(payload,original);return true;};assert.equal(f.runStart(),true);
+});
+
+test('spell start captures the input pointer and main-target stack before locking, then pops a fresh stack',()=>{
+ const f=spellStartFixture(),original=f.ctx.m_mainTarget,other=f.context().m_mainTarget;f.references.push(other,'prior');
+ f.start.lockPointer=pointer=>{assert.equal(pointer.obj,f.target);f.ability.m_inputTarget.value={obj:null,cachedUid:0};f.ctx.m_mainTarget=other;return f.target;};
+ f.start.onOwnerSpell=()=>{assert.equal(f.references.peek(original),f.target);assert.equal(f.references.peek(other),'prior');};assert.equal(f.runStart(),true);
+ assert.equal(original._size,1);assert.equal(other._size,0);
+ const g=spellStartFixture();g.ctx.m_mainTarget=null;let locked=false;g.start.lockPointer=()=>{locked=true;return null;};assert.throws(g.runStart,/null native object/);assert.equal(locked,true);
+});
+
+test('spell start allows null input-target locks and skips owner notification after Unity invalidation',()=>{
+ const f=spellStartFixture();f.start.lockPointer=()=>null;f.start.onOwnerSpell=()=>assert.equal(f.references.peek(f.ctx.m_mainTarget),null);assert.equal(f.runStart(),true);
+ const g=spellStartFixture();g.start.onEvent=()=>{g.owner.destroyed=true;};g.start.copyInputTargetPointer=()=>{throw Error('unexpected main-target read');};assert.equal(g.runStart(),true);assert.equal(g.events.includes('owner-spell'),false);
+});
+
+for(const firstOnly of [false,true])for(const spellCnt of [0,1])test(`spell start audio first-only=${firstOnly} spell=${spellCnt}`,()=>{
+ const f=spellStartFixture();f.start.onlyFirstAudio=()=>firstOnly;f.ability.spellCnt=spellCnt;assert.equal(f.runStart(),true);
+ assert.equal(f.events.includes('audio'),!firstOnly||spellCnt===0);assert.equal(f.events.includes('output'),spellCnt===0);assert.equal(f.events.includes('output-each'),true);
+});
+
+test('spell start rechecks damage eligibility and allowNoTarget after output callbacks',()=>{
+ const f=spellStartFixture();f.start.onOutput=()=>{f.events.push('output');f.ability.m_isDmgOrHealAbility=false;};assert.equal(f.runStart(),true);assert.equal(f.events.includes('output-each'),false);
+ const g=spellStartFixture();g.ability.m_castTargets=[];let probes=0;g.start.allowNoTarget=()=>++probes===1;assert.equal(g.runStart(),false);assert.equal(probes,2);assert.equal(g.events.includes('output'),true);assert.equal(g.events.includes('output-each'),false);
+ const h=spellStartFixture();h.ability.m_castTargets=[];let count=0;h.start.allowNoTarget=()=>++count===2;assert.equal(h.runStart(),false);assert.equal(count,2);assert.equal(h.events.includes('output'),false);assert.equal(h.events.includes('output-each'),true);
+ const i=spellStartFixture();i.ability.m_isDmgOrHealAbility=false;i.start.allowNoTarget=()=>{throw Error('unexpected allowNoTarget');};assert.equal(i.runStart(),true);assert.equal(i.events.includes('output-each'),false);
+});
+
+test('spell start no-target result controls event5 and removes frames on both Boolean outcomes',()=>{
+ for(const result of [false,true]){const f=spellStartFixture(),battle=fixture();f.ability.m_castTargets=[];f.start.noTarget=()=>result;
+  const spell=fearProjectileSpell(battle.b,{owner:battle.source,onSpellStart:f.runStart,isCasting:()=>true,emitSpellEnd:()=>f.events.push('event5'),mayBeginPostDelay:()=>true,beginPostDelay:()=>{}});
+  assert.equal(spell.run().spellEnd,result);assert.equal(f.events.includes('event5'),result);for(const value of Object.values(f.ctx))assert.equal(value._size,0);
+ }
+});
+
+for(const phase of ['getBuffs','onEvent','onOwnerSpell','emitAudio','castTargets','onOutput','onOutputEach','noTarget'])test('spell start preserves pushed native frames after '+phase+' throws',()=>{
+ const f=spellStartFixture(),error=Error(phase);if(phase==='noTarget')f.ability.m_castTargets=[];f.start[phase]=()=>{throw error;};assert.throws(f.runStart,actual=>actual===error);
+ assert.equal(f.ctx.m_ability._size,1);assert.equal(f.ctx.m_source._size,1);assert.equal(f.ctx.m_mainTarget._size,phase==='onOwnerSpell'?1:0);
+});
+
+test('spell start preserves prior source/ability frames when later pushes or pops fail',()=>{
+ const f=spellStartFixture();f.ctx.m_source=null;assert.throws(f.runStart,/null native object/);assert.equal(f.ctx.m_ability._size,1);
+ const g=spellStartFixture(),error=Error('source pop');g.start.popSource=()=>{throw error;};assert.throws(g.runStart,actual=>actual===error);assert.equal(g.ctx.m_ability._size,1);assert.equal(g.ctx.m_source._size,1);
+});
+
+test('spell start permits nested starts with independent payload state and balanced context stacks',()=>{
+ const f=spellStartFixture();let nested=false,start;
+ f.start.onOwnerSpell=()=>{assert.equal(f.ctx.m_ability._size,nested?2:1);assert.equal(f.ctx.m_source._size,nested?2:1);assert.equal(f.ctx.m_mainTarget._size,nested?2:1);if(!nested){nested=true;assert.equal(start(f.ability),true);nested=false;}};
+ start=fearProjectileSpellStart(f.start);assert.equal(start(f.ability),true);for(const value of Object.values(f.ctx))assert.equal(value._size,0);assert.equal(f.events.filter(e=>Array.isArray(e)&&e[0]==='cast').length,2);
+});
 
 function targetCastingFixture(){
  const events=[],owner={uid:1,alive:true,destroyed:false},target={uid:2,alive:true,destroyed:false},selector={},pointers=fearProjectileContextPointers({readUid:value=>value.uid,isDestroyedOrNull:value=>value==null||value.destroyed===true,isActive:()=>true}),
@@ -5131,7 +5231,7 @@ test('owner reuse while testing casting prevents spell-end and post-delay for th
  assert.equal(f.spell.run(),null);assert.deepEqual(f.events,['start']);
 });
 
-test('bounded wait, initialized modes, event5 self-death and independent flight compose without canceling born damage',()=>{
+test('bounded wait, native spell-start/target casting, event5 self-death and independent flight preserve born damage',()=>{
  const f=modeFixture({readStartIniting:()=>false});f.source.base.atk=175;f.source.markDirty();f.target.nativeUid=1;
  const graph=read('data/candidates/arkpedia-windows-fear-self-death-source.json').modeSwitch.graph;
  for(const [role,mode]of [['mode0',f.old],['mode1',f.next]]){
@@ -5154,19 +5254,26 @@ test('bounded wait, initialized modes, event5 self-death and independent flight 
  const activation=fearProjectileSelfDeathActivation(f.b,{owner:f.source,readAbnormalFlag:()=>false,readAbnormalCombo:()=>false,
   switchMode:()=>handoff.run(),createImmunityBuff:()=>true,instantKill:()=>suicide.run()});
  const source=fearProjectileSourceReference(f.b,f.source),damage=fearProjectileDamageAction(f.b,source),events=[];
- let flight;
- const spell=fearProjectileSpell(f.b,{owner:f.source,onSpellStart:()=>{
+ let flight;const start=spellStartFixture();f.source.uid=11;f.target.uid=12;
+ start.ability.m_owner=start.pointers.capture(f.source);start.ability.m_inputTarget.value=start.pointers.capture(f.target);start.ability.m_castTargets=[start.pointers.capture(f.target)];
+ start.start.canSpell=(owner,ability)=>{assert.equal(owner,f.source);assert.equal(ability,start.ability);return true;};
+ start.start.onEvent=(_ability,event,runAction)=>{assert.equal(event,4);assert.equal(runAction,false);events.push('event4');};
+ start.start.onOwnerSpell=owner=>{assert.equal(owner,f.source);assert.equal(start.sources.getValue(start.ctx.m_source),f.source);assert.equal(start.references.peek(start.ctx.m_mainTarget),f.target);};
+ start.options.castOnTarget=(_ability,target)=>{assert.equal(target,f.target);
   events.push('birth');flight=fearProjectileFlight(f.b,{from:{x:0,y:0,z:0},initialTarget:{x:1,y:0,z:0},
    resolveTargetPosition:()=>null,resolveTraceTarget:()=>f.target,
    area:{queryOverlaps:()=>[f.target],resolveEntity:u=>u,readUid:u=>u.nativeUid,isCandidate:()=>true,
     verifyTarget:()=>true,deterministic:true,resolveSource:source.resolveSource,onSelected:()=>{}},
    runHit:({target})=>applyFearProjectileImpact(f.b,{source:f.source,target,applyAttachments:()=>{},runActions:damage}),
-   onStopped:()=>{},scheduleCompletion:()=>()=>{}});return true;
- },isCasting:()=>casting,emitSpellEnd:()=>{events.push('event5');assert.equal(activation.run(),null);},
+   onStopped:()=>{},scheduleCompletion:()=>()=>{}});
+ };
+ start.start.castTargets=fearProjectileTargetCasting(start.options);
+ const spell=fearProjectileSpell(f.b,{owner:f.source,onSpellStart:start.runStart,isCasting:()=>casting,emitSpellEnd:()=>{
+  for(const stack of Object.values(start.ctx))assert.equal(stack._size,0);events.push('event5');assert.equal(activation.run(),null);},
  mayBeginPostDelay:()=>{throw Error('removed owner');},beginPostDelay:()=>{throw Error('removed owner');}});
  const wait=fearProjectileAttackWait(f.b,{owner:f.source,cachedDurationRaw:fpOne,readDeltaPlayTime:()=>1,
   isCastActive:()=>true,subscribeAttackEvent:()=>()=>{},onReady:()=>spell.run()});
- wait.resume();assert.equal(flight,undefined);wait.resume();assert.deepEqual(events,['birth','event5']);
+ wait.resume();assert.equal(flight,undefined);wait.resume();assert.deepEqual(events,['event4','birth','event5']);
  assert.equal(state,12);assert.equal(casting,false);assert.equal(f.current,f.next);
  assert.deepEqual(skillEvents,['range','buff','detach','attach']);
  assert.deepEqual(detached,['-5760848500668714718','4729572091462136098']);

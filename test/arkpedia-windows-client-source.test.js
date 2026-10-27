@@ -20,6 +20,29 @@ function settingsFixture(){
  return{...f,settings:{version:f.pin.version,source:f.pin.source,file}};
 }
 
+test('spell-start source binds owner rejection, payload slots, context stacks and post-cast output branches',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-spell-start-source.json'),parent=read('data/candidates/arkpedia-windows-cast-lifecycle-source.json');assert.equal(c.methods.length,1);assert.deepEqual(c.methods[0],parent.methods.find(m=>m.index===54700));
+ for(const source of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+source.path,import.meta.url))),source.sha256);
+ for(const method of c.methods)for(const chunk of method.chunks){const raw=Buffer.from(chunk.base64,'base64');assert.equal(sha(raw),chunk.sha256);assert.equal(raw.length,chunk.endRva-chunk.beginRva);}
+ assert.deepEqual(c.fields.map(f=>[f.declaringTypeIndex,f.name,f.offset]),[[8742,'m_owner',72],[8752,'_ignoreIfOwnerDead',200],[8752,'m_inputTarget',216],[8752,'m_isDmgOrHealAbility',256],[8960,'m_source',16],[8960,'m_ability',40],[8960,'m_mainTarget',80]]);
+ assert.deepEqual(c.virtualSlots.map(s=>[s.slot,s.name]),[[18,'get_allowNoTarget'],[44,'GetActiveBuffs'],[46,'GetAbilityAttachments'],[62,'FinishIfNot'],[70,'get_onlyTrigAudioSignalForFirstSpell'],[73,'OnEvent'],[74,'GetEventActions'],[81,'DoOnHasNoTarget'],[87,'DoCastOnTargets'],[93,'DoEmitAudioSignalForSpellOn'],[96,'OnOutputAttackOrHeal'],[97,'OnOutputAttackOrHealEachSpell'],[133,'CanDoAbilitySpellOn']]);
+ assert.equal(c.virtualSlots.find(s=>s.slot===44).type,'RangedAttack');assert.equal(c.virtualSlots.find(s=>s.slot===74).type,'RangedAttack');
+ assert.deepEqual(c.directCalls.map(d=>[d.name,d.entryRva]),[['get_context',0x3910b80],['get_spellCnt',0x390dc30],['OnAbilitySpellOn',0x3a1e320]]);
+ assert.deepEqual(c.signatures.slice(0,4).map(s=>s.returnKind),[2,1,2,2]);assert.deepEqual(c.signatures[0].parameters.map(p=>p.name),['ability','reason']);assert.ok(c.signatures[0].parameters[1].typeBits&0x20000000);
+ assert.equal(c.inputTargetType.definition.name,'KeyValuePair`2');assert.equal(c.inputTargetType.arguments[0].name,'Vector2');assert.equal(c.inputTargetType.arguments[0].definitionIndex,42145);assert.equal(c.inputTargetType.arguments[1].definition.name,'ObjectPtr`1');assert.equal(c.inputTargetType.arguments[1].arguments[0].definitionIndex,9044);
+ for(const load of c.metadataLoads){assert.equal(load.encodedUsage>>>29,6);assert.equal((load.encodedUsage&0x1ffffffe)>>>1,load.specification.index);assert.equal(load.specification.nativeMapping,null);}
+ assert.deepEqual(c.metadataLoads.map(l=>l.specification.definition.name),['ValidAndAlive','Lock','Push','Push','Lock','Push','Pop','Pop','Pop']);
+ const at=(rva,operands)=>assert.ok(instructions(c.methods[0]).some(i=>i.rva===rva&&i.operands===operands),'Spell-start instruction '+rva.toString(16));
+ for(const [rva,args]of [[0x390bbea,'xmm0, xmmword ptr [rbx + 0x48]'],[0x390bbfa,'edx, byte ptr [rbx + 0xc8]'],[0x390bc06,'0x183f4f050'],[0x390bc2e,'rcx, [rbx + 0x48]'],[0x390bc32,'0x18477cad0'],[0x390bc57,'r8, [rsp + 0x80]'],[0x390bc65,'r10, qword ptr [r9 + 0x988]'],[0x390bc73,'r10'],[0x390bd04,'r8d, [rcx - 0x46]'],[0x390bd12,'r9d, r9d'],[0x390bd1b,'r8d, [rcx - 0x45]'],[0x390bd41,'0x185ebee90'],[0x390bd68,'rsi, qword ptr [rax + 0x50]'],[0x390bd7d,'0x18477cad0'],[0x390bd82,'rsi, rsi'],[0x390bda6,'0x183a1e320'],[0x390be08,'qword ptr [rsp + 0x20], r14'],[0x390be0d,'r9, rbp'],[0x390be10,'r8, r15'],[0x390be25,'0x18390be81'],[0x390bf22,'r8d, dword ptr [rsp + 0x80]'],[0x390bf2f,'r9d, r9d'],[0x390bf5f,'edx, [r8 + 2]']])at(rva,args);
+ for(const rva of c.contextReadCalls)at(rva,'0x183910b80');
+ for(const [rva,args]of c.contextPushCalls.map((rva,i)=>[rva,i===1?'0x184be7ef0':'0x18490b650']))at(rva,args);
+ for(const [rva,args]of c.contextPopCalls.map((rva,i)=>[rva,i===1?'0x184be7e60':'0x184be81a0']))at(rva,args);
+ for(const rva of c.damageFieldReads)at(rva,'byte ptr [rbx + 0x100], 0');for(const rva of c.allowNoTargetCalls)at(rva,'0x1800057b0');
+ for(const rva of c.outputCalls)at(rva,'0x180005b40');at(c.castTargetsCallRva,'0x18005e070');at(c.noTargetCallRva,'0x18005e070');at(c.inputPointerCopyRva,'xmm0, xmmword ptr [rbx + 0xe0]');
+ assert.equal(c.inputPointerAbsoluteOffset,224);assert.equal(c.event,4);assert.equal(c.eventRunsActions,false);assert.equal(c.invalidOwnerFinishReason,2);assert.equal(c.resetCd,false);
+ for(const key of ['runtimeDispatchVerified','frameParity','crossVersionParity','nativeOwnerEffectsVerified','nativeVirtualEffectsVerified','liveSpellStartVerified','defaultBodyHasExceptionCleanup','hotfixDispatchVerified'])assert.equal(c[key],false);assert.equal(c.testOnly,true);
+});
+
 test('target casting source binds complete loop/check bodies, selector notification and nested pointer-list metadata',()=>{
  const c=read('data/candidates/arkpedia-windows-fear-target-casting-source.json'),parent=read('data/candidates/arkpedia-windows-cast-lifecycle-source.json');assert.equal(c.methods.length,2);assert.deepEqual(c.methods[0],parent.methods.find(m=>m.index===54713));
  for(const source of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+source.path,import.meta.url))),source.sha256);

@@ -1402,6 +1402,52 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
 
+### Standard spell-start orchestration
+
+`extract-windows-fear-spell-start.py --check` reproduces the complete selected
+default AbilityStandard.OnSpellStart body from the unchanged cast-lifecycle
+bundle and pinned Windows client. It binds owner CanDoAbilitySpellOn slot133,
+its by-reference FinishReason output, the direct Entity.OnAbilitySpellOn call,
+context stack fields and concrete RangedAttack payload slots. GetActiveBuffs
+slot44 and GetEventActions slot74 resolve on the concrete type; the shared
+resolver still rejects abstract encoded slots. The input field is independently
+typed as KeyValuePair<Vector2,ObjectPtr<Entity>>; the native copy at ability+e0
+is retained as an observed instruction, without inferring inflated generic
+field offsets from zero-offset generic metadata.
+
+`fearProjectileSpellStart` copies the owner before reading the ignore-death
+flag, validates it, locks the fresh owner field and checks its rejection reason
+before touching context. It pushes ability/source frames through separately
+fetched contexts, captures buffs/attachments/event4 actions, and emits event4
+with runAction=false. A Unity-valid owner receives OnAbilitySpellOn inside a
+main-target frame. The input pointer is copied and that stack captured before
+locking; the pop fetches context again. Audio honors first-spell-only behavior.
+
+Target casting receives the captured payloads. The damage/heal field and
+allowNoTarget getter are sampled again after output callbacks as in the native
+branches; an initially false damage field skips both output branches. The
+no-target callback determines the returned Boolean only when casting found no
+valid targets. Successful and false-result paths pop source then ability using
+fresh contexts. Exceptions preserve already pushed frames: the selected default
+body has no exception cleanup. Reentry retains independent local payloads and
+results. No extra lifecycle cancellation or automatic frame repair is inserted.
+
+Tests cover owner rejection/replacement, payload capture, changing contexts and
+stack fields, nullable input locks, output/audio branches, callback errors and
+nested calls. The longer bounded-wait/mode-switch/event5-self-death/independent-
+flight composition now runs through this spell-start implementation and the
+native target loop before its explicit projectile-construction receiver. It
+checks that context frames are popped before event5 and born damage survives
+the source's death. All1399 focused native/fear/family/miner tests, evidence
+reproduction and the three existing Fear/miner contract checks pass.
+
+RangedAttack projectile construction, native owner/virtual/hotfix effects,
+initial FSM, local-miner integration and stage/frame parity remain open.
+Source/support/receipt/catalogue gates and stage registries are unchanged;
+new stages stay test-only and this checkpoint stays local. The exact previously
+approved0524e2b1 remains the remote branch head with full40558578137 and
+continuation40558189633 successful; later commits have not been uploaded.
+
 ### Standard target-cast loop and finish checks
 
 `extract-windows-fear-target-casting.py --check` reproduces a separate selected
