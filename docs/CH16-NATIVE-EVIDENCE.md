@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 110 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 113 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -1209,6 +1209,33 @@ Full40533531161 and continuation40533531826 check d74e28a3 independently.
 
 Native controller cleanup timing, Reset effects and full controller/stage
 integration remain open. No source/support/receipt/catalogue gate changed.
+
+### Blackboard numeric reads and default duration/trigger getters
+
+The113-method artifact additionally retains _TryGetNumber, TryGetInt and the
+complete numeric-predicate tail wrapper. Numeric eligibility uses
+String.IsNullOrEmpty(valueStr), so an empty string is numeric-eligible. The
+number scan skips matching nonnumeric pairs and can find a later numeric
+duplicate. After its predicate it reads the indexed value again. Missing/null/
+empty keys produce false and a zero out float. TryGetFP converts that out float
+even on failure; GetFpOrDefault performs conversion before fallback selection.
+TryGetInt skips rounding when lookup fails. Its round and Int32 conversion
+instructions are retained, without certifying a replacement rounding policy.
+
+`fearProjectileBuffBlackboardReads` implements the selected pair-list scan and
+default getter orchestration, with explicit native comparison, FP conversion,
+integer rounding and lifecycle receivers. Numeric reads use float32 values,
+preserve found/out results and reject reentry across getter kinds. The unused
+default-branch Boolean remains accepted without inventing behavior from its
+hotfix-only use. Culture/rounding/FP effects remain unverified receivers.
+
+Tests cover nonnumeric and numeric duplicates, empty-string values, missing-key
+out values, conversion-before-fallback, default flags, repeated pair reads,
+float32 rounding inputs, exceptions/retry, reentry and lifecycle cancellation.
+A composed write/read/lifetime/trigger test supplies Reset from the concrete
+pair operations. All693 focused native/fear/family/miner tests pass and --check
+reproduces the113-method bundle. Full native conversions, list versioning, full
+Reset and live controller/stage integration remain open; all gates are intact.
 
 ### ClearRunTimeData default cleanup ordering
 

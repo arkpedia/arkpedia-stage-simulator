@@ -1,6 +1,55 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import {fearProjectileBuffDurationKey} from './chapter16-fear-buff-timing.js';
 
+// Selected default Blackboard numeric reads on a List<DataPair> projection.
+// Native culture comparison, FP conversion and integer rounding stay explicit.
+export function fearProjectileBuffBlackboardReads({entries,compareIgnoreCase,floatToRaw,roundToInt,isActive}){
+ if(!Array.isArray(entries)||[compareIgnoreCase,floatToRaw,roundToInt,isActive].some(fn=>typeof fn!=='function'))
+  throw new TypeError('Fear blackboard reads require native list, comparison, conversion and lifecycle callers');
+ let running=false;const cancelled=Symbol('cancelled');
+ const active=()=>{const value=isActive();if(typeof value!=='boolean')throw new TypeError('Fear blackboard reads require Boolean lifecycle validity');return value;};
+ const check=()=>{if(!active())throw cancelled;};
+ const raw=value=>{if(typeof value!=='bigint'||value<-(1n<<63n)||value>(1n<<63n)-1n)throw new TypeError('Fear blackboard reads require signed Q32.32 results');return value;};
+ const int=value=>{if(!Number.isInteger(value)||value<-(2**31)||value>=2**31)throw new TypeError('Fear blackboard reads require native Int32 results');return value;};
+ function number(key){
+  if(key==null||key==='')return{found:false,value:0};
+  if(typeof key!=='string')throw new TypeError('Fear blackboard lookup requires a nullable native string key');
+  for(let index=0;index<entries.length;index++){
+   const existing=entries[index]?.key;check();
+   const compared=compareIgnoreCase(existing,key,true);check();int(compared);
+   if(compared!==0)continue;
+   const text=entries[index]?.valueStr;check();
+   if(text!=null&&typeof text!=='string')throw new TypeError('Fear blackboard numeric predicate requires a nullable native string');
+   if(text!=null&&text!=='')continue;
+   const value=entries[index]?.value;check();
+   if(typeof value!=='number')throw new TypeError('Fear blackboard lookup requires native float values');
+   return{found:true,value:Math.fround(value)};
+  }
+  return{found:false,value:0};
+ }
+ function run(key,kind,fallback){
+  if(running)return null;running=true;
+  try{
+   check();const result=number(key);
+   if(kind==='number')return Object.freeze(result);
+   if(kind==='fp'||kind==='fpDefault'){
+    const converted=floatToRaw(result.value);check();const valueRaw=raw(converted);
+    return kind==='fp'?Object.freeze({found:result.found,valueRaw}):result.found?valueRaw:raw(fallback);
+   }
+   if(!result.found)return kind==='int'?Object.freeze({found:false,value:0}):int(fallback);
+   const rounded=roundToInt(result.value);check();const value=int(rounded);
+   return kind==='int'?Object.freeze({found:true,value}):value;
+  }catch(error){if(error===cancelled)return null;throw error;}
+  finally{running=false;}
+ }
+ return Object.freeze({
+  tryGetNumber:key=>run(key,'number'),tryGetFP:key=>run(key,'fp'),tryGetInt:key=>run(key,'int'),
+  // The default native branches ignore this bool; hotfix dispatch retains it.
+  getFpOrDefault:(key,fallback,_flag=false)=>run(key,'fpDefault',fallback),
+  getIntOrDefault:(key,fallback,_flag=false)=>run(key,'intDefault',fallback),
+ });
+}
+
 // Selected Blackboard.Assign(float/string) on its List<DataPair> projection.
 // Culture-sensitive System.String operations are supplied without substituting
 // JavaScript's different casing/collation rules.

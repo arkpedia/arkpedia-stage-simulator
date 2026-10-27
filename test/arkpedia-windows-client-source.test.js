@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,110);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,113);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -225,6 +225,20 @@ test('immediate recycle source enumerates stored pairs and pointer lists before 
  }
  at(q.outerMoveNext,0x4dd4158,'dword ptr [rbx + 0xc], eax');at(q.outerMoveNext,0x4dd41b6,'dword ptr [rbx + 0xc], eax');
  assert.ok(!instructions(m).some(i=>i.mnemonic==='call'&&i.operands==='0x183991a80'),'flush does not filter by current frame');
+});
+
+test('blackboard numeric read source binds numeric filtering and found/out conversion ordering',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.blackboardReads;
+ const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ const number=castMethod(c,'Blackboard','_TryGetNumber');at(number,q.numberCompareCallRva,'0x1850cd8b0');at(number,q.numberPredicateCallRva,'0x181cdfdb0');
+ at(number,q.numberValueReadRva,'xmm0, dword ptr [rsp + 0x50]');at(number,q.numberMissingOutWriteRva,'dword ptr [rsi], 0');at(number,q.numberFoundOutWriteRva,'dword ptr [rsi], xmm0');
+ const fp=castMethod(c,'Blackboard','TryGetFP');at(fp,q.fpNumberCallRva,'0x182167b50');at(fp,q.fpConversionCallRva,'0x185a3da20');at(fp,q.fpOutWriteRva,'qword ptr [rbx], rax');
+ const fpDefault=castMethod(c,'Blackboard','GetFpOrDefault');at(fpDefault,q.fpDefaultNumberCallRva,'0x182167b50');at(fpDefault,q.fpDefaultConversionCallRva,'0x185a3da20');
+ const integer=castMethod(c,'Blackboard','TryGetInt');at(integer,q.intNumberCallRva,'0x182167b50');at(integer,q.intMissingOutWriteRva,'dword ptr [rbx], 0');
+ at(integer,q.intRoundCallRva,'0x1804d00c4');at(integer,q.intConversionRva,'eax, xmm0');at(integer,q.intOutWriteRva,'dword ptr [rbx], eax');
+ at(castMethod(c,'Blackboard','GetIntOrDefault'),q.intDefaultTryCallRva,'0x182167520');
+ const predicate=castMethod(c,'DataPair','get_isNumericValue');assert.ok(instructions(predicate).some(i=>i.mnemonic==='jmp'&&i.operands==='0x1850d34b0'));
+ assert.equal(q.nativeNumberConversionVerified,false);assert.equal(q.liveReadPhaseVerified,false);
 });
 
 test('blackboard write source binds key lowering, original-key comparison and whole-pair replacement',()=>{

@@ -667,6 +667,32 @@ result['modeSwitch']['buffNotification']['blackboardWrites'] = {
     'stringPairValueClearRva': 0x22622e2, 'stringPairStringWriteRva': 0x22622df,
     'nativeCultureEffectsVerified': False, 'nativeListVersioningVerified': False, 'liveWritePhaseVerified': False,
 }
+for name in ['TryGetInt', '_TryGetNumber']:
+    methods.append(c['method'](blackboard_type, c['unique'](lambda r: r['name'] == name, blackboard_type['methods'])))
+numeric_row = c['unique'](lambda r: r['name'] == 'get_isNumericValue', pair['methods'])
+numeric_rva = v['pointer'](numeric_row) - v['image_base']
+assert numeric_rva == 0x1cdfdb0
+pos = v['offset'](v['image_base'] + numeric_rva)
+numeric_raw = v['b'][pos:pos + 11]
+assert numeric_raw.hex() == '488b491033d2e9f5363f03'
+numeric_ins = list(Cs(CS_ARCH_X86, CS_MODE_64).disasm(numeric_raw, v['image_base'] + numeric_rva))
+assert [(i.mnemonic, i.op_str) for i in numeric_ins] == [('mov', 'rcx, qword ptr [rcx + 0x10]'), ('xor', 'edx, edx'), ('jmp', '0x1850d34b0')]
+pp = v['method_start'] + numeric_row['index'] * 32
+methods.append({'image': 'Assembly-CSharp.dll', 'typeIndex': pair['index'], 'namespace': pair['namespace'], 'type': 'DataPair', **numeric_row,
+    'virtualSlot': struct.unpack_from('<H', v['m'], pp + 28)[0], 'parameterCount': struct.unpack_from('<H', v['m'], pp + 30)[0],
+    'entryRva': numeric_rva, 'chunks': [{'beginRva': numeric_rva, 'endRva': numeric_rva + len(numeric_raw), 'unwindRva': None,
+        'boundary': 'Reviewed complete numeric-predicate tail wrapper to String.IsNullOrEmpty',
+        'base64': base64.b64encode(numeric_raw).decode(), 'sha256': v['sha'](numeric_raw),
+        'instructions': [{'rva': i.address - v['image_base'], 'size': i.size, 'mnemonic': i.mnemonic, 'operands': i.op_str} for i in numeric_ins]}]})
+result['modeSwitch']['buffNotification']['blackboardReads'] = {
+    'numberCompareCallRva': 0x2167c15, 'numberPredicateCallRva': 0x2167c52, 'numberValueReadRva': 0x2167c99,
+    'numberMissingOutWriteRva': 0x2167c62, 'numberFoundOutWriteRva': 0x2167ca1,
+    'fpNumberCallRva': 0x2167406, 'fpConversionCallRva': 0x216742e, 'fpOutWriteRva': 0x2167438,
+    'fpDefaultNumberCallRva': 0x21668f1, 'fpDefaultConversionCallRva': 0x2166919,
+    'intNumberCallRva': 0x2167589, 'intMissingOutWriteRva': 0x2167592,
+    'intRoundCallRva': 0x21675e7, 'intConversionRva': 0x21675f1, 'intOutWriteRva': 0x21675f5,
+    'intDefaultTryCallRva': 0x21669fb, 'nativeNumberConversionVerified': False, 'liveReadPhaseVerified': False,
+}
 pool = c['type_row']('ObjectPool`1', 'Torappu.ObjectPool')
 pool_methods = []
 for index in [147561, 147566, 147567, 147558, 147559, 147563, 147564, 147568, 147569]:

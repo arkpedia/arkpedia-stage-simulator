@@ -21,7 +21,7 @@ import {fearProjectileFinishAndRemoveBuff,fearProjectileOverrideGroupRemove} fro
 import {fearProjectileBuffRecycleQueue,fearProjectileClearRuntimeData} from '../server/sim/content/chapter16-fear-buff-recycle.js';
 import {fearProjectileBuffIdentity,fearProjectileResetBuffLifecycle} from '../server/sim/content/chapter16-fear-buff-identity.js';
 import {fearProjectileBuffTimer,fearProjectileResetBuffTriggers,fearProjectileBuffDurationKey,fearProjectileResetBuffLifetime,fearProjectileModifyBuffLifetime} from '../server/sim/content/chapter16-fear-buff-timing.js';
-import {fearProjectileResetBuffBlackboard,fearProjectileBuffPrefixAssignments,fearProjectileBuffBlackboardWrites} from '../server/sim/content/chapter16-fear-buff-blackboard.js';
+import {fearProjectileResetBuffBlackboard,fearProjectileBuffPrefixAssignments,fearProjectileBuffBlackboardWrites,fearProjectileBuffBlackboardReads} from '../server/sim/content/chapter16-fear-buff-blackboard.js';
 import {fearProjectileBuffRecyclePool,fearProjectileDefaultBuffPool} from '../server/sim/content/chapter16-fear-buff-pool.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
@@ -207,6 +207,63 @@ test('finish and native-frame queue use concrete buff recycle identity before th
  finish.run();queue.update();assert.equal(buff.instanceUid,1);assert.equal(buff.m_isValid,true);assert.equal(recycled,0);
  f.b.kill(f.source,null);frame=11;queue.update();assert.equal(recycled,1);assert.equal(buff.instanceUid,0);assert.equal(buff.m_isValid,false);assert.equal(p.lock(old),null);
  identity.allocate(buff);assert.equal(buff.instanceUid,2);assert.equal(p.lock(old),null);assert.equal(p.lock(p.capture(buff)),buff);queue.release();assert.deepEqual(f.b.errors,[]);
+});
+
+function blackboardReadsFixture(overrides={}){
+ const entries=[],events=[];let active=true;
+ const readers=fearProjectileBuffBlackboardReads({entries,compareIgnoreCase:(a,b,ignore)=>{events.push(['compare',a,b,ignore]);return a?.toLowerCase()===b.toLowerCase()?0:1;},
+  floatToRaw:n=>{events.push(['fp',n]);return BigInt(Math.trunc(n*2**32));},roundToInt:n=>{events.push(['round',n]);return Math.trunc(n);},isActive:()=>active,...overrides});
+ return{entries,events,readers,set active(value){active=value;}};
+}
+
+test('blackboard numeric lookup skips nonnumeric duplicates but accepts empty string values',()=>{
+ const f=blackboardReadsFixture();f.entries.push({key:'count',value:0,valueStr:'text'},{key:'COUNT',value:3,valueStr:''},{key:'count',value:4,valueStr:null});
+ assert.deepEqual(f.readers.tryGetNumber('Count'),{found:true,value:3});assert.deepEqual(f.readers.tryGetFP('count'),{found:true,valueRaw:3n<<32n});
+});
+
+test('missing/null/empty numeric keys return zero out values and FP conversion still runs',()=>{
+ const f=blackboardReadsFixture();for(const key of [null,'','missing']){
+  assert.deepEqual(f.readers.tryGetNumber(key),{found:false,value:0});assert.deepEqual(f.readers.tryGetFP(key),{found:false,valueRaw:0n});
+  assert.deepEqual(f.readers.tryGetInt(key),{found:false,value:0});
+ }
+ assert.equal(f.events.filter(e=>e[0]==='fp').length,3);assert.equal(f.events.some(e=>e[0]==='round'),false);
+});
+
+test('default getters preserve their supplied fallback and selected default branch ignores the hotfix-only bool',()=>{
+ const f=blackboardReadsFixture();for(const flag of [true,false]){
+  assert.equal(f.readers.getFpOrDefault('absent',77n,flag),77n);assert.equal(f.readers.getIntOrDefault('absent',9,flag),9);
+ }
+ f.entries.push({key:'x',value:2,valueStr:null});assert.equal(f.readers.getFpOrDefault('x',77n,true),2n<<32n);
+ assert.equal(f.readers.getIntOrDefault('x',9,true),2);
+});
+
+test('numeric lookup rereads the value after the numeric predicate instead of keeping the first DataPair snapshot',()=>{
+ let reads=0;const entries=[];Object.defineProperty(entries,0,{get(){reads++;return{key:'x',value:reads===3?7:1,valueStr:reads===3?'later string':null};}});
+ const f=blackboardReadsFixture({entries});assert.deepEqual(f.readers.tryGetNumber('x'),{found:true,value:7});assert.equal(reads,3);
+});
+
+test('Int32 getter delegates rounding of the stored float32 and does not truncate inside the reader',()=>{
+ let seen;const f=blackboardReadsFixture({roundToInt:value=>{seen=value;return 7;}});f.entries.push({key:'x',value:6.7,valueStr:null});
+ assert.deepEqual(f.readers.tryGetInt('x'),{found:true,value:7});assert.equal(seen,Math.fround(6.7));
+});
+
+test('numeric getters stop before conversion when comparison invalidates the life',()=>{
+ let f;f=blackboardReadsFixture({compareIgnoreCase:()=>{f.active=false;return undefined;}});f.entries.push({key:'x',value:1,valueStr:null});
+ assert.equal(f.readers.tryGetFP('x'),null);assert.equal(f.events.some(e=>e[0]==='fp'),false);
+});
+
+test('numeric getters share a recursion guard and preserve conversion exception ordering before fallback',()=>{
+ let f,fail=true;f=blackboardReadsFixture({floatToRaw:()=>{assert.equal(f.readers.tryGetInt('x'),null);if(fail)throw Error('convert');return 0n;}});
+ assert.throws(()=>f.readers.getFpOrDefault('absent',99n),/convert/);fail=false;assert.equal(f.readers.getFpOrDefault('absent',99n),99n);
+});
+
+test('concrete writes and numeric reads supply duration and trigger Reset without Map-backed getter stand-ins',()=>{
+ const entries=[],writes=blackboardWritesFixture({entries}),reads=blackboardReadsFixture({entries});
+ writes.writes.assignNumeric('duration',3);writes.writes.assignNumeric('interval',0.5);writes.writes.assignNumeric('trig_cnt',2);
+ const f=lifetimeResetFixture();fearProjectileResetBuffLifetime({buff:f.buff,durationKey:'duration',tryGetDuration:reads.readers.tryGetFP,
+  readData:()=>f.data,floatToRaw:()=>{throw Error('fallback');},modifyLifeTimeFinally:()=>{},isActive:()=>true}).run();assert.equal(f.buff.m_remainingTime,3n<<32n);
+ const t=triggerResetFixture({getFpOrDefault:reads.readers.getFpOrDefault,getIntOrDefault:reads.readers.getIntOrDefault});t.reset.run();
+ assert.equal(t.state.m_periodTime,1n<<31n);assert.equal(t.buff.m_triggerCnt,2);
 });
 
 function blackboardWritesFixture(overrides={}){
