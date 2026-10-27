@@ -2,6 +2,71 @@
 import {fearProjectileBuffDurationKey} from './chapter16-fear-buff-timing.js';
 import {fearProjectileFloatToRaw,fearProjectileFloorToInt} from './chapter16-fear-fixed-values.js';
 
+// Blackboard.Assign(IReadOnlyList<DataPair>) preserves source pair keys and
+// both value fields. It does not route through the key-lowering write overloads.
+export function fearProjectileBuffBlackboardPairs({entries,compareIgnoreCase,isActive}){
+ if(!Array.isArray(entries)||[compareIgnoreCase,isActive].some(fn=>typeof fn!=='function'))
+  throw new TypeError('Fear pair assignment requires native list, comparison and lifecycle callers');
+ let running=false;
+ const active=()=>{const value=isActive();if(typeof value!=='boolean')throw new TypeError('Fear pair assignment requires Boolean lifecycle validity');return value;};
+ const compare=(a,b)=>{
+  const result=compareIgnoreCase(a,b,true);
+  if(!active())return null;
+  if(!Number.isInteger(result)||result<-(2**31)||result>=2**31)throw new TypeError('Fear pair comparison requires a native Int32 result');
+  return result;
+ };
+ const copy=value=>{
+  if(!value||typeof value!=='object')throw new TypeError('Fear pair assignment requires native DataPair fields');
+  const key=value.key,number=value.value,text=value.valueStr;
+  if((key!=null&&typeof key!=='string')||typeof number!=='number'||(text!=null&&typeof text!=='string'))
+   throw new TypeError('Fear pair assignment requires native DataPair fields');
+  return{key:key??null,value:Math.fround(number),valueStr:text??null};
+ };
+ return Object.freeze({
+  assign(source){
+   if(running)return null;running=true;
+   try{
+    if(!active())return null;
+    if(source==null)return;
+    if(!Array.isArray(source))throw new TypeError('Fear pair assignment requires a native source list projection');
+    if(!entries.length){
+     // The selected array ICollection copy path preserves duplicates, key
+     // casing and complete pair values. No culture comparison is performed.
+     const batch=[];for(let index=0;index<source.length;index++)batch.push(copy(source[index]));if(!active())return null;
+     for(const pair of batch)entries.push(pair);
+     return;
+    }
+    for(let index=0;index<source.length;index++){
+     const pair=copy(source[index]);if(!active())return null;
+     let replaced=false;
+     for(let at=0;at<entries.length;at++){
+      const existing=entries[at]?.key;if(!active())return null;
+      const result=compare(existing,pair.key);if(result===null)return null;
+      if(result!==0)continue;
+      if(at>=entries.length)throw new RangeError('Fear pair replacement index is outside the native list');
+      entries[at]=pair;replaced=true;break;
+     }
+     if(!replaced)entries.push(pair);
+     if(!active())return null;
+    }
+   }finally{running=false;}
+  },
+  containsKey(key){
+   if(running)return null;running=true;
+   try{
+    if(!active())return null;
+    if(key!=null&&typeof key!=='string')throw new TypeError('Fear pair lookup requires a nullable native string key');
+    for(let index=0;index<entries.length;index++){
+     const current=entries[index]?.key;if(!active())return null;
+     const result=compare(current,key);if(result===null)return null;if(result===0)return true;
+    }
+    return false;
+   }finally{running=false;}
+  },
+  clear(){if(running)return null;running=true;try{if(!active())return null;entries.length=0;}finally{running=false;}},
+ });
+}
+
 // Selected default Blackboard numeric reads on a List<DataPair> projection.
 // Native culture comparison stays explicit; scalar conversions use the retained
 // x64 result paths unless instrumented native receivers are supplied.

@@ -719,6 +719,18 @@ result['modeSwitch']['buffNotification']['blackboardReads']['scalarConversions']
     'floatToFP': {'entryRva': 0x5a3da20, 'chunks': c['code'](0x5a3da20)}, 'constants': constants,
     'selectedScalarResultVerified': True, 'nativeExceptionStateVerified': False, 'nanTailEffectsVerified': False,
 }
+result['modeSwitch']['buffNotification']['blackboardPairAssignments'] = {
+    'emptyDestinationBranchRva': 0x2165434, 'emptyDestinationAddRangeTailRva': 0x2165799,
+    'sourcePairReadCallRva': 0x216555b, 'sourcePairCopyRva': 0x2165565,
+    'internalCompareCallRva': 0x216562b, 'internalReplaceCallRva': 0x2165703, 'internalAppendVersionRva': 0x2165646,
+    'internalAppendPairCopyRva': 0x216573b, 'containsCompareCallRva': 0x2165bd5,
+    'arrayProjectionVerified': False, 'nativeListVersioningVerified': False, 'liveAssignmentPhaseVerified': False,
+}
+add_range_spec = priority['specification'](117463)
+assert add_range_spec['declaringType'] == 'List`1' and add_range_spec['definition']['name'] == 'AddRange'
+assert add_range_spec['instantiations']['class']['arguments'][0]['typeIndex'] == pair['index']
+assert v['quad'](v['b'], priority['pointer_table'] + add_range_spec['nativeMapping']['methodPointerIndex'] * 8) - v['image_base'] == 0x450dea0
+result['modeSwitch']['buffNotification']['blackboardPairAssignments']['addRangeSpecification'] = add_range_spec
 pool = c['type_row']('ObjectPool`1', 'Torappu.ObjectPool')
 pool_methods = []
 for index in [147561, 147566, 147567, 147558, 147559, 147563, 147564, 147568, 147569]:

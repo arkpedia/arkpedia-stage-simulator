@@ -227,6 +227,18 @@ test('immediate recycle source enumerates stored pairs and pointer lists before 
  assert.ok(!instructions(m).some(i=>i.mnemonic==='call'&&i.operands==='0x183991a80'),'flush does not filter by current frame');
 });
 
+test('ordinary pair assignment source binds empty-destination AddRange and raw whole-pair replacement',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.blackboardPairAssignments;
+ const m=c.methods.find(m=>m.type==='Blackboard'&&m.entryRva===0x21653b0),at=(rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ at(q.emptyDestinationBranchRva,'0x182165782');at(q.emptyDestinationAddRangeTailRva,'0x18450dea0');at(q.sourcePairReadCallRva,'r10');
+ at(q.sourcePairCopyRva,'xmm0, xmmword ptr [rax]');at(q.internalCompareCallRva,'0x1850cd8b0');at(q.internalReplaceCallRva,'0x184520160');
+ at(q.internalAppendVersionRva,'dword ptr [rdi + 0x1c]');at(q.internalAppendPairCopyRva,'xmmword ptr [rcx], xmm0');
+ assert.equal(q.addRangeSpecification.declaringType,'List`1');assert.equal(q.addRangeSpecification.definition.name,'AddRange');
+ assert.equal(q.addRangeSpecification.instantiations.class.arguments[0].name,'DataPair');
+ assert.ok(instructions(castMethod(c,'Blackboard','ContainsKey')).some(i=>i.rva===q.containsCompareCallRva&&i.operands==='0x1850cd8b0'));
+ assert.equal(q.arrayProjectionVerified,false);assert.equal(q.nativeListVersioningVerified,false);assert.equal(q.liveAssignmentPhaseVerified,false);
+});
+
 test('blackboard scalar conversion source binds floor finite branches and exact scalar constants',()=>{
  const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.blackboardReads.scalarConversions;
  assert.deepEqual(q.constants.map(v=>v.value),[-1,1,4294967296]);assert.equal(q.selectedScalarResultVerified,true);

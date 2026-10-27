@@ -1263,6 +1263,32 @@ diagnostic effects and live runtime floating-point mode are not certified.
 Culture comparison, full Reset, controller/stage integration and existing
 source/support/receipt/catalogue gates remain unchanged.
 
+### Ordinary pair assignment and key membership
+
+The retained Assign(IReadOnlyList<DataPair>) default path preserves whole source
+pairs, unlike numeric/string overloads that lower keys and clear alternate value
+fields. An empty destination dispatches to List<DataPair>.AddRange; the exact
+mapped specification117463 binds that call. A nonempty destination copies the
+source pair before its destination comparison loop, replaces the first matching
+pair in place or appends, and preserves source casing and both value fields.
+ContainsKey compares keys independently of numeric/string eligibility.
+
+`fearProjectileBuffBlackboardPairs` implements these selected array-projection
+operations and clear. Empty-destination assignment preserves duplicates and
+copies pair values; nonempty assignment follows live indexed source/destination
+lists. Culture comparison remains explicit. List capacity/version behavior,
+general IEnumerable AddRange behavior and runtime array projection parity are
+not certified by this internal selected model.
+
+Tests cover duplicate/case/value preservation, whole-pair replacement, nullable
+keys and string membership, captured source pairs, exceptions/retry, reentry
+before lifecycle probes and cancellation. A composed ordinary Reset uses these
+storage operations, numeric reads/default conversions, heavy-enemy lifetime
+modification, trigger configuration and concrete timer initialization together.
+All707 focused native/fear/family/miner tests pass. The113-method evidence bundle
+reproduces; full Reset and live controller/stage integration remain open. No
+source/support/receipt/catalogue gate changed.
+
 ### ClearRunTimeData default cleanup ordering
 
 Static direct-call review locates immediate delayed-buff recycling inside

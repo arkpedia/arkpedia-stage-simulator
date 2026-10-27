@@ -21,7 +21,7 @@ import {fearProjectileFinishAndRemoveBuff,fearProjectileOverrideGroupRemove} fro
 import {fearProjectileBuffRecycleQueue,fearProjectileClearRuntimeData} from '../server/sim/content/chapter16-fear-buff-recycle.js';
 import {fearProjectileBuffIdentity,fearProjectileResetBuffLifecycle} from '../server/sim/content/chapter16-fear-buff-identity.js';
 import {fearProjectileBuffTimer,fearProjectileResetBuffTriggers,fearProjectileBuffDurationKey,fearProjectileResetBuffLifetime,fearProjectileModifyBuffLifetime} from '../server/sim/content/chapter16-fear-buff-timing.js';
-import {fearProjectileResetBuffBlackboard,fearProjectileBuffPrefixAssignments,fearProjectileBuffBlackboardWrites,fearProjectileBuffBlackboardReads} from '../server/sim/content/chapter16-fear-buff-blackboard.js';
+import {fearProjectileResetBuffBlackboard,fearProjectileBuffPrefixAssignments,fearProjectileBuffBlackboardWrites,fearProjectileBuffBlackboardReads,fearProjectileBuffBlackboardPairs} from '../server/sim/content/chapter16-fear-buff-blackboard.js';
 import {fearProjectileFloatToRaw,fearProjectileFloorToInt} from '../server/sim/content/chapter16-fear-fixed-values.js';
 import {fearProjectileBuffRecyclePool,fearProjectileDefaultBuffPool} from '../server/sim/content/chapter16-fear-buff-pool.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
@@ -208,6 +208,66 @@ test('finish and native-frame queue use concrete buff recycle identity before th
  finish.run();queue.update();assert.equal(buff.instanceUid,1);assert.equal(buff.m_isValid,true);assert.equal(recycled,0);
  f.b.kill(f.source,null);frame=11;queue.update();assert.equal(recycled,1);assert.equal(buff.instanceUid,0);assert.equal(buff.m_isValid,false);assert.equal(p.lock(old),null);
  identity.allocate(buff);assert.equal(buff.instanceUid,2);assert.equal(p.lock(old),null);assert.equal(p.lock(p.capture(buff)),buff);queue.release();assert.deepEqual(f.b.errors,[]);
+});
+
+function pairAssignmentFixture(overrides={}){
+ const entries=[],events=[];let active=true;
+ const pairs=fearProjectileBuffBlackboardPairs({entries,compareIgnoreCase:(a,b,ignore)=>{events.push([a,b,ignore]);return a?.toLowerCase()===b?.toLowerCase()?0:1;},isActive:()=>active,...overrides});
+ return{entries,events,pairs,set active(value){active=value;}};
+}
+
+test('ordinary pair assignment into an empty list preserves duplicates, key case and both value fields',()=>{
+ const f=pairAssignmentFixture(),source=[{key:'UPPER',value:3,valueStr:'text'},{key:'UPPER',value:4,valueStr:null}];
+ f.pairs.assign(source);assert.deepEqual(f.entries,source);assert.equal(f.events.length,0);
+ assert.notEqual(f.entries[0],source[0]);source[0].value=9;assert.equal(f.entries[0].value,3);
+});
+
+test('ordinary pair assignment replaces first matches without lowering incoming keys or dropping secondary values',()=>{
+ const f=pairAssignmentFixture();f.entries.push({key:'x',value:1,valueStr:null},{key:'X',value:2,valueStr:null});
+ f.pairs.assign([{key:'X',value:7,valueStr:'both'},{key:'New',value:3,valueStr:''}]);
+ assert.deepEqual(f.entries,[{key:'X',value:7,valueStr:'both'},{key:'X',value:2,valueStr:null},{key:'New',value:3,valueStr:''}]);
+});
+
+test('ContainsKey checks any pair including strings/null keys while numeric lookup remains separate',()=>{
+ const f=pairAssignmentFixture();f.entries.push({key:'duration',value:0,valueStr:'text'},{key:null,value:1,valueStr:null});
+ assert.equal(f.pairs.containsKey('DURATION'),true);assert.equal(f.pairs.containsKey(null),true);assert.equal(f.pairs.containsKey('absent'),false);
+ f.pairs.clear();assert.deepEqual(f.entries,[]);assert.equal(f.pairs.containsKey(null),false);
+});
+
+test('ordinary assignment captures the incoming pair before destination comparison effects',()=>{
+ const entries=[{key:'x',value:1,valueStr:null}],source=[{key:'x',value:7,valueStr:'before'}];
+ const f=pairAssignmentFixture({entries,compareIgnoreCase:()=>{source[0].value=99;source[0].valueStr='after';return 0;}});
+ f.pairs.assign(source);assert.deepEqual(entries,[{key:'x',value:7,valueStr:'before'}]);
+});
+
+test('pair assignment/lookup/clear share a guard before lifecycle and comparison callbacks',()=>{
+ let f;f=pairAssignmentFixture({isActive:()=>{assert.equal(f.pairs.containsKey('nested'),null);return true;}});
+ f.pairs.assign([{key:'x',value:1,valueStr:null}]);assert.equal(f.pairs.containsKey('x'),true);f.pairs.clear();assert.deepEqual(f.entries,[]);
+});
+
+test('pair assignment stops invalidated lives and preserves prior pairs when later comparison fails',()=>{
+ let f;f=pairAssignmentFixture({compareIgnoreCase:()=>{f.active=false;return undefined;}});f.entries.push({key:'x',value:1,valueStr:null});
+ assert.equal(f.pairs.assign([{key:'x',value:2,valueStr:null}]),null);assert.equal(f.entries[0].value,1);
+ let fail=true;const g=pairAssignmentFixture({compareIgnoreCase:()=>{if(fail)throw Error('comparison');return 0;}});g.entries.push({key:'x',value:1,valueStr:null});
+ assert.throws(()=>g.pairs.assign([{key:'x',value:2,valueStr:null}]),/comparison/);fail=false;g.pairs.assign([{key:'x',value:2,valueStr:null}]);assert.equal(g.entries[0].value,2);
+});
+
+test('ordinary Reset composition uses pair storage and numeric reads through heavy-enemy lifetime and trigger initialization',()=>{
+ const entries=[],compareIgnoreCase=(a,b)=>a?.toLowerCase()===b?.toLowerCase()?0:1,pairs=fearProjectileBuffBlackboardPairs({entries,compareIgnoreCase,isActive:()=>true});
+ const reads=fearProjectileBuffBlackboardReads({entries,compareIgnoreCase,isActive:()=>true});
+ const buff={...resetBuffBody(),m_lifeTime:99n,m_remainingTime:98n,m_existingTime:97n,m_triggerCnt:99,m_triggerTimer:{m_periodTime:99n,m_remainingTime:98n}};
+ const data={stripBlackboardParamsWithBuffKey:false,blackboard:[{key:'duration',value:5.5,valueStr:null},{key:'interval',value:0.25,valueStr:null},{key:'trig_cnt',value:2.8,valueStr:null}],
+  lifeTimeType:1,lifeTime:3,triggerLifeType:1,triggerCnt:3,triggerInterval:1,waitFirstTriggerInterval:true,firstTriggerInterval:0.75};
+ const reset=fearProjectileResetBuffBlackboard({first:[{key:'DURATION',value:9,valueStr:null}],second:null,readBlackboard:()=>entries,equals:(a,b)=>a===b,copyBlackboard:()=>{throw Error('unexpected alias');},
+  resetLifecycle:()=>fearProjectileResetBuffLifecycle(buff),readDurationKey:()=>null,readData:()=>data,readBuffKey:()=> 'buff',clear:pairs.clear,assign:(_,source)=>pairs.assign(source),
+  assignByPrefix:()=>{throw Error('prefix');},assignValueStrByPrefix:()=>{throw Error('prefix');},containsKey:(_,key)=>pairs.containsKey(key),tryGetFP:(_,key)=>reads.tryGetFP(key),assignFP:()=>{},isActive:()=>true});
+ const {durationKey}=reset.run();
+ const modifier=fearProjectileModifyBuffLifetime({buff,readOwner:()=>({mass:4}),isDestroyedOrNull:e=>e==null,asEnemy:e=>e,hasLevitate:()=>true,readMassLevel:e=>e.mass,isActive:()=>true});
+ fearProjectileResetBuffLifetime({buff,durationKey,tryGetDuration:reads.tryGetFP,readData:()=>data,modifyLifeTimeFinally:modifier.run,isActive:()=>true}).run();
+ fearProjectileResetBuffTriggers({buff,readData:()=>data,getFpOrDefault:reads.getFpOrDefault,getIntOrDefault:reads.getIntOrDefault,
+  timer:fearProjectileBuffTimer(buff.m_triggerTimer),setTriggerable:value=>{buff.triggerable=value;},isActive:()=>true}).run();
+ assert.equal(buff.m_isFinished,false);assert.equal(buff.m_remainingTime,11n<<30n);assert.equal(buff.m_existingTime,0n);
+ assert.equal(buff.m_triggerCnt,2);assert.equal(buff.triggerable,true);assert.equal(buff.m_triggerTimer.m_remainingTime,1n<<30n);
 });
 
 test('native float-to-FP scalar conversion preserves float32 scaling and signed truncation',()=>{
