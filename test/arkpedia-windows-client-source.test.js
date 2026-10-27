@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,78);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,81);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -149,7 +149,8 @@ test('buff pool identity source binds the shared counter and UID/validity alloca
  }
  const context=identity.staticRecycleContext;assert.equal(context.definitionStride,16);assert.equal(context.length,29);assert.equal(context.concreteRuntimeContextVerified,false);
  assert.deepEqual(context.bindings.map(row=>[row.slot,row.declaringType,row.definition.name]),[
-  [19,'HashSet`1','Remove'],[20,'ObjectPool`1','_RecycleInternal'],[26,'Stack`1','Push'],[18,'ObjectPool`1','_SendNotification']]);
+  [19,'HashSet`1','Remove'],[20,'ObjectPool`1','_RecycleInternal'],[26,'Stack`1','Push'],[18,'ObjectPool`1','_SendNotification'],
+  [1,'Stack`1','get_Count'],[6,'Options','Prepare'],[11,'Stack`1','Pop'],[12,'ObjectPool`1','get_allLoadedCnt'],[13,'ObjectPool`1','_CreateNew'],[16,'HashSet`1','Add']]);
  for(const binding of context.bindings){
   const raw=Buffer.from(binding.definitionBase64,'base64');assert.equal(raw.length,16);assert.equal(sha(raw),binding.sha256);
   assert.equal(raw.readUInt32LE(0),3);assert.equal(binding.genericArgumentKind,19);assert.equal(binding.genericParameterIndex,248);
@@ -160,6 +161,25 @@ test('buff pool identity source binds the shared counter and UID/validity alloca
  const recyclePool=identity.canonicalPoolMethods.find(m=>m.definition.name==='Recycle'),internal=identity.canonicalPoolMethods.find(m=>m.definition.name==='_RecycleInternal');
  at(recyclePool,0x477b64b,'0x18477b6a2');at(recyclePool,0x477b661,'r8, qword ptr [r9 + 0x98]');
  at(internal,0x477b9fc,'rax, qword ptr [r9 + 0xd0]');at(internal,0x477ba0d,'r8d, 1');at(internal,0x477ba1d,'rax, qword ptr [rcx + 0x90]');
+});
+
+test('default buff allocation source binds100 preload, prepared signed capacity and disabled auto reuse',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),pool=c.modeSwitch.buffNotification.poolIdentity,a=pool.defaultAllocation;
+ assert.deepEqual(a.selectedOptions,{preloadSize:100,maxCapacityBeforePrepare:0,maxCapacity:2147483647,allowPoolAutoReuse:false});
+ assert.equal(a.constructorSpecification.instantiations.class.arguments[0].name,'Buff');assert.equal(a.constructorSpecification.nativeMapping,null);
+ assert.equal(a.nativeConstructorEffectsVerified,false);assert.equal(a.liveAllocationPhaseVerified,false);
+ assert.deepEqual([a.constructedType.namespace,a.constructedType.name],['Torappu.Battle','Buff']);
+ assert.equal(a.constructedType.encodedUsage>>>29,1);assert.equal(a.metadataLoads[0].index,253089);assert.equal(a.metadataLoads[1].index,56747);
+ const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ const battle=castMethod(c,'BattleController','.ctor');at(battle,0x3990432,'qword ptr [rbp - 0x20], rax');
+ at(battle,0x3990439,'dword ptr [rbp - 0x20], 0x64');at(battle,0x3990440,'byte ptr [rbp - 0x18], al');
+ at(battle,0x3990475,'0x18477bac0');at(battle,0x399047a,'rcx, [rbx + 0x90]');
+ for(const ch of a.prepare.chunks){const raw=Buffer.from(ch.base64,'base64');assert.equal(sha(raw),ch.sha256);assert.equal(raw.length,14);}
+ assert.deepEqual(instructions(a.prepare).map(i=>[i.mnemonic,i.operands]),[['cmp','dword ptr [rcx + 4], 0'],['jg','0x1828a710d'],
+  ['mov','dword ptr [rcx + 4], 0x7fffffff'],['ret','']]);
+ const allocate=pool.canonicalPoolMethods.find(m=>m.definition.name==='Allocate');at(allocate,0x477b4bb,'0x18477b50c');
+ at(allocate,0x477b4de,'0x18477b5a5');at(allocate,0x477b54a,'rax, qword ptr [rdx + 0x80]');at(allocate,0x477b588,'r8d, r8d');
+ at(castMethod(c,'BuffContainer','CreateBuff'),0x39bfed1,'0x1839b5fc0');assert.ok(castMethod(c,'Buff','.ctor'));
 });
 
 test('delayed recycle source binds UInt32 exact-frame buckets and a second frame sample before removal',()=>{

@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 78 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 81 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -1135,3 +1135,45 @@ These are selected default pool/identity projections, not certified native live
 pool construction, allocation, force reuse, state-reset effects or battle-end
 flush. Full ability/controller/stage integration and existing source/support/
 receipt/catalogue gates remain unchanged.
+
+### Selected default battle buff-pool allocation
+
+The81-method artifact additionally retains BattleController's complete
+constructor, BuffContainer.CreateBuff and Buff's constructor. The battle
+constructor binds ObjectPool<Buff>'s constructor specification253089 and the
+CreateBuff delegate definition56747, then installs that pool atfield0x90. Its
+options set preloadSize100, maxCapacity0 and allowPoolAutoReuse=false.
+Options.Prepare changes nonpositive signed capacity to Int32.MaxValue. Its
+complete14-byte leaf, including the internal branch to its terminal return,
+is separately reviewed without weakening the generic native-code reader.
+CreateBuff's new-object type load resolves specifically to Torappu.Battle.Buff.
+
+Mapped Object canonical constructor/Allocate/_CreateNew/_LoadToSize and count
+methods are retained. The static generic context also resolves stack count/pop,
+Options.Prepare, all-loaded count, creation and using-set Add. Preloading calls
+the constructor delegate but does not send OnAllocate. Allocate pops an unused
+body first, otherwise creates one body if below prepared capacity. Automatic
+force reuse is disabled on this selected path. Using-set insertion precedes the
+allocation notification; its Add result is ignored before notification/return.
+
+`fearProjectileDefaultBuffPool` implements these selected options with explicit
+construction and allocate/recycle receivers. It preloads100 bodies, skips null
+factory returns, allocates from the unused stack and grows by one when the
+preload is exhausted. It does not generalize unrelated pool options or infer the
+full Buff constructor/Reset effects. The existing concrete UID identity receiver
+can supply OnAllocate and OnRecycle without resetting the shared static counter.
+
+Tests verify preload without UID allocation, LIFO order, fresh UID on reused
+bodies, exhaustion without force reuse, null and throwing factories, committed
+membership after allocation-notification failure, ignored duplicate Add results
+and nested allocation. A composed default-pool/finish/native-frame-queue test
+allocates a preloaded body, defers recycling to frame+1 and reallocates that same
+body under a new UID while the old pointer remains invalid. The focused
+native/fear/family/miner suite passes560 tests and the source reproduces with
+--check. Continuation40529910533 atfa0971c2 completed successfully;
+full40524709132 at5be7b022 remains active and is not replaced at this checkpoint.
+
+Actual native constructor/Reset data effects, live pool phase/initialization,
+full ability/controller/stage integration, battle-end flushing and geometry
+remain unverified. Static selected allocation behavior does not relax existing
+source/support/receipt/catalogue gates.

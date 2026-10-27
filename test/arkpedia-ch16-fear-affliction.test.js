@@ -20,7 +20,7 @@ import {fearProjectileFinishedBuffs} from '../server/sim/content/chapter16-fear-
 import {fearProjectileFinishAndRemoveBuff,fearProjectileOverrideGroupRemove} from '../server/sim/content/chapter16-fear-buff-finish.js';
 import {fearProjectileBuffRecycleQueue} from '../server/sim/content/chapter16-fear-buff-recycle.js';
 import {fearProjectileBuffIdentity} from '../server/sim/content/chapter16-fear-buff-identity.js';
-import {fearProjectileBuffRecyclePool} from '../server/sim/content/chapter16-fear-buff-pool.js';
+import {fearProjectileBuffRecyclePool,fearProjectileDefaultBuffPool} from '../server/sim/content/chapter16-fear-buff-pool.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
 import {fearProjectileSpell} from '../server/sim/content/chapter16-fear-spell.js';
@@ -57,6 +57,66 @@ test('mode initialization rejects invalid entries and delegates equality without
   isValid:x=>x!==null&&!x.invalid,equals:(left,right)=>{calls.push([left,right]);return left.id===right.id;}});
  assert.deepEqual(list,[a]);assert.deepEqual(calls,[[a,duplicate]]);
  assert.throws(()=>fearProjectileCollectModeAbilities({generalAbilities:[],combat:null,attack:null,isValid:()=>1,equals:()=>true}),/Boolean/);
+});
+
+test('default battle buff pool preloads100 without allocating identities and pops unused bodies in LIFO order',()=>{
+ const counter={value:0},identity=fearProjectileBuffIdentity({counter});let created=0;
+ const pool=fearProjectileDefaultBuffPool({createBuff:()=>({instanceUid:0,m_isValid:false,serial:++created}),onAllocate:identity.allocate,onRecycle:identity.recycle});
+ assert.equal(created,100);assert.equal(counter.value,0);assert.equal(pool.availableUnusedCount,100);assert.equal(pool.allLoadedCount,100);assert.equal(pool.usingCount,0);
+ const first=pool.allocate(),second=pool.allocate();assert.equal(first.serial,100);assert.equal(second.serial,99);
+ assert.equal(first.instanceUid,1);assert.equal(second.instanceUid,2);assert.equal(pool.availableUnusedCount,98);assert.equal(pool.usingCount,2);
+ assert.equal(pool.recycle(first),true);assert.equal(first.instanceUid,0);assert.equal(first.m_isValid,false);
+ assert.equal(pool.allocate(),first);assert.equal(first.instanceUid,3);assert.equal(created,100);assert.equal(pool.allLoadedCount,100);
+});
+
+test('exhausting the default preload creates one new buff and never force-reuses a currently tracked body',()=>{
+ let created=0,notifications=0;
+ const pool=fearProjectileDefaultBuffPool({createBuff:()=>({serial:++created}),onAllocate:()=>notifications++,onRecycle:()=>{throw Error('auto reuse disabled');}});
+ const loaded=[];for(let i=0;i<100;i++)loaded.push(pool.allocate());assert.equal(created,100);assert.equal(pool.availableUnusedCount,0);
+ const extra=pool.allocate();assert.equal(created,101);assert.equal(extra.serial,101);assert.equal(loaded.includes(extra),false);
+ assert.equal(notifications,101);assert.equal(pool.usingCount,101);assert.equal(pool.allLoadedCount,101);
+});
+
+test('null constructors are skipped during preload and a null allocation returns without notification',()=>{
+ let created=0;const pool=fearProjectileDefaultBuffPool({createBuff:()=>{created++;return null;},onAllocate:()=>{throw Error('null allocation');},onRecycle:()=>{}});
+ assert.equal(created,100);assert.equal(pool.allLoadedCount,0);assert.equal(pool.allocate(),null);assert.equal(created,101);assert.equal(pool.usingCount,0);
+});
+
+test('preload construction failure does not send allocation notifications',()=>{
+ let created=0,allocated=0;
+ assert.throws(()=>fearProjectileDefaultBuffPool({createBuff:()=>{if(++created===3)throw Error('construct');return{};},onAllocate:()=>allocated++,onRecycle:()=>{}}),/construct/);
+ assert.equal(created,3);assert.equal(allocated,0);
+});
+
+test('allocation notification failure preserves popped-body membership and permits recycling it',()=>{
+ let failed,throws=true;const counter={value:0},identity=fearProjectileBuffIdentity({counter});
+ const pool=fearProjectileDefaultBuffPool({createBuff:()=>({instanceUid:0,m_isValid:false}),onAllocate:buff=>{
+  if(throws){failed=buff;throw Error('allocate notification');}identity.allocate(buff);
+ },onRecycle:identity.recycle});
+ assert.throws(()=>pool.allocate(),/allocate notification/);assert.equal(pool.usingCount,1);assert.equal(pool.availableUnusedCount,99);
+ assert.equal(pool.recycle(failed),true);throws=false;assert.equal(pool.allocate(),failed);assert.equal(failed.instanceUid,1);assert.equal(pool.allLoadedCount,100);
+});
+
+test('a duplicate factory result is not rejected when native HashSet.Add reports existing membership',()=>{
+ const same={},pool=fearProjectileDefaultBuffPool({createBuff:()=>same,onAllocate:()=>{},onRecycle:()=>{}});
+ assert.equal(pool.allocate(),same);assert.equal(pool.allocate(),same);assert.equal(pool.usingCount,1);assert.equal(pool.availableUnusedCount,98);
+});
+
+test('default allocation permits a nested allocation from the notification after the outer member is tracked',()=>{
+ let pool,nested,first=true;
+ pool=fearProjectileDefaultBuffPool({createBuff:()=>({}),onAllocate:()=>{if(first){first=false;assert.equal(pool.usingCount,1);nested=pool.allocate();}},onRecycle:()=>{}});
+ const outer=pool.allocate();assert.notEqual(outer,nested);assert.equal(pool.usingCount,2);assert.equal(pool.availableUnusedCount,98);
+});
+
+test('default pool allocation, finish and native-frame recycling reuse a body with a fresh UID',()=>{
+ const f=fixture(),counter={value:0},identity=fearProjectileBuffIdentity({counter}),p=fearProjectileBuffPointers({readUid:b=>b.instanceUid});let created=0,frame=10;
+ const pool=fearProjectileDefaultBuffPool({createBuff:()=>{created++;return{instanceUid:0,m_isValid:false};},onAllocate:identity.allocate,onRecycle:identity.recycle}),
+  queue=fearProjectileBuffRecycleQueue(f.b,{readFixedFrame:()=>frame,copyPointer:p.copy,isPointerValid:p.isValid,lockPointer:p.lock,recycleBuff:pool.recycle});
+ const buff=pool.allocate(),old=p.capture(buff);assert.equal(buff.instanceUid,1);
+ fearProjectileFinishAndRemoveBuff(f.b,{owner:f.source,buff,removeFromList:()=>true,readUid:b=>b.instanceUid,removeUidRegistration:()=>true,
+  markFinish:()=>{},onFinish:()=>true,captureBuffPointer:p.capture,queueRecycleNextFrame:queue.enqueue}).run();
+ queue.update();assert.equal(pool.usingCount,1);frame=11;queue.update();assert.equal(pool.usingCount,0);assert.equal(pool.availableUnusedCount,100);assert.equal(p.lock(old),null);
+ assert.equal(pool.allocate(),buff);assert.equal(buff.instanceUid,2);assert.equal(p.lock(old),null);assert.equal(p.lock(p.capture(buff)),buff);assert.equal(created,100);queue.release();
 });
 
 test('buff recycle pool removes using membership and pushes the unused stack before notifying recycle',()=>{

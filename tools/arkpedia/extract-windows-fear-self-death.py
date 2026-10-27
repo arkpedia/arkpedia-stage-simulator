@@ -389,7 +389,7 @@ for name in ['OnAllocate', 'OnRecycle', 'set_instanceUid']:
     methods.append(c['method'](buff, c['unique'](lambda r: r['name'] == name, buff['methods'])))
 pool = c['type_row']('ObjectPool`1', 'Torappu.ObjectPool')
 pool_methods = []
-for index in [147561, 147566, 147567]:
+for index in [147561, 147566, 147567, 147558, 147559, 147563, 147564, 147568, 147569]:
     spec = priority['specification'](index)
     assert spec['declaringTypeIndex'] == pool['index']
     pointer = v['quad'](v['b'], priority['pointer_table'] + spec['nativeMapping']['methodPointerIndex'] * 8)
@@ -416,7 +416,9 @@ assert 0 <= rgctx_begin < rgctx_begin + rgctx_length <= definition_count
 definition_pos = v['offset'](v['quad'](v['b'], module_pos + 88))
 bindings = []
 for slot, expected_type, expected_method in [(19, 'HashSet`1', 'Remove'), (20, 'ObjectPool`1', '_RecycleInternal'),
-                                             (26, 'Stack`1', 'Push'), (18, 'ObjectPool`1', '_SendNotification')]:
+    (26, 'Stack`1', 'Push'), (18, 'ObjectPool`1', '_SendNotification'), (1, 'Stack`1', 'get_Count'),
+    (6, 'Options', 'Prepare'), (11, 'Stack`1', 'Pop'), (12, 'ObjectPool`1', 'get_allLoadedCnt'),
+    (13, 'ObjectPool`1', '_CreateNew'), (16, 'HashSet`1', 'Add')]:
     pos = definition_pos + (rgctx_begin + slot) * 16
     raw = v['b'][pos:pos + 16]
     assert v['uint'](v['b'], pos) == 3
@@ -463,6 +465,51 @@ assert [(row['slot'], row['name']) for row in notify_slots] == [(0, 'OnAllocate'
 result['modeSwitch']['buffNotification']['poolIdentity']['notificationInterface'] = {
     'loadRva': notify_rva, 'targetRva': notify_target, 'encodedUsage': notify_usage, 'typeIndex': notify_type_index,
     'definitionIndex': notify_type['index'], 'namespace': notify_type['namespace'], 'name': notify_type['name'], 'slots': notify_slots}
+for owner_type, name in [(battle_controller, '.ctor'), (c['type_row']('BuffContainer', ''), 'CreateBuff'), (buff, '.ctor')]:
+    methods.append(c['method'](owner_type, c['unique'](lambda r: r['name'] == name, owner_type['methods'])))
+options_type = v['types'][pool['nested'][0]]
+assert options_type['name'] == 'Options' and [f['name'] for f in options_type['fields']] == ['preloadSize', 'maxCapacity', 'allowPoolAutoReuse']
+prepare_rva = 0x28a7100
+prepare_pos = v['offset'](v['image_base'] + prepare_rva)
+prepare_raw = v['b'][prepare_pos:prepare_pos + 14]
+assert prepare_raw.hex() == '837904007f07c74104ffffff7fc3'
+prepare_instructions = list(Cs(CS_ARCH_X86, CS_MODE_64).disasm(prepare_raw, v['image_base'] + prepare_rva))
+assert [(i.mnemonic, i.op_str) for i in prepare_instructions] == [
+    ('cmp', 'dword ptr [rcx + 4], 0'), ('jg', '0x1828a710d'), ('mov', 'dword ptr [rcx + 4], 0x7fffffff'), ('ret', '')]
+assert sum(i.size for i in prepare_instructions) == len(prepare_raw)
+constructor_spec = priority['specification'](253089)
+assert constructor_spec['declaringTypeIndex'] == pool['index'] and constructor_spec['definition']['name'] == '.ctor'
+assert constructor_spec['instantiations']['class']['arguments'][0]['name'] == 'Buff' and constructor_spec['nativeMapping'] is None
+allocation_loads = []
+for load_rva, kind, expected_index in [(0x3990463, 6, 253089), (0x3990415, 3, 56747)]:
+    load_pos = v['offset'](v['image_base'] + load_rva)
+    assert v['b'][load_pos:load_pos + 3] in [bytes.fromhex('4c8b0d'), bytes.fromhex('4c8b05')]
+    target_rva = load_rva + 7 + struct.unpack_from('<i', v['b'], load_pos + 3)[0]
+    usage = v['quad'](v['b'], v['offset'](v['image_base'] + target_rva))
+    assert usage >> 29 == kind and (usage & 0x1ffffffe) >> 1 == expected_index
+    allocation_loads.append({'instructionRva': load_rva, 'targetRva': target_rva, 'encodedUsage': usage, 'index': expected_index, 'kind': kind})
+result['modeSwitch']['buffNotification']['poolIdentity']['defaultAllocation'] = {
+    'constructorSpecification': constructor_spec, 'metadataLoads': allocation_loads, 'optionsFields': options_type['fields'],
+    'selectedOptions': {'preloadSize': 100, 'maxCapacityBeforePrepare': 0, 'maxCapacity': 2147483647, 'allowPoolAutoReuse': False},
+    'prepare': {'entryRva': prepare_rva, 'chunks': [{'beginRva': prepare_rva, 'endRva': prepare_rva + len(prepare_raw), 'unwindRva': None,
+        'boundary': 'Reviewed complete four-instruction Options.Prepare leaf; one internal branch to its terminal ret',
+        'base64': base64.b64encode(prepare_raw).decode(), 'sha256': v['sha'](prepare_raw),
+        'instructions': [{'rva': i.address - v['image_base'], 'size': i.size, 'mnemonic': i.mnemonic, 'operands': i.op_str} for i in prepare_instructions]}]},
+    'nativeConstructorEffectsVerified': False, 'liveAllocationPhaseVerified': False,
+}
+factory_type_load_rva = 0x39bfeb8
+factory_type_load_pos = v['offset'](v['image_base'] + factory_type_load_rva)
+assert v['b'][factory_type_load_pos:factory_type_load_pos + 3] == bytes.fromhex('488b0d')
+factory_type_target = factory_type_load_rva + 7 + struct.unpack_from('<i', v['b'], factory_type_load_pos + 3)[0]
+factory_type_usage = v['quad'](v['b'], v['offset'](v['image_base'] + factory_type_target))
+assert factory_type_usage >> 29 == 1
+factory_type_index = (factory_type_usage & 0x1ffffffe) >> 1
+factory_type_pos = v['offset'](v['quad'](v['b'], v['type_table'] + factory_type_index * 8))
+assert (v['uint'](v['b'], factory_type_pos + 8) >> 16) & 255 == 18
+assert v['quad'](v['b'], factory_type_pos) == buff['index']
+result['modeSwitch']['buffNotification']['poolIdentity']['defaultAllocation']['constructedType'] = {
+    'loadRva': factory_type_load_rva, 'encodedUsage': factory_type_usage, 'typeIndex': factory_type_index,
+    'definitionIndex': buff['index'], 'namespace': buff['namespace'], 'name': buff['name']}
 serialized = json.dumps(result, ensure_ascii=False, indent=1) + '\n'
 out = ROOT / 'data/candidates/arkpedia-windows-fear-self-death-source.json'
 if __name__ == '__main__':
