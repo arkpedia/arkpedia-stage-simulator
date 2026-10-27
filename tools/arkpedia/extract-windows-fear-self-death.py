@@ -1942,6 +1942,40 @@ result['modeSwitch']['buffNotification']['newBuff']['managedArrayCopy'] = {
     'nativeFastCopyEffectsVerified': False, 'nativeFallbackConversionAndExceptionEffectsVerified': False,
     'nativeRuntimeArrayLayoutVerified': False, 'liveArrayCopyVerified': False,
 }
+fast_copy_leaves = []
+for label, entry, expected_hex, padding, mnemonics in [
+    ('length', 0x7990, '8b4118c3', 12, ['mov', 'ret']),
+    ('valueType', 0x428be0, '8b4128c1e81fc3', 9, ['mov', 'shr', 'ret']),
+    ('flagsBit2', 0x428890, '0fb68132010000c0e8022401c3', 3, ['movzx', 'shr', 'and', 'ret']),
+    ('unbox', 0x388ec0, '488d4110c3', 11, ['lea', 'ret']),
+    ('elementSizeThunk', 0x445270, 'e97b130000', 11, ['jmp']),
+    ('elementSize', 0x4465f0, '8b8100010000c3', 9, ['mov', 'ret']),
+]:
+    pos = v['offset'](v['image_base'] + entry)
+    raw = bytes.fromhex(expected_hex)
+    assert v['b'][pos:pos + len(raw)] == raw and v['b'][pos + len(raw):pos + len(raw) + padding] == bytes.fromhex('cc' * padding)
+    decoded = list(Cs(CS_ARCH_X86, CS_MODE_64).disasm(raw, v['image_base'] + entry))
+    assert [i.mnemonic for i in decoded] == mnemonics and sum(i.size for i in decoded) == len(raw)
+    fast_copy_leaves.append({'name': label, 'entryRva': entry, 'chunks': [{'beginRva': entry, 'endRva': entry + len(raw), 'unwindRva': None,
+        'boundary': f'Reviewed complete no-stack-change leaf/thunk with {padding} following INT3 bytes; exact bytes pinned',
+        'base64': base64.b64encode(raw).decode(), 'sha256': v['sha'](raw),
+        'instructions': [{'rva': i.address - v['image_base'], 'size': i.size, 'mnemonic': i.mnemonic, 'operands': i.op_str} for i in decoded]}]})
+result['modeSwitch']['buffNotification']['newBuff']['managedArrayCopy']['fastCopyFlow'] = {
+    'reviewedLeaves': fast_copy_leaves,
+    'subclassProbe': {'entryRva': 0x428a40, 'chunks': c['code'](0x428a40)},
+    'destinationClassReadRva': 0x489309, 'sourceClassReadRva': 0x48930f,
+    'rankComparisonRva': 0x489323, 'sourceBoundsTestRva': 0x489330, 'destinationBoundsTestRva': 0x48933b,
+    'destinationLengthCallRva': 0x489349, 'sourceLengthCallRva': 0x489369,
+    'sourceElementReadRva': 0x489379, 'destinationElementReadRva': 0x489387,
+    'boxedProbeCallRva': 0x4893bb, 'boxedZeroCallRva': 0x489404,
+    'boxedUnboxCallRva': 0x48942c, 'boxedMoveCallRva': 0x489448, 'boxedNotifyCallRva': 0x489464,
+    'firstSubclassCallRva': 0x4894c2, 'referenceCastCallRva': 0x4894eb, 'secondSubclassCallRva': 0x489510,
+    'plainSizeCallRva': 0x48951c, 'plainMoveCallRva': 0x489549, 'plainNotifyCallRva': 0x489558,
+    'nativeClassFieldOffsets': {'rank': 0x12e, 'elementClass': 0x40, 'typeBits': 0x28, 'flags132': 0x132, 'elementSize': 0x100},
+    'nativeArrayFieldOffsets': {'bounds': 0x10, 'length': 0x18, 'data': 0x20},
+    'nativeSubclassAndCastEffectsVerified': False, 'nativeMemoryAndGcEffectsVerified': False,
+    'nativeExceptionConstructionVerified': False, 'liveFastCopyVerified': False,
+}
 context_stack_canonical = []
 for index in [24503, 24504, 24505, 24506, 24513, 24514, 24515, 24509, 24510, 24511, 24517, 24518, 24519]:
     spec = priority['specification'](index)

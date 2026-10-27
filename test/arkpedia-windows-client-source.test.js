@@ -533,6 +533,28 @@ test('context snapshot source binds distinct capture/push orders and closed refe
  assert.equal(q.nativeContextStackEffectsVerified,false);assert.equal(q.nativeNestedValueCopiesVerified,false);assert.equal(q.liveContextSnapshotsVerified,false);
 });
 
+test('native fast-copy source binds reviewed field readers, typed branches, byte movement and write notification',()=>{
+ const q=read('data/candidates/arkpedia-windows-fear-self-death-source.json').modeSwitch.buffNotification.newBuff.managedArrayCopy,flow=q.fastCopyFlow;
+ assert.deepEqual(flow.reviewedLeaves.map(m=>[m.name,m.entryRva]),[['length',0x7990],['valueType',0x428be0],['flagsBit2',0x428890],['unbox',0x388ec0],['elementSizeThunk',0x445270],['elementSize',0x4465f0]]);
+ for(const body of [...flow.reviewedLeaves,flow.subclassProbe])for(const chunk of body.chunks){const bytes=Buffer.from(chunk.base64,'base64');assert.equal(bytes.length,chunk.endRva-chunk.beginRva);assert.equal(sha(bytes),chunk.sha256);}
+ assert.deepEqual(flow.nativeClassFieldOffsets,{rank:0x12e,elementClass:0x40,typeBits:0x28,flags132:0x132,elementSize:0x100});assert.deepEqual(flow.nativeArrayFieldOffsets,{bounds:0x10,length:0x18,data:0x20});
+ const at=(rva,args)=>assert.ok(instructions(q.fastCopy).some(i=>i.rva===rva&&i.operands===args));
+ at(flow.destinationClassReadRva,'rax, qword ptr [r8]');at(flow.sourceClassReadRva,'r11, qword ptr [rcx]');at(flow.rankComparisonRva,'byte ptr [r11 + 0x12e], r10b');
+ at(flow.sourceBoundsTestRva,'qword ptr [rcx + 0x10], 0');at(flow.destinationBoundsTestRva,'qword ptr [r8 + 0x10], 0');
+ at(flow.destinationLengthCallRva,'0x180007990');at(flow.sourceLengthCallRva,'0x180007990');at(flow.sourceElementReadRva,'rbx, qword ptr [rax + 0x40]');at(flow.destinationElementReadRva,'rsi, qword ptr [rax + 0x40]');
+ at(flow.boxedProbeCallRva,'0x1804aea10');at(flow.boxedZeroCallRva,'0x1804cab80');at(flow.boxedUnboxCallRva,'0x180388ec0');at(flow.boxedMoveCallRva,'0x1804cad40');at(flow.boxedNotifyCallRva,'0x180481270');
+ at(flow.firstSubclassCallRva,'0x180428a40');at(flow.referenceCastCallRva,'0x1804aea10');at(flow.secondSubclassCallRva,'0x180428a40');
+ at(flow.plainSizeCallRva,'0x180445270');at(flow.plainMoveCallRva,'0x1804cad40');at(flow.plainNotifyCallRva,'0x180481270');
+ const leaf=name=>flow.reviewedLeaves.find(m=>m.name===name);
+ assert.ok(instructions(leaf('length')).some(i=>i.operands==='eax, dword ptr [rcx + 0x18]'));
+ assert.ok(instructions(leaf('valueType')).some(i=>i.mnemonic==='shr'&&i.operands==='eax, 0x1f'));
+ assert.ok(instructions(leaf('flagsBit2')).some(i=>i.mnemonic==='shr'&&i.operands==='al, 2'));
+ assert.ok(instructions(leaf('unbox')).some(i=>i.operands==='rax, [rcx + 0x10]'));
+ assert.ok(instructions(leaf('elementSizeThunk')).some(i=>i.mnemonic==='jmp'&&i.operands==='0x1804465f0'));
+ assert.ok(instructions(leaf('elementSize')).some(i=>i.operands==='eax, dword ptr [rcx + 0x100]'));
+ for(const name of ['nativeSubclassAndCastEffectsVerified','nativeMemoryAndGcEffectsVerified','nativeExceptionConstructionVerified','liveFastCopyVerified'])assert.equal(flow[name],false);
+});
+
 test('managed Array.Copy source retains complete entry guards, native fast-copy body and bounded rank leaf',()=>{
  const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.newBuff.managedArrayCopy,
   method=c.methods.find(m=>m.index===q.method.index&&m.image===q.method.image);

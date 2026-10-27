@@ -2,6 +2,54 @@
 const nonnull=value=>{if(value==null)throw new TypeError('Fear context stack dereferenced a null native receiver');return value;};
 const count=(readCount,stack)=>{const value=readCount(nonnull(stack));if(!Number.isInteger(value)||value<-(2**31)||value>=2**31)throw new TypeError('Fear context stack requires native Int32 counts');return value;};
 
+// Selected native Array.FastCopy body. Class records project rank(+12e),
+// elementClass(+40), typeBits(+28) and flags132. Memory receivers use byte
+// offsets relative to array data, excluding the native 0x20-byte header.
+export function fearProjectileNativeArrayFastCopy({readArrayClass,readBounds,readLength,readElementSize,readElement,objectClass,isSubclassOf,castObject,unboxObject,zeroMemory,moveMemory,notifyWrites}){
+ if([readArrayClass,readBounds,readLength,readElementSize,readElement,isSubclassOf,castObject,unboxObject,zeroMemory,moveMemory,notifyWrites].some(fn=>typeof fn!=='function')||objectClass==null)throw new TypeError('Fear native fast copy requires class, cast and memory callers');
+ const integer=(value,min,max)=>{if(!Number.isInteger(value)||value<min||value>max)throw new TypeError('Fear native fast copy requires native integer fields');return value;},
+  signed=value=>integer(value,-(2**31),2**31-1),byte=value=>integer(value,0,255),uint=value=>integer(value,0,0xffffffff),
+  bool=value=>{if(typeof value!=='boolean')throw new TypeError('Fear native fast copy requires native Boolean subclass results');return value;},
+  valueType=klass=>signed(nonnull(klass).typeBits)<0,
+  multiply=(a,b)=>BigInt.asIntN(64,BigInt(a)*BigInt(b));
+ return(source,sourceIndex,destination,destinationIndex,length)=>{
+  signed(sourceIndex);signed(destinationIndex);signed(length);
+  const destinationClass=nonnull(readArrayClass(nonnull(destination))),sourceClass=nonnull(readArrayClass(nonnull(source))),destinationRank=byte(destinationClass.rank);
+  if(byte(sourceClass.rank)!==destinationRank)return false;
+  if(readBounds(source)!=null)return false;
+  if(readBounds(destination)!=null)return false;
+  const destinationLength=uint(readLength(destination));
+  if(((destinationIndex+length)>>>0)>destinationLength)return false;
+  const sourceEnd=(sourceIndex+length)|0,sourceLength=uint(readLength(source));
+  if((sourceEnd>>>0)>sourceLength)return false;
+  const sourceElement=nonnull(nonnull(readArrayClass(source)).elementClass),destinationElement=nonnull(nonnull(readArrayClass(destination)).elementClass);
+  if(sourceElement===objectClass&&valueType(destinationElement)){
+   for(let at=sourceIndex;at<sourceEnd;at++){
+    const value=readElement(source,at);if(value!=null&&castObject(value,destinationElement)==null)return false;
+   }
+   const width=signed(readElementSize(nonnull(readArrayClass(destination)))),offset=multiply(destinationIndex,width),bytes=multiply(length,width);
+   zeroMemory(destination,offset,bytes);
+   for(let at=0;at<length;at++){
+    const value=readElement(source,sourceIndex+at);if(value==null)throw new TypeError('Fear native fast copy encountered a null boxed element');
+    const unboxed=unboxObject(value);moveMemory(destination,multiply(destinationIndex+at,width),unboxed,0n,BigInt(width));
+   }
+   notifyWrites(destination,offset,bytes);return true;
+  }
+  if(sourceElement!==destinationElement){
+   if(valueType(destinationElement)||(byte(destinationElement.flags132)&4)!==0)return false;
+   if(valueType(sourceElement)||(byte(sourceElement.flags132)&4)!==0)return false;
+   if(bool(isSubclassOf(destinationElement,sourceElement,false))){
+    for(let at=sourceIndex;at<sourceEnd;at++){
+     const value=readElement(source,at);if(value!=null&&castObject(value,destinationElement)==null)throw new TypeError('Fear native fast copy element cast failed');
+    }
+   }else if(!bool(isSubclassOf(sourceElement,destinationElement,false)))return false;
+  }
+  const width=signed(readElementSize(nonnull(readArrayClass(destination)))),offset=multiply(destinationIndex,width),bytes=multiply(length,width);
+  moveMemory(destination,offset,source,multiply(sourceIndex,width),bytes);
+  notifyWrites(destination,offset,bytes);return true;
+ };
+}
+
 // Array.Copy's entry guards and fast-copy dispatch. The fallback receiver must
 // perform the remaining native bounds, type, conversion and exception behavior.
 export function fearProjectileManagedArrayCopy({readRank,tryFastCopy,copyFallback}){

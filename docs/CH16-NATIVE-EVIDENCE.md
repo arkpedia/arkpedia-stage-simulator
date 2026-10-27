@@ -1402,6 +1402,39 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
 
+### Native Array.FastCopy control flow
+
+The203 ordinary methods and earlier fast-copy body remain unchanged. Six
+separately bounded, exact-byte leaves/thunks bind array length(+0x18), the
+class typeBits sign bit(+0x28), flags132 bit2, unboxed payload(+0x10), and the
+element-size thunk/field(+0x100). Each has reviewed terminal instructions and
+following INT3 padding; the shared strict reader is unchanged. The complete
+subclass probe at0x428a40 is retained separately. Array class rank/element and
+bounds/data offsets remain tied to the retained native fast-copy instructions.
+
+`fearProjectileNativeArrayFastCopy` follows the flat-array rank/bounds checks,
+destination-then-source unsigned range checks, and fresh element-class reads.
+Equal element classes use element-scaled byte movement followed by a write
+notification, including zero-length copies. Different reference classes check
+destination/source ancestry in native order; the downcast path validates every
+nonnull source object before copying. TypeBits-sign/flags-bit2 mismatches reject
+the fast path. Boxed-object to value-type copies first validate all nonnull
+objects, then zero the destination range and reread/unbox/copy each element.
+A null box in that second pass preserves zeroing and any earlier element writes.
+
+The helper uses explicit class records, subclass/cast receivers and byte-memory
+operations, with signed Int32 element sizes and exact64-bit byte arithmetic.
+Native cast/subclass internals, memory/GC effects, exception construction and
+full Array.Copy fallback semantics remain unverified. Projected TypeErrors are
+not claims about native exception classes. The ten-stack nested action fixture
+now uses this control flow for8/16/136/40-byte elements while retaining typed
+memory/default/copy fixtures. Tests cover flat/range rejection, overlapping
+movement, ancestry direction, failed prescans, boxed conversion order and
+partial failures. No source/support/receipt/catalogue gate changes or stage
+promotion follow; this checkpoint remains local outside pending upload scope.
+
+All1182 focused native/fear/family/miner tests pass for this control-flow checkpoint.
+
 ### Managed Array.Copy entry guards and fast-path dispatch
 
 The203-method ordinary bundle adds the complete five-parameter mscorlib

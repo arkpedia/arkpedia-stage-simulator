@@ -43,7 +43,62 @@ import {fearProjectileBuffAttributeProvider} from '../server/sim/content/chapter
 import {fearProjectileRunBuffActions} from '../server/sim/content/chapter16-fear-buff-run-actions.js';
 import {fearProjectileContextGuards} from '../server/sim/content/chapter16-fear-context-guard.js';
 import {fearProjectileContextSnapshots} from '../server/sim/content/chapter16-fear-context-snapshot.js';
-import {fearProjectileContextPointerStacks,fearProjectileContextValueStacks,fearProjectileManagedReferenceStacks,fearProjectileManagedValueStacks,fearProjectileManagedPointerStacks,fearProjectileManagedArrayResize,fearProjectileManagedArrayCopy} from '../server/sim/content/chapter16-fear-context-stacks.js';
+import {fearProjectileContextPointerStacks,fearProjectileContextValueStacks,fearProjectileManagedReferenceStacks,fearProjectileManagedValueStacks,fearProjectileManagedPointerStacks,fearProjectileManagedArrayResize,fearProjectileManagedArrayCopy,fearProjectileNativeArrayFastCopy} from '../server/sim/content/chapter16-fear-context-stacks.js';
+
+function nativeFastCopyFixture(){
+ const objectClass={typeBits:0,flags132:0},klass={rank:1,elementClass:objectClass,elementSize:8},events=[],
+  source={klass,bounds:null,elements:[{id:1},{id:2},{id:3}]},destination={klass,bounds:null,elements:[null,null,null]},
+  options={objectClass,readArrayClass:value=>value.klass,readBounds:value=>value.bounds,
+   readLength:value=>{events.push(['length',value===source?'source':'destination']);return value.elements.length;},
+   readElementSize:value=>{events.push(['size',value]);return value.elementSize;},readElement:(array,index)=>{events.push(['element',index]);return array.elements[index];},
+   isSubclassOf:(...args)=>{events.push(['subclass',...args]);return false;},castObject:(value,type)=>{events.push(['cast',value,type]);return value.invalid?null:value;},
+   unboxObject:value=>{events.push(['unbox',value]);return value.payload;},
+   zeroMemory:(array,offset,bytes)=>{events.push(['zero',offset,bytes]);const width=array.klass.elementSize;for(let i=0;i<Number(bytes)/width;i++)array.elements[Number(offset)/width+i]=0;},
+   moveMemory:(to,toOffset,from,fromOffset,bytes)=>{events.push(['move',toOffset,fromOffset,bytes]);const width=to.klass.elementSize,values=from.elements.slice(Number(fromOffset)/width,(Number(fromOffset)+Number(bytes))/width);for(let i=0;i<values.length;i++)to.elements[Number(toOffset)/width+i]=values[i];},
+   notifyWrites:(array,offset,bytes)=>events.push(['notify',offset,bytes])};
+ return{objectClass,klass,events,source,destination,options,copy:()=>fearProjectileNativeArrayFastCopy(options)};
+}
+test('native fast copy checks flat bounds and destination range before source range without writing on failure',()=>{
+ const f=nativeFastCopyFixture();f.destination.klass={...f.klass,rank:2};assert.equal(f.copy()(f.source,0,f.destination,0,1),false);assert.deepEqual(f.events,[]);
+ f.destination.klass=f.klass;f.source.bounds={};assert.equal(f.copy()(f.source,0,f.destination,0,1),false);assert.deepEqual(f.events,[]);
+ f.source.bounds=null;f.destination.bounds={};assert.equal(f.copy()(f.source,0,f.destination,0,1),false);f.destination.bounds=null;
+ assert.equal(f.copy()(f.source,0,f.destination,3,1),false);assert.deepEqual(f.events,[['length','destination']]);f.events.length=0;
+ assert.equal(f.copy()(f.source,3,f.destination,0,1),false);assert.deepEqual(f.events,[['length','destination'],['length','source']]);assert.ok(f.destination.elements.every(v=>v===null));
+});
+test('native fast copy uses element-scaled byte ranges and notifies after overlap-safe memory movement',()=>{
+ const f=nativeFastCopyFixture(),original=[...f.source.elements];assert.equal(f.copy()(f.source,0,f.source,1,2),true);assert.deepEqual(f.source.elements,[original[0],original[0],original[1]]);
+ assert.deepEqual(f.events.filter(e=>['move','notify'].includes(e[0])),[['move',8n,0n,16n],['notify',8n,16n]]);
+ f.events.length=0;assert.equal(f.copy()(f.source,0,f.destination,0,0),true);assert.deepEqual(f.events.slice(-2),[['move',0n,0n,0n],['notify',0n,0n]]);
+});
+test('native fast copy downcasts references in a full validation pass before changing destination',()=>{
+ const f=nativeFastCopyFixture(),derived={typeBits:0,flags132:0};f.destination.klass={...f.klass,elementClass:derived};
+ f.options.isSubclassOf=(left,right,interfaces)=>{assert.equal(interfaces,false);assert.equal(left,derived);assert.equal(right,f.objectClass);return true;};
+ f.source.elements[1].invalid=true;assert.throws(()=>f.copy()(f.source,0,f.destination,0,3),/element cast failed/);assert.ok(f.destination.elements.every(v=>v===null));assert.equal(f.events.some(e=>e[0]==='move'),false);
+ delete f.source.elements[1].invalid;f.events.length=0;assert.equal(f.copy()(f.source,0,f.destination,0,3),true);assert.equal(f.events.filter(e=>e[0]==='cast').length,3);
+ assert.equal(f.destination.elements[2],f.source.elements[2]);
+});
+test('native fast copy probes reference ancestry in both directions and rejects value/flagged mismatches',()=>{
+ const f=nativeFastCopyFixture(),sourceType={typeBits:0,flags132:0},destinationType={typeBits:0,flags132:0};f.source.klass={...f.klass,elementClass:sourceType};f.destination.klass={...f.klass,elementClass:destinationType};
+ f.options.isSubclassOf=(left,right,interfaces)=>{f.events.push(['probe',left,right,interfaces]);return left===sourceType;};assert.equal(f.copy()(f.source,0,f.destination,0,1),true);
+ assert.deepEqual(f.events.filter(e=>e[0]==='probe'),[['probe',destinationType,sourceType,false],['probe',sourceType,destinationType,false]]);assert.equal(f.events.some(e=>e[0]==='cast'),false);
+ for(const field of ['typeBits','flags132']){f.events.length=0;destinationType[field]=field==='typeBits'?-2147483648:4;assert.equal(f.copy()(f.source,0,f.destination,0,1),false);assert.equal(f.events.some(e=>['probe','move'].includes(e[0])),false);destinationType[field]=0;}
+ f.options.isSubclassOf=()=>false;assert.equal(f.copy()(f.source,0,f.destination,0,1),false);
+});
+test('native fast copy validates boxes before clearing then unboxes each value and notifies the whole range',()=>{
+ const f=nativeFastCopyFixture(),valueType={typeBits:-2147483648,flags132:0};f.destination.klass={rank:1,elementClass:valueType,elementSize:4};
+ f.source.elements=[{payload:{elements:[7]}},{payload:{elements:[8]}}];f.destination.elements=[99,99];
+ assert.equal(f.copy()(f.source,0,f.destination,0,2),true);assert.deepEqual(f.destination.elements,[7,8]);
+ assert.deepEqual(f.events.filter(e=>['zero','move','notify'].includes(e[0])),[['zero',0n,8n],['move',0n,0n,4n],['move',4n,0n,4n],['notify',0n,8n]]);
+ f.events.length=0;f.destination.elements=[99,99];f.source.elements[1].invalid=true;
+ assert.equal(f.copy()(f.source,0,f.destination,0,2),false);assert.deepEqual(f.destination.elements,[99,99]);assert.equal(f.events.some(e=>e[0]==='zero'),false);
+});
+test('native fast copy keeps zeroing and completed element copies when a null box fails in the second pass',()=>{
+ const f=nativeFastCopyFixture();f.destination.klass={rank:1,elementClass:{typeBits:-2147483648,flags132:0},elementSize:4};f.destination.elements=[99,99];f.source.elements=[{payload:{elements:[7]}},null];
+ assert.throws(()=>f.copy()(f.source,0,f.destination,0,2),/null boxed element/);assert.deepEqual(f.destination.elements,[7,0]);assert.equal(f.events.some(e=>e[0]==='notify'),false);
+});
+test('native fast copy preserves completed movement when the write notification throws',()=>{
+ const f=nativeFastCopyFixture();f.options.notifyWrites=()=>{throw Error('write notification failed');};assert.throws(()=>f.copy()(f.source,0,f.destination,0,2),/write notification failed/);assert.equal(f.destination.elements[1],f.source.elements[1]);
+});
 
 test('managed array copy rejects null arrays and negative length before reading ranks or dispatching copy',()=>{
  const copy=fearProjectileManagedArrayCopy({readRank:()=>{throw Error('unexpected rank');},tryFastCopy:()=>{throw Error('unexpected fast copy');},copyFallback:()=>{throw Error('unexpected fallback');}});
@@ -109,11 +164,16 @@ test('managed ObjectPtr storage captures pointer fields before resizing and clea
 function managedActionContextFixture(){
  const f=actionDispatchFixture(),g=contextGuardsFixture(),pointers=fearProjectileContextPointers({readUid:value=>value.uid,
   isDestroyedOrNull:value=>value==null||value.destroyed===true,isActive:()=>true}),
-  resize=(copyValue,defaultValue)=>fearProjectileManagedArrayResize({allocateArray:length=>Array.from({length},defaultValue),
-   copyArray:fearProjectileManagedArrayCopy({readRank:()=>1,tryFastCopy:(source,si,destination,di,length)=>{for(let i=0;i<length;i++)destination[di+i]=copyValue(source[si+i]);return true;},
-    copyFallback:()=>{throw Error('unexpected typed array fallback');}})}),
-  ptr=fearProjectileManagedPointerStacks({copyPointer:pointers.copy,resizeArray:resize(pointers.copy,()=>({obj:null,cachedUid:0}))}),refs=fearProjectileManagedReferenceStacks({resizeArray:resize(value=>value,()=>null)}),
-  mf=managedValueFixture('Modifier'),af=managedValueFixture('AttackInfo'),modifier=fearProjectileManagedValueStacks({...mf.options,resizeArray:resize(mf.options.copyValue,mf.options.defaultValue)}),attack=fearProjectileManagedValueStacks({...af.options,resizeArray:resize(af.options.copyValue,af.options.defaultValue)}),
+  resize=(copyValue,defaultValue,width=8)=>{
+   const objectClass={typeBits:0,flags132:0},klass={rank:1,elementClass:width===8?objectClass:{typeBits:-2147483648,flags132:0},elementSize:width},
+    unexpected=()=>{throw Error('unexpected typed-array conversion');},tryFastCopy=fearProjectileNativeArrayFastCopy({objectClass,readArrayClass:()=>klass,
+     readBounds:()=>null,readLength:array=>array.length,readElementSize:type=>type.elementSize,readElement:(array,index)=>array[index],
+     isSubclassOf:unexpected,castObject:unexpected,unboxObject:unexpected,zeroMemory:unexpected,
+     moveMemory:(to,toOffset,from,fromOffset,bytes)=>{const start=Number(fromOffset)/width,values=from.slice(start,start+Number(bytes)/width).map(copyValue);for(let i=0;i<values.length;i++)to[Number(toOffset)/width+i]=values[i];},notifyWrites:()=>{}});
+   return fearProjectileManagedArrayResize({allocateArray:length=>Array.from({length},defaultValue),copyArray:fearProjectileManagedArrayCopy({readRank:()=>1,tryFastCopy,copyFallback:unexpected})});
+  },
+  ptr=fearProjectileManagedPointerStacks({copyPointer:pointers.copy,resizeArray:resize(pointers.copy,()=>({obj:null,cachedUid:0}),16)}),refs=fearProjectileManagedReferenceStacks({resizeArray:resize(value=>value,()=>null)}),
+  mf=managedValueFixture('Modifier'),af=managedValueFixture('AttackInfo'),modifier=fearProjectileManagedValueStacks({...mf.options,resizeArray:resize(mf.options.copyValue,mf.options.defaultValue,136)}),attack=fearProjectileManagedValueStacks({...af.options,resizeArray:resize(af.options.copyValue,af.options.defaultValue,40)}),
   pointerFields=new Set(['m_source','m_target','m_buff','m_projectile','m_tile','m_mainBuff']),
   wrap=(api,defaultValue,copyValue)=>fearProjectileContextValueStacks({readCount:api.count,peekStored:api.peek,popStored:api.pop,defaultValue,copyValue}),
   pointerContext=fearProjectileContextPointerStacks({readCount:ptr.count,peekStored:ptr.peek,popStored:ptr.pop,pushStored:ptr.push,wrapPointer:pointers.capture,copyPointer:pointers.copy,lockPointer:pointers.lock}),
