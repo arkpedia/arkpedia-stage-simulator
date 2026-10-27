@@ -9,11 +9,37 @@ import { makeBattle, enemyRec } from './helpers/battleHarness.js';
 import { compileStageLocalEnemy } from '../shared/arkpedia/enemy-records.js';
 import { fearProjectileAfflictions } from '../server/sim/content/chapter16-fear-affliction.js';
 import {applyFearProjectileImpact,fearProjectileDamageAction,fearProjectileSourceReference} from '../server/sim/content/chapter16-fear-impact.js';
-import {fearProjectileReached} from '../server/sim/content/chapter16-fear-movement.js';
+import {fearProjectileReached,fearProjectileMotionStep} from '../server/sim/content/chapter16-fear-movement.js';
 import { battle as minerBattle, keys as minerKeys } from './helpers/ch17Harness.js';
 import { chapter16Shadow } from '../server/sim/content/chapter16-shadow.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
 const parentKey='feawpj_a[mcreep_fear]';
+test('selected speed-10 motion advances in three dimensions and snaps without overshoot',()=>{
+ const origin={x:0,y:0,z:0};
+ for(const axis of ['x','y','z']){
+  const target={...origin,[axis]:5};
+  assert.deepEqual(fearProjectileMotionStep(origin,target,.1),{...origin,[axis]:1,reached:false});
+  assert.deepEqual(fearProjectileMotionStep(origin,target,1),{...target,reached:true});
+  assert.deepEqual(target,{...origin,[axis]:5});
+ }
+ const diagonal=fearProjectileMotionStep(origin,{x:3,y:4,z:0},.1);
+ assert.equal(diagonal.x,Math.fround(.6));
+ // Native component*delta then *speed rounds twice: this is one ULP above
+ // float32(0.8), which a combined distance multiplier would incorrectly return.
+ assert.equal(diagonal.y,.8000000715255737);assert.equal(diagonal.z,0);
+ assert.equal(diagonal.reached,false);assert.deepEqual(origin,{x:0,y:0,z:0});
+});
+
+test('motion uses the supplied current 3D destination and arrival tolerance after movement',()=>{
+ const first=fearProjectileMotionStep({x:0,y:0,z:0},{x:5,y:0,z:0},.1);
+ const second=fearProjectileMotionStep(first,{x:1,y:0,z:5},.1);
+ assert.deepEqual(second,{x:1,y:0,z:1,reached:false});
+ assert.deepEqual(fearProjectileMotionStep({x:0,y:0,z:0},{x:.09,y:0,z:0},0),{x:0,y:0,z:0,reached:true});
+ assert.deepEqual(fearProjectileMotionStep({x:0,y:0,z:0},{x:0,y:0,z:0},0),{x:0,y:0,z:0,reached:true});
+ for(const delta of [-1,NaN,Infinity])assert.throws(()=>fearProjectileMotionStep(first,second,delta));
+ assert.throws(()=>fearProjectileMotionStep({x:0,y:0},{x:1,y:1,z:0},.1),/3D/);
+});
+
 test('native arrival includes the float32 0.1 boundary and checks all three mount-point axes',()=>{
  const zero={x:0,y:0,z:0},radius=Math.fround(.1),outside=Math.fround(radius+2**-27);
  const source=read('data/candidates/arkpedia-windows-fear-movement-source.json');

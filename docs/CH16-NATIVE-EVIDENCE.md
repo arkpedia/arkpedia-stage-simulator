@@ -281,7 +281,7 @@ for every projectile is therefore unproven. The internal damage-action port's
 explicit cached-ATK argument does not establish that ownership or birth timing.
 
 `extract-windows-fear-movement.py --check` binds the original movement component
-and retains 25 complete default methods. `OnInit` and `OnTick` contain embedded
+and retains 31 complete default methods. `OnInit` and `OnTick` contain embedded
 six-entry switch tables in their chained PE ranges. Each table's exact bytes,
 index bias, bounds check and instruction-boundary targets are retained separately
 from executable bytes; the shared strict native reader remains unchanged.
@@ -307,3 +307,16 @@ coordinates or removes the vertical axis. Remaining movement arithmetic,
 mount-point mapping and scheduler lifetime/frame behavior still need review
 before launch/delivery integration. These artifacts grant no runtime/frame/cross-
 version parity or additional stage support.
+
+Mount-coordinate evidence additionally binds the exact `ILocatable` interface,
+the selected Windows `MUZZLE` enum value, owner slot 90 through `Unit.GetMountPoint`,
+and mount-point world-to-map conversion. Actual unit/scene transform selection
+remains unverified. The direct normalization and magnitude helper bodies retain
+their complete PE ranges with explicit unresolved metadata identities. The
+internal `fearProjectileMotionStep` maps the selected speed-10, no-inertia,
+no-dynamic-speed arithmetic using supplied 3D mount coordinates and an already
+scaled effective delta. It preserves float32 normalization, the 1e-5 normalization
+threshold, per-component delta-then-speed multiplication and inclusive snap
+comparison. Launch sampling, live/stale mount ownership, effective-delta scaling,
+expiry and arrival callbacks remain separate integration work; this arithmetic
+port does not register an enemy or stage.

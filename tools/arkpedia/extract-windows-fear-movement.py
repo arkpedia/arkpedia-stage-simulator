@@ -107,6 +107,50 @@ tolerance = {'callerLoadRva': load, 'valueRva': tolerance_rva, 'hex': tolerance_
              'float32': struct.unpack('<f', tolerance_raw)[0], 'dimensions': 3,
              'comparison': 'inclusive squared float32 distance'}
 
+for name, names in [
+    ('BasicMovement', ['Init', 'OnInit']), ('MountPoint', ['get_mapPositionV3']),
+    ('Unit', ['GetMountPoint']), ('MapUtil', ['WorldToMapPosV3']),
+]:
+    t = c['type_row'](name, 'Torappu.Battle')
+    for name in names:
+        methods.append(c['method'](t, c['unique'](lambda r: r['name'] == name, t['methods'])))
+map_type = c['type_row']('Map', 'Torappu.Battle')
+methods.append(c['method'](map_type, c['unique'](lambda r: r['index'] == 60931, map_type['methods'])))
+load = 0x662e87
+p = v['offset'](base + load)
+assert b[p:p + 3] == bytes.fromhex('4c8b05')
+slot = load + 7 + struct.unpack_from('<i', b, p + 3)[0]
+usage = v['quad'](b, v['offset'](base + slot))
+assert usage >> 29 == 1
+tp = v['offset'](v['quad'](b, v['type_table'] + ((usage & 0x1ffffffe) >> 1) * 8))
+locatable = v['types'][v['quad'](b, tp)]
+assert (locatable['namespace'], locatable['name']) == ('Torappu.Battle', 'ILocatable')
+assert locatable['methods'][1]['name'] == 'get_mapPositionV3'
+ranged = c['type_row']('RangedAttack', 'Torappu.Battle.Abilities')
+mount_fields = {name: c['unique'](lambda f: f['name'] == name, c['fields'](ranged))
+                for name in ['_mountPointType', '_projectileDestination']}
+mount_mapping = {'locatable': {**locatable, 'callerLoadRva': load, 'encodedUsage': usage},
+                 'castFields': mount_fields,
+                 'enums': {name: c['enum'](v['types'][field['typeData']]) for name, field in mount_fields.items()},
+                 'sourceMountSlot': c['resolved_slot'](c['type_row']('Enemy', 'Torappu.Battle'), 90),
+                 'unitToMountPointMappingVerified': False}
+
+# These direct movement-call helpers have complete PE ranges but no separately
+# resolved metadata identity. Bind the actual caller RVAs and bodies explicitly.
+arithmetic_helpers = []
+for name, rva, caller in [('normalize', 0x511250, 0xa7cad0), ('magnitude', 0x72eb40, 0xa7ce50)]:
+    arithmetic_helpers.append({'role': name, 'entryRva': rva, 'callerRva': caller,
+                               'metadataIdentityVerified': False, 'chunks': c['code'](rva)})
+load = 0x5112f4
+p = v['offset'](base + load)
+assert b[p:p + 3] == bytes.fromhex('0f2f1d')
+epsilon_rva = load + 7 + struct.unpack_from('<i', b, p + 3)[0]
+p = v['offset'](base + epsilon_rva)
+epsilon_raw = b[p:p + 4]
+assert epsilon_raw.hex() == 'acc52737'
+normalization_epsilon = {'callerLoadRva': load, 'valueRva': epsilon_rva,
+                         'hex': epsilon_raw.hex(), 'float32': struct.unpack('<f', epsilon_raw)[0]}
+
 
 def mixed_method(name, entry_rva, table_rva, end_rva, dispatch):
     row = c['unique'](lambda r: r['name'] == name, movement['methods'])
@@ -200,6 +244,8 @@ result = {
                   'unmatchedSerializedFields': unmatched, 'serializedFieldParity': not unmatched},
     'moveType': move_type, 'methods': methods, 'completionCallback': callback,
     'completionDelay': delay, 'arrivalTolerance': tolerance,
+    'mountMapping': mount_mapping, 'arithmeticHelpers': arithmetic_helpers,
+    'normalizationEpsilon': normalization_epsilon,
     'fields': {t['name']: c['fields'](t) for t in hierarchy},
     'resolvedSlots': [c['resolved_slot'](movement, slot) for slot in [19, 21, 22, 23, 30]],
     'review': [
@@ -210,7 +256,9 @@ result = {
         'AdvancedMovement.DoCheckReached first calls BasicMovement.CheckReached. Its un-reached path dispatches slot22 to AdvancedMovement.DoCheckReachedInternal, which invokes slot21 BasicMovement.DealReached on proximity. DealReached sets m_reachedTarget before dispatching Behaviour.Reached -> Projectile.OnProjectileReached. The projectile sets its own reached flag before DealProjectileReached. Only after that return does AdvancedMovement.DoCheckReached call EnsureLifeTime, passing clearTraceTargetWhenReached, then schedule completion. Trace identity must not be cleared before arrival impact.',
         'The exact callback delegate method usage binds the complete two-tail-jump leaf. With comeBack=false it tails to Behaviour.Stop -> Projectile.StopMe. The separate BasicMovement.OnProjectileReached fix guard sets m_reachedTarget before its repeated check; no invented second arrival is required. Delayed scheduler dispatch/frame timing and remaining movement arithmetic remain unverified before delivery integration.',
         'The completion call loads InvokeAsyncFixedSeconds<AdvancedMovement>. Its independently mapped Object canonical wrapper and coroutine bodies are retained without claiming concrete RGCTX execution. The float WaitForFixedSeconds iterator calculates a frame count, clamps it to at least one, and yields before incrementing its frame index. A configured zero delay must not be replaced with a same-stack stop callback; precise battle-coroutine scheduling and cancellation still require separate integration evidence.',
-        'The arrival proximity constant is float32 0.1. The separately image-bound Torappu.Common MathUtil.CheckDistance squares all three float32 coordinate deltas, adds the y/x/z squares and inclusively compares against the squared tolerance. This is neither exact coordinate equality nor an unverified two-dimensional radius.'
+        'The arrival proximity constant is float32 0.1. The separately image-bound Torappu.Common MathUtil.CheckDistance squares all three float32 coordinate deltas, adds the y/x/z squares and inclusively compares against the squared tolerance. This is neither exact coordinate equality nor an unverified two-dimensional radius.',
+        'BasicMovement.OnInit obtains source and target mapPositionV3 through the exact ILocatable interface slot1. The selected RangedAttack mountPointType2 is MUZZLE in the Windows enum; its source call dispatches Enemy slot90 to Unit.GetMountPoint. MountPoint.get_mapPositionV3 calls MapUtil.WorldToMapPosV3 and Map.WorldToMapPositionV3. Runtime unit-to-mount-point mapping, native camera/scene transforms and historical CN field parity remain unverified; no fixed tile-center height is inferred.',
+        'Selected movement calls the retained complete normalization and magnitude helper bodies. The normalization body sums float32 y/x/z squares, rounds the square-root result to float32, uses a strict greater-than float32 1e-5 magnitude threshold and divides each component at float32 precision. The movement branch compares float32 speed*delta with magnitude, snaps on greater-or-equal, or applies component*delta then *speed before adding position. Helpers have bound callers and complete bytes but no separately verified metadata identity. Effective-delta scaling and mount-point tracking remain caller/integration obligations.'
     ]}
 serialized = json.dumps(result, ensure_ascii=False, indent=1) + '\n'
 out = ROOT / 'data/candidates/arkpedia-windows-fear-movement-source.json'

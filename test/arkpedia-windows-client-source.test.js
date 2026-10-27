@@ -129,7 +129,7 @@ test('ordinary projectile birth preprocesses the existing ability action list be
 
 test('movement evidence retains full chained ranges and separates both bounded switch tables from code',()=>{
  const c=read('data/candidates/arkpedia-windows-fear-movement-source.json');
- assert.equal(c.methods.length,25);
+ assert.equal(c.methods.length,31);
  for(const p of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+p.path,import.meta.url))),p.sha256);
  const component=c.component,native=JSON.parse(component.originalJson);
  assert.equal(component.scriptIdentity.m_ClassName,'AdvancedMovement');assert.equal(component.serializedFieldParity,false);
@@ -258,6 +258,45 @@ test('arrival tolerance is a separately image-bound inclusive three-dimensional 
   ['addss','xmm2, xmm3'],['mulss','xmm4, xmm4'],['addss','xmm2, xmm1']]);
  assert.ok(code.some(i=>i.mnemonic==='comiss'&&i.operands==='xmm4, xmm2'));
  assert.ok(code.some(i=>i.mnemonic==='setae'&&i.operands==='al'));
+});
+
+test('movement mount coordinates bind ILocatable, muzzle enum, owner dispatch and world-to-map conversion',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-movement-source.json'),mapping=c.mountMapping;
+ assert.equal(mapping.unitToMountPointMappingVerified,false);
+ assert.equal(mapping.locatable.name,'ILocatable');assert.equal(mapping.locatable.namespace,'Torappu.Battle');
+ assert.equal(mapping.locatable.encodedUsage>>>29,1);assert.equal(mapping.locatable.methods[1].name,'get_mapPositionV3');
+ assert.equal(mapping.castFields._mountPointType.offset,0x210);assert.equal(mapping.castFields._projectileDestination.offset,0x230);
+ assert.equal(mapping.enums._mountPointType.fields.find(f=>f.value===2).name,'MUZZLE');
+ assert.equal(mapping.enums._projectileDestination.fields.find(f=>f.value===0).name,'TARGET');
+ assert.equal(mapping.sourceMountSlot.slot,90);assert.equal(mapping.sourceMountSlot.declaringType,'Unit');
+ assert.equal(mapping.sourceMountSlot.entryRva,castMethod(c,'Unit','GetMountPoint').entryRva);
+ const init=instructions(castMethod(c,'BasicMovement','OnInit'));
+ assert.ok(init.some(i=>i.rva===0x662e8e&&i.operands==='edx, [rcx + 1]'));
+ assert.ok(init.some(i=>i.rva===0x662e98&&i.operands==='0x18000c2e0'));
+ assert.ok(init.some(i=>i.rva===0x662edd&&i.operands==='0x18000c2e0'));
+ const calls=(type,name,target)=>assert.ok(instructions(castMethod(c,type,name)).some(i=>i.mnemonic==='call'&&i.operands===target));
+ calls('MountPoint','get_mapPositionV3','0x1808831c0');calls('MapUtil','WorldToMapPosV3','0x18063bb10');
+ const launch=instructions(castMethod(read(projectilePath),'RangedAttack','CreateProjectile'));
+ assert.ok(launch.some(i=>i.rva===0xbfb055&&i.operands==='ebp, dword ptr [rbx + 0x210]'));
+ assert.ok(launch.some(i=>i.rva===0xbfb080&&i.operands==='rax, qword ptr [r8 + 0x6d8]'));
+});
+
+test('selected motion binds complete arithmetic helpers, normalization epsilon and separate delta/speed rounding',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-movement-source.json');
+ assert.equal(c.normalizationEpsilon.hex,'acc52737');assert.equal(c.normalizationEpsilon.float32,Math.fround(1e-5));
+ const tick=instructions(castMethod(c,'AdvancedMovement','OnTick'));
+ for(const m of c.arithmeticHelpers){
+  assert.equal(m.metadataIdentityVerified,false);
+  assert.ok(tick.some(i=>i.rva===m.callerRva&&i.mnemonic==='call'&&i.operands==='0x'+(c.imageBase+m.entryRva).toString(16)));
+  for(const ch of m.chunks){const raw=Buffer.from(ch.base64,'base64');assert.equal(raw.length,ch.endRva-ch.beginRva);assert.equal(sha(raw),ch.sha256);}
+ }
+ const normalize=instructions(c.arithmeticHelpers.find(m=>m.role==='normalize'));
+ assert.ok(normalize.some(i=>i.rva===0x5112fb&&i.mnemonic==='ja'&&i.operands==='0x18051133e'));
+ assert.equal(normalize.filter(i=>i.mnemonic==='divss').length,3);
+ assert.deepEqual(tick.filter(i=>i.rva>=0xa7cea7&&i.rva<=0xa7cec3).map(i=>[i.mnemonic,i.operands]),[
+  ['mulss','xmm2, xmm10'],['mulss','xmm3, xmm10'],['movsd','qword ptr [rbp - 0x59], xmm0'],
+  ['mulss','xmm1, xmm10'],['mulss','xmm3, xmm7'],['mulss','xmm2, xmm7'],['mulss','xmm1, xmm7']]);
+ assert.ok(tick.some(i=>i.rva===0xa7ce63&&i.mnemonic==='jae'&&i.operands==='0x180a7cef3'));
 });
 
 test('native projectile source lock checks cached UID and destroyed/null state across allocation and recycling',()=>{
