@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,161);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,162);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -225,6 +225,27 @@ test('immediate recycle source enumerates stored pairs and pointer lists before 
  }
  at(q.outerMoveNext,0x4dd4158,'dword ptr [rbx + 0xc], eax');at(q.outerMoveNext,0x4dd41b6,'dword ptr [rbx + 0xc], eax');
  assert.ok(!instructions(m).some(i=>i.mnemonic==='call'&&i.operands==='0x183991a80'),'flush does not filter by current frame');
+});
+
+test('EnsureOverrideGroup source binds populated-queue bypass, STACK blackboard keys and late map/key registration',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.newBuff.ensureOverrideGroup,m=castMethod(c,'BuffContainer','EnsureOverrideGroup');
+ const at=(rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ assert.deepEqual(q.groupFields.map(f=>[f.name,f.offset]),[['m_queue',0x10],['m_type',0x18],['m_maxStackCnt',0x1c],['m_maxValidStackCnt',0x20]]);
+ assert.deepEqual(q.dataFields.map(f=>[f.name,f.offset]),[['overrideType',0x40],['maxStackCnt',0x44],['maxValidStackCnt',0x4c]]);
+ assert.deepEqual(q.overrideEnum.fields.map(f=>[f.name,f.value]),[['DEFAULT',0],['STACK',1],['UNIQUE',2],['EXTEND',3],['EXTEND_TIME',4]]);
+ assert.deepEqual(q.literals.map(x=>x.value),['max_stack_cnt','max_valid_stack_cnt','max_stack_cnt','max_valid_stack_cnt']);
+ for(const spec of q.queueSpecifications){assert.equal(spec.encodedUsage>>>29,6);assert.equal(spec.specification.declaringType,'PriorityQueue`1');
+  assert.equal(spec.specification.nativeMapping,null);assert.equal(spec.specification.instantiations.class.arguments[0].name,'Buff');}
+ assert.equal(q.groupTypeLoad.name,'OverrideGroup');assert.equal(q.groupTypeLoad.encodedUsage>>>29,1);
+ at(q.mapCaptureRva,'rbx, qword ptr [rbp + 0x20]');at(q.keyGetterCallRva,'0x1839b6f70');at(q.lookupCallRva,'0x184c0e320');
+ at(q.initialQueueReadRva,'rcx, qword ptr [rsi + 0x10]');at(q.queueCountCallRva,'0x1841fcd50');at(q.queueRereadRva,'rcx, qword ptr [rbx + 0x10]');
+ at(q.existingQueueCtorCallRva,'0x1847b55d0');at(q.existingQueueWriteRva,'qword ptr [rbx + 0x10], rsi');at(q.clearQueueCallRva,'0x1847b4860');
+ at(q.existingTypeWriteRva,'dword ptr [rbx + 0x18], eax');at(q.existingMaxStackCallRva,'0x182166990');at(q.existingMaxValidCallRva,'0x182166990');
+ at(q.groupCtorCallRva,'0x180511a50');at(q.newQueueCtorCallRva,'0x1847b55d0');at(q.newQueueWriteRva,'qword ptr [rcx], rsi');
+ at(q.newTypeWriteRva,'dword ptr [rbx + 0x18], eax');at(q.newMaxStackCallRva,'0x182166990');at(q.newMaxValidCallRva,'0x182166990');
+ at(q.newMaxStackWriteRva,'dword ptr [rbx + 0x1c], eax');at(q.newMaxValidWriteRva,'dword ptr [rbx + 0x20], eax');
+ at(q.mapRereadRva,'rbx, qword ptr [rbp + 0x20]');at(q.newKeyGetterCallRva,'0x1839b6f70');at(q.addGroupCallRva,'0x184c0b0d0');
+ assert.ok(castMethod(c,'Buff','get_blackboard'));assert.equal(q.nativeQueueConstructionVerified,false);assert.equal(q.nativeGroupConstructionVerified,false);assert.equal(q.liveEnsureGroupPhaseVerified,false);
 });
 
 test('native admission source binds signed Int16 counters, combo fallback and Enemy raw-WALK levitation',()=>{

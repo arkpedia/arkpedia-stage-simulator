@@ -33,6 +33,7 @@ import {fearProjectileBuffOverrideKey,fearProjectileResetBuffOverride,fearProjec
 import {fearProjectileResetBuff} from '../server/sim/content/chapter16-fear-buff-reset.js';
 import {fearProjectileNewBuff} from '../server/sim/content/chapter16-fear-buff-new.js';
 import {fearProjectileAttributeStatus,fearProjectileBuffAdmission,fearProjectileComboFlag} from '../server/sim/content/chapter16-fear-buff-admission.js';
+import {fearProjectileEnsureOverrideGroup} from '../server/sim/content/chapter16-fear-buff-group.js';
 import {fearProjectileBuffRecyclePool,fearProjectileDefaultBuffPool} from '../server/sim/content/chapter16-fear-buff-pool.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
@@ -45,6 +46,81 @@ import { chapter16Shadow } from '../server/sim/content/chapter16-shadow.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
 const parentKey='feawpj_a[mcreep_fear]';
 const fpOne=1n<<32n;
+
+function ensureGroupFixture(){
+ const buff={overrideKey:'key',data:{overrideType:1,maxStackCnt:7,maxValidStackCnt:3},board:new Map()},events=[],created=[],state={active:true,map:new Map()};
+ const options={buff,isActive:()=>state.active,readGroups:()=>{events.push('map');return state.map;},readOverrideKey:value=>{events.push('key');return value.overrideKey;},
+  tryGetGroup:(map,key)=>({found:map.has(key),value:map.get(key)??null}),readQueue:group=>{events.push('queue');return group.m_queue;},readQueueCount:queue=>queue.length,
+  clearQueue:queue=>{events.push('clear');queue.length=0;},createQueue:()=>{events.push('create-queue');return[];},
+  createGroup:()=>{events.push('create-group');const group={m_queue:null,m_type:0,m_maxStackCnt:0,m_maxValidStackCnt:0};created.push(group);return group;},
+  readData:value=>{events.push('data');return value.data;},readBlackboard:value=>{events.push('board');return value.board;},
+  getIntOrDefault:(board,key,fallback,include)=>{events.push([key,fallback,include]);return board.get(key)??fallback;},
+  addGroup:(map,key,group)=>{events.push('add');if(map.has(key))throw Error('duplicate group');map.set(key,group);}};
+ return{buff,events,created,state,options,run:()=>fearProjectileEnsureOverrideGroup(options).run()};
+}
+test('new override group initializes a PriorityQueue projection, type and both native blackboard stack limits before registration',()=>{
+ const f=ensureGroupFixture(),group=f.run();assert.equal(group,f.created[0]);assert.equal(f.state.map.get('key'),group);
+ assert.deepEqual(group,{m_queue:[],m_type:1,m_maxStackCnt:7,m_maxValidStackCnt:3});
+ assert.deepEqual(f.events,['map','key','create-group','create-queue','data','board','data',['max_stack_cnt',7,true],'board','data',['max_valid_stack_cnt',3,true],'map','key','add']);
+});
+test('populated override groups retain their old configuration and bypass even invalid new data',()=>{
+ const f=ensureGroupFixture(),group={m_queue:[{}],m_type:3,m_maxStackCnt:99,m_maxValidStackCnt:98};f.state.map.set('key',group);f.buff.data=null;
+ assert.equal(f.run(),group);assert.deepEqual(f.events,['map','key','queue']);assert.equal(group.m_type,3);assert.equal(group.m_maxStackCnt,99);
+});
+for(const type of [0,2,-7])test('empty override group reinitializes type '+type+' without blackboard lookups',()=>{
+ const f=ensureGroupFixture(),queue=[],group={m_queue:queue,m_type:1,m_maxStackCnt:99,m_maxValidStackCnt:98};f.state.map.set('key',group);f.buff.data.overrideType=type;
+ assert.equal(f.run(),group);assert.equal(group.m_queue,queue);assert.equal(group.m_maxStackCnt,1);assert.equal(group.m_maxValidStackCnt,-1);
+ assert.equal(f.events.includes('clear'),true);assert.equal(f.events.includes('board'),false);assert.equal(f.events.includes('add'),false);
+});
+test('existing null group queue constructs one queue without creating or registering another group',()=>{
+ const f=ensureGroupFixture(),group={m_queue:null};f.state.map.set('key',group);assert.equal(f.run(),group);
+ assert.deepEqual(group.m_queue,[]);assert.equal(f.events.includes('create-queue'),true);assert.equal(f.events.includes('create-group'),false);assert.equal(f.events.includes('add'),false);
+});
+test('group initialization rereads the queue after the empty test and clears the current queue',()=>{
+ const f=ensureGroupFixture(),old=[],current=[{}],group={m_queue:old};f.state.map.set('key',group);let reads=0;
+ f.options.readQueue=value=>{if(++reads===2)value.m_queue=current;return value.m_queue;};assert.equal(f.run(),group);assert.deepEqual(current,[]);assert.equal(group.m_queue,current);assert.equal(reads,2);
+});
+test('stack limits read blackboard before fresh data for each lookup and preserve signed native results',()=>{
+ const f=ensureGroupFixture();let reads=0;f.options.readBlackboard=value=>{value.data={...value.data,maxStackCnt:13,maxValidStackCnt:17};reads++;return value.board;};
+ f.options.getIntOrDefault=(_board,key,fallback,include)=>{assert.equal(include,true);assert.equal(fallback,key==='max_stack_cnt'?13:17);return key==='max_stack_cnt'?-2:-9;};
+ const group=f.run();assert.equal(group.m_maxStackCnt,-2);assert.equal(group.m_maxValidStackCnt,-9);assert.equal(reads,2);
+});
+test('second stack-limit branch observes current group type after the first blackboard receiver',()=>{
+ const f=ensureGroupFixture();let lookups=0;f.options.getIntOrDefault=()=>{lookups++;f.created[0].m_type=2;return 8;};const group=f.run();
+ assert.equal(group.m_type,2);assert.equal(group.m_maxStackCnt,8);assert.equal(group.m_maxValidStackCnt,-1);assert.equal(lookups,1);
+});
+test('new group registration rereads map and override key after construction and configuration effects',()=>{
+ const f=ensureGroupFixture(),old=f.state.map,create=f.options.createGroup;
+ f.options.createGroup=()=>{f.state.map=new Map();f.buff.overrideKey='changed';return create();};const group=f.run();assert.equal(old.size,0);assert.equal(f.state.map.get('changed'),group);
+ assert.equal(f.events.filter(x=>x==='key').length,2);assert.equal(f.events.filter(x=>x==='map').length,2);
+});
+test('null map is checked after the override key and a found null group is not treated as a missing group',()=>{
+ const f=ensureGroupFixture();f.state.map=null;assert.throws(f.run,/null native/);assert.deepEqual(f.events,['map','key']);
+ const g=ensureGroupFixture();g.state.map.set('key',null);assert.throws(g.run,/null native/);assert.equal(g.events.includes('create-group'),false);
+});
+test('group initialization failures retain queue clearing and earlier field writes without registering a partial new group',()=>{
+ const f=ensureGroupFixture(),group={m_queue:[],m_type:2,m_maxStackCnt:99,m_maxValidStackCnt:98};f.state.map.set('key',group);
+ f.options.getIntOrDefault=()=>{throw Error('blackboard failure');};assert.throws(f.run,/blackboard failure/);assert.equal(group.m_type,1);assert.equal(group.m_maxStackCnt,99);assert.ok(f.events.includes('clear'));
+ const g=ensureGroupFixture();g.options.addGroup=()=>{throw Error('Add failed');};assert.throws(g.run,/Add failed/);assert.equal(g.created[0].m_maxValidStackCnt,3);assert.equal(g.state.map.size,0);
+});
+for(const phase of ['createQueue','getIntOrDefault','addGroup'])test('override group stops on lifecycle invalidation during '+phase,()=>{
+ const f=ensureGroupFixture(),original=f.options[phase];f.options[phase]=(...args)=>{const result=original(...args);f.state.active=false;return result;};assert.equal(f.run(),null);
+ if(phase==='createQueue')assert.equal(f.created[0].m_queue,null);if(phase==='getIntOrDefault')assert.equal(f.created[0].m_maxStackCnt,0);
+ if(phase==='addGroup')assert.equal(f.state.map.get('key'),f.created[0]);else assert.equal(f.state.map.size,0);
+});
+test('override group rejects recursive entry before lifecycle probes and permits an ordinary later reuse',()=>{
+ const f=ensureGroupFixture();let adapter,nested;f.options.isActive=()=>{nested=adapter.run();return true;};adapter=fearProjectileEnsureOverrideGroup(f.options);
+ const group=adapter.run();assert.equal(nested,null);group.m_queue.push({});assert.equal(adapter.run(),group);assert.equal(f.created.length,1);
+});
+test('NewBuff uses concrete EnsureOverrideGroup and blackboard readers before invoking group insertion',()=>{
+ const f=ensureGroupFixture(),n=newBuffFixture(),entries=[{key:'max_stack_cnt',value:3.9,valueStr:null},{key:'max_valid_stack_cnt',value:2.9,valueStr:null}];
+ f.buff=n.buff;n.buff.overrideKey='key';n.buff.data={overrideType:1,maxStackCnt:7,maxValidStackCnt:6};n.buff.board=entries;f.options.buff=n.buff;
+ const reads=fearProjectileBuffBlackboardReads({entries,compareIgnoreCase:(a,b)=>a===b?0:1,isActive:()=>true});
+ f.options.getIntOrDefault=(board,key,fallback,include)=>{assert.equal(board,entries);return reads.getIntOrDefault(key,fallback,include);};const ensure=fearProjectileEnsureOverrideGroup(f.options);
+ Object.assign(n.options,{ensureOverrideGroup:()=>ensure.run(),readGroupQueue:group=>group.m_queue,addToGroup:(group,buff)=>{
+  assert.equal(group.m_type,1);assert.equal(group.m_maxStackCnt,3);assert.equal(group.m_maxValidStackCnt,2);group.m_queue.push(buff);return true;}});
+ assert.equal(n.run(),n.buff);assert.equal(f.state.map.get('key').m_queue[0],n.buff);assert.ok(n.events.includes('group-update'));
+});
 
 function admissionFixture(){
  const attributes={m_abnormalFlagsCounter:Array(64).fill(0),m_abnormalImmuneCounter:Array(64).fill(0),m_abnormalAntiCounter:Array(64).fill(0),m_abnormalComboMgr:{m_abnormalFlagMask:0n}},

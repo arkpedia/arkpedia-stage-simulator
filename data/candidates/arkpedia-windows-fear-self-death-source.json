@@ -78635,6 +78635,164 @@
   },
   {
    "image": "Assembly-CSharp.dll",
+   "typeIndex": 8933,
+   "namespace": "Torappu.Battle",
+   "type": "Buff",
+   "index": 56533,
+   "name": "get_blackboard",
+   "token": 100719830,
+   "virtualSlot": 65535,
+   "parameterCount": 0,
+   "entryRva": 60515808,
+   "chunks": [
+    {
+     "beginRva": 60515808,
+     "endRva": 60515924,
+     "unwindRva": 119936336,
+     "sha256": "80581a991a14b8996a35eb3ea1667d5bae26911b0447672f7a6ac5b0d4324f30",
+     "base64": "QFNIg+wggD055lcEAEiL2XUTSI0Nx30YBOiynqX8xgUh5lcEAUiLBbR9GASDuOAAAAAAdQ9Ii8joA6Gl/EiLBZx9GARIi4C4AAAASIuI6AAAAEiFyXUNSIuDqAAAAEiDxCBbw0UzwEiL00iDxCBb6cx9nf8=",
+     "instructions": [
+      {
+       "rva": 60515808,
+       "mnemonic": "push",
+       "operands": "rbx"
+      },
+      {
+       "rva": 60515810,
+       "mnemonic": "sub",
+       "operands": "rsp, 0x20"
+      },
+      {
+       "rva": 60515814,
+       "mnemonic": "cmp",
+       "operands": "byte ptr [rip + 0x457e639], 0"
+      },
+      {
+       "rva": 60515821,
+       "mnemonic": "mov",
+       "operands": "rbx, rcx"
+      },
+      {
+       "rva": 60515824,
+       "mnemonic": "jne",
+       "operands": "0x1839b6605"
+      },
+      {
+       "rva": 60515826,
+       "mnemonic": "lea",
+       "operands": "rcx, [rip + 0x4187dc7]"
+      },
+      {
+       "rva": 60515833,
+       "mnemonic": "call",
+       "operands": "0x1804104b0"
+      },
+      {
+       "rva": 60515838,
+       "mnemonic": "mov",
+       "operands": "byte ptr [rip + 0x457e621], 1"
+      },
+      {
+       "rva": 60515845,
+       "mnemonic": "mov",
+       "operands": "rax, qword ptr [rip + 0x4187db4]"
+      },
+      {
+       "rva": 60515852,
+       "mnemonic": "cmp",
+       "operands": "dword ptr [rax + 0xe0], 0"
+      },
+      {
+       "rva": 60515859,
+       "mnemonic": "jne",
+       "operands": "0x1839b6624"
+      },
+      {
+       "rva": 60515861,
+       "mnemonic": "mov",
+       "operands": "rcx, rax"
+      },
+      {
+       "rva": 60515864,
+       "mnemonic": "call",
+       "operands": "0x180410720"
+      },
+      {
+       "rva": 60515869,
+       "mnemonic": "mov",
+       "operands": "rax, qword ptr [rip + 0x4187d9c]"
+      },
+      {
+       "rva": 60515876,
+       "mnemonic": "mov",
+       "operands": "rax, qword ptr [rax + 0xb8]"
+      },
+      {
+       "rva": 60515883,
+       "mnemonic": "mov",
+       "operands": "rcx, qword ptr [rax + 0xe8]"
+      },
+      {
+       "rva": 60515890,
+       "mnemonic": "test",
+       "operands": "rcx, rcx"
+      },
+      {
+       "rva": 60515893,
+       "mnemonic": "jne",
+       "operands": "0x1839b6644"
+      },
+      {
+       "rva": 60515895,
+       "mnemonic": "mov",
+       "operands": "rax, qword ptr [rbx + 0xa8]"
+      },
+      {
+       "rva": 60515902,
+       "mnemonic": "add",
+       "operands": "rsp, 0x20"
+      },
+      {
+       "rva": 60515906,
+       "mnemonic": "pop",
+       "operands": "rbx"
+      },
+      {
+       "rva": 60515907,
+       "mnemonic": "ret",
+       "operands": ""
+      },
+      {
+       "rva": 60515908,
+       "mnemonic": "xor",
+       "operands": "r8d, r8d"
+      },
+      {
+       "rva": 60515911,
+       "mnemonic": "mov",
+       "operands": "rdx, rbx"
+      },
+      {
+       "rva": 60515914,
+       "mnemonic": "add",
+       "operands": "rsp, 0x20"
+      },
+      {
+       "rva": 60515918,
+       "mnemonic": "pop",
+       "operands": "rbx"
+      },
+      {
+       "rva": 60515919,
+       "mnemonic": "jmp",
+       "operands": "0x18338e420"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "image": "Assembly-CSharp.dll",
    "typeIndex": 8911,
    "namespace": "Torappu.Battle",
    "type": "BattleController",
@@ -97349,6 +97507,300 @@
      "nativeFlagEnumerationVerified": false,
      "nativeComboEffectsVerified": false,
      "liveAdmissionGatesVerified": false
+    },
+    "ensureOverrideGroup": {
+     "groupFields": [
+      {
+       "index": 61235,
+       "name": "m_queue",
+       "typeIndex": 23597,
+       "offset": 16,
+       "typeData": 6574158120,
+       "typeBits": 1376257
+      },
+      {
+       "index": 61236,
+       "name": "m_type",
+       "typeIndex": 83261,
+       "offset": 24,
+       "typeData": 3920,
+       "typeBits": 2148597761
+      },
+      {
+       "index": 61237,
+       "name": "m_maxStackCnt",
+       "typeIndex": 52804,
+       "offset": 28,
+       "typeData": 36888,
+       "typeBits": 2148007937
+      },
+      {
+       "index": 61238,
+       "name": "m_maxValidStackCnt",
+       "typeIndex": 52804,
+       "offset": 32,
+       "typeData": 36888,
+       "typeBits": 2148007937
+      }
+     ],
+     "dataFields": [
+      {
+       "index": 21484,
+       "name": "overrideType",
+       "typeIndex": 83262,
+       "offset": 64,
+       "typeData": 3920,
+       "typeBits": 2148597766
+      },
+      {
+       "index": 21485,
+       "name": "maxStackCnt",
+       "typeIndex": 52808,
+       "offset": 68,
+       "typeData": 36888,
+       "typeBits": 2148007942
+      },
+      {
+       "index": 21488,
+       "name": "maxValidStackCnt",
+       "typeIndex": 52808,
+       "offset": 76,
+       "typeData": 36888,
+       "typeBits": 2148007942
+      }
+     ],
+     "overrideEnum": {
+      "typeIndex": 3920,
+      "name": "OverrideType",
+      "fields": [
+       {
+        "index": 21515,
+        "name": "DEFAULT",
+        "typeIndex": 83263,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20604655,
+        "encodedHex": "00",
+        "value": 0
+       },
+       {
+        "index": 21516,
+        "name": "STACK",
+        "typeIndex": 83263,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20604656,
+        "encodedHex": "02",
+        "value": 1
+       },
+       {
+        "index": 21517,
+        "name": "UNIQUE",
+        "typeIndex": 83263,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20604657,
+        "encodedHex": "04",
+        "value": 2
+       },
+       {
+        "index": 21518,
+        "name": "EXTEND",
+        "typeIndex": 83263,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20604658,
+        "encodedHex": "06",
+        "value": 3
+       },
+       {
+        "index": 21519,
+        "name": "EXTEND_TIME",
+        "typeIndex": 83263,
+        "defaultTypeIndex": 52803,
+        "defaultFileOffset": 20604659,
+        "encodedHex": "08",
+        "value": 4
+       }
+      ]
+     },
+     "queueSpecifications": [
+      {
+       "loadRva": 60555947,
+       "encodedUsage": 3221732553,
+       "specification": {
+        "index": 253540,
+        "definition": {
+         "index": 24244,
+         "name": "get_count",
+         "token": 100687541
+        },
+        "declaringType": "PriorityQueue`1",
+        "declaringTypeIndex": 1396,
+        "instantiations": {
+         "class": {
+          "index": 1751,
+          "arguments": [
+           {
+            "namespace": "Torappu.Battle",
+            "name": "Buff",
+            "typeIndex": 8933,
+            "typeBits": 1179648
+           }
+          ]
+         }
+        },
+        "nativeMapping": null
+       }
+      },
+      {
+       "loadRva": 60556090,
+       "encodedUsage": 3221732543,
+       "specification": {
+        "index": 253535,
+        "definition": {
+         "index": 24248,
+         "name": ".ctor",
+         "token": 100687545
+        },
+        "declaringType": "PriorityQueue`1",
+        "declaringTypeIndex": 1396,
+        "instantiations": {
+         "class": {
+          "index": 1751,
+          "arguments": [
+           {
+            "namespace": "Torappu.Battle",
+            "name": "Buff",
+            "typeIndex": 8933,
+            "typeBits": 1179648
+           }
+          ]
+         }
+        },
+        "nativeMapping": null
+       }
+      },
+      {
+       "loadRva": 60556123,
+       "encodedUsage": 3221732547,
+       "specification": {
+        "index": 253537,
+        "definition": {
+         "index": 24255,
+         "name": "Clear",
+         "token": 100687552
+        },
+        "declaringType": "PriorityQueue`1",
+        "declaringTypeIndex": 1396,
+        "instantiations": {
+         "class": {
+          "index": 1751,
+          "arguments": [
+           {
+            "namespace": "Torappu.Battle",
+            "name": "Buff",
+            "typeIndex": 8933,
+            "typeBits": 1179648
+           }
+          ]
+         }
+        },
+        "nativeMapping": null
+       }
+      },
+      {
+       "loadRva": 60556436,
+       "encodedUsage": 3221732543,
+       "specification": {
+        "index": 253535,
+        "definition": {
+         "index": 24248,
+         "name": ".ctor",
+         "token": 100687545
+        },
+        "declaringType": "PriorityQueue`1",
+        "declaringTypeIndex": 1396,
+        "instantiations": {
+         "class": {
+          "index": 1751,
+          "arguments": [
+           {
+            "namespace": "Torappu.Battle",
+            "name": "Buff",
+            "typeIndex": 8933,
+            "typeBits": 1179648
+           }
+          ]
+         }
+        },
+        "nativeMapping": null
+       }
+      }
+     ],
+     "literals": [
+      {
+       "loadRva": 60556198,
+       "encodedUsage": 2684417457,
+       "literalIndex": 31448,
+       "value": "max_stack_cnt",
+       "length": 13,
+       "dataOffset": 1442751
+      },
+      {
+       "loadRva": 60556273,
+       "encodedUsage": 2684417463,
+       "literalIndex": 31451,
+       "value": "max_valid_stack_cnt",
+       "length": 19,
+       "dataOffset": 1442789
+      },
+      {
+       "loadRva": 60556529,
+       "encodedUsage": 2684417457,
+       "literalIndex": 31448,
+       "value": "max_stack_cnt",
+       "length": 13,
+       "dataOffset": 1442751
+      },
+      {
+       "loadRva": 60556604,
+       "encodedUsage": 2684417463,
+       "literalIndex": 31451,
+       "value": "max_valid_stack_cnt",
+       "length": 19,
+       "dataOffset": 1442789
+      }
+     ],
+     "groupTypeLoad": {
+      "loadRva": 60556314,
+      "encodedUsage": 537037413,
+      "typeIndex": 83250,
+      "definitionIndex": 8930,
+      "name": "OverrideGroup"
+     },
+     "mapCaptureRva": 60555825,
+     "keyGetterCallRva": 60555843,
+     "lookupCallRva": 60555875,
+     "initialQueueReadRva": 60555938,
+     "queueCountCallRva": 60555954,
+     "queueRereadRva": 60556057,
+     "existingQueueCtorCallRva": 60556100,
+     "existingQueueWriteRva": 60556108,
+     "clearQueueCallRva": 60556130,
+     "existingTypeWriteRva": 60556151,
+     "existingMaxStackCallRva": 60556213,
+     "existingMaxValidCallRva": 60556288,
+     "groupCtorCallRva": 60556407,
+     "newQueueCtorCallRva": 60556446,
+     "newQueueWriteRva": 60556458,
+     "newTypeWriteRva": 60556482,
+     "newMaxStackCallRva": 60556544,
+     "newMaxValidCallRva": 60556619,
+     "newMaxStackWriteRva": 60556556,
+     "newMaxValidWriteRva": 60556631,
+     "mapRereadRva": 60556644,
+     "newKeyGetterCallRva": 60556648,
+     "addGroupCallRva": 60556676,
+     "nativeQueueConstructionVerified": false,
+     "nativeGroupConstructionVerified": false,
+     "liveEnsureGroupPhaseVerified": false
     }
    },
    "poolIdentity": {

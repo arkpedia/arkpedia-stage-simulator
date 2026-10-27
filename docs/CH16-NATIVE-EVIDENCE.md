@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 161 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 162 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -1401,6 +1401,38 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 124-method bundle. Continuation40545156330 at3b7defc7 passed; existing
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
+
+### Override-group initialization and stack limits
+
+The162-method bundle additionally retains Buff.get_blackboard and resolves the
+EnsureOverrideGroup caller's exact PriorityQueue<Buff> count, constructor and
+Clear specifications. Their concrete mappings remain null. Type metadata binds
+new allocation to OverrideGroup, and original string literals bind
+`max_stack_cnt` and `max_valid_stack_cnt` in both initialization branches.
+OverrideType.STACK is1; DEFAULT/UNIQUE/EXTEND/EXTEND_TIME are0/2/3/4.
+
+`fearProjectileEnsureOverrideGroup` preserves an existing group with a populated
+queue without reading or replacing its configuration. An empty group rereads
+the queue before clearing it or creating a replacement. A missing group is
+constructed and given a new queue. Initialization copies overrideType, uses
+GetIntOrDefault(key,configuredDefault,true) for the two STACK limits, and uses
+maxStack1/maxValidStack-1 for other types. Each STACK lookup obtains blackboard
+before rereading data. The second branch checks the group's current type after
+the first lookup. New-group registration rereads the map before obtaining a
+second override-key sample; existing groups are not registered again.
+
+Tests cover populated-group preservation, empty/null queue reinitialization,
+late queue/map/key changes, signed stack limits, missing groups and null values,
+partial initialization/Add failures, lifecycle cancellation and reentry.
+A NewBuff composition uses this implementation and concrete Blackboard readers
+to obtain floor-rounded stack limits before invoking group insertion. All952
+focused native/fear/family/miner tests pass, and --check reproduces162 methods.
+This checkpoint is local; hosted validation remains pending.
+
+Native queue/group construction and priority-queue storage/comparison, stack
+merge/update effects, full activation and live enemy/controller/stage/frame
+integration remain open. Source/support/receipt/catalogue gates are unchanged;
+all new stages remain test-only.
 
 ### Native abnormal-status queries and NewBuff admission gates
 

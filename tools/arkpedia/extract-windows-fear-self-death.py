@@ -1197,6 +1197,61 @@ result['modeSwitch']['buffNotification']['newBuff']['admissionGates'] = {
     'antiCounterReadRva': 0x3957714, 'antiCounterCompareRva': 0x3957729,
     'nativeFlagEnumerationVerified': False, 'nativeComboEffectsVerified': False, 'liveAdmissionGatesVerified': False,
 }
+board_row = c['unique'](lambda r: r['name'] == 'get_blackboard', buff['methods'])
+if not any(m['index'] == board_row['index'] and m['image'] == 'Assembly-CSharp.dll' for m in methods):
+    methods.append(c['method'](buff, board_row))
+group_type = c['type_row']('OverrideGroup', '')
+override_type_field = c['unique'](lambda f: f['name'] == 'overrideType', c['fields'](data_type))
+override_enum = c['enum'](v['types'][override_type_field['typeData']])
+queue_specs = []
+for load_rva, index, name in [(0x39c02ab, 253540, 'get_count'), (0x39c033a, 253535, '.ctor'), (0x39c035b, 253537, 'Clear'), (0x39c0494, 253535, '.ctor')]:
+    pos = v['offset'](v['image_base'] + load_rva)
+    assert v['b'][pos:pos + 3] == bytes.fromhex('488b15')
+    target = load_rva + 7 + struct.unpack_from('<i', v['b'], pos + 3)[0]
+    usage = v['quad'](v['b'], v['offset'](v['image_base'] + target))
+    assert usage >> 29 == 6 and (usage & 0x1ffffffe) >> 1 == index
+    spec = priority['specification'](index)
+    assert spec['declaringType'] == 'PriorityQueue`1' and spec['definition']['name'] == name and spec['nativeMapping'] is None
+    assert spec['instantiations']['class']['arguments'][0]['name'] == 'Buff'
+    queue_specs.append({'loadRva': load_rva, 'encodedUsage': usage, 'specification': spec})
+group_literals = []
+for load_rva, expected in [(0x39c03a6, 'max_stack_cnt'), (0x39c03f1, 'max_valid_stack_cnt'),
+                           (0x39c04f1, 'max_stack_cnt'), (0x39c053c, 'max_valid_stack_cnt')]:
+    pos = v['offset'](v['image_base'] + load_rva)
+    assert v['b'][pos:pos + 3] == bytes.fromhex('488b15')
+    target = load_rva + 7 + struct.unpack_from('<i', v['b'], pos + 3)[0]
+    usage = v['quad'](v['b'], v['offset'](v['image_base'] + target))
+    assert usage >> 29 == 5
+    index = (usage & 0x1ffffffe) >> 1
+    length, offset = struct.unpack_from('<II', v['m'], v['uint'](v['m'], 8) + index * 8)
+    assert offset + length <= v['uint'](v['m'], 20)
+    value = v['m'][v['uint'](v['m'], 16) + offset:v['uint'](v['m'], 16) + offset + length].decode()
+    assert value == expected
+    group_literals.append({'loadRva': load_rva, 'encodedUsage': usage, 'literalIndex': index, 'value': value, 'length': length, 'dataOffset': offset})
+group_load_rva = 0x39c041a
+pos = v['offset'](v['image_base'] + group_load_rva)
+assert v['b'][pos:pos + 3] == bytes.fromhex('488b0d')
+target = group_load_rva + 7 + struct.unpack_from('<i', v['b'], pos + 3)[0]
+usage = v['quad'](v['b'], v['offset'](v['image_base'] + target))
+assert usage >> 29 == 1
+ti = (usage & 0x1ffffffe) >> 1
+tp = v['offset'](v['quad'](v['b'], v['type_table'] + ti * 8))
+assert (v['uint'](v['b'], tp + 8) >> 16) & 255 == 18 and v['quad'](v['b'], tp) == group_type['index']
+result['modeSwitch']['buffNotification']['newBuff']['ensureOverrideGroup'] = {
+    'groupFields': [c['unique'](lambda f: f['name'] == name, c['fields'](group_type)) for name in ['m_queue', 'm_type', 'm_maxStackCnt', 'm_maxValidStackCnt']],
+    'dataFields': [c['unique'](lambda f: f['name'] == name, c['fields'](data_type)) for name in ['overrideType', 'maxStackCnt', 'maxValidStackCnt']],
+    'overrideEnum': override_enum, 'queueSpecifications': queue_specs, 'literals': group_literals,
+    'groupTypeLoad': {'loadRva': group_load_rva, 'encodedUsage': usage, 'typeIndex': ti, 'definitionIndex': group_type['index'], 'name': group_type['name']},
+    'mapCaptureRva': 0x39c0231, 'keyGetterCallRva': 0x39c0243, 'lookupCallRva': 0x39c0263,
+    'initialQueueReadRva': 0x39c02a2, 'queueCountCallRva': 0x39c02b2, 'queueRereadRva': 0x39c0319,
+    'existingQueueCtorCallRva': 0x39c0344, 'existingQueueWriteRva': 0x39c034c, 'clearQueueCallRva': 0x39c0362,
+    'existingTypeWriteRva': 0x39c0377, 'existingMaxStackCallRva': 0x39c03b5, 'existingMaxValidCallRva': 0x39c0400,
+    'groupCtorCallRva': 0x39c0477, 'newQueueCtorCallRva': 0x39c049e, 'newQueueWriteRva': 0x39c04aa,
+    'newTypeWriteRva': 0x39c04c2, 'newMaxStackCallRva': 0x39c0500, 'newMaxValidCallRva': 0x39c054b,
+    'newMaxStackWriteRva': 0x39c050c, 'newMaxValidWriteRva': 0x39c0557,
+    'mapRereadRva': 0x39c0564, 'newKeyGetterCallRva': 0x39c0568, 'addGroupCallRva': 0x39c0584,
+    'nativeQueueConstructionVerified': False, 'nativeGroupConstructionVerified': False, 'liveEnsureGroupPhaseVerified': False,
+}
 for index in [147561, 147566, 147567, 147558, 147559, 147563, 147564, 147568, 147569]:
     spec = priority['specification'](index)
     assert spec['declaringTypeIndex'] == pool['index']
