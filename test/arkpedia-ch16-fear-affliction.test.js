@@ -68,6 +68,82 @@ import {fearProjectileInit} from '../server/sim/content/chapter16-fear-projectil
 import {fearProjectileInlineInit} from '../server/sim/content/chapter16-fear-projectile-inline.js';
 import {fearProjectileSetTraceTarget,fearProjectileBorn} from '../server/sim/content/chapter16-fear-projectile-born.js';
 import {fearProjectileBaseBorn,fearProjectileDefaultOnBorn,fearProjectileActionBirth,fearProjectileActionContextSetters,fearProjectileControllerRunActions} from '../server/sim/content/chapter16-fear-projectile-action-born.js';
+import {fearProjectileActionControllerInit,fearProjectileRegisterActions} from '../server/sim/content/chapter16-fear-projectile-action-init.js';
+
+function projectileActionInitFixture(){
+ const events=[],board={},buffs=[{buff:true}],attachments={},projectile={m_type:0},ability={board,buffs,attachments},
+  controller={_useSelfBlackboard:false,actions:Array.from({length:7},()=>['old']),m_buffsToAttach:['old-buff'],m_attachedBuffsForTargetMap:new Map([['old',1]]),m_attachedExtraBuffsForTargetMap:new Map([['old',2]]),m_addBuffsToTargetCnt:9},
+  clearList=list=>{events.push(['clear',list]);list.length=0;},readLength=array=>array.length,readElement=(array,index)=>array[index],
+  writeBarrier=(...args)=>events.push(['barrier',...args]),isNullOrEmpty=list=>list==null||list.length===0,
+  registration={readProjectileType:p=>p.m_type,isNullOrEmpty,readLength,readElement,clearList,allocateActionList:()=>[],constructActionList:()=>{},
+   checkArrayElement:()=>{},writeElement:(array,index,value)=>{array[index]=value;},writeBarrier,addRange:(list,source)=>list.push(...source)},
+  options={readAbilityBlackboard:value=>value.board,createSelfBlackboard:value=>({parent:value}),writeBarrier,getActiveBuffs:value=>value.buffs,
+   clearList,allocateBuffList:()=>[],constructBuffList:()=>{},isNullOrEmpty,addBuffRange:(list,source)=>list.push(...source),getAttachments:value=>value.attachments,
+   readLength,readElement,getProjectileActions:(value,event,p)=>{events.push(['get',value,event,p]);return[{event}];},
+   registerActions:(...args)=>fearProjectileRegisterActions(registration)(...args),clearMap:map=>map.clear()};
+ return{events,board,buffs,attachments,projectile,ability,controller,registration,options,run:()=>fearProjectileActionControllerInit(options)(controller,ability,projectile)};
+}
+
+test('projectile action Init reuses lists and registers all seven events before map and counter reset',()=>{
+ const f=projectileActionInitFixture(),arrays=f.controller.actions,lists=[...arrays],buffList=f.controller.m_buffsToAttach;f.run();
+ assert.equal(f.controller.blackboard,f.board);assert.equal(f.controller.projectile,f.projectile);assert.equal(f.controller.actions,arrays);
+ assert.equal(f.controller.m_buffsToAttach,buffList);assert.deepEqual(buffList,f.buffs);assert.equal(f.controller.m_attachmentsToAttach,f.attachments);
+ assert.deepEqual(arrays,Array.from({length:7},(_,event)=>[{event}]));for(let i=0;i<7;i++)assert.equal(arrays[i],lists[i]);
+ assert.deepEqual(f.events.filter(e=>e[0]==='get').map(e=>e[2]),[0,1,2,3,4,5,6]);assert.equal(f.controller.m_addBuffsToTargetCnt,0);
+ assert.equal(f.controller.m_attachedBuffsForTargetMap.size,0);assert.equal(f.controller.m_attachedExtraBuffsForTargetMap.size,0);
+});
+test('self blackboard follows the captured flag and Of receiver; nullable buffs allocate after active buff lookup',()=>{
+ const f=projectileActionInitFixture();f.controller._useSelfBlackboard=true;f.controller.m_buffsToAttach=null;f.ability.buffs=null;
+ f.options.readAbilityBlackboard=value=>{f.controller._useSelfBlackboard=false;return value.board;};
+ f.options.getActiveBuffs=()=>{assert.equal(f.controller.projectile,f.projectile);assert.equal(f.controller.m_buffsToAttach,null);return null;};f.run();
+ assert.deepEqual(f.controller.blackboard,{parent:f.board});assert.deepEqual(f.controller.m_buffsToAttach,[]);
+});
+test('Init refreshes buff destination after clear and action arrays between event callbacks',()=>{
+ const f=projectileActionInitFixture(),old=f.controller.m_buffsToAttach,replacement=[];f.options.clearList=list=>{list.length=0;if(list===old)f.controller.m_buffsToAttach=replacement;};
+ f.options.getProjectileActions=(_ability,event)=>{if(event===0)f.controller.actions=Array.from({length:7},()=>[]);return[{event}];};f.run();
+ assert.deepEqual(replacement,f.buffs);assert.deepEqual(old,[]);assert.deepEqual(f.controller.actions,Array.from({length:7},(_,event)=>[{event}]));
+});
+test('Init graphic projectiles still fetch seven events and clear old lists while registration skips additions',()=>{
+ const f=projectileActionInitFixture();f.projectile.m_type=2;f.registration.isNullOrEmpty=()=>{throw Error('registration must skip empty query');};f.run();
+ assert.deepEqual(f.controller.actions,Array.from({length:7},()=>[]));assert.equal(f.events.filter(e=>e[0]==='get').length,7);
+});
+for(const phase of ['getAttachments','getProjectileActions','registerActions','clearMap'])test('action Init failure at '+phase+' preserves prior publication and leaves the counter',()=>{
+ const f=projectileActionInitFixture();f.options[phase]=()=>{throw Error(phase);};assert.throws(f.run,new RegExp(phase));
+ assert.equal(f.controller.projectile,f.projectile);assert.equal(f.controller.blackboard,f.board);assert.equal(f.controller.m_addBuffsToTargetCnt,9);
+});
+test('short action arrays fail after prior events without resetting attachment maps',()=>{
+ const f=projectileActionInitFixture();f.controller.actions.length=3;assert.throws(f.run,/bounds/);assert.equal(f.events.filter(e=>e[0]==='get').length,3);
+ assert.equal(f.controller.m_attachedBuffsForTargetMap.size,1);assert.equal(f.controller.m_addBuffsToTargetCnt,9);
+});
+test('registration appends or replaces existing nodes without preprocessing',()=>{
+ const f=projectileActionInitFixture();f.controller.projectile=f.projectile;const run=fearProjectileRegisterActions(f.registration),list=f.controller.actions[5],nodes=[{node:1}];
+ run(f.controller,5,nodes,true);assert.deepEqual(list,['old',...nodes]);run(f.controller,5,nodes,false);assert.deepEqual(list,nodes);
+});
+test('empty registration leaves existing lists intact even in replace mode and skips event bounds',()=>{
+ const f=projectileActionInitFixture();f.controller.projectile=f.projectile;const run=fearProjectileRegisterActions(f.registration);
+ run(f.controller,-1,null,false);run(f.controller,99,[],false);assert.deepEqual(f.controller.actions[0],['old']);
+});
+test('registration publishes an allocated list into its captured array then uses a fresh array for AddRange',()=>{
+ const f=projectileActionInitFixture();f.controller.projectile=f.projectile;f.controller.actions[5]=null;const original=f.controller.actions,replacement=Array.from({length:7},()=>[]);
+ f.registration.constructActionList=()=>{f.controller.actions=replacement;};fearProjectileRegisterActions(f.registration)(f.controller,5,['new'],true);
+ assert.deepEqual(original[5],[]);assert.deepEqual(replacement[5],['new']);
+});
+test('registration array type check failure retains allocation but never publishes or adds nodes',()=>{
+ const f=projectileActionInitFixture();f.controller.projectile=f.projectile;f.controller.actions[5]=null;f.registration.checkArrayElement=()=>{throw Error('element type');};
+ assert.throws(()=>fearProjectileRegisterActions(f.registration)(f.controller,5,['new'],true),/element type/);assert.equal(f.controller.actions[5],null);
+});
+test('action Init and registration require explicit receivers and preserve native bounds',()=>{
+ assert.throws(()=>fearProjectileActionControllerInit({}),/callers/);assert.throws(()=>fearProjectileRegisterActions({}),/callers/);
+ const f=projectileActionInitFixture();f.controller.projectile=f.projectile;for(const event of [-1,7])assert.throws(()=>fearProjectileRegisterActions(f.registration)(f.controller,event,['new'],true),/bounds/);
+});
+test('initialized birth event actions run through shared managed context and restore every stack before callback',()=>{
+ const f=projectileActionInitFixture(),birth=projectileActionBornFixture();
+ Object.assign(f.controller,{actions:Array(7).fill(null)});Object.assign(f.projectile,birth.projectile);
+ f.ability.board=birth.controller.blackboard;f.options.getProjectileActions=(_ability,event)=>event===5?[birth.probe]:null;f.run();
+ fearProjectileActionBirth({runActions:fearProjectileControllerRunActions(birth.options)})(f.controller);
+ assert.equal(birth.events.filter(e=>e[0]==='node').length,1);assert.equal(birth.events.filter(e=>e[0]==='callback').length,1);
+ assert.deepEqual(birth.snapshots.takeSnapshot(),birth.managed.prior);for(const stack of Object.values(birth.g.context))assert.equal(stack._size,1);
+});
 
 function projectileActionBornFixture(){
  const managed=managedActionContextFixture(),{g,guards,snapshots}=managed,events=[],ability={uid:501},projectile={uid:500,source:managed.f.source,traceTarget:managed.f.owner,ability,context:g.context,m_eventCallbacks:Array(7).fill(null)},

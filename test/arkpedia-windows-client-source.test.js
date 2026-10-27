@@ -20,6 +20,20 @@ function settingsFixture(){
  return{...f,settings:{version:f.pin.version,source:f.pin.source,file}};
 }
 
+test('action Init source retains seven-event registration, slot bindings, list replacement and reset ordering',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-projectile-action-init-source.json'),parent=read('data/candidates/arkpedia-windows-fear-projectile-source.json');
+ assert.deepEqual(c.methods.map(m=>[m.index,m.entryRva]),[[62270,0x6a1340],[62272,0x6a1ed0]]);
+ for(const m of c.methods){assert.deepEqual(m,parent.methods.find(row=>row.index===m.index));for(const chunk of m.chunks){const raw=Buffer.from(chunk.base64,'base64');assert.equal(sha(raw),chunk.sha256);assert.equal(raw.length,chunk.endRva-chunk.beginRva);}}
+ for(const source of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+source.path,import.meta.url))),source.sha256);
+ assert.deepEqual(c.virtualSlots.map(s=>[s.slot,s.name]),[[44,'GetActiveBuffs'],[45,'GetProjectileActions'],[46,'GetAbilityAttachments']]);
+ assert.deepEqual(c.directCalls.map(r=>[r.name,r.entryRva]),[['get_blackboard',0x3910ac0],['Of',0x2166fa0],['get_type',0x67e760]]);
+ assert.deepEqual(c.fields.map(f=>[f.name,f.offset]),[['_useSelfBlackboard',22],['m_buffsToAttach',48],['m_attachmentsToAttach',56],['m_actionsToAttach',40],['m_attachedBuffsForTargetMap',64],['m_attachedExtraBuffsForTargetMap',72],['m_addBuffsToTargetCnt',36],['<blackboard>k__BackingField',80],['<projectile>k__BackingField',88]]);
+ const at=(method,rva,operands)=>assert.ok(instructions(c.methods[method]).some(i=>i.rva===rva&&i.operands===operands),'Action Init instruction '+rva.toString(16));
+ for(const [rva,operands]of [[0x6a139c,'byte ptr [rdi + 0x16], dl'],[0x6a13b2,'0x182166fa0'],[0x6a13be,'qword ptr [rcx], rax'],[0x6a13cd,'qword ptr [rcx], r15'],[0x6a13fa,'rax'],[0x6a14b8,'0x183f62450'],[0x6a14d8,'0x18450dea0'],[0x6a1502,'rax'],[0x6a155e,'0x1851ce000'],[0x6a1563,'ecx, 0x2d'],[0x6a1571,'0x18000e9b0'],[0x6a1576,'r9b, 1'],[0x6a1586,'0x1806a1ed0'],[0x6a158d,'ebx, 7'],[0x6a15a2,'0x184c0b100'],[0x6a15b7,'0x184c0b100'],[0x6a15cb,'dword ptr [rdi + 0x24], r12d']])at(0,rva,operands);
+ for(const [rva,operands]of [[0x6a1f4f,'0x18067e760'],[0x6a1f54,'eax, 2'],[0x6a1f67,'0x183f62450'],[0x6a1fb8,'0x1851ce000'],[0x6a1fdd,'0x18430e530'],[0x6a1fec,'0x18040ffa0'],[0x6a2006,'qword ptr [rcx], rsi'],[0x6a200e,'rax, qword ptr [rbp + 0x28]'],[0x6a2030,'0x18450dea0']])at(1,rva,operands);
+ assert.equal(c.init.eventLimit,7);assert.equal(c.testOnly,true);for(const key of ['runtimeDispatchVerified','frameParity','crossVersionParity','nativeCollectionEffectsVerified','nativePreprocessorEffectsVerified','hotfixDispatchVerified','liveActionInitVerified'])assert.equal(c[key],false);
+});
+
 test('base/action birth source binds exact leaf wrappers, borned flag and context cleanup before delegate dispatch',()=>{
  const c=read('data/candidates/arkpedia-windows-fear-projectile-action-born-source.json'),parent=read('data/candidates/arkpedia-windows-fear-projectile-source.json');assert.equal(c.methods.length,7);assert.deepEqual(c.methods[3],parent.methods.find(m=>m.index===62283));
  for(const source of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+source.path,import.meta.url))),source.sha256);for(const method of c.methods)for(const chunk of method.chunks){const raw=Buffer.from(chunk.base64,'base64');assert.equal(sha(raw),chunk.sha256);assert.equal(raw.length,chunk.endRva-chunk.beginRva);}

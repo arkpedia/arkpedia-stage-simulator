@@ -3473,3 +3473,29 @@ write receivers. All684 focused native/fear/family/miner tests pass. Hosted
 continuation40539231228 ate94e018a and full40533531161 atd74e28a3 both passed.
 Culture effects, native list versioning, full Reset and live controller/stage
 integration remain open. No source/support/receipt/catalogue gate changed.
+
+## Projectile action initialization checkpoint
+
+The test-only `chapter16-fear-projectile-action-init.js` adapter now follows the
+retained default ActionController.Init (62270, RVA 0x6a1340) and RegisterActions
+(62272, RVA 0x6a1ed0). The new checksum-bound extractor and candidate retain both
+complete bodies, their field offsets, direct method identities and RangedAttack
+slots 44/45/46 (GetActiveBuffs/GetProjectileActions/GetAbilityAttachments).
+
+Init samples the self-blackboard flag before obtaining the ability blackboard;
+the separate-blackboard branch calls Blackboard.Of, not a method named Clone.
+It publishes blackboard and projectile before obtaining buffs, clears or
+constructs the buff list, obtains attachments, and clears/registers events 0–6
+in order. Both attached-buff maps clear before the addition counter resets.
+Registration skips graphic type 2 before querying incoming actions, preserves
+old nodes for null/empty input, handles append versus replacement, publishes a
+new list into the captured array, and fetches the controller array again for
+AddRange. No preprocessing is invented inside registration.
+
+The 1,522-test focused run includes reuse, nullable and replaced collections,
+failure ordering, short arrays, graphic skips, and registration composed with
+the prior birth runner and all ten managed context stacks. The extractor check
+and Fear/miner contracts also remain required. Collection internals,
+Blackboard.Of effects, concrete ability preprocessing, hotfix dispatch and live
+runtime parity remain explicit/unverified; this checkpoint admits no enemy,
+stage or public catalogue entry.
