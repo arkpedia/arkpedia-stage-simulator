@@ -607,3 +607,25 @@ processing remains in the HP caller; no generic b.kill credit is substituted.
 The area-query slot38 receipt is also corrected and explicitly bound to
 get_alive rather than labeled as generic selectability. Target-free and other
 eligibility checks remain the separately retained TargetOptions branches.
+
+### Buff activation target binding
+
+`extract-windows-fear-context.py --check` retains nine complete Buff/ChangeGuard
+methods and the complete `Nodes.GetActionTarget` method. The latter has an
+embedded eleven-entry image-relative table. All code bytes, table bytes,
+dispatch bounds and instruction-aligned destinations are classified and
+checked; the shared strict decoder is unchanged.
+
+Native Buff.OnStart invokes event0 with target-to-owner enabled. `_RunActions`
+sets the buff/source context and, on that branch, writes Buff.owner into target.
+The actual target-type enum and resolver bind TARGET0 to the context target and
+BUFF_OWNER3 to Buff.owner. For this activation both resolve to the owner, even
+if the incoming context had another target. The original started-field guard
+and subsequent started write are retained separately from local one-shot safety.
+
+`fearProjectileSelfDeathActivation` supplies that selected binding to the action
+handler. Tests prevent incoming TARGET/BUFF_OWNER values or a reused owner body
+from redirecting the self-death actions. General context routing remains exposed
+only by the lower-level handler. Actual BuffToOwner/AddBuff admission, effect
+application, native context stack timing, mode/FSM and HP death processing still
+require integration before enemy or stage support is granted.

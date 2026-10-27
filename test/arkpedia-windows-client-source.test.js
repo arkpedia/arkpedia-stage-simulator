@@ -20,6 +20,38 @@ function settingsFixture(){
  return{...f,settings:{version:f.pin.version,source:f.pin.source,file}};
 }
 
+test('buff activation context binds event0 target to owner and preserves the complete target dispatch table',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-context-source.json');assert.equal(c.methods.length,9);
+ for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
+ for(const m of c.methods)for(const ch of m.chunks){
+  const raw=Buffer.from(ch.base64,'base64');assert.equal(sha(raw),ch.sha256);assert.equal(raw.length,ch.endRva-ch.beginRva);
+ }
+ const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ const start=castMethod(c,'Buff','OnStart');
+ at(start,0x39b0187,'r9b, 1');at(start,0x39b018f,'r8d, r8d');at(start,0x39b0195,'0x1839b5370');
+ assert.equal(c.buffStartedField.offset,0x1e8);at(start,0x39b019c,'byte ptr [rbx + 0x1e8], 1');
+ const run=castMethod(c,'Buff','_RunActions');at(run,0x39b5486,'r14b, r14b');
+ at(run,0x39b5495,'0x1839b6ff0');at(run,0x39b54ac,'0x1839eb3e0');
+ at(run,0x39b545b,'0x1839eb000');at(run,0x39b5481,'0x1839eb350');
+ const chunk=c.targetDispatcher.chunks[0],raw=Buffer.from(chunk.base64,'base64');
+ const code=Buffer.from(chunk.codeBase64,'base64'),table=Buffer.from(chunk.jumpTable.base64,'base64');
+ assert.equal(sha(raw),chunk.sha256);assert.equal(sha(code),chunk.codeSha256);assert.equal(sha(table),chunk.jumpTable.sha256);
+ assert.deepEqual(Buffer.concat([code,table]),raw);assert.equal(raw.length,chunk.endRva-chunk.beginRva);
+ assert.equal(code.length,chunk.codeEndRva-chunk.beginRva);assert.equal(table.length,11*4);
+ let cursor=chunk.beginRva;for(const i of chunk.instructions){assert.equal(i.rva,cursor);cursor+=i.size;}
+ assert.equal(cursor,chunk.codeEndRva);
+ for(let i=0;i<11;i++){
+  assert.equal(table.readUInt32LE(i*4),chunk.jumpTable.targetRvas[i]);
+  assert.ok(chunk.instructions.some(ins=>ins.rva===chunk.jumpTable.targetRvas[i]));
+ }
+ const value=name=>c.targetType.fields.find(f=>f.name===name).value;
+ assert.equal(value('TARGET'),0);assert.equal(value('BUFF_OWNER'),3);
+ assert.equal(chunk.jumpTable.targetRvas[value('TARGET')],0xced3d4);
+ assert.equal(chunk.jumpTable.targetRvas[value('BUFF_OWNER')],0xced40f);
+ at(c.targetDispatcher,0xced3d4,'rax, qword ptr [rbx + 8]');at(c.targetDispatcher,0xced428,'0x1839b6ff0');
+ for(const key of ['runtimeDispatchVerified','frameParity','crossVersionParity'])assert.equal(c[key],false);
+});
+
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
  const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,14);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);

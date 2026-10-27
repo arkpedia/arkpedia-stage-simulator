@@ -46,6 +46,8 @@ jobs:
         run: python tools/arkpedia/extract-windows-cast-lifecycle.py --check
       - name: Reproduce selected self-death template and native action-chain conditions
         run: python tools/arkpedia/extract-windows-fear-self-death.py --check
+      - name: Reproduce buff activation context and complete action-target switch table
+        run: python tools/arkpedia/extract-windows-fear-context.py --check
       - name: Reproduce default miner talent assignment and missing-duration evidence
         run: python tools/arkpedia/extract-windows-miner-talents.py --check
       - name: Reproduce fear selector binding and conditional abnormal-filter evidence

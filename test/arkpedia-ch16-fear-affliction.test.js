@@ -16,7 +16,7 @@ import {fearProjectileFlight} from '../server/sim/content/chapter16-fear-flight.
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
 import {fearProjectileSpell} from '../server/sim/content/chapter16-fear-spell.js';
-import {fearProjectileSelfDeath,fearProjectileSuicide} from '../server/sim/content/chapter16-fear-self-death.js';
+import {fearProjectileSelfDeath,fearProjectileSuicide,fearProjectileSelfDeathActivation} from '../server/sim/content/chapter16-fear-self-death.js';
 import {fearProjectileTargetVerifier,fearProjectileSourceMotion} from '../server/sim/content/chapter16-fear-targets.js';
 import {fearProjectileReached,fearProjectileMotionStep,fearProjectileMountReference,fearProjectileTraceMotion} from '../server/sim/content/chapter16-fear-movement.js';
 import { battle as minerBattle, keys as minerKeys } from './helpers/ch17Harness.js';
@@ -24,6 +24,24 @@ import { chapter16Shadow } from '../server/sim/content/chapter16-shadow.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
 const parentKey='feawpj_a[mcreep_fear]';
 const fpOne=1n<<32n;
+test('native self-death activation binds TARGET and BUFF_OWNER to the owner despite an incoming different target',()=>{
+ const f=fixture(),events=[];
+ const activation=fearProjectileSelfDeathActivation(f.b,{owner:f.source,target:f.target,buffOwner:f.target,
+  readAbnormalFlag:unit=>{assert.equal(unit,f.source);return false;},readAbnormalCombo:unit=>{assert.equal(unit,f.source);return false;},
+  switchMode:unit=>{assert.equal(unit,f.source);events.push('mode1');return true;},
+  createImmunityBuff:unit=>{assert.equal(unit,f.source);events.push('immunity');return true;},
+  instantKill:unit=>{assert.equal(unit,f.source);events.push('suicide');return false;}});
+ assert.equal(activation.run(),false);assert.equal(activation.run(),null);assert.deepEqual(events,['mode1','immunity','suicide']);
+ assert.equal(f.target.alive,true);
+});
+
+test('activation binds its original owner life and never redirects the action chain to a reused body',()=>{
+ const f=fixture();let callbacks=0;
+ const activation=fearProjectileSelfDeathActivation(f.b,{owner:f.source,readAbnormalFlag:()=>{callbacks++;return false;},
+  readAbnormalCombo:()=>false,switchMode:()=>true,createImmunityBuff:()=>true,instantKill:()=>true});
+ f.source.deploySeq++;assert.equal(activation.run(),null);assert.equal(callbacks,0);
+});
+
 test('selected InstantKill marks suicide before forced zero HP and returns the post-action alive state',()=>{
  const f=fixture(),events=[];
  const suicide=fearProjectileSuicide(f.b,{target:f.source,readAlive:unit=>{events.push('alive');return unit.alive;},

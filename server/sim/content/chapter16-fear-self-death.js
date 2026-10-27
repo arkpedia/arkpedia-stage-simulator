@@ -2,6 +2,12 @@
 // Selected ON_ACTIVATE action order of fearpj_m0_t[switch_to_die]. Context
 // binding, native status/mode/buff/kill effects remain explicit callers. Effect
 // callbacks return the native action's Boolean, not an inferred buff receipt.
+export function fearProjectileSelfDeathActivation(b,{owner,...callers}){
+ // Buff.OnStart invokes event0 with set-target-to-owner=true. The caller's
+ // prior context target cannot redirect this activation's TARGET actions.
+ return fearProjectileSelfDeath(b,{...callers,buffOwner:owner,target:owner});
+}
+
 export function fearProjectileSuicide(b,{target,readAlive,markSuicide,setHpInternal}){
  if(!target||!Number.isInteger(target.deploySeq)||[readAlive,markSuicide,setHpInternal].some(fn=>typeof fn!=='function'))
   throw new TypeError('Fear suicide requires a target life and explicit native alive, suicide-mark and HP callers');
