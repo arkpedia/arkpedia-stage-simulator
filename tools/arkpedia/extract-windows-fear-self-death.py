@@ -442,6 +442,32 @@ result['modeSwitch']['buffNotification']['recycleQueue']['immediateFlush'] = {
     'getEnumerator': {'entryRva': 0x4511980, 'chunks': c['code'](0x4511980), 'concreteContextVerified': False},
     'nativeCleanupPhaseVerified': False,
 }
+for name in ['ClearRunTimeData', 'get_runeManager', 'get_globalBlackboard']:
+    methods.append(c['method'](battle_controller, c['unique'](lambda r: r['name'] == name, battle_controller['methods'])))
+cleanup_effects = []
+for type_name, namespace, name, rva in [
+    ('BattleLogger', 'Torappu.Battle', 'ClearAll', 0x3a35060),
+    ('RuneManager', 'Torappu.Battle.Runes', 'Clear', 0x9ffb50),
+    ('PoolManager', 'Torappu.ObjectPool', 'Recycle', 0x28a91e0),
+    ('BattleGlobalBlackboard', 'Torappu.Battle', 'Reset', 0x39a5400),
+    ('GlobalEnvSystemController', 'Torappu.Battle', 'RemoveAll', 0x5718a0),
+    ('SpineShaderManager', 'Torappu.Battle', 'ResetAllSpineShaders', 0x3968e00),
+    ('BattleController', 'Torappu.Battle', '_ClearResourcesInHolder', 0x3986e30),
+    ('BattleController', 'Torappu.Battle', '_ClearStaticVariables', 0x3987060)]:
+    t = c['type_row'](type_name, namespace)
+    row = c['unique'](lambda r: r['name'] == name and v['pointer'](r) - v['image_base'] == rva, t['methods'])
+    cleanup_effects.append({'typeIndex': t['index'], 'namespace': namespace, 'type': type_name, 'definition': row, 'entryRva': rva})
+result['modeSwitch']['buffNotification']['recycleQueue']['runtimeCleanup'] = {
+    'effects': cleanup_effects,
+    'globalBuffField': c['unique'](lambda f: f['name'] == 'm_globalBuffs', c['fields'](battle_controller)),
+    'loggerClearCallRva': 0x396ef57, 'runeGetterCallRva': 0x396ef61, 'runeClearCallRva': 0x396ef74,
+    'initialCountCallRva': 0x396f014, 'readGlobalBuffCallRva': 0x396f037, 'objectValidityCallRva': 0x396f059,
+    'recycleGlobalBuffCallRva': 0x396f092, 'loopCountCallRva': 0x396f0a4, 'clearGlobalBuffCountRva': 0x396f0c5,
+    'blackboardGetterCallRva': 0x396f0f1, 'blackboardResetCallRva': 0x396f100, 'environmentRemoveAllCallRva': 0x396f110,
+    'shaderResetCallRva': 0x396f123, 'resourcesClearCallRva': 0x396f12d,
+    'immediateFlushCallRva': 0x396f137, 'staticClearTailRva': 0x396f150,
+    'liveLifecyclePhaseVerified': False, 'subsystemEffectsVerified': False,
+}
 for name in ['OnAllocate', 'OnRecycle', 'set_instanceUid']:
     methods.append(c['method'](buff, c['unique'](lambda r: r['name'] == name, buff['methods'])))
 pool = c['type_row']('ObjectPool`1', 'Torappu.ObjectPool')

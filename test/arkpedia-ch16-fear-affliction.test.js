@@ -18,7 +18,7 @@ import {fearProjectileBuffList} from '../server/sim/content/chapter16-fear-buff-
 import {fearProjectileBuffPointers} from '../server/sim/content/chapter16-fear-buff-pointer.js';
 import {fearProjectileFinishedBuffs} from '../server/sim/content/chapter16-fear-buff-cleanup.js';
 import {fearProjectileFinishAndRemoveBuff,fearProjectileOverrideGroupRemove} from '../server/sim/content/chapter16-fear-buff-finish.js';
-import {fearProjectileBuffRecycleQueue} from '../server/sim/content/chapter16-fear-buff-recycle.js';
+import {fearProjectileBuffRecycleQueue,fearProjectileClearRuntimeData} from '../server/sim/content/chapter16-fear-buff-recycle.js';
 import {fearProjectileBuffIdentity} from '../server/sim/content/chapter16-fear-buff-identity.js';
 import {fearProjectileBuffRecyclePool,fearProjectileDefaultBuffPool} from '../server/sim/content/chapter16-fear-buff-pool.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
@@ -205,6 +205,66 @@ test('finish and native-frame queue use concrete buff recycle identity before th
  finish.run();queue.update();assert.equal(buff.instanceUid,1);assert.equal(buff.m_isValid,true);assert.equal(recycled,0);
  f.b.kill(f.source,null);frame=11;queue.update();assert.equal(recycled,1);assert.equal(buff.instanceUid,0);assert.equal(buff.m_isValid,false);assert.equal(p.lock(old),null);
  identity.allocate(buff);assert.equal(buff.instanceUid,2);assert.equal(p.lock(old),null);assert.equal(p.lock(p.capture(buff)),buff);queue.release();assert.deepEqual(f.b.errors,[]);
+});
+
+function runtimeCleanupFixture(overrides={}){
+ const f=fixture(),events=[],globalBuffs=[{id:'a'},null,{id:'b'}];
+ const effects=['clearLogger','clearRunes','clearGlobalBuffList','resetGlobalBlackboard','removeAllGlobalEnvironments',
+  'resetAllSpineShaders','clearResourcesInHolder','flushDelayedBuffs','clearStaticVariables'];
+ const callers=Object.fromEntries(effects.map(name=>[name,()=>{events.push(name);if(name==='clearGlobalBuffList')globalBuffs.length=0;}]));
+ Object.assign(callers,{readGlobalBuffCount:()=>globalBuffs.length,readGlobalBuff:i=>globalBuffs[i],isDestroyedOrNull:b=>b==null,
+  recycleGlobalBuff:b=>events.push(b.id)},overrides);
+ const cleanup=fearProjectileClearRuntimeData(f.b,callers);return{...f,events,globalBuffs,cleanup,callers};
+}
+
+test('runtime cleanup recycles valid global objects before subsystems, delayed buffs and static state',()=>{
+ const f=runtimeCleanupFixture();f.cleanup.run();assert.deepEqual(f.events,['clearLogger','clearRunes','a','b','clearGlobalBuffList',
+  'resetGlobalBlackboard','removeAllGlobalEnvironments','resetAllSpineShaders','clearResourcesInHolder','flushDelayedBuffs','clearStaticVariables']);
+ assert.deepEqual(f.globalBuffs,[]);f.cleanup.release();
+});
+
+test('runtime cleanup resamples the live global-buff list after each recycled object',()=>{
+ let f;f=runtimeCleanupFixture({recycleGlobalBuff:b=>{f.events.push(b.id);if(b.id==='a')f.globalBuffs.push({id:'c'});}});
+ f.cleanup.run();assert.deepEqual(f.events.slice(0,5),['clearLogger','clearRunes','a','b','c']);f.cleanup.release();
+});
+
+test('runtime cleanup list shrink does not recycle stale snapshot objects',()=>{
+ let f;f=runtimeCleanupFixture({recycleGlobalBuff:b=>{f.events.push(b.id);f.globalBuffs.length=0;}});
+ f.cleanup.run();assert.deepEqual(f.events.slice(0,4),['clearLogger','clearRunes','a','clearGlobalBuffList']);f.cleanup.release();
+});
+
+test('runtime cleanup flushes retained next-frame pointers after held resources and before static cleanup',()=>{
+ let f;const order=[],p=fearProjectileBuffPointers({readUid:b=>b.uid});let queue;
+ f=runtimeCleanupFixture({clearResourcesInHolder:()=>order.push('resources'),flushDelayedBuffs:()=>queue.flushImmediately(),clearStaticVariables:()=>{
+  assert.equal(queue.pendingCount,0);order.push('static');
+ }});
+ queue=fearProjectileBuffRecycleQueue(f.b,{readFixedFrame:()=>10,copyPointer:p.copy,isPointerValid:p.isValid,lockPointer:p.lock,recycleBuff:b=>{order.push('buff');b.uid=0;}});
+ queue.enqueue(p.capture({uid:1}));f.cleanup.run();assert.deepEqual(order,['resources','buff','static']);queue.release();f.cleanup.release();
+});
+
+test('runtime cleanup failure preserves committed effects and skips later static cleanup',()=>{
+ let f,fail=true;f=runtimeCleanupFixture({flushDelayedBuffs:()=>{f.events.push('flush');if(fail)throw Error('flush failed');}});
+ assert.throws(()=>f.cleanup.run(),/flush failed/);assert.equal(f.events.includes('clearStaticVariables'),false);assert.deepEqual(f.globalBuffs,[]);
+ fail=false;f.cleanup.run();assert.equal(f.events.at(-1),'clearStaticVariables');f.cleanup.release();
+});
+
+for(const point of ['clearLogger','clearRunes','readGlobalBuffCount','readGlobalBuff','isDestroyedOrNull','recycleGlobalBuff',
+ 'clearGlobalBuffList','resetGlobalBlackboard','removeAllGlobalEnvironments','resetAllSpineShaders','clearResourcesInHolder',
+ 'flushDelayedBuffs','clearStaticVariables'])test('runtime cleanup cancels local battle end during '+point,()=>{
+ let f;f=runtimeCleanupFixture({[point]:(...args)=>{f.b.emit('battleEnd',{});return args[0];}});
+ assert.equal(f.cleanup.run(),null);assert.equal(f.cleanup.run(),null);assert.deepEqual(f.b.errors,[]);
+});
+
+test('runtime cleanup rejects recursive cleanup while global objects recycle',()=>{
+ let f;f=runtimeCleanupFixture({recycleGlobalBuff:()=>assert.equal(f.cleanup.run(),null)});f.cleanup.run();f.cleanup.release();
+});
+
+test('runtime cleanup rejects invalid native count and validity results before later effects',()=>{
+ for(const value of [-1,NaN,1.5,2**31]){
+  const f=runtimeCleanupFixture({readGlobalBuffCount:()=>value});assert.throws(()=>f.cleanup.run(),/Int32 list count/);
+  assert.deepEqual(f.events,['clearLogger','clearRunes']);f.cleanup.release();
+ }
+ const f=runtimeCleanupFixture({isDestroyedOrNull:()=>undefined});assert.throws(()=>f.cleanup.run(),/Boolean object validity/);f.cleanup.release();
 });
 
 function recycleQueueFixture(overrides={}){

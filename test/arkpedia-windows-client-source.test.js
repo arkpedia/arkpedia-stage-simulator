@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,81);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,84);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -225,6 +225,25 @@ test('immediate recycle source enumerates stored pairs and pointer lists before 
  }
  at(q.outerMoveNext,0x4dd4158,'dword ptr [rbx + 0xc], eax');at(q.outerMoveNext,0x4dd41b6,'dword ptr [rbx + 0xc], eax');
  assert.ok(!instructions(m).some(i=>i.mnemonic==='call'&&i.operands==='0x183991a80'),'flush does not filter by current frame');
+});
+
+test('runtime cleanup source binds subsystem order around immediate delayed-buff recycling',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.recycleQueue.runtimeCleanup;
+ const m=castMethod(c,'BattleController','ClearRunTimeData'),at=(rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ assert.equal(q.globalBuffField.name,'m_globalBuffs');assert.equal(q.globalBuffField.offset,0x68);
+ assert.equal(q.liveLifecyclePhaseVerified,false);assert.equal(q.subsystemEffectsVerified,false);
+ for(const[key,target]of [['loggerClearCallRva',0x3a35060],['runeGetterCallRva',0x3993d90],['runeClearCallRva',0x9ffb50],
+  ['initialCountCallRva',0x3f64f60],['readGlobalBuffCallRva',0x4527e70],['objectValidityCallRva',0x5a445f0],
+  ['recycleGlobalBuffCallRva',0x28a91e0],['loopCountCallRva',0x3f64f60],['blackboardGetterCallRva',0x3991d60],
+  ['blackboardResetCallRva',0x39a5400],['environmentRemoveAllCallRva',0x5718a0],['shaderResetCallRva',0x3968e00],
+  ['resourcesClearCallRva',0x3986e30],['immediateFlushCallRva',0x398e200],['staticClearTailRva',0x3987060]])at(q[key],'0x'+(0x180000000+target).toString(16));
+ at(q.clearGlobalBuffCountRva,'dword ptr [rcx + 0x18], 0');
+ assert.deepEqual(q.effects.map(e=>[e.type,e.definition.name]),[
+  ['BattleLogger','ClearAll'],['RuneManager','Clear'],['PoolManager','Recycle'],['BattleGlobalBlackboard','Reset'],
+  ['GlobalEnvSystemController','RemoveAll'],['SpineShaderManager','ResetAllSpineShaders'],
+  ['BattleController','_ClearResourcesInHolder'],['BattleController','_ClearStaticVariables']]);
+ assert.ok(q.clearGlobalBuffCountRva<q.blackboardResetCallRva&&q.resourcesClearCallRva<q.immediateFlushCallRva&&q.immediateFlushCallRva<q.staticClearTailRva);
+ assert.ok(castMethod(c,'BattleController','get_runeManager'));assert.ok(castMethod(c,'BattleController','get_globalBlackboard'));
 });
 
 test('finish effects bind UID-map removal, MarkFinish/OnFinish flags and delayed recycle queue after native completion',()=>{

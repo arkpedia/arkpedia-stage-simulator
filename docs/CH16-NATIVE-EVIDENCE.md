@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 81 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 84 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -1209,3 +1209,32 @@ Full40533531161 and continuation40533531826 check d74e28a3 independently.
 
 Native controller cleanup timing, Reset effects and full controller/stage
 integration remain open. No source/support/receipt/catalogue gate changed.
+
+### ClearRunTimeData default cleanup ordering
+
+Static direct-call review locates immediate delayed-buff recycling inside
+BattleController.ClearRunTimeData at396f137. The complete method and its
+rune-manager/global-blackboard getters are now retained in the84-method artifact.
+Metadata/native pointer bindings identify the logger, rune, global-object pool,
+blackboard, global environment and shader effects plus the resource and static
+cleanup methods. These bindings do not certify the subsystem implementations.
+
+The selected default path clears the logger and runes, then indexes the live
+global-buff list. It checks native object destruction/null semantics before
+PoolManager.Recycle, and reads the live count again after every iteration rather
+than taking a snapshot. It clears that list before resetting the global
+blackboard, removing all global environments, resetting all spine shaders and
+clearing held resources. Immediate delayed-buff recycling follows; static cleanup
+is a tail call only after that operation succeeds.
+
+`fearProjectileClearRuntimeData` composes these ordered effects through required
+native subsystem receivers. It supports a live global-buff list, skips destroyed
+objects, preserves completed effects after exceptions, and prevents recursive
+cleanup. It runs explicitly before the local battleEnd cancellation; no native
+end-request scheduling or live subsystem wiring is inferred. The queue composition
+verifies pending pointers are recycled after held-resource cleanup and before
+static cleanup. Tests also cover list growth/shrinkage, retry after a flush error,
+malformed native count/validity results and cancellation at every receiver.
+All594 focused native/fear/family/miner tests pass and --check reproduces the
+84-method evidence. Full controller/stage integration, live lifecycle phase,
+subsystem effects and Buff.Reset remain open; all existing gates remain intact.

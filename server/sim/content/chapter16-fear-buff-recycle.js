@@ -76,3 +76,47 @@ export function fearProjectileBuffRecycleQueue(b,{readFixedFrame,copyPointer,isP
   release,
  });
 }
+
+// Selected default ClearRunTimeData orchestration. Receivers perform the actual
+// native subsystem effects; this runs before the local battleEnd cancellation.
+export function fearProjectileClearRuntimeData(b,{clearLogger,clearRunes,readGlobalBuffCount,readGlobalBuff,
+ isDestroyedOrNull,recycleGlobalBuff,clearGlobalBuffList,resetGlobalBlackboard,removeAllGlobalEnvironments,
+ resetAllSpineShaders,clearResourcesInHolder,flushDelayedBuffs,clearStaticVariables}){
+ if([clearLogger,clearRunes,readGlobalBuffCount,readGlobalBuff,isDestroyedOrNull,recycleGlobalBuff,clearGlobalBuffList,
+  resetGlobalBlackboard,removeAllGlobalEnvironments,resetAllSpineShaders,clearResourcesInHolder,flushDelayedBuffs,
+  clearStaticVariables].some(fn=>typeof fn!=='function'))throw new TypeError('Fear runtime cleanup requires native subsystem and global-buff callers');
+ let ended=false,running=false,endHandle=null;
+ const release=()=>{ended=true;if(endHandle)b.off(endHandle);endHandle=null;};
+ const active=()=>{if(!ended&&(b.finished||b._endReq))release();return!ended;};
+ const count=()=>{
+  const n=readGlobalBuffCount();if(!active())return null;
+  if(!Number.isInteger(n)||n<0||n>0x7fffffff)throw new TypeError('Fear runtime cleanup requires a native nonnegative Int32 list count');
+  return n;
+ };
+ if(active())endHandle=b.on('battleEnd',release);
+ return Object.freeze({
+  run(){
+   if(running||!active())return null;running=true;
+   try{
+    clearLogger();if(!active())return null;
+    clearRunes();if(!active())return null;
+    let size=count();if(!active())return null;
+    for(let index=0;index<size;index=(index+1)|0){
+     const buff=readGlobalBuff(index);if(!active())return null;
+     const destroyed=isDestroyedOrNull(buff);if(!active())return null;
+     if(typeof destroyed!=='boolean')throw new TypeError('Fear runtime cleanup requires native Boolean object validity');
+     if(!destroyed){
+      if(buff==null)throw new TypeError('Fear runtime cleanup cannot recycle a null global buff');
+      recycleGlobalBuff(buff);if(!active())return null;
+     }
+     size=count();if(!active())return null;
+    }
+    for(const effect of [clearGlobalBuffList,resetGlobalBlackboard,removeAllGlobalEnvironments,resetAllSpineShaders,
+     clearResourcesInHolder,flushDelayedBuffs,clearStaticVariables]){
+     effect();if(!active())return null;
+    }
+   }finally{running=false;}
+  },
+  release,
+ });
+}
