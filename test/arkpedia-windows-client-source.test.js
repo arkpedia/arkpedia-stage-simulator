@@ -74,7 +74,7 @@ const castMethod=(c,type,name)=>{
 };
 
 test('fear projectile source pins complete native methods and exact original script references',()=>{
- const c=read(projectilePath);assert.equal(c.methods.length,35);
+ const c=read(projectilePath);assert.equal(c.methods.length,38);
  for(const p of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+p.path,import.meta.url))),p.sha256);
  for(const method of [...c.methods,c.lifeValueLeaf])for(const chunk of method.chunks){
   const raw=Buffer.from(chunk.base64,'base64');assert.equal(raw.length,chunk.endRva-chunk.beginRva);assert.equal(sha(raw),chunk.sha256);
@@ -84,6 +84,27 @@ test('fear projectile source pins complete native methods and exact original scr
  assert.equal(hit.scriptIdentity.m_ClassName,'HitBehaviour');assert.equal(hit.serializedFieldParity,false);
  assert.deepEqual(hit.unmatchedSerializedFields,{_exceptFlyCharacter:0});
  for(const field of ['runtimeDispatchVerified','frameParity','crossVersionParity'])assert.equal(c[field],false);
+});
+
+test('native projectile source lock checks cached UID and destroyed/null state across allocation and recycling',()=>{
+ const c=read(projectilePath),ref=c.sourceReference;
+ assert.equal(ref.method.name,'Lock');assert.equal(ref.encodedUsage>>>29,6);
+ assert.equal(ref.typeArgument.namespace,'Torappu.Battle');assert.equal(ref.typeArgument.name,'Entity');
+ assert.equal(ref.interface.name,'IPtrObject');assert.deepEqual(ref.interface.methods.map(m=>m.name),['get_instanceUid']);
+ assert.deepEqual(ref.declaredFields.map(f=>f.name),['obj','cachedUid']);
+ assert.equal(ref.instanceUidField.offset,0x18);assert.equal(ref.concreteContextVerified,false);
+ for(const m of [ref.lock,ref.validity])for(const ch of m.chunks){
+  const raw=Buffer.from(ch.base64,'base64');assert.equal(sha(raw),ch.sha256);assert.equal(raw.length,ch.endRva-ch.beginRva);
+ }
+ const thunk=Buffer.from(ref.validityThunk.base64,'base64');assert.equal(thunk.length,5);assert.equal(thunk[0],0xe9);assert.equal(sha(thunk),ref.validityThunk.sha256);
+ assert.equal(ref.validityThunk.entryRva+5+thunk.readInt32LE(1),ref.validity.entryRva);
+ const valid=instructions(ref.validity),nullCheck=castMethod(c,'ObjectExtensions','IsDestroyedOrNull');
+ assert.equal(nullCheck.image,'Torappu.Common.dll');
+ assert.ok(valid.some(i=>i.mnemonic==='call'&&i.operands==='0x'+(c.imageBase+nullCheck.entryRva).toString(16)));
+ assert.ok(valid.some(i=>i.rva===0x477cdfe&&i.mnemonic==='cmp'&&i.operands==='eax, dword ptr [rbx + 8]'));
+ const allocate=instructions(castMethod(c,'BObject','OnAllocate')),recycle=instructions(castMethod(c,'BObject','OnRecycle'));
+ assert.ok(allocate.some(i=>i.rva===0x399825a&&i.operands==='dword ptr [rbx + 0x18], eax'));
+ assert.ok(recycle.some(i=>i.rva===0x3998334&&i.operands==='dword ptr [rbx + 0x18], 0'));
 });
 
 test('uncached-only false selects ordinary ApplyDamage with a live source path and cached no-source fallback',()=>{

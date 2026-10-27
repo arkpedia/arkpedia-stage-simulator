@@ -28,11 +28,73 @@ for t, names in [
     (c['type_row']('AbstractAnimatedAbility', 'Torappu.Battle.Abilities'), ['NewDamageNode']),
     (c['type_row']('ApplyDamage', ''), ['PreprocessForProjectile', 'CreateDamageModifier', 'Execute', '.ctor']),
     (c['type_row']('BattleUtil', 'Torappu.Battle'), ['CalculateDamageBySource', 'CalculateDamageByAtkNoSource']),
+    (c['type_row']('BObject', 'Torappu.Battle'), ['OnAllocate', 'OnRecycle']),
 ]:
     for name in names:
         rows = [r for r in t['methods'] if r['name'] == name]
         assert rows
         methods.extend(c['method'](t, row) for row in rows)
+
+# Resolve the common-image null/destroyed predicate through its own module.
+mod = c['module']('Torappu.Common.dll')
+table = v['offset'](v['image_base'] + mod['methodPointerTableRva'])
+common_rows = v['types'][mod['typeStart']:mod['typeStart'] + mod['typeCount']]
+owner, null_row = c['unique'](lambda pair: True, [(t, m) for t in common_rows for m in t['methods']
+    if v['quad'](b, table + ((m['token'] & 0xffffff) - 1) * 8) == v['image_base'] + 0x5a445f0])
+assert owner['name'] == 'ObjectExtensions' and null_row['name'] == 'IsDestroyedOrNull'
+methods.append(c['method'](owner, null_row, 'Torappu.Common.dll'))
+
+source_load = 0x67e418
+p = v['offset'](v['image_base'] + source_load)
+assert b[p:p + 3] == bytes.fromhex('488b15')
+source_slot = source_load + 7 + struct.unpack_from('<i', b, p + 3)[0]
+source_usage = v['quad'](b, v['offset'](v['image_base'] + source_slot))
+assert source_usage >> 29 == 6
+source_index = (source_usage & 0x1ffffffe) >> 1
+reg = v['registration']
+source_spec = struct.unpack_from('<iii', b, v['offset'](v['quad'](b, reg + 72)) + source_index * 12)
+object_ptr = c['type_row']('ObjectPtr`1', 'Torappu')
+source_method = c['unique'](lambda row: row['index'] == source_spec[0], object_ptr['methods'])
+assert source_method['name'] == 'Lock'
+assert source_spec[2] == -1 and 0 <= source_spec[1] < v['quad'](b, reg + 16)
+inst_table = v['offset'](v['quad'](b, reg + 24))
+inst = v['offset'](v['quad'](b, inst_table + source_spec[1] * 8))
+assert v['quad'](b, inst) == 1
+args = v['offset'](v['quad'](b, inst + 8))
+tp = v['offset'](v['quad'](b, args))
+source_argument = v['types'][v['quad'](b, tp)]
+assert (source_argument['namespace'], source_argument['name']) == ('Torappu.Battle', 'Entity')
+thunk_rva = 0xb9be0
+p = v['offset'](v['image_base'] + thunk_rva)
+thunk = b[p:p + 5]
+assert thunk[0] == 0xe9
+assert thunk_rva + 5 + struct.unpack_from('<i', thunk, 1)[0] == 0x477cd80
+interface_load = 0x477cdf0
+p = v['offset'](v['image_base'] + interface_load)
+assert b[p:p + 3] == bytes.fromhex('488b15')
+interface_slot = interface_load + 7 + struct.unpack_from('<i', b, p + 3)[0]
+interface_usage = v['quad'](b, v['offset'](v['image_base'] + interface_slot))
+assert interface_usage >> 29 == 1
+type_index = (interface_usage & 0x1ffffffe) >> 1
+tp = v['offset'](v['quad'](b, v['type_table'] + type_index * 8))
+interface = v['types'][v['quad'](b, tp)]
+assert interface['name'] == 'IPtrObject' and [m['name'] for m in interface['methods']] == ['get_instanceUid']
+uid = c['unique'](lambda f: f['name'] == '<instanceUid>k__BackingField', c['fields'](c['type_row']('BObject', 'Torappu.Battle')))
+assert uid['offset'] == 0x18
+source_reference = {
+    'methodSpecIndex': source_index, 'encodedUsage': source_usage, 'method': source_method,
+    'classInstantiationIndex': source_spec[1], 'methodInstantiationIndex': source_spec[2],
+    'typeArgument': {'namespace': source_argument['namespace'], 'name': source_argument['name'], 'typeIndex': source_argument['index']},
+    'declaredFields': object_ptr['fields'], 'instanceUidField': uid,
+    'interface': {'typeIndex': interface['index'], 'name': interface['name'],
+                  'encodedUsage': interface_usage, 'methods': interface['methods']},
+    'lock': {'entryRva': 0x477cad0, 'chunks': c['code'](0x477cad0)},
+    'validity': {'entryRva': 0x477cd80, 'chunks': c['code'](0x477cd80)},
+    'validityThunk': {'entryRva': thunk_rva, 'targetRva': 0x477cd80,
+                      'boundary': 'Reviewed exact five-byte unconditional tail jump; no stack changes or fallthrough',
+                      'base64': base64.b64encode(thunk).decode(), 'sha256': v['sha'](thunk)},
+    'concreteContextVerified': False,
+}
 
 # LifeType is an unsigned byte enum. Do not apply the signed int32 zigzag
 # decoder used for Entity.Event/AbnormalFlag to these raw byte defaults.
@@ -125,6 +187,7 @@ result = {
     'lifeType': {'typeIndex': life['index'], 'name': life['name'], 'underlyingType': 'System.Byte', 'fields': enum_values},
     'fields': {t['name']: c['fields'](t) for t in [simple, projectile, hit]},
     'damageFields': c['fields'](c['type_row']('ApplyDamage', '')),
+    'sourceReference': source_reference,
     'damageNodeSlot': c['resolved_slot'](c['type_row']('RangedAttack', 'Torappu.Battle.Abilities'), 106),
     'methods': methods, 'lifeValueLeaf': leaf, 'prefabScriptBridges': bridges,
     'resolvedSlots': [c['resolved_slot'](simple, slot) for slot in [38, 39, 40, 41, 42, 43]],
@@ -134,6 +197,7 @@ result = {
         'Projectile.OnTick combines finite lifetime expiry with the virtual stopWhenSourceInvalid condition before its finish path. The CN prefab has finite life10 and stopWhenSourceInvalid=false. Born projectile ownership must therefore not be inferred solely from source death.',
         'ActionController.OnHitTarget calls _AttachBuffs first, then AbilityAttachment.Apply, then _RunActions. The selected projectile enables active buffs, disables trace-target-only and once-only buff gates, and has no extra buff list. Damage/source-attribute evaluation remains a separate caller review; buff-before-damage ordering must not be reversed by a convenience explosion helper.',
         'RangedAttack.NewDamageNode tests useCachedAtkOnly. Its false branch tail-calls AbstractAnimatedAbility.NewDamageNode, which constructs ordinary ApplyDamage rather than ApplyCacheAtkDamageFromProjectile. PreprocessForProjectile stores source ATK in m_cachedAtk; CreateDamageModifier uses CalculateDamageBySource when its source reference is valid and CalculateDamageByAtkNoSource with the cached value when the source is missing. Source-reference identity validity and reuse timing remain separate from merely testing an alive flag.',
+        'Projectile.get_source loads the exact ObjectPtr Lock method specification. Its shared body reaches the reviewed validity tail-jump/body: IsDestroyedOrNull is checked first, then IPtrObject.instanceUid is compared with cachedUid. BObject.OnAllocate assigns an incremented UID and OnRecycle clears it to zero. The simulator must preserve output identity across a dead but unrecycled source and reject the replacement body after retirement/reuse. Concrete generic context and precise recycle/frame timing remain unverified.',
         'Reached handling, trace-target end hit and HitBehaviour area selection/dispatch are retained in complete bodies. Cross-version field differences remain explicit. Source identity reuse, reentrant impact ordering and event5 self-death still require integration tests before admission.'
     ]}
 serialized = json.dumps(result, ensure_ascii=False, indent=1) + '\n'

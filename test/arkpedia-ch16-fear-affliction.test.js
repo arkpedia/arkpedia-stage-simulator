@@ -8,7 +8,7 @@ import { execFileSync } from 'node:child_process';
 import { makeBattle, enemyRec } from './helpers/battleHarness.js';
 import { compileStageLocalEnemy } from '../shared/arkpedia/enemy-records.js';
 import { fearProjectileAfflictions } from '../server/sim/content/chapter16-fear-affliction.js';
-import {applyFearProjectileImpact,fearProjectileDamageAction} from '../server/sim/content/chapter16-fear-impact.js';
+import {applyFearProjectileImpact,fearProjectileDamageAction,fearProjectileSourceReference} from '../server/sim/content/chapter16-fear-impact.js';
 import { battle as minerBattle, keys as minerKeys } from './helpers/ch17Harness.js';
 import { chapter16Shadow } from '../server/sim/content/chapter16-shadow.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
@@ -25,6 +25,36 @@ function fixture({marked=true,full=false,local=false}={}){
 }
 function apply(f){const p=f.manager.apply(f.source,f.target);assert.ok(p);return p;}
 function assertClean(f){assert.equal(f.target.findBuff(parentKey),null);assert.equal(f.target.buffs.some(b=>b.key.startsWith('ch16:fearpj:')),false);assert.deepEqual(f.b.errors,[]);}
+
+test('born source reference captures preprocessing ATK but resolves later same-life ATK',()=>{
+ const f=fixture();f.source.base.atk=200;f.source.markDirty();const ref=fearProjectileSourceReference(f.b,f.source);
+ f.source.base.atk=325;f.source.markDirty();const hp=f.target.hp;
+ fearProjectileDamageAction(f.b,ref)({target:f.target});assert.equal(ref.cachedAtk,200);assert.equal(hp-f.target.hp,325);
+ ref.release();assert.equal(ref.resolveSource(),null);assert.deepEqual(f.b.errors,[]);
+});
+
+test('dead or inactive but unretired source keeps its same-life reference until removal',()=>{
+ const f=fixture(),ref=fearProjectileSourceReference(f.b,f.source);
+ f.source.alive=false;f.source.deployed=false;f.b.emit('death',{unit:f.source});
+ assert.equal(ref.resolveSource(),f.source);f.b.emit('removed',{unit:f.source});assert.equal(ref.resolveSource(),null);
+});
+
+for(const retire of ['removed','reuse','battleEnd'])test('source reference '+retire+' preserves cached damage and rejects replacement stats',()=>{
+ const f=fixture();f.source.base.atk=210;f.source.markDirty();const ref=fearProjectileSourceReference(f.b,f.source);
+ if(retire==='removed')f.b.kill(f.source,null);else if(retire==='reuse')f.source.deploySeq++;else f.b.emit('battleEnd',{});
+ f.source.base.atk=9999;f.source.markDirty();assert.equal(ref.resolveSource(),null);assert.equal(ref.cachedAtk,210);
+ const hp=f.target.hp;fearProjectileDamageAction(f.b,ref)({target:f.target});
+ assert.equal(hp-f.target.hp,retire==='battleEnd'?0:210);assert.deepEqual(f.b.errors,[]);
+});
+
+for(const retiredFirst of [false,true])test('source reference prevents post-battle cached output without affliction manager, retired='+retiredFirst,()=>{
+ const h=makeBattle({content:'generic',autoFinish:false,defs:{enemies:{source:enemyRec({key:'source',atk:200,moveSpeed:0}),target:enemyRec({key:'target',maxHp:1000,moveSpeed:0})}}});
+ h.b.start();const source=h.spawn('source',{pos:[10,6]}),target=h.spawn('target',{pos:[10,7]});
+ const ref=fearProjectileSourceReference(h.b,source);assert.equal(h.b.chapter16FearAfflictions,undefined);
+ if(retiredFirst)h.b.kill(source,null);
+ h.b.emit('battleEnd',{});const hp=target.hp;fearProjectileDamageAction(h.b,ref)({target});
+ assert.equal(target.hp,hp);assert.equal(ref.isBattleActive(),false);
+});
 
 test('impact damage reads the resolved source ATK after buff and attachment callbacks',()=>{
  const f=fixture(),hp=f.target.hp,damage=fearProjectileDamageAction(f.b,{cachedAtk:200,resolveSource:()=>f.source});

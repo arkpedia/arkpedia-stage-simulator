@@ -1,5 +1,46 @@
 # Development priorities
 
+### 27 October: native source UID receipt and internal reference handle
+
+Previous checkpoint `4da96159` made concrete source and runtime progress. Hosted
+continuation `40488148817` has passed native-source, focused Ubuntu and every
+stage-browser job including17-12; focused Windows remains live. Full matrix
+`40484748212` is also still live: Ubuntu Node24 shard1 has passed, the other seven
+matrix jobs continue. Preserve both handles; do not restart on an observation
+timeout or supersede the continuation just to publish another checkpoint.
+
+The source getter's actual method usage resolves ObjectPtr<Entity>.Lock, including
+its concrete Entity type argument. The shared lock body calls a reviewed exact
+five-byte tail-jump thunk to the validity body. That body first calls the
+separately image-bound ObjectExtensions.IsDestroyedOrNull and then compares the
+IPtrObject instance UID with cachedUid. The interface type/method and BObject UID
+field at0x18 are bound directly. BObject.OnAllocate increments/assigns a UID;
+OnRecycle clears it to zero. These complete bodies and the exact thunk bytes are
+retained. Shared generic-context execution and native recycle frames remain
+explicitly unverified; no alive flag is substituted for this identity contract.
+
+Added internal fearProjectileSourceReference, which captures preprocessing ATK,
+resolves later same-life source stats, and invalidates on engine removal or
+deployment reuse. A dead/inactive but unretired source is not invalid merely
+because alive=false. Source retirement keeps cached damage available while the
+output remains active; a separate battle-end observer prevents later cached
+output, including when no affliction manager exists. Explicit release ends that
+output handle. Native animation/recycle timing is not claimed by this local
+removal/deployment-receipt mapping.
+
+Seven source-reference cases cover live ATK changes, dead/inactive same-life
+reference retention, removal, reuse, battle end and post-battle output both before
+and after source retirement without an affliction manager. Together with the new
+source binding assertions, all180 focused source/Fear/family/miner tests pass;
+all38 Windows source checks pass. The expanded38-method projectile producer
+reproduces with --check. The four known quarantine deletions remain unstaged.
+
+Next bind preprocessing timing at actual projectile creation, implement delivery
+with original hit/count/reach rules, and finish event5 mode-switch/self-death
+integration; keep selector/context/CN field gaps explicit before test-only16-9
+admission. Full remaining Chapter16/17 and operator/module scope remains required.
+No simulator merge, deploy or public catalogue promotion.
+
 ### 27 October: normal projectile damage evaluation and explicit source resolution
 
 Previous `004a876e` was concrete internal impact progress and remained local while
