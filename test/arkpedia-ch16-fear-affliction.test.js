@@ -14,6 +14,7 @@ import {fearProjectileLifetime} from '../server/sim/content/chapter16-fear-clock
 import {fearProjectileAreaDelivery} from '../server/sim/content/chapter16-fear-area.js';
 import {fearProjectileFlight} from '../server/sim/content/chapter16-fear-flight.js';
 import {fearProjectileBuffIteration} from '../server/sim/content/chapter16-fear-buff-iteration.js';
+import {fearProjectileBuffList} from '../server/sim/content/chapter16-fear-buff-list.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
 import {fearProjectileSpell} from '../server/sim/content/chapter16-fear-spell.js';
@@ -50,6 +51,89 @@ test('mode initialization rejects invalid entries and delegates equality without
   isValid:x=>x!==null&&!x.invalid,equals:(left,right)=>{calls.push([left,right]);return left.id===right.id;}});
  assert.deepEqual(list,[a]);assert.deepEqual(calls,[[a,duplicate]]);
  assert.throws(()=>fearProjectileCollectModeAbilities({generalAbilities:[],combat:null,attack:null,isValid:()=>1,equals:()=>true}),/Boolean/);
+});
+
+function buffListFixture(overrides={}){
+ const f=fixture(),defaults={copyEntry:e=>({...e}),isEntryValid:e=>e.buff!=null&&e.uid===e.buff.uid&&!e.buff.retired,
+  resolveEntry:e=>e.buff!=null&&e.uid===e.buff.uid&&!e.buff.retired?e.buff:null,readPriority:buff=>buff.priority,readUid:buff=>buff.uid};
+ const callers={owner:f.source,...defaults,...overrides};
+ const list=fearProjectileBuffList(f.b,callers),entry=buff=>({buff,uid:buff?.uid??0});
+ const values=()=>{const cursor=list.openIterator(),out=[];try{while(cursor.moveNext())out.push(cursor.current());}finally{cursor.dispose();}return out;};
+ return{...f,list,entry,values,defaults};
+}
+
+test('buff sorted insertion is descending by event priority and stable for equal priorities',()=>{
+ const f=buffListFixture(),buffs=[{id:'low',uid:1,priority:-5},{id:'high',uid:2,priority:10},{id:'mid',uid:3,priority:2},{id:'equal',uid:4,priority:2}];
+ for(const buff of buffs)assert.equal(f.list.add(f.entry(buff)),undefined);
+ assert.deepEqual(f.values().map(b=>b.id),['high','mid','equal','low']);assert.equal(f.list.count,4);f.list.release();
+});
+
+test('buff insertion compares current priorities without resorting existing entries after a field change',()=>{
+ const f=buffListFixture(),a={id:'a',uid:1,priority:10},b={id:'b',uid:2,priority:5},c={id:'c',uid:3,priority:7};
+ f.list.add(f.entry(a));f.list.add(f.entry(b));a.priority=0;f.list.add(f.entry(c));
+ assert.deepEqual(f.values().map(b=>b.id),['c','a','b']);f.list.release();
+});
+
+test('buff removal scans backward and matches UID rather than object identity',()=>{
+ const f=buffListFixture(),a={id:'first',uid:0xffffffff,priority:1},b={id:'last',uid:0xffffffff,priority:1};
+ f.list.add(f.entry(a));f.list.add(f.entry(b));assert.equal(f.list.remove({uid:0xffffffff}),true);
+ assert.deepEqual(f.values(),[a]);assert.equal(f.list.remove(null),false);assert.equal(f.list.remove({uid:8}),false);f.list.release();
+});
+
+test('invalid buff pointers append without locking and are removed only outside an iterator loop',()=>{
+ const f=buffListFixture(),buff={uid:1,priority:2};f.list.add(f.entry(buff));f.list.add({buff:null,uid:0});
+ assert.equal(f.list.count,2);assert.deepEqual(f.values(),[buff,null]);
+ const cursor=f.list.openIterator();f.list.clearInvalidElementsIfNotLoop();assert.equal(f.list.count,2);
+ cursor.dispose();f.list.clearInvalidElementsIfNotLoop();assert.equal(f.list.count,1);assert.deepEqual(f.values(),[buff]);f.list.release();
+ const g=buffListFixture({resolveEntry:()=>{throw Error('invalid pointer locked');}});
+ g.list.add({buff:null,uid:0});assert.equal(g.list.count,1);g.list.release();
+});
+
+test('list mutation leaves an open snapshot intact and a later traversal observes the new sorted contents',()=>{
+ const f=buffListFixture(),a={uid:1,priority:10},b={uid:2,priority:1},c={uid:3,priority:5};
+ f.list.add(f.entry(a));f.list.add(f.entry(b));const cursor=f.list.openIterator();assert.equal(cursor.moveNext(),true);assert.equal(cursor.current(),a);
+ f.list.remove(b);f.list.add(f.entry(c));const nested=f.list.openIterator();const view=[];
+ while(nested.moveNext())view.push(nested.current());assert.deepEqual(view,[a,b]);nested.dispose();
+ assert.equal(cursor.moveNext(),true);assert.equal(cursor.current(),b);cursor.dispose();assert.deepEqual(f.values(),[a,c]);f.list.release();
+});
+
+test('an invalidated UID cannot donate a saved buff entry to its replacement life',()=>{
+ const f=buffListFixture(),buff={uid:7,priority:0},entry=f.entry(buff);f.list.add(entry);const cursor=f.list.openIterator();
+ entry.uid=8;buff.uid=8;assert.equal(cursor.moveNext(),true);assert.equal(cursor.current(),null);cursor.dispose();
+ assert.equal(f.list.remove({uid:7}),false);f.list.clearInvalidElementsIfNotLoop();assert.equal(f.list.count,0);f.list.release();
+});
+
+test('sorted list and two-pass mode dispatcher preserve native event-priority order through nested mutations',()=>{
+ const f=buffListFixture(),a={id:'a',uid:1,priority:10},b={id:'b',uid:2,priority:1},c={id:'c',uid:3,priority:5},events=[];
+ f.list.add(f.entry(b));f.list.add(f.entry(a));let nested=false;
+ const callers={owner:f.source,openIterator:()=>f.list.openIterator(),isFinishedOrDisabled:()=>false,isActionValid:()=>true,
+  runActions:buff=>{events.push(buff.id);if(buff===a&&!nested){nested=true;f.list.remove(b);f.list.add(f.entry(c));assert.equal(fearProjectileBuffModeChange(f.b,callers).run(),true);}},
+  checkFinishedBuffs:()=>f.list.clearInvalidElementsIfNotLoop()};
+ assert.equal(fearProjectileBuffModeChange(f.b,callers).run(),true);assert.deepEqual(events,['a','a','b','b']);assert.equal(f.list.openCount,0);
+ events.length=0;assert.equal(fearProjectileBuffModeChange(f.b,callers).run(),true);assert.deepEqual(events,['a','c']);f.list.release();
+});
+
+test('failed priority/UID readers do not leave mutation reentry locked or silently accept malformed native values',()=>{
+ const f=buffListFixture(),a={uid:1,priority:1},bad={uid:2,priority:NaN};f.list.add(f.entry(a));
+ assert.throws(()=>f.list.add(f.entry(bad)),/Int32 priority/);assert.equal(f.list.count,1);
+ assert.throws(()=>f.list.remove({uid:-1}),/UInt32 UID/);assert.equal(f.list.remove({uid:1}),true);f.list.release();
+});
+
+for(const point of ['copyEntry','isEntryValid','resolveEntry','readPriority','readUid'])test('buff list cancels owner reuse in '+point,()=>{
+ const f=fixture(),buff={uid:1,priority:1};let retire=false;
+ const base={copyEntry:e=>({...e}),isEntryValid:()=>true,resolveEntry:e=>e.buff,readPriority:b=>b.priority,readUid:b=>b.uid},callers={owner:f.source};
+ for(const [name,fn]of Object.entries(base))callers[name]=(...args)=>{if(retire&&name===point)f.source.deploySeq++;return fn(...args);};
+ const list=fearProjectileBuffList(f.b,callers);list.add({buff,uid:1});retire=true;
+ assert.equal(point==='readUid'?list.remove(buff):list.add({buff:{uid:2,priority:2},uid:2}),null);
+ assert.equal(list.count,0);assert.equal(list.openCount,0);assert.equal(list.openIterator(),null);assert.deepEqual(f.b.errors,[]);
+});
+
+test('recursive priority effects cannot duplicate insertion while a nested iterator sees the pre-insertion snapshot',()=>{
+ const f=fixture(),a={uid:1,priority:1},b={uid:2,priority:2};let list,checked=false,cursor;
+ list=fearProjectileBuffList(f.b,{owner:f.source,copyEntry:e=>({...e}),isEntryValid:()=>true,resolveEntry:e=>e.buff,readUid:b=>b.uid,
+  readPriority:buff=>{if(!checked){checked=true;assert.equal(list.add({buff:b,uid:2}),null);cursor=list.openIterator();}return buff.priority;}});
+ list.add({buff:a,uid:1});list.add({buff:b,uid:2});assert.equal(list.count,2);
+ assert.equal(cursor.moveNext(),true);assert.equal(cursor.current(),a);assert.equal(cursor.moveNext(),false);cursor.dispose();list.release();
 });
 
 function buffIterationFixture(overrides={}){

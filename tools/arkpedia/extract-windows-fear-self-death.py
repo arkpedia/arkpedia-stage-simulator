@@ -215,7 +215,7 @@ result['modeSwitch']['buffNotification'] = {
     'setTargetToOwner': False, 'nativeIteratorRuntimeVerified': False,
 }
 iterator_methods = []
-for index in [38622, 38627, 68292, 68293, 68297]:
+for index in [38622, 38627, 68292, 68293, 68297, 38630]:
     spec = priority['specification'](index)
     assert spec['instantiations']['class']['arguments'][0]['name'] == 'Object'
     pointer = v['quad'](v['b'], priority['pointer_table'] + spec['nativeMapping']['methodPointerIndex'] * 8)
@@ -250,6 +250,35 @@ result['modeSwitch']['buffNotification']['forwardIteration'] = {
     'buffLockSpecification': buff_lock_spec,
     'fields': base_list['fields'][:5],
     'concreteContextVerified': False, 'poolRuntimeVerified': False,
+}
+for type_name, namespace, names in [('SortedDoubleBufferedBuffList', '', ['Add']),
+                                    ('DoubleBufferedBuffList', '', ['Remove', 'ClearInvalidElementsIfNotLoop']),
+                                    ('Buff', 'Torappu.Battle', ['get_instanceUid', 'get_onEventPriority'])]:
+    t = c['type_row'](type_name, namespace)
+    for name in names:
+        methods.append(c['method'](t, c['unique'](lambda r: r['name'] == name, t['methods'])))
+result['modeSwitch']['buffNotification']['listMutation'] = {
+    'uidField': c['unique'](lambda f: f['name'] == '<instanceUid>k__BackingField', c['fields'](buff)),
+    'priorityField': c['unique'](lambda f: f['name'] == '<onEventPriority>k__BackingField', c['fields'](buff)),
+    'addMethodRva': 0x39dfa80, 'removeMethodRva': 0x39debc0, 'clearInvalidMethodRva': 0x39de900,
+}
+priority_type = v['types'][result['modeSwitch']['buffNotification']['listMutation']['priorityField']['typeData']]
+assert priority_type['name'] == 'OnEventPriority'
+priority_underlying = c['unique'](lambda f: f['name'] == 'value__', c['fields'](priority_type))
+assert (priority_underlying['typeBits'] >> 16) & 255 == 8
+result['modeSwitch']['buffNotification']['listMutation']['priorityType'] = {
+    'index': priority_type['index'], 'name': priority_type['name'], 'underlyingField': priority_underlying}
+loop_definition, loop_class_inst, loop_method_inst = struct.unpack_from('<iii', v['b'], priority['spec_start'] + 229767 * 12)
+assert loop_definition == 23977 and loop_class_inst == 4600 and loop_method_inst == -1
+loop_pos = v['offset'](v['image_base'] + 0x39de984)
+assert v['b'][loop_pos:loop_pos + 3] == bytes.fromhex('488b15')
+loop_target = 0x39de984 + 7 + struct.unpack_from('<i', v['b'], loop_pos + 3)[0]
+loop_usage = v['quad'](v['b'], v['offset'](v['image_base'] + loop_target))
+assert loop_usage >> 29 == 6 and (loop_usage & 0x1ffffffe) >> 1 == 229767
+result['modeSwitch']['buffNotification']['listMutation']['isInLoopCall'] = {
+    'specificationIndex': 229767, 'definitionIndex': loop_definition, 'classInstantiationIndex': loop_class_inst,
+    'nativeMapping': priority['mapping'].get(229767), 'loadRva': 0x39de984, 'encodedUsage': loop_usage,
+    'entryRva': 0x4d97fd0, 'chunks': c['code'](0x4d97fd0), 'concreteContextVerified': False,
 }
 serialized = json.dumps(result, ensure_ascii=False, indent=1) + '\n'
 out = ROOT / 'data/candidates/arkpedia-windows-fear-self-death-source.json'

@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 56 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 61 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -877,3 +877,48 @@ still running and is not replaced. Sorted insertion/removal of native buff
 entries, concrete ObjectPtr locking, finished-buff effects, full controller
 scheduling and stage geometry/query integration remain open. This checkpoint
 does not create enemy or stage support receipts or change catalogue gates.
+
+### Sorted buff list mutation and iterator composition
+
+The61-method artifact adds SortedDoubleBufferedBuffList.Add,
+DoubleBufferedBuffList.Remove/ClearInvalidElementsIfNotLoop and the Buff UID
+and event-priority getters. Buff.instanceUid atoffset0x208 is UInt32;
+onEventPriority atoffset0x24c is OnEventPriority, a signed Int32-backed enum.
+The Object canonical get_isInLoop at0x4d980a0 is retained independently from
+the concrete caller's0x4d97fd0 body and its exact encoded specification229767.
+The latter has no direct generic mapping, so concrete context parity remains
+false; the two compiled bodies are not treated as interchangeable evidence.
+
+`fearProjectileBuffList` now composes selected native list mutation with the
+shared forward snapshot iterator and two-pass mode-change dispatcher. Valid
+entries insert by descending numeric event priority, scanning backward and
+inserting after an existing equal priority. This preserves insertion order for
+equal priorities. Invalid entries append through the base-list path, and invalid
+existing entries do not supply comparison priorities. The algorithm compares
+current priorities during insertion; it does not sort the whole list after an
+existing buff priority changes.
+
+Removal scans backward and compares current instance UIDs rather than JS object
+identity, removing only the first valid match in that reverse scan. Invalid
+pointer cleanup returns without scanning while a cursor is open, and otherwise
+removes invalid entries backward. Mutating the internal list leaves an existing
+outer snapshot unchanged; a later outer iterator sees the updated sorted list.
+Native pointer copying/validity/Lock and field getters remain explicit callers.
+Local reentry/life guards prevent mutations against replacement owner lives;
+add/cleanup keep their native void completion shape, while Remove returns its
+native Boolean result.
+
+Tests cover priority ties, live priority changes, duplicate UIDs, maximum UInt32
+UIDs, invalid entries, loop-gated cleanup, snapshot retention, reused pointer
+values, malformed field readers, callback retirement and recursive mutation.
+A composed sorted-list/iterator/mode-change test inserts and removes entries
+during an action and nests another dispatch; it requires both traversals to
+retain the old snapshot and the next dispatch to observe current sorted entries.
+The focused native/fear/family/miner suite passes453 tests; the producer
+reproduces with --check. Continuation40519284428 at64ef2cb7 completed
+successfully, while full40514426781 remains active and is not replaced.
+
+This closes the explicit ordered-entry input for the selected internal list
+adapter. Actual native pointer registration, finished-buff removal/effects,
+ability data setup, complete fear/controller scheduling and stage geometry
+integration remain open. No enemy/stage support or catalogue gate is changed.

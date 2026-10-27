@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,56);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,61);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -130,6 +130,28 @@ test('mode initialization binds general/combat/attack order and the canonical sw
  at(dedup,0x3f62e1e,'0x180004fe0');at(dedup,0x3f62e72,'0x180004b40');
  at(dedup,0x3f62e77,'esi');at(dedup,0x3f62e79,'0x183f62d00');
  assert.equal(init.equalsDispatch.metadataIdentityVerified,false);
+});
+
+test('buff list mutation binds event priority insertion, reverse UID removal and loop-gated invalid cleanup',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),list=c.modeSwitch.buffNotification.listMutation;
+ assert.equal(list.uidField.offset,0x208);assert.equal((list.uidField.typeBits>>>16)&255,9);
+ assert.equal(list.priorityField.offset,0x24c);assert.equal((list.priorityField.typeBits>>>16)&255,17);
+ assert.equal(list.priorityType.name,'OnEventPriority');assert.equal((list.priorityType.underlyingField.typeBits>>>16)&255,8);
+ const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ const add=castMethod(c,'SortedDoubleBufferedBuffList','Add'),remove=castMethod(c,'DoubleBufferedBuffList','Remove');
+ assert.equal(add.entryRva,list.addMethodRva);assert.equal(remove.entryRva,list.removeMethodRva);
+ at(add,0x39dfb42,'0x184d966a0');at(add,0x39dfbdf,'0x1839b6e50');at(add,0x39dfc31,'0x1839b6e50');
+ at(add,0x39dfc36,'ebp, eax');at(add,0x39dfc38,'0x1839dfc83');at(add,0x39dfc97,'edx, [rbx + 1]');
+ at(remove,0x39ded08,'0x1839b6970');at(remove,0x39ded14,'0x1839b6970');at(remove,0x39ded1b,'0x1839ded3d');
+ at(remove,0x39ded1d,'edi, 1');at(remove,0x39ded4f,'0x184515c00');
+ const clear=castMethod(c,'DoubleBufferedBuffList','ClearInvalidElementsIfNotLoop');assert.equal(clear.entryRva,list.clearInvalidMethodRva);
+ at(clear,0x39de98e,'0x184d97fd0');at(clear,0x39de995,'0x1839dea0f');at(clear,0x39dea00,'0x184515c00');
+ at(castMethod(c,'Buff','get_instanceUid'),0x39b69c4,'eax, dword ptr [rbx + 0x208]');
+ at(castMethod(c,'Buff','get_onEventPriority'),0x39b6ea7,'eax, dword ptr [rbx + 0x24c]');
+ assert.ok(c.modeSwitch.buffNotification.forwardIteration.canonicalMethods.some(m=>m.definition.name==='get_isInLoop'&&m.entryRva===0x4d980a0));
+ assert.equal(list.isInLoopCall.specificationIndex,229767);assert.equal(list.isInLoopCall.definitionIndex,23977);
+ assert.equal(list.isInLoopCall.entryRva,0x4d97fd0);assert.equal(list.isInLoopCall.nativeMapping,null);assert.equal(list.isInLoopCall.concreteContextVerified,false);
+ for(const ch of list.isInLoopCall.chunks){const raw=Buffer.from(ch.base64,'base64');assert.equal(sha(raw),ch.sha256);assert.equal(raw.length,ch.endRva-ch.beginRva);}
 });
 
 test('buff forward iteration retains mapped canonical code and the separately bound closed ObjectPtr Buff argument',()=>{
