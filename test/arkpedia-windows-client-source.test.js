@@ -65,10 +65,54 @@ test('new compiled evidence grants neither runtime/frame parity nor enemy/stage 
 
 const castPath='data/candidates/arkpedia-windows-cast-lifecycle-source.json';
 const minerTalentsPath='data/candidates/arkpedia-windows-miner-talents-source.json';
+const fearSelectorPath='data/candidates/arkpedia-windows-fear-selector-source.json';
 const instructions=method=>method.chunks.flatMap(c=>c.instructions);
 const castMethod=(c,type,name)=>{
  const matches=c.methods.filter(m=>m.type===type&&m.name===name);assert.equal(matches.length,1);return matches[0];
 };
+
+test('fear selector retains complete native chunks and exact CN script identity with explicit layout differences',()=>{
+ const c=read(fearSelectorPath);assert.equal(c.methods.length,22);
+ for(const p of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+p.path,import.meta.url))),p.sha256);
+ for(const method of c.methods)for(const chunk of method.chunks){
+  const raw=Buffer.from(chunk.base64,'base64');assert.equal(raw.length,chunk.endRva-chunk.beginRva);assert.equal(sha(raw),chunk.sha256);
+  assert.ok(chunk.unwindRva>0);
+ }
+ assert.equal(c.selector.scriptIdentity.m_ClassName,'AdvancedSelector');assert.equal(c.selector.serializedFieldParity,false);
+ assert.deepEqual(c.selector.unmatchedSerializedFields,{_ignoreMotionMode:0});
+ const bindings=read('data/candidates/arkpedia-ch16-script-bindings-source.json');
+ const binding=bindings.bindings.find(b=>b.componentPathId===c.selector.componentPathId&&b.prefab===c.selector.prefab);
+ assert.equal(binding.scriptPathId,c.selector.scriptPathId);assert.equal(binding.componentSha256,sha(c.selector.originalJson));
+ for(const field of ['runtimeDispatchVerified','frameParity','crossVersionParity'])assert.equal(c[field],false);
+});
+
+test('fear selector abnormal values are retained under their actual disabled branch conditions',()=>{
+ const c=read(fearSelectorPath),native=JSON.parse(c.selector.originalJson),fields=c.fields.TargetOptions.fields;
+ assert.equal(native._ignoreTargetFree,0);assert.equal(native._onlyIgnoreSomeOfTargetFreeCase,0);assert.equal(native._excludeSomeAbnormalFlags,0);
+ assert.equal(native._abnormalFlag,42);assert.equal(native._abnormalCombo,2);assert.equal(native._excludeAbnormalFlag,46);
+ for(const [name,offset] of [['ignoreTargetFree',0xd],['onlyIgnoreSomeOfTargetFreeCase',0x2c],['abnormalFlag',0x30],['abnormalCombo',0x34],['excludeSomeAbnormalFlags',0x11],['excludeAbnormalFlag',0x14]]){
+  const f=fields.find(f=>f.name===name);assert.equal(f.unboxedOffset,offset);assert.equal(f.offset,offset+16);
+ }
+ const code=instructions(castMethod(c,'TargetOptions','_VerifyAdvanced'));
+ for(const [rva,operands] of [[0x787bcc,'byte ptr [rbx + 0xd], sil'],[0x787bd2,'byte ptr [rbx + 0x2c], sil'],[0x787c59,'byte ptr [rbx + 0x11], sil']])
+  assert.ok(code.some(i=>i.rva===rva&&i.mnemonic==='cmp'&&i.operands===operands));
+ assert.ok(code.some(i=>i.rva===0x787bd0&&i.mnemonic==='je'&&i.operands==='0x180787c30'));
+ assert.ok(code.some(i=>i.rva===0x787bd6&&i.mnemonic==='je'&&i.operands==='0x180787c30'));
+ assert.ok(code.some(i=>i.rva===0x787c5d&&i.mnemonic==='je'&&i.operands==='0x180787c91'));
+ for(const [slot,name] of [[31,'get_onlyIgnoreSomeOfTargetFreeCase'],[32,'get_abnormalFlag'],[33,'get_abnormalCombo'],[35,'get_excludeSomeAbnormalFlags'],[36,'get_excludeAbnormalFlag']])
+  assert.equal(c.resolvedSlots.find(r=>r.slot===slot).name,name);
+});
+
+test('selector enums describe only the pinned Windows version and preserve the earlier CN admission hold',()=>{
+ const c=read(fearSelectorPath),value=(key,name)=>c.enums[key].fields.find(f=>f.name===name).value;
+ assert.equal(value('_abnormalFlag','FEARED_PRIVATE'),42);assert.equal(value('_abnormalFlag','E_NUM'),44);
+ assert.equal(value('_abnormalCombo','E_NUM'),2);assert.equal(value('_postFilter','HATRED_DES'),4);
+ assert.equal(c.enums._postFilter.partial,true);assert.equal(c.enums._postFilter.fields.length,1);
+ assert.equal(value('_targetSide','ENEMY'),2);assert.equal(value('_targetMotion','WALK_ONLY'),1);assert.equal(value('_targetCategory','DEFAULT'),1);
+ assert.equal(c.methods.filter(m=>m.type==='AdvancedSelector'&&m.name==='OnPostFilter').length,2);
+ assert.equal(read('data/candidates/arkpedia-ch16-enemy-support.json').enemies.enemy_10128_fearpj.policy,null);
+ assert.equal(read('data/arkpedia-stages.json').stages.some(s=>s.code==='16-9'),false);
+});
 
 test('miner talent evidence pins complete native methods and exact source inputs without admission',()=>{
  const c=read(minerTalentsPath);assert.equal(c.methods.length,28);

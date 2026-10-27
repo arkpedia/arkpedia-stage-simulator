@@ -1,5 +1,47 @@
 # Development priorities
 
+### 27 October: actual fear selector conditional flags
+
+Previous checkpoint `6f708712` was concrete controller progress. Its continuation
+`40483335594` passes native-source, both focused Linux/Windows jobs and every
+browser except 17-12, whose existing internal preset/wave/tutorial/UI step is
+still live (job `122119040357`). Full `40477137676` now has seven passing matrix
+jobs; Windows Node22 shard0 remains live in unit/integration tests (job
+`122098048826`). Do not restart either run on an observation timeout.
+
+New reproducible fear-selector evidence retains 22 complete default methods:
+AdvancedSelector getters/validation/post-filter caller, RangeSelector reset and
+selection, TargetOptions construction/initialization/verification, and BattleUtil
+side/motion/category handling. Exact CN MonoScript references bind the selected
+component. `_ignoreMotionMode=0` is an explicit unmatched serialized field; it is
+not silently treated as inert or claimed to have Windows layout parity.
+
+The abnormalFlag=42/abnormalCombo=2 pair belongs to the target-free exception
+branch, which requires ignoreTargetFree and onlyIgnoreSomeOfTargetFreeCase. Both
+switches are zero in the CN fear selector. Explicit exclusion is separately gated
+by excludeSomeAbnormalFlags, also zero. Thus these serialized integers do not
+establish an active feared-target filter in the retained default path. The actual
+vtable getter slots and TargetOptions field offsets bind this conclusion. This
+value-type's metadata offsets include the boxed 16-byte header; unboxed offsets
+are recorded separately to match the compiled struct accesses.
+
+Windows enum defaults are retained with their version scope: side ENEMY=2,
+motion WALK_ONLY=1, category DEFAULT=1, selected post-filter HATRED_DES=4,
+FEARED_PRIVATE=42 and abnormal-combo sentinel2. No identical historical CN enum
+table is assumed. Only the selected post-filter enum entry is captured; the
+one-byte decoder is not stretched into a claim about the entire later enum.
+FilterUtil.Filter itself is deliberately not captured: the complete native range
+fails code-only disassembly, so sort implementation parity remains unproven.
+
+All 29 source checks and 75 combined source/Fear/family cases pass; the new Python
+producer reproduces with --check, and hosted native-source is configured to run
+it. Preserve the currently live continuation until terminal before pushing this
+source-only checkpoint, so the long 17-12 browser job can finish. Next review
+post-filter code/data boundaries, the unmatched motion field and remaining
+projectile hit/count and event5/self-death ownership before stage16-9 integration.
+The complete Chapter16/17 and operator/module backlog, test-only stage restriction,
+no-public-promotion rule and four unstaged quarantine deletions remain unchanged.
+
 ### 27 October: internal complete stage-local miner composition
 
 Previous checkpoint `1a61d694` made concrete runtime and source progress. Hosted

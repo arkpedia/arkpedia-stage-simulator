@@ -42,6 +42,8 @@ jobs:
         run: python tools/arkpedia/extract-windows-cast-lifecycle.py --check
       - name: Reproduce default miner talent assignment and missing-duration evidence
         run: python tools/arkpedia/extract-windows-miner-talents.py --check
+      - name: Reproduce fear selector binding and conditional abnormal-filter evidence
+        run: python tools/arkpedia/extract-windows-fear-selector.py --check
       - name: Independently reproduce complete native graphs and indexed components
         run: |
           python tools/arkpedia/extract-ch16-artillery.py --check
