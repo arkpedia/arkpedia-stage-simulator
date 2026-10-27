@@ -149,3 +149,61 @@ export function fearProjectileModifyBuffLifetime({buff,readOwner,isDestroyedOrNu
   },
  });
 }
+
+// Default Buff merge callees, with signed FP arithmetic. Getter dispatch,
+// Unity owner validity, notification and attribute-stack updates stay explicit.
+export function fearProjectileMergeBuffTiming({buff,readLifeTime,readRemainingTime,readExistingTime,readOwner,
+ isDestroyedOrNull,notifyBuffExtend,updateStack,isActive}){
+ if(!buff||[readLifeTime,readRemainingTime,readExistingTime,readOwner,isDestroyedOrNull,notifyBuffExtend,updateStack,isActive].some(fn=>typeof fn!=='function'))
+  throw new TypeError('Fear timing merge requires native buff, timing, owner and lifecycle callers');
+ const raw=value=>{if(typeof value!=='bigint'||value<-(1n<<63n)||value>(1n<<63n)-1n)throw new TypeError('Fear timing merge requires signed Q32.32 values');return value;};
+ const int=value=>{if(!Number.isInteger(value)||value<-(2**31)||value>=2**31)throw new TypeError('Fear timing merge requires native Int32 stack counts');return value;};
+ const boolean=value=>{if(typeof value!=='boolean')throw new TypeError('Fear timing merge requires native Boolean results');return value;};
+ const nonnull=value=>{if(value==null)throw new TypeError('Fear timing merge dereferenced a null native object');return value;};
+ const cancelled=Symbol('cancelled'),check=()=>{if(!boolean(isActive()))throw cancelled;};
+ const invoke=(fn,...args)=>{const value=fn(...args);check();return value;};
+ const add=(a,b)=>BigInt.asIntN(64,raw(a)+raw(b));
+ const maximum=(a,b)=>raw(a)>raw(b)?a:b;
+ const notify=incoming=>{
+  const owner=invoke(readOwner,buff);
+  if(!boolean(invoke(isDestroyedOrNull,owner)))invoke(notifyBuffExtend,nonnull(invoke(readOwner,buff)),buff,incoming);
+ };
+ const mergeRemaining=incoming=>{
+  const remaining=raw(buff.m_remainingTime);
+  const other=raw(invoke(readRemainingTime,nonnull(incoming)));
+  buff.m_remainingTime=maximum(remaining,other);check();
+ };
+ return Object.freeze({
+  extend(incoming){
+   try{
+    check();nonnull(incoming);
+    if(raw(invoke(readLifeTime,incoming))>=0n){
+     const life=raw(invoke(readLifeTime,incoming)),remaining=raw(buff.m_remainingTime);
+     buff.m_remainingTime=add(life,remaining);check();
+     const total=raw(buff.m_lifeTime),extra=raw(invoke(readLifeTime,incoming));
+     buff.m_lifeTime=add(total,extra);check();
+    }
+    const existing=raw(buff.m_existingTime),extra=raw(invoke(readExistingTime,incoming));
+    buff.m_existingTime=add(existing,extra);check();notify(incoming);
+   }catch(error){if(error===cancelled)return null;throw error;}
+  },
+  fill(incoming){
+   try{
+    check();nonnull(incoming);const finite=raw(invoke(readLifeTime,incoming))>=0n;
+    const life=raw(invoke(readLifeTime,incoming));
+    buff.m_remainingTime=finite?maximum(life,raw(buff.m_remainingTime)):life;check();
+    const existing=raw(buff.m_existingTime),extra=raw(invoke(readExistingTime,incoming));
+    buff.m_existingTime=add(existing,extra);check();notify(incoming);
+   }catch(error){if(error===cancelled)return null;throw error;}
+  },
+  refreshAtMax(incoming){
+   try{check();mergeRemaining(incoming);}catch(error){if(error===cancelled)return null;throw error;}
+  },
+  addStack(incoming){
+   try{
+    check();buff.m_stackCnt=(int(buff.m_stackCnt)+1)|0;check();
+    mergeRemaining(incoming);invoke(updateStack,buff);
+   }catch(error){if(error===cancelled)return null;throw error;}
+  },
+ });
+}

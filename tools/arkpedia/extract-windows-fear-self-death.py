@@ -1295,6 +1295,35 @@ result['modeSwitch']['buffNotification']['newBuff']['overrideGroupDispatch'] = {
     'updateQueueAfterSetterRva': 0x39df850,
     'nativeQueueOrderingVerified': False, 'nativeBuffMergeEffectsVerified': False, 'liveGroupDispatchVerified': False,
 }
+for name, entry in [('get_lifeTime', 0x39b6d40), ('get_remainingTime', 0x39b71f0), ('get_existingTime', 0x39b6870)]:
+    row = c['unique'](lambda r: r['name'] == name, buff['methods'])
+    retained = c['method'](buff, row)
+    assert retained['entryRva'] == entry
+    if not any(m['index'] == row['index'] and m['image'] == 'Assembly-CSharp.dll' for m in methods):
+        methods.append(retained)
+notify_row = c['unique'](lambda r: r['name'] == 'OnBuffExtend', entity['methods'])
+assert v['pointer'](notify_row) - v['image_base'] == 0x3a1fd50
+result['modeSwitch']['buffNotification']['newBuff']['mergeTiming'] = {
+    'ownerNotification': {'type': entity['name'], 'name': notify_row['name'], 'index': notify_row['index'], 'entryRva': 0x3a1fd50},
+    'fields': [c['unique'](lambda f: f['name'] == name, c['fields'](buff)) for name in ['m_lifeTime', 'm_remainingTime', 'm_existingTime', 'm_stackCnt']],
+    'extendLifeGetterCalls': [0x39b35d2, 0x39b360f, 0x39b364b], 'extendFiniteCompareRva': 0x39b3601,
+    'extendRemainingReadRva': 0x39b361e, 'extendRemainingWriteRva': 0x39b3647,
+    'extendLifeReadRva': 0x39b363e, 'extendLifeWriteRva': 0x39b365e,
+    'extendExistingReadRva': 0x39b3662, 'extendExistingGetterCallRva': 0x39b366e, 'extendExistingWriteRva': 0x39b369b,
+    'extendAddCalls': [0x39b3639, 0x39b3659, 0x39b3694], 'extendOwnerCalls': [0x39b36a5, 0x39b36e2],
+    'extendOwnerValidityCallRva': 0x39b36cf, 'extendNotifyTailRva': 0x39b3702,
+    'fillLifeGetterCalls': [0x39b38ae, 0x39b38eb, 0x39b38f2], 'fillFiniteCompareRva': 0x39b38dd,
+    'fillRemainingReadRva': 0x39b3901, 'fillMaxCallRva': 0x39b391c, 'fillRemainingWriteRva': 0x39b3921,
+    'fillExistingReadRva': 0x39b3927, 'fillExistingGetterCallRva': 0x39b3931, 'fillExistingAddCallRva': 0x39b3957,
+    'fillExistingWriteRva': 0x39b395e, 'fillOwnerCalls': [0x39b3968, 0x39b39a5],
+    'fillOwnerValidityCallRva': 0x39b3992, 'fillNotifyTailRva': 0x39b39c5,
+    'refreshRemainingReadRva': 0x39b379f, 'refreshRemainingGetterCallRva': 0x39b37ad,
+    'refreshMaxCallRva': 0x39b37d3, 'refreshRemainingWriteRva': 0x39b37dd,
+    'addStackIncrementRva': 0x39b2aef, 'addStackRemainingReadRva': 0x39b2af5, 'addStackRemainingGetterCallRva': 0x39b2b03,
+    'addStackMaxCallRva': 0x39b2b29, 'addStackRemainingWriteRva': 0x39b2b30, 'addStackUpdateTailRva': 0x39b2b46,
+    'mathEvidence': {'maximum': 'modeSwitch.buffNotification.resetTiming.math', 'additionAndSignedComparison': 'modeSwitch.buffNotification.attributeLoading.math'},
+    'nativeOwnerNotificationEffectsVerified': False, 'nativeGetterHotfixDispatchVerified': False, 'liveMergeTimingVerified': False,
+}
 for index in [147561, 147566, 147567, 147558, 147559, 147563, 147564, 147568, 147569]:
     spec = priority['specification'](index)
     assert spec['declaringTypeIndex'] == pool['index']

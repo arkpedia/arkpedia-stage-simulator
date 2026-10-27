@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 168 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 171 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -1401,6 +1401,45 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 124-method bundle. Continuation40545156330 at3b7defc7 passed; existing
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
+
+### Override-group duration merge and stack effects
+
+The171-method bundle additionally retains default Buff.get_lifeTime,
+get_remainingTime and get_existingTime, including their separate hotfix branches.
+The mergeTiming record binds field offsets, exact getter samples and writes,
+the existing signed FP addition/comparison/maximum evidence, and the owner
+notification target Entity.OnBuffExtend. Getter hotfix effects and notification
+execution remain explicit receivers and are not certified by caller evidence.
+
+`fearProjectileMergeBuffTiming` implements the four default merge callees.
+EXTEND tests the incoming lifetime, adds it to remaining and total lifetime
+only if the first sample is nonnegative, and always adds incoming existing
+time. It preserves three lifetime getter samples on the finite branch and
+captures old total lifetime before the final sample. FILL samples lifetime
+again after its sign test, writes either that negative-branch result or the
+maximum of that result and current remaining duration, and adds existing time.
+Both operations notify a valid owner through a second owner lookup after the
+timing writes. STACK increments its signed Int32 count, takes the maximum of
+captured old remaining duration and incoming remaining duration, then updates
+attributes. Refresh at the stack maximum only performs that duration maximum.
+FP addition wraps signed64 bits. Neither operation invents a notification or
+changes total lifetime/existing time in the stack branches.
+
+Tests cover negative/zero/finite lifetime, changing getter samples and fields,
+signed overflow, null-input partial stack increments, owner replacement and
+destruction, nested notification, lifecycle cancellation and receiver failure.
+Override-group composition executes concrete EXTEND/FILL timing and STACK
+timing plus capped attribute updating, then maximum-stack refresh without an
+extra attribute update. All1000 focused native/fear/family/miner tests pass;
+--check reproduces171 complete methods. This checkpoint is local.
+
+Continuation40558189633 at approved0524e2b1 initially failed because Chrome
+did not expose its debugging endpoint within30 seconds in the17-10 browser
+job. Rerunning failed jobs on the same handle passed (attempt2). Full40558578137
+remains active; it has not been restarted or replaced. Queue ordering, snapshot
+effects, enable effects, actual OnBuffExtend behavior and full controller/stage
+integration remain open. All source/support/receipt/catalogue gates are retained
+and all new stages remain test-only.
 
 ### Override-group merge dispatch and live activation selection
 

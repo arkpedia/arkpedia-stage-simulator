@@ -20,7 +20,7 @@ import {fearProjectileFinishedBuffs} from '../server/sim/content/chapter16-fear-
 import {fearProjectileFinishAndRemoveBuff,fearProjectileOverrideGroupRemove} from '../server/sim/content/chapter16-fear-buff-finish.js';
 import {fearProjectileBuffRecycleQueue,fearProjectileClearRuntimeData} from '../server/sim/content/chapter16-fear-buff-recycle.js';
 import {fearProjectileBuffIdentity,fearProjectileResetBuffLifecycle} from '../server/sim/content/chapter16-fear-buff-identity.js';
-import {fearProjectileBuffTimer,fearProjectileResetBuffTriggers,fearProjectileBuffDurationKey,fearProjectileResetBuffLifetime,fearProjectileModifyBuffLifetime} from '../server/sim/content/chapter16-fear-buff-timing.js';
+import {fearProjectileBuffTimer,fearProjectileResetBuffTriggers,fearProjectileBuffDurationKey,fearProjectileResetBuffLifetime,fearProjectileModifyBuffLifetime,fearProjectileMergeBuffTiming} from '../server/sim/content/chapter16-fear-buff-timing.js';
 import {fearProjectileResetBuffBlackboard,fearProjectileBuffPrefixAssignments,fearProjectileBuffBlackboardWrites,fearProjectileBuffBlackboardReads,fearProjectileBuffBlackboardPairs} from '../server/sim/content/chapter16-fear-buff-blackboard.js';
 import {fearProjectileFloatToRaw,fearProjectileFloorToInt,fearProjectileMultiplyRaw,fearProjectileAbsRaw,fearProjectileRoundRawToInt} from '../server/sim/content/chapter16-fear-fixed-values.js';
 import {fearProjectileLoadBuffActions} from '../server/sim/content/chapter16-fear-buff-actions.js';
@@ -46,6 +46,95 @@ import { chapter16Shadow } from '../server/sim/content/chapter16-shadow.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
 const parentKey='feawpj_a[mcreep_fear]';
 const fpOne=1n<<32n;
+
+function mergeTimingFixture(){
+ const buff={m_lifeTime:10n*fpOne,m_remainingTime:3n*fpOne,m_existingTime:7n*fpOne,m_stackCnt:1},
+  incoming={m_lifeTime:5n*fpOne,m_remainingTime:2n*fpOne,m_existingTime:4n*fpOne},owner={},events=[],state={active:true};
+ const options={buff,isActive:()=>state.active,readLifeTime:value=>{events.push('life');return value.m_lifeTime;},
+  readRemainingTime:value=>{events.push('remaining');return value.m_remainingTime;},readExistingTime:value=>{events.push('existing');return value.m_existingTime;},
+  readOwner:value=>{assert.equal(value,buff);events.push('owner');return owner;},isDestroyedOrNull:value=>{events.push('Unity');return value==null;},
+  notifyBuffExtend:(who,old,next)=>{assert.equal(who,owner);assert.equal(old,buff);assert.equal(next,incoming);events.push('notify');},
+  updateStack:value=>{assert.equal(value,buff);events.push('update');}};
+ return{buff,incoming,owner,events,state,options,adapter:()=>fearProjectileMergeBuffTiming(options)};
+}
+test('EXTEND adds incoming finite lifetime to remaining and total lifetime, then existing time before OnBuffExtend',()=>{
+ const f=mergeTimingFixture();f.adapter().extend(f.incoming);
+ assert.equal(f.buff.m_remainingTime,8n*fpOne);assert.equal(f.buff.m_lifeTime,15n*fpOne);assert.equal(f.buff.m_existingTime,11n*fpOne);
+ assert.deepEqual(f.events,['life','life','life','existing','owner','Unity','owner','notify']);
+});
+test('negative EXTEND lifetime skips both duration writes but still adds incoming existing time and notifies',()=>{
+ const f=mergeTimingFixture();f.incoming.m_lifeTime=-fpOne;f.adapter().extend(f.incoming);
+ assert.equal(f.buff.m_remainingTime,3n*fpOne);assert.equal(f.buff.m_lifeTime,10n*fpOne);assert.equal(f.buff.m_existingTime,11n*fpOne);
+ assert.deepEqual(f.events,['life','existing','owner','Unity','owner','notify']);
+});
+test('EXTEND keeps three lifetime getter samples and captures old lifetime before the third getter',()=>{
+ const f=mergeTimingFixture();let calls=0;
+ f.options.readLifeTime=()=>{calls++;if(calls===2)f.buff.m_remainingTime=8n;if(calls===3)f.buff.m_lifeTime=999n;return BigInt(calls);};
+ f.adapter().extend(f.incoming);assert.equal(calls,3);assert.equal(f.buff.m_remainingTime,10n);assert.equal(f.buff.m_lifeTime,10n*fpOne+3n);
+});
+for(const [life,expected] of [[5n,5n],[1n,3n],[-1n,-1n],[0n,3n]])test('FILL lifetime '+life+' selects native remaining '+expected+' without replacing total lifetime',()=>{
+ const f=mergeTimingFixture();f.buff.m_remainingTime=3n;f.incoming.m_lifeTime=life;f.adapter().fill(f.incoming);
+ assert.equal(f.buff.m_remainingTime,expected);assert.equal(f.buff.m_lifeTime,10n*fpOne);assert.equal(f.buff.m_existingTime,11n*fpOne);
+ assert.deepEqual(f.events,['life','life','existing','owner','Unity','owner','notify']);
+});
+test('FILL branches on the first lifetime getter and uses its second sample for the write',()=>{
+ for(const first of [-1n,1n]){
+  const f=mergeTimingFixture();let calls=0;f.options.readLifeTime=()=>++calls===1?first:-5n;
+  f.adapter().fill(f.incoming);assert.equal(f.buff.m_remainingTime,first<0n?-5n:3n*fpOne);
+ }
+});
+for(const method of ['refreshAtMax','addStack'])test(method+' preserves the larger remaining duration and leaves lifetime/existing time untouched',()=>{
+ const f=mergeTimingFixture();f.adapter()[method](f.incoming);assert.equal(f.buff.m_remainingTime,3n*fpOne);
+ assert.equal(f.buff.m_lifeTime,10n*fpOne);assert.equal(f.buff.m_existingTime,7n*fpOne);assert.equal(f.buff.m_stackCnt,method==='addStack'?2:1);
+ assert.deepEqual(f.events,method==='addStack'?['remaining','update']:['remaining']);
+});
+test('STACK captures old remaining time before the incoming getter and increments before null-input failure',()=>{
+ const f=mergeTimingFixture();f.options.readRemainingTime=()=>{f.buff.m_remainingTime=100n*fpOne;return 8n*fpOne;};
+ f.adapter().addStack(f.incoming);assert.equal(f.buff.m_remainingTime,8n*fpOne);
+ const g=mergeTimingFixture();assert.throws(()=>g.adapter().addStack(null),/null native/);assert.equal(g.buff.m_stackCnt,2);assert.deepEqual(g.events,[]);
+});
+test('merge arithmetic wraps signed Q32.32 additions and Int32 stack increments',()=>{
+ const f=mergeTimingFixture(),max=(1n<<63n)-1n;f.buff.m_lifeTime=max;f.buff.m_remainingTime=max;f.buff.m_existingTime=max;
+ f.incoming.m_lifeTime=1n;f.incoming.m_existingTime=1n;f.adapter().extend(f.incoming);
+ assert.equal(f.buff.m_lifeTime,-(1n<<63n));assert.equal(f.buff.m_remainingTime,-(1n<<63n));assert.equal(f.buff.m_existingTime,-(1n<<63n));
+ const g=mergeTimingFixture();g.buff.m_stackCnt=2147483647;g.adapter().addStack(g.incoming);assert.equal(g.buff.m_stackCnt,-2147483648);
+});
+for(const method of ['fill','extend'])test(method+' skips destroyed owners and rereads a live owner before notification',()=>{
+ const f=mergeTimingFixture();f.options.isDestroyedOrNull=()=>true;f.adapter()[method](f.incoming);assert.equal(f.events.includes('notify'),false);
+ const g=mergeTimingFixture(),replacement={};let reads=0;g.options.readOwner=()=>++reads===1?g.owner:replacement;
+ g.options.notifyBuffExtend=(who,old,next)=>{assert.equal(who,replacement);assert.equal(old,g.buff);assert.equal(next,g.incoming);};
+ g.adapter()[method](g.incoming);assert.equal(reads,2);
+});
+test('merge cancellation and notification failures keep earlier duration and stack mutations',()=>{
+ const f=mergeTimingFixture();f.options.readExistingTime=()=>{f.state.active=false;return 2n;};assert.equal(f.adapter().extend(f.incoming),null);
+ assert.equal(f.buff.m_lifeTime,15n*fpOne);assert.equal(f.buff.m_existingTime,7n*fpOne);assert.equal(f.events.includes('notify'),false);
+ const g=mergeTimingFixture();g.options.updateStack=()=>{throw Error('attribute failure');};assert.throws(()=>g.adapter().addStack(g.incoming),/attribute failure/);assert.equal(g.buff.m_stackCnt,2);
+});
+test('merge calls allow nested native notification with independent invocation state',()=>{
+ const f=mergeTimingFixture();let adapter,nested=false;f.options.notifyBuffExtend=()=>{if(!nested){nested=true;adapter.extend(f.incoming);}};
+ adapter=f.adapter();adapter.extend(f.incoming);assert.equal(f.buff.m_remainingTime,13n*fpOne);assert.equal(f.buff.m_lifeTime,20n*fpOne);
+ assert.equal(f.buff.m_existingTime,15n*fpOne);
+});
+test('STACK group composes timing extension and native capped attribute updating before rejecting the incoming buff',()=>{
+ const f=mergeTimingFixture(),group=groupDispatchFixture(1,[f.buff]),attributes={},owner={},writes=[];
+ f.buff.m_data={attributes:{name:'native modifier'}};f.buff.attributeMask=8n;f.incoming.m_remainingTime=6n*fpOne;
+ f.options.updateStack=()=>fearProjectileUpdateBuffStack({buff:f.buff,isActive:()=>true,
+  loadAttributes:(data,count)=>writes.push([data,count]),readOwner:()=>owner,readOwnerAttributes:who=>{assert.equal(who,owner);return attributes;},
+  markAttributesDirty:(target,mask)=>writes.push([target,mask])}).run();
+ group.options.addStack=(buff,incoming)=>{assert.equal(buff,f.buff);f.adapter().addStack(incoming);};
+ assert.equal(group.adapter().add(f.incoming),false);assert.equal(f.buff.m_stackCnt,2);assert.equal(f.buff.m_remainingTime,6n*fpOne);
+ assert.equal(f.buff.m_maxValidStackCnt,2);assert.deepEqual(writes,[[f.buff.m_data.attributes,2],[attributes,8n]]);
+ group.group.m_maxStackCnt=2;f.buff.m_refreshRemainingTimeWhenStackMax=true;f.incoming.m_remainingTime=9n*fpOne;
+ group.options.fillRemainingTimeWhenStackMax=(buff,incoming)=>{assert.equal(buff,f.buff);f.adapter().refreshAtMax(incoming);};
+ assert.equal(group.adapter().add(f.incoming),false);assert.equal(f.buff.m_stackCnt,2);assert.equal(f.buff.m_remainingTime,9n*fpOne);assert.equal(writes.length,2);
+});
+for(const type of [3,4])test('override mode '+type+' composes its concrete duration effect before optional snapshot processing',()=>{
+ const f=mergeTimingFixture(),group=groupDispatchFixture(type,[f.buff]);f.buff.m_data={takeSnapshotWhenExtend:false};
+ group.options.fillRemainingTime=(buff,incoming)=>{assert.equal(buff,f.buff);f.adapter().fill(incoming);};
+ group.options.extendRemainingTime=(buff,incoming)=>{assert.equal(buff,f.buff);f.adapter().extend(incoming);};
+ assert.equal(group.adapter().add(f.incoming),false);assert.equal(f.buff.m_remainingTime,(type===3?5n:8n)*fpOne);
+ assert.equal(f.buff.m_lifeTime,(type===3?10n:15n)*fpOne);assert.equal(f.events.at(-1),'notify');
+});
 
 function groupDispatchFixture(type=0,members=[]){
  const group={m_type:type,m_queue:members,m_maxStackCnt:3,m_maxValidStackCnt:2},events=[],state={active:true};

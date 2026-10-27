@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,168);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,171);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -272,6 +272,37 @@ test('override group source distinguishes all merge modes and live first-unfinis
  at(update,q.updateFinishedCallRva,'0x1839b6b00');at(update,q.updateSelectedWriteRva,'bpl, 1');at(update,q.updateEnabledCallRva,'0x1839b7e80');
  at(update,q.updateQueueAfterSetterRva,'rax, qword ptr [rdi + 0x10]');
  assert.equal(q.nativeQueueOrderingVerified,false);assert.equal(q.nativeBuffMergeEffectsVerified,false);assert.equal(q.liveGroupDispatchVerified,false);
+});
+
+test('native merge timing source binds distinct lifetime and remaining getters, signed arithmetic and notification ordering',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),b=c.modeSwitch.buffNotification,q=b.newBuff.mergeTiming;
+ const extend=castMethod(c,'Buff','_ExtendRemainingTime'),fill=castMethod(c,'Buff','_FillRemainingTime'),
+  refresh=castMethod(c,'Buff','_FillRemainingTimeWhenStackMax'),stack=castMethod(c,'Buff','_AddStack');
+ const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args),`${rva.toString(16)} ${args}`);
+ assert.deepEqual(q.fields.map(f=>[f.name,f.offset]),[['m_lifeTime',0x70],['m_remainingTime',0x78],['m_existingTime',0x80],['m_stackCnt',0x8c]]);
+ assert.equal(q.ownerNotification.type,'Entity');assert.equal(q.ownerNotification.name,'OnBuffExtend');assert.equal(q.ownerNotification.entryRva,0x3a1fd50);
+ for(const rva of q.extendLifeGetterCalls)at(extend,rva,'0x1839b6d40');at(extend,q.extendFiniteCompareRva,'0x1851df0b0');
+ at(extend,q.extendRemainingReadRva,'rdi, qword ptr [rsi + 0x78]');at(extend,q.extendRemainingWriteRva,'qword ptr [rsi + 0x78], rax');
+ at(extend,q.extendLifeReadRva,'rbx, qword ptr [rsi + 0x70]');at(extend,q.extendLifeWriteRva,'qword ptr [rsi + 0x70], rax');
+ at(extend,q.extendExistingReadRva,'rbx, qword ptr [rsi + 0x80]');at(extend,q.extendExistingGetterCallRva,'0x1839b6870');at(extend,q.extendExistingWriteRva,'qword ptr [rsi + 0x80], rax');
+ for(const rva of q.extendAddCalls)at(extend,rva,'0x184175da0');for(const rva of q.extendOwnerCalls)at(extend,rva,'0x1839b6ff0');
+ at(extend,q.extendOwnerValidityCallRva,'0x185ebee90');at(extend,q.extendNotifyTailRva,'0x183a1fd50');
+ for(const rva of q.fillLifeGetterCalls)at(fill,rva,'0x1839b6d40');at(fill,q.fillFiniteCompareRva,'0x1851df0b0');
+ at(fill,q.fillRemainingReadRva,'rdi, qword ptr [rbp + 0x78]');at(fill,q.fillMaxCallRva,'0x185a5c940');at(fill,q.fillRemainingWriteRva,'qword ptr [rbp + 0x78], rax');
+ at(fill,q.fillExistingReadRva,'rbx, qword ptr [rbp + 0x80]');at(fill,q.fillExistingGetterCallRva,'0x1839b6870');
+ at(fill,q.fillExistingAddCallRva,'0x184175da0');at(fill,q.fillExistingWriteRva,'qword ptr [rbp + 0x80], rax');
+ for(const rva of q.fillOwnerCalls)at(fill,rva,'0x1839b6ff0');at(fill,q.fillOwnerValidityCallRva,'0x185ebee90');at(fill,q.fillNotifyTailRva,'0x183a1fd50');
+ at(refresh,q.refreshRemainingReadRva,'rbx, qword ptr [rsi + 0x78]');at(refresh,q.refreshRemainingGetterCallRva,'0x1839b71f0');
+ at(refresh,q.refreshMaxCallRva,'0x185a5c940');at(refresh,q.refreshRemainingWriteRva,'qword ptr [rsi + 0x78], rax');
+ at(stack,q.addStackIncrementRva,'dword ptr [rsi + 0x8c]');at(stack,q.addStackRemainingReadRva,'rbx, qword ptr [rsi + 0x78]');
+ at(stack,q.addStackRemainingGetterCallRva,'0x1839b71f0');at(stack,q.addStackMaxCallRva,'0x185a5c940');
+ at(stack,q.addStackRemainingWriteRva,'qword ptr [rsi + 0x78], rax');at(stack,q.addStackUpdateTailRva,'0x1839b3450');
+ at(castMethod(c,'Buff','get_lifeTime'),0x39b6d97,'rax, qword ptr [rbx + 0x70]');
+ at(castMethod(c,'Buff','get_remainingTime'),0x39b7247,'rax, qword ptr [rbx + 0x78]');
+ at(castMethod(c,'Buff','get_existingTime'),0x39b68c7,'rax, qword ptr [rbx + 0x80]');
+ const max=b.resetTiming.math.find(m=>m.entryRva===0x5a5c940),add=b.attributeLoading.math.find(m=>m.entryRva===0x4175da0),ge=b.attributeLoading.math.find(m=>m.entryRva===0x51df0b0);
+ assert.ok(max);assert.ok(add);assert.ok(ge);at(max,0x5a5c98a,'0x1851df0c0');
+ assert.equal(q.nativeOwnerNotificationEffectsVerified,false);assert.equal(q.nativeGetterHotfixDispatchVerified,false);assert.equal(q.liveMergeTimingVerified,false);
 });
 
 test('native admission source binds signed Int16 counters, combo fallback and Enemy raw-WALK levitation',()=>{
