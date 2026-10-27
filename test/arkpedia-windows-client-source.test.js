@@ -127,6 +127,45 @@ test('ordinary projectile birth preprocesses the existing ability action list be
  assert.ok(!instructions(register).some(i=>i.operands==='0x180004cc0'));
 });
 
+test('movement evidence retains full chained ranges and separates both bounded switch tables from code',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-movement-source.json');
+ assert.equal(c.methods.length,9);
+ for(const p of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+p.path,import.meta.url))),p.sha256);
+ const component=c.component,native=JSON.parse(component.originalJson);
+ assert.equal(component.scriptIdentity.m_ClassName,'AdvancedMovement');assert.equal(component.serializedFieldParity,false);
+ assert.equal(sha(component.originalJson),component.componentSha256);
+ assert.equal(native._moveType,1);assert.equal(native._speed,10);assert.equal(native._useDynamicSpeed,0);
+ assert.equal(c.moveType.fields.find(f=>f.value===1).name,'TRACE_TARGET_WITH_SPEED');
+ assert.deepEqual(component.unmatchedSerializedFields,Object.fromEntries([
+  '_adjustSourceToTargetArcAngleBySourceFace','_drawFuncTurnAndWaveDebugLine','_fixProjectileHasReached',
+  '_fixProjectileZWhenReached','_rotateToTargetOnDelayToStart','_sourceToTargetArcAngle'].map(k=>[k,0])));
+ for(const field of ['runtimeDispatchVerified','frameParity','crossVersionParity'])assert.equal(c[field],false);
+ for(const m of c.methods)for(const ch of m.chunks){
+  const raw=Buffer.from(ch.base64,'base64');assert.equal(raw.length,ch.endRva-ch.beginRva);assert.equal(sha(raw),ch.sha256);
+ }
+ for(const [name,chunkCount,tableRva,selectedTarget] of [
+  ['OnInit',6,0xa7c780,0xa7c3aa],['OnTick',10,0xa7d598,0xa7ca2c]]){
+  const m=castMethod(c,'AdvancedMovement',name);assert.equal(m.chunks.length,chunkCount);
+  const chunks=m.chunks.filter(ch=>ch.jumpTable);assert.equal(chunks.length,1);
+  const ch=chunks[0],table=ch.jumpTable,raw=Buffer.from(ch.base64,'base64');
+  assert.equal(table.beginRva,tableRva);assert.equal(table.endRva,ch.endRva);
+  assert.equal(table.count,6);assert.equal(table.entryBytes,4);assert.equal(table.indexBias,-1);
+  assert.equal(table.targetRvas[native._moveType-1],selectedTarget);
+  const code=raw.subarray(0,ch.codeRange.endRva-ch.beginRva),bytes=raw.subarray(code.length);
+  assert.equal(sha(code),ch.codeRange.sha256);assert.equal(sha(bytes),table.sha256);
+  assert.equal(bytes.length,24);assert.deepEqual(Array.from({length:6},(_,i)=>bytes.readUInt32LE(i*4)),table.targetRvas);
+  const at=new Map(instructions(m).map(i=>[i.rva,i]));
+  for(const target of table.targetRvas)assert.ok(at.has(target));
+  for(const dispatch of m.dispatcher){const i=at.get(dispatch.rva);assert.equal(i.mnemonic,dispatch.mnemonic);assert.equal(i.operands,dispatch.operands);}
+  assert.equal(m.dispatcher.find(i=>i.mnemonic==='cmp').operands,'eax, 5');
+  for(const chunk of m.chunks){
+   let cursor=chunk.beginRva;
+   for(const i of chunk.instructions){assert.equal(i.rva,cursor);cursor+=i.size;}
+   assert.equal(cursor,chunk.codeRange?.endRva??chunk.endRva);
+  }
+ }
+});
+
 test('native projectile source lock checks cached UID and destroyed/null state across allocation and recycling',()=>{
  const c=read(projectilePath),ref=c.sourceReference;
  assert.equal(ref.method.name,'Lock');assert.equal(ref.encodedUsage>>>29,6);
