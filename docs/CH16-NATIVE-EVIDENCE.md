@@ -3525,3 +3525,32 @@ observes 175 damage after source retirement. Collection/interface internals,
 native ATK getter effects, attachment lookup, damage-node construction,
 hotfixes and live/frame/cross-version parity remain held. The new work changes
 no stage, enemy support, receipt or catalogue admission gate.
+
+## Attachment lookup checkpoint
+
+The test-only `chapter16-fear-projectile-attachments.js` adapter follows the
+default Ability.GetAbilityAttachments (54622, RVA 0x390f1a0) and Entity lookup
+(58028, RVA 0x3a1b6f0). The extractor retains both complete native bodies,
+RangedAttack slot 46, the Options.familyGroup field, all six selected enum
+defaults, and the exact three-byte enum identity leaf at RVA 0x28a66d0. The
+caller loads EnumInt32ToInt.Convert<FamilyGroup>; the generic specification's
+native mapping remains null, and no unrelated method sharing that address is
+used as the semantic identity. The shared PE boundary reader is unchanged.
+
+Ability lookup checks its first owner with Unity null semantics, fetches owner
+again, reads the family group, then checks the captured second owner before
+calling Entity. Entity captures m_abilityAttachments before the identity
+conversion and performs unsigned bounds checking. Nullable family slots pass
+through. ATTACK/COMBAT/SKILL/TALENT/GENERAL are 0–4; E_NUM is 5 and is not an
+extra attachment family. The default Options field layout places familyGroup
+at boxed offset 44; the ability's Options value starts at 144, so its unboxed
+family group is at 172, matching the extracted high word from the native
+16-byte read at 160.
+
+All 1,542 focused tests and the attachment extractor/Fear/miner contracts pass.
+The long Fear birth composition uses this lookup for spell-start and action
+initialization, checking the shared attack-family list reference before
+self-death and later impact. Its attachment list is explicitly empty: native
+attachment creation/application, array/value-copy internals, hotfix behavior
+and runtime/frame/cross-version parity remain open. No stage or enemy support,
+receipt or public catalogue admission changed.

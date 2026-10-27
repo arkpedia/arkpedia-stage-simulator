@@ -70,6 +70,46 @@ import {fearProjectileSetTraceTarget,fearProjectileBorn} from '../server/sim/con
 import {fearProjectileBaseBorn,fearProjectileDefaultOnBorn,fearProjectileActionBirth,fearProjectileActionContextSetters,fearProjectileControllerRunActions} from '../server/sim/content/chapter16-fear-projectile-action-born.js';
 import {fearProjectileActionControllerInit,fearProjectileRegisterActions} from '../server/sim/content/chapter16-fear-projectile-action-init.js';
 import {fearProjectileRangedActions,fearProjectileActiveBuffs,fearProjectilePreprocessActions,fearProjectilePreprocessDamage} from '../server/sim/content/chapter16-fear-projectile-action-provider.js';
+import {fearProjectileAttachmentFamilyGroup,fearProjectileAbilityAttachments,fearProjectileEntityAttachments} from '../server/sim/content/chapter16-fear-projectile-attachments.js';
+
+function projectileAttachmentsFixture(){
+ const slots=Array.from({length:5},(_,family)=>[{family}]),owner={m_abilityAttachments:slots},ability={owner,options:{familyGroup:0}},events=[],
+  arrayOptions={readLength:array=>{events.push('length');return array.length;},readElement:(array,index)=>{events.push(['item',index]);return array[index];}},
+  options={readOwner:value=>{events.push('owner');return value.owner;},isNullUnity:value=>{events.push('null');return value==null||value.destroyed===true;},
+   readFamilyGroup:value=>{events.push('group');return fearProjectileAttachmentFamilyGroup(value);},getEntityAttachments:fearProjectileEntityAttachments(arrayOptions)};
+ return{slots,owner,ability,events,arrayOptions,options,run:()=>fearProjectileAbilityAttachments(options)(ability)};
+}
+test('attachment lookup selects each shared family slot after two owner reads',()=>{
+ const f=projectileAttachmentsFixture();for(let group=0;group<5;group++){f.ability.options.familyGroup=group;assert.equal(f.run(),f.slots[group]);}
+ assert.deepEqual(f.events.slice(0,6),['owner','null','owner','group','length',['item',0]]);
+});
+test('null or destroyed first owner returns null before reading group or collections',()=>{
+ for(const owner of [null,{destroyed:true}]){const f=projectileAttachmentsFixture();f.ability.owner=owner;f.options.readFamilyGroup=()=>{throw Error('unexpected group');};assert.equal(f.run(),null);assert.deepEqual(f.events,['owner','null']);}
+});
+test('attachment lookup uses the second owner without another Unity query',()=>{
+ const f=projectileAttachmentsFixture(),replacement={destroyed:true,m_abilityAttachments:[['replacement']]};
+ f.options.isNullUnity=owner=>{assert.equal(owner,f.owner);f.ability.owner=replacement;return false;};assert.deepEqual(f.run(),['replacement']);
+});
+test('null second owner fails after family lookup and preserves its callbacks',()=>{
+ const f=projectileAttachmentsFixture();f.options.isNullUnity=()=>{f.ability.owner=null;return false;};let read=false;
+ f.options.readFamilyGroup=()=>{read=true;return 0;};assert.throws(f.run,/null native object/);assert.equal(read,true);
+});
+test('family lookup can change the current owner while entity selection retains the captured owner',()=>{
+ const f=projectileAttachmentsFixture();f.options.readFamilyGroup=()=>{f.ability.owner={m_abilityAttachments:[['wrong']]};return 0;};assert.equal(f.run(),f.slots[0]);
+});
+test('entity lookup permits a null family slot but rejects null arrays and unsigned out-of-range indexes',()=>{
+ const f=projectileAttachmentsFixture();f.slots[0]=null;assert.equal(f.run(),null);
+ for(const group of [-1,5,2147483647]){f.ability.options.familyGroup=group;assert.throws(f.run,/bounds/);}
+ f.ability.options.familyGroup=0;f.owner.m_abilityAttachments=null;assert.throws(f.run,/null native object/);
+});
+test('entity lookup reads an element from its captured array when the length callback replaces the owner field',()=>{
+ const f=projectileAttachmentsFixture();f.arrayOptions.readLength=array=>{f.owner.m_abilityAttachments=[['wrong']];return array.length;};
+ assert.equal(fearProjectileEntityAttachments(f.arrayOptions)(f.owner,0),f.slots[0]);
+});
+test('attachment lookup requires explicit typed callers and preserves native integer checks',()=>{
+ assert.throws(()=>fearProjectileAbilityAttachments({}),/callers/);assert.throws(()=>fearProjectileEntityAttachments({}),/callers/);
+ const f=projectileAttachmentsFixture();f.options.isNullUnity=()=>1;assert.throws(f.run,/Boolean/);f.ability.options.familyGroup=1.5;assert.throws(()=>fearProjectileAttachmentFamilyGroup(f.ability),/Int32/);
+});
 
 function projectileProviderFixture(){
  const owner={atkRaw:175n*(1n<<32n)},ability={owner,m_actions:[{damage:true,m_cachedAtk:0n}],_activeBuffs:[]},events=[],
@@ -5894,6 +5934,11 @@ test('bounded wait, controller/factory birth and Init, event5 self-death and ind
  const preprocessDamage=fearProjectilePreprocessDamage(provider.damageOptions);
  provider.options.preprocessNode=(node,owner)=>{preprocessDamage(node,owner);damage=fearProjectileDamageAction(f.b,{...source,cachedAtk:Math.fround(Number(node.m_cachedAtk)/2**32)});};
  actionInit.options.getActiveBuffs=fearProjectileActiveBuffs;actionInit.options.getProjectileActions=fearProjectileRangedActions({preprocess:fearProjectilePreprocessActions(provider.options)});
+ const attackGroup=read('data/candidates/arkpedia-windows-fear-projectile-attachments-source.json').familyGroup.values.find(row=>row.name==='ATTACK').value;
+ start.ability.options={familyGroup:attackGroup};f.source.m_abilityAttachments=Array(5).fill(null);f.source.m_abilityAttachments[attackGroup]=[];
+ const attachments=fearProjectileAbilityAttachments({readOwner:ability=>start.pointers.lock(ability.m_owner),isNullUnity:value=>value==null||value.destroyed===true,
+  readFamilyGroup:fearProjectileAttachmentFamilyGroup,getEntityAttachments:fearProjectileEntityAttachments({readLength:array=>array.length,readElement:(array,index)=>array[index]})});
+ start.start.getAttachments=attachments;actionInit.options.getAttachments=attachments;
  initialization.initOptions.initActionController=fearProjectileActionControllerInit(actionInit.options);
  Object.assign(inner.inlineOptions,{getLifeTime:()=>nativeProjectile._lifeTime,getKeepAlreadyHitTime:()=>fearProjectileFloatToRaw(nativeProjectile._keepAlreadyHitTime)});
  Object.assign(born.traceOptions,{castEntity:value=>value===f.target?value:null,castMountPoint:value=>value===hitMount?value:null,readMountOwner:()=>start.pointers.capture(f.target),readMapPosition:()=>({x:1,y:0})});
@@ -5934,6 +5979,7 @@ test('bounded wait, controller/factory birth and Init, event5 self-death and ind
  const spell=fearProjectileSpell(f.b,{owner:f.source,onSpellStart:start.runStart,isCasting:()=>casting,emitSpellEnd:()=>{
   for(const stack of Object.values(start.ctx))assert.equal(stack._size,1);assert.deepEqual(actionBirth.snapshots.takeSnapshot(),actionBirth.managed.prior);assert.equal(start.projectile.borned,true);assert.equal(actionBirth.events.includes('disposed'),true);
   assert.equal(sharedDamage.m_cachedAtk,175n*fpOne);assert.deepEqual(start.projectile._actionController.actions[0],[sharedDamage]);assert.equal(start.projectile._actionController.blackboard,start.ability.board);assert.equal(start.projectile._actionController.m_addBuffsToTargetCnt,0);
+  assert.equal(start.projectile._actionController.m_attachmentsToAttach,f.source.m_abilityAttachments[attackGroup]);
   assert.deepEqual(start.ability.m_projectiles,[start.pointers.capture(start.projectile)]);assert.deepEqual(initialization.managed,[]);assert.equal(inner.scheduled.length,0);assert.deepEqual(born.events.find(e=>e[0]==='effect'),['effect',start.projectile,nativeProjectile._mainEffect]);events.push('event5');assert.equal(activation.run(),null);},
  mayBeginPostDelay:()=>{throw Error('removed owner');},beginPostDelay:()=>{throw Error('removed owner');}});
  const wait=fearProjectileAttackWait(f.b,{owner:f.source,cachedDurationRaw:fpOne,readDeltaPlayTime:()=>1,

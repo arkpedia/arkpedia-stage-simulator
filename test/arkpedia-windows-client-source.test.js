@@ -20,6 +20,20 @@ function settingsFixture(){
  return{...f,settings:{version:f.pin.version,source:f.pin.source,file}};
 }
 
+test('attachment source retains separate owner reads, options family layout and bounded enum identity conversion',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-projectile-attachments-source.json');assert.deepEqual(c.methods.map(m=>[m.index,m.entryRva]),[[54622,0x390f1a0],[58028,0x3a1b6f0]]);
+ for(const source of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+source.path,import.meta.url))),source.sha256);
+ for(const m of c.methods)for(const chunk of m.chunks){const raw=Buffer.from(chunk.base64,'base64');assert.equal(sha(raw),chunk.sha256);assert.equal(raw.length,chunk.endRva-chunk.beginRva);}
+ assert.deepEqual(c.fields.map(f=>[f.name,f.offset]),[['<options>k__BackingField',144],['familyGroup',44],['m_abilityAttachments',256]]);assert.equal(c.fields[0].typeData,8736);assert.equal(c.fields[1].typeData,8738);
+ assert.equal(c.abilitySlot.slot,46);assert.equal(c.abilitySlot.index,54622);assert.deepEqual(c.familyGroup.values.map(row=>[row.name,row.value,row.encodedHex]),[['ATTACK',0,'00'],['COMBAT',1,'02'],['SKILL',2,'04'],['TALENT',3,'06'],['GENERAL',4,'08'],['E_NUM',5,'0a']]);
+ const conversion=c.conversion;assert.equal(conversion.encodedUsage>>>29,6);assert.equal((conversion.encodedUsage&0x1ffffffe)>>>1,264121);assert.equal(conversion.specification.declaringType,'EnumInt32ToInt');assert.equal(conversion.specification.definition.name,'Convert');assert.equal(conversion.specification.instantiations.method.arguments[0].typeIndex,8738);
+ const raw=Buffer.from(conversion.leaf.base64,'base64');assert.equal(raw.toString('hex'),'8bc1c3');assert.equal(sha(raw),conversion.leaf.sha256);assert.equal(conversion.leaf.endRva-conversion.leaf.beginRva,3);assert.deepEqual(conversion.leaf.instructions.map(i=>[i.mnemonic,i.operands]),[['mov','eax, ecx'],['ret','']]);
+ const at=(method,rva,operands)=>assert.ok(instructions(c.methods[method]).some(i=>i.rva===rva&&i.operands===operands),'Attachment instruction '+rva.toString(16));
+ for(const [rva,operands]of [[0x390f1f9,'0x183911530'],[0x390f21e,'0x185ebec60'],[0x390f230,'0x183911530'],[0x390f2a0,'xmm1, xmmword ptr [rbx + 0xa0]'],[0x390f2b1,'rax, 0x20'],[0x390f2e6,'rdi, rdi'],[0x390f2fd,'0x183a1b6f0']])at(0,rva,operands);
+ for(const [rva,operands]of [[0x3a1b762,'rbx, qword ptr [rbx + 0x100]'],[0x3a1b769,'0x1828a66d0'],[0x3a1b775,'eax, dword ptr [rbx + 0x18]'],[0x3a1b77a,'rax, qword ptr [rbx + rax*8 + 0x20]']])at(1,rva,operands);
+ assert.equal(c.testOnly,true);for(const key of ['runtimeDispatchVerified','frameParity','crossVersionParity','nativeArrayEffectsVerified','nativeOptionsCopyEffectsVerified','hotfixDispatchVerified','liveAttachmentLookupVerified'])assert.equal(c[key],false);
+});
+
 test('action provider source retains shared list reread, captured traversal and native damage cache write',()=>{
  const c=read('data/candidates/arkpedia-windows-fear-projectile-action-provider-source.json'),parent=read('data/candidates/arkpedia-windows-fear-projectile-source.json');
  assert.deepEqual(c.methods.map(m=>[m.index,m.entryRva]),[[80001,0xbfb750],[54641,0x390fa70],[80968,0xc1dba0],[86256,0xd7a0e0]]);
