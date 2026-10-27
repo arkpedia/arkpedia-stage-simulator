@@ -504,6 +504,42 @@ result['modeSwitch']['buffNotification']['resetTiming'] = {
     'remainingMinCallRva': 0x1c5dc03, 'remainingWriteRva': 0x1c5dc0d,
     'fullResetEffectsVerified': False, 'liveTimerSchedulingVerified': False,
 }
+for owner, name in [(buff, 'set_triggerable'), (c['type_row']('Blackboard', 'Torappu'), 'GetFpOrDefault'),
+                    (c['type_row']('Blackboard', 'Torappu'), 'GetIntOrDefault')]:
+    methods.append(c['method'](owner, c['unique'](lambda r: r['name'] == name, owner['methods'])))
+trigger_literals = []
+for load_rva, expected in [(0x39b17a9, 'interval'), (0x39b17e0, 'trig_cnt'), (0x39b1853, 'first_trigger_interval')]:
+    pos = v['offset'](v['image_base'] + load_rva)
+    assert v['b'][pos:pos + 3] == bytes.fromhex('488b15')
+    target = load_rva + 7 + struct.unpack_from('<i', v['b'], pos + 3)[0]
+    usage = v['quad'](v['b'], v['offset'](v['image_base'] + target))
+    assert usage >> 29 == 5 and usage & 1
+    index = (usage & 0x1ffffffe) >> 1
+    length, data_offset = struct.unpack_from('<ii', v['m'], v['uint'](v['m'], 8) + index * 8)
+    start = v['uint'](v['m'], 16) + data_offset
+    value = v['m'][start:start + length].decode('utf8')
+    assert value == expected
+    trigger_literals.append({'loadRva': load_rva, 'encodedUsage': usage, 'literalIndex': index, 'length': length, 'dataOffset': data_offset, 'value': value})
+conditional_rva = 0x402c5d0
+pos = v['offset'](v['image_base'] + conditional_rva)
+conditional_raw = v['b'][pos:pos + 18]
+assert conditional_raw.hex() == '84d2740b80fa02440f45c1418bc0c333c0c3'
+conditional_ins = list(Cs(CS_ARCH_X86, CS_MODE_64).disasm(conditional_raw, v['image_base'] + conditional_rva))
+assert [i.mnemonic for i in conditional_ins] == ['test', 'je', 'cmp', 'cmovne', 'mov', 'ret', 'xor', 'ret']
+data_type = v['types'][c['unique'](lambda f: f['name'] == 'm_data', c['fields'](buff))['typeData']]
+result['modeSwitch']['buffNotification']['resetTriggers'] = {
+    'literals': trigger_literals,
+    'dataFields': [c['unique'](lambda f: f['name'] == name, c['fields'](data_type)) for name in
+        ['triggerLifeType', 'triggerCnt', 'triggerInterval', 'waitFirstTriggerInterval', 'firstTriggerInterval']],
+    'conditional': {'entryRva': conditional_rva, 'chunks': [{'beginRva': conditional_rva, 'endRva': conditional_rva + len(conditional_raw), 'unwindRva': None,
+        'boundary': 'Reviewed complete byte-conditional Int32 leaf, one internal branch and two terminal returns',
+        'base64': base64.b64encode(conditional_raw).decode(), 'sha256': v['sha'](conditional_raw),
+        'instructions': [{'rva': i.address - v['image_base'], 'size': i.size, 'mnemonic': i.mnemonic, 'operands': i.op_str} for i in conditional_ins]}]},
+    'conditionalCallRva': 0x39b1736, 'initialCountWriteRva': 0x39b173b, 'intervalLookupCallRva': 0x39b17be,
+    'countLookupCallRva': 0x39b17ec, 'overrideCountWriteRva': 0x39b17f1, 'firstLookupCallRva': 0x39b1868,
+    'triggerableCompareRva': 0x39b18bd, 'triggerableCallRva': 0x39b18cc,
+    'fullResetEffectsVerified': False, 'liveTriggerSchedulingVerified': False,
+}
 pool = c['type_row']('ObjectPool`1', 'Torappu.ObjectPool')
 pool_methods = []
 for index in [147561, 147566, 147567, 147558, 147559, 147563, 147564, 147568, 147569]:

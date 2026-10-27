@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 88 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 91 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -1287,3 +1287,32 @@ native/fear/family/miner tests pass and --check reproduces the88-method bundle.
 Buff-specific blackboard interval/count setup, trigger configuration, lifetime
 adjustments, timer advancement, full Reset and controller/stage integration remain
 open. Existing source/support/receipt/catalogue gates are unchanged.
+
+### Buff.Reset trigger count and interval setup
+
+The91-method artifact additionally retains Blackboard.GetFpOrDefault,
+GetIntOrDefault and Buff.set_triggerable. Three exact metadata string-literal
+loads identify interval, trig_cnt and first_trigger_interval. The reviewed
+18-byte conditional leaf returns zero for byte0, the supplied fallback for
+byte2 and the supplied count for other nonzero values. It is not a Boolean
+ternary. Complete bytes include its internal branch and both returns.
+
+`fearProjectileResetBuffTriggers` implements this selected configuration sequence
+using explicit native data, blackboard, conversion, timer and lifecycle receivers.
+The initial count is zero, negative one or the selected configured count. A
+fresh trigger-life read decides timer invalidation versus the enabled path.
+The enabled path reads interval, overrides count, rereads the initial-wait flag,
+resets the timer, then applies a first-delay override only when positive.
+The final triggerable setter receives count>0, including false for the negative
+one sentinel; no invented infinite-trigger shortcut is applied. Data and count
+are reread at their native effect boundaries. Completed mutations survive a
+later exception; recursive configuration is rejected and invalidated lives stop.
+
+Tests cover exact lookup keys/defaults/flags and ordering, disabled triggers,
+byte2 and other nonzero values, count/interval/first-delay overrides, negative
+first delays, mutable configuration, errors/retry, reentry and lifecycle changes.
+Concrete PeriodicTimer composition verifies positive overrides cap at the period.
+All619 focused native/fear/family/miner tests pass and --check reproduces the
+91-method bundle. Continuation40535732403 at9a5bc3e1 passed; the existing
+full40533531161 atd74e28a3 remains active. Full Reset, live timer scheduling and
+controller/stage integration remain open. All existing gates remain intact.

@@ -29,3 +29,46 @@ export function fearProjectileBuffTimer(timer){
   },
  });
 }
+
+// Trigger portion of Buff.Reset. The caller supplies native data/blackboard
+// reads, float conversion, validity and the retained PeriodicTimer receivers.
+export function fearProjectileResetBuffTriggers({buff,readData,getFpOrDefault,getIntOrDefault,floatToRaw,timer,setTriggerable,isActive}){
+ if(!buff||[readData,getFpOrDefault,getIntOrDefault,floatToRaw,setTriggerable,isActive].some(fn=>typeof fn!=='function')||
+  !timer||['reset','markInvalid','setRemainingTime'].some(key=>typeof timer[key]!=='function'))
+  throw new TypeError('Fear trigger reset requires native data, blackboard, conversion and lifecycle callers');
+ const field=Object.getOwnPropertyDescriptor(buff,'m_triggerCnt');
+ if(!field||!Object.hasOwn(field,'value')||!field.writable)throw new TypeError('Fear trigger reset requires a writable native trigger count');
+ const int=value=>{if(!Number.isInteger(value)||value<-(2**31)||value>=2**31)throw new TypeError('Fear trigger reset requires native Int32 counts');return value;};
+ const raw=value=>{if(typeof value!=='bigint'||value<-(1n<<63n)||value>(1n<<63n)-1n)throw new TypeError('Fear trigger reset requires signed Q32.32 values');return value;};
+ const byte=value=>{if(!Number.isInteger(value)||value<0||value>255)throw new TypeError('Fear trigger reset requires a native byte trigger-life value');return value;};
+ int(field.value);let running=false;
+ const active=()=>{const value=isActive();if(typeof value!=='boolean')throw new TypeError('Fear trigger reset requires Boolean lifecycle validity');return value;};
+ return Object.freeze({
+  run(){
+   if(running)return null;running=true;
+   try{
+    if(!active())return null;
+    let data=readData();if(!active())return null;
+    const type=byte(data.triggerLifeType);
+    buff.m_triggerCnt=type===0?0:type===2?-1:int(data.triggerCnt);
+    data=readData();if(!active())return null;
+    if(byte(data.triggerLifeType)===0){timer.markInvalid();if(!active())return null;}
+    else{
+     data=readData();if(!active())return null;
+     const defaultPeriod=floatToRaw(data.triggerInterval);if(!active())return null;
+     const interval=getFpOrDefault('interval',raw(defaultPeriod),false);if(!active())return null;raw(interval);
+     const count=getIntOrDefault('trig_cnt',int(buff.m_triggerCnt),false);if(!active())return null;
+     buff.m_triggerCnt=int(count);
+     data=readData();if(!active())return null;
+     if(typeof data.waitFirstTriggerInterval!=='boolean')throw new TypeError('Fear trigger reset requires a native Boolean initial-wait flag');
+     timer.reset(interval,data.waitFirstTriggerInterval);if(!active())return null;
+     data=readData();if(!active())return null;
+     const defaultFirst=floatToRaw(data.firstTriggerInterval);if(!active())return null;
+     const first=getFpOrDefault('first_trigger_interval',raw(defaultFirst),false);if(!active())return null;
+     if(raw(first)>0n){timer.setRemainingTime(first);if(!active())return null;}
+    }
+    setTriggerable(int(buff.m_triggerCnt)>0);if(!active())return null;
+   }finally{running=false;}
+  },
+ });
+}

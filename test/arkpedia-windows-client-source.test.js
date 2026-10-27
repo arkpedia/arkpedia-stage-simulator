@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,88);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,91);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -225,6 +225,20 @@ test('immediate recycle source enumerates stored pairs and pointer lists before 
  }
  at(q.outerMoveNext,0x4dd4158,'dword ptr [rbx + 0xc], eax');at(q.outerMoveNext,0x4dd41b6,'dword ptr [rbx + 0xc], eax');
  assert.ok(!instructions(m).some(i=>i.mnemonic==='call'&&i.operands==='0x183991a80'),'flush does not filter by current frame');
+});
+
+test('Reset trigger source binds exact blackboard literals and byte-conditional count selection',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.resetTriggers;
+ assert.deepEqual(q.literals.map(l=>l.value),['interval','trig_cnt','first_trigger_interval']);
+ assert.deepEqual(q.dataFields.map(f=>[f.name,f.offset]),[['triggerLifeType',0x84],['triggerCnt',0x88],['triggerInterval',0x8c],['waitFirstTriggerInterval',0x90],['firstTriggerInterval',0x94]]);
+ const m=castMethod(c,'Buff','Reset'),at=(rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ at(q.conditionalCallRva,'0x18402c5d0');at(q.initialCountWriteRva,'dword ptr [rsi + 0x88], eax');
+ at(q.intervalLookupCallRva,'0x182166830');at(q.countLookupCallRva,'0x182166990');at(q.overrideCountWriteRva,'dword ptr [rsi + 0x88], eax');
+ at(q.firstLookupCallRva,'0x182166830');at(q.triggerableCompareRva,'dword ptr [rsi + 0x88], ebp');at(q.triggerableCallRva,'0x1839b81f0');
+ const ch=q.conditional.chunks[0],raw=Buffer.from(ch.base64,'base64');assert.equal(sha(raw),ch.sha256);assert.equal(raw.length,18);
+ assert.deepEqual(instructions(q.conditional).map(i=>i.mnemonic),['test','je','cmp','cmovne','mov','ret','xor','ret']);
+ assert.ok(castMethod(c,'Blackboard','GetFpOrDefault'));assert.ok(castMethod(c,'Blackboard','GetIntOrDefault'));assert.ok(castMethod(c,'Buff','set_triggerable'));
+ assert.equal(q.fullResetEffectsVerified,false);assert.equal(q.liveTriggerSchedulingVerified,false);
 });
 
 test('Reset timing source binds PeriodicTimer invalidation, initial wait and signed min/max operations',()=>{

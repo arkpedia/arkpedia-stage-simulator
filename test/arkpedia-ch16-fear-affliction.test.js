@@ -20,7 +20,7 @@ import {fearProjectileFinishedBuffs} from '../server/sim/content/chapter16-fear-
 import {fearProjectileFinishAndRemoveBuff,fearProjectileOverrideGroupRemove} from '../server/sim/content/chapter16-fear-buff-finish.js';
 import {fearProjectileBuffRecycleQueue,fearProjectileClearRuntimeData} from '../server/sim/content/chapter16-fear-buff-recycle.js';
 import {fearProjectileBuffIdentity,fearProjectileResetBuffLifecycle} from '../server/sim/content/chapter16-fear-buff-identity.js';
-import {fearProjectileBuffTimer} from '../server/sim/content/chapter16-fear-buff-timing.js';
+import {fearProjectileBuffTimer,fearProjectileResetBuffTriggers} from '../server/sim/content/chapter16-fear-buff-timing.js';
 import {fearProjectileBuffRecyclePool,fearProjectileDefaultBuffPool} from '../server/sim/content/chapter16-fear-buff-pool.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
@@ -206,6 +206,70 @@ test('finish and native-frame queue use concrete buff recycle identity before th
  finish.run();queue.update();assert.equal(buff.instanceUid,1);assert.equal(buff.m_isValid,true);assert.equal(recycled,0);
  f.b.kill(f.source,null);frame=11;queue.update();assert.equal(recycled,1);assert.equal(buff.instanceUid,0);assert.equal(buff.m_isValid,false);assert.equal(p.lock(old),null);
  identity.allocate(buff);assert.equal(buff.instanceUid,2);assert.equal(p.lock(old),null);assert.equal(p.lock(p.capture(buff)),buff);queue.release();assert.deepEqual(f.b.errors,[]);
+});
+
+function triggerResetFixture(overrides={}){
+ const events=[],buff={m_triggerCnt:99},state={m_periodTime:99n,m_remainingTime:98n};
+ const data={triggerLifeType:1,triggerCnt:3,triggerInterval:2,waitFirstTriggerInterval:true,firstTriggerInterval:0};
+ const concrete=fearProjectileBuffTimer(state);let active=true;
+ const callers={buff,readData:()=>data,floatToRaw:n=>BigInt(n)*(1n<<32n),
+  getFpOrDefault:(key,value,strip)=>{events.push([key,value,strip]);return value;},
+  getIntOrDefault:(key,value,strip)=>{events.push([key,value,strip]);return value;},
+  timer:Object.fromEntries(['reset','markInvalid','setRemainingTime'].map(name=>[name,(...args)=>{events.push([name,...args]);concrete[name](...args);}])) ,
+  setTriggerable:value=>events.push(['triggerable',value]),isActive:()=>active,...overrides};
+ const reset=fearProjectileResetBuffTriggers(callers);return{events,buff,state,data,reset,callers,set active(value){active=value;}};
+}
+
+test('trigger reset initializes enabled count and interval with exact blackboard keys and lookup flags',()=>{
+ const f=triggerResetFixture();f.reset.run();assert.equal(f.buff.m_triggerCnt,3);assert.deepEqual(f.state,{m_periodTime:2n<<32n,m_remainingTime:2n<<32n});
+ assert.deepEqual(f.events,[['interval',2n<<32n,false],['trig_cnt',3,false],['reset',2n<<32n,true],
+  ['first_trigger_interval',0n,false],['triggerable',true]]);
+});
+
+test('disabled trigger life invalidates the old timer without reading blackboard defaults',()=>{
+ const f=triggerResetFixture();f.data.triggerLifeType=0;f.data.triggerCnt=NaN;f.reset.run();
+ assert.equal(f.buff.m_triggerCnt,0);assert.deepEqual(f.events,[['markInvalid'],['triggerable',false]]);
+ assert.deepEqual(f.state,{m_periodTime:-(1n<<32n),m_remainingTime:-(1n<<32n)});
+});
+
+test('byte-conditional trigger count preserves the native infinite sentinel and other nonzero cases',()=>{
+ const f=triggerResetFixture();f.data.triggerLifeType=2;f.data.triggerCnt=NaN;f.reset.run();
+ assert.equal(f.buff.m_triggerCnt,-1);assert.deepEqual(f.events.at(-1),['triggerable',false]);
+ f.data.triggerLifeType=3;f.data.triggerCnt=7;f.reset.run();assert.equal(f.buff.m_triggerCnt,7);assert.deepEqual(f.events.at(-1),['triggerable',true]);
+});
+
+test('blackboard trigger overrides replace finite count and cap positive first delay through the concrete timer',()=>{
+ const f=triggerResetFixture({getFpOrDefault:(key,value)=>key==='interval'?3n<<32n:key==='first_trigger_interval'?5n<<32n:value,getIntOrDefault:()=>0});
+ f.reset.run();assert.equal(f.buff.m_triggerCnt,0);assert.deepEqual(f.state,{m_periodTime:3n<<32n,m_remainingTime:3n<<32n});
+ assert.deepEqual(f.events.at(-1),['triggerable',false]);assert.ok(f.events.some(e=>e[0]==='setRemainingTime'&&e[1]===5n<<32n));
+});
+
+test('zero and negative first-delay overrides preserve the initial-wait selection',()=>{
+ for(const wait of [true,false])for(const first of [0,-1]){
+  const f=triggerResetFixture();f.data.waitFirstTriggerInterval=wait;f.data.firstTriggerInterval=first;f.reset.run();
+  assert.equal(f.state.m_remainingTime,wait?2n<<32n:0n);assert.equal(f.events.some(e=>e[0]==='setRemainingTime'),false);
+ }
+});
+
+test('trigger reset rereads data after lookup effects rather than snapshotting the entire configuration',()=>{
+ let f;f=triggerResetFixture({getIntOrDefault:()=>{f.data.waitFirstTriggerInterval=false;return 5;}});
+ f.reset.run();assert.equal(f.state.m_remainingTime,0n);assert.equal(f.buff.m_triggerCnt,5);
+});
+
+test('trigger reset exceptions leave earlier count assignment committed and allow another native reset',()=>{
+ let fail=true;const f=triggerResetFixture({getFpOrDefault:(key,value)=>{if(fail)throw Error('lookup');return value;}});
+ assert.throws(()=>f.reset.run(),/lookup/);assert.equal(f.buff.m_triggerCnt,3);assert.equal(f.events.length,0);
+ fail=false;f.reset.run();assert.deepEqual(f.events.at(-1),['triggerable',true]);
+});
+
+for(const point of ['readData','floatToRaw','getFpOrDefault','getIntOrDefault','setTriggerable'])test('trigger reset cancels life invalidation during '+point,()=>{
+ let f;f=triggerResetFixture({[point]:()=>{f.active=false;return undefined;}});assert.equal(f.reset.run(),null);
+ assert.equal(f.events.some(e=>e[0]==='reset'),point==='setTriggerable');assert.equal(f.reset.run(),null);
+});
+
+test('trigger reset rejects recursion without repeating lookup or timer effects',()=>{
+ let f;f=triggerResetFixture({getFpOrDefault:(key,value)=>{assert.equal(f.reset.run(),null);return value;}});
+ f.reset.run();assert.equal(f.events.filter(e=>e[0]==='reset').length,1);
 });
 
 test('buff timer Reset replaces stale timing with either immediate or delayed first-trigger state',()=>{
