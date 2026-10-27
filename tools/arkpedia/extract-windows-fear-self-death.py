@@ -540,6 +540,38 @@ result['modeSwitch']['buffNotification']['resetTriggers'] = {
     'triggerableCompareRva': 0x39b18bd, 'triggerableCallRva': 0x39b18cc,
     'fullResetEffectsVerified': False, 'liveTriggerSchedulingVerified': False,
 }
+for name in ['.cctor', '_ModifyLifeTimeFinally']:
+    methods.append(c['method'](buff, c['unique'](lambda r: r['name'] == name, buff['methods'])))
+life_conditional_rva = 0x402c5b0
+pos = v['offset'](v['image_base'] + life_conditional_rva)
+life_raw = v['b'][pos:pos + 20]
+assert life_raw.hex() == '84d2740d80fa027404488bc1c3498bc0c333c0c3'
+life_ins = list(Cs(CS_ARCH_X86, CS_MODE_64).disasm(life_raw, v['image_base'] + life_conditional_rva))
+assert [i.mnemonic for i in life_ins] == ['test', 'je', 'cmp', 'je', 'mov', 'ret', 'mov', 'ret', 'xor', 'ret']
+load_rva = 0x39b1397
+pos = v['offset'](v['image_base'] + load_rva)
+assert v['b'][pos:pos + 3] == bytes.fromhex('4c8b2d')
+target = load_rva + 7 + struct.unpack_from('<i', v['b'], pos + 3)[0]
+usage = v['quad'](v['b'], v['offset'](v['image_base'] + target))
+assert usage >> 29 == 5 and usage & 1
+index = (usage & 0x1ffffffe) >> 1
+length, data_offset = struct.unpack_from('<ii', v['m'], v['uint'](v['m'], 8) + index * 8)
+start = v['uint'](v['m'], 16) + data_offset
+assert v['m'][start:start + length].decode('utf8') == 'duration'
+result['modeSwitch']['buffNotification']['resetLifetime'] = {
+    'durationLiteral': {'loadRva': load_rva, 'encodedUsage': usage, 'literalIndex': index, 'length': length, 'dataOffset': data_offset, 'value': 'duration'},
+    'dataFields': [c['unique'](lambda f: f['name'] == name, c['fields'](data_type)) for name in ['durationKey', 'lifeTime', 'lifeTimeType']],
+    'infinityField': c['unique'](lambda f: f['name'] == 'INFINITY_TIME', c['fields'](buff)),
+    'infinityIntInputRva': 0x39b5f91, 'infinityConversionCallRva': 0x39b5f94, 'infinityWriteRva': 0x39b5fa7,
+    'lookupCallRva': 0x39b1642, 'fallbackConversionCallRva': 0x39b1679, 'fallbackWriteRva': 0x39b167e,
+    'conditionalCallRva': 0x39b16d0, 'selectedLifetimeWriteRva': 0x39b16d7, 'modifyCallRva': 0x39b16de,
+    'remainingWriteRva': 0x39b16e7, 'existingWriteRva': 0x39b1708,
+    'conditional': {'entryRva': life_conditional_rva, 'chunks': [{'beginRva': life_conditional_rva, 'endRva': life_conditional_rva + len(life_raw), 'unwindRva': None,
+        'boundary': 'Reviewed complete byte-conditional Int64 leaf, internal branches and three terminal returns',
+        'base64': base64.b64encode(life_raw).decode(), 'sha256': v['sha'](life_raw),
+        'instructions': [{'rva': i.address - v['image_base'], 'size': i.size, 'mnemonic': i.mnemonic, 'operands': i.op_str} for i in life_ins]}]},
+    'modifierEffectsVerified': False, 'fullResetEffectsVerified': False, 'liveLifetimePhaseVerified': False,
+}
 pool = c['type_row']('ObjectPool`1', 'Torappu.ObjectPool')
 pool_methods = []
 for index in [147561, 147566, 147567, 147558, 147559, 147563, 147564, 147568, 147569]:

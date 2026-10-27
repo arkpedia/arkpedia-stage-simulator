@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 91 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 93 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -1316,3 +1316,30 @@ All619 focused native/fear/family/miner tests pass and --check reproduces the
 91-method bundle. Continuation40535732403 at9a5bc3e1 passed; the existing
 full40533531161 atd74e28a3 remains active. Full Reset, live timer scheduling and
 controller/stage integration remain open. All existing gates remain intact.
+
+### Buff.Reset lifetime selection and final-state copies
+
+The93-method artifact additionally retains Buff's static constructor and
+_ModifyLifeTimeFinally. The static constructor initializes INFINITY_TIME by
+converting integer-1 to FP, producing negative one second. The selected native
+Int64 conditional leaf chooses zero for byte0, that infinity fallback for byte2,
+and the supplied lifetime otherwise. Its complete20 bytes include both internal
+branches and all three returns. The exact fallback string literal is duration.
+
+`fearProjectileBuffDurationKey` selects duration only for null/empty keys; callers
+capture this before the blackboard merge, as in Reset. The later
+`fearProjectileResetBuffLifetime` uses that captured key and the explicit native
+TryGet found/out result. It writes the out field even when lookup fails, before
+fallback float conversion. It then reads lifetime type, applies the selected
+conditional, calls the required final modifier, copies the modified lifetime
+to remaining time and resets existing time to zero. Exceptions and invalidated
+lives preserve earlier writes and skip later state copies. Modifier effects
+are retained source but remain an explicit, unverified receiver.
+
+Tests cover custom/whitespace/default keys, lookup success without conversion,
+signed64 precision, finite negative values, all selected conditional outcomes,
+modifier-before-copy ordering, failed fallback/modifier partial state, repeated
+data reads, reentry and lifecycle cancellation. All632 focused native/fear/family/
+miner tests pass and --check reproduces the93-method bundle. Full Reset,
+modifier effects, live lifecycle phases and full controller/stage integration
+remain open. Source/support/receipt/catalogue gates remain unchanged.

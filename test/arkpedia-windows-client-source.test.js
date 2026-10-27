@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,91);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,93);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -225,6 +225,21 @@ test('immediate recycle source enumerates stored pairs and pointer lists before 
  }
  at(q.outerMoveNext,0x4dd4158,'dword ptr [rbx + 0xc], eax');at(q.outerMoveNext,0x4dd41b6,'dword ptr [rbx + 0xc], eax');
  assert.ok(!instructions(m).some(i=>i.mnemonic==='call'&&i.operands==='0x183991a80'),'flush does not filter by current frame');
+});
+
+test('Reset lifetime source binds captured duration lookup, infinity sentinel and post-modifier state copies',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.resetLifetime;
+ const m=castMethod(c,'Buff','Reset'),at=(method,rva,args)=>assert.ok(instructions(method).some(i=>i.rva===rva&&i.operands===args));
+ assert.equal(q.durationLiteral.value,'duration');assert.equal(q.infinityField.offset,0x18);
+ assert.deepEqual(q.dataFields.map(f=>[f.name,f.offset]),[['durationKey',0x78],['lifeTime',0x80],['lifeTimeType',0x70]]);
+ const init=castMethod(c,'Buff','.cctor');at(init,q.infinityIntInputRva,'ecx, [rdx - 1]');at(init,q.infinityConversionCallRva,'0x185a3da10');at(init,q.infinityWriteRva,'qword ptr [rdx + 0x18], rax');
+ at(m,q.lookupCallRva,'0x182167390');at(m,q.fallbackConversionCallRva,'0x185a3da20');at(m,q.fallbackWriteRva,'qword ptr [rsi + 0x70], rax');
+ at(m,q.conditionalCallRva,'0x18402c5b0');at(m,q.selectedLifetimeWriteRva,'qword ptr [rsi + 0x70], rax');at(m,q.modifyCallRva,'0x1839b4e50');
+ at(m,q.remainingWriteRva,'qword ptr [rsi + 0x78], rax');at(m,q.existingWriteRva,'qword ptr [rsi + 0x80], rax');
+ assert.ok(q.modifyCallRva<q.remainingWriteRva&&q.remainingWriteRva<q.existingWriteRva);
+ const ch=q.conditional.chunks[0],raw=Buffer.from(ch.base64,'base64');assert.equal(raw.length,20);assert.equal(sha(raw),ch.sha256);
+ assert.deepEqual(instructions(q.conditional).map(i=>i.mnemonic),['test','je','cmp','je','mov','ret','mov','ret','xor','ret']);
+ assert.ok(castMethod(c,'Buff','_ModifyLifeTimeFinally'));assert.equal(q.modifierEffectsVerified,false);assert.equal(q.fullResetEffectsVerified,false);assert.equal(q.liveLifetimePhaseVerified,false);
 });
 
 test('Reset trigger source binds exact blackboard literals and byte-conditional count selection',()=>{

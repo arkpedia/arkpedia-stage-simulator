@@ -72,3 +72,49 @@ export function fearProjectileResetBuffTriggers({buff,readData,getFpOrDefault,ge
   },
  });
 }
+
+// Reset captures this key before merging its blackboards; callers carry the
+// selected key to the later duration lookup rather than rereading it there.
+export function fearProjectileBuffDurationKey(value){
+ if(value==null||value==='')return'duration';
+ if(typeof value!=='string')throw new TypeError('Fear buff duration key requires a native string');
+ return value;
+}
+
+export function fearProjectileResetBuffLifetime({buff,durationKey,tryGetDuration,readData,floatToRaw,modifyLifeTimeFinally,isActive}){
+ if(!buff||typeof durationKey!=='string'||[tryGetDuration,readData,floatToRaw,modifyLifeTimeFinally,isActive].some(fn=>typeof fn!=='function'))
+  throw new TypeError('Fear lifetime reset requires the captured duration key and native duration/lifecycle callers');
+ const raw=value=>{if(typeof value!=='bigint'||value<-(1n<<63n)||value>(1n<<63n)-1n)throw new TypeError('Fear lifetime reset requires signed Q32.32 values');return value;};
+ for(const key of ['m_lifeTime','m_remainingTime','m_existingTime']){
+  const d=Object.getOwnPropertyDescriptor(buff,key);
+  if(!d||!Object.hasOwn(d,'value')||!d.writable)throw new TypeError('Fear lifetime reset requires writable native timing data fields');
+  raw(d.value);
+ }
+ let running=false;
+ const active=()=>{const result=isActive();if(typeof result!=='boolean')throw new TypeError('Fear lifetime reset requires Boolean lifecycle validity');return result;};
+ return Object.freeze({
+  run(){
+   if(running)return null;running=true;
+   try{
+    if(!active())return null;
+    const lookup=tryGetDuration(durationKey);if(!active())return null;
+    if(!lookup||typeof lookup.found!=='boolean')throw new TypeError('Fear lifetime reset requires native found/out duration results');
+    // The native out argument is the lifetime field itself, even on failure.
+    buff.m_lifeTime=raw(lookup.valueRaw);
+    if(!lookup.found){
+     const data=readData();if(!active())return null;
+     const fallback=floatToRaw(data.lifeTime);if(!active())return null;
+     buff.m_lifeTime=raw(fallback);
+    }
+    const data=readData();if(!active())return null;
+    const type=data.lifeTimeType;
+    if(!Number.isInteger(type)||type<0||type>255)throw new TypeError('Fear lifetime reset requires a native byte lifetime type');
+    if(type===0)buff.m_lifeTime=0n;
+    else if(type===2)buff.m_lifeTime=-(1n<<32n);
+    modifyLifeTimeFinally(buff);if(!active())return null;
+    buff.m_remainingTime=raw(buff.m_lifeTime);
+    buff.m_existingTime=0n;
+   }finally{running=false;}
+  },
+ });
+}

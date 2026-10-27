@@ -20,7 +20,7 @@ import {fearProjectileFinishedBuffs} from '../server/sim/content/chapter16-fear-
 import {fearProjectileFinishAndRemoveBuff,fearProjectileOverrideGroupRemove} from '../server/sim/content/chapter16-fear-buff-finish.js';
 import {fearProjectileBuffRecycleQueue,fearProjectileClearRuntimeData} from '../server/sim/content/chapter16-fear-buff-recycle.js';
 import {fearProjectileBuffIdentity,fearProjectileResetBuffLifecycle} from '../server/sim/content/chapter16-fear-buff-identity.js';
-import {fearProjectileBuffTimer,fearProjectileResetBuffTriggers} from '../server/sim/content/chapter16-fear-buff-timing.js';
+import {fearProjectileBuffTimer,fearProjectileResetBuffTriggers,fearProjectileBuffDurationKey,fearProjectileResetBuffLifetime} from '../server/sim/content/chapter16-fear-buff-timing.js';
 import {fearProjectileBuffRecyclePool,fearProjectileDefaultBuffPool} from '../server/sim/content/chapter16-fear-buff-pool.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
@@ -206,6 +206,61 @@ test('finish and native-frame queue use concrete buff recycle identity before th
  finish.run();queue.update();assert.equal(buff.instanceUid,1);assert.equal(buff.m_isValid,true);assert.equal(recycled,0);
  f.b.kill(f.source,null);frame=11;queue.update();assert.equal(recycled,1);assert.equal(buff.instanceUid,0);assert.equal(buff.m_isValid,false);assert.equal(p.lock(old),null);
  identity.allocate(buff);assert.equal(buff.instanceUid,2);assert.equal(p.lock(old),null);assert.equal(p.lock(p.capture(buff)),buff);queue.release();assert.deepEqual(f.b.errors,[]);
+});
+
+function lifetimeResetFixture(overrides={}){
+ const events=[],buff={m_lifeTime:99n,m_remainingTime:98n,m_existingTime:97n},data={lifeTime:3,lifeTimeType:1};let active=true;
+ const callers={buff,durationKey:'duration',tryGetDuration:key=>{events.push(['lookup',key]);return{found:false,valueRaw:0n};},
+  readData:()=>data,floatToRaw:n=>BigInt(n)*(1n<<32n),modifyLifeTimeFinally:b=>events.push(['modify',b.m_lifeTime]),isActive:()=>active,...overrides};
+ const reset=fearProjectileResetBuffLifetime(callers);return{events,buff,data,reset,set active(value){active=value;}};
+}
+
+test('duration key selection preserves custom/whitespace keys and falls back only for null or empty',()=>{
+ for(const value of [null,undefined,''])assert.equal(fearProjectileBuffDurationKey(value),'duration');
+ for(const value of ['custom',' '])assert.equal(fearProjectileBuffDurationKey(value),value);
+ assert.throws(()=>fearProjectileBuffDurationKey(1),/native string/);
+});
+
+test('lifetime reset uses the captured key and fallback before copying the final modified lifetime',()=>{
+ let f;f=lifetimeResetFixture({durationKey:'captured',modifyLifeTimeFinally:b=>{f.events.push(['modify',b.m_lifeTime]);b.m_lifeTime/=2n;}});
+ f.reset.run();assert.deepEqual(f.events,[['lookup','captured'],['modify',3n<<32n]]);
+ assert.deepEqual(f.buff,{m_lifeTime:3n<<31n,m_remainingTime:3n<<31n,m_existingTime:0n});
+});
+
+test('successful duration lookup skips fallback conversion and preserves signed raw precision',()=>{
+ const value=(1n<<62n)+1n;const f=lifetimeResetFixture({tryGetDuration:()=>({found:true,valueRaw:value}),floatToRaw:()=>{throw Error('unexpected fallback');}});
+ f.reset.run();assert.equal(f.buff.m_lifeTime,value);assert.equal(f.buff.m_remainingTime,value);assert.equal(f.buff.m_existingTime,0n);
+});
+
+test('lifetime type selection applies zero and negative-one-second sentinel before final modification',()=>{
+ for(const[type,expected]of [[0,0n],[2,-(1n<<32n)],[1,3n<<32n],[3,3n<<32n]]){
+  const f=lifetimeResetFixture();f.data.lifeTimeType=type;f.reset.run();
+  assert.deepEqual(f.events.at(-1),['modify',expected]);assert.equal(f.buff.m_remainingTime,expected);
+ }
+});
+
+test('negative finite lifetime remains negative rather than becoming an infinite or zero substitute',()=>{
+ const f=lifetimeResetFixture({tryGetDuration:()=>({found:true,valueRaw:-1n})});f.reset.run();assert.equal(f.buff.m_remainingTime,-1n);
+});
+
+test('failed duration fallback retains the native out write and skips remaining/existing resets',()=>{
+ const f=lifetimeResetFixture({tryGetDuration:()=>({found:false,valueRaw:5n}),floatToRaw:()=>{throw Error('convert');}});
+ assert.throws(()=>f.reset.run(),/convert/);assert.deepEqual(f.buff,{m_lifeTime:5n,m_remainingTime:98n,m_existingTime:97n});
+});
+
+test('final lifetime modifier failure preserves its mutation and does not copy it to remaining time',()=>{
+ const f=lifetimeResetFixture({modifyLifeTimeFinally:b=>{b.m_lifeTime=4n;throw Error('modify');}});
+ assert.throws(()=>f.reset.run(),/modify/);assert.deepEqual(f.buff,{m_lifeTime:4n,m_remainingTime:98n,m_existingTime:97n});
+});
+
+test('lifetime type is read after fallback conversion effects and recursive reset is rejected',()=>{
+ let f;f=lifetimeResetFixture({floatToRaw:()=>{assert.equal(f.reset.run(),null);f.data.lifeTimeType=2;return 3n<<32n;}});
+ f.reset.run();assert.equal(f.buff.m_remainingTime,-(1n<<32n));
+});
+
+for(const point of ['tryGetDuration','readData','floatToRaw','modifyLifeTimeFinally'])test('lifetime reset stops after life invalidation in '+point,()=>{
+ let f;f=lifetimeResetFixture({[point]:()=>{f.active=false;return undefined;}});assert.equal(f.reset.run(),null);
+ assert.equal(f.buff.m_remainingTime,98n);assert.equal(f.buff.m_existingTime,97n);assert.equal(f.reset.run(),null);
 });
 
 function triggerResetFixture(overrides={}){
