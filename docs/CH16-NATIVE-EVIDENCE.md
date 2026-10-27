@@ -195,3 +195,12 @@ the graph and original animation bytes. The runtime binds selected clocks and
 output lives, while initial native FSM and precise mode-handoff/frame parity
 remain unclaimed. The original interruptAbilityOnDetach 0 is retained, not used
 to infer compiled dispatch behavior. No admission follows from source extraction.
+
+The fear-projectile affliction contract independently binds the original parent
+configuration, numeric event aliases (ON_BUFF_START/ON_BUFF_TRIGGER) and ordered
+`feawpj_a[mcreep_fear]` template actions. The internal receiver derives only its
+own Fear/Disarm receipts for marked miners and samples full HP every 0.5 seconds
+before finishing the parent/children. Shared status semantics and independent
+owned keys are explicit simulator mappings; native launch, event5/self-death
+dispatch, initial FSM and compiled frame ordering remain unproven. The fear enemy
+is still unsupported and 16-9 unadmitted. No OnAttack marker has been fabricated.

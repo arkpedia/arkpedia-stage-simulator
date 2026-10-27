@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "testOnly": true,
+  "frameParity": false,
+  "sources": {
+    "data/candidates/arkpedia-ch16-fear-projectile-source.json": {
+      "path": "data/candidates/arkpedia-ch16-fear-projectile-source.json",
+      "sha256": "80236308f7f4ee0869c15ffc1e2832c8609ed12389fb4eb4582366142f114172"
+    },
+    "data/arkpedia-cn-native-source.json": {
+      "path": "data/arkpedia-cn-native-source.json",
+      "sha256": "b6e0cfbe21768b277e42cae0f6f4ae627ee69020898bcacb1b8e5ed05bee7655"
+    },
+    "data/arkpedia-cn-enemy-native-source.json": {
+      "path": "data/arkpedia-cn-enemy-native-source.json",
+      "sha256": "a6d2d82284f5b497e6fb4b0f55a1fb42d1b3d05c507c9b2c873808bd03ba1904"
+    },
+    "data/arkpedia-enemy-clock-source.json": {
+      "path": "data/arkpedia-enemy-clock-source.json",
+      "sha256": "56d6b96a60a11ce111401b0afff0fd4f68dde5843c7758de0e91e2d9e78a5f80"
+    },
+    "data/candidates/arkpedia-buff-event-alias-source.json": {
+      "path": "data/candidates/arkpedia-buff-event-alias-source.json",
+      "sha256": "df85c1d8ee05e0391c7be3854bb39632bdf5282b1f48b061c4e7af5b5397e407"
+    }
+  },
+  "castPathId": "4729572091462136098",
+  "parent": {
+    "attributes": {
+      "abnormalAntis": [],
+      "abnormalComboImmunes": [],
+      "abnormalCombos": [],
+      "abnormalFlags": [],
+      "abnormalImmunes": [],
+      "attributeModifiers": []
+    },
+    "audioSignal": "",
+    "blackboard": [],
+    "buffKey": "feawpj_a[mcreep_fear]",
+    "clearAllStackCntWhenTimeUp": 0,
+    "disableOverride": 0,
+    "durationKey": "duration",
+    "enableInitDirectionFromSource": 0,
+    "firstTriggerInterval": -1,
+    "independentCharacterSource": 0,
+    "isDamageMissable": 0,
+    "isDurableBuff": 0,
+    "isFreezable": 0,
+    "isGroundBoundable": 0,
+    "isLevitatable": 0,
+    "isSilenceable": 0,
+    "isStunnable": 0,
+    "lifeTime": 0,
+    "lifeTimeType": 2,
+    "loadFromDB": 0,
+    "maxStackCnt": 1,
+    "maxValidStackCnt": -1,
+    "onEventPriority": 0,
+    "overrideEffectKey": "",
+    "overrideKey": "",
+    "overrideOnEventPriority": 0,
+    "overrideType": 2,
+    "priority": -1,
+    "priorityBBKeys": [],
+    "refreshRemainingTimeWhenStackMax": 0,
+    "remainingTimeKey": "",
+    "statusResistable": 2,
+    "stripBlackboardParamsWithBuffKey": 0,
+    "takeSnapshotWhenExtend": 0,
+    "templateKey": "feawpj_a[mcreep_fear]",
+    "triggerCnt": 0,
+    "triggerInterval": 0.5,
+    "triggerLifeType": 2,
+    "waitFirstTriggerInterval": 1
+  },
+  "templateOriginalJson": "{\"effectKey\":\"\",\"eventToActions\":{\"_items\":[{\"key\":0,\"value\":{\"SerializedObjectReferences\":[],\"SerializedState\":\"[{\\\"_conditionNode\\\":{\\\"_targetType\\\":\\\"BUFF_OWNER\\\",\\\"_buffKeys\\\":[\\\"enemy_mcreep_self_mark\\\"],\\\"isAND\\\":true,\\\"_loadFromBlackboard\\\":false,\\\"_checkBuffSource\\\":false,\\\"_buffSourceType\\\":\\\"BUFF_SOURCE\\\",\\\"_checkSourceHost\\\":false,\\\"$type\\\":\\\"Torappu.Battle.Action.Nodes+CheckContainsBuff\\\"},\\\"_succeedNodes\\\":[{\\\"_buff\\\":{\\\"attributes\\\":{\\\"abnormalFlags\\\":[],\\\"abnormalImmunes\\\":[],\\\"abnormalAntis\\\":[],\\\"abnormalCombos\\\":[],\\\"abnormalComboImmunes\\\":[],\\\"attributeModifiers\\\":[]},\\\"buffKey\\\":\\\"fear\\\",\\\"loadFromDB\\\":true,\\\"isDurableBuff\\\":false,\\\"isDamageMissable\\\":false,\\\"isSilenceable\\\":false,\\\"isStunnable\\\":false,\\\"isFreezable\\\":false,\\\"isLevitatable\\\":false,\\\"isGroundBoundable\\\":false,\\\"statusResistable\\\":\\\"AUTOMATIC\\\",\\\"templateKey\\\":\\\"empty\\\",\\\"disableOverride\\\":false,\\\"overrideKey\\\":null,\\\"overrideType\\\":\\\"DEFAULT\\\",\\\"maxStackCnt\\\":1,\\\"refreshRemainingTimeWhenStackMax\\\":false,\\\"clearAllStackCntWhenTimeUp\\\":false,\\\"maxValidStackCnt\\\":-1,\\\"independentCharacterSource\\\":false,\\\"overrideEffectKey\\\":null,\\\"overrideOnEventPriority\\\":false,\\\"onEventPriority\\\":\\\"DEFAULT\\\",\\\"audioSignal\\\":null,\\\"lifeTimeType\\\":\\\"LIMITED\\\",\\\"takeSnapshotWhenExtend\\\":false,\\\"durationKey\\\":null,\\\"remainingTimeKey\\\":null,\\\"lifeTime\\\":0.0,\\\"triggerLifeType\\\":\\\"IMMEDIATELY\\\",\\\"triggerCnt\\\":0,\\\"triggerInterval\\\":-1.0,\\\"waitFirstTriggerInterval\\\":true,\\\"firstTriggerInterval\\\":-1.0,\\\"priority\\\":-1,\\\"priorityBBKeys\\\":[],\\\"stripBlackboardParamsWithBuffKey\\\":false,\\\"blackboard\\\":[{\\\"key\\\":\\\"fear\\\",\\\"value\\\":999999.0,\\\"valueStr\\\":\\\"\\\"}],\\\"enableInitDirectionFromSource\\\":false},\\\"_buffOwner\\\":\\\"BUFF_OWNER\\\",\\\"_useSpecialBuffSource\\\":false,\\\"_specialBuffSource\\\":\\\"BUFF_SOURCE\\\",\\\"_isDerivedBuff\\\":true,\\\"_finishDerivedBuffIfParentFinish\\\":true,\\\"_inherateSourceProjectileFromParentBuff\\\":false,\\\"_hookEffectKeyFromSourceProjectile\\\":false,\\\"$type\\\":\\\"Torappu.Battle.Action.Nodes+CreateBuff\\\"},{\\\"_buff\\\":{\\\"attributes\\\":{\\\"abnormalFlags\\\":[\\\"DISARMED\\\"],\\\"abnormalImmunes\\\":[],\\\"abnormalAntis\\\":[],\\\"abnormalCombos\\\":[],\\\"abnormalComboImmunes\\\":[],\\\"attributeModifiers\\\":[]},\\\"buffKey\\\":\\\"fearpj_a[mcreep_disarmed]\\\",\\\"loadFromDB\\\":false,\\\"isDurableBuff\\\":false,\\\"isDamageMissable\\\":false,\\\"isSilenceable\\\":false,\\\"isStunnable\\\":false,\\\"isFreezable\\\":false,\\\"isLevitatable\\\":false,\\\"isGroundBoundable\\\":false,\\\"statusResistable\\\":\\\"AUTOMATIC\\\",\\\"templateKey\\\":\\\"empty\\\",\\\"disableOverride\\\":false,\\\"overrideKey\\\":null,\\\"overrideType\\\":\\\"UNIQUE\\\",\\\"maxStackCnt\\\":1,\\\"refreshRemainingTimeWhenStackMax\\\":false,\\\"clearAllStackCntWhenTimeUp\\\":false,\\\"maxValidStackCnt\\\":-1,\\\"independentCharacterSource\\\":false,\\\"overrideEffectKey\\\":null,\\\"overrideOnEventPriority\\\":false,\\\"onEventPriority\\\":\\\"DEFAULT\\\",\\\"audioSignal\\\":null,\\\"lifeTimeType\\\":\\\"INFINITY\\\",\\\"takeSnapshotWhenExtend\\\":false,\\\"durationKey\\\":null,\\\"remainingTimeKey\\\":null,\\\"lifeTime\\\":0.0,\\\"triggerLifeType\\\":\\\"IMMEDIATELY\\\",\\\"triggerCnt\\\":0,\\\"triggerInterval\\\":-1.0,\\\"waitFirstTriggerInterval\\\":true,\\\"firstTriggerInterval\\\":-1.0,\\\"priority\\\":-1,\\\"priorityBBKeys\\\":[],\\\"stripBlackboardParamsWithBuffKey\\\":false,\\\"blackboard\\\":[],\\\"enableInitDirectionFromSource\\\":false},\\\"_buffOwner\\\":\\\"BUFF_OWNER\\\",\\\"_useSpecialBuffSource\\\":false,\\\"_specialBuffSource\\\":\\\"BUFF_SOURCE\\\",\\\"_isDerivedBuff\\\":true,\\\"_finishDerivedBuffIfParentFinish\\\":true,\\\"_inherateSourceProjectileFromParentBuff\\\":false,\\\"_hookEffectKeyFromSourceProjectile\\\":false,\\\"$type\\\":\\\"Torappu.Battle.Action.Nodes+CreateBuff\\\"}],\\\"_failNodes\\\":[{\\\"_decCntIfStack\\\":false,\\\"_updateOverrideMap\\\":true,\\\"$type\\\":\\\"Torappu.Battle.Action.Nodes+FinishBuff\\\"}],\\\"$type\\\":\\\"Torappu.Battle.Action.Nodes+IfElse\\\"}]\"}},{\"key\":2,\"value\":{\"SerializedObjectReferences\":[],\"SerializedState\":\"[{\\\"_targetType\\\":\\\"BUFF_OWNER\\\",\\\"_condType\\\":\\\"EQUALS\\\",\\\"_value\\\":1.0,\\\"_useSourceHpRatio\\\":false,\\\"_sourceType\\\":\\\"SOURCE\\\",\\\"_blackboardPrefix\\\":null,\\\"$type\\\":\\\"Torappu.Battle.Action.Nodes+FilterByTargetHpRatio\\\"},{\\\"_decCntIfStack\\\":false,\\\"_updateOverrideMap\\\":true,\\\"$type\\\":\\\"Torappu.Battle.Action.Nodes+FinishBuff\\\"}]\"}}]},\"onEventPriority\":0,\"templateKey\":\"feawpj_a[mcreep_fear]\"}",
+  "defaults": {
+    "parentKey": "feawpj_a[mcreep_fear]",
+    "minerMark": "enemy_mcreep_self_mark",
+    "interval": 0.5,
+    "fearDuration": 999999,
+    "disarmKey": "fearpj_a[mcreep_disarmed]"
+  },
+  "limits": [
+    "Only the retained affliction parent/derived Fear/Disarm and sampled full-HP finish are mapped. Unique parent replacement and independently keyed child receipts are explicit simulator ownership mappings. Fear uses the existing engine status/immunity/resistance/movement implementation. Launch, native self-destruction/death dispatch, compiled frame parity, stage-local miner support and16-9 admission remain held. No original OnAttack marker is fabricated."
+  ]
+}

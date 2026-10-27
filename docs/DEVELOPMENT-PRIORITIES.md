@@ -1,5 +1,54 @@
 # Development priorities
 
+### 27 October: fear-projectile derived affliction receiver
+
+The previous goal turn made concrete progress at `96948d3e`. Its hosted
+continuation `40458661367` now passed completely. Full CI `40457533148` is still
+running at crossbow checkpoint `1e9509f7`; preserve that handle and distinguish
+its source from later Patrol/affliction work. A fresh full run at the latest
+source remains required after it terminates.
+
+The retained fear-projectile parent `feawpj_a[mcreep_fear]` now has a separate
+internal action receiver and reproducible source contract. The producer verifies
+the complete original family graph, native inventories/index, retained numeric
+buff-event aliases, parent configuration and ordered template actions. On start,
+only an owner carrying `enemy_mcreep_self_mark` derives the loaded Fear status
+(literal blackboard 999999) and raw infinite DISARMED child. An unmarked owner's
+parent finishes. Every 0.5 seconds, after the first full interval, the parent
+checks its owner's literal full-HP ratio and finishes itself and its own children.
+No periodic marker recheck or invented animation attack event is introduced.
+
+The receiver uses the shared Fear immunity/resistance/movement implementation
+and independent owned child keys. Unique parent replacement and per-child
+receipts are explicit simulator ownership mappings, not native frame proof.
+Unrelated Fear/Disarm owners survive cleanup. Rejected parent/child applications,
+reentrant parent removal/replacement, source or recipient object reuse, recipient
+death/removal and battle end leave no orphan derived output. Source death alone
+does not erase an existing affliction; its captured source life remains bound.
+Hidden recipients retain the world-time parent check, as do stunned/frozen/
+sleeping/silenced/levitated recipients. Full HP is sampled, not an immediate heal
+callback. The source-bound exact 16-9 local miner rejects Fear through its recorded
+immunity while retaining the separate Disarm child until the parent finishes.
+
+The real ordinary miner controller composes with this receiver: an injured miner
+loses its canonical 200 HP pulse while feared, stops refreshing shadow suppression,
+then resumes suppression after full-HP recovery clears the parent. Dedicated
+affliction/family/local-record checks pass all 50 cases. The broader invocation
+passed all 1,973 then-available cases; the subsequently added actual-miner and
+hidden-recipient cases pass in the separate 50-case run. The four known quarantined
+test files remain unchanged in Git and excluded only locally. Hosted continuation
+now reproduces this affliction contract as well as original fear family source.
+
+This is one literal component of the remaining 16-9 controller, not a replacement
+for completing that controller. It is not automatically registered or attached
+to the unsupported fear enemy. Fear projectile support stays null and 16-9 stays
+absent from the catalogue. Its launch, event5 switch-to-die wrapper, two-mode/
+animator-hooker/InstantKill ordering, explosion projectile and source-bound local
+miner runtime/stage integration still require review and implementation. The
+original skeleton has no OnAttack event; never borrow a release marker to bypass
+that remaining work. Other normal-stage, operator/module, frame-parity and source/
+support/receipt gates remain open. Artwork and effects remain later phases.
+
 ### 27 October: Patrol Captain native animator and attack clocks
 
 The previous goal turn made concrete progress at `1e9509f7`. Its hosted
