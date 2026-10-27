@@ -897,10 +897,66 @@ function managedActionContextFixture(){
   setTarget:guards.setTarget,setTile:guards.setTile,disposeGuard:guards.dispose,runActionArray:actionUtil.run,copySnapshot:snapshots.copySnapshot});
  return{f,g,snapshots,guards,actionUtil,pointerFields,prior:snapshots.takeSnapshot()};
 }
-for(const blocked of ['none','LEVITATE','FROZEN','STUNNED','SLEEPING'])test('checked self-death graph runs predicate nodes through ActionUtil with blocked state '+blocked,()=>{
+function selfDeathImmunityAdmission({f,g,snapshots,actionUtil,attributes,flags,combos,native,getters,events,failure}){
+ const r=resetPipelineFixture(),n=newBuffFixture(),buff=r.buff,readData=()=>r.state.data,isActive=()=>f.state.active,unexpected=()=>{throw Error('unexpected immunity branch');},
+  graph=JSON.parse(readFileSync(new URL('../data/candidates/arkpedia-ch16-fear-projectile-source.json',import.meta.url),'utf8')),proof=graph.templates.empty,template=JSON.parse(proof.originalJson),
+  life=JSON.parse(readFileSync(new URL('../data/candidates/arkpedia-windows-fear-projectile-source.json',import.meta.url),'utf8')).lifeType,
+  values=record=>new Map(record.fields.map(field=>[field.name,field.value])),lifeValues=values(life),statusValues=values(native.modeSwitch.buffNotification.statusInitialization.switchEnum),overrideValues=values(native.modeSwitch.buffNotification.newBuff.ensureOverrideGroup.overrideEnum),
+  manager=comboFixture().manager,combo=fearProjectileBuffCombos({manager,isActive});
+ assert.equal(createHash('sha256').update(proof.originalJson).digest('hex'),proof.sha256);assert.deepEqual(template.eventToActions._items,[]);template.eventToActions=[];
+ Object.assign(attributes,{m_abnormalFlagModifiers:new Set(),m_attributeModifiers:Array.from({length:38},()=>new Set()),m_abnormalComboMgr:manager});
+ Object.assign(f.owner,{attributes,inited:true});Object.assign(f.source,{attributes,instanceUid:f.source.uid,destroyed:false});n.container['<owner>k__BackingField']=f.owner;
+ Object.assign(buff,{instanceUid:0,uid:0,m_isValid:false,m_actions:r.actions,m_blackboard:r.entries});const identity=fearProjectileBuffIdentity({counter:{value:400}});let made=0;
+ const pool=fearProjectileDefaultBuffPool({createBuff:()=>++made===100?buff:structuredClone(buff),onAllocate:value=>{identity.allocate(value);value.uid=value.instanceUid;},onRecycle:value=>{identity.recycle(value);value.uid=0;}}),
+  pointers=fearProjectileBuffPointers({readUid:value=>value.instanceUid}),contextPointers=fearProjectileContextPointers({readUid:value=>value.instanceUid,isDestroyedOrNull:value=>value==null,isActive}),
+  masks=['attributeMask','abnormalFlagMask','abnormalImmuneMask','abnormalAntiMask','abnormalComboMask','abnormalComboImmuneMask'],
+  dirty=fearProjectileAbnormalDirty({attributes,readMask:(value,slot)=>value[masks[slot]],invokeDelegate:unexpected,isActive}),
+  modifier=fearProjectileAttributeModifiers({attributes,isActive,addToSet:(set,value)=>{const fresh=!set.has(value);set.add(value);return fresh;},removeFromSet:(set,value)=>set.delete(value),readMask:(value,slot)=>value[masks[slot]],
+   pushCombo:(_manager,mask,immune)=>combo.push(mask,immune),popCombo:(_manager,mask,immune)=>combo.pop(mask,immune),markAttributeDirty:unexpected,calculateAbnormalDirty:(_attributes,value)=>dirty.run(value)});
+ let childEvent=-1,pending=null;const childActions=fearProjectileRunBuffActions({...f.options,buff,runActionArray:(actions,source,board)=>{
+  assert.ok(g.fields.every(field=>g.context[field]._size===(childEvent===25?2:3)));assert.equal(g.context.m_buff._array[g.context.m_buff._size-1].obj,buff);
+  if(failure==='enable'&&childEvent===24)throw Error('immunity enable action failed');return actionUtil.run(actions,source,board);
+ }}),runChild=(value,event,target)=>{assert.equal(value,buff);childEvent=event;return childActions.run(event,target);},
+  enabled=fearProjectileBuffEnabled({buff,isActive,readOwner:getters.readBuffOwner,isDestroyedOrNull:value=>value==null,isSilenced:unexpected,isStunned:unexpected,isFrozen:unexpected,isLevitate:unexpected,
+   readAttributes:owner=>owner.attributes,addModifier:(_attributes,value)=>modifier.add(value),removeModifier:(_attributes,value)=>modifier.remove(value),runActions:runChild}),
+  group=groupDispatchFixture(0),ensure=ensureGroupFixture();Object.assign(group.options,{isActive,readIsFinished:value=>value.m_isFinished,setIsEnabled:(value,state)=>{assert.equal(value,buff);enabled.set(state);}});
+ Object.assign(ensure.options,{buff,isActive,readData:value=>value.m_data,readBlackboard:value=>value.m_blackboard,createGroup:()=>group.group});
+ const gateFixture=admissionFixture();Object.assign(gateFixture.options,{isActive,readOwner:()=>f.owner,readOwnerAttributes:()=>attributes});const gates=gateFixture.gates();
+ Object.assign(n.options,{isActive,container:n.container,source:f.source,ability:null,sourceProjectile:null,readOwner:()=>f.owner,readOwnerInited:value=>value.inited,
+  readInputData:()=>pending.data,readInput:()=>pending,readPool:()=>pool,allocateBuff:value=>value.allocate(),recycleBuff:(value,body)=>value.recycle(body),captureBuffPointer:pointers.capture,
+  passesAbnormalAnti:gates.passesAbnormalAnti,passesLevitate:gates.passesLevitate,passesStatusAnti:gates.passesStatusAnti,hasFlag:(actual,flag)=>gateFixture.query(actual).getAbnormalFlag(flag),
+  resetBuff:(value,config,context)=>{
+   assert.equal(value,buff);assert.equal(config.data,pending.data);r.state.data=config.data;r.state.template=config.template;buff.m_blackboard=r.entries;
+   const configReader=fearProjectileBuffConfig({readData,readTemplate:()=>r.state.template,isActive});r.options.resetContext=()=>fearProjectileResetBuffContext({buff,container:n.container,source:context.source,ability:context.ability,sourceProjectile:context.sourceProjectile,
+    readData,config:configReader,isActive,isDestroyedOrNull:value=>value==null,asCharacter:unexpected,readAudioSignals:unexpected,tryHookAudio:unexpected,capturePointer:contextPointers.capture}).run();
+   const pairs=fearProjectileBuffBlackboardPairs({entries:r.entries,compareIgnoreCase:(a,b)=>a===b?0:1,isActive});
+   r.options.resetBlackboard=()=>fearProjectileResetBuffBlackboard({first:context.extraBlackboard,second:context.extraBlackboard2,readBlackboard:()=>r.entries,equals:(a,b)=>a===b,copyBlackboard:entries=>entries.map(pair=>({...pair})),
+    resetLifecycle:()=>fearProjectileResetBuffLifecycle(buff),readDurationKey:()=>readData().durationKey,readData,readBuffKey:()=>buff.key,clear:()=>{r.entries.length=0;},assign:(_target,source)=>pairs.assign(source),
+    assignByPrefix:unexpected,assignValueStrByPrefix:unexpected,containsKey:(_target,key)=>pairs.containsKey(key),tryGetFP:unexpected,assignFP:unexpected,isActive}).run();
+   if(failure==='reset')r.options.loadAttributes=()=>{throw Error('immunity reset failed');};r.run();
+  },readAbnormalAntiMask:value=>value.abnormalAntiMask,filterAbnormalAnti:mask=>assert.equal(mask,0n),readFinished:value=>value.m_isFinished,
+  onStart:value=>{assert.equal(n.map.get(value.instanceUid),value);assert.equal(pointers.lock(n.list[0]),value);runChild(value,0,true);value.m_started=true;},readOverrideKey:value=>value.overrideKey,
+  setEnabled:(value,state)=>{assert.equal(value,buff);enabled.set(state);},ensureOverrideGroup:()=>ensure.run(),readGroupQueue:value=>value.m_queue,readQueueCount:queue=>queue.length,readQueueItem:(queue,index)=>queue[index],
+  addToGroup:(_group,value)=>group.adapter().add(value),updateGroup:()=>group.adapter().update()});
+ const database=fearProjectileBuffDatabase({tryGetBuffData:unexpected,tryGetTemplate:(key,out)=>{assert.equal(key,'empty');out.value=template;return true;},deepClone:unexpected,mergeBlackboard:unexpected}),
+  admission=fearProjectileEntityAddBuff({tryGetBuff:database.tryGetData,raiseMissingConfig:unexpected,readContainer:fearProjectileEntityBuffContainer,
+   newBuff:(container,dataConfig,source,ability,board,second,projectile,override)=>{assert.equal(container,n.container);assert.equal(source,f.source);assert.equal(ability,null);assert.equal(projectile,null);assert.equal(override,null);pending=dataConfig;
+    Object.assign(n.options,{extraBlackboard:board,extraBlackboard2:second});events.push('immunity');return fearProjectileNewBuff(n.options).run();}});
+ f.owner['<buffContainer>k__BackingField']=n.container;
+ return{buff,pool,n,manager,enabled,projectData:raw=>({...raw,statusResistable:statusValues.get(raw.statusResistable),lifeTimeType:lifeValues.get(raw.lifeTimeType),triggerLifeType:lifeValues.get(raw.triggerLifeType),overrideType:overrideValues.get(raw.overrideType),
+   attributes:{...raw.attributes,abnormalFlags:raw.attributes.abnormalFlags.map(name=>flags.get(name)),abnormalImmunes:raw.attributes.abnormalImmunes.map(name=>flags.get(name)),abnormalAntis:raw.attributes.abnormalAntis.map(name=>flags.get(name)),
+    abnormalCombos:raw.attributes.abnormalCombos.map(name=>combos.get(name)),abnormalComboImmunes:raw.attributes.abnormalComboImmunes.map(name=>combos.get(name))}}),addBuff:admission.addData,
+  assertEnabled(){assert.equal(buff.m_isActuallyEnabled,true);assert.equal(buff.m_lifeTime,-fpOne);assert.equal(buff.m_isStatusResistable,false);assert.equal(n.map.get(buff.instanceUid),buff);
+   const status=fearProjectileAttributeStatus({attributes,isActive});for(const name of ['STUNNED','FROZEN','LEVITATE']){const flag=flags.get(name),prior=attributes.m_abnormalFlagsCounter[flag];assert.equal(attributes.m_abnormalImmuneCounter[flag],1);attributes.m_abnormalFlagsCounter[flag]=prior+1;assert.equal(status.getAbnormalFlag(flag),false);attributes.m_abnormalFlagsCounter[flag]=prior;}
+   const sleeping=combos.get('SLEEPING'),bit=1n<<BigInt(sleeping);assert.equal(manager.m_abnormalComboImmuneCounter[sleeping],1);combo.push(bit,0n);assert.equal(manager.m_abnormalComboMask&bit,0n);combo.pop(bit,0n);
+  },
+  cleanup(){const prior=n.list[0];if(pool.usingCount&&buff.m_isActuallyEnabled)enabled.set(false);n.list.length=0;n.map.clear();group.group.m_queue.length=0;if(pool.usingCount)pool.recycle(buff);if(prior)assert.equal(pointers.lock(prior),null);}
+ };
+}
+for(const {blocked,failure}of [...['none','LEVITATE','FROZEN','STUNNED','SLEEPING'].map(blocked=>({blocked,failure:null})),{blocked:'none',failure:'reset'},{blocked:'none',failure:'enable'}])test('checked self-death graph composes immunity admission with '+blocked+' / '+(failure??'success'),()=>{
  const native=JSON.parse(readFileSync(new URL('../data/candidates/arkpedia-windows-fear-self-death-source.json',import.meta.url),'utf8')),
   evidence=native.modeSwitch.buffNotification.newBuff.predicateNodes,toMap=record=>new Map(record.fields.map(f=>[f.name,f.value])),flags=toMap(evidence.abnormalFlags),combos=toMap(evidence.abnormalCombos),targets=toMap(evidence.targetTypes),
-  {f,g,snapshots,prior}=managedActionContextFixture(),events=[],attributes={m_abnormalFlagsCounter:Array(44).fill(0),m_abnormalImmuneCounter:Array(44).fill(0),m_abnormalAntiCounter:Array(44).fill(0),m_abnormalComboMgr:{m_abnormalFlagMask:0n}},
+  {f,g,snapshots,actionUtil,prior}=managedActionContextFixture(),events=[],attributes={m_abnormalFlagsCounter:Array(44).fill(0),m_abnormalImmuneCounter:Array(44).fill(0),m_abnormalAntiCounter:Array(44).fill(0),m_abnormalComboMgr:{m_abnormalFlagMask:0n}},
   status=fearProjectileAttributeStatus({attributes,isActive:()=>true});
  if(flags.has(blocked))attributes.m_abnormalFlagsCounter[flags.get(blocked)]=1;
  f.buff.m_container={'<owner>k__BackingField':f.owner};f.buff.m_source={obj:f.source,cachedUid:f.source.uid};
@@ -910,16 +966,18 @@ for(const blocked of ['none','LEVITATE','FROZEN','STUNNED','SLEEPING'])test('che
   predicates=fearProjectilePredicateNodes({getEntity:selector.getEntity,isDestroyedOrNull:entity=>entity==null||entity.destroyed===true,
   readAttributes:entity=>{assert.equal(entity,f.owner);return attributes;},readBlackboardInt:()=>{throw Error('unexpected graph blackboard lookup');},
   queryFlag:(actual,flag)=>{assert.equal(actual,attributes);events.push([...flags].find(pair=>pair[1]===flag)[0]);return status.getAbnormalFlag(flag);},
-  queryCombo:(actual,combo)=>{assert.equal(actual,attributes);assert.equal(combo,combos.get('SLEEPING'));events.push('SLEEPING');return blocked==='SLEEPING';}});
+  queryCombo:(actual,combo)=>{assert.equal(actual,attributes);assert.equal(combo,combos.get('SLEEPING'));events.push('SLEEPING');return(immunity.manager.m_abnormalComboMask&(1n<<BigInt(combo)))>0n;}});
  const modeNode=fearProjectileSwitchModeNode({getEntity:selector.getEntity,asUnit:entity=>entity===f.owner?entity:null,isDestroyedOrNull:entity=>entity==null||entity.destroyed===true,
   tryReadInt:()=>{throw Error('unexpected graph mode lookup');},switchByIndex:(unit,index,restart)=>{assert.equal(unit,f.owner);assert.equal(index,1);assert.equal(restart,true);events.push('mode');return false;},switchToDefaultMode:()=>{throw Error('unexpected graph default mode');}});
- const unexpectedKill=()=>{throw Error('unexpected graph kill branch');},entitySuicide=fearProjectileEntitySuicide({readAlive:entity=>entity.alive,setHpInternal:(entity,args)=>{assert.deepEqual(args,{valueRaw:0n,force:true,noSource:false,skipReborn:false});assert.equal(entity.m_isSuicide,true);events.push('kill');entity.alive=false;}}),
+ const immunity=selfDeathImmunityAdmission({f,g,snapshots,actionUtil,attributes,flags,combos,native,getters,events,failure});f.buff.m_blackboard=[];
+ if(blocked==='SLEEPING')fearProjectileBuffCombos({manager:immunity.manager,isActive:()=>true}).push(1n<<BigInt(combos.get('SLEEPING')),0n);
+ const unexpectedKill=()=>{throw Error('unexpected graph kill branch');},entitySuicide=fearProjectileEntitySuicide({readAlive:entity=>entity.alive,setHpInternal:(entity,args)=>{assert.deepEqual(args,{valueRaw:0n,force:true,noSource:false,skipReborn:false});assert.equal(entity.m_isSuicide,true);immunity.assertEnabled();events.push('kill');entity.alive=false;}}),
   killNode=fearProjectileInstantKillNode({getEntity:selector.getEntity,isDestroyedOrNull:entity=>entity==null||entity.destroyed===true,asRallyPoint:()=>null,isValidUnity:entity=>entity!=null,
    readInRallyPointMode:unexpectedKill,withdraw:unexpectedKill,finishWithNoReason:unexpectedKill,finishWithReachExit:unexpectedKill,suicide:entitySuicide,readAlive:entity=>entity.alive});
  f.options.readOwner=getters.readBuffOwner;f.options.readSource=getters.readBuffSource;
  const createNode=fearProjectileCreateBuffNode({getEntity:selector.getEntity,isDestroyedOrNull:entity=>entity==null||entity.destroyed===true,...getters,
   readBuffData:node=>node._buff,readOverrideEffectKey:data=>data.overrideEffectKey,readProjectileEffectPairs:()=>{throw Error('unexpected effect pairs');},keysEqual:(a,b)=>a===b,
-  allocateBlackboard:()=>({}),initializeBlackboard:()=>{},addBuff:(owner,data,source,ability,_copy,extra,projectile,override)=>{assert.equal(owner,f.owner);assert.ok(data);assert.equal(source,f.source);assert.equal(ability,null);assert.equal(extra,null);assert.equal(projectile,null);assert.equal(override,null);events.push('immunity');return null;},addDerivedBuff:()=>{throw Error('unexpected derived graph buff');}});
+  allocateBlackboard:()=>[],initializeBlackboard:(to,from)=>to.push(...from.map(pair=>({...pair}))),addBuff:immunity.addBuff,addDerivedBuff:()=>{throw Error('unexpected derived graph buff');}});
  f.buff.m_actions[0]=native.actions.map(raw=>{
   const kind=raw.$type.split('+').at(-1),node={...raw,allowedSource:63,condition:kind==='AlwaysNext'?0:1};
   if(kind==='CheckAbnormalFlag'){node._targetType=targets.get(raw._targetType);node._abnormalFlag=flags.get(raw._abnormalFlag);node.execute=(...args)=>predicates.executeFlag(node,...args);}
@@ -927,11 +985,15 @@ for(const blocked of ['none','LEVITATE','FROZEN','STUNNED','SLEEPING'])test('che
   else if(kind==='AlwaysNext')node.execute=predicates.executeAlwaysNext;
   else if(kind==='SwitchMode'){node._targetType=targets.get(raw._targetType);node.execute=(...args)=>modeNode.execute(node,...args);}
   else if(kind==='InstantKill'){node._targetType=targets.get(raw._targetType);node.execute=(...args)=>killNode.execute(node,...args);}
-  else {assert.equal(kind,'CreateBuff');node._buffOwner=targets.get(raw._buffOwner);node._specialBuffSource=targets.get(raw._specialBuffSource);node.execute=(...args)=>createNode.execute(node,...args);}
+  else {assert.equal(kind,'CreateBuff');node._buff=immunity.projectData(raw._buff);node._buffOwner=targets.get(raw._buffOwner);node._specialBuffSource=targets.get(raw._specialBuffSource);node.execute=(...args)=>createNode.execute(node,...args);}
   return node;
  });
- const result=f.adapter().run(0,true),checks=['LEVITATE','FROZEN','STUNNED','SLEEPING'];assert.equal(result.target,f.owner);
- assert.deepEqual(events,blocked==='none'?[...checks,'mode','immunity','kill']:checks.slice(0,checks.indexOf(blocked)+1));assert.deepEqual(snapshots.takeSnapshot(),prior);assert.ok(g.fields.every(field=>g.context[field]._size===1));
+ const checks=['LEVITATE','FROZEN','STUNNED','SLEEPING'];if(failure)assert.throws(()=>f.adapter().run(0,true),new RegExp('immunity '+failure));else assert.equal(f.adapter().run(0,true).target,f.owner);
+ assert.deepEqual(events,blocked==='none'?[...checks,'mode','immunity',...(failure?[]:['kill'])]:checks.slice(0,checks.indexOf(blocked)+1));assert.deepEqual(snapshots.takeSnapshot(),prior);assert.ok(g.fields.every(field=>g.context[field]._size===1));
+ if(blocked==='none'&&failure!=='reset'){immunity.assertEnabled();assert.equal(f.owner.alive,failure==='enable');}else assert.equal(immunity.n.map.size,0);
+ assert.equal(immunity.pool.usingCount,blocked==='none'?1:0);assert.equal(immunity.n.list.length,blocked==='none'&&failure!=='reset'?1:0);
+ immunity.cleanup();for(const name of ['STUNNED','FROZEN','LEVITATE'])assert.equal(attributes.m_abnormalImmuneCounter[flags.get(name)],0);assert.equal(immunity.manager.m_abnormalComboImmuneCounter[combos.get('SLEEPING')],0);assert.equal(immunity.pool.usingCount,0);
+ assert.deepEqual(snapshots.takeSnapshot(),prior);assert.ok(g.fields.every(field=>g.context[field]._size===1));
 });
 test('native action utility executes FROM_BUFF nodes through complete context copies and preserves ALWAYS recovery',()=>{
  const {f,g,snapshots,prior}=managedActionContextFixture(),calls=[],node=(id,condition,result,amount)=>({allowedSource:1,condition,execute:(board,sourceType,ref)=>{

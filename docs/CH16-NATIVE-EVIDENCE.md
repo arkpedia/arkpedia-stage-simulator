@@ -1402,6 +1402,39 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
 
+### Self-death graph through immunity admission and enablement
+
+The checked eight-node self-death graph now composes CreateBuff, BuffDB inline
+lookup, both Entity.AddBuff overloads, pooled identity allocation and the default
+NewBuff/Reset phases. It uses the checksum-retained `empty` template and explicit
+retained enum mappings for the immunity configuration. Reset covers context,
+blackboard/lifecycle, lifetime/triggers, attribute masks, empty actions, priority,
+override, status and final flags. EnsureOverrideGroup and DEFAULT group dispatch
+then drive the concrete enabled setter, attribute counters and combo manager.
+
+At the forced-zero-HP receiver, registration and the enabled immunity buff are
+already visible: STUNNED/FROZEN/LEVITATE immune counters and SLEEPING combo immunity
+are set. Temporary incoming status counters remain suppressed by the native
+status query projection, and the combo manager refuses the simulated sleep push.
+The lifetime is infinite and the immunity is not status-resistable. Stun,
+freeze, levitate and sleep predicate cases stop before pool allocation or UID
+registration. The sleep predicate now reads the concrete combo manager state.
+
+Nested buff-start and enabled actions run through managed context guards and
+restore all ten stacks. Injected Reset and enable-action errors stop before
+suicide while preserving prior allocation/registration/counter effects. Tests
+explicitly retire their admitted/partially initialized buffs afterwards,
+checking removed immunity, released pool membership, stale UID rejection and
+restored context. This explicit test retirement does not certify native Entity
+death cleanup. The host HP/state/mode, dictionary/queue, config conversion and
+other native receivers retain their existing verification limits.
+
+All1357 focused native/fear/family/miner tests and the fear-affliction,
+miner-clock and miner-listener contract checks pass. No native evidence,
+source/support/receipt/catalogue gates or stage registry changed. Full cast
+launch, initial FSM, controller/frame parity and16-9 admission remain held.
+This checkpoint stays local.
+
 ### Nested attribute-data and modifier clones
 
 The225-method bundle adds complete AttributeModifierData.DeepClone and
