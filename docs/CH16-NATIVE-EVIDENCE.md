@@ -1402,6 +1402,55 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
 
+### Ranged projectile destinations and creation wrapper
+
+`extract-windows-fear-projectile-launch.py --check` reproduces the complete
+default RangedAttack.OnCastOnTarget and CreateProjectile bodies from the pinned
+Windows client. The former matches the unchanged cast-lifecycle record. The
+new bundle binds destination enum0..4, CreateProjectile/GetProjectileKey slots,
+Enemy's concrete root-tile getter, Entity.GetMountPoint, position constructors,
+the BattleController creation signature, event40 ON_CREATE_PROJECTILE and
+generic metadata usages. A bounded nested argument check binds
+List<ObjectPtr<Projectile>>. Concrete method-spec mappings remain absent rather
+than being inferred from shared code. The checked Fear prefab selects TARGET,
+projectile_enemy_fearpj, mount type2, no mount group, no creation event and no
+input-position/root-tile fallback emission.
+
+`fearProjectileRangedTargetCast` invokes the base action callback with null
+buffs/attachments, then samples the destination. It implements target hit-mount,
+input Vector2, target Vector3, root-tile and target-XY/tile-height destinations.
+Unknown enum values follow the target branch as the native body does. Position
+construction/boxing remains explicit. The primary projectile list is captured
+at the branch-specific native point; a nullable creation result is converted
+to an ObjectPtr and appended without a Unity-validity filter. A valid fake
+projectile is captured independently and appended to a freshly read list.
+
+`fearProjectileCreateProjectile` captures controller, key and source owner in
+order before choosing the shoot mount. A mount group samples SafeCount then
+the current index, rereads its cache, increments before indexed access and
+queries a fresh owner. Exhausted groups use the configured mount type. The
+controller receives the earlier captured source, selected mount, destination,
+ability and fake-projectile out reference. The creation-event flag is read
+after creation; when set, a fresh owner/event pool emits event40 even for a
+null creation result. Exceptions preserve prior effects and no cancellation
+guard suppresses list append when a creation callback invalidates the source.
+
+Tests cover all destinations, nullable target/root-tile cases, position/list
+sampling order, primary/fake pointers, owner replacement, group exhaustion and
+failed indexing, null controller/event pool, callback errors and nested births.
+The longer wait/spell-start/target-loop/event5-self-death/flight composition now
+uses both ranged wrappers before its explicit BattleController creation
+receiver. It checks projectile tracking before event5 and damage after source
+death. All1422 focused native/fear/family/miner tests, evidence reproduction and
+the three Fear/miner contract checks pass.
+
+BattleController allocation/reset, mount/FixedPosition runtime effects,
+projectile-list native storage/growth, the RangedAttack no-target fallback,
+base target-action application, hotfix dispatch, initial FSM and stage/frame
+parity remain open. This wrapper composition does not admit the Fear controller
+or16-9. All source/support/receipt/catalogue gates and stage registries stay
+unchanged; this checkpoint remains local.
+
 ### Standard spell-start orchestration
 
 `extract-windows-fear-spell-start.py --check` reproduces the complete selected

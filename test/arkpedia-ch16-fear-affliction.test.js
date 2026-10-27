@@ -62,6 +62,116 @@ import {fearProjectileBuffDataConstructor,fearProjectileAttributeDataConstructor
 import {fearProjectileAttributeModifierConstructor,fearProjectileAttributeModifierClone,fearProjectileAttributeDataClone} from '../server/sim/content/chapter16-fear-attribute-data-clone.js';
 import {fearProjectileTargetCasting,fearProjectileCheckCastingFinished} from '../server/sim/content/chapter16-fear-target-casting.js';
 import {fearProjectileSpellStart} from '../server/sim/content/chapter16-fear-spell-start.js';
+import {fearProjectileCreateProjectile,fearProjectileRangedTargetCast} from '../server/sim/content/chapter16-fear-projectile-launch.js';
+
+function projectileLaunchFixture(){
+ const f=spellStartFixture(),controller={},projectile={uid:90},fake={uid:91},mount={},tile={mapPosition:{x:10,y:20,z:30}},
+  createOptions={readController:()=>{f.events.push('controller');return controller;},getProjectileKey:ability=>{f.events.push('key');return ability._projectileKey;},
+   readOwner:ability=>{f.events.push('owner');return f.pointers.lock(ability.m_owner);},readUseMountGroup:ability=>ability._useMountGroup,
+   readMountCache:ability=>ability.m_mountPointsCache,safeMountCount:list=>list?.length??0,readMountIndex:ability=>ability.m_mountPointIndex,
+   writeMountIndex:(ability,index)=>{ability.m_mountPointIndex=index;},readMountItem:(list,index)=>{if(index<0||index>=list.length)throw RangeError('mount bounds');return list[index];},
+   readMountType:ability=>ability._mountPointType,getMountPoint:(owner,type)=>{f.events.push(['mount',owner,type]);return mount;},
+   createProjectile:(...args)=>{f.events.push(['create',...args]);return projectile;},readFireCreateEvent:ability=>ability._fireCreateProjectileEvent,
+   readEventPool:owner=>owner.eventPool,emitCreateEvent:(...args)=>f.events.push(['emit',...args])},
+  rangedOptions={baseCast:(...args)=>f.events.push(['base',...args]),readDestination:ability=>ability._projectileDestination,readProjectiles:ability=>ability.m_projectiles,
+   readInputX:ability=>ability.m_inputTarget.key.x,readInputY:ability=>ability.m_inputTarget.key.y,readHitMountPoint:target=>target.hitMountPoint,
+   readMapPosition:value=>value.mapPosition,readRootTile:target=>target.rootTile,
+   positionFromVector2:value=>({kind:'Vector2',value}),positionFromVector3:value=>({kind:'Vector3',value}),positionFromVisual:value=>({kind:'Visual',value}),
+   boxPosition:value=>({boxed:value}),createProjectile:(...args)=>fearProjectileCreateProjectile(createOptions)(...args),capturePointer:f.pointers.capture,
+   appendProjectile:(list,pointer)=>{f.events.push(['append',list,pointer]);list.push(f.pointers.copy(pointer));},isValidUnity:value=>value!=null&&!value.destroyed};
+ Object.assign(f.ability,{_projectileDestination:0,_projectileKey:'projectile_enemy_fearpj',_useMountGroup:false,m_mountPointsCache:[],m_mountPointIndex:0,_mountPointType:2,_fireCreateProjectileEvent:false,m_projectiles:[]});
+ f.ability.m_inputTarget.key={x:1/3,y:2/3};Object.assign(f.target,{hitMountPoint:{hit:true},mapPosition:{x:1,y:2,z:3},rootTile:tile});f.owner.eventPool={};
+ return{...f,controller,projectile,fake,mount,tile,createOptions,rangedOptions,
+  create:(target,out={value:null})=>fearProjectileCreateProjectile(createOptions)(f.ability,target,out),
+  launch:()=>fearProjectileRangedTargetCast(rangedOptions)(f.ability,f.target,f.actions,f.buffs,f.attachments)};
+}
+
+test('ranged target launch routes base actions without buffs/attachments and tracks the created projectile',()=>{
+ const f=projectileLaunchFixture();assert.equal(f.launch(),undefined);assert.deepEqual(f.events[0],['base',f.ability,f.target,f.actions,null,null]);
+ const call=f.events.find(e=>Array.isArray(e)&&e[0]==='create');assert.deepEqual(call.slice(1,7),[f.controller,'projectile_enemy_fearpj',f.owner,f.mount,f.target.hitMountPoint,f.ability]);assert.deepEqual(call[7],{value:null});
+ assert.equal(f.ability.m_projectiles.length,1);assert.deepEqual(f.ability.m_projectiles[0],f.pointers.capture(f.projectile));assert.equal(f.events.some(e=>Array.isArray(e)&&e[0]==='emit'),false);
+});
+
+for(const destination of [0,1,2,3,4,99,-1])test('ranged target destination '+destination+' uses the native position branch',()=>{
+ const f=projectileLaunchFixture();f.ability._projectileDestination=destination;f.launch();const position=f.events.find(e=>Array.isArray(e)&&e[0]==='create')[5];
+ if(destination===1)assert.deepEqual(position,{boxed:{kind:'Vector2',value:{x:Math.fround(1/3),y:Math.fround(2/3)}}});
+ else if(destination===2)assert.deepEqual(position,{boxed:{kind:'Vector3',value:{x:1,y:2,z:3}}});
+ else if(destination===3)assert.deepEqual(position,{boxed:{kind:'Visual',value:f.tile}});
+ else if(destination===4)assert.deepEqual(position,{boxed:{kind:'Vector3',value:{x:1,y:2,z:30}}});
+ else assert.equal(position,f.target.hitMountPoint);
+});
+
+test('ranged launch captures the primary list before destination callbacks but rereads it for a valid fake projectile',()=>{
+ const f=projectileLaunchFixture(),original=f.ability.m_projectiles,next=[];f.rangedOptions.readHitMountPoint=()=>{f.ability.m_projectiles=next;return f.target.hitMountPoint;};
+ f.createOptions.createProjectile=(_controller,_key,_source,_mount,_target,_ability,out)=>{out.value=f.fake;return f.projectile;};f.launch();
+ assert.deepEqual(original,[f.pointers.capture(f.projectile)]);assert.deepEqual(next,[f.pointers.capture(f.fake)]);
+});
+
+test('ranged launch captures pointer before checking a null list and retains primary append if fake processing fails',()=>{
+ const f=projectileLaunchFixture();f.ability.m_projectiles=null;let capture=0;f.rangedOptions.capturePointer=value=>{capture++;return f.pointers.capture(value);};assert.throws(f.launch,/null native object/);assert.equal(capture,1);assert.ok(f.events.some(e=>Array.isArray(e)&&e[0]==='create'));
+ const g=projectileLaunchFixture();g.createOptions.createProjectile=(_a,_b,_c,_d,_e,_f,out)=>{out.value=g.fake;return g.projectile;};g.rangedOptions.isValidUnity=()=>{g.ability.m_projectiles=null;return true;};const prior=g.ability.m_projectiles;assert.throws(g.launch,/null native object/);assert.deepEqual(prior,[g.pointers.capture(g.projectile)]);
+});
+
+test('ranged launch appends nullable primary pointers and samples fake validity independently',()=>{
+ for(const fakeAlive of [false,true]){const f=projectileLaunchFixture();f.createOptions.createProjectile=(_a,_b,_c,_d,_e,_f,out)=>{out.value=f.fake;f.fake.destroyed=!fakeAlive;return null;};f.launch();assert.deepEqual(f.ability.m_projectiles[0],{obj:null,cachedUid:0});assert.equal(f.ability.m_projectiles.length,fakeAlive?2:1);}
+});
+
+test('ranged launch reads destination after base effects and preserves base effects before destination errors',()=>{
+ const f=projectileLaunchFixture();f.rangedOptions.baseCast=()=>{f.ability._projectileDestination=1;};f.launch();assert.equal(f.events.find(e=>Array.isArray(e)&&e[0]==='create')[5].boxed.kind,'Vector2');
+ const g=projectileLaunchFixture();g.rangedOptions.readHitMountPoint=()=>{throw Error('mount getter');};assert.throws(g.launch,/mount getter/);assert.equal(g.events[0][0],'base');assert.equal(g.events.some(e=>e==='controller'),false);
+});
+
+test('input-point destination samples Y then captures list then samples X',()=>{
+ const f=projectileLaunchFixture(),original=f.ability.m_projectiles;f.ability._projectileDestination=1;const events=[];
+ f.rangedOptions.readInputY=()=>{events.push('y');return 7;};f.rangedOptions.readProjectiles=()=>{events.push('list');return original;};f.rangedOptions.readInputX=()=>{events.push('x');f.ability.m_projectiles=[];return 8;};f.launch();
+ assert.deepEqual(events,['y','list','x']);assert.equal(original.length,1);assert.equal(f.ability.m_projectiles.length,0);
+});
+
+test('tile-height destination captures target vector before root lookup and reads tile height after list capture',()=>{
+ const f=projectileLaunchFixture();f.ability._projectileDestination=4;f.rangedOptions.readRootTile=()=>{f.target.mapPosition.x=99;return f.tile;};
+ f.rangedOptions.readProjectiles=()=>{f.tile.mapPosition.z=42;return f.ability.m_projectiles;};f.launch();assert.deepEqual(f.events.find(e=>Array.isArray(e)&&e[0]==='create')[5],{boxed:{kind:'Vector3',value:{x:1,y:2,z:42}}});
+});
+
+test('projectile creation captures source separately from fresh mount/event owners',()=>{
+ const f=projectileLaunchFixture(),mountOwner={},eventOwner={eventPool:{}},owners=[f.owner,mountOwner,eventOwner];f.ability._fireCreateProjectileEvent=true;
+ f.createOptions.readOwner=()=>owners.shift();f.createOptions.createProjectile=(_controller,_key,source,mount)=>{assert.equal(source,f.owner);assert.equal(mount,f.mount);return f.projectile;};assert.equal(f.create({}),f.projectile);
+ assert.deepEqual(f.events.find(e=>Array.isArray(e)&&e[0]==='mount'),['mount',mountOwner,2]);assert.deepEqual(f.events.at(-1),['emit',eventOwner.eventPool,40,f.projectile]);assert.equal(owners.length,0);
+});
+
+test('mount group uses live cache after SafeCount, increments before indexing and falls back after exhaustion',()=>{
+ const f=projectileLaunchFixture();f.ability._useMountGroup=true;f.ability.m_mountPointsCache=[7];const replacement=[8];f.createOptions.safeMountCount=list=>{assert.deepEqual(list,[7]);f.ability.m_mountPointsCache=replacement;return 1;};
+ f.createOptions.readMountItem=(list,index)=>{assert.equal(list,replacement);assert.equal(index,0);assert.equal(f.ability.m_mountPointIndex,1);return list[index];};f.create({});assert.deepEqual(f.events.find(e=>Array.isArray(e)&&e[0]==='mount'),['mount',f.owner,8]);
+ f.createOptions.safeMountCount=list=>list.length;f.events.length=0;f.create({});assert.deepEqual(f.events.find(e=>Array.isArray(e)&&e[0]==='mount'),['mount',f.owner,2]);assert.equal(f.ability.m_mountPointIndex,1);
+});
+
+test('mount indexing errors retain the increment and do not create a projectile',()=>{
+ const f=projectileLaunchFixture();f.ability._useMountGroup=true;f.ability.m_mountPointsCache=[7];f.ability.m_mountPointIndex=-1;assert.throws(()=>f.create({}),/mount bounds/);assert.equal(f.ability.m_mountPointIndex,0);assert.equal(f.events.some(e=>Array.isArray(e)&&e[0]==='create'),false);
+});
+
+test('controller null check follows key/owner/mount callbacks and creation events follow successful creation',()=>{
+ const f=projectileLaunchFixture();f.createOptions.readController=()=>null;assert.throws(()=>f.create({}),/null native object/);assert.ok(f.events.some(e=>Array.isArray(e)&&e[0]==='mount'));
+ const g=projectileLaunchFixture();g.ability._fireCreateProjectileEvent=true;g.createOptions.createProjectile=()=>{throw Error('controller creation');};assert.throws(()=>g.create({}),/controller creation/);assert.equal(g.events.some(e=>Array.isArray(e)&&e[0]==='emit'),false);
+ const h=projectileLaunchFixture();h.ability._fireCreateProjectileEvent=true;h.owner.eventPool=null;assert.throws(()=>h.create({}),/null native object/);assert.ok(h.events.some(e=>Array.isArray(e)&&e[0]==='create'));
+});
+
+test('creation event receives nullable controller result and exceptions prevent list append after birth',()=>{
+ const f=projectileLaunchFixture();f.ability._fireCreateProjectileEvent=true;f.createOptions.createProjectile=()=>null;assert.equal(f.create({}),null);assert.deepEqual(f.events.at(-1),['emit',f.owner.eventPool,40,null]);
+ const g=projectileLaunchFixture();g.ability._fireCreateProjectileEvent=true;g.createOptions.emitCreateEvent=()=>{throw Error('creation event');};assert.throws(g.launch,/creation event/);assert.equal(g.ability.m_projectiles.length,0);assert.ok(g.events.some(e=>Array.isArray(e)&&e[0]==='create'));
+});
+
+test('ranged launch supports nested creation and preserves native append order',()=>{
+ const f=projectileLaunchFixture(),nested={uid:92};let inner=false;f.createOptions.createProjectile=()=>{if(inner)return nested;inner=true;f.launch();return f.projectile;};f.launch();assert.deepEqual(f.ability.m_projectiles.map(p=>p.obj),[nested,f.projectile]);
+});
+
+test('ranged launch appends a born projectile even when its creation event invalidates the source',()=>{
+ const f=projectileLaunchFixture();f.ability._fireCreateProjectileEvent=true;f.createOptions.emitCreateEvent=()=>{f.owner.destroyed=true;f.ability.m_isCasting=false;};f.launch();assert.equal(f.owner.destroyed,true);assert.equal(f.ability.m_isCasting,false);assert.deepEqual(f.ability.m_projectiles,[f.pointers.capture(f.projectile)]);
+});
+
+test('fixed input-point launch accepts a null target while root-tile failures retain the base callback',()=>{
+ const f=projectileLaunchFixture();f.ability._projectileDestination=1;fearProjectileRangedTargetCast(f.rangedOptions)(f.ability,null,f.actions,f.buffs,f.attachments);assert.equal(f.events[0][2],null);assert.equal(f.ability.m_projectiles.length,1);
+ const g=projectileLaunchFixture();g.ability._projectileDestination=3;g.target.rootTile=null;g.launch();assert.deepEqual(g.events.find(e=>Array.isArray(e)&&e[0]==='create')[5],{boxed:{kind:'Visual',value:null}});
+ const h=projectileLaunchFixture();h.ability._projectileDestination=4;h.target.rootTile=null;assert.throws(h.launch,/null native object/);assert.equal(h.events[0][0],'base');assert.equal(h.events.some(e=>e==='controller'),false);
+});
 
 function spellStartFixture(){
  const f=targetCastingFixture(),stack=()=>({_array:Array(8).fill(null),_size:0,_version:0}),
@@ -5231,7 +5341,7 @@ test('owner reuse while testing casting prevents spell-end and post-delay for th
  assert.equal(f.spell.run(),null);assert.deepEqual(f.events,['start']);
 });
 
-test('bounded wait, native spell-start/target casting, event5 self-death and independent flight preserve born damage',()=>{
+test('bounded wait, native ranged launch, event5 self-death and independent flight preserve born damage',()=>{
  const f=modeFixture({readStartIniting:()=>false});f.source.base.atk=175;f.source.markDirty();f.target.nativeUid=1;
  const graph=read('data/candidates/arkpedia-windows-fear-self-death-source.json').modeSwitch.graph;
  for(const [role,mode]of [['mode0',f.old],['mode1',f.next]]){
@@ -5254,22 +5364,26 @@ test('bounded wait, native spell-start/target casting, event5 self-death and ind
  const activation=fearProjectileSelfDeathActivation(f.b,{owner:f.source,readAbnormalFlag:()=>false,readAbnormalCombo:()=>false,
   switchMode:()=>handoff.run(),createImmunityBuff:()=>true,instantKill:()=>suicide.run()});
  const source=fearProjectileSourceReference(f.b,f.source),damage=fearProjectileDamageAction(f.b,source),events=[];
- let flight;const start=spellStartFixture();f.source.uid=11;f.target.uid=12;
+ let flight;const start=projectileLaunchFixture();f.source.uid=11;f.target.uid=12;
  start.ability.m_owner=start.pointers.capture(f.source);start.ability.m_inputTarget.value=start.pointers.capture(f.target);start.ability.m_castTargets=[start.pointers.capture(f.target)];
  start.start.canSpell=(owner,ability)=>{assert.equal(owner,f.source);assert.equal(ability,start.ability);return true;};
  start.start.onEvent=(_ability,event,runAction)=>{assert.equal(event,4);assert.equal(runAction,false);events.push('event4');};
  start.start.onOwnerSpell=owner=>{assert.equal(owner,f.source);assert.equal(start.sources.getValue(start.ctx.m_source),f.source);assert.equal(start.references.peek(start.ctx.m_mainTarget),f.target);};
- start.options.castOnTarget=(_ability,target)=>{assert.equal(target,f.target);
+ const hitMount={};start.rangedOptions.readHitMountPoint=target=>{assert.equal(target,f.target);return hitMount;};
+ start.createOptions.createProjectile=(controller,key,owner,mount,target,ability,fake)=>{
+  assert.equal(controller,start.controller);assert.equal(key,'projectile_enemy_fearpj');assert.equal(owner,f.source);assert.equal(mount,start.mount);
+  assert.equal(target,hitMount);assert.equal(ability,start.ability);assert.equal(fake.value,null);
   events.push('birth');flight=fearProjectileFlight(f.b,{from:{x:0,y:0,z:0},initialTarget:{x:1,y:0,z:0},
    resolveTargetPosition:()=>null,resolveTraceTarget:()=>f.target,
    area:{queryOverlaps:()=>[f.target],resolveEntity:u=>u,readUid:u=>u.nativeUid,isCandidate:()=>true,
     verifyTarget:()=>true,deterministic:true,resolveSource:source.resolveSource,onSelected:()=>{}},
    runHit:({target})=>applyFearProjectileImpact(f.b,{source:f.source,target,applyAttachments:()=>{},runActions:damage}),
-   onStopped:()=>{},scheduleCompletion:()=>()=>{}});
+   onStopped:()=>{},scheduleCompletion:()=>()=>{}});return start.projectile;
  };
+ start.options.castOnTarget=fearProjectileRangedTargetCast(start.rangedOptions);
  start.start.castTargets=fearProjectileTargetCasting(start.options);
  const spell=fearProjectileSpell(f.b,{owner:f.source,onSpellStart:start.runStart,isCasting:()=>casting,emitSpellEnd:()=>{
-  for(const stack of Object.values(start.ctx))assert.equal(stack._size,0);events.push('event5');assert.equal(activation.run(),null);},
+  for(const stack of Object.values(start.ctx))assert.equal(stack._size,0);assert.deepEqual(start.ability.m_projectiles,[start.pointers.capture(start.projectile)]);events.push('event5');assert.equal(activation.run(),null);},
  mayBeginPostDelay:()=>{throw Error('removed owner');},beginPostDelay:()=>{throw Error('removed owner');}});
  const wait=fearProjectileAttackWait(f.b,{owner:f.source,cachedDurationRaw:fpOne,readDeltaPlayTime:()=>1,
   isCastActive:()=>true,subscribeAttackEvent:()=>()=>{},onReady:()=>spell.run()});
