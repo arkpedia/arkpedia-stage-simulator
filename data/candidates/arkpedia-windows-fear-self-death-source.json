@@ -134332,6 +134332,169 @@
      "nativeAttributeQueryEffectsVerified": false,
      "livePredicateNodeDispatchVerified": false
     },
+    "instantKillNode": {
+     "fields": [
+      {
+       "index": 100536,
+       "name": "_targetType",
+       "typeIndex": 91891,
+       "offset": 16,
+       "typeData": 12109,
+       "typeBits": 2148597761
+      },
+      {
+       "index": 100537,
+       "name": "_killSource",
+       "typeIndex": 38774,
+       "offset": 20,
+       "typeData": 36824,
+       "typeBits": 2147614721
+      },
+      {
+       "index": 100538,
+       "name": "_noSource",
+       "typeIndex": 38774,
+       "offset": 21,
+       "typeData": 36824,
+       "typeBits": 2147614721
+      },
+      {
+       "index": 100539,
+       "name": "_withdrawIfRallyPoint",
+       "typeIndex": 38774,
+       "offset": 22,
+       "typeData": 36824,
+       "typeBits": 2147614721
+      },
+      {
+       "index": 100540,
+       "name": "_resultIfInRallyPointMode",
+       "typeIndex": 38774,
+       "offset": 23,
+       "typeData": 36824,
+       "typeBits": 2147614721
+      },
+      {
+       "index": 100541,
+       "name": "_skipReborn",
+       "typeIndex": 38774,
+       "offset": 24,
+       "typeData": 36824,
+       "typeBits": 2147614721
+      },
+      {
+       "index": 100542,
+       "name": "_noReason",
+       "typeIndex": 38774,
+       "offset": 25,
+       "typeData": 36824,
+       "typeBits": 2147614721
+      },
+      {
+       "index": 100543,
+       "name": "_markReachExit",
+       "typeIndex": 38774,
+       "offset": 26,
+       "typeData": 36824,
+       "typeBits": 2147614721
+      },
+      {
+       "index": 100544,
+       "name": "_switchState",
+       "typeIndex": 38774,
+       "offset": 27,
+       "typeData": 36824,
+       "typeBits": 2147614721
+      }
+     ],
+     "virtualSlots": [
+      {
+       "typeIndex": 10181,
+       "type": "RallyPoint",
+       "index": 67746,
+       "name": "Withdraw",
+       "token": 100731043,
+       "virtualSlot": 215,
+       "parameters": [
+        {
+         "index": 65585,
+         "name": "switchToDeadState",
+         "typeIndex": 38799
+        },
+        {
+         "index": 65586,
+         "name": "force",
+         "typeIndex": 38799
+        },
+        {
+         "index": 65587,
+         "name": "manual",
+         "typeIndex": 38799
+        },
+        {
+         "index": 65588,
+         "name": "logAutoWithdraw",
+         "typeIndex": 38799
+        }
+       ]
+      },
+      {
+       "typeIndex": 9044,
+       "type": "Entity",
+       "index": 58001,
+       "name": "FinishWithReachExit",
+       "token": 100721298,
+       "virtualSlot": 92,
+       "parameters": [
+        {
+         "index": 57363,
+         "name": "switchState",
+         "typeIndex": 38799
+        }
+       ]
+      }
+     ],
+     "rallyType": {
+      "loadRva": 14286490,
+      "encodedUsage": 536991089,
+      "typeIndex": 60088,
+      "definitionIndex": 10181,
+      "name": "RallyPoint"
+     },
+     "suicideField": {
+      "index": 62708,
+      "name": "m_isSuicide",
+      "typeIndex": 38774,
+      "offset": 209,
+      "typeData": 36824,
+      "typeBits": 2147614721
+     },
+     "killSourceFlagReadRva": 14286421,
+     "sourceReadRva": 14286426,
+     "targetCallRva": 14286440,
+     "validityCallRva": 14286477,
+     "withdrawFlagReadRva": 14286571,
+     "rallyValidityCallRva": 14286610,
+     "rallyModeCallRva": 14286633,
+     "withdrawCallRva": 14286696,
+     "rallyResultReadRva": 14286704,
+     "noReasonFlagReadRva": 14286713,
+     "reachExitFlagReadRva": 14286719,
+     "skipRebornReadRva": 14286734,
+     "noSourceReadRva": 14286742,
+     "suicideCallRva": 14286749,
+     "switchStateReadRva": 14286756,
+     "reachExitCallRva": 14286803,
+     "noReasonCallRva": 14286821,
+     "returnAliveCallRva": 14286863,
+     "suicideAliveCallRva": 60972071,
+     "suicideMarkRva": 60972077,
+     "suicideHpCallRva": 60972138,
+     "nativeRallyCastAndWithdrawEffectsVerified": false,
+     "nativeFinishEffectsVerified": false,
+     "nativeHpEncodingAndEffectsVerified": false,
+     "liveInstantKillNodeVerified": false
+    },
     "switchModeNode": {
      "fields": [
       {

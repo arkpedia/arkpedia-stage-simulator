@@ -50,6 +50,40 @@ import {fearProjectilePredicateNodes} from '../server/sim/content/chapter16-fear
 import {fearProjectileActionTargets} from '../server/sim/content/chapter16-fear-action-targets.js';
 import {fearProjectileActionTargetGetters} from '../server/sim/content/chapter16-fear-target-getters.js';
 import {fearProjectileSwitchModeNode} from '../server/sim/content/chapter16-fear-switch-mode-node.js';
+import {fearProjectileInstantKillNode,fearProjectileEntitySuicide} from '../server/sim/content/chapter16-fear-instant-kill-node.js';
+
+function instantKillNodeFixture(){
+ const entity={alive:true},source={alive:true},ref={value:{source}},events=[],node={_targetType:0,_killSource:false,_noSource:false,_withdrawIfRallyPoint:false,_resultIfInRallyPointMode:false,_skipReborn:false,_noReason:false,_markReachExit:false,_switchState:false},
+  options={getEntity:(actual,target)=>{assert.equal(actual,ref);assert.equal(target,0);return entity;},isDestroyedOrNull:value=>value==null||value.destroyed===true,asRallyPoint:()=>null,isValidUnity:value=>value!=null&&!value.destroyed,
+   readInRallyPointMode:()=>false,withdraw:(...args)=>{events.push(['withdraw',...args]);return false;},finishWithNoReason:value=>{events.push('finish');value.alive=false;},finishWithReachExit:(value,state)=>{events.push(['exit',state]);value.alive=false;},
+   suicide:(value,noSource,skip)=>{events.push(['suicide',value,noSource,skip]);value.alive=false;},readAlive:value=>{events.push('alive');return value.alive;}};
+ return{entity,source,ref,events,node,options,api:()=>fearProjectileInstantKillNode(options)};
+}
+test('InstantKill selects source directly when requested and returns post-effect alive rather than a kill receipt',()=>{
+ const f=instantKillNodeFixture();f.node._killSource=true;f.options.getEntity=()=>{throw Error('unexpected selector');};Object.defineProperty(f.node,'_targetType',{get(){throw Error('unexpected target enum');}});
+ assert.equal(f.api().execute(f.node,null,1,f.ref),false);assert.deepEqual(f.events,[['suicide',f.source,false,false],'alive']);assert.equal(f.entity.alive,true);
+ const g=instantKillNodeFixture();g.options.suicide=()=>{};assert.equal(g.api().execute(g.node,null,1,g.ref),true);
+});
+test('InstantKill RallyPoint paths return withdrawal or configured mode results without reading alive',()=>{
+ const f=instantKillNodeFixture(),rally={};f.node._withdrawIfRallyPoint=true;f.options.asRallyPoint=()=>rally;f.options.readAlive=()=>{throw Error('unexpected alive query');};
+ assert.equal(f.api().execute(f.node,null,1,f.ref),false);assert.deepEqual(f.events,[['withdraw',rally,false,false,true,false]]);
+ f.events.length=0;f.options.readInRallyPointMode=()=>true;f.node._resultIfInRallyPointMode=true;assert.equal(f.api().execute(f.node,null,1,f.ref),true);assert.deepEqual(f.events,[]);
+});
+test('InstantKill finish-with-no-reason takes precedence over reach-exit and both finish paths query alive afterward',()=>{
+ const f=instantKillNodeFixture();f.node._noReason=true;f.node._markReachExit=true;assert.equal(f.api().execute(f.node,null,1,f.ref),false);assert.deepEqual(f.events,['finish','alive']);
+ const g=instantKillNodeFixture();g.node._markReachExit=true;g.node._switchState=true;assert.equal(g.api().execute(g.node,null,1,g.ref),false);assert.deepEqual(g.events,[['exit',true],'alive']);
+ const h=instantKillNodeFixture();h.node._noSource=true;h.node._skipReborn=true;h.api().execute(h.node,null,1,h.ref);assert.deepEqual(h.events,[['suicide',h.entity,true,true],'alive']);
+});
+test('InstantKill rejects invalid entities before casting and propagates effect exceptions',()=>{
+ const f=instantKillNodeFixture();f.entity.destroyed=true;f.options.asRallyPoint=()=>{throw Error('unexpected cast');};assert.equal(f.api().execute(f.node,null,1,f.ref),false);assert.deepEqual(f.events,[]);
+ f.options.getEntity=()=>null;assert.equal(f.api().execute(f.node,null,1,f.ref),false);
+ const g=instantKillNodeFixture();g.options.suicide=()=>{throw Error('suicide failed');};assert.throws(()=>g.api().execute(g.node,null,1,g.ref),/suicide failed/);assert.deepEqual(g.events,[]);
+});
+test('Entity suicide marks before forced zero HP, skips dead entities and retains its mark on HP failure',()=>{
+ const entity={alive:true},events=[],options={readAlive:value=>{events.push('alive');return value.alive;},setHpInternal:(value,args)=>{assert.equal(value.m_isSuicide,true);assert.deepEqual(args,{valueRaw:0n,force:true,noSource:true,skipReborn:false});events.push('hp');value.alive=false;}},suicide=fearProjectileEntitySuicide(options);
+ assert.equal(suicide(entity,true,false),undefined);suicide(entity,true,false);assert.deepEqual(events,['alive','hp','alive']);
+ options.setHpInternal=()=>{throw Error('HP failed');};const other={alive:true};assert.throws(()=>fearProjectileEntitySuicide(options)(other,false,true),/HP failed/);assert.equal(other.m_isSuicide,true);
+});
 
 function switchModeNodeFixture(){
  const unit={},board={},ref={value:{}},events=[],node={_targetType:0,_modeIndex:1,_loadModeFromBlackboard:false,_restoreDefault:false,_restartFSM:true},options={
@@ -397,6 +431,9 @@ for(const blocked of ['none','LEVITATE','FROZEN','STUNNED','SLEEPING'])test('che
   queryCombo:(actual,combo)=>{assert.equal(actual,attributes);assert.equal(combo,combos.get('SLEEPING'));events.push('SLEEPING');return blocked==='SLEEPING';}});
  const modeNode=fearProjectileSwitchModeNode({getEntity:selector.getEntity,asUnit:entity=>entity===f.owner?entity:null,isDestroyedOrNull:entity=>entity==null||entity.destroyed===true,
   tryReadInt:()=>{throw Error('unexpected graph mode lookup');},switchByIndex:(unit,index,restart)=>{assert.equal(unit,f.owner);assert.equal(index,1);assert.equal(restart,true);events.push('mode');return false;},switchToDefaultMode:()=>{throw Error('unexpected graph default mode');}});
+ const unexpectedKill=()=>{throw Error('unexpected graph kill branch');},entitySuicide=fearProjectileEntitySuicide({readAlive:entity=>entity.alive,setHpInternal:(entity,args)=>{assert.deepEqual(args,{valueRaw:0n,force:true,noSource:false,skipReborn:false});assert.equal(entity.m_isSuicide,true);events.push('kill');entity.alive=false;}}),
+  killNode=fearProjectileInstantKillNode({getEntity:selector.getEntity,isDestroyedOrNull:entity=>entity==null||entity.destroyed===true,asRallyPoint:()=>null,isValidUnity:entity=>entity!=null,
+   readInRallyPointMode:unexpectedKill,withdraw:unexpectedKill,finishWithNoReason:unexpectedKill,finishWithReachExit:unexpectedKill,suicide:entitySuicide,readAlive:entity=>entity.alive});
  f.options.readOwner=getters.readBuffOwner;f.options.readSource=getters.readBuffSource;
  f.buff.m_actions[0]=native.actions.map(raw=>{
   const kind=raw.$type.split('+').at(-1),node={...raw,allowedSource:63,condition:kind==='AlwaysNext'?0:1};
@@ -404,7 +441,8 @@ for(const blocked of ['none','LEVITATE','FROZEN','STUNNED','SLEEPING'])test('che
   else if(kind==='CheckAbnormalCombo'){node._targetType=targets.get(raw._targetType);node._abnormalCombo=combos.get(raw._abnormalCombo);node.execute=(...args)=>predicates.executeCombo(node,...args);}
   else if(kind==='AlwaysNext')node.execute=predicates.executeAlwaysNext;
   else if(kind==='SwitchMode'){node._targetType=targets.get(raw._targetType);node.execute=(...args)=>modeNode.execute(node,...args);}
-  else node.execute=(_board,sourceType)=>{assert.equal(sourceType,1);if(kind==='CreateBuff'){events.push('immunity');return false;}assert.equal(kind,'InstantKill');events.push('kill');return false;};
+  else if(kind==='InstantKill'){node._targetType=targets.get(raw._targetType);node.execute=(...args)=>killNode.execute(node,...args);}
+  else node.execute=(_board,sourceType)=>{assert.equal(sourceType,1);assert.equal(kind,'CreateBuff');events.push('immunity');return false;};
   return node;
  });
  const result=f.adapter().run(0,true),checks=['LEVITATE','FROZEN','STUNNED','SLEEPING'];assert.equal(result.target,f.owner);

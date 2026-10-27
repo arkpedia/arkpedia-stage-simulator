@@ -2101,6 +2101,41 @@ result['modeSwitch']['buffNotification']['newBuff']['predicateNodes'] = {
     'nativeAttributeQueryEffectsVerified': False, 'livePredicateNodeDispatchVerified': False,
 }
 context_stack_canonical = []
+kill_node_slots = []
+for type_index, method_index, slot in [(10181, 67746, 215), (9044, 58001, 92)]:
+    t = v['types'][type_index]
+    row = c['unique'](lambda r: r['index'] == method_index, t['methods'])
+    pos = v['method_start'] + method_index * 32
+    assert struct.unpack_from('<H', v['m'], pos + 28)[0] == slot
+    start, count = v['sint'](v['m'], pos + 12), struct.unpack_from('<H', v['m'], pos + 30)[0]
+    parameters = []
+    for n in range(count):
+        pp = v['uint'](v['m'], 88) + (start + n) * 12
+        parameters.append({'index': start + n, 'name': v['text'](v['uint'](v['m'], pp)), 'typeIndex': v['sint'](v['m'], pp + 8)})
+    kill_node_slots.append({'typeIndex': type_index, 'type': t['name'], **row, 'virtualSlot': slot, 'parameters': parameters})
+assert [p['name'] for p in kill_node_slots[0]['parameters']] == ['switchToDeadState', 'force', 'manual', 'logAutoWithdraw']
+assert [p['name'] for p in kill_node_slots[1]['parameters']] == ['switchState']
+rally_load = 0xd9fe9a
+pos = v['offset'](v['image_base'] + rally_load)
+assert v['b'][pos:pos + 3] == bytes.fromhex('488b15')
+target = rally_load + 7 + struct.unpack_from('<i', v['b'], pos + 3)[0]
+rally_usage = v['quad'](v['b'], v['offset'](v['image_base'] + target))
+assert rally_usage >> 29 == 1
+rally_type_index = (rally_usage & 0x1ffffffe) >> 1
+rally_type_pos = v['offset'](v['quad'](v['b'], v['type_table'] + rally_type_index * 8))
+assert v['quad'](v['b'], rally_type_pos) == 10181 and v['types'][10181]['name'] == 'RallyPoint'
+suicide_field = c['unique'](lambda f: f['name'] == 'm_isSuicide', c['fields'](entity))
+assert suicide_field['offset'] == 0xd1 and (suicide_field['typeBits'] >> 16) & 255 == 2
+result['modeSwitch']['buffNotification']['newBuff']['instantKillNode'] = {
+    'fields': [f for f in fields['InstantKill'] if not f['typeBits'] & 16], 'virtualSlots': kill_node_slots,
+    'rallyType': {'loadRva': rally_load, 'encodedUsage': rally_usage, 'typeIndex': rally_type_index, 'definitionIndex': 10181, 'name': 'RallyPoint'},
+    'suicideField': suicide_field, 'killSourceFlagReadRva': 0xd9fe55, 'sourceReadRva': 0xd9fe5a, 'targetCallRva': 0xd9fe68, 'validityCallRva': 0xd9fe8d,
+    'withdrawFlagReadRva': 0xd9feeb, 'rallyValidityCallRva': 0xd9ff12, 'rallyModeCallRva': 0xd9ff29, 'withdrawCallRva': 0xd9ff68, 'rallyResultReadRva': 0xd9ff70,
+    'noReasonFlagReadRva': 0xd9ff79, 'reachExitFlagReadRva': 0xd9ff7f, 'skipRebornReadRva': 0xd9ff8e, 'noSourceReadRva': 0xd9ff96,
+    'suicideCallRva': 0xd9ff9d, 'switchStateReadRva': 0xd9ffa4, 'reachExitCallRva': 0xd9ffd3, 'noReasonCallRva': 0xd9ffe5, 'returnAliveCallRva': 0xda000f,
+    'suicideAliveCallRva': 0x3a25c27, 'suicideMarkRva': 0x3a25c2d, 'suicideHpCallRva': 0x3a25c6a,
+    'nativeRallyCastAndWithdrawEffectsVerified': False, 'nativeFinishEffectsVerified': False, 'nativeHpEncodingAndEffectsVerified': False, 'liveInstantKillNodeVerified': False,
+}
 switch_node_unit = c['type_row']('Unit', 'Torappu.Battle')
 switch_node_calls = []
 for index, entry, names in [(68052, 0x855090, ['index', 'restartFSM']), (68054, 0x855260, ['restartFSM'])]:

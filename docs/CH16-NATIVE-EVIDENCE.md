@@ -1402,6 +1402,40 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
 
+### InstantKill action and separate Entity suicide body
+
+The209 ordinary bodies remain unchanged. New bindings identify RallyPoint as
+the optional cast type, its Withdraw virtual slot215 with Boolean arguments
+switchToDeadState/force/manual/logAutoWithdraw, and Entity.FinishWithReachExit
+slot92 with switchState. Entity.m_isSuicide is bound to Boolean field+0xd1.
+Instruction pins retain selection, branch precedence, argument reads and the
+final virtual alive query separately from Entity.Suicide's own alive probe.
+
+`fearProjectileInstantKillNode` selects the raw snapshot source when _killSource
+is set, otherwise delegates target selection, then checks Unity validity and
+casts to RallyPoint. The optional RallyPoint branch returns its configured
+in-mode result or Withdraw(false,false,true,false)'s Boolean directly, without
+an alive query. Normal Entity dispatch prioritizes finish-with-no-reason over
+reach-exit over suicide. It then returns the virtual alive result after the
+effect. A completed kill can therefore return false, while a surviving or
+reborn entity can return true; no kill-success receipt is invented.
+
+`fearProjectileEntitySuicide` implements only the default Entity body: probe
+alive once, mark m_isSuicide, then dispatch forced raw-zero HP with noSource and
+skipReborn. Its caller owns any post-effect alive query. The HP receiver still
+owns native FP encoding and HP/death effects. The existing lifecycle wrapper
+remains unchanged. The checked self-death action graph now uses these two
+receivers for InstantKill, preserving context restoration after the owner dies.
+
+Tests cover direct source selection, invalid targets, RallyPoint early returns,
+finish precedence, suicide flags, nullable receivers, effect errors and the
+mark retained after HP failure. Concrete RallyPoint/finish/HP effects, native
+exception construction and full controller/stage/frame parity remain unverified.
+Source/support/receipt/catalogue gates are unchanged; this checkpoint stays
+local outside pending upload authorization.
+
+All1228 focused native/fear/family/miner tests and evidence reproduction pass.
+
 ### SwitchMode action and void Unit dispatch
 
 The209-method ordinary bundle adds Unit.SwitchToDefaultMode's complete wrapper;

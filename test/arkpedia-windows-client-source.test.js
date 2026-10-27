@@ -533,6 +533,20 @@ test('context snapshot source binds distinct capture/push orders and closed refe
  assert.equal(q.nativeContextStackEffectsVerified,false);assert.equal(q.nativeNestedValueCopiesVerified,false);assert.equal(q.liveContextSnapshotsVerified,false);
 });
 
+test('InstantKill source binds RallyPoint dispatch, finish precedence and the post-effect alive query',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.newBuff.instantKillNode,m=c.methods.find(m=>m.type==='InstantKill'&&m.name==='Execute');
+ assert.equal(q.fields.length,9);assert.equal(q.rallyType.name,'RallyPoint');assert.equal(q.rallyType.definitionIndex,10181);assert.equal(q.rallyType.encodedUsage>>>29,1);
+ assert.deepEqual(q.virtualSlots.map(m=>[m.type,m.name,m.virtualSlot,m.parameters.map(p=>p.name)]),[['RallyPoint','Withdraw',215,['switchToDeadState','force','manual','logAutoWithdraw']],['Entity','FinishWithReachExit',92,['switchState']]]);
+ assert.equal(q.suicideField.name,'m_isSuicide');assert.equal(q.suicideField.offset,0xd1);
+ const at=(rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ at(q.killSourceFlagReadRva,'byte ptr [rsi + 0x14], cl');at(q.sourceReadRva,'rbx, qword ptr [rbx]');at(q.targetCallRva,'0x180ced380');at(q.validityCallRva,'0x185ebec60');
+ at(q.withdrawFlagReadRva,'byte ptr [rsi + 0x16], 0');at(q.rallyValidityCallRva,'0x185ebee90');at(q.rallyModeCallRva,'0x180844680');at(q.withdrawCallRva,'r10');at(q.rallyResultReadRva,'eax, byte ptr [rsi + 0x17]');
+ at(q.noReasonFlagReadRva,'byte ptr [rsi + 0x19], 0');at(q.reachExitFlagReadRva,'byte ptr [rsi + 0x1a], 0');at(q.skipRebornReadRva,'r8d, byte ptr [rsi + 0x18]');at(q.noSourceReadRva,'edx, byte ptr [rsi + 0x15]');
+ at(q.suicideCallRva,'0x183a25b90');at(q.switchStateReadRva,'edi, byte ptr [rsi + 0x1b]');at(q.reachExitCallRva,'qword ptr [rax + 0x6f8]');at(q.noReasonCallRva,'0x183a1b510');at(q.returnAliveCallRva,'rax');
+ const suicide=c.methods.find(m=>m.type==='Entity'&&m.name==='Suicide');assert.ok(instructions(suicide).some(i=>i.rva===q.suicideMarkRva&&i.operands==='byte ptr [rbx + 0xd1], 1'));assert.ok(instructions(suicide).some(i=>i.rva===q.suicideHpCallRva&&i.operands==='0x180012f30'));
+ for(const name of ['nativeRallyCastAndWithdrawEffectsVerified','nativeFinishEffectsVerified','nativeHpEncodingAndEffectsVerified','liveInstantKillNodeVerified'])assert.equal(q[name],false);
+});
+
 test('SwitchMode node source binds the mode key, void Unit signatures and true-after-dispatch results',()=>{
  const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.newBuff.switchModeNode,m=c.methods.find(m=>m.type==='SwitchMode'&&m.name==='Execute');
  assert.deepEqual(q.fields.map(f=>[f.name,f.offset]),[['_modeIndex',16],['_loadModeFromBlackboard',20],['_restoreDefault',21],['_restartFSM',22],['_targetType',24]]);
