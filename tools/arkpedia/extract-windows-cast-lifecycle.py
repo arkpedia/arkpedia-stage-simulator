@@ -77,6 +77,8 @@ def code(rva):
 
 
 def fields(t):
+    if not t['fields']:
+        return []
     ptr = v['offset'](quad(b, v['field_table'] + t['index'] * 8))
     out = []
     for n, f in enumerate(t['fields']):
@@ -115,6 +117,37 @@ def method(t, row, image='Assembly-CSharp.dll'):
             'entryRva': va - base, 'chunks': code(va - base)}
 
 
+def lineage(t):
+    result, seen = [], set()
+    while t['index'] not in seen:
+        seen.add(t['index'])
+        result.append(t)
+        ti = sint(m, v['type_start'] + t['index'] * 88 + 16)
+        if ti < 0:
+            return result
+        tp = v['offset'](quad(b, v['type_table'] + ti * 8))
+        index = quad(b, tp)
+        assert 0 <= index < len(v['types'])
+        t = v['types'][index]
+    raise AssertionError('Cyclic native type hierarchy')
+
+
+def resolved_slot(t, slot):
+    p = v['type_start'] + t['index'] * 88
+    assert 0 <= slot < struct.unpack_from('<H', m, p + 74)[0]
+    start = sint(m, p + 56)
+    encoded = uint(m, uint(m, 144) + (start + slot) * 4)
+    assert encoded >> 29 == 3 and encoded != 1
+    index = (encoded & 0x1ffffffe) >> 1
+    rows = [(owner, row) for owner in v['image_types'] for row in owner['methods'] if row['index'] == index]
+    assert len(rows) == 1
+    owner, row = rows[0]
+    return {'type': t['name'], 'typeIndex': t['index'], 'slot': slot,
+            'encodedMethod': encoded, 'declaringType': owner['name'],
+            'declaringTypeIndex': owner['index'], **row,
+            'entryRva': v['pointer'](row) - base}
+
+
 ns = 'Torappu.Battle.Abilities'
 animated = type_row('AbstractAnimatedAbility', ns)
 easy = type_row('EasyToStartAbility', ns)
@@ -122,13 +155,22 @@ ranged = type_row('RangedAttack', ns)
 standard = type_row('AbilityStandard', 'Torappu.Battle')
 asynchronous = type_row('AsyncUtil', 'Torappu.Battle')
 entity = type_row('Entity', 'Torappu.Battle')
+unit = type_row('Unit', 'Torappu.Battle')
+unit_animator = type_row('UnitAnimator', 'Torappu.Battle')
+spine = type_row('SpineAnimator', 'Torappu.Battle')
+single_spine = type_row('SingleSpineAnimator', 'Torappu.Battle')
+animation_data = unique(lambda t: t['name'] == 'AnimationData', [v['types'][n] for n in spine['nested']])
+enemy = type_row('Enemy', 'Torappu.Battle')
+spine_animation = type_row('Animation', 'Spine')
 selected = []
 for t, names in [
     (animated, ['get_cooldown', 'get_preDelay', 'GetDuration', 'UpdatePlaybackSpeed', 'ApplyAttackTime']),
     (easy, ['get_waitForAttackEvent', 'get_postDelay', 'OnCastStart', 'WaitForNextEvent', '_CheckNotReceiveEvent', '_OnReceiveEvent']),
-    (ranged, ['DoCastOnTargets', 'OnCastOnTarget', 'OnCastEnd']),
+    (ranged, ['DoCastOnTargets', 'OnCastOnTarget', 'OnCastEnd', 'CreateProjectile', 'ClearProjectile']),
     (standard, ['OnSpellStart', 'OnCastOnTarget', 'DoCastOnTargets', 'OnCastEnd']),
     (asynchronous, ['WaitWhileForFixedSeconds']),
+    (unit, ['GetAnimationTime']), (unit_animator, ['GetAnimationTime']),
+    (spine, ['GetAnimationTimeInternal', 'GetAnimationData', 'InitAnimationDataIfNot', 'UpdateAnimationData', 'GetAnimName']),
 ]:
     for name in names:
         rows = [r for r in t['methods'] if r['name'] == name]
@@ -143,6 +185,8 @@ for t, prefixes in [(easy, ['<WaitForNextEvent>', '<OnWaitForPreDelay>', '<OnWai
 for name, token in [('FP', 0x60002b2), ('FP', 0x60002c9), ('FP', 0x60002d0), ('MathUtil', 0x600022e)]:
     t = type_row(name, 'Torappu')
     selected.append(method(t, unique(lambda r: r['token'] == token, t['methods']), 'Torappu.Common.dll'))
+spine_data = type_row('SkeletonData', 'Spine')
+selected.append(method(spine_data, unique(lambda r: r['name'] == 'FindAnimation', spine_data['methods']), 'spine-unity.dll'))
 
 entity_event = enum(unique(lambda t: t['name'] == 'Event', [v['types'][n] for n in entity['nested']]))
 time_mode = enum(unique(lambda t: t['name'] == 'TimeMode', [v['types'][n] for n in animated['nested']]))
@@ -157,17 +201,60 @@ for t, names in [(standard, ['OnEvent', 'OnSpellStart', 'OnWaitForPreDelay', 'On
             virtual_bindings.append({'typeIndex': t['index'], 'type': t['name'], **row,
                                      'slot': struct.unpack_from('<H', m, p + 28)[0]})
 
+script_path = 'data/candidates/arkpedia-ch16-script-bindings-source.json'
+script_source = json.loads((ROOT / script_path).read_bytes())
+graph_path = 'data/candidates/arkpedia-ch16-fear-projectile-source.json'
+graph = json.loads((ROOT / graph_path).read_bytes())
+prefab = 'dyn/battle/prefabs/enemies/enemy_10128_fearpj.prefab'
+bridges = []
+for path_id in ['4729572091462136098', '-4003912029476114142', '-2847013522971053790', '-5930072227765702366', '8176622560865923362']:
+    binding = unique(lambda r: r['graph'] == graph_path and r['prefab'] == prefab and r['componentPathId'] == path_id,
+                     script_source['bindings'])
+    script = script_source['scripts'][binding['scriptPathId']]
+    assert v['sha'](script['originalJson'].encode()) == script['sha256']
+    identity = json.loads(script['originalJson'])
+    assert identity['m_AssemblyName'] == 'Assembly-CSharp.dll'
+    t = type_row(identity['m_ClassName'], identity['m_Namespace'])
+    module_row = module('Assembly-CSharp.dll')
+    assert module_row['typeStart'] <= t['index'] < module_row['typeStart'] + module_row['typeCount']
+    ancestors = lineage(t)
+    available = {}
+    for ancestor in ancestors:
+        if not ancestor['namespace'].startswith('Torappu.Battle'):
+            continue
+        for field in fields(ancestor):
+            available.setdefault(field['name'], {**field, 'declaringTypeIndex': ancestor['index'],
+                                                  'declaringType': ancestor['name']})
+    row = unique(lambda r: r['pathId'] == path_id, graph['prefabs'][prefab])
+    assert row['sha256'] == binding['componentSha256'] == v['sha'](row['originalJson'].encode())
+    native = json.loads(row['originalJson'])
+    mapped, unmatched = [], {}
+    for name in sorted(set(native) - {'m_Script', 'm_Enabled', 'm_GameObject', 'm_Name'}):
+        if name in available:
+            mapped.append(available[name])
+        else:
+            unmatched[name] = native[name]
+    if t['name'] in ['RangedAttack', 'BuffToOwner', 'EmptyAnimatedAbility']:
+        assert not unmatched, f'Unmatched serialized cast fields: {unmatched}'
+    bridges.append({**binding, 'scriptIdentity': identity, 'windowsTypeIndex': t['index'],
+                    'lineage': [{'typeIndex': a['index'], 'name': a['name'], 'namespace': a['namespace']} for a in ancestors],
+                    'matchedSerializedFields': mapped, 'unmatchedSerializedFields': unmatched,
+                    'serializedFieldParity': not unmatched})
+
 result = {'schemaVersion': 1,
           'scope': 'Static default cast/wait evidence only; no runtime hotfix, frame or cross-version parity and no enemy/stage admission.',
           'runtimeDispatchVerified': False, 'frameParity': False, 'crossVersionParity': False,
           'sources': {p: {'path': p, 'sha256': v['sha']((ROOT / p).read_bytes())}
                       for p in ['data/arkpedia-global-windows-client-source.json',
                                 'data/candidates/arkpedia-windows-ability-events-source.json',
-                                'data/candidates/arkpedia-ch16-fear-projectile-source.json']},
+                                'data/candidates/arkpedia-ch16-fear-projectile-source.json', script_path]},
           'nativeFiles': v['pin']['files'], 'metadataVersion': 29, 'imageBase': base,
           'codeGenModules': list(modules.values()), 'entityEvent': entity_event, 'timeMode': time_mode,
-          'fields': {t['name']: {'typeIndex': t['index'], 'fields': fields(t)} for t in [standard, easy, animated, ranged]},
+          'fields': {t['name']: {'typeIndex': t['index'], 'fields': fields(t)} for t in [standard, easy, animated, ranged, animation_data, spine_animation]},
           'virtualBindings': virtual_bindings,
+          'resolvedSlots': [resolved_slot(t, slot) for t, slots in [(enemy, [102, 103]), (single_spine, [45, 46, 60]),
+                                                                   (ranged, [75, 80, 87, 116])] for slot in slots],
+          'prefabScriptBridges': bridges,
           'virtualHelpers': [{'entryRva': rva, 'chunks': code(rva)} for rva in [0x57b0, 0x1cf10]],
           'methods': selected,
           'review': [
@@ -175,7 +262,9 @@ result = {'schemaVersion': 1,
               'The fixed-point waiter divides duration by FP(deltaPlayTime), calls MathUtil.RoundToInt and clamps the count to at least one; it yields before testing the predicate on resumption. This is a bounded frame count, not a fabricated OnAttack marker.',
               'AbstractAnimatedAbility GetDuration returns m_attackTime. UpdatePlaybackSpeed initializes it from virtual get_cooldown; in timeMode0 get_cooldown reads owner.attackTime. The animation-query, minimum/maximum scale and fixed-point conversion paths remain in full for review.',
               'The ordinary _DoCast coroutine dispatches OnSpellStart, checks CheckAnotherSpell, then emits ability event5 before its post-delay. RangedAttack projectile creation and self-death wrapper ordering still require caller/lifecycle review before admission.',
-              'The pinned Global Windows code and retained CN prefab/skeleton are different platform/version sources. Native Enemy animation lookup, hotfix state, scheduler/frame parity and local miner talent attachment are not proved by these chunks.'
+              'Exact CN MonoScript references identify RangedAttack, BuffToOwner, EmptyAnimatedAbility, SingleSpineAnimator and Enemy. Cast field names bind through actual Windows inheritance chains; unmatched animator/owner fields remain explicit with serializedFieldParity=false. No unmatched field is assumed inert and no blanket cross-version behavioral parity follows.',
+              'Enemy virtual animation lookup resolves to Unit, then UnitAnimator and the SingleSpineAnimator inherited SpineAnimator implementation. The latter returns AnimationData.time / speed; its update path reads the original animation duration into time.',
+              'The pinned Global Windows code and retained CN prefab/skeleton are different platform/version sources. Runtime hotfix state, scheduler/frame parity and local miner talent attachment remain separate requirements.'
           ]}
 out = ROOT / 'data/candidates/arkpedia-windows-cast-lifecycle-source.json'
 serialized = json.dumps(result, ensure_ascii=False, indent=1) + '\n'

@@ -69,9 +69,9 @@ const castMethod=(c,type,name)=>{
  const matches=c.methods.filter(m=>m.type===type&&m.name===name);assert.equal(matches.length,1);return matches[0];
 };
 test('cast evidence resolves common-library tokens in their own image and preserves every native chunk',()=>{
- const c=read(castPath);assert.equal(c.methods.length,30);
+ const c=read(castPath);assert.equal(c.methods.length,43);
  for(const p of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+p.path,import.meta.url))),p.sha256);
- assert.deepEqual(c.codeGenModules.map(m=>m.name),['Assembly-CSharp.dll','Torappu.Common.dll']);
+ assert.deepEqual(c.codeGenModules.map(m=>m.name),['Assembly-CSharp.dll','Torappu.Common.dll','spine-unity.dll']);
  for(const method of [...c.methods,...c.virtualHelpers])for(const chunk of method.chunks){
   const raw=Buffer.from(chunk.base64,'base64');assert.equal(raw.length,chunk.endRva-chunk.beginRva);assert.equal(sha(raw),chunk.sha256);
  }
@@ -116,4 +116,54 @@ test('cached duration retains owner attack-time and animation scale paths rather
  for(const field of ['runtimeDispatchVerified','frameParity','crossVersionParity'])assert.equal(c[field],false);
  assert.equal(read('data/candidates/arkpedia-ch16-enemy-support.json').enemies.enemy_10128_fearpj.policy,null);
  assert.equal(read('data/arkpedia-stages.json').stages.some(s=>s.code==='16-9'),false);
+});
+
+test('exact CN script references identify the cast classes without inventing full cross-version field parity',()=>{
+ const c=read(castPath),bindings=read('data/candidates/arkpedia-ch16-script-bindings-source.json');
+ assert.equal(bindings.bindings.length,173);assert.equal(Object.keys(bindings.scripts).length,33);
+ for(const row of Object.values(bindings.graphs))assert.equal(sha(readFileSync(new URL('../'+row.path,import.meta.url))),row.sha256);
+ for(const script of Object.values(bindings.scripts)){
+  assert.equal(sha(script.originalJson),script.sha256);assert.equal(script.serializedFile,'CAB-658d74aab777086fc32b93f385be999a');
+ }
+ for(const [id,name] of [['4729572091462136098','RangedAttack'],['-4003912029476114142','BuffToOwner'],['-5930072227765702366','EmptyAnimatedAbility']]){
+  const bridge=c.prefabScriptBridges.find(b=>b.componentPathId===id);
+  assert.equal(bridge.scriptIdentity.m_ClassName,name);assert.equal(bridge.scriptIdentity.m_Namespace,'Torappu.Battle.Abilities');
+  assert.equal(bridge.scriptIdentity.m_AssemblyName,'Assembly-CSharp.dll');assert.equal(bridge.serializedFieldParity,true);
+  assert.deepEqual(bridge.unmatchedSerializedFields,{});
+  const binding=bindings.bindings.find(b=>b.graph===bridge.graph&&b.prefab===bridge.prefab&&b.componentPathId===id);
+  assert.equal(binding.scriptPathId,bridge.scriptPathId);assert.equal(binding.componentSha256,bridge.componentSha256);
+ }
+ const animator=c.prefabScriptBridges.find(b=>b.scriptIdentity.m_ClassName==='SingleSpineAnimator');
+ assert.equal(animator.serializedFieldParity,false);
+ assert.deepEqual(Object.keys(animator.unmatchedSerializedFields).sort(),['_neverImmediatelyFaceSwitcher','_shadowTransform']);
+ const enemy=c.prefabScriptBridges.find(b=>b.scriptIdentity.m_ClassName==='Enemy');assert.equal(enemy.serializedFieldParity,false);
+ assert.deepEqual(Object.keys(enemy.unmatchedSerializedFields),['_groundBoundHeightZOffset']);
+});
+test('anonymous shared script intake retains complete official checksums without treating a short tag as MD5',()=>{
+ const c=read('data/candidates/arkpedia-ch16-script-bindings-source.json'),recipe=read('data/arkpedia-cn-mono-script-source.json');
+ assert.equal(c.source.checksumProof.kind,'pinned-official-archive');assert.equal(c.source.checksumProof.nativeManifestShortTagVerified,false);
+ assert.equal(c.source.checksumProof.nativeManifestTag,'1cc3');assert.equal(recipe.nativeRow.md5,'1cc3');
+ assert.match(recipe.archive.md5,/^[a-f0-9]{32}$/);assert.match(recipe.bundle.md5,/^[a-f0-9]{32}$/);
+ assert.equal(c.source.checksumProof.sha256,sha(readFileSync(new URL('../'+c.source.checksumProof.recipe,import.meta.url))));
+ assert.equal(c.source.sha256,recipe.bundle.sha256);assert.equal(recipe.identity.scriptCount,6916);
+ for(const field of ['runtimeDispatchVerified','frameParity','crossVersionParity'])assert.equal(c[field],false);
+});
+test('enemy animation dispatch reaches inherited Unit and Spine time divided by configured speed',()=>{
+ const c=read(castPath);
+ for(const [type,slot,declaringType,name] of [['Enemy',103,'Unit','GetAnimationTime'],['SingleSpineAnimator',46,'SpineAnimator','GetAnimationTimeInternal'],['RangedAttack',80,'AbilityStandard','OnSpellStart'],['RangedAttack',116,'RangedAttack','CreateProjectile']]){
+  const row=c.resolvedSlots.find(r=>r.type===type&&r.slot===slot);assert.equal(row.declaringType,declaringType);assert.equal(row.name,name);
+  assert.equal(row.encodedMethod>>>29,3);
+ }
+ const fields=c.fields.AnimationData.fields;
+ assert.equal(fields.find(f=>f.name==='time').offset,0x2c);assert.equal(fields.find(f=>f.name==='speed').offset,0x24);
+ const methods=c.methods.filter(m=>m.type==='SpineAnimator'&&m.name==='GetAnimationTimeInternal');assert.equal(methods.length,2);
+ for(const method of methods)assert.ok(instructions(method).some(i=>i.mnemonic==='divss'&&i.operands==='xmm0, dword ptr [rax + 0x24]'));
+ const update=instructions(castMethod(c,'SpineAnimator','UpdateAnimationData'));
+ assert.ok(update.some(i=>i.mnemonic==='movss'&&i.operands==='dword ptr [rdi + 0x2c], xmm0'));
+ const find=castMethod(c,'SkeletonData','FindAnimation');assert.equal(find.image,'spine-unity.dll');
+ assert.ok(update.some(i=>i.mnemonic==='call'&&i.operands==='0x'+(c.imageBase+find.entryRva).toString(16)));
+ assert.equal(c.fields.Animation.fields.find(f=>f.name==='duration').offset,0x28);
+ assert.ok(update.some(i=>i.mnemonic==='movss'&&i.operands==='xmm0, dword ptr [rax + 0x28]'));
+ const end=instructions(castMethod(c,'RangedAttack','OnCastEnd'));
+ assert.ok(end.some(i=>i.mnemonic==='cmp'&&i.operands==='byte ptr [rbx + 0x224], 0'));
 });

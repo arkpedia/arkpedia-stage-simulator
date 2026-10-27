@@ -1,5 +1,54 @@
 # Development priorities
 
+### 27 October: exact shared MonoScript references and inherited Spine timing
+
+The previous goal checkpoint `baa0beef` made concrete progress. Its continuation
+`40477138446` is terminal success, including both focused platforms, native-source
+and every stage-browser job. Full run `40477137676` is still live on that exact
+checkpoint across all eight matrix jobs. Preserve its handle; do not restart it
+because a status observation expires or a newer source-only checkpoint exists.
+
+The fear cast's external script reference is now resolved directly. A read of the
+pinned resource index located the manifest-listed shared MonoScript dependency;
+only its 391,328-byte official archive was needed for the new reproducible source
+intake. The archive matches the publisher's Content-MD5 and retained complete
+MD5/SHA256. ZIP metadata/CRC and decoded bundle size/MD5/SHA256 are also pinned.
+The manifest's `1cc3` tag is explicitly not treated as a complete MD5 or claimed
+verified. The existing bounded anonymous-source verifier handles hosted fetching.
+
+The decoded shared file has the exact external CAB identity and 6,916 MonoScript
+objects. The new producer binds 173 actual component references in six retained
+Chapter16 families to 33 selected original MonoScripts, including each referring
+component's original JSON, file-ID lookup and exact script path ID. This identifies
+the fear cast as RangedAttack, its spell-end wrapper as BuffToOwner, death-mode
+combat as EmptyAnimatedAbility, and its animator as SingleSpineAnimator. Class
+identity is no longer inferred from a similar serialized shape.
+
+The Windows artifact now retains 43 complete native methods. Encoded vtable entries
+resolve Enemy.GetAnimationTime to Unit, then through UnitAnimator to the inherited
+SpineAnimator implementation. AnimationData.time and speed have exact field offsets;
+the lookup returns time/speed and the update path populates time from the original
+Spine animation, with FindAnimation's token resolved in spine-unity.dll and its
+duration field bound independently. RangedAttack.CreateProjectile/ClearProjectile and cast-end cleanup
+are retained for the caller/lifecycle review. The attack, wrapper and empty-cast
+serialized fields all bind through the real Windows inheritance chains.
+
+There are real platform/version field differences: the CN animator also serializes
+`_neverImmediatelyFaceSwitcher` and `_shadowTransform`, and the CN enemy serializes
+`_groundBoundHeightZOffset`. They remain explicit unmatched fields with
+serializedFieldParity=false. They are not assumed inert. Numeric selector/default
+enum semantics have not been established across these versions either. This source
+work does not grant blanket behavioral/frame/hotfix parity or admit any new stage.
+
+All 21 Windows source checks pass. Hosted native-source is configured to fetch and
+reproduce the exact shared script bindings before the extended cast artifact.
+Next: finish the selected projectile/event5/self-death review and the remaining
+selector semantics; inspect Enemy._AssignTalent/OnInit and BasicTalent assignment/
+root-mode attachment to resolve the stage-local miner without guessing that absent
+DB groups are inert. The full stage/controller and operator/module backlog remains
+required before art/models/chibis/effects. Quarantine deletions remain unstaged;
+no simulator merge, deployment or public promotion is authorized.
+
 ### 27 October: compiled cast lifecycle and bounded attack-event wait
 
 The previous simulator checkpoint `a4d4e27d` made concrete progress. Its hosted
