@@ -41,6 +41,7 @@ import {fearProjectileRuntimeSnapshot,fearProjectileTakeBuffSnapshot} from '../s
 import {fearProjectileAttributeValues} from '../server/sim/content/chapter16-fear-attribute-values.js';
 import {fearProjectileBuffAttributeProvider} from '../server/sim/content/chapter16-fear-buff-provider.js';
 import {fearProjectileRunBuffActions} from '../server/sim/content/chapter16-fear-buff-run-actions.js';
+import {fearProjectileContextGuards} from '../server/sim/content/chapter16-fear-context-guard.js';
 import {fearProjectileBuffRecyclePool,fearProjectileDefaultBuffPool} from '../server/sim/content/chapter16-fear-buff-pool.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
@@ -53,6 +54,81 @@ import { chapter16Shadow } from '../server/sim/content/chapter16-shadow.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
 const parentKey='feawpj_a[mcreep_fear]';
 const fpOne=1n<<32n;
+
+function contextGuardsFixture(){
+ const fields=['m_source','m_target','m_buff','m_ability','m_modifier','m_projectile','m_tile','m_mainTarget','m_atkInfo','m_mainBuff'],context={},events=[],guards=[],state={active:true};
+ for(const field of fields){context[field]=[{field}];context[field].field=field;}
+ const pop=(stack,kind)=>{events.push([kind,stack.field]);if(!stack.length)throw Error('test stack empty');return stack.pop();};
+ const options={isActive:()=>state.active,allocateGuard:()=>{events.push('allocate');const guard={m_context:null};guards.push(guard);return guard;},
+  initializeGuard:()=>events.push('initialize'),duplicateAll:ctx=>{events.push('snapshot');for(const field of fields)ctx[field].push(ctx[field].at(-1));},
+  popPointer:stack=>pop(stack,'pointer'),popValue:stack=>pop(stack,'value'),pushPointer:(stack,value)=>{events.push(['push',stack.field]);stack.push(value);}};
+ return{fields,context,events,guards,state,options,adapter:()=>fearProjectileContextGuards(options)};
+}
+test('context guard allocates, initializes and assigns context before snapshotting, then restores ten stacks in native order',()=>{
+ const f=contextGuardsFixture(),adapter=f.adapter(),guard=adapter.begin(f.context);assert.equal(guard,f.guards[0]);assert.equal(guard.m_context,f.context);
+ assert.deepEqual(f.events,['allocate','initialize','snapshot']);assert.ok(f.fields.every(field=>f.context[field].length===2));f.events.length=0;adapter.dispose(guard);
+ assert.deepEqual(f.events,[['pointer','m_source'],['pointer','m_target'],['pointer','m_buff'],['value','m_ability'],['value','m_modifier'],
+  ['pointer','m_projectile'],['pointer','m_tile'],['value','m_mainTarget'],['value','m_atkInfo'],['pointer','m_mainBuff']]);
+ assert.ok(f.fields.every(field=>f.context[field].length===1));assert.equal(guard.m_context,f.context);
+});
+for(const [method,field]of [['setBuff','m_buff'],['setSource','m_source'],['setTarget','m_target'],['setTile','m_tile']])
+test('context guard '+method+' replaces one pointer-stack top through Pop then Push',()=>{
+ const f=contextGuardsFixture(),adapter=f.adapter(),guard=adapter.begin(f.context),original=f.context[field][0],value={};f.events.length=0;
+ adapter[method](guard,value);assert.deepEqual(f.events,[['pointer',field],['push',field]]);assert.equal(f.context[field].length,2);assert.equal(f.context[field].at(-1),value);
+ adapter.dispose(guard);assert.equal(f.context[field].at(-1),original);
+});
+test('context guard setters reread context after Pop while Dispose keeps its first context sample',()=>{
+ const f=contextGuardsFixture(),g=contextGuardsFixture(),adapter=f.adapter(),guard=adapter.begin(f.context),pop=f.options.popPointer;
+ f.options.popPointer=stack=>{const result=pop(stack);guard.m_context=g.context;return result;};const value={};f.adapter().setSource(guard,value);
+ assert.equal(f.context.m_source.length,1);assert.equal(g.context.m_source.at(-1),value);
+ const h=contextGuardsFixture(),other=contextGuardsFixture(),dispose=h.adapter(),captured=dispose.begin(h.context),original=h.options.popPointer;
+ h.options.popPointer=stack=>{const result=original(stack);captured.m_context=other.context;return result;};h.adapter().dispose(captured);
+ assert.ok(h.fields.every(field=>h.context[field].length===1));assert.ok(other.fields.every(field=>other.context[field].length===1));
+});
+test('context guard disposal does not become idempotent or clear the guard context',()=>{
+ const f=contextGuardsFixture(),adapter=f.adapter(),guard=adapter.begin(f.context);adapter.dispose(guard);adapter.dispose(guard);
+ assert.ok(f.fields.every(field=>f.context[field].length===0));assert.equal(guard.m_context,f.context);assert.equal(f.events.filter(Array.isArray).length,20);
+});
+test('context guard allocation and snapshot failures preserve native partial initialization without rollback',()=>{
+ const f=contextGuardsFixture();f.options.duplicateAll=ctx=>{ctx.m_source.push({});throw Error('snapshot failed');};assert.throws(()=>f.adapter().begin(f.context),/snapshot failed/);
+ assert.equal(f.guards[0].m_context,f.context);assert.equal(f.context.m_source.length,2);assert.equal(f.context.m_target.length,1);
+ const g=contextGuardsFixture();g.options.initializeGuard=()=>{throw Error('initialize failed');};assert.throws(()=>g.adapter().begin(g.context),/initialize failed/);assert.equal(g.guards[0].m_context,null);
+ const h=contextGuardsFixture();assert.throws(()=>h.adapter().begin(null),/null native/);assert.equal(h.guards[0].m_context,null);assert.deepEqual(h.events,['allocate','initialize']);
+});
+test('context guard setter failures preserve the first Pop and do not invent a replacement Push',()=>{
+ const f=contextGuardsFixture(),adapter=f.adapter(),guard=adapter.begin(f.context),pop=f.options.popPointer;
+ f.options.popPointer=stack=>{const result=pop(stack);guard.m_context=null;return result;};assert.throws(()=>f.adapter().setBuff(guard,{}),/null native/);
+ assert.equal(f.context.m_buff.length,1);assert.equal(f.events.some(e=>Array.isArray(e)&&e[0]==='push'),false);
+});
+test('context guard disposal retains earlier Pops on failure and still completes after lifecycle cancellation',()=>{
+ const f=contextGuardsFixture(),adapter=f.adapter(),guard=adapter.begin(f.context),pop=f.options.popValue;
+ f.options.popValue=stack=>{if(stack.field==='m_modifier')throw Error('pop failed');return pop(stack);};assert.throws(()=>f.adapter().dispose(guard),/pop failed/);
+ assert.equal(f.context.m_ability.length,1);assert.equal(f.context.m_modifier.length,2);assert.equal(f.context.m_mainBuff.length,2);
+ const g=contextGuardsFixture(),a=g.adapter(),current=a.begin(g.context),original=g.options.popPointer;
+ g.options.popPointer=stack=>{const result=original(stack);g.state.active=false;return result;};g.adapter().dispose(current);
+ assert.ok(g.fields.every(field=>g.context[field].length===1));
+});
+test('buff action dispatch composes concrete guard allocation, setters and ten-stack disposal',()=>{
+ const f=actionDispatchFixture(),g=contextGuardsFixture(),guard=g.adapter(),prior=g.fields.map(field=>g.context[field].at(-1));
+ Object.assign(f.options,{readContext:()=>g.context,beginChangeGuard:context=>guard.begin(context),setBuff:(value,buff)=>guard.setBuff(value,buff),
+  setSource:(value,source)=>guard.setSource(value,source),setTarget:(value,target)=>guard.setTarget(value,target),setTile:(value,tile)=>guard.setTile(value,tile),disposeGuard:value=>guard.dispose(value),
+  runActionArray:()=>({source:g.context.m_source.at(-1),target:g.context.m_target.at(-1),buff:g.context.m_buff.at(-1),tile:g.context.m_tile.at(-1),modifier:{},atkInfo:{}})});
+ const result=f.adapter().run(24,true);assert.equal(result.source,f.source);assert.equal(result.target,f.owner);assert.equal(result.buff,f.buff);assert.equal(result.tile,f.owner.tile);
+ assert.ok(g.fields.every((field,index)=>g.context[field].length===1&&g.context[field][0]===prior[index]));
+});
+test('native context guard completion allows cancelled outer buff dispatch to dispose balanced stacks',()=>{
+ const f=actionDispatchFixture(),g=contextGuardsFixture(),pop=g.options.popPointer;
+ g.options.popPointer=stack=>{const result=pop(stack);if(stack.field==='m_source'){g.state.active=false;f.state.active=false;}return result;};
+ const guard=g.adapter();Object.assign(f.options,{readContext:()=>g.context,beginChangeGuard:context=>guard.begin(context),
+  setBuff:(value,buff)=>guard.setBuff(value,buff),setSource:(value,source)=>guard.setSource(value,source),disposeGuard:value=>guard.dispose(value)});
+ assert.equal(f.adapter().run(24,true),null);assert.ok(g.fields.every(field=>g.context[field].length===1));
+});
+test('context guard returned after cancellation during duplication is still disposed by outer dispatch',()=>{
+ const f=actionDispatchFixture(),g=contextGuardsFixture(),duplicate=g.options.duplicateAll;
+ g.options.duplicateAll=context=>{duplicate(context);g.state.active=false;f.state.active=false;};const guard=g.adapter();
+ Object.assign(f.options,{readContext:()=>g.context,beginChangeGuard:context=>guard.begin(context),disposeGuard:value=>guard.dispose(value)});
+ assert.equal(f.adapter().run(24,true),null);assert.ok(g.fields.every(field=>g.context[field].length===1));assert.equal(f.events.includes('buff'),false);
+});
 
 function actionDispatchFixture(){
  const context={target:{id:'prior-target'},tile:{id:'prior-tile'}},owner={alive:true,tile:{id:'owner-tile'}},source={},

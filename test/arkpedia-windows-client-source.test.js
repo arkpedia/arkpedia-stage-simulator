@@ -488,6 +488,30 @@ test('buff action dispatch source binds context guard setup, owner virtual slots
  assert.equal(q.nativeGuardEffectsVerified,false);assert.equal(q.nativeActionArrayExecutionVerified,false);assert.equal(q.nativeSnapshotCopyVerified,false);assert.equal(q.liveRunActionsVerified,false);
 });
 
+test('context guard source binds allocation, fresh setter contexts and ordered pointer/value stack disposal',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.newBuff.contextGuards,
+  begin=castMethod(c,'Context','BeginChangeGard'),dispose=castMethod(c,'ChangeGuard','Dispose');
+ const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args),`${rva.toString(16)} ${args}`);
+ assert.equal(q.guardField.name,'m_context');assert.equal(q.guardField.offset,0x10);
+ assert.deepEqual(q.contextFields.map(f=>[f.name,f.offset]),[['m_source',0x10],['m_target',0x18],['m_buff',0x20],['m_ability',0x28],['m_modifier',0x30],
+  ['m_projectile',0x38],['m_tile',0x40],['m_mainTarget',0x50],['m_atkInfo',0x48],['m_mainBuff',0x58]]);
+ assert.equal(q.guardTypeLoad.encodedUsage>>>29,1);assert.equal(q.guardTypeLoad.definitionIndex,dispose.typeIndex);
+ assert.equal(q.duplicateAllTarget.name,'_DuplicateAll');assert.equal(q.duplicateAllTarget.entryRva,0x39edc70);
+ assert.equal(q.stackSpecifications.length,18);for(const spec of q.stackSpecifications)assert.equal(spec.encodedUsage>>>29,6);
+ assert.deepEqual(q.stackSpecifications.slice(0,8).map(s=>s.specification.definition.name),['Pop','Push','Pop','Push','Pop','Push','Pop','Push']);
+ assert.deepEqual(q.stackSpecifications.slice(8).map(s=>s.specification.declaringType),['ContextPtrStack`1','ContextPtrStack`1','ContextPtrStack`1','ContextValueStack`1','ContextValueStack`1',
+  'ContextPtrStack`1','ContextPtrStack`1','ContextValueStack`1','ContextValueStack`1','ContextPtrStack`1']);
+ assert.deepEqual(q.stackSpecifications.slice(8).map(s=>s.specification.instantiations.class.arguments[0].name),['Entity','Entity','Buff','Ability','Modifier','Projectile','Tile','Entity','AttackInfo','Buff']);
+ at(begin,q.allocateCallRva,'0x180410630');at(begin,q.initializeCallRva,'0x180511a50');at(begin,q.contextWriteRva,'qword ptr [rdi + 0x10], rsi');
+ at(begin,q.contextRereadRva,'rdx, qword ptr [rdi + 0x10]');at(begin,q.duplicateAllCallRva,'0x1839edc70');
+ for(const [index,name]of ['set_buff','set_source','set_target','set_tile'].entries()){
+  const setter=castMethod(c,'ChangeGuard',name);at(setter,q.setterPopCalls[index],'0x184be7e60');at(setter,q.setterContextRereads[index],'rcx, qword ptr [rbx + 0x10]');at(setter,q.setterPushTails[index],'0x184be7ef0');
+ }
+ at(dispose,q.disposeContextCaptureRva,'rbx, qword ptr [rcx + 0x10]');
+ for(const [index,target]of ['0x184be7e60','0x184be7e60','0x184be7e60','0x184be81a0','0x184be8210','0x184be7e60','0x184be7e60','0x184be81a0','0x184be8320','0x184be7e60'].entries())at(dispose,q.disposePopCalls[index],target);
+ assert.equal(q.nativeGuardAllocationVerified,false);assert.equal(q.nativeContextDuplicationVerified,false);assert.equal(q.nativeContextStackEffectsVerified,false);assert.equal(q.liveContextGuardsVerified,false);
+});
+
 test('native admission source binds signed Int16 counters, combo fallback and Enemy raw-WALK levitation',()=>{
  const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.newBuff.admissionGates;
  const anti=castMethod(c,'BuffContainer','_CheckThroughBuffAbnormalAnti'),levitate=castMethod(c,'BuffContainer','_CheckThroughLevitateBuffCondition'),status=castMethod(c,'BuffContainer','_CheckThroughBuffStatusResistableAnti');

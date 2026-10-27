@@ -1690,6 +1690,51 @@ result['modeSwitch']['buffNotification']['newBuff']['runActions'] = {
     'firstResultCopyRva': 0x39b55a6, 'normalDisposeCallRva': 0x39b5635, 'exceptionDisposeCallRva': 0x39b564f, 'returnCopyRva': 0x39b5672,
     'nativeGuardEffectsVerified': False, 'nativeActionArrayExecutionVerified': False, 'nativeSnapshotCopyVerified': False, 'liveRunActionsVerified': False,
 }
+guard_stack_specs = []
+for load_rva, method_name, stack_name in [
+    (0x39eb04a, 'Pop', 'ContextPtrStack`1'), (0x39eb068, 'Push', 'ContextPtrStack`1'),
+    (0x39eb39a, 'Pop', 'ContextPtrStack`1'), (0x39eb3b8, 'Push', 'ContextPtrStack`1'),
+    (0x39eb42a, 'Pop', 'ContextPtrStack`1'), (0x39eb448, 'Push', 'ContextPtrStack`1'),
+    (0x39eb4ba, 'Pop', 'ContextPtrStack`1'), (0x39eb4d8, 'Push', 'ContextPtrStack`1'),
+    (0x39ea983, 'Pop', 'ContextPtrStack`1'), (0x39ea99c, 'Pop', 'ContextPtrStack`1'), (0x39ea9b5, 'Pop', 'ContextPtrStack`1'),
+    (0x39ea9ce, 'Pop', 'ContextValueStack`1'), (0x39ea9e7, 'Pop', 'ContextValueStack`1'),
+    (0x39eaa01, 'Pop', 'ContextPtrStack`1'), (0x39eaa16, 'Pop', 'ContextPtrStack`1'),
+    (0x39eaa2b, 'Pop', 'ContextValueStack`1'), (0x39eaa40, 'Pop', 'ContextValueStack`1'), (0x39eaa5a, 'Pop', 'ContextPtrStack`1')]:
+    pos = v['offset'](v['image_base'] + load_rva)
+    assert v['b'][pos:pos + 3] in [bytes.fromhex('488b15'), bytes.fromhex('4c8b05')]
+    target = load_rva + 7 + struct.unpack_from('<i', v['b'], pos + 3)[0]
+    usage = v['quad'](v['b'], v['offset'](v['image_base'] + target))
+    assert usage >> 29 == 6
+    spec = priority['specification']((usage & 0x1ffffffe) >> 1)
+    assert spec['declaringType'] == stack_name and spec['definition']['name'] == method_name
+    guard_stack_specs.append({'loadRva': load_rva, 'encodedUsage': usage, 'specification': spec})
+guard_type_load = 0x39ed7bc
+pos = v['offset'](v['image_base'] + guard_type_load)
+assert v['b'][pos:pos + 3] == bytes.fromhex('488b0d')
+target = guard_type_load + 7 + struct.unpack_from('<i', v['b'], pos + 3)[0]
+usage = v['quad'](v['b'], v['offset'](v['image_base'] + target))
+assert usage >> 29 == 1
+ti = (usage & 0x1ffffffe) >> 1
+tp = v['offset'](v['quad'](v['b'], v['type_table'] + ti * 8))
+assert (v['uint'](v['b'], tp + 8) >> 16) & 255 == 18 and v['quad'](v['b'], tp) == change_guard_type['index']
+guard_duplicate_all = c['unique'](lambda r: r['name'] == '_DuplicateAll', action_context_type['methods'])
+assert v['pointer'](guard_duplicate_all) - v['image_base'] == 0x39edc70
+result['modeSwitch']['buffNotification']['newBuff']['contextGuards'] = {
+    'guardField': c['unique'](lambda f: f['name'] == 'm_context', c['fields'](change_guard_type)),
+    'contextFields': [c['unique'](lambda f: f['name'] == name, c['fields'](action_context_type)) for name in
+        ['m_source', 'm_target', 'm_buff', 'm_ability', 'm_modifier', 'm_projectile', 'm_tile', 'm_mainTarget', 'm_atkInfo', 'm_mainBuff']],
+    'stackSpecifications': guard_stack_specs,
+    'guardTypeLoad': {'loadRva': guard_type_load, 'encodedUsage': usage, 'typeIndex': ti, 'definitionIndex': change_guard_type['index']},
+    'duplicateAllTarget': {**guard_duplicate_all, 'entryRva': 0x39edc70},
+    'allocateCallRva': 0x39ed7c3, 'initializeCallRva': 0x39ed7dd, 'contextWriteRva': 0x39ed7e5,
+    'contextRereadRva': 0x39ed7f2, 'duplicateAllCallRva': 0x39ed80b,
+    'setterPopCalls': [0x39eb051, 0x39eb3a1, 0x39eb431, 0x39eb4c1],
+    'setterContextRereads': [0x39eb056, 0x39eb3a6, 0x39eb436, 0x39eb4c6],
+    'setterPushTails': [0x39eb07c, 0x39eb3cc, 0x39eb45c, 0x39eb4ec],
+    'disposeContextCaptureRva': 0x39ea8f9,
+    'disposePopCalls': [0x39ea98a, 0x39ea9a3, 0x39ea9bc, 0x39ea9d5, 0x39ea9f3, 0x39eaa08, 0x39eaa1d, 0x39eaa32, 0x39eaa4c, 0x39eaa69],
+    'nativeGuardAllocationVerified': False, 'nativeContextDuplicationVerified': False, 'nativeContextStackEffectsVerified': False, 'liveContextGuardsVerified': False,
+}
 for index in [147561, 147566, 147567, 147558, 147559, 147563, 147564, 147568, 147569]:
     spec = priority['specification'](index)
     assert spec['declaringTypeIndex'] == pool['index']

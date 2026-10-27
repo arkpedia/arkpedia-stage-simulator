@@ -1402,6 +1402,43 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
 
+### Context guard initialization, replacement and disposal
+
+The200-method bundle now binds ChangeGuard.m_context, all ten Context stack
+fields, the exact ChangeGuard allocation type and eighteen closed stack
+specifications. Setters use ContextPtrStack Pop/Push. Disposal distinguishes
+pointer stacks from ContextValueStack<Ability/Modifier/Entity/AttackInfo>.
+BeginChangeGard assigns the context and invokes Context._DuplicateAll; it does
+not store an old-context object inside the guard. The latter method's body and
+generic stack effects remain outside this checkpoint's execution claim.
+
+`fearProjectileContextGuards` allocates and initializes the guard, writes its
+context, then invokes duplication. Buff/source/target/tile setters Pop one
+pointer stack, reread guard.m_context, and Push on the current stack. Dispose
+captures its context once and Pops source, target, buff, ability, modifier,
+projectile, tile, main target, attack info and main buff in native order. It
+does not clear m_context or add an idempotence flag. Errors retain completed
+Pops. Begin/set operations check lifecycle before entering and finish their
+native stack changes once entered. Dispose remains callable after cancellation,
+so the outer action dispatch's finally can clean up a returned guard.
+
+Tests cover allocation/initialization/duplication order, all four setters,
+context replacement between Pop/Push, captured disposal contexts, repeated
+disposal, null/receiver failures and partial stack changes. Action dispatch
+composes concrete guard controls with explicit stack/duplication receivers;
+cancellation during setter or duplication still restores balanced fixture
+frames through outer finally cleanup. The array-backed fixture receivers do
+not certify native stack storage, pointer UID locking, value copying or
+_DuplicateAll execution. All1120 focused native/fear/family/miner tests pass;
+--check reproduces200 methods. This checkpoint is local.
+
+Hosted full40558578137 at approved0524e2b1 passed, as did continuation40558189633
+on attempt2. These validate that approved remote commit; the newer local
+checkpoints still require hosted validation. Native guard allocation/stack/
+duplication effects, ActionUtil execution, value copies and full controller/
+stage/frame integration remain open. Source/support/receipt/catalogue gates
+remain unchanged and all new stages remain test-only.
+
 ### Buff event action dispatch and context-guard lifetime
 
 The200-method bundle adds Buff._RunActions/context/source getters and complete
