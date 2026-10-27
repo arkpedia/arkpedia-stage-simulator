@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {crc64XZ,verifyWindowsManifest,verifyWindowsFile} from '../tools/arkpedia/windows-client-source.mjs';
+import {verifyWindowsSettingsManifest} from '../tools/arkpedia/windows-settings-source.mjs';
 const sha=b=>createHash('sha256').update(b).digest('hex');
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
 function fixture(){
@@ -11,6 +12,44 @@ function fixture(){
  const manifest={source:'/Arknights_EN-042.0.0-game',file:files.map(f=>({path:f.path,size:String(f.bytes),hash:f.crc64XZ}))};
  const raw=Buffer.from(JSON.stringify(manifest));return{raw,pin:{source:manifest.source,manifest:{bytes:raw.length,sha256:sha(raw)},files},manifest};
 }
+function settingsFixture(){
+ const f=fixture();f.pin.version='042.0.0';
+ const file={path:'/Arknights_Data/globalgamemanagers',bytes:985100,crc64XZ:'16749682563938344243',sha256:'b'.repeat(64)};
+ f.manifest.file.push({path:file.path,size:String(file.bytes),hash:file.crc64XZ});
+ f.raw=Buffer.from(JSON.stringify(f.manifest));f.pin.manifest={bytes:f.raw.length,sha256:sha(f.raw)};
+ return{...f,settings:{version:f.pin.version,source:f.pin.source,file}};
+}
+
+test('Unity settings intake binds one bounded file to the same frozen publisher manifest',()=>{
+ const f=settingsFixture();assert.deepEqual(verifyWindowsSettingsManifest(f.pin,f.settings,f.raw),f.manifest);
+ for(const invalid of ['path','size','crc','sha','version','source','unbounded']){
+  const pin=structuredClone(f.settings);
+  if(invalid==='path')pin.file.path='/Arknights.exe';
+  else if(invalid==='size')pin.file.bytes++;
+  else if(invalid==='crc')pin.file.crc64XZ='changed';
+  else if(invalid==='sha')pin.file.sha256='invalid';
+  else if(invalid==='version')pin.version='043.0.0';
+  else if(invalid==='source')pin.source='/another-release';
+  else pin.file.bytes=2000001;
+  assert.throws(()=>verifyWindowsSettingsManifest(f.pin,pin,f.raw));
+ }
+});
+
+test('retained original settings bind exact layer indices and query defaults without runtime parity',()=>{
+ const c=read('data/candidates/arkpedia-windows-physics-settings-source.json');
+ const pinRaw=readFileSync(new URL('../'+c.source.pin,import.meta.url)),pin=JSON.parse(pinRaw);
+ assert.equal(sha(pinRaw),c.source.pinSha256);assert.deepEqual(pin.file,c.source.file);
+ assert.equal(sha(readFileSync(new URL('../'+pin.nativeSource.path,import.meta.url))),pin.nativeSource.sha256);
+ for(const obj of Object.values(c.objects))assert.equal(sha(obj.originalJson),obj.sha256);
+ const tags=JSON.parse(c.objects.TagManager.originalJson),physics=JSON.parse(c.objects.Physics2DSettings.originalJson);
+ assert.equal(c.unityVersion,'2021.3.39f1');assert.equal(tags.layers.length,32);
+ assert.equal(c.objects.TagManager.pathId,'3');assert.equal(c.objects.Physics2DSettings.pathId,'15');
+ assert.deepEqual([c.layerIndices.ALLY,c.layerIndices.ENEMY,c.layerIndices.NEUTRAL],[10,9,28]);
+ for(const [name,index]of Object.entries(c.layerIndices))assert.equal(tags.layers[index],name);
+ assert.equal(physics.m_QueriesHitTriggers,true);assert.equal(physics.m_QueriesStartInColliders,true);
+ assert.equal(physics.m_AutoSyncTransforms,true);assert.equal(physics.m_LayerCollisionMatrix.length,32);
+ for(const key of ['runtimeOverridesVerified','crossVersionParity','frameParity'])assert.equal(c[key],false);
+});
 test('CRC64/XZ matches the published check vector and official tiny app-info receipt',()=>{
  assert.equal(crc64XZ(Buffer.alloc(0)),'0');
  assert.equal(crc64XZ(Buffer.from('123456789')),String(0x995dc9bbdf1939fan));

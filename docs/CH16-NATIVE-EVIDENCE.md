@@ -477,3 +477,23 @@ neutral recipients while excluding the enemy layer. Original layer names,
 complete layer/side initializer bodies, field offsets, constant writes and the
 Unity API binding are retained. Scene layer indices, collider world geometry
 and physics ordering remain required inputs; no stage support follows.
+
+### Frozen original Unity settings
+
+`windows-settings-source.mjs --fetch` obtains only the 985,100-byte
+`Arknights_Data/globalgamemanagers` from the same frozen official042.0.0 manifest.
+Its publisher CRC64/XZ and retained SHA256 are checked independently, without
+changing the two-file native-code intake or executing the client.
+`extract-windows-physics-settings.py --check` reproduces the complete TagManager
+and Physics2DSettings trees from Unity2021.3.39f1. The original named indices are
+ALLY10, ENEMY9 and NEUTRAL28, yielding mask268436480 for the selected Enemy
+opposite-side query. The original miner root's layer28 and collision holder's
+layer19 match NEUTRAL and ENEMY_COLLIDER in this static Windows table.
+
+The Physics2D source retains trigger-query and start-in-collider defaults,
+automatic transform synchronization, the full layer collision matrix and the
+other serialized settings. These are original defaults, not proof that battle
+code/hotfixes never override them or that CN uses the same settings. Tests pin
+the source chain, named indices, query defaults, selected mask and matching
+prefab layer roles while keeping runtime/cross-version/frame flags false.
+Hosted native-source validation fetches and reproduces this bounded file.

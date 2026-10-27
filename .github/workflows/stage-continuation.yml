@@ -31,6 +31,10 @@ jobs:
       - run: python -m pip install -r tools/arkpedia/windows-client-requirements.txt
       - name: Fetch only frozen official Windows native evidence (never execute the client)
         run: node tools/arkpedia/windows-client-source.mjs --fetch
+      - name: Fetch frozen original Unity layer and physics settings
+        run: node tools/arkpedia/windows-settings-source.mjs --fetch
+      - name: Reproduce static Unity layer table and complete Physics2D settings
+        run: python tools/arkpedia/extract-windows-physics-settings.py --check
       - name: Reproduce static Windows metadata and compiled default ability-event handler
         run: python tools/arkpedia/extract-windows-ability-events.py --check
       - run: node --test test/arkpedia-enemy-family-source-plan.test.js

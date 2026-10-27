@@ -37,6 +37,17 @@ test('arrival mask uses supplied layer layout and signed Int32 bit shifts',()=>{
  assert.throws(()=>fearProjectileArrivalLayerMask({sourceSide:undefined,layerIndices:{ALLY:8,ENEMY:9,NEUTRAL:28}}),/native Int32/);
 });
 
+test('selected arrival mask reproduces original Windows ally and neutral layer bits',()=>{
+ const settings=read('data/candidates/arkpedia-windows-physics-settings-source.json');
+ assert.deepEqual(fearProjectileArrivalLayerMask({sourceSide:2,layerIndices:settings.layerIndices}),
+  {sideMask:5,layerMask:268436480});
+ const owner=read('data/candidates/arkpedia-windows-fear-area-source.json').minerColliderOwnership;
+ assert.equal(JSON.parse(owner.geometry.root.originalJson).m_Layer,settings.layerIndices.NEUTRAL);
+ assert.equal(JSON.parse(owner.geometry.collisionHolder.originalJson).m_Layer,settings.layerIndices.ENEMY_COLLIDER);
+ // Matching static indices do not establish CN runtime settings or world size.
+ assert.equal(settings.crossVersionParity,false);assert.equal(owner.physicsOverlapParity,false);
+});
+
 test('arrival area query can use the explicit layer mask without losing neutral recipients',()=>{
  const f=fixture(),layerIndices={ALLY:8,ENEMY:9,NEUTRAL:28};f.target.nativeUid=1;
  const {layerMask}=fearProjectileArrivalLayerMask({sourceSide:2,layerIndices});
