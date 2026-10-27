@@ -1498,6 +1498,52 @@ result['modeSwitch']['buffNotification']['newBuff']['attributeDirty'] = {
     'conversionCallRva': 0x3957f34, 'delegateCallRva': 0x3957f46,
     'nativeCachedValueConversionVerified': False, 'nativeDirtyDelegateInvocationVerified': False, 'liveAttributeDirtyVerified': False,
 }
+snapshot_type = c['type_row']('RuntimeAttributesSnapshot', 'Torappu.Battle')
+for owner, name, entry in [(snapshot_type, 'TakeSnapshot', 0x6d3aa0),
+    (attributes_type, 'GetValue', 0x3957db0), (attributes_type, 'GetValueRoundToInt', 0x3957d40)]:
+    row = c['unique'](lambda r: r['name'] == name, owner['methods'])
+    retained = c['method'](owner, row)
+    assert retained['entryRva'] == entry
+    if not any(m['index'] == row['index'] and m['image'] == 'Assembly-CSharp.dll' for m in methods):
+        methods.append(retained)
+snapshot_fields = c['fields'](snapshot_type)
+assert [(f['name'], f['offset']) for f in snapshot_fields] == [('maxHp', 16), ('atk', 56), ('def', 96), ('magicResistance', 136),
+    ('cost', 176), ('blockCnt', 196), ('attackSpeed', 216), ('baseAttackTime', 256), ('respawnTime', 296)]
+snapshot_conversions = []
+for field_name, entry, expected_type in [('maxHp', 0x5a45a50, 'ObscuredFP'), ('cost', 0x595c350, 'ObscuredInt')]:
+    field = c['unique'](lambda f: f['name'] == field_name, snapshot_fields)
+    owner = v['types'][field['typeData']]
+    assert owner['name'] == expected_type
+    image = c['unique'](lambda r: r[2] <= owner['index'] < r[2] + r[3], v['image_rows'])
+    image_name = v['text'](image[0])
+    mod = c['module'](image_name)
+    table = v['offset'](v['image_base'] + mod['methodPointerTableRva'])
+    row = c['unique'](lambda r: r['name'] == 'op_Implicit' and
+        v['quad'](v['b'], table + ((r['token'] & 0xffffff) - 1) * 8) - v['image_base'] == entry, owner['methods'])
+    retained = c['method'](owner, row, image_name)
+    if not any(m['index'] == row['index'] and m['image'] == image_name for m in methods):
+        methods.append(retained)
+    snapshot_conversions.append({'type': owner['name'], 'image': image_name, 'index': row['index'], 'entryRva': entry})
+snapshot_load = 0x39b1d24
+pos = v['offset'](v['image_base'] + snapshot_load)
+assert v['b'][pos:pos + 3] == bytes.fromhex('488b15')
+target = snapshot_load + 7 + struct.unpack_from('<i', v['b'], pos + 3)[0]
+usage = v['quad'](v['b'], v['offset'](v['image_base'] + target))
+assert usage >> 29 == 6
+snapshot_lock = priority['specification']((usage & 0x1ffffffe) >> 1)
+assert snapshot_lock['declaringType'] == 'ObjectPtr`1' and snapshot_lock['definition']['name'] == 'Lock'
+assert snapshot_lock['instantiations']['class']['arguments'][0]['name'] == 'Entity'
+result['modeSwitch']['buffNotification']['newBuff']['statSnapshot'] = {
+    'fields': snapshot_fields, 'boxedHeaderBytes': 16, 'conversions': snapshot_conversions,
+    'buffFields': [c['unique'](lambda f: f['name'] == name, c['fields'](buff)) for name in ['m_source', 'm_runtimeAttributesSnapshot']],
+    'sourceLock': {'loadRva': snapshot_load, 'encodedUsage': usage, 'specification': snapshot_lock},
+    'sourceLockCallRva': 0x39b1d2f, 'sourceValidityCallRva': 0x39b1d54, 'sourceAttributesCallRva': 0x39b1d67, 'snapshotCallRva': 0x39b1d79,
+    'attributeReadCalls': [0x6d3ae2, 0x6d3b19, 0x6d3b51, 0x6d3b89, 0x6d3bc7, 0x6d3c0f, 0x6d3c40, 0x6d3c81, 0x6d3cc2],
+    'conversionCalls': [0x6d3af2, 0x6d3b29, 0x6d3b61, 0x6d3b99, 0x6d3bed, 0x6d3c1e, 0x6d3c50, 0x6d3c91, 0x6d3cd1],
+    'firstCopyWrites': [0x6d3b0d, 0x6d3b44, 0x6d3b7c, 0x6d3bb4, 0x6d3bff, 0x6d3c30, 0x6d3c6b, 0x6d3cac, 0x6d3ce6],
+    'attributeIndices': [0, 1, 2, 3, 4, 5, 7, 8, 21], 'valueByteLengths': [40, 40, 40, 40, 20, 20, 40, 40, 20],
+    'nativeObscuredValueConversionVerified': False, 'nativeSnapshotPointerDispatchVerified': False, 'liveStatSnapshotVerified': False,
+}
 for index in [147561, 147566, 147567, 147558, 147559, 147563, 147564, 147568, 147569]:
     spec = priority['specification'](index)
     assert spec['declaringTypeIndex'] == pool['index']

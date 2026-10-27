@@ -37,6 +37,7 @@ import {fearProjectileEnsureOverrideGroup,fearProjectileOverrideGroup} from '../
 import {fearProjectileBuffEnabled} from '../server/sim/content/chapter16-fear-buff-enabled.js';
 import {fearProjectileAttributeModifiers,fearProjectileAbnormalDirty,fearProjectileMarkAttributeDirty} from '../server/sim/content/chapter16-fear-buff-modifiers.js';
 import {fearProjectileBuffCombos,FEAR_COMBO_FLAG_MASKS} from '../server/sim/content/chapter16-fear-buff-combos.js';
+import {fearProjectileRuntimeSnapshot,fearProjectileTakeBuffSnapshot} from '../server/sim/content/chapter16-fear-buff-snapshot.js';
 import {fearProjectileBuffRecyclePool,fearProjectileDefaultBuffPool} from '../server/sim/content/chapter16-fear-buff-pool.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
@@ -49,6 +50,65 @@ import { chapter16Shadow } from '../server/sim/content/chapter16-shadow.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
 const parentKey='feawpj_a[mcreep_fear]';
 const fpOne=1n<<32n;
+
+function runtimeSnapshotFixture(){
+ const snapshot={},attributes={},events=[],state={active:true};
+ const encode=(value,bytes)=>{const result=new Uint8Array(bytes);new DataView(result.buffer).setBigInt64(0,BigInt(value),true);return result;};
+ const options={snapshot,isActive:()=>state.active,readFp:(attrs,index)=>{assert.equal(attrs,attributes);events.push(['fp',index]);return BigInt(index+1)*fpOne;},
+  readInt:(attrs,index)=>{assert.equal(attrs,attributes);events.push(['int',index]);return index+1;},
+  encodeFp:value=>{events.push(['encode-fp',value]);return encode(value,40);},encodeInt:value=>{events.push(['encode-int',value]);return encode(value,20);}};
+ return{snapshot,attributes,events,state,options,encode,adapter:()=>fearProjectileRuntimeSnapshot(options)};
+}
+test('runtime snapshot reads nine native attributes in order and copies the exact FP/int value-struct widths',()=>{
+ const f=runtimeSnapshotFixture();f.adapter().run(f.attributes);
+ assert.deepEqual(f.events.filter(e=>e[0]==='fp'||e[0]==='int'),[['fp',0],['fp',1],['fp',2],['fp',3],['int',4],['int',5],['fp',7],['fp',8],['int',21]]);
+ assert.deepEqual(Object.keys(f.snapshot),['maxHp','atk','def','magicResistance','cost','blockCnt','attackSpeed','baseAttackTime','respawnTime']);
+ assert.deepEqual(Object.values(f.snapshot).map(bytes=>bytes.length),[40,40,40,40,20,20,40,40,20]);
+ assert.equal(new DataView(f.snapshot.atk.buffer).getBigInt64(0,true),2n*fpOne);assert.equal(new DataView(f.snapshot.cost.buffer).getBigInt64(0,true),5n);
+});
+test('runtime snapshot copies reused conversion buffers rather than retaining mutable byte aliases',()=>{
+ const f=runtimeSnapshotFixture(),shared=Buffer.alloc(40);f.options.encodeFp=value=>{shared.fill(Number(value/fpOne));return shared;};
+ f.adapter().run(f.attributes);shared.fill(99);assert.equal(f.snapshot.maxHp[0],1);assert.equal(f.snapshot.atk[0],2);assert.equal(f.snapshot.baseAttackTime[0],9);
+ assert.notEqual(f.snapshot.maxHp,f.snapshot.atk);
+});
+test('runtime snapshot receiver failures retain earlier fields and do not clear later old fields',()=>{
+ const f=runtimeSnapshotFixture();f.snapshot.cost=new Uint8Array(20).fill(9);const read=f.options.readFp;
+ f.options.readFp=(attrs,index)=>{if(index===2)throw Error('attribute failed');return read(attrs,index);};assert.throws(()=>f.adapter().run(f.attributes),/attribute failed/);
+ assert.ok(f.snapshot.maxHp);assert.ok(f.snapshot.atk);assert.equal(f.snapshot.def,undefined);assert.equal(f.snapshot.cost[0],9);
+ const g=runtimeSnapshotFixture();g.options.encodeInt=()=>new Uint8Array(19);assert.throws(()=>g.adapter().run(g.attributes),/complete native/);assert.ok(g.snapshot.magicResistance);assert.equal(g.snapshot.cost,undefined);
+});
+test('runtime snapshot cancellation during conversion stops before copying that field',()=>{
+ const f=runtimeSnapshotFixture(),encode=f.options.encodeFp;f.options.encodeFp=value=>{if(value===2n*fpOne)f.state.active=false;return encode(value);};
+ assert.equal(f.adapter().run(f.attributes),null);assert.ok(f.snapshot.maxHp);assert.equal(f.snapshot.atk,undefined);
+});
+test('buff snapshot composes concrete source UID locking and runtime capture while invalid sources preserve prior values',()=>{
+ const f=runtimeSnapshotFixture(),source={uid:7,destroyed:false,attributes:f.attributes},isDestroyedOrNull=value=>value==null||value.destroyed,
+  pointers=fearProjectileContextPointers({readUid:value=>value.uid,isDestroyedOrNull,isActive:()=>true}),buff={m_source:pointers.capture(source),m_runtimeAttributesSnapshot:f.snapshot};
+ const driver=fearProjectileTakeBuffSnapshot({buff,lockSource:pointer=>pointers.lock(pointer),isDestroyedOrNull,readAttributes:value=>value.attributes,
+  takeSnapshot:(snapshot,attributes)=>{assert.equal(snapshot,f.snapshot);f.adapter().run(attributes);},isActive:()=>true});
+ driver.run();const old=f.snapshot.atk;source.uid=8;driver.run();assert.equal(f.snapshot.atk,old);
+ source.uid=7;source.destroyed=true;driver.run();assert.equal(f.snapshot.atk,old);
+});
+test('buff snapshot uses one locked source and obtains its current destination after attribute getter effects',()=>{
+ const source={},destination={},buff={m_source:{id:'old'},m_runtimeAttributesSnapshot:{}},events=[];
+ fearProjectileTakeBuffSnapshot({buff,isActive:()=>true,lockSource:pointer=>{assert.equal(pointer.id,'old');events.push('lock');buff.m_source={id:'new'};return source;},
+  isDestroyedOrNull:value=>{assert.equal(value,source);events.push('Unity');return false;},readAttributes:value=>{assert.equal(value,source);buff.m_runtimeAttributesSnapshot=destination;events.push('attributes');return null;},
+  takeSnapshot:(snapshot,attributes)=>{assert.equal(snapshot,destination);assert.equal(attributes,null);events.push('snapshot');}}).run();
+ assert.deepEqual(events,['lock','Unity','attributes','snapshot']);
+});
+test('buff snapshot stops after lifecycle invalidation and runtime capture rejects null attributes without writing',()=>{
+ const buff={m_source:{},m_runtimeAttributesSnapshot:{}},state={active:true};let captured=false;
+ assert.equal(fearProjectileTakeBuffSnapshot({buff,isActive:()=>state.active,lockSource:()=>({}),isDestroyedOrNull:()=>{state.active=false;return false;},
+  readAttributes:()=>{throw Error('unexpected attributes');},takeSnapshot:()=>{captured=true;}}).run(),null);assert.equal(captured,false);
+ const f=runtimeSnapshotFixture();assert.throws(()=>f.adapter().run(null),/null native attributes/);assert.deepEqual(f.snapshot,{});
+});
+test('EXTEND group snapshot composes source attributes before copying incoming blackboard pairs',()=>{
+ const f=runtimeSnapshotFixture(),old=groupMember({m_data:{takeSnapshotWhenExtend:true},m_source:{},m_runtimeAttributesSnapshot:f.snapshot}),incoming=groupMember(),g=groupDispatchFixture(3,[old]);
+ g.options.takeSnapshot=buff=>fearProjectileTakeBuffSnapshot({buff,isActive:()=>true,lockSource:()=>({attributes:f.attributes}),isDestroyedOrNull:()=>false,
+  readAttributes:source=>source.attributes,takeSnapshot:(snapshot,attrs)=>{assert.equal(snapshot,f.snapshot);f.adapter().run(attrs);}}).run();
+ g.options.assignBlackboard=(destination,source)=>{assert.equal(destination,old.m_blackboard);assert.equal(source,incoming.m_blackboard);assert.ok(f.snapshot.respawnTime);};
+ assert.equal(g.adapter().add(incoming),false);assert.equal(f.snapshot.maxHp.length,40);
+});
 
 test('attribute dirty writes its bit then converts a forty-byte value copy for the captured delegate',()=>{
  const old=new Uint8Array(40).fill(7),attributes={m_dirtyMask:0n,m_cachedData:[old]},seen=[];

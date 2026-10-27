@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 184 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 189 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -1401,6 +1401,42 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 124-method bundle. Continuation40545156330 at3b7defc7 passed; existing
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
+
+### Native source-stat snapshot copies
+
+The189-method bundle adds RuntimeAttributesSnapshot.TakeSnapshot,
+Attributes.GetValue/GetValueRoundToInt and the exact cross-image FP/int
+obscured-value conversion bodies called by capture. Metadata binds the nine
+snapshot fields and their boxed offsets; original stores copy their unboxed
+40-byte FP and20-byte integer representations. The source-lock usage binds
+ObjectPtr<Entity>.Lock; source Unity validity and Entity.get_attributes precede
+the runtime snapshot call. Native obscured-value conversion and concrete pointer
+dispatch effects remain explicit and unverified by this caller evidence.
+
+`fearProjectileRuntimeSnapshot` reads maxHP, ATK, DEF, resistance, cost, block,
+attack speed, base attack time and respawn time in native order at attribute
+indices0/1/2/3/4/5/7/8/21. Cost/block/respawn use native integer reads; the others
+use signed FP reads. Each encoded value is copied into its own field before
+reading the next attribute. Converted byte buffers cannot alias snapshot fields.
+Failures retain earlier field writes and leave later old fields intact.
+
+`fearProjectileTakeBuffSnapshot` locks the current source pointer once, checks
+Unity validity, obtains source attributes, then reads the current destination
+snapshot. Invalid/destroyed/stale-UID sources retain prior snapshot contents;
+there is no invented clearing. Tests compose concrete context-pointer validity,
+runtime capture and EXTEND's snapshot-before-blackboard-copy ordering. They also
+cover reused Buffer conversions, getter effects replacing destination storage,
+null attributes, malformed conversion widths, partial failures and cancellation.
+All1067 focused native/fear/family/miner tests pass; --check reproduces189
+methods. This checkpoint is local; original full40558578137 remains active
+at approved0524e2b1, whose continuation passed on attempt2.
+
+Native attribute evaluation and obscured-value conversion, HashSet equality,
+actions, OnBuffExtend/effect refresh, full snapshot consumption and controller/
+stage/frame integration remain open. The owner-extension trace primarily routes
+effect-key refresh; stat snapshots were completed first to preserve mechanics
+priority. Source/support/receipt/catalogue gates are unchanged and all new
+stages remain test-only.
 
 ### Attribute dirty bits and cached-value callback copies
 

@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,184);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,189);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -406,6 +406,28 @@ test('attribute dirty source binds signed dirty bits and forty-byte ObscuredFP c
  at(q.copyReads[1],'xmm1, xmmword ptr [rbx + rax*8 + 0x30]');at(q.copyReads[2],'xmm0, qword ptr [rbx + rax*8 + 0x40]');
  at(q.conversionCallRva,'0x185a45a80');at(q.delegateCallRva,'qword ptr [rbp + 0x18]');
  assert.equal(q.nativeCachedValueConversionVerified,false);assert.equal(q.nativeDirtyDelegateInvocationVerified,false);assert.equal(q.liveAttributeDirtyVerified,false);
+});
+
+test('stat snapshot source binds native field layout, source locking and nine FP/int attribute copies',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.newBuff.statSnapshot,
+  m=castMethod(c,'RuntimeAttributesSnapshot','TakeSnapshot'),wrapper=castMethod(c,'Buff','TakeSnapshotToBuffAttribute');
+ const at=(method,rva,args)=>assert.ok(instructions(method).some(i=>i.rva===rva&&i.operands===args),`${rva.toString(16)} ${args}`);
+ assert.equal(q.boxedHeaderBytes,16);assert.deepEqual(q.fields.map(f=>[f.name,f.offset]),[['maxHp',16],['atk',56],['def',96],['magicResistance',136],
+  ['cost',176],['blockCnt',196],['attackSpeed',216],['baseAttackTime',256],['respawnTime',296]]);
+ assert.deepEqual(q.attributeIndices,[0,1,2,3,4,5,7,8,21]);assert.deepEqual(q.valueByteLengths,[40,40,40,40,20,20,40,40,20]);
+ assert.deepEqual(q.buffFields.map(f=>[f.name,f.offset]),[['m_source',0x18],['m_runtimeAttributesSnapshot',0xb0]]);
+ assert.equal(q.sourceLock.encodedUsage>>>29,6);assert.equal(q.sourceLock.specification.declaringType,'ObjectPtr`1');
+ assert.equal(q.sourceLock.specification.definition.name,'Lock');assert.equal(q.sourceLock.specification.instantiations.class.arguments[0].name,'Entity');
+ for(const conversion of q.conversions)assert.ok(c.methods.some(method=>method.image===conversion.image&&method.index===conversion.index&&method.entryRva===conversion.entryRva));
+ at(wrapper,q.sourceLockCallRva,'0x18477cad0');at(wrapper,q.sourceValidityCallRva,'0x185ebee90');at(wrapper,q.sourceAttributesCallRva,'0x183a29330');at(wrapper,q.snapshotCallRva,'0x1806d3aa0');
+ for(let index=0;index<9;index++){
+  const integer=[4,5,8].includes(index);at(m,q.attributeReadCalls[index],integer?'0x183957d40':'0x183957db0');
+  at(m,q.conversionCalls[index],integer?'0x18595c350':'0x185a45a50');
+ }
+ for(const [index,operands]of ['xmmword ptr [rdi], xmm1','xmmword ptr [rdi + 0x28], xmm1','xmmword ptr [rdi + 0x50], xmm1',
+  'xmmword ptr [rdi + 0x78], xmm1','xmmword ptr [rdi + 0xa0], xmm0','xmmword ptr [rdi + 0xb4], xmm0',
+  'xmmword ptr [rdi + 0xc8], xmm1','xmmword ptr [rdi + 0xf0], xmm1','xmmword ptr [rdi + 0x118], xmm0'].entries())at(m,q.firstCopyWrites[index],operands);
+ assert.equal(q.nativeObscuredValueConversionVerified,false);assert.equal(q.nativeSnapshotPointerDispatchVerified,false);assert.equal(q.liveStatSnapshotVerified,false);
 });
 
 test('native admission source binds signed Int16 counters, combo fallback and Enemy raw-WALK levitation',()=>{
