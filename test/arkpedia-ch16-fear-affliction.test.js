@@ -64,6 +64,82 @@ import {fearProjectileTargetCasting,fearProjectileCheckCastingFinished} from '..
 import {fearProjectileSpellStart} from '../server/sim/content/chapter16-fear-spell-start.js';
 import {fearProjectileCreateProjectile,fearProjectileRangedTargetCast} from '../server/sim/content/chapter16-fear-projectile-launch.js';
 import {fearProjectileControllerCreation,fearProjectileFactoryCreation,fearProjectileAttachGraphic} from '../server/sim/content/chapter16-fear-projectile-controller.js';
+import {fearProjectileInit} from '../server/sim/content/chapter16-fear-projectile-init.js';
+
+function projectileInitFixture(){
+ const f=controllerCreationFixture(),p=f.logic,pointers=fearProjectileContextPointers({readUid:value=>value.uid,isDestroyedOrNull:value=>value==null||value.destroyed===true,isActive:()=>true}),logger={},managed=[],pairs={};
+ Object.assign(f.source,{uid:301,side:1,playerSide:2,id:'source-id',mapPosition:{x:1/3,y:2/3}});Object.assign(f.ability,{uid:302,owner:f.source,damageMissFlag:true,extraDataId:'ability-id'});
+ Object.assign(p,{_actionController:{},_managedBySource:true,m_ExtraLogIds:[]});Object.assign(f.start,{mapPosition:{x:4/3,y:5/3},height:6/7});
+ const options={writeBarrier:(...args)=>f.events.push(['barrier',...args]),readAbilityOwner:value=>value.owner,wrapEntity:pointers.capture,wrapAbility:pointers.capture,copyPointer:pointers.copy,
+  isValidPointer:pointer=>pointers.lock(pointer)!=null,lockPointer:pointers.lock,readMapPosition:value=>value.mapPosition,readVector2Zero:()=>({x:0,y:0}),readDamageMissFlag:value=>value.damageMissFlag,
+  initActionController:(...args)=>f.events.push(['action-init',...args]),readStartPosition:value=>value.mapPosition,readSource:value=>pointers.lock(value.m_source),readSide:value=>value.side,readPlayerSide:value=>value.playerSide,
+  readStartHeight:value=>value.height,initBObject:(...args)=>f.events.push(['base-init',...args]),initInline:(...args)=>f.events.push(['inline',...args]),
+  readLogger:()=>logger,readEntityId:value=>value.id,castCharacter:value=>value?.isCharacter?value:null,readCharacterMode:value=>value.currentModeIndex,modeToString:value=>'mode:'+value,
+  readEmptyString:()=>'',isValidUnity:value=>value!=null&&!value.destroyed,readAbilityExtraData:value=>value.extraDataId,fetchLoggerIds:(...args)=>f.events.push(['logger',...args]),
+  readManagedProjectiles:()=>managed,captureProjectilePointer:pointers.capture,appendManagedProjectile:(list,pointer)=>{f.events.push(['managed',pointer]);list.push(pointers.copy(pointer));}};
+ return{...f,p,pointers,logger,managed,pairs,initOptions:options,runInit:()=>fearProjectileInit(options)(p,'key',f.start,f.target,f.ability,0,'original',pairs)};
+}
+
+test('projectile Init captures source/ability and positions before inner setup, logging and managed ownership',()=>{
+ const f=projectileInitFixture();assert.equal(f.runInit(),undefined);assert.equal(f.p.key,'key');assert.equal(f.p.originalKey,'original');assert.equal(f.p.damageMissFlag,true);
+ assert.deepEqual(f.p.m_source,f.pointers.capture(f.source));assert.deepEqual(f.p.m_ability,f.pointers.capture(f.ability));assert.deepEqual(f.p.m_sourceMapPos,{x:Math.fround(1/3),y:Math.fround(2/3)});assert.deepEqual(f.p.m_startMapPos,{x:Math.fround(4/3),y:Math.fround(5/3)});assert.equal(f.p.m_effectReplacePairs,f.pairs);assert.equal(f.p.m_type,0);
+ assert.deepEqual(f.events.filter(e=>Array.isArray(e)&&e[0].endsWith('init')),[['action-init',f.p._actionController,f.ability,f.p],['base-init',f.p,1,2,{x:Math.fround(4/3),y:Math.fround(5/3)},Math.fround(6/7)]]);
+ assert.deepEqual(f.events.find(e=>e[0]==='inline'),['inline',f.p,f.target,f.start]);assert.deepEqual(f.events.find(e=>e[0]==='logger'),['logger',f.logger,f.p.m_ExtraLogIds,2,'source-id','','original','ability-id']);assert.deepEqual(f.managed,[f.pointers.capture(f.p)]);
+});
+
+test('Init key writes precede ability null checks and pointer-lock failures preserve earlier state',()=>{
+ const f=projectileInitFixture();assert.throws(()=>fearProjectileInit(f.initOptions)(f.p,'key',f.start,f.target,null,0,'original',f.pairs),/null native object/);assert.equal(f.p.key,'key');assert.equal(f.p.originalKey,'original');assert.equal(f.p.m_source,undefined);
+ const g=projectileInitFixture();g.initOptions.isValidPointer=()=>true;g.initOptions.lockPointer=()=>null;assert.throws(g.runInit,/null native object/);assert.deepEqual(g.p.m_source,g.pointers.capture(g.source));assert.equal(g.p.m_ability,undefined);
+});
+
+test('Init retains zero source position and later writes before failing to dereference a missing source',()=>{
+ const f=projectileInitFixture();f.ability.owner=null;assert.throws(f.runInit,/null native object/);assert.deepEqual(f.p.m_sourceMapPos,{x:0,y:0});assert.deepEqual(f.p.m_ability,f.pointers.capture(f.ability));assert.equal(f.events.some(e=>e[0]==='action-init'),true);assert.equal(f.events.some(e=>e[0]==='base-init'),false);
+});
+
+test('Init rereads ability pointer after validity and uses false miss flag when its pointer is invalid',()=>{
+ const f=projectileInitFixture(),replacement={uid:303,damageMissFlag:false};const valid=f.initOptions.isValidPointer;f.initOptions.isValidPointer=pointer=>{if(pointer.obj===f.ability)f.p.m_ability=f.pointers.capture(replacement);return valid(pointer);};f.runInit();assert.equal(f.p.damageMissFlag,false);
+ const g=projectileInitFixture();g.initOptions.isValidPointer=pointer=>pointer.obj!==g.ability&&g.pointers.lock(pointer)!=null;g.initOptions.readDamageMissFlag=()=>{throw Error('unexpected miss getter');};g.runInit();assert.equal(g.p.damageMissFlag,false);
+});
+
+test('Init samples side/player side and start position through separate fresh reads',()=>{
+ const f=projectileInitFixture(),other={uid:304,side:9,playerSide:8,mapPosition:{x:0,y:0},id:'other'};let starts=0;
+ f.initOptions.readSide=source=>{assert.equal(source,f.source);f.p.m_source=f.pointers.capture(other);return source.side;};f.initOptions.readStartPosition=()=>++starts===1?{x:1,y:2}:{x:3,y:4};f.runInit();
+ assert.deepEqual(f.p.m_startMapPos,{x:1,y:2});assert.deepEqual(f.events.find(e=>e[0]==='base-init').slice(2),[1,8,{x:3,y:4},Math.fround(6/7)]);assert.equal(f.events.find(e=>e[0]==='logger')[4],'other');
+});
+
+test('Init stores effect pairs and type before action-controller initialization and validates start afterward',()=>{
+ const f=projectileInitFixture();f.initOptions.initActionController=()=>{assert.equal(f.p.m_effectReplacePairs,f.pairs);assert.equal(f.p.m_type,2);f.events.push('action');};
+ assert.throws(()=>fearProjectileInit(f.initOptions)(f.p,'key',null,f.target,f.ability,2,'original',f.pairs),/null native object/);assert.equal(f.events.at(-1),'action');
+});
+
+test('Init captures log ids after singleton lookup and before fresh source callbacks',()=>{
+ const f=projectileInitFixture(),captured=[],later=[];f.initOptions.readLogger=()=>{f.p.m_ExtraLogIds=captured;return f.logger;};const read=f.initOptions.readSource;let calls=0;
+ f.initOptions.readSource=value=>{if(++calls===3)f.p.m_ExtraLogIds=later;return read(value);};f.runInit();assert.equal(f.events.find(e=>e[0]==='logger')[2],captured);assert.equal(f.p.m_ExtraLogIds,later);
+});
+
+test('Init source-id validity precedes a fresh source-pointer lock and character mode uses its own casts',()=>{
+ const f=projectileInitFixture(),next={uid:305,id:'fresh',isCharacter:true,currentModeIndex:7};let changed=false;f.initOptions.isValidUnity=value=>{if(!changed&&value===f.source){changed=true;f.p.m_source=f.pointers.capture(next);}return value!=null&&!value.destroyed;};let casts=0;const cast=f.initOptions.castCharacter;f.initOptions.castCharacter=value=>{casts++;return cast(value);};f.runInit();
+ assert.deepEqual(f.events.find(e=>e[0]==='logger').slice(4),['fresh','mode:7','original','ability-id']);assert.equal(casts,3);
+});
+
+test('Init missing logger is checked after gathering ids and names and does not append ownership',()=>{
+ const f=projectileInitFixture();let extra=false;f.initOptions.readLogger=()=>null;f.initOptions.readAbilityExtraData=()=>{extra=true;return'ability';};assert.throws(f.runInit,/null native object/);assert.equal(extra,true);assert.equal(f.events.some(e=>e[0]==='inline'),true);assert.deepEqual(f.managed,[]);
+});
+
+test('Init applies logger effects before checking current source ownership and captures pointer before a null list check',()=>{
+ const f=projectileInitFixture();f.initOptions.fetchLoggerIds=()=>{f.source.uid++;};f.runInit();assert.deepEqual(f.managed,[]);
+ const g=projectileInitFixture();g.initOptions.readManagedProjectiles=()=>null;let captures=0;g.initOptions.captureProjectilePointer=value=>{captures++;return g.pointers.capture(value);};assert.throws(g.runInit,/null native object/);assert.equal(captures,1);assert.equal(g.events.some(e=>e[0]==='logger'),true);
+});
+
+for(const phase of ['initActionController','initBObject','initInline','fetchLoggerIds','appendManagedProjectile'])test('Init preserves writes and prior callbacks when '+phase+' throws',()=>{
+ const f=projectileInitFixture(),error=Error(phase);f.initOptions[phase]=()=>{throw error;};assert.throws(f.runInit,actual=>actual===error);assert.equal(f.p.key,'key');assert.deepEqual(f.p.m_source,f.pointers.capture(f.source));assert.equal(f.p.m_effectReplacePairs,f.pairs);assert.equal(f.managed.length,0);
+});
+
+test('Init supports nested initialization with independent inputs and captured logger values',()=>{
+ const f=projectileInitFixture(),inner={...f.p,uid:400,m_ExtraLogIds:[]};let nested=false;const init=fearProjectileInit(f.initOptions);
+ f.initOptions.initInline=()=>{};const options={...f.initOptions,initInline:(projectile,...args)=>{f.events.push(['inline',projectile,...args]);if(projectile===f.p&&!nested){nested=true;init(inner,'inner',f.start,f.target,f.ability,1,'inner-original',f.pairs);}}};
+ fearProjectileInit(options)(f.p,'key',f.start,f.target,f.ability,0,'original',f.pairs);assert.equal(inner.key,'inner');assert.equal(f.p.key,'key');assert.deepEqual(f.managed.map(p=>p.obj),[inner,f.p]);
+});
 
 function controllerCreationFixture(){
  const events=[],factory={_projectileFolder:{}},controller={_factory:factory},source={effectReplacePairs:{}},start={},target={},ability={},
@@ -5440,7 +5516,7 @@ test('owner reuse while testing casting prevents spell-end and post-delay for th
  assert.equal(f.spell.run(),null);assert.deepEqual(f.events,['start']);
 });
 
-test('bounded wait, controller/factory ranged birth, event5 self-death and independent flight preserve born damage',()=>{
+test('bounded wait, controller/factory birth and Init, event5 self-death and independent flight preserve born damage',()=>{
  const f=modeFixture({readStartIniting:()=>false});f.source.base.atk=175;f.source.markDirty();f.target.nativeUid=1;
  const graph=read('data/candidates/arkpedia-windows-fear-self-death-source.json').modeSwitch.graph;
  for(const [role,mode]of [['mode0',f.old],['mode1',f.next]]){
@@ -5468,8 +5544,10 @@ test('bounded wait, controller/factory ranged birth, event5 self-death and indep
  start.start.canSpell=(owner,ability)=>{assert.equal(owner,f.source);assert.equal(ability,start.ability);return true;};
  start.start.onEvent=(_ability,event,runAction)=>{assert.equal(event,4);assert.equal(runAction,false);events.push('event4');};
  start.start.onOwnerSpell=owner=>{assert.equal(owner,f.source);assert.equal(start.sources.getValue(start.ctx.m_source),f.source);assert.equal(start.references.peek(start.ctx.m_mainTarget),f.target);};
- const hitMount={},birth=controllerCreationFixture();start.rangedOptions.readHitMountPoint=target=>{assert.equal(target,f.target);return hitMount;};
+ const hitMount={},birth=controllerCreationFixture(),initialization=projectileInitFixture();start.rangedOptions.readHitMountPoint=target=>{assert.equal(target,f.target);return hitMount;};
  start.controller._factory=birth.factory;start.projectile.transform={};birth.queue.splice(0,birth.queue.length,start.projectile);f.source.effectReplacePairs=[];
+ Object.assign(start.projectile,{_actionController:{},_managedBySource:true,m_ExtraLogIds:[]});Object.assign(start.mount,{mapPosition:{x:0,y:0},height:0});Object.assign(start.ability,{uid:13,damageMissFlag:false});
+ Object.assign(initialization.initOptions,{readAbilityOwner:ability=>start.pointers.lock(ability.m_owner),readMapPosition:()=>({x:0,y:0}),readSide:()=>1,readPlayerSide:()=>2,readAbilityExtraData:()=>''});
  start.createOptions.createProjectile=(controller,key,owner,mount,target,ability,fake)=>{
   assert.equal(controller,start.controller);assert.equal(key,'projectile_enemy_fearpj');assert.equal(owner,f.source);assert.equal(mount,start.mount);
   assert.equal(target,hitMount);assert.equal(ability,start.ability);assert.equal(fake.value,null);
@@ -5479,6 +5557,10 @@ test('bounded wait, controller/factory ranged birth, event5 self-death and indep
   assert.equal(projectile,start.projectile);assert.equal(key,'projectile_enemy_fearpj');assert.equal(mount,start.mount);assert.equal(target,hitMount);
   assert.equal(ability,start.ability);assert.equal(type,0);assert.equal(originalKey,key);assert.equal(effectReplacePairs,f.source.effectReplacePairs);
   assert.deepEqual(projectile.transform,{parent:birth.factory._projectileFolder,localScale:{x:1,y:1,z:1}});
+  fearProjectileInit(initialization.initOptions)(projectile,key,mount,target,ability,type,originalKey,effectReplacePairs);
+ };
+ initialization.initOptions.initInline=(projectile,target,mount)=>{
+  assert.equal(projectile,start.projectile);assert.equal(target,hitMount);assert.equal(mount,start.mount);assert.equal(projectile.m_source.obj,f.source);assert.equal(projectile.m_ability.obj,start.ability);assert.deepEqual(projectile.m_startMapPos,{x:0,y:0});
   events.push('birth');flight=fearProjectileFlight(f.b,{from:{x:0,y:0,z:0},initialTarget:{x:1,y:0,z:0},
    resolveTargetPosition:()=>null,resolveTraceTarget:()=>f.target,
    area:{queryOverlaps:()=>[f.target],resolveEntity:u=>u,readUid:u=>u.nativeUid,isCandidate:()=>true,
@@ -5489,7 +5571,7 @@ test('bounded wait, controller/factory ranged birth, event5 self-death and indep
  start.options.castOnTarget=fearProjectileRangedTargetCast(start.rangedOptions);
  start.start.castTargets=fearProjectileTargetCasting(start.options);
  const spell=fearProjectileSpell(f.b,{owner:f.source,onSpellStart:start.runStart,isCasting:()=>casting,emitSpellEnd:()=>{
-  for(const stack of Object.values(start.ctx))assert.equal(stack._size,0);assert.deepEqual(start.ability.m_projectiles,[start.pointers.capture(start.projectile)]);events.push('event5');assert.equal(activation.run(),null);},
+  for(const stack of Object.values(start.ctx))assert.equal(stack._size,0);assert.deepEqual(start.ability.m_projectiles,[start.pointers.capture(start.projectile)]);assert.deepEqual(initialization.managed,[start.pointers.capture(start.projectile)]);events.push('event5');assert.equal(activation.run(),null);},
  mayBeginPostDelay:()=>{throw Error('removed owner');},beginPostDelay:()=>{throw Error('removed owner');}});
  const wait=fearProjectileAttackWait(f.b,{owner:f.source,cachedDurationRaw:fpOne,readDeltaPlayTime:()=>1,
   isCastActive:()=>true,subscribeAttackEvent:()=>()=>{},onReady:()=>spell.run()});

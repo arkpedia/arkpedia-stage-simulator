@@ -1402,6 +1402,50 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
 
+### Projectile Init references, positions and ownership
+
+`extract-windows-fear-projectile-init.py --check` retains the complete default
+Projectile.Init body and key/original-key/damage-miss setters. It binds their
+backing fields, Entity/Ability pointer Wrap/validity/Lock usages, ILocatable
+position/height slots0/5, BObject side/playerSide fields and Init parameters,
+Character casts, logger parameters and Enemy's concrete managed-projectile
+getter. Abstract Entity slot52 is not accepted as a concrete implementation.
+The unchanged controller evidence independently names this Init entry point.
+
+`fearProjectileInit` writes keys before validating the ability, wraps the owner
+into the source pointer, samples source position, wraps the ability and derives
+the damage-miss flag through fresh pointer queries. It stores effect-replacement
+pairs and the projectile type before action-controller initialization. Start
+position is sampled once for m_startMapPos, then again for BObject.Init after
+separate source side/playerSide reads; height follows the second position.
+The inner initializer receives target then start. Reference writes expose their
+barriers; no cancellation guard or exception rollback replaces the native order.
+
+After inner initialization, logger lookup precedes log-id capture and fresh
+source queries. Source id uses a fresh pointer lock after Unity validity. The
+Character path repeats its cast checks and delegates Int32 mode formatting;
+fallback strings and ability extra-data lookup remain explicit. The logger is
+checked only after those inputs are gathered. Managed-by-source registration
+runs after logging, rechecks current pointer validity, reads the source's list
+and captures the projectile pointer before checking that list for null.
+
+Tests cover partial writes on null receivers/errors, source/ability replacement,
+zero-source-position failure, separate side/playerSide and start reads, logging
+capture order, Character mode queries, ownership invalidation and nested Init.
+The wait/spell-start/controller/factory/ranged-flight composition now executes
+this Init layer before its explicit inner-initializer receiver. It verifies
+source/ability pointers and start position at inner setup, ownership/tracking
+before event5 and damage after source death. All1455 focused native/fear/family/
+miner tests, evidence reproduction and the three Fear/miner contract checks pass.
+
+Projectile._InitInline, BObject/ActionController initialization effects,
+PoolManager allocation/reuse, pointer/static/log/managed-list runtime effects,
+initial FSM, base target actions, no-target fallback, local-miner attachment and
+stage/frame parity remain open. The next birth-path work is _InitInline and
+the underlying pool path. No Fear controller or16-9 admission or source/support/
+receipt/catalogue gate changed; stage registries are unchanged. This checkpoint
+is local and has not received hosted validation or been uploaded.
+
 ### Controller/factory projectile birth and graphic attachment
 
 `extract-windows-fear-projectile-controller.py --check` retains complete default
