@@ -51,6 +51,60 @@ import {fearProjectileActionTargets} from '../server/sim/content/chapter16-fear-
 import {fearProjectileActionTargetGetters} from '../server/sim/content/chapter16-fear-target-getters.js';
 import {fearProjectileSwitchModeNode} from '../server/sim/content/chapter16-fear-switch-mode-node.js';
 import {fearProjectileInstantKillNode,fearProjectileEntitySuicide} from '../server/sim/content/chapter16-fear-instant-kill-node.js';
+import {fearProjectileCreateBuffNode} from '../server/sim/content/chapter16-fear-create-buff-node.js';
+
+function createBuffNodeFixture(){
+ const owner={},source={},ability={},projectile={},data={overrideEffectKey:'original'},parent={source,ability,projectile},ref={value:{buff:parent}},board={incoming:true},copy={},events=[],
+  node={_buffOwner:3,_useSpecialBuffSource:false,_specialBuffSource:1,_isDerivedBuff:false,_finishDerivedBuffIfParentFinish:false,_inherateSourceProjectileFromParentBuff:false,_hookEffectKeyFromSourceProjectile:false},
+  options={getEntity:(actual,selector)=>{assert.equal(actual,ref);events.push(['target',selector]);return owner;},isDestroyedOrNull:value=>value==null||value.destroyed===true,
+   readBuffSource:buff=>buff.source,readBuffAbility:buff=>buff.ability,readBuffProjectile:buff=>buff.projectile,readBuffData:()=>{events.push('data');return data;},readOverrideEffectKey:value=>value.overrideEffectKey,
+   readProjectileEffectPairs:value=>value.pairs??null,keysEqual:(a,b)=>a===b,allocateBlackboard:()=>{events.push('allocate');return copy;},initializeBlackboard:(actual,incoming)=>{assert.equal(actual,copy);assert.equal(incoming,board);events.push('copy');},
+   addBuff:(...args)=>{events.push(['add',...args]);return null;},addDerivedBuff:(...args)=>events.push(['derived',...args])};
+ return{owner,source,ability,projectile,data,parent,ref,board,copy,events,node,options,run:()=>fearProjectileCreateBuffNode(options).execute(node,board,1,ref)};
+}
+
+test('CreateBuff returns true after nullable admission and copies the blackboard before reading final data',()=>{
+ const f=createBuffNodeFixture();assert.equal(f.run(),true);assert.deepEqual(f.events,[['target',3],'allocate','copy','data',['add',f.owner,f.data,f.source,f.ability,f.copy,null,null,null]]);
+});
+test('CreateBuff rejects an invalid owner before reading parent, data or flags',()=>{
+ const f=createBuffNodeFixture();f.owner.destroyed=true;Object.defineProperty(f.ref,'value',{get(){throw Error('unexpected parent');}});Object.defineProperty(f.node,'_useSpecialBuffSource',{get(){throw Error('unexpected flag');}});
+ assert.equal(f.run(),false);assert.deepEqual(f.events,[['target',3]]);
+});
+test('CreateBuff samples ability from the current parent after the source getter and allows a nullable special source',()=>{
+ const f=createBuffNodeFixture(),nextAbility={};f.options.readBuffSource=parent=>{assert.equal(parent,f.parent);f.ref.value.buff={ability:nextAbility};return f.source;};
+ f.node._useSpecialBuffSource=true;f.options.getEntity=(_ref,index)=>index===3?f.owner:null;assert.equal(f.run(),true);assert.deepEqual(f.events.at(-1),['add',f.owner,f.data,null,nextAbility,f.copy,null,null,null]);
+});
+test('CreateBuff requires the reread parent for ability but skips both inherited getters when initially absent',()=>{
+ const f=createBuffNodeFixture();f.options.readBuffSource=()=>{f.ref.value.buff=null;return f.source;};assert.throws(f.run,/null native object/);assert.deepEqual(f.events,[['target',3]]);
+ const absent=createBuffNodeFixture();absent.ref.value.buff=null;absent.options.readBuffSource=absent.options.readBuffAbility=()=>{throw Error('unexpected inherited getter');};assert.equal(absent.run(),true);assert.deepEqual(absent.events.at(-1).slice(3,5),[null,null]);
+});
+test('CreateBuff captures an effect pair value before equality and uses the second effect array',()=>{
+ const f=createBuffNodeFixture(),pair={key:'original',value:'replacement'},pairs=[{key:'other',value:'skip'},pair,{key:'original',value:'later'}];f.node._hookEffectKeyFromSourceProjectile=true;
+ let reads=0;f.options.readProjectileEffectPairs=()=>++reads===1?[]:pairs;f.options.keysEqual=(key,value)=>{if(key==='original')pair.value='changed';return key===value;};
+ assert.equal(f.run(),true);assert.equal(reads,2);assert.equal(f.events.at(-1).at(-1),'replacement');assert.deepEqual(f.events.slice(1,5),['data','allocate','copy','data']);
+});
+for(const state of ['absent parent','absent projectile','destroyed projectile','absent pairs','no match'])test('CreateBuff preserves the override key with '+state,()=>{
+ const f=createBuffNodeFixture();f.node._hookEffectKeyFromSourceProjectile=true;
+ if(state==='absent parent')f.ref.value.buff=null;else if(state==='absent projectile')f.parent.projectile=null;else if(state==='destroyed projectile')f.projectile.destroyed=true;else if(state==='no match')f.projectile.pairs=[{key:'other',value:'wrong'}];
+ assert.equal(f.run(),true);assert.equal(f.events.at(-1).at(-1),'original');
+});
+test('CreateBuff rejects a disappearing second effect array before blackboard allocation',()=>{
+ const f=createBuffNodeFixture();f.node._hookEffectKeyFromSourceProjectile=true;let reads=0;f.options.readProjectileEffectPairs=()=>++reads===1?[]:null;
+ assert.throws(f.run,/null native object/);assert.deepEqual(f.events,[['target',3],'data']);
+});
+test('CreateBuff rereads data and inherited projectile after blackboard construction, then parent after admission',()=>{
+ const f=createBuffNodeFixture(),nextData={},nextProjectile={},nextParent={projectile:nextProjectile},finalParent={};f.node._inherateSourceProjectileFromParentBuff=true;f.node._isDerivedBuff=true;
+ let copied=false;f.options.readBuffData=()=>copied?nextData:f.data;f.options.initializeBlackboard=()=>{f.ref.value.buff=nextParent;copied=true;};f.options.addBuff=(...args)=>{assert.deepEqual(args,[f.owner,nextData,f.source,f.ability,f.copy,null,nextProjectile,null]);f.ref.value.buff=finalParent;f.node._finishDerivedBuffIfParentFinish=true;return null;};
+ assert.equal(f.run(),true);assert.deepEqual(f.events.at(-1),['derived',finalParent,null,true]);
+});
+test('CreateBuff permits null derived parent and child but inheritance requires a nonnull current parent',()=>{
+ const f=createBuffNodeFixture();f.ref.value.buff=null;f.node._isDerivedBuff=true;assert.equal(f.run(),true);assert.deepEqual(f.events.at(-1),['derived',null,null,false]);
+ const inherit=createBuffNodeFixture();inherit.ref.value.buff=null;inherit.node._inherateSourceProjectileFromParentBuff=true;assert.throws(inherit.run,/null native object/);assert.deepEqual(inherit.events,[['target',3],'allocate','copy','data']);
+});
+for(const phase of ['initializeBlackboard','readBuffData','addBuff','addDerivedBuff'])test('CreateBuff propagates '+phase+' failure without continuing',()=>{
+ const f=createBuffNodeFixture(),error=Error(phase);f.node._isDerivedBuff=true;f.options[phase]=()=>{throw error;};assert.throws(f.run,actual=>actual===error);assert.equal(f.events.some(e=>Array.isArray(e)&&e[0]==='derived'),false);
+ if(phase!=='addDerivedBuff')assert.equal(f.events.some(e=>Array.isArray(e)&&e[0]==='add'),false);
+});
 
 function instantKillNodeFixture(){
  const entity={alive:true},source={alive:true},ref={value:{source}},events=[],node={_targetType:0,_killSource:false,_noSource:false,_withdrawIfRallyPoint:false,_resultIfInRallyPointMode:false,_skipReborn:false,_noReason:false,_markReachExit:false,_switchState:false},
@@ -124,7 +178,7 @@ test('native target getters lock stored pointers and leave the container owner a
  entity.uid=7;entity.destroyed=true;for(const call of calls)assert.equal(call(),null);assert.equal(getters.readBuffOwner(buff),entity);
 });
 test('native target getters keep pointer-field views live across replacement during Lock',()=>{
- for(const [method,field]of [['readBuffSource','m_source'],['readModifierSource','m_source'],['readModifierTarget','m_target'],['readAbilityOwner','m_owner'],['readProjectileSource','m_source'],['readProjectileTraceTarget','m_traceTarget']]){
+ for(const [method,field]of [['readBuffAbility','m_ability'],['readBuffProjectile','m_sourceProjectile'],['readBuffSource','m_source'],['readModifierSource','m_source'],['readModifierTarget','m_target'],['readAbilityOwner','m_owner'],['readProjectileSource','m_source'],['readProjectileTraceTarget','m_traceTarget']]){
   const first={},second={},record={[field]:{obj:first,cachedUid:1}},getters=fearProjectileActionTargetGetters({lockPointer:ref=>{
    assert.equal(ref.obj,first);assert.equal(ref.cachedUid,1);record[field]={obj:second,cachedUid:2};assert.equal(ref.cachedUid,2);return ref.obj;
   }});assert.equal(getters[method](record),second);
@@ -423,6 +477,7 @@ for(const blocked of ['none','LEVITATE','FROZEN','STUNNED','SLEEPING'])test('che
   status=fearProjectileAttributeStatus({attributes,isActive:()=>true});
  if(flags.has(blocked))attributes.m_abnormalFlagsCounter[flags.get(blocked)]=1;
  f.buff.m_container={'<owner>k__BackingField':f.owner};f.buff.m_source={obj:f.source,cachedUid:f.source.uid};
+ f.buff.m_ability={obj:null,cachedUid:0};f.buff.m_sourceProjectile={obj:null,cachedUid:0};
  const pointers=fearProjectileContextPointers({readUid:value=>value.uid,isDestroyedOrNull:value=>value==null||value.destroyed===true,isActive:()=>true}),getters=fearProjectileActionTargetGetters({lockPointer:pointers.lock}),
   selector=fearProjectileActionTargets({...getters,isValidUnity:value=>value!=null&&!value.destroyed}),
   predicates=fearProjectilePredicateNodes({getEntity:selector.getEntity,isDestroyedOrNull:entity=>entity==null||entity.destroyed===true,
@@ -435,6 +490,9 @@ for(const blocked of ['none','LEVITATE','FROZEN','STUNNED','SLEEPING'])test('che
   killNode=fearProjectileInstantKillNode({getEntity:selector.getEntity,isDestroyedOrNull:entity=>entity==null||entity.destroyed===true,asRallyPoint:()=>null,isValidUnity:entity=>entity!=null,
    readInRallyPointMode:unexpectedKill,withdraw:unexpectedKill,finishWithNoReason:unexpectedKill,finishWithReachExit:unexpectedKill,suicide:entitySuicide,readAlive:entity=>entity.alive});
  f.options.readOwner=getters.readBuffOwner;f.options.readSource=getters.readBuffSource;
+ const createNode=fearProjectileCreateBuffNode({getEntity:selector.getEntity,isDestroyedOrNull:entity=>entity==null||entity.destroyed===true,...getters,
+  readBuffData:node=>node._buff,readOverrideEffectKey:data=>data.overrideEffectKey,readProjectileEffectPairs:()=>{throw Error('unexpected effect pairs');},keysEqual:(a,b)=>a===b,
+  allocateBlackboard:()=>({}),initializeBlackboard:()=>{},addBuff:(owner,data,source,ability,_copy,extra,projectile,override)=>{assert.equal(owner,f.owner);assert.ok(data);assert.equal(source,f.source);assert.equal(ability,null);assert.equal(extra,null);assert.equal(projectile,null);assert.equal(override,null);events.push('immunity');return null;},addDerivedBuff:()=>{throw Error('unexpected derived graph buff');}});
  f.buff.m_actions[0]=native.actions.map(raw=>{
   const kind=raw.$type.split('+').at(-1),node={...raw,allowedSource:63,condition:kind==='AlwaysNext'?0:1};
   if(kind==='CheckAbnormalFlag'){node._targetType=targets.get(raw._targetType);node._abnormalFlag=flags.get(raw._abnormalFlag);node.execute=(...args)=>predicates.executeFlag(node,...args);}
@@ -442,7 +500,7 @@ for(const blocked of ['none','LEVITATE','FROZEN','STUNNED','SLEEPING'])test('che
   else if(kind==='AlwaysNext')node.execute=predicates.executeAlwaysNext;
   else if(kind==='SwitchMode'){node._targetType=targets.get(raw._targetType);node.execute=(...args)=>modeNode.execute(node,...args);}
   else if(kind==='InstantKill'){node._targetType=targets.get(raw._targetType);node.execute=(...args)=>killNode.execute(node,...args);}
-  else node.execute=(_board,sourceType)=>{assert.equal(sourceType,1);assert.equal(kind,'CreateBuff');events.push('immunity');return false;};
+  else {assert.equal(kind,'CreateBuff');node._buffOwner=targets.get(raw._buffOwner);node._specialBuffSource=targets.get(raw._specialBuffSource);node.execute=(...args)=>createNode.execute(node,...args);}
   return node;
  });
  const result=f.adapter().run(0,true),checks=['LEVITATE','FROZEN','STUNNED','SLEEPING'];assert.equal(result.target,f.owner);

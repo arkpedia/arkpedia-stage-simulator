@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,209);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,213);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -531,6 +531,22 @@ test('context snapshot source binds distinct capture/push orders and closed refe
   'rcx, qword ptr [rdi + 0x48]','rcx, qword ptr [rdi + 0x58]'].entries())at(duplicate,q.pushFieldReads[index],args);
  for(const [index,target]of ['0x184be7ef0','0x184be7ef0','0x184be7ef0','0x18490b650','0x18490b820','0x184be7ef0','0x184be7ef0','0x18490b650','0x18490b790','0x184be7ef0'].entries())at(duplicate,q.pushCalls[index],target);
  assert.equal(q.nativeContextStackEffectsVerified,false);assert.equal(q.nativeNestedValueCopiesVerified,false);assert.equal(q.liveContextSnapshotsVerified,false);
+});
+
+test('CreateBuff source binds copied blackboard, fresh parent reads and unconditional post-admission success',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.newBuff.createBuffNode,m=c.methods.find(m=>m.type==='CreateBuff'&&m.name==='Execute');
+ assert.deepEqual(q.fields.map(f=>[f.name,f.offset]),[['_buff',16],['_buffOwner',24],['_useSpecialBuffSource',28],['_specialBuffSource',32],['_isDerivedBuff',36],['_finishDerivedBuffIfParentFinish',37],['_inherateSourceProjectileFromParentBuff',38],['_hookEffectKeyFromSourceProjectile',39]]);
+ assert.deepEqual(q.calls.map(m=>[m.index,m.entryRva]),[[84934,0xd28de0],[56519,0x39b73d0],[56549,0x39b61d0],[62124,0x67dda0],[28607,0x2167de0],[56584,0x39a9560],[57965,0x3a174d0]]);assert.equal(q.calls[0].virtualSlot,8);
+ assert.deepEqual(q.calls.at(-1).parameters.map(p=>p.name),['data','source','ability','extraBlackboard','extraBlackboard2','sourceProjectile','customOverrideEffectKey']);
+ assert.deepEqual(q.calls.at(-2).parameters.map(p=>p.name),['parentBuff','derivedBuff','finishDerivedBuffIfParentFinish']);
+ assert.deepEqual(q.getterFields.map(f=>[f.name,f.offset]),[['m_ability',40],['m_sourceProjectile',56],['overrideEffectKey',88]]);
+ const at=(rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args),'CreateBuff instruction '+rva.toString(16));
+ for(const [key,args]of [['ownerCallRva','0x180ced380'],['validityCallRva','0x185ebec60'],['sourceCallRva','0x1839b7460'],['abilityParentReadRva','rcx, qword ptr [r15 + 0x10]'],['abilityCallRva','0x1839b61d0'],['specialSourceCallRva','0x180ced380'],['hookDataCallRva','0x1800057b0'],['overrideKeyReadRva','rsi, qword ptr [rax + 0x58]'],['hookProjectileCallRva','0x1839b73d0'],['pairCopyRva','xmm0, xmmword ptr [r14 + rax*8]'],['keyEqualsCallRva','0x1850d0da0'],['pairValueReadRva','rsi, qword ptr [rsp + 0x60]'],['allocateCallRva','0x180410630'],['blackboardCopyCallRva','0x182167de0'],['finalDataCallRva','rax'],['inheritParentReadRva','rcx, qword ptr [r15 + 0x10]'],['inheritProjectileCallRva','0x1839b73d0'],['addBuffCallRva','0x183a174d0'],['derivedParentReadRva','rbx, qword ptr [r15 + 0x10]'],['derivedFinishReadRva','edi, byte ptr [rdi + 0x25]'],['addDerivedCallRva','0x1839a9560'],['trueReturnRva','al, 1'],['falseReturnRva','al, al']])at(q[key],args);
+ for(const rva of q.effectPairsCalls)at(rva,'0x18067dda0');
+ assert.ok(q.blackboardCopyCallRva<q.finalDataCallRva&&q.finalDataCallRva<q.addBuffCallRva&&q.addBuffCallRva<q.trueReturnRva);
+ for(const [index,typeIndex]of [[253167,8742],[253231,9558]]){const load=q.lockLoads.find(l=>l.specification.index===index);assert.equal(load.encodedUsage>>>29,6);assert.equal((load.encodedUsage&0x1ffffffe)>>>1,index);assert.equal(load.specification.nativeMapping,null);assert.equal(load.specification.instantiations.class.arguments[0].typeIndex,typeIndex);}
+ for(const [name,address,tail,args]of [['get_ability',q.abilityAddressRva,q.abilityLockTailRva,'rcx, [rbx + 0x28]'],['get_sourceProjectile',q.projectileAddressRva,q.projectileLockTailRva,'rcx, [rbx + 0x38]']]){const body=c.methods.find(m=>m.type==='Buff'&&m.name===name);assert.ok(instructions(body).some(i=>i.rva===address&&i.operands===args));assert.ok(instructions(body).some(i=>i.rva===tail&&i.operands==='0x18477cad0'));}
+ for(const name of ['nativeBlackboardCopyEffectsVerified','nativeDataAndEffectReplacementVerified','nativeAdmissionAndDerivedEffectsVerified','liveCreateBuffNodeVerified'])assert.equal(q[name],false);
 });
 
 test('InstantKill source binds RallyPoint dispatch, finish precedence and the post-effect alive query',()=>{

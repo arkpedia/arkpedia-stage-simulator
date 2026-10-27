@@ -1402,6 +1402,39 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
 
+### CreateBuff action and nullable admission results
+
+The213-method bundle adds complete CreateBuff.get_data, Buff.get_ability,
+Buff.get_sourceProjectile and Projectile.get_effectReplacePairs bodies. All209
+prior method records and all prior evidence remain unchanged. New bindings
+retain CreateBuff's eight instance fields, Buff's Ability/Projectile pointer
+fields, BuffData.overrideEffectKey, the virtual data slot8, Blackboard copy
+constructor and exact Entity.AddBuff/AddDerivedBuffSafe signatures. The two
+new pointer getters bind concrete ObjectPtr<Ability/Projectile>.Lock metadata
+specifications separately from their shared native tail.
+
+`fearProjectileCreateBuffNode` resolves and validates its owner before further
+work. It inherits source, then rereads the parent for ability; an optional
+special source can replace the inherited source with null. Effect replacement
+reads data before copying the incoming blackboard, probes and rereads the
+projectile pair array, and captures each pair value before comparing its key.
+The final virtual data read occurs after blackboard construction. Projectile
+inheritance and derived linkage each reread the current parent at their native
+positions. Nullable admission and derived parent/child values are forwarded to
+their explicit receivers. Once admission and optional linkage return, Execute
+returns true even if admission produced no buff. An invalid owner returns false.
+
+All eight nodes of the selected self-death graph now use action adapters in the
+checked context-stack composition. A null admission result still proceeds
+through AlwaysNext to suicide, and context restoration survives the owner death.
+Tests also cover reentrant parent changes, effect-array replacement, copied
+pair values, constructor/data/admission/linkage errors and required null checks.
+All1246 focused native/fear/family/miner tests pass. Evidence reproduction and
+comparison preserve the earlier records. Native allocation, blackboard-copy,
+virtual data, equality, admission and derived-link effects remain explicit
+receivers; full controller/stage/frame parity is still unverified. All source,
+support, receipt and catalogue gates remain unchanged. This checkpoint is local.
+
 ### InstantKill action and separate Entity suicide body
 
 The209 ordinary bodies remain unchanged. New bindings identify RallyPoint as

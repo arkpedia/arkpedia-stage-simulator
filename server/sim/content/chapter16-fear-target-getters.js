@@ -10,6 +10,7 @@ export function fearProjectileActionTargetGetters({lockPointer}){
  return Object.freeze({
   readBuffOwner:buff=>nonnull(nonnull(buff).m_container)['<owner>k__BackingField'],
   readBuffSource:buff=>pointer(buff,'m_source'),
+  readBuffAbility:buff=>pointer(buff,'m_ability'),readBuffProjectile:buff=>pointer(buff,'m_sourceProjectile'),
   readModifierSource:modifier=>pointer(modifier,'m_source'),readModifierTarget:modifier=>pointer(modifier,'m_target'),
   readAbilityOwner:ability=>pointer(ability,'m_owner'),
   readProjectileSource:projectile=>pointer(projectile,'m_source'),readProjectileTraceTarget:projectile=>pointer(projectile,'m_traceTarget'),

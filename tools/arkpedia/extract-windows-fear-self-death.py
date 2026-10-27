@@ -2101,6 +2101,52 @@ result['modeSwitch']['buffNotification']['newBuff']['predicateNodes'] = {
     'nativeAttributeQueryEffectsVerified': False, 'livePredicateNodeDispatchVerified': False,
 }
 context_stack_canonical = []
+create_buff_calls = []
+for ti, index, entry in [(12408, 84934, 0xd28de0), (8933, 56519, 0x39b73d0), (8933, 56549, 0x39b61d0),
+    (9558, 62124, 0x67dda0), (3918, 28607, 0x2167de0), (8933, 56584, 0x39a9560), (9044, 57965, 0x3a174d0)]:
+    t = v['types'][ti]
+    row = c['unique'](lambda r: r['index'] == index, t['methods'])
+    assert v['pointer'](row) == v['image_base'] + entry
+    if index in [84934, 56519, 56549, 62124]:
+        record = c['method'](t, row)
+        assert record['entryRva'] == entry
+        assert not any(m['index'] == index for m in methods)
+        methods.append(record)
+    pos = v['method_start'] + index * 32
+    start, count = v['sint'](v['m'], pos + 12), struct.unpack_from('<H', v['m'], pos + 30)[0]
+    args = []
+    for n in range(count):
+        pp = v['uint'](v['m'], 88) + (start + n) * 12
+        args.append({'name': v['text'](v['uint'](v['m'], pp)), 'typeIndex': v['sint'](v['m'], pp + 8)})
+    create_buff_calls.append({'typeIndex': ti, 'type': t['name'], **row, 'entryRva': entry,
+        'virtualSlot': struct.unpack_from('<H', v['m'], pos + 28)[0], 'parameters': args})
+assert [p['name'] for p in create_buff_calls[-1]['parameters']] == ['data', 'source', 'ability', 'extraBlackboard', 'extraBlackboard2', 'sourceProjectile', 'customOverrideEffectKey']
+create_buff_fields = []
+for ti, name, offset in [(8933, 'm_ability', 0x28), (8933, 'm_sourceProjectile', 0x38), (3923, 'overrideEffectKey', 0x58)]:
+    field = c['unique'](lambda f: f['name'] == name, c['fields'](v['types'][ti]))
+    assert field['offset'] == offset
+    create_buff_fields.append({'typeIndex': ti, **field})
+create_buff_locks = []
+for rva, index, ti in [(0x39b6233, 253167, 8742), (0x39b7430, 253231, 9558)]:
+    pos = v['offset'](v['image_base'] + rva)
+    assert v['b'][pos:pos + 3] == bytes.fromhex('488b15')
+    address = rva + 7 + struct.unpack_from('<i', v['b'], pos + 3)[0]
+    usage = v['quad'](v['b'], v['offset'](v['image_base'] + address))
+    assert usage >> 29 == 6 and (usage & 0x1ffffffe) >> 1 == index
+    spec = priority['specification'](index)
+    assert spec['declaringType'] == 'ObjectPtr`1' and spec['definition']['name'] == 'Lock'
+    assert spec['nativeMapping'] is None and spec['instantiations']['class']['arguments'][0]['typeIndex'] == ti
+    create_buff_locks.append({'loadRva': rva, 'encodedUsage': usage, 'specification': spec})
+result['modeSwitch']['buffNotification']['newBuff']['createBuffNode'] = {
+    'fields': [f for f in fields['CreateBuff'] if not f['typeBits'] & 16], 'calls': create_buff_calls, 'getterFields': create_buff_fields, 'lockLoads': create_buff_locks,
+    'ownerCallRva': 0xd298d7, 'validityCallRva': 0xd298fc, 'sourceCallRva': 0xd29929, 'abilityParentReadRva': 0xd2992e, 'abilityCallRva': 0xd29940,
+    'specialSourceCallRva': 0xd29959, 'hookDataCallRva': 0xd29973, 'overrideKeyReadRva': 0xd29988, 'hookProjectileCallRva': 0xd299d7,
+    'effectPairsCalls': [0xd29a17, 0xd29a2a], 'pairCopyRva': 0xd29a60, 'keyEqualsCallRva': 0xd29a6f, 'pairValueReadRva': 0xd29a7e,
+    'allocateCallRva': 0xd29aae, 'blackboardCopyCallRva': 0xd29ac8, 'finalDataCallRva': 0xd29af2, 'inheritParentReadRva': 0xd29afd, 'inheritProjectileCallRva': 0xd29b0c,
+    'addBuffCallRva': 0xd29b4d, 'derivedParentReadRva': 0xd29b62, 'derivedFinishReadRva': 0xd29b66, 'addDerivedCallRva': 0xd29b85, 'trueReturnRva': 0xd29b92, 'falseReturnRva': 0xd29bac,
+    'abilityAddressRva': 0x39b623a, 'abilityLockTailRva': 0x39b6243, 'projectileAddressRva': 0x39b7437, 'projectileLockTailRva': 0x39b7440,
+    'nativeBlackboardCopyEffectsVerified': False, 'nativeDataAndEffectReplacementVerified': False, 'nativeAdmissionAndDerivedEffectsVerified': False, 'liveCreateBuffNodeVerified': False,
+}
 kill_node_slots = []
 for type_index, method_index, slot in [(10181, 67746, 215), (9044, 58001, 92)]:
     t = v['types'][type_index]
