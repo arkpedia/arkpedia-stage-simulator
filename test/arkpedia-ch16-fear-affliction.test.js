@@ -65,6 +65,76 @@ import {fearProjectileSpellStart} from '../server/sim/content/chapter16-fear-spe
 import {fearProjectileCreateProjectile,fearProjectileRangedTargetCast} from '../server/sim/content/chapter16-fear-projectile-launch.js';
 import {fearProjectileControllerCreation,fearProjectileFactoryCreation,fearProjectileAttachGraphic} from '../server/sim/content/chapter16-fear-projectile-controller.js';
 import {fearProjectileInit} from '../server/sim/content/chapter16-fear-projectile-init.js';
+import {fearProjectileInlineInit} from '../server/sim/content/chapter16-fear-projectile-inline.js';
+
+function projectileInlineFixture(){
+ const f=projectileInitFixture(),scheduled=[],object={active:true},randomImp={},randomTrivial={};
+ Object.assign(f.p,{currentTime:99n,m_currentHitNum:9,m_isEliminated:true,m_hasReached:true,m_isStopped:true,m_hasHitTraceTarget:true,
+  m_targetsAlreadyHit:new Map([[1,2n]]),m_eventCallbacks:[{},{},{}],m_behaviours:[{id:1},{id:2}],m_behavioursInited:false,_bodyTransform:{},_randomDelayToBorn:0});
+ const options={clearAlreadyHit:map=>{f.events.push('clear');map.clear();},readLength:array=>array.length,readElement:(array,index)=>{if(index>=array.length)throw RangeError('array bounds');return array[index];},
+  storeReference:(array,index,value)=>{if(index>=array.length)throw RangeError('array bounds');array[index]=value;},getLifeTime:()=>10,floatToRaw:fearProjectileFloatToRaw,getMaxHitNum:()=>128,getKeepAlreadyHitTime:()=>-fpOne,
+  isNullUnity:value=>value==null||value.destroyed===true,readTransform:value=>value.transform,writeBarrier:(...args)=>f.events.push(['body-barrier',...args]),
+  setTraceTarget:(...args)=>f.events.push(['trace',...args]),initBehaviour:(...args)=>f.events.push(['behaviour',...args]),initOuterSettings:value=>{assert.equal(value.m_behavioursInited,true);f.events.push('outer');},
+  isDeterministic:()=>true,readRandomImp:()=>{f.events.push('random-imp');return randomImp;},readRandomTrivial:()=>{f.events.push('random-trivial');return randomTrivial;},isZero:value=>value===0,
+  randomRange:(random,min,max)=>{f.events.push(['range',random,min,max]);return Math.fround(max/2);},greaterThan:(a,b)=>a>b,readGameObject:()=>object,
+  setActive:(value,active)=>{f.events.push(['active',active]);value.active=active;},createBornAction:(projectile,callback)=>({projectile,run:callback}),invokeFixedDelay:(action,delay)=>{scheduled.push({action,delay});},
+  onBorn:projectile=>f.events.push(['born',projectile])};
+ return{...f,inlineOptions:options,scheduled,object,randomImp,randomTrivial,runInline:()=>fearProjectileInlineInit(options)(f.p,f.target,f.start)};
+}
+
+test('inner Init clears old state, converts lifetime, initializes behaviors then immediately births the zero-delay Fear projection',()=>{
+ const f=projectileInlineFixture();f.runInline();assert.equal(f.p.currentTime,0n);assert.equal(f.p.m_currentHitNum,0);
+ for(const field of ['m_isEliminated','m_hasReached','m_isStopped','m_hasHitTraceTarget'])assert.equal(f.p[field],false);assert.equal(f.p.m_targetsAlreadyHit.size,0);assert.deepEqual(f.p.m_eventCallbacks,[null,null,null]);
+ assert.equal(f.p.m_lifeTime,10n*fpOne);assert.equal(f.p.m_maxHitNum,128);assert.equal(f.p.m_keepAlreadyHitTime,-fpOne);assert.equal(f.p.m_behavioursInited,true);
+ assert.deepEqual(f.events.filter(e=>Array.isArray(e)&&e[0]==='behaviour'),f.p.m_behaviours.map(value=>['behaviour',value,f.start,f.target,f.p]));assert.deepEqual(f.events.at(-1),['born',f.p]);assert.equal(f.events.includes('random-imp'),true);assert.equal(f.scheduled.length,0);assert.equal(f.object.active,true);
+});
+
+test('inner Init preserves counter reset before a null hit dictionary and does not clear later arrays',()=>{
+ const f=projectileInlineFixture();f.p.m_targetsAlreadyHit=null;const callbacks=f.p.m_eventCallbacks.slice();assert.throws(f.runInline,/null native object/);assert.equal(f.p.currentTime,0n);assert.equal(f.p.m_currentHitNum,0);assert.equal(f.p.m_isStopped,false);assert.deepEqual(f.p.m_eventCallbacks,callbacks);assert.equal(f.p.m_lifeTime,undefined);
+});
+
+test('inner Init clears callbacks through fresh arrays and live counts after each store',()=>{
+ const f=projectileInlineFixture(),old=f.p.m_eventCallbacks,next=[1,2,3,4];f.inlineOptions.storeReference=(array,index,value)=>{array[index]=value;if(index===0)f.p.m_eventCallbacks=next;};f.runInline();assert.equal(old[0],null);assert.notEqual(old[1],null);assert.deepEqual(next,[1,null,null,null]);
+ const g=projectileInlineFixture();g.inlineOptions.storeReference=(array,index,value)=>{array[index]=value;g.p.m_eventCallbacks=null;};assert.throws(g.runInline,/null native object/);assert.equal(g.p.m_targetsAlreadyHit.size,0);assert.equal(g.p.m_lifeTime,undefined);
+});
+
+test('inner Init rereads behavior storage after callbacks and sets the initialized flag only after traversal',()=>{
+ const f=projectileInlineFixture(),first=f.p.m_behaviours[0],last={id:3};f.inlineOptions.initBehaviour=(value,...args)=>{assert.equal(f.p.m_behavioursInited,false);f.events.push(['behaviour',value,...args]);if(value===first)f.p.m_behaviours=[{},last];};f.runInline();assert.deepEqual(f.events.filter(e=>e[0]==='behaviour').map(e=>e[1]),[first,last]);
+ const g=projectileInlineFixture();g.inlineOptions.initBehaviour=()=>{g.p.m_behaviours=null;};assert.throws(g.runInline,/null native object/);assert.equal(g.p.m_behavioursInited,false);assert.equal(g.events.includes('outer'),false);
+});
+
+test('inner Init samples body transform before storing keep time and rereads a nonnull transform after the Unity query',()=>{
+ const f=projectileInlineFixture(),old={},next={};let keepSeen;Object.defineProperty(f.p,'_bodyTransform',{configurable:true,get(){keepSeen=f.p.m_keepAlreadyHitTime;return old;},set(value){Object.defineProperty(f.p,'_bodyTransform',{value,writable:true,configurable:true});}});
+ f.inlineOptions.isNullUnity=value=>{assert.equal(value,old);assert.equal(keepSeen,undefined);f.p._bodyTransform=next;return false;};f.runInline();assert.equal(f.p._bodyTransform,next);assert.equal(f.p.m_keepAlreadyHitTime,-fpOne);
+ const g=projectileInlineFixture();g.p._bodyTransform=null;g.runInline();assert.equal(g.p._bodyTransform,g.p.transform);
+});
+
+test('inner Init selects trivial random even for zero delay without invoking Range',()=>{
+ const f=projectileInlineFixture();f.inlineOptions.isDeterministic=()=>false;f.inlineOptions.randomRange=()=>{throw Error('unexpected Range');};f.runInline();assert.equal(f.events.includes('random-trivial'),true);assert.equal(f.events.includes('random-imp'),false);
+});
+
+test('inner Init samples delay again after IsZero before checking a missing random receiver',()=>{
+ const f=projectileInlineFixture();f.p._randomDelayToBorn=1;f.inlineOptions.isZero=value=>{assert.equal(value,1);f.p._randomDelayToBorn=2;return false;};f.runInline();assert.deepEqual(f.events.find(e=>Array.isArray(e)&&e[0]==='range'),['range',f.randomImp,0,2]);assert.equal(f.scheduled[0].delay,1);
+ const g=projectileInlineFixture();g.inlineOptions.readRandomImp=()=>null;let reads=0;Object.defineProperty(g.p,'_randomDelayToBorn',{get(){reads++;return 1;}});assert.throws(g.runInline,/null native object/);assert.equal(reads,2);
+});
+
+test('positive inner birth delay deactivates before scheduling and reactivates before the deferred birth',()=>{
+ const f=projectileInlineFixture();f.p._randomDelayToBorn=2;f.runInline();assert.equal(f.object.active,false);assert.equal(f.events.some(e=>Array.isArray(e)&&e[0]==='born'),false);assert.equal(f.scheduled.length,1);assert.equal(f.scheduled[0].delay,1);
+ f.scheduled[0].action.run();assert.equal(f.object.active,true);assert.deepEqual(f.events.slice(-2),[['active',true],['born',f.p]]);
+});
+
+test('nonpositive sampled delay births immediately and delayed callback has no invented cancellation or one-shot guard',()=>{
+ const f=projectileInlineFixture();f.p._randomDelayToBorn=2;f.inlineOptions.randomRange=()=>-1;f.runInline();assert.equal(f.scheduled.length,0);assert.deepEqual(f.events.at(-1),['born',f.p]);
+ const g=projectileInlineFixture();g.p._randomDelayToBorn=2;g.runInline();g.p.m_isStopped=true;g.scheduled[0].action.run();g.scheduled[0].action.run();assert.equal(g.events.filter(e=>Array.isArray(e)&&e[0]==='born').length,2);
+});
+
+for(const phase of ['createBornAction','invokeFixedDelay'])test('inner Init '+phase+' errors retain deactivation and initialized state',()=>{
+ const f=projectileInlineFixture();f.p._randomDelayToBorn=2;f.inlineOptions[phase]=()=>{throw Error(phase);};assert.throws(f.runInline,new RegExp(phase));assert.equal(f.object.active,false);assert.equal(f.p.m_behavioursInited,true);assert.equal(f.p.m_targetsAlreadyHit.size,0);
+});
+
+test('inner Init delegates comparison semantics and preserves effects when OnBorn throws',()=>{
+ const f=projectileInlineFixture();f.p._randomDelayToBorn=2;f.inlineOptions.greaterThan=(value,zero)=>{assert.equal(value,1);assert.equal(zero,0);return false;};f.inlineOptions.onBorn=()=>{throw Error('birth');};assert.throws(f.runInline,/birth/);assert.equal(f.object.active,true);assert.equal(f.p.m_behavioursInited,true);assert.equal(f.scheduled.length,0);
+});
 
 function projectileInitFixture(){
  const f=controllerCreationFixture(),p=f.logic,pointers=fearProjectileContextPointers({readUid:value=>value.uid,isDestroyedOrNull:value=>value==null||value.destroyed===true,isActive:()=>true}),logger={},managed=[],pairs={};
@@ -5544,9 +5614,14 @@ test('bounded wait, controller/factory birth and Init, event5 self-death and ind
  start.start.canSpell=(owner,ability)=>{assert.equal(owner,f.source);assert.equal(ability,start.ability);return true;};
  start.start.onEvent=(_ability,event,runAction)=>{assert.equal(event,4);assert.equal(runAction,false);events.push('event4');};
  start.start.onOwnerSpell=owner=>{assert.equal(owner,f.source);assert.equal(start.sources.getValue(start.ctx.m_source),f.source);assert.equal(start.references.peek(start.ctx.m_mainTarget),f.target);};
- const hitMount={},birth=controllerCreationFixture(),initialization=projectileInitFixture();start.rangedOptions.readHitMountPoint=target=>{assert.equal(target,f.target);return hitMount;};
+ const hitMount={},birth=controllerCreationFixture(),initialization=projectileInitFixture(),inner=projectileInlineFixture(),
+  nativeProjectile=JSON.parse(read('data/candidates/arkpedia-ch16-fear-projectile-source.json').projectiles['dyn/battle/prefabs/[uc]projectiles/projectile_enemy_fearpj.prefab'].find(row=>row.pathId==='3827519080143594587').originalJson);
+ start.rangedOptions.readHitMountPoint=target=>{assert.equal(target,f.target);return hitMount;};
  start.controller._factory=birth.factory;start.projectile.transform={};birth.queue.splice(0,birth.queue.length,start.projectile);f.source.effectReplacePairs=[];
- Object.assign(start.projectile,{_actionController:{},_managedBySource:true,m_ExtraLogIds:[]});Object.assign(start.mount,{mapPosition:{x:0,y:0},height:0});Object.assign(start.ability,{uid:13,damageMissFlag:false});
+ Object.assign(start.projectile,{_actionController:{},_managedBySource:Boolean(nativeProjectile._managedBySource),m_ExtraLogIds:[],
+  _randomDelayToBorn:nativeProjectile._randomDelayToBorn,m_targetsAlreadyHit:new Map(),m_eventCallbacks:[{}],m_behaviours:[{}],m_behavioursInited:false,_bodyTransform:start.projectile.transform});
+ Object.assign(start.mount,{mapPosition:{x:0,y:0},height:0});Object.assign(start.ability,{uid:13,damageMissFlag:false});
+ Object.assign(inner.inlineOptions,{getLifeTime:()=>nativeProjectile._lifeTime,getKeepAlreadyHitTime:()=>fearProjectileFloatToRaw(nativeProjectile._keepAlreadyHitTime)});
  Object.assign(initialization.initOptions,{readAbilityOwner:ability=>start.pointers.lock(ability.m_owner),readMapPosition:()=>({x:0,y:0}),readSide:()=>1,readPlayerSide:()=>2,readAbilityExtraData:()=>''});
  start.createOptions.createProjectile=(controller,key,owner,mount,target,ability,fake)=>{
   assert.equal(controller,start.controller);assert.equal(key,'projectile_enemy_fearpj');assert.equal(owner,f.source);assert.equal(mount,start.mount);
@@ -5561,6 +5636,10 @@ test('bounded wait, controller/factory birth and Init, event5 self-death and ind
  };
  initialization.initOptions.initInline=(projectile,target,mount)=>{
   assert.equal(projectile,start.projectile);assert.equal(target,hitMount);assert.equal(mount,start.mount);assert.equal(projectile.m_source.obj,f.source);assert.equal(projectile.m_ability.obj,start.ability);assert.deepEqual(projectile.m_startMapPos,{x:0,y:0});
+  fearProjectileInlineInit(inner.inlineOptions)(projectile,target,mount);
+ };
+ inner.inlineOptions.onBorn=projectile=>{
+  assert.equal(projectile,start.projectile);assert.equal(projectile.m_behavioursInited,true);assert.equal(projectile.m_lifeTime,10n*fpOne);assert.equal(projectile.m_keepAlreadyHitTime,-fpOne);assert.deepEqual(projectile.m_eventCallbacks,[null]);
   events.push('birth');flight=fearProjectileFlight(f.b,{from:{x:0,y:0,z:0},initialTarget:{x:1,y:0,z:0},
    resolveTargetPosition:()=>null,resolveTraceTarget:()=>f.target,
    area:{queryOverlaps:()=>[f.target],resolveEntity:u=>u,readUid:u=>u.nativeUid,isCandidate:()=>true,
@@ -5571,7 +5650,7 @@ test('bounded wait, controller/factory birth and Init, event5 self-death and ind
  start.options.castOnTarget=fearProjectileRangedTargetCast(start.rangedOptions);
  start.start.castTargets=fearProjectileTargetCasting(start.options);
  const spell=fearProjectileSpell(f.b,{owner:f.source,onSpellStart:start.runStart,isCasting:()=>casting,emitSpellEnd:()=>{
-  for(const stack of Object.values(start.ctx))assert.equal(stack._size,0);assert.deepEqual(start.ability.m_projectiles,[start.pointers.capture(start.projectile)]);assert.deepEqual(initialization.managed,[start.pointers.capture(start.projectile)]);events.push('event5');assert.equal(activation.run(),null);},
+  for(const stack of Object.values(start.ctx))assert.equal(stack._size,0);assert.deepEqual(start.ability.m_projectiles,[start.pointers.capture(start.projectile)]);assert.deepEqual(initialization.managed,[]);assert.equal(inner.scheduled.length,0);events.push('event5');assert.equal(activation.run(),null);},
  mayBeginPostDelay:()=>{throw Error('removed owner');},beginPostDelay:()=>{throw Error('removed owner');}});
  const wait=fearProjectileAttackWait(f.b,{owner:f.source,cachedDurationRaw:fpOne,readDeltaPlayTime:()=>1,
   isCastActive:()=>true,subscribeAttackEvent:()=>()=>{},onReady:()=>spell.run()});

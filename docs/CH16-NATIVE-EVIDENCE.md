@@ -1402,6 +1402,54 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
 
+### Inner initialization, reset and delayed birth
+
+`extract-windows-fear-projectile-inline.py --check` retains complete _InitInline,
+set_currentTime and _DelayToBorn bodies. The first two match the existing
+projectile evidence byte for byte. Lifetime/max-hit/retained-hit-time/birth slots
+resolve on SimpleProjectile, not abstract Projectile slots. The bundle binds
+HitBehaviour's Init slot, IBattleRandom.Range slot8, the dictionary-clear usage,
+the delayed-birth method definition and cross-image FP/MathUtil/Unity calls.
+The checked Fear component has zero random delay, _managedBySource=0, limited
+ten-second lifetime and the existing unlimited hit-number configuration.
+
+`fearProjectileInlineInit` resets time/hit counters and stop/reached flags before
+clearing hit storage and callback references. Callback and behavior traversals
+read fresh arrays and live lengths after each store/callback. Lifetime is
+converted through the supplied checked FP conversion, max hits remain Int32,
+and retained-hit time remains raw Q32.32. The body transform is sampled before
+storing retained-hit time; an existing nonnull transform is reread after the
+Unity query. Trace setup precedes behavior Init(start,target,projectile), the
+initialized flag and outer adjustable settings.
+
+Random-source selection occurs even at zero delay. The maximum delay is reread
+after IsZero and before a required random receiver is checked. Native IsZero/GT
+semantics and Range remain explicit callers. Nonpositive sampled delay calls
+OnProjectileBorn immediately; positive delay deactivates the GameObject before
+constructing and scheduling the born action. _DelayToBorn reactivates the
+GameObject before the virtual birth call. No extra one-shot, cancellation or
+pool-identity guard is inferred from these default bodies; scheduler/lifecycle
+ownership remains to be proved separately. Exceptions retain prior writes,
+initialization and deactivation effects.
+
+Tests cover reused-state reset, changing arrays, partial failures, body-transform
+sampling, deterministic/trivial random selection, delay rereads, immediate and
+scheduled births, callback replay and failed action/scheduler creation. The
+longer controller/Init/flight composition now runs this inner layer before its
+explicit birth receiver. It uses the canonical unmanaged-source and zero-delay
+Fear settings, checks reset/lifetime/behavior state at birth, and still verifies
+damage after event5 source death. Separate diagnostic tests continue to cover
+managed-source registration. All1468 focused native/fear/family/miner tests,
+evidence reproduction and the three Fear/miner contract checks pass.
+
+SetTraceTarget, behavior Init, outer adjustable settings and OnProjectileBorn
+runtime effects, native collection/random/math/Unity/scheduler effects, pool
+allocation/reuse, initial FSM, base target actions, no-target fallback,
+local-miner attachment and stage/frame parity remain open. Trace-target/birth
+setup and the underlying pool path are next. No controller/stage admission or
+source/support/receipt/catalogue gate changed; stage registries are unchanged.
+This checkpoint is local and has not been uploaded or run in hosted CI.
+
 ### Projectile Init references, positions and ownership
 
 `extract-windows-fear-projectile-init.py --check` retains the complete default
@@ -1434,7 +1482,7 @@ zero-source-position failure, separate side/playerSide and start reads, logging
 capture order, Character mode queries, ownership invalidation and nested Init.
 The wait/spell-start/controller/factory/ranged-flight composition now executes
 this Init layer before its explicit inner-initializer receiver. It verifies
-source/ability pointers and start position at inner setup, ownership/tracking
+source/ability pointers and start position at inner setup, ability tracking
 before event5 and damage after source death. All1455 focused native/fear/family/
 miner tests, evidence reproduction and the three Fear/miner contract checks pass.
 
