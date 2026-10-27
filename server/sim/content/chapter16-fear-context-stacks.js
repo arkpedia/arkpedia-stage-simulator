@@ -31,6 +31,38 @@ export function fearProjectileManagedReferenceStacks({resizeArray}){
  });
 }
 
+// Selected native Stack<Modifier>/Stack<AttackInfo> storage. Copy/default
+// receivers implement typed value semantics, including embedded references;
+// they must not substitute a recursive clone for the native struct layout.
+export function fearProjectileManagedValueStacks({specialization,resizeArray,copyValue,defaultValue}){
+ if(!['Modifier','AttackInfo'].includes(specialization))throw new TypeError('Fear managed value stack requires a reviewed specialization');
+ if([resizeArray,copyValue,defaultValue].some(fn=>typeof fn!=='function'))throw new TypeError('Fear managed value stack requires typed copy/default and native Array.Resize callers');
+ const array=stack=>nonnull(nonnull(stack)._array);
+ const index=(value,storage)=>{if((value>>>0)>=storage.length)throw new RangeError('Fear managed stack array bounds');return value;};
+ const top=(size,storage)=>{const next=(size-1)|0;if((next>>>0)>=storage.length)throw new RangeError('Fear managed stack is empty');return next;};
+ const pushWithResize=(stack,value)=>{
+  const old=array(stack);resizeArray(stack,old.length===0?4:(old.length*2)|0);
+  const storage=array(stack),at=index(stack._size,storage);
+  storage[at]=copyValue(value);stack._version=(stack._version+1)|0;stack._size=(stack._size+1)|0;
+ };
+ return Object.freeze({
+  count:stack=>count(value=>value._size,stack),
+  peek(stack){const storage=array(stack),size=stack._size;return copyValue(storage[top(size,storage)]);},
+  pop(stack){
+   nonnull(stack);const size=stack._size,storage=array(stack),at=top(size,storage);
+   stack._version=(stack._version+1)|0;stack._size=at;
+   const value=copyValue(storage[index(at,storage)]);
+   if(specialization==='Modifier'){storage[index(at,storage)]=defaultValue();return copyValue(value);}
+   return value;
+  },
+  push(stack,value){
+   const storage=array(stack),size=stack._size;
+   if((size>>>0)>=storage.length){pushWithResize(stack,copyValue(value));return;}
+   storage[size]=copyValue(value);stack._version=(stack._version+1)|0;stack._size=(size+1)|0;
+  },pushWithResize,
+ });
+}
+
 // Default reference-shared ContextPtrStack operations. Pointer construction,
 // UID/Unity locking and underlying Stack storage stay explicit.
 export function fearProjectileContextPointerStacks({readCount,peekStored,popStored,pushStored,wrapPointer,copyPointer,lockPointer}){

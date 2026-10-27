@@ -1792,6 +1792,32 @@ result['modeSwitch']['buffNotification']['newBuff']['managedReferenceStack'] = {
     'nativeArrayResizeVerified': False, 'nativeGcBarrierVerified': False,
     'nativePointerAndValueSpecializationsVerified': False, 'liveContextStorageVerified': False,
 }
+managed_value_stacks = []
+for name, width, entries in [('Modifier', 136, [(174642, 'Peek', 0x490a640), (174643, 'Pop', 0x490aa50),
+    (174644, 'Push', 0x490b820), (174645, 'PushWithResize', 0x490b000)]),
+    ('AttackInfo', 40, [(174768, 'Peek', 0x490a370), (174769, 'Pop', 0x490a990),
+    (174770, 'Push', 0x490b790), (174771, 'PushWithResize', 0x490b340)])]:
+    retained = []
+    for index, expected_name, expected_entry in entries:
+        spec = priority['specification'](index)
+        assert spec['declaringType'] == 'Stack`1' and spec['definition']['name'] == expected_name
+        argument = spec['instantiations']['class']['arguments'][0]
+        assert argument['name'] == name and (argument['typeBits'] >> 16) & 255 == 17
+        entry = v['quad'](v['b'], priority['pointer_table'] + spec['nativeMapping']['methodPointerIndex'] * 8) - v['image_base']
+        assert entry == expected_entry
+        retained.append({**spec, 'entryRva': entry, 'chunks': c['code'](entry)})
+    managed_value_stacks.append({'specialization': name, 'valueWidth': width, 'clearOnPop': name == 'Modifier', 'canonicalMethods': retained})
+result['modeSwitch']['buffNotification']['newBuff']['managedValueStacks'] = {
+    'specializations': managed_value_stacks,
+    'modifierPeekArrayCopy': {'entryRva': 0x1d5270, 'chunks': c['code'](0x1d5270)},
+    'modifierPopVersionRva': 0x490aac8, 'modifierPopSizeRva': 0x490aacf,
+    'modifierPopCopyRva': 0x490aae4, 'modifierPopClearRva': 0x490ab7b,
+    'attackPopVersionRva': 0x490a9ee, 'attackPopSizeRva': 0x490a9f5,
+    'attackPopCopyRva': 0x490aa01,
+    'modifierPushResizeCallRva': 0x490b8b1, 'attackPushResizeCallRva': 0x490b7e0,
+    'nativeTypedValueCopiesVerified': False, 'nativeArrayResizeVerified': False,
+    'nativePointerSpecializationVerified': False, 'liveValueStackStorageVerified': False,
+}
 context_stack_canonical = []
 for index in [24503, 24504, 24505, 24506, 24513, 24514, 24515, 24509, 24510, 24511, 24517, 24518, 24519]:
     spec = priority['specification'](index)

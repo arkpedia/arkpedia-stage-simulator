@@ -43,7 +43,65 @@ import {fearProjectileBuffAttributeProvider} from '../server/sim/content/chapter
 import {fearProjectileRunBuffActions} from '../server/sim/content/chapter16-fear-buff-run-actions.js';
 import {fearProjectileContextGuards} from '../server/sim/content/chapter16-fear-context-guard.js';
 import {fearProjectileContextSnapshots} from '../server/sim/content/chapter16-fear-context-snapshot.js';
-import {fearProjectileContextPointerStacks,fearProjectileContextValueStacks,fearProjectileManagedReferenceStacks} from '../server/sim/content/chapter16-fear-context-stacks.js';
+import {fearProjectileContextPointerStacks,fearProjectileContextValueStacks,fearProjectileManagedReferenceStacks,fearProjectileManagedValueStacks} from '../server/sim/content/chapter16-fear-context-stacks.js';
+
+const managedValueFixture=specialization=>{
+ const owner=specialization==='Modifier'?{}:undefined,keys=specialization==='Modifier'?[]:undefined,
+  value={raw:new Uint8Array(specialization==='Modifier'?136:40),...(specialization==='Modifier'?{owner,keys}:{})};value.raw[0]=7;
+ const copyValue=value=>({...value,raw:new Uint8Array(value.raw)}),defaultValue=()=>({raw:new Uint8Array(value.raw.length),owner:null,keys:null}),
+  storage={_array:[],_size:0,_version:0},options={specialization,copyValue,defaultValue,resizeArray:(stack,length)=>{stack._array=Array.from({length},(_,i)=>stack._array[i]??defaultValue());}};
+ return{owner,keys,value,storage,options,api:()=>fearProjectileManagedValueStacks(options)};
+};
+for(const specialization of ['Modifier','AttackInfo']){
+ test(`managed ${specialization} detaches value bytes and follows its selected clearing rule`,()=>{
+  const f=managedValueFixture(specialization),api=f.api();api.push(f.storage,f.value);f.value.raw[0]=9;
+  const a=api.peek(f.storage),b=api.peek(f.storage);assert.equal(a.raw[0],7);assert.notEqual(a.raw,b.raw);assert.equal(a.owner,f.owner);assert.equal(a.keys,f.keys);
+  a.raw[0]=33;assert.equal(api.peek(f.storage).raw[0],7);const popped=api.pop(f.storage);assert.equal(popped.raw[0],7);assert.equal(popped.owner,f.owner);
+  assert.equal(f.storage._size,0);assert.equal(f.storage._version,2);
+  if(specialization==='Modifier'){assert.ok(f.storage._array[0].raw.every(v=>v===0));assert.equal(f.storage._array[0].owner,null);assert.equal(f.storage._array[0].keys,null);}
+  else{assert.equal(f.storage._array[0].raw[0],7);assert.equal(f.storage._array[0].owner,f.owner);popped.raw[0]=55;assert.equal(f.storage._array[0].raw[0],7);}
+  assert.throws(()=>api.pop(f.storage),/empty/);assert.equal(f.storage._version,2);
+ });
+ test(`managed ${specialization} captures Push argument before resize and rereads destination state afterward`,()=>{
+  const f=managedValueFixture(specialization),replacement=[null,null];f.options.resizeArray=(stack,length)=>{
+   assert.equal(length,4);f.value.raw[0]=99;stack._array=replacement;stack._size=1;stack._version=12;
+  };f.api().push(f.storage,f.value);assert.equal(replacement[1].raw[0],7);assert.equal(replacement[1].owner,f.owner);assert.equal(f.storage._size,2);assert.equal(f.storage._version,13);
+  const g=managedValueFixture(specialization);g.options.resizeArray=(stack,length)=>{assert.equal(length,4);g.value.raw[0]=88;stack._array=[null];};
+  g.api().pushWithResize(g.storage,g.value);assert.equal(g.storage._array[0].raw[0],88);
+ });
+ test(`managed ${specialization} retains Pop count/version mutation on failed copy and resize failure before insertion`,()=>{
+  const f=managedValueFixture(specialization);f.storage._array=[f.value];f.storage._size=1;f.storage._version=2147483647;
+  f.options.copyValue=()=>{assert.equal(f.storage._size,0);assert.equal(f.storage._version,-2147483648);throw Error('typed copy failed');};
+  assert.throws(()=>f.api().pop(f.storage),/typed copy failed/);assert.equal(f.storage._array[0],f.value);
+  const g=managedValueFixture(specialization);g.options.resizeArray=stack=>{stack._array=[null];throw Error('resize failed');};
+  assert.throws(()=>g.api().push(g.storage,g.value),/resize failed/);assert.equal(g.storage._size,0);assert.equal(g.storage._version,0);assert.equal(g.storage._array[0],null);
+ });
+}
+test('Modifier Pop clears the captured slot before copying the saved return value',()=>{
+ const f=managedValueFixture('Modifier'),copy=f.options.copyValue;f.storage._array=[f.value];f.storage._size=1;let calls=0;
+ f.options.copyValue=value=>{if(++calls===2){assert.equal(f.storage._array[0].owner,null);assert.equal(f.storage._size,0);throw Error('return copy failed');}return copy(value);};
+ assert.throws(()=>f.api().pop(f.storage),/return copy failed/);assert.equal(calls,2);assert.equal(f.storage._version,1);assert.ok(f.storage._array[0].raw.every(v=>v===0));
+});
+test('AttackInfo Pop retains the captured slot without constructing a clearing value',()=>{
+ const f=managedValueFixture('AttackInfo');f.storage._array=[f.value];f.storage._size=1;f.options.defaultValue=()=>{throw Error('unexpected clearing value');};
+ const value=f.api().pop(f.storage);assert.notEqual(value.raw,f.value.raw);assert.equal(f.storage._array[0],f.value);
+});
+test('managed typed storage composes with context snapshot duplication and returns detached Modifier/AttackInfo values',()=>{
+ const modifier=managedValueFixture('Modifier'),attack=managedValueFixture('AttackInfo'),ma=modifier.api(),aa=attack.api();
+ ma.push(modifier.storage,modifier.value);aa.push(attack.storage,attack.value);
+ const context={m_modifier:modifier.storage,m_atkInfo:attack.storage};
+ for(const field of ['m_source','m_target','m_buff','m_ability','m_projectile','m_tile','m_mainTarget','m_mainBuff'])context[field]=[{}];
+ const wrap=(f,api)=>fearProjectileContextValueStacks({readCount:api.count,peekStored:api.peek,popStored:api.pop,copyValue:f.options.copyValue,defaultValue:f.options.defaultValue}),
+  modifiers=wrap(modifier,ma),attacks=wrap(attack,aa),snapshots=fearProjectileContextSnapshots({context,
+   peekReference:stack=>stack.at(-1),peekModifier:modifiers.getValue,peekAttackInfo:attacks.getValue,
+   copyModifier:modifier.options.copyValue,copyAttackInfo:attack.options.copyValue,
+   pushPointer:(stack,value)=>stack.push(value),pushReferenceValue:(stack,value)=>stack.push(value),pushModifier:ma.push,pushAttackInfo:aa.push});
+ snapshots.duplicateAll();assert.equal(modifier.storage._size,2);assert.equal(attack.storage._size,2);
+ const m=modifiers.pop(modifier.storage),a=attacks.pop(attack.storage);m.raw[0]=50;a.raw[0]=51;
+ assert.equal(modifiers.getValue(modifier.storage).raw[0],7);assert.equal(attacks.getValue(attack.storage).raw[0],7);
+ assert.equal(m.owner,modifier.owner);assert.equal(a.owner,attack.owner);
+ assert.equal(modifier.storage._array[1].owner,null);assert.equal(attack.storage._array[1].raw[0],7);
+});
 
 test('managed reference storage grows from four, doubles, clears popped references and preserves object identity',()=>{
  const capacities=[],storage={_array:[],_size:0,_version:0},api=fearProjectileManagedReferenceStacks({resizeArray:(stack,length)=>{

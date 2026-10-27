@@ -1402,6 +1402,34 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
 
+### Managed Modifier and AttackInfo stack storage
+
+The202 ordinary methods remain unchanged. Eight additional canonical
+Stack<Modifier>/Stack<AttackInfo> specifications retain complete Peek, Pop,
+Push and PushWithResize bodies. Modifier Peek's selected array-copy helper
+at0x1d5270 is retained separately, with complete bounds checking and136-byte
+copy instructions. The two stack element widths are136 and40 bytes.
+
+`fearProjectileManagedValueStacks` keeps those specializations distinct.
+Modifier Pop increments version and reduces size, copies the captured slot
+to a temporary, clears that slot, then copies the temporary for return.
+AttackInfo Pop updates version/size and copies40 bytes without clearing the
+captured slot. Both Push paths copy the input to a temporary before entering
+PushWithResize. Direct PushWithResize reloads array and size after the explicit
+byref allocation caller and then copies the supplied value into the destination.
+Fitting Push retains its captured count for the size write; resize increments
+the current count. Typed copies/defaults remain explicit receivers, preserving
+embedded Modifier references rather than recursively cloning referenced objects.
+
+Tests cover detached value bytes, selected clearing rules, embedded reference
+identity, pre-resize argument capture, direct resize input timing, replacement
+storage/count, version wrap, failures at copy/allocation/return, and composition
+with Context snapshot duplication. All1156 focused native/fear/family/miner
+tests pass. Complete typed-copy/default semantics, native allocation/GC,
+ObjectPtr specialization and live controller/stage integration remain open.
+No source/support/receipt/catalogue gate changes or stage promotion follow.
+This checkpoint remains local outside the pending upload scope.
+
 ### Managed reference stack storage
 
 The202 ordinary methods remain unchanged. Four additional canonical
