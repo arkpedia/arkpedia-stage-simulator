@@ -173,3 +173,14 @@ are one second. `rkbomb_m0_t[shield]` retains the original MAX_HP snapshot,
 InverseDamage, miner-only Physical BlockDamage and forced M1Start actions.
 Independent reviewed hashes bind these bytes; extraction never grants approval.
 The candidate claims exactly one wrapper and zero active general/common abilities.
+
+The crossbow clock contract now binds both complete retained graphs to their
+distinct Attack/Combat component references and original prefab-bound Spine3.8
+JSON skeletons. Their original OnAttack events are0.5s for Attack and
+0.53329998254776s for Combat's Skill; exact clip durations are
+1.7999999523162842s and1.8667000532150269s. The producer preserves raw byte,
+graph/index/inventory and skeletonData hashes and reproduces with `--check`.
+Fresh hosted extraction independently reproduces the original graphs and JSON
+animation source. Runtime and lifecycle tests bind these selected clocks, not
+initial native FSM or exact mid-clip mode handoff/frame ordering. Listener
+direct-radius/collider parity remains held, and no public admission follows.

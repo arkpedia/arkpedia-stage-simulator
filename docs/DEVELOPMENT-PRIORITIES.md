@@ -1,5 +1,47 @@
 # Development priorities
 
+### 27 October: original crossbow Attack and Combat clocks
+
+Final local focused validation passes all1,903 available cases, with zero
+failures/skips/cancellations. Only the four known quarantined files are absent
+locally; hosted checkout retains and executes them. The actual16-4 app journey
+passes desktop/phone, natural SP, keyboard controls and restart. No stage time
+budgets, canonical stats or admission/receipt expectations changed for crossbow.
+
+The preceding goal turn made concrete progress at07ff639a. Hosted continuation
+40456524054 now passed in full, including fresh artillery/crossbow graph and
+animation reproduction, Linux/Windows focused tests, actual16-5/16-14/16-15 and
+all Chapter17 browser jobs. Full CI40456524231 is still running at that source;
+do not treat a polling delay as completion or restart that source without cause.
+
+Both crossbow variants now bind their distinct native Attack and Combat
+components to the original Spine3.8 JSON markers:Attack0.5s and Combat's
+Skill0.53329998254776s. Clip durations remain1.7999999523162842s and
+1.8667000532150269s. Their independent cooldowns, sampled capped TimeMode0
+playback, eligible live slow_down, captured input mode/target deployment and
+one accepted attack receipt are preserved. Unborn work is cancelled by control
+or source retirement, while born ranged shots retain speed10/world travel,
+live same-life ATK, old-life source credit after source reuse, target-life
+checks and battle-end retirement. Source death alone does not destroy a born
+shot. The independent nonsilenceable0.1s listener, marked-neutral queries,
+commander radii and2.5x ranged/unscaled melee factors remain unchanged.
+
+Exact initial native FSM and mid-clip mode handoff/frame ordering remain held.
+The explicit simulator port serializes accepted clips and retains their input
+mode; a fresh Combat can spend its own cooldown after that clip ends. This is
+an explicit internal mapping, not proof of compiled native mode transitions.
+Direct-radius geometry remains the existing test-only center-distance model.
+No enemy/stage admission, canonical data, source/support receipts or public
+catalogue changes are made by this checkpoint.
+
+The new producer binds native mode/cast references, graph/index/inventory and
+original JSON byte hashes; hosted source reproduction now checks that producer.
+Actual16-4 joins hosted browser coverage. Before broad validation,51 direct
+clock/source/lifecycle checks and33 crossbow/16-4 through16-7 checks pass;
+actual16-4 desktop/phone natural-SP/keyboard/restart passes. All remaining
+enemy/stage/operator/module mechanics precede artwork and effects; Patrol
+original attack clock intake and the normal-stage/controller backlog remain open.
+
 ### 27 October: artillery source clocks and born-output lives
 
 The previous goal checkpoint made concrete progress (e40da3a4). Its full hosted

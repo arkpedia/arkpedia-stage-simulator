@@ -55,6 +55,7 @@ jobs:
           node tools/arkpedia/fortbreaker-clock-contract.mjs --check
           node tools/arkpedia/shielded-enemy-clock-contract.mjs --check
           node tools/arkpedia/artillery-clock-contract.mjs --check
+          node tools/arkpedia/crossbow-clock-contract.mjs --check
           python tools/arkpedia/extract-enemy-family-clocks.py --family ch16-artillery --bundle refs/arts/enm_art_23.ab --check
           python tools/arkpedia/extract-enemy-family-clocks.py --family ch16-crossbow --bundle refs/arts/enm_art_23.ab --check
           python tools/arkpedia/extract-enemy-family-clocks.py --family ch16-story-guardian --bundle refs/arts/enm_art_23.ab --check
@@ -117,7 +118,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        stage: ['16-5', '16-14', '16-15']
+        stage: ['16-4', '16-5', '16-14', '16-15']
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:

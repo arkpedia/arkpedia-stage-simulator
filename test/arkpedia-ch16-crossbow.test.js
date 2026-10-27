@@ -88,6 +88,7 @@ test('isolated ranged attack has native multiplier, travel and a born projectile
   const { h, e, b, u } = fixture(), hp = u.hp;
   h.run(.14);
   assert.equal(e.stats.attacks, 1); assert.equal(u.hp, hp);
+  assert.equal(b.projectiles.list.length,0); h.run(.5);
   assert.equal(b.projectiles.list.at(-1).speed, 10);
   b.kill(e, null); h.run(.3);
   assert.equal(hp - u.hp, 850, 'the native multiplier applies to ATK before DEF'); assert.deepEqual(b.errors, []);
@@ -114,7 +115,7 @@ test('neutral interference requires the native miner mark; unrelated neutral uni
 
 test('the blocked combat path is an ordinary unscaled physical hit, independent of ranged readiness', () => {
   const { h, e, b, u } = fixture({ blocker: true }), hp = u.hp;
-  h.run(.2);
+  h.run(.7);
   assert.equal(e.blockedBy, u); assert.equal(e.stats.attacks, 1);
   assert.equal(hp - u.hp, rec.stats.atk - u.s.def);
   assert.equal(b.projectiles.list.length, 0); assert.deepEqual(b.errors, []);
@@ -141,15 +142,16 @@ test('enemy-side units are not ALLY query recipients; player-side direct selecti
   assert.deepEqual(b.errors, []);
 });
 
-test('real block and release switches retain separate native Attack and Combat cooldowns', () => {
+test('real block and release switches retain separate cooldowns while the explicit port serializes accepted clips', () => {
   const { h, e, b, u } = fixture();
   h.run(.14); assert.equal(e.stats.attacks, 1);
   assert.ok(e.profile.attackCooldowns.attack > 4.8);
   u.base.blockCnt = 2; u.markDirty();
   e.x = u.x; assert.equal(b._checkBlock(e), true);
-  h.run(b.dt);
-  assert.equal(e.stats.attacks, 2, 'fresh Combat does not inherit the ranged cooldown');
-  assert.ok(e.profile.attackCooldowns.combat > 4.9);
+  h.run(b.dt); assert.equal(e.stats.attacks,1,'accepted ranged clip remains owned until it ends');
+  h.run(1.85);
+  assert.equal(e.stats.attacks, 2, 'fresh Combat does not inherit the ranged cooldown after the accepted clip ends');
+  assert.ok(e.profile.attackCooldowns.combat > 4.8);
   b._unblock(e); e.x = 7;
   h.run(1);
   assert.equal(e.stats.attacks, 2, 'returning to Attack retains its already spent cooldown');
