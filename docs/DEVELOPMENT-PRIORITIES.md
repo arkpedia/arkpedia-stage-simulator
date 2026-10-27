@@ -1,5 +1,53 @@
 # Development priorities
 
+### 27 October: artillery source clocks and born-output lives
+
+The previous goal checkpoint made concrete progress (e40da3a4). Its full hosted
+CI run 40362474509 succeeded on all eight Linux/Windows Node22/24 shards.
+Continuation 40362474424 failed only during 16-14 Chrome startup: retained
+stderr shows DevTools becoming ready after the former 30-second launch timeout.
+The browser harness now allows 60 seconds for hosted process startup, retaining
+the existing 120-second test deadline and unchanged gameplay waits/assertions.
+
+Both artillery variants now release at original OnAttack 0.46666666865348816s
+and retain their original 1.2666666507720947s Attack clip. Attack and Combat
+reference the same native component and keep one shared cooldown. TimeMode0
+samples BAT/interval capped at one; clip and cooldown work consume live eligible
+slow_down. Accepted target deployments are captured at input. Control and source
+retirement cancel unborn shells and clear their movement holds. Born shells use
+world travel time, survive source death, retain source-life damage credit across
+reuse, and cannot create a new field without their original live source. Existing
+fixed-100-Arts fields survive source death, retain original credit on source reuse,
+reset recipient clocks on redeployment, and retire at battle end. Reentrant area
+callbacks cannot donate a selected victim or source life to another deployment.
+The canonical stats, waves, receipts, support gates and public catalogue are unchanged.
+
+The new source producer reproduces exact graph/index hashes and original bound
+binary skeletons. The same frozen enm_art_23 intake now retains both crossbow
+JSON skeletons: Attack OnAttack 0.5s (clip 1.7999999523162842s), Combat's Skill
+OnAttack 0.53329998254776s (clip 1.8667000532150269s). The parser now explicitly
+handles original Spine3.8 JSON using the same metadata projection as binary input.
+Crossbow runtime clock conversion remains next; source intake alone is not parity.
+Native initial FSM and compiled frame parity remain held for both families.
+
+16-15's existing high-LP route diagnostic now clears at 341.0333333333333s for
+seeds19/71/129 with original artillery holds, beyond the old incidental330s
+expectation. Its existing600s diagnostic budget is retained; the independent
+default300s timeout test remains unchanged. No game time limit is increased.
+The original artillery graph and both families' animation sources reproduce
+locally, and hosted native-source reproduction now includes both original family
+graphs and animations. Hosted browser coverage includes actual16-5 as well as
+16-14/16-15. The four known quarantined test files remain unchanged in Git;
+never stage their local deletions or require the user to restore them.
+
+Validation before this checkpoint:42 direct clock/parser/source-plan checks,
+122 artillery/aggregate stage checks,60 related Fortbreaker/16-4 through16-7
+checks, and actual16-5 desktop/phone natural-SP/keyboard/restart all pass.
+The first broad local cohort passed1833/1837 and exposed the three16-15 bound
+failures plus one sandbox EPERM rename; the122-case rerun fixes all three
+source-timing expectations, and the unchanged canonical loader passes all five
+cases outside that sandbox. Fresh hosted continuation and full CI remain required.
+
 The user resumed development in this Windows session after the computer-transfer
 pause on 26 October. Priority remains all enemy/stage/operator/module mechanics,
 then stage art/models/enemy chibis, then effects. The latest Fortbreaker

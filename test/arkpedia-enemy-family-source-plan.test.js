@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {familySourcePlan} from '../tools/arkpedia/fetch-enemy-family-source.mjs';
 test('retained mechanics fetch plan contains exact unique prefab, template, projectile and clock dependencies',async()=>{
-  const plan=await familySourcePlan(['ch16-story-guardian','ch16-fear-projectile','ch17-brute','ch17-flyer','ch17-bag','ch17-channel-carrier','ch17-war-caster','ch17-firewall-boss','ch17-brute']);
+  const plan=await familySourcePlan(['ch16-story-guardian','ch16-fear-projectile','ch16-artillery','ch16-crossbow','ch17-brute','ch17-flyer','ch17-bag','ch17-channel-carrier','ch17-war-caster','ch17-firewall-boss','ch17-brute']);
   assert.deepEqual(plan.map(p=>p.path).sort(),['battle/enm_pfb_27.ab','battle/enm_pfb_28.ab','battle/enm_pfb_31.ab',
     'battle/prefabs/[uc]envsystems.ab','battle/prefabs/[uc]projectiles.ab','config/buff_template_holder.ab','refs/arts/enm_art_23.ab','refs/arts/enm_art_26.ab']);
   assert.ok(plan.every(p=>p.bytes>0&&/^[a-f0-9]{64}$/.test(p.sha256)));

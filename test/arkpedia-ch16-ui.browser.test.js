@@ -21,6 +21,9 @@ test(`test-only ${stageCode} tunnel command works with natural SP, keyboard, mob
     mkdirSync(out, { recursive: true });
     try {
       browser = await puppeteer.launch({ executablePath: chrome, headless: true, dumpio: process.env.CI === 'true',
+        // Hosted startup logs show DevTools appearing just after 30 seconds.
+        // Bound process startup separately; gameplay waits/assertions stay fixed.
+        timeout: process.env.CI === 'true' ? 60000 : 30000,
         args: ['--no-first-run', process.platform === 'darwin' ? '--use-angle=metal' : '--use-angle=swiftshader', '--enable-gpu', '--ignore-gpu-blocklist',
           '--disable-background-timer-throttling', '--disable-renderer-backgrounding'] });
       let page = await browser.newPage();

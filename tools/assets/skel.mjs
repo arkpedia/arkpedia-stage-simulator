@@ -70,6 +70,19 @@ export function parseSkel(bytes, atlasRegions, { includeEventPayloads = false, i
   // Node file Buffers can share a pool; copy only this exact slice so another
   // pooled file cannot be mistaken for the original skeleton header.
   const data = bin.readSkeletonData(new Uint8Array(bytes));
+  return inspectSkeleton(data, r, missing, { includeEventPayloads, includeExactDurations, includeAttachmentTimelines });
+}
+
+/** Inspect retained original Spine 3.8 JSON text without converting its bytes. */
+export function parseJsonSkel(bytes, atlasRegions, options = {}) {
+  const source = JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(bytes));
+  if (!/^3\.8\./.test(source?.skeleton?.spine ?? '')) throw Error('Expected original Spine 3.8 JSON');
+  const r = loadRuntime(), missing = new Set();
+  const data = new r.SkeletonJson(makeLoader(r, atlasRegions, missing)).readSkeletonData(source);
+  return inspectSkeleton(data, r, missing, options);
+}
+
+function inspectSkeleton(data, r, missing, { includeEventPayloads = false, includeExactDurations = false, includeAttachmentTimelines = false } = {}) {
   const animations = data.animations.map((a) => a.name);
   const durations = {};
   const exactDurations = {};

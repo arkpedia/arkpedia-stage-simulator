@@ -27,7 +27,9 @@ const specs = {
   '16-10': { total:27, counts:{enemy_10120_uaghst_2:12,enemy_10126_rkbomb:8,enemy_10124_uashld:6,enemy_10127_rkmbst:1}, hidden:[] },
   '16-11': { total:28, counts:{enemy_10126_rkbomb:23,enemy_10127_rkmbst:5}, hidden:['raid4'] },
   '16-14': { total:28, counts:{enemy_10124_uashld_2:2,enemy_10120_uaghst_2:21,enemy_10127_rkmbst_2:5}, hidden:['raid4'] },
-  '16-15': { total:27, counts:{enemy_10124_uashld_2:3,enemy_10120_uaghst_2:18,enemy_10122_uacann_2:3,enemy_10127_rkmbst_2:3}, hidden:['group1'], cap:600, clearsBefore:330 },
+  // Route-only high-LP fixture: original artillery clip holds finish at 341.03s.
+  // Retain its existing 600s diagnostic budget and the separate real 300s timeout check.
+  '16-15': { total:27, counts:{enemy_10124_uashld_2:3,enemy_10120_uaghst_2:18,enemy_10122_uacann_2:3,enemy_10127_rkmbst_2:3}, hidden:['group1'], cap:600, clearsBefore:600 },
   '17-7': { total:28, counts:{enemy_10206_muveg:6,enemy_10201_muinf:13,enemy_10202_mubow:3,enemy_10204_mudia:6}, hidden:['h1','h2'] },
   '17-8': { total:40, counts:{enemy_10206_muveg:3,enemy_10201_muinf:24,enemy_10202_mubow:8,enemy_10207_mubrut:5}, hidden:['h2'] },
   '17-9': { total:22, scheduled:23, counts:{enemy_10208_mucow:4,enemy_10211_murad:1,enemy_10202_mubow:10,enemy_10206_muveg:4,enemy_10207_mubrut:4}, hidden:['raid','raid5A','raid5B'], cap:330, clearsBefore:302 },

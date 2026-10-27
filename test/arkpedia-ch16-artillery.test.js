@@ -61,6 +61,7 @@ test('both artillery variants retain indexed evidence and clear only candidate a
 test('shared engine shell deals physical impact, then three independent fixed Arts ticks', () => {
   const { h, e, b, u } = fixture(), hp = u.hp;
   h.run(.1); assert.equal(e.stats.attacks, 1); assert.equal(u.hp, hp);
+  assert.equal(b.projectiles.list.length, 0); h.run(.5);
   assert.equal(b.projectiles.list[0].speed, 4);
   h.run(.6); assert.equal(hp - u.hp, 250);
   h.run(3); assert.equal(hp - u.hp, 550);
@@ -70,17 +71,17 @@ test('shared engine shell deals physical impact, then three independent fixed Ar
 
 test('born shell survives source death but cannot create a new burn; existing burn survives source death', () => {
   const first = fixture(), hp = first.u.hp;
-  first.h.run(.1); first.b.kill(first.e, null); first.h.run(4);
+  first.h.run(.6); first.b.kill(first.e, null); first.h.run(4);
   assert.equal(hp - first.u.hp, 250);
   const second = fixture(), hp2 = second.u.hp;
-  second.h.run(.7); second.b.kill(second.e, null); second.h.run(3);
+  second.h.run(1.2); second.b.kill(second.e, null); second.h.run(3);
   assert.equal(hp2 - second.u.hp, 550);
   assert.deepEqual([...first.b.errors, ...second.b.errors], []);
 });
 
 test('distinct burning areas stack, and leaving/reentering resets only that recipient timer', () => {
   const { h, b, e, u } = fixture();
-  h.run(.7);
+  h.run(1.2);
   b.chapter16Artillery.add(e, u.x, u.y, 3, 100);
   const hp = u.hp;
   h.run(1.1); assert.equal(hp - u.hp, 200);
@@ -98,10 +99,10 @@ test('actual commander orders prefer a marked miner over the ordinary operator t
   b.addBuff(miner, { key: 'test:low-taunt', persist: true, mods: { taunt: -1 } });
   const leader = h.spawn('enemy_10125_uacomd', { pos: [1, 1] });
   attach(b, leader, [frontlineCommander(records.enemy_10125_uacomd.levels[0])]);
-  h.run(.1); assert.equal(b.projectiles.list[0].target, miner);
+  h.run(.6); assert.equal(b.projectiles.list[0].target, miner);
   h.run(.11); assert.ok(e.findBuff('uacann_a[extra_effect_core]'));
   b.kill(leader, null); h.run(.21); assert.equal(e.findBuff('uacann_a[extra_effect_core]'), null);
-  e.atkCd = 0; h.run(.04); assert.equal(b.projectiles.list.at(-1).target, u);
+  h.run(.7); e.atkCd = 0; h.run(.6); assert.equal(b.projectiles.list.at(-1).target, u);
   assert.deepEqual(b.errors, []);
 });
 
@@ -130,7 +131,7 @@ test('explicit burning collider includes a touching operator body and does not t
 
 test('shell reads live attack at impact while its lingering Arts damage remains a fixed table value', () => {
   const { h, b, e, u } = fixture(); const hp = u.hp;
-  h.run(.1);
+  h.run(.6);
   b.addBuff(e, { key: 'test:attack', persist: true, mods: { atkPct: 1 } });
   h.run(.6); assert.equal(hp - u.hp, 600, '700 live ATK minus 100 DEF');
   h.run(3); assert.equal(hp - u.hp, 900, 'burn does not scale with source ATK');
