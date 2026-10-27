@@ -2101,6 +2101,22 @@ result['modeSwitch']['buffNotification']['newBuff']['predicateNodes'] = {
     'nativeAttributeQueryEffectsVerified': False, 'livePredicateNodeDispatchVerified': False,
 }
 context_stack_canonical = []
+blackboard_list_bodies = []
+for index, name, entry in [(117458, '.ctor', 0x430e530), (117527, 'get_Item', 0x4519cb0), (117529, 'set_Item', 0x4520160), (117461, 'Add', 0x451b890)]:
+    spec = priority['specification'](index)
+    assert spec['declaringType'] == 'List`1' and spec['definition']['name'] == name
+    assert spec['instantiations']['class']['arguments'][0]['typeIndex'] == pair['index']
+    assert v['quad'](v['b'], priority['pointer_table'] + spec['nativeMapping']['methodPointerIndex'] * 8) - v['image_base'] == entry
+    blackboard_list_bodies.append({'specification': spec, 'entryRva': entry, 'chunks': c['code'](entry)})
+result['modeSwitch']['buffNotification']['newBuff']['blackboardListStorage'] = {
+    'bodies': blackboard_list_bodies, 'selectedLayout': {'_items': 16, '_size': 24, '_version': 28},
+    'constructorBaseCallRva': 0x430e542, 'constructorItemsWriteRva': 0x430e5a4, 'constructorBarrierTailRva': 0x430e5b1,
+    'getListBoundsRva': 0x4519cc8, 'getItemsReadRva': 0x4519cd4, 'getArrayBoundsRva': 0x4519cdd, 'getPairReadRva': 0x4519ce9, 'getPairStringReadRva': 0x4519cf3,
+    'setListBoundsRva': 0x4520178, 'setItemsReadRva': 0x4520184, 'setArrayBoundsRva': 0x452018d, 'setPairWriteRva': 0x45201a8, 'setStringWriteRva': 0x45201ab, 'setBarrierCallRva': 0x45201b0, 'setVersionIncrementRva': 0x45201b5,
+    'addVersionIncrementRva': 0x451b894, 'addItemsReadRva': 0x451b89a, 'addSizeReadRva': 0x451b89e, 'addCapacityCompareRva': 0x451b8a7,
+    'addResizePairCopyRva': 0x451b8b1, 'addResizeCallRva': 0x451b8da, 'addSizeWriteRva': 0x451b8e6, 'addPairWriteRva': 0x451b906, 'addStringWriteRva': 0x451b909, 'addBarrierTailRva': 0x451b912,
+    'nativeTypeInitializationVerified': False, 'nativeWriteBarrierEffectsVerified': False, 'nativeListGrowthVerified': False, 'liveDataPairStorageVerified': False,
+}
 merge_row = c['unique'](lambda r: r['index'] == 28620, blackboard_type['methods'])
 merge_record = c['method'](blackboard_type, merge_row)
 assert merge_record['entryRva'] == 0x2166d70 and not any(m['index'] == 28620 for m in methods)

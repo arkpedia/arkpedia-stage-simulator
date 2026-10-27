@@ -533,6 +533,19 @@ test('context snapshot source binds distinct capture/push orders and closed refe
  assert.equal(q.nativeContextStackEffectsVerified,false);assert.equal(q.nativeNestedValueCopiesVerified,false);assert.equal(q.liveContextSnapshotsVerified,false);
 });
 
+test('DataPair list storage source binds complete specialized bodies and distinct version/write order',()=>{
+ const q=read('data/candidates/arkpedia-windows-fear-self-death-source.json').modeSwitch.buffNotification.newBuff.blackboardListStorage;
+ assert.deepEqual(q.selectedLayout,{_items:16,_size:24,_version:28});assert.deepEqual(q.bodies.map(b=>[b.specification.index,b.specification.definition.name,b.entryRva]),[[117458,'.ctor',0x430e530],[117527,'get_Item',0x4519cb0],[117529,'set_Item',0x4520160],[117461,'Add',0x451b890]]);
+ for(const body of q.bodies){assert.equal(body.specification.instantiations.class.arguments[0].typeIndex,3917);for(const chunk of body.chunks){const raw=Buffer.from(chunk.base64,'base64');assert.equal(sha(raw),chunk.sha256);assert.equal(raw.length,chunk.endRva-chunk.beginRva);}}
+ const at=(name,rva,args)=>assert.ok(instructions(q.bodies.find(b=>b.specification.definition.name===name)).some(i=>i.rva===rva&&i.operands===args),'DataPair list instruction '+rva.toString(16));
+ for(const [key,args]of [['constructorBaseCallRva','0x180511a50'],['constructorItemsWriteRva','qword ptr [rcx], rdx'],['constructorBarrierTailRva','0x18040ff90']])at('.ctor',q[key],args);
+ for(const [key,args]of [['getListBoundsRva','ebx, dword ptr [rdx + 0x18]'],['getItemsReadRva','rdx, qword ptr [rdi + 0x10]'],['getArrayBoundsRva','ebx, dword ptr [rdx + 0x18]'],['getPairReadRva','xmm0, xmmword ptr [rdx + rcx*8 + 0x20]'],['getPairStringReadRva','xmm1, qword ptr [rdx + rcx*8 + 0x30]']])at('get_Item',q[key],args);
+ for(const [key,args]of [['setListBoundsRva','ebx, dword ptr [rcx + 0x18]'],['setItemsReadRva','rdx, qword ptr [rdi + 0x10]'],['setArrayBoundsRva','ebx, dword ptr [rdx + 0x18]'],['setPairWriteRva','xmmword ptr [rcx], xmm0'],['setStringWriteRva','qword ptr [rcx + 0x10], xmm1'],['setBarrierCallRva','0x18040ff90'],['setVersionIncrementRva','dword ptr [rdi + 0x1c]']])at('set_Item',q[key],args);
+ for(const [key,args]of [['addVersionIncrementRva','dword ptr [rcx + 0x1c]'],['addItemsReadRva','rcx, qword ptr [rcx + 0x10]'],['addSizeReadRva','r9, dword ptr [r10 + 0x18]'],['addCapacityCompareRva','r9d, dword ptr [rcx + 0x18]'],['addResizePairCopyRva','xmm0, xmmword ptr [rdx]'],['addResizeCallRva','qword ptr [rax + 8]'],['addSizeWriteRva','dword ptr [r10 + 0x18], eax'],['addPairWriteRva','xmmword ptr [rcx], xmm0'],['addStringWriteRva','qword ptr [rcx + 0x10], xmm1'],['addBarrierTailRva','0x18040ff90']])at('Add',q[key],args);
+ assert.ok(q.setPairWriteRva<q.setBarrierCallRva&&q.setBarrierCallRva<q.setVersionIncrementRva);assert.ok(q.addVersionIncrementRva<q.addItemsReadRva&&q.addItemsReadRva<q.addSizeReadRva&&q.addSizeWriteRva<q.addPairWriteRva);
+ for(const name of ['nativeTypeInitializationVerified','nativeWriteBarrierEffectsVerified','nativeListGrowthVerified','liveDataPairStorageVerified'])assert.equal(q[name],false);
+});
+
 test('Blackboard.MergeTo source binds list specialization, pair copies and destination rereads',()=>{
  const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.newBuff.blackboardMerge,m=c.methods.find(m=>m.index===q.methodIndex);
  assert.equal(m.type,'Blackboard');assert.equal(m.name,'MergeTo');assert.equal(m.entryRva,0x2166d70);assert.equal(q.pairSize,24);assert.deepEqual(q.unboxedPairOffsets,{key:0,value:8,valueStr:16});assert.deepEqual(q.pairFields.map(f=>[f.name,f.offset]),[['key',16],['value',24],['valueStr',32]]);

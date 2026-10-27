@@ -1402,6 +1402,35 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
 
+### List<DataPair> storage and native mutation ordering
+
+The219 ordinary method records and all earlier evidence remain unchanged.
+A separate storage binding retains four complete mapped List<DataPair>
+specialization bodies: constructor, get_Item, set_Item and Add. Generic metadata
+binds each to the24-byte DataPair element type. Instruction sites pin the
+selected _items+0x10, _size+0x18 and _version+0x1c layout and full-pair copies.
+
+`fearProjectileDataPairLists` provides construction, direct count reads,
+detached indexed reads, replacements and Add's capacity branch. Construction
+calls the base receiver, reads the shared empty array through the runtime type
+receiver, publishes that array and invokes the write barrier. It does not reset
+size/version fields. Reads and replacements check the unsigned logical index
+before loading/checking backing storage. Replacements copy the complete pair,
+invoke the barrier, then increment the current version with Int32 wraparound.
+
+Add increments version first, captures items before reading size, then either
+writes size before copying/storing the new pair or dispatches a copied pair to
+the explicit AddWithResize receiver. Errors retain native earlier mutations;
+there is no rollback or synthesized successful growth. Tests cover null storage,
+logical/array bounds, pair/barrier errors, version overflow, receiver replacement
+and growth failure. MergeTo and BuffDB's external-blackboard composition now use
+the typed list adapter, verifying first-match replacement and append versions
+while leaving database source storage unchanged. Runtime type initialization,
+write barriers, capacity growth and full controller/stage/frame parity remain
+explicit or unverified. Existing source/support/receipt/catalogue gates are
+unchanged and new stages stay test-only. All1298 focused native/fear/family/
+miner tests pass. This checkpoint remains local.
+
 ### Blackboard.MergeTo external-value composition
 
 The219-method bundle adds the complete default Blackboard.MergeTo body. All218

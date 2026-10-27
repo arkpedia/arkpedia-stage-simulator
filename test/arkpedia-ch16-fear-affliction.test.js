@@ -55,6 +55,62 @@ import {fearProjectileCreateBuffNode} from '../server/sim/content/chapter16-fear
 import {fearProjectileEntityAddBuff,fearProjectileEntityBuffContainer} from '../server/sim/content/chapter16-fear-entity-add-buff.js';
 import {fearProjectileBuffDatabase} from '../server/sim/content/chapter16-fear-buff-db.js';
 import {fearProjectileBlackboardMerge} from '../server/sim/content/chapter16-fear-blackboard-merge.js';
+import {fearProjectileDataPairLists} from '../server/sim/content/chapter16-fear-blackboard-list.js';
+
+function dataPairListFixture(){
+ const events=[],empty=[],pair=(key=null,value=0,valueStr=null)=>({key,value,valueStr}),list=(values=[],capacity=values.length)=>({_items:Array.from({length:capacity},(_,i)=>i<values.length?{...values[i]}:pair()),_size:values.length,_version:0}),
+  options={objectConstructor:value=>events.push(['base',value]),readEmptyArray:()=>{events.push('empty');return empty;},writeBarrier:(owner,key)=>events.push(['barrier',owner,key]),
+   addWithResize:()=>{throw Error('explicit native growth required');}};
+ return{events,empty,pair,list,options,api:()=>fearProjectileDataPairLists(options)};
+}
+test('DataPair list construction assigns the shared empty array after base/type initialization without resetting size/version',()=>{
+ const f=dataPairListFixture(),list={_items:null,_size:3,_version:7};f.api().initialize(list);assert.equal(list._items,f.empty);assert.equal(list._size,3);assert.equal(list._version,7);
+ assert.deepEqual(f.events,[['base',list],'empty',['barrier',list,'_items']]);
+ const g=dataPairListFixture();assert.throws(()=>g.api().initialize(null),/null native object/);assert.deepEqual(g.events,[['base',null],'empty']);
+});
+test('DataPair list getter copies all pair fields and checks logical bounds before backing storage',()=>{
+ const f=dataPairListFixture(),pair=f.pair('key',1/3,'text'),list=f.list([pair],3),copy=f.api().getItem(list,0);assert.deepEqual(copy,f.pair('key',Math.fround(1/3),'text'));assert.notEqual(copy,list._items[0]);copy.key='changed';assert.equal(list._items[0].key,'key');assert.equal(list._version,0);
+ list._items=null;assert.throws(()=>f.api().getItem(list,-1),/outside the native list/);assert.throws(()=>f.api().getItem(list,1),/outside the native list/);assert.throws(()=>f.api().getItem(list,0),/null native object/);
+ list._items=[];assert.throws(()=>f.api().getItem(list,0),/outside the native array/);
+});
+test('DataPair list replacement stores before the barrier and increments the current version afterwards',()=>{
+ const f=dataPairListFixture(),list=f.list([f.pair('old')]),value=f.pair('new',7,'text');f.options.writeBarrier=(items,index)=>{assert.equal(items,list._items);assert.equal(index,0);assert.deepEqual(items[0],value);assert.equal(list._version,0);list._version=11;};
+ f.api().setItem(list,0,value);assert.equal(list._version,12);assert.notEqual(list._items[0],value);assert.equal(list._size,1);
+});
+test('DataPair list replacement failure preserves earlier store while leaving version unchanged',()=>{
+ const f=dataPairListFixture(),list=f.list([f.pair('old')]),error=Error('barrier');f.options.writeBarrier=()=>{throw error;};assert.throws(()=>f.api().setItem(list,0,f.pair('new')),actual=>actual===error);assert.equal(list._items[0].key,'new');assert.equal(list._version,0);
+ const g=dataPairListFixture(),other=g.list([g.pair('old')]);assert.throws(()=>g.api().setItem(other,-1,null),/outside the native list/);other._items=[];assert.throws(()=>g.api().setItem(other,0,null),/outside the native array/);assert.equal(other._version,0);
+});
+test('DataPair list Add increments version before null storage and leaves size unchanged on that failure',()=>{
+ const f=dataPairListFixture(),list={_items:null,_size:0,_version:2147483647};assert.throws(()=>f.api().add(list,null),/null native object/);assert.equal(list._version,-2147483648);assert.equal(list._size,0);
+});
+test('DataPair list Add captures items before reading size and stores count before pair/barrier work',()=>{
+ const f=dataPairListFixture(),old=[f.pair()],next=[f.pair()],list={_items:old,_version:0};let size=0;Object.defineProperty(list,'_size',{get(){list._items=next;return size;},set(value){size=value;}});
+ f.options.writeBarrier=(items,index)=>{assert.equal(items,old);assert.equal(index,0);assert.equal(size,1);assert.equal(list._version,1);};f.api().add(list,f.pair('new',3));assert.equal(old[0].key,'new');assert.equal(next[0].key,null);
+});
+test('DataPair list Add retains incremented size and version when pair capture or barrier fails',()=>{
+ const f=dataPairListFixture(),list=f.list([],1);assert.throws(()=>f.api().add(list,null),/null native object/);assert.equal(list._size,1);assert.equal(list._version,1);
+ const g=dataPairListFixture(),other=g.list([],1),error=Error('barrier');g.options.writeBarrier=()=>{throw error;};assert.throws(()=>g.api().add(other,g.pair('new')),actual=>actual===error);assert.equal(other._size,1);assert.equal(other._version,1);assert.equal(other._items[0].key,'new');
+});
+test('DataPair list Add delegates a copied pair to growth after its sole version increment',()=>{
+ const f=dataPairListFixture(),list=f.list([f.pair('old')]),value=f.pair('new',1/3,'text');f.options.addWithResize=(actual,pair)=>{assert.equal(actual,list);assert.equal(list._version,1);assert.equal(list._size,1);assert.notEqual(pair,value);assert.deepEqual(pair,f.pair('new',Math.fround(1/3),'text'));pair.key='local';};
+ f.api().add(list,value);assert.equal(value.key,'new');assert.equal(list._size,1);assert.equal(list._version,1);
+});
+test('DataPair list Add retains its version when the required growth receiver fails',()=>{
+ const f=dataPairListFixture(),list=f.list([]);assert.throws(()=>f.api().add(list,f.pair('new')),/explicit native growth required/);assert.equal(list._version,1);assert.equal(list._size,0);assert.deepEqual(list._items,[]);
+});
+test('Blackboard.MergeTo composes DataPair list reads, first-match writes and fast appends with native versions',()=>{
+ const f=dataPairListFixture(),storage=f.api(),from=f.list([f.pair('ATK',1),f.pair('atk',2),f.pair('HP',3)]),to={value:f.list([],4)},merge=fearProjectileBlackboardMerge({
+  allocateList:()=>{throw Error('unexpected allocation');},initializeList:storage.initialize,readCount:storage.readCount,readItem:storage.getItem,setItem:storage.setItem,addItem:storage.add,
+  compareIgnoreCase:(a,b,ignore)=>{assert.equal(ignore,true);return a.toLowerCase()===b.toLowerCase()?0:1;}});
+ merge(to,from);assert.equal(to.value._size,2);assert.equal(to.value._version,3);assert.equal(from._version,0);assert.deepEqual([storage.getItem(to.value,0),storage.getItem(to.value,1)],[f.pair('atk',2),f.pair('HP',3)]);
+});
+test('BuffDB external merge composes DataPair storage without modifying the source config',()=>{
+ const f=buffDatabaseFixture(),m=dataPairListFixture(),storage=m.api(),original=m.list([m.pair('ATK',1)]),clone=m.list([m.pair('ATK',1)],3),external=m.list([m.pair('atk',2),m.pair('HP',3)]);
+ f.source.blackboard=original;f.cloned.blackboard=clone;f.options.mergeBlackboard=fearProjectileBlackboardMerge({allocateList:()=>{throw Error('unexpected allocation');},initializeList:storage.initialize,
+  readCount:storage.readCount,readItem:storage.getItem,setItem:storage.setItem,addItem:storage.add,compareIgnoreCase:(a,b)=>a.toLowerCase()===b.toLowerCase()?0:1});
+ assert.equal(f.api().tryGetKey('key',f.out,external),true);assert.equal(f.out.value.data.blackboard,clone);assert.equal(clone._size,2);assert.equal(clone._version,2);assert.equal(original._version,0);assert.deepEqual(storage.getItem(original,0),m.pair('ATK',1));
+});
 
 function blackboardMergeFixture(){
  const events=[],created=[],pair=(key,value=0,valueStr=null)=>({key,value,valueStr}),options={allocateList:()=>{const list=[];created.push(list);events.push('allocate');return list;},
