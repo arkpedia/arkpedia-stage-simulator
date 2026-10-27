@@ -2101,6 +2101,27 @@ result['modeSwitch']['buffNotification']['newBuff']['predicateNodes'] = {
     'nativeAttributeQueryEffectsVerified': False, 'livePredicateNodeDispatchVerified': False,
 }
 context_stack_canonical = []
+target_region = c['unique'](lambda region: region[0] == 0xced380, v['runtime'])
+assert target_region == (0xced380, 0xced5c0, 0x7261558)
+assert v['families'][v['parent'](target_region)] == [target_region]
+target_pos = v['offset'](v['image_base'] + target_region[0])
+target_raw = v['b'][target_pos:target_pos + 576]
+target_code, target_table = target_raw[:532], target_raw[532:]
+target_decoded = list(Cs(CS_ARCH_X86, CS_MODE_64).disasm(target_code, v['image_base'] + 0xced380))
+assert sum(i.size for i in target_decoded) == 532
+target_entries = list(struct.unpack('<11I', target_table))
+assert target_entries == [0xced3d4, 0xced3e3, 0xced3f1, 0xced40f, 0xced42d, 0xced457, 0xced481, 0xced493, 0xced49f, 0xced4f1, 0xced53b]
+assert all(entry in {i.address - v['image_base'] for i in target_decoded} for entry in target_entries)
+assert any(i.address - v['image_base'] == 0xced3c8 and i.op_str == 'ecx, dword ptr [rdx + rdi*4 + 0xced594]' for i in target_decoded)
+result['modeSwitch']['buffNotification']['newBuff']['actionTargets'] = {
+    'definition': target_resolver, 'entryRva': 0xced380,
+    'region': {'beginRva': target_region[0], 'endRva': target_region[1], 'unwindRva': target_region[2], 'base64': base64.b64encode(target_raw).decode(), 'sha256': v['sha'](target_raw)},
+    'code': {'beginRva': 0xced380, 'endRva': 0xced594, 'base64': base64.b64encode(target_code).decode(), 'sha256': v['sha'](target_code),
+        'instructions': [{'rva': i.address - v['image_base'], 'size': i.size, 'mnemonic': i.mnemonic, 'operands': i.op_str} for i in target_decoded]},
+    'jumpTable': {'beginRva': 0xced594, 'endRva': 0xced5c0, 'base64': base64.b64encode(target_table).decode(), 'sha256': v['sha'](target_table), 'entries': target_entries},
+    'boundary': 'Complete PE unwind region partitioned into 532 code bytes and eleven little-endian RVA entries; every case points to a decoded instruction',
+    'nativeOwnerAndPointerEffectsVerified': False, 'nativeUnityEffectsVerified': False, 'nativeClassInitializationVerified': False, 'liveActionTargetsVerified': False,
+}
 for index in [24503, 24504, 24505, 24506, 24513, 24514, 24515, 24509, 24510, 24511, 24517, 24518, 24519]:
     spec = priority['specification'](index)
     assert spec['declaringType'] in ['ContextPtrStack`1', 'ContextValueStack`1'] and spec['nativeMapping'] is not None

@@ -1402,6 +1402,35 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
 
+### Reviewed target-selector switch and embedded jump table
+
+The203 ordinary methods remain unchanged. The complete GetActionTarget PE
+unwind region0xced380..0xced5c0 contains532 code bytes followed by eleven
+little-endian RVA entries. A separately reviewed segmented record retains the
+entire576-byte region, both portions and their hashes. Every table target is
+a decoded instruction boundary, the unsigned selector check admits0..10,
+and the dispatch reads the table at0xced594 relative to image base. The shared
+linear code reader is unchanged; its earlier failure record and existing gates
+remain intact. This adds source evidence without certifying runtime effects.
+
+`fearProjectileActionTargets` implements all eleven selector branches. Target,
+source and main target return their stored references directly. Buff source/
+owner and main-buff source use a captured nullable buff receiver. Modifier
+source/target delegate through the stored Modifier value. Projectile source/
+trace target and ability owner first test Unity validity, then reread the
+snapshot field before the getter; a field cleared after a successful validity
+probe throws at that reread. Unknown selectors return null before snapshot
+access. Owner/pointer getters and Unity validity remain explicit receivers.
+
+The checked self-death graph now uses this selector's BUFF_OWNER branch in its
+predicate calls. Tests cover all eleven cases, raw-reference retention, nullable
+buffs, receiver capture, mutable snapshot rereads, invalid Unity objects and
+post-validity null failures. All1212 focused native/fear/family/miner tests pass.
+Class initialization, concrete pointer/owner/Unity effects and live controller/
+stage/frame parity remain unverified. No source/support/receipt/catalogue gate
+changes or stage promotion follow; this checkpoint remains local outside
+pending upload authorization.
+
 ### Abnormal predicate nodes through ActionUtil
 
 The203 ordinary bodies remain unchanged. New bindings retain instance fields,

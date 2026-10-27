@@ -533,6 +533,19 @@ test('context snapshot source binds distinct capture/push orders and closed refe
  assert.equal(q.nativeContextStackEffectsVerified,false);assert.equal(q.nativeNestedValueCopiesVerified,false);assert.equal(q.liveContextSnapshotsVerified,false);
 });
 
+test('action target source partitions the entire unwind region into decoded code and eleven checked RVA entries',()=>{
+ const q=read('data/candidates/arkpedia-windows-fear-self-death-source.json').modeSwitch.buffNotification.newBuff.actionTargets;
+ const bytes=part=>{const raw=Buffer.from(part.base64,'base64');assert.equal(raw.length,part.endRva-part.beginRva);assert.equal(sha(raw),part.sha256);return raw;},region=bytes(q.region),code=bytes(q.code),table=bytes(q.jumpTable);
+ assert.equal(code.length,532);assert.equal(table.length,44);assert.deepEqual(Buffer.concat([code,table]),region);assert.equal(q.region.unwindRva,0x7261558);
+ assert.equal(q.code.instructions.reduce((n,i)=>n+i.size,0),532);assert.deepEqual(q.jumpTable.entries,Array.from({length:11},(_,i)=>table.readUInt32LE(i*4)));
+ assert.ok(q.jumpTable.entries.every(entry=>q.code.instructions.some(i=>i.rva===entry)));assert.ok(q.code.instructions.some(i=>i.rva===0xced3c8&&i.operands==='ecx, dword ptr [rdx + rdi*4 + 0xced594]'));
+ const at=(rva,mnemonic,operands)=>assert.ok(q.code.instructions.some(i=>i.rva===rva&&i.mnemonic===mnemonic&&i.operands===operands));
+ at(0xced3b8,'cmp','edi, 0xa');at(0xced3bb,'ja','0x180ced57f');at(0xced3c1,'lea','rdx, [rip - 0xced3c8]');at(0xced3d2,'jmp','rcx');
+ at(q.jumpTable.entries[0],'mov','rax, qword ptr [rbx + 8]');at(q.jumpTable.entries[1],'mov','rax, qword ptr [rbx]');at(q.jumpTable.entries[2],'mov','rcx, qword ptr [rbx + 0x10]');at(q.jumpTable.entries[3],'mov','rcx, qword ptr [rbx + 0x10]');
+ at(q.jumpTable.entries[6],'mov','rax, qword ptr [rbx + 0xb8]');at(q.jumpTable.entries[7],'mov','rcx, qword ptr [rbx + 0xe8]');at(0xced4d0,'mov','rcx, qword ptr [rbx + 0xa8]');at(0xced51e,'mov','rcx, qword ptr [rbx + 0xa8]');at(0xced565,'mov','rcx, qword ptr [rbx + 0x18]');
+ for(const name of ['nativeOwnerAndPointerEffectsVerified','nativeUnityEffectsVerified','nativeClassInitializationVerified','liveActionTargetsVerified'])assert.equal(q[name],false);
+});
+
 test('predicate node source binds entity validity, blackboard fallback and distinct flag/combo read ordering',()=>{
  const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.newBuff.predicateNodes;
  assert.deepEqual(q.fields.CheckAbnormalFlag.map(f=>[f.name,f.offset]),[['_abnormalFlag',16],['_targetType',20],['_isUnset',24],['_abnormalFlagKey',32]]);

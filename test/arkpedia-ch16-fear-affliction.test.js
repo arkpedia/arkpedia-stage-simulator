@@ -47,6 +47,32 @@ import {fearProjectileContextPointerStacks,fearProjectileContextValueStacks,fear
 import {fearProjectileContextStructValues} from '../server/sim/content/chapter16-fear-context-values.js';
 import {fearProjectileActionUtil,FEAR_ACTION_SOURCE_FROM_BUFF} from '../server/sim/content/chapter16-fear-action-util.js';
 import {fearProjectilePredicateNodes} from '../server/sim/content/chapter16-fear-predicate-nodes.js';
+import {fearProjectileActionTargets} from '../server/sim/content/chapter16-fear-action-targets.js';
+
+function actionTargetFixture(){
+ const ref={value:{target:{id:0},source:{id:1},buff:{source:{id:2},owner:{id:3}},modifier:{target:{id:4},source:{id:5}},mainTarget:{id:6},mainBuff:{source:{id:7}},projectile:{source:{id:8},trace:{id:9}},ability:{owner:{id:10}}}},
+  options={readBuffSource:buff=>buff.source,readBuffOwner:buff=>buff.owner,readModifierTarget:modifier=>modifier.target,readModifierSource:modifier=>modifier.source,
+   isValidUnity:value=>value!=null&&!value.destroyed,readProjectileSource:value=>value.source,readProjectileTraceTarget:value=>value.trace,readAbilityOwner:value=>value.owner};
+ return{ref,options,api:()=>fearProjectileActionTargets(options)};
+}
+test('action target selector dispatches all eleven targets and rejects unknown selectors before snapshot access',()=>{
+ const f=actionTargetFixture();for(let index=0;index<11;index++)assert.equal(f.api().getEntity(f.ref,index).id,index);
+ assert.equal(f.api().getEntity(null,-1),null);assert.equal(f.api().getEntity(null,11),null);assert.throws(()=>f.api().getEntity(null,0),/null native object/);
+ f.ref.value.target.destroyed=true;assert.equal(f.api().getEntity(f.ref,0),f.ref.value.target);
+ for(const field of ['buff','mainBuff'])f.ref.value[field]=null;for(const index of [2,3,7])assert.equal(f.api().getEntity(f.ref,index),null);
+});
+test('Unity-qualified action targets reread snapshot storage after validity and preserve null-after-validity failures',()=>{
+ for(const selector of [8,9,10]){
+  const f=actionTargetFixture(),field=selector===10?'ability':'projectile',replacement={source:{id:'fresh'},trace:{id:'fresh'},owner:{id:'fresh'}};
+  f.options.isValidUnity=value=>{assert.equal(value,f.ref.value[field]);f.ref.value={...f.ref.value,[field]:replacement};return true;};assert.equal(f.api().getEntity(f.ref,selector).id,'fresh');
+  f.options.isValidUnity=()=>{f.ref.value[field]=null;return true;};assert.throws(()=>f.api().getEntity(f.ref,selector),/null native object/);
+  f.options.isValidUnity=()=>false;assert.equal(f.api().getEntity(f.ref,selector),null);
+ }
+});
+test('buff action targets pass the captured buff to its getter without resampling it during effects',()=>{
+ const f=actionTargetFixture(),original=f.ref.value.buff;f.options.readBuffSource=buff=>{f.ref.value.buff={source:{id:'replacement'}};assert.equal(buff,original);return buff.source;};
+ assert.equal(f.api().getEntity(f.ref,2),original.source);
+});
 
 function predicateNodeFixture(){
  const attributes={},entity={attributes},events=[],ref={value:{}},node={_targetType:3,_abnormalFlag:25,_abnormalCombo:0,_isUnset:false,_abnormalFlagKey:''},
@@ -310,7 +336,9 @@ for(const blocked of ['none','LEVITATE','FROZEN','STUNNED','SLEEPING'])test('che
   {f,g,snapshots,prior}=managedActionContextFixture(),events=[],attributes={m_abnormalFlagsCounter:Array(44).fill(0),m_abnormalImmuneCounter:Array(44).fill(0),m_abnormalAntiCounter:Array(44).fill(0),m_abnormalComboMgr:{m_abnormalFlagMask:0n}},
   status=fearProjectileAttributeStatus({attributes,isActive:()=>true});
  if(flags.has(blocked))attributes.m_abnormalFlagsCounter[flags.get(blocked)]=1;
- const predicates=fearProjectilePredicateNodes({getEntity:(ref,target)=>{assert.equal(ref.value.buff,f.buff);assert.equal(target,targets.get('BUFF_OWNER'));return f.owner;},isDestroyedOrNull:entity=>entity==null||entity.destroyed===true,
+ const unexpected=()=>{throw Error('unexpected self-death target path');},selector=fearProjectileActionTargets({readBuffOwner:buff=>{assert.equal(buff,f.buff);return f.options.readOwner(buff);},
+  readBuffSource:unexpected,readModifierSource:unexpected,readModifierTarget:unexpected,isValidUnity:unexpected,readProjectileSource:unexpected,readProjectileTraceTarget:unexpected,readAbilityOwner:unexpected}),
+  predicates=fearProjectilePredicateNodes({getEntity:selector.getEntity,isDestroyedOrNull:entity=>entity==null||entity.destroyed===true,
   readAttributes:entity=>{assert.equal(entity,f.owner);return attributes;},readBlackboardInt:()=>{throw Error('unexpected graph blackboard lookup');},
   queryFlag:(actual,flag)=>{assert.equal(actual,attributes);events.push([...flags].find(pair=>pair[1]===flag)[0]);return status.getAbnormalFlag(flag);},
   queryCombo:(actual,combo)=>{assert.equal(actual,attributes);assert.equal(combo,combos.get('SLEEPING'));events.push('SLEEPING');return blocked==='SLEEPING';}});
