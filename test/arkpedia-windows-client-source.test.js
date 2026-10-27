@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,14);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,25);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -79,6 +79,34 @@ test('self-death source binds the original template and native chain-stop versus
  const check=castMethod(c,'ActionUtil','CheckExecute');
  at(check,0xe43def,'0x180e43e19');at(check,0xe43df4,'0x180e43e0b');at(check,0xe43e19,'al, 1');
  for(const key of ['runtimeDispatchVerified','frameParity','crossVersionParity'])assert.equal(c[key],false);
+});
+
+test('mode switch source binds the two original modes, death animation hook and same-state FSM restart',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),mode=c.modeSwitch;
+ assert.equal(mode.modeField.name,'m_currentMode');assert.equal(mode.modeField.offset,0x1e8);
+ const graph=Object.fromEntries(Object.entries(mode.graph).map(([key,row])=>{
+  assert.equal(sha(row.component.originalJson),row.component.sha256);assert.equal(row.binding.componentSha256,row.component.sha256);
+  return[key,JSON.parse(row.component.originalJson)];
+ }));
+ assert.deepEqual(graph.owner._modes.map(r=>r.m_PathID),[mode.graph.mode0.component.pathId,mode.graph.mode1.component.pathId]);
+ assert.equal(graph.mode1._attack.m_PathID,'0');assert.equal(graph.mode1._combat.m_PathID,mode.graph.combat1.component.pathId);
+ assert.equal(mode.graph.combat1.scriptIdentity.m_ClassName,'EmptyAnimatedAbility');
+ assert.equal(graph.mode1._animatorHooker.m_PathID,mode.graph.animatorHooker1.component.pathId);
+ assert.deepEqual(graph.animatorHooker1._replaceAnimPairs,[{fromAnimKey:'Die',toAnimKey:'Die_2'}]);
+ assert.deepEqual(mode.parameters.find(m=>m.entryRva===0x854d20).parameters.map(p=>p.name),['nextMode','force','isInit','restartFSM']);
+ const core=c.methods.find(m=>m.entryRva===0x854d20);
+ const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ at(core,0x854ea2,'0x180850800');at(core,0x854eb8,'qword ptr [rbx + 0x1e8], rsi');at(core,0x854ed8,'0x18084ce40');
+ assert.equal(mode.switchSlots.find(s=>s.type==='Enemy').name,'OnSwitchMode');
+ const switched=castMethod(c,'Unit','OnSwitchMode');
+ at(switched,0x852f7f,'0x18247e0b0');at(switched,0x852f86,'0x180852fb2');
+ at(switched,0x852f95,'edi, dword ptr [rcx + 0x48]');at(switched,0x852f9a,'0x18247da40');
+ at(switched,0x852fab,'edx, edi');at(switched,0x852fad,'0x18247d9b0');
+ assert.equal(mode.fsmStateField.name,'<currentStateId>k__BackingField');assert.equal(mode.fsmStateField.offset,0x48);
+ const stop=c.methods.find(m=>m.entryRva===0x247da40);
+ assert.deepEqual(instructions(stop).map(i=>[i.mnemonic,i.operands]),[
+  ['xor','r9d, r9d'],['mov','r8b, 1'],['lea','edx, [r9 - 1]'],['jmp','0x18247dbe0']]);
+ assert.ok(c.methods.some(m=>m.type==='StateMachine'&&m.entryRva===0x247dbe0));
 });
 
 test('selected InstantKill binds Suicide no-source/reborn parameters, suicide mark and SetHpInternal dispatch',()=>{

@@ -8,6 +8,35 @@ export function fearProjectileSelfDeathActivation(b,{owner,...callers}){
  return fearProjectileSelfDeath(b,{...callers,buffOwner:owner,target:owner});
 }
 
+export function fearProjectileModeFsmRestart(b,{owner,isRunning,readState,stop,start}){
+ if(!owner||!Number.isInteger(owner.deploySeq)||[isRunning,readState,stop,start].some(fn=>typeof fn!=='function'))
+  throw new TypeError('Fear mode FSM restart requires an owner life and explicit native state-machine callers');
+ const life=owner.deploySeq;let used=false,ended=false,endHandle=null,removeHandle=null;
+ const release=()=>{ended=true;if(endHandle)b.off(endHandle);if(removeHandle)b.off(removeHandle);endHandle=removeHandle=null;};
+ const active=()=>{if(!ended&&(b.finished||b._endReq||owner.removed||owner.deploySeq!==life))release();return!ended;};
+ if(active()){
+  endHandle=b.on('battleEnd',release);
+  removeHandle=b.on('removed',({unit})=>{if(unit===owner)release();});
+ }
+ return Object.freeze({
+  run(){
+   if(used||!active())return null;
+   used=true;
+   try{
+    const running=isRunning(owner);if(!active())return null;
+    if(typeof running!=='boolean')throw new TypeError('Fear mode FSM requires a native Boolean running state');
+    if(!running)return false;
+    const state=readState(owner);if(!active())return null;
+    if(!Number.isInteger(state)||state<-2147483648||state>2147483647)
+     throw new TypeError('Fear mode FSM requires a native Int32 current state');
+    stop(owner);if(!active())return null;
+    start(owner,state);return true;
+   }finally{release();}
+  },
+  release,
+ });
+}
+
 export function fearProjectileSuicide(b,{target,readAlive,markSuicide,setHpInternal}){
  if(!target||!Number.isInteger(target.deploySeq)||[readAlive,markSuicide,setHpInternal].some(fn=>typeof fn!=='function'))
   throw new TypeError('Fear suicide requires a target life and explicit native alive, suicide-mark and HP callers');

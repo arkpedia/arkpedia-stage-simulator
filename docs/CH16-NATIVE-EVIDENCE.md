@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and fourteen complete default node/runner/entity
+`fearpj_m0_t[switch_to_die]` template and 25 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -629,3 +629,26 @@ from redirecting the self-death actions. General context routing remains exposed
 only by the lower-level handler. Actual BuffToOwner/AddBuff admission, effect
 application, native context stack timing, mode/FSM and HP death processing still
 require integration before enemy or stage support is granted.
+
+### Mode1 and FSM restart
+
+The self-death evidence now binds the original Enemy mode array in order,
+mode1's absent attack, EmptyAnimatedAbility combat and SimpleUnitAnimatorHooker
+mapping Die to Die_2. It retains all three Unit.SwitchMode overloads, mode
+activation/inactivation, Unit/Enemy OnSwitchMode and the FSM running/start/stop
+paths, with metadata argument names and exact component/script hashes.
+
+The native mode core inactivates the old mode, writes `m_currentMode`, activates
+the new mode and dispatches OnSwitchMode. For restartFSM=true, Unit.OnSwitchMode
+only restarts an already-running FSM: it captures currentStateId before Stop and
+passes that saved ID to Start. It does not replace it with a default or start a
+stopped FSM. The reviewed Stop tail-jump leaf and its full callee remain separate
+from the unchanged strict generic reader.
+
+`fearProjectileModeFsmRestart` ports that selected restart with explicit native
+state-machine callers. Tests preserve the old state when Stop mutates it, leave
+stopped FSMs alone, reject reuse/battle end during Stop, guard recursion and
+compose restart before immunity/suicide. Native mode activation, ability detach/
+attach, pose preservation, animation hook execution and live FSM state/cadence
+remain integration inputs. Initial FSM admission and full enemy/stage support
+are still unproven.

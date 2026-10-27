@@ -16,7 +16,7 @@ import {fearProjectileFlight} from '../server/sim/content/chapter16-fear-flight.
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
 import {fearProjectileSpell} from '../server/sim/content/chapter16-fear-spell.js';
-import {fearProjectileSelfDeath,fearProjectileSuicide,fearProjectileSelfDeathActivation} from '../server/sim/content/chapter16-fear-self-death.js';
+import {fearProjectileSelfDeath,fearProjectileSuicide,fearProjectileSelfDeathActivation,fearProjectileModeFsmRestart} from '../server/sim/content/chapter16-fear-self-death.js';
 import {fearProjectileTargetVerifier,fearProjectileSourceMotion} from '../server/sim/content/chapter16-fear-targets.js';
 import {fearProjectileReached,fearProjectileMotionStep,fearProjectileMountReference,fearProjectileTraceMotion} from '../server/sim/content/chapter16-fear-movement.js';
 import { battle as minerBattle, keys as minerKeys } from './helpers/ch17Harness.js';
@@ -24,6 +24,40 @@ import { chapter16Shadow } from '../server/sim/content/chapter16-shadow.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
 const parentKey='feawpj_a[mcreep_fear]';
 const fpOne=1n<<32n;
+test('mode restart preserves the state captured before Stop changes the state machine',()=>{
+ const f=fixture(),events=[];let state=42,running=true;
+ const restart=fearProjectileModeFsmRestart(f.b,{owner:f.source,isRunning:()=>running,readState:()=>state,
+  stop:owner=>{assert.equal(owner,f.source);events.push('stop:'+state);state=-1;running=false;},
+  start:(owner,saved)=>{assert.equal(owner,f.source);events.push('start:'+saved);state=saved;running=true;}});
+ assert.equal(restart.run(),true);assert.equal(state,42);assert.equal(running,true);
+ assert.deepEqual(events,['stop:42','start:42']);assert.equal(restart.run(),null);
+});
+
+test('mode restart does not start a stopped state machine or read an arbitrary default state',()=>{
+ const f=fixture();const unexpected=()=>{throw Error('stopped FSM');};
+ const restart=fearProjectileModeFsmRestart(f.b,{owner:f.source,isRunning:()=>false,readState:unexpected,stop:unexpected,start:unexpected});
+ assert.equal(restart.run(),false);assert.equal(restart.run(),null);
+});
+
+for(const boundary of ['reuse','battleEnd','recursive'])test('mode FSM restart guards '+boundary+' while stopping',()=>{
+ const f=fixture();let starts=0,restart;
+ restart=fearProjectileModeFsmRestart(f.b,{owner:f.source,isRunning:()=>true,readState:()=>7,
+  stop:()=>{if(boundary==='reuse')f.source.deploySeq++;else if(boundary==='battleEnd')f.b.emit('battleEnd',{});
+   else assert.equal(restart.run(),null);},start:()=>starts++});
+ assert.equal(restart.run(),boundary==='recursive'?true:null);assert.equal(starts,boundary==='recursive'?1:0);
+ assert.deepEqual(f.b.errors,[]);
+});
+
+test('selected mode restart can precede immunity and suicide without changing its saved FSM state',()=>{
+ const f=fixture(),events=[];let state=12;
+ const restart=fearProjectileModeFsmRestart(f.b,{owner:f.source,isRunning:()=>true,readState:()=>state,
+  stop:()=>{events.push('stop');state=-1;},start:(_owner,saved)=>{events.push('start');state=saved;}});
+ const activation=fearProjectileSelfDeathActivation(f.b,{owner:f.source,readAbnormalFlag:()=>false,readAbnormalCombo:()=>false,
+  switchMode:()=>{events.push('mode1');restart.run();return true;},
+  createImmunityBuff:()=>{events.push('immunity');return true;},instantKill:()=>{events.push('suicide');return false;}});
+ assert.equal(activation.run(),false);assert.equal(state,12);assert.deepEqual(events,['mode1','stop','start','immunity','suicide']);
+});
+
 test('native self-death activation binds TARGET and BUFF_OWNER to the owner despite an incoming different target',()=>{
  const f=fixture(),events=[];
  const activation=fearProjectileSelfDeathActivation(f.b,{owner:f.source,target:f.target,buffOwner:f.target,

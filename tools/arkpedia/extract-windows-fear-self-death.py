@@ -2,10 +2,12 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Retain exact default action-chain evidence for event5's self-death buff."""
 from pathlib import Path
+import base64
 import json
 import runpy
 import struct
 import sys
+from capstone import Cs, CS_ARCH_X86, CS_MODE_64
 
 ROOT = Path(__file__).resolve().parents[2]
 c = runpy.run_path(str(ROOT / 'tools/arkpedia/extract-windows-cast-lifecycle.py'))
@@ -39,9 +41,28 @@ for name in ['Suicide', 'SetHpInternal', 'get_alive']:
                                 'typeIndex': v['sint'](v['m'], pp + 8)})
 assert [p['name'] for p in parameters['Suicide']] == ['noSource', 'skipReborn']
 assert [p['name'] for p in parameters['SetHpInternal']] == ['value', 'force', 'noSource', 'skipReborn']
+mode_methods, mode_parameters = [], []
+for type_name, names in [('Unit', ['SwitchMode', 'ActivateMode', 'InactiveMode', 'OnSwitchMode']),
+                         ('Enemy', ['OnSwitchMode'])]:
+    t = c['type_row'](type_name, 'Torappu.Battle')
+    for row in t['methods']:
+        if row['name'] not in names:
+            continue
+        record = c['method'](t, row)
+        methods.append(record)
+        mode_methods.append(record['entryRva'])
+        pos = v['method_start'] + row['index'] * 32
+        start, count = v['sint'](v['m'], pos + 12), struct.unpack_from('<H', v['m'], pos + 30)[0]
+        args = []
+        for index in range(count):
+            pp = v['uint'](v['m'], 88) + (start + index) * 12
+            args.append({'index': start + index, 'name': v['text'](v['uint'](v['m'], pp)),
+                         'typeIndex': v['sint'](v['m'], pp + 8)})
+        mode_parameters.append({'type': type_name, **row, 'entryRva': record['entryRva'], 'parameters': args})
 graph_path = 'data/candidates/arkpedia-ch16-fear-projectile-source.json'
 graph_raw = (ROOT / graph_path).read_bytes()
-template = json.loads(graph_raw)['templates']['fearpj_m0_t[switch_to_die]']
+graph = json.loads(graph_raw)
+template = graph['templates']['fearpj_m0_t[switch_to_die]']
 assert v['sha'](template['originalJson'].encode()) == template['sha256']
 original = json.loads(template['originalJson'])
 events = original['eventToActions']['_items']
@@ -50,16 +71,60 @@ actions = json.loads(events[0]['value']['SerializedState'])
 assert [a['$type'].split('+')[-1] for a in actions] == [
     'CheckAbnormalFlag', 'CheckAbnormalFlag', 'CheckAbnormalFlag', 'CheckAbnormalCombo',
     'SwitchMode', 'CreateBuff', 'AlwaysNext', 'InstantKill']
+bindings_path = 'data/candidates/arkpedia-ch16-script-bindings-source.json'
+bindings = json.loads((ROOT / bindings_path).read_bytes())
+prefab = 'dyn/battle/prefabs/enemies/enemy_10128_fearpj.prefab'
+rows = graph['prefabs'][prefab]
+mode_graph = {}
+for role, path_id, expected in [('owner', '8176622560865923362', 'Enemy'),
+    ('mode0', '6909681923100553506', 'UnitMode'), ('mode1', '4179135437288288546', 'UnitMode'),
+    ('combat1', '-5930072227765702366', 'EmptyAnimatedAbility'),
+    ('animatorHooker1', '7661396829937840418', 'SimpleUnitAnimatorHooker')]:
+    row = c['unique'](lambda r: r['pathId'] == path_id, rows)
+    binding = c['unique'](lambda r: r['prefab'] == prefab and r['componentPathId'] == path_id, bindings['bindings'])
+    script_record = bindings['scripts'][binding['scriptPathId']]
+    assert v['sha'](script_record['originalJson'].encode()) == script_record['sha256']
+    script = json.loads(script_record['originalJson'])
+    assert script['m_ClassName'] == expected and script['m_Namespace'].startswith('Torappu.Battle')
+    assert row['sha256'] == binding['componentSha256'] == v['sha'](row['originalJson'].encode())
+    mode_graph[role] = {'component': row, 'binding': binding, 'scriptIdentity': script}
+native = {role: json.loads(value['component']['originalJson']) for role, value in mode_graph.items()}
+assert [r['m_PathID'] for r in native['owner']['_modes']] == [
+    mode_graph['mode0']['component']['pathId'], mode_graph['mode1']['component']['pathId']]
+assert native['mode1']['_attack']['m_PathID'] == '0'
+assert native['mode1']['_combat']['m_PathID'] == mode_graph['combat1']['component']['pathId']
+assert native['mode1']['_animatorHooker']['m_PathID'] == mode_graph['animatorHooker1']['component']['pathId']
+assert native['animatorHooker1']['_replaceAnimPairs'] == [{'fromAnimKey': 'Die', 'toAnimKey': 'Die_2'}]
 result = {'schemaVersion': 1, 'scope': 'Static selected self-death action chain; no runtime/frame/cross-version parity or support admission.',
     'runtimeDispatchVerified': False, 'frameParity': False, 'crossVersionParity': False,
     'nativeFiles': v['pin']['files'], 'imageBase': v['image_base'],
     'sources': {path: {'path': path, 'sha256': v['sha']((ROOT / path).read_bytes())} for path in [
-        'data/arkpedia-global-windows-client-source.json', graph_path]},
+        'data/arkpedia-global-windows-client-source.json', graph_path, bindings_path]},
     'template': template, 'eventKey': 0, 'actions': actions, 'fields': fields, 'methods': methods,
     'entityParameters': parameters, 'suicideFlag': c['unique'](lambda f: f['name'] == 'm_isSuicide', c['fields'](entity)),
     'entitySlots': [c['resolved_slot'](c['type_row'](name, 'Torappu.Battle'), slot)
                     for name in ['Entity', 'Enemy', 'Character'] for slot in [38, 108]],
     'setHpDispatch': {'entryRva': 0x12f30, 'chunks': c['code'](0x12f30), 'metadataIdentityVerified': False}}
+result['modeSwitch'] = {'methods': mode_methods, 'parameters': mode_parameters, 'graph': mode_graph,
+    'modeField': c['unique'](lambda f: f['name'] == 'm_currentMode', c['fields'](c['type_row']('Unit', 'Torappu.Battle'))),
+    'switchSlots': [c['resolved_slot'](c['type_row'](name, 'Torappu.Battle'), 183) for name in ['Unit', 'Enemy']]}
+fsm = c['type_row']('StateMachine', 'Torappu')
+for rva in [0x247e0b0, 0x247d9b0, 0x247dbe0]:
+    methods.append(c['method'](fsm, c['unique'](lambda r: v['pointer'](r) == v['image_base'] + rva, fsm['methods'])))
+stop_row = c['unique'](lambda r: v['pointer'](r) == v['image_base'] + 0x247da40, fsm['methods'])
+pos = v['offset'](v['image_base'] + 0x247da40)
+raw = v['b'][pos:pos + 15]
+decoded = list(Cs(CS_ARCH_X86, CS_MODE_64).disasm(raw, v['image_base'] + 0x247da40))
+assert [(i.mnemonic, i.op_str) for i in decoded] == [
+    ('xor', 'r9d, r9d'), ('mov', 'r8b, 1'), ('lea', 'edx, [r9 - 1]'), ('jmp', '0x18247dbe0')]
+assert sum(i.size for i in decoded) == len(raw)
+methods.append({'type': fsm['name'], **stop_row, 'entryRva': 0x247da40,
+    'chunks': [{'beginRva': 0x247da40, 'endRva': 0x247da4f, 'unwindRva': None,
+        'boundary': 'Reviewed complete four-instruction Stop tail-jump leaf; no stack changes or fallthrough',
+        'base64': base64.b64encode(raw).decode(), 'sha256': v['sha'](raw),
+        'instructions': [{'rva': i.address - v['image_base'], 'size': i.size, 'mnemonic': i.mnemonic,
+                          'operands': i.op_str} for i in decoded]}]})
+result['modeSwitch']['fsmStateField'] = c['unique'](lambda f: f['name'] == '<currentStateId>k__BackingField', c['fields'](fsm))
 serialized = json.dumps(result, ensure_ascii=False, indent=1) + '\n'
 out = ROOT / 'data/candidates/arkpedia-windows-fear-self-death-source.json'
 if __name__ == '__main__':
