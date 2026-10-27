@@ -1,5 +1,45 @@
 # Development priorities
 
+### 27 October: reference-shared priority filtering and native UID tie source
+
+The preceding `c6a502ee` checkpoint made concrete source progress and was saved
+locally while continuation `40484333392` remained live. That continuation is now
+terminal success across all jobs, including 17-12 and both focused platforms.
+Full run `40484748212` remains live at `5319bc8a` across all eight matrix jobs;
+preserve it and do not dispatch another full run while it is active.
+
+Resolved the selected call's actual Entity generic Filter specification and the
+mapped Object canonical/reference-sharing specification. The concrete Entity
+specification has no independent method-table mapping; this is preserved as
+null rather than fabricating a concrete entry. The generic pointer array is
+located by two independent mapped pointer anchors. Actual WeightedTarget
+constructor/CompareTo bodies bind through their mapped canonical specifications.
+New source capture retains those three generic bodies, FilterUtil static setup
+and sandbox hook, Entity.CompareTo, plus image-local FP division, TSMath.Floor
+and MathUtil.Equals implementations.
+
+The selected path maintains a bounded PriorityQueue, not a stable list sort.
+HATRED_WEIGHT_SMALL_ENOUGH_GAP is float32 0.1 converted to FP. The weighted
+comparator compares priorWeight, then quantized primary weight via division/
+floor before the target comparison interface. Entity.CompareTo reads the native
+unsigned BObject.instanceUid at 0x18, distinct from the string Entity.id. The
+extra-mode hook is sandbox filtering, not a distance tie. Native instance UID
+ordering must not be replaced by a guessed string/spawn-order rule.
+
+Concrete reference-sharing RGCTX/interface execution is still unverified and
+explicitly false. One called weight-comparison helper at 0x546a3e0 has neither
+an image-local metadata identity nor a PE unwind entry; its address remains
+explicitly unresolved with no claimed body boundary. The common complete-code
+reader was not relaxed. These are static default code facts, not runtime/CN/frame
+parity or stage admission. All 32 source checks and 78 combined source/Fear/family
+checks pass; the new producer reproduces with --check and is in hosted source CI.
+
+Next finish the remaining comparison/interface context where needed, then the
+fear projectile's hit/count, source-death and event5 mode-switch lifecycle; keep
+the unmatched CN motion field explicit. Integrate test-only16-9 only through its
+exact source/support/receipt gates. Full Chapter16/17 and operator/module scope
+remains open. No merge, deploy or public promotion; quarantine deletions unstaged.
+
 ### 27 October: complete filter code and bounded switch table
 
 Checkpoint `5319bc8a` was concrete source progress. Revalidated both previously

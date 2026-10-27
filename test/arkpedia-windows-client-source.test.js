@@ -66,10 +66,45 @@ test('new compiled evidence grants neither runtime/frame parity nor enemy/stage 
 const castPath='data/candidates/arkpedia-windows-cast-lifecycle-source.json';
 const minerTalentsPath='data/candidates/arkpedia-windows-miner-talents-source.json';
 const fearSelectorPath='data/candidates/arkpedia-windows-fear-selector-source.json';
+const priorityPath='data/candidates/arkpedia-windows-filter-priority-source.json';
 const instructions=method=>method.chunks.flatMap(c=>c.instructions);
 const castMethod=(c,type,name)=>{
  const matches=c.methods.filter(m=>m.type===type&&m.name===name);assert.equal(matches.length,1);return matches[0];
 };
+
+test('priority filtering binds generic definitions and reference-sharing without inventing a concrete native mapping',()=>{
+ const c=read(priorityPath);assert.equal(c.genericMethods.length,3);assert.equal(c.methods.length,6);
+ for(const p of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+p.path,import.meta.url))),p.sha256);
+ for(const method of [...c.methods,...c.genericMethods])for(const chunk of method.chunks){
+  const raw=Buffer.from(chunk.base64,'base64');assert.equal(raw.length,chunk.endRva-chunk.beginRva);assert.equal(sha(raw),chunk.sha256);assert.ok(chunk.unwindRva>0);
+ }
+ const concrete=c.concreteFilterSpecification,canonical=c.genericMethods[0];
+ assert.equal(concrete.declaringType,'FilterUtil');assert.equal(concrete.definition.name,'Filter');
+ assert.deepEqual(concrete.definition,canonical.definition);assert.equal(concrete.nativeMapping,null);
+ assert.equal(concrete.instantiations.method.arguments[0].name,'Entity');assert.equal(canonical.instantiations.method.arguments[0].name,'Object');
+ assert.equal(c.genericPointerTableRva,0x6ae7d00);
+ assert.equal(c.pointerAnchors[0].definition.name,'Filter');assert.equal(c.pointerAnchors[1].definition.name,'Max');
+ for(const flag of ['runtimeDispatchVerified','concreteContextVerified','frameParity','crossVersionParity'])assert.equal(c[flag],false);
+ assert.equal(c.unresolvedWeightComparison.bodyRetained,false);assert.equal(c.unresolvedWeightComparison.metadataIdentityVerified,false);
+});
+
+test('native priority comparator retains gap quantization, interface tie and UID source separately',()=>{
+ const c=read(priorityPath);assert.equal(c.hatredGap.field.name,'HATRED_WEIGHT_SMALL_ENOUGH_GAP');assert.equal(c.hatredGap.field.offset,8);
+ assert.equal(c.hatredGap.hex,'cdcccc3d');assert.equal(c.hatredGap.float32,Math.fround(.1));
+ const comparator=instructions(c.genericMethods.find(m=>m.definition.name==='CompareTo'));
+ for(const [type,name] of [['FP','op_Division'],['TSMath','Floor'],['MathUtil','Equals']]){
+  const target=castMethod(c,type,name),address='0x'+(c.imageBase+target.entryRva).toString(16);
+  assert.ok(comparator.some(i=>i.mnemonic==='call'&&i.operands===address));
+ }
+ assert.ok(comparator.some(i=>i.rva===0x4a5edd2&&i.mnemonic==='call'&&i.operands==='r9'),'equal weights retain interface dispatch, not an invented distance tie');
+ assert.equal(c.instanceUidField.name,'<instanceUid>k__BackingField');assert.equal(c.instanceUidField.offset,0x18);
+ assert.equal((c.instanceUidField.typeBits>>>16)&255,9,'native instance UID is unsigned 32-bit');
+ const tie=instructions(castMethod(c,'Entity','CompareTo'));
+ assert.ok(tie.some(i=>i.rva===0x3a197ae&&i.operands==='eax, dword ptr [rdi + 0x18]'));
+ assert.ok(tie.some(i=>i.rva===0x3a197ba&&i.operands==='edx, dword ptr [rbx + 0x18]'));
+ assert.equal(read('data/candidates/arkpedia-ch16-enemy-support.json').enemies.enemy_10128_fearpj.policy,null);
+ assert.equal(read('data/arkpedia-stages.json').stages.some(s=>s.code==='16-9'),false);
+});
 
 test('fear selector retains complete native chunks and exact CN script identity with explicit layout differences',()=>{
  const c=read(fearSelectorPath);assert.equal(c.methods.length,24);
