@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,182);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,184);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -390,6 +390,22 @@ test('abnormal dirty source binds separate flag/combo and immunity passes with l
  for(const [index,offset]of [0x70,0x78,0x70,0x78].entries())at(q.delegateReads[index],`r9, qword ptr [rbp + 0x${offset.toString(16)}]`);
  for(const rva of q.delegateCalls)at(rva,'qword ptr [r9 + 0x18]');
  assert.equal(q.nativeDelegateInvocationVerified,false);assert.equal(q.liveAbnormalDirtyVerified,false);
+});
+
+test('attribute dirty source binds signed dirty bits and forty-byte ObscuredFP copies before captured callbacks',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.newBuff.attributeDirty,m=castMethod(c,'Attributes','MarkAttributeDirty');
+ const at=(rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ assert.deepEqual(q.fields.map(f=>[f.name,f.offset]),[['m_cachedData',0x50],['m_dirtyMask',0x60],['onAttributeMarkedDirty',0x68]]);
+ assert.equal((q.fields[1].typeBits>>>16)&255,10);assert.equal(q.cachedElement.name,'ObscuredFP');assert.equal(q.cachedElement.namespace,'Torappu');
+ assert.equal(q.conversion.image,'Torappu.Common.dll');assert.equal(q.conversion.entryRva,0x5a45a80);
+ assert.ok(c.methods.some(method=>method.image===q.conversion.image&&method.index===q.conversion.index&&method.entryRva===q.conversion.entryRva));
+ at(q.maskCaptureRva,'rbx, qword ptr [rdi + 0x60]');at(q.firstIdentityCallRva,'0x1828a66d0');at(q.delegateCaptureRva,'rbp, qword ptr [rdi + 0x68]');
+ at(q.shiftMaskRva,'eax, 0x3f');at(q.setBitRva,'rbx, rax');at(q.maskWriteRva,'qword ptr [rdi + 0x60], rbx');at(q.delegateNullTestRva,'rbp, rbp');
+ at(q.cacheCaptureRva,'rbx, qword ptr [rdi + 0x50]');at(q.secondIdentityCallRva,'0x1828a66d0');at(q.cacheBoundsRva,'eax, dword ptr [rbx + 0x18]');
+ at(q.cacheStrideRva,'rax, [rax + rax*4]');at(q.copyReads[0],'xmm0, xmmword ptr [rbx + rax*8 + 0x20]');
+ at(q.copyReads[1],'xmm1, xmmword ptr [rbx + rax*8 + 0x30]');at(q.copyReads[2],'xmm0, qword ptr [rbx + rax*8 + 0x40]');
+ at(q.conversionCallRva,'0x185a45a80');at(q.delegateCallRva,'qword ptr [rbp + 0x18]');
+ assert.equal(q.nativeCachedValueConversionVerified,false);assert.equal(q.nativeDirtyDelegateInvocationVerified,false);assert.equal(q.liveAttributeDirtyVerified,false);
 });
 
 test('native admission source binds signed Int16 counters, combo fallback and Enemy raw-WALK levitation',()=>{

@@ -35,7 +35,7 @@ import {fearProjectileNewBuff} from '../server/sim/content/chapter16-fear-buff-n
 import {fearProjectileAttributeStatus,fearProjectileBuffAdmission,fearProjectileComboFlag} from '../server/sim/content/chapter16-fear-buff-admission.js';
 import {fearProjectileEnsureOverrideGroup,fearProjectileOverrideGroup} from '../server/sim/content/chapter16-fear-buff-group.js';
 import {fearProjectileBuffEnabled} from '../server/sim/content/chapter16-fear-buff-enabled.js';
-import {fearProjectileAttributeModifiers,fearProjectileAbnormalDirty} from '../server/sim/content/chapter16-fear-buff-modifiers.js';
+import {fearProjectileAttributeModifiers,fearProjectileAbnormalDirty,fearProjectileMarkAttributeDirty} from '../server/sim/content/chapter16-fear-buff-modifiers.js';
 import {fearProjectileBuffCombos,FEAR_COMBO_FLAG_MASKS} from '../server/sim/content/chapter16-fear-buff-combos.js';
 import {fearProjectileBuffRecyclePool,fearProjectileDefaultBuffPool} from '../server/sim/content/chapter16-fear-buff-pool.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
@@ -49,6 +49,52 @@ import { chapter16Shadow } from '../server/sim/content/chapter16-shadow.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
 const parentKey='feawpj_a[mcreep_fear]';
 const fpOne=1n<<32n;
+
+test('attribute dirty writes its bit then converts a forty-byte value copy for the captured delegate',()=>{
+ const old=new Uint8Array(40).fill(7),attributes={m_dirtyMask:0n,m_cachedData:[old]},seen=[];
+ const original=(index,value)=>seen.push([index,value]);attributes.onAttributeMarkedDirty=original;
+ fearProjectileMarkAttributeDirty({attributes,isActive:()=>true,decodeCachedValue:bytes=>{
+  assert.equal(attributes.m_dirtyMask,1n);assert.notEqual(bytes,old);old.fill(9);assert.equal(bytes[0],7);
+  attributes.onAttributeMarkedDirty=()=>{throw Error('replacement callback');};return 123n;
+ },invokeDelegate:(delegate,index,value)=>{assert.equal(delegate,original);delegate(index,value);}}).run(0);
+ assert.deepEqual(seen,[[0,123n]]);
+});
+test('attribute dirty with no delegate marks wrapped enum bits without accessing its cache',()=>{
+ const attributes={m_dirtyMask:0n,onAttributeMarkedDirty:null,m_cachedData:null},adapter=fearProjectileMarkAttributeDirty({attributes,isActive:()=>true,
+  decodeCachedValue:()=>{throw Error('unexpected decode');},invokeDelegate:()=>{throw Error('unexpected delegate');}});
+ adapter.run(64);assert.equal(attributes.m_dirtyMask,1n);adapter.run(-1);assert.equal(attributes.m_dirtyMask,BigInt.asIntN(64,(1n<<63n)|1n));
+});
+test('attribute dirty copies Buffer-backed cache bytes without retaining a shared slice',()=>{
+ const cached=Buffer.alloc(40,3),attributes={m_dirtyMask:0n,m_cachedData:[cached],onAttributeMarkedDirty:{}};
+ fearProjectileMarkAttributeDirty({attributes,isActive:()=>true,decodeCachedValue:copy=>{cached.fill(8);assert.equal(copy[0],3);return 0n;},invokeDelegate:()=>{}}).run(0);
+});
+test('attribute dirty checks the unmasked cache index after marking its wrapped bit',()=>{
+ for(const index of [-1,64]){
+  const attributes={m_dirtyMask:0n,onAttributeMarkedDirty:{},m_cachedData:[new Uint8Array(40)]};
+  assert.throws(()=>fearProjectileMarkAttributeDirty({attributes,isActive:()=>true,decodeCachedValue:()=>0n,invokeDelegate:()=>{}}).run(index),/outside/);
+  assert.equal(attributes.m_dirtyMask,BigInt.asIntN(64,1n<<BigInt(index&63)));
+ }
+});
+test('attribute dirty keeps completed bit writes when conversion fails or lifecycle ends before its callback',()=>{
+ for(const cancel of [false,true]){
+  const attributes={m_dirtyMask:0n,onAttributeMarkedDirty:{},m_cachedData:[new Uint8Array(40)]},state={active:true};let called=false;
+  const adapter=fearProjectileMarkAttributeDirty({attributes,isActive:()=>state.active,decodeCachedValue:()=>{if(!cancel)throw Error('decode failure');state.active=false;return 0n;},invokeDelegate:()=>{called=true;}});
+  if(cancel)assert.equal(adapter.run(0),null);else assert.throws(()=>adapter.run(0),/decode failure/);
+  assert.equal(attributes.m_dirtyMask,1n);assert.equal(called,false);
+ }
+});
+test('nested attribute-dirty callbacks retain independent copied cached values and accumulate dirty bits',()=>{
+ const attributes={m_dirtyMask:0n,m_cachedData:[new Uint8Array(40).fill(1),new Uint8Array(40).fill(2)]},seen=[];let adapter;
+ attributes.onAttributeMarkedDirty=(index,value)=>{seen.push([index,value]);if(index===0)adapter.run(1);};
+ adapter=fearProjectileMarkAttributeDirty({attributes,isActive:()=>true,decodeCachedValue:bytes=>BigInt(bytes[0]),invokeDelegate:(fn,...args)=>fn(...args)});
+ adapter.run(0);assert.equal(attributes.m_dirtyMask,3n);assert.deepEqual(seen,[[0,1n],[1,2n]]);
+});
+test('modifier addition composes concrete attribute-dirty marking after all per-attribute set writes',()=>{
+ const f=modifierFixture();f.attributes.m_dirtyMask=0n;f.attributes.onAttributeMarkedDirty=null;
+ const dirty=fearProjectileMarkAttributeDirty({attributes:f.attributes,isActive:()=>true,decodeCachedValue:()=>{throw Error('unexpected decode');},invokeDelegate:()=>{}});
+ f.options.markAttributeDirty=(attrs,index)=>{assert.equal(attrs.m_attributeModifiers[2].has(f.modifier),true);dirty.run(index);};
+ f.adapter().add(f.modifier);assert.equal(f.attributes.m_dirtyMask,5n);
+});
 
 function comboFixture(){
  const manager={m_abnormalComboCounter:[0,0],m_abnormalComboImmuneCounter:[0,0],m_abnormalComboMask:0n,m_abnormalFlagMask:0n},events=[],state={active:true};

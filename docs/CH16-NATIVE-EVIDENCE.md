@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 182 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 184 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -1401,6 +1401,40 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 124-method bundle. Continuation40545156330 at3b7defc7 passed; existing
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
+
+### Attribute dirty bits and cached-value callback copies
+
+The184-method bundle additionally retains Attributes.MarkAttributeDirty and
+the exact Torappu.Common.dll ObscuredFP.op_Implicit wrapper called by it.
+Metadata binds m_cachedData to an ObscuredFP array, m_dirtyMask to signed Int64
+and onAttributeMarkedDirty to its native delegate field. Caller instructions
+bind two identity conversions, low-six-bit dirty selection, the40-byte cache
+stride and16+16+8-byte stack copy before conversion. The native decryption and
+delegate effects remain explicit; the retained wrapper alone does not certify
+their execution.
+
+`fearProjectileMarkAttributeDirty` captures the old dirty mask and delegate,
+writes the selected bit, and skips cache access when no delegate exists. With
+a delegate it checks the original signed attribute index against the cache,
+copies all40 cache bytes, converts that copy and invokes the captured delegate
+with index/value. The array index is not reduced to six bits. Invalid indices
+therefore retain their dirty-bit write before throwing. Copies also detach
+Buffer-backed byte views; callback replacement during conversion does not
+replace the already captured delegate. Nested calls and completed mutations
+survive receiver failure or lifecycle cancellation according to call order.
+
+Tests cover copy detachment, captured callbacks, missing delegates, wrapped
+dirty indices with unmasked bounds checks, nested callbacks, conversion failure,
+cancellation and composition after all selected per-attribute set mutations.
+All1058 focused native/fear/family/miner tests pass; --check reproduces184
+complete methods. This checkpoint remains local. Approved0524e2b1 continuation
+passed on attempt2; original full40558578137 still has eight live Linux/Windows
+test jobs across Node22/24 and both shards.
+
+Cached-value conversion/decryption, native delegates, HashSet equality/storage,
+actions, snapshots, OnBuffExtend and full controller/stage/frame integration
+remain open. Source/support/receipt/catalogue gates remain unchanged and all
+new stages remain test-only.
 
 ### Abnormal combo counters and dirty notification passes
 

@@ -65,3 +65,26 @@ export function fearProjectileAbnormalDirty({attributes,readMask,invokeDelegate,
   }catch(error){if(error===cancelled)return null;throw error;}
  }});
 }
+
+// Default MarkAttributeDirty. ObscuredFP cache entries are copied as forty
+// bytes before conversion; the native conversion/delegate stay explicit.
+export function fearProjectileMarkAttributeDirty({attributes,decodeCachedValue,invokeDelegate,isActive}){
+ if(!attributes||[decodeCachedValue,invokeDelegate,isActive].some(fn=>typeof fn!=='function'))throw new TypeError('Fear attribute dirty requires native attributes, cached-value conversion, delegate and lifecycle callers');
+ const cancelled=Symbol('cancelled'),check=()=>{const active=isActive();if(typeof active!=='boolean')throw new TypeError('Fear attribute dirty requires native Boolean lifecycle results');if(!active)throw cancelled;};
+ const raw=value=>{if(typeof value!=='bigint'||value<-(1n<<63n)||value>=(1n<<63n))throw new TypeError('Fear attribute dirty requires signed Int64 masks and FP values');return value;};
+ return Object.freeze({run(index){
+  try{
+   check();if(!Number.isInteger(index)||index<-(2**31)||index>=2**31)throw new TypeError('Fear attribute dirty requires a native Int32 attribute');
+   const previous=raw(attributes.m_dirtyMask),delegate=attributes.onAttributeMarkedDirty;
+   attributes.m_dirtyMask=BigInt.asIntN(64,previous|(1n<<BigInt(index&63)));check();
+   if(delegate==null)return;
+   const values=attributes.m_cachedData;
+   if(values==null)throw new TypeError('Fear attribute dirty dereferenced a null native cache array');
+   if(!Array.isArray(values))throw new TypeError('Fear attribute dirty requires a native cache array');
+   if(index<0||index>=values.length)throw new RangeError('Fear dirty attribute is outside the native cache array');
+   const value=values[index];if(!(value instanceof Uint8Array)||value.length!==40)throw new TypeError('Fear attribute dirty requires a forty-byte ObscuredFP projection');
+   const snapshot=new Uint8Array(value),decoded=decodeCachedValue(snapshot);check();raw(decoded);
+   invokeDelegate(delegate,index,decoded);check();
+  }catch(error){if(error===cancelled)return null;throw error;}
+ }});
+}

@@ -1471,6 +1471,33 @@ result['modeSwitch']['buffNotification']['newBuff']['abnormalDirty'] = {
     'delegateCalls': [0x3958ee3, 0x3958f43, 0x3958fa3, 0x3959003],
     'nativeDelegateInvocationVerified': False, 'liveAbnormalDirtyVerified': False,
 }
+dirty_row = c['unique'](lambda r: r['name'] == 'MarkAttributeDirty', attributes_type['methods'])
+if not any(m['index'] == dirty_row['index'] and m['image'] == 'Assembly-CSharp.dll' for m in methods):
+    methods.append(c['method'](attributes_type, dirty_row))
+cached_field = c['unique'](lambda f: f['name'] == 'm_cachedData', c['fields'](attributes_type))
+assert (cached_field['typeBits'] >> 16) & 255 == 29
+cached_element = v['offset'](cached_field['typeData'])
+assert (v['uint'](v['b'], cached_element + 8) >> 16) & 255 == 17
+cached_type = v['types'][v['quad'](v['b'], cached_element)]
+assert cached_type['name'] == 'ObscuredFP' and cached_type['namespace'] == 'Torappu'
+cached_module = c['module']('Torappu.Common.dll')
+cached_table = v['offset'](v['image_base'] + cached_module['methodPointerTableRva'])
+cached_conversion_row = c['unique'](lambda r: r['name'] == 'op_Implicit' and
+    v['quad'](v['b'], cached_table + ((r['token'] & 0xffffff) - 1) * 8) - v['image_base'] == 0x5a45a80, cached_type['methods'])
+cached_conversion = c['method'](cached_type, cached_conversion_row, 'Torappu.Common.dll')
+if not any(m['index'] == cached_conversion_row['index'] and m['image'] == 'Torappu.Common.dll' for m in methods):
+    methods.append(cached_conversion)
+result['modeSwitch']['buffNotification']['newBuff']['attributeDirty'] = {
+    'fields': [c['unique'](lambda f: f['name'] == name, c['fields'](attributes_type)) for name in ['m_cachedData', 'm_dirtyMask', 'onAttributeMarkedDirty']],
+    'cachedElement': {'name': cached_type['name'], 'namespace': cached_type['namespace'], 'index': cached_type['index'], 'typeHex': v['b'][cached_element:cached_element + 16].hex()},
+    'conversion': {'image': 'Torappu.Common.dll', 'index': cached_conversion_row['index'], 'entryRva': 0x5a45a80},
+    'maskCaptureRva': 0x3957ece, 'firstIdentityCallRva': 0x3957ed2, 'delegateCaptureRva': 0x3957ed7,
+    'shiftMaskRva': 0x3957edb, 'setBitRva': 0x3957ede, 'maskWriteRva': 0x3957ee2, 'delegateNullTestRva': 0x3957ee6,
+    'cacheCaptureRva': 0x3957ef4, 'secondIdentityCallRva': 0x3957ef8, 'cacheBoundsRva': 0x3957f04,
+    'cacheStrideRva': 0x3957f09, 'copyReads': [0x3957f0f, 0x3957f19, 0x3957f23],
+    'conversionCallRva': 0x3957f34, 'delegateCallRva': 0x3957f46,
+    'nativeCachedValueConversionVerified': False, 'nativeDirtyDelegateInvocationVerified': False, 'liveAttributeDirtyVerified': False,
+}
 for index in [147561, 147566, 147567, 147558, 147559, 147563, 147564, 147568, 147569]:
     spec = priority['specification'](index)
     assert spec['declaringTypeIndex'] == pool['index']

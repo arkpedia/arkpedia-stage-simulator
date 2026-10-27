@@ -88322,6 +88322,357 @@
   },
   {
    "image": "Assembly-CSharp.dll",
+   "typeIndex": 8873,
+   "namespace": "Torappu.Battle",
+   "type": "Attributes",
+   "index": 55766,
+   "name": "MarkAttributeDirty",
+   "token": 100719063,
+   "virtualSlot": 65535,
+   "parameterCount": 1,
+   "entryRva": 60128912,
+   "chunks": [
+    {
+     "beginRva": 60128912,
+     "endRva": 60129130,
+     "unwindRva": 119936760,
+     "sha256": "6f8fd73076f961d62d6f9e3ed9466ad26bc548a60eab327f1487f1e6e6b71473",
+     "base64": "SIlcJAhIiWwkEEiJdCQYV0iD7FCAPffKXQQAi/JIi/l1E0iNDd9zIATo8oWr/MYF3cpdBAFIixXMcyAEi85Ii19g6Pnn9P5Ii29og+A/SA+rw0iJX2BIhe10XkiLFaZzIASLzkiLX1Do0+f0/kiF23RcSJg7QxhzW0iNBIAz0g8QRMMgSI1MJCAPEEzDMA8pRCQg8g8QRMNA8g8RRCRADylMJDDoR9sOAkyLTShMi8BIi01Ai9b/VRhIi1wkYEiLbCRoSIt0JHBIg8RQX8PoHYer/MzoB4er/Mw=",
+     "instructions": [
+      {
+       "rva": 60128912,
+       "mnemonic": "mov",
+       "operands": "qword ptr [rsp + 8], rbx"
+      },
+      {
+       "rva": 60128917,
+       "mnemonic": "mov",
+       "operands": "qword ptr [rsp + 0x10], rbp"
+      },
+      {
+       "rva": 60128922,
+       "mnemonic": "mov",
+       "operands": "qword ptr [rsp + 0x18], rsi"
+      },
+      {
+       "rva": 60128927,
+       "mnemonic": "push",
+       "operands": "rdi"
+      },
+      {
+       "rva": 60128928,
+       "mnemonic": "sub",
+       "operands": "rsp, 0x50"
+      },
+      {
+       "rva": 60128932,
+       "mnemonic": "cmp",
+       "operands": "byte ptr [rip + 0x45dcaf7], 0"
+      },
+      {
+       "rva": 60128939,
+       "mnemonic": "mov",
+       "operands": "esi, edx"
+      },
+      {
+       "rva": 60128941,
+       "mnemonic": "mov",
+       "operands": "rdi, rcx"
+      },
+      {
+       "rva": 60128944,
+       "mnemonic": "jne",
+       "operands": "0x183957ec5"
+      },
+      {
+       "rva": 60128946,
+       "mnemonic": "lea",
+       "operands": "rcx, [rip + 0x42073df]"
+      },
+      {
+       "rva": 60128953,
+       "mnemonic": "call",
+       "operands": "0x1804104b0"
+      },
+      {
+       "rva": 60128958,
+       "mnemonic": "mov",
+       "operands": "byte ptr [rip + 0x45dcadd], 1"
+      },
+      {
+       "rva": 60128965,
+       "mnemonic": "mov",
+       "operands": "rdx, qword ptr [rip + 0x42073cc]"
+      },
+      {
+       "rva": 60128972,
+       "mnemonic": "mov",
+       "operands": "ecx, esi"
+      },
+      {
+       "rva": 60128974,
+       "mnemonic": "mov",
+       "operands": "rbx, qword ptr [rdi + 0x60]"
+      },
+      {
+       "rva": 60128978,
+       "mnemonic": "call",
+       "operands": "0x1828a66d0"
+      },
+      {
+       "rva": 60128983,
+       "mnemonic": "mov",
+       "operands": "rbp, qword ptr [rdi + 0x68]"
+      },
+      {
+       "rva": 60128987,
+       "mnemonic": "and",
+       "operands": "eax, 0x3f"
+      },
+      {
+       "rva": 60128990,
+       "mnemonic": "bts",
+       "operands": "rbx, rax"
+      },
+      {
+       "rva": 60128994,
+       "mnemonic": "mov",
+       "operands": "qword ptr [rdi + 0x60], rbx"
+      },
+      {
+       "rva": 60128998,
+       "mnemonic": "test",
+       "operands": "rbp, rbp"
+      },
+      {
+       "rva": 60129001,
+       "mnemonic": "je",
+       "operands": "0x183957f49"
+      },
+      {
+       "rva": 60129003,
+       "mnemonic": "mov",
+       "operands": "rdx, qword ptr [rip + 0x42073a6]"
+      },
+      {
+       "rva": 60129010,
+       "mnemonic": "mov",
+       "operands": "ecx, esi"
+      },
+      {
+       "rva": 60129012,
+       "mnemonic": "mov",
+       "operands": "rbx, qword ptr [rdi + 0x50]"
+      },
+      {
+       "rva": 60129016,
+       "mnemonic": "call",
+       "operands": "0x1828a66d0"
+      },
+      {
+       "rva": 60129021,
+       "mnemonic": "test",
+       "operands": "rbx, rbx"
+      },
+      {
+       "rva": 60129024,
+       "mnemonic": "je",
+       "operands": "0x183957f5e"
+      },
+      {
+       "rva": 60129026,
+       "mnemonic": "cdqe",
+       "operands": ""
+      },
+      {
+       "rva": 60129028,
+       "mnemonic": "cmp",
+       "operands": "eax, dword ptr [rbx + 0x18]"
+      },
+      {
+       "rva": 60129031,
+       "mnemonic": "jae",
+       "operands": "0x183957f64"
+      },
+      {
+       "rva": 60129033,
+       "mnemonic": "lea",
+       "operands": "rax, [rax + rax*4]"
+      },
+      {
+       "rva": 60129037,
+       "mnemonic": "xor",
+       "operands": "edx, edx"
+      },
+      {
+       "rva": 60129039,
+       "mnemonic": "movups",
+       "operands": "xmm0, xmmword ptr [rbx + rax*8 + 0x20]"
+      },
+      {
+       "rva": 60129044,
+       "mnemonic": "lea",
+       "operands": "rcx, [rsp + 0x20]"
+      },
+      {
+       "rva": 60129049,
+       "mnemonic": "movups",
+       "operands": "xmm1, xmmword ptr [rbx + rax*8 + 0x30]"
+      },
+      {
+       "rva": 60129054,
+       "mnemonic": "movaps",
+       "operands": "xmmword ptr [rsp + 0x20], xmm0"
+      },
+      {
+       "rva": 60129059,
+       "mnemonic": "movsd",
+       "operands": "xmm0, qword ptr [rbx + rax*8 + 0x40]"
+      },
+      {
+       "rva": 60129065,
+       "mnemonic": "movsd",
+       "operands": "qword ptr [rsp + 0x40], xmm0"
+      },
+      {
+       "rva": 60129071,
+       "mnemonic": "movaps",
+       "operands": "xmmword ptr [rsp + 0x30], xmm1"
+      },
+      {
+       "rva": 60129076,
+       "mnemonic": "call",
+       "operands": "0x185a45a80"
+      },
+      {
+       "rva": 60129081,
+       "mnemonic": "mov",
+       "operands": "r9, qword ptr [rbp + 0x28]"
+      },
+      {
+       "rva": 60129085,
+       "mnemonic": "mov",
+       "operands": "r8, rax"
+      },
+      {
+       "rva": 60129088,
+       "mnemonic": "mov",
+       "operands": "rcx, qword ptr [rbp + 0x40]"
+      },
+      {
+       "rva": 60129092,
+       "mnemonic": "mov",
+       "operands": "edx, esi"
+      },
+      {
+       "rva": 60129094,
+       "mnemonic": "call",
+       "operands": "qword ptr [rbp + 0x18]"
+      },
+      {
+       "rva": 60129097,
+       "mnemonic": "mov",
+       "operands": "rbx, qword ptr [rsp + 0x60]"
+      },
+      {
+       "rva": 60129102,
+       "mnemonic": "mov",
+       "operands": "rbp, qword ptr [rsp + 0x68]"
+      },
+      {
+       "rva": 60129107,
+       "mnemonic": "mov",
+       "operands": "rsi, qword ptr [rsp + 0x70]"
+      },
+      {
+       "rva": 60129112,
+       "mnemonic": "add",
+       "operands": "rsp, 0x50"
+      },
+      {
+       "rva": 60129116,
+       "mnemonic": "pop",
+       "operands": "rdi"
+      },
+      {
+       "rva": 60129117,
+       "mnemonic": "ret",
+       "operands": ""
+      },
+      {
+       "rva": 60129118,
+       "mnemonic": "call",
+       "operands": "0x180410680"
+      },
+      {
+       "rva": 60129123,
+       "mnemonic": "int3",
+       "operands": ""
+      },
+      {
+       "rva": 60129124,
+       "mnemonic": "call",
+       "operands": "0x180410670"
+      },
+      {
+       "rva": 60129129,
+       "mnemonic": "int3",
+       "operands": ""
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "image": "Torappu.Common.dll",
+   "typeIndex": 34369,
+   "namespace": "Torappu",
+   "type": "ObscuredFP",
+   "index": 196201,
+   "name": "op_Implicit",
+   "token": 100663955,
+   "virtualSlot": 65535,
+   "parameterCount": 1,
+   "entryRva": 94657152,
+   "chunks": [
+    {
+     "beginRva": 94657152,
+     "endRva": 94657168,
+     "unwindRva": 119936356,
+     "sha256": "ac9dc086468c3759c23f37d2da6f6853e338f4e7cfaa579b519983133a52ab4c",
+     "base64": "SIPsKDPS6OX8//9Ig8Qoww==",
+     "instructions": [
+      {
+       "rva": 94657152,
+       "mnemonic": "sub",
+       "operands": "rsp, 0x28"
+      },
+      {
+       "rva": 94657156,
+       "mnemonic": "xor",
+       "operands": "edx, edx"
+      },
+      {
+       "rva": 94657158,
+       "mnemonic": "call",
+       "operands": "0x185a45770"
+      },
+      {
+       "rva": 94657163,
+       "mnemonic": "add",
+       "operands": "rsp, 0x28"
+      },
+      {
+       "rva": 94657167,
+       "mnemonic": "ret",
+       "operands": ""
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "image": "Assembly-CSharp.dll",
    "typeIndex": 8911,
    "namespace": "Torappu.Battle",
    "type": "BattleController",
@@ -108264,6 +108615,66 @@
      ],
      "nativeDelegateInvocationVerified": false,
      "liveAbnormalDirtyVerified": false
+    },
+    "attributeDirty": {
+     "fields": [
+      {
+       "index": 59897,
+       "name": "m_cachedData",
+       "typeIndex": 29273,
+       "offset": 80,
+       "typeData": 6574454760,
+       "typeBits": 1900545
+      },
+      {
+       "index": 59899,
+       "name": "m_dirtyMask",
+       "typeIndex": 52839,
+       "offset": 96,
+       "typeData": 36889,
+       "typeBits": 2148139009
+      },
+      {
+       "index": 59900,
+       "name": "onAttributeMarkedDirty",
+       "typeIndex": 5752,
+       "offset": 104,
+       "typeData": 6573977848,
+       "typeBits": 1376262
+      }
+     ],
+     "cachedElement": {
+      "name": "ObscuredFP",
+      "namespace": "Torappu",
+      "index": 34369,
+      "typeHex": "41860000000000000000118000000000"
+     },
+     "conversion": {
+      "image": "Torappu.Common.dll",
+      "index": 196201,
+      "entryRva": 94657152
+     },
+     "maskCaptureRva": 60128974,
+     "firstIdentityCallRva": 60128978,
+     "delegateCaptureRva": 60128983,
+     "shiftMaskRva": 60128987,
+     "setBitRva": 60128990,
+     "maskWriteRva": 60128994,
+     "delegateNullTestRva": 60128998,
+     "cacheCaptureRva": 60129012,
+     "secondIdentityCallRva": 60129016,
+     "cacheBoundsRva": 60129028,
+     "cacheStrideRva": 60129033,
+     "copyReads": [
+      60129039,
+      60129049,
+      60129059
+     ],
+     "conversionCallRva": 60129076,
+     "delegateCallRva": 60129094,
+     "nativeCachedValueConversionVerified": false,
+     "nativeDirtyDelegateInvocationVerified": false,
+     "liveAttributeDirtyVerified": false
     }
    },
    "poolIdentity": {
