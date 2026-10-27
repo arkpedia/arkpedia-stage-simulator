@@ -40,6 +40,7 @@ import {fearProjectileBuffCombos,FEAR_COMBO_FLAG_MASKS} from '../server/sim/cont
 import {fearProjectileRuntimeSnapshot,fearProjectileTakeBuffSnapshot} from '../server/sim/content/chapter16-fear-buff-snapshot.js';
 import {fearProjectileAttributeValues} from '../server/sim/content/chapter16-fear-attribute-values.js';
 import {fearProjectileBuffAttributeProvider} from '../server/sim/content/chapter16-fear-buff-provider.js';
+import {fearProjectileRunBuffActions} from '../server/sim/content/chapter16-fear-buff-run-actions.js';
 import {fearProjectileBuffRecyclePool,fearProjectileDefaultBuffPool} from '../server/sim/content/chapter16-fear-buff-pool.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
@@ -52,6 +53,73 @@ import { chapter16Shadow } from '../server/sim/content/chapter16-shadow.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
 const parentKey='feawpj_a[mcreep_fear]';
 const fpOne=1n<<32n;
+
+function actionDispatchFixture(){
+ const context={target:{id:'prior-target'},tile:{id:'prior-tile'}},owner={alive:true,tile:{id:'owner-tile'}},source={},
+  buff={m_actions:Array(104).fill(null),m_blackboard:{}},events=[],state={active:true};buff.m_actions[24]=[{id:'enable'}];
+ const options={buff,isActive:()=>state.active,readContext:()=>{events.push('context');return context;},
+  beginChangeGuard:ctx=>{events.push('begin');return{context:ctx,previous:{...ctx}};},setBuff:(guard,value)=>{events.push('buff');guard.context.buff=value;},
+  readSource:()=>{events.push('source');return source;},setSource:(guard,value)=>{events.push('set-source');guard.context.source=value;},
+  readOwner:()=>{events.push('owner');return owner;},setTarget:(guard,value)=>{events.push('target');guard.context.target=value;},
+  readAlive:value=>{events.push('alive');return value.alive;},readRootTile:value=>{events.push('tile');return value.tile;},setTile:(guard,value)=>{events.push('set-tile');guard.context.tile=value;},
+  runActionArray:(actions,instant,board)=>{events.push('run');assert.equal(instant,true);assert.equal(board,buff.m_blackboard);return{...context,modifier:{m_value:1n},atkInfo:{atk:2n},actions};},
+  copySnapshot:value=>{events.push('copy');return{...value,modifier:{...value.modifier},atkInfo:{...value.atkInfo}};},
+  disposeGuard:guard=>{events.push('dispose');for(const key of Object.keys(guard.context))delete guard.context[key];Object.assign(guard.context,guard.previous);}};
+ return{context,owner,source,buff,events,state,options,adapter:()=>fearProjectileRunBuffActions(options)};
+}
+test('buff action dispatch configures context, invokes instant actions and copies the result around guard disposal',()=>{
+ const f=actionDispatchFixture(),prior={...f.context},result=f.adapter().run(24,true);
+ assert.equal(result.buff,f.buff);assert.equal(result.source,f.source);assert.equal(result.target,f.owner);assert.equal(result.tile,f.owner.tile);assert.equal(result.actions,f.buff.m_actions[24]);
+ assert.deepEqual(f.context,prior);assert.deepEqual(f.events,['context','begin','buff','source','set-source','owner','target','owner','alive','owner','tile','set-tile','run','copy','dispose','copy']);
+});
+test('buff action dispatch retains the prior target without setMeAsTarget and the prior tile for a dead owner',()=>{
+ const f=actionDispatchFixture(),prior={...f.context};f.owner.alive=false;const result=f.adapter().run(25,false);
+ assert.equal(result.target,prior.target);assert.equal(result.tile,prior.tile);assert.equal(result.actions,null);
+ assert.equal(f.events.filter(x=>x==='owner').length,1);assert.equal(f.events.includes('target'),false);assert.equal(f.events.includes('tile'),false);
+});
+test('buff action dispatch rereads the owner for target, alive and tile operations',()=>{
+ const f=actionDispatchFixture(),targetOwner={},aliveOwner={alive:true},tileOwner={tile:{}},owners=[targetOwner,aliveOwner,tileOwner];
+ f.options.readOwner=()=>owners.shift();f.options.readAlive=value=>{assert.equal(value,aliveOwner);return true;};
+ f.options.readRootTile=value=>{assert.equal(value,tileOwner);return value.tile;};const result=f.adapter().run(24,true);
+ assert.equal(result.target,targetOwner);assert.equal(result.tile,tileOwner.tile);assert.equal(owners.length,0);
+});
+test('buff action dispatch captures value fields before disposal while retaining reference-field identity',()=>{
+ const f=actionDispatchFixture(),dispose=f.options.disposeGuard;let nativeResult;f.options.runActionArray=()=>nativeResult={source:f.source,modifier:{m_value:1n},atkInfo:{atk:2n}};
+ f.options.disposeGuard=guard=>{nativeResult.modifier.m_value=9n;nativeResult.atkInfo.atk=10n;f.source.changed=true;dispose(guard);};
+ const result=f.adapter().run(24,true);assert.equal(result.modifier.m_value,1n);assert.equal(result.atkInfo.atk,2n);assert.equal(result.source,f.source);assert.equal(result.source.changed,true);
+});
+test('buff action dispatch prepares context and disposes the guard even when the event array or index is invalid',()=>{
+ for(const [actions,event,pattern]of [[null,24,/null native action array/],[[],24,/outside/],[Array(104).fill(null),-1,/outside/]]){
+  const f=actionDispatchFixture();f.buff.m_actions=actions;assert.throws(()=>f.adapter().run(event,true),pattern);
+  assert.equal(f.events.includes('set-tile'),true);assert.equal(f.events.at(-1),'dispose');assert.equal(f.events.includes('run'),false);
+ }
+});
+for(const phase of ['setBuff','readSource','setSource','setTarget','readAlive','readRootTile','setTile','runActionArray','copySnapshot'])
+test('buff action dispatch disposes its guard after '+phase+' failure',()=>{
+ const f=actionDispatchFixture();f.options[phase]=()=>{throw Error('receiver failed');};assert.throws(()=>f.adapter().run(24,true),/receiver failed/);
+ assert.equal(f.events.at(-1),'dispose');assert.equal(f.events.filter(x=>x==='dispose').length,1);
+});
+test('buff action dispatch only disposes successfully returned nonnull guards',()=>{
+ const f=actionDispatchFixture();f.options.readContext=()=>null;assert.throws(()=>f.adapter().run(24,true),/null native/);assert.deepEqual(f.events,[]);
+ const g=actionDispatchFixture();g.options.beginChangeGuard=()=>null;assert.throws(()=>g.adapter().run(24,true),/null native/);assert.equal(g.events.includes('dispose'),false);
+});
+test('buff action dispatch cancellation during guard creation still disposes it, and cancellation during disposal skips return copying',()=>{
+ const f=actionDispatchFixture(),begin=f.options.beginChangeGuard;f.options.beginChangeGuard=ctx=>{const guard=begin(ctx);f.state.active=false;return guard;};
+ assert.equal(f.adapter().run(24,true),null);assert.deepEqual(f.events,['context','begin','dispose']);
+ const g=actionDispatchFixture(),dispose=g.options.disposeGuard;g.options.disposeGuard=guard=>{dispose(guard);g.state.active=false;};
+ assert.equal(g.adapter().run(24,true),null);assert.equal(g.events.filter(x=>x==='copy').length,1);
+});
+test('nested buff action guards restore their own prior context before the outer result is copied',()=>{
+ const f=actionDispatchFixture(),run=f.options.runActionArray;let nested=false,adapter;
+ f.options.runActionArray=(...args)=>{if(!nested){nested=true;const inner=adapter.run(25,false);assert.equal(inner.target,f.owner);assert.equal(f.context.buff,f.buff);}return run(...args);};
+ adapter=f.adapter();const before={...f.context};assert.equal(adapter.run(24,true).target,f.owner);assert.deepEqual(f.context,before);assert.equal(f.events.filter(x=>x==='dispose').length,2);
+});
+test('concrete enable/disable events compose native buff action dispatch and owner targeting',()=>{
+ const f=actionDispatchFixture(),enabled=buffEnabledFixture(),dispatched=[];Object.assign(enabled.buff,f.buff);f.options.buff=enabled.buff;
+ f.options.runActionArray=(actions,instant,board)=>{assert.equal(instant,true);assert.equal(board,enabled.buff.m_blackboard);assert.equal(f.context.target,f.owner);dispatched.push(actions);return{modifier:{},atkInfo:{}};};
+ enabled.options.runActions=(buff,event,target)=>{assert.equal(buff,enabled.buff);f.adapter().run(event,target);};
+ enabled.adapter().set(true);enabled.adapter().set(false);assert.deepEqual(dispatched,[f.buff.m_actions[24],null]);assert.equal(f.events.filter(x=>x==='dispose').length,2);
+});
 
 function buffProviderFixture(){
  const buff={m_isActuallyEnabled:true,m_isManuallyEnabled:false,m_isLateEnabled:false,m_isFinished:true,

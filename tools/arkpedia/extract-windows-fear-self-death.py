@@ -1638,6 +1638,58 @@ result['modeSwitch']['buffNotification']['newBuff']['buffAttributeProvider'] = {
     'enabledTrueRva': 0x39aad01, 'disabledFalseRva': 0x39aad48,
     'nativeInterfaceDispatchVerified': False, 'nativeProviderHotfixVerified': False, 'liveBuffProviderVerified': False,
 }
+action_context_type = c['type_row']('Context', 'Torappu.Battle')
+change_guard_type = c['type_row']('ChangeGuard', '')
+run_action_methods = []
+for owner, name, entry in [(buff, '_RunActions', 0x39b5370), (buff, 'get_context', 0x39b6660), (buff, 'get_source', 0x39b7460),
+    (action_context_type, 'BeginChangeGard', 0x39ed790), (change_guard_type, 'set_buff', 0x39eb000),
+    (change_guard_type, 'set_source', 0x39eb350), (change_guard_type, 'set_target', 0x39eb3e0),
+    (change_guard_type, 'set_tile', 0x39eb470), (change_guard_type, 'Dispose', 0x39ea8f0)]:
+    row = c['unique'](lambda r: r['name'] == name, owner['methods'])
+    retained = c['method'](owner, row)
+    assert retained['entryRva'] == entry
+    if not any(m['index'] == row['index'] and m['image'] == 'Assembly-CSharp.dll' for m in methods):
+        methods.append(retained)
+    run_action_methods.append({'type': owner['name'], 'name': name, 'index': row['index'], 'entryRva': entry})
+run_action_row = c['unique'](lambda r: r['name'] == '_RunActions', buff['methods'])
+result_type_index = v['sint'](v['m'], v['method_start'] + run_action_row['index'] * 32 + 8)
+tp = v['offset'](v['quad'](v['b'], v['type_table'] + result_type_index * 8))
+assert (v['uint'](v['b'], tp + 8) >> 16) & 255 == 17
+action_snapshot_type = v['types'][v['quad'](v['b'], tp)]
+assert action_snapshot_type['name'] == 'Snapshot' and action_snapshot_type['index'] in action_context_type['nested']
+owner_slots = []
+for name, slot, table_offset in [('get_alive', 38, 0x398), ('get_rootTile', 50, 0x458)]:
+    row = c['unique'](lambda r: r['name'] == name, entity['methods'])
+    assert struct.unpack_from('<H', v['m'], v['method_start'] + row['index'] * 32 + 28)[0] == slot
+    owner_slots.append({**row, 'virtualSlot': slot, 'tableOffset': table_offset})
+dispose_load = 0x39b562e
+pos = v['offset'](v['image_base'] + dispose_load)
+assert v['b'][pos:pos + 3] == bytes.fromhex('488b15')
+target = dispose_load + 7 + struct.unpack_from('<i', v['b'], pos + 3)[0]
+usage = v['quad'](v['b'], v['offset'](v['image_base'] + target))
+assert usage >> 29 == 1
+dispose_ti = (usage & 0x1ffffffe) >> 1
+tp = v['offset'](v['quad'](v['b'], v['type_table'] + dispose_ti * 8))
+assert (v['uint'](v['b'], tp + 8) >> 16) & 255 == 18
+dispose_type = v['types'][v['quad'](v['b'], tp)]
+assert dispose_type['name'] == 'IDisposable' and dispose_type['namespace'] == 'System'
+dispose_row = c['unique'](lambda r: r['name'] == 'Dispose', dispose_type['methods'])
+assert struct.unpack_from('<H', v['m'], v['method_start'] + dispose_row['index'] * 32 + 28)[0] == 0
+result['modeSwitch']['buffNotification']['newBuff']['runActions'] = {
+    'methods': run_action_methods, 'ownerSlots': owner_slots,
+    'fields': [c['unique'](lambda f: f['name'] == name, c['fields'](buff)) for name in ['m_actions', 'm_blackboard']],
+    'snapshot': {'name': action_snapshot_type['name'], 'typeIndex': action_snapshot_type['index'], 'fields': c['fields'](action_snapshot_type), 'boxedHeaderBytes': 16, 'byteLength': 240},
+    'disposeInterface': {'loadRva': dispose_load, 'encodedUsage': usage, 'typeIndex': dispose_ti, 'definitionIndex': dispose_type['index'], 'name': dispose_type['name'], 'method': {**dispose_row, 'virtualSlot': 0}},
+    'zeroLengthInputRva': 0x39b53ce, 'contextGetterCallRva': 0x39b5417, 'beginGuardCallRva': 0x39b542a,
+    'setBuffCallRva': 0x39b545b, 'sourceGetterCallRva': 0x39b546a, 'setSourceCallRva': 0x39b5481,
+    'targetOwnerCallRva': 0x39b5495, 'setTargetCallRva': 0x39b54ac, 'aliveOwnerCallRva': 0x39b54b6,
+    'aliveSlotReadRva': 0x39b54db, 'aliveVirtualCallRva': 0x39b54ec, 'tileOwnerCallRva': 0x39b54fc,
+    'tileSlotReadRva': 0x39b5521, 'tileVirtualCallRva': 0x39b5532, 'setTileCallRva': 0x39b5546,
+    'actionsCaptureRva': 0x39b554b, 'eventIdentityCallRva': 0x39b555c, 'eventBoundsRva': 0x39b556d,
+    'blackboardReadRva': 0x39b557f, 'instantTrueRva': 0x39b5586, 'runArrayCallRva': 0x39b5599,
+    'firstResultCopyRva': 0x39b55a6, 'normalDisposeCallRva': 0x39b5635, 'exceptionDisposeCallRva': 0x39b564f, 'returnCopyRva': 0x39b5672,
+    'nativeGuardEffectsVerified': False, 'nativeActionArrayExecutionVerified': False, 'nativeSnapshotCopyVerified': False, 'liveRunActionsVerified': False,
+}
 for index in [147561, 147566, 147567, 147558, 147559, 147563, 147564, 147568, 147569]:
     spec = priority['specification'](index)
     assert spec['declaringTypeIndex'] == pool['index']

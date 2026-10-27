@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 191 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 200 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -1401,6 +1401,41 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 124-method bundle. Continuation40545156330 at3b7defc7 passed; existing
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
+
+### Buff event action dispatch and context-guard lifetime
+
+The200-method bundle adds Buff._RunActions/context/source getters and complete
+Context.BeginChangeGard plus ChangeGuard buff/source/target/tile setters and
+Dispose. Caller metadata binds Entity.get_alive slot38, get_rootTile slot50,
+System.IDisposable.Dispose slot0, event-action/blackboard fields and the240-byte
+Context.Snapshot return layout. The result includes reference fields and nested
+Modifier/AttackInfo values; native value-copy semantics remain an explicit
+receiver rather than treating the result as a flat reference object.
+
+`fearProjectileRunBuffActions` obtains a context guard, sets buff/source,
+optionally sets the owner target, then reads a fresh owner for alive status.
+Living owners cause another owner read and root-tile assignment. It captures
+the event action array, checks bounds, reads blackboard and runs the selected
+array with instant=true, including null action entries. A value-copy receiver
+captures the result before guard disposal and copies it again on return.
+All errors/cancellations after a guard is returned dispose that guard; a null
+or throwing creation has no fabricated disposal. Nested invocations retain
+independent guard and result state.
+
+Tests cover exact configuration/copy/disposal order, distinct owner samples,
+dead-owner tile preservation, optional targeting, null action slots, invalid
+arrays/events, each receiver-failure phase, cancelled creation/disposal and
+nested calls. Enable/disable events compose this concrete dispatcher. Fixture
+guard/action/snapshot receivers test ordering without certifying native guard
+pooling/restoration, action-array execution or mixed-value copying. All1106
+focused native/fear/family/miner tests pass; --check reproduces200 methods.
+This checkpoint is local. Approved0524e2b1 continuation passed on attempt2;
+original full40558578137 remains active.
+
+Concrete guard effects, ActionUtil array execution, Snapshot value copies,
+native provider/set/conversion/range effects, effect refresh and full controller/
+stage/frame integration remain open. Source/support/receipt/catalogue gates
+remain unchanged and all new stages remain test-only.
 
 ### Concrete buff attribute provider and load-to-evaluation composition
 

@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,191);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,200);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -466,6 +466,26 @@ test('buff provider source binds actual enable state and ordered four-array or n
  for(const [index,args]of ['qword ptr [rcx], rax','qword ptr [rsi], rax','qword ptr [rdi], rax','qword ptr [rcx], rax'].entries())at(m,q.disabledOutputWrites[index],args);
  at(m,q.enabledTrueRva,'al, 1');at(m,q.disabledFalseRva,'al, al');
  assert.equal(q.nativeInterfaceDispatchVerified,false);assert.equal(q.nativeProviderHotfixVerified,false);assert.equal(q.liveBuffProviderVerified,false);
+});
+
+test('buff action dispatch source binds context guard setup, owner virtual slots and snapshot/disposal ordering',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.newBuff.runActions,m=castMethod(c,'Buff','_RunActions');
+ const at=(rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args),`${rva.toString(16)} ${args}`);
+ for(const method of q.methods)assert.equal(castMethod(c,method.type,method.name).entryRva,method.entryRva);
+ assert.deepEqual(q.fields.map(f=>[f.name,f.offset]),[['m_actions',0xa0],['m_blackboard',0xa8]]);
+ assert.deepEqual(q.ownerSlots.map(s=>[s.name,s.virtualSlot,s.tableOffset]),[['get_alive',38,0x398],['get_rootTile',50,0x458]]);
+ assert.equal(q.disposeInterface.name,'IDisposable');assert.equal(q.disposeInterface.encodedUsage>>>29,1);assert.equal(q.disposeInterface.method.name,'Dispose');assert.equal(q.disposeInterface.method.virtualSlot,0);
+ assert.equal(q.snapshot.name,'Snapshot');assert.equal(q.snapshot.byteLength,240);assert.equal(q.snapshot.boxedHeaderBytes,16);
+ assert.deepEqual(q.snapshot.fields.map(f=>[f.name,f.offset]),[['source',16],['target',24],['buff',32],['ability',40],['modifier',48],['projectile',184],['tile',192],['mainTarget',200],['atkInfo',208],['mainBuff',248]]);
+ at(q.zeroLengthInputRva,'r8d, 0xf0');at(q.contextGetterCallRva,'0x1839b6660');at(q.beginGuardCallRva,'0x1839ed790');
+ at(q.setBuffCallRva,'0x1839eb000');at(q.sourceGetterCallRva,'0x1839b7460');at(q.setSourceCallRva,'0x1839eb350');
+ at(q.targetOwnerCallRva,'0x1839b6ff0');at(q.setTargetCallRva,'0x1839eb3e0');at(q.aliveOwnerCallRva,'0x1839b6ff0');
+ at(q.aliveSlotReadRva,'rax, qword ptr [rdx + 0x398]');at(q.aliveVirtualCallRva,'rax');at(q.tileOwnerCallRva,'0x1839b6ff0');
+ at(q.tileSlotReadRva,'rax, qword ptr [rdx + 0x458]');at(q.tileVirtualCallRva,'rax');at(q.setTileCallRva,'0x1839eb470');
+ at(q.actionsCaptureRva,'rdi, qword ptr [rbx + 0xa0]');at(q.eventIdentityCallRva,'0x1828a66d0');at(q.eventBoundsRva,'edx, dword ptr [rdi + 0x18]');
+ at(q.blackboardReadRva,'r9, qword ptr [rbx + 0xa8]');at(q.instantTrueRva,'r8d, 1');at(q.runArrayCallRva,'0x180e44600');
+ at(q.firstResultCopyRva,'xmmword ptr [rcx], xmm0');at(q.normalDisposeCallRva,'0x180005a80');at(q.exceptionDisposeCallRva,'0x180005a80');at(q.returnCopyRva,'xmmword ptr [rsi], xmm0');
+ assert.equal(q.nativeGuardEffectsVerified,false);assert.equal(q.nativeActionArrayExecutionVerified,false);assert.equal(q.nativeSnapshotCopyVerified,false);assert.equal(q.liveRunActionsVerified,false);
 });
 
 test('native admission source binds signed Int16 counters, combo fallback and Enemy raw-WALK levitation',()=>{
