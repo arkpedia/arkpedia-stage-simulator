@@ -204,6 +204,57 @@ export function fearProjectileModeNotification(b,{owner,nextMode,lastMode,restar
  });
 }
 
+// BuffContainer.OnUnitSwitchMode's eligibility probe and dispatch use separate
+// native iterators. The caller owns double-buffer visibility and collection
+// ordering; no array snapshot or admission of newly added buffs is assumed.
+export function fearProjectileBuffModeChange(b,{owner,openIterator,isFinishedOrDisabled,isActionValid,runActions,checkFinishedBuffs}){
+ if(!owner||!Number.isInteger(owner.deploySeq)||[openIterator,isFinishedOrDisabled,isActionValid,runActions,checkFinishedBuffs].some(fn=>typeof fn!=='function'))
+  throw new TypeError('Fear buff mode change requires an owner life and native iteration/action callers');
+ const life=owner.deploySeq;let used=false,ended=false,endHandle=null,removeHandle=null;
+ const release=()=>{ended=true;if(endHandle)b.off(endHandle);if(removeHandle)b.off(removeHandle);endHandle=removeHandle=null;};
+ const active=()=>{if(!ended&&(b.finished||b._endReq||owner.removed||owner.deploySeq!==life))release();return!ended;};
+ const boolean=value=>{if(typeof value!=='boolean')throw new TypeError('Fear buff mode change requires native Boolean predicates');return value;};
+ const visit=(phase,probe)=>{
+  const iterator=openIterator(phase);
+  if(!active()){if(iterator&&typeof iterator.dispose==='function')iterator.dispose();return null;}
+  if(!iterator||typeof iterator.dispose!=='function')throw new TypeError('Fear buff mode change requires a disposable native iterator');
+  try{
+   if(!active())return null;
+   if(typeof iterator.moveNext!=='function'||typeof iterator.current!=='function')throw new TypeError('Fear buff mode change requires native iterator moveNext/current');
+   for(;;){
+    const moved=iterator.moveNext();if(!active())return null;
+    if(!boolean(moved))return false;
+    const buff=iterator.current();if(!active())return null;
+    if(buff==null)continue;
+    const disabled=isFinishedOrDisabled(buff);if(!active())return null;
+    if(boolean(disabled))continue;
+    const valid=isActionValid(buff,75);if(!active())return null;
+    if(!boolean(valid))continue;
+    if(probe)return true;
+    // Buff.OnUnitSwitchMode uses _RunActions(75, setTarget=false).
+    // Unlike OnStart, this must not overwrite Context.target with the owner.
+    runActions(buff,{event:75,setTargetToOwner:false});if(!active())return null;
+   }
+  }finally{iterator.dispose();}
+ };
+ if(active()){
+  endHandle=b.on('battleEnd',release);
+  removeHandle=b.on('removed',({unit})=>{if(unit===owner)release();});
+ }
+ return Object.freeze({
+  run(){
+   if(used||!active())return null;used=true;
+   try{
+    const eligible=visit('probe',true);if(!active())return null;
+    if(!eligible)return false;
+    visit('dispatch',false);if(!active())return null;
+    checkFinishedBuffs(owner);return active()?true:null;
+   }finally{release();}
+  },
+  release,
+ });
+}
+
 export function fearProjectileModeFsmRestart(b,{owner,isRunning,readState,stop,start}){
  if(!owner||!Number.isInteger(owner.deploySeq)||[isRunning,readState,stop,start].some(fn=>typeof fn!=='function'))
   throw new TypeError('Fear mode FSM restart requires an owner life and explicit native state-machine callers');

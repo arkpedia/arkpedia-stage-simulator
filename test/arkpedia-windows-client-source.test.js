@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,49);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,56);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -130,6 +130,22 @@ test('mode initialization binds general/combat/attack order and the canonical sw
  at(dedup,0x3f62e1e,'0x180004fe0');at(dedup,0x3f62e72,'0x180004b40');
  at(dedup,0x3f62e77,'esi');at(dedup,0x3f62e79,'0x183f62d00');
  assert.equal(init.equalsDispatch.metadataIdentityVerified,false);
+});
+
+test('buff mode notification source binds event75 and preserves context target through its action dispatcher',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),n=c.modeSwitch.buffNotification;
+ const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ assert.equal(n.event.name,'ON_UNIT_SWITCH_MODE');assert.equal(n.event.value,75);assert.equal(n.event.encodedHex,'8096');
+ assert.equal(n.setTargetToOwner,false);assert.equal(n.nativeIteratorRuntimeVerified,false);
+ const buff=castMethod(c,'Buff','OnUnitSwitchMode'),container=castMethod(c,'BuffContainer','OnUnitSwitchMode');
+ at(container,n.containerProbeCallRva,'0x1839d6660');at(container,n.containerCleanupCallRva,'0x1839d6870');
+ at(container,0x39d2bf7,'0x1839d2d90');at(container,0x39d2d00,'0x1839b6a60');
+ at(container,0x39d2d12,'0x1839b0c00');at(container,0x39d2d48,'0x180005a80');
+ at(buff,n.buffActionCheckCallRva,'0x1839b4170');at(buff,0x39b0c6c,'r9d, r9d');
+ at(buff,0x39b0c80,'r8d, [r9 + 0x4b]');at(buff,n.buffRunActionsCallRva,'0x1839b5370');
+ const probe=castMethod(c,'BuffContainer','_CheckBuffsActionValid');
+ at(probe,0x39d67b2,'0x1839b4170');at(probe,0x39d67d0,'0x180005a80');
+ for(const name of ['get_isFinishedOrDisabled','get_isFinished','get_isEnabled','_IsActionValid'])assert.ok(castMethod(c,'Buff',name));
 });
 
 test('enemy mode notification source binds Unit range/buff notifications before nonroot skill transitions',()=>{

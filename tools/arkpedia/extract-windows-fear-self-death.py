@@ -189,6 +189,31 @@ result['modeSwitch']['notification'] = {
     'rootCallRva': 0x80aff4, 'nextParentCallRva': 0x80b002, 'previousParentCallRva': 0x80b036,
     'attachCallRva': 0x80b071, 'detachCallRva': 0x80b06a,
 }
+for type_name, namespace, names in [('Buff', 'Torappu.Battle', ['OnUnitSwitchMode', '_IsActionValid', 'get_isFinishedOrDisabled', 'get_isFinished', 'get_isEnabled']),
+                                    ('BuffContainer', '', ['_CheckBuffsActionValid', '_CheckFinishedBuffs'])]:
+    t = c['type_row'](type_name, namespace)
+    for name in names:
+        methods.append(c['method'](t, c['unique'](lambda r: r['name'] == name, t['methods'])))
+buff = c['type_row']('Buff', 'Torappu.Battle')
+event = c['unique'](lambda t: t['name'] == 'Event', [v['types'][i] for i in buff['nested']])
+event_field = c['unique'](lambda f: f['name'] == 'ON_UNIT_SWITCH_MODE', event['fields'])
+ti, di = v['defaults'][event_field['index']]
+default_type_pos = v['offset'](v['quad'](v['b'], v['type_table'] + ti * 8))
+assert (v['uint'](v['b'], default_type_pos + 8) >> 16) & 255 == 8
+event_pos = v['uint'](v['m'], 72) + di
+event_raw = v['m'][event_pos:event_pos + 2]
+# The shared small-enum reader deliberately only handles one-byte defaults.
+# This selected signed Int32 default is the reviewed two-byte encoding of150.
+assert event_raw == bytes.fromhex('8096')
+encoded = ((event_raw[0] & 0x3f) << 8) | event_raw[1]
+assert encoded & 1 == 0 and encoded >> 1 == 75
+result['modeSwitch']['buffNotification'] = {
+    'event': {**event_field, 'ownerTypeIndex': event['index'], 'defaultTypeIndex': ti,
+              'defaultFileOffset': event_pos, 'encodedHex': event_raw.hex(), 'value': encoded >> 1},
+    'containerProbeCallRva': 0x39d2bf0, 'containerCleanupCallRva': 0x39d2d81,
+    'buffActionCheckCallRva': 0x39b0c63, 'buffRunActionsCallRva': 0x39b0c84,
+    'setTargetToOwner': False, 'nativeIteratorRuntimeVerified': False,
+}
 serialized = json.dumps(result, ensure_ascii=False, indent=1) + '\n'
 out = ROOT / 'data/candidates/arkpedia-windows-fear-self-death-source.json'
 if __name__ == '__main__':

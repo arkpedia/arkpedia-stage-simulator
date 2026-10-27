@@ -16,7 +16,7 @@ import {fearProjectileFlight} from '../server/sim/content/chapter16-fear-flight.
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
 import {fearProjectileSpell} from '../server/sim/content/chapter16-fear-spell.js';
-import {fearProjectileSelfDeath,fearProjectileSuicide,fearProjectileSelfDeathActivation,fearProjectileModeFsmRestart,fearProjectileModeSwitch,fearProjectileCollectModeAbilities,fearProjectileModeEffects,fearProjectileModeNotification} from '../server/sim/content/chapter16-fear-self-death.js';
+import {fearProjectileSelfDeath,fearProjectileSuicide,fearProjectileSelfDeathActivation,fearProjectileModeFsmRestart,fearProjectileModeSwitch,fearProjectileCollectModeAbilities,fearProjectileModeEffects,fearProjectileModeNotification,fearProjectileBuffModeChange} from '../server/sim/content/chapter16-fear-self-death.js';
 import {fearProjectileTargetVerifier,fearProjectileSourceMotion} from '../server/sim/content/chapter16-fear-targets.js';
 import {fearProjectileReached,fearProjectileMotionStep,fearProjectileMountReference,fearProjectileTraceMotion} from '../server/sim/content/chapter16-fear-movement.js';
 import { battle as minerBattle, keys as minerKeys } from './helpers/ch17Harness.js';
@@ -49,6 +49,88 @@ test('mode initialization rejects invalid entries and delegates equality without
   isValid:x=>x!==null&&!x.invalid,equals:(left,right)=>{calls.push([left,right]);return left.id===right.id;}});
  assert.deepEqual(list,[a]);assert.deepEqual(calls,[[a,duplicate]]);
  assert.throws(()=>fearProjectileCollectModeAbilities({generalAbilities:[],combat:null,attack:null,isValid:()=>1,equals:()=>true}),/Boolean/);
+});
+
+function buffModeFixture(overrides={}){
+ const f=fixture(),events=[],buffs=[null,{id:'disabled',disabled:true,valid:true},{id:'empty',disabled:false,valid:false},{id:'ready',disabled:false,valid:true}];
+ const callers={owner:f.source,openIterator:phase=>{
+  events.push('open:'+phase);let index=-1;
+  return{moveNext:()=>++index<buffs.length,current:()=>buffs[index],dispose:()=>events.push('dispose:'+phase)};
+ },isFinishedOrDisabled:buff=>{events.push('state:'+buff.id);return buff.disabled;},
+ isActionValid:(buff,event)=>{assert.equal(event,75);events.push('check:'+buff.id);return buff.valid;},
+ runActions:(buff,options)=>{assert.deepEqual(options,{event:75,setTargetToOwner:false});events.push('run:'+buff.id);},
+ checkFinishedBuffs:owner=>{assert.equal(owner,f.source);events.push('cleanup');},...overrides};
+ return{...f,buffs,events,callers};
+}
+
+test('buff mode change probes eligibility then opens a fresh iterator and cleans finished buffs after disposal',()=>{
+ const f=buffModeFixture(),dispatch=fearProjectileBuffModeChange(f.b,f.callers);
+ assert.equal(dispatch.run(),true);assert.equal(dispatch.run(),null);
+ assert.deepEqual(f.events,['open:probe','state:disabled','state:empty','check:empty','state:ready','check:ready','dispose:probe',
+  'open:dispatch','state:disabled','state:empty','check:empty','state:ready','check:ready','run:ready','dispose:dispatch','cleanup']);
+ assert.deepEqual(f.b.errors,[]);
+});
+
+test('an empty buff action probe skips dispatch and finished-buff cleanup',()=>{
+ const f=buffModeFixture();f.buffs.at(-1).valid=false;
+ assert.equal(fearProjectileBuffModeChange(f.b,f.callers).run(),false);
+ assert.equal(f.events.includes('open:dispatch'),false);assert.equal(f.events.includes('cleanup'),false);assert.equal(f.events.at(-1),'dispose:probe');
+});
+
+test('probe iterator stops at the first eligible buff and does not inspect later entries',()=>{
+ const f=buffModeFixture();f.buffs.splice(0,4,{id:'first',valid:true},{id:'later',valid:true});let phase;
+ const open=f.callers.openIterator;f.callers.openIterator=p=>{phase=p;return open(p);};
+ f.callers.isFinishedOrDisabled=b=>{if(phase==='probe'&&b.id==='later')throw Error('probe scanned beyond first match');return false;};
+ assert.equal(fearProjectileBuffModeChange(f.b,f.callers).run(),true);assert.ok(f.events.includes('run:later'));
+});
+
+test('dispatch rereads buff action eligibility and does not reuse the probe result',()=>{
+ const f=buffModeFixture();f.buffs.splice(0,4,{id:'changing',disabled:false,valid:true});let checks=0;
+ f.callers.isActionValid=()=>++checks===1;
+ assert.equal(fearProjectileBuffModeChange(f.b,f.callers).run(),true);assert.equal(checks,2);assert.equal(f.events.includes('run:changing'),false);
+ assert.equal(f.events.at(-1),'cleanup');
+});
+
+test('probe disposal can change which buffs the fresh dispatch iterator sees',()=>{
+ const f=buffModeFixture(),open=f.callers.openIterator;
+ f.callers.openIterator=phase=>{const iterator=open(phase),dispose=iterator.dispose;iterator.dispose=()=>{
+  dispose();if(phase==='probe')f.buffs.splice(0,4,{id:'replacement',disabled:false,valid:true});
+ };return iterator;};
+ assert.equal(fearProjectileBuffModeChange(f.b,f.callers).run(),true);assert.ok(f.events.includes('run:replacement'));assert.equal(f.events.includes('run:ready'),false);
+});
+
+test('a buff action exception disposes the dispatch iterator and skips later cleanup',()=>{
+ const f=buffModeFixture({runActions:()=>{throw Error('buff action');}}),dispatch=fearProjectileBuffModeChange(f.b,f.callers);
+ assert.throws(()=>dispatch.run(),/buff action/);assert.equal(f.events.at(-1),'dispose:dispatch');assert.equal(f.events.includes('cleanup'),false);assert.equal(dispatch.run(),null);
+});
+
+for(const point of ['isFinishedOrDisabled','isActionValid','runActions','checkFinishedBuffs'])for(const boundary of ['reuse','battleEnd','recursive'])
+ test('buff mode change guards '+boundary+' in '+point,()=>{
+  const f=buffModeFixture();let dispatch;const original=f.callers[point];f.callers[point]=(...args)=>{
+   if(boundary==='reuse')f.source.deploySeq++;else if(boundary==='battleEnd')f.b.emit('battleEnd',{});else assert.equal(dispatch.run(),null);
+   return boundary==='recursive'?original(...args):undefined;
+  };
+  dispatch=fearProjectileBuffModeChange(f.b,f.callers);assert.equal(dispatch.run(),boundary==='recursive'?true:null);
+  assert.equal(dispatch.run(),null);assert.ok(f.events.some(e=>e.startsWith('dispose:')));assert.deepEqual(f.b.errors,[]);
+ });
+
+test('retirement during iterator acquisition closes a returned cursor without consuming it',()=>{
+ const f=buffModeFixture(),dispatch=fearProjectileBuffModeChange(f.b,{...f.callers,openIterator:()=>{
+  f.source.deploySeq++;return{moveNext:()=>{throw Error('replacement cursor');},current:()=>null,dispose:()=>f.events.push('closed')};
+ }});
+ assert.equal(dispatch.run(),null);assert.deepEqual(f.events,['closed']);
+});
+
+test('retirement inside a buff mode action stops enemy skill notifications and still disposes the cursor',()=>{
+ const f=modeNotificationFixture(),buffEvents=[],buff={};
+ f.callers.onBuffModeChanged=()=>fearProjectileBuffModeChange(f.b,{owner:f.source,
+  openIterator:phase=>{let moved=false;return{moveNext:()=>{if(moved)return false;moved=true;return true;},current:()=>buff,
+   dispose:()=>buffEvents.push('dispose:'+phase)};},
+  isFinishedOrDisabled:()=>false,isActionValid:()=>true,runActions:()=>{buffEvents.push('retire');f.b.kill(f.source,null);},
+  checkFinishedBuffs:()=>{throw Error('retired owner cleanup');}}).run();
+ const notification=fearProjectileModeNotification(f.b,f.callers);
+ assert.equal(notification.run(),null);assert.deepEqual(f.events,['restart','range']);
+ assert.deepEqual(buffEvents,['dispose:probe','retire','dispose:dispatch']);assert.deepEqual(f.b.errors,[]);
 });
 
 function modeNotificationFixture(overrides={}){

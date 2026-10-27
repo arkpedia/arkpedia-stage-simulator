@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 49 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 56 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -799,3 +799,38 @@ Concrete attack-range/buff notification effects, EnemySkill attachment effects,
 ability data setup, live FSM/coroutine scheduling and stage geometry/query
 integration remain explicit inputs. All enemy/stage support and test-only
 catalogue gates remain unchanged.
+
+### Buff mode-change probe, dispatch and context
+
+The56-method artifact additionally retains Buff.OnUnitSwitchMode,
+_IsActionValid, get_isFinishedOrDisabled, get_isFinished and get_isEnabled,
+plus BuffContainer._CheckBuffsActionValid and _CheckFinishedBuffs. The selected
+Buff.Event.ON_UNIT_SWITCH_MODE constant is75: its exact signed Int32 default
+uses reviewed compressed bytes8096. This bounded two-byte case is retained
+without weakening the shared one-byte enum decoder.
+
+`fearProjectileBuffModeChange` ports the container's eligibility probe and
+dispatch order using explicit native iterator callers. The probe skips null,
+finished/disabled and action-ineligible buffs, stops at the first eligible buff
+and disposes its cursor. Only a successful probe opens the separate dispatch
+iterator. That pass checks current enabled/finished state and action eligibility
+again before invoking event75 actions. Each run uses setTargetToOwner=false,
+matching Buff._RunActions's R9=false call; this must not reuse OnStart's
+owner-target binding. The dispatch cursor closes before _CheckFinishedBuffs.
+An unsuccessful probe skips both dispatch and finished-buff cleanup. Exceptions
+still dispose their cursor and skip subsequent cleanup; local owner retirement
+also prevents callbacks against a replacement life.
+
+Tests cover both iteration passes, early probe exit, repeated action checks,
+different contents visible to the second iterator, exceptions, recursive calls,
+reuse/battle end, retirement during cursor acquisition and action execution.
+A composed enemy notification test retires the owner inside a mode-change buff
+action, requires cursor disposal and prohibits later enemy skill effects.
+The focused native/fear/family/miner suite passes427 tests; the56-method source
+producer reproduces with --check. Existing continuation40516147908 and
+full40514426781 remain active and are not replaced at this checkpoint.
+
+Native double-buffer visibility/ordering, exact action/context effect callers
+and finished-buff removal remain explicit inputs. These source and composition
+tests do not certify concrete engine buff-container execution, the fear enemy
+controller or16-9 stage support. No support/receipt/catalogue gate changes.
