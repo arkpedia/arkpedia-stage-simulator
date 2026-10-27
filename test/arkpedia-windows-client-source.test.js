@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,84);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,85);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -225,6 +225,18 @@ test('immediate recycle source enumerates stored pairs and pointer lists before 
  }
  at(q.outerMoveNext,0x4dd4158,'dword ptr [rbx + 0xc], eax');at(q.outerMoveNext,0x4dd41b6,'dword ptr [rbx + 0xc], eax');
  assert.ok(!instructions(m).some(i=>i.mnemonic==='call'&&i.operands==='0x183991a80'),'flush does not filter by current frame');
+});
+
+test('Reset source binds lifecycle clearing independently of allocation UID and validity',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.resetLifecycle;
+ const m=castMethod(c,'Buff','Reset'),at=(rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ assert.equal(m.entryRva,0x39b0d60);assert.equal(instructions(m).length,896);
+ assert.deepEqual(q.fields.map(f=>[f.name,f.offset]),[['m_started',0x1e8],['m_isFinished',0x1e9],['m_needRemove',0x1eb],
+  ['m_isActuallyEnabled',0x1ec],['m_isLateEnabled',0x1ed],['m_isManuallyEnabled',0x1ee],['m_isActuallyFinished',0x1ea],['m_derivedBuffs',0x260]]);
+ at(q.startedFinishedWriteRva,'word ptr [rsi + 0x1e8], bp');at(q.removeEnabledWriteRva,'dword ptr [rsi + 0x1eb], ebp');
+ at(q.actuallyFinishedWriteRva,'byte ptr [rsi + 0x1ea], bpl');at(q.derivedNullTestRva,'rcx, rcx');
+ at(q.derivedVersionIncrementRva,'dword ptr [rcx + 0x1c]');at(q.derivedCountWriteRva,'dword ptr [rcx + 0x18], ebp');
+ at(q.derivedClearArrayCallRva,'0x1851ce000');assert.equal(q.fullResetEffectsVerified,false);assert.equal(q.liveResetPhaseVerified,false);
 });
 
 test('runtime cleanup source binds subsystem order around immediate delayed-buff recycling',()=>{

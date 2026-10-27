@@ -468,8 +468,17 @@ result['modeSwitch']['buffNotification']['recycleQueue']['runtimeCleanup'] = {
     'immediateFlushCallRva': 0x396f137, 'staticClearTailRva': 0x396f150,
     'liveLifecyclePhaseVerified': False, 'subsystemEffectsVerified': False,
 }
-for name in ['OnAllocate', 'OnRecycle', 'set_instanceUid']:
+for name in ['OnAllocate', 'OnRecycle', 'set_instanceUid', 'Reset']:
     methods.append(c['method'](buff, c['unique'](lambda r: r['name'] == name, buff['methods'])))
+result['modeSwitch']['buffNotification']['resetLifecycle'] = {
+    'fields': [c['unique'](lambda f: f['name'] == name, c['fields'](buff)) for name in
+        ['m_started', 'm_isFinished', 'm_needRemove', 'm_isActuallyEnabled', 'm_isLateEnabled',
+         'm_isManuallyEnabled', 'm_isActuallyFinished', 'm_derivedBuffs']],
+    'startedFinishedWriteRva': 0x39b1341, 'removeEnabledWriteRva': 0x39b1348, 'actuallyFinishedWriteRva': 0x39b134e,
+    'derivedNullTestRva': 0x39b1355, 'derivedVersionIncrementRva': 0x39b135e, 'derivedCountWriteRva': 0x39b1361,
+    'derivedClearArrayCallRva': 0x39b1372,
+    'fullResetEffectsVerified': False, 'liveResetPhaseVerified': False,
+}
 pool = c['type_row']('ObjectPool`1', 'Torappu.ObjectPool')
 pool_methods = []
 for index in [147561, 147566, 147567, 147558, 147559, 147563, 147564, 147568, 147569]:

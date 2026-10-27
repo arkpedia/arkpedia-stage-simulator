@@ -19,7 +19,7 @@ import {fearProjectileBuffPointers} from '../server/sim/content/chapter16-fear-b
 import {fearProjectileFinishedBuffs} from '../server/sim/content/chapter16-fear-buff-cleanup.js';
 import {fearProjectileFinishAndRemoveBuff,fearProjectileOverrideGroupRemove} from '../server/sim/content/chapter16-fear-buff-finish.js';
 import {fearProjectileBuffRecycleQueue,fearProjectileClearRuntimeData} from '../server/sim/content/chapter16-fear-buff-recycle.js';
-import {fearProjectileBuffIdentity} from '../server/sim/content/chapter16-fear-buff-identity.js';
+import {fearProjectileBuffIdentity,fearProjectileResetBuffLifecycle} from '../server/sim/content/chapter16-fear-buff-identity.js';
 import {fearProjectileBuffRecyclePool,fearProjectileDefaultBuffPool} from '../server/sim/content/chapter16-fear-buff-pool.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
@@ -205,6 +205,41 @@ test('finish and native-frame queue use concrete buff recycle identity before th
  finish.run();queue.update();assert.equal(buff.instanceUid,1);assert.equal(buff.m_isValid,true);assert.equal(recycled,0);
  f.b.kill(f.source,null);frame=11;queue.update();assert.equal(recycled,1);assert.equal(buff.instanceUid,0);assert.equal(buff.m_isValid,false);assert.equal(p.lock(old),null);
  identity.allocate(buff);assert.equal(buff.instanceUid,2);assert.equal(p.lock(old),null);assert.equal(p.lock(p.capture(buff)),buff);queue.release();assert.deepEqual(f.b.errors,[]);
+});
+
+const resetFlagNames=['m_started','m_isFinished','m_needRemove','m_isActuallyEnabled','m_isLateEnabled','m_isManuallyEnabled','m_isActuallyFinished'];
+function resetBuffBody(){return{instanceUid:0,m_isValid:false,...Object.fromEntries(resetFlagNames.map(n=>[n,true])),m_derivedBuffs:[{id:'old child'}]};}
+
+test('Reset lifecycle clears prior execution flags and derived references without finishing child buffs',()=>{
+ const buff=resetBuffBody(),child=buff.m_derivedBuffs[0],list=buff.m_derivedBuffs;child.m_isFinished=false;
+ Object.assign(buff,{instanceUid:71,m_isValid:true,m_lifeTime:123n,m_source:{id:'source'},m_blackboard:{key:3}});
+ fearProjectileResetBuffLifecycle(buff);
+ for(const key of resetFlagNames)assert.equal(buff[key],false,key);
+ assert.equal(buff.m_derivedBuffs,list);assert.deepEqual(list,[]);assert.equal(child.m_isFinished,false);
+ assert.equal(buff.instanceUid,71);assert.equal(buff.m_isValid,true);assert.equal(buff.m_lifeTime,123n);
+ assert.deepEqual(buff.m_source,{id:'source'});assert.deepEqual(buff.m_blackboard,{key:3});
+});
+
+test('Reset lifecycle accepts absent native derived-list contents and remains repeatable',()=>{
+ const buff=resetBuffBody();buff.m_derivedBuffs=null;fearProjectileResetBuffLifecycle(buff);
+ assert.equal(buff.m_derivedBuffs,null);buff.m_started=true;buff.m_needRemove=true;fearProjectileResetBuffLifecycle(buff);
+ assert.equal(buff.m_started,false);assert.equal(buff.m_needRemove,false);
+});
+
+test('recycled pooled buff keeps its new allocation identity while Reset removes old-life execution state',()=>{
+ const f=fixture(),identity=fearProjectileBuffIdentity({counter:{value:0}}),p=fearProjectileBuffPointers({readUid:b=>b.instanceUid});
+ const pool=fearProjectileDefaultBuffPool({createBuff:resetBuffBody,onAllocate:identity.allocate,onRecycle:identity.recycle});
+ const queue=fearProjectileBuffRecycleQueue(f.b,{readFixedFrame:()=>10,copyPointer:p.copy,isPointerValid:p.isValid,lockPointer:p.lock,recycleBuff:pool.recycle});
+ const buff=pool.allocate(),old=p.capture(buff);assert.equal(buff.m_isFinished,true);queue.enqueue(old);queue.flushImmediately();
+ assert.equal(buff.instanceUid,0);assert.equal(buff.m_isValid,false);assert.equal(buff.m_isFinished,true,'recycling itself does not Reset');
+ assert.equal(pool.allocate(),buff);const current=p.capture(buff);assert.equal(buff.instanceUid,2);
+ fearProjectileResetBuffLifecycle(buff);assert.equal(p.lock(current),buff);assert.equal(p.lock(old),null);assert.equal(buff.m_isValid,true);
+ for(const key of resetFlagNames)assert.equal(buff[key],false,key);assert.deepEqual(buff.m_derivedBuffs,[]);queue.release();
+});
+
+test('Reset lifecycle rejects accessor projections without executing user code',()=>{
+ let calls=0;const buff=resetBuffBody();Object.defineProperty(buff,'m_started',{get(){calls++;return true;}});
+ assert.throws(()=>fearProjectileResetBuffLifecycle(buff),/Boolean lifecycle data fields/);assert.equal(calls,0);
 });
 
 function runtimeCleanupFixture(overrides={}){

@@ -32,3 +32,20 @@ export function fearProjectileBuffIdentity({counter}){
   },
  });
 }
+
+// The lifecycle-field block inside Buff.Reset, after context/blackboard copies
+// and before timing/actions initialization. Allocation owns UID/validity.
+export function fearProjectileResetBuffLifecycle(buff){
+ const names=['m_started','m_isFinished','m_needRemove','m_isActuallyEnabled','m_isLateEnabled','m_isManuallyEnabled','m_isActuallyFinished'];
+ if(!buff||typeof buff!=='object')throw new TypeError('Fear buff reset requires native lifecycle data fields');
+ for(const name of names){
+  const d=Object.getOwnPropertyDescriptor(buff,name);
+  if(!d||!Object.hasOwn(d,'value')||!d.writable||typeof d.value!=='boolean')
+   throw new TypeError('Fear buff reset requires native Boolean lifecycle data fields');
+ }
+ const derived=Object.getOwnPropertyDescriptor(buff,'m_derivedBuffs');
+ if(!derived||!Object.hasOwn(derived,'value')||(derived.value!=null&&!Array.isArray(derived.value)))
+  throw new TypeError('Fear buff reset requires a native nullable derived-buff list projection');
+ for(const name of names)buff[name]=false;
+ if(derived.value!=null)derived.value.length=0;
+}

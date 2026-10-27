@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 84 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 85 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -1238,3 +1238,28 @@ malformed native count/validity results and cancellation at every receiver.
 All594 focused native/fear/family/miner tests pass and --check reproduces the
 84-method evidence. Full controller/stage integration, live lifecycle phase,
 subsystem effects and Buff.Reset remain open; all existing gates remain intact.
+
+### Buff.Reset lifecycle-field block
+
+The85-method artifact now retains Buff.Reset's complete896-instruction default
+method and chained chunks, including the hotfix branch. Its selected lifecycle
+block clears started/finished together, then needRemove/actuallyEnabled/
+lateEnabled/manuallyEnabled together, then actuallyFinished. It subsequently
+clears the optional derived-buff list's contents. This is reference clearing,
+without a per-child Finish action. Allocation UID/validity are separate from
+these writes.
+
+`fearProjectileResetBuffLifecycle` projects precisely this block onto writable
+native Boolean fields and a nullable derived-list array. It preserves that
+array's identity and does not change the allocation identity, source, blackboard
+or timing fields. It is explicitly not the full Reset method. A default-pool /
+UID / queue composition recycles a prior finished body, allocates it under a
+fresh UID, and resets lifecycle flags while the new ObjectPtr remains valid
+and the old one remains invalid. Other tests cover nullable lists, repeated
+Reset, non-finishing of retained child objects and accessor rejection.
+
+All599 focused native/fear/family/miner tests pass and --check reproduces the
+85-method evidence bundle. Native derived-list versioning, Reset's context,
+blackboard, timing, action and attribute effects, live lifecycle phases and full
+controller/stage integration remain open. No support or catalogue admission
+follows from the selected lifecycle block.
