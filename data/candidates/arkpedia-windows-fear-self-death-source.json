@@ -54255,6 +54255,69 @@
   },
   {
    "image": "Assembly-CSharp.dll",
+   "typeIndex": 3917,
+   "namespace": "",
+   "type": "DataPair",
+   "index": 28653,
+   "name": "get_isStringValue",
+   "token": 100691950,
+   "virtualSlot": 65535,
+   "parameterCount": 0,
+   "entryRva": 13164656,
+   "chunks": [
+    {
+     "beginRva": 13164656,
+     "endRva": 13164681,
+     "unwindRva": 119936356,
+     "sha256": "65d7ce08880a28ac5be653067b45bc824b98b406bcbc5707400bc0e758aa19f9",
+     "base64": "SIPsKEiLSRAz0ugxVEQEhMAPlMBIg8Qoww==",
+     "instructions": [
+      {
+       "rva": 13164656,
+       "mnemonic": "sub",
+       "operands": "rsp, 0x28"
+      },
+      {
+       "rva": 13164660,
+       "mnemonic": "mov",
+       "operands": "rcx, qword ptr [rcx + 0x10]"
+      },
+      {
+       "rva": 13164664,
+       "mnemonic": "xor",
+       "operands": "edx, edx"
+      },
+      {
+       "rva": 13164666,
+       "mnemonic": "call",
+       "operands": "0x1850d34b0"
+      },
+      {
+       "rva": 13164671,
+       "mnemonic": "test",
+       "operands": "al, al"
+      },
+      {
+       "rva": 13164673,
+       "mnemonic": "sete",
+       "operands": "al"
+      },
+      {
+       "rva": 13164676,
+       "mnemonic": "add",
+       "operands": "rsp, 0x28"
+      },
+      {
+       "rva": 13164680,
+       "mnemonic": "ret",
+       "operands": ""
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "image": "Assembly-CSharp.dll",
    "typeIndex": 8911,
    "namespace": "Torappu.Battle",
    "type": "BattleController",
@@ -68980,6 +69043,49 @@
     },
     "nativeBlackboardEffectsVerified": false,
     "fullResetEffectsVerified": false
+   },
+   "blackboardPrefix": {
+    "dataPairTypeIndex": 3917,
+    "dataPairFields": [
+     {
+      "index": 21465,
+      "name": "key",
+      "typeIndex": 70188,
+      "offset": 16,
+      "typeData": 36784,
+      "typeBits": 917510
+     },
+     {
+      "index": 21466,
+      "name": "value",
+      "typeIndex": 67971,
+      "offset": 24,
+      "typeData": 36934,
+      "typeBits": 2148270086
+     },
+     {
+      "index": 21467,
+      "name": "valueStr",
+      "typeIndex": 70188,
+      "offset": 32,
+      "typeData": 36784,
+      "typeBits": 917510
+     }
+    ],
+    "numericStartsWithCallRva": 35016200,
+    "numericComparisonInputRva": 35016187,
+    "numericSubstringCallRva": 35016315,
+    "numericWriteCallRva": 35016436,
+    "numericLoopIncrementRva": 35016441,
+    "stringStartsWithCallRva": 35017061,
+    "stringComparisonInputRva": 35017048,
+    "stringSubstringCallRva": 35017177,
+    "stringPredicateCallRva": 35017282,
+    "stringWriteCallRva": 35017344,
+    "stringLoopIncrementRva": 35017349,
+    "nativeStringComparisonVerified": false,
+    "destinationWritesVerified": false,
+    "livePrefixPhaseVerified": false
    },
    "poolIdentity": {
     "uidField": {

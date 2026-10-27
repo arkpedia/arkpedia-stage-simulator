@@ -1,6 +1,45 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import {fearProjectileBuffDurationKey} from './chapter16-fear-buff-timing.js';
 
+// Selected IReadOnlyList<DataPair> array projection. The native ordinal-ignore-
+// case comparison stays explicit; destination numeric/string writes are separate.
+export function fearProjectileBuffPrefixAssignments({startsWith,assignNumeric,assignString,isActive}){
+ if([startsWith,assignNumeric,assignString,isActive].some(fn=>typeof fn!=='function'))
+  throw new TypeError('Fear prefix assignment requires native string comparison, writes and lifecycle callers');
+ const boolean=value=>{if(typeof value!=='boolean')throw new TypeError('Fear prefix assignment requires native Boolean results');return value;};
+ let running=false;
+ function run(source,prefix,stringValues){
+  if(running)return null;running=true;
+  try{
+   if(!boolean(isActive()))return null;
+   if(source==null)return;
+   if(!Array.isArray(source))throw new TypeError('Fear prefix assignment requires a native DataPair list projection');
+   for(let index=0;index<source.length;index++){
+    const key=source[index]?.key;
+    if(!boolean(isActive()))return null;
+    if(typeof key!=='string')throw new TypeError('Fear prefix assignment requires nonnull native string keys');
+    const matched=startsWith(key,prefix,5);if(!boolean(isActive()))return null;
+    if(!boolean(matched))continue;
+    if(typeof prefix!=='string')throw new TypeError('Fear prefix assignment requires a native string prefix');
+    const stripped=key.slice(prefix.length);
+    if(stringValues){
+     const probe=source[index]?.valueStr;if(!boolean(isActive()))return null;
+     if(probe==null||probe==='')continue;
+     if(typeof probe!=='string')throw new TypeError('Fear prefix assignment requires native nullable string values');
+     const value=source[index]?.valueStr;if(!boolean(isActive()))return null;
+     if(value!=null&&typeof value!=='string')throw new TypeError('Fear prefix assignment requires native nullable string values');
+     assignString(stripped,value);if(!boolean(isActive()))return null;
+    }else{
+     const value=source[index]?.value;if(!boolean(isActive()))return null;
+     if(typeof value!=='number')throw new TypeError('Fear prefix assignment requires native float values');
+     assignNumeric(stripped,Math.fround(value));if(!boolean(isActive()))return null;
+    }
+   }
+  }finally{running=false;}
+ }
+ return Object.freeze({assignByPrefix:(source,prefix)=>run(source,prefix,false),assignValueStrByPrefix:(source,prefix)=>run(source,prefix,true)});
+}
+
 // Selected Buff.Reset blackboard preparation. Concrete Blackboard operations
 // remain native receivers, including virtual Equals and copy construction.
 export function fearProjectileResetBuffBlackboard({first,second,readBlackboard,equals,copyBlackboard,resetLifecycle,

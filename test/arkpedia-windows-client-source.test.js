@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,103);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,104);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -225,6 +225,20 @@ test('immediate recycle source enumerates stored pairs and pointer lists before 
  }
  at(q.outerMoveNext,0x4dd4158,'dword ptr [rbx + 0xc], eax');at(q.outerMoveNext,0x4dd41b6,'dword ptr [rbx + 0xc], eax');
  assert.ok(!instructions(m).some(i=>i.mnemonic==='call'&&i.operands==='0x183991a80'),'flush does not filter by current frame');
+});
+
+test('blackboard prefix source binds OrdinalIgnoreCase, key substring and separate numeric/string writes',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.blackboardPrefix;
+ const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ const numeric=castMethod(c,'Blackboard','AssignByPrefix'),string=castMethod(c,'Blackboard','AssignValueStrByPrefix');
+ at(numeric,q.numericComparisonInputRva,'r8d, [rcx + 5]');at(numeric,q.numericStartsWithCallRva,'0x1850d7620');at(numeric,q.numericSubstringCallRva,'0x1850d7a60');
+ at(numeric,q.numericWriteCallRva,'0x1821659a0');at(numeric,q.numericLoopIncrementRva,'ebp');
+ at(string,q.stringComparisonInputRva,'r8d, [rcx + 5]');at(string,q.stringStartsWithCallRva,'0x1850d7620');at(string,q.stringSubstringCallRva,'0x1850d7a60');
+ at(string,q.stringPredicateCallRva,'0x180c8e070');at(string,q.stringWriteCallRva,'0x182165800');at(string,q.stringLoopIncrementRva,'r14d');
+ const predicate=castMethod(c,'DataPair','get_isStringValue');assert.equal(predicate.typeIndex,q.dataPairTypeIndex);
+ assert.deepEqual(q.dataPairFields.map(f=>[f.name,f.offset]),[['key',0x10],['value',0x18],['valueStr',0x20]]);
+ assert.ok(instructions(predicate).some(i=>i.mnemonic==='call'&&i.operands==='0x1850d34b0'));
+ assert.equal(q.nativeStringComparisonVerified,false);assert.equal(q.destinationWritesVerified,false);assert.equal(q.livePrefixPhaseVerified,false);
 });
 
 test('Reset blackboard source binds virtual equality copies, prefix operations and duration fallback ordering',()=>{

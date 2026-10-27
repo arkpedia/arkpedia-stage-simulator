@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 103 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 104 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -1397,3 +1397,30 @@ pass and --check reproduces the103-method bundle. Continuation40537355768 at
 92b9df4d passed; existing full40533531161 atd74e28a3 is still active. Concrete
 blackboard operations, full Reset and live controller/stage integration remain
 open. All source/support/receipt/catalogue gates remain intact.
+
+### Blackboard numeric/string prefix traversal
+
+The104-method artifact additionally retains Blackboard.DataPair.get_isStringValue
+and its exact fields. The numeric and string prefix methods both call StartsWith
+with comparison5 (OrdinalIgnoreCase), strip prefix.Length UTF16 units and reread
+the source index for their assignment value. The string path first checks a
+separate DataPair copy for nonnull/nonempty valueStr, then rereads the source for
+the string write. Numeric writes pass the source float independently of valueStr.
+
+`fearProjectileBuffPrefixAssignments` implements the selected indexed list
+traversal on an explicit DataPair array projection. It rereads live count and
+indexed values, preserves the first key for prefix stripping, keeps numeric
+float32 and nullable string writes distinct, and skips empty string-value probes.
+Native OrdinalIgnoreCase comparison and destination writes remain mandatory
+receivers; no approximate JS Unicode folding or complete Blackboard storage
+parity is claimed. Both operations share a reentry guard and stop on lifecycle
+invalidation after external effects.
+
+Tests cover prefix filtering/stripping, comparison5 delegation, separate writes,
+empty/whitespace values, repeated source reads, list growth/shrinkage, nonfinite
+native floats, null/empty input, write exceptions/retry and lifecycle cancellation.
+A Reset composition uses both concrete traversals before duration fallback.
+All675 focused native/fear/family/miner tests pass; --check reproduces the
+104-method evidence bundle. Full native Blackboard storage/equality/string
+comparison, full Reset and controller/stage integration remain open. Existing
+source/support/receipt/catalogue gates remain unchanged.

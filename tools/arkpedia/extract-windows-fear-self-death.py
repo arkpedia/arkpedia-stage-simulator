@@ -622,6 +622,16 @@ result['modeSwitch']['buffNotification']['resetBlackboard'] = {
     'equalsDispatch': {'entryRva': 0x5860, 'chunks': c['code'](0x5860), 'concreteEqualsVerified': False},
     'nativeBlackboardEffectsVerified': False, 'fullResetEffectsVerified': False,
 }
+pair = c['unique'](lambda t: t['name'] == 'DataPair', [v['types'][i] for i in blackboard_type['nested']])
+methods.append(c['method'](pair, c['unique'](lambda r: r['name'] == 'get_isStringValue', pair['methods'])))
+result['modeSwitch']['buffNotification']['blackboardPrefix'] = {
+    'dataPairTypeIndex': pair['index'], 'dataPairFields': c['fields'](pair),
+    'numericStartsWithCallRva': 0x2164e08, 'numericComparisonInputRva': 0x2164dfb, 'numericSubstringCallRva': 0x2164e7b,
+    'numericWriteCallRva': 0x2164ef4, 'numericLoopIncrementRva': 0x2164ef9,
+    'stringStartsWithCallRva': 0x2165165, 'stringComparisonInputRva': 0x2165158, 'stringSubstringCallRva': 0x21651d9,
+    'stringPredicateCallRva': 0x2165242, 'stringWriteCallRva': 0x2165280, 'stringLoopIncrementRva': 0x2165285,
+    'nativeStringComparisonVerified': False, 'destinationWritesVerified': False, 'livePrefixPhaseVerified': False,
+}
 pool = c['type_row']('ObjectPool`1', 'Torappu.ObjectPool')
 pool_methods = []
 for index in [147561, 147566, 147567, 147558, 147559, 147563, 147564, 147568, 147569]:

@@ -21,7 +21,7 @@ import {fearProjectileFinishAndRemoveBuff,fearProjectileOverrideGroupRemove} fro
 import {fearProjectileBuffRecycleQueue,fearProjectileClearRuntimeData} from '../server/sim/content/chapter16-fear-buff-recycle.js';
 import {fearProjectileBuffIdentity,fearProjectileResetBuffLifecycle} from '../server/sim/content/chapter16-fear-buff-identity.js';
 import {fearProjectileBuffTimer,fearProjectileResetBuffTriggers,fearProjectileBuffDurationKey,fearProjectileResetBuffLifetime,fearProjectileModifyBuffLifetime} from '../server/sim/content/chapter16-fear-buff-timing.js';
-import {fearProjectileResetBuffBlackboard} from '../server/sim/content/chapter16-fear-buff-blackboard.js';
+import {fearProjectileResetBuffBlackboard,fearProjectileBuffPrefixAssignments} from '../server/sim/content/chapter16-fear-buff-blackboard.js';
 import {fearProjectileBuffRecyclePool,fearProjectileDefaultBuffPool} from '../server/sim/content/chapter16-fear-buff-pool.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
@@ -207,6 +207,74 @@ test('finish and native-frame queue use concrete buff recycle identity before th
  finish.run();queue.update();assert.equal(buff.instanceUid,1);assert.equal(buff.m_isValid,true);assert.equal(recycled,0);
  f.b.kill(f.source,null);frame=11;queue.update();assert.equal(recycled,1);assert.equal(buff.instanceUid,0);assert.equal(buff.m_isValid,false);assert.equal(p.lock(old),null);
  identity.allocate(buff);assert.equal(buff.instanceUid,2);assert.equal(p.lock(old),null);assert.equal(p.lock(p.capture(buff)),buff);queue.release();assert.deepEqual(f.b.errors,[]);
+});
+
+function prefixAssignmentFixture(overrides={}){
+ const events=[];let active=true;
+ const callers={startsWith:(key,prefix,comparison)=>{events.push(['compare',comparison]);return key.startsWith(prefix);},
+  assignNumeric:(key,value)=>events.push(['number',key,value]),assignString:(key,value)=>events.push(['string',key,value]),isActive:()=>active,...overrides};
+ const operations=fearProjectileBuffPrefixAssignments(callers);return{events,operations,set active(value){active=value;}};
+}
+
+test('prefix assignment preserves numeric/string separation, strips keys and skips missing string values',()=>{
+ const f=prefixAssignmentFixture(),source=[{key:'buff.atk',value:1.2,valueStr:null},{key:'other.atk',value:9,valueStr:'skip'},
+  {key:'buff.label',value:0,valueStr:'name'},{key:'buff.empty',value:2,valueStr:''},{key:'buff.space',value:3,valueStr:' '}];
+ f.operations.assignByPrefix(source,'buff.');f.operations.assignValueStrByPrefix(source,'buff.');
+ assert.deepEqual(f.events.filter(e=>e[0]==='number'),[['number','atk',Math.fround(1.2)],['number','label',0],['number','empty',2],['number','space',3]]);
+ assert.deepEqual(f.events.filter(e=>e[0]==='string'),[['string','label','name'],['string','space',' ']]);
+ assert.ok(f.events.filter(e=>e[0]==='compare').every(e=>e[1]===5));
+});
+
+test('prefix traversal delegates comparison instead of replacing native OrdinalIgnoreCase with a JS fold',()=>{
+ const f=prefixAssignmentFixture({startsWith:(key,prefix,comparison)=>{assert.equal(comparison,5);assert.equal(key,'BUFF.atk');assert.equal(prefix,'buff.');return true;}});
+ f.operations.assignByPrefix([{key:'BUFF.atk',value:2,valueStr:null}],'buff.');assert.deepEqual(f.events,[['number','atk',2]]);
+});
+
+test('prefix numeric read retains the first key and rereads value after comparison effects',()=>{
+ const source=[{key:'buff.old',value:1}];const f=prefixAssignmentFixture({startsWith:()=>{source[0]={key:'changed',value:7};return true;}});
+ f.operations.assignByPrefix(source,'buff.');assert.deepEqual(f.events,[['number','old',7]]);
+});
+
+test('prefix string traversal rereads the value after its separate nonempty-string probe',()=>{
+ let reads=0;const source=[];Object.defineProperty(source,0,{configurable:true,get(){reads++;return{key:'buff.name',value:0,valueStr:reads<3?'probe':null};}});
+ const f=prefixAssignmentFixture();f.operations.assignValueStrByPrefix(source,'buff.');
+ assert.equal(reads,3);assert.deepEqual(f.events.at(-1),['string','name',null]);
+});
+
+test('prefix traversal reads live list count and does not snapshot appended or removed entries',()=>{
+ const source=[{key:'buff.a',value:1}];const events=[];const f=prefixAssignmentFixture({assignNumeric:(key,value)=>{
+  events.push([key,value]);if(key==='a')source.push({key:'buff.b',value:2});
+ }});f.operations.assignByPrefix(source,'buff.');assert.deepEqual(events,[['a',1],['b',2]]);
+ const g=prefixAssignmentFixture({assignNumeric:()=>{source.length=0;}});g.operations.assignByPrefix(source,'buff.');assert.equal(source.length,0);
+});
+
+test('prefix traversal treats null source as empty and keeps native float nonfinite values',()=>{
+ const f=prefixAssignmentFixture();f.operations.assignByPrefix(null,null);f.operations.assignValueStrByPrefix([],null);
+ f.operations.assignByPrefix([{key:'buff.nan',value:NaN},{key:'buff.inf',value:Infinity}],'buff.');
+ const values=f.events.filter(e=>e[0]==='number');assert.ok(Number.isNaN(values[0][2]));assert.equal(values[1][2],Infinity);
+});
+
+test('prefix operations share a reentry guard and can retry after a destination exception',()=>{
+ let f,fail=true;f=prefixAssignmentFixture({assignNumeric:()=>{
+  assert.equal(f.operations.assignValueStrByPrefix([],''),null);if(fail)throw Error('write');
+ }});const source=[{key:'buff.a',value:1}];assert.throws(()=>f.operations.assignByPrefix(source,'buff.'),/write/);
+ fail=false;assert.equal(f.operations.assignByPrefix(source,'buff.'),undefined);
+});
+
+test('prefix traversal stops after comparison invalidates its life before any write',()=>{
+ let f;f=prefixAssignmentFixture({startsWith:()=>{f.active=false;return undefined;}});
+ assert.equal(f.operations.assignByPrefix([{key:'buff.a',value:1}],'buff.'),null);assert.deepEqual(f.events,[]);
+});
+
+test('Reset prefix composition invokes both concrete traversals with native numeric and string write receivers',()=>{
+ const destination=new Map(),source=[{key:'buff.duration',value:3,valueStr:null},{key:'buff.label',value:0,valueStr:'name'}];
+ const prefixes=fearProjectileBuffPrefixAssignments({startsWith:(key,prefix)=>key.startsWith(prefix),
+  assignNumeric:(key,value)=>destination.set(key,value),assignString:(key,value)=>destination.set(key,value),isActive:()=>true});
+ const reset=fearProjectileResetBuffBlackboard({first:source,second:null,readBlackboard:()=>destination,equals:()=>false,copyBlackboard:()=>{throw Error('copy');},
+  resetLifecycle:()=>{},readDurationKey:()=>null,readData:()=>({stripBlackboardParamsWithBuffKey:true,blackboard:[]}),readBuffKey:()=> 'buff',clear:t=>t.clear(),
+  assign:()=>{},assignByPrefix:(_,s,p)=>prefixes.assignByPrefix(s,p),assignValueStrByPrefix:(_,s,p)=>prefixes.assignValueStrByPrefix(s,p),
+  containsKey:(t,k)=>t.has(k),tryGetFP:()=>{throw Error('fallback');},assignFP:()=>{throw Error('assign FP');},isActive:()=>true});
+ assert.deepEqual(reset.run(),{durationKey:'duration'});assert.equal(destination.get('duration'),3);assert.equal(destination.get('label'),'name');
 });
 
 function blackboardResetFixture(overrides={}){
