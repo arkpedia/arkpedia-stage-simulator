@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 177 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 182 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -1401,6 +1401,47 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 124-method bundle. Continuation40545156330 at3b7defc7 passed; existing
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
+
+### Abnormal combo counters and dirty notification passes
+
+The182-method bundle adds complete AbnormalComboManager.PushMask/PopMask,
+_UpdateAbnormalCombo and static constructor bodies, plus
+Attributes._CalculateAbnormalDirtyByModifier. The comboMutation record binds
+signed Int16 counter-array elements, signed Int64 combo/flag masks and the
+two-entry signed mapping array. Original constructor writes bind exact flag
+masks0x80028 and0x40028. The abnormalDirty record binds flag/combo delegate
+fields, four interface slots, enum identity conversions, loop bounds and calls.
+
+`fearProjectileBuffCombos` updates only the native two combo entries, wrapping
+counter changes as signed16 bits. A combo is active when its counter is positive
+and its immunity counter is nonpositive; the latter array is not read when
+the active counter is nonpositive. Each affected entry is recalculated even
+after an earlier entry changed. Derived abnormal flags are rebuilt only if
+some combo enabled bit changes. The rebuild captures the combo mask once and
+rereads the mapping array for each active entry. Unchanged state retains the
+existing derived mask. Signed masks, unrelated stored combo bits and partial
+failure/cancellation mutations are preserved.
+
+`fearProjectileAbnormalDirty` reads flag, combo, immune and combo-immune masks
+in separate passes, with44/2/44/2 entries. Each pass captures its own mask but
+reads the current nullable delegate for every matching bit; later passes see
+earlier callback effects. The anti mask does not add a fifth notification pass.
+Actual native delegate invocation remains an explicit receiver.
+
+Tests cover combo projection/immunity, unchanged masks, both-entry updates,
+ignored high bits, Int16 overflow, short/null arrays, captured masks and live
+mapping arrays, nested calls, partial failures and lifecycle cancellation.
+Modifier and enable/disable composition now use concrete combo mutations and
+native flag queries. Dirty callbacks observe the updated counters/combo flags;
+separate mask passes and callback replacement are covered. All1050 focused
+native/fear/family/miner tests pass; --check reproduces182 methods. This is a
+local checkpoint; approved0524e2b1 continuation passed on attempt2 and original
+full40558578137 remains active.
+
+Native static-mapping lifecycle, delegate execution, attribute-value dirty
+propagation, HashSet equality/storage, actions, snapshots, OnBuffExtend and full
+controller/stage/frame integration remain open. Source/support/receipt/catalogue
+gates are unchanged and all new stages remain test-only.
 
 ### Attribute modifier registration and removal
 

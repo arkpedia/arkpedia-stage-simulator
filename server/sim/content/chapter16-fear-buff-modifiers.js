@@ -46,3 +46,22 @@ export function fearProjectileAttributeModifiers({attributes,addToSet,removeFrom
  };
  return Object.freeze({add:modifier=>mutate(modifier,true),remove:modifier=>mutate(modifier,false)});
 }
+
+// Default _CalculateAbnormalDirtyByModifier. Each mask is captured for its own
+// pass; the nullable delegate is read again for each matching bit.
+export function fearProjectileAbnormalDirty({attributes,readMask,invokeDelegate,isActive}){
+ if(!attributes||[readMask,invokeDelegate,isActive].some(fn=>typeof fn!=='function'))throw new TypeError('Fear abnormal dirty requires native attributes, modifier, delegate and lifecycle callers');
+ const cancelled=Symbol('cancelled'),check=()=>{const active=isActive();if(typeof active!=='boolean')throw new TypeError('Fear abnormal dirty requires native Boolean lifecycle results');if(!active)throw cancelled;};
+ return Object.freeze({run(modifier){
+  try{
+   check();if(modifier==null)throw new TypeError('Fear abnormal dirty dereferenced a null native modifier');
+   for(const [slot,limit,field]of [[1,44,'onAbnormalFlagDirty'],[4,2,'onAbnormalComboDirty'],[2,44,'onAbnormalFlagDirty'],[5,2,'onAbnormalComboDirty']]){
+    const mask=readMask(modifier,slot);check();
+    if(typeof mask!=='bigint'||mask<0n||mask>=(1n<<64n))throw new TypeError('Fear abnormal dirty requires native UInt64 masks');
+    for(let index=0;index<limit;index++)if((mask&(1n<<BigInt(index)))>0n){
+     const delegate=attributes[field];if(delegate!=null){invokeDelegate(delegate,index);check();}
+    }
+   }
+  }catch(error){if(error===cancelled)return null;throw error;}
+ }});
+}

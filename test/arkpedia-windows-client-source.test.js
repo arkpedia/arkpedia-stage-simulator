@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,177);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,182);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -353,6 +353,43 @@ test('modifier mutation source binds interface slots, concrete membership specif
  at(remove,q.removeAttributeSetCallRva,'0x18436f4c0');at(remove,q.removeAttributeLimitRva,'ebx, 0x26');at(remove,q.removeDirtyCallRva,'0x183957e90');
  at(remove,q.removeDirtyLimitRva,'ebp, 0x26');at(remove,q.removeAbnormalDirtyTailRva,'0x183958e30');
  assert.equal(q.nativeSetEqualityVerified,false);assert.equal(q.nativeComboMutationVerified,false);assert.equal(q.nativeDirtyPropagationVerified,false);assert.equal(q.liveModifierMutationVerified,false);
+});
+
+test('combo mutation source binds two signed counter entries, state-change-only projection and exact static mappings',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.newBuff.comboMutation,
+  push=castMethod(c,'AbnormalComboManager','PushMask'),pop=castMethod(c,'AbnormalComboManager','PopMask'),
+  update=castMethod(c,'AbnormalComboManager','_UpdateAbnormalCombo'),ctor=castMethod(c,'AbnormalComboManager','.cctor');
+ const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args),`${rva.toString(16)} ${args}`);
+ assert.deepEqual(q.counterFields.map(f=>[f.name,f.offset,f.elementKind]),[['m_abnormalComboCounter',0x10,6],['m_abnormalComboImmuneCounter',0x18,6]]);
+ assert.deepEqual(q.maskFields.map(f=>[f.name,f.offset,(f.typeBits>>>16)&255]),[['m_abnormalComboMask',0x20,10],['m_abnormalFlagMask',0x28,10]]);
+ assert.equal(q.mappingField.name,'ABNORMAL_COMBO_TO_FLAG_MASK');assert.equal(q.mappingField.offset,0);assert.equal(q.mappingField.elementKind,10);
+ assert.deepEqual(q.mappingValues,[0x80028,0x40028]);at(ctor,q.mappingLengthInputRva,'edx, 2');
+ at(ctor,q.mappingWriteRvas[0],'qword ptr [rax + 0x20], 0x80028');at(ctor,q.mappingWriteRvas[1],'qword ptr [rax + 0x28], 0x40028');
+ for(const rva of q.pushCounterWrites){at(push,rva,'word ptr [rax + rcx*2 + 0x20]');assert.equal(instructions(push).find(i=>i.rva===rva).mnemonic,'inc');}
+ at(push,q.pushUpdateCallRva,'0x1839963b0');at(push,q.pushLimitRva,'ebx, 2');at(push,q.pushChangedTestRva,'bpl, bpl');
+ at(push,q.pushComboCaptureRva,'rbp, qword ptr [rdi + 0x20]');at(push,q.pushMappingReadRva,'rcx, qword ptr [rax]');
+ at(push,q.pushMappingOrRva,'rsi, qword ptr [rcx + rax*8 + 0x20]');at(push,q.pushFlagMaskWriteRva,'qword ptr [rdi + 0x28], rsi');
+ for(const rva of q.popCounterWrites){at(pop,rva,'word ptr [rax + rcx*2 + 0x20]');assert.equal(instructions(pop).find(i=>i.rva===rva).mnemonic,'dec');}
+ at(pop,q.popUpdateCallRva,'0x1839963b0');at(pop,q.popLimitRva,'ebx, 2');at(pop,q.popChangedTestRva,'bpl, bpl');
+ at(pop,q.popComboCaptureRva,'rbp, qword ptr [rdi + 0x20]');at(pop,q.popMappingReadRva,'rcx, qword ptr [rax]');
+ at(pop,q.popMappingOrRva,'rsi, qword ptr [rcx + rax*8 + 0x20]');at(pop,q.popFlagMaskWriteRva,'qword ptr [rdi + 0x28], rsi');
+ at(update,q.updateMaskCaptureRva,'r9, qword ptr [rcx + 0x20]');at(update,q.updateActiveCounterCompareRva,'word ptr [r11 + rcx], 0');
+ at(update,q.updateImmuneCounterCompareRva,'word ptr [r11 + rax], cx');at(update,q.updatePreviousTestRva,'r8, r9');at(update,q.updatePreviousSignedPositiveRva,'cl');
+ at(update,q.updateClearSubtractRva,'r9, rax');at(update,q.updateClearWriteRva,'qword ptr [r10 + 0x20], r9');
+ at(update,q.updateSetOrRva,'r9, r8');at(update,q.updateSetWriteRva,'qword ptr [r10 + 0x20], r9');
+ assert.equal(q.nativeStaticMappingLifecycleVerified,false);assert.equal(q.liveComboMutationVerified,false);
+});
+
+test('abnormal dirty source binds separate flag/combo and immunity passes with live delegates',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.newBuff.abnormalDirty,m=castMethod(c,'Attributes','_CalculateAbnormalDirtyByModifier');
+ const at=(rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ assert.deepEqual(q.delegateFields.map(f=>[f.name,f.offset]),[['onAbnormalFlagDirty',0x70],['onAbnormalComboDirty',0x78]]);
+ for(const [index,slot]of [1,4,2,5].entries())at(q.slotInputs[index],`ecx, ${slot}`);
+ for(const rva of q.maskCalls)at(rva,'0x180005250');for(const rva of q.conversionCalls)at(rva,'0x1828a66d0');
+ for(const [index,args]of ['ebx, 0x2c','ebx, 2','ebx, 0x2c','edi, 2'].entries())at(q.limits[index],args);
+ for(const [index,offset]of [0x70,0x78,0x70,0x78].entries())at(q.delegateReads[index],`r9, qword ptr [rbp + 0x${offset.toString(16)}]`);
+ for(const rva of q.delegateCalls)at(rva,'qword ptr [r9 + 0x18]');
+ assert.equal(q.nativeDelegateInvocationVerified,false);assert.equal(q.liveAbnormalDirtyVerified,false);
 });
 
 test('native admission source binds signed Int16 counters, combo fallback and Enemy raw-WALK levitation',()=>{

@@ -1422,6 +1422,55 @@ result['modeSwitch']['buffNotification']['newBuff']['modifierMutation'] = {
     'removeAttributeLimitRva': 0x395878c, 'removeDirtyCallRva': 0x395879e, 'removeDirtyLimitRva': 0x39587a8, 'removeAbnormalDirtyTailRva': 0x39587d1,
     'nativeSetEqualityVerified': False, 'nativeComboMutationVerified': False, 'nativeDirtyPropagationVerified': False, 'liveModifierMutationVerified': False,
 }
+for name, entry in [('PushMask', 0x3996140), ('PopMask', 0x3995fe0), ('_UpdateAbnormalCombo', 0x39963b0), ('.cctor', 0x3996440)]:
+    row = c['unique'](lambda r: r['name'] == name, combo_type['methods'])
+    retained = c['method'](combo_type, row)
+    assert retained['entryRva'] == entry
+    if not any(m['index'] == row['index'] and m['image'] == 'Assembly-CSharp.dll' for m in methods):
+        methods.append(retained)
+combo_counter_fields = []
+for name in ['m_abnormalComboCounter', 'm_abnormalComboImmuneCounter']:
+    field = c['unique'](lambda f: f['name'] == name, c['fields'](combo_type))
+    assert (field['typeBits'] >> 16) & 255 == 29
+    ep = v['offset'](field['typeData'])
+    assert (v['uint'](v['b'], ep + 8) >> 16) & 255 == 6
+    combo_counter_fields.append({**field, 'elementTypeHex': v['b'][ep:ep + 16].hex(), 'elementKind': 6})
+combo_mapping_field = c['unique'](lambda f: f['name'] == 'ABNORMAL_COMBO_TO_FLAG_MASK', c['fields'](combo_type))
+assert combo_mapping_field['offset'] == 0 and (combo_mapping_field['typeBits'] >> 16) & 255 == 29
+ep = v['offset'](combo_mapping_field['typeData'])
+assert (v['uint'](v['b'], ep + 8) >> 16) & 255 == 10
+combo_cctor = c['code'](0x3996440)
+for rva, expected in [(0x3996473, 'edx, 2'), (0x3996488, 'qword ptr [rax + 0x20], 0x80028'), (0x3996496, 'qword ptr [rax + 0x28], 0x40028')]:
+    assert any(i['rva'] == rva and i['mnemonic'] == 'mov' and i['operands'] == expected for ch in combo_cctor for i in ch['instructions'])
+result['modeSwitch']['buffNotification']['newBuff']['comboMutation'] = {
+    'counterFields': combo_counter_fields,
+    'maskFields': [c['unique'](lambda f: f['name'] == name, c['fields'](combo_type)) for name in ['m_abnormalComboMask', 'm_abnormalFlagMask']],
+    'mappingField': {**combo_mapping_field, 'elementTypeHex': v['b'][ep:ep + 16].hex(), 'elementKind': 10},
+    'mappingValues': [0x80028, 0x40028], 'mappingLengthInputRva': 0x3996473, 'mappingWriteRvas': [0x3996488, 0x3996496],
+    'pushCounterWrites': [0x399619e, 0x39961c3], 'pushUpdateCallRva': 0x39961d6, 'pushLimitRva': 0x39961e4,
+    'pushChangedTestRva': 0x39961e9, 'pushComboCaptureRva': 0x39961f9, 'pushMappingReadRva': 0x3996252,
+    'pushMappingOrRva': 0x3996262, 'pushFlagMaskWriteRva': 0x399626e,
+    'popCounterWrites': [0x399603e, 0x3996063], 'popUpdateCallRva': 0x3996076, 'popLimitRva': 0x3996084,
+    'popChangedTestRva': 0x3996089, 'popComboCaptureRva': 0x3996099, 'popMappingReadRva': 0x39960f2,
+    'popMappingOrRva': 0x3996102, 'popFlagMaskWriteRva': 0x399610e,
+    'updateMaskCaptureRva': 0x39963b4, 'updateActiveCounterCompareRva': 0x39963d4, 'updateImmuneCounterCompareRva': 0x39963f2,
+    'updatePreviousTestRva': 0x39963fa, 'updatePreviousSignedPositiveRva': 0x39963fd,
+    'updateClearSubtractRva': 0x3996418, 'updateClearWriteRva': 0x399641d, 'updateSetOrRva': 0x3996426, 'updateSetWriteRva': 0x3996429,
+    'nativeStaticMappingLifecycleVerified': False, 'liveComboMutationVerified': False,
+}
+abnormal_dirty_row = c['unique'](lambda r: r['name'] == '_CalculateAbnormalDirtyByModifier', attributes_type['methods'])
+if not any(m['index'] == abnormal_dirty_row['index'] and m['image'] == 'Assembly-CSharp.dll' for m in methods):
+    methods.append(c['method'](attributes_type, abnormal_dirty_row))
+result['modeSwitch']['buffNotification']['newBuff']['abnormalDirty'] = {
+    'delegateFields': [c['unique'](lambda f: f['name'] == name, c['fields'](attributes_type)) for name in ['onAbnormalFlagDirty', 'onAbnormalComboDirty']],
+    'maskCalls': [0x3958e9c, 0x3958efd, 0x3958f5d, 0x3958fbd],
+    'slotInputs': [0x3958e85, 0x3958ef5, 0x3958f55, 0x3958fb5],
+    'limits': [0x3958ee9, 0x3958f49, 0x3958fa9, 0x3959009],
+    'conversionCalls': [0x3958ecb, 0x3958f2b, 0x3958f8b, 0x3958feb],
+    'delegateReads': [0x3958ed0, 0x3958f30, 0x3958f90, 0x3958ff0],
+    'delegateCalls': [0x3958ee3, 0x3958f43, 0x3958fa3, 0x3959003],
+    'nativeDelegateInvocationVerified': False, 'liveAbnormalDirtyVerified': False,
+}
 for index in [147561, 147566, 147567, 147558, 147559, 147563, 147564, 147568, 147569]:
     spec = priority['specification'](index)
     assert spec['declaringTypeIndex'] == pool['index']

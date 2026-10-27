@@ -35,7 +35,8 @@ import {fearProjectileNewBuff} from '../server/sim/content/chapter16-fear-buff-n
 import {fearProjectileAttributeStatus,fearProjectileBuffAdmission,fearProjectileComboFlag} from '../server/sim/content/chapter16-fear-buff-admission.js';
 import {fearProjectileEnsureOverrideGroup,fearProjectileOverrideGroup} from '../server/sim/content/chapter16-fear-buff-group.js';
 import {fearProjectileBuffEnabled} from '../server/sim/content/chapter16-fear-buff-enabled.js';
-import {fearProjectileAttributeModifiers} from '../server/sim/content/chapter16-fear-buff-modifiers.js';
+import {fearProjectileAttributeModifiers,fearProjectileAbnormalDirty} from '../server/sim/content/chapter16-fear-buff-modifiers.js';
+import {fearProjectileBuffCombos,FEAR_COMBO_FLAG_MASKS} from '../server/sim/content/chapter16-fear-buff-combos.js';
 import {fearProjectileBuffRecyclePool,fearProjectileDefaultBuffPool} from '../server/sim/content/chapter16-fear-buff-pool.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
@@ -48,6 +49,104 @@ import { chapter16Shadow } from '../server/sim/content/chapter16-shadow.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
 const parentKey='feawpj_a[mcreep_fear]';
 const fpOne=1n<<32n;
+
+function comboFixture(){
+ const manager={m_abnormalComboCounter:[0,0],m_abnormalComboImmuneCounter:[0,0],m_abnormalComboMask:0n,m_abnormalFlagMask:0n},events=[],state={active:true};
+ const options={manager,isActive:()=>state.active,readFlagMasks:()=>{events.push('mapping');return FEAR_COMBO_FLAG_MASKS;}};
+ return{manager,events,state,options,adapter:()=>fearProjectileBuffCombos(options)};
+}
+test('combo push/pop updates both counters and projects the exact native status-mask mappings',()=>{
+ const f=comboFixture(),adapter=f.adapter();adapter.push(3n,0n);
+ assert.deepEqual(f.manager.m_abnormalComboCounter,[1,1]);assert.equal(f.manager.m_abnormalComboMask,3n);assert.equal(f.manager.m_abnormalFlagMask,0xc0028n);
+ assert.deepEqual(f.events,['mapping','mapping']);assert.equal(fearProjectileComboFlag(f.manager,19),true);assert.equal(fearProjectileComboFlag(f.manager,18),true);
+ adapter.pop(1n,0n);assert.equal(f.manager.m_abnormalComboMask,2n);assert.equal(f.manager.m_abnormalFlagMask,0x40028n);
+ adapter.pop(2n,0n);assert.equal(f.manager.m_abnormalComboMask,0n);assert.equal(f.manager.m_abnormalFlagMask,0n);
+});
+test('combo immunity suppresses positive counters and removing it restores the combo flags',()=>{
+ const f=comboFixture(),adapter=f.adapter();adapter.push(1n,1n);assert.deepEqual(f.manager.m_abnormalComboCounter,[1,0]);
+ assert.deepEqual(f.manager.m_abnormalComboImmuneCounter,[1,0]);assert.equal(f.manager.m_abnormalComboMask,0n);assert.deepEqual(f.events,[]);
+ adapter.pop(0n,1n);assert.equal(f.manager.m_abnormalComboMask,1n);assert.equal(f.manager.m_abnormalFlagMask,0x80028n);
+ adapter.push(0n,1n);assert.equal(f.manager.m_abnormalFlagMask,0n);
+});
+test('unchanged combo bits retain the old projected mask and never read the mapping',()=>{
+ const f=comboFixture(),adapter=f.adapter();adapter.push(1n,0n);f.manager.m_abnormalFlagMask=123n;f.events.length=0;
+ adapter.push(1n,0n);adapter.pop(1n,0n);assert.equal(f.manager.m_abnormalComboCounter[0],1);assert.equal(f.manager.m_abnormalFlagMask,123n);assert.deepEqual(f.events,[]);
+});
+test('combo updates are not skipped when an earlier combo already changed',()=>{
+ const f=comboFixture();f.adapter().push(3n,0n);assert.equal(f.manager.m_abnormalComboMask,3n);assert.equal(f.manager.m_abnormalComboCounter[1],1);
+});
+test('combo loops ignore input bits above the two native entries and retain unrelated stored combo bits',()=>{
+ const f=comboFixture();f.manager.m_abnormalComboMask=1n<<50n;
+ f.adapter().push((1n<<63n)|4n,4n);assert.deepEqual(f.manager.m_abnormalComboCounter,[0,0]);assert.deepEqual(f.events,[]);
+ f.adapter().push(1n,0n);assert.equal(f.manager.m_abnormalComboMask,(1n<<50n)|1n);assert.equal(f.manager.m_abnormalFlagMask,0x80028n);
+});
+test('combo counter wrapping can disable a formerly active combo without clamping its counter',()=>{
+ const f=comboFixture();f.manager.m_abnormalComboCounter[0]=32767;f.manager.m_abnormalComboMask=1n;f.manager.m_abnormalFlagMask=0x80028n;
+ f.adapter().push(1n,0n);assert.equal(f.manager.m_abnormalComboCounter[0],-32768);assert.equal(f.manager.m_abnormalComboMask,0n);assert.equal(f.manager.m_abnormalFlagMask,0n);
+ f.adapter().pop(1n,0n);assert.equal(f.manager.m_abnormalComboCounter[0],32767);assert.equal(f.manager.m_abnormalFlagMask,0x80028n);
+});
+test('combo helper skips null immunity counters when its active counter is not positive',()=>{
+ const f=comboFixture();f.manager.m_abnormalComboImmuneCounter=null;f.manager.m_abnormalComboCounter[0]=-2;
+ f.adapter().push(1n,0n);assert.equal(f.manager.m_abnormalComboCounter[0],-1);assert.deepEqual(f.events,[]);
+ f.adapter().push(1n,0n);assert.equal(f.manager.m_abnormalComboCounter[0],0);
+ assert.throws(()=>f.adapter().push(1n,0n),/null native/);assert.equal(f.manager.m_abnormalComboCounter[0],1);
+});
+test('combo mapping rereads the static array for each active combo but captures the combined combo mask once',()=>{
+ const f=comboFixture();let reads=0;f.options.readFlagMasks=()=>{reads++;f.manager.m_abnormalComboMask=0n;return reads===1?[1n,2n]:[4n,8n];};
+ f.adapter().push(3n,0n);assert.equal(reads,2);assert.equal(f.manager.m_abnormalFlagMask,9n);assert.equal(f.manager.m_abnormalComboMask,0n);
+});
+test('combo projection stores signed Int64 masks and keeps signed-positive flag-query semantics',()=>{
+ const f=comboFixture();f.options.readFlagMasks=()=>[-(1n<<63n),0n];f.adapter().push(1n,0n);
+ assert.equal(f.manager.m_abnormalFlagMask,-(1n<<63n));assert.equal(fearProjectileComboFlag(f.manager,63),false);
+});
+test('combo errors retain counter/bit mutations but do not overwrite the old derived flags',()=>{
+ const f=comboFixture();f.options.readFlagMasks=()=>[];assert.throws(()=>f.adapter().push(1n,0n),/outside/);
+ assert.equal(f.manager.m_abnormalComboCounter[0],1);assert.equal(f.manager.m_abnormalComboMask,1n);assert.equal(f.manager.m_abnormalFlagMask,0n);
+ const g=comboFixture();g.manager.m_abnormalComboCounter=[0];assert.throws(()=>g.adapter().push(3n,0n),/outside/);assert.equal(g.manager.m_abnormalComboMask,1n);
+});
+test('combo lifecycle cancellation after mapping read preserves earlier bit writes and prevents derived-mask assignment',()=>{
+ const f=comboFixture();f.options.readFlagMasks=()=>{f.state.active=false;return FEAR_COMBO_FLAG_MASKS;};
+ assert.equal(f.adapter().push(1n,0n),null);assert.equal(f.manager.m_abnormalComboMask,1n);assert.equal(f.manager.m_abnormalFlagMask,0n);
+});
+test('nested combo changes retain native captured outer projection ordering',()=>{
+ const f=comboFixture();let nested=false,adapter;f.options.readFlagMasks=()=>{if(!nested){nested=true;adapter.pop(1n,0n);}return FEAR_COMBO_FLAG_MASKS;};
+ adapter=f.adapter();adapter.push(1n,0n);assert.equal(f.manager.m_abnormalComboMask,0n);assert.equal(f.manager.m_abnormalFlagMask,0x80028n);
+});
+test('modifier registration composes concrete combo mutation and native status queries through enable/disable',()=>{
+ const f=modifierFixture(),enabled=buffEnabledFixture(),combo=comboFixture();f.attributes.m_abnormalComboMgr=combo.manager;
+ f.options.pushCombo=(manager,value,immune)=>{assert.equal(manager,combo.manager);combo.adapter().push(value,immune);};
+ f.options.popCombo=(manager,value,immune)=>{assert.equal(manager,combo.manager);combo.adapter().pop(value,immune);};
+ f.options.calculateAbnormalDirty=()=>{};enabled.buff.masks=[0n,0n,0n,0n,1n,0n];enabled.options.readAttributes=()=>f.attributes;
+ enabled.options.addModifier=(_attrs,value)=>f.adapter().add(value);enabled.options.removeModifier=(_attrs,value)=>f.adapter().remove(value);
+ const query=fearProjectileAttributeStatus({attributes:f.attributes,isActive:()=>true});enabled.adapter().set(true);
+ assert.equal(query.getAbnormalFlag(19),true);assert.equal(query.getAbnormalFlag(3),true);assert.equal(query.getAbnormalFlag(18),false);
+ enabled.adapter().set(false);assert.equal(query.getAbnormalFlag(19),false);assert.equal(combo.manager.m_abnormalComboCounter[0],0);
+});
+test('abnormal dirty emits flags, combos, immunities and combo immunities in separate native passes',()=>{
+ const events=[],attributes={onAbnormalFlagDirty:index=>events.push(['flag',index]),onAbnormalComboDirty:index=>events.push(['combo',index])},
+  modifier={masks:[0n,3n,2n,~0n,3n,1n]},slots=[];
+ fearProjectileAbnormalDirty({attributes,isActive:()=>true,readMask:(value,slot)=>{slots.push(slot);return value.masks[slot];},invokeDelegate:(fn,index)=>fn(index)}).run(modifier);
+ assert.deepEqual(slots,[1,4,2,5]);assert.deepEqual(events,[['flag',0],['flag',1],['combo',0],['combo',1],['flag',1],['combo',0]]);
+});
+test('abnormal dirty captures each phase mask but reloads callbacks and later phase masks after effects',()=>{
+ const events=[],modifier={masks:[0n,3n,0n,0n,0n,0n]},attributes={onAbnormalFlagDirty:index=>{
+  events.push(['old',index]);modifier.masks[1]=0n;modifier.masks[4]=2n;attributes.onAbnormalFlagDirty=value=>events.push(['new',value]);},onAbnormalComboDirty:index=>events.push(['combo',index])};
+ fearProjectileAbnormalDirty({attributes,isActive:()=>true,readMask:(value,slot)=>value.masks[slot],invokeDelegate:(fn,index)=>fn(index)}).run(modifier);
+ assert.deepEqual(events,[['old',0],['new',1],['combo',1]]);
+});
+test('abnormal dirty ignores high mask bits, skips absent delegates and stops on lifecycle invalidation',()=>{
+ const events=[],state={active:true},modifier={masks:[0n,(1n<<43n)|(1n<<44n),0n,0n,(1n<<1n)|(1n<<2n),0n]},attributes={onAbnormalFlagDirty:null,onAbnormalComboDirty:index=>{events.push(index);state.active=false;}};
+ assert.equal(fearProjectileAbnormalDirty({attributes,isActive:()=>state.active,readMask:(value,slot)=>value.masks[slot],invokeDelegate:(fn,index)=>fn(index)}).run(modifier),null);
+ assert.deepEqual(events,[1]);
+});
+test('modifier mutation composes real abnormal dirty dispatch after counters and combo flags are updated',()=>{
+ const f=modifierFixture(),combo=comboFixture(),observed=[];f.attributes.m_abnormalComboMgr=combo.manager;f.modifier.masks=[0n,2n,0n,0n,1n,0n];
+ f.options.pushCombo=(_manager,value,immune)=>combo.adapter().push(value,immune);
+ const query=fearProjectileAttributeStatus({attributes:f.attributes,isActive:()=>true});f.attributes.onAbnormalFlagDirty=index=>observed.push(['flag',index,query.getAbnormalFlag(index)]);
+ f.attributes.onAbnormalComboDirty=index=>observed.push(['combo',index,query.getAbnormalFlag(19)]);
+ f.options.calculateAbnormalDirty=()=>fearProjectileAbnormalDirty({attributes:f.attributes,isActive:()=>true,readMask:f.options.readMask,invokeDelegate:(fn,index)=>fn(index)}).run(f.modifier);
+ f.adapter().add(f.modifier);assert.deepEqual(observed,[['flag',1,true],['combo',0,true]]);
+});
 
 function modifierFixture(){
  const attributes={m_abnormalFlagModifiers:new Set(),m_attributeModifiers:Array.from({length:38},()=>new Set()),
