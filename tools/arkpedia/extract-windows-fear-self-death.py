@@ -1324,6 +1324,50 @@ result['modeSwitch']['buffNotification']['newBuff']['mergeTiming'] = {
     'mathEvidence': {'maximum': 'modeSwitch.buffNotification.resetTiming.math', 'additionAndSignedComparison': 'modeSwitch.buffNotification.attributeLoading.math'},
     'nativeOwnerNotificationEffectsVerified': False, 'nativeGetterHotfixDispatchVerified': False, 'liveMergeTimingVerified': False,
 }
+enabled_callees = []
+for owner, name, entry in [(buff, '_UpdateIsEnabledIfNotFinished', 0x39b5a70),
+    (entity, 'get_isSilenced', 0x3a2d560), (entity, 'get_isStunned', 0x3a2d830), (entity, 'get_isFrozen', 0x3a2cb10),
+    (attributes_type, 'AddModifier', 0x3957030), (attributes_type, 'RemoveModifier', 0x39585b0)]:
+    row = c['unique'](lambda r: r['name'] == name, owner['methods'])
+    retained = c['method'](owner, row)
+    assert retained['entryRva'] == entry
+    if not any(m['index'] == row['index'] and m['image'] == 'Assembly-CSharp.dll' for m in methods):
+        methods.append(retained)
+    enabled_callees.append({'type': owner['name'], 'name': name, 'index': row['index'], 'entryRva': entry})
+run_actions_row = c['unique'](lambda r: r['name'] == '_RunActions', buff['methods'])
+assert v['pointer'](run_actions_row) - v['image_base'] == 0x39b5370
+pos = v['method_start'] + run_actions_row['index'] * 32
+start, count = v['sint'](v['m'], pos + 12), struct.unpack_from('<H', v['m'], pos + 30)[0]
+run_parameters = []
+for index in range(count):
+    pp = v['uint'](v['m'], 88) + (start + index) * 12
+    run_parameters.append({'name': v['text'](v['uint'](v['m'], pp)), 'typeIndex': v['sint'](v['m'], pp + 8)})
+assert [p['name'] for p in run_parameters] == ['ev', 'setMeAsTarget']
+tp = v['offset'](v['quad'](v['b'], v['type_table'] + run_parameters[0]['typeIndex'] * 8))
+assert (v['uint'](v['b'], tp + 8) >> 16) & 255 == 17
+enabled_event_type = v['types'][v['quad'](v['b'], tp)]
+assert enabled_event_type['name'] == 'Event' and enabled_event_type['index'] in buff['nested']
+# Bind only the selected two single-byte constants. Other Event constants need
+# a different compressed-integer decoder and are outside this record's claim.
+enabled_events = c['enum']({**enabled_event_type, 'fields': [f for f in enabled_event_type['fields'] if f['name'] in ['value__', 'ON_BUFF_ENABLE', 'ON_BUFF_DISABLE']]})
+assert [(f['name'], f['value']) for f in enabled_events['fields']] == [('ON_BUFF_ENABLE', 24), ('ON_BUFF_DISABLE', 25)]
+result['modeSwitch']['buffNotification']['newBuff']['enabledUpdate'] = {
+    'selectedEvents': enabled_events, 'runActions': {'index': run_actions_row['index'], 'entryRva': 0x39b5370, 'parameters': run_parameters},
+    'fields': [c['unique'](lambda f: f['name'] == name, c['fields'](buff)) for name in
+        ['m_isSilenceable', 'm_isStunnable', 'm_isFreezable', 'm_isLevitatable', 'm_isFinished', 'm_isActuallyEnabled', 'm_isLateEnabled', 'm_isManuallyEnabled']],
+    'callees': enabled_callees,
+    'setterFinishedTestRva': 0x39b7ede, 'setterManualWriteRva': 0x39b7ee9, 'setterUpdateTailRva': 0x39b7efd,
+    'manualCaptureRva': 0x39b5aea, 'ownerCaptureCallRva': 0x39b5af6,
+    'capabilityTests': [0x39b5afb, 0x39b5b48, 0x39b5b92, 0x39b5bd8],
+    'ownerValidityCalls': [0x39b5b24, 0x39b5b6e, 0x39b5bb8, 0x39b5bfe],
+    'ownerStatusCalls': [0x39b5b3b, 0x39b5b85, 0x39b5bcf, 0x39b5c15],
+    'actualCompareRva': 0x39b5c21, 'disableActualWriteRva': 0x39b5c3e, 'enableActualLateWriteRva': 0x39b5d03,
+    'disableOwnerCallRva': 0x39b5c95, 'disableAttributesCallRva': 0x39b5ca8, 'removeModifierCallRva': 0x39b5cbf,
+    'disableSetMeAsTargetRva': 0x39b5cc4, 'disableEventInputRva': 0x39b5cd0, 'runActionsCallRva': 0x39b5cde,
+    'enableOwnerCallRva': 0x39b5d58, 'enableAttributesCallRva': 0x39b5d67, 'addModifierCallRva': 0x39b5d7a,
+    'enableSetMeAsTargetRva': 0x39b5d7f, 'enableEventInputRva': 0x39b5d8b,
+    'nativeModifierStorageVerified': False, 'nativeEnabledActionsVerified': False, 'liveEnabledUpdateVerified': False,
+}
 for index in [147561, 147566, 147567, 147558, 147559, 147563, 147564, 147568, 147569]:
     spec = priority['specification'](index)
     assert spec['declaringTypeIndex'] == pool['index']

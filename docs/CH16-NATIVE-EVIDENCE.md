@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 171 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 177 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -1401,6 +1401,42 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 124-method bundle. Continuation40545156330 at3b7defc7 passed; existing
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
+
+### Buff manual, actual and late activation
+
+The177-method bundle additionally retains _UpdateIsEnabledIfNotFinished,
+Entity silence/stun/frozen getters and Attributes.AddModifier/RemoveModifier.
+The enabledUpdate record binds all capability/lifecycle offsets, separate
+manual/actual/late writes, owner/status/attribute calls and action dispatch.
+The exact _RunActions parameter metadata identifies `ev` and `setMeAsTarget`.
+Only the two selected single-byte Buff.Event constants are decoded here:
+ON_BUFF_ENABLE24 and ON_BUFF_DISABLE25. Other Event constants remain outside
+this record's claim; the shared enum decoder is unchanged.
+
+`fearProjectileBuffEnabled` preserves the native setter's finished-and-true
+bypass; false is still accepted after finish. It writes manual enable before
+updating actual state. Update captures manual enable and one owner, then checks
+silence, stun, frozen and levitation in that order using live capability fields
+and separate owner-validity calls. A suppressing status stops later queries.
+These checks still run when manual enable is false. A changed actual state is
+written before modifier/action callbacks; enabling also writes late-enabled,
+while disabling leaves late-enabled untouched. A fresh owner/attribute lookup
+then adds/removes the modifier and runs the matching action event with
+setMeAsTarget=true. Unchanged actual state performs neither mutation nor event.
+
+Tests cover all four suppression branches, recovery, disabled capabilities,
+captured manual/owner values, live capability changes, finished-buff disabling,
+owner destruction/replacement, null lookup failure, retained late state,
+nested modifier callbacks, receiver errors and lifecycle cancellation. NewBuff
+direct activation and override-group finished-prefix replacement compose this
+concrete setter. All1017 focused native/fear/family/miner tests pass and --check
+reproduces177 methods. This checkpoint is local; approved0524e2b1 continuation
+CI passed on attempt2 and its original full40558578137 is still active.
+
+Native modifier storage, action execution, snapshot copying, OnBuffExtend
+effects, full buff/controller/frame integration and remaining stage admission
+remain open. All source/support/receipt/catalogue gates are unchanged and all
+new stages remain test-only.
 
 ### Override-group duration merge and stack effects
 

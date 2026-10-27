@@ -34,6 +34,7 @@ import {fearProjectileResetBuff} from '../server/sim/content/chapter16-fear-buff
 import {fearProjectileNewBuff} from '../server/sim/content/chapter16-fear-buff-new.js';
 import {fearProjectileAttributeStatus,fearProjectileBuffAdmission,fearProjectileComboFlag} from '../server/sim/content/chapter16-fear-buff-admission.js';
 import {fearProjectileEnsureOverrideGroup,fearProjectileOverrideGroup} from '../server/sim/content/chapter16-fear-buff-group.js';
+import {fearProjectileBuffEnabled} from '../server/sim/content/chapter16-fear-buff-enabled.js';
 import {fearProjectileBuffRecyclePool,fearProjectileDefaultBuffPool} from '../server/sim/content/chapter16-fear-buff-pool.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
@@ -46,6 +47,94 @@ import { chapter16Shadow } from '../server/sim/content/chapter16-shadow.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
 const parentKey='feawpj_a[mcreep_fear]';
 const fpOne=1n<<32n;
+
+function buffEnabledFixture(){
+ const buff={m_isFinished:false,m_isActuallyEnabled:false,m_isLateEnabled:false,m_isManuallyEnabled:false,
+  m_isSilenceable:true,m_isStunnable:true,m_isFreezable:true,m_isLevitatable:true},
+  attributes={},owner={silenced:false,stunned:false,frozen:false,levitating:false,attributes},events=[],state={active:true};
+ const options={buff,isActive:()=>state.active,readOwner:()=>{events.push('owner');return owner;},
+  isDestroyedOrNull:value=>{events.push('Unity');return value==null;},
+  isSilenced:value=>{events.push('silenced');return value.silenced;},isStunned:value=>{events.push('stunned');return value.stunned;},
+  isFrozen:value=>{events.push('frozen');return value.frozen;},isLevitate:value=>{events.push('levitating');return value.levitating;},
+  readAttributes:value=>{events.push('attributes');return value.attributes;},
+  addModifier:(attrs,value)=>{assert.equal(attrs,attributes);assert.equal(value,buff);events.push('add');},
+  removeModifier:(attrs,value)=>{assert.equal(attrs,attributes);assert.equal(value,buff);events.push('remove');},
+  runActions:(value,event,setMeAsTarget)=>{assert.equal(value,buff);assert.equal(setMeAsTarget,true);events.push(['actions',event]);}};
+ return{buff,attributes,owner,events,state,options,adapter:()=>fearProjectileBuffEnabled(options)};
+}
+test('enabled setter writes manual state then adds attributes and runs enable actions after actual/late state',()=>{
+ const f=buffEnabledFixture();f.options.addModifier=()=>{assert.equal(f.buff.m_isActuallyEnabled,true);assert.equal(f.buff.m_isLateEnabled,true);f.events.push('add');};
+ f.adapter().set(true);assert.equal(f.buff.m_isManuallyEnabled,true);
+ assert.deepEqual(f.events,['owner','Unity','silenced','Unity','stunned','Unity','frozen','Unity','levitating','owner','attributes','add',['actions',24]]);
+ f.events.length=0;f.adapter().set(false);assert.equal(f.buff.m_isActuallyEnabled,false);assert.equal(f.buff.m_isLateEnabled,true);
+ assert.deepEqual(f.events.slice(-4),['owner','attributes','remove',['actions',25]]);
+});
+test('finished buff refuses true before manual writes but permits disabling and modifier removal',()=>{
+ const f=buffEnabledFixture();f.buff.m_isFinished=true;f.adapter().set(true);assert.deepEqual(f.events,[]);assert.equal(f.buff.m_isManuallyEnabled,false);
+ f.buff.m_isActuallyEnabled=true;f.buff.m_isManuallyEnabled=true;f.adapter().set(false);
+ assert.equal(f.buff.m_isActuallyEnabled,false);assert.equal(f.buff.m_isManuallyEnabled,false);assert.equal(f.events.includes('remove'),true);
+});
+for(const [status,index]of ['silenced','stunned','frozen','levitating'].map((s,i)=>[s,i]))test('owner '+status+' suppresses enable in native order and stops later status reads',()=>{
+ const f=buffEnabledFixture();f.owner[status]=true;f.adapter().set(true);
+ assert.equal(f.buff.m_isManuallyEnabled,true);assert.equal(f.buff.m_isActuallyEnabled,false);assert.equal(f.buff.m_isLateEnabled,false);
+ assert.deepEqual(f.events.filter(e=>['silenced','stunned','frozen','levitating'].includes(e)),['silenced','stunned','frozen','levitating'].slice(0,index+1));
+ assert.equal(f.events.includes('add'),false);
+ f.owner[status]=false;f.adapter().update();assert.equal(f.buff.m_isActuallyEnabled,true);assert.equal(f.events.includes('add'),true);
+});
+test('suppression queries run even when manual enable is false, and disabled capabilities skip owner status calls',()=>{
+ const f=buffEnabledFixture();f.adapter().set(false);assert.equal(f.events.includes('levitating'),true);assert.equal(f.events.includes('remove'),false);
+ const g=buffEnabledFixture();for(const field of ['m_isSilenceable','m_isStunnable','m_isFreezable','m_isLevitatable'])g.buff[field]=false;
+ g.owner.silenced=true;g.adapter().set(true);assert.deepEqual(g.events,['owner','owner','attributes','add',['actions',24]]);
+});
+test('enabled update captures manual and owner once for suppression, then rereads the owner for modifier mutation',()=>{
+ const f=buffEnabledFixture(),replacement={attributes:f.attributes};let reads=0;
+ f.options.readOwner=()=>{reads++;f.buff.m_isManuallyEnabled=false;return reads===1?f.owner:replacement;};
+ f.options.isSilenced=value=>{assert.equal(value,f.owner);return false;};f.options.readAttributes=value=>{assert.equal(value,replacement);return value.attributes;};
+ f.adapter().set(true);assert.equal(f.buff.m_isManuallyEnabled,false);assert.equal(f.buff.m_isActuallyEnabled,true);assert.equal(reads,2);
+});
+test('destroyed owners skip each capability query; a changed transition still dereferences its fresh owner',()=>{
+ const f=buffEnabledFixture();f.options.isDestroyedOrNull=()=>true;f.adapter().set(true);
+ assert.equal(f.events.includes('silenced'),false);assert.equal(f.events.includes('add'),true);
+ const g=buffEnabledFixture();g.options.readOwner=()=>null;assert.throws(()=>g.adapter().set(true),/null native/);
+ assert.equal(g.buff.m_isActuallyEnabled,true);assert.equal(g.buff.m_isLateEnabled,true);
+});
+test('same actual enabled state does not re-add modifiers or repeat actions',()=>{
+ const f=buffEnabledFixture(),adapter=f.adapter();adapter.set(true);f.events.length=0;adapter.set(true);
+ assert.equal(f.events.includes('add'),false);assert.equal(f.events.some(Array.isArray),false);assert.equal(f.events.includes('silenced'),true);
+});
+test('disabling retains late-enabled state rather than fabricating a second write',()=>{
+ for(const late of [false,true]){const f=buffEnabledFixture();f.buff.m_isActuallyEnabled=true;f.buff.m_isLateEnabled=late;
+  f.adapter().set(false);assert.equal(f.buff.m_isLateEnabled,late);assert.equal(f.events.at(-1)[1],25);}
+});
+test('enabled update rereads later capability flags after earlier owner-query effects',()=>{
+ const f=buffEnabledFixture();f.options.isSilenced=()=>{f.buff.m_isStunnable=false;f.owner.stunned=true;return false;};
+ f.adapter().set(true);assert.equal(f.events.includes('stunned'),false);assert.equal(f.buff.m_isActuallyEnabled,true);
+});
+test('nested modifier effects can disable a buff before the outer enable action resumes',()=>{
+ const f=buffEnabledFixture();let adapter;f.options.addModifier=()=>{f.events.push('add');adapter.set(false);};
+ adapter=f.adapter();adapter.set(true);assert.equal(f.buff.m_isActuallyEnabled,false);assert.equal(f.buff.m_isManuallyEnabled,false);
+ assert.deepEqual(f.events.filter(Array.isArray),[['actions',25],['actions',24]]);
+});
+test('enabled update retains partial state on modifier failure and stops actions on lifecycle invalidation',()=>{
+ const f=buffEnabledFixture();f.options.addModifier=()=>{throw Error('modifier failed');};assert.throws(()=>f.adapter().set(true),/modifier failed/);
+ assert.equal(f.buff.m_isActuallyEnabled,true);assert.equal(f.buff.m_isLateEnabled,true);
+ const g=buffEnabledFixture();g.options.addModifier=()=>{g.state.active=false;};assert.equal(g.adapter().set(true),null);
+ assert.equal(g.buff.m_isActuallyEnabled,true);assert.equal(g.events.some(Array.isArray),false);
+});
+test('NewBuff direct enable composes the concrete setter after registration and startup',()=>{
+ const n=newBuffFixture(),f=buffEnabledFixture();Object.assign(n.buff,f.buff);f.options.buff=n.buff;
+ f.options.addModifier=(_attributes,value)=>{assert.equal(value,n.buff);assert.equal(n.map.get(7),n.buff);assert.equal(n.buff.m_started,true);f.events.push('add');};
+ f.options.runActions=(_value,event,target)=>{assert.equal(event,24);assert.equal(target,true);};
+ n.options.setEnabled=(buff,value)=>{assert.equal(buff,n.buff);f.adapter().set(value);};
+ assert.equal(n.run(),n.buff);assert.equal(n.buff.m_isActuallyEnabled,true);assert.ok(f.events.includes('add'));
+});
+test('override update composes concrete enabled setters, disables a finished prefix and enables its successor',()=>{
+ const a=buffEnabledFixture(),b=buffEnabledFixture();a.buff.finished=true;b.buff.finished=false;a.buff.m_isFinished=true;
+ a.buff.m_isActuallyEnabled=true;a.buff.m_isManuallyEnabled=true;
+ const group=groupDispatchFixture(0,[a.buff,b.buff]);group.options.setIsEnabled=(buff,value)=>(buff===a.buff?a:b).adapter().set(value);
+ group.adapter().update();assert.equal(a.buff.m_isActuallyEnabled,false);assert.equal(b.buff.m_isActuallyEnabled,true);
+ assert.equal(a.events.at(-1)[1],25);assert.equal(b.events.at(-1)[1],24);
+});
 
 function mergeTimingFixture(){
  const buff={m_lifeTime:10n*fpOne,m_remainingTime:3n*fpOne,m_existingTime:7n*fpOne,m_stackCnt:1},

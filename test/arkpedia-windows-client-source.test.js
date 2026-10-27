@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,171);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,177);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -303,6 +303,29 @@ test('native merge timing source binds distinct lifetime and remaining getters, 
  const max=b.resetTiming.math.find(m=>m.entryRva===0x5a5c940),add=b.attributeLoading.math.find(m=>m.entryRva===0x4175da0),ge=b.attributeLoading.math.find(m=>m.entryRva===0x51df0b0);
  assert.ok(max);assert.ok(add);assert.ok(ge);at(max,0x5a5c98a,'0x1851df0c0');
  assert.equal(q.nativeOwnerNotificationEffectsVerified,false);assert.equal(q.nativeGetterHotfixDispatchVerified,false);assert.equal(q.liveMergeTimingVerified,false);
+});
+
+test('enabled source preserves finished/manual/actual/late fields, suppression ordering and native modifier/action targets',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.newBuff.enabledUpdate,
+  setter=castMethod(c,'Buff','set_isEnabled'),update=castMethod(c,'Buff','_UpdateIsEnabledIfNotFinished');
+ const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args),`${rva.toString(16)} ${args}`);
+ assert.deepEqual(q.fields.map(f=>[f.name,f.offset]),[['m_isSilenceable',0x1e2],['m_isStunnable',0x1e3],['m_isFreezable',0x1e4],['m_isLevitatable',0x1e7],
+  ['m_isFinished',0x1e9],['m_isActuallyEnabled',0x1ec],['m_isLateEnabled',0x1ed],['m_isManuallyEnabled',0x1ee]]);
+ for(const callee of q.callees)assert.equal(castMethod(c,callee.type,callee.name).entryRva,callee.entryRva);
+ assert.deepEqual(q.selectedEvents.fields.map(f=>[f.name,f.value]),[['ON_BUFF_ENABLE',24],['ON_BUFF_DISABLE',25]]);
+ assert.deepEqual(q.runActions.parameters.map(p=>p.name),['ev','setMeAsTarget']);assert.equal(q.runActions.entryRva,0x39b5370);
+ at(setter,q.setterFinishedTestRva,'byte ptr [rbx + 0x1e9], dil');at(setter,q.setterManualWriteRva,'byte ptr [rbx + 0x1ee], dil');at(setter,q.setterUpdateTailRva,'0x1839b5a70');
+ at(update,q.manualCaptureRva,'esi, byte ptr [rbx + 0x1ee]');at(update,q.ownerCaptureCallRva,'0x1839b6ff0');
+ for(const [index,offset]of [0x1e2,0x1e3,0x1e4,0x1e7].entries())at(update,q.capabilityTests[index],`byte ptr [rbx + 0x${offset.toString(16)}], 0`);
+ for(const rva of q.ownerValidityCalls)at(update,rva,'0x185ebee90');
+ for(const [index,entry]of ['0x183a2d560','0x183a2d830','0x183a2cb10','0x183a2cf50'].entries())at(update,q.ownerStatusCalls[index],entry);
+ at(update,q.actualCompareRva,'byte ptr [rbx + 0x1ec], sil');at(update,q.disableActualWriteRva,'byte ptr [rbx + 0x1ec], sil');
+ at(update,q.enableActualLateWriteRva,'word ptr [rbx + 0x1ec], 0x101');
+ at(update,q.disableOwnerCallRva,'0x1839b6ff0');at(update,q.disableAttributesCallRva,'0x183a29330');at(update,q.removeModifierCallRva,'0x1839585b0');
+ at(update,q.disableSetMeAsTargetRva,'r9b, 1');at(update,q.disableEventInputRva,'r8d, 0x19');at(update,q.runActionsCallRva,'0x1839b5370');
+ at(update,q.enableOwnerCallRva,'0x1839b6ff0');at(update,q.enableAttributesCallRva,'0x183a29330');at(update,q.addModifierCallRva,'0x183957030');
+ at(update,q.enableSetMeAsTargetRva,'r9b, 1');at(update,q.enableEventInputRva,'r8d, 0x18');
+ assert.equal(q.nativeModifierStorageVerified,false);assert.equal(q.nativeEnabledActionsVerified,false);assert.equal(q.liveEnabledUpdateVerified,false);
 });
 
 test('native admission source binds signed Int16 counters, combo fallback and Enemy raw-WALK levitation',()=>{
