@@ -275,8 +275,9 @@ result = {'schemaVersion': 1, 'scope': 'Static default compiled handler and meta
                      'This Global Windows version is separate from retained CN prefab/skeleton inputs. Matching field layout and explicit wrapper values bind the selected evidence; no blanket cross-version/runtime/frame parity or new support follows.']}
 out = ROOT / 'data/candidates/arkpedia-windows-ability-events-source.json'
 serialized = json.dumps(result, ensure_ascii=False, indent=1) + '\n'
-if '--check' in sys.argv:
-    assert out.read_text(encoding='utf8') == serialized, 'Static Windows ability-event evidence differs'
-else:
-    out.write_text(serialized, encoding='utf8', newline='\n')
-print('Verified static event5=ON_SPELL_END, native wrapper field type/offset, compiled default handler and chained method chunks')
+if __name__ == '__main__':
+    if '--check' in sys.argv:
+        assert out.read_text(encoding='utf8') == serialized, 'Static Windows ability-event evidence differs'
+    else:
+        out.write_text(serialized, encoding='utf8', newline='\n')
+    print('Verified static event5=ON_SPELL_END, native wrapper field type/offset, compiled default handler and chained method chunks')

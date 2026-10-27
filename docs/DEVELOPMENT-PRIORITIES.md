@@ -1,5 +1,46 @@
 # Development priorities
 
+### 27 October: compiled cast lifecycle and bounded attack-event wait
+
+The previous simulator checkpoint `a4d4e27d` made concrete progress. Its hosted
+continuation `40468679529` passed every job, including independent native-source
+reproduction, both focused platforms and actual-stage browser checks. Full run
+`40468679456` also passed all eight Linux/Windows Node22/24 shards. The earlier
+16-8 assertion repair is therefore validated on every requested full matrix job.
+
+The new static cast producer reuses the checksum-verified Windows reader without
+rewriting its existing event evidence on import. It retains 30 complete cast,
+animation, projectile and waiter methods with all chained PE hot/cold ranges.
+The single FP(float) conversion leaf has no unwind record; its exact reviewed
+`mulss; cvttss2si; ret` sequence supplies the boundary, with no next-method window.
+Every non-leaf chunk must disassemble completely. Common-library FP and MathUtil
+tokens resolve through `Torappu.Common.dll`'s own code-gen module, rather than
+misusing the Assembly-CSharp token table. Native virtual helpers bind the actual
+slot layout, alongside instance-field offsets and nested enum defaults.
+
+Entity event19 is `ON_ATTACK_EVENT`. EasyToStartAbility caches virtual GetDuration
+at cast start and passes that FP duration to its event waiter. The actual fixed-
+point waiter divides by FP(deltaPlayTime), calls MathUtil.RoundToInt, clamps to at
+least one frame, yields, then tests its predicate on resumption. An event-free
+clip therefore does not imply an infinite wait or authorize a fabricated marker.
+GetDuration returns m_attackTime. The animation timing method starts from virtual
+get_cooldown (owner.attackTime in timeMode0) and applies the retained animation
+query/scale/conversion path. `_DoCast`'s spell-end event remains before post-delay.
+
+All 18 Windows source checks pass, and the direct combined source/family/Fear
+receiver cohort passes 64 cases. Both old and new Python producers reproduce with
+`--check`; hosted native-source now independently reproduces the new cast artifact.
+This is static evidence, not runtime hotfix, frame or cross-version parity, and
+does not admit fearpj, the 16-9 local miner or stage16-9. The four quarantined test
+files remain untouched local deletions and continue to run in hosted CI.
+
+Next: bind Enemy.GetAnimationTime to the retained animation query and finish the
+projectile-creation/event5/self-death caller/lifecycle review. Then implement the
+literal fear controller and local miner attachment with integration and lifecycle
+tests before considering test-only 16-9 admission. The full Chapter16/17 backlog
+and operator/module audit remain required before art/models/chibis/effects; no
+simulator merge, deployment or public catalogue promotion is authorized.
+
 ### 27 October: official Windows native code intake and event5 binding
 
 The previous goal checkpoint `e9bb61cb` made concrete progress. Its hosted

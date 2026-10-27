@@ -33,6 +33,8 @@ jobs:
         run: node tools/arkpedia/windows-client-source.mjs --fetch
       - name: Reproduce static Windows metadata and compiled default ability-event handler
         run: python tools/arkpedia/extract-windows-ability-events.py --check
+      - name: Reproduce static Windows cast and bounded-wait evidence
+        run: python tools/arkpedia/extract-windows-cast-lifecycle.py --check
       - run: node --test test/arkpedia-enemy-family-source-plan.test.js
       - name: Fetch exact frozen family dependencies and named template source
         run: node tools/arkpedia/fetch-enemy-family-source.mjs --fetch ch16-miner ch16-story-guardian ch16-fear-projectile ch16-artillery ch16-crossbow ch16-patrol ch17-brute ch17-flyer ch17-bag ch17-channel-carrier ch17-war-caster ch17-firewall-boss
