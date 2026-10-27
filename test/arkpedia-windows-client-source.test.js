@@ -392,6 +392,49 @@ test('ordinary projectile initialization resets its fixed-point lifetime clock b
  assert.ok(instructions(castMethod(c,'Projectile','set_currentTime')).some(i=>i.operands==='qword ptr [rdi + 0x158], rbx'));
 });
 
+test('arrival-area evidence binds the authored circle and explicit nested field differences',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-area-source.json');assert.equal(c.methods.length,16);
+ for(const p of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+p.path,import.meta.url))),p.sha256);
+ for(const m of [...c.methods,c.layerMaskLeaf])for(const ch of m.chunks){
+  const raw=Buffer.from(ch.base64,'base64');assert.equal(raw.length,ch.endRva-ch.beginRva);assert.equal(sha(raw),ch.sha256);
+ }
+ for(const row of Object.values(c.geometry))assert.equal(sha(row.originalJson),row.sha256);
+ const collider=JSON.parse(c.geometry.collider.originalJson),transform=JSON.parse(c.geometry.transform.originalJson);
+ assert.equal(c.geometry.collider.componentType,'CircleCollider2D');assert.equal(collider.m_Radius,1);
+ assert.deepEqual(collider.m_Offset,{x:0,y:0});assert.equal(collider.m_IsTrigger,true);assert.equal(collider.m_Enabled,1);
+ assert.deepEqual(transform.m_LocalScale,{x:1,y:1,z:1});
+ assert.equal(collider.m_GameObject.m_PathID,c.geometry.gameObject.pathId);
+ const [range,hit]=c.prefabScriptBridges;
+ assert.equal(range.scriptIdentity.m_ClassName,'CircleRange');assert.equal(hit.scriptIdentity.m_ClassName,'HitBehaviour');
+ assert.deepEqual(range.unmatchedSerializedFields,{_useBlackboardRangeId:0});assert.equal(range.serializedFieldParity,false);
+ assert.deepEqual(hit.unmatchedSerializedFields,{_exceptFlyCharacter:0});assert.equal(hit.serializedFieldParity,false);
+ assert.deepEqual(c.unmatchedTargetOptions,{ignoreMotionMode:0});assert.equal(c.targetOptionParity,false);
+ for(const field of ['runtimeDispatchVerified','frameParity','crossVersionParity'])assert.equal(c[field],false);
+});
+
+test('native area query filters and caps before deterministic sorting and source notification before hits',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-area-source.json'),query=instructions(castMethod(c,'Box2dPhysicsUtil','FindTargets_DISPOSE'));
+ assert.equal(c.queryLimit,128);
+ const at=(code,rva,args)=>assert.ok(code.some(i=>i.rva===rva&&i.operands===args));
+ at(query,0x731add,'0x180787570');at(query,0x731c10,'0x1807325f0');
+ at(query,0x731cf5,'edx, dword ptr [rbx + 0x18]');
+ at(query,0x731d13,'0x180787770');at(query,0x731d92,'dword ptr [rbp + 0x18], 0x80');
+ at(query,0x731d99,'0x180731db5');
+ assert.equal(c.deterministicSort.declaringType,'List`1');assert.equal(c.deterministicSort.definition.name,'Sort');
+ assert.equal(c.deterministicSort.instantiations.class.arguments[0].name,'Entity');
+ assert.equal(c.deterministicSort.parameterCount,0);assert.equal(c.deterministicSort.concreteContextVerified,false);
+ assert.equal(c.deterministicSort.callerLoadRva,0x731dd5);
+ const layer=instructions(c.layerMaskLeaf);
+ assert.deepEqual(layer.map(i=>[i.mnemonic,i.operands]),[
+  ['mov','ecx, dword ptr [rcx + 0x44]'],['xor','edx, edx'],['jmp','0x180876380']]);
+ assert.equal(c.targetOptionFields.find(f=>f.name==='m_targetSideMask').unboxedOffset,0x44);
+ const arrival=instructions(castMethod(c,'HitBehaviour','OnProjectileReached'));
+ at(arrival,0xa73cfa,'0x1807319f0');at(arrival,0xa73e7e,'0x183a21980');at(arrival,0xa73f1c,'qword ptr [r10 + 0x228]');
+ const native=JSON.parse(c.prefabScriptBridges[1].originalJson);
+ assert.equal(native._onlyCheckHitWhenReachTarget,1);assert.equal(native._ignoreCamouflage,1);
+ for(const field of ['_exceptSource','_exceptTraceTarget','_onlyTraceTarget'])assert.equal(native[field],0);
+});
+
 test('native projectile source lock checks cached UID and destroyed/null state across allocation and recycling',()=>{
  const c=read(projectilePath),ref=c.sourceReference;
  assert.equal(ref.method.name,'Lock');assert.equal(ref.encodedUsage>>>29,6);

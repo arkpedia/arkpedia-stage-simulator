@@ -11,12 +11,82 @@ import { fearProjectileAfflictions } from '../server/sim/content/chapter16-fear-
 import {applyFearProjectileImpact,fearProjectileDamageAction,fearProjectileSourceReference,fearProjectileEntityReference} from '../server/sim/content/chapter16-fear-impact.js';
 import {fearProjectileHitLedger} from '../server/sim/content/chapter16-fear-delivery.js';
 import {fearProjectileLifetime} from '../server/sim/content/chapter16-fear-clock.js';
+import {fearProjectileAreaDelivery} from '../server/sim/content/chapter16-fear-area.js';
 import {fearProjectileReached,fearProjectileMotionStep,fearProjectileMountReference,fearProjectileTraceMotion} from '../server/sim/content/chapter16-fear-movement.js';
 import { battle as minerBattle, keys as minerKeys } from './helpers/ch17Harness.js';
 import { chapter16Shadow } from '../server/sim/content/chapter16-shadow.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
 const parentKey='feawpj_a[mcreep_fear]';
 const fpOne=1n<<32n;
+function areaFixture(f,units,overrides={}){
+ return fearProjectileAreaDelivery(f.b,{queryOverlaps:()=>units.map(unit=>({unit})),resolveEntity:c=>c.unit,
+  readUid:u=>u.nativeUid,isCandidate:()=>true,verifyTarget:()=>true,deterministic:true,
+  resolveSource:()=>f.source,onSelected:()=>{},hitTarget:()=>true,...overrides});
+}
+test('area query deduplicates collider entities and truncates physics order before UID sorting',()=>{
+ const f=fixture(),units=Array.from({length:130},(_,i)=>({nativeUid:500-i,deploySeq:i}));
+ const colliders=units.flatMap(u=>[u,u]);const hits=[],selected=[];let verifies=0;
+ const area=areaFixture(f,colliders,{verifyTarget:()=>{verifies++;return true;},
+  onSelected:e=>selected.push(e.count),hitTarget:u=>{hits.push(u.nativeUid);return true;}});
+ assert.deepEqual(area.deliver(),{selected:128,attempted:128,hits:128});
+ assert.equal(verifies,128);assert.deepEqual(selected,[128]);
+ assert.deepEqual(hits,units.slice(0,128).map(u=>u.nativeUid).sort((a,b)=>a-b));
+ assert.equal(hits.includes(371),false);assert.equal(hits.includes(372),false);assert.equal(area.deliver(),null);
+});
+
+test('non-deterministic area dispatch keeps supplied collider order',()=>{
+ const f=fixture(),hits=[],units=[3,1,2].map(id=>({nativeUid:id,deploySeq:id}));
+ const area=areaFixture(f,units,{deterministic:false,hitTarget:u=>{hits.push(u.nativeUid);return true;}});
+ area.deliver();assert.deepEqual(hits,[3,1,2]);
+});
+
+test('area admits an identity only after validity and target-option verification',()=>{
+ const f=fixture(),rejected={nativeUid:1,deploySeq:1},retry={nativeUid:2,deploySeq:2},hits=[];let verifies=0;
+ const area=areaFixture(f,[rejected,retry,retry],{isCandidate:u=>u!==rejected,
+  verifyTarget:()=>++verifies===2,hitTarget:u=>{hits.push(u.nativeUid);return true;}});
+ assert.deepEqual(area.deliver(),{selected:1,attempted:1,hits:1});assert.equal(verifies,2);assert.deepEqual(hits,[2]);
+});
+
+test('source notification precedes hits and cannot redirect captured recipients to recycled lives',()=>{
+ const f=fixture(),units=[1,2].map(id=>({nativeUid:id,deploySeq:id})),events=[];
+ const area=areaFixture(f,units,{onSelected:({count})=>{events.push('selected:'+count);units[0].deploySeq++;units[0].nativeUid=99;},
+  hitTarget:u=>{events.push('hit:'+u.nativeUid);return true;}});
+ assert.deepEqual(area.deliver(),{selected:2,attempted:1,hits:1});assert.deepEqual(events,['selected:2','hit:2']);
+});
+
+test('area still dispatches found targets after the born source reference retires',()=>{
+ const f=fixture(),u={nativeUid:1,deploySeq:1};let notified=0,hits=0;
+ const area=areaFixture(f,[u],{resolveSource:()=>null,onSelected:()=>notified++,hitTarget:()=>{hits++;return true;}});
+ area.deliver();assert.equal(notified,0);assert.equal(hits,1);
+});
+
+test('battle end while stabilizing a query result prevents later collider and hit callbacks',()=>{
+ const f=fixture(),units=[1,2].map(id=>({nativeUid:id,deploySeq:id}));let reads=0,resolves=0,hits=0;
+ const area=areaFixture(f,units,{resolveEntity:c=>{resolves++;return c.unit;},
+  readUid:u=>{if(++reads===2)f.b.emit('battleEnd',{});return u.nativeUid;},hitTarget:()=>{hits++;return true;}});
+ assert.equal(area.deliver(),null);assert.equal(resolves,1);assert.equal(hits,0);assert.deepEqual(f.b.errors,[]);
+});
+
+test('reentrant area calls cannot repeat the selected notification or impacts',()=>{
+ const f=fixture(),u={nativeUid:1,deploySeq:1};let area,hits=0,notified=0;
+ area=areaFixture(f,[u],{onSelected:()=>{notified++;assert.equal(area.deliver(),null);},
+  hitTarget:()=>{hits++;assert.equal(area.deliver(),null);return true;}});
+ area.deliver();assert.equal(hits,1);assert.equal(notified,1);
+});
+
+test('area-to-ledger composition applies one affliction/damage receipt despite duplicate colliders and stop',()=>{
+ const f=fixture();f.target.nativeUid=123;f.source.base.atk=175;f.source.markDirty();
+ const source=fearProjectileSourceReference(f.b,f.source),target=fearProjectileEntityReference(f.b,f.target);
+ const damage=fearProjectileDamageAction(f.b,source);
+ const ledger=fearProjectileHitLedger(f.b,{resolveTraceTarget:target.resolveEntity,
+  runHit:({target})=>applyFearProjectileImpact(f.b,{source:f.source,target,applyAttachments:()=>{},runActions:damage}),onStopped:()=>{}});
+ const area=areaFixture(f,[f.target,f.target],{resolveSource:source.resolveSource,hitTarget:ledger.hit});
+ f.b.kill(f.source,null);const hp=f.target.hp;
+ assert.deepEqual(area.deliver(),{selected:1,attempted:1,hits:1});ledger.stop();
+ assert.equal(hp-f.target.hp,175);assert.equal(ledger.count,1);assert.ok(f.target.findBuff(parentKey));
+ assert.deepEqual(f.b.errors,[]);source.release();target.release();
+});
+
 test('native clock expires at the Q32.32 boundary rather than rounded float seconds',()=>{
  let expires=0;const clock=fearProjectileLifetime({isBattleActive:()=>true,onExpire:()=>expires++});
  assert.equal(clock.elapsedRaw,0n);

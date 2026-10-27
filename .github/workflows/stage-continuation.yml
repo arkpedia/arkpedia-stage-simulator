@@ -50,6 +50,8 @@ jobs:
         run: python tools/arkpedia/extract-windows-fear-projectile.py --check
       - name: Reproduce movement code and both embedded switch tables
         run: python tools/arkpedia/extract-windows-fear-movement.py --check
+      - name: Reproduce arrival collider and native overlap/filter pipeline
+        run: python tools/arkpedia/extract-windows-fear-area.py --check
       - name: Independently reproduce complete native graphs and indexed components
         run: |
           python tools/arkpedia/extract-ch16-artillery.py --check

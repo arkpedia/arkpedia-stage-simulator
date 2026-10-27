@@ -362,3 +362,26 @@ float halfway rounding, recursive dispatch and cancellation. The engine-to-nativ
 raw input-delta mapping, deferred stop scheduler, area selection and full launch
 registration remain unverified. This port grants no stage admission or frame
 parity.
+
+### Arrival overlap and dispatch
+
+`extract-windows-fear-area.py --check` retains 16 complete range/query/filter
+methods, the exact layer-mask tail-jump leaf, the `List<Entity>.Sort` call
+specification and the original circle/collider/transform graph. Authored local
+radius is 1 with zero offset and unit root scale. Runtime range scaling, target
+body geometry and actual overlap order remain separate from those authored
+values. Original `CircleRange._useBlackboardRangeId=0`, top-level
+`HitBehaviour._exceptFlyCharacter=0` and nested `TargetOptions.ignoreMotionMode=0`
+have explicit unmatched Windows fields; their zero values do not grant parity.
+
+The internal `fearProjectileAreaDelivery` consumes an explicit ordered collider
+query and explicit validity/target-option/UID readers. It deduplicates accepted
+UIDs, stops at 128 before deterministic sorting, notifies a valid source of the
+positive selected count, then dispatches captured recipient lives. It does not
+substitute point-distance geometry or infer native UID ordering from labels.
+Tests join this dispatch to the hit ledger and affliction/damage receiver, with
+duplicate colliders, source retirement, cap/order edges, recipient replacement,
+recursive calls and battle-end cancellation. This does not supply the actual
+physics query, scene/layer mappings, dynamic range scale, concrete native sort
+context or full launcher. Enemy/stage support and public catalogue gates remain
+unchanged.
