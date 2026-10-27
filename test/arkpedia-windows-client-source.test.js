@@ -74,7 +74,7 @@ const castMethod=(c,type,name)=>{
 };
 
 test('fear projectile source pins complete native methods and exact original script references',()=>{
- const c=read(projectilePath);assert.equal(c.methods.length,38);
+ const c=read(projectilePath);assert.equal(c.methods.length,48);
  for(const p of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+p.path,import.meta.url))),p.sha256);
  for(const method of [...c.methods,c.lifeValueLeaf])for(const chunk of method.chunks){
   const raw=Buffer.from(chunk.base64,'base64');assert.equal(raw.length,chunk.endRva-chunk.beginRva);assert.equal(sha(raw),chunk.sha256);
@@ -84,6 +84,47 @@ test('fear projectile source pins complete native methods and exact original scr
  assert.equal(hit.scriptIdentity.m_ClassName,'HitBehaviour');assert.equal(hit.serializedFieldParity,false);
  assert.deepEqual(hit.unmatchedSerializedFields,{_exceptFlyCharacter:0});
  for(const field of ['runtimeDispatchVerified','frameParity','crossVersionParity'])assert.equal(c[field],false);
+});
+
+test('ordinary projectile birth preprocesses the existing ability action list before registration',()=>{
+ const c=read(projectilePath),p=c.preprocessing;
+ assert.equal(p.getActionsSlot.slot,45);assert.equal(p.getActionsSlot.name,'GetProjectileActions');
+ assert.equal(p.getActionsSlot.declaringType,'RangedAttack');
+ assert.equal(p.preprocessSlot.slot,65);assert.equal(p.preprocessSlot.name,'PreprocessActionsForProjectile');
+ assert.equal(p.preprocessSlot.declaringType,'Ability');
+ assert.equal(p.actionListField.name,'m_actions');assert.equal(p.actionListField.offset,0x1f8);
+ assert.equal(p.independentDamageNodePerProjectileVerified,false);
+ for(const binding of p.interfaceBindings){
+  assert.equal(binding.encodedUsage>>>29,1);assert.equal(binding.namespace,'Torappu.Battle.Action');
+  assert.equal(binding.name,'IDamageOrHealSourceNode');
+  assert.deepEqual(binding.methods.map(m=>m.name),['get_purposeMask','PreprocessForProjectile']);
+ }
+ const calls=(m,rva)=>instructions(m).some(i=>i.mnemonic==='call'&&i.operands==='0x'+(c.imageBase+rva).toString(16));
+ const create=castMethod(c,'BattleController','CreateProjectile');
+ assert.ok(calls(castMethod(c,'RangedAttack','CreateProjectile'),create.entryRva));
+ const root=c.methods.find(m=>m.type==='Projectile'&&m.name==='Init'&&m.entryRva===p.rootInitEntryRva);
+ assert.ok(root);assert.ok(calls(create,root.entryRva));
+ const init=castMethod(c,'ActionController','Init'),register=castMethod(c,'ActionController','RegisterActions');
+ assert.ok(calls(root,init.entryRva));
+ const at=(m,rva,op)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===op));
+ at(init,0x6a1563,'ecx, 0x2d');at(init,0x6a1571,'0x18000e9b0');
+ at(init,0x6a157e,'r8, rax');assert.ok(calls(init,register.entryRva));
+ const get=castMethod(c,'RangedAttack','GetProjectileActions');
+ at(get,0xbfb79d,'edi, edi');at(get,0xbfb7ba,'rdi, qword ptr [rbx + 0x1f8]');
+ at(get,0xbfb7ce,'rdx, rdi');at(get,0xbfb7db,'qword ptr [rax + 0x548]');
+ at(get,0xbfb7e1,'rax, qword ptr [rbx + 0x1f8]');
+ const preprocess=castMethod(c,'Ability','PreprocessActionsForProjectile');
+ assert.ok(calls(preprocess,castMethod(c,'Ability','get_owner').entryRva));
+ at(preprocess,0x390fc2e,'ecx, 1');at(preprocess,0x390fc33,'r9, r15');
+ at(preprocess,0x390fc39,'0x180004cc0');
+ const explicit=castMethod(c,'Projectile','RegisterActions');
+ at(explicit,0x67b315,'byte ptr [rsp + 0x90], r14b');
+ at(explicit,0x67b31d,'0x18067b3fc');
+ assert.ok(calls(explicit,castMethod(c,'Projectile','get_source').entryRva));
+ at(explicit,0x67b3dd,'ecx, 1');at(explicit,0x67b3e8,'0x180004cc0');
+ assert.ok(calls(explicit,register.entryRva));
+ assert.ok(!calls(register,preprocess.entryRva));
+ assert.ok(!instructions(register).some(i=>i.operands==='0x180004cc0'));
 });
 
 test('native projectile source lock checks cached UID and destroyed/null state across allocation and recycling',()=>{

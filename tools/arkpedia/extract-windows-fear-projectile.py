@@ -20,11 +20,14 @@ for t, names in [
     (simple, ['get_limitedHitNum', 'GetMaxHitNum', 'get_needLifeTime', 'GetLifeTime',
               'get_stopWhenSourceInvalid', 'get_stopAfterFirstHit', 'get_stopAfterMaxHit']),
     (projectile, ['OnTick', 'ExtraCheckToFinish', 'OnHitTarget', 'DealHitTarget', '_DealHitTraceTarget',
-                  'OnProjectileReached', 'DealProjectileReached', 'StopMe', 'get_source', 'get_ability']),
+                  'OnProjectileReached', 'DealProjectileReached', 'StopMe', 'get_source', 'get_ability',
+                  'Init', 'RegisterActions']),
     (hit, ['OnProjectileReached', 'DealHitTarget']),
-    (c['type_row']('ActionController', ''), ['OnHitTarget', '_AttachBuffs', '_RunActions']),
+    (c['type_row']('ActionController', ''), ['OnHitTarget', '_AttachBuffs', '_RunActions', 'Init', 'RegisterActions']),
+    (c['type_row']('Ability', 'Torappu.Battle'), ['PreprocessActionsForProjectile', 'get_owner']),
+    (c['type_row']('BattleController', 'Torappu.Battle'), ['CreateProjectile']),
     (c['type_row']('AbilityAttachment', 'Torappu.Battle'), ['Apply']),
-    (c['type_row']('RangedAttack', 'Torappu.Battle.Abilities'), ['NewDamageNode', 'get_useCachedAtkOnly', 'GetProjectileActions']),
+    (c['type_row']('RangedAttack', 'Torappu.Battle.Abilities'), ['NewDamageNode', 'get_useCachedAtkOnly', 'GetProjectileActions', 'CreateProjectile']),
     (c['type_row']('AbstractAnimatedAbility', 'Torappu.Battle.Abilities'), ['NewDamageNode']),
     (c['type_row']('ApplyDamage', ''), ['PreprocessForProjectile', 'CreateDamageModifier', 'Execute', '.ctor']),
     (c['type_row']('BattleUtil', 'Torappu.Battle'), ['CalculateDamageBySource', 'CalculateDamageByAtkNoSource']),
@@ -94,6 +97,36 @@ source_reference = {
                       'boundary': 'Reviewed exact five-byte unconditional tail jump; no stack changes or fallthrough',
                       'base64': base64.b64encode(thunk).decode(), 'sha256': v['sha'](thunk)},
     'concreteContextVerified': False,
+}
+
+# Bind both preprocessing interface casts through the actual metadata usages.
+# The ordinary birth path asks the ability for its existing action list; it
+# does not create an independently cached damage node for each projectile.
+preprocess_bindings = []
+for load in [0x390fbd5, 0x67b3b5]:
+    p = v['offset'](v['image_base'] + load)
+    assert b[p:p + 3] == bytes.fromhex('488b15')
+    slot = load + 7 + struct.unpack_from('<i', b, p + 3)[0]
+    usage = v['quad'](b, v['offset'](v['image_base'] + slot))
+    assert usage >> 29 == 1
+    index = (usage & 0x1ffffffe) >> 1
+    tp = v['offset'](v['quad'](b, v['type_table'] + index * 8))
+    interface = v['types'][v['quad'](b, tp)]
+    assert (interface['namespace'], interface['name']) == ('Torappu.Battle.Action', 'IDamageOrHealSourceNode')
+    assert [m['name'] for m in interface['methods']] == ['get_purposeMask', 'PreprocessForProjectile']
+    preprocess_bindings.append({'callerLoadRva': load, 'encodedUsage': usage,
+                               'typeIndex': interface['index'], 'name': interface['name'],
+                               'namespace': interface['namespace'], 'methods': interface['methods']})
+actions_field = c['unique'](lambda f: f['name'] == 'm_actions',
+    c['fields'](c['type_row']('AbstractBasicAttack', 'Torappu.Battle.Abilities')))
+assert actions_field['offset'] == 0x1f8
+preprocessing = {
+    'interfaceBindings': preprocess_bindings,
+    'getActionsSlot': c['resolved_slot'](c['type_row']('RangedAttack', 'Torappu.Battle.Abilities'), 45),
+    'preprocessSlot': c['resolved_slot'](c['type_row']('RangedAttack', 'Torappu.Battle.Abilities'), 65),
+    'actionListField': actions_field,
+    'rootInitEntryRva': 0x678950,
+    'independentDamageNodePerProjectileVerified': False,
 }
 
 # LifeType is an unsigned byte enum. Do not apply the signed int32 zigzag
@@ -188,6 +221,7 @@ result = {
     'fields': {t['name']: c['fields'](t) for t in [simple, projectile, hit]},
     'damageFields': c['fields'](c['type_row']('ApplyDamage', '')),
     'sourceReference': source_reference,
+    'preprocessing': preprocessing,
     'damageNodeSlot': c['resolved_slot'](c['type_row']('RangedAttack', 'Torappu.Battle.Abilities'), 106),
     'methods': methods, 'lifeValueLeaf': leaf, 'prefabScriptBridges': bridges,
     'resolvedSlots': [c['resolved_slot'](simple, slot) for slot in [38, 39, 40, 41, 42, 43]],
@@ -198,6 +232,7 @@ result = {
         'ActionController.OnHitTarget calls _AttachBuffs first, then AbilityAttachment.Apply, then _RunActions. The selected projectile enables active buffs, disables trace-target-only and once-only buff gates, and has no extra buff list. Damage/source-attribute evaluation remains a separate caller review; buff-before-damage ordering must not be reversed by a convenience explosion helper.',
         'RangedAttack.NewDamageNode tests useCachedAtkOnly. Its false branch tail-calls AbstractAnimatedAbility.NewDamageNode, which constructs ordinary ApplyDamage rather than ApplyCacheAtkDamageFromProjectile. PreprocessForProjectile stores source ATK in m_cachedAtk; CreateDamageModifier uses CalculateDamageBySource when its source reference is valid and CalculateDamageByAtkNoSource with the cached value when the source is missing. Source-reference identity validity and reuse timing remain separate from merely testing an alive flag.',
         'Projectile.get_source loads the exact ObjectPtr Lock method specification. Its shared body reaches the reviewed validity tail-jump/body: IsDestroyedOrNull is checked first, then IPtrObject.instanceUid is compared with cachedUid. BObject.OnAllocate assigns an incremented UID and OnRecycle clears it to zero. The simulator must preserve output identity across a dead but unrecycled source and reject the replacement body after retirement/reuse. Concrete generic context and precise recycle/frame timing remain unverified.',
+        'The ordinary birth chain is RangedAttack.CreateProjectile -> BattleController.CreateProjectile -> Projectile.Init at 0x678950 -> ActionController.Init -> ability virtual slot45 GetProjectileActions. In the default event0 branch RangedAttack passes its existing m_actions list through slot65 Ability.PreprocessActionsForProjectile before returning that same list. The preprocessor obtains ability.owner and invokes IDamageOrHealSourceNode slot1 on matching nodes. Ordinary ActionController.RegisterActions appends lists without preprocessing; explicit Projectile.RegisterActions has a separate boolean-gated preprocessing path using projectile.source. A per-projectile immutable damage-node cache is not proven by this path.',
         'Reached handling, trace-target end hit and HitBehaviour area selection/dispatch are retained in complete bodies. Cross-version field differences remain explicit. Source identity reuse, reentrant impact ordering and event5 self-death still require integration tests before admission.'
     ]}
 serialized = json.dumps(result, ensure_ascii=False, indent=1) + '\n'
