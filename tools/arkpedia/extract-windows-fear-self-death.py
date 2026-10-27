@@ -4,6 +4,7 @@
 from pathlib import Path
 import json
 import runpy
+import struct
 import sys
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -23,6 +24,21 @@ methods.append(c['method'](base_node, c['unique'](lambda r: r['name'] == 'get_ex
 util = c['type_row']('ActionUtil', 'Torappu.Battle.Action')
 for rva in [0xe43d80, 0xe44600, 0xe44890]:
     methods.append(c['method'](util, c['unique'](lambda r: v['pointer'](r) == v['image_base'] + rva, util['methods'])))
+entity = c['type_row']('Entity', 'Torappu.Battle')
+parameters = {}
+for name in ['Suicide', 'SetHpInternal', 'get_alive']:
+    row = c['unique'](lambda r: r['name'] == name, entity['methods'])
+    methods.append(c['method'](entity, row))
+    pos = v['method_start'] + row['index'] * 32
+    start, count = v['sint'](v['m'], pos + 12), struct.unpack_from('<H', v['m'], pos + 30)[0]
+    assert v['uint'](v['m'], 92) % 12 == 0
+    parameters[name] = []
+    for index in range(count):
+        pp = v['uint'](v['m'], 88) + (start + index) * 12
+        parameters[name].append({'index': start + index, 'name': v['text'](v['uint'](v['m'], pp)),
+                                'typeIndex': v['sint'](v['m'], pp + 8)})
+assert [p['name'] for p in parameters['Suicide']] == ['noSource', 'skipReborn']
+assert [p['name'] for p in parameters['SetHpInternal']] == ['value', 'force', 'noSource', 'skipReborn']
 graph_path = 'data/candidates/arkpedia-ch16-fear-projectile-source.json'
 graph_raw = (ROOT / graph_path).read_bytes()
 template = json.loads(graph_raw)['templates']['fearpj_m0_t[switch_to_die]']
@@ -39,7 +55,11 @@ result = {'schemaVersion': 1, 'scope': 'Static selected self-death action chain;
     'nativeFiles': v['pin']['files'], 'imageBase': v['image_base'],
     'sources': {path: {'path': path, 'sha256': v['sha']((ROOT / path).read_bytes())} for path in [
         'data/arkpedia-global-windows-client-source.json', graph_path]},
-    'template': template, 'eventKey': 0, 'actions': actions, 'fields': fields, 'methods': methods}
+    'template': template, 'eventKey': 0, 'actions': actions, 'fields': fields, 'methods': methods,
+    'entityParameters': parameters, 'suicideFlag': c['unique'](lambda f: f['name'] == 'm_isSuicide', c['fields'](entity)),
+    'entitySlots': [c['resolved_slot'](c['type_row'](name, 'Torappu.Battle'), slot)
+                    for name in ['Entity', 'Enemy', 'Character'] for slot in [38, 108]],
+    'setHpDispatch': {'entryRva': 0x12f30, 'chunks': c['code'](0x12f30), 'metadataIdentityVerified': False}}
 serialized = json.dumps(result, ensure_ascii=False, indent=1) + '\n'
 out = ROOT / 'data/candidates/arkpedia-windows-fear-self-death-source.json'
 if __name__ == '__main__':

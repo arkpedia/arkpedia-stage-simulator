@@ -16,7 +16,7 @@ import {fearProjectileFlight} from '../server/sim/content/chapter16-fear-flight.
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
 import {fearProjectileSpell} from '../server/sim/content/chapter16-fear-spell.js';
-import {fearProjectileSelfDeath} from '../server/sim/content/chapter16-fear-self-death.js';
+import {fearProjectileSelfDeath,fearProjectileSuicide} from '../server/sim/content/chapter16-fear-self-death.js';
 import {fearProjectileTargetVerifier,fearProjectileSourceMotion} from '../server/sim/content/chapter16-fear-targets.js';
 import {fearProjectileReached,fearProjectileMotionStep,fearProjectileMountReference,fearProjectileTraceMotion} from '../server/sim/content/chapter16-fear-movement.js';
 import { battle as minerBattle, keys as minerKeys } from './helpers/ch17Harness.js';
@@ -24,6 +24,44 @@ import { chapter16Shadow } from '../server/sim/content/chapter16-shadow.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
 const parentKey='feawpj_a[mcreep_fear]';
 const fpOne=1n<<32n;
+test('selected InstantKill marks suicide before forced zero HP and returns the post-action alive state',()=>{
+ const f=fixture(),events=[];
+ const suicide=fearProjectileSuicide(f.b,{target:f.source,readAlive:unit=>{events.push('alive');return unit.alive;},
+  markSuicide:unit=>{assert.equal(unit,f.source);events.push('suicide');},
+  setHpInternal:(unit,options)=>{
+   assert.equal(unit,f.source);assert.deepEqual(options,{valueRaw:0n,force:true,noSource:false,skipReborn:false});
+   events.push('zero HP');unit.alive=false;
+  }});
+ assert.equal(suicide.run(),false);assert.deepEqual(events,['alive','suicide','zero HP','alive']);assert.equal(suicide.run(),null);
+});
+
+test('already non-alive suicide target receives no mark or HP write but preserves final alive query',()=>{
+ const f=fixture();f.source.alive=false;let reads=0;
+ const suicide=fearProjectileSuicide(f.b,{target:f.source,readAlive:()=>{reads++;return false;},
+  markSuicide:()=>{throw Error('dead target');},setHpInternal:()=>{throw Error('dead target');}});
+ assert.equal(suicide.run(),false);assert.equal(reads,2);
+});
+
+for(const boundary of ['reuse','battleEnd','recursive'])test('suicide primitive guards '+boundary+' while marking its target',()=>{
+ const f=fixture();let writes=0,suicide;
+ suicide=fearProjectileSuicide(f.b,{target:f.source,readAlive:()=>true,markSuicide:()=>{
+  if(boundary==='reuse')f.source.deploySeq++;else if(boundary==='battleEnd')f.b.emit('battleEnd',{});
+  else assert.equal(suicide.run(),null);
+ },setHpInternal:()=>writes++});
+ assert.equal(suicide.run(),boundary==='recursive'?true:null);assert.equal(writes,boundary==='recursive'?1:0);
+ assert.deepEqual(f.b.errors,[]);
+});
+
+test('self-death chain retains false native return after zero-HP death rather than treating it as a failed action',()=>{
+ const f=fixture(),events=[];
+ const suicide=fearProjectileSuicide(f.b,{target:f.source,readAlive:unit=>unit.alive,
+  markSuicide:()=>events.push('suicide'),setHpInternal:unit=>{events.push('zero HP');unit.alive=false;}});
+ const action=fearProjectileSelfDeath(f.b,{buffOwner:f.source,target:f.source,readAbnormalFlag:()=>false,
+  readAbnormalCombo:()=>false,switchMode:()=>{events.push('mode1');return true;},
+  createImmunityBuff:()=>{events.push('immunity');return true;},instantKill:()=>suicide.run()});
+ assert.equal(action.run(),false);assert.equal(f.source.alive,false);assert.deepEqual(events,['mode1','immunity','suicide','zero HP']);
+});
+
 function selfDeathFixture(overrides={}){
  const f=fixture(),events=[];
  const action=fearProjectileSelfDeath(f.b,{buffOwner:f.source,target:f.source,

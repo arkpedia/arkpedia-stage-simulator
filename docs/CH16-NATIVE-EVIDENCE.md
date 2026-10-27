@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and eleven complete default node/runner
+`fearpj_m0_t[switch_to_die]` template and fourteen complete default node/runner/entity
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -591,3 +591,19 @@ the helper does not invent a kill-credit source. Buff activation/context binding
 actual mode/FSM, immunity creation, native kill reason/credit/reborn behavior and
 full event5 integration remain required before an enemy support receipt or
 stage admission is granted.
+
+The selected InstantKill branch is now bound through `Entity.Suicide` and
+`SetHpInternal`, including metadata parameter names and the actual slot108
+dispatch. It checks alive, sets `m_isSuicide`, and calls forced zero HP with the
+selected noSource=false and skipReborn=false switches. No separate killer
+pointer is supplied by this action branch. `InstantKill.Execute` then returns
+get_alive after Suicide, so an effective death may return false; that Boolean
+must not be interpreted as a kill-success receipt.
+
+`fearProjectileSuicide` ports this selected sequence behind explicit native
+alive/mark/HP callers, with tests for dead targets, post-action return values,
+owner replacement, recursion and battle end. Native death/credit/reborn event
+processing remains in the HP caller; no generic b.kill credit is substituted.
+The area-query slot38 receipt is also corrected and explicitly bound to
+get_alive rather than labeled as generic selectability. Target-free and other
+eligibility checks remain the separately retained TargetOptions branches.

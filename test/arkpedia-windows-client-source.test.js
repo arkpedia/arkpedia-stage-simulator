@@ -21,7 +21,7 @@ function settingsFixture(){
 }
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,11);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,14);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -47,6 +47,25 @@ test('self-death source binds the original template and native chain-stop versus
  const check=castMethod(c,'ActionUtil','CheckExecute');
  at(check,0xe43def,'0x180e43e19');at(check,0xe43df4,'0x180e43e0b');at(check,0xe43e19,'al, 1');
  for(const key of ['runtimeDispatchVerified','frameParity','crossVersionParity'])assert.equal(c[key],false);
+});
+
+test('selected InstantKill binds Suicide no-source/reborn parameters, suicide mark and SetHpInternal dispatch',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');
+ assert.deepEqual(c.entityParameters.Suicide.map(p=>p.name),['noSource','skipReborn']);
+ assert.deepEqual(c.entityParameters.SetHpInternal.map(p=>p.name),['value','force','noSource','skipReborn']);
+ assert.equal(c.suicideFlag.name,'m_isSuicide');assert.equal(c.suicideFlag.offset,0xd1);
+ for(const slot of c.entitySlots)assert.equal(slot.name,slot.slot===38?'get_alive':'SetHpInternal');
+ const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ const kill=castMethod(c,'InstantKill','Execute');
+ at(kill,0xd9ff96,'edx, byte ptr [rsi + 0x15]');at(kill,0xd9ff8e,'r8d, byte ptr [rsi + 0x18]');
+ at(kill,0xd9ff9d,'0x183a25b90');at(kill,0xda0001,'rax, qword ptr [rdx + 0x398]');
+ const suicide=castMethod(c,'Entity','Suicide');
+ at(suicide,0x3a25c2d,'byte ptr [rbx + 0xd1], 1');at(suicide,0x3a25c4d,'0x185a3da10');
+ at(suicide,0x3a25c52,'ecx, 0x6c');at(suicide,0x3a25c5c,'r9b, 1');
+ at(suicide,0x3a25c57,'byte ptr [rsp + 0x28], dil');at(suicide,0x3a25c5f,'byte ptr [rsp + 0x20], sil');
+ at(suicide,0x3a25c6a,'0x180012f30');
+ for(const ch of c.setHpDispatch.chunks)assert.equal(sha(Buffer.from(ch.base64,'base64')),ch.sha256);
+ assert.equal(c.setHpDispatch.metadataIdentityVerified,false);
 });
 
 test('Unity settings intake binds one bounded file to the same frozen publisher manifest',()=>{
@@ -577,6 +596,9 @@ test('native area query filters and caps before deterministic sorting and source
  assert.equal(c.queryLimit,128);
  const at=(code,rva,args)=>assert.ok(code.some(i=>i.rva===rva&&i.operands===args));
  at(query,0x731add,'0x180787570');at(query,0x731c10,'0x1807325f0');
+ at(query,0x731ca7,'ecx, 0x26');at(query,0x731caf,'0x1800057b0');
+ assert.deepEqual(c.candidateAliveSlots.map(s=>[s.type,s.slot,s.name]),[
+  ['Entity',38,'get_alive'],['Enemy',38,'get_alive'],['Character',38,'get_alive']]);
  at(query,0x731cf5,'edx, dword ptr [rbx + 0x18]');
  at(query,0x731d13,'0x180787770');at(query,0x731d92,'dword ptr [rbp + 0x18], 0x80');
  at(query,0x731d99,'0x180731db5');

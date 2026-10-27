@@ -2,6 +2,38 @@
 // Selected ON_ACTIVATE action order of fearpj_m0_t[switch_to_die]. Context
 // binding, native status/mode/buff/kill effects remain explicit callers. Effect
 // callbacks return the native action's Boolean, not an inferred buff receipt.
+export function fearProjectileSuicide(b,{target,readAlive,markSuicide,setHpInternal}){
+ if(!target||!Number.isInteger(target.deploySeq)||[readAlive,markSuicide,setHpInternal].some(fn=>typeof fn!=='function'))
+  throw new TypeError('Fear suicide requires a target life and explicit native alive, suicide-mark and HP callers');
+ const life=target.deploySeq;
+ let used=false,ended=false,endHandle=null,removeHandle=null;
+ const release=()=>{ended=true;if(endHandle)b.off(endHandle);if(removeHandle)b.off(removeHandle);endHandle=removeHandle=null;};
+ const active=()=>{if(!ended&&(b.finished||b._endReq||target.removed||target.deploySeq!==life))release();return!ended;};
+ const boolean=value=>{if(typeof value!=='boolean')throw new TypeError('Fear suicide requires a native Boolean alive result');return value;};
+ if(active()){
+  endHandle=b.on('battleEnd',release);
+  removeHandle=b.on('removed',({unit})=>{if(unit===target)release();});
+ }
+ return Object.freeze({
+  run(){
+   if(used||!active())return null;
+   used=true;
+   try{
+    const alive=readAlive(target);if(!active())return null;
+    if(boolean(alive)){
+     markSuicide(target);if(!active())return null;
+     setHpInternal(target,{valueRaw:0n,force:true,noSource:false,skipReborn:false});
+     if(!active())return null;
+    }
+    // InstantKill.Execute returns get_alive AFTER Suicide, rather than a kill
+    // success receipt. A target that actually dies normally returns false.
+    const remaining=readAlive(target);return active()?boolean(remaining):null;
+   }finally{release();}
+  },
+  release,
+ });
+}
+
 export function fearProjectileSelfDeath(b,{buffOwner,target,readAbnormalFlag,readAbnormalCombo,
  switchMode,createImmunityBuff,instantKill}){
  if(!buffOwner||!target||!Number.isInteger(buffOwner.deploySeq)||!Number.isInteger(target.deploySeq)||

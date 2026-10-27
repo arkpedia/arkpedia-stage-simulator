@@ -278,6 +278,8 @@ result = {
     'deterministicSort': {**sort, 'callerLoadRva': load, 'encodedUsage': usage, 'parameterCount': 0, 'concreteContextVerified': False},
     'queryLimit': 128,
     'componentQueries': component_queries,
+    'candidateAliveSlots': [c['resolved_slot'](c['type_row'](name, 'Torappu.Battle'), 38)
+                            for name in ['Entity', 'Enemy', 'Character']],
     'motionTargetFreeDispatch': motion_free_dispatch,
     'sourceMotionSnapshot': source_motion,
     'layers': layers,
@@ -288,7 +290,7 @@ result = {
         'worldGeometryVerified': False, 'physicsOverlapParity': False},
     'review': [
         'The original arrival range is a CircleRange on the same root as an enabled trigger CircleCollider2D: local radius1, offset0 and unit root scale. This is authored local geometry, not proof of final runtime world radius, target-body geometry or collider ordering.',
-        'FindTargets_DISPOSE obtains a side layer mask, queries actual collider overlaps, resolves entities, checks native validity and selectability, deduplicates by instanceUid, then runs TargetOptions.VerifyTargetWithoutCheckingTargetSide and an optional predicate before adding each UID/entity. Collection stops at128 before optional deterministic List<Entity>.Sort; sorting all possible targets before truncation would change selection. Concrete generic comparer dispatch remains unverified.',
+        'FindTargets_DISPOSE obtains a side layer mask, queries actual collider overlaps, resolves entities, checks native validity and virtual slot38 get_alive, deduplicates by instanceUid, then runs TargetOptions.VerifyTargetWithoutCheckingTargetSide and an optional predicate before adding each UID/entity. Collection stops at128 before optional deterministic List<Entity>.Sort; sorting all possible targets before truncation would change selection. Concrete generic comparer dispatch remains unverified.',
         'HitBehaviour.OnProjectileReached performs its overlap query only when onlyCheckHitWhenReachTarget is enabled. It notifies a still-valid source through Entity.OnProjectileSelectTargets when the found count is positive, then forwards each candidate to DealHitTarget. Selected ignoreCamouflage=true disables that extra rejection; exceptSource, exceptTraceTarget and onlyTraceTarget are false. Native layer masks, target geometry, dynamic range scaling and current target options remain integration obligations.',
         'The original nested TargetOptions contains ignoreMotionMode=0 absent from the Windows struct. CircleRange._useBlackboardRangeId=0 and HitBehaviour._exceptFlyCharacter=0 also have no matching Windows fields. None of these zero-valued differences proves inertness or full layout/runtime parity.',
         'The query uses same-component GetComponent<Entity>, not parent lookup. The original miner root contains the script-bound Enemy, Rigidbody2D and enabled radius0.1 trigger; its child collision capsule has only a Transform and CapsuleCollider2D, so attached-rigidbody ancestry alone does not make that child an Entity hit body. Enemy._InitPhysics reads the root circle radius into its main-trigger radius field. This does not prove runtime transform scale or Unity physics boundary tolerance.',
