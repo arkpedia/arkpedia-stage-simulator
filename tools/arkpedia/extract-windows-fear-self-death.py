@@ -125,7 +125,7 @@ methods.append({'type': fsm['name'], **stop_row, 'entryRva': 0x247da40,
         'instructions': [{'rva': i.address - v['image_base'], 'size': i.size, 'mnemonic': i.mnemonic,
                           'operands': i.op_str} for i in decoded]}]})
 result['modeSwitch']['fsmStateField'] = c['unique'](lambda f: f['name'] == '<currentStateId>k__BackingField', c['fields'](fsm))
-for type_name, names in [('Ability', ['Attach', 'Detach']), ('UnitMode', ['OnActivate', 'OnInactivate']),
+for type_name, names in [('Ability', ['Attach', 'Detach']), ('UnitMode', ['OnActivate', 'OnInactivate', 'InitOnce', 'OnInit', '_InitAbilities']),
                          ('Entity', ['get_startIniting', 'get_faceTo', 'FaceTo', 'SetBodyDirection'])]:
     t = c['type_row'](type_name, 'Torappu.Battle')
     for name in names:
@@ -141,6 +141,32 @@ result['modeSwitch']['lifecycle'] = {
     'faceSlots': [c['resolved_slot'](c['type_row'](name, 'Torappu.Battle'), 10) for name in ['Unit', 'Enemy']],
     'modeSlots': [c['resolved_slot'](unit_mode, slot) for slot in [8, 9]],
     'lastModeResampledAfterInactive': {'readRva': 0x854ea7, 'writeRva': 0x854eb8},
+}
+priority = runpy.run_path(str(ROOT / 'tools/arkpedia/extract-windows-filter-priority.py'))
+add_spec, concrete_dedup, canonical_dedup = [priority['specification'](i) for i in [242560, 259296, 208394]]
+assert add_spec['declaringType'] == 'List`1' and add_spec['definition']['name'] == 'Add'
+assert add_spec['instantiations']['class']['arguments'][0]['name'] == 'Ability'
+assert concrete_dedup['definition'] == canonical_dedup['definition']
+assert concrete_dedup['definition']['name'] == 'RemoveDuplicationsInplace'
+assert concrete_dedup['nativeMapping'] is None
+assert concrete_dedup['instantiations']['method']['arguments'][0]['name'] == 'Ability'
+assert canonical_dedup['instantiations']['method']['arguments'][0]['name'] == 'Object'
+dedup_rva = v['quad'](v['b'], priority['pointer_table'] + canonical_dedup['nativeMapping']['methodPointerIndex'] * 8) - v['image_base']
+assert dedup_rva == 0x3f62c90
+spec_loads = []
+for rva, spec in [(0x870b56, add_spec), (0x870c0b, concrete_dedup)]:
+    pos = v['offset'](v['image_base'] + rva)
+    assert v['b'][pos:pos + 3] in [bytes.fromhex('4c8b05'), bytes.fromhex('488b15')]
+    target_rva = rva + 7 + struct.unpack_from('<i', v['b'], pos + 3)[0]
+    usage = v['quad'](v['b'], v['offset'](v['image_base'] + target_rva))
+    assert usage >> 29 == 6 and (usage & 0x1ffffffe) >> 1 == spec['index']
+    spec_loads.append({'instructionRva': rva, 'targetRva': target_rva, 'encodedUsage': usage, 'specificationIndex': spec['index']})
+result['modeSwitch']['abilityInitialization'] = {
+    'fields': [f for f in c['fields'](unit_mode) if f['name'] in ['_generalAbilities', '_combat', '_attack', 'm_abilities', 'm_inited']],
+    'specificationLoads': spec_loads, 'addSpecification': add_spec, 'concreteDedupSpecification': concrete_dedup,
+    'canonicalDedup': {**canonical_dedup, 'entryRva': dedup_rva, 'chunks': c['code'](dedup_rva)},
+    'concreteContextVerified': False,
+    'equalsDispatch': {'entryRva': 0x5860, 'metadataIdentityVerified': False},
 }
 serialized = json.dumps(result, ensure_ascii=False, indent=1) + '\n'
 out = ROOT / 'data/candidates/arkpedia-windows-fear-self-death-source.json'

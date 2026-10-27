@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 33 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 36 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -687,3 +687,42 @@ and Enemy.OnSwitchMode talent implementations, live FSM/coroutine scheduling,
 animation hooks and stage coordinate/query readers still require integration.
 These internal components grant no enemy/stage support receipt; all existing
 test-only and catalogue gates remain unchanged.
+
+### Mode ability initialization and composed self-death flight
+
+The artifact retains UnitMode.InitOnce, OnInit and _InitAbilities, bringing its
+ordinary method count to36. InitOnce sets the original inited flag before
+talent/ability initialization; these methods are distinct from OnInit's ability
+data setup. _InitAbilities collects valid general abilities, then combat, then
+attack into m_abilities. Its exact encoded generic method loads bind
+List<Ability>.Add and RemoveDuplicationsInplace<Ability>. The concrete latter
+has no direct native mapping: the independently mapped Object specialization
+at0x3f62c90 supplies retained reference-shared code; concrete RGCTX execution and
+the Equals dispatch helper's metadata identity remain unverified.
+
+`fearProjectileCollectModeAbilities` ports that selected collection order with
+explicit native validity/equality predicates. Duplicate removal swaps the last
+element into the duplicate index, removes the last and advances the inner
+index. It does not preserve stable order or recheck the swapped index: three
+equal entries can leave two. Tests preserve that literal behavior and reject
+non-Boolean predicates. This supersedes treating the array as an arbitrary
+attack/combat pair or a stable Set; the handoff still iterates whatever entries
+actually remain in the initialized array.
+
+The original fear mode0 initializes [general ability, ranged ability], with its
+shared combat/attack reference included once; mode1 initializes [empty combat].
+The composed wait/spell/flight test now supplies these original initialized
+arrays to the mode transition, detaches both mode0 entries, restarts the saved
+FSM state and executes immunity/suicide before advancing the independent born
+projectile. Its impact still applies fear and cached damage after the owner is
+removed. This exposed and fixed a missing retirement check after InstantKill:
+the action chain now observes cancellation before validating the returned
+Boolean, so the suicide adapter's null retirement result cannot throw.
+
+The focused native/fear/family/miner suite passes359 tests and the producer
+reproduces with --check. Existing checkpoint55cb5385's continuation40514427997
+has passed native-source and both focused OS jobs; its17-12 browser job and
+full40514426781 remain active at this checkpoint. Neither live run is replaced.
+Native concrete equality, initialized ability data/talents, live FSM scheduling,
+animation and stage geometry/query integration remain open; this checkpoint
+does not admit the fear enemy or16-9.

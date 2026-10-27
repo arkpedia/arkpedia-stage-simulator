@@ -16,7 +16,7 @@ import {fearProjectileFlight} from '../server/sim/content/chapter16-fear-flight.
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
 import {fearProjectileSpell} from '../server/sim/content/chapter16-fear-spell.js';
-import {fearProjectileSelfDeath,fearProjectileSuicide,fearProjectileSelfDeathActivation,fearProjectileModeFsmRestart,fearProjectileModeSwitch} from '../server/sim/content/chapter16-fear-self-death.js';
+import {fearProjectileSelfDeath,fearProjectileSuicide,fearProjectileSelfDeathActivation,fearProjectileModeFsmRestart,fearProjectileModeSwitch,fearProjectileCollectModeAbilities} from '../server/sim/content/chapter16-fear-self-death.js';
 import {fearProjectileTargetVerifier,fearProjectileSourceMotion} from '../server/sim/content/chapter16-fear-targets.js';
 import {fearProjectileReached,fearProjectileMotionStep,fearProjectileMountReference,fearProjectileTraceMotion} from '../server/sim/content/chapter16-fear-movement.js';
 import { battle as minerBattle, keys as minerKeys } from './helpers/ch17Harness.js';
@@ -24,6 +24,33 @@ import { chapter16Shadow } from '../server/sim/content/chapter16-shadow.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
 const parentKey='feawpj_a[mcreep_fear]';
 const fpOne=1n<<32n;
+test('original fear modes initialize general before shared combat/attack and retain one shared ranged ability',()=>{
+ const source=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),graph=source.modeSwitch.graph;
+ const resolve=ref=>ref.m_PathID==='0'?null:ref.m_PathID;
+ const collect=role=>{
+  const native=JSON.parse(graph[role].component.originalJson);
+  return fearProjectileCollectModeAbilities({generalAbilities:native._generalAbilities.map(resolve),combat:resolve(native._combat),
+   attack:resolve(native._attack),isValid:x=>x!==null,equals:(a,b)=>a===b});
+ };
+ assert.deepEqual(collect('mode0'),['-5760848500668714718','4729572091462136098']);
+ assert.deepEqual(collect('mode1'),['-5930072227765702366']);
+});
+
+test('mode initialization uses swap-last removal and advances past the swapped entry exactly as the native loop does',()=>{
+ const a={},b={},c={};
+ const collect=generalAbilities=>fearProjectileCollectModeAbilities({generalAbilities,combat:null,attack:null,isValid:x=>x!==null,equals:(x,y)=>x===y});
+ assert.deepEqual(collect([a,a,b,c]),[a,c,b]);
+ assert.deepEqual(collect([a,a,a]),[a,a],'the swapped element is not rechecked at the same index');
+});
+
+test('mode initialization rejects invalid entries and delegates equality without substituting JavaScript reference equality',()=>{
+ const a={id:1},duplicate={id:1},invalid={invalid:true},calls=[];
+ const list=fearProjectileCollectModeAbilities({generalAbilities:[invalid,a],combat:duplicate,attack:null,
+  isValid:x=>x!==null&&!x.invalid,equals:(left,right)=>{calls.push([left,right]);return left.id===right.id;}});
+ assert.deepEqual(list,[a]);assert.deepEqual(calls,[[a,duplicate]]);
+ assert.throws(()=>fearProjectileCollectModeAbilities({generalAbilities:[],combat:null,attack:null,isValid:()=>1,equals:()=>true}),/Boolean/);
+});
+
 function modeFixture(overrides={}){
  const f=fixture(),events=[],old={abilities:['attack','attack',null,'general']},next={abilities:['empty']};
  let current=old;
@@ -292,8 +319,24 @@ test('owner reuse while testing casting prevents spell-end and post-delay for th
  assert.equal(f.spell.run(),null);assert.deepEqual(f.events,['start']);
 });
 
-test('bounded wait, spell event5 and independent flight compose without canceling born damage',()=>{
- const f=fixture();f.source.base.atk=175;f.source.markDirty();f.target.nativeUid=1;
+test('bounded wait, initialized modes, event5 self-death and independent flight compose without canceling born damage',()=>{
+ const f=modeFixture({readStartIniting:()=>false});f.source.base.atk=175;f.source.markDirty();f.target.nativeUid=1;
+ const graph=read('data/candidates/arkpedia-windows-fear-self-death-source.json').modeSwitch.graph;
+ for(const [role,mode]of [['mode0',f.old],['mode1',f.next]]){
+  const native=JSON.parse(graph[role].component.originalJson),resolve=ref=>ref.m_PathID==='0'?null:ref.m_PathID;
+  mode.abilities=fearProjectileCollectModeAbilities({generalAbilities:native._generalAbilities.map(resolve),combat:resolve(native._combat),
+   attack:resolve(native._attack),isValid:x=>x!==null,equals:(a,b)=>a===b});
+ }
+ let state=12,casting=true;
+ const restart=fearProjectileModeFsmRestart(f.b,{owner:f.source,isRunning:()=>true,readState:()=>state,
+  stop:()=>{state=-1;},start:(_owner,saved)=>{state=saved;}});
+ const detached=[];f.callers.detachAbility=ability=>{detached.push(ability);casting=false;};
+ f.callers.onSwitchMode=()=>restart.run();
+ const handoff=fearProjectileModeSwitch(f.b,f.callers);
+ const suicide=fearProjectileSuicide(f.b,{target:f.source,readAlive:()=>f.source.alive,markSuicide:()=>{},
+  setHpInternal:()=>f.b.kill(f.source,null)});
+ const activation=fearProjectileSelfDeathActivation(f.b,{owner:f.source,readAbnormalFlag:()=>false,readAbnormalCombo:()=>false,
+  switchMode:()=>handoff.run(),createImmunityBuff:()=>true,instantKill:()=>suicide.run()});
  const source=fearProjectileSourceReference(f.b,f.source),damage=fearProjectileDamageAction(f.b,source),events=[];
  let flight;
  const spell=fearProjectileSpell(f.b,{owner:f.source,onSpellStart:()=>{
@@ -303,11 +346,13 @@ test('bounded wait, spell event5 and independent flight compose without cancelin
     verifyTarget:()=>true,deterministic:true,resolveSource:source.resolveSource,onSelected:()=>{}},
    runHit:({target})=>applyFearProjectileImpact(f.b,{source:f.source,target,applyAttachments:()=>{},runActions:damage}),
    onStopped:()=>{},scheduleCompletion:()=>()=>{}});return true;
- },isCasting:()=>true,emitSpellEnd:()=>{events.push('event5');f.b.kill(f.source,null);},
+ },isCasting:()=>casting,emitSpellEnd:()=>{events.push('event5');assert.equal(activation.run(),null);},
  mayBeginPostDelay:()=>{throw Error('removed owner');},beginPostDelay:()=>{throw Error('removed owner');}});
  const wait=fearProjectileAttackWait(f.b,{owner:f.source,cachedDurationRaw:fpOne,readDeltaPlayTime:()=>1,
   isCastActive:()=>true,subscribeAttackEvent:()=>()=>{},onReady:()=>spell.run()});
  wait.resume();assert.equal(flight,undefined);wait.resume();assert.deepEqual(events,['birth','event5']);
+ assert.equal(state,12);assert.equal(casting,false);assert.equal(f.current,f.next);
+ assert.deepEqual(detached,['-5760848500668714718','4729572091462136098']);
  const hp=f.target.hp;flight.advance(fpOne/10n,fpOne);assert.equal(hp-f.target.hp,175);
  assert.ok(f.target.findBuff(parentKey));assert.equal(wait.resume(),null);assert.equal(spell.run(),null);
  flight.release();source.release();assert.deepEqual(f.b.errors,[]);

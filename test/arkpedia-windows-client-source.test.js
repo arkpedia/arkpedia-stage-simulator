@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,33);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,36);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -107,6 +107,29 @@ test('mode switch source binds the two original modes, death animation hook and 
  assert.deepEqual(instructions(stop).map(i=>[i.mnemonic,i.operands]),[
   ['xor','r9d, r9d'],['mov','r8b, 1'],['lea','edx, [r9 - 1]'],['jmp','0x18247dbe0']]);
  assert.ok(c.methods.some(m=>m.type==='StateMachine'&&m.entryRva===0x247dbe0));
+});
+
+test('mode initialization binds general/combat/attack order and the canonical swap-last duplicate removal loop',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),init=c.modeSwitch.abilityInitialization;
+ const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ const method=castMethod(c,'UnitMode','_InitAbilities');
+ at(method,0x870ac1,'rcx, qword ptr [rdi + 0x68]');at(method,0x870b86,'rbx, qword ptr [rdi + 0x38]');
+ at(method,0x870bcc,'rbx, qword ptr [rdi + 0x40]');at(method,0x870c2d,'0x183f62c90');
+ assert.deepEqual(init.fields.filter(f=>['_generalAbilities','_combat','_attack'].includes(f.name)).map(f=>[f.name,f.offset]),[
+  ['_combat',0x38],['_attack',0x40],['_generalAbilities',0x68]]);
+ assert.equal(init.addSpecification.declaringType,'List`1');assert.equal(init.addSpecification.definition.name,'Add');
+ assert.equal(init.concreteDedupSpecification.definition.name,'RemoveDuplicationsInplace');
+ assert.equal(init.concreteDedupSpecification.nativeMapping,null);assert.equal(init.concreteContextVerified,false);
+ assert.equal(init.canonicalDedup.instantiations.method.arguments[0].name,'Object');
+ for(const load of init.specificationLoads){assert.equal(load.encodedUsage>>>29,6);assert.equal((load.encodedUsage&0x1ffffffe)>>>1,load.specificationIndex);}
+ for(const ch of init.canonicalDedup.chunks){
+  const raw=Buffer.from(ch.base64,'base64');assert.equal(sha(raw),ch.sha256);assert.equal(raw.length,ch.endRva-ch.beginRva);
+ }
+ const dedup=init.canonicalDedup;
+ at(dedup,0x3f62d92,'0x180005860');at(dedup,0x3f62deb,'0x1800053d0');
+ at(dedup,0x3f62e1e,'0x180004fe0');at(dedup,0x3f62e72,'0x180004b40');
+ at(dedup,0x3f62e77,'esi');at(dedup,0x3f62e79,'0x183f62d00');
+ assert.equal(init.equalsDispatch.metadataIdentityVerified,false);
 });
 
 test('mode lifecycle binds the initialized ability array and the exact startIniting gate rather than alive state',()=>{

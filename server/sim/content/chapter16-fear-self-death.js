@@ -80,6 +80,24 @@ export function fearProjectileModeSwitch(b,{owner,nextMode,readCurrentMode,sameM
  });
 }
 
+// UnitMode._InitAbilities appends general, combat, attack, then invokes the
+// reference-shared RemoveDuplicationsInplace routine. Its removal swaps in the
+// last element and still advances j; a stable Set/filter is not equivalent.
+// Unity validity and virtual Equals remain explicit native predicate inputs.
+export function fearProjectileCollectModeAbilities({generalAbilities,combat,attack,isValid,equals}){
+ if(!Array.isArray(generalAbilities)||typeof isValid!=='function'||typeof equals!=='function')
+  throw new TypeError('Fear mode abilities require the original general array and native validity/equality predicates');
+ const boolean=value=>{if(typeof value!=='boolean')throw new TypeError('Fear mode abilities require native Boolean predicates');return value;};
+ const abilities=[];
+ for(let i=0;i<generalAbilities.length;i++)if(boolean(isValid(generalAbilities[i])))abilities.push(generalAbilities[i]);
+ if(boolean(isValid(combat)))abilities.push(combat);
+ if(boolean(isValid(attack)))abilities.push(attack);
+ for(let i=0;i<abilities.length;i++)for(let j=i+1;j<abilities.length;j++){
+  if(boolean(equals(abilities[i],abilities[j]))){abilities[j]=abilities.at(-1);abilities.pop();}
+ }
+ return abilities;
+}
+
 export function fearProjectileModeFsmRestart(b,{owner,isRunning,readState,stop,start}){
  if(!owner||!Number.isInteger(owner.deploySeq)||[isRunning,readState,stop,start].some(fn=>typeof fn!=='function'))
   throw new TypeError('Fear mode FSM restart requires an owner life and explicit native state-machine callers');
@@ -176,8 +194,9 @@ export function fearProjectileSelfDeath(b,{buffOwner,target,readAbnormalFlag,rea
     // Default nodes require previous success, and failed condition dispatch
     // exits RunActions. Only this next node is AlwaysNext(condition0), returns
     // true, and thereby permits InstantKill even if immunity creation failed.
-    return boolean(instantKill(target,{killSource:false,noSource:false,withdrawIfRallyPoint:false,
-     resultIfInRallyPointMode:false,skipReborn:false,noReason:false,markReachExit:false,switchState:false}));
+    const killed=instantKill(target,{killSource:false,noSource:false,withdrawIfRallyPoint:false,
+     resultIfInRallyPointMode:false,skipReborn:false,noReason:false,markReachExit:false,switchState:false});
+    return active()?boolean(killed):null;
    }finally{release();}
   },
   release,
