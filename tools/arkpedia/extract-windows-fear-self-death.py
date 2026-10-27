@@ -632,6 +632,41 @@ result['modeSwitch']['buffNotification']['blackboardPrefix'] = {
     'stringPredicateCallRva': 0x2165242, 'stringWriteCallRva': 0x2165280, 'stringLoopIncrementRva': 0x2165285,
     'nativeStringComparisonVerified': False, 'destinationWritesVerified': False, 'livePrefixPhaseVerified': False,
 }
+for owner, name, rva in [(blackboard_type, 'Assign', 0x21659a0), (blackboard_type, 'Assign', 0x2165800),
+                         (pair, '.ctor', 0x2262300), (pair, '.ctor', 0x22622c0)]:
+    methods.append(c['method'](owner, c['unique'](lambda r: r['name'] == name and v['pointer'](r) - v['image_base'] == rva, owner['methods'])))
+string_type = c['type_row']('String', 'System')
+string_module = c['module']('mscorlib.dll')
+string_table = v['offset'](v['image_base'] + string_module['methodPointerTableRva'])
+for name, rva in [('ToLower', 0x50d8500), ('Compare', 0x50cd8b0)]:
+    row = c['unique'](lambda r: r['name'] == name and v['quad'](v['b'], string_table + ((r['token'] & 0xffffff) - 1) * 8) - v['image_base'] == rva, string_type['methods'])
+    if name == 'ToLower':
+        methods.append(c['method'](string_type, row, 'mscorlib.dll'))
+    else:
+        pos = v['offset'](v['image_base'] + rva)
+        raw = v['b'][pos:pos + 14]
+        assert raw.hex() == '6690450fb6c04533c9e962010000'
+        decoded = list(Cs(CS_ARCH_X86, CS_MODE_64).disasm(raw, v['image_base'] + rva))
+        assert [(i.mnemonic, i.op_str) for i in decoded] == [('nop', ''), ('movzx', 'r8d, r8b'), ('xor', 'r9d, r9d'), ('jmp', '0x1850cda20')]
+        pp = v['method_start'] + row['index'] * 32
+        methods.append({'image': 'mscorlib.dll', 'typeIndex': string_type['index'], 'namespace': 'System', 'type': 'String', **row,
+            'virtualSlot': struct.unpack_from('<H', v['m'], pp + 28)[0], 'parameterCount': struct.unpack_from('<H', v['m'], pp + 30)[0],
+            'tailTargetRva': 0x50cda20, 'tailTargetBodyRetained': False,
+            'entryRva': rva, 'chunks': [{'beginRva': rva, 'endRva': rva + len(raw), 'unwindRva': None,
+                'boundary': 'Reviewed complete bool-to-comparison wrapper leaf; tail callee body is not certified by this record',
+                'base64': base64.b64encode(raw).decode(), 'sha256': v['sha'](raw),
+                'instructions': [{'rva': i.address - v['image_base'], 'size': i.size, 'mnemonic': i.mnemonic, 'operands': i.op_str} for i in decoded]}]})
+result['modeSwitch']['buffNotification']['blackboardWrites'] = {
+    'numericLowerCallRva': 0x2165a47, 'numericPairConstructorCallRva': 0x2165a5a,
+    'numericIgnoreCaseInputRva': 0x2165a8f, 'numericCompareCallRva': 0x2165a95,
+    'numericAppendCallRva': 0x2165aca, 'numericReplaceCallRva': 0x2165af8,
+    'stringLowerCallRva': 0x21658a4, 'stringPairConstructorCallRva': 0x21658b7,
+    'stringIgnoreCaseInputRva': 0x21658ef, 'stringCompareCallRva': 0x21658f5,
+    'stringAppendCallRva': 0x216592a, 'stringReplaceCallRva': 0x2165958,
+    'numericPairValueWriteRva': 0x2262326, 'numericPairStringClearRva': 0x226231f,
+    'stringPairValueClearRva': 0x22622e2, 'stringPairStringWriteRva': 0x22622df,
+    'nativeCultureEffectsVerified': False, 'nativeListVersioningVerified': False, 'liveWritePhaseVerified': False,
+}
 pool = c['type_row']('ObjectPool`1', 'Torappu.ObjectPool')
 pool_methods = []
 for index in [147561, 147566, 147567, 147558, 147559, 147563, 147564, 147568, 147569]:

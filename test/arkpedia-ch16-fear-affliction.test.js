@@ -21,7 +21,7 @@ import {fearProjectileFinishAndRemoveBuff,fearProjectileOverrideGroupRemove} fro
 import {fearProjectileBuffRecycleQueue,fearProjectileClearRuntimeData} from '../server/sim/content/chapter16-fear-buff-recycle.js';
 import {fearProjectileBuffIdentity,fearProjectileResetBuffLifecycle} from '../server/sim/content/chapter16-fear-buff-identity.js';
 import {fearProjectileBuffTimer,fearProjectileResetBuffTriggers,fearProjectileBuffDurationKey,fearProjectileResetBuffLifetime,fearProjectileModifyBuffLifetime} from '../server/sim/content/chapter16-fear-buff-timing.js';
-import {fearProjectileResetBuffBlackboard,fearProjectileBuffPrefixAssignments} from '../server/sim/content/chapter16-fear-buff-blackboard.js';
+import {fearProjectileResetBuffBlackboard,fearProjectileBuffPrefixAssignments,fearProjectileBuffBlackboardWrites} from '../server/sim/content/chapter16-fear-buff-blackboard.js';
 import {fearProjectileBuffRecyclePool,fearProjectileDefaultBuffPool} from '../server/sim/content/chapter16-fear-buff-pool.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
@@ -207,6 +207,67 @@ test('finish and native-frame queue use concrete buff recycle identity before th
  finish.run();queue.update();assert.equal(buff.instanceUid,1);assert.equal(buff.m_isValid,true);assert.equal(recycled,0);
  f.b.kill(f.source,null);frame=11;queue.update();assert.equal(recycled,1);assert.equal(buff.instanceUid,0);assert.equal(buff.m_isValid,false);assert.equal(p.lock(old),null);
  identity.allocate(buff);assert.equal(buff.instanceUid,2);assert.equal(p.lock(old),null);assert.equal(p.lock(p.capture(buff)),buff);queue.release();assert.deepEqual(f.b.errors,[]);
+});
+
+function blackboardWritesFixture(overrides={}){
+ const entries=[],events=[];let active=true;
+ const callers={entries,toLower:key=>{events.push(['lower',key]);return key.toLowerCase();},
+  compareIgnoreCase:(a,b,ignore)=>{events.push(['compare',a,b,ignore]);return a?.toLowerCase()===b.toLowerCase()?0:1;},isActive:()=>active,...overrides};
+ const writes=fearProjectileBuffBlackboardWrites(callers);return{entries,events,writes,set active(value){active=value;}};
+}
+
+test('blackboard numeric/string writes replace whole pairs at the first matching index',()=>{
+ const f=blackboardWritesFixture();f.writes.assignString('ATK','old');f.writes.assignNumeric('atk',1.2);
+ assert.deepEqual(f.entries,[{key:'atk',value:Math.fround(1.2),valueStr:null}]);
+ f.writes.assignString('Atk','new');assert.deepEqual(f.entries,[{key:'atk',value:0,valueStr:'new'}]);
+});
+
+test('blackboard writes preserve ordering and leave later duplicate keys untouched',()=>{
+ const f=blackboardWritesFixture();f.entries.push({key:'first',value:1,valueStr:null},{key:'ATK',value:2,valueStr:null},{key:'atk',value:3,valueStr:null});
+ f.writes.assignNumeric('Atk',4);assert.deepEqual(f.entries.map(e=>[e.key,e.value]),[['first',1],['atk',4],['atk',3]]);
+ f.writes.assignNumeric('last',5);assert.equal(f.entries.at(-1).key,'last');
+});
+
+test('blackboard writes construct the lowered key but compare the original input using the native receiver',()=>{
+ const entries=[{key:'existing',value:1,valueStr:null}],events=[];
+ const f=blackboardWritesFixture({entries,toLower:key=>{events.push(['lower',key]);return'normalized';},
+  compareIgnoreCase:(old,key,ignore)=>{events.push(['compare',old,key,ignore]);return 0;}});
+ f.writes.assignString('ORIGINAL','value');assert.deepEqual(events,[['lower','ORIGINAL'],['compare','existing','ORIGINAL',true]]);
+ assert.deepEqual(entries,[{key:'normalized',value:0,valueStr:'value'}]);
+});
+
+test('blackboard nullable/empty string values clear numeric storage independently of string-value predicate',()=>{
+ const f=blackboardWritesFixture();f.writes.assignString('',null);f.writes.assignString('empty','');
+ assert.deepEqual(f.entries,[{key:'',value:0,valueStr:null},{key:'empty',value:0,valueStr:''}]);
+});
+
+test('blackboard writes observe live list changes during comparison and reject a removed replacement slot',()=>{
+ const entries=[{key:'a',value:1,valueStr:null}];let changed=false;
+ const f=blackboardWritesFixture({entries,compareIgnoreCase:()=>{if(!changed){changed=true;entries.push({key:'b',value:2,valueStr:null});return 1;}return 0;}});
+ f.writes.assignNumeric('new',3);assert.deepEqual(entries.map(e=>e.key),['a','new']);
+ const g=blackboardWritesFixture({entries,compareIgnoreCase:()=>{entries.length=0;return 0;}});
+ assert.throws(()=>g.writes.assignNumeric('new',4),/replacement index/);assert.deepEqual(entries,[]);
+});
+
+test('blackboard writes cancel after casing/comparison life invalidation without changing stored pairs',()=>{
+ let f;f=blackboardWritesFixture({toLower:()=>{f.active=false;return undefined;}});assert.equal(f.writes.assignNumeric('x',1),null);assert.deepEqual(f.entries,[]);
+ let g;g=blackboardWritesFixture({compareIgnoreCase:()=>{g.active=false;return undefined;}});g.entries.push({key:'x',value:2,valueStr:null});
+ assert.equal(g.writes.assignString('x','replacement'),null);assert.equal(g.entries[0].value,2);
+});
+
+test('blackboard numeric/string writes share a reentry guard and recover after comparison errors',()=>{
+ let f,fail=true;f=blackboardWritesFixture({compareIgnoreCase:()=>{
+  assert.equal(f.writes.assignString('nested','x'),null);if(fail)throw Error('compare');return 0;
+ }});f.entries.push({key:'x',value:1,valueStr:null});assert.throws(()=>f.writes.assignNumeric('x',2),/compare/);
+ fail=false;f.writes.assignNumeric('x',3);assert.equal(f.entries[0].value,3);
+});
+
+test('prefix traversal and native pair writes compose without merging numeric and string fields',()=>{
+ const f=blackboardWritesFixture(),prefix=fearProjectileBuffPrefixAssignments({startsWith:(k,p)=>k.startsWith(p),
+  assignNumeric:f.writes.assignNumeric,assignString:f.writes.assignString,isActive:()=>true});
+ const source=[{key:'buff.Label',value:7,valueStr:'name'},{key:'buff.atk',value:1.2,valueStr:null}];
+ prefix.assignByPrefix(source,'buff.');prefix.assignValueStrByPrefix(source,'buff.');
+ assert.deepEqual(f.entries,[{key:'label',value:0,valueStr:'name'},{key:'atk',value:Math.fround(1.2),valueStr:null}]);
 });
 
 function prefixAssignmentFixture(overrides={}){

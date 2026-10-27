@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,104);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,110);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -225,6 +225,25 @@ test('immediate recycle source enumerates stored pairs and pointer lists before 
  }
  at(q.outerMoveNext,0x4dd4158,'dword ptr [rbx + 0xc], eax');at(q.outerMoveNext,0x4dd41b6,'dword ptr [rbx + 0xc], eax');
  assert.ok(!instructions(m).some(i=>i.mnemonic==='call'&&i.operands==='0x183991a80'),'flush does not filter by current frame');
+});
+
+test('blackboard write source binds key lowering, original-key comparison and whole-pair replacement',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.blackboardWrites;
+ const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ const numeric=c.methods.find(m=>m.type==='Blackboard'&&m.entryRva===0x21659a0),string=c.methods.find(m=>m.type==='Blackboard'&&m.entryRva===0x2165800);
+ at(numeric,q.numericLowerCallRva,'0x1850d8500');at(numeric,q.numericPairConstructorCallRva,'0x182262300');
+ at(numeric,q.numericIgnoreCaseInputRva,'r8b, 1');at(numeric,q.numericCompareCallRva,'0x1850cd8b0');
+ at(numeric,q.numericAppendCallRva,'0x18001b340');at(numeric,q.numericReplaceCallRva,'0x184520160');
+ at(string,q.stringLowerCallRva,'0x1850d8500');at(string,q.stringPairConstructorCallRva,'0x1822622c0');
+ at(string,q.stringIgnoreCaseInputRva,'r8b, 1');at(string,q.stringCompareCallRva,'0x1850cd8b0');
+ at(string,q.stringAppendCallRva,'0x18001b340');at(string,q.stringReplaceCallRva,'0x184520160');
+ const numberPair=c.methods.find(m=>m.type==='DataPair'&&m.entryRva===0x2262300),stringPair=c.methods.find(m=>m.type==='DataPair'&&m.entryRva===0x22622c0);
+ at(numberPair,q.numericPairValueWriteRva,'dword ptr [rbx + 8], xmm6');at(numberPair,q.numericPairStringClearRva,'qword ptr [rcx], 0');
+ at(stringPair,q.stringPairValueClearRva,'dword ptr [rbx + 8], 0');at(stringPair,q.stringPairStringWriteRva,'qword ptr [rcx], rdi');
+ const lower=castMethod(c,'String','ToLower'),compare=castMethod(c,'String','Compare');assert.equal(lower.image,'mscorlib.dll');assert.equal(compare.image,'mscorlib.dll');
+ assert.ok(instructions(compare).some(i=>i.mnemonic==='jmp'&&i.operands==='0x1850cda20'));
+ assert.equal(compare.tailTargetRva,0x50cda20);assert.equal(compare.tailTargetBodyRetained,false);
+ assert.equal(q.nativeCultureEffectsVerified,false);assert.equal(q.nativeListVersioningVerified,false);assert.equal(q.liveWritePhaseVerified,false);
 });
 
 test('blackboard prefix source binds OrdinalIgnoreCase, key substring and separate numeric/string writes',()=>{

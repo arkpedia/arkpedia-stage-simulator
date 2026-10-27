@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 104 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 110 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -1424,3 +1424,29 @@ All675 focused native/fear/family/miner tests pass; --check reproduces the
 104-method evidence bundle. Full native Blackboard storage/equality/string
 comparison, full Reset and controller/stage integration remain open. Existing
 source/support/receipt/catalogue gates remain unchanged.
+
+### Blackboard whole-pair numeric/string writes
+
+The110-method artifact additionally retains the numeric/string Assign overloads,
+both DataPair constructors, and the actual mscorlib String.ToLower and selected
+String.Compare wrapper. Cross-image methods resolve through mscorlib's own
+pointer table. The complete14-byte Compare wrapper passes the ignore-case bool
+to its comparison-enum overload. The latter body's strict reader failed complete
+disassembly, so that body is explicitly not certified or retained; its unsupported
+range does not relax the shared reader or become fabricated evidence.
+
+`fearProjectileBuffBlackboardWrites` implements whole-pair construction and
+indexed replacement on the List<DataPair> array projection. It lowers the new
+key before searching, compares each stored key against the original input with
+ignoreCase=true, replaces only the first match in place, and otherwise appends.
+Numeric writes use float32 and clear valueStr; string writes set numeric value
+to zero and preserve the nullable string. Casing and comparison remain explicit
+native receivers, rather than using JS culture behavior as native parity.
+
+Tests cover replacement across value types, ordering, later duplicate retention,
+original-key comparison, nullable/empty strings, list mutation, invalidated lives,
+errors/retry and reentry. Prefix traversal now composes with these whole-pair
+write receivers. All684 focused native/fear/family/miner tests pass. Hosted
+continuation40539231228 ate94e018a and full40533531161 atd74e28a3 both passed.
+Culture effects, native list versioning, full Reset and live controller/stage
+integration remain open. No source/support/receipt/catalogue gate changed.

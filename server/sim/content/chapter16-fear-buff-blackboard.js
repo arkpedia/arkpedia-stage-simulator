@@ -1,6 +1,39 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import {fearProjectileBuffDurationKey} from './chapter16-fear-buff-timing.js';
 
+// Selected Blackboard.Assign(float/string) on its List<DataPair> projection.
+// Culture-sensitive System.String operations are supplied without substituting
+// JavaScript's different casing/collation rules.
+export function fearProjectileBuffBlackboardWrites({entries,toLower,compareIgnoreCase,isActive}){
+ if(!Array.isArray(entries)||[toLower,compareIgnoreCase,isActive].some(fn=>typeof fn!=='function'))
+  throw new TypeError('Fear blackboard writes require native list, casing, comparison and lifecycle callers');
+ let running=false;
+ const active=()=>{const value=isActive();if(typeof value!=='boolean')throw new TypeError('Fear blackboard writes require Boolean lifecycle validity');return value;};
+ function write(key,value,stringValue){
+  if(running)return null;running=true;
+  try{
+   if(!active())return null;
+   if(typeof key!=='string')throw new TypeError('Fear blackboard write requires a nonnull native string key');
+   if(stringValue){if(value!=null&&typeof value!=='string')throw new TypeError('Fear blackboard string write requires a nullable native string');}
+   else if(typeof value!=='number')throw new TypeError('Fear blackboard numeric write requires a native float');
+   const lowered=toLower(key);if(!active())return null;
+   if(typeof lowered!=='string')throw new TypeError('Fear blackboard casing requires a nonnull native string result');
+   const pair={key:lowered,value:stringValue?0:Math.fround(value),valueStr:stringValue?(value??null):null};
+   for(let index=0;index<entries.length;index++){
+    const existing=entries[index]?.key;if(!active())return null;
+    const compared=compareIgnoreCase(existing,key,true);if(!active())return null;
+    if(!Number.isInteger(compared)||compared<-(2**31)||compared>=2**31)throw new TypeError('Fear blackboard comparison requires a native Int32 result');
+    if(compared===0){
+     if(index>=entries.length)throw new RangeError('Fear blackboard replacement index is outside the native list');
+     entries[index]=pair;return active()?undefined:null;
+    }
+   }
+   entries.push(pair);if(!active())return null;
+  }finally{running=false;}
+ }
+ return Object.freeze({assignNumeric:(key,value)=>write(key,value,false),assignString:(key,value)=>write(key,value,true)});
+}
+
 // Selected IReadOnlyList<DataPair> array projection. The native ordinal-ignore-
 // case comparison stays explicit; destination numeric/string writes are separate.
 export function fearProjectileBuffPrefixAssignments({startsWith,assignNumeric,assignString,isActive}){
