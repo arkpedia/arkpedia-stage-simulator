@@ -214,6 +214,43 @@ result['modeSwitch']['buffNotification'] = {
     'buffActionCheckCallRva': 0x39b0c63, 'buffRunActionsCallRva': 0x39b0c84,
     'setTargetToOwner': False, 'nativeIteratorRuntimeVerified': False,
 }
+iterator_methods = []
+for index in [38622, 38627, 68292, 68293, 68297]:
+    spec = priority['specification'](index)
+    assert spec['instantiations']['class']['arguments'][0]['name'] == 'Object'
+    pointer = v['quad'](v['b'], priority['pointer_table'] + spec['nativeMapping']['methodPointerIndex'] * 8)
+    iterator_methods.append({**spec, 'entryRva': pointer - v['image_base'], 'chunks': c['code'](pointer - v['image_base'])})
+assert [(r['definition']['name'], r['entryRva']) for r in iterator_methods[:2]] == [
+    ('GetEnumerator', 0x4d96ab0), ('_ForwardEnumeratorOnDispose', 0x4d97460)]
+definition, class_inst, method_inst = struct.unpack_from('<iii', v['b'], priority['spec_start'] + 38599 * 12)
+assert definition == iterator_methods[0]['definition']['index'] and class_inst == 4600 and method_inst == -1
+assert priority['mapping'].get(38599) is None
+# Decode only this reviewed closed argument: DoubleBufferedList<ObjectPtr<Buff>>.
+inst_table = v['offset'](v['quad'](v['b'], v['registration'] + 24))
+inst_pos = v['offset'](v['quad'](v['b'], inst_table + class_inst * 8))
+assert v['quad'](v['b'], inst_pos) == 1
+arg_table = v['offset'](v['quad'](v['b'], inst_pos + 8))
+arg_pos = v['offset'](v['quad'](v['b'], arg_table))
+assert (v['uint'](v['b'], arg_pos + 8) >> 16) & 255 == 21
+generic_class_pos = v['offset'](v['quad'](v['b'], arg_pos))
+generic_definition_pos = v['offset'](v['quad'](v['b'], generic_class_pos))
+object_ptr = c['type_row']('ObjectPtr`1', 'Torappu')
+assert v['quad'](v['b'], generic_definition_pos) == object_ptr['index']
+assert (v['uint'](v['b'], generic_definition_pos + 8) >> 16) & 255 == 17
+buff_lock_spec = priority['specification'](253183)
+assert buff_lock_spec['declaringTypeIndex'] == object_ptr['index']
+assert buff_lock_spec['instantiations']['class']['arguments'][0]['name'] == 'Buff'
+assert v['quad'](v['b'], generic_class_pos + 8) == v['quad'](v['b'], inst_table + 1751 * 8)
+base_list = c['type_row']('DoubleBufferedList`1', 'Torappu')
+result['modeSwitch']['buffNotification']['forwardIteration'] = {
+    'canonicalMethods': iterator_methods,
+    'concreteSpecification': {'index': 38599, 'definitionIndex': definition, 'classInstantiationIndex': class_inst,
+        'argument': 'Torappu.ObjectPtr<Torappu.Battle.Buff>', 'argumentTypeHex': v['b'][arg_pos:arg_pos + 16].hex(),
+        'genericDefinitionTypeHex': v['b'][generic_definition_pos:generic_definition_pos + 16].hex(), 'nativeMapping': None},
+    'buffLockSpecification': buff_lock_spec,
+    'fields': base_list['fields'][:5],
+    'concreteContextVerified': False, 'poolRuntimeVerified': False,
+}
 serialized = json.dumps(result, ensure_ascii=False, indent=1) + '\n'
 out = ROOT / 'data/candidates/arkpedia-windows-fear-self-death-source.json'
 if __name__ == '__main__':

@@ -13,6 +13,7 @@ import {fearProjectileHitLedger} from '../server/sim/content/chapter16-fear-deli
 import {fearProjectileLifetime} from '../server/sim/content/chapter16-fear-clock.js';
 import {fearProjectileAreaDelivery} from '../server/sim/content/chapter16-fear-area.js';
 import {fearProjectileFlight} from '../server/sim/content/chapter16-fear-flight.js';
+import {fearProjectileBuffIteration} from '../server/sim/content/chapter16-fear-buff-iteration.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
 import {fearProjectileSpell} from '../server/sim/content/chapter16-fear-spell.js';
@@ -49,6 +50,83 @@ test('mode initialization rejects invalid entries and delegates equality without
   isValid:x=>x!==null&&!x.invalid,equals:(left,right)=>{calls.push([left,right]);return left.id===right.id;}});
  assert.deepEqual(list,[a]);assert.deepEqual(calls,[[a,duplicate]]);
  assert.throws(()=>fearProjectileCollectModeAbilities({generalAbilities:[],combat:null,attack:null,isValid:()=>1,equals:()=>true}),/Boolean/);
+});
+
+function buffIterationFixture(overrides={}){
+ const f=fixture(),entries=['a','b'],events=[];
+ const callers={owner:f.source,readInternalEntries:()=>{events.push('snapshot');return entries;},copyEntry:entry=>entry,
+  resolveEntry:entry=>entry,...overrides};
+ const iteration=fearProjectileBuffIteration(f.b,callers);return{...f,entries,events,callers,iteration};
+}
+
+test('nested buff iterators share the outer snapshot while the next outer iterator sees current entries',()=>{
+ const f=buffIterationFixture(),outer=f.iteration.openIterator();assert.equal(f.iteration.openCount,1);
+ f.entries.splice(0,2,'replacement');const nested=f.iteration.openIterator();assert.equal(f.iteration.openCount,2);
+ assert.equal(outer.moveNext(),true);assert.equal(outer.current(),'a');assert.equal(nested.moveNext(),true);assert.equal(nested.current(),'a');
+ outer.dispose();assert.equal(f.iteration.openCount,1);assert.equal(nested.moveNext(),true);assert.equal(nested.current(),'b');
+ nested.dispose();nested.dispose();assert.equal(f.iteration.openCount,0);assert.deepEqual(f.events,['snapshot']);
+ const fresh=f.iteration.openIterator();assert.equal(fresh.moveNext(),true);assert.equal(fresh.current(),'replacement');
+ fresh.dispose();f.iteration.release();assert.deepEqual(f.events,['snapshot','snapshot']);
+});
+
+test('buff iterator copies ObjectPtr values at snapshot and current rather than aliasing their mutable wrappers',()=>{
+ const entity={},entry={entity,uid:7};let resolved;
+ const f=buffIterationFixture({readInternalEntries:()=>[entry],copyEntry:ref=>({...ref}),resolveEntry:ref=>{resolved=ref.uid;ref.uid=99;return ref.entity;}});
+ const cursor=f.iteration.openIterator();entry.uid=8;
+ assert.equal(cursor.moveNext(),true);assert.equal(cursor.current(),entity);assert.equal(resolved,7);
+ assert.equal(cursor.current(),entity);assert.equal(resolved,7);assert.equal(entry.uid,8);
+ cursor.dispose();f.iteration.release();
+});
+
+test('buff cursor movement is explicit and retired cursors cannot consume a later traversal',()=>{
+ const f=buffIterationFixture(),cursor=f.iteration.openIterator();assert.throws(()=>cursor.current(),/no current/);
+ assert.equal(cursor.moveNext(),true);assert.equal(cursor.current(),'a');assert.equal(cursor.moveNext(),true);assert.equal(cursor.current(),'b');
+ assert.equal(cursor.moveNext(),false);assert.throws(()=>cursor.current(),/no current/);cursor.dispose();
+ const next=f.iteration.openIterator();assert.equal(cursor.moveNext(),false);assert.equal(cursor.current(),null);
+ assert.equal(next.moveNext(),true);assert.equal(next.current(),'a');next.dispose();f.iteration.release();
+});
+
+for(const boundary of ['reuse','battleEnd','removed'])test('buff iterator manager closes every cursor on '+boundary,()=>{
+ const f=buffIterationFixture(),a=f.iteration.openIterator(),b=f.iteration.openIterator();
+ if(boundary==='reuse')f.source.deploySeq++;else if(boundary==='battleEnd')f.b.emit('battleEnd',{});else f.b.emit('removed',{unit:f.source});
+ assert.equal(a.moveNext(),false);assert.equal(b.current(),null);assert.equal(f.iteration.openCount,0);assert.equal(f.iteration.openIterator(),null);
+ a.dispose();b.dispose();assert.equal(f.iteration.openCount,0);assert.deepEqual(f.b.errors,[]);
+});
+
+test('buff snapshot failure rolls back acquisition and allows a later valid traversal',()=>{
+ const f=fixture();let fail=true;
+ const iteration=fearProjectileBuffIteration(f.b,{owner:f.source,readInternalEntries:()=>{if(fail)throw Error('snapshot');return['valid'];},copyEntry:x=>x,resolveEntry:x=>x});
+ assert.throws(()=>iteration.openIterator(),/snapshot/);assert.equal(iteration.openCount,0);fail=false;
+ const cursor=iteration.openIterator();assert.equal(cursor.moveNext(),true);assert.equal(cursor.current(),'valid');cursor.dispose();iteration.release();
+});
+
+test('owner retirement during snapshot copying leaves no phantom iterator counter',()=>{
+ const f=fixture();const iteration=fearProjectileBuffIteration(f.b,{owner:f.source,readInternalEntries:()=>['entry'],
+  copyEntry:()=>{f.source.deploySeq++;return'entry';},resolveEntry:x=>x});
+ assert.equal(iteration.openIterator(),null);assert.equal(iteration.openCount,0);
+});
+
+test('recursive buff snapshot acquisition and recursive current locking cannot duplicate cursor work',()=>{
+ const f=fixture();let iteration,cursor;
+ iteration=fearProjectileBuffIteration(f.b,{owner:f.source,readInternalEntries:()=>{assert.equal(iteration.openIterator(),null);return['entry'];},
+  copyEntry:x=>x,resolveEntry:x=>{assert.equal(cursor.current(),null);return x;}});
+ cursor=iteration.openIterator();assert.equal(cursor.moveNext(),true);assert.equal(cursor.current(),'entry');cursor.dispose();iteration.release();
+});
+
+test('mode-change dispatch uses the shared outer snapshot through nested buff notifications and refreshes after disposal',()=>{
+ const f=buffIterationFixture(),events=[];let nesting=false,nestedCalled=false;
+ const callers={owner:f.source,openIterator:()=>f.iteration.openIterator(),isFinishedOrDisabled:()=>false,isActionValid:()=>true,
+  runActions:buff=>{
+   events.push((nesting?'inner:':'outer:')+buff);
+   if(buff==='a'&&!nestedCalled){
+    nestedCalled=true;f.entries.splice(0,2,'a','c');nesting=true;
+    assert.equal(fearProjectileBuffModeChange(f.b,callers).run(),true);nesting=false;
+   }
+  },checkFinishedBuffs:()=>events.push('cleanup')};
+ assert.equal(fearProjectileBuffModeChange(f.b,callers).run(),true);
+ assert.deepEqual(events,['outer:a','inner:a','inner:b','cleanup','outer:b','cleanup']);assert.equal(f.iteration.openCount,0);
+ events.length=0;assert.equal(fearProjectileBuffModeChange(f.b,callers).run(),true);
+ assert.deepEqual(events,['outer:a','outer:c','cleanup']);assert.equal(f.iteration.openCount,0);f.iteration.release();
 });
 
 function buffModeFixture(overrides={}){

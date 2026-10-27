@@ -834,3 +834,46 @@ Native double-buffer visibility/ordering, exact action/context effect callers
 and finished-buff removal remain explicit inputs. These source and composition
 tests do not certify concrete engine buff-container execution, the fear enemy
 controller or16-9 stage support. No support/receipt/catalogue gate changes.
+
+### Forward buff iteration and nested snapshot visibility
+
+The source artifact now retains five independently mapped Object canonical
+generic bodies: DoubleBufferedList.GetEnumerator, _ForwardEnumeratorOnDispose
+and ForwardEnumerator.Dispose, MoveNext and get_Current. The closed call-site
+specification38599 resolves DoubleBufferedList<ObjectPtr<Buff>>. Its nested
+argument and ObjectPtr<Buff>.Lock specification253183 are bound separately from
+the canonical methods; concrete RGCTX execution and native pool reuse remain
+unverified. Generic definition field metadata is retained without treating its
+zero offsets as verified closed-instance offsets. The strict general generic
+decoder remains unchanged; the nested argument decoding is explicitly bounded
+to this reviewed ObjectPtr<Buff> shape.
+
+The default GetEnumerator code increments a UInt16 nesting counter before
+snapshot acquisition. It clears/copies the internal list only when the previous
+counter was zero. Nested forward enumerators use that same cached buffer.
+Dispose retires a cursor once and decrements the shared counter before returning
+it to the native pool. MoveNext increments its Int32 cursor before comparing
+against the buffer count; get_Current returns the selected T value.
+
+`fearProjectileBuffIteration` composes these selected counter/snapshot rules
+with the mode-change dispatcher. Already ordered native entries, ObjectPtr value
+copying and UID locking remain explicit readers. Copies are required both when
+acquiring the snapshot and when returning current, so mutable wrapper records
+cannot change a saved pointer value or mutate the cached buffer during Lock.
+Local life/reentry guards reject stale cursor operations and close all cursors
+on owner retirement or battle end; they do not claim native pool alias parity.
+
+Tests prove shared outer/nested views, refresh after the last cursor closes,
+independent cursor positions, copied pointer values, repeated disposal, cursor
+range errors, failure rollback, acquisition/current recursion and owner-life
+cancellation. A composed mode-change test changes the live list during an
+action, nests another notification and requires both traversals to see the old
+snapshot; a subsequent outer notification sees the new list. The focused
+native/fear/family/miner suite passes438 tests and the producer reproduces the
+56 ordinary plus5 canonical generic methods with --check.
+
+Continuation40516147908 at6de1933a completed successfully. Full40514426781 is
+still running and is not replaced. Sorted insertion/removal of native buff
+entries, concrete ObjectPtr locking, finished-buff effects, full controller
+scheduling and stage geometry/query integration remain open. This checkpoint
+does not create enemy or stage support receipts or change catalogue gates.

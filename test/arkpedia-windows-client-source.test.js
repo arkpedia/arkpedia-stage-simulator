@@ -132,6 +132,27 @@ test('mode initialization binds general/combat/attack order and the canonical sw
  assert.equal(init.equalsDispatch.metadataIdentityVerified,false);
 });
 
+test('buff forward iteration retains mapped canonical code and the separately bound closed ObjectPtr Buff argument',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),f=c.modeSwitch.buffNotification.forwardIteration;
+ assert.equal(f.concreteSpecification.index,38599);assert.equal(f.concreteSpecification.definitionIndex,23983);
+ assert.equal(f.concreteSpecification.argument,'Torappu.ObjectPtr<Torappu.Battle.Buff>');assert.equal(f.concreteSpecification.nativeMapping,null);
+ assert.equal(f.buffLockSpecification.definition.name,'Lock');assert.equal(f.buffLockSpecification.instantiations.class.arguments[0].name,'Buff');
+ assert.equal(f.concreteContextVerified,false);assert.equal(f.poolRuntimeVerified,false);
+ assert.deepEqual(f.fields.map(field=>field.name),['m_internalList','m_cachedBuffer','m_eCounter','m_forwardEnumeratorPool','m_backwardEnumeratorPool']);
+ for(const method of f.canonicalMethods){
+  assert.equal(method.instantiations.class.arguments[0].name,'Object');assert.ok(method.nativeMapping);
+  for(const chunk of method.chunks){const raw=Buffer.from(chunk.base64,'base64');assert.equal(sha(raw),chunk.sha256);assert.equal(raw.length,chunk.endRva-chunk.beginRva);}
+ }
+ const find=name=>f.canonicalMethods.find(m=>m.definition.name===name);
+ const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ at(find('GetEnumerator'),0x4d96afd,'ecx, word ptr [rbx + 0x20]');at(find('GetEnumerator'),0x4d96b04,'word ptr [rbx + 0x20], ax');
+ at(find('GetEnumerator'),0x4d96b0b,'0x184d96b55');at(find('GetEnumerator'),0x4d96b2c,'qword ptr [rax + 8]');
+ at(find('GetEnumerator'),0x4d96b52,'qword ptr [rax + 8]');
+ at(find('_ForwardEnumeratorOnDispose'),0x4d974b5,'word ptr [rbx + 0x20], ax');
+ at(find('Dispose'),0x432ed30,'byte ptr [rbx + 0x1c], 1');
+ at(find('MoveNext'),0x432ed73,'dword ptr [rcx + 0x18], ebx');at(find('MoveNext'),0x432edaa,'rbx, qword ptr [rsp + 0x30]');
+});
+
 test('buff mode notification source binds event75 and preserves context target through its action dispatcher',()=>{
  const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),n=c.modeSwitch.buffNotification;
  const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
