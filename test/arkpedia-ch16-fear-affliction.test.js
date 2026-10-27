@@ -8,7 +8,7 @@ import { execFileSync } from 'node:child_process';
 import { makeBattle, enemyRec } from './helpers/battleHarness.js';
 import { compileStageLocalEnemy } from '../shared/arkpedia/enemy-records.js';
 import { fearProjectileAfflictions } from '../server/sim/content/chapter16-fear-affliction.js';
-import {applyFearProjectileImpact} from '../server/sim/content/chapter16-fear-impact.js';
+import {applyFearProjectileImpact,fearProjectileDamageAction} from '../server/sim/content/chapter16-fear-impact.js';
 import { battle as minerBattle, keys as minerKeys } from './helpers/ch17Harness.js';
 import { chapter16Shadow } from '../server/sim/content/chapter16-shadow.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
@@ -25,6 +25,42 @@ function fixture({marked=true,full=false,local=false}={}){
 }
 function apply(f){const p=f.manager.apply(f.source,f.target);assert.ok(p);return p;}
 function assertClean(f){assert.equal(f.target.findBuff(parentKey),null);assert.equal(f.target.buffs.some(b=>b.key.startsWith('ch16:fearpj:')),false);assert.deepEqual(f.b.errors,[]);}
+
+test('impact damage reads the resolved source ATK after buff and attachment callbacks',()=>{
+ const f=fixture(),hp=f.target.hp,damage=fearProjectileDamageAction(f.b,{cachedAtk:200,resolveSource:()=>f.source});
+ applyFearProjectileImpact(f.b,{source:f.source,target:f.target,
+  applyAttachments:()=>{f.b.addBuff(f.source,{key:'impact-atk',persist:true,mods:{atkFlat:350}});},runActions:damage});
+ assert.equal(hp-f.target.hp,350);assert.deepEqual(f.b.errors,[]);
+});
+
+test('missing source reference uses the supplied preprocessed ATK without transferring damage credit',()=>{
+ const f=fixture(),hp=f.target.hp,packets=[];
+ f.b.on('damaged',c=>{if(c.target===f.target)packets.push(c);});
+ const damage=fearProjectileDamageAction(f.b,{cachedAtk:225,resolveSource:()=>null});
+ applyFearProjectileImpact(f.b,{source:f.source,target:f.target,applyAttachments:()=>{},runActions:damage});
+ assert.equal(hp-f.target.hp,225);assert.equal(packets.length,1);assert.equal(packets[0].source,null);
+ assert.deepEqual(f.b.errors,[]);
+});
+
+test('source alive flag alone does not override an explicit native-reference resolver',()=>{
+ const f=fixture(),hp=f.target.hp;f.source.base.atk=175;f.source.markDirty();f.b.kill(f.source,null);
+ const amount=f.source.s.atk,damage=fearProjectileDamageAction(f.b,{cachedAtk:999,resolveSource:()=>f.source});
+ applyFearProjectileImpact(f.b,{source:f.source,target:f.target,applyAttachments:()=>{},runActions:damage});
+ assert.equal(hp-f.target.hp,amount);assert.deepEqual(f.b.errors,[]);
+});
+
+test('reentrant source resolution cannot damage a replacement recipient life',()=>{
+ const f=fixture(),hp=f.target.hp;
+ const damage=fearProjectileDamageAction(f.b,{cachedAtk:225,resolveSource:()=>{f.target.deploySeq++;return null;}});
+ damage({target:f.target});assert.equal(f.target.hp,hp);
+ for(const cachedAtk of [-1,NaN,Infinity])assert.throws(()=>fearProjectileDamageAction(f.b,{cachedAtk,resolveSource:()=>null}),/requires/);
+});
+
+test('an ended battle rejects damage before invoking a source resolver',()=>{
+ const f=fixture();f.b.emit('battleEnd',{});let calls=0;
+ fearProjectileDamageAction(f.b,{cachedAtk:200,resolveSource:()=>{calls++;return f.source;}})({target:f.target});
+ assert.equal(calls,0);assert.deepEqual(f.b.errors,[]);
+});
 
 test('impact runs the caller attachments and damage actions after Fear/Disarm admission',()=>{
  const f=fixture(),order=[],hp=f.target.hp;

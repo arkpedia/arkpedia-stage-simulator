@@ -74,7 +74,7 @@ const castMethod=(c,type,name)=>{
 };
 
 test('fear projectile source pins complete native methods and exact original script references',()=>{
- const c=read(projectilePath);assert.equal(c.methods.length,24);
+ const c=read(projectilePath);assert.equal(c.methods.length,35);
  for(const p of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+p.path,import.meta.url))),p.sha256);
  for(const method of [...c.methods,c.lifeValueLeaf])for(const chunk of method.chunks){
   const raw=Buffer.from(chunk.base64,'base64');assert.equal(raw.length,chunk.endRva-chunk.beginRva);assert.equal(sha(raw),chunk.sha256);
@@ -84,6 +84,27 @@ test('fear projectile source pins complete native methods and exact original scr
  assert.equal(hit.scriptIdentity.m_ClassName,'HitBehaviour');assert.equal(hit.serializedFieldParity,false);
  assert.deepEqual(hit.unmatchedSerializedFields,{_exceptFlyCharacter:0});
  for(const field of ['runtimeDispatchVerified','frameParity','crossVersionParity'])assert.equal(c[field],false);
+});
+
+test('uncached-only false selects ordinary ApplyDamage with a live source path and cached no-source fallback',()=>{
+ const c=read(projectilePath),graph=read('data/candidates/arkpedia-ch16-fear-projectile-source.json');
+ const cast=JSON.parse(Object.values(graph.prefabs)[0].find(r=>r.pathId==='4729572091462136098').originalJson);
+ assert.equal(cast._useCachedAtkOnly,0);assert.equal(cast._atkScale,1);assert.equal(cast._damageType,2);
+ assert.equal(c.damageNodeSlot.slot,106);assert.equal(c.damageNodeSlot.name,'NewDamageNode');assert.equal(c.damageNodeSlot.declaringType,'RangedAttack');
+ const node=instructions(castMethod(c,'RangedAttack','NewDamageNode'));
+ const normal=castMethod(c,'AbstractAnimatedAbility','NewDamageNode');
+ assert.ok(node.some(i=>i.rva===0xbfbb06&&i.operands==='byte ptr [rdi + 0x23a], cl'));
+ assert.ok(node.some(i=>i.mnemonic==='jmp'&&i.operands==='0x'+(c.imageBase+normal.entryRva).toString(16)));
+ assert.ok(instructions(normal).some(i=>i.mnemonic==='call'&&i.operands==='0x180d7a420'));
+ assert.equal(c.damageFields.find(f=>f.name==='m_cachedAtk').offset,0x28);
+ const preprocess=instructions(castMethod(c,'ApplyDamage','PreprocessForProjectile'));
+ assert.ok(preprocess.some(i=>i.mnemonic==='call'&&i.operands==='0x183a29060'));
+ assert.ok(preprocess.some(i=>i.rva===0xd7a196&&i.operands==='qword ptr [rdi + 0x28], rax'));
+ const evaluate=instructions(castMethod(c,'ApplyDamage','CreateDamageModifier'));
+ for(const name of ['CalculateDamageBySource','CalculateDamageByAtkNoSource']){
+  const m=castMethod(c,'BattleUtil',name);assert.ok(evaluate.some(i=>i.mnemonic==='call'&&i.operands==='0x'+(c.imageBase+m.entryRva).toString(16)));
+ }
+ assert.ok(instructions(castMethod(c,'BattleUtil','CalculateDamageBySource')).some(i=>i.mnemonic==='call'&&i.operands==='0x183a29060'));
 });
 
 test('native impact attaches active buffs before attachments and action execution',()=>{

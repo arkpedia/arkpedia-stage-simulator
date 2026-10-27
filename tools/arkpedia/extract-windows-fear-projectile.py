@@ -24,6 +24,10 @@ for t, names in [
     (hit, ['OnProjectileReached', 'DealHitTarget']),
     (c['type_row']('ActionController', ''), ['OnHitTarget', '_AttachBuffs', '_RunActions']),
     (c['type_row']('AbilityAttachment', 'Torappu.Battle'), ['Apply']),
+    (c['type_row']('RangedAttack', 'Torappu.Battle.Abilities'), ['NewDamageNode', 'get_useCachedAtkOnly', 'GetProjectileActions']),
+    (c['type_row']('AbstractAnimatedAbility', 'Torappu.Battle.Abilities'), ['NewDamageNode']),
+    (c['type_row']('ApplyDamage', ''), ['PreprocessForProjectile', 'CreateDamageModifier', 'Execute', '.ctor']),
+    (c['type_row']('BattleUtil', 'Torappu.Battle'), ['CalculateDamageBySource', 'CalculateDamageByAtkNoSource']),
 ]:
     for name in names:
         rows = [r for r in t['methods'] if r['name'] == name]
@@ -120,6 +124,8 @@ result = {
         'data/arkpedia-global-windows-client-source.json', graph_path, binding_path]},
     'lifeType': {'typeIndex': life['index'], 'name': life['name'], 'underlyingType': 'System.Byte', 'fields': enum_values},
     'fields': {t['name']: c['fields'](t) for t in [simple, projectile, hit]},
+    'damageFields': c['fields'](c['type_row']('ApplyDamage', '')),
+    'damageNodeSlot': c['resolved_slot'](c['type_row']('RangedAttack', 'Torappu.Battle.Abilities'), 106),
     'methods': methods, 'lifeValueLeaf': leaf, 'prefabScriptBridges': bridges,
     'resolvedSlots': [c['resolved_slot'](simple, slot) for slot in [38, 39, 40, 41, 42, 43]],
     'review': [
@@ -127,6 +133,7 @@ result = {
         'GetMaxHitNum passes the serialized value, byte hitNumType and safety value128 to Misc.GetLifeValue<int>. The exact complete leaf returns the safety argument for INFINITY, zero for IMMEDIATELY and the supplied value otherwise. Blackboard and block-count overrides are separately retained; the CN prefab disables both.',
         'Projectile.OnTick combines finite lifetime expiry with the virtual stopWhenSourceInvalid condition before its finish path. The CN prefab has finite life10 and stopWhenSourceInvalid=false. Born projectile ownership must therefore not be inferred solely from source death.',
         'ActionController.OnHitTarget calls _AttachBuffs first, then AbilityAttachment.Apply, then _RunActions. The selected projectile enables active buffs, disables trace-target-only and once-only buff gates, and has no extra buff list. Damage/source-attribute evaluation remains a separate caller review; buff-before-damage ordering must not be reversed by a convenience explosion helper.',
+        'RangedAttack.NewDamageNode tests useCachedAtkOnly. Its false branch tail-calls AbstractAnimatedAbility.NewDamageNode, which constructs ordinary ApplyDamage rather than ApplyCacheAtkDamageFromProjectile. PreprocessForProjectile stores source ATK in m_cachedAtk; CreateDamageModifier uses CalculateDamageBySource when its source reference is valid and CalculateDamageByAtkNoSource with the cached value when the source is missing. Source-reference identity validity and reuse timing remain separate from merely testing an alive flag.',
         'Reached handling, trace-target end hit and HitBehaviour area selection/dispatch are retained in complete bodies. Cross-version field differences remain explicit. Source identity reuse, reentrant impact ordering and event5 self-death still require integration tests before admission.'
     ]}
 serialized = json.dumps(result, ensure_ascii=False, indent=1) + '\n'

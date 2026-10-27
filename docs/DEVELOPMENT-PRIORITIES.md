@@ -1,5 +1,46 @@
 # Development priorities
 
+### 27 October: normal projectile damage evaluation and explicit source resolution
+
+Previous `004a876e` was concrete internal impact progress and remained local while
+continuation `40486733871` ran. That continuation at `80820cfd` is now terminal
+success across all jobs, including both focused platforms and 17-12. Full matrix
+`40484748212` remains live across all eight jobs at `5319bc8a`; preserve it and
+do not start another full matrix while it is active.
+
+Resolved actual RangedAttack slot106 to NewDamageNode. With the CN cast's
+useCachedAtkOnly=false, its default branch tail-calls AbstractAnimatedAbility's
+ordinary ApplyDamage constructor, rather than the specialized cached-only
+projectile node. ApplyDamage.PreprocessForProjectile records source ATK at field
+0x28. CreateDamageModifier uses CalculateDamageBySource for a valid source and
+CalculateDamageByAtkNoSource for a missing source; the former reads current ATK.
+The expanded projectile artifact retains all those complete bodies and actual
+field/slot bindings: 35 methods total. This does not establish when a source
+ObjectPtr becomes invalid; alive=false alone is not sufficient evidence.
+
+Added internal fearProjectileDamageAction for the selected Arts/atkScale1 cast,
+with an explicit cached ATK and caller-supplied source-reference resolver. While
+that resolver returns a source, it uses current ATK after buff/attachment effects;
+when it returns null, it uses the preprocessed cached value with null damage
+credit. It does not copy a replacement deployment's stats by choosing an implicit
+resolver or turn source death alone into reference invalidity. Recipient life and
+battle state are rechecked before/after a reentrant resolver callback.
+
+Five damage cases verify current ATK after attachments, cached no-source output
+and null credit, an explicitly resolved dead source, replacement recipient life
+during resolution, and rejection before invoking a resolver after battle end.
+All 172 focused source/Fear/family/miner-clock/listener cases pass; all 37 Windows
+source checks pass and the expanded projectile artifact reproduces with --check.
+
+Next bind actual ObjectPtr cached-UID/null validity and preprocessing timing into
+the launch controller, then finish delivery and event5 mode-switch/self-death
+integration. Cached investigation found the source getter locks an ObjectPtr;
+that trace remains exploratory until reproduced and reviewed. Keep remaining
+selector/context and CN field differences explicit. Only then integrate test-only
+16-9 through exact source/support/receipt gates. Full remaining Chapter16/17 and
+operator/module audit remain required. No merge/deploy/public promotion; four
+quarantined test deletions remain unstaged.
+
 ### 27 October: ordered internal projectile impact receiver
 
 Previous checkpoint `80820cfd` made concrete source progress. Continuation
