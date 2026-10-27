@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,218);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,219);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -531,6 +531,17 @@ test('context snapshot source binds distinct capture/push orders and closed refe
   'rcx, qword ptr [rdi + 0x48]','rcx, qword ptr [rdi + 0x58]'].entries())at(duplicate,q.pushFieldReads[index],args);
  for(const [index,target]of ['0x184be7ef0','0x184be7ef0','0x184be7ef0','0x18490b650','0x18490b820','0x184be7ef0','0x184be7ef0','0x18490b650','0x18490b790','0x184be7ef0'].entries())at(duplicate,q.pushCalls[index],target);
  assert.equal(q.nativeContextStackEffectsVerified,false);assert.equal(q.nativeNestedValueCopiesVerified,false);assert.equal(q.liveContextSnapshotsVerified,false);
+});
+
+test('Blackboard.MergeTo source binds list specialization, pair copies and destination rereads',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.newBuff.blackboardMerge,m=c.methods.find(m=>m.index===q.methodIndex);
+ assert.equal(m.type,'Blackboard');assert.equal(m.name,'MergeTo');assert.equal(m.entryRva,0x2166d70);assert.equal(q.pairSize,24);assert.deepEqual(q.unboxedPairOffsets,{key:0,value:8,valueStr:16});assert.deepEqual(q.pairFields.map(f=>[f.name,f.offset]),[['key',16],['value',24],['valueStr',32]]);
+ assert.deepEqual(q.listLoads.map(load=>[load.specification.index,load.specification.definition.name]),[[117458,'.ctor'],[117527,'get_Item'],[117527,'get_Item'],[117529,'set_Item'],[117461,'Add']]);
+ for(const load of q.listLoads){assert.equal(load.encodedUsage>>>29,6);assert.equal((load.encodedUsage&0x1ffffffe)>>>1,load.specification.index);assert.equal(load.specification.instantiations.class.arguments[0].typeIndex,3917);assert.equal(load.specification.declaringType,'List`1');assert.ok(load.mappedEntryRva>0);}
+ const at=(rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args),'Blackboard.MergeTo instruction '+rva.toString(16));
+ for(const [key,args]of [['sourceNullCheckRva','r14, r14'],['targetNullCheckRva','qword ptr [rdi], rcx'],['allocateCallRva','0x180410630'],['initializeCallRva','0x18430e530'],['publishRva','qword ptr [rdi], rbx'],['sourceCountReadRva','eax, dword ptr [r14 + 0x18]'],['sourceItemCallRva','0x184519cb0'],['sourceKeyCaptureRva','rbp, qword ptr [rsp + 0x20]'],['targetReadRva','rdx, qword ptr [rdi]'],['targetCountReadRva','ebx, dword ptr [rdx + 0x18]'],['targetItemCallRva','0x184519cb0'],['ignoreCaseArgumentRva','r8b, 1'],['compareCallRva','0x1850cd8b0'],['replacementTargetReadRva','rcx, qword ptr [rdi]'],['replacementPairCopyRva','xmm0, xmmword ptr [rsp + 0x20]'],['replacementCallRva','0x184520160'],['appendPairCopyRva','xmm0, xmmword ptr [rsp + 0x20]'],['appendCallRva','0x18001b340']])at(q[key],args);
+ assert.ok(q.sourceNullCheckRva<q.targetNullCheckRva&&q.initializeCallRva<q.publishRva&&q.compareCallRva<q.replacementTargetReadRva);
+ for(const name of ['nativeListStorageEffectsVerified','nativeCultureComparisonVerified','liveBlackboardMergeVerified'])assert.equal(q[name],false);
 });
 
 test('BuffDB source distinguishes inline identity from cloned database data and post-publication merge',()=>{

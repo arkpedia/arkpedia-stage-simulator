@@ -1402,6 +1402,35 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
 
+### Blackboard.MergeTo external-value composition
+
+The219-method bundle adds the complete default Blackboard.MergeTo body. All218
+prior bodies and earlier evidence remain unchanged. Metadata loads bind the
+concrete List<DataPair> constructor, get_Item, set_Item and Add specializations
+and their mapped entries. DataPair occupies24 unboxed bytes: key+0, Single
+value+8 and valueStr+16. Instruction pins retain the early null-source return,
+constructor-before-publication order, live source/destination counts, copied
+source pair, ignore-case comparison and destination reread before replacement.
+
+`fearProjectileBlackboardMerge` does nothing for a null source before accessing
+the destination. A null destination gets a newly initialized list even when
+the source is empty. Every source pair is copied and processed separately;
+there is no empty-destination AddRange shortcut. Consequently later duplicate
+keys replace the first matching entry rather than surviving as duplicates.
+The incoming key's casing and all value fields replace that entry together.
+Comparison uses an explicit native Int32/ignore-case receiver. List operations
+remain explicit receivers with their own storage/versioning and bounds effects.
+
+The adapter preserves captured destination receivers for item reads and append,
+but rereads the destination after a matching comparison before replacement.
+Tests cover callback-driven replacement, source growth, aliasing, nested merges,
+constructor failure, bounds/null failures and retained partial writes. BuffDB's
+external-blackboard composition now uses this adapter after config publication.
+Native allocation/list storage, culture comparison and full controller/stage/
+frame parity remain unverified; existing source/support/receipt/catalogue gates
+are unchanged and new stages stay test-only. All1286 focused native/fear/family/
+miner tests pass. This checkpoint remains local.
+
 ### BuffDBUtil inline identity and cloned database entries
 
 The218-method bundle adds both complete BuffDBUtil.TryGetBuff overloads. All216

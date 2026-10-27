@@ -2101,6 +2101,30 @@ result['modeSwitch']['buffNotification']['newBuff']['predicateNodes'] = {
     'nativeAttributeQueryEffectsVerified': False, 'livePredicateNodeDispatchVerified': False,
 }
 context_stack_canonical = []
+merge_row = c['unique'](lambda r: r['index'] == 28620, blackboard_type['methods'])
+merge_record = c['method'](blackboard_type, merge_row)
+assert merge_record['entryRva'] == 0x2166d70 and not any(m['index'] == 28620 for m in methods)
+methods.append(merge_record)
+merge_list_loads = []
+for rva, index, name in [(0x2166e41, 117458, '.ctor'), (0x2166e6c, 117527, 'get_Item'), (0x2166ea1, 117527, 'get_Item'),
+    (0x2166eec, 117529, 'set_Item'), (0x2166f26, 117461, 'Add')]:
+    pos = v['offset'](v['image_base'] + rva)
+    assert v['b'][pos:pos + 3] in [bytes.fromhex('488b15'), bytes.fromhex('4c8b0d'), bytes.fromhex('4c8b05')]
+    address = rva + 7 + struct.unpack_from('<i', v['b'], pos + 3)[0]
+    usage = v['quad'](v['b'], v['offset'](v['image_base'] + address))
+    assert usage >> 29 == 6 and (usage & 0x1ffffffe) >> 1 == index
+    spec = priority['specification'](index)
+    assert spec['declaringType'] == 'List`1' and spec['definition']['name'] == name and spec['instantiations']['class']['arguments'][0]['typeIndex'] == pair['index']
+    mapped_entry = v['quad'](v['b'], priority['pointer_table'] + spec['nativeMapping']['methodPointerIndex'] * 8) - v['image_base']
+    merge_list_loads.append({'loadRva': rva, 'encodedUsage': usage, 'specification': spec, 'mappedEntryRva': mapped_entry})
+result['modeSwitch']['buffNotification']['newBuff']['blackboardMerge'] = {
+    'methodIndex': 28620, 'listLoads': merge_list_loads, 'pairFields': c['fields'](pair), 'unboxedPairOffsets': {'key': 0, 'value': 8, 'valueStr': 16}, 'pairSize': 24,
+    'sourceNullCheckRva': 0x2166e03, 'targetNullCheckRva': 0x2166e24, 'allocateCallRva': 0x2166e30, 'initializeCallRva': 0x2166e4b, 'publishRva': 0x2166e53,
+    'sourceCountReadRva': 0x2166e62, 'sourceItemCallRva': 0x2166e7e, 'sourceKeyCaptureRva': 0x2166e83, 'targetReadRva': 0x2166e90, 'targetCountReadRva': 0x2166e9c,
+    'targetItemCallRva': 0x2166eb3, 'ignoreCaseArgumentRva': 0x2166ec3, 'compareCallRva': 0x2166ec9, 'replacementTargetReadRva': 0x2166ed6,
+    'replacementPairCopyRva': 0x2166ee2, 'replacementCallRva': 0x2166f06, 'appendPairCopyRva': 0x2166f1c, 'appendCallRva': 0x2166f3e,
+    'nativeListStorageEffectsVerified': False, 'nativeCultureComparisonVerified': False, 'liveBlackboardMergeVerified': False,
+}
 buff_db_methods = []
 for index, entry in [(68624, 0x8789a0), (68623, 0x878790)]:
     t = v['types'][10272]

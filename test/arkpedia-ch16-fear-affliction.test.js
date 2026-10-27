@@ -54,6 +54,65 @@ import {fearProjectileInstantKillNode,fearProjectileEntitySuicide} from '../serv
 import {fearProjectileCreateBuffNode} from '../server/sim/content/chapter16-fear-create-buff-node.js';
 import {fearProjectileEntityAddBuff,fearProjectileEntityBuffContainer} from '../server/sim/content/chapter16-fear-entity-add-buff.js';
 import {fearProjectileBuffDatabase} from '../server/sim/content/chapter16-fear-buff-db.js';
+import {fearProjectileBlackboardMerge} from '../server/sim/content/chapter16-fear-blackboard-merge.js';
+
+function blackboardMergeFixture(){
+ const events=[],created=[],pair=(key,value=0,valueStr=null)=>({key,value,valueStr}),options={allocateList:()=>{const list=[];created.push(list);events.push('allocate');return list;},
+  initializeList:()=>events.push('initialize'),readCount:list=>list.length,readItem:(list,index)=>{if(index<0||index>=list.length)throw RangeError('item bounds');return list[index];},
+  setItem:(list,index,pair)=>{if(index<0||index>=list.length)throw RangeError('set bounds');events.push('set');list[index]=pair;},addItem:(list,pair)=>{events.push('add');list.push(pair);},
+  compareIgnoreCase:(a,b,ignore)=>{assert.equal(ignore,true);return (a?.toLowerCase()??null)===(b?.toLowerCase()??null)?0:1;}};
+ return{events,created,pair,options,api:()=>fearProjectileBlackboardMerge(options)};
+}
+test('Blackboard.MergeTo skips null source before touching the destination and initializes even for empty source',()=>{
+ const f=blackboardMergeFixture();f.api()(null,null);assert.deepEqual(f.events,[]);const to={value:null};f.api()(to,[]);assert.equal(to.value,f.created[0]);assert.deepEqual(f.events,['allocate','initialize']);
+});
+test('Blackboard.MergeTo collapses later duplicate keys even from an initially empty destination',()=>{
+ const f=blackboardMergeFixture(),source=[f.pair('ATK',1,'first'),f.pair('atk',2,'last'),f.pair(null,3),f.pair(null,4)],to={value:[]};f.api()(to,source);
+ assert.deepEqual(to.value,[f.pair('atk',2,'last'),f.pair(null,4)]);assert.notEqual(to.value[0],source[1]);assert.deepEqual(f.events,['add','set','add','set']);
+});
+test('Blackboard.MergeTo replaces only the first case-insensitive match and copies all pair fields',()=>{
+ const f=blackboardMergeFixture(),later=f.pair('atk',99),source=f.pair('AtK',1/3,'text'),to={value:[f.pair('ATK',1),later]};f.api()(to,[source]);
+ assert.deepEqual(to.value,[f.pair('AtK',Math.fround(1/3),'text'),later]);assert.equal(source.value,1/3);
+});
+test('Blackboard.MergeTo captures the source pair before comparison effects and rereads destination before replacement',()=>{
+ const f=blackboardMergeFixture(),source=f.pair('key',7,'saved'),old=[f.pair('KEY')],next=[f.pair('other')],to={value:old};
+ f.options.compareIgnoreCase=(a,b)=>{assert.equal(a,'KEY');assert.equal(b,'key');source.value=99;source.valueStr='changed';to.value=next;return 0;};f.api()(to,[source]);
+ assert.equal(old[0].key,'KEY');assert.deepEqual(next,[f.pair('key',7,'saved')]);
+});
+test('Blackboard.MergeTo appends to the captured exhausted destination rather than a replacement from count effects',()=>{
+ const f=blackboardMergeFixture(),from=[f.pair('key')],old=[],next=[],to={value:old};f.options.readCount=list=>{if(list===old)to.value=next;return list.length;};
+ f.api()(to,from);assert.deepEqual(old,[f.pair('key')]);assert.deepEqual(next,[]);
+});
+test('Blackboard.MergeTo reads the captured destination item after count effects change the destination ref',()=>{
+ const f=blackboardMergeFixture(),from=[f.pair('key')],old=[f.pair('key')],next=[f.pair('other')],to={value:old};
+ f.options.readCount=list=>{if(list===old)to.value=next;return list.length;};f.options.compareIgnoreCase=(key)=>{assert.equal(key,'key');return 0;};f.api()(to,from);assert.equal(next[0].key,'key');
+});
+test('Blackboard.MergeTo publishes a new list only after initialization and retains initialization errors',()=>{
+ const f=blackboardMergeFixture(),to={value:null},replacement=[];f.options.initializeList=()=>{assert.equal(to.value,null);to.value=replacement;};f.api()(to,[]);assert.equal(to.value,f.created[0]);
+ const g=blackboardMergeFixture(),other={value:null},error=Error('constructor');g.options.initializeList=()=>{throw error;};assert.throws(()=>g.api()(other,[]),actual=>actual===error);assert.equal(other.value,null);assert.equal(g.created.length,1);
+});
+test('Blackboard.MergeTo observes source growth and target changes between source iterations',()=>{
+ const f=blackboardMergeFixture(),from=[f.pair('a',1)],to={value:[]},add=f.options.addItem;f.options.addItem=(list,pair)=>{add(list,pair);if(from.length===1)from.push(f.pair('b',2));};
+ f.api()(to,from);assert.deepEqual(to.value,[f.pair('a',1),f.pair('b',2)]);
+});
+test('Blackboard.MergeTo retains earlier writes and does not roll back a partial merge on comparison failure',()=>{
+ const f=blackboardMergeFixture(),to={value:[]},error=Error('compare');f.options.compareIgnoreCase=()=>{throw error;};assert.throws(()=>f.api()(to,[f.pair('first'),f.pair('second')]),actual=>actual===error);assert.deepEqual(to.value,[f.pair('first')]);
+});
+test('Blackboard.MergeTo preserves null-after-comparison and replacement bounds failures',()=>{
+ const f=blackboardMergeFixture(),to={value:[f.pair('key')]};f.options.compareIgnoreCase=()=>{to.value=null;return 0;};assert.throws(()=>f.api()(to,[f.pair('key')]),/null native object/);
+ const g=blackboardMergeFixture(),other={value:[g.pair('key')]};g.options.compareIgnoreCase=()=>{other.value=[];return 0;};assert.throws(()=>g.api()(other,[g.pair('key')]),/set bounds/);
+});
+test('Blackboard.MergeTo permits nested merges with independent source and target positions',()=>{
+ const f=blackboardMergeFixture(),to={value:[f.pair('outer')]},inner={value:[]};let nested=false,merge;f.options.compareIgnoreCase=()=>{if(!nested){nested=true;merge(inner,[f.pair('inner')]);}return 0;};
+ merge=f.api();merge(to,[f.pair('outer',2)]);assert.deepEqual(to.value,[f.pair('outer',2)]);assert.deepEqual(inner.value,[f.pair('inner')]);
+});
+test('Blackboard.MergeTo supports aliased source/destination without snapshotting the whole source',()=>{
+ const f=blackboardMergeFixture(),list=[f.pair('same',1),f.pair('SAME',2)],to={value:list};f.api()(to,list);assert.deepEqual(list,[f.pair('SAME',2),f.pair('SAME',2)]);
+});
+test('BuffDB invokes concrete MergeTo after config publication and leaves database source storage unchanged',()=>{
+ const f=buffDatabaseFixture(),m=blackboardMergeFixture(),original=[m.pair('ATK',1)];f.source.blackboard=original;f.cloned.blackboard=[m.pair('ATK',1)];f.options.mergeBlackboard=m.api();
+ assert.equal(f.api().tryGetKey('key',f.out,[m.pair('atk',2),m.pair('new',3)]),true);assert.deepEqual(f.out.value.data.blackboard,[m.pair('atk',2),m.pair('new',3)]);assert.deepEqual(original,[m.pair('ATK',1)]);
+});
 
 function buffDatabaseFixture(){
  const source={templateKey:'source-template',blackboard:[{key:'original'}]},inline={loadFromDB:false,templateKey:'inline-template',buffKey:'database-key',blackboard:[]},cloned={blackboard:[{key:'clone'}]},template={},out={value:{template:{},data:{}}},events=[],
