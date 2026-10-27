@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,61);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,62);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -130,6 +130,23 @@ test('mode initialization binds general/combat/attack order and the canonical sw
  at(dedup,0x3f62e1e,'0x180004fe0');at(dedup,0x3f62e72,'0x180004b40');
  at(dedup,0x3f62e77,'esi');at(dedup,0x3f62e79,'0x183f62d00');
  assert.equal(init.equalsDispatch.metadataIdentityVerified,false);
+});
+
+test('buff ObjectPtr source separates null/UID identity from enabled or finished state and retains both constructor samples',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),pointer=c.modeSwitch.buffNotification.pointer;
+ assert.deepEqual(pointer.fields.map(f=>f.name),['obj','cachedUid']);assert.equal(pointer.concreteContextVerified,false);
+ assert.deepEqual(pointer.buffLineage.map(t=>[t.namespace,t.name]),[['Torappu.Battle','Buff'],['System','Object']]);
+ for(const spec of pointer.concreteSpecifications){assert.equal(spec.nativeMapping,null);assert.equal(spec.instantiations.class.arguments[0].name,'Buff');}
+ for(const method of pointer.canonicalMethods)for(const ch of method.chunks){
+  const raw=Buffer.from(ch.base64,'base64');assert.equal(sha(raw),ch.sha256);assert.equal(raw.length,ch.endRva-ch.beginRva);
+ }
+ const find=name=>pointer.canonicalMethods.find(m=>m.definition.name===name),at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ const ctor=find('.ctor');at(ctor,0x477cc69,'0x180005250');at(ctor,0x477cc70,'0x18477ccd2');
+ at(ctor,0x477ccbf,'0x180005250');at(ctor,0x477ccc4,'dword ptr [rdi + 8], eax');
+ at(ctor,0x477ccd4,'qword ptr [rdi], rax');at(ctor,0x477ccd7,'dword ptr [rdi + 8], eax');
+ const valid=find('get_isValid');at(valid,0x477cdd2,'0x185a445f0');at(valid,0x477cdfe,'eax, dword ptr [rbx + 8]');
+ const lock=find('Lock');at(lock,0x477cafc,'0x1800b9be0');at(lock,0x477cb05,'rax, qword ptr [rbx]');
+ assert.ok(castMethod(c,'ObjectExtensions','IsDestroyedOrNull'));
 });
 
 test('buff list mutation binds event priority insertion, reverse UID removal and loop-gated invalid cleanup',()=>{

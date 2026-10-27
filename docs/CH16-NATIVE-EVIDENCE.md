@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 61 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 62 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -922,3 +922,39 @@ This closes the explicit ordered-entry input for the selected internal list
 adapter. Actual native pointer registration, finished-buff removal/effects,
 ability data setup, complete fear/controller scheduling and stage geometry
 integration remain open. No enemy/stage support or catalogue gate is changed.
+
+### Concrete selected buff pointer identity
+
+The artifact now retains independently mapped ObjectPtr<Object> constructor,
+Lock and get_isValid bodies, with separate ObjectPtr<Buff> specifications and
+obj/cachedUid field metadata. The concrete Buff specifications have no direct
+native mapping and concrete context execution remains unverified. The ordinary
+method count becomes62 with ObjectExtensions.IsDestroyedOrNull, resolved in
+its own Torappu.Common.dll image. Buff's metadata lineage is Buff->System.Object;
+it cannot enter the helper's UnityEngine.Object destroyed-object branch.
+
+`fearProjectileBuffPointers` supplies selected ObjectPtr<Buff> capture, copy,
+validity and Lock to the sorted list and snapshot iterator. Capture rejects null
+and an initial UID0, storing a null/zero pointer. Otherwise the native constructor
+stores the object and samples UID again for cachedUid; the second getter result
+must not be replaced by the first. Both stored fields are copied by value.
+Validity requires a nonnull object and equality between its current UInt32 UID
+and cachedUid, without considering finished/enabled state or the owner's life.
+Lock returns that same object only on a valid match. A UID change invalidates
+old pointer values instead of redirecting them to a pooled replacement.
+
+Tests cover null/zero capture, maximum UInt32 UID, both constructor samples,
+copied wrapper values, malformed UIDs, UID reuse and finished/disabled/owner-
+retired objects. The constructor's second UID read can itself return0 after a
+nonzero first read; tests preserve that distinction from initial UID0 rejection.
+A composed concrete-pointer/sorted-list/iterator/mode-change test retains
+finished and disabled UID-valid objects in the list while the dispatcher filters
+them by their separate state, then removes a genuinely invalidated pointer.
+The focused native/fear/family/miner suite passes459 tests and the source
+producer reproduces with --check. Existing continuation40521019928 and
+full40514426781 remain active and are not replaced.
+
+Native UID allocation/pool recycling and actual buff state/effect callers still
+require integration. Finished-buff removal/override-group effects and complete
+fear/controller/stage scheduling remain open; no support or catalogue gate is
+relaxed by these pointer identity tests.

@@ -280,6 +280,26 @@ result['modeSwitch']['buffNotification']['listMutation']['isInLoopCall'] = {
     'nativeMapping': priority['mapping'].get(229767), 'loadRva': 0x39de984, 'encodedUsage': loop_usage,
     'entryRva': 0x4d97fd0, 'chunks': c['code'](0x4d97fd0), 'concreteContextVerified': False,
 }
+pointer_methods = []
+for index in [147632, 147636, 147639]:
+    spec = priority['specification'](index)
+    assert spec['declaringTypeIndex'] == object_ptr['index']
+    pointer = v['quad'](v['b'], priority['pointer_table'] + spec['nativeMapping']['methodPointerIndex'] * 8)
+    pointer_methods.append({**spec, 'entryRva': pointer - v['image_base'], 'chunks': c['code'](pointer - v['image_base'])})
+common_image = c['module']('Torappu.Common.dll')
+common_table = v['offset'](v['image_base'] + common_image['methodPointerTableRva'])
+null_owner, null_row = c['unique'](lambda pair: True, [(t, row)
+    for t in v['types'][common_image['typeStart']:common_image['typeStart'] + common_image['typeCount']]
+    for row in t['methods'] if v['quad'](v['b'], common_table + ((row['token'] & 0xffffff) - 1) * 8) == v['image_base'] + 0x5a445f0])
+assert null_owner['name'] == 'ObjectExtensions' and null_row['name'] == 'IsDestroyedOrNull'
+methods.append(c['method'](null_owner, null_row, 'Torappu.Common.dll'))
+buff_lineage = [{'index': t['index'], 'namespace': t['namespace'], 'name': t['name']} for t in c['lineage'](buff)]
+assert [(t['namespace'], t['name']) for t in buff_lineage] == [('Torappu.Battle', 'Buff'), ('System', 'Object')]
+result['modeSwitch']['buffNotification']['pointer'] = {
+    'fields': object_ptr['fields'], 'canonicalMethods': pointer_methods,
+    'concreteSpecifications': [priority['specification'](i) for i in [253182, 253183, 253185]],
+    'buffLineage': buff_lineage, 'concreteContextVerified': False,
+}
 serialized = json.dumps(result, ensure_ascii=False, indent=1) + '\n'
 out = ROOT / 'data/candidates/arkpedia-windows-fear-self-death-source.json'
 if __name__ == '__main__':

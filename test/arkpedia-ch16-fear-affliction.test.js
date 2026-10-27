@@ -15,6 +15,7 @@ import {fearProjectileAreaDelivery} from '../server/sim/content/chapter16-fear-a
 import {fearProjectileFlight} from '../server/sim/content/chapter16-fear-flight.js';
 import {fearProjectileBuffIteration} from '../server/sim/content/chapter16-fear-buff-iteration.js';
 import {fearProjectileBuffList} from '../server/sim/content/chapter16-fear-buff-list.js';
+import {fearProjectileBuffPointers} from '../server/sim/content/chapter16-fear-buff-pointer.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
 import {fearProjectileSpell} from '../server/sim/content/chapter16-fear-spell.js';
@@ -51,6 +52,47 @@ test('mode initialization rejects invalid entries and delegates equality without
   isValid:x=>x!==null&&!x.invalid,equals:(left,right)=>{calls.push([left,right]);return left.id===right.id;}});
  assert.deepEqual(list,[a]);assert.deepEqual(calls,[[a,duplicate]]);
  assert.throws(()=>fearProjectileCollectModeAbilities({generalAbilities:[],combat:null,attack:null,isValid:()=>1,equals:()=>true}),/Boolean/);
+});
+
+test('buff ObjectPtr capture rejects null and initial zero UID before storing an object',()=>{
+ let reads=0;const pointers=fearProjectileBuffPointers({readUid:b=>{reads++;return b.uid;}});
+ const nil=pointers.capture(null);assert.deepEqual(nil,{obj:null,cachedUid:0});assert.equal(reads,0);assert.equal(pointers.isValid(nil),false);
+ const zero=pointers.capture({uid:0});assert.deepEqual(zero,{obj:null,cachedUid:0});assert.equal(reads,1);assert.equal(pointers.lock(zero),null);
+});
+
+test('buff ObjectPtr constructor resamples UID after the nonzero test instead of caching the first read',()=>{
+ const buff={};let samples=[1,0,0,0],reads=0;
+ const pointers=fearProjectileBuffPointers({readUid:()=>{reads++;return samples.shift();}}),pointer=pointers.capture(buff);
+ assert.equal(pointer.obj,buff);assert.equal(pointer.cachedUid,0);assert.equal(reads,2);
+ assert.equal(pointers.isValid(pointer),true);assert.equal(pointers.lock(pointer),buff);assert.equal(reads,4);
+});
+
+test('finished, disabled and owner-retired buff objects retain ObjectPtr validity until instance UID changes',()=>{
+ const f=fixture(),buff={uid:7,isFinished:true,isEnabled:false,removed:true,alive:false};
+ const pointers=fearProjectileBuffPointers({readUid:b=>b.uid}),pointer=pointers.capture(buff);
+ assert.equal(pointers.isValid(pointer),true);assert.equal(pointers.lock(pointer),buff);
+ f.b.kill(f.source,null);assert.equal(pointers.lock(pointer),buff);
+ buff.uid=8;assert.equal(pointers.isValid(pointer),false);assert.equal(pointers.lock(pointer),null);
+ assert.equal(pointers.lock(pointers.capture(buff)),buff);assert.deepEqual(f.b.errors,[]);
+});
+
+test('buff ObjectPtr copies retain value fields without aliasing a later wrapper mutation',()=>{
+ const buff={uid:0xffffffff},pointers=fearProjectileBuffPointers({readUid:b=>b.uid}),original={obj:buff,cachedUid:0xffffffff},copy=pointers.copy(original);
+ original.obj=null;original.cachedUid=0;assert.equal(pointers.lock(copy),buff);assert.equal(Object.isFrozen(copy),true);
+ assert.equal(pointers.isValid({obj:null,cachedUid:7}),false);
+ for(const uid of [-1,2**32,NaN,'1'])assert.throws(()=>pointers.capture({uid}),/UInt32/);
+});
+
+test('concrete buff pointers feed sorted mutation, nested iteration and mode dispatch without using enabled state as identity',()=>{
+ const f=fixture(),pointers=fearProjectileBuffPointers({readUid:b=>b.uid}),list=fearProjectileBuffList(f.b,{owner:f.source,
+  copyEntry:pointers.copy,isEntryValid:pointers.isValid,resolveEntry:pointers.lock,readPriority:b=>b.priority,readUid:b=>b.uid});
+ const finished={id:'finished',uid:1,priority:10,isFinished:true},disabled={id:'disabled',uid:2,priority:5,isEnabled:false},ready={id:'ready',uid:3,priority:0};
+ for(const buff of [ready,finished,disabled])list.add(pointers.capture(buff));assert.equal(list.count,3);
+ const events=[],dispatch=fearProjectileBuffModeChange(f.b,{owner:f.source,openIterator:()=>list.openIterator(),
+  isFinishedOrDisabled:b=>!!b.isFinished||b.isEnabled===false,isActionValid:()=>true,
+  runActions:b=>events.push(b.id),checkFinishedBuffs:()=>{events.push('cleanup');list.clearInvalidElementsIfNotLoop();}});
+ assert.equal(dispatch.run(),true);assert.deepEqual(events,['ready','cleanup']);assert.equal(list.count,3,'disabled/finished pointers remain UID-valid');
+ finished.uid=4;list.clearInvalidElementsIfNotLoop();assert.equal(list.count,2);list.release();
 });
 
 function buffListFixture(overrides={}){
