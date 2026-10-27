@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 95 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 103 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -1367,3 +1367,33 @@ reentry and cancellation. A composed lifetime Reset verifies the concrete
 modifier runs before remaining-time copying. All645 focused native/fear/family/
 miner tests pass. Full native owner/flag effects, Reset integration and live
 controller/stage phases remain open; support/catalogue gates are unchanged.
+
+### Reset blackboard copies, prefix assignment and duration fallback
+
+The103-method artifact additionally retains the selected Blackboard copy
+constructor, Assign overloads, AssignByPrefix, AssignValueStrByPrefix, ContainsKey,
+TryGetFP and Buff.get_key. The exact format literal is {0}. The virtual Equals
+dispatch helper is retained separately; concrete Equals behavior is not inferred
+from reference identity. Copy checks precede lifecycle clearing and destination
+blackboard clearing. Duration-key selection precedes the subsequent assignments.
+
+`fearProjectileResetBuffBlackboard` composes these native operations. Nonnull
+inputs matching the destination under the supplied equality receiver are copied
+before clear. Ordinary assignment applies first input, second input, then data.
+The selected prefix branch rereads buff key and applies both prefix operations
+for each input before data assignment. Only when the destination lacks the
+captured duration key does it probe both source inputs for duration. Both out
+writes are preserved: a failed second lookup can overwrite the out value even
+when the first lookup succeeded, while the combined found flag remains true.
+No early-success shortcut or general Map merge parity is claimed.
+
+Tests cover alias copies, virtual equality, assignment order, both prefix
+operations, data-provided duration, missing duration, the failed-second-lookup
+case, repeated key reads, exceptions/retry, reentry and lifecycle cancellation.
+A composed default-pool/lifecycle/blackboard/lifetime/trigger/timer test carries
+alias-preserved duration and trigger overrides into a freshly allocated body
+without changing its UID/validity. All665 focused native/fear/family/miner tests
+pass and --check reproduces the103-method bundle. Continuation40537355768 at
+92b9df4d passed; existing full40533531161 atd74e28a3 is still active. Concrete
+blackboard operations, full Reset and live controller/stage integration remain
+open. All source/support/receipt/catalogue gates remain intact.

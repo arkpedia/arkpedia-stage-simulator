@@ -595,6 +595,33 @@ result['modeSwitch']['buffNotification']['lifetimeModifier'] = {
     'division': {'entryRva': 0x5a3d680, 'chunks': c['code'](0x5a3d680)},
     'nativeOwnerFlagEffectsVerified': False, 'liveModifierPhaseVerified': False,
 }
+blackboard_type = c['type_row']('Blackboard', 'Torappu')
+for name, rva in [('.ctor', 0x2167de0), ('Assign', 0x21653b0), ('Assign', 0x21652f0), ('ContainsKey', 0x2165b40),
+                   ('TryGetFP', 0x2167390), ('AssignByPrefix', 0x2164c20), ('AssignValueStrByPrefix', 0x2164f60)]:
+    methods.append(c['method'](blackboard_type, c['unique'](lambda r: r['name'] == name and v['pointer'](r) - v['image_base'] == rva, blackboard_type['methods'])))
+methods.append(c['method'](buff, c['unique'](lambda r: r['name'] == 'get_key', buff['methods'])))
+load_rva = 0x39b13f1
+pos = v['offset'](v['image_base'] + load_rva)
+assert v['b'][pos:pos + 3] == bytes.fromhex('488b0d')
+target = load_rva + 7 + struct.unpack_from('<i', v['b'], pos + 3)[0]
+usage = v['quad'](v['b'], v['offset'](v['image_base'] + target))
+assert usage >> 29 == 5 and usage & 1
+index = (usage & 0x1ffffffe) >> 1
+length, data_offset = struct.unpack_from('<ii', v['m'], v['uint'](v['m'], 8) + index * 8)
+start = v['uint'](v['m'], 16) + data_offset
+assert v['m'][start:start + length].decode('utf8') == '{0}.'
+result['modeSwitch']['buffNotification']['resetBlackboard'] = {
+    'prefixFormat': {'loadRva': load_rva, 'encodedUsage': usage, 'literalIndex': index, 'length': length, 'dataOffset': data_offset, 'value': '{0}.'},
+    'firstEqualsCallRva': 0x39b12bd, 'secondEqualsCallRva': 0x39b1308,
+    'firstCopyCallRva': 0x39b12e7, 'secondCopyCallRva': 0x39b1332,
+    'firstKeyCallRva': 0x39b13d0, 'secondKeyCallRva': 0x39b13ec, 'formatCallRva': 0x39b13fe,
+    'prefixAssignCalls': [0x39b1451, 0x39b1492], 'prefixValueAssignCalls': [0x39b146f, 0x39b14b0],
+    'prefixDataAssignCallRva': 0x39b14dc, 'containsDurationCallRva': 0x39b14f7,
+    'firstDurationCallRva': 0x39b153d, 'secondDurationCallRva': 0x39b1559, 'assignDurationCallRva': 0x39b1585,
+    'ordinaryAssignCalls': [0x39b15d7, 0x39b15f7, 0x39b1623],
+    'equalsDispatch': {'entryRva': 0x5860, 'chunks': c['code'](0x5860), 'concreteEqualsVerified': False},
+    'nativeBlackboardEffectsVerified': False, 'fullResetEffectsVerified': False,
+}
 pool = c['type_row']('ObjectPool`1', 'Torappu.ObjectPool')
 pool_methods = []
 for index in [147561, 147566, 147567, 147558, 147559, 147563, 147564, 147568, 147569]:

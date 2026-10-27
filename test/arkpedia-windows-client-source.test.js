@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,95);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,103);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -225,6 +225,20 @@ test('immediate recycle source enumerates stored pairs and pointer lists before 
  }
  at(q.outerMoveNext,0x4dd4158,'dword ptr [rbx + 0xc], eax');at(q.outerMoveNext,0x4dd41b6,'dword ptr [rbx + 0xc], eax');
  assert.ok(!instructions(m).some(i=>i.mnemonic==='call'&&i.operands==='0x183991a80'),'flush does not filter by current frame');
+});
+
+test('Reset blackboard source binds virtual equality copies, prefix operations and duration fallback ordering',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.resetBlackboard;
+ const m=castMethod(c,'Buff','Reset'),at=(rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ assert.equal(q.prefixFormat.value,'{0}.');at(q.firstEqualsCallRva,'0x180005860');at(q.secondEqualsCallRva,'0x180005860');
+ at(q.firstCopyCallRva,'0x182167de0');at(q.secondCopyCallRva,'0x182167de0');at(q.firstKeyCallRva,'0x1839b6cc0');at(q.secondKeyCallRva,'0x1839b6cc0');
+ at(q.formatCallRva,'0x1850d1db0');for(const rva of q.prefixAssignCalls)at(rva,'0x182164c20');
+ for(const rva of q.prefixValueAssignCalls)at(rva,'0x182164f60');at(q.prefixDataAssignCallRva,'0x1821653b0');at(q.containsDurationCallRva,'0x182165b40');
+ at(q.firstDurationCallRva,'0x182167390');at(q.secondDurationCallRva,'0x182167390');at(q.assignDurationCallRva,'0x1821652f0');
+ for(const rva of q.ordinaryAssignCalls)at(rva,'0x1821653b0');
+ assert.ok(q.secondDurationCallRva<q.assignDurationCallRva);assert.ok(q.firstCopyCallRva<0x39b1341&&q.secondCopyCallRva<0x39b1341);
+ for(const ch of q.equalsDispatch.chunks){const raw=Buffer.from(ch.base64,'base64');assert.equal(sha(raw),ch.sha256);assert.equal(raw.length,ch.endRva-ch.beginRva);}
+ assert.equal(q.equalsDispatch.concreteEqualsVerified,false);assert.equal(q.nativeBlackboardEffectsVerified,false);assert.equal(q.fullResetEffectsVerified,false);
 });
 
 test('final lifetime modifier binds Enemy mass level and LEVITATE rather than generic status resistance',()=>{

@@ -21,6 +21,7 @@ import {fearProjectileFinishAndRemoveBuff,fearProjectileOverrideGroupRemove} fro
 import {fearProjectileBuffRecycleQueue,fearProjectileClearRuntimeData} from '../server/sim/content/chapter16-fear-buff-recycle.js';
 import {fearProjectileBuffIdentity,fearProjectileResetBuffLifecycle} from '../server/sim/content/chapter16-fear-buff-identity.js';
 import {fearProjectileBuffTimer,fearProjectileResetBuffTriggers,fearProjectileBuffDurationKey,fearProjectileResetBuffLifetime,fearProjectileModifyBuffLifetime} from '../server/sim/content/chapter16-fear-buff-timing.js';
+import {fearProjectileResetBuffBlackboard} from '../server/sim/content/chapter16-fear-buff-blackboard.js';
 import {fearProjectileBuffRecyclePool,fearProjectileDefaultBuffPool} from '../server/sim/content/chapter16-fear-buff-pool.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
@@ -206,6 +207,101 @@ test('finish and native-frame queue use concrete buff recycle identity before th
  finish.run();queue.update();assert.equal(buff.instanceUid,1);assert.equal(buff.m_isValid,true);assert.equal(recycled,0);
  f.b.kill(f.source,null);frame=11;queue.update();assert.equal(recycled,1);assert.equal(buff.instanceUid,0);assert.equal(buff.m_isValid,false);assert.equal(p.lock(old),null);
  identity.allocate(buff);assert.equal(buff.instanceUid,2);assert.equal(p.lock(old),null);assert.equal(p.lock(p.capture(buff)),buff);queue.release();assert.deepEqual(f.b.errors,[]);
+});
+
+function blackboardResetFixture(overrides={}){
+ const destination=new Map([['stale',99n]]),first=new Map([['duration',3n],['a',1n]]),second=new Map([['duration',4n],['b',2n]]),events=[];
+ const data={stripBlackboardParamsWithBuffKey:false,blackboard:new Map([['data',5n]])};let active=true;
+ const callers={first,second,readBlackboard:()=>destination,equals:(a,b)=>a===b,copyBlackboard:a=>{events.push('copy');return new Map(a);},
+  resetLifecycle:()=>events.push('lifecycle'),readDurationKey:()=>null,readData:()=>data,readBuffKey:()=> 'buff',
+  clear:t=>{events.push('clear');t.clear();},assign:(t,input)=>{events.push('assign');if(input)for(const[k,v]of input)t.set(k,v);},
+  assignByPrefix:(t,input,prefix)=>events.push(['prefix',input,prefix]),assignValueStrByPrefix:(t,input,prefix)=>events.push(['value-prefix',input,prefix]),
+  containsKey:(t,key)=>t.has(key),tryGetFP:(t,key)=>({found:t.has(key),valueRaw:t.get(key)??0n}),
+  assignFP:(t,key,value)=>{events.push(['duration',key,value]);t.set(key,value);},isActive:()=>active,...overrides};
+ const reset=fearProjectileResetBuffBlackboard(callers);return{destination,first,second,data,events,reset,set active(value){active=value;}};
+}
+
+test('blackboard Reset clears stale contents and assigns first, second, then data before returning captured duration key',()=>{
+ const f=blackboardResetFixture();assert.deepEqual(f.reset.run(),{durationKey:'duration'});
+ assert.deepEqual([...f.destination],[['duration',4n],['a',1n],['b',2n],['data',5n]]);
+ assert.deepEqual(f.events,['lifecycle','clear','assign','assign','assign']);
+});
+
+test('blackboard Reset copies aliasing input before lifecycle cleanup and destination clear',()=>{
+ const destination=new Map([['kept',7n]]),events=[];
+ const f=blackboardResetFixture({first:destination,second:null,readBlackboard:()=>destination,copyBlackboard:a=>{events.push('copy');return new Map(a);},resetLifecycle:()=>events.push('lifecycle')});
+ f.reset.run();assert.deepEqual(events,['copy','lifecycle']);assert.equal(destination.get('kept'),7n);
+});
+
+test('blackboard alias protection uses the supplied native virtual equality result',()=>{
+ let copies=0;const f=blackboardResetFixture({equals:()=>true,copyBlackboard:a=>{copies++;return new Map(a);}});
+ f.reset.run();assert.equal(copies,2);
+});
+
+test('prefix Reset assigns numeric and string-value prefixes for each input before data and duration fallback',()=>{
+ const f=blackboardResetFixture();f.data.stripBlackboardParamsWithBuffKey=true;f.reset.run();
+ assert.deepEqual(f.events.slice(0,7),['lifecycle','clear',['prefix',f.first,'buff.'],['value-prefix',f.first,'buff.'],
+  ['prefix',f.second,'buff.'],['value-prefix',f.second,'buff.'],'assign']);
+ assert.deepEqual(f.events.at(-1),['duration','duration',4n]);assert.equal(f.destination.get('duration'),4n);
+});
+
+test('prefix Reset keeps a data-provided duration without probing unprefixed inputs',()=>{
+ const f=blackboardResetFixture({tryGetFP:()=>{throw Error('unexpected duration lookup');}});f.data.stripBlackboardParamsWithBuffKey=true;
+ f.data.blackboard.set('duration',9n);f.reset.run();assert.equal(f.destination.get('duration'),9n);
+});
+
+test('prefix duration fallback preserves both native out writes even when second lookup fails',()=>{
+ const f=blackboardResetFixture();f.data.stripBlackboardParamsWithBuffKey=true;f.second.delete('duration');f.reset.run();
+ assert.equal(f.destination.get('duration'),0n,'the failed second lookup overwrites the out value while the combined found result remains true');
+});
+
+test('prefix duration fallback does not assign when neither lookup succeeds',()=>{
+ const f=blackboardResetFixture();f.data.stripBlackboardParamsWithBuffKey=true;f.first.delete('duration');f.second.delete('duration');f.reset.run();
+ assert.equal(f.destination.has('duration'),false);assert.equal(f.events.some(e=>Array.isArray(e)&&e[0]==='duration'),false);
+});
+
+test('prefix key is sampled twice and the duration key is captured before merge effects',()=>{
+ let calls=0;const f=blackboardResetFixture({readBuffKey:()=>++calls===1?'first':'second',readDurationKey:()=> 'chosen'});
+ f.data.stripBlackboardParamsWithBuffKey=true;const result=f.reset.run();assert.deepEqual(result,{durationKey:'chosen'});
+ assert.equal(f.events[2][2],'second.');assert.equal(calls,2);
+});
+
+test('empty prefix key uses the ordinary assignment branch without duration rescue',()=>{
+ const f=blackboardResetFixture({readBuffKey:()=>'',tryGetFP:()=>{throw Error('unexpected fallback');}});f.data.stripBlackboardParamsWithBuffKey=true;
+ f.reset.run();assert.equal(f.destination.get('duration'),4n);assert.deepEqual(f.events,['lifecycle','clear','assign','assign','assign']);
+});
+
+test('blackboard assignment failures preserve completed mutations and allow a subsequent Reset',()=>{
+ let fail=true;const f=blackboardResetFixture({assign:(t,input)=>{if(fail)throw Error('assign failure');for(const[k,v]of input)t.set(k,v);}});
+ assert.throws(()=>f.reset.run(),/assign failure/);assert.equal(f.destination.size,0);fail=false;f.reset.run();assert.equal(f.destination.get('duration'),4n);
+});
+
+for(const point of ['readBlackboard','equals','resetLifecycle','readDurationKey','readData','clear','assign'])test('blackboard Reset stops when life invalidates during '+point,()=>{
+ let f;f=blackboardResetFixture({[point]:()=>{f.active=false;return undefined;}});assert.equal(f.reset.run(),null);assert.equal(f.reset.run(),null);
+});
+
+test('blackboard Reset rejects recursive processing during a native assignment',()=>{
+ let f;f=blackboardResetFixture({assign:()=>assert.equal(f.reset.run(),null)});assert.deepEqual(f.reset.run(),{durationKey:'duration'});
+});
+
+test('pooled Reset composition carries alias-safe blackboard duration and trigger values through lifecycle initialization',()=>{
+ const one=1n<<32n,identity=fearProjectileBuffIdentity({counter:{value:0}});
+ const pool=fearProjectileDefaultBuffPool({createBuff:()=>({...resetBuffBody(),m_lifeTime:99n,m_remainingTime:98n,m_existingTime:97n,m_triggerCnt:99,
+  m_triggerTimer:{m_periodTime:99n,m_remainingTime:98n}}),onAllocate:identity.allocate,onRecycle:identity.recycle});
+ const buff=pool.allocate(),destination=new Map([['duration',10n*one],['interval',one/2n],['trig_cnt',2]]);
+ const bb=blackboardResetFixture({first:destination,second:null,readBlackboard:()=>destination,resetLifecycle:()=>fearProjectileResetBuffLifecycle(buff)});
+ const {durationKey}=bb.reset.run();assert.equal(buff.m_isFinished,false);assert.equal(buff.instanceUid,1);
+ const data={lifeTime:3,lifeTimeType:1,triggerLifeType:1,triggerCnt:3,triggerInterval:2,waitFirstTriggerInterval:true,firstTriggerInterval:0};
+ const modifier=fearProjectileModifyBuffLifetime({buff,readOwner:()=>null,isDestroyedOrNull:e=>e==null,asEnemy:e=>e,hasLevitate:()=>false,readMassLevel:()=>0,isActive:()=>true});
+ const lifetime=fearProjectileResetBuffLifetime({buff,durationKey,tryGetDuration:key=>({found:destination.has(key),valueRaw:destination.get(key)??0n}),
+  readData:()=>data,floatToRaw:n=>BigInt(n)*one,modifyLifeTimeFinally:modifier.run,isActive:()=>true});
+ lifetime.run();
+ fearProjectileResetBuffTriggers({buff,readData:()=>data,floatToRaw:n=>BigInt(n)*one,timer:fearProjectileBuffTimer(buff.m_triggerTimer),
+  getFpOrDefault:(key,fallback)=>destination.get(key)??fallback,getIntOrDefault:(key,fallback)=>destination.get(key)??fallback,
+  setTriggerable:value=>{buff.triggerable=value;},isActive:()=>true}).run();
+ assert.equal(buff.m_lifeTime,10n*one);assert.equal(buff.m_remainingTime,10n*one);assert.equal(buff.m_existingTime,0n);
+ assert.equal(buff.m_triggerCnt,2);assert.equal(buff.triggerable,true);assert.equal(buff.m_triggerTimer.m_periodTime,one/2n);
+ assert.equal(buff.m_triggerTimer.m_remainingTime,one/2n);assert.equal(buff.instanceUid,1);assert.equal(buff.m_isValid,true);
 });
 
 function lifetimeModifierFixture(overrides={}){
