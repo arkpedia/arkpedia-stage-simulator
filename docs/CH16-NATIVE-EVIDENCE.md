@@ -1402,6 +1402,57 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
 
+### Base Born and projectile action-context dispatch
+
+`extract-windows-fear-projectile-action-born.py --check` binds BObject.Born,
+the concrete SimpleProjectile OnBorn slot, ActionController.OnProjectileBorn,
+its full _RunActions body and the remaining ability/projectile/main-target
+ChangeGuard setters. Two individually reviewed complete leaves retain the exact
+three-byte ret0 default OnBorn and fifteen-byte action-birth tail wrapper.
+The shared native function reader is unchanged. _RunActions matches the older
+projectile evidence; fields/signatures bind its action array, blackboard,
+projectile and event callback array.
+
+`fearProjectileBaseBorn` calls virtual OnBorn before setting borned=true. Its
+default callback models the retained empty leaf. Failed callbacks leave the
+flag unchanged. `fearProjectileActionBirth` forwards event5 and a null target
+to the action runner and ignores its void result.
+
+`fearProjectileControllerRunActions` obtains context from the current projectile,
+begins a guard and sets projectile/source/target/main-target/ability through
+separately sampled getters. A Unity-null target uses the current trace target;
+the main target is read independently. It checks the selected action-array
+index, captures blackboard before indexed retrieval and runs ActionUtil with
+source type4. Guard cleanup precedes the separately fetched projectile event
+callback. Errors in the guarded region trigger disposal and skip callback
+dispatch; cleanup errors retain their own failure. Native exception-unwind
+metadata/runtime behavior remains explicitly uncertified despite the retained
+normal/exception cleanup blocks and tested projection.
+
+`fearProjectileActionContextSetters` adds the pointer-stack projectile setter
+and reference-stack ability/main-target setters. Each pops first, rereads the
+guard context/stack and then pushes, preserving partial failures. Tests compose
+them with the existing managed stacks, snapshots, guard disposal and ActionUtil.
+They cover restored callbacks, target/main-target separation, projectile
+replacement, blackboard capture, null actions, exceptions, bounds, cleanup
+failure and nested runs. Base Born and the event5 wrapper have dedicated tests.
+
+The full wait/controller/Init/trace/birth/flight composition now shares one
+ten-stack context across spell start and projectile actions. It runs the native
+event5 action wrapper and runner, restores the original context, then checks
+borned and projectile tracking before ability event5 and source death. Separate
+projectile/ability event5 meanings are retained. All1506 focused native/fear/
+family/miner tests, evidence reproduction and the three Fear/miner contracts pass.
+
+ActionController.Init/RegisterActions/preprocessing, concrete behavior birth,
+outer adjustable settings, pool allocation/reuse, native EH/stack/action/
+delegate runtime effects, initial FSM, no-target fallback, base target actions,
+local-miner attachment and stage/frame parity remain open. No controller/stage
+admission, source/support/receipt/catalogue gate or registry changed. This
+checkpoint remains local. The explicitly approved batch ending14d116d2 is now
+the remote branch head: continuation40601773125 passed, and full Linux/Windows
+40601788817 was confirmed in progress. No newer checkpoint was uploaded.
+
 ### Trace target and projectile birth callbacks
 
 `extract-windows-fear-projectile-born.py --check` retains complete SetTraceTarget

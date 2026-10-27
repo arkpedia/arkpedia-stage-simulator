@@ -67,6 +67,80 @@ import {fearProjectileControllerCreation,fearProjectileFactoryCreation,fearProje
 import {fearProjectileInit} from '../server/sim/content/chapter16-fear-projectile-init.js';
 import {fearProjectileInlineInit} from '../server/sim/content/chapter16-fear-projectile-inline.js';
 import {fearProjectileSetTraceTarget,fearProjectileBorn} from '../server/sim/content/chapter16-fear-projectile-born.js';
+import {fearProjectileBaseBorn,fearProjectileDefaultOnBorn,fearProjectileActionBirth,fearProjectileActionContextSetters,fearProjectileControllerRunActions} from '../server/sim/content/chapter16-fear-projectile-action-born.js';
+
+function projectileActionBornFixture(){
+ const managed=managedActionContextFixture(),{g,guards,snapshots}=managed,events=[],ability={uid:501},projectile={uid:500,source:managed.f.source,traceTarget:managed.f.owner,ability,context:g.context,m_eventCallbacks:Array(7).fill(null)},
+  controller={projectile,actions:Array(7).fill(null),blackboard:{}},refs=fearProjectileManagedReferenceStacks({resizeArray:()=>{throw Error('unexpected action reference resize');}}),
+  setters=fearProjectileActionContextSetters({popPointer:g.options.popPointer,pushPointer:g.options.pushPointer,popReference:refs.pop,pushReference:refs.push}),
+  options={readProjectile:value=>value.projectile,readContext:value=>value.context,beginGuard:guards.begin,...setters,
+   readSource:value=>value.source,setSource:guards.setSource,isNullUnity:value=>value==null||value.destroyed===true,readTraceTarget:value=>value.traceTarget,setTarget:guards.setTarget,
+   readAbility:value=>value.ability,readActions:value=>value.actions,readLength:array=>array.length,readElement:(array,index)=>{if(index<0||index>=array.length)throw RangeError('native action array');return array[index];},
+   readBlackboard:value=>value.blackboard,runActionArray:(...args)=>{events.push(['actions',...args]);return managed.actionUtil.run(...args);},
+   disposeGuard:guard=>{guards.dispose(guard);events.push('disposed');},readEventCallbacks:value=>value.m_eventCallbacks,invokeCallback:(callback,value)=>callback(value)};
+ const probe={allowedSource:4,condition:0,execute:(blackboard,source,ref)=>{events.push(['node',blackboard,source,ref.value]);return true;}};
+ controller.actions[5]=[probe];projectile.m_eventCallbacks[5]=value=>{assert.deepEqual(snapshots.takeSnapshot(),managed.prior);events.push(['callback',value]);};
+ return{managed,g,guards,snapshots,events,ability,projectile,controller,options,probe,run:()=>fearProjectileControllerRunActions(options)(controller,5,null)};
+}
+
+test('base Born invokes OnBorn before setting borned and the exact default OnBorn projection is empty',()=>{
+ const value={borned:false};assert.equal(fearProjectileDefaultOnBorn(value),undefined);assert.equal(value.borned,false);
+ fearProjectileBaseBorn({onBorn:object=>assert.equal(object.borned,false)})(value);assert.equal(value.borned,true);
+ const error=Error('virtual OnBorn');value.borned=false;assert.throws(()=>fearProjectileBaseBorn({onBorn:()=>{throw error;}})(value),actual=>actual===error);assert.equal(value.borned,false);fearProjectileBaseBorn()(value);assert.equal(value.borned,true);
+});
+
+test('action birth wrapper forwards event5 and null target while ignoring the void runner result',()=>{
+ const controller={},calls=[];assert.equal(fearProjectileActionBirth({runActions:(...args)=>{calls.push(args);return false;}})(controller),undefined);assert.deepEqual(calls,[[controller,5,null]]);
+});
+
+test('projectile action birth composes managed guard stacks and ActionUtil before restored-context callback',()=>{
+ const f=projectileActionBornFixture();f.run();const node=f.events.find(e=>Array.isArray(e)&&e[0]==='node');assert.equal(node[1],f.controller.blackboard);assert.equal(node[2],4);assert.equal(node[3].projectile,f.projectile);assert.equal(node[3].source,f.projectile.source);assert.equal(node[3].target,f.projectile.traceTarget);assert.equal(node[3].mainTarget,f.projectile.traceTarget);assert.equal(node[3].ability,f.ability);
+ assert.deepEqual(f.events.slice(-2),['disposed',['callback',f.projectile]]);assert.deepEqual(f.snapshots.takeSnapshot(),f.managed.prior);assert.ok(Object.values(f.g.context).every(stack=>stack._size===1));
+});
+
+test('action target overrides preserve a separate fresh main trace target',()=>{
+ const f=projectileActionBornFixture(),selected={uid:600},main={uid:601};f.projectile.traceTarget=main;fearProjectileControllerRunActions(f.options)(f.controller,5,selected);const snapshot=f.events.find(e=>e[0]==='node')[3];assert.equal(snapshot.target,selected);assert.equal(snapshot.mainTarget,main);
+});
+
+test('action runner rereads controller projectile for source/targets and again after guard disposal',()=>{
+ const f=projectileActionBornFixture(),next={...f.projectile,uid:601,source:{uid:602},traceTarget:{uid:603}},last={...next,uid:604,m_eventCallbacks:Array(7).fill(null)};
+ const set=f.options.setProjectile;f.options.setProjectile=(guard,value)=>{set(guard,value);f.controller.projectile=next;};const dispose=f.options.disposeGuard;f.options.disposeGuard=guard=>{dispose(guard);f.controller.projectile=last;};last.m_eventCallbacks[5]=value=>f.events.push(['last-callback',value]);f.run();
+ const snapshot=f.events.find(e=>e[0]==='node')[3];assert.equal(snapshot.projectile,f.projectile);assert.equal(snapshot.source,next.source);assert.equal(snapshot.mainTarget,next.traceTarget);assert.deepEqual(f.events.at(-1),['last-callback',last]);
+});
+
+test('action runner captures blackboard before indexed action retrieval and accepts nullable action arrays',()=>{
+ const f=projectileActionBornFixture(),original=f.controller.blackboard,read=f.options.readElement;f.options.readElement=(array,index)=>{if(array===f.controller.actions)f.controller.blackboard={};return read(array,index);};f.run();assert.equal(f.events.find(e=>e[0]==='node')[1],original);
+ const g=projectileActionBornFixture();g.controller.actions[5]=null;g.run();assert.equal(g.events.some(e=>e[0]==='node'),false);assert.deepEqual(g.events.at(-1),['callback',g.projectile]);
+});
+
+for(const phase of ['setProjectile','readSource','setTarget','setMainTarget','setAbility','runActionArray'])test('projectile action '+phase+' errors dispose the frame and skip the event callback',()=>{
+ const f=projectileActionBornFixture(),error=Error(phase);f.options[phase]=()=>{throw error;};assert.throws(f.run,actual=>actual===error);assert.deepEqual(f.snapshots.takeSnapshot(),f.managed.prior);assert.equal(f.events.at(-1),'disposed');assert.equal(f.events.some(e=>e[0]==='callback'),false);
+});
+
+test('action node failure unwinds all ten managed stacks and callback errors do not dispose twice',()=>{
+ const f=projectileActionBornFixture();f.probe.execute=()=>{throw Error('node');};assert.throws(f.run,/node/);assert.ok(Object.values(f.g.context).every(stack=>stack._size===1));
+ const g=projectileActionBornFixture();g.projectile.m_eventCallbacks[5]=()=>{throw Error('callback');};assert.throws(g.run,/callback/);assert.equal(g.events.filter(e=>e==='disposed').length,1);assert.deepEqual(g.snapshots.takeSnapshot(),g.managed.prior);
+});
+
+test('action cleanup failure replaces an action error and suppresses callback dispatch',()=>{
+ const f=projectileActionBornFixture();f.options.runActionArray=()=>{throw Error('actions');};const dispose=f.options.disposeGuard;f.options.disposeGuard=guard=>{dispose(guard);throw Error('dispose');};assert.throws(f.run,/dispose/);assert.equal(f.events.some(e=>e[0]==='callback'),false);
+});
+
+test('action array bounds fail inside the guard while callback bounds fail after its cleanup',()=>{
+ const f=projectileActionBornFixture();assert.throws(()=>fearProjectileControllerRunActions(f.options)(f.controller,-1,null),/native array bounds/);assert.equal(f.events.at(-1),'disposed');assert.deepEqual(f.snapshots.takeSnapshot(),f.managed.prior);
+ const g=projectileActionBornFixture();g.projectile.m_eventCallbacks=[];assert.throws(g.run,/native array bounds/);assert.equal(g.events.at(-1),'disposed');assert.deepEqual(g.snapshots.takeSnapshot(),g.managed.prior);
+});
+
+test('additional context setters pop before fetching the replacement context for push',()=>{
+ for(const [name,field,pointer]of [['setProjectile','m_projectile',true],['setAbility','m_ability',false],['setMainTarget','m_mainTarget',false]]){const first={},next={},value={},guard={m_context:{[field]:first}},events=[],pop=stack=>{events.push(['pop',stack]);guard.m_context={[field]:next};},push=(stack,value)=>events.push(['push',stack,value]),
+  api=fearProjectileActionContextSetters({popPointer:pointer?pop:()=>{throw Error('wrong pointer pop');},pushPointer:pointer?push:()=>{throw Error('wrong pointer push');},popReference:!pointer?pop:()=>{throw Error('wrong reference pop');},pushReference:!pointer?push:()=>{throw Error('wrong reference push');}});api[name](guard,value);assert.deepEqual(events,[['pop',first],['push',next,value]]);}
+});
+
+test('nested projectile action runs retain independent snapshots and restore the outer frame before continuing',()=>{
+ const f=projectileActionBornFixture(),inner={...f.projectile,uid:700,m_eventCallbacks:Array(7).fill(null)},other={projectile:inner,actions:Array(7).fill(null),blackboard:{}};let nested=false,run;
+ f.probe.execute=(_board,_type,ref)=>{assert.equal(ref.value.projectile,f.projectile);nested=true;run(other,5,null);assert.equal(f.snapshots.takeSnapshot().projectile,f.projectile);return true;};
+ inner.m_eventCallbacks[5]=()=>{assert.equal(f.snapshots.takeSnapshot().projectile,f.projectile);};run=fearProjectileControllerRunActions(f.options);run(f.controller,5,null);assert.equal(nested,true);assert.deepEqual(f.snapshots.takeSnapshot(),f.managed.prior);
+});
 
 function projectileBornFixture(){
  const f=projectileInlineFixture(),target=Object.assign(f.target,{kind:'entity',uid:401,mapPosition:{x:1/3,y:2/3}}),mount={kind:'mount',m_entity:f.pointers.capture(target)},tile={kind:'tile',mapPosition:{x:2,y:3}},
@@ -5677,17 +5751,20 @@ test('bounded wait, controller/factory birth and Init, event5 self-death and ind
  start.start.canSpell=(owner,ability)=>{assert.equal(owner,f.source);assert.equal(ability,start.ability);return true;};
  start.start.onEvent=(_ability,event,runAction)=>{assert.equal(event,4);assert.equal(runAction,false);events.push('event4');};
  start.start.onOwnerSpell=owner=>{assert.equal(owner,f.source);assert.equal(start.sources.getValue(start.ctx.m_source),f.source);assert.equal(start.references.peek(start.ctx.m_mainTarget),f.target);};
- const hitMount={},birth=controllerCreationFixture(),initialization=projectileInitFixture(),inner=projectileInlineFixture(),born=projectileBornFixture(),
+ const hitMount={},birth=controllerCreationFixture(),initialization=projectileInitFixture(),inner=projectileInlineFixture(),born=projectileBornFixture(),actionBirth=projectileActionBornFixture(),
   nativeProjectile=JSON.parse(read('data/candidates/arkpedia-ch16-fear-projectile-source.json').projectiles['dyn/battle/prefabs/[uc]projectiles/projectile_enemy_fearpj.prefab'].find(row=>row.pathId==='3827519080143594587').originalJson);
  start.rangedOptions.readHitMountPoint=target=>{assert.equal(target,f.target);return hitMount;};
  start.controller._factory=birth.factory;start.projectile.transform={};birth.queue.splice(0,birth.queue.length,start.projectile);f.source.effectReplacePairs=[];
- Object.assign(start.projectile,{_actionController:{},_managedBySource:Boolean(nativeProjectile._managedBySource),m_ExtraLogIds:[],
-  _mainEffect:nativeProjectile._mainEffect,_randomDelayToBorn:nativeProjectile._randomDelayToBorn,m_targetsAlreadyHit:new Map(),m_eventCallbacks:[{}],m_behaviours:[{}],m_behavioursInited:false,_bodyTransform:start.projectile.transform});
+ start.ctx=actionBirth.g.context;start.ability.context=start.ctx;start.start.pushSource=actionBirth.g.options.pushPointer;start.start.popSource=actionBirth.g.options.popPointer;
+ Object.assign(start.projectile,{_actionController:{projectile:start.projectile,actions:Array(7).fill(null),blackboard:{}},context:start.ctx,_managedBySource:Boolean(nativeProjectile._managedBySource),m_ExtraLogIds:[],
+  _mainEffect:nativeProjectile._mainEffect,_randomDelayToBorn:nativeProjectile._randomDelayToBorn,m_targetsAlreadyHit:new Map(),m_eventCallbacks:Array(7).fill(null),m_behaviours:[{}],m_behavioursInited:false,_bodyTransform:start.projectile.transform});
  Object.assign(start.mount,{mapPosition:{x:0,y:0},height:0});Object.assign(start.ability,{uid:13,damageMissFlag:false});
  Object.assign(inner.inlineOptions,{getLifeTime:()=>nativeProjectile._lifeTime,getKeepAlreadyHitTime:()=>fearProjectileFloatToRaw(nativeProjectile._keepAlreadyHitTime)});
  Object.assign(born.traceOptions,{castEntity:value=>value===f.target?value:null,castMountPoint:value=>value===hitMount?value:null,readMountOwner:()=>start.pointers.capture(f.target),readMapPosition:()=>({x:1,y:0})});
  inner.inlineOptions.setTraceTarget=fearProjectileSetTraceTarget(born.traceOptions);
  Object.assign(born.bornOptions,{readAudioSignal:()=>'',readWorldPosition:()=>({x:0,y:0,z:0}),readSource:projectile=>start.pointers.lock(projectile.m_source)});
+ Object.assign(actionBirth.options,{readSource:projectile=>start.pointers.lock(projectile.m_source),readTraceTarget:projectile=>start.pointers.lock(projectile.m_traceTarget),readAbility:projectile=>start.pointers.lock(projectile.m_ability)});
+ born.bornOptions.actionBorn=fearProjectileActionBirth({runActions:fearProjectileControllerRunActions(actionBirth.options)});born.bornOptions.baseBorn=fearProjectileBaseBorn();
  Object.assign(initialization.initOptions,{readAbilityOwner:ability=>start.pointers.lock(ability.m_owner),readMapPosition:()=>({x:0,y:0}),readSide:()=>1,readPlayerSide:()=>2,readAbilityExtraData:()=>''});
  start.createOptions.createProjectile=(controller,key,owner,mount,target,ability,fake)=>{
   assert.equal(controller,start.controller);assert.equal(key,'projectile_enemy_fearpj');assert.equal(owner,f.source);assert.equal(mount,start.mount);
@@ -5705,7 +5782,7 @@ test('bounded wait, controller/factory birth and Init, event5 self-death and ind
   fearProjectileInlineInit(inner.inlineOptions)(projectile,target,mount);
  };
  inner.inlineOptions.onBorn=projectile=>{
-  assert.equal(projectile,start.projectile);assert.equal(projectile.m_behavioursInited,true);assert.equal(projectile.m_lifeTime,10n*fpOne);assert.equal(projectile.m_keepAlreadyHitTime,-fpOne);assert.deepEqual(projectile.m_eventCallbacks,[null]);
+  assert.equal(projectile,start.projectile);assert.equal(projectile.m_behavioursInited,true);assert.equal(projectile.m_lifeTime,10n*fpOne);assert.equal(projectile.m_keepAlreadyHitTime,-fpOne);assert.equal(projectile.m_eventCallbacks.length,7);assert.ok(projectile.m_eventCallbacks.every(value=>value===null));
   assert.deepEqual(projectile.m_traceTarget,start.pointers.capture(f.target));assert.deepEqual(projectile.m_traceTargetMapPos,{hasValue:true,value:{x:1,y:0}});fearProjectileBorn(born.bornOptions)(projectile);
  };
  born.bornOptions.behaviourBorn=()=>{
@@ -5719,7 +5796,8 @@ test('bounded wait, controller/factory birth and Init, event5 self-death and ind
  start.options.castOnTarget=fearProjectileRangedTargetCast(start.rangedOptions);
  start.start.castTargets=fearProjectileTargetCasting(start.options);
  const spell=fearProjectileSpell(f.b,{owner:f.source,onSpellStart:start.runStart,isCasting:()=>casting,emitSpellEnd:()=>{
-  for(const stack of Object.values(start.ctx))assert.equal(stack._size,0);assert.deepEqual(start.ability.m_projectiles,[start.pointers.capture(start.projectile)]);assert.deepEqual(initialization.managed,[]);assert.equal(inner.scheduled.length,0);assert.deepEqual(born.events.find(e=>e[0]==='effect'),['effect',start.projectile,nativeProjectile._mainEffect]);events.push('event5');assert.equal(activation.run(),null);},
+  for(const stack of Object.values(start.ctx))assert.equal(stack._size,1);assert.deepEqual(actionBirth.snapshots.takeSnapshot(),actionBirth.managed.prior);assert.equal(start.projectile.borned,true);assert.equal(actionBirth.events.includes('disposed'),true);
+  assert.deepEqual(start.ability.m_projectiles,[start.pointers.capture(start.projectile)]);assert.deepEqual(initialization.managed,[]);assert.equal(inner.scheduled.length,0);assert.deepEqual(born.events.find(e=>e[0]==='effect'),['effect',start.projectile,nativeProjectile._mainEffect]);events.push('event5');assert.equal(activation.run(),null);},
  mayBeginPostDelay:()=>{throw Error('removed owner');},beginPostDelay:()=>{throw Error('removed owner');}});
  const wait=fearProjectileAttackWait(f.b,{owner:f.source,cachedDurationRaw:fpOne,readDeltaPlayTime:()=>1,
   isCastActive:()=>true,subscribeAttackEvent:()=>()=>{},onReady:()=>spell.run()});
