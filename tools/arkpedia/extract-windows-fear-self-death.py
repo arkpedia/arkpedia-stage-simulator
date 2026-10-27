@@ -2101,6 +2101,48 @@ result['modeSwitch']['buffNotification']['newBuff']['predicateNodes'] = {
     'nativeAttributeQueryEffectsVerified': False, 'livePredicateNodeDispatchVerified': False,
 }
 context_stack_canonical = []
+blackboard_growth_bodies = []
+for index, definition, name, entry in [(117464, 224983, 'AddWithResize', 0x451b700), (117474, 224998, 'EnsureCapacity', 0x450f350), (117528, 224970, 'set_Capacity', 0x4519de0)]:
+    spec = priority['specification'](index)
+    assert spec['declaringTypeIndex'] == 38190 and spec['definition']['index'] == definition and spec['definition']['name'] == name
+    assert spec['instantiations']['class']['arguments'][0]['typeIndex'] == pair['index']
+    assert v['quad'](v['b'], priority['pointer_table'] + spec['nativeMapping']['methodPointerIndex'] * 8) - v['image_base'] == entry
+    blackboard_growth_bodies.append({'specification': spec, 'entryRva': entry, 'chunks': c['code'](entry)})
+list_type_token = v['uint'](v['m'], v['type_start'] + 38190 * 88 + 84)
+list_module = c['module']('mscorlib.dll')
+list_module_pos = v['offset'](v['image_base'] + list_module['rva'])
+list_ranges = v['offset'](v['quad'](v['b'], list_module_pos + 72))
+list_definitions = v['offset'](v['quad'](v['b'], list_module_pos + 88))
+list_range = c['unique'](lambda r: r[0] == list_type_token, [struct.unpack_from('<Iii', v['b'], list_ranges + n * 12) for n in range(v['quad'](v['b'], list_module_pos + 64))])
+assert list_range == (0x2000612, 1292, 53)
+list_growth_context = []
+for slot, spec_index, definition, name in [(11, 90893, 224983, 'AddWithResize'), (12, 90897, 224998, 'EnsureCapacity'), (24, 90912, 224970, 'set_Capacity')]:
+    pos = list_definitions + (list_range[1] + slot) * 16
+    assert v['uint'](v['b'], pos) == 3
+    descriptor = v['offset'](v['quad'](v['b'], pos + 8))
+    assert v['sint'](v['b'], descriptor) == spec_index
+    assert struct.unpack_from('<iii', v['b'], priority['spec_start'] + spec_index * 12) == (definition, 255, -1)
+    row = c['unique'](lambda r: r['index'] == definition, v['types'][38190]['methods'])
+    assert row['name'] == name
+    list_growth_context.append({'slot': slot, 'kind': 3, 'specificationIndex': spec_index, 'definition': row, 'classInstantiationIndex': 255,
+        'entryHex': v['b'][pos:pos + 16].hex(), 'descriptorHex': v['b'][descriptor:descriptor + 12].hex()})
+list_inst_table = v['offset'](v['quad'](v['b'], v['registration'] + 24))
+list_inst = v['offset'](v['quad'](v['b'], list_inst_table + 255 * 8))
+assert v['quad'](v['b'], list_inst) == 1
+list_args = v['offset'](v['quad'](v['b'], list_inst + 8))
+list_arg = v['offset'](v['quad'](v['b'], list_args))
+assert (v['uint'](v['b'], list_arg + 8) >> 16) & 255 == 19
+result['modeSwitch']['buffNotification']['newBuff']['blackboardListGrowth'] = {
+    'bodies': blackboard_growth_bodies, 'genericContext': {'typeIndex': 38190, 'token': list_type_token, 'start': 1292, 'length': 53,
+        'genericArgumentKind': 19, 'genericParameterIndex': v['quad'](v['b'], list_arg), 'bindings': list_growth_context},
+    'resizeSizeReadRva': 0x451b71b, 'resizeNextCountRva': 0x451b729, 'ensureCallRva': 0x451b735, 'resizeItemsRereadRva': 0x451b738, 'resizeCountWriteRva': 0x451b73c,
+    'resizeArrayBoundsRva': 0x451b744, 'resizePairReadRva': 0x451b749, 'resizePairWriteRva': 0x451b760, 'resizeBarrierTailRva': 0x451b77c,
+    'ensureCapacityCompareRva': 0x450f363, 'defaultCapacityRva': 0x450f36f, 'doubleCapacityRva': 0x450f379, 'maximumCapacityRva': 0x450f37b,
+    'unsignedMaximumClampRva': 0x450f382, 'minimumClampRva': 0x450f388, 'setCapacityTailRva': 0x450f3a8, 'maximumCapacity': 0x7fefffff,
+    'capacitySizeCheckRva': 0x4519dfc, 'capacityItemsReadRva': 0x4519e10, 'capacityEqualCheckRva': 0x4519e1d, 'emptyItemsWriteRva': 0x4519e7f,
+    'allocateCallRva': 0x4519ebb, 'copySizeRereadRva': 0x4519ec3, 'copyItemsRereadRva': 0x4519eca, 'copyCallRva': 0x4519ee3, 'publishRva': 0x4519ee8, 'capacityBarrierCallRva': 0x4519e87,
+    'nativeRuntimeGenericInflationVerified': False, 'nativeArrayAllocationAndCopyVerified': False, 'nativeWriteBarrierEffectsVerified': False, 'liveDataPairGrowthVerified': False,
+}
 blackboard_list_bodies = []
 for index, name, entry in [(117458, '.ctor', 0x430e530), (117527, 'get_Item', 0x4519cb0), (117529, 'set_Item', 0x4520160), (117461, 'Add', 0x451b890)]:
     spec = priority['specification'](index)

@@ -56,6 +56,72 @@ import {fearProjectileEntityAddBuff,fearProjectileEntityBuffContainer} from '../
 import {fearProjectileBuffDatabase} from '../server/sim/content/chapter16-fear-buff-db.js';
 import {fearProjectileBlackboardMerge} from '../server/sim/content/chapter16-fear-blackboard-merge.js';
 import {fearProjectileDataPairLists} from '../server/sim/content/chapter16-fear-blackboard-list.js';
+import {fearProjectileDataPairListGrowth} from '../server/sim/content/chapter16-fear-blackboard-list-growth.js';
+
+function dataPairGrowthFixture(){
+ const f=dataPairListFixture(),allocations=[],elementClass={typeBits:-2146369536,flags132:0},arrayClass={rank:1,elementClass},unexpected=()=>{throw Error('unexpected DataPair array conversion');},
+  fastCopy=fearProjectileNativeArrayFastCopy({readArrayClass:()=>arrayClass,readBounds:()=>null,readLength:array=>array.length,readElementSize:()=>24,readElement:(array,index)=>array[index],objectClass:{},
+   isSubclassOf:unexpected,castObject:unexpected,unboxObject:unexpected,zeroMemory:unexpected,
+   moveMemory:(to,toOffset,from,fromOffset,bytes)=>{f.events.push(['move-pairs',toOffset,fromOffset,bytes]);assert.equal(toOffset%24n,0n);assert.equal(fromOffset%24n,0n);assert.equal(bytes%24n,0n);
+    const start=Number(fromOffset/24n),count=Number(bytes/24n),pairs=from.slice(start,start+count).map(pair=>({key:pair.key,value:Math.fround(pair.value),valueStr:pair.valueStr}));
+    for(let i=0;i<count;i++)to[Number(toOffset/24n)+i]=pairs[i];},notifyWrites:(array,offset,bytes)=>f.events.push(['array-barrier',array,offset,bytes])}),
+  copy=fearProjectileManagedArrayCopy({readRank:()=>1,tryFastCopy:fastCopy,copyFallback:unexpected}),
+  options={allocateArray:count=>{f.events.push(['allocate-array',count]);const array=Array.from({length:count},()=>f.pair());allocations.push(array);return array;},
+  copyArray:(...args)=>{f.events.push(['copy-array',...args]);copy(...args);},
+  readEmptyArray:()=>f.empty,writeBarrier:f.options.writeBarrier};
+ return{...f,allocations,growthOptions:options,growth:()=>fearProjectileDataPairListGrowth(options)};
+}
+test('DataPair capacity growth defaults to four, doubles, and raises to the requested minimum',()=>{
+ for(const [length,minimum,expected]of [[0,1,4],[4,5,8],[4,13,13]]){const f=dataPairGrowthFixture(),list=f.list([],length);f.growth().ensureCapacity(list,minimum);assert.equal(list._items.length,expected);assert.equal(list._size,0);assert.equal(list._version,0);assert.equal(f.allocations.length,1);}
+});
+test('DataPair capacity arithmetic uses unsigned ceiling clamp before the signed minimum clamp',()=>{
+ for(const [length,minimum,expected]of [[0x40000000,0x40000001,0x7fefffff],[0x7fefffff,0x7fffffff,0x7fffffff]]){
+  const f=dataPairGrowthFixture(),items=[],error=Error('allocation boundary');items.length=length;const list={_items:items,_size:0,_version:0};let requested;
+  f.growthOptions.allocateArray=count=>{requested=count;throw error;};assert.throws(()=>f.growth().ensureCapacity(list,minimum),actual=>actual===error);assert.equal(requested,expected);assert.equal(list._items,items);
+ }
+});
+test('DataPair EnsureCapacity leaves sufficient capacity unchanged, including a negative minimum',()=>{
+ const f=dataPairGrowthFixture(),list=f.list([],4),items=list._items;f.growth().ensureCapacity(list,4);f.growth().ensureCapacity(list,-1);assert.equal(list._items,items);assert.deepEqual(f.events,[]);
+});
+test('DataPair set_Capacity checks size before items, preserves equal capacity and uses the shared empty array for zero',()=>{
+ const f=dataPairGrowthFixture(),list={_items:null,_size:2,_version:7};assert.throws(()=>f.growth().setCapacity(list,1),/below the native list size/);list._items=[f.pair(),f.pair()];const prior=list._items;f.growth().setCapacity(list,2);assert.equal(list._items,prior);assert.deepEqual(f.events,[]);
+ list._size=0;f.growth().setCapacity(list,0);assert.equal(list._items,f.empty);assert.equal(list._version,7);assert.deepEqual(f.events,[['barrier',list,'_items']]);
+});
+test('DataPair capacity allocation rereads source items and size before copying and publishes only after copy',()=>{
+ const f=dataPairGrowthFixture(),list=f.list([f.pair('old')]),old=list._items,replacement=[f.pair('a',1),f.pair('b',2)],allocate=f.growthOptions.allocateArray;
+ f.growthOptions.allocateArray=count=>{list._items=replacement;list._size=2;return allocate(count);};const copy=f.growthOptions.copyArray;
+ f.growthOptions.copyArray=(from,fromIndex,to,toIndex,count)=>{assert.equal(list._items,replacement);assert.equal(from,replacement);assert.equal(count,2);copy(from,fromIndex,to,toIndex,count);};
+ f.growth().setCapacity(list,4);assert.notEqual(list._items,old);assert.deepEqual(list._items.slice(0,2),replacement);assert.notEqual(list._items[0],replacement[0]);assert.equal(list._size,2);assert.equal(list._version,0);
+});
+test('DataPair capacity copy failure retains prior storage and allocation effects without publication',()=>{
+ const f=dataPairGrowthFixture(),list=f.list([f.pair('old')]),prior=list._items,error=Error('copy');f.growthOptions.copyArray=(_from,_fi,to)=>{to[0]=f.pair('partial');throw error;};
+ assert.throws(()=>f.growth().setCapacity(list,4),actual=>actual===error);assert.equal(list._items,prior);assert.equal(f.allocations[0][0].key,'partial');assert.equal(list._size,1);assert.equal(f.events.some(e=>Array.isArray(e)&&e[0]==='barrier'),false);
+});
+test('DataPair AddWithResize writes the captured next count after allocation-driven size changes',()=>{
+ const f=dataPairGrowthFixture(),list=f.list([]),allocate=f.growthOptions.allocateArray,replacement=[f.pair('first'),f.pair('second')];f.growthOptions.allocateArray=count=>{list._items=replacement;list._size=2;return allocate(count);};
+ f.growth().addWithResize(list,f.pair('new'));assert.equal(list._size,1);assert.equal(list._version,0);assert.equal(list._items[0].key,'new');assert.equal(list._items[1].key,'second');assert.equal(list._items.length,4);
+});
+test('DataPair AddWithResize captures the incoming pair after capacity work while Add captures before dispatch',()=>{
+ const direct=dataPairGrowthFixture(),directList=direct.list([]),directPair=direct.pair('old'),allocate=direct.growthOptions.allocateArray;
+ direct.growthOptions.allocateArray=count=>{directPair.key='changed';return allocate(count);};direct.growth().addWithResize(directList,directPair);assert.equal(directList._items[0].key,'changed');
+ const outer=dataPairGrowthFixture(),outerList=outer.list([]),outerPair=outer.pair('old'),outerAllocate=outer.growthOptions.allocateArray;outer.growthOptions.allocateArray=count=>{outerPair.key='changed';return outerAllocate(count);};outer.options.addWithResize=outer.growth().addWithResize;
+ outer.api().add(outerList,outerPair);assert.equal(outerList._items[0].key,'old');assert.equal(outerList._version,1);
+});
+test('DataPair growth keeps earlier version/count/storage changes at allocation, barrier and null-array failure boundaries',()=>{
+ const f=dataPairGrowthFixture(),list=f.list([]),error=Error('allocate');f.growthOptions.allocateArray=()=>{throw error;};f.options.addWithResize=f.growth().addWithResize;assert.throws(()=>f.api().add(list,f.pair()),actual=>actual===error);assert.equal(list._size,0);assert.equal(list._version,1);
+ const g=dataPairGrowthFixture(),other=g.list([]),barrierError=Error('barrier');g.growthOptions.writeBarrier=()=>{throw barrierError;};g.options.addWithResize=g.growth().addWithResize;assert.throws(()=>g.api().add(other,g.pair()),actual=>actual===barrierError);assert.equal(other._items.length,4);assert.equal(other._size,0);assert.equal(other._version,1);
+ const h=dataPairGrowthFixture(),third=h.list([]);h.growthOptions.allocateArray=()=>null;h.options.addWithResize=h.growth().addWithResize;assert.throws(()=>h.api().add(third,h.pair()),/null native object/);assert.equal(third._items,null);assert.equal(third._size,1);assert.equal(third._version,1);
+});
+test('MergeTo builds a fresh DataPair list and grows through four/eight slots while replacing duplicates',()=>{
+ const f=dataPairGrowthFixture(),growth=f.growth();f.options.addWithResize=growth.addWithResize;const storage=f.api(),source=f.list([f.pair('a',1),f.pair('b',2),f.pair('c',3),f.pair('d',4),f.pair('e',5),f.pair('A',6)]),to={value:null},
+  merge=fearProjectileBlackboardMerge({allocateList:()=>({_items:null,_size:0,_version:0}),initializeList:storage.initialize,readCount:storage.readCount,readItem:storage.getItem,setItem:storage.setItem,addItem:storage.add,
+   compareIgnoreCase:(a,b)=>a.toLowerCase()===b.toLowerCase()?0:1});
+ merge(to,source);assert.equal(to.value._size,5);assert.equal(to.value._version,6);assert.equal(to.value._items.length,8);assert.equal(storage.getItem(to.value,0).value,6);assert.deepEqual(f.allocations.map(a=>a.length),[4,8]);assert.equal(source._version,0);
+});
+test('DataPair growth composes managed Array.Copy and native FastCopy using 24-byte value elements',()=>{
+ const f=dataPairGrowthFixture(),source=f.list([f.pair('a',1/3,'text'),f.pair('b',2)]),prior=source._items;f.growth().setCapacity(source,4);
+ assert.deepEqual(f.events.filter(e=>Array.isArray(e)&&e[0]==='move-pairs'),[['move-pairs',0n,0n,48n]]);assert.equal(source._items[0].value,Math.fround(1/3));assert.equal(source._items[0].valueStr,'text');assert.notEqual(source._items[0],prior[0]);assert.equal(source._size,2);assert.equal(source._version,0);
+});
 
 function dataPairListFixture(){
  const events=[],empty=[],pair=(key=null,value=0,valueStr=null)=>({key,value,valueStr}),list=(values=[],capacity=values.length)=>({_items:Array.from({length:capacity},(_,i)=>i<values.length?{...values[i]}:pair()),_size:values.length,_version:0}),
@@ -106,10 +172,10 @@ test('Blackboard.MergeTo composes DataPair list reads, first-match writes and fa
  merge(to,from);assert.equal(to.value._size,2);assert.equal(to.value._version,3);assert.equal(from._version,0);assert.deepEqual([storage.getItem(to.value,0),storage.getItem(to.value,1)],[f.pair('atk',2),f.pair('HP',3)]);
 });
 test('BuffDB external merge composes DataPair storage without modifying the source config',()=>{
- const f=buffDatabaseFixture(),m=dataPairListFixture(),storage=m.api(),original=m.list([m.pair('ATK',1)]),clone=m.list([m.pair('ATK',1)],3),external=m.list([m.pair('atk',2),m.pair('HP',3)]);
+ const f=buffDatabaseFixture(),m=dataPairGrowthFixture();m.options.addWithResize=m.growth().addWithResize;const storage=m.api(),original=m.list([m.pair('ATK',1)]),clone=m.list([m.pair('ATK',1)],1),external=m.list([m.pair('atk',2),m.pair('HP',3)]);
  f.source.blackboard=original;f.cloned.blackboard=clone;f.options.mergeBlackboard=fearProjectileBlackboardMerge({allocateList:()=>{throw Error('unexpected allocation');},initializeList:storage.initialize,
   readCount:storage.readCount,readItem:storage.getItem,setItem:storage.setItem,addItem:storage.add,compareIgnoreCase:(a,b)=>a.toLowerCase()===b.toLowerCase()?0:1});
- assert.equal(f.api().tryGetKey('key',f.out,external),true);assert.equal(f.out.value.data.blackboard,clone);assert.equal(clone._size,2);assert.equal(clone._version,2);assert.equal(original._version,0);assert.deepEqual(storage.getItem(original,0),m.pair('ATK',1));
+ assert.equal(f.api().tryGetKey('key',f.out,external),true);assert.equal(f.out.value.data.blackboard,clone);assert.equal(clone._size,2);assert.equal(clone._version,2);assert.equal(clone._items.length,2);assert.equal(original._version,0);assert.deepEqual(storage.getItem(original,0),m.pair('ATK',1));
 });
 
 function blackboardMergeFixture(){

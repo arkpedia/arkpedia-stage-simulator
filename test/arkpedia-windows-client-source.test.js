@@ -533,6 +533,21 @@ test('context snapshot source binds distinct capture/push orders and closed refe
  assert.equal(q.nativeContextStackEffectsVerified,false);assert.equal(q.nativeNestedValueCopiesVerified,false);assert.equal(q.liveContextSnapshotsVerified,false);
 });
 
+test('DataPair list growth source binds specialized bodies, RGCTX dispatch and copy/publication order',()=>{
+ const q=read('data/candidates/arkpedia-windows-fear-self-death-source.json').modeSwitch.buffNotification.newBuff.blackboardListGrowth;
+ assert.deepEqual(q.bodies.map(b=>[b.specification.index,b.specification.definition.name,b.entryRva]),[[117464,'AddWithResize',0x451b700],[117474,'EnsureCapacity',0x450f350],[117528,'set_Capacity',0x4519de0]]);
+ for(const body of q.bodies){assert.equal(body.specification.declaringTypeIndex,38190);assert.equal(body.specification.instantiations.class.arguments[0].typeIndex,3917);for(const chunk of body.chunks){const raw=Buffer.from(chunk.base64,'base64');assert.equal(sha(raw),chunk.sha256);assert.equal(raw.length,chunk.endRva-chunk.beginRva);}}
+ assert.equal(q.maximumCapacity,0x7fefffff);assert.equal(q.genericContext.token,0x2000612);assert.equal(q.genericContext.start,1292);assert.equal(q.genericContext.length,53);assert.equal(q.genericContext.genericArgumentKind,19);
+ assert.deepEqual(q.genericContext.bindings.map(b=>[b.slot,b.specificationIndex,b.definition.index,b.definition.name,b.classInstantiationIndex]),[[11,90893,224983,'AddWithResize',255],[12,90897,224998,'EnsureCapacity',255],[24,90912,224970,'set_Capacity',255]]);
+ for(const b of q.genericContext.bindings){assert.equal(b.kind,3);assert.equal(Buffer.from(b.entryHex,'hex').length,16);assert.equal(Buffer.from(b.descriptorHex,'hex').readInt32LE(0),b.specificationIndex);}
+ const at=(name,rva,args)=>assert.ok(instructions(q.bodies.find(b=>b.specification.definition.name===name)).some(i=>i.rva===rva&&i.operands===args),'DataPair growth instruction '+rva.toString(16));
+ for(const [key,args]of [['resizeSizeReadRva','rsi, dword ptr [rcx + 0x18]'],['resizeNextCountRva','ebx, [rsi + 1]'],['ensureCallRva','qword ptr [rax + 8]'],['resizeItemsRereadRva','rcx, qword ptr [rdi + 0x10]'],['resizeCountWriteRva','dword ptr [rdi + 0x18], ebx'],['resizeArrayBoundsRva','esi, dword ptr [rcx + 0x18]'],['resizePairReadRva','xmm0, xmmword ptr [rbp]'],['resizePairWriteRva','xmmword ptr [rcx], xmm0'],['resizeBarrierTailRva','0x18040ff90']])at('AddWithResize',q[key],args);
+ for(const [key,args]of [['ensureCapacityCompareRva','dword ptr [rax + 0x18], edx'],['defaultCapacityRva','edx, 4'],['doubleCapacityRva','edx, edx'],['maximumCapacityRva','eax, 0x7fefffff'],['unsignedMaximumClampRva','edx, eax'],['minimumClampRva','edx, r9d'],['setCapacityTailRva','qword ptr [rax + 8]']])at('EnsureCapacity',q[key],args);
+ for(const [key,args]of [['capacitySizeCheckRva','edx, dword ptr [rcx + 0x18]'],['capacityItemsReadRva','rax, qword ptr [rsi + 0x10]'],['capacityEqualCheckRva','edi, dword ptr [rax + 0x18]'],['emptyItemsWriteRva','qword ptr [rsi + 0x10], rdx'],['allocateCallRva','0x180410010'],['copySizeRereadRva','eax, dword ptr [rsi + 0x18]'],['copyItemsRereadRva','rcx, qword ptr [rsi + 0x10]'],['copyCallRva','0x1851ce8a0'],['publishRva','qword ptr [rsi + 0x10], rdi'],['capacityBarrierCallRva','0x18040ff90']])at('set_Capacity',q[key],args);
+ assert.ok(q.allocateCallRva<q.copySizeRereadRva&&q.copySizeRereadRva<q.copyCallRva&&q.copyCallRva<q.publishRva);assert.ok(q.ensureCallRva<q.resizeItemsRereadRva&&q.resizeCountWriteRva<q.resizeArrayBoundsRva&&q.resizeArrayBoundsRva<q.resizePairReadRva);
+ for(const name of ['nativeRuntimeGenericInflationVerified','nativeArrayAllocationAndCopyVerified','nativeWriteBarrierEffectsVerified','liveDataPairGrowthVerified'])assert.equal(q[name],false);
+});
+
 test('DataPair list storage source binds complete specialized bodies and distinct version/write order',()=>{
  const q=read('data/candidates/arkpedia-windows-fear-self-death-source.json').modeSwitch.buffNotification.newBuff.blackboardListStorage;
  assert.deepEqual(q.selectedLayout,{_items:16,_size:24,_version:28});assert.deepEqual(q.bodies.map(b=>[b.specification.index,b.specification.definition.name,b.entryRva]),[[117458,'.ctor',0x430e530],[117527,'get_Item',0x4519cb0],[117529,'set_Item',0x4520160],[117461,'Add',0x451b890]]);

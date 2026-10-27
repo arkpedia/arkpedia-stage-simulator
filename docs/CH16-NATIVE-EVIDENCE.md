@@ -1402,6 +1402,42 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
 
+### List<DataPair> capacity growth and publication order
+
+All219 ordinary method records and all prior evidence remain unchanged. A new
+growth binding retains complete mapped AddWithResize, EnsureCapacity and
+set_Capacity bodies for DataPair. The mscorlib List generic-context range binds
+slots11/12/24 to the corresponding method definitions through an uninflated
+VAR argument, separately from the concrete DataPair specializations. No runtime
+generic inflation proof is inferred from the static metadata.
+
+`fearProjectileDataPairListGrowth` selects four slots for an empty list, otherwise
+doubles capacity with Int32 arithmetic, clamps using the native unsigned ceiling
+comparison, then raises to the signed requested minimum. set_Capacity checks
+the current size before loading items and preserves equal-capacity storage.
+Positive capacity allocates first, rereads size/items for Array.Copy, then
+publishes the replacement and invokes the barrier. Zero capacity uses the shared
+empty-array receiver. Size and version are not otherwise modified by this phase.
+
+AddWithResize captures its old size and incremented count before ensuring
+capacity, rereads items, writes that captured next count, checks array bounds,
+then copies/stores the pair and invokes the barrier. It does not increment
+version; outer Add already did so. Direct AddWithResize captures its incoming
+pair after capacity work, while outer Add's dispatch supplied a prior value copy.
+Tests retain the different failure boundaries rather than rolling back counts,
+versions, published arrays or partially copied allocation buffers.
+
+MergeTo now constructs an empty typed list and grows it through four/eight
+slots while preserving duplicate replacement and version changes. BuffDB's
+external merge composition also exercises the growth chain. Array copying is
+composed through the retained managed Array.Copy and native FastCopy adapters
+with a24-byte DataPair memory projection. All1310 focused native/fear/family/
+miner tests and evidence reproduction pass. Native array
+allocation/copy, runtime class initialization, barriers and full controller/
+stage/frame parity remain explicit or unverified. All existing source/support/
+receipt/catalogue gates are unchanged; new stages remain test-only and this
+checkpoint stays local.
+
 ### List<DataPair> storage and native mutation ordering
 
 The219 ordinary method records and all earlier evidence remain unchanged.
