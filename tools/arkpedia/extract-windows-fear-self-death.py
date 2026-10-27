@@ -1774,6 +1774,63 @@ result['modeSwitch']['buffNotification']['newBuff']['contextSnapshots'] = {
     'pushCalls': [0x39ede51, 0x39edef6, 0x39edf9b, 0x39ee040, 0x39ee144, 0x39ee1e8, 0x39ee28c, 0x39ee330, 0x39ee3ee, 0x39ee48e],
     'nativeContextStackEffectsVerified': False, 'nativeNestedValueCopiesVerified': False, 'liveContextSnapshotsVerified': False,
 }
+context_stack_canonical = []
+for index in [24503, 24504, 24505, 24506, 24513, 24514, 24515, 24509, 24510, 24511, 24517, 24518, 24519]:
+    spec = priority['specification'](index)
+    assert spec['declaringType'] in ['ContextPtrStack`1', 'ContextValueStack`1'] and spec['nativeMapping'] is not None
+    entry = v['quad'](v['b'], priority['pointer_table'] + spec['nativeMapping']['methodPointerIndex'] * 8) - v['image_base']
+    if entry == 0x432a930:
+        pos = v['offset'](v['image_base'] + entry)
+        raw = v['b'][pos:pos + 22]
+        assert raw.hex() == '488b4220488b90c0000000488b5210488b420848ffe0'
+        assert v['b'][pos + 22:pos + 32] == bytes.fromhex('cc' * 10)
+        decoded = list(Cs(CS_ARCH_X86, CS_MODE_64).disasm(raw, v['image_base'] + entry))
+        assert [i.mnemonic for i in decoded] == ['mov', 'mov', 'mov', 'mov', 'jmp'] and sum(i.size for i in decoded) == 22
+        chunks = [{'beginRva': entry, 'endRva': entry + 22, 'unwindRva': None,
+            'boundary': 'Reviewed complete read-only RGCTX slot2 method tail-dispatch leaf; no stack changes; ten INT3 bytes follow',
+            'base64': base64.b64encode(raw).decode(), 'sha256': v['sha'](raw),
+            'instructions': [{'rva': i.address - v['image_base'], 'size': i.size, 'mnemonic': i.mnemonic, 'operands': i.op_str} for i in decoded]}]
+    else:
+        chunks = c['code'](entry)
+    context_stack_canonical.append({**spec, 'entryRva': entry, 'chunks': chunks})
+context_stack_rgctx = []
+context_stack_module = c['module']('Assembly-CSharp.dll')
+context_stack_module_pos = v['offset'](v['image_base'] + context_stack_module['rva'])
+context_stack_ranges = v['offset'](v['quad'](v['b'], context_stack_module_pos + 72))
+context_stack_range_count = v['quad'](v['b'], context_stack_module_pos + 64)
+context_stack_definitions = v['offset'](v['quad'](v['b'], context_stack_module_pos + 88))
+context_stack_definition_count = v['quad'](v['b'], context_stack_module_pos + 80)
+for type_index, expected_length, selected in [(8957, 10, [(2, 'ContextPtrStack`1', 'Peek'), (3, 'ObjectPtr', 'Wrap'),
+    (4, 'Stack`1', 'Push'), (5, 'Stack`1', 'get_Count'), (6, 'Stack`1', 'Pop'), (7, 'ObjectPtr`1', 'Lock'), (9, 'Stack`1', 'Peek')]),
+    (8958, 6, [(2, 'ContextValueStack`1', 'Peek'), (3, 'Stack`1', 'get_Count'), (4, 'Stack`1', 'Pop'), (5, 'Stack`1', 'Peek')])]:
+    token = v['uint'](v['m'], v['type_start'] + type_index * 88 + 84)
+    number, start, length, found_token = c['unique'](lambda row: row[3] == token,
+        [(n, *struct.unpack_from('<Iii', v['b'], context_stack_ranges + n * 12)[1:], v['uint'](v['b'], context_stack_ranges + n * 12)) for n in range(context_stack_range_count)])
+    assert length == expected_length and 0 <= start < start + length <= context_stack_definition_count
+    bindings = []
+    for slot, expected_owner, expected_name in selected:
+        pos = context_stack_definitions + (start + slot) * 16
+        assert v['uint'](v['b'], pos) == 3
+        data = v['offset'](v['quad'](v['b'], pos + 8))
+        spec_index = v['sint'](v['b'], data)
+        definition, class_inst, method_inst = struct.unpack_from('<iii', v['b'], priority['spec_start'] + spec_index * 12)
+        owner, row = c['unique'](lambda pair: pair[1]['index'] == definition, [(t, r) for t in v['types'] for r in t['methods']])
+        assert owner['name'] == expected_owner and row['name'] == expected_name
+        bindings.append({'slot': slot, 'kind': 3, 'specificationIndex': spec_index, 'definition': row,
+            'declaringType': owner['name'], 'declaringTypeIndex': owner['index'], 'classInstantiation': class_inst, 'methodInstantiation': method_inst,
+            'descriptorHex': v['b'][data:data + 12].hex(), 'entryHex': v['b'][pos:pos + 16].hex()})
+    context_stack_rgctx.append({'typeIndex': type_index, 'name': v['types'][type_index]['name'], 'token': token, 'rangeIndex': number, 'start': start, 'length': length, 'bindings': bindings})
+result['modeSwitch']['buffNotification']['newBuff']['contextStackOperations'] = {
+    'canonicalMethods': context_stack_canonical, 'genericContextBindings': context_stack_rgctx,
+    'pointerPeekCountCallRva': 0x4be7df8, 'pointerPeekCountBranchRva': 0x4be7dfc, 'pointerPeekStoredCallRva': 0x4be7e26,
+    'pointerPeekCopyRva': 0x4be7e2f, 'pointerPeekLockCallRva': 0x4be7e44,
+    'pointerPopCountCallRva': 0x4be7e88, 'pointerPopCountBranchRva': 0x4be7e8c, 'pointerPopStoredCallRva': 0x4be7eb6,
+    'pointerPopCopyRva': 0x4be7ebf, 'pointerPopLockCallRva': 0x4be7ed4,
+    'pointerWrapCallRva': 0x4be7f18, 'pointerPushReceiverTestRva': 0x4be7f1a, 'pointerPushCopyRva': 0x4be7f2b, 'pointerPushStoredCallRva': 0x4be7f41,
+    'referencePeekCountBranchRva': 0x4be815c, 'referencePopCountBranchRva': 0x4be81cc,
+    'modifierPeekCountBranchRva': 0x4be805e, 'modifierPopCountBranchRva': 0x4be824e,
+    'nativeConcreteGenericContextVerified': False, 'nativeUnderlyingStackStorageVerified': False, 'nativeValueDefaultsAndCopiesVerified': False, 'liveContextStackOperationsVerified': False,
+}
 for index in [147561, 147566, 147567, 147558, 147559, 147563, 147564, 147568, 147569]:
     spec = priority['specification'](index)
     assert spec['declaringTypeIndex'] == pool['index']

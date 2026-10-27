@@ -43,6 +43,7 @@ import {fearProjectileBuffAttributeProvider} from '../server/sim/content/chapter
 import {fearProjectileRunBuffActions} from '../server/sim/content/chapter16-fear-buff-run-actions.js';
 import {fearProjectileContextGuards} from '../server/sim/content/chapter16-fear-context-guard.js';
 import {fearProjectileContextSnapshots} from '../server/sim/content/chapter16-fear-context-snapshot.js';
+import {fearProjectileContextPointerStacks,fearProjectileContextValueStacks} from '../server/sim/content/chapter16-fear-context-stacks.js';
 import {fearProjectileBuffRecyclePool,fearProjectileDefaultBuffPool} from '../server/sim/content/chapter16-fear-buff-pool.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
@@ -55,6 +56,79 @@ import { chapter16Shadow } from '../server/sim/content/chapter16-shadow.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
 const parentKey='feawpj_a[mcreep_fear]';
 const fpOne=1n<<32n;
+
+function contextPointerStackFixture(){
+ const storage=[],events=[],source={uid:7,destroyed:false},pointers=fearProjectileContextPointers({readUid:value=>value.uid,isDestroyedOrNull:value=>value==null||value.destroyed===true,isActive:()=>true});
+ const options={readCount:stack=>{events.push('count');return stack.length;},peekStored:stack=>{events.push('peek');return stack.at(-1);},popStored:stack=>{events.push('pop');return stack.pop();},
+  pushStored:(stack,value)=>{events.push('push');stack.push(value);},wrapPointer:value=>{events.push('wrap');return pointers.capture(value);},
+  copyPointer:value=>{events.push('copy');return pointers.copy(value);},lockPointer:value=>{events.push('lock');return pointers.lock(value);}};
+ return{storage,events,source,pointers,options,adapter:()=>fearProjectileContextPointerStacks(options)};
+}
+test('pointer context stack wraps and copies pointers on push, then locks copied values on peek/pop',()=>{
+ const f=contextPointerStackFixture(),adapter=f.adapter();adapter.push(f.storage,f.source);assert.deepEqual(f.events,['wrap','copy','push']);f.events.length=0;
+ assert.equal(adapter.getValue(f.storage),f.source);assert.equal(f.storage.length,1);assert.deepEqual(f.events,['count','peek','copy','lock']);f.events.length=0;
+ assert.equal(adapter.pop(f.storage),f.source);assert.equal(f.storage.length,0);assert.deepEqual(f.events,['count','pop','copy','lock']);
+});
+test('empty pointer stack returns null without calling storage Peek/Pop or pointer lock',()=>{
+ const f=contextPointerStackFixture(),adapter=f.adapter();assert.equal(adapter.peek(f.storage),null);assert.equal(adapter.pop(f.storage),null);assert.deepEqual(f.events,['count','count']);
+ f.options.readCount=()=>-1;assert.equal(f.adapter().pop(f.storage),null);
+});
+test('pointer stack rejects stale/recycled or destroyed identities without manufacturing a replacement reference',()=>{
+ const f=contextPointerStackFixture(),adapter=f.adapter();adapter.push(f.storage,f.source);f.source.uid=8;
+ assert.equal(adapter.peek(f.storage),null);assert.equal(f.storage.length,1);assert.equal(adapter.pop(f.storage),null);assert.equal(f.storage.length,0);
+ f.source.uid=7;adapter.push(f.storage,f.source);f.source.destroyed=true;assert.equal(adapter.getValue(f.storage),null);assert.equal(adapter.pop(f.storage),null);
+});
+test('pointer Push wraps before null receiver failure and copies the pointer after checking the receiver',()=>{
+ const f=contextPointerStackFixture();assert.throws(()=>f.adapter().push(null,f.source),/null native receiver/);assert.deepEqual(f.events,['wrap']);
+ f.events.length=0;assert.throws(()=>f.adapter().peek(null),/null native receiver/);assert.deepEqual(f.events,[]);
+});
+test('pointer stack copies stored pointer fields before lock callbacks can mutate their temporary values',()=>{
+ const f=contextPointerStackFixture(),pointer={obj:f.source,cachedUid:7};f.storage.push(pointer);
+ f.options.lockPointer=value=>{assert.notEqual(value,pointer);pointer.cachedUid=99;return f.pointers.lock(value);};
+ assert.equal(f.adapter().peek(f.storage),f.source);assert.equal(pointer.cachedUid,99);
+});
+test('pointer stack removes an entry before a failing lock and does not repeat a count check after storage changes',()=>{
+ const f=contextPointerStackFixture();f.storage.push(f.pointers.capture(f.source));f.options.lockPointer=()=>{throw Error('lock failed');};
+ assert.throws(()=>f.adapter().pop(f.storage),/lock failed/);assert.equal(f.storage.length,0);
+ const g=contextPointerStackFixture();g.storage.push(g.pointers.capture(g.source));g.options.readCount=stack=>{stack.pop();return 1;};
+ g.options.peekStored=()=>{throw Error('native storage underflow');};assert.throws(()=>g.adapter().peek(g.storage),/native storage underflow/);
+});
+test('value context stacks return defaults when empty and copy positive-count values after Peek/Pop',()=>{
+ const storage=[],events=[],options={readCount:stack=>stack.length,peekStored:stack=>{events.push('peek');return stack.at(-1);},popStored:stack=>{events.push('pop');return stack.pop();},
+  defaultValue:()=>({value:0n}),copyValue:value=>({...value})},adapter=fearProjectileContextValueStacks(options);
+ const a=adapter.peek(storage),b=adapter.pop(storage);assert.deepEqual(a,{value:0n});assert.deepEqual(b,a);assert.notEqual(a,b);assert.deepEqual(events,[]);
+ const old={value:3n};storage.push(old);assert.notEqual(adapter.getValue(storage),old);assert.equal(storage.length,1);assert.deepEqual(adapter.pop(storage),old);assert.equal(storage.length,0);
+});
+test('reference-valued context stacks retain raw references without pointer UID or Unity validation',()=>{
+ const value={uid:0,destroyed:true},storage=[value],adapter=fearProjectileContextValueStacks({readCount:stack=>stack.length,peekStored:stack=>stack.at(-1),
+  popStored:stack=>stack.pop(),defaultValue:()=>null,copyValue:value=>value});
+ assert.equal(adapter.getValue(storage),value);assert.equal(adapter.pop(storage),value);assert.equal(adapter.pop(storage),null);
+});
+test('value context stack preserves Pop removal before a copy failure and checks null storage before constructing defaults',()=>{
+ const storage=[{}],options={readCount:stack=>stack.length,peekStored:stack=>stack.at(-1),popStored:stack=>stack.pop(),defaultValue:()=>{throw Error('unexpected default');},copyValue:()=>{throw Error('copy failed');}},adapter=fearProjectileContextValueStacks(options);
+ assert.throws(()=>adapter.pop(storage),/copy failed/);assert.equal(storage.length,0);assert.throws(()=>adapter.pop(null),/null native receiver/);
+});
+test('context snapshot/guard composition uses concrete pointer locks and value-stack empty defaults',()=>{
+ const f=actionDispatchFixture(),g=contextGuardsFixture(),pointer=contextPointerStackFixture(),pointerStacks=pointer.adapter(),ptrFields=new Set(['m_source','m_target','m_buff','m_projectile','m_tile','m_mainBuff']);
+ for(const [index,field]of g.fields.entries()){
+  const value=g.context[field][0];value.uid=index+1;if(ptrFields.has(field))g.context[field][0]=pointer.pointers.capture(value);
+ }
+ g.context.m_modifier[0]={m_value:3n};g.context.m_atkInfo[0]={atk:4n};f.source.uid=30;f.owner.uid=31;f.buff.uid=32;f.owner.tile.uid=33;
+ const storage={readCount:stack=>stack.length,peekStored:stack=>stack.at(-1),popStored:stack=>stack.pop()},
+  refs=fearProjectileContextValueStacks({...storage,defaultValue:()=>null,copyValue:value=>value}),
+  modifiers=fearProjectileContextValueStacks({...storage,defaultValue:()=>({m_value:0n}),copyValue:value=>({...value})}),
+  attacks=fearProjectileContextValueStacks({...storage,defaultValue:()=>({atk:0n}),copyValue:value=>({...value})}),
+  snapshots=fearProjectileContextSnapshots({context:g.context,peekReference:stack=>ptrFields.has(stack.field)?pointerStacks.getValue(stack):refs.getValue(stack),
+   peekModifier:stack=>modifiers.getValue(stack),peekAttackInfo:stack=>attacks.getValue(stack),copyModifier:value=>({...value}),copyAttackInfo:value=>({...value}),
+   pushPointer:(stack,value)=>pointerStacks.push(stack,value),pushReferenceValue:(stack,value)=>stack.push(value),pushModifier:(stack,value)=>stack.push({...value}),pushAttackInfo:(stack,value)=>stack.push({...value})});
+ Object.assign(g.options,{duplicateAll:()=>snapshots.duplicateAll(),popPointer:stack=>pointerStacks.pop(stack),pushPointer:(stack,value)=>pointerStacks.push(stack,value),
+  popValue:stack=>stack.field==='m_modifier'?modifiers.pop(stack):stack.field==='m_atkInfo'?attacks.pop(stack):refs.pop(stack)});const guards=g.adapter();
+ Object.assign(f.options,{readContext:()=>g.context,beginChangeGuard:context=>guards.begin(context),setBuff:(guard,value)=>guards.setBuff(guard,value),setSource:(guard,value)=>guards.setSource(guard,value),
+  setTarget:(guard,value)=>guards.setTarget(guard,value),setTile:(guard,value)=>guards.setTile(guard,value),disposeGuard:guard=>guards.dispose(guard),runActionArray:()=>snapshots.takeSnapshot(),copySnapshot:value=>snapshots.copySnapshot(value)});
+ const result=f.adapter().run(24,true);assert.equal(result.source,f.source);assert.equal(result.target,f.owner);assert.equal(result.buff,f.buff);assert.equal(result.tile,f.owner.tile);assert.equal(result.modifier.m_value,3n);
+ assert.ok(g.fields.every(field=>g.context[field].length===1));guards.dispose({m_context:g.context});guards.dispose({m_context:g.context});
+ const empty=snapshots.takeSnapshot();assert.equal(empty.source,null);assert.equal(empty.ability,null);assert.deepEqual(empty.modifier,{m_value:0n});assert.deepEqual(empty.atkInfo,{atk:0n});
+});
 
 function contextSnapshotsFixture(){
  const guard=contextGuardsFixture(),context=guard.context,events=[];context.m_modifier[0]={m_value:1n,customKeys:{}};context.m_atkInfo[0]={atk:2n};

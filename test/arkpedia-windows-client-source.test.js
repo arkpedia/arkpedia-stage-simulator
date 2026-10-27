@@ -533,6 +533,27 @@ test('context snapshot source binds distinct capture/push orders and closed refe
  assert.equal(q.nativeContextStackEffectsVerified,false);assert.equal(q.nativeNestedValueCopiesVerified,false);assert.equal(q.liveContextSnapshotsVerified,false);
 });
 
+test('context stack source binds canonical pointer/value bodies and RGCTX Peek/Wrap/count/storage/lock methods',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.newBuff.contextStackOperations;
+ assert.deepEqual(q.canonicalMethods.map(m=>m.index),[24503,24504,24505,24506,24513,24514,24515,24509,24510,24511,24517,24518,24519]);
+ for(const method of q.canonicalMethods){assert.ok(method.nativeMapping);for(const chunk of method.chunks){const bytes=Buffer.from(chunk.base64,'base64');assert.equal(bytes.length,chunk.endRva-chunk.beginRva);assert.equal(sha(bytes),chunk.sha256);}}
+ const find=entry=>q.canonicalMethods.find(m=>m.entryRva===entry),at=(entry,rva,args)=>assert.ok(instructions(find(entry)).some(i=>i.rva===rva&&i.operands===args));
+ const thunk=find(0x432a930);assert.equal(thunk.chunks[0].endRva-thunk.chunks[0].beginRva,22);
+ assert.deepEqual(instructions(thunk).map(i=>[i.mnemonic,i.operands]),[['mov','rax, qword ptr [rdx + 0x20]'],['mov','rdx, qword ptr [rax + 0xc0]'],
+  ['mov','rdx, qword ptr [rdx + 0x10]'],['mov','rax, qword ptr [rdx + 8]'],['jmp','rax']]);
+ assert.deepEqual(q.genericContextBindings.map(b=>[b.typeIndex,b.length]),[[8957,10],[8958,6]]);
+ assert.deepEqual(q.genericContextBindings[0].bindings.map(b=>[b.slot,b.declaringType,b.definition.name]),[[2,'ContextPtrStack`1','Peek'],[3,'ObjectPtr','Wrap'],[4,'Stack`1','Push'],[5,'Stack`1','get_Count'],[6,'Stack`1','Pop'],[7,'ObjectPtr`1','Lock'],[9,'Stack`1','Peek']]);
+ assert.deepEqual(q.genericContextBindings[1].bindings.map(b=>[b.slot,b.declaringType,b.definition.name]),[[2,'ContextValueStack`1','Peek'],[3,'Stack`1','get_Count'],[4,'Stack`1','Pop'],[5,'Stack`1','Peek']]);
+ for(const binding of q.genericContextBindings.flatMap(b=>b.bindings)){assert.equal(binding.kind,3);assert.equal(Buffer.from(binding.descriptorHex,'hex').length,12);assert.equal(Buffer.from(binding.entryHex,'hex').length,16);}
+ at(0x4be7dd0,q.pointerPeekCountCallRva,'rax');at(0x4be7dd0,q.pointerPeekCountBranchRva,'0x184be7e0b');at(0x4be7dd0,q.pointerPeekStoredCallRva,'rax');
+ at(0x4be7dd0,q.pointerPeekCopyRva,'xmmword ptr [rsp + 0x20], xmm0');at(0x4be7dd0,q.pointerPeekLockCallRva,'0x18477cad0');
+ at(0x4be7e60,q.pointerPopCountCallRva,'rax');at(0x4be7e60,q.pointerPopCountBranchRva,'0x184be7e9b');at(0x4be7e60,q.pointerPopStoredCallRva,'rax');
+ at(0x4be7e60,q.pointerPopCopyRva,'xmmword ptr [rsp + 0x20], xmm0');at(0x4be7e60,q.pointerPopLockCallRva,'0x18477cad0');
+ at(0x4be7ef0,q.pointerWrapCallRva,'rax');at(0x4be7ef0,q.pointerPushReceiverTestRva,'rdi, rdi');at(0x4be7ef0,q.pointerPushCopyRva,'xmmword ptr [rsp + 0x20], xmm0');at(0x4be7ef0,q.pointerPushStoredCallRva,'qword ptr [rax + 8]');
+ for(const [entry,rva]of [[0x4be8130,q.referencePeekCountBranchRva],[0x4be81a0,q.referencePopCountBranchRva],[0x4be8020,q.modifierPeekCountBranchRva],[0x4be8210,q.modifierPopCountBranchRva]])assert.equal(instructions(find(entry)).find(i=>i.rva===rva).mnemonic,'jg');
+ assert.equal(q.nativeConcreteGenericContextVerified,false);assert.equal(q.nativeUnderlyingStackStorageVerified,false);assert.equal(q.nativeValueDefaultsAndCopiesVerified,false);assert.equal(q.liveContextStackOperationsVerified,false);
+});
+
 test('native admission source binds signed Int16 counters, combo fallback and Enemy raw-WALK levitation',()=>{
  const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.newBuff.admissionGates;
  const anti=castMethod(c,'BuffContainer','_CheckThroughBuffAbnormalAnti'),levitate=castMethod(c,'BuffContainer','_CheckThroughLevitateBuffCondition'),status=castMethod(c,'BuffContainer','_CheckThroughBuffStatusResistableAnti');

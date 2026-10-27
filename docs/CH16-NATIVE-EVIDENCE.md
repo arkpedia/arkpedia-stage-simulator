@@ -1402,6 +1402,42 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
 
+### Context pointer/value stack operations
+
+The202-method ordinary bundle now also retains thirteen mapped canonical
+ContextPtrStack/ContextValueStack specifications for Object, Modifier and
+AttackInfo. The reference get_value thunk is a separately reviewed22-byte
+read-only RGCTX tail dispatch with ten following INT3 bytes; the shared strict
+unwind reader is unchanged. Type-token RGCTX ranges bind slot2 to Peek for
+both classes, plus ObjectPtr.Wrap/Lock and underlying Stack count/Push/Pop/Peek
+definitions. Closed concrete generic execution and storage remain unverified.
+
+`fearProjectileContextPointerStacks` checks count before Peek/Pop, returning
+null for nonpositive counts. Positive operations copy the stored pointer and
+lock that copy; Pop removes storage before locking. Push wraps the input before
+checking a null stack receiver, then copies the pointer before storing it.
+`fearProjectileContextValueStacks` likewise checks counts but returns supplied
+typed defaults when empty and copies supplied value results when nonempty.
+Reference-valued frames keep class references directly, without pointer UID/
+Unity validation. Both getValue paths delegate to their Peek operation.
+
+Tests cover empty/default behavior, stale/recycled/destroyed pointers, wrap/
+receiver/copy ordering, failures after Pop removal, changed storage after count,
+and reference-vs-value semantics. A composed action dispatch now uses concrete
+pointer locking and value-stack controls through duplication, guard setters,
+snapshot capture and repeated disposal. The remaining array-storage and typed
+default/copy fixture receivers are explicit; they do not certify native Stack
+memory, concrete RGCTX dispatch or full Modifier value copies. All1141 focused
+native/fear/family/miner tests pass; --check reproduces the complete artifact,
+including the202 ordinary methods and these canonical generic records.
+
+Hosted full40558578137 at approved0524e2b1 passed; continuation40558189633
+passed on attempt2. Upload approval through14d116d2 remains pending and this
+newer checkpoint stays local. Underlying native stack/storage and value-copy
+effects, ActionUtil execution and full controller/stage/frame integration
+remain open. Source/support/receipt/catalogue gates remain unchanged and all
+new stages remain test-only.
+
 ### Context snapshot capture and frame duplication
 
 The202-method bundle adds complete Context.TakeSnapshot and _DuplicateAll.
