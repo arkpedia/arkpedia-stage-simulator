@@ -5,10 +5,10 @@ import {fearProjectileAfflictions} from './chapter16-fear-affliction.js';
 
 // Local lifetime mapping for the native ObjectPtr UID receipt. Engine removal
 // corresponds to retirement; precise native recycle/animation frames stay held.
-export function fearProjectileSourceReference(b,source){
- if(!source||!Number.isInteger(source.deploySeq)||!Number.isFinite(source.s.atk)||source.s.atk<0)
-  throw Error('Fear projectile source reference requires a deployed source record');
- const life=source.deploySeq,cachedAtk=source.s.atk;let retired=false,ended=false,endHandle=null;const handles=[];
+export function fearProjectileEntityReference(b,source){
+ if(!source||!Number.isInteger(source.deploySeq))
+  throw Error('Fear projectile reference requires an entity life');
+ const life=source.deploySeq;let retired=false,ended=false,endHandle=null;const handles=[];
  const retireSource=()=>{retired=true;for(const handle of handles)b.off(handle);handles.length=0;};
  const release=()=>{ended=true;retireSource();if(endHandle)b.off(endHandle);endHandle=null;};
  const resolveSource=()=>{
@@ -22,7 +22,15 @@ export function fearProjectileSourceReference(b,source){
    b.on('death',({unit})=>{if(unit===source&&source.removed)retireSource();}));
  }
  if(!ended)endHandle=b.on('battleEnd',release);
- return Object.freeze({cachedAtk,resolveSource,release,isBattleActive:()=>!ended&&!b.finished&&!b._endReq});
+ return Object.freeze({resolveEntity:resolveSource,release,isBattleActive:()=>!ended&&!b.finished&&!b._endReq});
+}
+
+export function fearProjectileSourceReference(b,source){
+ const cachedAtk=source?.s?.atk;
+ if(!Number.isFinite(cachedAtk)||cachedAtk<0)
+  throw Error('Fear projectile source reference requires a deployed source record');
+ const ref=fearProjectileEntityReference(b,source);
+ return Object.freeze({cachedAtk,resolveSource:ref.resolveEntity,release:ref.release,isBattleActive:ref.isBattleActive});
 }
 
 // The selected cast has atkScale=1 and Arts damage. Its native ApplyDamage

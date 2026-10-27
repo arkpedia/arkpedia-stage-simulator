@@ -9,11 +9,101 @@ import { makeBattle, enemyRec } from './helpers/battleHarness.js';
 import { compileStageLocalEnemy } from '../shared/arkpedia/enemy-records.js';
 import { fearProjectileAfflictions } from '../server/sim/content/chapter16-fear-affliction.js';
 import {applyFearProjectileImpact,fearProjectileDamageAction,fearProjectileSourceReference} from '../server/sim/content/chapter16-fear-impact.js';
-import {fearProjectileReached,fearProjectileMotionStep} from '../server/sim/content/chapter16-fear-movement.js';
+import {fearProjectileReached,fearProjectileMotionStep,fearProjectileMountReference,fearProjectileTraceMotion} from '../server/sim/content/chapter16-fear-movement.js';
 import { battle as minerBattle, keys as minerKeys } from './helpers/ch17Harness.js';
 import { chapter16Shadow } from '../server/sim/content/chapter16-shadow.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
 const parentKey='feawpj_a[mcreep_fear]';
+test('mount reference follows the same unretired entity life and copies supplied 3D coordinates',()=>{
+ const f=fixture();let mount={x:1,y:2,z:3},reads=0;
+ const ref=fearProjectileMountReference(f.b,f.target,()=>{reads++;return mount;});
+ const first=ref.resolvePosition();assert.deepEqual(first,mount);first.x=999;
+ f.target.hidden=true;f.target.alive=false;f.target.deployed=false;mount={x:4,y:5,z:6};
+ assert.deepEqual(ref.resolvePosition(),mount,'visibility/combat flags do not replace ObjectPtr validity');
+ f.target.deploySeq++;assert.equal(ref.resolvePosition(),null);assert.equal(reads,2);
+ ref.release();assert.equal(ref.isBattleActive(),false);
+});
+
+for(const retire of ['removed','reuse','battleEnd'])test('mount reader '+retire+' reentrancy cannot return replacement coordinates',()=>{
+ const f=fixture();const ref=fearProjectileMountReference(f.b,f.target,()=>{
+  if(retire==='removed')f.b.kill(f.target,null);
+  else if(retire==='reuse')f.target.deploySeq++;
+  else f.b.emit('battleEnd',{});
+  return undefined;
+ });
+ assert.equal(ref.resolvePosition(),null);assert.deepEqual(f.b.errors,[]);ref.release();
+});
+
+test('trace motion retains the last 3D destination after native reference retirement',()=>{
+ const f=fixture();let mount={x:5,y:0,z:0};
+ const ref=fearProjectileMountReference(f.b,f.target,()=>mount);
+ const trace=fearProjectileTraceMotion({from:{x:0,y:0,z:0},initialTarget:ref.resolvePosition(),
+  resolveTargetPosition:ref.resolvePosition,isBattleActive:ref.isBattleActive});
+ assert.deepEqual(trace.advance(.1),{x:1,y:0,z:0,reached:false});
+ mount={x:1,y:5,z:0};assert.deepEqual(trace.advance(.1),{x:1,y:1,z:0,reached:false});
+ f.b.kill(f.target,null);f.target.deploySeq++;mount={x:999,y:999,z:999};
+ assert.deepEqual(trace.advance(.1),{x:1,y:2,z:0,reached:false});
+ assert.deepEqual(trace.destination,{x:1,y:5,z:0});
+ const copy=trace.destination;copy.z=999;assert.equal(trace.destination.z,0);
+ assert.equal(trace.advance(.3).reached,true);assert.equal(trace.advance(.1),null);
+ trace.release();ref.release();
+});
+
+test('trace motion rejects recursive advancement and permanently retires on lifecycle end',()=>{
+ let active=true,trace,recursive;
+ trace=fearProjectileTraceMotion({from:{x:0,y:0,z:0},initialTarget:{x:5,y:0,z:0},
+  resolveTargetPosition:()=>{recursive=trace.advance(.2);return{x:5,y:0,z:0};},isBattleActive:()=>active});
+ assert.deepEqual(trace.advance(.1),{x:1,y:0,z:0,reached:false});assert.equal(recursive,null);
+ active=false;assert.equal(trace.advance(.1),null);active=true;assert.equal(trace.advance(.1),null);
+ assert.equal(trace.position.x,1);
+});
+
+test('trace release while resolving coordinates prevents a late movement commit',()=>{
+ let trace;trace=fearProjectileTraceMotion({from:{x:0,y:0,z:0},initialTarget:{x:5,y:0,z:0},
+  resolveTargetPosition:()=>{trace.release();return{x:999,y:0,z:0};},isBattleActive:()=>true});
+ assert.equal(trace.advance(.1),null);assert.deepEqual(trace.position,{x:0,y:0,z:0});
+});
+
+test('trace lifecycle resolver cannot recursively advance before the position read',()=>{
+ let trace,recursive,reads=0;
+ trace=fearProjectileTraceMotion({from:{x:0,y:0,z:0},initialTarget:{x:5,y:0,z:0},
+  resolveTargetPosition:()=>{reads++;return null;},isBattleActive:()=>{recursive=trace.advance(.2);return true;}});
+ assert.deepEqual(trace.advance(.1),{x:1,y:0,z:0,reached:false});assert.equal(recursive,null);assert.equal(reads,1);
+ trace.release();
+});
+
+test('battle end from a mount reader cancels shared-system movement before arrival',()=>{
+ const f=fixture();let end=false,hits=0;
+ const mount=fearProjectileMountReference(f.b,f.target,u=>{
+  if(end){f.b.emit('battleEnd',{});return undefined;}
+  return{x:u.x,y:u.y,z:.2};
+ });
+ const trace=fearProjectileTraceMotion({from:{x:f.source.x,y:f.source.y,z:.2},initialTarget:mount.resolvePosition(),
+  resolveTargetPosition:mount.resolvePosition,isBattleActive:mount.isBattleActive});
+ const initial=trace.position;
+ f.b.addProjectile({from:initial,to:trace.destination,maxAge:10,advanceMotion:({dt})=>trace.advance(dt),onHit:()=>hits++});
+ end=true;f.b.projectiles.update(.2);
+ assert.equal(hits,0);assert.deepEqual(trace.position,initial);assert.equal(f.b.projectiles.list.length,0);
+ assert.deepEqual(f.b.errors,[]);trace.release();mount.release();
+});
+
+test('shared projectile system carries reviewed trace motion and cached impact after source removal',()=>{
+ const f=fixture();f.source.base.atk=200;f.source.markDirty();
+ const sourceRef=fearProjectileSourceReference(f.b,f.source);
+ const mount=fearProjectileMountReference(f.b,f.target,u=>({x:u.x,y:u.y,z:.2}));
+ const trace=fearProjectileTraceMotion({from:{x:f.source.x,y:f.source.y,z:.2},initialTarget:mount.resolvePosition(),
+  resolveTargetPosition:mount.resolvePosition,isBattleActive:sourceRef.isBattleActive});
+ const damage=fearProjectileDamageAction(f.b,sourceRef);let hits=0;
+ f.b.addProjectile({from:trace.position,to:trace.destination,source:f.source,maxAge:10,
+  advanceMotion:({dt})=>trace.advance(dt),onHit:()=>{
+   hits++;applyFearProjectileImpact(f.b,{source:f.source,target:f.target,applyAttachments:()=>{},runActions:damage});
+   mount.release();trace.release();sourceRef.release();
+  }});
+ f.b.kill(f.source,null);const hp=f.target.hp;f.h.run(.3);
+ assert.equal(hits,1);assert.equal(hp-f.target.hp,200);assert.ok(f.target.findBuff(parentKey));
+ assert.equal(f.b.projectiles.list.length,0);f.h.run(.2);assert.equal(hits,1);assert.deepEqual(f.b.errors,[]);
+});
+
 test('selected speed-10 motion advances in three dimensions and snaps without overshoot',()=>{
  const origin={x:0,y:0,z:0};
  for(const axis of ['x','y','z']){

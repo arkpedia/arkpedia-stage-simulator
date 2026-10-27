@@ -270,6 +270,9 @@ test('movement mount coordinates bind ILocatable, muzzle enum, owner dispatch an
  assert.equal(mapping.enums._projectileDestination.fields.find(f=>f.value===0).name,'TARGET');
  assert.equal(mapping.sourceMountSlot.slot,90);assert.equal(mapping.sourceMountSlot.declaringType,'Unit');
  assert.equal(mapping.sourceMountSlot.entryRva,castMethod(c,'Unit','GetMountPoint').entryRva);
+ assert.equal(mapping.entityReferenceFields.mount.name,'m_entity');assert.equal(mapping.entityReferenceFields.mount.offset,0x18);
+ assert.deepEqual(mapping.entityReferenceFields.projectile.map(f=>f.name),['m_source','m_traceTarget']);
+ for(const field of mapping.entityReferenceFields.projectile)assert.equal(field.typeData,mapping.entityReferenceFields.mount.typeData);
  const init=instructions(castMethod(c,'BasicMovement','OnInit'));
  assert.ok(init.some(i=>i.rva===0x662e8e&&i.operands==='edx, [rcx + 1]'));
  assert.ok(init.some(i=>i.rva===0x662e98&&i.operands==='0x18000c2e0'));

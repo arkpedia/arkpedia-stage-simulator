@@ -320,3 +320,15 @@ threshold, per-component delta-then-speed multiplication and inclusive snap
 comparison. Launch sampling, live/stale mount ownership, effective-delta scaling,
 expiry and arrival callbacks remain separate integration work; this arithmetic
 port does not register an enemy or stage.
+
+`MountPoint.m_entity` has the same retained `ObjectPtr<Entity>` field type as the
+projectile source and trace target. The internal source and mount references now
+share the reviewed simulator identity mapping. An explicit mount reader is
+checked both before and after coordinate extraction; entity replacement/removal
+or battle end during that read cannot commit replacement coordinates. The trace
+carrier keeps its last 3D destination after reference invalidation, allows one
+arrival, and prevents recursive or post-end advancement. A shared projectile-
+system test joins that carrier to the affliction/damage receiver and confirms
+one cached impact after source removal. This proves the internal composition,
+not the full native launcher, actual scene transform mapping, area targeting,
+expiry/end-hit behavior or scheduler/frame parity. Stage16-9 remains unadmitted.

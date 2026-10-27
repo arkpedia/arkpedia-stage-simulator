@@ -134,6 +134,14 @@ mount_mapping = {'locatable': {**locatable, 'callerLoadRva': load, 'encodedUsage
                  'enums': {name: c['enum'](v['types'][field['typeData']]) for name, field in mount_fields.items()},
                  'sourceMountSlot': c['resolved_slot'](c['type_row']('Enemy', 'Torappu.Battle'), 90),
                  'unitToMountPointMappingVerified': False}
+mount_fields = c['fields'](c['type_row']('MountPoint', 'Torappu.Battle'))
+mount_entity = c['unique'](lambda f: f['name'] == 'm_entity', mount_fields)
+projectile_fields = c['fields'](c['type_row']('Projectile', 'Torappu.Battle'))
+references = [c['unique'](lambda f: f['name'] == name, projectile_fields)
+              for name in ['m_source', 'm_traceTarget']]
+assert mount_entity['offset'] == 0x18
+assert all(field['typeData'] == mount_entity['typeData'] for field in references)
+mount_mapping['entityReferenceFields'] = {'mount': mount_entity, 'projectile': references}
 
 # These direct movement-call helpers have complete PE ranges but no separately
 # resolved metadata identity. Bind the actual caller RVAs and bodies explicitly.
@@ -257,7 +265,7 @@ result = {
         'The exact callback delegate method usage binds the complete two-tail-jump leaf. With comeBack=false it tails to Behaviour.Stop -> Projectile.StopMe. The separate BasicMovement.OnProjectileReached fix guard sets m_reachedTarget before its repeated check; no invented second arrival is required. Delayed scheduler dispatch/frame timing and remaining movement arithmetic remain unverified before delivery integration.',
         'The completion call loads InvokeAsyncFixedSeconds<AdvancedMovement>. Its independently mapped Object canonical wrapper and coroutine bodies are retained without claiming concrete RGCTX execution. The float WaitForFixedSeconds iterator calculates a frame count, clamps it to at least one, and yields before incrementing its frame index. A configured zero delay must not be replaced with a same-stack stop callback; precise battle-coroutine scheduling and cancellation still require separate integration evidence.',
         'The arrival proximity constant is float32 0.1. The separately image-bound Torappu.Common MathUtil.CheckDistance squares all three float32 coordinate deltas, adds the y/x/z squares and inclusively compares against the squared tolerance. This is neither exact coordinate equality nor an unverified two-dimensional radius.',
-        'BasicMovement.OnInit obtains source and target mapPositionV3 through the exact ILocatable interface slot1. The selected RangedAttack mountPointType2 is MUZZLE in the Windows enum; its source call dispatches Enemy slot90 to Unit.GetMountPoint. MountPoint.get_mapPositionV3 calls MapUtil.WorldToMapPosV3 and Map.WorldToMapPositionV3. Runtime unit-to-mount-point mapping, native camera/scene transforms and historical CN field parity remain unverified; no fixed tile-center height is inferred.',
+        'BasicMovement.OnInit obtains source and target mapPositionV3 through the exact ILocatable interface slot1. The selected RangedAttack mountPointType2 is MUZZLE in the Windows enum; its source call dispatches Enemy slot90 to Unit.GetMountPoint. MountPoint.get_mapPositionV3 calls MapUtil.WorldToMapPosV3 and Map.WorldToMapPositionV3. MountPoint.m_entity at offset0x18 has exactly the same generic field type data as Projectile.m_source and m_traceTarget; its validity path uses the retained ObjectPtr UID check. Runtime unit-to-mount-point mapping, native camera/scene transforms and historical CN field parity remain unverified; no fixed tile-center height is inferred.',
         'Selected movement calls the retained complete normalization and magnitude helper bodies. The normalization body sums float32 y/x/z squares, rounds the square-root result to float32, uses a strict greater-than float32 1e-5 magnitude threshold and divides each component at float32 precision. The movement branch compares float32 speed*delta with magnitude, snaps on greater-or-equal, or applies component*delta then *speed before adding position. Helpers have bound callers and complete bytes but no separately verified metadata identity. Effective-delta scaling and mount-point tracking remain caller/integration obligations.'
     ]}
 serialized = json.dumps(result, ensure_ascii=False, indent=1) + '\n'

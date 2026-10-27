@@ -21422,7 +21422,35 @@
    "token": 100731369,
    "entryRva": 8717008
   },
-  "unitToMountPointMappingVerified": false
+  "unitToMountPointMappingVerified": false,
+  "entityReferenceFields": {
+   "mount": {
+    "index": 68652,
+    "name": "m_entity",
+    "typeIndex": 23215,
+    "offset": 24,
+    "typeData": 6573814712,
+    "typeBits": 2148859905
+   },
+   "projectile": [
+    {
+     "index": 68985,
+     "name": "m_source",
+     "typeIndex": 23216,
+     "offset": 240,
+     "typeData": 6573814712,
+     "typeBits": 2148859908
+    },
+    {
+     "index": 68988,
+     "name": "m_traceTarget",
+     "typeIndex": 23216,
+     "offset": 272,
+     "typeData": 6573814712,
+     "typeBits": 2148859908
+    }
+   ]
+  }
  },
  "arithmeticHelpers": [
   {
@@ -23194,7 +23222,7 @@
   "The exact callback delegate method usage binds the complete two-tail-jump leaf. With comeBack=false it tails to Behaviour.Stop -> Projectile.StopMe. The separate BasicMovement.OnProjectileReached fix guard sets m_reachedTarget before its repeated check; no invented second arrival is required. Delayed scheduler dispatch/frame timing and remaining movement arithmetic remain unverified before delivery integration.",
   "The completion call loads InvokeAsyncFixedSeconds<AdvancedMovement>. Its independently mapped Object canonical wrapper and coroutine bodies are retained without claiming concrete RGCTX execution. The float WaitForFixedSeconds iterator calculates a frame count, clamps it to at least one, and yields before incrementing its frame index. A configured zero delay must not be replaced with a same-stack stop callback; precise battle-coroutine scheduling and cancellation still require separate integration evidence.",
   "The arrival proximity constant is float32 0.1. The separately image-bound Torappu.Common MathUtil.CheckDistance squares all three float32 coordinate deltas, adds the y/x/z squares and inclusively compares against the squared tolerance. This is neither exact coordinate equality nor an unverified two-dimensional radius.",
-  "BasicMovement.OnInit obtains source and target mapPositionV3 through the exact ILocatable interface slot1. The selected RangedAttack mountPointType2 is MUZZLE in the Windows enum; its source call dispatches Enemy slot90 to Unit.GetMountPoint. MountPoint.get_mapPositionV3 calls MapUtil.WorldToMapPosV3 and Map.WorldToMapPositionV3. Runtime unit-to-mount-point mapping, native camera/scene transforms and historical CN field parity remain unverified; no fixed tile-center height is inferred.",
+  "BasicMovement.OnInit obtains source and target mapPositionV3 through the exact ILocatable interface slot1. The selected RangedAttack mountPointType2 is MUZZLE in the Windows enum; its source call dispatches Enemy slot90 to Unit.GetMountPoint. MountPoint.get_mapPositionV3 calls MapUtil.WorldToMapPosV3 and Map.WorldToMapPositionV3. MountPoint.m_entity at offset0x18 has exactly the same generic field type data as Projectile.m_source and m_traceTarget; its validity path uses the retained ObjectPtr UID check. Runtime unit-to-mount-point mapping, native camera/scene transforms and historical CN field parity remain unverified; no fixed tile-center height is inferred.",
   "Selected movement calls the retained complete normalization and magnitude helper bodies. The normalization body sums float32 y/x/z squares, rounds the square-root result to float32, uses a strict greater-than float32 1e-5 magnitude threshold and divides each component at float32 precision. The movement branch compares float32 speed*delta with magnitude, snaps on greater-or-equal, or applies component*delta then *speed before adding position. Helpers have bound callers and complete bytes but no separately verified metadata identity. Effective-delta scaling and mount-point tracking remain caller/integration obligations."
  ]
 }
