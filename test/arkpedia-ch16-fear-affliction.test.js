@@ -16,7 +16,7 @@ import {fearProjectileFlight} from '../server/sim/content/chapter16-fear-flight.
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
 import {fearProjectileSpell} from '../server/sim/content/chapter16-fear-spell.js';
-import {fearProjectileSelfDeath,fearProjectileSuicide,fearProjectileSelfDeathActivation,fearProjectileModeFsmRestart,fearProjectileModeSwitch,fearProjectileCollectModeAbilities,fearProjectileModeEffects} from '../server/sim/content/chapter16-fear-self-death.js';
+import {fearProjectileSelfDeath,fearProjectileSuicide,fearProjectileSelfDeathActivation,fearProjectileModeFsmRestart,fearProjectileModeSwitch,fearProjectileCollectModeAbilities,fearProjectileModeEffects,fearProjectileModeNotification} from '../server/sim/content/chapter16-fear-self-death.js';
 import {fearProjectileTargetVerifier,fearProjectileSourceMotion} from '../server/sim/content/chapter16-fear-targets.js';
 import {fearProjectileReached,fearProjectileMotionStep,fearProjectileMountReference,fearProjectileTraceMotion} from '../server/sim/content/chapter16-fear-movement.js';
 import { battle as minerBattle, keys as minerKeys } from './helpers/ch17Harness.js';
@@ -49,6 +49,72 @@ test('mode initialization rejects invalid entries and delegates equality without
   isValid:x=>x!==null&&!x.invalid,equals:(left,right)=>{calls.push([left,right]);return left.id===right.id;}});
  assert.deepEqual(list,[a]);assert.deepEqual(calls,[[a,duplicate]]);
  assert.throws(()=>fearProjectileCollectModeAbilities({generalAbilities:[],combat:null,attack:null,isValid:()=>1,equals:()=>true}),/Boolean/);
+});
+
+function modeNotificationFixture(overrides={}){
+ const f=fixture(),next={},last={},other={},events=[];
+ const skills=[{id:'root',root:true,parent:next},{id:'old',root:false,parent:last},{id:'new',root:false,parent:next},{id:'other',root:false,parent:other}];
+ const callers={owner:f.source,nextMode:next,lastMode:last,restartFsm:()=>{events.push('restart');return false;},
+  onAttackRangeChanged:()=>events.push('range'),onBuffModeChanged:()=>events.push('buff'),readEnemySkills:()=>skills,
+  isRootSkill:s=>s.root,readParentMode:s=>s.parent,sameMode:(a,b)=>a===b,
+  attachSkill:s=>events.push('attach:'+s.id),detachSkill:s=>events.push('detach:'+s.id),...overrides};
+ return{...f,next,last,other,skills,events,callers};
+}
+
+test('enemy mode notification runs Unit base notifications before processing nonroot skills in order',()=>{
+ const f=modeNotificationFixture(),notification=fearProjectileModeNotification(f.b,f.callers);
+ assert.equal(notification.run(),true);assert.equal(notification.run(),null);
+ assert.deepEqual(f.events,['restart','range','buff','detach:old','attach:new']);assert.deepEqual(f.b.errors,[]);
+});
+
+test('next-mode match takes precedence over previous-mode equality',()=>{
+ const f=modeNotificationFixture();f.callers.lastMode=f.next;
+ assert.equal(fearProjectileModeNotification(f.b,f.callers).run(),true);
+ assert.deepEqual(f.events,['restart','range','buff','attach:new']);
+});
+
+test('previous-mode comparison rereads a skill parent instead of caching the next-mode comparison value',()=>{
+ const f=modeNotificationFixture();f.skills.splice(0,4,{id:'changed',root:false});let reads=0;
+ f.callers.readParentMode=()=>++reads===1?f.other:f.last;
+ assert.equal(fearProjectileModeNotification(f.b,f.callers).run(),true);assert.equal(reads,2);
+ assert.deepEqual(f.events,['restart','range','buff','detach:changed']);
+});
+
+test('root skills skip both parent reads and attachment effects',()=>{
+ const f=modeNotificationFixture();f.skills.splice(1);f.callers.readParentMode=()=>{throw Error('root parent read');};
+ assert.equal(fearProjectileModeNotification(f.b,f.callers).run(),true);assert.deepEqual(f.events,['restart','range','buff']);
+});
+
+test('buff notification can replace the skill list before the enemy override reads it',()=>{
+ const f=modeNotificationFixture();f.callers.onBuffModeChanged=()=>{f.events.push('buff');f.skills.splice(0,4,{id:'inserted',root:false,parent:f.next});};
+ assert.equal(fearProjectileModeNotification(f.b,f.callers).run(),true);
+ assert.deepEqual(f.events,['restart','range','buff','attach:inserted']);
+});
+
+test('enemy skill effects observe appended entries without filtering through unrelated ability validity',()=>{
+ const f=modeNotificationFixture();f.skills.splice(0,4,{id:'first',root:false,parent:f.next});
+ f.callers.attachSkill=s=>{f.events.push('attach:'+s.id);if(s.id==='first')f.skills.push({id:'appended',root:false,parent:f.next});};
+ assert.equal(fearProjectileModeNotification(f.b,f.callers).run(),true);
+ assert.deepEqual(f.events,['restart','range','buff','attach:first','attach:appended']);
+});
+
+for(const point of ['restartFsm','onAttackRangeChanged','onBuffModeChanged','isRootSkill','readParentMode','sameMode','detachSkill','attachSkill'])
+ for(const boundary of ['reuse','battleEnd','recursive'])test('enemy mode notification guards '+boundary+' in '+point,()=>{
+  const f=modeNotificationFixture();let notification;const original=f.callers[point];
+  f.callers[point]=(...args)=>{
+   if(boundary==='reuse')f.source.deploySeq++;else if(boundary==='battleEnd')f.b.emit('battleEnd',{});else assert.equal(notification.run(),null);
+   return boundary==='recursive'?original(...args):undefined;
+  };
+  notification=fearProjectileModeNotification(f.b,f.callers);
+  assert.equal(notification.run(),boundary==='recursive'?true:null);assert.equal(notification.run(),null);assert.deepEqual(f.b.errors,[]);
+ });
+
+test('invalid enemy notification predicates and null skill entries fail and retire their handler',()=>{
+ for(const kind of ['predicate','entry']){
+  const f=modeNotificationFixture();if(kind==='predicate')f.callers.isRootSkill=()=>1;else f.skills[0]=null;
+  const notification=fearProjectileModeNotification(f.b,f.callers);
+  assert.throws(()=>notification.run(),kind==='predicate'?/Boolean/:/cannot be null/);assert.equal(notification.run(),null);
+ }
 });
 
 function modeEffectsFixture(operation,overrides={}){
@@ -409,7 +475,11 @@ test('bounded wait, initialized modes, event5 self-death and independent flight 
  const restart=fearProjectileModeFsmRestart(f.b,{owner:f.source,isRunning:()=>true,readState:()=>state,
   stop:()=>{state=-1;},start:(_owner,saved)=>{state=saved;}});
  const detached=[];f.callers.detachAbility=ability=>{detached.push(ability);casting=false;};
- f.callers.onSwitchMode=()=>restart.run();
+ const skillEvents=[],skills=[{root:true,parent:f.old},{root:false,parent:f.old},{root:false,parent:f.next}];
+ f.callers.onSwitchMode=(_owner,nextMode,lastMode)=>fearProjectileModeNotification(f.b,{owner:f.source,nextMode,lastMode,
+  restartFsm:()=>restart.run(),onAttackRangeChanged:()=>skillEvents.push('range'),onBuffModeChanged:()=>skillEvents.push('buff'),
+  readEnemySkills:()=>skills,isRootSkill:s=>s.root,readParentMode:s=>s.parent,sameMode:(a,b)=>a===b,
+  attachSkill:()=>skillEvents.push('attach'),detachSkill:()=>skillEvents.push('detach')}).run();
  const handoff=fearProjectileModeSwitch(f.b,f.callers);
  const suicide=fearProjectileSuicide(f.b,{target:f.source,readAlive:()=>f.source.alive,markSuicide:()=>{},
   setHpInternal:()=>f.b.kill(f.source,null)});
@@ -430,6 +500,7 @@ test('bounded wait, initialized modes, event5 self-death and independent flight 
   isCastActive:()=>true,subscribeAttackEvent:()=>()=>{},onReady:()=>spell.run()});
  wait.resume();assert.equal(flight,undefined);wait.resume();assert.deepEqual(events,['birth','event5']);
  assert.equal(state,12);assert.equal(casting,false);assert.equal(f.current,f.next);
+ assert.deepEqual(skillEvents,['range','buff','detach','attach']);
  assert.deepEqual(detached,['-5760848500668714718','4729572091462136098']);
  const hp=f.target.hp;flight.advance(fpOne/10n,fpOne);assert.equal(hp-f.target.hp,175);
  assert.ok(f.target.findBuff(parentKey));assert.equal(wait.resume(),null);assert.equal(spell.run(),null);

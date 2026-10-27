@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 43 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 49 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -761,3 +761,41 @@ The new callbacks still require concrete initialized native talent/dynamic data
 and BasicTalent effect implementations. Enemy.OnSwitchMode's separate enemy
 skill list, live FSM scheduling, animation and stage query integration remain
 open; no source/support/receipt gate is relaxed.
+
+### Enemy mode notification and skill ownership
+
+The49-method artifact additionally retains EnemySkill.get_parentMode,
+get_isRoot, Attach and Detach, Unit.OnAttackRangeChanged and
+BuffContainer.OnUnitSwitchMode. Metadata slot127 resolves the Unit virtual
+notification to OnAttackRangeChanged. The original Enemy.m_skills field at
+offset0x498 and EnemySkill.parentMode atoffset0x78 are retained separately
+from UnitMode's BasicTalent/static/dynamic ability collections.
+
+`fearProjectileModeNotification` composes the selected restartFSM=true
+Enemy.OnSwitchMode dispatch. Unit base work comes first: restart the existing
+FSM through the captured-state handler, notify attack-range change, then notify
+the buff container. It subsequently visits the current enemy skill list in
+order. Root skills skip parent reads and effects. A nonroot skill belonging to
+nextMode is attached; otherwise its parent is read again and a match against
+lastMode detaches it. Skills belonging to neither mode are unchanged. A new-mode
+match takes precedence; attachment-state and Unity-validity filters are not
+invented for this separate skill loop.
+
+Tests cover notification order, stopped-FSM continuation, root exclusion,
+new/old precedence, a changed parent getter, list replacement during the buff
+notification, appended skills, malformed predicates, null entries, recursion,
+reuse and battle end at each effect boundary. The composed bounded wait,
+original initialized mode arrays, self-death and independent flight test now
+also uses this notification handler with synthetic root/old/new skills. It
+verifies range/buff notifications and skill detach/attach before suicide, while
+the born projectile still applies fear and damage after owner retirement.
+These synthetic skill records do not certify the original fear enemy's complete
+skill data or effects.
+
+The focused native/fear/family/miner suite passes406 tests and the49-method
+source producer reproduces with --check. Continuation40516147908 at6de1933a
+remains queued and full40514426781 is in progress, so neither is replaced.
+Concrete attack-range/buff notification effects, EnemySkill attachment effects,
+ability data setup, live FSM/coroutine scheduling and stage geometry/query
+integration remain explicit inputs. All enemy/stage support and test-only
+catalogue gates remain unchanged.

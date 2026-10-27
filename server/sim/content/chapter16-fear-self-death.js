@@ -156,6 +156,54 @@ export function fearProjectileModeEffects(b,{owner,mode,operation,isInit=false,r
  });
 }
 
+// Selected Enemy.OnSwitchMode dispatch: Unit base work precedes m_skills.
+// EnemySkill is separate from UnitMode BasicTalent and Ability collections.
+export function fearProjectileModeNotification(b,{owner,nextMode,lastMode,restartFsm,onAttackRangeChanged,onBuffModeChanged,
+ readEnemySkills,isRootSkill,readParentMode,sameMode,attachSkill,detachSkill}){
+ if(!owner||!Number.isInteger(owner.deploySeq)||!nextMode||
+  [restartFsm,onAttackRangeChanged,onBuffModeChanged,readEnemySkills,isRootSkill,readParentMode,sameMode,attachSkill,detachSkill].some(fn=>typeof fn!=='function'))
+  throw new TypeError('Fear mode notification requires an owner life, next mode and explicit native notification/skill callers');
+ const life=owner.deploySeq;let used=false,ended=false,endHandle=null,removeHandle=null;
+ const release=()=>{ended=true;if(endHandle)b.off(endHandle);if(removeHandle)b.off(removeHandle);endHandle=removeHandle=null;};
+ const active=()=>{if(!ended&&(b.finished||b._endReq||owner.removed||owner.deploySeq!==life))release();return!ended;};
+ const boolean=value=>{if(typeof value!=='boolean')throw new TypeError('Fear mode notification requires native Boolean predicates');return value;};
+ const array=value=>{if(!Array.isArray(value))throw new TypeError('Fear mode notification requires the initialized enemy skill array');return value;};
+ if(active()){
+  endHandle=b.on('battleEnd',release);
+  removeHandle=b.on('removed',({unit})=>{if(unit===owner)release();});
+ }
+ return Object.freeze({
+  run(){
+   if(used||!active())return null;used=true;
+   try{
+    restartFsm(owner);if(!active())return null;
+    onAttackRangeChanged(owner);if(!active())return null;
+    onBuffModeChanged(owner);if(!active())return null;
+    let skills=readEnemySkills(owner);if(!active())return null;skills=array(skills);
+    for(let index=0;index<skills.length;index++){
+     const skill=skills[index];if(skill==null)throw new TypeError('Fear mode enemy skill cannot be null');
+     const root=isRootSkill(skill);if(!active())return null;
+     if(!boolean(root)){
+      const parent=readParentMode(skill);if(!active())return null;
+      const next=sameMode(parent,nextMode);if(!active())return null;
+      if(boolean(next)){attachSkill(skill);if(!active())return null;}
+      else{
+       // Native code reads parentMode again rather than reusing the value
+       // compared against nextMode; getters may have effectful overrides.
+       const previousParent=readParentMode(skill);if(!active())return null;
+       const previous=sameMode(previousParent,lastMode);if(!active())return null;
+       if(boolean(previous)){detachSkill(skill);if(!active())return null;}
+      }
+     }
+     skills=readEnemySkills(owner);if(!active())return null;skills=array(skills);
+    }
+    return true;
+   }finally{release();}
+  },
+  release,
+ });
+}
+
 export function fearProjectileModeFsmRestart(b,{owner,isRunning,readState,stop,start}){
  if(!owner||!Number.isInteger(owner.deploySeq)||[isRunning,readState,stop,start].some(fn=>typeof fn!=='function'))
   throw new TypeError('Fear mode FSM restart requires an owner life and explicit native state-machine callers');

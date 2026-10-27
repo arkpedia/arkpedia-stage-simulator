@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,43);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,49);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -130,6 +130,22 @@ test('mode initialization binds general/combat/attack order and the canonical sw
  at(dedup,0x3f62e1e,'0x180004fe0');at(dedup,0x3f62e72,'0x180004b40');
  at(dedup,0x3f62e77,'esi');at(dedup,0x3f62e79,'0x183f62d00');
  assert.equal(init.equalsDispatch.metadataIdentityVerified,false);
+});
+
+test('enemy mode notification source binds Unit range/buff notifications before nonroot skill transitions',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),n=c.modeSwitch.notification;
+ const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ assert.equal(n.skillsField.name,'m_skills');assert.equal(n.skillsField.offset,0x498);
+ assert.equal(n.skillParentField.name,'<parentMode>k__BackingField');assert.equal(n.skillParentField.offset,0x78);
+ for(const slot of n.rangeChangedSlots){assert.equal(slot.slot,127);assert.equal(slot.name,'OnAttackRangeChanged');}
+ const unit=castMethod(c,'Unit','OnSwitchMode'),enemy=castMethod(c,'Enemy','OnSwitchMode');
+ at(unit,n.rangeChangedCallRva,'qword ptr [rax + 0x928]');at(unit,n.buffCallRva,'0x1839d2b50');
+ at(enemy,n.baseCallRva,'0x180852f10');at(enemy,n.rootCallRva,'0x183a05eb0');
+ at(enemy,n.nextParentCallRva,'0x183a06160');at(enemy,n.previousParentCallRva,'0x183a06160');
+ at(enemy,n.attachCallRva,'0x183a03970');at(enemy,n.detachCallRva,'0x183a04430');
+ at(enemy,0x80affb,'0x18080b076');at(enemy,0x80b034,'0x18080b071');
+ for(const name of ['get_parentMode','get_isRoot','Attach','Detach'])assert.ok(castMethod(c,'EnemySkill',name));
+ assert.ok(castMethod(c,'BuffContainer','OnUnitSwitchMode'));
 });
 
 test('mode callback source binds BasicTalent validity and attachment predicates before ordered dynamic ability effects',()=>{
