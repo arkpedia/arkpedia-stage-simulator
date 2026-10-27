@@ -1402,6 +1402,51 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
 
+### Trace target and projectile birth callbacks
+
+`extract-windows-fear-projectile-born.py --check` retains complete SetTraceTarget
+and OnProjectileBorn bodies. It binds Entity/MountPoint/Tile casts, the MountPoint
+owner pointer at+18 and Entity.get_hitMountPoint's MountPoint return type. The
+Nullable<Vector2> constructor usage has an actual generic mapping; pointer and
+singleton usages without mappings remain explicit. Born resolves BObject.Born
+slot24 and the behavior callback slot6, with its logger and audio call targets.
+
+`fearProjectileSetTraceTarget` publishes entity pointers before caching map
+positions. Entity targets keep their local entity for that position; mount
+targets lock their owner, publish it and relock the freshly stored trace field
+before reading position. Tile targets clear entity tracking and cache the
+original input's ILocatable position. Null/other targets clear tracking and
+the nullable cache. Casts, pointers and nullable construction/copy remain
+mandatory receivers, without inferring a native generic struct layout.
+
+`fearProjectileBorn` creates the main effect before reading the action controller,
+runs action/behavior birth callbacks, then base Born. Behavior traversal uses
+the current array for indexing and refreshes it after each callback. The type
+is sampled after base Born; ONLY_GRAPHIC skips logging/audio while retaining
+the preceding callbacks. Other types fetch controller/logger, add the log
+count, read audio key, copy world position, then resolve the source and emit
+ON_PROJECTILE_BORN audio. Errors preserve preceding effects; nested calls are
+not silently suppressed.
+
+Tests cover entity/mount/tile/null targets, detached caches, fresh mount locks,
+stale-owner and nullable errors, all three birth types, changing controllers/
+arrays/type, callback errors, position-copy order and nested births. The long
+wait/controller/Init/flight composition now resolves the selected mount to its
+entity and cached position, then runs the complete birth sequence before an
+explicit behavior-birth receiver starts the headless flight. It uses the
+canonical Fear main-effect key through an explicit effect receiver, retains
+the unmanaged/zero-delay configuration and proves damage after event5 source
+death. All1488 focused native/fear/family/miner tests, evidence reproduction
+and existing Fear/miner contract checks pass.
+
+Native action/behavior initialization and birth internals, BObject.Born,
+outer adjustable settings, pool allocation/reuse, main-effect/nullable/cast/
+pointer/log/audio runtime effects, initial FSM, no-target fallback, base target
+actions, local-miner attachment and stage/frame parity remain open. Concrete
+action/behavior/base birth and the underlying pool path are next. No controller
+or stage admission, source/support/receipt/catalogue gate or registry changed.
+This checkpoint stays local; hosted validation of it has not occurred.
+
 ### Inner initialization, reset and delayed birth
 
 `extract-windows-fear-projectile-inline.py --check` retains complete _InitInline,

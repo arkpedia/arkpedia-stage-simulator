@@ -66,6 +66,69 @@ import {fearProjectileCreateProjectile,fearProjectileRangedTargetCast} from '../
 import {fearProjectileControllerCreation,fearProjectileFactoryCreation,fearProjectileAttachGraphic} from '../server/sim/content/chapter16-fear-projectile-controller.js';
 import {fearProjectileInit} from '../server/sim/content/chapter16-fear-projectile-init.js';
 import {fearProjectileInlineInit} from '../server/sim/content/chapter16-fear-projectile-inline.js';
+import {fearProjectileSetTraceTarget,fearProjectileBorn} from '../server/sim/content/chapter16-fear-projectile-born.js';
+
+function projectileBornFixture(){
+ const f=projectileInlineFixture(),target=Object.assign(f.target,{kind:'entity',uid:401,mapPosition:{x:1/3,y:2/3}}),mount={kind:'mount',m_entity:f.pointers.capture(target)},tile={kind:'tile',mapPosition:{x:2,y:3}},
+  clone=value=>({hasValue:value.hasValue,value:{...value.value}}),traceOptions={castEntity:value=>value?.kind==='entity'?value:null,castMountPoint:value=>value?.kind==='mount'?value:null,castTile:value=>value?.kind==='tile'?value:null,
+   readMountOwner:value=>value.m_entity,lockPointer:f.pointers.lock,wrapEntity:f.pointers.capture,copyPointer:f.pointers.copy,writeBarrier:(...args)=>f.events.push(['trace-barrier',...args]),
+   readMapPosition:value=>value.mapPosition,readLocatablePosition:value=>value.mapPosition,somePosition:value=>({hasValue:true,value}),nonePosition:()=>({hasValue:false,value:{x:0,y:0}}),copyNullable:clone},
+  bornOptions={createMainEffect:(...args)=>f.events.push(['effect',...args]),actionBorn:value=>f.events.push(['action-born',value]),readLength:array=>array.length,
+   readElement:(array,index)=>{if(index>=array.length)throw RangeError('born array bounds');return array[index];},behaviourBorn:value=>f.events.push(['behaviour-born',value]),baseBorn:value=>f.events.push(['base-born',value]),
+   readController:()=>f.controller,readLogger:()=>f.logger,logAddCount:(...args)=>f.events.push(['log-count',...args]),readAudioSignal:value=>value.audioSignal,readWorldPosition:value=>value.worldPosition,
+   readSource:()=>f.source,playAudio:(...args)=>f.events.push(['audio-born',...args])};
+ Object.assign(f.p,{_mainEffect:'main-effect',m_type:0,audioSignal:'signal',worldPosition:{x:1/3,y:2/3,z:3/7}});
+ return{...f,mount,tile,traceOptions,bornOptions,setTrace:target=>fearProjectileSetTraceTarget(traceOptions)(f.p,target),runBorn:()=>fearProjectileBorn(bornOptions)(f.p)};
+}
+
+test('trace setup handles entity and mount targets with detached nullable map-position copies',()=>{
+ for(const kind of ['entity','mount']){const f=projectileBornFixture();f.setTrace(kind==='entity'?f.target:f.mount);assert.deepEqual(f.p.m_traceTarget,f.pointers.capture(f.target));assert.deepEqual(f.p.m_traceTargetMapPos,{hasValue:true,value:{x:Math.fround(1/3),y:Math.fround(2/3)}});f.target.mapPosition.x=99;assert.equal(f.p.m_traceTargetMapPos.value.x,Math.fround(1/3));}
+});
+
+test('trace setup clears entity tracking for tile/null/other locatables and caches only recognized tile positions',()=>{
+ const f=projectileBornFixture();f.setTrace(f.target);f.setTrace(f.tile);assert.deepEqual(f.p.m_traceTarget,{obj:null,cachedUid:0});assert.deepEqual(f.p.m_traceTargetMapPos,{hasValue:true,value:{x:2,y:3}});
+ for(const target of [null,{kind:'fixed',mapPosition:{x:8,y:9}}]){f.traceOptions.readLocatablePosition=()=>{throw Error('unexpected position');};f.setTrace(target);assert.deepEqual(f.p.m_traceTarget,{obj:null,cachedUid:0});assert.deepEqual(f.p.m_traceTargetMapPos,{hasValue:false,value:{x:0,y:0}});}
+});
+
+test('mount trace setup relocks the freshly published field while direct entity setup retains its local entity',()=>{
+ for(const kind of ['entity','mount']){const f=projectileBornFixture(),next={uid:402,mapPosition:{x:9,y:10}};f.traceOptions.writeBarrier=()=>{f.p.m_traceTarget=f.pointers.capture(next);};f.setTrace(kind==='entity'?f.target:f.mount);assert.deepEqual(f.p.m_traceTargetMapPos.value,kind==='entity'?{x:Math.fround(1/3),y:Math.fround(2/3)}:{x:9,y:10});}
+});
+
+test('trace mount-owner failure preserves the published null pointer and previous cached position',()=>{
+ const f=projectileBornFixture(),prior={hasValue:true,value:{x:8,y:9}};f.p.m_traceTargetMapPos=prior;f.target.uid++;assert.throws(()=>f.setTrace(f.mount),/null native object/);assert.deepEqual(f.p.m_traceTarget,{obj:null,cachedUid:0});assert.equal(f.p.m_traceTargetMapPos,prior);
+});
+
+test('trace tile conversion reads the original input and preserves pointer writes on nullable-constructor errors',()=>{
+ const f=projectileBornFixture();f.traceOptions.castTile=()=>({});f.traceOptions.readLocatablePosition=value=>{assert.equal(value,f.tile);return value.mapPosition;};f.traceOptions.somePosition=()=>{throw Error('nullable constructor');};assert.throws(()=>f.setTrace(f.tile),/nullable constructor/);assert.deepEqual(f.p.m_traceTarget,{obj:null,cachedUid:0});assert.equal(f.p.m_traceTargetMapPos,undefined);
+});
+
+for(const type of [0,1,2])test('projectile born type '+type+' performs effects/actions/behaviors/base before the graphic-only gate',()=>{
+ const f=projectileBornFixture();f.p.m_type=type;f.runBorn();assert.deepEqual(f.events.map(e=>e[0]),type===2?['effect','action-born','behaviour-born','behaviour-born','base-born']:['effect','action-born','behaviour-born','behaviour-born','base-born','log-count','audio-born']);
+ if(type!==2){assert.deepEqual(f.events.find(e=>e[0]==='log-count'),['log-count',f.logger,2,f.p.m_ExtraLogIds]);assert.deepEqual(f.events.at(-1),['audio-born','ON_PROJECTILE_BORN','signal',{x:Math.fround(1/3),y:Math.fround(2/3),z:Math.fround(3/7)},f.source]);}
+});
+
+test('born callbacks sample action controller after main-effect creation and type after base Born',()=>{
+ const f=projectileBornFixture(),next={};f.bornOptions.createMainEffect=()=>{f.p._actionController=next;};f.bornOptions.actionBorn=value=>assert.equal(value,next);f.bornOptions.baseBorn=()=>{f.p.m_type=2;};f.bornOptions.readController=()=>{throw Error('unexpected logger path');};f.runBorn();
+ const g=projectileBornFixture();g.p.m_type=2;g.bornOptions.baseBorn=()=>{g.p.m_type=0;};g.runBorn();assert.equal(g.events.some(e=>e[0]==='audio-born'),true);
+});
+
+test('born behavior traversal captures its current array for indexing and refreshes after each callback',()=>{
+ const f=projectileBornFixture(),first=f.p.m_behaviours[0],last={id:3};f.bornOptions.behaviourBorn=value=>{f.events.push(['behaviour-born',value]);if(value===first)f.p.m_behaviours=[{},last];};f.runBorn();assert.deepEqual(f.events.filter(e=>e[0]==='behaviour-born').map(e=>e[1]),[first,last]);
+ const g=projectileBornFixture();g.bornOptions.behaviourBorn=()=>{g.p.m_behaviours=null;};assert.throws(g.runBorn,/null native object/);assert.equal(g.events.some(e=>e[0]==='base-born'),false);
+});
+
+test('born logging precedes audio-key/position/source reads and position is copied before source callbacks',()=>{
+ const f=projectileBornFixture(),source={};f.bornOptions.logAddCount=()=>{f.p.audioSignal='new-signal';};f.bornOptions.readSource=()=>{f.p.worldPosition.x=99;return source;};f.runBorn();assert.deepEqual(f.events.at(-1),['audio-born','ON_PROJECTILE_BORN','new-signal',{x:Math.fround(1/3),y:Math.fround(2/3),z:Math.fround(3/7)},source]);
+});
+
+for(const phase of ['actionBorn','behaviourBorn','baseBorn','logAddCount','readAudioSignal','readWorldPosition','playAudio'])test('born '+phase+' errors preserve earlier birth effects',()=>{
+ const f=projectileBornFixture(),error=Error(phase);f.bornOptions[phase]=()=>{throw error;};assert.throws(f.runBorn,actual=>actual===error);assert.equal(f.events[0][0],'effect');
+});
+
+test('born null action-controller failure follows effect creation, and nested births are not silently suppressed',()=>{
+ const f=projectileBornFixture();f.p._actionController=null;assert.throws(f.runBorn,/null native object/);assert.equal(f.events[0][0],'effect');
+ const g=projectileBornFixture(),inner={...g.p};let run;g.bornOptions.baseBorn=value=>{if(value===g.p)run(inner);};run=fearProjectileBorn(g.bornOptions);run(g.p);assert.equal(g.events.filter(e=>e[0]==='audio-born').length,2);
+});
 
 function projectileInlineFixture(){
  const f=projectileInitFixture(),scheduled=[],object={active:true},randomImp={},randomTrivial={};
@@ -5614,14 +5677,17 @@ test('bounded wait, controller/factory birth and Init, event5 self-death and ind
  start.start.canSpell=(owner,ability)=>{assert.equal(owner,f.source);assert.equal(ability,start.ability);return true;};
  start.start.onEvent=(_ability,event,runAction)=>{assert.equal(event,4);assert.equal(runAction,false);events.push('event4');};
  start.start.onOwnerSpell=owner=>{assert.equal(owner,f.source);assert.equal(start.sources.getValue(start.ctx.m_source),f.source);assert.equal(start.references.peek(start.ctx.m_mainTarget),f.target);};
- const hitMount={},birth=controllerCreationFixture(),initialization=projectileInitFixture(),inner=projectileInlineFixture(),
+ const hitMount={},birth=controllerCreationFixture(),initialization=projectileInitFixture(),inner=projectileInlineFixture(),born=projectileBornFixture(),
   nativeProjectile=JSON.parse(read('data/candidates/arkpedia-ch16-fear-projectile-source.json').projectiles['dyn/battle/prefabs/[uc]projectiles/projectile_enemy_fearpj.prefab'].find(row=>row.pathId==='3827519080143594587').originalJson);
  start.rangedOptions.readHitMountPoint=target=>{assert.equal(target,f.target);return hitMount;};
  start.controller._factory=birth.factory;start.projectile.transform={};birth.queue.splice(0,birth.queue.length,start.projectile);f.source.effectReplacePairs=[];
  Object.assign(start.projectile,{_actionController:{},_managedBySource:Boolean(nativeProjectile._managedBySource),m_ExtraLogIds:[],
-  _randomDelayToBorn:nativeProjectile._randomDelayToBorn,m_targetsAlreadyHit:new Map(),m_eventCallbacks:[{}],m_behaviours:[{}],m_behavioursInited:false,_bodyTransform:start.projectile.transform});
+  _mainEffect:nativeProjectile._mainEffect,_randomDelayToBorn:nativeProjectile._randomDelayToBorn,m_targetsAlreadyHit:new Map(),m_eventCallbacks:[{}],m_behaviours:[{}],m_behavioursInited:false,_bodyTransform:start.projectile.transform});
  Object.assign(start.mount,{mapPosition:{x:0,y:0},height:0});Object.assign(start.ability,{uid:13,damageMissFlag:false});
  Object.assign(inner.inlineOptions,{getLifeTime:()=>nativeProjectile._lifeTime,getKeepAlreadyHitTime:()=>fearProjectileFloatToRaw(nativeProjectile._keepAlreadyHitTime)});
+ Object.assign(born.traceOptions,{castEntity:value=>value===f.target?value:null,castMountPoint:value=>value===hitMount?value:null,readMountOwner:()=>start.pointers.capture(f.target),readMapPosition:()=>({x:1,y:0})});
+ inner.inlineOptions.setTraceTarget=fearProjectileSetTraceTarget(born.traceOptions);
+ Object.assign(born.bornOptions,{readAudioSignal:()=>'',readWorldPosition:()=>({x:0,y:0,z:0}),readSource:projectile=>start.pointers.lock(projectile.m_source)});
  Object.assign(initialization.initOptions,{readAbilityOwner:ability=>start.pointers.lock(ability.m_owner),readMapPosition:()=>({x:0,y:0}),readSide:()=>1,readPlayerSide:()=>2,readAbilityExtraData:()=>''});
  start.createOptions.createProjectile=(controller,key,owner,mount,target,ability,fake)=>{
   assert.equal(controller,start.controller);assert.equal(key,'projectile_enemy_fearpj');assert.equal(owner,f.source);assert.equal(mount,start.mount);
@@ -5640,8 +5706,11 @@ test('bounded wait, controller/factory birth and Init, event5 self-death and ind
  };
  inner.inlineOptions.onBorn=projectile=>{
   assert.equal(projectile,start.projectile);assert.equal(projectile.m_behavioursInited,true);assert.equal(projectile.m_lifeTime,10n*fpOne);assert.equal(projectile.m_keepAlreadyHitTime,-fpOne);assert.deepEqual(projectile.m_eventCallbacks,[null]);
-  events.push('birth');flight=fearProjectileFlight(f.b,{from:{x:0,y:0,z:0},initialTarget:{x:1,y:0,z:0},
-   resolveTargetPosition:()=>null,resolveTraceTarget:()=>f.target,
+  assert.deepEqual(projectile.m_traceTarget,start.pointers.capture(f.target));assert.deepEqual(projectile.m_traceTargetMapPos,{hasValue:true,value:{x:1,y:0}});fearProjectileBorn(born.bornOptions)(projectile);
+ };
+ born.bornOptions.behaviourBorn=()=>{
+  events.push('birth');flight=fearProjectileFlight(f.b,{from:{x:0,y:0,z:0},initialTarget:{...start.projectile.m_traceTargetMapPos.value,z:0},
+   resolveTargetPosition:()=>null,resolveTraceTarget:()=>start.pointers.lock(start.projectile.m_traceTarget),
    area:{queryOverlaps:()=>[f.target],resolveEntity:u=>u,readUid:u=>u.nativeUid,isCandidate:()=>true,
     verifyTarget:()=>true,deterministic:true,resolveSource:source.resolveSource,onSelected:()=>{}},
    runHit:({target})=>applyFearProjectileImpact(f.b,{source:f.source,target,applyAttachments:()=>{},runActions:damage}),
@@ -5650,7 +5719,7 @@ test('bounded wait, controller/factory birth and Init, event5 self-death and ind
  start.options.castOnTarget=fearProjectileRangedTargetCast(start.rangedOptions);
  start.start.castTargets=fearProjectileTargetCasting(start.options);
  const spell=fearProjectileSpell(f.b,{owner:f.source,onSpellStart:start.runStart,isCasting:()=>casting,emitSpellEnd:()=>{
-  for(const stack of Object.values(start.ctx))assert.equal(stack._size,0);assert.deepEqual(start.ability.m_projectiles,[start.pointers.capture(start.projectile)]);assert.deepEqual(initialization.managed,[]);assert.equal(inner.scheduled.length,0);events.push('event5');assert.equal(activation.run(),null);},
+  for(const stack of Object.values(start.ctx))assert.equal(stack._size,0);assert.deepEqual(start.ability.m_projectiles,[start.pointers.capture(start.projectile)]);assert.deepEqual(initialization.managed,[]);assert.equal(inner.scheduled.length,0);assert.deepEqual(born.events.find(e=>e[0]==='effect'),['effect',start.projectile,nativeProjectile._mainEffect]);events.push('event5');assert.equal(activation.run(),null);},
  mayBeginPostDelay:()=>{throw Error('removed owner');},beginPostDelay:()=>{throw Error('removed owner');}});
  const wait=fearProjectileAttackWait(f.b,{owner:f.source,cachedDurationRaw:fpOne,readDeltaPlayTime:()=>1,
   isCastActive:()=>true,subscribeAttackEvent:()=>()=>{},onReady:()=>spell.run()});
