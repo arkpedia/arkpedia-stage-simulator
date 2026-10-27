@@ -1,5 +1,40 @@
 # Development priorities
 
+### 27 October: native miner assignment and missing-duration path
+
+The preceding website clarification was not simulator progress. Revalidated the
+actual simulator worktree at `38a23864`: only the four known quarantined test
+deletions were present. Continuation `40480252734` is terminal success across all
+jobs. Full run `40477137676` remains live: four matrix jobs now pass and four are
+still running. Preserve that handle rather than restarting the full workflow.
+
+The new miner-talent producer retains 24 complete native methods, their chained
+PE ranges, exact field layouts, pinned native files and CN graph hashes. The cast
+producer is now import-safe so reusing its checked readers does not rewrite its
+artifact. The hosted native-source job reproduces the new evidence independently.
+All 24 Windows source checks and 70 combined source/family/Fear cases pass locally.
+
+Enemy._AssignTalent allocates a fresh Blackboard and TalentData while iterating
+prefab talents even without an incoming parameter group. OnInit subsequently
+checks root/current-mode validity before Attach. The actual Unit.OnAwake,
+RecollectTalents, _InitUnitModes and BasicTalent.SetParentMode bodies are retained
+for resolving hierarchy, rather than treating `_defaultModeIndex=-1` alone as
+proof of root attachment.
+
+The shadow action's RIP-relative metadata usage resolves exactly to `times`, not
+an inferred parameter name. Its default path clears the fallback float to zero,
+calls Blackboard.GetFloatOrDefault and forwards the returned value unchanged to
+ChangeShadowTileEscapeTimeViaRangeId. Missing local parameters therefore cannot
+be filled from the canonical miner's catalogue values. The range manager calls
+_UpdateOneTileEscapeTime for shadow tiles, which updates its timer and immediately
+calls _UpdateTileState. OnTick and _isShadowTileInShadowState are also retained.
+Next resolve the timer's generic maximum operation and zero/state ordering, then
+bind the three CN talent transforms to the actual parent-mode setup before local
+miner integration. CN/runtime/frame parity remains unproven; source tests do not
+admit the local miner or stage16-9. Fear projectile selector/lifecycle review and
+the full Chapter16/17 and operator/module backlog remain required. No merge,
+deployment or public promotion; quarantine deletions remain unstaged.
+
 ### 27 October: exact shared MonoScript references and inherited Spine timing
 
 The previous goal checkpoint `baa0beef` made concrete progress. Its continuation

@@ -268,8 +268,9 @@ result = {'schemaVersion': 1,
           ]}
 out = ROOT / 'data/candidates/arkpedia-windows-cast-lifecycle-source.json'
 serialized = json.dumps(result, ensure_ascii=False, indent=1) + '\n'
-if '--check' in sys.argv:
-    assert out.read_text(encoding='utf8') == serialized, 'Static Windows cast-lifecycle evidence differs'
-else:
-    out.write_text(serialized, encoding='utf8', newline='\n')
-print(f'Verified {len(selected)} complete native cast/wait methods, image-local tokens, fields, enums and dispatch helpers')
+if __name__ == '__main__':
+    if '--check' in sys.argv:
+        assert out.read_text(encoding='utf8') == serialized, 'Static Windows cast-lifecycle evidence differs'
+    else:
+        out.write_text(serialized, encoding='utf8', newline='\n')
+    print(f'Verified {len(selected)} complete native cast/wait methods, image-local tokens, fields, enums and dispatch helpers')

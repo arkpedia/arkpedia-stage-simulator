@@ -64,10 +64,52 @@ test('new compiled evidence grants neither runtime/frame parity nor enemy/stage 
 });
 
 const castPath='data/candidates/arkpedia-windows-cast-lifecycle-source.json';
+const minerTalentsPath='data/candidates/arkpedia-windows-miner-talents-source.json';
 const instructions=method=>method.chunks.flatMap(c=>c.instructions);
 const castMethod=(c,type,name)=>{
  const matches=c.methods.filter(m=>m.type===type&&m.name===name);assert.equal(matches.length,1);return matches[0];
 };
+
+test('miner talent evidence pins complete native methods and exact source inputs without admission',()=>{
+ const c=read(minerTalentsPath);assert.equal(c.methods.length,24);
+ for(const p of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+p.path,import.meta.url))),p.sha256);
+ for(const method of c.methods)for(const chunk of method.chunks){
+  const raw=Buffer.from(chunk.base64,'base64');assert.equal(raw.length,chunk.endRva-chunk.beginRva);assert.equal(sha(raw),chunk.sha256);
+  assert.ok(chunk.unwindRva>0);assert.ok(chunk.instructions.length>0);
+ }
+ for(const field of ['runtimeDispatchVerified','frameParity','crossVersionParity'])assert.equal(c[field],false);
+ assert.equal(read('data/candidates/arkpedia-ch16-enemy-support.json').enemies.enemy_3010_mcreep_a,undefined);
+ assert.equal(read('data/arkpedia-stages.json').stages.some(s=>s.code==='16-9'),false);
+});
+
+test('native miner duration reads the exact times literal with a zero fallback and forwards the result',()=>{
+ const c=read(minerTalentsPath),action=instructions(castMethod(c,'Main16ChangeTileShadowViaRange','Execute'));
+ assert.deepEqual(c.literals.map(l=>[l.instructionRva,l.value]),[[0xdd1871,'times'],[0xdd184a,'range_id']]);
+ for(const literal of c.literals){assert.equal(literal.encodedUsage>>>29,5);assert.equal((literal.encodedUsage&0x1ffffffe)>>>1,literal.literalIndex);}
+ const at=rva=>action.find(i=>i.rva===rva);
+ assert.deepEqual([at(0xdd187b).mnemonic,at(0xdd187b).operands],['xorps','xmm2, xmm2']);
+ const target=method=>'0x'+(c.imageBase+method.entryRva).toString(16);
+ assert.equal(at(0xdd1886).operands,target(castMethod(c,'Blackboard','GetFloatOrDefault')));
+ assert.equal(at(0xdd18b8).operands,target(castMethod(c,'Mainline16Manager','ChangeShadowTileEscapeTimeViaRangeId')));
+ assert.deepEqual([at(0xdd1890).operands,at(0xdd18ac).operands],['xmm6, xmm0','dword ptr [rsp + 0x20], xmm6']);
+ const fallback=instructions(castMethod(c,'Blackboard','GetFloatOrDefault'));
+ assert.ok(fallback.some(i=>i.rva===0x2166652&&i.operands==='xmm6, xmm2'));
+ assert.ok(fallback.some(i=>i.rva===0x21666f7&&i.operands==='xmm0, xmm6'));
+});
+
+test('native enemy initialization retains explicit talent validity and attachment calls',()=>{
+ const c=read(minerTalentsPath),init=instructions(castMethod(c,'Enemy','OnInit'));
+ for(const name of ['CheckRootOrValidModeTalent','Attach']){
+  const method=castMethod(c,'BasicTalent',name),address='0x'+(c.imageBase+method.entryRva).toString(16);
+  assert.ok(init.some(i=>i.mnemonic==='call'&&i.operands===address));
+ }
+ const assign=instructions(castMethod(c,'Enemy','_AssignTalent'));
+ assert.ok(assign.some(i=>i.mnemonic==='call'&&i.operands==='0x182167ea0'),'fresh blackboard allocation remains in the retained assignment path');
+ assert.ok(assign.some(i=>i.mnemonic==='call'&&i.operands==='0x18247e330'),'fresh TalentData allocation remains in the retained assignment path');
+ const update=instructions(castMethod(c,'Mainline16Manager','_UpdateOneTileEscapeTime'));
+ const state=castMethod(c,'Mainline16Manager','_UpdateTileState');
+ assert.ok(update.some(i=>i.mnemonic==='jmp'&&i.operands==='0x'+(c.imageBase+state.entryRva).toString(16)));
+});
 test('cast evidence resolves common-library tokens in their own image and preserves every native chunk',()=>{
  const c=read(castPath);assert.equal(c.methods.length,43);
  for(const p of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+p.path,import.meta.url))),p.sha256);

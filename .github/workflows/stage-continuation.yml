@@ -40,6 +40,8 @@ jobs:
         run: python tools/arkpedia/extract-native-script-bindings.py --fetch --check
       - name: Reproduce static Windows cast, animator and bounded-wait evidence
         run: python tools/arkpedia/extract-windows-cast-lifecycle.py --check
+      - name: Reproduce default miner talent assignment and missing-duration evidence
+        run: python tools/arkpedia/extract-windows-miner-talents.py --check
       - name: Independently reproduce complete native graphs and indexed components
         run: |
           python tools/arkpedia/extract-ch16-artillery.py --check
