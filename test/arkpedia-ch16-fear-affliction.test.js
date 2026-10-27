@@ -9,10 +9,25 @@ import { makeBattle, enemyRec } from './helpers/battleHarness.js';
 import { compileStageLocalEnemy } from '../shared/arkpedia/enemy-records.js';
 import { fearProjectileAfflictions } from '../server/sim/content/chapter16-fear-affliction.js';
 import {applyFearProjectileImpact,fearProjectileDamageAction,fearProjectileSourceReference} from '../server/sim/content/chapter16-fear-impact.js';
+import {fearProjectileReached} from '../server/sim/content/chapter16-fear-movement.js';
 import { battle as minerBattle, keys as minerKeys } from './helpers/ch17Harness.js';
 import { chapter16Shadow } from '../server/sim/content/chapter16-shadow.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
 const parentKey='feawpj_a[mcreep_fear]';
+test('native arrival includes the float32 0.1 boundary and checks all three mount-point axes',()=>{
+ const zero={x:0,y:0,z:0},radius=Math.fround(.1),outside=Math.fround(radius+2**-27);
+ const source=read('data/candidates/arkpedia-windows-fear-movement-source.json');
+ assert.equal(source.arrivalTolerance.float32,radius);assert.equal(source.arrivalTolerance.dimensions,3);
+ for(const axis of ['x','y','z']){
+  assert.equal(fearProjectileReached(zero,{...zero,[axis]:radius}),true,axis+' inclusive');
+  assert.equal(fearProjectileReached(zero,{...zero,[axis]:outside}),false,axis+' outside');
+ }
+ assert.equal(fearProjectileReached(zero,{x:.06,y:.06,z:.06}),false,'3D distance exceeds radius despite each axis fitting');
+ assert.equal(fearProjectileReached({x:12,y:-3,z:4},{x:12.05,y:-3.05,z:4}),true);
+ assert.equal(fearProjectileReached(zero,{x:0,y:0}),false,'missing mount-point height is not silently flattened');
+ for(const value of [NaN,Infinity,-Infinity])assert.equal(fearProjectileReached(zero,{x:0,y:0,z:value}),false);
+ assert.equal(fearProjectileReached(null,zero),false);
+});
 function fixture({marked=true,full=false,local=false}={}){
  const ref=read('data/candidates/arkpedia-stage-16-9-source.json').rawLevel.enemyDbRefs.find(r=>r.useDb===false);
  const targetRec=local?compileStageLocalEnemy(ref,{damageType:'PHYSIC'}):enemyRec({key:'recipient',maxHp:1000,atk:0,moveSpeed:0});

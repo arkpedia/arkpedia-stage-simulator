@@ -129,7 +129,7 @@ test('ordinary projectile birth preprocesses the existing ability action list be
 
 test('movement evidence retains full chained ranges and separates both bounded switch tables from code',()=>{
  const c=read('data/candidates/arkpedia-windows-fear-movement-source.json');
- assert.equal(c.methods.length,21);
+ assert.equal(c.methods.length,25);
  for(const p of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+p.path,import.meta.url))),p.sha256);
  const component=c.component,native=JSON.parse(component.originalJson);
  assert.equal(component.scriptIdentity.m_ClassName,'AdvancedMovement');assert.equal(component.serializedFieldParity,false);
@@ -217,6 +217,47 @@ test('arrival completion binds its actual delegate and complete stop-or-comeback
  assert.equal(c.fields.AdvancedMovement.find(f=>f.name==='m_isComeBack').offset,0x108);
  const native=JSON.parse(c.component.originalJson);assert.equal(native._comeBack,0);
  assert.ok(instructions(castMethod(c,'Behaviour','Stop')).some(i=>i.mnemonic==='jmp'&&i.operands==='0x18067c030'));
+});
+
+test('completion delay retains its concrete usage, canonical reference bodies and minimum-one-frame float waiter',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-movement-source.json'),d=c.completionDelay;
+ assert.equal(d.encodedUsage>>>29,6);assert.equal((d.encodedUsage&0x1ffffffe)>>>1,d.concreteSpecification.index);
+ assert.equal(d.concreteSpecification.declaringType,'AsyncUtil');
+ assert.equal(d.concreteSpecification.definition.name,'InvokeAsyncFixedSeconds');
+ assert.equal(d.concreteSpecification.instantiations.method.arguments[0].name,'AdvancedMovement');
+ assert.equal(d.concreteSpecification.nativeMapping,null);assert.equal(d.concreteContextVerified,false);
+ assert.equal(d.genericPointerTableRva,0x6ae7d00);assert.equal(d.pointerAnchors.length,2);
+ assert.deepEqual(d.canonicalBodies.map(m=>[m.index,m.entryRva]),[
+  [207531,0x3f2bbf0],[207539,0x3f2bf40],[2813,0x4695170]]);
+ assert.deepEqual(d.canonicalBodies[0].definition,d.concreteSpecification.definition);
+ for(const m of d.canonicalBodies){
+  assert.equal(Object.values(m.instantiations)[0].arguments[0].name,'Object');
+  for(const ch of m.chunks){const raw=Buffer.from(ch.base64,'base64');assert.equal(raw.length,ch.endRva-ch.beginRva);assert.equal(sha(raw),ch.sha256);}
+ }
+ const moveNext=instructions(d.canonicalBodies[2]);
+ assert.ok(moveNext.some(i=>i.rva===0x469518e&&i.operands==='0x183956c10'));
+ assert.ok(moveNext.some(i=>i.rva===0x46951a2&&i.operands==='al, 1'));
+ const wait=instructions(castMethod(c,'<WaitForFixedSeconds>d__0','MoveNext'));
+ const at=(rva,args)=>assert.ok(wait.some(i=>i.rva===rva&&i.operands===args));
+ at(0x396b428,'edi, 1');at(0x396b45d,'xmm6, xmm0');
+ at(0x396b46b,'eax, edi');at(0x396b46d,'eax, edi');
+ at(0x396b475,'dword ptr [rbx + 0x24], eax');at(0x396b478,'dword ptr [rbx + 0x28], 0');
+ at(0x396b485,'dword ptr [rbx + 0x28]');at(0x396b4cc,'eax, dil');
+ assert.equal(d.floatWaiterFields.find(f=>f.name==='<frameCnt>5__2').offset,0x24);
+ assert.equal(d.floatWaiterFields.find(f=>f.name==='<frameI>5__3').offset,0x28);
+});
+
+test('arrival tolerance is a separately image-bound inclusive three-dimensional float32 distance',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-movement-source.json'),t=c.arrivalTolerance;
+ assert.equal(t.hex,'cdcccc3d');assert.equal(t.float32,Math.fround(.1));assert.equal(t.dimensions,3);
+ const m=castMethod(c,'MathUtil','CheckDistance');assert.equal(m.image,'Torappu.Common.dll');assert.equal(m.entryRva,0x5a40470);
+ const code=instructions(m);
+ assert.deepEqual(code.filter(i=>['subss','mulss','addss'].includes(i.mnemonic)).map(i=>[i.mnemonic,i.operands]),[
+  ['subss','xmm3, xmm1'],['subss','xmm1, dword ptr [rsp + 0x18]'],['subss','xmm2, xmm0'],
+  ['mulss','xmm2, xmm2'],['mulss','xmm3, xmm3'],['mulss','xmm1, xmm1'],
+  ['addss','xmm2, xmm3'],['mulss','xmm4, xmm4'],['addss','xmm2, xmm1']]);
+ assert.ok(code.some(i=>i.mnemonic==='comiss'&&i.operands==='xmm4, xmm2'));
+ assert.ok(code.some(i=>i.mnemonic==='setae'&&i.operands==='al'));
 });
 
 test('native projectile source lock checks cached UID and destroyed/null state across allocation and recycling',()=>{

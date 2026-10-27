@@ -281,7 +281,7 @@ for every projectile is therefore unproven. The internal damage-action port's
 explicit cached-ATK argument does not establish that ownership or birth timing.
 
 `extract-windows-fear-movement.py --check` binds the original movement component
-and retains 21 complete default methods. `OnInit` and `OnTick` contain embedded
+and retains 25 complete default methods. `OnInit` and `OnTick` contain embedded
 six-entry switch tables in their chained PE ranges. Each table's exact bytes,
 index bias, bounds check and instruction-boundary targets are retained separately
 from executable bytes; the shared strict native reader remains unchanged.
@@ -295,6 +295,15 @@ arrival handlers. Only after arrival returns does the movement controller call
 `EnsureLifeTime` with the trace-clearing flag. The actual delayed-completion
 delegate is bound through its metadata usage and retained as a complete two-tail-
 jump leaf; the selected `comeBack=false` branch reaches `Projectile.StopMe`.
-The remaining arithmetic and scheduler lifetime/frame behavior still need review
+The completion call loads `InvokeAsyncFixedSeconds<AdvancedMovement>`; the
+independently mapped reference-shared wrapper and coroutine bodies remain
+separate from unverified concrete RGCTX execution. Its float fixed-seconds waiter
+clamps its frame count to at least one and yields before advancing the frame
+index, including for the selected zero delay. The separately image-bound
+`MathUtil.CheckDistance` uses an inclusive 3D float32 tolerance of 0.1. The internal
+`fearProjectileReached` port preserves its scalar operation order and requires
+all three mount-point coordinates explicitly. No caller substitutes tile
+coordinates or removes the vertical axis. Remaining movement arithmetic,
+mount-point mapping and scheduler lifetime/frame behavior still need review
 before launch/delivery integration. These artifacts grant no runtime/frame/cross-
 version parity or additional stage support.

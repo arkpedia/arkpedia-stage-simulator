@@ -59,6 +59,54 @@ assert usage >> 29 == 3 and (usage & 0x1ffffffe) >> 1 == callback_row['index']
 callback['delegateLoadRva'] = load
 callback['encodedUsage'] = usage
 
+# Retain the actual invocation specification and independently mapped canonical
+# reference bodies. Do not infer an independent concrete RGCTX specialization.
+priority = runpy.run_path(str(ROOT / 'tools/arkpedia/extract-windows-filter-priority.py'))
+load = 0xa7d879
+p = v['offset'](base + load)
+assert b[p:p + 3] == bytes.fromhex('488b05')
+slot = load + 7 + struct.unpack_from('<i', b, p + 3)[0]
+usage = v['quad'](b, v['offset'](base + slot))
+assert usage >> 29 == 6
+concrete_delay = priority['specification']((usage & 0x1ffffffe) >> 1)
+assert concrete_delay['declaringType'] == 'AsyncUtil'
+assert concrete_delay['definition']['name'] == 'InvokeAsyncFixedSeconds'
+assert concrete_delay['instantiations']['method']['arguments'][0]['name'] == 'AdvancedMovement'
+assert concrete_delay['nativeMapping'] is None
+delay_bodies = []
+for index, expected in [(207531, 0x3f2bbf0), (207539, 0x3f2bf40), (2813, 0x4695170)]:
+    spec = priority['specification'](index)
+    ptr = v['quad'](b, priority['pointer_table'] + spec['nativeMapping']['methodPointerIndex'] * 8)
+    assert ptr == base + expected
+    delay_bodies.append({**spec, 'entryRva': expected, 'chunks': c['code'](expected)})
+assert concrete_delay['definition'] == delay_bodies[0]['definition']
+delay = {'callerLoadRva': load, 'encodedUsage': usage, 'concreteSpecification': concrete_delay,
+         'concreteContextVerified': False, 'canonicalBodies': delay_bodies,
+         'genericPointerTableRva': v['address'](priority['pointer_table']) - base,
+         'pointerAnchors': [priority['filter_spec'], priority['math_spec']]}
+async_type = c['type_row']('AsyncUtil', 'Torappu.Battle')
+waiter = c['unique'](lambda t: t['name'] == '<WaitForFixedSeconds>d__0',
+                     [v['types'][index] for index in async_type['nested']])
+for t, index in [(async_type, 55607), (waiter, 55629),
+                  (c['type_row']('BattleController', 'Torappu.Battle'), 56201)]:
+    methods.append(c['method'](t, c['unique'](lambda r: r['index'] == index, t['methods'])))
+delay['floatWaiterFields'] = c['fields'](waiter)
+
+math_type = c['type_row']('MathUtil', 'Torappu')
+distance = c['method'](math_type, c['unique'](lambda r: r['index'] == 196179, math_type['methods']), 'Torappu.Common.dll')
+assert distance['name'] == 'CheckDistance' and distance['entryRva'] == 0x5a40470
+methods.append(distance)
+load = 0xa7baa3
+p = v['offset'](base + load)
+assert b[p:p + 4] == bytes.fromhex('f30f1015')
+tolerance_rva = load + 8 + struct.unpack_from('<i', b, p + 4)[0]
+p = v['offset'](base + tolerance_rva)
+tolerance_raw = b[p:p + 4]
+assert tolerance_raw.hex() == 'cdcccc3d'
+tolerance = {'callerLoadRva': load, 'valueRva': tolerance_rva, 'hex': tolerance_raw.hex(),
+             'float32': struct.unpack('<f', tolerance_raw)[0], 'dimensions': 3,
+             'comparison': 'inclusive squared float32 distance'}
+
 
 def mixed_method(name, entry_rva, table_rva, end_rva, dispatch):
     row = c['unique'](lambda r: r['name'] == name, movement['methods'])
@@ -151,6 +199,7 @@ result = {
                   'matchedFields': {k: fields[k] for k in native if k in fields},
                   'unmatchedSerializedFields': unmatched, 'serializedFieldParity': not unmatched},
     'moveType': move_type, 'methods': methods, 'completionCallback': callback,
+    'completionDelay': delay, 'arrivalTolerance': tolerance,
     'fields': {t['name']: c['fields'](t) for t in hierarchy},
     'resolvedSlots': [c['resolved_slot'](movement, slot) for slot in [19, 21, 22, 23, 30]],
     'review': [
@@ -159,7 +208,9 @@ result = {
         'OnInit and OnTick each subtract one from the selected movement value and bound the switch index to five before an image-relative six-entry jump table. Every chained PE unwind range and all table bytes are retained, and every table target is an actual decoded instruction boundary. The shared strict code reader remains unchanged.',
         'The selected value1 enters OnInit at 0xa7c3aa and OnTick at 0xa7ca2c. Slot23 resolves to BasicMovement.GetTraceTargetMapPosition, which keeps m_targetPos when the target mount-point reference no longer locks. Slot30 resolves to GetSpeed, whose default body returns the supplied speed rather than applying the estimate ratio.',
         'AdvancedMovement.DoCheckReached first calls BasicMovement.CheckReached. Its un-reached path dispatches slot22 to AdvancedMovement.DoCheckReachedInternal, which invokes slot21 BasicMovement.DealReached on proximity. DealReached sets m_reachedTarget before dispatching Behaviour.Reached -> Projectile.OnProjectileReached. The projectile sets its own reached flag before DealProjectileReached. Only after that return does AdvancedMovement.DoCheckReached call EnsureLifeTime, passing clearTraceTargetWhenReached, then schedule completion. Trace identity must not be cleared before arrival impact.',
-        'The exact callback delegate method usage binds the complete two-tail-jump leaf. With comeBack=false it tails to Behaviour.Stop -> Projectile.StopMe. The separate BasicMovement.OnProjectileReached fix guard sets m_reachedTarget before its repeated check; no invented second arrival is required. Delayed scheduler dispatch/frame timing and remaining movement arithmetic remain unverified before delivery integration.'
+        'The exact callback delegate method usage binds the complete two-tail-jump leaf. With comeBack=false it tails to Behaviour.Stop -> Projectile.StopMe. The separate BasicMovement.OnProjectileReached fix guard sets m_reachedTarget before its repeated check; no invented second arrival is required. Delayed scheduler dispatch/frame timing and remaining movement arithmetic remain unverified before delivery integration.',
+        'The completion call loads InvokeAsyncFixedSeconds<AdvancedMovement>. Its independently mapped Object canonical wrapper and coroutine bodies are retained without claiming concrete RGCTX execution. The float WaitForFixedSeconds iterator calculates a frame count, clamps it to at least one, and yields before incrementing its frame index. A configured zero delay must not be replaced with a same-stack stop callback; precise battle-coroutine scheduling and cancellation still require separate integration evidence.',
+        'The arrival proximity constant is float32 0.1. The separately image-bound Torappu.Common MathUtil.CheckDistance squares all three float32 coordinate deltas, adds the y/x/z squares and inclusively compares against the squared tolerance. This is neither exact coordinate equality nor an unverified two-dimensional radius.'
     ]}
 serialized = json.dumps(result, ensure_ascii=False, indent=1) + '\n'
 out = ROOT / 'data/candidates/arkpedia-windows-fear-movement-source.json'
