@@ -17,6 +17,47 @@ movement = c['type_row']('AdvancedMovement', 'Torappu.Battle.Projectiles')
 methods = [c['method'](movement, c['unique'](lambda r: r['name'] == name, movement['methods']))
            for name in ['Init', 'DoCheckReached', 'DoCheckReachedInternal', '_UpdateAfterReach',
                         'get_moveType', 'get_movementCalculator', 'get_isTwoPoint']]
+behaviour = c['unique'](lambda t: t['name'] == 'Behaviour' and t['namespace'] == '', c['lineage'](movement))
+for t, names in [
+    (c['type_row']('BasicMovement', 'Torappu.Battle'), ['CheckReached', 'DealReached',
+        'OnProjectileReached', 'GetTraceTargetMapPosition', 'OnProjectileStop']),
+    (behaviour, ['Reached', 'Stop']),
+    (movement, ['GetSpeed', 'get_speed']),
+    (c['type_row']('Projectile', 'Torappu.Battle'), ['EnsureLifeTime', 'OnProjectileReached', 'DealProjectileReached']),
+]:
+    for name in names:
+        methods.append(c['method'](t, c['unique'](lambda r: r['name'] == name, t['methods'])))
+
+# The delayed completion callback has no unwind entry: retain its exact complete
+# two-tail-jump leaf, checking both internal branches and the destination methods.
+callback_row = c['unique'](lambda r: r['name'] == '<_UpdateAfterReach>b__75_0', movement['methods'])
+assert v['pointer'](callback_row) == base + 0xa7d790
+callback_begin, callback_end = 0xa7d790, 0xa7d7b0
+p = v['offset'](base + callback_begin)
+callback_raw = b[p:p + callback_end - callback_begin]
+decoded = list(Cs(CS_ARCH_X86, CS_MODE_64).disasm(callback_raw, base + callback_begin))
+assert [(i.mnemonic, i.op_str) for i in decoded] == [
+    ('cmp', 'byte ptr [rcx + 0xc0], 0'), ('je', '0x180a7d7a9'),
+    ('cmp', 'byte ptr [rcx + 0x108], 0'), ('jne', '0x180a7d7a9'),
+    ('xor', 'edx, edx'), ('jmp', '0x180a7b410'),
+    ('xor', 'edx, edx'), ('jmp', '0x1806a8e00')]
+assert sum(i.size for i in decoded) == len(callback_raw)
+assert v['pointer'](c['unique'](lambda r: r['name'] == 'Comeback', movement['methods'])) == base + 0xa7b410
+assert v['pointer'](c['unique'](lambda r: r['name'] == 'Stop', behaviour['methods'])) == base + 0x6a8e00
+callback = {'type': movement['name'], **callback_row, 'entryRva': callback_begin,
+    'chunks': [{'beginRva': callback_begin, 'endRva': callback_end, 'unwindRva': None,
+                'boundary': 'Reviewed complete two-tail-jump leaf with two internal branches; no calls or stack changes',
+                'sha256': v['sha'](callback_raw), 'base64': base64.b64encode(callback_raw).decode(),
+                'instructions': [{'rva': i.address - base, 'size': i.size,
+                                  'mnemonic': i.mnemonic, 'operands': i.op_str} for i in decoded]}]}
+load = 0xa7d83c
+p = v['offset'](base + load)
+assert b[p:p + 3] == bytes.fromhex('4c8b05')
+usage_slot = load + 7 + struct.unpack_from('<i', b, p + 3)[0]
+usage = v['quad'](b, v['offset'](base + usage_slot))
+assert usage >> 29 == 3 and (usage & 0x1ffffffe) >> 1 == callback_row['index']
+callback['delegateLoadRva'] = load
+callback['encodedUsage'] = usage
 
 
 def mixed_method(name, entry_rva, table_rva, end_rva, dispatch):
@@ -109,12 +150,16 @@ result = {
     'component': {**binding, 'scriptIdentity': script, 'originalJson': component['originalJson'],
                   'matchedFields': {k: fields[k] for k in native if k in fields},
                   'unmatchedSerializedFields': unmatched, 'serializedFieldParity': not unmatched},
-    'moveType': move_type, 'methods': methods,
+    'moveType': move_type, 'methods': methods, 'completionCallback': callback,
+    'fields': {t['name']: c['fields'](t) for t in hierarchy},
+    'resolvedSlots': [c['resolved_slot'](movement, slot) for slot in [19, 21, 22, 23, 30]],
     'review': [
         'The original CN component resolves to AdvancedMovement. The Windows signed-int MoveType enum assigns value1 to TRACE_TARGET_WITH_SPEED; this is static enum evidence, not proof of historical CN runtime dispatch.',
         'Six original serialized movement fields have no matching Windows hierarchy field. Their zero values are retained as explicit cross-version differences, not treated as proof of inertness or complete layout parity.',
         'OnInit and OnTick each subtract one from the selected movement value and bound the switch index to five before an image-relative six-entry jump table. Every chained PE unwind range and all table bytes are retained, and every table target is an actual decoded instruction boundary. The shared strict code reader remains unchanged.',
-        'The selected value1 enters OnInit at 0xa7c3aa and OnTick at 0xa7ca2c. Movement arithmetic, underlying BasicMovement helpers, arrival ordering and delayed-callback lifetime still require review before delivery integration.'
+        'The selected value1 enters OnInit at 0xa7c3aa and OnTick at 0xa7ca2c. Slot23 resolves to BasicMovement.GetTraceTargetMapPosition, which keeps m_targetPos when the target mount-point reference no longer locks. Slot30 resolves to GetSpeed, whose default body returns the supplied speed rather than applying the estimate ratio.',
+        'AdvancedMovement.DoCheckReached first calls BasicMovement.CheckReached. Its un-reached path dispatches slot22 to AdvancedMovement.DoCheckReachedInternal, which invokes slot21 BasicMovement.DealReached on proximity. DealReached sets m_reachedTarget before dispatching Behaviour.Reached -> Projectile.OnProjectileReached. The projectile sets its own reached flag before DealProjectileReached. Only after that return does AdvancedMovement.DoCheckReached call EnsureLifeTime, passing clearTraceTargetWhenReached, then schedule completion. Trace identity must not be cleared before arrival impact.',
+        'The exact callback delegate method usage binds the complete two-tail-jump leaf. With comeBack=false it tails to Behaviour.Stop -> Projectile.StopMe. The separate BasicMovement.OnProjectileReached fix guard sets m_reachedTarget before its repeated check; no invented second arrival is required. Delayed scheduler dispatch/frame timing and remaining movement arithmetic remain unverified before delivery integration.'
     ]}
 serialized = json.dumps(result, ensure_ascii=False, indent=1) + '\n'
 out = ROOT / 'data/candidates/arkpedia-windows-fear-movement-source.json'

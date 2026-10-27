@@ -129,7 +129,7 @@ test('ordinary projectile birth preprocesses the existing ability action list be
 
 test('movement evidence retains full chained ranges and separates both bounded switch tables from code',()=>{
  const c=read('data/candidates/arkpedia-windows-fear-movement-source.json');
- assert.equal(c.methods.length,9);
+ assert.equal(c.methods.length,21);
  for(const p of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+p.path,import.meta.url))),p.sha256);
  const component=c.component,native=JSON.parse(component.originalJson);
  assert.equal(component.scriptIdentity.m_ClassName,'AdvancedMovement');assert.equal(component.serializedFieldParity,false);
@@ -164,6 +164,59 @@ test('movement evidence retains full chained ranges and separates both bounded s
    assert.equal(cursor,chunk.codeRange?.endRva??chunk.endRva);
   }
  }
+});
+
+test('movement arrival dispatch precedes trace clearing and preserves both once-only guards',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-movement-source.json');
+ assert.deepEqual(c.resolvedSlots.map(s=>[s.slot,s.declaringType,s.name]),[
+  [19,'AdvancedMovement','DoCheckReached'],[21,'BasicMovement','DealReached'],
+  [22,'AdvancedMovement','DoCheckReachedInternal'],[23,'BasicMovement','GetTraceTargetMapPosition'],
+  [30,'AdvancedMovement','GetSpeed']]);
+ const code=(type,name)=>instructions(castMethod(c,type,name));
+ const at=(type,name,rva,args)=>assert.ok(code(type,name).some(i=>i.rva===rva&&i.operands===args));
+ const check=code('AdvancedMovement','DoCheckReached');
+ const index=address=>check.findIndex(i=>i.mnemonic==='call'&&i.operands===address);
+ assert.ok(index('0x180662260')>=0&&index('0x180662260')<index('0x180678500'));
+ at('BasicMovement','CheckReached',0x66229f,'byte ptr [rbx + 0x64], cl');
+ at('BasicMovement','CheckReached',0x6622b2,'ecx, 0x16');
+ at('AdvancedMovement','DoCheckReachedInternal',0xa7bb07,'qword ptr [rax + 0x288]');
+ at('BasicMovement','DealReached',0x66233f,'byte ptr [rbx + 0x64], cl');
+ at('BasicMovement','DealReached',0x66234a,'byte ptr [rbx + 0x64], 1');
+ at('BasicMovement','DealReached',0x6624f7,'0x1806a8d50');
+ at('Behaviour','Reached',0x6a8de0,'0x18067a800');
+ at('Projectile','OnProjectileReached',0x67a8da,'byte ptr [rbx + 0xa6], 0');
+ at('Projectile','OnProjectileReached',0x67a8e5,'byte ptr [rbx + 0xa6], 1');
+ at('Projectile','OnProjectileReached',0x67a8ef,'0x180678290');
+ at('AdvancedMovement','DoCheckReached',0xa7bc34,'r8d, byte ptr [rsi + 0xd4]');
+ at('Projectile','EnsureLifeTime',0x6785a9,'bpl, bpl');
+ at('Projectile','EnsureLifeTime',0x6785c6,'rcx, [rsi + 0x110]');
+ at('BasicMovement','OnProjectileReached',0x6635d9,'byte ptr [rbx + 0x47], 0');
+ at('BasicMovement','OnProjectileReached',0x6635df,'byte ptr [rbx + 0x64], 0');
+ at('BasicMovement','OnProjectileReached',0x6635e5,'byte ptr [rbx + 0x64], 1');
+ assert.equal(c.fields.BasicMovement.find(f=>f.name==='m_reachedTarget').offset,0x64);
+ const target=code('BasicMovement','GetTraceTargetMapPosition');
+ assert.ok(target.some(i=>i.rva===0x662a93&&i.operands==='0x18477cd80'));
+ assert.ok(target.some(i=>i.rva===0x662a9c&&i.operands==='xmm0, qword ptr [rbx + 0x58]'));
+ assert.equal(c.fields.BasicMovement.find(f=>f.name==='m_targetPos').offset,0x58);
+ at('AdvancedMovement','GetSpeed',0xa7bd7f,'xmm0, xmm6');
+});
+
+test('arrival completion binds its actual delegate and complete stop-or-comeback leaf',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-movement-source.json'),m=c.completionCallback;
+ assert.equal(m.name,'<_UpdateAfterReach>b__75_0');assert.equal(m.encodedUsage>>>29,3);
+ assert.equal((m.encodedUsage&0x1ffffffe)>>>1,m.index);assert.equal(m.delegateLoadRva,0xa7d83c);
+ const ch=m.chunks[0],raw=Buffer.from(ch.base64,'base64');
+ assert.equal(ch.unwindRva,null);assert.equal(raw.length,ch.endRva-ch.beginRva);assert.equal(sha(raw),ch.sha256);
+ let cursor=ch.beginRva;for(const i of ch.instructions){assert.equal(i.rva,cursor);cursor+=i.size;}
+ assert.equal(cursor,ch.endRva);
+ assert.deepEqual(ch.instructions.map(i=>i.mnemonic),['cmp','je','cmp','jne','xor','jmp','xor','jmp']);
+ assert.equal(ch.instructions[0].operands,'byte ptr [rcx + 0xc0], 0');
+ assert.equal(ch.instructions[2].operands,'byte ptr [rcx + 0x108], 0');
+ assert.equal(ch.instructions.at(-1).operands,'0x1806a8e00');
+ assert.equal(c.fields.AdvancedMovement.find(f=>f.name==='_comeBack').offset,0xc0);
+ assert.equal(c.fields.AdvancedMovement.find(f=>f.name==='m_isComeBack').offset,0x108);
+ const native=JSON.parse(c.component.originalJson);assert.equal(native._comeBack,0);
+ assert.ok(instructions(castMethod(c,'Behaviour','Stop')).some(i=>i.mnemonic==='jmp'&&i.operands==='0x18067c030'));
 });
 
 test('native projectile source lock checks cached UID and destroyed/null state across allocation and recycling',()=>{

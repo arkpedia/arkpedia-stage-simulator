@@ -281,13 +281,20 @@ for every projectile is therefore unproven. The internal damage-action port's
 explicit cached-ATK argument does not establish that ownership or birth timing.
 
 `extract-windows-fear-movement.py --check` binds the original movement component
-and retains nine complete default methods. `OnInit` and `OnTick` contain embedded
+and retains 21 complete default methods. `OnInit` and `OnTick` contain embedded
 six-entry switch tables in their chained PE ranges. Each table's exact bytes,
 index bias, bounds check and instruction-boundary targets are retained separately
 from executable bytes; the shared strict native reader remains unchanged.
 Windows `MoveType` value 1 is `TRACE_TARGET_WITH_SPEED`, selecting initialization
 at `0xa7c3aa` and ticking at `0xa7ca2c`. Six original CN fields have no matching
 Windows hierarchy field and remain explicit differences even though their values
-are zero. The selected arithmetic, BasicMovement calls, arrival callbacks and
-callback lifetime still need review before launch/delivery integration. These
-artifacts grant no runtime/frame/cross-version parity or additional stage support.
+are zero. `GetTraceTargetMapPosition` retains the previous target position if its
+mount-point reference no longer locks. The native arrival chain sets the movement
+guard, dispatches `Behaviour.Reached` and sets the projectile guard before running
+arrival handlers. Only after arrival returns does the movement controller call
+`EnsureLifeTime` with the trace-clearing flag. The actual delayed-completion
+delegate is bound through its metadata usage and retained as a complete two-tail-
+jump leaf; the selected `comeBack=false` branch reaches `Projectile.StopMe`.
+The remaining arithmetic and scheduler lifetime/frame behavior still need review
+before launch/delivery integration. These artifacts grant no runtime/frame/cross-
+version parity or additional stage support.
