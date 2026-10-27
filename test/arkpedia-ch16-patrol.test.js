@@ -48,7 +48,8 @@ test('native ranged Attack reaches a marked miner while ignoring an unblocked op
   const { h, b, e, u, spawn } = fixture(); const hp = u.hp;
   h.run(.2); assert.equal(e.stats.attacks, 0); assert.equal(u.hp, hp);
   const m = spawn(), before = m.hp; h.run(.04);
-  assert.equal(e.stats.attacks, 1); assert.equal(m.hp, before); assert.equal(b.projectiles.list[0].speed, 10);
+  assert.equal(e.stats.attacks, 1); assert.equal(m.hp, before); assert.equal(b.projectiles.list.length,0);
+  h.run(.5); assert.equal(b.projectiles.list[0].speed,10);
   h.run(.2); assert.equal(before - m.hp, 180); assert.equal(u.hp, hp); assert.deepEqual(b.errors, []);
 });
 
@@ -63,15 +64,15 @@ test('unmarked, airborne and out-of-radius neutral units cannot trigger the weap
 
 test('Combat hits the actual blocker and keeps an independent cooldown from ranged Attack', () => {
   const { h, b, e, u, spawn } = fixture(1); const hp = u.hp;
-  h.run(.1); assert.equal(hp - u.hp, 330); assert.equal(b.projectiles.list.length, 0);
-  assert.ok(e.profile.attackCooldowns.combat > 1.8); assert.equal(e.profile.attackCooldowns.attack, 0);
-  const m = spawn(); const before = m.hp; b.retreat(u); h.run(.04);
-  assert.equal(e.stats.attacks, 2); assert.ok(e.profile.attackCooldowns.attack > 1.9);
-  h.run(.2); assert.equal(before - m.hp, 180); assert.deepEqual(b.errors, []);
+  h.run(.1); assert.equal(hp-u.hp,0);h.run(.5);assert.equal(hp - u.hp, 330); assert.equal(b.projectiles.list.length, 0);
+  assert.ok(e.profile.attackCooldowns.combat > 1.3); assert.equal(e.profile.attackCooldowns.attack, 0);
+  const m = spawn(); const before = m.hp; b.retreat(u); h.run(.5);
+  assert.equal(e.stats.attacks, 2); assert.ok(e.profile.attackCooldowns.attack > 1.8);
+  h.run(.7); assert.equal(before - m.hp, 180); assert.deepEqual(b.errors, []);
 });
 
 test('a born shell survives source death and reads its current attack value at impact', () => {
   const { h, b, e, spawn } = fixture(); const m = spawn(), hp = m.hp;
-  h.run(.04); b.addBuff(e, { key: 'fixture-atk', mods: { atkFlat: 100 }, persist: true });
+  h.run(.55); assert.equal(b.projectiles.list.length,1); b.addBuff(e, { key: 'fixture-atk', mods: { atkFlat: 100 }, persist: true });
   b.kill(e, null); h.run(.2); assert.equal(hp - m.hp, 280); assert.deepEqual(b.errors, []);
 });

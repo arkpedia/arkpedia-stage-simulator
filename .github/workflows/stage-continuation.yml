@@ -28,11 +28,12 @@ jobs:
       - run: python -m pip install -r tools/arkpedia/stages/requirements.txt
       - run: node --test test/arkpedia-enemy-family-source-plan.test.js
       - name: Fetch exact frozen family dependencies and named template source
-        run: node tools/arkpedia/fetch-enemy-family-source.mjs --fetch ch16-story-guardian ch16-fear-projectile ch16-artillery ch16-crossbow ch17-brute ch17-flyer ch17-bag ch17-channel-carrier ch17-war-caster ch17-firewall-boss
+        run: node tools/arkpedia/fetch-enemy-family-source.mjs --fetch ch16-story-guardian ch16-fear-projectile ch16-artillery ch16-crossbow ch16-patrol ch17-brute ch17-flyer ch17-bag ch17-channel-carrier ch17-war-caster ch17-firewall-boss
       - name: Independently reproduce complete native graphs and indexed components
         run: |
           python tools/arkpedia/extract-ch16-artillery.py --check
           python tools/arkpedia/extract-ch16-crossbow.py --check
+          python tools/arkpedia/extract-ch16-patrol.py --check
           python tools/arkpedia/extract-enemy-family-source.py --family ch16-story-guardian --prefab enemy_3011_dyegrd --check
           python tools/arkpedia/extract-enemy-family-source.py --family ch16-fear-projectile --prefab enemy_10128_fearpj --check
           python tools/arkpedia/extract-enemy-family-source.py --family ch17-brute --prefab enemy_10207_mubrut --prefab enemy_10207_mubrut_2 --check
@@ -56,6 +57,8 @@ jobs:
           node tools/arkpedia/shielded-enemy-clock-contract.mjs --check
           node tools/arkpedia/artillery-clock-contract.mjs --check
           node tools/arkpedia/crossbow-clock-contract.mjs --check
+          node tools/arkpedia/patrol-clock-contract.mjs --check
+          python tools/arkpedia/extract-enemy-family-clocks.py --family ch16-patrol --bundle refs/arts/enm_art_6.ab --check
           python tools/arkpedia/extract-enemy-family-clocks.py --family ch16-artillery --bundle refs/arts/enm_art_23.ab --check
           python tools/arkpedia/extract-enemy-family-clocks.py --family ch16-crossbow --bundle refs/arts/enm_art_23.ab --check
           python tools/arkpedia/extract-enemy-family-clocks.py --family ch16-story-guardian --bundle refs/arts/enm_art_23.ab --check

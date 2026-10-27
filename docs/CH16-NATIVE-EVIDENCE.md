@@ -184,3 +184,14 @@ Fresh hosted extraction independently reproduces the original graphs and JSON
 animation source. Runtime and lifecycle tests bind these selected clocks, not
 initial native FSM or exact mid-clip mode handoff/frame ordering. Listener
 direct-radius/collider parity remains held, and no public admission follows.
+
+Patrol Captain now retains its exact prefab-bound binary skeleton from frozen
+`refs/arts/enm_art_6.ab`. Its original body/mode/animator graph resolves the
+literal aliases `Attack_01 -> Attack` and `Attack_02 -> Combat`, both speed 1,
+loop 0 and ignoreMissing 0. Both original clips have one OnAttack at 0.5 seconds
+and duration 1 second. `patrol-clock-contract.mjs --check` reproduces those
+references and byte/hash receipts; hosted source intake independently reproduces
+the graph and original animation bytes. The runtime binds selected clocks and
+output lives, while initial native FSM and precise mode-handoff/frame parity
+remain unclaimed. The original interruptAbilityOnDetach 0 is retained, not used
+to infer compiled dispatch behavior. No admission follows from source extraction.

@@ -1,5 +1,51 @@
 # Development priorities
 
+### 27 October: Patrol Captain native animator and attack clocks
+
+The previous goal turn made concrete progress at `1e9509f7`. Its hosted
+continuation `40457532159` passed completely, including Linux/Windows focused
+cohorts, native reproduction and every browser job. Full CI `40457533148` is
+still running at that crossbow source. Preserve that active handle; its result
+does not validate the subsequent Patrol Captain changes. Fresh full validation
+of the later source remains required after the current full run terminates.
+
+Patrol Captain's exact prefab `battle/enm_pfb_6.ab` and original animation bundle
+`refs/arts/enm_art_6.ab` now have checksum-verified source intake. The prefab's
+external CAB reference and skeletonData pathID bind the actual binary skeleton.
+The native body resolves its animator and mode; that animator explicitly maps
+`Attack_01` to `Attack` and `Attack_02` to `Combat`, with speed 1, loop 0 and
+ignoreMissing 0. Both original clips release one OnAttack event at 0.5 seconds
+and last one second. The new producer verifies every native reference and the
+retained graph/index/inventory/skeleton byte hashes, rather than guessing aliases.
+
+The runtime retains separate Attack/Combat cooldowns, sampled capped TimeMode0
+playback and eligible live slow_down. Each accepted clip captures mode and input
+deployment; control or source retirement discards unborn output and movement
+holds. Born speed-10, five-second-lifetime shots use world travel, live same-life
+ATK and original source credit across source reuse; they survive source death,
+refuse a replacement target life and stop at battle end. The marked-neutral
+selector, exact radius and ordinary unscaled Combat remain unchanged. Native
+initial FSM, precise mid-clip mode handoff and compiled frame parity remain held;
+the source's interruptAbilityOnDetach 0 is retained as evidence, not interpreted
+as proof of native dispatch. The explicit simulator port serializes accepted clips.
+
+Hosted native-source checks now fetch the exact Patrol dependencies and reproduce
+its graph, original animation bytes and alias/clock contract. Forty-five direct
+Patrol clock/lifecycle/family cases and the existing seven 16-5 source/builder/
+seeded-stage cases pass. Actual 16-5 desktop/phone natural-SP, keyboard and restart
+passes. The broader available local cohort passes all 1,942 cases with zero
+failures/skips/cancellations; all 55 combined Patrol/source-plan/16-5/report
+checks pass too. The four quarantined files remain untouched in Git and will run
+from clean hosted checkouts.
+
+Next normal-stage gap: 16-9's fear-projectile and stage-local miner contracts.
+The existing inventory still excludes 16-9/12/13/16/17/18 and 17-14/16/18 from
+admission. The retained fear-projectile skeleton has no OnAttack event; do not
+borrow a hit clock. The local miner compiler already retains literal useDb=false
+and fear-loss 0, but dedicated runtime/native review and stage integration are
+still required. These changes grant no public or test-only stage admission and
+do not complete the wider enemy/stage/operator/module mechanics audit.
+
 ### 27 October: original crossbow Attack and Combat clocks
 
 Final local focused validation passes all1,903 available cases, with zero
