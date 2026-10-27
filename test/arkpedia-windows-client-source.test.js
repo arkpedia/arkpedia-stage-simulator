@@ -72,9 +72,9 @@ const castMethod=(c,type,name)=>{
 };
 
 test('fear selector retains complete native chunks and exact CN script identity with explicit layout differences',()=>{
- const c=read(fearSelectorPath);assert.equal(c.methods.length,22);
+ const c=read(fearSelectorPath);assert.equal(c.methods.length,24);
  for(const p of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+p.path,import.meta.url))),p.sha256);
- for(const method of c.methods)for(const chunk of method.chunks){
+ for(const method of [...c.methods,c.filterDispatcher])for(const chunk of method.chunks){
   const raw=Buffer.from(chunk.base64,'base64');assert.equal(raw.length,chunk.endRva-chunk.beginRva);assert.equal(sha(raw),chunk.sha256);
   assert.ok(chunk.unwindRva>0);
  }
@@ -84,6 +84,30 @@ test('fear selector retains complete native chunks and exact CN script identity 
  const binding=bindings.bindings.find(b=>b.componentPathId===c.selector.componentPathId&&b.prefab===c.selector.prefab);
  assert.equal(binding.scriptPathId,c.selector.scriptPathId);assert.equal(binding.componentSha256,sha(c.selector.originalJson));
  for(const field of ['runtimeDispatchVerified','frameParity','crossVersionParity'])assert.equal(c[field],false);
+});
+
+test('native filter dispatch retains every byte as decoded code or a bounded instruction-aligned jump table',()=>{
+ const c=read(fearSelectorPath),dispatcher=c.filterDispatcher;assert.equal(dispatcher.entryRva,0x769490);
+ assert.equal(dispatcher.chunks.length,1);const chunk=dispatcher.chunks[0],raw=Buffer.from(chunk.base64,'base64');
+ const code=chunk.codeRange,table=chunk.jumpTable;
+ assert.equal(code.beginRva,chunk.beginRva);assert.equal(code.endRva,table.beginRva);assert.equal(table.endRva,chunk.endRva);
+ assert.equal(table.count,79);assert.equal(table.entryBytes,4);assert.equal(table.endRva-table.beginRva,table.count*4);
+ const codeBytes=raw.subarray(0,code.endRva-code.beginRva),dataBytes=raw.subarray(codeBytes.length);
+ assert.equal(sha(codeBytes),code.sha256);assert.equal(sha(dataBytes),table.sha256);
+ let cursor=code.beginRva;for(const i of chunk.instructions){assert.equal(i.rva,cursor);cursor+=i.size;}assert.equal(cursor,table.beginRva);
+ const starts=new Set(chunk.instructions.map(i=>i.rva));
+ for(let n=0;n<table.count;n++){assert.equal(dataBytes.readUInt32LE(n*4),table.targetRvas[n]);assert.ok(starts.has(table.targetRvas[n]));}
+ const at=rva=>chunk.instructions.find(i=>i.rva===rva);
+ assert.deepEqual([at(0x76990e).mnemonic,at(0x76990e).operands],['cmp','ebp, 0x4e']);
+ assert.deepEqual([at(0x76991e).mnemonic,at(0x76991e).operands],['mov','ecx, dword ptr [rdx + rbp*4 + 0x76b648]']);
+ assert.deepEqual([at(0x769928).mnemonic,at(0x769928).operands],['jmp','rcx']);
+ const selected=dispatcher.selectedCase;assert.equal(selected.value,4);assert.equal(selected.targetRva,table.targetRvas[4]);
+ assert.equal(selected.encodedUsage>>>29,3);assert.equal((selected.encodedUsage&0x1ffffffe)>>>1,selected.method.index);
+ assert.equal(selected.method.name,'_Filter_HatredDes');
+ assert.equal(selected.hatredSlot.slot,46);assert.equal(selected.hatredSlot.declaringType,'Enemy');assert.equal(selected.hatredSlot.name,'get_hatred');
+ const getter=castMethod(c,'Enemy','get_hatred');assert.equal(getter.entryRva,selected.hatredSlot.entryRva);
+ const key=instructions(castMethod(c,'FilterUtil','_Filter_HatredDes'));
+ assert.ok(key.some(i=>i.mnemonic==='mov'&&i.operands==='rax, qword ptr [rdx + 0x418]'));
 });
 
 test('fear selector abnormal values are retained under their actual disabled branch conditions',()=>{

@@ -1,5 +1,39 @@
 # Development priorities
 
+### 27 October: complete filter code and bounded switch table
+
+Checkpoint `5319bc8a` was concrete source progress. Revalidated both previously
+live workflows as terminal success: continuation `40483335594` at `6f708712`
+passes all jobs including 17-12, and full `40477137676` at `baa0beef` passes all
+eight Linux/Windows Node22/24 matrix jobs. Pushed the saved selector checkpoint
+only after those results; its continuation `40484333392` is now live. Preserve
+that handle until terminal before pushing another source-only checkpoint.
+
+Resolved the FilterUtil.Filter disassembly gap with exact native structure,
+without weakening the common complete-code reader. The PE range has fully
+decoded instructions through 0x76b648, followed by 79 four-byte RVA entries ending
+exactly at the PE boundary 0x76b784. Its actual unsigned `cmp index,78`, image-base
+LEA, indexed table load and indirect jump bind the split. Every table destination
+is a decoded instruction boundary. Full raw range, code/table checksums, complete
+instructions with byte sizes and all target RVAs are retained; no bytes are lost
+or interpreted as instructions merely to satisfy a completeness assertion.
+
+The selected case4 loads an encoded method-definition usage that resolves exactly
+to FilterUtil._Filter_HatredDes. That key function reads native hatred slot46,
+which binds to Enemy.get_hatred; both complete methods are now retained. This
+closes the dispatch/key-source gap, but not generic sort/comparer/tie behavior,
+runtime hotfix or CN cross-version parity. The unmatched CN ignoreMotionMode
+field and projectile hit/count/event5 self-death lifetime still require review.
+
+The selector producer reproduces 24 complete ordinary methods plus the complete
+mixed code/table dispatcher. All 30 source checks and 76 combined source/Fear/
+family checks pass. Added byte-contiguous code coverage, exact table bounds,
+instruction-boundary targets, selected delegate usage and hatred-slot assertions.
+Next resolve generic sort/comparer behavior and projectile lifetime before adding
+the exact internal local miner/projectile to test-only16-9. Entire Chapter16/17
+and operator/module backlog remains required. No merge/deploy/public promotion;
+four known quarantine deletions remain unstaged.
+
 ### 27 October: actual fear selector conditional flags
 
 Previous checkpoint `6f708712` was concrete controller progress. Its continuation
