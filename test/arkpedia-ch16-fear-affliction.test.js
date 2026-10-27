@@ -15,6 +15,7 @@ import {fearProjectileAreaDelivery} from '../server/sim/content/chapter16-fear-a
 import {fearProjectileFlight} from '../server/sim/content/chapter16-fear-flight.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
+import {fearProjectileSpell} from '../server/sim/content/chapter16-fear-spell.js';
 import {fearProjectileTargetVerifier,fearProjectileSourceMotion} from '../server/sim/content/chapter16-fear-targets.js';
 import {fearProjectileReached,fearProjectileMotionStep,fearProjectileMountReference,fearProjectileTraceMotion} from '../server/sim/content/chapter16-fear-movement.js';
 import { battle as minerBattle, keys as minerKeys } from './helpers/ch17Harness.js';
@@ -22,6 +23,65 @@ import { chapter16Shadow } from '../server/sim/content/chapter16-shadow.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
 const parentKey='feawpj_a[mcreep_fear]';
 const fpOne=1n<<32n;
+function spellFixture(overrides={}){
+ const f=fixture(),events=[];
+ const spell=fearProjectileSpell(f.b,{owner:f.source,onSpellStart:()=>{events.push('start');return true;},
+  isCasting:()=>{events.push('casting');return true;},emitSpellEnd:({event,spellCount})=>{
+   assert.equal(event,5);assert.equal(spellCount,1);events.push('end');},
+  mayBeginPostDelay:()=>{events.push('canPost');return true;},beginPostDelay:()=>events.push('post'),...overrides});
+ return{...f,spell,events};
+}
+
+test('single-spell continuation launches before event5 and checks post-delay afterward',()=>{
+ const f=spellFixture();assert.deepEqual(f.spell.run(),{started:true,spellEnd:true,postDelay:true});
+ assert.deepEqual(f.events,['start','casting','end','canPost','post']);assert.equal(f.spell.run(),null);
+});
+
+for(const [key,expected]of [['onSpellStart',{started:false,spellEnd:false,postDelay:false}],
+ ['isCasting',{started:true,spellEnd:false,postDelay:false}],['mayBeginPostDelay',{started:true,spellEnd:true,postDelay:false}]])
+test('spell continuation preserves the false '+key+' gate',()=>{
+ const f=spellFixture({[key]:()=>false});assert.deepEqual(f.spell.run(),expected);
+ assert.equal(f.events.includes('post'),false);if(key!=='mayBeginPostDelay')assert.equal(f.events.includes('end'),false);
+});
+
+test('event5 owner removal prevents post-delay without suppressing the completed spell event',()=>{
+ let f;f=spellFixture({emitSpellEnd:()=>{f.events.push('end');f.b.kill(f.source,null);}});
+ assert.deepEqual(f.spell.run(),{started:true,spellEnd:true,postDelay:false});
+ assert.deepEqual(f.events,['start','casting','end']);assert.equal(f.spell.run(),null);assert.deepEqual(f.b.errors,[]);
+});
+
+test('recursive spell continuations cannot duplicate launch or spell-end callbacks',()=>{
+ let f;f=spellFixture({onSpellStart:()=>{assert.equal(f.spell.run(),null);f.events.push('start');return true;},
+  emitSpellEnd:()=>{assert.equal(f.spell.run(),null);f.events.push('end');}});
+ f.spell.run();assert.deepEqual(f.events,['start','casting','end','canPost','post']);
+});
+
+test('owner reuse while testing casting prevents spell-end and post-delay for the replacement',()=>{
+ let f;f=spellFixture({isCasting:()=>{f.source.deploySeq++;return true;}});
+ assert.equal(f.spell.run(),null);assert.deepEqual(f.events,['start']);
+});
+
+test('bounded wait, spell event5 and independent flight compose without canceling born damage',()=>{
+ const f=fixture();f.source.base.atk=175;f.source.markDirty();f.target.nativeUid=1;
+ const source=fearProjectileSourceReference(f.b,f.source),damage=fearProjectileDamageAction(f.b,source),events=[];
+ let flight;
+ const spell=fearProjectileSpell(f.b,{owner:f.source,onSpellStart:()=>{
+  events.push('birth');flight=fearProjectileFlight(f.b,{from:{x:0,y:0,z:0},initialTarget:{x:1,y:0,z:0},
+   resolveTargetPosition:()=>null,resolveTraceTarget:()=>f.target,
+   area:{queryOverlaps:()=>[f.target],resolveEntity:u=>u,readUid:u=>u.nativeUid,isCandidate:()=>true,
+    verifyTarget:()=>true,deterministic:true,resolveSource:source.resolveSource,onSelected:()=>{}},
+   runHit:({target})=>applyFearProjectileImpact(f.b,{source:f.source,target,applyAttachments:()=>{},runActions:damage}),
+   onStopped:()=>{},scheduleCompletion:()=>()=>{}});return true;
+ },isCasting:()=>true,emitSpellEnd:()=>{events.push('event5');f.b.kill(f.source,null);},
+ mayBeginPostDelay:()=>{throw Error('removed owner');},beginPostDelay:()=>{throw Error('removed owner');}});
+ const wait=fearProjectileAttackWait(f.b,{owner:f.source,cachedDurationRaw:fpOne,readDeltaPlayTime:()=>1,
+  isCastActive:()=>true,subscribeAttackEvent:()=>()=>{},onReady:()=>spell.run()});
+ wait.resume();assert.equal(flight,undefined);wait.resume();assert.deepEqual(events,['birth','event5']);
+ const hp=f.target.hp;flight.advance(fpOne/10n,fpOne);assert.equal(hp-f.target.hp,175);
+ assert.ok(f.target.findBuff(parentKey));assert.equal(wait.resume(),null);assert.equal(spell.run(),null);
+ flight.release();source.release();assert.deepEqual(f.b.errors,[]);
+});
+
 test('cast wait frame conversion rounds FP quotient ties to even and clamps to one',()=>{
  for(const [raw,expected]of [[fpOne,1],[3n*fpOne/2n,2],[5n*fpOne/2n,2],[7n*fpOne/2n,4],
   [0n,1],[-5n*fpOne/2n,1]])assert.equal(fearProjectileWaitFrameCount(raw,1),expected);

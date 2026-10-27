@@ -862,7 +862,7 @@ test('native enemy initialization retains explicit talent validity and attachmen
  assert.ok(update.some(i=>i.mnemonic==='jmp'&&i.operands==='0x'+(c.imageBase+state.entryRva).toString(16)));
 });
 test('cast evidence resolves common-library tokens in their own image and preserves every native chunk',()=>{
- const c=read(castPath);assert.equal(c.methods.length,46);
+ const c=read(castPath);assert.equal(c.methods.length,47);
  for(const p of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+p.path,import.meta.url))),p.sha256);
  assert.deepEqual(c.codeGenModules.map(m=>m.name),['Assembly-CSharp.dll','Torappu.Common.dll','spine-unity.dll']);
  for(const method of [...c.methods,...c.virtualHelpers])for(const chunk of method.chunks){
@@ -892,6 +892,20 @@ test('cast frame conversion binds rounded division, FP ties-to-even and reserved
  for(const [rva,args]of [[0x396bd38,'0x183991370'],[0x396bd5a,'0x185a3da20'],
   [0x396bd68,'0x185a3d680'],[0x396bd8f,'0x185a42a50'],[0x396bd96,'eax, esi']])at(waiter,rva,args);
  at(castMethod(c,'BattleController','get_deltaPlayTime'),0x3991401,'0x185a3ad10');
+});
+
+test('single-spell native continuation gates spell end after launch and casting validation',()=>{
+ const c=read(castPath),sequence=instructions(castMethod(c,'<_DoCast>d__85','MoveNext'));
+ const at=(rva,args)=>assert.ok(sequence.some(i=>i.rva===rva&&i.operands===args));
+ at(0x391ff1a,'rax');at(0x391ff1e,'0x183920050');at(0x391ff29,'0x183911110');
+ at(0x391ff30,'0x183920050');at(0x391ff4b,'0x18390dde0');
+ at(0x391ff78,'rax');at(0x391ff85,'ecx, 0x49');at(0x391ff8d,'r8d, [rcx - 0x44]');
+ at(0x391ff91,'0x18001cf10');at(0x3920001,'0x1800057b0');
+ assert.equal(c.resolvedSlots.find(s=>s.type==='RangedAttack'&&s.slot===73).name,'OnEvent');
+ assert.equal(c.resolvedSlots.find(s=>s.type==='RangedAttack'&&s.slot===78).name,'OnWaitForPostDelay');
+ assert.equal(c.resolvedSlots.find(s=>s.type==='RangedAttack'&&s.slot===89).name,'CheckAnotherSpell');
+ const another=instructions(castMethod(c,'AbilityStandard','CheckAnotherSpell'));
+ assert.ok(another.some(i=>i.rva===0x3908725&&i.operands==='al, al'));
 });
 
 test('cast start captures virtual GetDuration before the iterator initializes its frame count',()=>{

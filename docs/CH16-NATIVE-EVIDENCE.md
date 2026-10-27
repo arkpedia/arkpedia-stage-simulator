@@ -546,3 +546,22 @@ waiting, deliver an event during timing sampling, and cancel or reject malformed
 timing after registration without leaking an event handler. These inputs still
 come from explicit native-state callers; engine sampling and coroutine cadence
 are not inferred from a generic simulation step.
+
+### Single-spell continuation
+
+`fearProjectileSpell` joins successful spell-start/launch, the casting-state
+check, spell-count1 and event5 dispatch in the native default single-spell
+order. The retained `CheckAnotherSpell` default returns false; runtime hotfix
+behavior is not certified. A rejected spell start or lost casting state does
+not emit spell end. Event5 precedes owner/action checks for post-delay and can
+remove the owner itself; no removed or recycled owner is passed to post-delay.
+The helper does not own or clear independently born projectiles.
+
+Tests compose the bounded wait, actual internal flight, event5 source removal,
+affliction and cached damage. They also cover rejected launch/casting/post-delay
+gates, recursive spell calls and owner reuse during the casting-state reader.
+Native `_DoCast` call/branch sites and RangedAttack virtual slots73/78/89 bind
+the ordering. This is a selected continuation with explicit launch, event5 and
+post-delay callers. Initial target selection, actual mode-switch/self-death
+receivers, full coroutine completion/interrupt handling, native mount/query
+inputs and stage support receipts remain integration obligations.
