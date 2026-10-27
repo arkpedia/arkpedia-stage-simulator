@@ -22,3 +22,16 @@ export function fearProjectileMultiplyRaw(a,b){
   throw new TypeError('Fear FP multiplication requires signed Q32.32 values');
  return BigInt.asIntN(64,(a*b)>>32n);
 }
+
+export function fearProjectileAbsRaw(value){
+ if(typeof value!=='bigint'||value<-(1n<<63n)||value>(1n<<63n)-1n)throw new TypeError('Fear FP absolute value requires signed Q32.32');
+ if(value===-(1n<<63n))return(1n<<63n)-2n;
+ return value<0n?-value:value;
+}
+
+export function fearProjectileRoundRawToInt(value){
+ if(typeof value!=='bigint'||value<-(1n<<63n)||value>(1n<<63n)-1n)throw new TypeError('Fear FP rounding requires signed Q32.32');
+ const one=1n<<32n,fraction=BigInt.asUintN(32,value);let rounded=value&-one;
+ if(fraction>one/2n||(fraction===one/2n&&(rounded&one)!==0n))rounded=BigInt.asIntN(64,rounded+one);
+ return Number(BigInt.asIntN(32,rounded>>32n));
+}

@@ -22,9 +22,10 @@ import {fearProjectileBuffRecycleQueue,fearProjectileClearRuntimeData} from '../
 import {fearProjectileBuffIdentity,fearProjectileResetBuffLifecycle} from '../server/sim/content/chapter16-fear-buff-identity.js';
 import {fearProjectileBuffTimer,fearProjectileResetBuffTriggers,fearProjectileBuffDurationKey,fearProjectileResetBuffLifetime,fearProjectileModifyBuffLifetime} from '../server/sim/content/chapter16-fear-buff-timing.js';
 import {fearProjectileResetBuffBlackboard,fearProjectileBuffPrefixAssignments,fearProjectileBuffBlackboardWrites,fearProjectileBuffBlackboardReads,fearProjectileBuffBlackboardPairs} from '../server/sim/content/chapter16-fear-buff-blackboard.js';
-import {fearProjectileFloatToRaw,fearProjectileFloorToInt,fearProjectileMultiplyRaw} from '../server/sim/content/chapter16-fear-fixed-values.js';
+import {fearProjectileFloatToRaw,fearProjectileFloorToInt,fearProjectileMultiplyRaw,fearProjectileAbsRaw,fearProjectileRoundRawToInt} from '../server/sim/content/chapter16-fear-fixed-values.js';
 import {fearProjectileLoadBuffActions} from '../server/sim/content/chapter16-fear-buff-actions.js';
 import {fearProjectileLoadBuffAttributes} from '../server/sim/content/chapter16-fear-buff-attributes.js';
+import {fearProjectileBuffPriority,fearProjectileUpdateBuffStack} from '../server/sim/content/chapter16-fear-buff-priority.js';
 import {fearProjectileBuffRecyclePool,fearProjectileDefaultBuffPool} from '../server/sim/content/chapter16-fear-buff-pool.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
@@ -210,6 +211,78 @@ test('finish and native-frame queue use concrete buff recycle identity before th
  finish.run();queue.update();assert.equal(buff.instanceUid,1);assert.equal(buff.m_isValid,true);assert.equal(recycled,0);
  f.b.kill(f.source,null);frame=11;queue.update();assert.equal(recycled,1);assert.equal(buff.instanceUid,0);assert.equal(buff.m_isValid,false);assert.equal(p.lock(old),null);
  identity.allocate(buff);assert.equal(buff.instanceUid,2);assert.equal(p.lock(old),null);assert.equal(p.lock(p.capture(buff)),buff);queue.release();assert.deepEqual(f.b.errors,[]);
+});
+
+function priorityFixture(overrides={}){
+ const buff=Object.fromEntries(['m_attributeAdditions','m_attributeMultipliers','m_attributeFinalAdditions','m_attributeFinalScalers'].map(k=>[k,Array(38).fill(0n)]));
+ const data={priority:-1,priorityBBKeys:null},events=[];let active=true;
+ const priority=fearProjectileBuffPriority({buff,readData:()=>data,getFpOrDefault:(...args)=>{events.push(args);return 0n;},isActive:()=>active,...overrides});
+ return{buff,data,events,priority,set active(value){active=value;}};
+}
+
+test('explicit nonnegative buff priority returns without reading attribute arrays or blackboard keys',()=>{
+ const f=priorityFixture({buff:{},getFpOrDefault:()=>{throw Error('lookup');}});f.data.priority=7;assert.equal(f.priority.run(),7);f.data.priority=0;assert.equal(f.priority.run(),0);
+});
+
+test('automatic priority sums signed additions/multipliers/final additions and excludes final scalers',()=>{
+ const f=priorityFixture();f.buff.m_attributeAdditions[0]=1n<<32n;f.buff.m_attributeMultipliers[1]=-(1n<<30n);f.buff.m_attributeFinalAdditions[37]=-2n<<32n;
+ f.buff.m_attributeFinalScalers.fill(99n<<32n);assert.equal(f.priority.run(),-1250);assert.deepEqual(f.events,[]);
+});
+
+test('configured priority keys use per-key absolute values and native lookup flag true',()=>{
+ const f=priorityFixture({getFpOrDefault:(key,fallback,flag)=>{assert.equal(fallback,0n);assert.equal(flag,true);return key==='a'?-5n<<30n:5n<<31n;}});
+ f.data.priorityBBKeys=['a','b'];assert.equal(f.priority.run(),3750);
+});
+
+test('automatic priority uses FP ties-to-even rounding after multiplying by1000',()=>{
+ for(const[value,expected]of [[1n<<28n,62],[3n<<28n,188],[-1n<<28n,-62],[-3n<<28n,-188]]){
+  const f=priorityFixture();f.buff.m_attributeAdditions[0]=value;assert.equal(f.priority.run(),expected);
+ }
+ assert.equal(fearProjectileAbsRaw(-(1n<<63n)),(1n<<63n)-2n);
+ assert.equal(fearProjectileRoundRawToInt((1n<<63n)-1n),-(2**31));
+});
+
+test('priority key traversal rereads live key array after native lookup effects',()=>{
+ let f;f=priorityFixture({getFpOrDefault:()=>{f.data.priorityBBKeys.length=1;return 1n<<32n;}});f.data.priorityBBKeys=['a','b'];assert.equal(f.priority.run(),1000);
+});
+
+test('priority guards reentry and stops lifecycle invalidation after lookup before interpreting its result',()=>{
+ let f;f=priorityFixture({getFpOrDefault:()=>{assert.equal(f.priority.run(),null);f.active=false;return undefined;}});f.data.priorityBBKeys=['a'];assert.equal(f.priority.run(),null);
+});
+
+function stackUpdateFixture(overrides={}){
+ const buff={m_stackCnt:2,m_maxValidStackCnt:2,m_data:{attributes:{id:'attrs'}},attributeMask:2n},events=[],owner={},ownerAttributes={};let active=true;
+ const update=fearProjectileUpdateBuffStack({buff,loadAttributes:(a,n)=>{events.push(['load',a,n]);buff.attributeMask=4n;},
+  readOwner:()=>owner,readOwnerAttributes:o=>{assert.equal(o,owner);return ownerAttributes;},markAttributesDirty:(a,m)=>events.push(['dirty',a,m]),isActive:()=>active,...overrides});
+ return{buff,events,owner,ownerAttributes,update,set active(value){active=value;}};
+}
+
+test('stack update skips above a nonnegative cap without clamping the count or marking attributes dirty',()=>{
+ const f=stackUpdateFixture();f.buff.m_stackCnt=3;f.update.run();assert.equal(f.buff.m_stackCnt,3);assert.equal(f.buff.attributeMask,2n);assert.deepEqual(f.events,[]);
+ f.buff.m_maxValidStackCnt=0;f.buff.m_data=null;f.update.run();assert.deepEqual(f.events,[]);
+});
+
+test('stack update at its cap and with negative cap reloads current attributes then marks the resulting mask dirty',()=>{
+ const f=stackUpdateFixture();f.update.run();assert.deepEqual(f.events,[['load',f.buff.m_data.attributes,2],['dirty',f.ownerAttributes,4n]]);
+ f.buff.m_maxValidStackCnt=-1;f.buff.m_stackCnt=9;f.update.run();assert.equal(f.events.at(-2)[2],9);
+});
+
+test('stack update and priority compose with concrete attribute initialization',()=>{
+ const f=attributeLoadingFixture(),dirty=[];f.attributes.attributeModifiers=[attributeModifier(0,2)];Object.assign(f.buff,{m_stackCnt:2,m_maxValidStackCnt:3,m_data:{attributes:f.attributes}});
+ const update=fearProjectileUpdateBuffStack({buff:f.buff,loadAttributes:(attributes,stackCount)=>fearProjectileLoadBuffAttributes({buff:f.buff,attributes,stackCount,
+  tryGetFP:()=>({found:false,valueRaw:0n}),getBlackboardKey:()=>'',readSource:()=>null,isDestroyedOrNull:s=>s==null,readSourceAttribute:()=>0n,captureSnapshot:()=>{},isActive:()=>true}).run(),
+  readOwner:()=>({}),readOwnerAttributes:()=>({}),markAttributesDirty:(_,mask)=>dirty.push(mask),isActive:()=>true});
+ update.run();assert.deepEqual(dirty,[2n]);assert.equal(f.buff.m_attributeAdditions[1],4n<<32n);
+ const priority=fearProjectileBuffPriority({buff:f.buff,readData:()=>({priority:-1,priorityBBKeys:null}),getFpOrDefault:()=>0n,isActive:()=>true});assert.equal(priority.run(),4000);
+});
+
+for(const point of ['loadAttributes','readOwner','readOwnerAttributes','markAttributesDirty'])test('stack update stops life invalidation during '+point,()=>{
+ let f;f=stackUpdateFixture({[point]:()=>{f.active=false;return undefined;}});assert.equal(f.update.run(),null);assert.equal(f.update.run(),null);
+});
+
+test('stack update guards recursive attribute loading and can retry after a receiver exception',()=>{
+ let f,fail=true;f=stackUpdateFixture({loadAttributes:()=>{assert.equal(f.update.run(),null);if(fail)throw Error('load');}});
+ assert.throws(()=>f.update.run(),/load/);fail=false;f.update.run();assert.equal(f.events.at(-1)[0],'dirty');
 });
 
 function attributeLoadingFixture(overrides={}){

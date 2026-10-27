@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 117 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 121 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -1346,6 +1346,34 @@ invalid sources, unknown formula mask behavior, partial array failures, reentry,
 retry and lifecycle cancellation. All746 focused native/fear/family/miner tests
 pass. Full Reset, native source snapshot effects and live controller/stage
 integration remain open; all source/support/receipt/catalogue gates are intact.
+
+### Buff priority calculation and capped stack updates
+
+The121-method artifact additionally retains _CalculatePriority, _DoUpdateStack,
+BuffData.get_isAutoPriority and FP's static constructor through the correct
+Torappu.Common image. Negative configured priority selects automatic calculation.
+With no priority keys it sums38 signed additions/multipliers/final-additions;
+final-scalers are excluded. With keys it sums each native FP lookup's absolute
+value, using fallback0 and the selected Boolean true. Both automatic paths
+multiply by the pinned float1000 and use FP ties-to-even rounding to Int32.
+FP.Abs's minimum-value case uses native MaxValue raw7ffffffffffffffe, rather
+than inventing an unrepresentable positive counterpart.
+
+`fearProjectileBuffPriority` implements those selected calculations with signed64
+wrapping and concrete FP multiplication/absolute/rounding operations. Data/key
+and lifecycle reads remain explicit. `fearProjectileUpdateBuffStack` preserves
+the native cap guard: a stack count above a nonnegative maxValidStackCnt skips
+recalculation without clamping the count. Otherwise it reloads modifiers with
+the current count, gets owner attributes, reads the resulting attribute mask and
+marks that mask dirty. It does not silently skip a missing owner.
+
+Tests cover explicit priority, signed sums, per-key absolute values, scale and
+tie rounding, minimum/overflow values, live key changes, cap/negative-cap cases,
+retry, reentry and cancellation. A concrete stack/attribute/priority composition
+verifies stack-scaled modifiers and dirty-mask notification before calculating
+priority. All761 focused native/fear/family/miner tests pass; --check reproduces
+the121-method evidence bundle. Native owner dirty effects, full Reset and live
+controller/stage integration remain open. All existing gates remain intact.
 
 ### ClearRunTimeData default cleanup ordering
 

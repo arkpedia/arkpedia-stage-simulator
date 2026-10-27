@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,117);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,121);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -225,6 +225,24 @@ test('immediate recycle source enumerates stored pairs and pointer lists before 
  }
  at(q.outerMoveNext,0x4dd4158,'dword ptr [rbx + 0xc], eax');at(q.outerMoveNext,0x4dd41b6,'dword ptr [rbx + 0xc], eax');
  assert.ok(!instructions(m).some(i=>i.mnemonic==='call'&&i.operands==='0x183991a80'),'flush does not filter by current frame');
+});
+
+test('priority/stack source binds auto sign,1000 scale, FP rounding and over-cap early return',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.priorityAndStack;
+ const priority=castMethod(c,'Buff','_CalculatePriority'),stack=castMethod(c,'Buff','_DoUpdateStack');
+ const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ at(priority,q.autoPredicateCallRva,'0x18225d400');at(priority,q.staticPriorityReadRva,'eax, dword ptr [rdi + 0x98]');
+ at(priority,q.attributeCountRva,'ebp, 0x26');at(priority,q.priorityMultiplyCallRva,'0x185a3b800');at(priority,q.roundCallRva,'0x185a42a50');
+ at(priority,q.keyLookupCallRva,'0x182166830');at(priority,q.absoluteCallRva,'0x185a5bf20');at(priority,q.sumCallRva,'0x184175da0');
+ assert.equal(q.priorityScale.hex,'00007a44');assert.equal(q.priorityScale.value,1000);
+ const fpInit=c.methods.find(m=>m.type==='FP'&&m.name==='.cctor');assert.equal(fpInit.image,'Torappu.Common.dll');
+ at(fpInit,q.maxValueConstantRva,'rax, 0x7ffffffffffffffe');at(fpInit,q.maxValueWriteRva,'qword ptr [rcx + 0x10], rax');
+ at(stack,q.stackCapReadRva,'eax, dword ptr [rbx + 0x90]');at(stack,q.stackCountCompareRva,'dword ptr [rbx + 0x8c], eax');at(stack,q.overCapBranchRva,'0x1839b351b');
+ at(stack,q.stackAttributeLoadCallRva,'0x1839b4460');at(stack,q.stackOwnerCallRva,'0x1839b6ff0');at(stack,q.stackOwnerAttributesCallRva,'0x183a29330');
+ at(stack,q.stackMaskCallRva,'0x1839b64e0');at(stack,q.stackDirtyCallRva,'0x183957f70');
+ assert.ok(instructions(castMethod(c,'BuffData','get_isAutoPriority')).some(i=>i.mnemonic==='shr'&&i.operands==='eax, 0x1f'));
+ for(const m of q.math)for(const ch of m.chunks){const raw=Buffer.from(ch.base64,'base64');assert.equal(sha(raw),ch.sha256);assert.equal(raw.length,ch.endRva-ch.beginRva);}
+ assert.equal(q.nativeOwnerDirtyEffectsVerified,false);assert.equal(q.livePriorityPhaseVerified,false);assert.equal(q.liveStackPhaseVerified,false);
 });
 
 test('attribute loader source binds status masks,38 entries, source conversion and snapshot ordering',()=>{

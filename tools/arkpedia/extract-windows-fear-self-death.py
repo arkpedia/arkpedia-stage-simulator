@@ -786,6 +786,28 @@ one_raw = v['b'][cp:cp + 4]
 assert one_raw.hex() == '0000803f'
 result['modeSwitch']['buffNotification']['attributeLoading']['initialScalerConstant'] = {
     'loadRva': 0x39b47a6, 'targetRva': target, 'hex': one_raw.hex(), 'value': struct.unpack('<f', one_raw)[0]}
+for owner, name, image in [(buff, '_CalculatePriority', 'Assembly-CSharp.dll'), (buff, '_DoUpdateStack', 'Assembly-CSharp.dll'),
+                            (c['type_row']('BuffData', 'Torappu'), 'get_isAutoPriority', 'Assembly-CSharp.dll'),
+                            (c['type_row']('FP', 'Torappu'), '.cctor', 'Torappu.Common.dll')]:
+    methods.append(c['method'](owner, c['unique'](lambda r: r['name'] == name, owner['methods']), image))
+pos = v['offset'](v['image_base'] + 0x39b3323)
+assert v['b'][pos:pos + 4] == bytes.fromhex('f30f1005')
+target = 0x39b3323 + 8 + struct.unpack_from('<i', v['b'], pos + 4)[0]
+cp = v['offset'](v['image_base'] + target)
+scale_raw = v['b'][cp:cp + 4]
+assert scale_raw.hex() == '00007a44'
+result['modeSwitch']['buffNotification']['priorityAndStack'] = {
+    'priorityScale': {'loadRva': 0x39b3323, 'targetRva': target, 'hex': scale_raw.hex(), 'value': struct.unpack('<f', scale_raw)[0]},
+    'autoPredicateCallRva': 0x39b31fb, 'staticPriorityReadRva': 0x39b3204,
+    'attributeCountRva': 0x39b3305, 'priorityMultiplyCallRva': 0x39b333b, 'roundCallRva': 0x39b335d,
+    'keyLookupCallRva': 0x39b33d4, 'absoluteCallRva': 0x39b33f5, 'sumCallRva': 0x39b3403,
+    'maxValueConstantRva': 0x5a3d005, 'maxValueWriteRva': 0x5a3d00f,
+    'math': [{'entryRva': rva, 'chunks': c['code'](rva)} for rva in [0x5a42a50, 0x5a3c840, 0x5a5bf20, 0x5a3a900]],
+    'stackCapReadRva': 0x39b34a7, 'stackCountCompareRva': 0x39b34b1, 'overCapBranchRva': 0x39b34b7,
+    'stackAttributeLoadCallRva': 0x39b34d8, 'stackOwnerCallRva': 0x39b34e2, 'stackOwnerAttributesCallRva': 0x39b34f1,
+    'stackMaskCallRva': 0x39b34fe, 'stackDirtyCallRva': 0x39b3511,
+    'nativeOwnerDirtyEffectsVerified': False, 'livePriorityPhaseVerified': False, 'liveStackPhaseVerified': False,
+}
 pool = c['type_row']('ObjectPool`1', 'Torappu.ObjectPool')
 pool_methods = []
 for index in [147561, 147566, 147567, 147558, 147559, 147563, 147564, 147568, 147569]:
