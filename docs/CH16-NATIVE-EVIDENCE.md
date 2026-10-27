@@ -365,7 +365,7 @@ parity.
 
 ### Arrival overlap and dispatch
 
-`extract-windows-fear-area.py --check` retains 30 complete methods covering the
+`extract-windows-fear-area.py --check` retains 36 complete methods covering the
 range/query/filter pipeline, enemy physics and map conversion, together with
 the exact layer-mask tail-jump leaf, the `List<Entity>.Sort` call
 specification and the original circle/collider/transform graph. Authored local
@@ -457,3 +457,23 @@ explicit native predicate, exercise fallback and missing-source behavior, reject
 replacement/removal during a read, and feed live/captured motion into arrival
 eligibility. Native PtrObjRef registry, alive-or-dying and motion state readers
 remain explicit integration inputs rather than guessed local flag mappings.
+
+### Arrival side and layer masks
+
+The retained `SideTypes` initializer binds same-side masks `[1,2,4]` and
+opposite-side masks `[2,5,2]`: an Enemy source's opposite mask includes both
+Allies and Neutrals. `ConvertSideType` with source side0 returns the literal
+requested side, while the nonzero opposite lookup compares each single bit for
+equality. A separately image-bound complete `IndexEqualsToBinaryMask` leaf proves
+that combined sides do not select the first contained side. `Layers` resolves
+the original ALLY/ENEMY/NEUTRAL names through Unity `LayerMask.NameToLayer` and
+builds signed32 masks with bit shifts; prefab layer numbers alone do not prove
+the runtime name-to-index table.
+
+The selected `fearProjectileArrivalLayerMask` ports targetSide2 with explicit
+runtime layer indices, including Enemy-to-Allies-and-Neutrals, source side0,
+unrecognized combined sides and signed bit31. A composed query test retains
+neutral recipients while excluding the enemy layer. Original layer names,
+complete layer/side initializer bodies, field offsets, constant writes and the
+Unity API binding are retained. Scene layer indices, collider world geometry
+and physics ordering remain required inputs; no stage support follows.

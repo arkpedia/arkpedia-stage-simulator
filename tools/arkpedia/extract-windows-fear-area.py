@@ -20,7 +20,10 @@ for name, namespace, names in [
     ('Box2dPhysicsUtil', 'Torappu.Battle', ['FindTargets_DISPOSE', '_OverlapCollider', 'CheckOverlap', 'GetWorldRadius']),
     ('TargetOptions', 'Torappu.Battle', ['Init', 'VerifyTargetWithoutCheckingTargetSide', '_VerifyAdvanced',
         '_TryGetSourceMotionMode', '_InitSourceSnapshot']),
-    ('BattleUtil', 'Torappu.Battle', ['GetLayerMask', 'VerifyTarget', 'CheckProfessionMask']),
+    ('BattleUtil', 'Torappu.Battle', ['GetLayerMask', 'VerifyTarget', 'CheckProfessionMask',
+        'ConvertSideType', 'GetOppositeSideMask', 'GetSameSideMask']),
+    ('Layers', 'Torappu.Battle', ['.cctor', 'BelongToLayerMask']),
+    ('SideTypes', 'Torappu.Battle', ['.cctor']),
     ('Entity', 'Torappu.Battle', ['OnProjectileSelectTargets', 'get_isTargetFree',
         'get_isAllyTargetFree', 'get_changeableMotionMode', 'isStillMotionTargetFreeWithImmuneFlag',
         'isMotionTargetFreeWithImmuneFlag']),
@@ -207,6 +210,60 @@ for index, rva in [(151158, 0x47b7990), (207899, 0x3f4ec20), (151162, 0x47b7720)
     assert spec['definition'] == source_motion['concreteSpecifications'][len(source_motion['canonicalBodies'])]['definition']
     source_motion['canonicalBodies'].append({**spec, 'entryRva': rva, 'chunks': c['code'](rva)})
 
+layer_literals = []
+for load_rva, expected in [(0x391dd54, 'ALLY'), (0x391dd74, 'ENEMY'), (0x391dd93, 'NEUTRAL'),
+    (0x391ddb2, 'MAP'), (0x391ddd1, 'UI'), (0x391ddf0, 'TILE'), (0x391de0f, 'DEATH_AREA'),
+    (0x391de2e, 'EFFECT'), (0x391de4d, 'ENEMY_COLLIDER'), (0x391de6c, 'PROJECTILE'),
+    (0x391de8b, 'UI_RT_PS'), (0x391deaa, 'COLLIDER')]:
+    pos = v['offset'](base + load_rva)
+    assert b[pos:pos + 3] == bytes.fromhex('488b0d')
+    slot = load_rva + 7 + struct.unpack_from('<i', b, pos + 3)[0]
+    usage = v['quad'](b, v['offset'](base + slot))
+    assert usage >> 29 == 5 and usage & 1
+    index = (usage & 0x1ffffffe) >> 1
+    assert index * 8 < v['uint'](v['m'], 12)
+    length, data_offset = struct.unpack_from('<II', v['m'], v['uint'](v['m'], 8) + index * 8)
+    assert data_offset + length <= v['uint'](v['m'], 20)
+    start = v['uint'](v['m'], 16) + data_offset
+    value = v['m'][start:start + length].decode('utf8')
+    assert value == expected
+    layer_literals.append({'instructionRva': load_rva, 'slotRva': slot, 'encodedUsage': usage,
+        'literalIndex': index, 'length': length, 'dataOffset': data_offset, 'value': value})
+side_fields = c['fields'](c['type_row']('SideTypes', 'Torappu.Battle'))
+side_ctor = c['unique'](lambda m: m['type'] == 'SideTypes' and m['name'] == '.cctor', methods)
+side_instructions = [i for ch in side_ctor['chunks'] for i in ch['instructions']]
+side_constants = []
+for field in side_fields[:8]:
+    operand = 'dword ptr [rcx]' if field['offset'] == 0 else f"dword ptr [rcx + {hex(field['offset']) if field['offset'] >= 10 else field['offset']}]"
+    ins = c['unique'](lambda i: i['mnemonic'] == 'mov' and i['operands'].startswith(operand + ', '), side_instructions)
+    value = int(ins['operands'].split(', ')[1], 0)
+    side_constants.append({'field': field, 'instructionRva': ins['rva'], 'value': value})
+assert [row['value'] for row in side_constants] == [7, 3, 1, 2, 2, 5, 4, 2]
+layers = {'fields': c['fields'](c['type_row']('Layers', 'Torappu.Battle')), 'nameLiterals': layer_literals,
+    'runtimeIndicesVerified': False, 'sideFields': side_fields, 'sideConstants': side_constants,
+    'sameSides': [1, 2, 4], 'oppositeSides': [2, 5, 2]}
+common = c['module']('Torappu.Common.dll')
+common_table = v['offset'](base + common['methodPointerTableRva'])
+misc = c['type_row']('Misc', 'Torappu')
+index_row = c['unique'](lambda r: r['name'] == 'IndexEqualsToBinaryMask', misc['methods'])
+assert v['quad'](b, common_table + ((index_row['token'] & 0xffffff) - 1) * 8) == base + 0x5a7d4d0
+pos = v['offset'](base + 0x5a7d4d0)
+raw = b[pos:pos + 16]
+decoded = list(Cs(CS_ARCH_X86, CS_MODE_64).disasm(raw, base + 0x5a7d4d0))
+assert [(i.mnemonic, i.op_str) for i in decoded] == [
+    ('and', 'ecx, 0x1f'), ('mov', 'eax, 1'), ('shl', 'eax, cl'),
+    ('cmp', 'eax, edx'), ('sete', 'al'), ('ret', '')]
+layers['indexEqualityLeaf'] = {'image': 'Torappu.Common.dll', 'type': 'Misc', **index_row,
+    'entryRva': 0x5a7d4d0, 'chunks': [{'beginRva': 0x5a7d4d0, 'endRva': 0x5a7d4e0,
+        'unwindRva': None, 'boundary': 'Reviewed complete six-instruction index-equality leaf through ret',
+        'sha256': v['sha'](raw), 'base64': base64.b64encode(raw).decode(),
+        'instructions': [{'rva': i.address - base, 'size': i.size, 'mnemonic': i.mnemonic,
+                          'operands': i.op_str} for i in decoded]}]}
+unity_layer = c['type_row']('LayerMask', 'UnityEngine')
+layers['nameToLayerMethod'] = c['method'](unity_layer,
+    c['unique'](lambda r: r['name'] == 'NameToLayer', unity_layer['methods']), 'UnityEngine.CoreModule.dll')
+assert layers['nameToLayerMethod']['entryRva'] == 0x5ebad60
+
 result = {
     'schemaVersion': 1,
     'scope': 'Static original arrival collider and native query pipeline; no physics/frame/cross-version parity or admission.',
@@ -223,6 +280,7 @@ result = {
     'componentQueries': component_queries,
     'motionTargetFreeDispatch': motion_free_dispatch,
     'sourceMotionSnapshot': source_motion,
+    'layers': layers,
     'minerColliderOwnership': {'prefab': miner_prefab, 'geometry': miner_geometry,
         'entityBinding': entity_binding, 'entityScript': entity_script,
         'enemyLineage': [{'name': t['name'], 'namespace': t['namespace'], 'index': t['index']}

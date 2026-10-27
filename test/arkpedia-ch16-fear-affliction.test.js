@@ -13,6 +13,7 @@ import {fearProjectileHitLedger} from '../server/sim/content/chapter16-fear-deli
 import {fearProjectileLifetime} from '../server/sim/content/chapter16-fear-clock.js';
 import {fearProjectileAreaDelivery} from '../server/sim/content/chapter16-fear-area.js';
 import {fearProjectileFlight} from '../server/sim/content/chapter16-fear-flight.js';
+import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileTargetVerifier,fearProjectileSourceMotion} from '../server/sim/content/chapter16-fear-targets.js';
 import {fearProjectileReached,fearProjectileMotionStep,fearProjectileMountReference,fearProjectileTraceMotion} from '../server/sim/content/chapter16-fear-movement.js';
 import { battle as minerBattle, keys as minerKeys } from './helpers/ch17Harness.js';
@@ -20,6 +21,32 @@ import { chapter16Shadow } from '../server/sim/content/chapter16-shadow.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
 const parentKey='feawpj_a[mcreep_fear]';
 const fpOne=1n<<32n;
+test('enemy arrival query includes the configured ally and neutral layers',()=>{
+ const layerIndices={ALLY:8,ENEMY:9,NEUTRAL:28};
+ assert.deepEqual(fearProjectileArrivalLayerMask({sourceSide:2,layerIndices}),{sideMask:5,layerMask:(1<<8)|(1<<28)});
+ for(const sourceSide of [0,1,4])assert.deepEqual(fearProjectileArrivalLayerMask({sourceSide,layerIndices}),{sideMask:2,layerMask:1<<9});
+ // Opposite-side lookup tests equality with single bits, not set membership.
+ for(const sourceSide of [3,5,6,7,8,-1])assert.deepEqual(fearProjectileArrivalLayerMask({sourceSide,layerIndices}),{sideMask:0,layerMask:0});
+});
+
+test('arrival mask uses supplied layer layout and signed Int32 bit shifts',()=>{
+ assert.deepEqual(fearProjectileArrivalLayerMask({sourceSide:2,layerIndices:{ALLY:31,ENEMY:1,NEUTRAL:0}}),
+  {sideMask:5,layerMask:-2147483647});
+ for(const layerIndices of [undefined,{ALLY:-1,ENEMY:9,NEUTRAL:28},{ALLY:8,ENEMY:32,NEUTRAL:28}])
+  assert.throws(()=>fearProjectileArrivalLayerMask({sourceSide:2,layerIndices}),/actual named/);
+ assert.throws(()=>fearProjectileArrivalLayerMask({sourceSide:undefined,layerIndices:{ALLY:8,ENEMY:9,NEUTRAL:28}}),/native Int32/);
+});
+
+test('arrival area query can use the explicit layer mask without losing neutral recipients',()=>{
+ const f=fixture(),layerIndices={ALLY:8,ENEMY:9,NEUTRAL:28};f.target.nativeUid=1;
+ const {layerMask}=fearProjectileArrivalLayerMask({sourceSide:2,layerIndices});
+ const other={nativeUid:2,deploySeq:2},enemy={nativeUid:3,deploySeq:3},hits=[];
+ const colliders=[{unit:f.target,layer:28},{unit:other,layer:8},{unit:enemy,layer:9}];
+ const area=areaFixture(f,[],{queryOverlaps:()=>colliders.filter(c=>((1<<c.layer)&layerMask)!==0),
+  hitTarget:unit=>{hits.push(unit);return true;}});
+ assert.deepEqual(area.deliver(),{selected:2,attempted:2,hits:2});assert.deepEqual(hits,[f.target,other]);
+});
+
 test('source motion uses current native motion while alive-or-dying and captured motion afterward',()=>{
  const f=fixture(),ref=fearProjectileEntityReference(f.b,f.source);let motion=1,valid=true;
  const snapshot=fearProjectileSourceMotion(f.b,{source:f.source,resolveSource:ref.resolveEntity,

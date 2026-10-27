@@ -407,7 +407,7 @@ test('ordinary projectile initialization resets its fixed-point lifetime clock b
 });
 
 test('arrival-area evidence binds the authored circle and explicit nested field differences',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-area-source.json');assert.equal(c.methods.length,30);
+ const c=read('data/candidates/arkpedia-windows-fear-area-source.json');assert.equal(c.methods.length,36);
  for(const p of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+p.path,import.meta.url))),p.sha256);
  for(const m of [...c.methods,c.layerMaskLeaf])for(const ch of m.chunks){
   const raw=Buffer.from(ch.base64,'base64');assert.equal(raw.length,ch.endRva-ch.beginRva);assert.equal(sha(raw),ch.sha256);
@@ -424,6 +424,30 @@ test('arrival-area evidence binds the authored circle and explicit nested field 
  assert.deepEqual(hit.unmatchedSerializedFields,{_exceptFlyCharacter:0});assert.equal(hit.serializedFieldParity,false);
  assert.deepEqual(c.unmatchedTargetOptions,{ignoreMotionMode:0});assert.equal(c.targetOptionParity,false);
  for(const field of ['runtimeDispatchVerified','frameParity','crossVersionParity'])assert.equal(c[field],false);
+});
+
+test('arrival layer evidence binds named layers and enemy opposition includes neutrals',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-area-source.json'),layers=c.layers;
+ assert.equal(layers.runtimeIndicesVerified,false);
+ assert.deepEqual(layers.nameLiterals.slice(0,3).map(l=>l.value),['ALLY','ENEMY','NEUTRAL']);
+ for(const literal of layers.nameLiterals)assert.equal(literal.encodedUsage>>>29,5);
+ assert.deepEqual(layers.sideConstants.map(row=>[row.field.name,row.value]),[
+  ['ALL_SIDE_MASK',7],['BOTH_ALLY_AND_ENEMY',3],['ALLY_TO_SAME',1],['ALLY_TO_OPPOSITE',2],
+  ['ENEMY_TO_SAME',2],['ENEMY_TO_OPPOSITE',5],['NEUTRAL_TO_SAME',4],['NEUTRAL_TO_OPPOSITE',2]]);
+ assert.deepEqual(layers.sameSides,[1,2,4]);assert.deepEqual(layers.oppositeSides,[2,5,2]);
+ const ctor=instructions(castMethod(c,'SideTypes','.cctor'));
+ for(const row of layers.sideConstants)assert.ok(ctor.some(i=>i.rva===row.instructionRva&&i.operands.endsWith(', '+row.value)));
+ for(const m of [layers.indexEqualityLeaf,layers.nameToLayerMethod])for(const ch of m.chunks){
+  const raw=Buffer.from(ch.base64,'base64');assert.equal(sha(raw),ch.sha256);assert.equal(raw.length,ch.endRva-ch.beginRva);
+ }
+ assert.equal(layers.nameToLayerMethod.image,'UnityEngine.CoreModule.dll');assert.equal(layers.nameToLayerMethod.entryRva,0x5ebad60);
+ assert.deepEqual(instructions(layers.indexEqualityLeaf).map(i=>[i.mnemonic,i.operands]),[
+  ['and','ecx, 0x1f'],['mov','eax, 1'],['shl','eax, cl'],['cmp','eax, edx'],['sete','al'],['ret','']]);
+ const opposite=instructions(castMethod(c,'BattleUtil','GetOppositeSideMask'));
+ assert.ok(opposite.some(i=>i.rva===0x876687&&i.operands==='0x185a7d4d0'));
+ const convert=instructions(castMethod(c,'BattleUtil','ConvertSideType'));
+ assert.ok(convert.some(i=>i.rva===0x875451&&i.operands==='eax, ebx'));
+ assert.ok(convert.some(i=>i.rva===0x87544c&&i.operands==='0x180876630'));
 });
 
 test('source motion snapshot retains live alive-or-dying lookup and independent initialization fallback',()=>{
