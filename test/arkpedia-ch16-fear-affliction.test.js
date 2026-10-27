@@ -16,7 +16,7 @@ import {fearProjectileFlight} from '../server/sim/content/chapter16-fear-flight.
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
 import {fearProjectileSpell} from '../server/sim/content/chapter16-fear-spell.js';
-import {fearProjectileSelfDeath,fearProjectileSuicide,fearProjectileSelfDeathActivation,fearProjectileModeFsmRestart} from '../server/sim/content/chapter16-fear-self-death.js';
+import {fearProjectileSelfDeath,fearProjectileSuicide,fearProjectileSelfDeathActivation,fearProjectileModeFsmRestart,fearProjectileModeSwitch} from '../server/sim/content/chapter16-fear-self-death.js';
 import {fearProjectileTargetVerifier,fearProjectileSourceMotion} from '../server/sim/content/chapter16-fear-targets.js';
 import {fearProjectileReached,fearProjectileMotionStep,fearProjectileMountReference,fearProjectileTraceMotion} from '../server/sim/content/chapter16-fear-movement.js';
 import { battle as minerBattle, keys as minerKeys } from './helpers/ch17Harness.js';
@@ -24,6 +24,92 @@ import { chapter16Shadow } from '../server/sim/content/chapter16-shadow.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
 const parentKey='feawpj_a[mcreep_fear]';
 const fpOne=1n<<32n;
+function modeFixture(overrides={}){
+ const f=fixture(),events=[],old={abilities:['attack','attack',null,'general']},next={abilities:['empty']};
+ let current=old;
+ const pose={x:1,y:0};
+ const callers={owner:f.source,nextMode:next,readCurrentMode:()=>current,sameMode:(a,b)=>a===b,isModeValid:x=>x!=null,
+  readFacing:()=>pose,readBodyDirection:()=>pose,readAbilities:mode=>mode.abilities,
+  detachAbility:a=>events.push('detach:'+a),onInactivate:()=>events.push('inactive'),
+  setModeActive:(mode,value)=>events.push((mode===old?'old':'new')+':'+value),
+  writeCurrentMode:(_owner,mode)=>{current=mode;events.push('write');},readStartIniting:()=>true,
+  attachAbility:(a,owner)=>{assert.equal(owner,f.source);events.push('attach:'+a);},
+  onActivate:(mode,last,options)=>{assert.equal(mode,next);assert.equal(last,old);assert.deepEqual(options,{isInit:false});events.push('activate');},
+  onSwitchMode:(_owner,mode,last,options)=>{assert.equal(mode,next);assert.equal(last,old);assert.deepEqual(options,{restartFSM:true});events.push('notify');pose.x=0;},
+  faceTo:(_owner,value,options)=>{assert.deepEqual(value,{x:1,y:0});assert.deepEqual(options,{force:true});events.push('face');},
+  setBodyDirection:(_owner,value,options)=>{assert.deepEqual(value,{x:1,y:0});assert.deepEqual(options,{force:true});events.push('direction');},...overrides};
+ return{...f,events,old,next,callers,get current(){return current;},set current(value){current=value;}};
+}
+
+test('mode handoff detaches duplicate ability entries before inactivation and preserves captured pose through notification',()=>{
+ const f=modeFixture(),handoff=fearProjectileModeSwitch(f.b,f.callers);
+ assert.equal(handoff.run(),true);assert.equal(handoff.run(),null);assert.equal(f.current,f.next);
+ assert.deepEqual(f.events,['detach:attack','detach:attack','detach:general','inactive','old:false','write','new:true','attach:empty','activate','notify','face','direction']);
+ assert.deepEqual(f.b.errors,[]);
+});
+
+test('mode attachment uses startIniting, while activation and notification still run when that gate is false',()=>{
+ const f=modeFixture({readStartIniting:()=>false});
+ assert.equal(fearProjectileModeSwitch(f.b,f.callers).run(),true);
+ assert.equal(f.events.some(e=>e.startsWith('attach:')),false);assert.ok(f.events.includes('activate'));assert.ok(f.events.includes('notify'));
+});
+
+test('same-mode nonforced switch returns false before pose reads or mode effects',()=>{
+ const f=modeFixture();f.current=f.next;f.callers.readFacing=()=>{throw Error('no pose read');};
+ assert.equal(fearProjectileModeSwitch(f.b,f.callers).run(),false);assert.deepEqual(f.events,[]);
+});
+
+test('inactivation may change currentMode before native lastMode is sampled for activation and notification',()=>{
+ const f=modeFixture(),replacement={abilities:[]};
+ f.callers.onInactivate=()=>{f.current=replacement;};
+ f.callers.onActivate=(_mode,last)=>assert.equal(last,replacement);
+ f.callers.onSwitchMode=(_owner,_mode,last)=>assert.equal(last,replacement);
+ assert.equal(fearProjectileModeSwitch(f.b,f.callers).run(),true);assert.equal(f.current,f.next);
+});
+
+test('mode is sampled after pose reads before inactivation, rather than using the earlier equality-check value',()=>{
+ const f=modeFixture(),replacement={abilities:['changed']};
+ f.callers.readBodyDirection=()=>{f.current=replacement;return{x:1,y:0};};
+ f.callers.onInactivate=mode=>assert.equal(mode,replacement);
+ f.callers.onActivate=(_mode,last)=>assert.equal(last,replacement);
+ f.callers.onSwitchMode=(_owner,_mode,last)=>assert.equal(last,replacement);
+ assert.equal(fearProjectileModeSwitch(f.b,f.callers).run(),true);
+ assert.deepEqual(f.events.slice(0,2),['detach:changed','new:false']);
+});
+
+test('self-death composes mode detachment and saved-state restart before immunity and zero HP',()=>{
+ const f=modeFixture({readStartIniting:()=>false});let state=12;
+ const restart=fearProjectileModeFsmRestart(f.b,{owner:f.source,isRunning:()=>true,readState:()=>state,
+  stop:()=>{f.events.push('stop');state=-1;},start:(_owner,saved)=>{f.events.push('start');state=saved;}});
+ f.callers.onSwitchMode=()=>restart.run();
+ const handoff=fearProjectileModeSwitch(f.b,f.callers);
+ const suicide=fearProjectileSuicide(f.b,{target:f.source,readAlive:()=>f.source.alive,
+  markSuicide:()=>f.events.push('suicide'),setHpInternal:()=>{f.events.push('zero HP');f.source.alive=false;}});
+ const activation=fearProjectileSelfDeathActivation(f.b,{owner:f.source,readAbnormalFlag:()=>false,readAbnormalCombo:()=>false,
+  switchMode:()=>handoff.run(),createImmunityBuff:()=>{f.events.push('immunity');return true;},instantKill:()=>suicide.run()});
+ assert.equal(activation.run(),false);assert.equal(state,12);assert.equal(f.current,f.next);assert.equal(f.source.alive,false);
+ assert.deepEqual(f.events,['detach:attack','detach:attack','detach:general','inactive','old:false','write','new:true','activate','stop','start','face','direction','immunity','suicide','zero HP']);
+});
+
+test('mode ability iteration observes appended entries rather than snapshotting or deduplicating the initialized array',()=>{
+ const f=modeFixture();f.old.abilities=['first'];
+ f.callers.detachAbility=a=>{f.events.push('detach:'+a);if(a==='first')f.old.abilities.push('appended');};
+ assert.equal(fearProjectileModeSwitch(f.b,f.callers).run(),true);
+ assert.deepEqual(f.events.slice(0,2),['detach:first','detach:appended']);
+});
+
+for(const point of ['detachAbility','onInactivate','writeCurrentMode','attachAbility','onActivate','onSwitchMode','faceTo'])
+ for(const boundary of ['reuse','battleEnd'])test('mode switch stops at '+point+' on '+boundary,()=>{
+  const f=modeFixture();f.callers[point]=()=>{if(boundary==='reuse')f.source.deploySeq++;else f.b.emit('battleEnd',{});};
+  const handoff=fearProjectileModeSwitch(f.b,f.callers);
+  assert.equal(handoff.run(),null);assert.equal(handoff.run(),null);assert.equal(f.events.includes('direction'),false);assert.deepEqual(f.b.errors,[]);
+ });
+
+test('mode handoff rejects reentry during detachment without losing the original transition',()=>{
+ const f=modeFixture();let handoff;f.callers.detachAbility=()=>assert.equal(handoff.run(),null);
+ handoff=fearProjectileModeSwitch(f.b,f.callers);assert.equal(handoff.run(),true);assert.equal(f.events.at(-1),'direction');
+});
+
 test('mode restart preserves the state captured before Stop changes the state machine',()=>{
  const f=fixture(),events=[];let state=42,running=true;
  const restart=fearProjectileModeFsmRestart(f.b,{owner:f.source,isRunning:()=>running,readState:()=>state,

@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,25);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,33);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -107,6 +107,25 @@ test('mode switch source binds the two original modes, death animation hook and 
  assert.deepEqual(instructions(stop).map(i=>[i.mnemonic,i.operands]),[
   ['xor','r9d, r9d'],['mov','r8b, 1'],['lea','edx, [r9 - 1]'],['jmp','0x18247dbe0']]);
  assert.ok(c.methods.some(m=>m.type==='StateMachine'&&m.entryRva===0x247dbe0));
+});
+
+test('mode lifecycle binds the initialized ability array and the exact startIniting gate rather than alive state',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),l=c.modeSwitch.lifecycle;
+ assert.equal(l.abilityArrayField.name,'m_abilities');assert.equal(l.abilityArrayField.offset,0x90);
+ const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ const activate=castMethod(c,'Unit','ActivateMode'),inactive=castMethod(c,'Unit','InactiveMode');
+ assert.equal(l.attachGate.method,'get_startIniting');assert.equal(l.attachGate.calleeRva,0x3a2f650);
+ at(activate,l.attachGate.callRva,'0x183a2f650');at(activate,0x84cf96,'0x18084d008');
+ at(castMethod(c,'Entity','get_startIniting'),0x3a2f6a7,'eax, byte ptr [rbx + 0x89]');
+ at(activate,l.attachCall.callRva,'0x18390e170');at(inactive,l.detachCall.callRva,'0x18390e4a0');
+ at(inactive,0x850946,'qword ptr [rax + 0x1c8]');at(inactive,0x850968,'0x185eb6b60');
+ at(activate,0x84cf85,'0x185eb6b60');at(activate,0x84d02d,'qword ptr [rax + 0x1b8]');
+ assert.deepEqual(l.modeSlots.map(s=>[s.slot,s.name]),[[8,'OnActivate'],[9,'OnInactivate']]);
+ for(const slot of l.faceSlots){assert.equal(slot.slot,10);assert.equal(slot.name,'get_faceTo');}
+ const core=c.methods.find(m=>m.entryRva===0x854d20);
+ at(core,l.lastModeResampledAfterInactive.readRva,'r14, qword ptr [rbx + 0x1e8]');
+ at(core,l.lastModeResampledAfterInactive.writeRva,'qword ptr [rbx + 0x1e8], rsi');
+ at(core,0x854f3d,'0x183a1af00');at(core,0x854f50,'0x183a23fa0');
 });
 
 test('selected InstantKill binds Suicide no-source/reborn parameters, suicide mark and SetHpInternal dispatch',()=>{

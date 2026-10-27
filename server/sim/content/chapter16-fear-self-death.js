@@ -8,6 +8,78 @@ export function fearProjectileSelfDeathActivation(b,{owner,...callers}){
  return fearProjectileSelfDeath(b,{...callers,buffOwner:owner,target:owner});
 }
 
+// Selected non-initial, non-forced Unit.SwitchMode body. Native mode/ability
+// objects and effect implementations must be supplied from the bound graph;
+// an attack/combat pair is not a substitute for UnitMode.m_abilities.
+export function fearProjectileModeSwitch(b,{owner,nextMode,readCurrentMode,sameMode,isModeValid,
+ readFacing,readBodyDirection,readAbilities,detachAbility,onInactivate,setModeActive,
+ writeCurrentMode,readStartIniting,attachAbility,onActivate,onSwitchMode,faceTo,setBodyDirection}){
+ const callers=[readCurrentMode,sameMode,isModeValid,readFacing,readBodyDirection,readAbilities,
+  detachAbility,onInactivate,setModeActive,writeCurrentMode,readStartIniting,attachAbility,
+  onActivate,onSwitchMode,faceTo,setBodyDirection];
+ if(!owner||!Number.isInteger(owner.deploySeq)||!nextMode||callers.some(fn=>typeof fn!=='function'))
+  throw new TypeError('Fear mode switch requires a bound next mode, owner life and explicit native callers');
+ const life=owner.deploySeq;let used=false,ended=false,endHandle=null,removeHandle=null;
+ const release=()=>{ended=true;if(endHandle)b.off(endHandle);if(removeHandle)b.off(removeHandle);endHandle=removeHandle=null;};
+ const active=()=>{if(!ended&&(b.finished||b._endReq||owner.removed||owner.deploySeq!==life))release();return!ended;};
+ const boolean=value=>{if(typeof value!=='boolean')throw new TypeError('Fear mode switch requires native Boolean predicates');return value;};
+ const vector=value=>{
+  if(!value||!Number.isFinite(value.x)||!Number.isFinite(value.y)||
+   !Number.isFinite(Math.fround(value.x))||!Number.isFinite(Math.fround(value.y)))
+   throw new TypeError('Fear mode switch requires native Vector2 pose values');
+  return Object.freeze({x:Math.fround(value.x),y:Math.fround(value.y)});
+ };
+ // Unit uses the initialized m_abilities array, including duplicates. It reads
+ // its live length each iteration and tests Unity validity before each call.
+ const abilities=(mode,visit)=>{
+  const list=readAbilities(mode);if(!active())return false;
+  if(!Array.isArray(list))throw new TypeError('Fear mode switch requires the initialized native ability array');
+  for(let index=0;index<list.length;index++){
+   const ability=list[index],valid=isModeValid(ability);if(!active())return false;
+   if(boolean(valid)){visit(ability);if(!active())return false;}
+  }
+  return true;
+ };
+ if(active()){
+  endHandle=b.on('battleEnd',release);
+  removeHandle=b.on('removed',({unit})=>{if(unit===owner)release();});
+ }
+ return Object.freeze({
+  run(){
+   if(used||!active())return null;
+   used=true;
+   try{
+    const initialMode=readCurrentMode(owner);if(!active())return null;
+    const same=sameMode(nextMode,initialMode);if(!active())return null;
+    if(boolean(same))return false;
+    const facingValue=readFacing(owner);if(!active())return null;
+    const facing=vector(facingValue);if(!active())return null;
+    const directionValue=readBodyDirection(owner);if(!active())return null;
+    const direction=vector(directionValue);if(!active())return null;
+    const oldMode=readCurrentMode(owner);if(!active())return null;
+    const valid=isModeValid(oldMode);if(!active())return null;
+    if(boolean(valid)){
+     if(!abilities(oldMode,ability=>detachAbility(ability)))return null;
+     onInactivate(oldMode);if(!active())return null;
+     setModeActive(oldMode,false);if(!active())return null;
+    }
+    // Native code samples lastMode again after InactiveMode callbacks. It can
+    // differ from the mode whose abilities were just detached.
+    const lastMode=readCurrentMode(owner);if(!active())return null;
+    writeCurrentMode(owner,nextMode);if(!active())return null;
+    setModeActive(nextMode,true);if(!active())return null;
+    const startIniting=readStartIniting(owner);if(!active())return null;
+    if(boolean(startIniting)&&!abilities(nextMode,ability=>attachAbility(ability,owner)))return null;
+    onActivate(nextMode,lastMode,{isInit:false});if(!active())return null;
+    onSwitchMode(owner,nextMode,lastMode,{restartFSM:true});if(!active())return null;
+    faceTo(owner,facing,{force:true});if(!active())return null;
+    setBodyDirection(owner,direction,{force:true});return active()?true:null;
+   }finally{release();}
+  },
+  release,
+ });
+}
+
 export function fearProjectileModeFsmRestart(b,{owner,isRunning,readState,stop,start}){
  if(!owner||!Number.isInteger(owner.deploySeq)||[isRunning,readState,stop,start].some(fn=>typeof fn!=='function'))
   throw new TypeError('Fear mode FSM restart requires an owner life and explicit native state-machine callers');

@@ -125,6 +125,23 @@ methods.append({'type': fsm['name'], **stop_row, 'entryRva': 0x247da40,
         'instructions': [{'rva': i.address - v['image_base'], 'size': i.size, 'mnemonic': i.mnemonic,
                           'operands': i.op_str} for i in decoded]}]})
 result['modeSwitch']['fsmStateField'] = c['unique'](lambda f: f['name'] == '<currentStateId>k__BackingField', c['fields'](fsm))
+for type_name, names in [('Ability', ['Attach', 'Detach']), ('UnitMode', ['OnActivate', 'OnInactivate']),
+                         ('Entity', ['get_startIniting', 'get_faceTo', 'FaceTo', 'SetBodyDirection'])]:
+    t = c['type_row'](type_name, 'Torappu.Battle')
+    for name in names:
+        methods.append(c['method'](t, c['unique'](lambda r: r['name'] == name and
+            (name not in ['FaceTo', 'SetBodyDirection'] or v['pointer'](r) == v['image_base'] +
+             {'FaceTo': 0x3a1af00, 'SetBodyDirection': 0x3a23fa0}[name]), t['methods'])))
+unit_mode = c['type_row']('UnitMode', 'Torappu.Battle')
+result['modeSwitch']['lifecycle'] = {
+    'abilityArrayField': c['unique'](lambda f: f['name'] == 'm_abilities', c['fields'](unit_mode)),
+    'attachGate': {'callRva': 0x84cf8f, 'calleeRva': 0x3a2f650, 'type': 'Entity', 'method': 'get_startIniting'},
+    'detachCall': {'callRva': 0x85091d, 'calleeRva': 0x390e4a0},
+    'attachCall': {'callRva': 0x84cffd, 'calleeRva': 0x390e170},
+    'faceSlots': [c['resolved_slot'](c['type_row'](name, 'Torappu.Battle'), 10) for name in ['Unit', 'Enemy']],
+    'modeSlots': [c['resolved_slot'](unit_mode, slot) for slot in [8, 9]],
+    'lastModeResampledAfterInactive': {'readRva': 0x854ea7, 'writeRva': 0x854eb8},
+}
 serialized = json.dumps(result, ensure_ascii=False, indent=1) + '\n'
 out = ROOT / 'data/candidates/arkpedia-windows-fear-self-death-source.json'
 if __name__ == '__main__':

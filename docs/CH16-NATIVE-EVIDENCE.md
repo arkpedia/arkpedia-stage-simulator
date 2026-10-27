@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 25 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 33 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -652,3 +652,38 @@ compose restart before immunity/suicide. Native mode activation, ability detach/
 attach, pose preservation, animation hook execution and live FSM state/cadence
 remain integration inputs. Initial FSM admission and full enemy/stage support
 are still unproven.
+
+### Selected mode lifecycle handoff
+
+`fearProjectileModeSwitch` now composes the selected non-initial, non-forced
+mode switch: reject an equal mode, capture native Vector2 facing/body direction,
+read the old mode after pose reads, detach its initialized `m_abilities` entries
+in array order, invoke OnInactivate and disable its object. It samples lastMode
+again after inactivation, writes the new current mode, enables it, conditionally
+attaches its initialized abilities, invokes OnActivate and OnSwitchMode, then
+restores both copied pose values. Duplicate entries and live array length are
+preserved; this is not a deduplicated attack/combat list.
+
+The attachment predicate is specifically Entity.get_startIniting at 0x3a2f650,
+called at 0x84cf8f. Metadata and its default field read at offset0x89 disprove
+interpreting that call as alive/aliveOrDying. A false predicate skips the static
+ability attach loop but still invokes mode activation and switch notification.
+The artifact now also retains complete Ability.Attach/Detach, UnitMode
+OnActivate/OnInactivate and Entity pose methods, plus their metadata slot and
+field bindings. Dynamic ability/talent effects inside the native mode callbacks
+remain explicit callers, rather than being silently discarded.
+
+Lifecycle tests cover removal/reuse/battle end between effects, reentry,
+same-mode rejection, callback changes to currentMode, duplicate/appended ability
+entries and pose mutation during notification. A composed self-death test uses
+the mode handoff, captured-state FSM restart and suicide handlers together,
+requiring mode effects and restart before immunity and zero HP. The focused
+native-source/fear/family/miner suite passes 355 tests locally and the 33-method
+source producer reproduces with --check. The prior hosted continuation
+40512603998 and full Linux/Windows run40505955414 both completed successfully.
+
+Native initialized ability-array construction, concrete OnActivate/OnInactivate
+and Enemy.OnSwitchMode talent implementations, live FSM/coroutine scheduling,
+animation hooks and stage coordinate/query readers still require integration.
+These internal components grant no enemy/stage support receipt; all existing
+test-only and catalogue gates remain unchanged.
