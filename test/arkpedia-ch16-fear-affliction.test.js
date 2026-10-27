@@ -52,6 +52,48 @@ import {fearProjectileActionTargetGetters} from '../server/sim/content/chapter16
 import {fearProjectileSwitchModeNode} from '../server/sim/content/chapter16-fear-switch-mode-node.js';
 import {fearProjectileInstantKillNode,fearProjectileEntitySuicide} from '../server/sim/content/chapter16-fear-instant-kill-node.js';
 import {fearProjectileCreateBuffNode} from '../server/sim/content/chapter16-fear-create-buff-node.js';
+import {fearProjectileEntityAddBuff,fearProjectileEntityBuffContainer} from '../server/sim/content/chapter16-fear-entity-add-buff.js';
+
+function entityAddBuffFixture(){
+ const container={},entity={'<buffContainer>k__BackingField':container},data={},config={template:{},data:{}},args=[{},{},{},{},{},'effect'],events=[],created={},
+  options={tryGetBuff:(actual,result)=>{assert.equal(actual,data);assert.deepEqual(result.value,{template:null,data:null});events.push('lookup');result.value=config;return true;},
+   raiseMissingConfig:actual=>{assert.equal(actual,data);events.push('missing');throw Error('missing config');},readContainer:actual=>{assert.equal(actual,entity);events.push('container');return fearProjectileEntityBuffContainer(actual);},
+   newBuff:(...actual)=>{events.push(['new',...actual]);return created;}};
+ return{container,entity,data,config,args,events,created,options,run:()=>fearProjectileEntityAddBuff(options).addData(entity,data,...args)};
+}
+test('Entity.AddBuff forwards nullable admission results and all seven data-overload parameters',()=>{
+ const f=entityAddBuffFixture();assert.equal(f.run(),f.created);assert.deepEqual(f.events,['lookup','container',['new',f.container,f.config,...f.args]]);assert.notEqual(f.events.at(-1)[2],f.config);
+ f.options.newBuff=()=>null;assert.equal(f.run(),null);
+});
+test('Entity.AddBuff copies resolved config before container lookup and the config overload copies after lookup',()=>{
+ const f=entityAddBuffFixture(),template=f.config.template,data=f.config.data;
+ f.options.readContainer=()=>{f.config.template={};f.config.data={};return f.container;};f.options.newBuff=(_container,config)=>{assert.deepEqual(config,{template,data});return f.created;};assert.equal(f.run(),f.created);
+ const g=entityAddBuffFixture(),next={};g.options.readContainer=()=>{g.config.template=next;return g.container;};g.options.newBuff=(_container,config)=>{assert.notEqual(config,g.config);assert.equal(config.template,next);};fearProjectileEntityAddBuff(g.options).addConfig(g.entity,g.config,...g.args);
+});
+test('Entity.AddBuff lookup failure throws before any container access even for a null entity',()=>{
+ const f=entityAddBuffFixture();f.options.tryGetBuff=()=>false;assert.throws(()=>fearProjectileEntityAddBuff(f.options).addData(null,f.data,...f.args),/missing config/);assert.deepEqual(f.events,['missing']);
+ f.options.raiseMissingConfig=()=>{};assert.throws(f.run,/must throw/);
+});
+test('Entity.AddBuff does not normalize nullable data or config references returned by a successful lookup',()=>{
+ const f=entityAddBuffFixture();f.options.tryGetBuff=(data,result)=>{assert.equal(data,null);result.value={template:null,data:null};return true;};f.options.newBuff=(_container,config)=>{assert.deepEqual(config,{template:null,data:null});return null;};
+ assert.equal(fearProjectileEntityAddBuff(f.options).addData(f.entity,null,...f.args),null);
+});
+test('Entity.AddBuff checks the container before reading the config overload input',()=>{
+ const f=entityAddBuffFixture();f.options.readContainer=()=>null;const config={get template(){throw Error('premature config read');}};
+ assert.throws(()=>fearProjectileEntityAddBuff(f.options).addConfig(f.entity,config,...f.args),/null native object/);assert.deepEqual(f.events,[]);
+ assert.equal(fearProjectileEntityBuffContainer({'<buffContainer>k__BackingField':null}),null);assert.throws(()=>fearProjectileEntityBuffContainer(null),/null native object/);
+});
+test('Entity.AddBuff lookup result must be Boolean and its successful out config must exist',()=>{
+ const f=entityAddBuffFixture();f.options.tryGetBuff=()=>0;assert.throws(f.run,/Boolean lookup/);f.options.tryGetBuff=(_data,result)=>{result.value=null;return true;};assert.throws(f.run,/null native object/);assert.deepEqual(f.events,[]);
+});
+for(const phase of ['tryGetBuff','readContainer','newBuff'])test('Entity.AddBuff retains '+phase+' errors without retry or synthetic null admission',()=>{
+ const f=entityAddBuffFixture(),error=Error(phase);let count=0;f.options[phase]=()=>{count++;throw error;};assert.throws(f.run,actual=>actual===error);assert.equal(count,1);
+});
+test('Entity.AddBuff supports nested lookup calls with independent out configs',()=>{
+ const f=entityAddBuffFixture(),inner={},outer={},seen=[];let nested=false,api;
+ f.options.tryGetBuff=(_data,result)=>{if(!nested){nested=true;assert.equal(api.addData(f.entity,{},...f.args),f.created);result.value={template:outer,data:f.data};}else result.value={template:inner,data:f.data};return true;};
+ f.options.newBuff=(_container,config)=>{seen.push(config.template);return f.created;};api=fearProjectileEntityAddBuff(f.options);assert.equal(api.addData(f.entity,f.data,...f.args),f.created);assert.deepEqual(seen,[inner,outer]);
+});
 
 function createBuffNodeFixture(){
  const owner={},source={},ability={},projectile={},data={overrideEffectKey:'original'},parent={source,ability,projectile},ref={value:{buff:parent}},board={incoming:true},copy={},events=[],
@@ -1816,6 +1858,21 @@ test('NewBuff consumes concrete admission gates before allocation and after Rese
   assert.equal(n.run(),blocked==='none'?n.buff:null);assert.equal(n.events.includes('allocate'),!['anti','levitate'].includes(blocked));
   assert.equal(n.recycled.length,blocked==='status'?1:0);assert.equal(n.map.size,blocked==='none'?1:0);
  }
+});
+
+for(const outcome of ['admit','abnormal rejection','status rejection'])test('CreateBuff reaches NewBuff registration through Entity.AddBuff with '+outcome,()=>{
+ const action=createBuffNodeFixture(),native=newBuffFixture();action.owner['<buffContainer>k__BackingField']=native.container;action.source.attributes=native.source.attributes;
+ if(outcome==='abnormal rejection')native.options.passesAbnormalAnti=()=>false;
+ if(outcome==='status rejection')native.options.passesStatusAnti=()=>false;
+ const admission=fearProjectileEntityAddBuff({tryGetBuff:(data,result)=>{assert.equal(data,action.data);result.value={template:native.state.input.template,data};return true;},
+  raiseMissingConfig:()=>{throw Error('unexpected config failure');},readContainer:fearProjectileEntityBuffContainer,
+  newBuff:(container,config,source,ability,extraBlackboard,extraBlackboard2,sourceProjectile,customOverrideEffectKey)=>{
+   assert.equal(container,native.container);assert.equal(config.data,action.data);assert.equal(source,action.source);assert.equal(ability,action.ability);assert.equal(extraBlackboard,action.copy);assert.equal(extraBlackboard2,null);
+   native.state.input=config;return fearProjectileNewBuff({...native.options,source,ability,extraBlackboard,extraBlackboard2,sourceProjectile,customOverrideEffectKey}).run();
+  }});
+ action.options.addBuff=admission.addData;assert.equal(action.run(),true);
+ if(outcome==='admit'){assert.equal(native.list[0].obj,native.buff);assert.equal(native.map.get(7),native.buff);assert.equal(native.buff.enabled,true);}
+ else{assert.equal(native.list.length,0);assert.equal(native.map.size,0);assert.deepEqual(native.recycled,outcome==='status rejection'?[native.buff]:[]);}
 });
 
 function newBuffFixture(){

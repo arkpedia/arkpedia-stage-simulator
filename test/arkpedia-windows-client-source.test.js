@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,213);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,216);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -531,6 +531,20 @@ test('context snapshot source binds distinct capture/push orders and closed refe
   'rcx, qword ptr [rdi + 0x48]','rcx, qword ptr [rdi + 0x58]'].entries())at(duplicate,q.pushFieldReads[index],args);
  for(const [index,target]of ['0x184be7ef0','0x184be7ef0','0x184be7ef0','0x18490b650','0x18490b820','0x184be7ef0','0x184be7ef0','0x18490b650','0x18490b790','0x184be7ef0'].entries())at(duplicate,q.pushCalls[index],target);
  assert.equal(q.nativeContextStackEffectsVerified,false);assert.equal(q.nativeNestedValueCopiesVerified,false);assert.equal(q.liveContextSnapshotsVerified,false);
+});
+
+test('Entity.AddBuff source binds data lookup, two config copies and container dispatch',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.newBuff.entityAddBuff;
+ assert.deepEqual(q.methods.map(m=>[m.index,m.name,m.entryRva]),[[57965,'AddBuff',0x3a174d0],[57964,'AddBuff',0x3a17370],[57828,'get_buffContainer',0x3a295e0]]);
+ assert.equal(q.containerField.name,'<buffContainer>k__BackingField');assert.equal(q.containerField.offset,0x150);assert.equal(q.containerField.typeData,8931);
+ assert.deepEqual(q.unboxedConfigFieldOffsets,{template:0,data:8});assert.deepEqual(q.configFields.map(f=>[f.name,f.offset]),[['template',16],['data',24]]);
+ assert.equal(q.lookup.typeIndex,10272);assert.equal(q.lookup.name,'TryGetBuff');assert.equal(q.lookup.index,68624);assert.equal(q.lookup.entryRva,0x8789a0);assert.equal(q.lookup.outConfigTypeBits,0x20110002);
+ assert.deepEqual(q.signatures.map(s=>s.parameters.map(p=>p.name)),[['data','source','ability','extraBlackboard','extraBlackboard2','sourceProjectile','customOverrideEffectKey'],['config','source','ability','extraBlackboard','extraBlackboard2','sourceProjectile','customOverrideEffectKey'],['data','result']]);assert.equal(q.signatures[1].parameters[0].typeIndex,39044);assert.equal(q.signatures[2].parameters[1].typeIndex,q.lookup.outConfigTypeIndex);
+ const body=index=>c.methods.find(m=>m.index===index),at=(index,rva,args)=>assert.ok(instructions(body(index)).some(i=>i.rva===rva&&i.operands===args),'Entity.AddBuff instruction '+rva.toString(16));
+ for(const [key,args]of [['zeroConfigRva','xmmword ptr [rsp + 0x50], xmm0'],['lookupCallRva','0x1808789a0'],['lookupFailureBranchRva','0x183a17621'],['lookupConfigReadRva','xmm0, xmmword ptr [rsp + 0x50]'],['overloadCopyRva','xmmword ptr [rsp + 0x60], xmm0'],['configOverloadCallRva','0x183a17370'],['missingDataKeyReadRva','rbx, qword ptr [rsi + 0x18]'],['missingTemplateKeyReadRva','rbx, qword ptr [rsi + 0x28]'],['missingExceptionCallRva','0x180410640']])at(57965,q[key],args);
+ for(const [key,args]of [['containerCallRva','0x183a295e0'],['containerNullCheckRva','rax, rax'],['containerConfigReadRva','xmm0, xmmword ptr [rbp]'],['containerConfigCopyRva','xmmword ptr [rsp + 0x50], xmm0'],['newBuffCallRva','0x1839c2370']])at(57964,q[key],args);
+ at(57828,q.containerFieldReadRva,'rax, qword ptr [rbx + 0x150]');assert.ok(q.lookupConfigReadRva<q.overloadCopyRva&&q.overloadCopyRva<q.configOverloadCallRva);assert.ok(q.containerCallRva<q.containerConfigReadRva&&q.containerConfigReadRva<q.containerConfigCopyRva&&q.containerConfigCopyRva<q.newBuffCallRva);
+ for(const name of ['nativeLookupEffectsVerified','nativeMissingConfigExceptionVerified','nativeContainerAdmissionEffectsVerified','liveEntityAddBuffVerified'])assert.equal(q[name],false);
 });
 
 test('CreateBuff source binds copied blackboard, fresh parent reads and unconditional post-admission success',()=>{

@@ -1402,6 +1402,37 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
 
+### Entity.AddBuff overloads and container admission bridge
+
+The216-method bundle adds both complete Entity.AddBuff overloads and the
+default Entity.get_buffContainer body. All213 prior bodies and prior evidence
+remain unchanged. Metadata binds the two signatures (BuffData versus BuffConfig)
+and BuffDBUtil.TryGetBuff's by-reference BuffConfig output. BuffConfig retains
+its two reference fields at unboxed offsets0/8; the entity container backing
+field is+0x150. Instruction pins distinguish the zero-initialized lookup output,
+copy into the config overload, container lookup, second config copy and NewBuff
+dispatch. The missing-config branch retains its separate diagnostic/throw path.
+
+`fearProjectileEntityAddBuff` forwards the data lookup's Boolean result, copies
+the resolved config before calling the config overload, then reads the current
+container before copying the overload's config to NewBuff. A failed lookup invokes
+the mandatory throwing exception receiver before any entity/container access.
+Nullable template/data fields and nullable NewBuff results are preserved.
+Nested calls use independent output storage. `fearProjectileEntityBuffContainer`
+reads the bound backing field directly and preserves a null stored container.
+
+Composition tests now run CreateBuff through both Entity overloads into the
+existing NewBuff pipeline. They verify successful list/UID registration and
+enabling, pre-allocation abnormal rejection, and status rejection with recycling;
+CreateBuff's action result stays true after each completed attempt. Additional
+tests cover copy timing across reentrant container getters, null containers,
+lookup failures, invalid results and callback errors without synthetic retries.
+The database lookup and native exception construction remain explicit receivers;
+their effects and full controller/stage/frame parity are not certified here.
+All1260 focused native/fear/family/miner tests pass. All source/support/receipt/
+catalogue gates remain unchanged and new stages stay
+test-only. This checkpoint remains local.
+
 ### CreateBuff action and nullable admission results
 
 The213-method bundle adds complete CreateBuff.get_data, Buff.get_ability,

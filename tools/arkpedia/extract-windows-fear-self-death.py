@@ -2101,6 +2101,45 @@ result['modeSwitch']['buffNotification']['newBuff']['predicateNodes'] = {
     'nativeAttributeQueryEffectsVerified': False, 'livePredicateNodeDispatchVerified': False,
 }
 context_stack_canonical = []
+entity_add_buff_methods = []
+for index, entry in [(57965, 0x3a174d0), (57964, 0x3a17370), (57828, 0x3a295e0)]:
+    row = c['unique'](lambda r: r['index'] == index, entity['methods'])
+    record = c['method'](entity, row)
+    assert record['entryRva'] == entry and not any(m['index'] == index for m in methods)
+    methods.append(record)
+    entity_add_buff_methods.append({'index': index, 'name': row['name'], 'entryRva': entry})
+entity_buff_field = c['unique'](lambda f: f['name'] == '<buffContainer>k__BackingField', c['fields'](entity))
+assert entity_buff_field['offset'] == 0x150 and entity_buff_field['typeData'] == 8931
+lookup_type = v['types'][10272]
+lookup_row = c['unique'](lambda r: r['index'] == 68624, lookup_type['methods'])
+assert lookup_type['name'] == 'BuffDBUtil' and lookup_row['name'] == 'TryGetBuff' and v['pointer'](lookup_row) == v['image_base'] + 0x8789a0
+lookup_config_type = 27005
+lookup_type_pos = v['offset'](v['quad'](v['b'], v['type_table'] + lookup_config_type * 8))
+assert v['quad'](v['b'], lookup_type_pos) == buff_config['index']
+assert v['uint'](v['b'], lookup_type_pos + 8) == 0x20110002
+entity_add_buff_signatures = []
+for ti, index in [(9044, 57965), (9044, 57964), (10272, 68624)]:
+    pos = v['method_start'] + index * 32
+    start, count = v['sint'](v['m'], pos + 12), struct.unpack_from('<H', v['m'], pos + 30)[0]
+    args = []
+    for n in range(count):
+        pp = v['uint'](v['m'], 88) + (start + n) * 12
+        args.append({'name': v['text'](v['uint'](v['m'], pp)), 'typeIndex': v['sint'](v['m'], pp + 8)})
+    entity_add_buff_signatures.append({'typeIndex': ti, 'index': index, 'returnTypeIndex': v['sint'](v['m'], pos + 8), 'parameters': args})
+assert [p['name'] for p in entity_add_buff_signatures[0]['parameters']] == ['data', 'source', 'ability', 'extraBlackboard', 'extraBlackboard2', 'sourceProjectile', 'customOverrideEffectKey']
+assert [p['name'] for p in entity_add_buff_signatures[1]['parameters']] == ['config', 'source', 'ability', 'extraBlackboard', 'extraBlackboard2', 'sourceProjectile', 'customOverrideEffectKey']
+assert entity_add_buff_signatures[1]['parameters'][0]['typeIndex'] == 39044
+assert entity_add_buff_signatures[2]['parameters'] == [{'name': 'data', 'typeIndex': 39047}, {'name': 'result', 'typeIndex': lookup_config_type}]
+result['modeSwitch']['buffNotification']['newBuff']['entityAddBuff'] = {
+    'methods': entity_add_buff_methods, 'containerField': entity_buff_field, 'signatures': entity_add_buff_signatures,
+    'configFields': config_fields, 'unboxedConfigFieldOffsets': {'template': 0, 'data': 8},
+    'lookup': {'typeIndex': 10272, **lookup_row, 'entryRva': 0x8789a0, 'outConfigTypeIndex': lookup_config_type, 'outConfigTypeBits': 0x20110002},
+    'zeroConfigRva': 0x3a17516, 'lookupCallRva': 0x3a17551, 'lookupFailureBranchRva': 0x3a17558,
+    'lookupConfigReadRva': 0x3a1756b, 'overloadCopyRva': 0x3a175ae, 'configOverloadCallRva': 0x3a175b4,
+    'containerCallRva': 0x3a173e3, 'containerNullCheckRva': 0x3a173eb, 'containerConfigReadRva': 0x3a17401, 'containerConfigCopyRva': 0x3a1743e, 'newBuffCallRva': 0x3a17448,
+    'containerFieldReadRva': 0x3a29637, 'missingDataKeyReadRva': 0x3a1767d, 'missingTemplateKeyReadRva': 0x3a176e7, 'missingExceptionCallRva': 0x3a17795,
+    'nativeLookupEffectsVerified': False, 'nativeMissingConfigExceptionVerified': False, 'nativeContainerAdmissionEffectsVerified': False, 'liveEntityAddBuffVerified': False,
+}
 create_buff_calls = []
 for ti, index, entry in [(12408, 84934, 0xd28de0), (8933, 56519, 0x39b73d0), (8933, 56549, 0x39b61d0),
     (9558, 62124, 0x67dda0), (3918, 28607, 0x2167de0), (8933, 56584, 0x39a9560), (9044, 57965, 0x3a174d0)]:
