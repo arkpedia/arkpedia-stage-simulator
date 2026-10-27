@@ -31,6 +31,7 @@ import {fearProjectileInitBuffFinalFlags} from '../server/sim/content/chapter16-
 import {fearProjectileBuffConfig,fearProjectileResetBuffContext} from '../server/sim/content/chapter16-fear-buff-context.js';
 import {fearProjectileBuffOverrideKey,fearProjectileResetBuffOverride,fearProjectileOverrideContainer} from '../server/sim/content/chapter16-fear-buff-override.js';
 import {fearProjectileResetBuff} from '../server/sim/content/chapter16-fear-buff-reset.js';
+import {fearProjectileNewBuff} from '../server/sim/content/chapter16-fear-buff-new.js';
 import {fearProjectileBuffRecyclePool,fearProjectileDefaultBuffPool} from '../server/sim/content/chapter16-fear-buff-pool.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
@@ -43,6 +44,94 @@ import { chapter16Shadow } from '../server/sim/content/chapter16-shadow.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
 const parentKey='feawpj_a[mcreep_fear]';
 const fpOne=1n<<32n;
+
+function newBuffFixture(){
+ const buff={instanceUid:7,m_started:false,finished:false,overrideKey:''},container={},source={attributes:{flags:new Set()}},owner={inited:true,attributes:{flags:new Set()}},
+  list=[],map=new Map(),group={queue:[]},pool={},events=[],recycled=[],state={active:true,input:{template:{},data:{id:'input'}}};
+ const event=(name,fn)=>(...args)=>{events.push(name);return fn(...args);};
+ const options={container,source,ability:{},extraBlackboard:[],extraBlackboard2:null,sourceProjectile:{},customOverrideEffectKey:null,isActive:()=>state.active,
+  readInputData:()=>state.input.data,readInput:()=>state.input,checkFinishedBuffs:event('cleanup',()=>{}),passesAbnormalAnti:event('abnormal-gate',()=>true),
+  passesLevitate:event('levitate-gate',()=>true),isDestroyedOrNull:event('source-validity',value=>value==null),readEntityAttributes:event('attributes',value=>value.attributes),
+  hasFlag:event('flag',(attributes,flag)=>attributes.flags.has(flag)),readOwner:event('owner',()=>owner),readPool:event('pool',()=>pool),allocateBuff:event('allocate',()=>buff),
+  recycleBuff:event('recycle',(_pool,value)=>{recycled.push(value);}),resetBuff:event('reset',()=>{}),overrideEffectKey:event('effect',(value,key)=>{value.effectKey=key;}),
+  passesStatusAnti:event('status-gate',()=>true),readBuffList:event('list',()=>list),captureBuffPointer:event('pointer',value=>({obj:value,cachedUid:value.instanceUid})),
+  addBuffPointer:event('list-add',(values,pointer)=>{values.push(pointer);}),readUidMap:event('uid-map',()=>map),readUid:event('uid',value=>value.instanceUid),
+  registerUid:event('register',(values,uid,value)=>{if(values.has(uid))throw Error('duplicate UID');values.set(uid,value);}),readOwnerInited:event('inited',value=>value.inited),
+  onStart:event('start',value=>{value.m_started=true;}),readAbnormalAntiMask:event('anti-mask',()=>8n),filterAbnormalAnti:event('filter',()=>{}),
+  readFinished:event('finished',value=>value.finished),readStarted:event('started',value=>value.m_started),finishAndRemove:event('finish-remove',value=>{
+   const index=list.findIndex(p=>p.obj===value);if(index>=0)list.splice(index,1);map.delete(value.instanceUid);value.finished=true;}),
+  readOverrideKey:event('key',value=>value.overrideKey),setEnabled:event('enable',(value,enabled)=>{value.enabled=enabled;}),
+  ensureOverrideGroup:event('ensure-group',()=>group),readGroupQueue:event('queue',value=>value.queue),readQueueCount:event('count',queue=>queue.length),
+  readQueueItem:event('item',(queue,index)=>queue[index]),addToGroup:event('group-add',(group,value)=>{group.queue.push(value);return true;}),updateGroup:event('group-update',()=>{})};
+ return{buff,container,source,owner,list,map,group,pool,events,recycled,state,options,run:()=>fearProjectileNewBuff(options).run()};
+}
+
+test('NewBuff registers list and UID before OnStart, then filters the new anti-mask before enabling',()=>{
+ const f=newBuffFixture();f.options.onStart=value=>{f.events.push('start');assert.equal(f.list[0].obj,value);assert.equal(f.map.get(value.instanceUid),value);value.m_started=true;};
+ assert.equal(f.run(),f.buff);assert.equal(f.buff.enabled,true);assert.deepEqual(f.events,[
+  'cleanup','abnormal-gate','levitate-gate','source-validity','attributes','flag','pool','allocate','reset','status-gate','list','pointer','list-add','uid-map','uid','register','owner','inited','start','anti-mask','filter','finished','key','enable']);
+});
+for(const phase of ['abnormal','levitate','source-defense'])test('NewBuff '+phase+' rejection never allocates or registers a buff',()=>{
+ const f=newBuffFixture();if(phase==='abnormal')f.options.passesAbnormalAnti=()=>false;if(phase==='levitate')f.options.passesLevitate=()=>false;
+ if(phase==='source-defense'){f.source.attributes.flags.add(37);f.owner.attributes.flags.add(38);}
+ assert.equal(f.run(),null);assert.ok(!f.events.includes('allocate'));assert.equal(f.list.length,0);assert.equal(f.map.size,0);assert.deepEqual(f.recycled,[]);
+});
+test('NewBuff skips source-defense attributes for a missing source and requires both specific flags to reject',()=>{
+ const f=newBuffFixture();f.options.source=null;assert.equal(f.run(),f.buff);assert.ok(!f.events.includes('attributes'));
+ const g=newBuffFixture();g.source.attributes.flags.add(37);assert.equal(g.run(),g.buff);assert.equal(g.events.filter(x=>x==='attributes').length,2);
+});
+test('NewBuff keeps the original gate data but snapshots input config after allocation effects',()=>{
+ const f=newBuffFixture(),original=f.state.input.data,replacement={template:{id:'new-template'},data:{id:'new-data'}};
+ f.options.passesAbnormalAnti=data=>{assert.equal(data,original);return true;};f.options.passesLevitate=data=>{assert.equal(data,original);return true;};
+ f.options.allocateBuff=()=>{f.state.input=replacement;return f.buff;};f.options.resetBuff=(buff,config,context)=>{
+  assert.equal(buff,f.buff);assert.notEqual(config,replacement);assert.equal(config.data,replacement.data);assert.equal(config.template,replacement.template);
+  assert.equal(context.container,f.container);assert.equal(context.source,f.source);assert.equal(context.extraBlackboard,f.options.extraBlackboard);};assert.equal(f.run(),f.buff);
+});
+test('NewBuff status rejection recycles after Reset/effect override but before registration, using a fresh pool read',()=>{
+ const f=newBuffFixture(),otherPool={};f.options.customOverrideEffectKey=' ';f.options.passesStatusAnti=()=>false;
+ f.options.readPool=()=>f.events.includes('reset')?otherPool:f.pool;f.options.recycleBuff=(pool,buff)=>{assert.equal(pool,otherPool);assert.equal(buff,f.buff);f.recycled.push(buff);};
+ assert.equal(f.run(),null);assert.equal(f.buff.effectKey,' ');assert.deepEqual(f.recycled,[f.buff]);assert.equal(f.list.length,0);assert.equal(f.map.size,0);
+});
+for(const inited of [false,true])test('NewBuff owner inited='+inited+' governs OnStart independently of registration and filtering',()=>{
+ const f=newBuffFixture();f.owner.inited=inited;assert.equal(f.run(),f.buff);assert.equal(f.events.includes('start'),inited);assert.ok(f.events.includes('filter'));assert.equal(f.map.get(7),f.buff);
+});
+for(const started of [false,true])test('NewBuff finished result started='+started+' follows the native finish/remove branch',()=>{
+ const f=newBuffFixture();f.options.onStart=value=>{value.m_started=started;value.finished=true;};const result=f.run();
+ assert.equal(result,started?null:f.buff);assert.equal(f.events.includes('finish-remove'),started);assert.ok(!f.events.includes('enable'));assert.ok(!f.events.includes('ensure-group'));
+ assert.equal(f.map.has(7),!started);assert.deepEqual(f.recycled,[],'the finish path delegates next-frame recycling rather than recycling inline');
+});
+test('NewBuff evaluates finished state after abnormal-anti filtering effects',()=>{
+ const f=newBuffFixture();f.options.filterAbnormalAnti=mask=>{assert.equal(mask,8n);f.buff.finished=true;};assert.equal(f.run(),null);assert.ok(f.events.includes('finish-remove'));
+});
+test('NewBuff group membership uses object identity, returns an already-added buff, and accepts whitespace override keys',()=>{
+ const f=newBuffFixture();f.buff.overrideKey=' ';f.group.queue=[{instanceUid:7},f.buff];assert.equal(f.run(),f.buff);
+ assert.ok(!f.events.includes('group-add'));assert.ok(!f.events.includes('group-update'));assert.ok(!f.events.includes('enable'));
+ const g=newBuffFixture();g.buff.overrideKey='key';g.group.queue=[{instanceUid:7}];assert.equal(g.run(),g.buff);assert.ok(g.events.includes('group-add'));assert.ok(g.events.includes('group-update'));
+});
+test('NewBuff rereads the group queue after count and handles group-add rejection without an update',()=>{
+ const f=newBuffFixture();f.buff.overrideKey='key';let reads=0;f.options.readGroupQueue=()=>++reads===1?[{}]:[f.buff];assert.equal(f.run(),f.buff);assert.equal(reads,2);assert.ok(!f.events.includes('group-add'));
+ const g=newBuffFixture();g.buff.overrideKey='key';g.options.addToGroup=()=>false;assert.equal(g.run(),null);assert.ok(g.events.includes('finish-remove'));assert.ok(!g.events.includes('group-update'));
+});
+test('NewBuff failures preserve native partial allocation and registration rather than inventing rollback',()=>{
+ const f=newBuffFixture();f.options.resetBuff=()=>{throw Error('Reset failed');};assert.throws(f.run,/Reset failed/);assert.deepEqual(f.recycled,[]);
+ const g=newBuffFixture();g.map.set(7,{});assert.throws(g.run,/duplicate UID/);assert.equal(g.list[0].obj,g.buff);assert.deepEqual(g.recycled,[]);assert.ok(!g.events.includes('start'));
+});
+test('NewBuff captures pointer before null list failure and samples UID before null UID-map failure',()=>{
+ const f=newBuffFixture();f.options.readBuffList=()=>null;assert.throws(f.run,/null native/);assert.ok(f.events.includes('pointer'));
+ const g=newBuffFixture();g.options.readUidMap=()=>null;assert.throws(g.run,/null native/);assert.ok(g.events.includes('uid'));assert.equal(g.list[0].obj,g.buff);
+});
+for(const phase of ['cleanup','allocateBuff','resetBuff','captureBuffPointer','registerUid','onStart','filterAbnormalAnti','addToGroup'])
+test('NewBuff stops the remaining native phases after lifecycle invalidation during '+phase,()=>{
+ const f=newBuffFixture();if(phase==='addToGroup')f.buff.overrideKey='key';const key=phase==='cleanup'?'checkFinishedBuffs':phase,original=f.options[key];
+ f.options[key]=(...args)=>{const value=original(...args);f.state.active=false;return value;};assert.equal(f.run(),null);assert.ok(!f.events.includes('enable'));assert.ok(!f.events.includes('group-update'));
+});
+test('NewBuff permits a separate nested invocation during activation and rejects recursive reuse of the same invocation',()=>{
+ const f=newBuffFixture(),nested=newBuffFixture();nested.buff.instanceUid=8;Object.assign(nested.options,{container:f.container,readBuffList:()=>f.list,
+  readUidMap:()=>f.map,readOwner:()=>f.owner,readPool:()=>f.pool});let invocation,nestedResult,reentry;
+ f.options.onStart=value=>{value.m_started=true;reentry=invocation.run();nestedResult=nested.run();};invocation=fearProjectileNewBuff(f.options);
+ assert.equal(invocation.run(),f.buff);assert.equal(reentry,null);assert.equal(nestedResult,nested.buff);assert.equal(invocation.run(),null);
+ assert.equal(f.list.length,2);assert.equal(f.map.get(8),nested.buff);
+});
 
 function buffContextFixture(overrides={}){
  const log=[],buff={},data={buffKey:'fear',overrideEffectKey:'',overrideOnEventPriority:false,enableInitDirectionFromSource:true,audioSignal:'fear-audio',
@@ -381,6 +470,31 @@ function resetPipelineFixture(){
   resetOverride:phase('override',override.run),initializeStatus:phase('status',status.run),initializeFinalFlags:phase('final',final.run)};
  return{...f,buff,entries,actions,shield,timerState,phases,options,pointers,overrideGroup,run:()=>fearProjectileResetBuff(options).run()};
 }
+
+test('NewBuff composes concrete pool allocation, Reset and pointer capture before activation and recycles an early status rejection',()=>{
+ const f=resetPipelineFixture(),n=newBuffFixture(),identity=fearProjectileBuffIdentity({counter:{value:70}});
+ Object.assign(f.buff,{instanceUid:0,m_isValid:false});f.data.disableOverride=true;f.data.independentCharacterSource=false;
+ let created=0;const pool=fearProjectileDefaultBuffPool({createBuff:()=>++created===100?f.buff:structuredClone(f.buff),onAllocate:identity.allocate,onRecycle:identity.recycle});
+ const pointers=fearProjectileBuffPointers({readUid:value=>value.instanceUid});f.source.attributes={flags:new Set()};
+ Object.assign(n.options,{container:f.container,source:f.source,ability:f.ability,sourceProjectile:f.sourceProjectile,
+  readInputData:()=>f.data,readInput:()=>({template:f.template,data:f.data}),readPool:()=>pool,allocateBuff:value=>value.allocate(),recycleBuff:(value,buff)=>value.recycle(buff),
+  resetBuff:(buff,config,context)=>{assert.equal(buff,f.buff);assert.equal(config.data,f.data);assert.equal(context.source,f.source);f.run();},
+  captureBuffPointer:pointers.capture,readFinished:buff=>buff.m_isFinished,onStart:buff=>{assert.equal(n.map.get(71),buff);assert.equal(pointers.lock(n.list[0]),buff);assert.equal(buff.m_lifeTime,6n<<32n);buff.m_started=true;}});
+ assert.equal(fearProjectileNewBuff(n.options).run(),f.buff);assert.equal(f.buff.instanceUid,71);assert.equal(pool.usingCount,1);assert.equal(f.buff.enabled,true);
+ assert.equal(f.buff.m_isStatusResistable,true);assert.equal(f.buff.hasShield,true);assert.equal(f.buff.priority,2000);
+ const prior=n.list[0];n.list.length=0;n.map.clear();pool.recycle(f.buff);n.options.passesStatusAnti=()=>false;assert.equal(fearProjectileNewBuff(n.options).run(),null);
+ assert.equal(pool.usingCount,0);assert.equal(f.buff.instanceUid,0);assert.equal(f.buff.m_isValid,false);assert.equal(pointers.isValid(prior),false);
+ assert.equal(n.list.length,0,'status rejection adds no registration');assert.equal(n.map.size,0);
+});
+
+test('NewBuff registration is visible to the native self-death activation receiver and its action result is not treated as a buff receipt',()=>{
+ const f=fixture(),n=newBuffFixture(),events=[];
+ const activation=fearProjectileSelfDeathActivation(f.b,{owner:f.source,readAbnormalFlag:()=>false,readAbnormalCombo:()=>false,
+  switchMode:()=>{assert.equal(n.map.get(7),n.buff);assert.equal(n.list[0].obj,n.buff);events.push('mode');return true;},
+  createImmunityBuff:()=>{events.push('immunity');return false;},instantKill:()=>{events.push('kill');return false;}});
+ n.options.onStart=buff=>{buff.m_started=true;return activation.run();};assert.equal(n.run(),n.buff);
+ assert.deepEqual(events,['mode','immunity','kill']);assert.equal(n.buff.enabled,true);assert.equal(n.recycled.length,0);
+});
 
 test('composed default Reset binds blackboard duration, trigger timer, attributes, actions, priority and final flags in native order',()=>{
  const f=resetPipelineFixture();assert.deepEqual(f.run(),{durationKey:'duration'});

@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 143 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 156 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -1401,6 +1401,54 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 124-method bundle. Continuation40545156330 at3b7defc7 passed; existing
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
+
+### NewBuff registration and activation order
+
+The156-method artifact additionally retains BuffContainer.NewBuff,
+EnsureOverrideGroup, its three anti/levitate gates and pool/owner/attribute
+getters, plus Buff's effect override, status-resistance/abnormal-anti getters,
+enabled setter and Entity's attribute getter. Concrete generic specifications
+bind Allocate/Recycle<Buff>, ObjectPtr<Buff>.op_Implicit and
+Dictionary<UInt32,Buff>.Add without inventing concrete mappings. The independently
+mapped Object canonical implicit-pointer body0x477cf00 is retained. A checksum
+reference links the already retained Buff.OnStart/context evidence.
+
+NewBuff cleans finished buffs before reading input.data. It applies abnormal
+anti and levitation gates before source/target cancellation flags37 and38, then
+allocates and snapshots the input BuffConfig for Reset. A nonempty custom effect
+override, including whitespace, is applied after Reset. Status-resistance
+rejection recycles immediately through a fresh pool getter and returns null
+without list/UID registration. Other exceptions do not invent pool rollback.
+
+On acceptance, the buff-list receiver is captured before pointer construction;
+the UID-map receiver is captured before reading the new UID. List insertion and
+UID registration both precede activation. It is the owner's BObject.inited
+field at0x24 that gates OnStart. Next, the new buff's abnormalAntiMask is passed
+to _FilterBuffAbnormalAnti; this is not its abnormalFlagMask. Finished state is
+checked only afterward. A finished, started buff delegates finish/removal and
+returns null; a finished but unstarted buff is returned without enabling or
+override insertion. Empty override keys enable directly. Otherwise group queue
+membership uses object identity, reading count/item receivers separately.
+Rejected _DoAddInternal delegates finish/removal; success calls _DoUpdateInternal.
+
+`fearProjectileNewBuff` implements that selected invocation order with explicit
+native effects. Separate nested invocations in the same container are allowed
+during activation; reuse of the same invocation cannot duplicate allocation.
+The pool/Reset/pointer composition test verifies allocation UID, timing, status,
+shield and priority before activation, plus immediate recycling on later status
+rejection. Another test makes registration visible during the retained native
+self-death action receiver and verifies that an action's false return is not
+mistaken for NewBuff's receipt. Tests also cover early gates, custom effects,
+late config snapshots, inited/started distinctions, post-filter finish checks,
+queue identity/rereads, add rejection, partial registration failures, reentry,
+nested registration and lifecycle cancellation. All904 focused tests pass;
+the156-method source bundle reproduces with --check.
+
+Continuation40553079851 at3beae344 passed. Full40550025781 at93014b95 is still
+active and has not been replaced. Native anti/levitate effects, override-group
+internals, complete activation effects and live enemy/controller/stage/frame
+integration remain open. Existing source/support/receipt/catalogue gates are
+unchanged; all new stages remain test-only.
 
 ### Reset Unity context pointers and override-container callers
 

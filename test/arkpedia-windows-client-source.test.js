@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,143);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,156);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -225,6 +225,33 @@ test('immediate recycle source enumerates stored pairs and pointer lists before 
  }
  at(q.outerMoveNext,0x4dd4158,'dword ptr [rbx + 0xc], eax');at(q.outerMoveNext,0x4dd41b6,'dword ptr [rbx + 0xc], eax');
  assert.ok(!instructions(m).some(i=>i.mnemonic==='call'&&i.operands==='0x183991a80'),'flush does not filter by current frame');
+});
+
+test('NewBuff source binds cleanup, pool/reset, pre-activation registration and post-activation override ordering',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.newBuff,m=castMethod(c,'BuffContainer','NewBuff');
+ const at=(rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args),`${rva.toString(16)} ${args}`);
+ assert.deepEqual(q.parameters.map(p=>p.name),['input','source','ability','extraBlackboard','extraBlackboard2','sourceProjectile','customOverrideEffectKey']);
+ assert.deepEqual(q.containerFields.map(f=>[f.name,f.offset]),[['m_buffs',0x18],['m_buffUidMap',0x28]]);
+ assert.equal(q.ownerInitedField.name,'<inited>k__BackingField');assert.equal(q.ownerInitedField.offset,0x24);assert.equal(q.startedField.name,'m_started');assert.equal(q.startedField.offset,0x1e8);
+ assert.equal(q.groupQueueField.name,'m_queue');assert.equal(q.groupQueueField.offset,0x10);
+ assert.deepEqual(q.flags.map(f=>[f.name,f.value]),[['ANTI_STATUS_RESISTABLE',30],['BUFF_ADD_CAN_BE_CANCELED_IF_DEFENSE',37],['DEFENSE_BUFF_ADD_IF_CANCELABLE_BUFF',38]]);
+ for(const [rva,target] of [[q.cleanupCallRva,'0x1839d6870'],[q.abnormalAntiCallRva,'0x1839d6cc0'],[q.levitateCallRva,'0x1839d6f60'],
+  [q.allocateCallRva,'0x18477b480'],[q.resetCallRva,'0x1839b0d60'],[q.overrideEffectCallRva,'0x1839b0cb0'],[q.recycleCallRva,'0x18477b630'],
+  [q.pointerCaptureCallRva,'0x18477cf00'],[q.uidAddCallRva,'0x184c0b0d0'],[q.onStartCallRva,'0x1839b0120'],[q.abnormalAntiMaskCallRva,'0x1839b6260'],
+  [q.filterAbnormalAntiCallRva,'0x1839d77e0'],[q.finishedCallRva,'0x1839b6b00'],[q.finishedRemoveCallRva,'0x1839d7a50'],
+  [q.directEnableCallRva,'0x1839b7e80'],[q.ensureGroupCallRva,'0x1839c01b0'],[q.groupAddCallRva,'0x1839df310'],[q.groupUpdateCallRva,'0x1839df770']])at(rva,target);
+ at(q.sourceFlagInputRva,'edx, [r8 + 0x25]');at(q.ownerFlagInputRva,'edx, [r8 + 0x26]');at(q.statusAntiInputRva,'edx, [r8 + 0x1e]');
+ at(q.configSnapshotReadRva,'xmm0, xmmword ptr [rbp]');at(q.listReadRva,'rdi, qword ptr [rsi + 0x18]');at(q.listVirtualAddCallRva,'qword ptr [rax + 0x198]');
+ at(q.uidMapReadRva,'rdi, qword ptr [rsi + 0x28]');at(q.ownerInitedReadRva,'byte ptr [rax + 0x24], 0');at(q.startedReadRva,'byte ptr [rbx + 0x1e8], 0');
+ at(q.groupQueueReadRva,'rcx, qword ptr [rbp + 0x10]');at(q.groupQueueItemReadRva,'rcx, qword ptr [rbp + 0x10]');at(q.groupIdentityCompareRva,'rax, rbx');
+ assert.ok(q.listVirtualAddCallRva<q.uidAddCallRva&&q.uidAddCallRva<q.onStartCallRva&&q.onStartCallRva<q.filterAbnormalAntiCallRva&&q.filterAbnormalAntiCallRva<q.finishedCallRva&&q.finishedCallRva<q.ensureGroupCallRva);
+ assert.deepEqual(q.methodSpecifications.map(x=>x.specification.definition.name),['Allocate','Recycle','op_Implicit','Add']);
+ assert.ok(q.methodSpecifications.every(x=>x.encodedUsage>>>29===6&&x.specification.nativeMapping===null));
+ assert.equal(q.canonicalImplicitPointer.entryRva,0x477cf00);assert.equal(q.canonicalImplicitPointer.definition.name,'op_Implicit');
+ for(const ch of q.canonicalImplicitPointer.chunks){const raw=Buffer.from(ch.base64,'base64');assert.equal(sha(raw),ch.sha256);assert.equal(raw.length,ch.endRva-ch.beginRva);}
+ assert.equal(sha(readFileSync(new URL('../'+q.activationEvidence.path,import.meta.url))),q.activationEvidence.sha256);assert.equal(q.activationEvidence.entryRva,0x39b0120);
+ assert.ok(castMethod(c,'BuffContainer','EnsureOverrideGroup'));assert.ok(castMethod(c,'Buff','OverrideEffectKey'));assert.ok(castMethod(c,'Buff','set_isEnabled'));
+ for(const key of ['nativeAntiAndLevitateEffectsVerified','nativeRegistrationEffectsVerified','nativeOverrideGroupEffectsVerified','liveNewBuffPhaseVerified'])assert.equal(q[key],false);
 });
 
 test('Reset context pointers bind Wrap specializations to the retained UID constructor and Unity validity branches',()=>{

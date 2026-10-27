@@ -1087,6 +1087,67 @@ result['modeSwitch']['buffNotification']['resetOverride']['containerBindings'] =
     'genericDictionaryEffectsVerified': False, 'nativeKeyEnumerationVerified': False, 'liveOverrideContainerVerified': False,
 }
 pool = c['type_row']('ObjectPool`1', 'Torappu.ObjectPool')
+for owner, names in [(override_container, ['NewBuff', 'EnsureOverrideGroup', '_CheckThroughBuffAbnormalAnti',
+    '_CheckThroughBuffStatusResistableAnti', '_CheckThroughLevitateBuffCondition', 'get_pool', 'get_owner', 'get_attributes']),
+    (buff, ['OverrideEffectKey', 'get_isStatusResistable', 'get_abnormalAntiMask', 'set_isEnabled']), (entity, ['get_attributes'])]:
+    for name in names:
+        row = c['unique'](lambda r: r['name'] == name, owner['methods'])
+        if not any(m['index'] == row['index'] and m['image'] == 'Assembly-CSharp.dll' for m in methods):
+            methods.append(c['method'](owner, row))
+new_buff_specs = []
+for load_rva, index, name in [(0x39c24e8, 253090, 'Allocate'), (0x39c25f5, 253091, 'Recycle'),
+                             (0x39c2637, 253187, 'op_Implicit'), (0x39c26a3, 229206, 'Add')]:
+    pos = v['offset'](v['image_base'] + load_rva)
+    assert v['b'][pos:pos + 3] in [bytes.fromhex('488b15'), bytes.fromhex('4c8b05'), bytes.fromhex('4c8b0d')]
+    target = load_rva + 7 + struct.unpack_from('<i', v['b'], pos + 3)[0]
+    usage = v['quad'](v['b'], v['offset'](v['image_base'] + target))
+    assert usage >> 29 == 6 and (usage & 0x1ffffffe) >> 1 == index
+    spec = priority['specification'](index)
+    assert spec['definition']['name'] == name and spec['nativeMapping'] is None
+    assert [a['name'] for a in spec['instantiations']['class']['arguments']] == (['UInt32', 'Buff'] if name == 'Add' else ['Buff'])
+    new_buff_specs.append({'loadRva': load_rva, 'encodedUsage': usage, 'specification': spec})
+implicit_spec = priority['specification'](147643)
+assert implicit_spec['definition'] == new_buff_specs[2]['specification']['definition']
+implicit_va = v['quad'](v['b'], priority['pointer_table'] + implicit_spec['nativeMapping']['methodPointerIndex'] * 8)
+assert implicit_va - v['image_base'] == 0x477cf00
+context_path = 'data/candidates/arkpedia-windows-fear-context-source.json'
+context_raw = (ROOT / context_path).read_bytes()
+context_evidence = json.loads(context_raw)
+assert any(m['type'] == 'Buff' and m['name'] == 'OnStart' and m['entryRva'] == 0x39b0120 for m in context_evidence['methods'])
+new_row = c['unique'](lambda r: r['name'] == 'NewBuff', override_container['methods'])
+pos = v['method_start'] + new_row['index'] * 32
+start, count = v['sint'](v['m'], pos + 12), struct.unpack_from('<H', v['m'], pos + 30)[0]
+new_parameters = []
+for index in range(count):
+    pp = v['uint'](v['m'], 88) + (start + index) * 12
+    new_parameters.append({'name': v['text'](v['uint'](v['m'], pp)), 'typeIndex': v['sint'](v['m'], pp + 8)})
+assert [p['name'] for p in new_parameters] == ['input', 'source', 'ability', 'extraBlackboard', 'extraBlackboard2', 'sourceProjectile', 'customOverrideEffectKey']
+new_flags = c['enum'](c['type_row']('AbnormalFlag', 'Torappu'))
+result['modeSwitch']['buffNotification']['newBuff'] = {
+    'parameters': new_parameters, 'methodSpecifications': new_buff_specs,
+    'canonicalImplicitPointer': {**implicit_spec, 'entryRva': implicit_va - v['image_base'], 'chunks': c['code'](implicit_va - v['image_base'])},
+    'activationEvidence': {'path': context_path, 'sha256': v['sha'](context_raw), 'method': 'Buff.OnStart', 'entryRva': 0x39b0120},
+    'containerFields': [c['unique'](lambda f: f['name'] == name, c['fields'](override_container)) for name in ['m_buffs', 'm_buffUidMap']],
+    'ownerInitedField': c['unique'](lambda f: f['name'] == '<inited>k__BackingField', c['fields'](c['type_row']('BObject', 'Torappu.Battle'))),
+    'startedField': c['unique'](lambda f: f['name'] == 'm_started', c['fields'](buff)),
+    'groupQueueField': c['unique'](lambda f: f['name'] == 'm_queue', c['fields'](c['type_row']('OverrideGroup', ''))),
+    'flags': [c['unique'](lambda f: f['value'] == value, new_flags['fields']) for value in [30, 37, 38]],
+    'cleanupCallRva': 0x39c240e, 'dataReadRva': 0x39c2413, 'abnormalAntiCallRva': 0x39c2420, 'levitateCallRva': 0x39c2436,
+    'sourceValidityCallRva': 0x39c2460, 'sourceAttributesCallRva': 0x39c2477, 'sourceFlagInputRva': 0x39c248b,
+    'ownerFlagInputRva': 0x39c24c4, 'poolGetterCallRva': 0x39c24da, 'allocateCallRva': 0x39c24f2,
+    'configSnapshotReadRva': 0x39c2510, 'resetCallRva': 0x39c254f, 'overrideEffectCallRva': 0x39c2573,
+    'statusGetterCallRva': 0x39c25b3, 'statusAntiInputRva': 0x39c25d5, 'recycleCallRva': 0x39c2602,
+    'listReadRva': 0x39c2643, 'pointerCaptureCallRva': 0x39c264a, 'listVirtualAddCallRva': 0x39c2686,
+    'uidMapReadRva': 0x39c268c, 'uidGetterCallRva': 0x39c2695, 'uidAddCallRva': 0x39c26b2,
+    'ownerInitedReadRva': 0x39c26ca, 'onStartCallRva': 0x39c26d5, 'abnormalAntiMaskCallRva': 0x39c26df,
+    'filterAbnormalAntiCallRva': 0x39c26ed, 'finishedCallRva': 0x39c26f7, 'startedReadRva': 0x39c2700,
+    'finishedRemoveCallRva': 0x39c2712, 'overrideKeyCallRva': 0x39c2726, 'directEnableCallRva': 0x39c2741,
+    'ensureGroupCallRva': 0x39c2754, 'groupQueueReadRva': 0x39c279f, 'groupQueueCountCallRva': 0x39c27b3,
+    'groupQueueItemReadRva': 0x39c27bc, 'groupQueueItemCallRva': 0x39c27d2, 'groupIdentityCompareRva': 0x39c27d7,
+    'groupAddCallRva': 0x39c27ed, 'groupUpdateCallRva': 0x39c27ff,
+    'nativeAntiAndLevitateEffectsVerified': False, 'nativeRegistrationEffectsVerified': False,
+    'nativeOverrideGroupEffectsVerified': False, 'liveNewBuffPhaseVerified': False,
+}
 pool_methods = []
 for index in [147561, 147566, 147567, 147558, 147559, 147563, 147564, 147568, 147569]:
     spec = priority['specification'](index)
