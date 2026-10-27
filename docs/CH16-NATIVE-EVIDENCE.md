@@ -332,3 +332,18 @@ system test joins that carrier to the affliction/damage receiver and confirms
 one cached impact after source removal. This proves the internal composition,
 not the full native launcher, actual scene transform mapping, area targeting,
 expiry/end-hit behavior or scheduler/frame parity. Stage16-9 remains unadmitted.
+
+The projectile artifact additionally retains `OnProjectileStop`, deduplication
+updates, the stop/trace virtual slots and a separately image-bound complete
+signed FP greater-or-equal comparison leaf. Expiry is tested before behaviour
+ticks. `StopMe` sets its stopped guard before dispatching stop handling and
+destruction. The selected configuration forces a final saved-target hit but
+does not force an area-arrival event; elimination suppresses that final hit.
+The internal `fearProjectileHitLedger` preserves the native order: per-identity
+reservation before the normal 128-hit cap, forced trace hits bypassing only that
+cap, and count increment after the hit callback. A cap-rejected attempt remains
+reserved, and a normal hit cannot repeat during final trace handling. Tests cover
+recursive stop/hit calls, source retirement with cached damage, recycled trace
+bodies, elimination and reentrant battle end. This is a selected hit/stop port;
+the FP lifetime clock, deferred stop scheduling, area-selection caller and full
+launcher integration remain held. No additional enemy or stage support follows.

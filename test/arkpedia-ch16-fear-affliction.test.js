@@ -8,12 +8,77 @@ import { execFileSync } from 'node:child_process';
 import { makeBattle, enemyRec } from './helpers/battleHarness.js';
 import { compileStageLocalEnemy } from '../shared/arkpedia/enemy-records.js';
 import { fearProjectileAfflictions } from '../server/sim/content/chapter16-fear-affliction.js';
-import {applyFearProjectileImpact,fearProjectileDamageAction,fearProjectileSourceReference} from '../server/sim/content/chapter16-fear-impact.js';
+import {applyFearProjectileImpact,fearProjectileDamageAction,fearProjectileSourceReference,fearProjectileEntityReference} from '../server/sim/content/chapter16-fear-impact.js';
+import {fearProjectileHitLedger} from '../server/sim/content/chapter16-fear-delivery.js';
 import {fearProjectileReached,fearProjectileMotionStep,fearProjectileMountReference,fearProjectileTraceMotion} from '../server/sim/content/chapter16-fear-movement.js';
 import { battle as minerBattle, keys as minerKeys } from './helpers/ch17Harness.js';
 import { chapter16Shadow } from '../server/sim/content/chapter16-shadow.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
 const parentKey='feawpj_a[mcreep_fear]';
+test('forced trace hit bypasses the 128 normal-hit cap once without an area-arrival dispatch',()=>{
+ const f=fixture(),trace={deploySeq:999},hits=[];let stops=0;
+ const ledger=fearProjectileHitLedger(f.b,{runHit:event=>hits.push(event),resolveTraceTarget:()=>trace,onStopped:()=>stops++});
+ for(let i=0;i<128;i++)assert.equal(ledger.hit({deploySeq:i}),true);
+ assert.equal(ledger.count,128);assert.equal(ledger.stop(),true);
+ assert.equal(ledger.count,129);assert.equal(hits.at(-1).target,trace);assert.equal(hits.at(-1).forced,true);
+ assert.equal(stops,1);assert.equal(ledger.stop(),false);assert.equal(ledger.hitTraceTarget(),false);
+});
+
+test('normal cap rejection still reserves an identity before the forced-hit path checks it',()=>{
+ const f=fixture(),trace={deploySeq:999};let hits=0;
+ const ledger=fearProjectileHitLedger(f.b,{runHit:()=>hits++,resolveTraceTarget:()=>trace,onStopped:()=>{}});
+ for(let i=0;i<128;i++)ledger.hit({deploySeq:i});
+ assert.equal(ledger.hit(trace),false);assert.equal(ledger.hitTraceTarget(),false);
+ assert.equal(ledger.hasHitTraceTarget,true);assert.equal(ledger.count,128);assert.equal(hits,128);
+ ledger.stop();
+});
+
+test('hit reservation precedes callbacks while the hit count increments after they return',()=>{
+ const f=fixture(),target={deploySeq:1};let ledger,recursive,countDuring;
+ ledger=fearProjectileHitLedger(f.b,{runHit:()=>{countDuring=ledger.count;recursive=ledger.hit(target);},
+  resolveTraceTarget:()=>target,onStopped:()=>{}});
+ assert.equal(ledger.hit(target),true);assert.equal(recursive,false);assert.equal(countDuring,0);assert.equal(ledger.count,1);
+ assert.equal(ledger.hitTraceTarget(),false,'normal arrival must not be repeated as a terminal trace hit');
+ target.deploySeq++;assert.equal(ledger.hit(target),true,'a replacement UID is a different normal-hit identity');
+ assert.equal(ledger.count,2);ledger.release();
+});
+
+test('recursive stop from a hit callback cannot repeat final trace damage or stop actions',()=>{
+ const f=fixture();let ledger,hits=0,stops=0;
+ ledger=fearProjectileHitLedger(f.b,{runHit:()=>{hits++;ledger.stop();},resolveTraceTarget:()=>f.target,onStopped:()=>stops++});
+ assert.equal(ledger.stop(),true);assert.equal(hits,1);assert.equal(stops,1);assert.equal(ledger.count,1);
+});
+
+test('eliminated projectiles run stop actions without inventing a final hit',()=>{
+ const f=fixture();let hits=0,stops=0;
+ const ledger=fearProjectileHitLedger(f.b,{runHit:()=>hits++,resolveTraceTarget:()=>f.target,onStopped:()=>stops++});
+ ledger.stop({eliminated:true});assert.equal(hits,0);assert.equal(stops,1);assert.equal(ledger.hasHitTraceTarget,false);
+});
+
+test('battle end during trace resolution prevents both final damage and late stop actions',()=>{
+ const f=fixture();let hits=0,stops=0;
+ const ledger=fearProjectileHitLedger(f.b,{runHit:()=>hits++,resolveTraceTarget:()=>{f.b.emit('battleEnd',{});return f.target;},onStopped:()=>stops++});
+ ledger.stop();assert.equal(hits,0);assert.equal(stops,0);assert.equal(ledger.count,0);assert.equal(ledger.hasHitTraceTarget,false);
+});
+
+test('terminal impact uses the live trace identity and cached source damage after source removal',()=>{
+ const f=fixture();f.source.base.atk=125;f.source.markDirty();
+ const source=fearProjectileSourceReference(f.b,f.source),target=fearProjectileEntityReference(f.b,f.target);
+ const damage=fearProjectileDamageAction(f.b,source);let stopped=0;
+ const ledger=fearProjectileHitLedger(f.b,{resolveTraceTarget:target.resolveEntity,
+  runHit:({target})=>applyFearProjectileImpact(f.b,{source:f.source,target,applyAttachments:()=>{},runActions:damage}),
+  onStopped:()=>{stopped++;target.release();source.release();}});
+ f.b.kill(f.source,null);const hp=f.target.hp;ledger.stop();
+ assert.equal(hp-f.target.hp,125);assert.ok(f.target.findBuff(parentKey));assert.equal(stopped,1);
+ assert.equal(ledger.count,1);assert.deepEqual(f.b.errors,[]);
+});
+
+test('terminal impact never follows a recycled trace body',()=>{
+ const f=fixture(),target=fearProjectileEntityReference(f.b,f.target);let hits=0;
+ const ledger=fearProjectileHitLedger(f.b,{resolveTraceTarget:target.resolveEntity,runHit:()=>hits++,onStopped:target.release});
+ f.target.deploySeq++;ledger.stop();assert.equal(hits,0);assert.equal(ledger.hasHitTraceTarget,false);
+});
+
 test('mount reference follows the same unretired entity life and copies supplied 3D coordinates',()=>{
  const f=fixture();let mount={x:1,y:2,z:3},reads=0;
  const ref=fearProjectileMountReference(f.b,f.target,()=>{reads++;return mount;});

@@ -18,10 +18,13 @@ hit = c['type_row']('HitBehaviour', 'Torappu.Battle.Projectiles')
 methods = []
 for t, names in [
     (simple, ['get_limitedHitNum', 'GetMaxHitNum', 'get_needLifeTime', 'GetLifeTime',
-              'get_stopWhenSourceInvalid', 'get_stopAfterFirstHit', 'get_stopAfterMaxHit']),
+              'get_stopWhenSourceInvalid', 'get_stopAfterFirstHit', 'get_stopAfterMaxHit',
+              'get_alwaysHitTraceTargetInTheEnd', 'get_alwaysHitTraceTargetWhenReached', 'get_alwaysReachInTheEnd']),
     (projectile, ['OnTick', 'ExtraCheckToFinish', 'OnHitTarget', 'DealHitTarget', '_DealHitTraceTarget',
                   'OnProjectileReached', 'DealProjectileReached', 'StopMe', 'get_source', 'get_ability',
-                  'Init', 'RegisterActions']),
+                  'Init', 'RegisterActions', 'OnProjectileStop', 'get_traceTarget', 'get_hasHitTraceTarget',
+                  'get_alwaysHitTraceTarget', 'CheckTargetAlreadyHitAndUpdate', 'CheckTargetAlreadyHit',
+                  'UpdateAlreadyHit', 'GetKeepAlreadyHitTime']),
     (hit, ['OnProjectileReached', 'DealHitTarget']),
     (c['type_row']('ActionController', ''), ['OnHitTarget', '_AttachBuffs', '_RunActions', 'Init', 'RegisterActions']),
     (c['type_row']('Ability', 'Torappu.Battle'), ['PreprocessActionsForProjectile', 'get_owner']),
@@ -31,7 +34,7 @@ for t, names in [
     (c['type_row']('AbstractAnimatedAbility', 'Torappu.Battle.Abilities'), ['NewDamageNode']),
     (c['type_row']('ApplyDamage', ''), ['PreprocessForProjectile', 'CreateDamageModifier', 'Execute', '.ctor']),
     (c['type_row']('BattleUtil', 'Torappu.Battle'), ['CalculateDamageBySource', 'CalculateDamageByAtkNoSource']),
-    (c['type_row']('BObject', 'Torappu.Battle'), ['OnAllocate', 'OnRecycle']),
+    (c['type_row']('BObject', 'Torappu.Battle'), ['OnAllocate', 'OnRecycle', 'DestroyMe']),
 ]:
     for name in names:
         rows = [r for r in t['methods'] if r['name'] == name]
@@ -46,6 +49,24 @@ owner, null_row = c['unique'](lambda pair: True, [(t, m) for t in common_rows fo
     if v['quad'](b, table + ((m['token'] & 0xffffff) - 1) * 8) == v['image_base'] + 0x5a445f0])
 assert owner['name'] == 'ObjectExtensions' and null_row['name'] == 'IsDestroyedOrNull'
 methods.append(c['method'](owner, null_row, 'Torappu.Common.dll'))
+
+# Bind the expiry comparator through its own image, retaining its reviewed
+# complete three-instruction leaf instead of relaxing the common PE reader.
+owner, compare_row = c['unique'](lambda pair: True, [(t, m) for t in common_rows for m in t['methods']
+    if v['quad'](b, table + ((m['token'] & 0xffffff) - 1) * 8) == v['image_base'] + 0x51df0b0])
+assert owner['name'] == 'FP' and compare_row['name'] == 'op_GreaterThanOrEqual'
+compare_rva = 0x51df0b0
+p = v['offset'](v['image_base'] + compare_rva)
+compare_raw = b[p:p + 7]
+decoded = list(Cs(CS_ARCH_X86, CS_MODE_64).disasm(compare_raw, v['image_base'] + compare_rva))
+assert [(i.mnemonic, i.op_str) for i in decoded] == [('cmp', 'rcx, rdx'), ('setge', 'al'), ('ret', '')]
+assert sum(i.size for i in decoded) == len(compare_raw)
+expiry_compare = {'image': 'Torappu.Common.dll', 'type': owner['name'], **compare_row, 'entryRva': compare_rva,
+    'chunks': [{'beginRva': compare_rva, 'endRva': compare_rva + len(compare_raw), 'unwindRva': None,
+                'boundary': 'Reviewed complete signed 64-bit comparison leaf through ret; no calls, branches or stack changes',
+                'sha256': v['sha'](compare_raw), 'base64': base64.b64encode(compare_raw).decode(),
+                'instructions': [{'rva': i.address - v['image_base'], 'size': i.size,
+                                  'mnemonic': i.mnemonic, 'operands': i.op_str} for i in decoded]}]}
 
 source_load = 0x67e418
 p = v['offset'](v['image_base'] + source_load)
@@ -223,7 +244,8 @@ result = {
     'sourceReference': source_reference,
     'preprocessing': preprocessing,
     'damageNodeSlot': c['resolved_slot'](c['type_row']('RangedAttack', 'Torappu.Battle.Abilities'), 106),
-    'methods': methods, 'lifeValueLeaf': leaf, 'prefabScriptBridges': bridges,
+    'methods': methods, 'lifeValueLeaf': leaf, 'expiryComparisonLeaf': expiry_compare, 'prefabScriptBridges': bridges,
+    'stopSlots': [c['resolved_slot'](simple, slot) for slot in [40, 41, 42, 43, 44, 51, 52, 53]],
     'resolvedSlots': [c['resolved_slot'](simple, slot) for slot in [38, 39, 40, 41, 42, 43]],
     'review': [
         'SimpleProjectile uses raw-byte LifeType: LIMITED=1 and INFINITY=2. get_limitedHitNum returns hitNumType !=2, so the original _maxHitNum=1 is not an active one-hit limit in this default configuration.',
@@ -233,7 +255,9 @@ result = {
         'RangedAttack.NewDamageNode tests useCachedAtkOnly. Its false branch tail-calls AbstractAnimatedAbility.NewDamageNode, which constructs ordinary ApplyDamage rather than ApplyCacheAtkDamageFromProjectile. PreprocessForProjectile stores source ATK in m_cachedAtk; CreateDamageModifier uses CalculateDamageBySource when its source reference is valid and CalculateDamageByAtkNoSource with the cached value when the source is missing. Source-reference identity validity and reuse timing remain separate from merely testing an alive flag.',
         'Projectile.get_source loads the exact ObjectPtr Lock method specification. Its shared body reaches the reviewed validity tail-jump/body: IsDestroyedOrNull is checked first, then IPtrObject.instanceUid is compared with cachedUid. BObject.OnAllocate assigns an incremented UID and OnRecycle clears it to zero. The simulator must preserve output identity across a dead but unrecycled source and reject the replacement body after retirement/reuse. Concrete generic context and precise recycle/frame timing remain unverified.',
         'The ordinary birth chain is RangedAttack.CreateProjectile -> BattleController.CreateProjectile -> Projectile.Init at 0x678950 -> ActionController.Init -> ability virtual slot45 GetProjectileActions. In the default event0 branch RangedAttack passes its existing m_actions list through slot65 Ability.PreprocessActionsForProjectile before returning that same list. The preprocessor obtains ability.owner and invokes IDamageOrHealSourceNode slot1 on matching nodes. Ordinary ActionController.RegisterActions appends lists without preprocessing; explicit Projectile.RegisterActions has a separate boolean-gated preprocessing path using projectile.source. A per-projectile immutable damage-node cache is not proven by this path.',
-        'Reached handling, trace-target end hit and HitBehaviour area selection/dispatch are retained in complete bodies. Cross-version field differences remain explicit. Source identity reuse, reentrant impact ordering and event5 self-death still require integration tests before admission.'
+        'Reached handling, trace-target end hit and HitBehaviour area selection/dispatch are retained in complete bodies. Cross-version field differences remain explicit. Source identity reuse, reentrant impact ordering and event5 self-death still require integration tests before admission.',
+        'OnTick compares currentTime with lifeTime through the separately image-bound signed FP greater-or-equal leaf before ticking behaviours. The default ExtraCheckToFinish returns true. StopMe marks m_isStopped before virtual slot51 OnProjectileStop, then calls BObject.DestroyMe. OnProjectileStop skips forced trace/reach work for eliminated projectiles, otherwise checks alwaysHitTraceTargetInTheEnd before the separate alwaysReachInTheEnd branch. The selected prefab enables the former and disables the latter: finite expiry must not invent an area-arrival dispatch.',
+        '_DealHitTraceTarget checks m_hasHitTraceTarget and the saved reference, then sets the trace-hit flag before calling DealHitTarget with its force argument true. DealHitTarget first calls CheckTargetAlreadyHitAndUpdate even on the forced path; only the normal max-hit comparison is bypassed. New targets are reserved in the already-hit dictionary before the normal cap check. OnHitTarget also updates that dictionary before behaviours/actions; hit count increments only after the hit callback returns. Thus a cap-rejected attempt can still suppress a subsequent forced hit on that same identity. The selected negative keepAlreadyHitTime retains the per-identity record throughout the projectile lifetime.'
     ]}
 serialized = json.dumps(result, ensure_ascii=False, indent=1) + '\n'
 out = ROOT / 'data/candidates/arkpedia-windows-fear-projectile-source.json'
@@ -242,4 +266,4 @@ if __name__ == '__main__':
         assert out.read_text(encoding='utf8') == serialized, 'Static Windows projectile evidence differs'
     else:
         out.write_text(serialized, encoding='utf8', newline='\n')
-    print(f'Verified {len(methods)} complete projectile methods, byte life enum and bounded life-value leaf')
+    print(f'Verified {len(methods)} complete projectile methods, byte life enum and bounded life/expiry leaves')

@@ -74,9 +74,9 @@ const castMethod=(c,type,name)=>{
 };
 
 test('fear projectile source pins complete native methods and exact original script references',()=>{
- const c=read(projectilePath);assert.equal(c.methods.length,48);
+ const c=read(projectilePath);assert.equal(c.methods.length,61);
  for(const p of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+p.path,import.meta.url))),p.sha256);
- for(const method of [...c.methods,c.lifeValueLeaf])for(const chunk of method.chunks){
+ for(const method of [...c.methods,c.lifeValueLeaf,c.expiryComparisonLeaf])for(const chunk of method.chunks){
   const raw=Buffer.from(chunk.base64,'base64');assert.equal(raw.length,chunk.endRva-chunk.beginRva);assert.equal(sha(raw),chunk.sha256);
  }
  const [simple,hit]=c.prefabScriptBridges;
@@ -300,6 +300,49 @@ test('selected motion binds complete arithmetic helpers, normalization epsilon a
   ['mulss','xmm2, xmm10'],['mulss','xmm3, xmm10'],['movsd','qword ptr [rbp - 0x59], xmm0'],
   ['mulss','xmm1, xmm10'],['mulss','xmm3, xmm7'],['mulss','xmm2, xmm7'],['mulss','xmm1, xmm7']]);
  assert.ok(tick.some(i=>i.rva===0xa7ce63&&i.mnemonic==='jae'&&i.operands==='0x180a7cef3'));
+});
+
+test('finite expiry binds signed FP greater-or-equal before behaviours and stop guards before destruction',()=>{
+ const c=read(projectilePath),leaf=c.expiryComparisonLeaf;
+ assert.equal(leaf.image,'Torappu.Common.dll');assert.equal(leaf.type,'FP');assert.equal(leaf.name,'op_GreaterThanOrEqual');
+ assert.deepEqual(instructions(leaf).map(i=>[i.mnemonic,i.operands]),[['cmp','rcx, rdx'],['setge','al'],['ret','']]);
+ const raw=Buffer.from(leaf.chunks[0].base64,'base64');assert.equal(raw.length,7);assert.equal(sha(raw),leaf.chunks[0].sha256);
+ assert.equal(leaf.chunks[0].unwindRva,null);
+ const at=(type,name,rva,args)=>assert.ok(instructions(castMethod(c,type,name)).some(i=>i.rva===rva&&i.operands===args));
+ at('Projectile','OnTick',0x67af5a,'0x1851df0b0');at('Projectile','OnTick',0x67af61,'0x18067af95');
+ at('Projectile','ExtraCheckToFinish',0x67614f,'al, 1');
+ at('Projectile','StopMe',0x67c06f,'byte ptr [rbx + 0xa4], cl');
+ at('Projectile','StopMe',0x67c077,'byte ptr [rbx + 0xa4], 1');
+ at('Projectile','StopMe',0x67c09b,'qword ptr [rax + 0x468]');
+ at('Projectile','StopMe',0x67c0ab,'0x1839980f0');
+ const stop=instructions(castMethod(c,'Projectile','OnProjectileStop'));
+ const call=target=>stop.findIndex(i=>i.mnemonic==='call'&&i.operands===target);
+ assert.ok(call('0x18067c970')>=0&&call('0x18067c970')<call('0x1806a1b60'));
+ at('Projectile','OnProjectileStop',0x67a9c5,'byte ptr [rbx + 0xa5], cl');
+ at('Projectile','OnProjectileStop',0x67a9cb,'0x18067ab67');
+ const native=JSON.parse(c.prefabScriptBridges[0].originalJson);
+ assert.equal(native._alwaysHitTraceTargetInTheEnd,1);assert.equal(native._alwaysReachInTheEnd,0);
+ assert.equal(c.stopSlots.find(s=>s.slot===51).name,'OnProjectileStop');
+ assert.equal(c.stopSlots.find(s=>s.slot===41).name,'get_alwaysHitTraceTargetInTheEnd');
+ assert.equal(c.stopSlots.find(s=>s.slot===43).name,'get_alwaysReachInTheEnd');
+});
+
+test('forced final trace hit keeps deduplication before the cap and count increment after actions',()=>{
+ const c=read(projectilePath),native=JSON.parse(c.prefabScriptBridges[0].originalJson);
+ assert.equal(native._canHitSameTargetMultipleTimes,0);assert.equal(native._keepAlreadyHitTime,-1);
+ const at=(name,rva,args)=>assert.ok(instructions(castMethod(c,'Projectile',name)).some(i=>i.rva===rva&&i.operands===args));
+ at('_DealHitTraceTarget',0x67c9bb,'byte ptr [rbx + 0xa7], cl');
+ at('_DealHitTraceTarget',0x67c9e6,'byte ptr [rbx + 0xa7], 1');
+ at('_DealHitTraceTarget',0x67c9f8,'r8b, 1');at('_DealHitTraceTarget',0x67ca06,'0x180678120');
+ at('DealHitTarget',0x67819a,'rax');at('DealHitTarget',0x6781a4,'sil, sil');
+ at('DealHitTarget',0x6781af,'dword ptr [rbx + 0xa8], eax');
+ at('DealHitTarget',0x6781c6,'0x180005620');at('DealHitTarget',0x6781cb,'dword ptr [rbx + 0xa8]');
+ assert.equal(c.stopSlots.find(s=>s.slot===53).name,'CheckTargetAlreadyHitAndUpdate');
+ at('CheckTargetAlreadyHitAndUpdate',0x677a57,'0x180677aa0');
+ at('CheckTargetAlreadyHitAndUpdate',0x677a69,'0x18067c390');
+ at('OnHitTarget',0x67a3ec,'0x18067c390');at('OnHitTarget',0x67a412,'0x1806a16e0');
+ assert.equal(c.fields.Projectile.find(f=>f.name==='m_targetsAlreadyHit').offset,0x150);
+ assert.equal(c.fields.Projectile.find(f=>f.name==='m_keepAlreadyHitTime').offset,0xb0);
 });
 
 test('native projectile source lock checks cached UID and destroyed/null state across allocation and recycling',()=>{
