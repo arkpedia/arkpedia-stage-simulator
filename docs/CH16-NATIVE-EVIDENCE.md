@@ -1402,6 +1402,57 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
 
+### Controller/factory projectile birth and graphic attachment
+
+`extract-windows-fear-projectile-controller.py --check` retains complete default
+BattleController.CreateProjectile, BattleFactory.CreateProjectile and
+Projectile.AttachGraphicProjectile bodies. It binds source GetEffectReplacePairs,
+TryHookProjectile and GetMountPoint slots, Init's seven parameters and the
+NORMAL/ONLY_LOGIC/ONLY_GRAPHIC enum0/1/2. Factory calls bind through the actual
+Torappu.Common and UnityEngine.CoreModule pointer tables, including FileUtil.Combine,
+Component.get_transform, Unity equality/inequality and Transform parent/scale
+setters. The PoolManager.Allocate<Projectile> specification has no concrete
+native mapping; none is invented. The prefab folder literal and Vector3.oneVector
+static field are retained with their metadata usages.
+
+`fearProjectileControllerCreation` samples Unity source nullness before obtaining
+effect-replacement pairs, then separately samples source validity before trying
+the projectile hook. Normal creation allocates by the original key, conditionally
+initializes a valid body as NORMAL and clears the graphic output last. Hooked
+creation allocates logic then graphic using separately fetched factories,
+publishes the graphic output before validity checks, obtains the source muzzle
+mount and initializes logic/graphic bodies with their distinct keys, starts and
+type flags. Both retain the original key and earlier effect-pair reference.
+Attachment rereads the graphic output after Init callbacks. Failed hook births
+report failure and return the logic result without retry, fallback or rollback.
+Exceptions retain allocated bodies and any already published output.
+
+`fearProjectileFactoryCreation` combines the canonical projectile folder with
+the key, delegates typed pool allocation, and returns null for Unity-null results.
+It obtains a transform, parents it to the factory folder, obtains the transform
+again and copies the supplied native oneVector components into a separate
+Single-valued scale. Parenting survives later failure. The second transform
+is checked after fetching the static field view but before reading its components.
+`fearProjectileAttachGraphic` stores the nullable reference before its explicit
+write-barrier receiver. Controller output stores/clears also expose their barriers.
+Pool, Unity, hook, static vector initialization and GC effects remain explicit.
+
+Tests cover normal/hooked creation, separate factories, output publication and
+rereads, invalid births, no automatic fallback, Init/report/transform failures,
+preserved effects and nested allocations. The wait/spell-start/ranged-launch/
+event5-self-death/flight composition now runs through controller and factory
+creation before its explicit typed-allocation and Projectile.Init receivers.
+It checks parenting/scale before Init, tracking before event5 and damage after
+source death. All1438 focused native/fear/family/miner tests, source reproduction
+and the existing three Fear/miner contract checks pass.
+
+Full Projectile.Init, pool allocation/reuse/reset, source hook effects, base
+target actions, no-target fallback, initial FSM, local-miner attachment and
+stage/frame parity remain open. The next birth-path work is Projectile.Init
+and PoolManager's actual allocation path. No Fear controller or16-9 admission,
+source/support/receipt/catalogue gate, or stage registry changed. This checkpoint
+is local and has not received hosted validation or been uploaded.
+
 ### Ranged projectile destinations and creation wrapper
 
 `extract-windows-fear-projectile-launch.py --check` reproduces the complete

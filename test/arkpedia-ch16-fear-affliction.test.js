@@ -63,6 +63,105 @@ import {fearProjectileAttributeModifierConstructor,fearProjectileAttributeModifi
 import {fearProjectileTargetCasting,fearProjectileCheckCastingFinished} from '../server/sim/content/chapter16-fear-target-casting.js';
 import {fearProjectileSpellStart} from '../server/sim/content/chapter16-fear-spell-start.js';
 import {fearProjectileCreateProjectile,fearProjectileRangedTargetCast} from '../server/sim/content/chapter16-fear-projectile-launch.js';
+import {fearProjectileControllerCreation,fearProjectileFactoryCreation,fearProjectileAttachGraphic} from '../server/sim/content/chapter16-fear-projectile-controller.js';
+
+function controllerCreationFixture(){
+ const events=[],factory={_projectileFolder:{}},controller={_factory:factory},source={effectReplacePairs:{}},start={},target={},ability={},
+  logic={uid:201,transform:{}},graphic={uid:202,transform:{}},queue=[logic,graphic],prior={},out={value:prior},
+  factoryOptions={combinePath:(folder,key)=>{events.push(['path',folder,key]);return folder+'/'+key;},allocate:path=>{events.push(['allocate',path]);return queue.shift();},
+   isNullUnity:value=>value==null||value.destroyed===true,readTransform:value=>{events.push(['transform',value]);return value.transform;},readFolder:value=>value._projectileFolder,
+   setParent:(transform,parent)=>{events.push(['parent',transform,parent]);transform.parent=parent;},readOneVector:()=>({x:1,y:1,z:1}),
+   setLocalScale:(transform,scale)=>{events.push(['scale',transform,scale]);transform.localScale=scale;}},
+  attachOptions={writeBarrier:(...args)=>events.push(['attach-barrier',...args])},
+  options={isNullUnity:value=>{events.push(['source-null',value]);return value==null||value.destroyed===true;},isValidUnity:value=>{events.push(['valid',value]);return value!=null&&!value.destroyed;},
+   getEffectReplacePairs:value=>{events.push(['pairs',value]);return value.effectReplacePairs;},tryHook:(...args)=>{events.push(['hook',...args]);return false;},
+   readFactory:value=>{events.push('factory');return value._factory;},factoryCreate:(...args)=>fearProjectileFactoryCreation(factoryOptions)(...args),
+   getMountPoint:(owner,type)=>{events.push(['mount',owner,type]);return start;},initProjectile:(...args)=>events.push(['init',...args]),
+   attachGraphic:(...args)=>{events.push(['attach',...args]);return fearProjectileAttachGraphic(attachOptions)(...args);},reportHookFailure:(...args)=>events.push(['hook-failure',...args]),
+   writeBarrier:(...args)=>events.push(['out-barrier',...args])};
+ const hook=()=>{options.tryHook=(_source,key,graphicKey,logicKey,muzzle)=>{assert.equal(key,'original');graphicKey.value='graphic';logicKey.value='logic';muzzle.value=7;return true;};};
+ return{events,factory,controller,source,start,target,ability,logic,graphic,queue,prior,out,factoryOptions,options,attachOptions,hook,
+  run:()=>fearProjectileControllerCreation(options)(controller,'original',source,start,target,ability,out)};
+}
+
+test('normal controller birth composes factory allocation/reparent/scale before Init and clears output last',()=>{
+ const f=controllerCreationFixture();assert.equal(f.run(),f.logic);assert.equal(f.out.value,null);assert.deepEqual(f.logic.transform,{parent:f.factory._projectileFolder,localScale:{x:1,y:1,z:1}});
+ const init=f.events.find(e=>Array.isArray(e)&&e[0]==='init');assert.deepEqual(init,['init',f.logic,'original',f.start,f.target,f.ability,0,'original',f.source.effectReplacePairs]);assert.deepEqual(f.events.at(-1),['out-barrier',f.out,'value',null]);
+ assert.ok(f.events.findIndex(e=>Array.isArray(e)&&e[0]==='scale')<f.events.indexOf(init));
+});
+
+test('hooked controller birth creates logic then graphic, initializes different mounts/types and attaches graphic',()=>{
+ const f=controllerCreationFixture(),logicStart={};f.hook();f.options.getMountPoint=(source,type)=>{assert.equal(source,f.source);assert.equal(type,7);assert.equal(f.out.value,f.graphic);return logicStart;};assert.equal(f.run(),f.logic);
+ assert.deepEqual(f.events.filter(e=>Array.isArray(e)&&e[0]==='path').map(e=>e[2]),['logic','graphic']);assert.equal(f.out.value,f.graphic);assert.equal(f.logic.m_graphicProjectile,f.graphic);
+ assert.deepEqual(f.events.filter(e=>Array.isArray(e)&&e[0]==='init'),[['init',f.logic,'logic',logicStart,f.target,f.ability,1,'original',f.source.effectReplacePairs],['init',f.graphic,'graphic',f.start,f.target,f.ability,2,'original',f.source.effectReplacePairs]]);
+ assert.deepEqual(f.events.at(-1),['attach-barrier',f.logic,'m_graphicProjectile',f.graphic]);
+});
+
+test('controller probes Unity nullness independently of later validity and keeps the earlier effect-pair reference',()=>{
+ const f=controllerCreationFixture(),pairs=f.source.effectReplacePairs;f.options.isValidUnity=value=>{if(value===f.source){f.source.effectReplacePairs={};return false;}return value!=null;};f.options.tryHook=()=>{throw Error('unexpected hook');};assert.equal(f.run(),f.logic);assert.equal(f.events.find(e=>Array.isArray(e)&&e[0]==='init').at(-1),pairs);
+ const g=controllerCreationFixture();g.source.destroyed=true;g.options.getEffectReplacePairs=()=>{throw Error('unexpected pairs');};assert.equal(g.run(),g.logic);assert.equal(g.events.find(e=>Array.isArray(e)&&e[0]==='init').at(-1),null);
+});
+
+test('controller uses freshly read factories for both hook allocations',()=>{
+ const f=controllerCreationFixture(),next={_projectileFolder:{}};f.hook();const create=f.options.factoryCreate;let count=0;
+ f.options.factoryCreate=(factory,key)=>{if(count++===0){assert.equal(factory,f.factory);f.controller._factory=next;}else assert.equal(factory,next);return create(factory,key);};f.run();assert.equal(f.logic.transform.parent,f.factory._projectileFolder);assert.equal(f.graphic.transform.parent,next._projectileFolder);
+});
+
+test('failed hooked allocation publishes graphic output and reports failure without initialization or fallback',()=>{
+ for(const invalid of ['logic','graphic']){const f=controllerCreationFixture();f.hook();f[invalid].destroyed=true;const result=f.run();assert.equal(result,invalid==='logic'?null:f.logic);assert.equal(f.out.value,invalid==='graphic'?null:f.graphic);
+  assert.deepEqual(f.events.at(-1),['hook-failure','logic','graphic']);assert.equal(f.events.some(e=>Array.isArray(e)&&e[0]==='init'),false);assert.equal(f.events.filter(e=>Array.isArray(e)&&e[0]==='allocate').length,2);
+ }
+});
+
+test('normal failed allocation returns null and clears a prior graphic output without initialization',()=>{
+ const f=controllerCreationFixture();f.logic.destroyed=true;assert.equal(f.run(),null);assert.equal(f.out.value,null);assert.equal(f.events.some(e=>Array.isArray(e)&&e[0]==='init'),false);
+});
+
+test('controller normal Init errors preserve the previous graphic output, while hooked errors preserve published births',()=>{
+ const f=controllerCreationFixture(),error=Error('init');f.options.initProjectile=()=>{throw error;};assert.throws(f.run,actual=>actual===error);assert.equal(f.out.value,f.prior);assert.equal(f.logic.transform.parent,f.factory._projectileFolder);
+ for(const failAt of [1,2]){const g=controllerCreationFixture();g.hook();let count=0;g.options.initProjectile=()=>{if(++count===failAt)throw error;};assert.throws(g.run,actual=>actual===error);assert.equal(g.out.value,g.graphic);assert.equal(g.logic.m_graphicProjectile,undefined);assert.equal(count,failAt);}
+});
+
+test('hook birth rereads graphic output after logic Init and after graphic Init before attachment',()=>{
+ const f=controllerCreationFixture(),replacement={uid:203},last={uid:204};f.hook();let count=0;
+ f.options.initProjectile=(projectile,...args)=>{if(++count===1){assert.equal(projectile,f.logic);f.out.value=replacement;}else{assert.equal(projectile,replacement);assert.equal(args[0],'graphic');f.out.value=last;}};
+ f.run();assert.equal(f.out.value,last);assert.equal(f.logic.m_graphicProjectile,last);
+ const g=controllerCreationFixture();g.hook();g.options.initProjectile=()=>{g.out.value=null;};assert.throws(g.run,/null native object/);assert.equal(g.out.value,null);assert.equal(g.logic.m_graphicProjectile,undefined);
+});
+
+test('hook failure preserves its output if reporting throws and a missing output receiver fails only after allocation',()=>{
+ const f=controllerCreationFixture();f.hook();f.logic.destroyed=true;f.options.reportHookFailure=()=>{throw Error('report');};assert.throws(f.run,/report/);assert.equal(f.out.value,f.graphic);
+ const g=controllerCreationFixture();g.hook();assert.throws(()=>fearProjectileControllerCreation(g.options)(g.controller,'original',g.source,g.start,g.target,g.ability,null),/null native object/);assert.equal(g.queue.length,0);
+});
+
+test('hook factory failures leave prior outputs and do not silently allocate a normal projectile',()=>{
+ const f=controllerCreationFixture();f.hook();const create=f.options.factoryCreate;let count=0;f.options.factoryCreate=(...args)=>{if(++count===2)throw Error('second allocation');return create(...args);};assert.throws(f.run,/second allocation/);assert.equal(f.out.value,f.prior);assert.equal(f.logic.transform.parent,f.factory._projectileFolder);assert.equal(count,2);
+});
+
+test('factory probes allocated Unity objects before accessing transforms and can return null without parenting',()=>{
+ const f=controllerCreationFixture();f.factoryOptions.allocate=()=>null;assert.equal(fearProjectileFactoryCreation(f.factoryOptions)(f.factory,'x'),null);assert.equal(f.events.some(e=>Array.isArray(e)&&e[0]==='transform'),false);
+});
+
+test('factory reparents one transform then fetches another transform for its detached scale value',()=>{
+ const f=controllerCreationFixture(),first={},second={},one={x:1/3,y:2/3,z:1};let calls=0;
+ f.factoryOptions.readTransform=()=>++calls===1?first:second;f.factoryOptions.readOneVector=()=>one;assert.equal(fearProjectileFactoryCreation(f.factoryOptions)(f.factory,'x'),f.logic);
+ assert.equal(first.parent,f.factory._projectileFolder);assert.equal(second.parent,undefined);assert.deepEqual(second.localScale,{x:Math.fround(1/3),y:Math.fround(2/3),z:1});assert.notEqual(second.localScale,one);assert.equal(calls,2);
+});
+
+test('factory errors preserve parenting, and second-transform null checks follow the static vector read',()=>{
+ const f=controllerCreationFixture();let calls=0,oneRead=false;f.factoryOptions.readTransform=()=>++calls===1?f.logic.transform:null;f.factoryOptions.readOneVector=()=>{oneRead=true;return{get x(){throw Error('unexpected scale component');}};};assert.throws(()=>fearProjectileFactoryCreation(f.factoryOptions)(f.factory,'x'),/null native object/);assert.equal(oneRead,true);assert.equal(f.logic.transform.parent,f.factory._projectileFolder);
+ const g=controllerCreationFixture();g.factoryOptions.setLocalScale=()=>{throw Error('scale');};assert.throws(()=>fearProjectileFactoryCreation(g.factoryOptions)(g.factory,'x'),/scale/);assert.equal(g.logic.transform.parent,g.factory._projectileFolder);
+});
+
+test('graphic attachment stores nullable references before the barrier and retains the write after barrier errors',()=>{
+ const f=controllerCreationFixture(),attach=fearProjectileAttachGraphic({writeBarrier:(value,key,graphic)=>{assert.equal(value[key],graphic);throw Error('barrier');}});assert.throws(()=>attach(f.logic,null),/barrier/);assert.equal(f.logic.m_graphicProjectile,null);
+});
+
+test('controller creation permits nested allocation with independent hook and output locals',()=>{
+ const f=controllerCreationFixture(),innerOut={value:f.prior},inner={uid:203,transform:{}};f.queue.splice(0,f.queue.length,inner,f.logic);let nested=false;
+ const allocate=f.factoryOptions.allocate;f.factoryOptions.allocate=path=>{if(!nested){nested=true;assert.equal(fearProjectileControllerCreation(f.options)(f.controller,'inner',f.source,f.start,f.target,f.ability,innerOut),inner);}return allocate(path);};
+ assert.equal(f.run(),f.logic);assert.equal(innerOut.value,null);assert.equal(f.out.value,null);assert.equal(f.events.filter(e=>Array.isArray(e)&&e[0]==='init').length,2);
+});
 
 function projectileLaunchFixture(){
  const f=spellStartFixture(),controller={},projectile={uid:90},fake={uid:91},mount={},tile={mapPosition:{x:10,y:20,z:30}},
@@ -5341,7 +5440,7 @@ test('owner reuse while testing casting prevents spell-end and post-delay for th
  assert.equal(f.spell.run(),null);assert.deepEqual(f.events,['start']);
 });
 
-test('bounded wait, native ranged launch, event5 self-death and independent flight preserve born damage',()=>{
+test('bounded wait, controller/factory ranged birth, event5 self-death and independent flight preserve born damage',()=>{
  const f=modeFixture({readStartIniting:()=>false});f.source.base.atk=175;f.source.markDirty();f.target.nativeUid=1;
  const graph=read('data/candidates/arkpedia-windows-fear-self-death-source.json').modeSwitch.graph;
  for(const [role,mode]of [['mode0',f.old],['mode1',f.next]]){
@@ -5369,16 +5468,23 @@ test('bounded wait, native ranged launch, event5 self-death and independent flig
  start.start.canSpell=(owner,ability)=>{assert.equal(owner,f.source);assert.equal(ability,start.ability);return true;};
  start.start.onEvent=(_ability,event,runAction)=>{assert.equal(event,4);assert.equal(runAction,false);events.push('event4');};
  start.start.onOwnerSpell=owner=>{assert.equal(owner,f.source);assert.equal(start.sources.getValue(start.ctx.m_source),f.source);assert.equal(start.references.peek(start.ctx.m_mainTarget),f.target);};
- const hitMount={};start.rangedOptions.readHitMountPoint=target=>{assert.equal(target,f.target);return hitMount;};
+ const hitMount={},birth=controllerCreationFixture();start.rangedOptions.readHitMountPoint=target=>{assert.equal(target,f.target);return hitMount;};
+ start.controller._factory=birth.factory;start.projectile.transform={};birth.queue.splice(0,birth.queue.length,start.projectile);f.source.effectReplacePairs=[];
  start.createOptions.createProjectile=(controller,key,owner,mount,target,ability,fake)=>{
   assert.equal(controller,start.controller);assert.equal(key,'projectile_enemy_fearpj');assert.equal(owner,f.source);assert.equal(mount,start.mount);
   assert.equal(target,hitMount);assert.equal(ability,start.ability);assert.equal(fake.value,null);
+  return fearProjectileControllerCreation(birth.options)(controller,key,owner,mount,target,ability,fake);
+ };
+ birth.options.initProjectile=(projectile,key,mount,target,ability,type,originalKey,effectReplacePairs)=>{
+  assert.equal(projectile,start.projectile);assert.equal(key,'projectile_enemy_fearpj');assert.equal(mount,start.mount);assert.equal(target,hitMount);
+  assert.equal(ability,start.ability);assert.equal(type,0);assert.equal(originalKey,key);assert.equal(effectReplacePairs,f.source.effectReplacePairs);
+  assert.deepEqual(projectile.transform,{parent:birth.factory._projectileFolder,localScale:{x:1,y:1,z:1}});
   events.push('birth');flight=fearProjectileFlight(f.b,{from:{x:0,y:0,z:0},initialTarget:{x:1,y:0,z:0},
    resolveTargetPosition:()=>null,resolveTraceTarget:()=>f.target,
    area:{queryOverlaps:()=>[f.target],resolveEntity:u=>u,readUid:u=>u.nativeUid,isCandidate:()=>true,
     verifyTarget:()=>true,deterministic:true,resolveSource:source.resolveSource,onSelected:()=>{}},
    runHit:({target})=>applyFearProjectileImpact(f.b,{source:f.source,target,applyAttachments:()=>{},runActions:damage}),
-   onStopped:()=>{},scheduleCompletion:()=>()=>{}});return start.projectile;
+   onStopped:()=>{},scheduleCompletion:()=>()=>{}});
  };
  start.options.castOnTarget=fearProjectileRangedTargetCast(start.rangedOptions);
  start.start.castTargets=fearProjectileTargetCasting(start.options);
