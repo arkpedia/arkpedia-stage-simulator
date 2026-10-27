@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 36 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 43 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -726,3 +726,38 @@ full40514426781 remain active at this checkpoint. Neither live run is replaced.
 Native concrete equality, initialized ability data/talents, live FSM scheduling,
 animation and stage geometry/query integration remain open; this checkpoint
 does not admit the fear enemy or16-9.
+
+### Mode talent and dynamic-ability callbacks
+
+The43-method artifact additionally retains UnitMode._InitTalents and
+_SetAbilityDataAndAttachIfNeed, together with BasicTalent.get_isValid,
+get_isAttached, Attach, Detach and SetParentMode. The exact slot6 metadata
+binding identifies the attachment predicate used by both mode callbacks;
+it is separate from validity and from Unity object validity.
+
+`fearProjectileModeEffects` composes selected UnitMode.OnActivate/OnInactivate
+effects with explicit native readers and effect callers. Non-initial activation
+attaches valid, currently detached talents; inactivation detaches valid,
+currently attached talents. Initial activation skips the talent pass. Both
+paths then process the dynamic ability keys in their current collection order,
+without applying the static ability loop's Unity-validity filter. Null dynamic
+entries fail. The dynamic list remains distinct from the initialized static
+m_abilities list and its startIniting attachment gate.
+
+The native activation path reloads a talent array entry after validity and
+attachment predicates, whereas inactivation retains its captured talent object.
+The adapter preserves that difference and rereads collection lengths after
+effects. Tests cover predicate replacement of entries, collection growth,
+reentry, retirement/reuse and battle end. A composed mode handoff verifies
+static detachment, talent detachment, dynamic detachment, old object disable,
+currentMode assignment, new object enable, talent/dynamic attachment and mode
+notification/pose restoration in order. A false startIniting skips new static
+attachment without suppressing new talent/dynamic effects.
+
+The focused source/fear/family/miner suite passes374 tests and all43 ordinary
+methods reproduce with --check. Continuation40514427997 at55cb5385 has now
+completed successfully; full40514426781 is still running and is not replaced.
+The new callbacks still require concrete initialized native talent/dynamic data
+and BasicTalent effect implementations. Enemy.OnSwitchMode's separate enemy
+skill list, live FSM scheduling, animation and stage query integration remain
+open; no source/support/receipt gate is relaxed.

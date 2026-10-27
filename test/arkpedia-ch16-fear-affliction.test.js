@@ -16,7 +16,7 @@ import {fearProjectileFlight} from '../server/sim/content/chapter16-fear-flight.
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
 import {fearProjectileSpell} from '../server/sim/content/chapter16-fear-spell.js';
-import {fearProjectileSelfDeath,fearProjectileSuicide,fearProjectileSelfDeathActivation,fearProjectileModeFsmRestart,fearProjectileModeSwitch,fearProjectileCollectModeAbilities} from '../server/sim/content/chapter16-fear-self-death.js';
+import {fearProjectileSelfDeath,fearProjectileSuicide,fearProjectileSelfDeathActivation,fearProjectileModeFsmRestart,fearProjectileModeSwitch,fearProjectileCollectModeAbilities,fearProjectileModeEffects} from '../server/sim/content/chapter16-fear-self-death.js';
 import {fearProjectileTargetVerifier,fearProjectileSourceMotion} from '../server/sim/content/chapter16-fear-targets.js';
 import {fearProjectileReached,fearProjectileMotionStep,fearProjectileMountReference,fearProjectileTraceMotion} from '../server/sim/content/chapter16-fear-movement.js';
 import { battle as minerBattle, keys as minerKeys } from './helpers/ch17Harness.js';
@@ -51,6 +51,62 @@ test('mode initialization rejects invalid entries and delegates equality without
  assert.throws(()=>fearProjectileCollectModeAbilities({generalAbilities:[],combat:null,attack:null,isValid:()=>1,equals:()=>true}),/Boolean/);
 });
 
+function modeEffectsFixture(operation,overrides={}){
+ const f=fixture(),mode={},events=[],talents=[{id:'valid',valid:true,attached:operation==='inactivate'},
+  {id:'invalid',valid:false,attached:true},{id:'unchanged',valid:true,attached:operation!=='inactivate'}],dynamic=['dynamic1','dynamic2'];
+ const callers={owner:f.source,mode,operation,readTalents:()=>talents,readDynamicAbilities:()=>dynamic,
+  isTalentValid:t=>t.valid,isTalentAttached:t=>t.attached,
+  attachTalent:(t,owner)=>{assert.equal(owner,f.source);events.push('talent+'+t.id);t.attached=true;},
+  detachTalent:t=>{events.push('talent-'+t.id);t.attached=false;},
+  attachAbility:(a,owner)=>{assert.equal(owner,f.source);events.push('ability+'+a);},
+  detachAbility:a=>events.push('ability-'+a),...overrides};
+ return{...f,mode,events,talents,dynamic,callers};
+}
+
+for(const operation of ['activate','inactivate'])test('mode '+operation+' applies eligible talent effects before dynamic ability effects',()=>{
+ const f=modeEffectsFixture(operation),effects=fearProjectileModeEffects(f.b,f.callers),sign=operation==='activate'?'+':'-';
+ assert.equal(effects.run(),true);assert.equal(effects.run(),null);
+ assert.deepEqual(f.events,['talent'+sign+'valid','ability'+sign+'dynamic1','ability'+sign+'dynamic2']);
+ assert.deepEqual(f.b.errors,[]);
+});
+
+test('initial mode activation skips talent predicates and still attaches dynamic abilities',()=>{
+ const unexpected=()=>{throw Error('initial talent scan');};
+ const f=modeEffectsFixture('activate',{isInit:true,readTalents:unexpected,isTalentValid:unexpected,isTalentAttached:unexpected});
+ assert.equal(fearProjectileModeEffects(f.b,f.callers).run(),true);assert.deepEqual(f.events,['ability+dynamic1','ability+dynamic2']);
+});
+
+test('mode activation rereads the talent entry after validity and attachment predicates',()=>{
+ const f=modeEffectsFixture('activate'),original=f.talents[0],middle={id:'middle',valid:true,attached:false},last={id:'last',valid:true,attached:false};
+ f.talents.splice(1);f.dynamic.length=0;
+ f.callers.isTalentValid=t=>{assert.equal(t,original);f.talents[0]=middle;return true;};
+ f.callers.isTalentAttached=t=>{assert.equal(t,middle);f.talents[0]=last;return false;};
+ assert.equal(fearProjectileModeEffects(f.b,f.callers).run(),true);assert.deepEqual(f.events,['talent+last']);
+});
+
+test('mode inactivation keeps its captured talent entry through validity and attachment predicates',()=>{
+ const f=modeEffectsFixture('inactivate'),original=f.talents[0],other={id:'other',valid:true,attached:true};
+ f.talents.splice(1);f.dynamic.length=0;
+ f.callers.isTalentValid=t=>{assert.equal(t,original);f.talents[0]=other;return true;};
+ f.callers.isTalentAttached=t=>{assert.equal(t,original);return true;};
+ assert.equal(fearProjectileModeEffects(f.b,f.callers).run(),true);assert.deepEqual(f.events,['talent-valid']);assert.equal(other.attached,true);
+});
+
+test('dynamic ability callbacks observe collection growth without filtering entries through talent validity',()=>{
+ const f=modeEffectsFixture('activate');f.talents.length=0;f.dynamic.splice(1);
+ f.callers.attachAbility=a=>{f.events.push(a);if(a==='dynamic1')f.dynamic.push('appended');};
+ assert.equal(fearProjectileModeEffects(f.b,f.callers).run(),true);assert.deepEqual(f.events,['dynamic1','appended']);
+});
+
+for(const operation of ['activate','inactivate'])for(const boundary of ['reuse','battleEnd','recursive'])
+ test('mode '+operation+' handles '+boundary+' during talent effects before reaching dynamic abilities',()=>{
+  const f=modeEffectsFixture(operation);let effects;
+  const effect=()=>{if(boundary==='reuse')f.source.deploySeq++;else if(boundary==='battleEnd')f.b.emit('battleEnd',{});else assert.equal(effects.run(),null);};
+  f.callers[operation==='activate'?'attachTalent':'detachTalent']=effect;
+  effects=fearProjectileModeEffects(f.b,f.callers);assert.equal(effects.run(),boundary==='recursive'?true:null);
+  assert.equal(f.events.some(e=>e.startsWith('ability')),boundary==='recursive');assert.deepEqual(f.b.errors,[]);
+ });
+
 function modeFixture(overrides={}){
  const f=fixture(),events=[],old={abilities:['attack','attack',null,'general']},next={abilities:['empty']};
  let current=old;
@@ -67,6 +123,28 @@ function modeFixture(overrides={}){
   setBodyDirection:(_owner,value,options)=>{assert.deepEqual(value,{x:1,y:0});assert.deepEqual(options,{force:true});events.push('direction');},...overrides};
  return{...f,events,old,next,callers,get current(){return current;},set current(value){current=value;}};
 }
+
+test('mode handoff composes static, talent and dynamic effects before notification without attaching new static abilities outside startIniting',()=>{
+ const f=modeFixture({readStartIniting:()=>false});
+ f.old.abilities=['old-static'];f.next.abilities=['new-static'];
+ f.old.talents=[{id:'old-talent',attached:true}];f.next.talents=[{id:'new-talent',attached:false}];
+ f.old.dynamic=['old-dynamic'];f.next.dynamic=['new-dynamic'];
+ const effects=(mode,operation)=>fearProjectileModeEffects(f.b,{owner:f.source,mode,operation,
+  readTalents:m=>m.talents,readDynamicAbilities:m=>m.dynamic,isTalentValid:()=>true,isTalentAttached:t=>t.attached,
+  attachTalent:t=>{t.attached=true;f.events.push('talent+'+t.id);},detachTalent:t=>{t.attached=false;f.events.push('talent-'+t.id);},
+  attachAbility:a=>f.events.push('dynamic+'+a),detachAbility:a=>f.events.push('dynamic-'+a)}).run();
+ f.callers.onInactivate=mode=>effects(mode,'inactivate');f.callers.onActivate=mode=>effects(mode,'activate');
+ assert.equal(fearProjectileModeSwitch(f.b,f.callers).run(),true);
+ assert.deepEqual(f.events,['detach:old-static','talent-old-talent','dynamic-old-dynamic','old:false','write','new:true',
+  'talent+new-talent','dynamic+new-dynamic','notify','face','direction']);
+ assert.equal(f.old.talents[0].attached,false);assert.equal(f.next.talents[0].attached,true);
+});
+
+test('null dynamic ability entries fail rather than silently passing a validity filter',()=>{
+ const f=modeEffectsFixture('activate');f.talents.length=0;f.dynamic.splice(0,2,null);
+ const effects=fearProjectileModeEffects(f.b,f.callers);
+ assert.throws(()=>effects.run(),/cannot be null/);assert.equal(effects.run(),null);assert.deepEqual(f.events,[]);
+});
 
 test('mode handoff detaches duplicate ability entries before inactivation and preserves captured pose through notification',()=>{
  const f=modeFixture(),handoff=fearProjectileModeSwitch(f.b,f.callers);

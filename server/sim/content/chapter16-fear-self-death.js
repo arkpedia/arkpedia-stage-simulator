@@ -98,6 +98,64 @@ export function fearProjectileCollectModeAbilities({generalAbilities,combat,atta
  return abilities;
 }
 
+// UnitMode callbacks, separate from Unit's static ability loop. Dynamic
+// entries are the ability keys of m_dynaimcAbilites, not m_abilities.
+export function fearProjectileModeEffects(b,{owner,mode,operation,isInit=false,readTalents,readDynamicAbilities,
+ isTalentValid,isTalentAttached,attachTalent,detachTalent,attachAbility,detachAbility}){
+ if(!owner||!Number.isInteger(owner.deploySeq)||!mode||!['activate','inactivate'].includes(operation)||typeof isInit!=='boolean'||
+  [readTalents,readDynamicAbilities,isTalentValid,isTalentAttached,attachTalent,detachTalent,attachAbility,detachAbility].some(fn=>typeof fn!=='function'))
+  throw new TypeError('Fear mode effects require a bound mode, owner life, operation and native effect callers');
+ const life=owner.deploySeq;let used=false,ended=false,endHandle=null,removeHandle=null;
+ const release=()=>{ended=true;if(endHandle)b.off(endHandle);if(removeHandle)b.off(removeHandle);endHandle=removeHandle=null;};
+ const active=()=>{if(!ended&&(b.finished||b._endReq||owner.removed||owner.deploySeq!==life))release();return!ended;};
+ const boolean=value=>{if(typeof value!=='boolean')throw new TypeError('Fear mode effects require native Boolean predicates');return value;};
+ const array=value=>{if(!Array.isArray(value))throw new TypeError('Fear mode effects require initialized native talent/dynamic arrays');return value;};
+ if(active()){
+  endHandle=b.on('battleEnd',release);
+  removeHandle=b.on('removed',({unit})=>{if(unit===owner)release();});
+ }
+ return Object.freeze({
+  run(){
+   if(used||!active())return null;used=true;
+   try{
+    if(operation==='inactivate'||!isInit){
+     let talents=readTalents(mode);if(!active())return null;talents=array(talents);
+     for(let index=0;index<talents.length;index++){
+      let talent=talents[index];const valid=isTalentValid(talent);if(!active())return null;
+      if(boolean(valid)){
+       if(operation==='activate'){
+        talents=readTalents(mode);if(!active())return null;talents=array(talents);
+        if(index>=talents.length)throw new RangeError('Fear mode talent index changed during activation');
+        talent=talents[index];
+       }
+       const attached=isTalentAttached(talent);if(!active())return null;
+       if(boolean(attached)===(operation==='inactivate')){
+        if(operation==='activate'){
+         talents=readTalents(mode);if(!active())return null;talents=array(talents);
+         if(index>=talents.length)throw new RangeError('Fear mode talent index changed during activation');
+         attachTalent(talents[index],owner);
+        }else detachTalent(talent);
+        if(!active())return null;
+       }
+      }
+      talents=readTalents(mode);if(!active())return null;talents=array(talents);
+     }
+    }
+    let dynamic=readDynamicAbilities(mode);if(!active())return null;dynamic=array(dynamic);
+    for(let index=0;index<dynamic.length;index++){
+     // Native dynamic entries are not filtered through Unity validity here.
+     if(dynamic[index]==null)throw new TypeError('Fear mode dynamic ability cannot be null');
+     if(operation==='activate')attachAbility(dynamic[index],owner);else detachAbility(dynamic[index]);
+     if(!active())return null;
+     dynamic=readDynamicAbilities(mode);if(!active())return null;dynamic=array(dynamic);
+    }
+    return true;
+   }finally{release();}
+  },
+  release,
+ });
+}
+
 export function fearProjectileModeFsmRestart(b,{owner,isRunning,readState,stop,start}){
  if(!owner||!Number.isInteger(owner.deploySeq)||[isRunning,readState,stop,start].some(fn=>typeof fn!=='function'))
   throw new TypeError('Fear mode FSM restart requires an owner life and explicit native state-machine callers');

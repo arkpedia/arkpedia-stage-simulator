@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,36);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,43);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -130,6 +130,20 @@ test('mode initialization binds general/combat/attack order and the canonical sw
  at(dedup,0x3f62e1e,'0x180004fe0');at(dedup,0x3f62e72,'0x180004b40');
  at(dedup,0x3f62e77,'esi');at(dedup,0x3f62e79,'0x183f62d00');
  assert.equal(init.equalsDispatch.metadataIdentityVerified,false);
+});
+
+test('mode callback source binds BasicTalent validity and attachment predicates before ordered dynamic ability effects',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),effects=c.modeSwitch.modeEffects;
+ const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ assert.deepEqual(effects.fields.map(f=>[f.name,f.offset]),[['m_dynaimcAbilites',0x98],['<talents>k__BackingField',0xc8]]);
+ assert.equal(effects.talentAttachedSlot.slot,6);assert.equal(effects.talentAttachedSlot.name,'get_isAttached');
+ const activate=castMethod(c,'UnitMode','OnActivate'),inactive=castMethod(c,'UnitMode','OnInactivate');
+ at(activate,effects.activation.validCallRva,'0x180719aa0');at(activate,effects.activation.attachedCallRva,'0x1800057b0');
+ at(activate,effects.activation.attachCallRva,'0x180718210');at(activate,effects.activation.dynamicAttachRva,'0x18390e170');
+ at(inactive,effects.inactivation.validCallRva,'0x180719aa0');at(inactive,effects.inactivation.attachedCallRva,'0x1800057b0');
+ at(inactive,effects.inactivation.detachCallRva,'0x1807186f0');at(inactive,effects.inactivation.dynamicDetachRva,'0x18390e4a0');
+ at(activate,0x86fcc3,'0x18086fda3');
+ for(const name of ['get_isValid','get_isAttached','Attach','Detach','SetParentMode'])assert.ok(castMethod(c,'BasicTalent',name));
 });
 
 test('mode lifecycle binds the initialized ability array and the exact startIniting gate rather than alive state',()=>{
