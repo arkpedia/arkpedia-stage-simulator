@@ -3554,3 +3554,35 @@ self-death and later impact. Its attachment list is explicitly empty: native
 attachment creation/application, array/value-copy internals, hotfix behavior
 and runtime/frame/cross-version parity remain open. No stage or enemy support,
 receipt or public catalogue admission changed.
+
+## Damage-node construction checkpoint
+
+The test-only `chapter16-fear-projectile-damage-node.js` adapter now follows
+RangedAttack.NewDamageNode (80008, RVA 0xbfbab0), its ordinary base path
+(80975, RVA 0xc1df30), ApplyDamage's parameterized constructor (86251,
+RVA 0xd7a420), ActionNode's default constructor (84017, RVA 0xce98c0), and
+ApplyCacheAtkDamageFromProjectile's separate constructor (86259,
+RVA 0xd79770). Its extractor retains those complete bodies plus the default
+apply-way/attack-type/dynamic-type getters, concrete slots, signatures, fields
+and actual System.String.Empty metadata loads.
+
+The retained Fear prefab selects ordinary construction: cached-only and source
+transfer are false, damage type is 2, attack type is 1, dynamic attack type is
+false and scale is 1. The ordinary factory captures all three properties and
+the modifier string before allocation. Its constructor publishes enum defaults
+and a modifier string, initializes cached ATK to native FP minus one, calls the
+base constructor, and then writes the final fields. The cached-only path
+captures source transfer before allocation, captures its modifier string inside
+its constructor, and writes source transfer after the final modifier barrier.
+These distinct orders are preserved rather than routing both constructors
+through an assumed identical sequence.
+
+All 1,554 focused tests and the extractor/Fear/miner contracts pass. Tests cover
+setting mutations, string captures, null allocation, partial writes on errors,
+constructor failures and nested allocation. The long Fear birth composition
+now starts with the constructed ordinary Arts node, checks its initial minus-one
+FP cache, then preprocesses to 175 before event 5 and later damage after source
+retirement. Allocation/zeroing and native Object/string/barrier effects remain
+explicit receivers; action-list construction by the ability's own initialization,
+native impact dispatch, hotfixes and live/frame/cross-version parity remain
+open. No stage, support, receipt or public catalogue gate changed.

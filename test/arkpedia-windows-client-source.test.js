@@ -20,6 +20,24 @@ function settingsFixture(){
  return{...f,settings:{version:f.pin.version,source:f.pin.source,file}};
 }
 
+test('damage construction source retains ordinary/cached branches, constructor order and canonical Fear settings',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-projectile-damage-node-source.json'),parent=read('data/candidates/arkpedia-windows-fear-projectile-source.json');
+ assert.deepEqual(c.methods.map(m=>[m.index,m.entryRva]),[[80008,0xbfbab0],[80975,0xc1df30],[86251,0xd7a420],[84017,0xce98c0],[86259,0xd79770],[79987,0xbfcdc0],[79489,0xbd4050],[79490,0xbd41e0]]);
+ for(const source of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+source.path,import.meta.url))),source.sha256);
+ for(const m of c.methods){if([80008,80975,86251].includes(m.index))assert.deepEqual(m,parent.methods.find(r=>r.index===m.index));for(const chunk of m.chunks){const raw=Buffer.from(chunk.base64,'base64');assert.equal(sha(raw),chunk.sha256);assert.equal(raw.length,chunk.endRva-chunk.beginRva);}}
+ assert.deepEqual(c.virtualSlots.map(s=>[s.slot,s.name]),[[23,'get_applyWay'],[102,'get_attackType'],[103,'get_useDynamicAttackType'],[106,'NewDamageNode']]);assert.deepEqual(c.signatures.map(s=>s.parameters.length),[2,2,6,6]);
+ assert.deepEqual(c.stringLoads.map(row=>row.loadRva),[0xc1e021,0xd7a48a,0xd797c7,0xd79813]);for(const row of c.stringLoads){assert.equal(row.encodedUsage>>>29,1);assert.equal(row.emptyField.name,'Empty');assert.equal(row.emptyField.offset,0);assert.ok(row.emptyField.typeBits&16);}
+ assert.deepEqual(c.fields.map(f=>[f.name,f.offset]),[['_useCachedAtkOnly',570],['_transferSource',571],['_attackType',472],['_useDynamicAttackType',484],['_damageType',16],['_applyWay',20],['_attackType',24],['_useDynamicAttackType',28],['_modifierKey',32],['m_cachedAtk',40],['m_atkScale',48],['_transferSource',64]]);
+ const graph=read('data/candidates/arkpedia-ch16-fear-projectile-source.json'),component=graph.prefabs[c.fearComponent.prefab].find(row=>row.pathId===c.fearComponent.pathId);assert.equal(sha(component.originalJson),c.fearComponent.sha256);for(const [key,value]of Object.entries(c.fearComponent.selectedFields))assert.equal(JSON.parse(component.originalJson)[key],value);assert.equal(c.fearComponent.selectedFields._useCachedAtkOnly,0);
+ const at=(method,rva,operands)=>assert.ok(instructions(c.methods[method]).some(i=>i.rva===rva&&i.operands===operands),'Damage construction instruction '+rva.toString(16));
+ for(const [rva,operands]of [[0xbfbb06,'byte ptr [rdi + 0x23a], cl'],[0xbfbb20,'0x180c1df30'],[0xbfbb5e,'rax'],[0xbfbb88,'r8'],[0xbfbbb2,'r8'],[0xbfbbc0,'r12d, byte ptr [rdi + 0x23b]'],[0xbfbbc8,'0x180410630'],[0xbfbbf7,'0x180d79770']])at(0,rva,operands);
+ for(const [rva,operands]of [[0xc1dfca,'rax'],[0xc1dff4,'r8'],[0xc1e01e,'r8'],[0xc1e03a,'r12, qword ptr [rdx]'],[0xc1e03d,'0x180410630'],[0xc1e06c,'0x180d7a420']])at(1,rva,operands);
+ for(const [rva,operands]of [[0xd7a47c,'dword ptr [rdi + 0x10], 1'],[0xd7a483,'dword ptr [rdi + 0x18], 1'],[0xd7a49f,'qword ptr [rdi + 0x20], rdx'],[0xd7a4c2,'0x185a3da10'],[0xd7a4c9,'qword ptr [rdi + 0x28], rax'],[0xd7a4d0,'0x180ce98c0'],[0xd7a4f5,'dword ptr [rdi + 0x10], r14d'],[0xd7a4f9,'qword ptr [rdi + 0x30], rbx'],[0xd7a4fd,'dword ptr [rdi + 0x14], ebp'],[0xd7a500,'dword ptr [rdi + 0x18], r12d'],[0xd7a504,'byte ptr [rdi + 0x1c], r13b'],[0xd7a508,'qword ptr [rdi + 0x20], r15'],[0xd7a50c,'0x18040ff90']])at(2,rva,operands);
+ at(3,0xce98ea,'0x180511a50');for(const [rva,operands]of [[0xd797d5,'r15, qword ptr [rdx]'],[0xd79852,'qword ptr [rdi + 0x28], rax'],[0xd79859,'0x180ce98c0'],[0xd79876,'byte ptr [rdi + 0x1c], r13b'],[0xd7988d,'0x18040ff90'],[0xd798da,'byte ptr [rdi + 0x40], dl']])at(4,rva,operands);
+ at(5,0xbfcdfc,'eax, [rcx + 2]');at(6,0xbd408c,'eax, dword ptr [rbx + 0x1d8]');at(7,0xbd421c,'eax, byte ptr [rbx + 0x1e4]');
+ assert.equal(c.testOnly,true);for(const key of ['runtimeDispatchVerified','frameParity','crossVersionParity','nativeAllocationAndZeroingVerified','nativeStringAndBarrierEffectsVerified','nativeObjectConstructorEffectsVerified','hotfixDispatchVerified','liveDamageNodeConstructionVerified'])assert.equal(c[key],false);
+});
+
 test('attachment source retains separate owner reads, options family layout and bounded enum identity conversion',()=>{
  const c=read('data/candidates/arkpedia-windows-fear-projectile-attachments-source.json');assert.deepEqual(c.methods.map(m=>[m.index,m.entryRva]),[[54622,0x390f1a0],[58028,0x3a1b6f0]]);
  for(const source of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+source.path,import.meta.url))),source.sha256);

@@ -71,6 +71,63 @@ import {fearProjectileBaseBorn,fearProjectileDefaultOnBorn,fearProjectileActionB
 import {fearProjectileActionControllerInit,fearProjectileRegisterActions} from '../server/sim/content/chapter16-fear-projectile-action-init.js';
 import {fearProjectileRangedActions,fearProjectileActiveBuffs,fearProjectilePreprocessActions,fearProjectilePreprocessDamage} from '../server/sim/content/chapter16-fear-projectile-action-provider.js';
 import {fearProjectileAttachmentFamilyGroup,fearProjectileAbilityAttachments,fearProjectileEntityAttachments} from '../server/sim/content/chapter16-fear-projectile-attachments.js';
+import {fearProjectileActionNodeConstructor,fearProjectileDamageNodeConstructors,fearProjectileNewDamageNode,fearProjectileRangedDamageNode,fearProjectileDamageNodeProperties} from '../server/sim/content/chapter16-fear-projectile-damage-node.js';
+
+function projectileDamageNodeFixture(){
+ const events=[],ability={_useCachedAtkOnly:false,_transferSource:false,_attackType:1,_useDynamicAttackType:false},allocated=[],
+  zero=()=>({_damageType:0,_applyWay:0,_attackType:0,_useDynamicAttackType:false,_modifierKey:null,m_cachedAtk:0n,m_atkScale:0n,_transferSource:false}),
+  constructorOptions={readEmptyString:()=>{events.push('empty');return '';},writeBarrier:(node,key,value)=>{assert.equal(node[key],value);events.push(['barrier',key,value]);},
+   baseActionConstructor:fearProjectileActionNodeConstructor({objectConstructor:node=>events.push(['object',node._damageType,node._attackType,node.m_cachedAtk])})},
+  properties={readApplyWay:value=>{events.push('way');return fearProjectileDamageNodeProperties.readApplyWay(value);},
+   readAttackType:value=>{events.push('attack');return fearProjectileDamageNodeProperties.readAttackType(value);},readUseDynamic:value=>{events.push('dynamic');return fearProjectileDamageNodeProperties.readUseDynamic(value);}},
+  options={...properties,readEmptyString:constructorOptions.readEmptyString,allocateDamage:()=>{events.push('allocate');const node=zero();allocated.push(node);return node;},
+   constructDamage:(...args)=>fearProjectileDamageNodeConstructors(constructorOptions).damage(...args)},
+  ranged={...properties,baseNewDamageNode:(...args)=>fearProjectileNewDamageNode(options)(...args),allocateCachedDamage:()=>{events.push('allocate-cached');const node=zero();allocated.push(node);return node;},
+   constructCachedDamage:(...args)=>fearProjectileDamageNodeConstructors(constructorOptions).cached(...args)};
+ return{events,ability,allocated,constructorOptions,options,ranged,make:(value=ability,type=2,scale=1n<<32n)=>fearProjectileRangedDamageNode(ranged)(value,type,scale)};
+}
+test('ordinary ranged damage construction delegates and initializes defaults before final fields',()=>{
+ const f=projectileDamageNodeFixture(),node=f.make();assert.equal(node,f.allocated[0]);
+ assert.deepEqual(node,{_damageType:2,_applyWay:2,_attackType:1,_useDynamicAttackType:false,_modifierKey:'',m_cachedAtk:-(1n<<32n),m_atkScale:1n<<32n,_transferSource:false});
+ assert.deepEqual(f.events,['way','attack','dynamic','empty','allocate','empty',['barrier','_modifierKey',''],['object',1,1,-(1n<<32n)],['barrier','_modifierKey','']]);
+});
+test('cached ranged construction captures transfer source before allocation and uses its separate constructor',()=>{
+ const f=projectileDamageNodeFixture();f.ability._useCachedAtkOnly=true;f.ability._transferSource=true;const alloc=f.ranged.allocateCachedDamage;
+ f.ranged.allocateCachedDamage=()=>{f.ability._transferSource=false;return alloc();};f.ranged.baseNewDamageNode=()=>{throw Error('unexpected ordinary path');};const node=f.make();
+ assert.equal(node._transferSource,true);assert.equal(node._damageType,2);assert.equal(node._applyWay,2);assert.deepEqual(f.events.slice(0,6),['way','attack','dynamic','allocate-cached','empty','empty']);
+});
+test('ordinary constructor retains the incoming modifier key while cached construction captures its own earlier string',()=>{
+ const f=projectileDamageNodeFixture(),construct=fearProjectileDamageNodeConstructors(f.constructorOptions),node={};construct.damage(node,2,2,2n,3,true,null);assert.equal(node._modifierKey,null);assert.equal(node.m_atkScale,2n);
+ let reads=0;f.constructorOptions.readEmptyString=()=>++reads===1?'earlier':'later';const cached={};fearProjectileDamageNodeConstructors(f.constructorOptions).cached(cached,2,2,3n,4,false,true);assert.equal(cached._modifierKey,'earlier');assert.equal(reads,2);
+});
+test('node factory captures settings and empty string before allocation mutates the ability',()=>{
+ const f=projectileDamageNodeFixture();f.options.readApplyWay=value=>{value._attackType=4;return 9;};f.options.readUseDynamic=value=>{value._attackType=8;return true;};
+ f.options.readEmptyString=()=>{f.ability._useDynamicAttackType=false;return 'key';};const node=f.make();assert.equal(node._applyWay,9);assert.equal(node._attackType,4);assert.equal(node._useDynamicAttackType,true);assert.equal(node._modifierKey,'key');
+});
+for(const cached of [false,true])test('null '+(cached?'cached':'ordinary')+' allocation fails after getters without constructor callbacks',()=>{
+ const f=projectileDamageNodeFixture();f.ability._useCachedAtkOnly=cached;if(cached)f.ranged.allocateCachedDamage=()=>null;else f.options.allocateDamage=()=>null;
+ assert.throws(f.make,/null native object/);assert.equal(f.events.some(e=>Array.isArray(e)&&e[0]==='object'),false);assert.deepEqual(f.events.slice(0,3),['way','attack','dynamic']);
+});
+test('constructor first barrier failure retains only initial enum and modifier writes',()=>{
+ const f=projectileDamageNodeFixture();f.constructorOptions.writeBarrier=()=>{throw Error('barrier');};assert.throws(f.make,/barrier/);const node=f.allocated[0];
+ assert.equal(node._damageType,1);assert.equal(node._attackType,1);assert.equal(node._modifierKey,'');assert.equal(node.m_cachedAtk,0n);assert.equal(node.m_atkScale,0n);
+});
+test('base constructor failure preserves cached-minus-one defaults before final field assignment',()=>{
+ const f=projectileDamageNodeFixture();f.constructorOptions.baseActionConstructor=()=>{throw Error('base');};assert.throws(f.make,/base/);const node=f.allocated[0];
+ assert.equal(node._damageType,1);assert.equal(node.m_cachedAtk,-(1n<<32n));assert.equal(node.m_atkScale,0n);
+});
+test('cached final barrier failure retains final damage fields but precedes transfer-source assignment',()=>{
+ const f=projectileDamageNodeFixture();f.ability._useCachedAtkOnly=true;f.ability._transferSource=true;let count=0;
+ f.constructorOptions.writeBarrier=()=>{if(++count===2)throw Error('final barrier');};assert.throws(f.make,/final barrier/);const node=f.allocated[0];assert.equal(node._damageType,2);assert.equal(node.m_atkScale,1n<<32n);assert.equal(node._transferSource,false);
+});
+test('damage node construction supports nested allocations without replacing the outer node or settings',()=>{
+ const f=projectileDamageNodeFixture(),allocate=f.options.allocateDamage;let entered=false,inner;
+ f.options.allocateDamage=()=>{if(!entered){entered=true;inner=f.make(f.ability,7,3n);}return allocate();};const outer=f.make();assert.notEqual(inner,outer);assert.equal(inner._damageType,7);assert.equal(outer._damageType,2);assert.equal(outer.m_atkScale,1n<<32n);
+});
+test('damage factories and constructors require explicit native callers and scalar representations',()=>{
+ for(const fn of [fearProjectileActionNodeConstructor,fearProjectileDamageNodeConstructors,fearProjectileNewDamageNode,fearProjectileRangedDamageNode])assert.throws(()=>fn({}),/callers/);
+ const f=projectileDamageNodeFixture();assert.throws(()=>f.make(f.ability,2,1),/FP raw/);f.ability._useCachedAtkOnly=0;assert.throws(f.make,/Boolean/);
+});
 
 function projectileAttachmentsFixture(){
  const slots=Array.from({length:5},(_,family)=>[{family}]),owner={m_abilityAttachments:slots},ability={owner,options:{familyGroup:0}},events=[],
@@ -5929,7 +5986,10 @@ test('bounded wait, controller/factory birth and Init, event5 self-death and ind
  Object.assign(start.projectile,{_actionController:{...actionInit.controller,_useSelfBlackboard:Boolean(nativeProjectile._actionController._useSelfBlackboard),actions:Array(7).fill(null)},context:start.ctx,_managedBySource:Boolean(nativeProjectile._managedBySource),m_ExtraLogIds:[],
   _mainEffect:nativeProjectile._mainEffect,_randomDelayToBorn:nativeProjectile._randomDelayToBorn,m_targetsAlreadyHit:new Map(),m_eventCallbacks:Array(7).fill(null),m_behaviours:[{}],m_behavioursInited:false,_bodyTransform:start.projectile.transform});
  Object.assign(start.mount,{mapPosition:{x:0,y:0},height:0});Object.assign(start.ability,{uid:13,damageMissFlag:false});
- const sharedDamage={damage:true,m_cachedAtk:0n};Object.assign(start.ability,{board:{},_activeBuffs:[],m_actions:[sharedDamage]});
+ const damageSettings=read('data/candidates/arkpedia-windows-fear-projectile-damage-node-source.json').fearComponent.selectedFields,construction=projectileDamageNodeFixture();
+ Object.assign(start.ability,{_useCachedAtkOnly:Boolean(damageSettings._useCachedAtkOnly),_transferSource:Boolean(damageSettings._transferSource),_attackType:damageSettings._attackType,_useDynamicAttackType:Boolean(damageSettings._useDynamicAttackType)});
+ const sharedDamage=construction.make(start.ability,damageSettings._damageType,fearProjectileFloatToRaw(damageSettings._atkScale));assert.equal(sharedDamage.m_cachedAtk,-fpOne);assert.equal(sharedDamage._damageType,2);assert.equal(sharedDamage._applyWay,2);
+ Object.assign(start.ability,{board:{},_activeBuffs:[],m_actions:[sharedDamage]});provider.options.castDamageNode=value=>value===sharedDamage?value:null;
  provider.options.readOwner=ability=>start.pointers.lock(ability.m_owner);provider.damageOptions.readAtkRaw=owner=>fearProjectileFloatToRaw(owner.s.atk);
  const preprocessDamage=fearProjectilePreprocessDamage(provider.damageOptions);
  provider.options.preprocessNode=(node,owner)=>{preprocessDamage(node,owner);damage=fearProjectileDamageAction(f.b,{...source,cachedAtk:Math.fround(Number(node.m_cachedAtk)/2**32)});};
