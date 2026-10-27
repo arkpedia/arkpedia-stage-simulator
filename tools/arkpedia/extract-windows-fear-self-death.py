@@ -944,6 +944,84 @@ result['modeSwitch']['buffNotification']['resetContext'] = {
     'nativeAudioSignalArrayValuesVerified': False, 'nativeCharacterAudioEffectsVerified': False,
     'nativeContextPointerCapturesVerified': False, 'liveResetContextPhaseVerified': False,
 }
+override_container = c['type_row']('BuffContainer', '')
+for owner, names in [(data_type, ['GetOverrideKey']), (override_container, ['GetOverrideKeyCandidate', 'EnsureOverrideIndependentKey']),
+                     (buff, ['get_overrideKey', 'set_overrideKey']), (character, ['get_cardUid'])]:
+    for name in names:
+        methods.append(c['method'](owner, c['unique'](lambda r: r['name'] == name, owner['methods'])))
+hg_string = c['type_row']('HGString', 'Torappu')
+for rva in [0x1c5ab80, 0x1c5a9d0]:
+    methods.append(c['method'](hg_string, c['unique'](lambda r: r['name'] == 'Format' and v['pointer'](r) - v['image_base'] == rva, hg_string['methods'])))
+override_literals = []
+for load_rva, expected in [(0x39b1a45, '{0}{1}'), (0x39b1aa7, '{0}{1}'), (0x39b1a3b, '^')]:
+    pos = v['offset'](v['image_base'] + load_rva)
+    assert v['b'][pos:pos + 3] in [bytes.fromhex('488b0d'), bytes.fromhex('4c8b05')]
+    target = load_rva + 7 + struct.unpack_from('<i', v['b'], pos + 3)[0]
+    usage = v['quad'](v['b'], v['offset'](v['image_base'] + target))
+    assert usage >> 29 == 5 and usage & 1
+    index = (usage & 0x1ffffffe) >> 1
+    assert index * 8 < v['uint'](v['m'], 12)
+    length, offset = struct.unpack_from('<II', v['m'], v['uint'](v['m'], 8) + index * 8)
+    assert offset + length <= v['uint'](v['m'], 20)
+    value = v['m'][v['uint'](v['m'], 16) + offset:v['uint'](v['m'], 16) + offset + length].decode()
+    assert value == expected
+    override_literals.append({'loadRva': load_rva, 'encodedUsage': usage, 'literalIndex': index, 'value': value,
+                              'dataOffset': offset, 'length': length})
+empty_load_rva = 0x225d080
+pos = v['offset'](v['image_base'] + empty_load_rva)
+assert v['b'][pos:pos + 3] == bytes.fromhex('488b05')
+target = empty_load_rva + 7 + struct.unpack_from('<i', v['b'], pos + 3)[0]
+usage = v['quad'](v['b'], v['offset'](v['image_base'] + target))
+assert usage >> 29 == 1
+ti = (usage & 0x1ffffffe) >> 1
+tp = v['offset'](v['quad'](v['b'], v['type_table'] + ti * 8))
+assert (v['uint'](v['b'], tp + 8) >> 16) & 255 == 14  # IL2CPP_TYPE_STRING
+string_type = v['types'][v['quad'](v['b'], tp)]
+assert string_type['name'] == 'String' and string_type['namespace'] == 'System'
+empty_field = c['unique'](lambda f: f['name'] == 'Empty', c['fields'](string_type))
+assert empty_field['offset'] == 0
+character_load_rva = 0x39b19c4
+pos = v['offset'](v['image_base'] + character_load_rva)
+assert v['b'][pos:pos + 3] == bytes.fromhex('488b15')
+target = character_load_rva + 7 + struct.unpack_from('<i', v['b'], pos + 3)[0]
+character_usage = v['quad'](v['b'], v['offset'](v['image_base'] + target))
+assert character_usage == context_loads[0]['encodedUsage']
+result['modeSwitch']['buffNotification']['resetOverride'] = {
+    'dataFields': [c['unique'](lambda f: f['name'] == name, c['fields'](data_type)) for name in
+                   ['disableOverride', 'overrideKey', 'buffKey', 'independentCharacterSource']],
+    'literals': override_literals,
+    'emptyStringTypeLoad': {'loadRva': empty_load_rva, 'encodedUsage': usage, 'typeIndex': ti,
+                            'definitionIndex': string_type['index'], 'name': string_type['name'], 'field': empty_field},
+    'disableReadRva': 0x225d058, 'keyEmptyTestCallRva': 0x225d063, 'keyFallbackReadRva': 0x225d06c,
+    'independentFlagReadRva': 0x39b19b2, 'sharedKeyCallRva': 0x39b19ba, 'sharedKeySetterCallRva': 0x39b1b1a,
+    'characterType': {'definitionIndex': character['index'], 'name': character['name'], 'encodedUsage': character_usage},
+    'characterTypeLoadRva': character_load_rva, 'characterSourceSelectionRva': 0x39b1a0b,
+    'independentKeyCallRva': 0x39b1a1e, 'baseFormatCallRva': 0x39b1a4f,
+    'characterNullTestCallRva': 0x39b1a74, 'cardUidCallRva': 0x39b1a8b, 'cardFormatCallRva': 0x39b1ab7,
+    'independentSetterCallRva': 0x39b1ac5, 'independentGetterCallRva': 0x39b1acf,
+    'ensureIndependentCallRva': 0x39b1aee, 'candidateCallRva': 0x39b1b0c,
+    'candidateStartsWithCallRva': 0x39c1c5c, 'candidateFoundDisposeCallRva': 0x39c1c6f,
+    'candidateExhaustedDisposeCallRva': 0x39c1c94, 'candidateExceptionDisposeCallRva': 0x39c1ca7,
+    'ensureTryGetCallRva': 0x39c0675, 'ensureContainsCallRva': 0x39c0691,
+    'ensureRemoveCallRva': 0x39c06ad, 'ensureAddCallRva': 0x39c06ca,
+    'nativeFormattingEffectsVerified': False, 'nativeOverrideContainerEffectsVerified': False,
+    'liveResetOverridePhaseVerified': False,
+}
+result['modeSwitch']['buffNotification']['resetPipeline'] = {
+    'stackFields': [c['unique'](lambda f: f['name'] == name, c['fields'](buff)) for name in
+                    ['m_stackCnt', 'm_refreshRemainingTimeWhenStackMax', 'm_clearAllStackCntWhenTimeUp', '<priority>k__BackingField']],
+    'dataFields': [c['unique'](lambda f: f['name'] == name, c['fields'](data_type)) for name in
+                   ['refreshRemainingTimeWhenStackMax', 'clearAllStackCntWhenTimeUp', 'attributes']],
+    'templateActionsField': c['unique'](lambda f: f['name'] == 'eventToActions', c['fields'](template_type)),
+    'stackDataReadRva': 0x39b18d1, 'stackCountWriteRva': 0x39b18d5,
+    'refreshStackWriteRva': 0x39b18ef, 'clearStacksWriteRva': 0x39b18fc,
+    'loadAttributesCallRva': 0x39b190a, 'templateReadRva': 0x39b190f, 'templateActionsReadRva': 0x39b191b,
+    'loadActionsCallRva': 0x39b1925, 'configSnapshotReadRva': 0x39b192a, 'configSnapshotWriteRva': 0x39b1939,
+    'calculatePriorityCallRva': 0x39b193e, 'priorityWriteRva': 0x39b198f,
+    'statusInitCallRva': 0x39b1b24, 'statusWriteRva': 0x39b1b33, 'slowdownWriteRva': 0x39b1be9,
+    'elementalBreakCallRva': 0x39b1bf2, 'elementalBreakWriteRva': 0x39b1bf9, 'shieldSourceCallRva': 0x39b1c02,
+    'fullResetEffectsVerified': False, 'liveResetPipelineVerified': False,
+}
 pool = c['type_row']('ObjectPool`1', 'Torappu.ObjectPool')
 pool_methods = []
 for index in [147561, 147566, 147567, 147558, 147559, 147563, 147564, 147568, 147569]:

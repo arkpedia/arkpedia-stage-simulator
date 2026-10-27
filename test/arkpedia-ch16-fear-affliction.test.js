@@ -29,6 +29,8 @@ import {fearProjectileBuffPriority,fearProjectileUpdateBuffStack} from '../serve
 import {fearProjectileInitBuffStatus} from '../server/sim/content/chapter16-fear-buff-status.js';
 import {fearProjectileInitBuffFinalFlags} from '../server/sim/content/chapter16-fear-buff-final-flags.js';
 import {fearProjectileBuffConfig,fearProjectileResetBuffContext} from '../server/sim/content/chapter16-fear-buff-context.js';
+import {fearProjectileBuffOverrideKey,fearProjectileResetBuffOverride} from '../server/sim/content/chapter16-fear-buff-override.js';
+import {fearProjectileResetBuff} from '../server/sim/content/chapter16-fear-buff-reset.js';
 import {fearProjectileBuffRecyclePool,fearProjectileDefaultBuffPool} from '../server/sim/content/chapter16-fear-buff-pool.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
@@ -151,6 +153,171 @@ test('Reset context and config guard reentry before any lifecycle probe effects'
  config=fearProjectileBuffConfig({readData:()=>f.data,readTemplate:()=>f.template,isActive:()=>{configReentry=config.effectKey();return true;}});
  assert.equal(config.effectKey(),'template-effect');assert.equal(configReentry,null);
 });
+function buffOverrideFixture(overrides={}){
+ const buff={overrideKey:'old'},data={disableOverride:false,overrideKey:null,buffKey:'fear',independentCharacterSource:true},source={},container={},events=[];
+ const state={active:true,data};
+ const options={buff,source,container,readData:()=>{events.push('data');return state.data;},isActive:()=>state.active,
+  asCharacter:value=>{events.push(['cast',value]);return value;},isDestroyedOrNull:value=>{events.push(['null',value]);return value==null;},
+  readCardUid:value=>{events.push(['uid',value]);return 17;},formatKey:(format,a,b)=>{events.push(['format',format,a,b]);return(a??'')+b;},
+  getOverrideKeyCandidate:(owner,base)=>{events.push(['candidate',owner,base]);return base+'existing';},
+  ensureOverrideIndependentKey:(owner,base,key)=>{events.push(['ensure',owner,base,key]);},...overrides};
+ return{buff,data,state,source,container,events,options,run:()=>fearProjectileResetBuffOverride(options).run()};
+}
+
+for(const key of [null,'',' ','custom'])test('BuffData override-key fallback preserves '+JSON.stringify(key),()=>{
+ assert.equal(fearProjectileBuffOverrideKey({disableOverride:false,overrideKey:key,buffKey:'fallback'}),key==null||key===''?'fallback':key);
+});
+test('disabled BuffData override returns String.Empty without inspecting other keys',()=>{
+ assert.equal(fearProjectileBuffOverrideKey({disableOverride:true,get overrideKey(){throw Error('unexpected key');}}),'');
+ assert.equal(fearProjectileBuffOverrideKey({disableOverride:false,overrideKey:'',buffKey:null}),null);
+});
+test('shared Reset override uses the original data object and does not enter character/container branches',()=>{
+ const f=buffOverrideFixture();f.data.independentCharacterSource=false;f.run();
+ assert.equal(f.buff.overrideKey,'fear');assert.deepEqual(f.events,['data']);
+});
+test('independent Reset override formats the key before validity and reads back the installed key before container migration',()=>{
+ const f=buffOverrideFixture();f.options.readOverrideKey=()=>{f.events.push('read-back');return'getter-key';};f.run();
+ assert.equal(f.buff.overrideKey,'fear^17');assert.deepEqual(f.events,[
+  'data',['cast',f.source],'data',['format','{0}{1}','fear','^'],['null',f.source],['uid',f.source],
+  ['format','{0}{1}','fear^',17],'read-back',['ensure',f.container,'fear^','getter-key']]);
+});
+test('independent Reset override retains original source identity after a successful native cast gate',()=>{
+ const f=buffOverrideFixture();f.options.asCharacter=()=>({different:true});f.options.readCardUid=value=>{assert.equal(value,f.source);return-1;};f.run();
+ assert.equal(f.buff.overrideKey,'fear^-1');
+});
+for(const missing of ['null','cast','destroyed'])test('independent Reset override chooses a container candidate for '+missing+' character',()=>{
+ const f=buffOverrideFixture();if(missing==='null')f.options.source=null;if(missing==='cast')f.options.asCharacter=()=>null;
+ if(missing==='destroyed')f.options.isDestroyedOrNull=()=>true;f.run();
+ assert.equal(f.buff.overrideKey,'fear^existing');assert.ok(!f.events.some(e=>Array.isArray(e)&&['uid','ensure'].includes(e[0])));
+ if(missing==='null')assert.ok(!f.events.some(e=>Array.isArray(e)&&e[0]==='cast'));
+});
+test('disabled independent override still passes an empty key through native formatting and the card UID suffix',()=>{
+ const f=buffOverrideFixture();f.data.disableOverride=true;f.run();assert.equal(f.buff.overrideKey,'^17');
+});
+test('Reset override rereads config data after the type test and captures the data before key lookup',()=>{
+ const f=buffOverrideFixture(),second={...f.data,buffKey:'second'};f.options.asCharacter=value=>{f.state.data=second;return value;};
+ f.options.getOverrideKey=data=>{assert.equal(data,second);f.state.data={...second,buffKey:'later'};return fearProjectileBuffOverrideKey(data);};f.run();
+ assert.equal(f.buff.overrideKey,'second^17');
+});
+test('Reset override leaves installed independent key after container failure and permits retry',()=>{
+ const f=buffOverrideFixture();let fail=true;f.options.ensureOverrideIndependentKey=()=>{if(fail)throw Error('container failure');};
+ const reset=fearProjectileResetBuffOverride(f.options);assert.throws(()=>reset.run(),/container failure/);assert.equal(f.buff.overrideKey,'fear^17');
+ fail=false;reset.run();assert.equal(f.buff.overrideKey,'fear^17');
+});
+test('null container fails after independent key write but before candidate write',()=>{
+ const valid=buffOverrideFixture({container:null});assert.throws(valid.run,/null native/);assert.equal(valid.buff.overrideKey,'fear^17');
+ const missing=buffOverrideFixture({container:null,source:null});assert.throws(missing.run,/null native/);assert.equal(missing.buff.overrideKey,'old');
+});
+for(const phase of ['format','uid','read-back'])test('Reset override stops on lifecycle invalidation during '+phase,()=>{
+ const f=buffOverrideFixture();
+ if(phase==='format')f.options.formatKey=()=>{f.state.active=false;return'late';};
+ if(phase==='uid')f.options.readCardUid=()=>{f.state.active=false;return 3;};
+ if(phase==='read-back')f.options.readOverrideKey=()=>{f.state.active=false;return'late';};
+ assert.equal(f.run(),null);assert.equal(f.buff.overrideKey,phase==='read-back'?'fear^17':'old');
+ assert.ok(!f.events.some(e=>Array.isArray(e)&&e[0]==='ensure'));
+});
+test('Reset override rejects recursive entry before lifecycle effects',()=>{
+ const f=buffOverrideFixture();let reset,nested;f.options.isActive=()=>{nested=reset.run();return true;};
+ reset=fearProjectileResetBuffOverride(f.options);reset.run();assert.equal(nested,null);assert.equal(f.buff.overrideKey,'fear^17');
+});
+
+function resetPipelineFixture(){
+ const f=buffContextFixture(),buff=f.buff,phases=[],entries=[],actions=Array(104).fill('stale'),timerState={m_periodTime:0n,m_remainingTime:0n};
+ const attributes={abnormalFlags:[0],abnormalImmunes:[],abnormalAntis:[],abnormalCombos:[],abnormalComboImmunes:[],
+  attributeModifiers:[{attributeType:1,formulaItem:0,value:2,loadFromBlackboard:false,fetchBaseValueFromSourceEntity:false}]};
+ Object.assign(f.data,{disableOverride:false,overrideKey:null,independentCharacterSource:true,durationKey:'',stripBlackboardParamsWithBuffKey:false,blackboard:null,
+  lifeTime:10,lifeTimeType:1,triggerLifeType:1,triggerCnt:2,triggerInterval:3,waitFirstTriggerInterval:true,firstTriggerInterval:1,
+  refreshRemainingTimeWhenStackMax:true,clearAllStackCntWhenTimeUp:false,attributes,priority:-1,priorityBBKeys:null,statusResistable:2,templateKey:'fear-template'});
+ const shield={kind:'block',showShieldUI:true,damageMask:5};f.template.eventToActions=[{key:10,value:{actions:[shield]}}];
+ Object.assign(buff,{m_lifeTime:0n,m_remainingTime:0n,m_existingTime:7n,m_triggerCnt:9,m_stackCnt:9,m_derivedBuffs:[{}],
+  m_started:true,m_isFinished:true,m_needRemove:true,m_isActuallyEnabled:true,m_isLateEnabled:true,m_isManuallyEnabled:true,m_isActuallyFinished:true,
+  ...Object.fromEntries(['m_attributeAdditions','m_attributeMultipliers','m_attributeFinalAdditions','m_attributeFinalScalers'].map(k=>[k,Array(38).fill(99n)]))});
+ const isActive=()=>f.state.active,readData=()=>f.state.data,compareIgnoreCase=(a,b)=>String(a).toLowerCase()===String(b).toLowerCase()?0:1;
+ const pairs=fearProjectileBuffBlackboardPairs({entries,compareIgnoreCase,isActive});
+ const reads=fearProjectileBuffBlackboardReads({entries,compareIgnoreCase,isActive});
+ const blackboard=fearProjectileResetBuffBlackboard({first:[{key:'duration',value:6,valueStr:null},{key:'interval',value:2,valueStr:null}],second:null,
+  readBlackboard:()=>entries,equals:(a,b)=>a===b,copyBlackboard:a=>a.map(x=>({...x})),resetLifecycle:()=>fearProjectileResetBuffLifecycle(buff),
+  readDurationKey:()=>readData().durationKey,readData,readBuffKey:()=>buff.key,clear:()=>{entries.length=0;},assign:(_target,source)=>pairs.assign(source),
+  assignByPrefix:()=>{throw Error('unexpected prefix');},assignValueStrByPrefix:()=>{throw Error('unexpected prefix');},
+  containsKey:(_target,key)=>pairs.containsKey(key),tryGetFP:()=>{throw Error('unexpected prefix duration rescue');},assignFP:()=>{throw Error('unexpected rescue');},isActive});
+ const triggers=fearProjectileResetBuffTriggers({buff,readData,getFpOrDefault:reads.getFpOrDefault,getIntOrDefault:reads.getIntOrDefault,
+  timer:fearProjectileBuffTimer(timerState),setTriggerable:value=>{buff.triggerable=value;},isActive});
+ const context=fearProjectileResetBuffContext(f.options);
+ const override=fearProjectileResetBuffOverride({buff,container:f.container,source:f.source,readData,isActive,asCharacter:value=>value,isDestroyedOrNull:value=>value==null,
+  readCardUid:()=>17,formatKey:(_format,a,b)=>(a??'')+b,getOverrideKeyCandidate:()=>{throw Error('unexpected candidate');},
+  ensureOverrideIndependentKey:(_container,base,key)=>{phases.push(['ensure',base,key]);}});
+ const status=fearProjectileInitBuffStatus({buff,readData,readAbnormalMask:()=>buff.abnormalFlagMask,readSlowDownTemplateKey:()=> 'slow-template',isActive});
+ const final=fearProjectileInitBuffFinalFlags({buff,isActive,readBuffKey:()=>buff.key,readBreakKeys:record=>record.keys,
+  openBreakIterator:()=>({moveNext:()=>false,current:()=>{throw Error('empty iterator');},dispose:()=>{phases.push('break-dispose');}}),
+  readActions:()=>actions,asBlockDamage:action=>action.kind==='block'?action:null,readShowShieldUI:action=>action.showShieldUI,readDamageMask:action=>action.damageMask});
+ const phase=(name,fn)=>(...args)=>{phases.push(name);return fn(...args);};
+ const options={buff,readData,readTemplate:()=>f.state.template,readConfig:()=>({template:f.state.template,data:f.state.data}),isActive,
+  resetContext:phase('context',context.run),resetBlackboard:phase('blackboard',blackboard.run),
+  resetLifetime:phase('lifetime',durationKey=>fearProjectileResetBuffLifetime({buff,durationKey,tryGetDuration:reads.tryGetFP,readData,modifyLifeTimeFinally:()=>{},isActive}).run()),
+  resetTriggers:phase('triggers',triggers.run),
+  loadAttributes:phase('attributes',(attributes,stackCount)=>fearProjectileLoadBuffAttributes({buff,attributes,stackCount,tryGetFP:reads.tryGetFP,getBlackboardKey:id=>'attribute'+id,
+   readSource:()=>f.source,isDestroyedOrNull:value=>value==null,readSourceAttribute:()=>0n,captureSnapshot:()=>{},isActive}).run()),
+  loadActions:phase('actions',dictionary=>fearProjectileLoadBuffActions({readActions:()=>actions,readDictionaryCount:()=>dictionary.length,
+   readDictionaryEntry:index=>dictionary[index],readActionArray:entry=>entry.actions,isAssignable:()=>true,isActive}).run()),
+  calculatePriority:phase('priority',config=>fearProjectileBuffPriority({buff,readData:()=>config.data,getFpOrDefault:reads.getFpOrDefault,isActive}).run()),
+  resetOverride:phase('override',override.run),initializeStatus:phase('status',status.run),initializeFinalFlags:phase('final',final.run)};
+ return{...f,buff,entries,actions,shield,timerState,phases,options,run:()=>fearProjectileResetBuff(options).run()};
+}
+
+test('composed default Reset binds blackboard duration, trigger timer, attributes, actions, priority and final flags in native order',()=>{
+ const f=resetPipelineFixture();assert.deepEqual(f.run(),{durationKey:'duration'});
+ assert.deepEqual(f.phases,['context','blackboard','lifetime','triggers','attributes','actions','priority','override',['ensure','fear^','fear^17'],'status','final','break-dispose']);
+ assert.equal(f.buff.m_lifeTime,6n<<32n);assert.equal(f.buff.m_remainingTime,6n<<32n);assert.equal(f.buff.m_existingTime,0n);
+ assert.equal(f.timerState.m_periodTime,2n<<32n);assert.equal(f.timerState.m_remainingTime,1n<<32n);assert.equal(f.buff.triggerable,true);
+ assert.equal(f.buff.m_stackCnt,1);assert.equal(f.buff.m_refreshRemainingTimeWhenStackMax,true);assert.equal(f.buff.m_clearAllStackCntWhenTimeUp,false);
+ assert.equal(f.buff.m_attributeAdditions[1],2n<<32n);assert.equal(f.buff.priority,2000);assert.equal(f.buff.overrideKey,'fear^17');
+ assert.equal(f.buff.m_isStatusResistable,true);assert.equal(f.buff.m_canSlowDown,true);assert.equal(f.buff.m_isEpBreakBuff,false);
+ assert.equal(f.buff.hasShield,true);assert.equal(f.buff.m_shieldMask,5);assert.deepEqual(f.actions[10],[f.shield]);
+ assert.ok(f.actions.every((value,index)=>index===10||value===null));assert.equal(f.buff.m_started,false);assert.equal(f.buff.m_isFinished,false);assert.deepEqual(f.buff.m_derivedBuffs,[]);
+});
+
+test('composed Reset can reuse a pooled buff while keeping its allocation identity and clearing stale action/status state',()=>{
+ const f=resetPipelineFixture(),counter={value:41},identity=fearProjectileBuffIdentity({counter});Object.assign(f.buff,{instanceUid:0,m_isValid:false});
+ identity.allocate(f.buff);f.run();assert.equal(f.buff.instanceUid,42);assert.equal(f.buff.m_isValid,true);
+ identity.recycle(f.buff);identity.allocate(f.buff);f.data.attributes={...f.data.attributes,abnormalFlags:[],attributeModifiers:[]};
+ f.data.audioSignal='';f.data.independentCharacterSource=false;f.template.eventToActions=[];f.run();
+ assert.equal(f.buff.instanceUid,43);assert.equal(f.buff.m_isValid,true);assert.equal(counter.value,43);
+ assert.equal(f.buff.m_isStatusResistable,false);assert.equal(f.buff.m_canSlowDown,false);assert.equal(f.buff.hasShield,false);
+ assert.equal(f.buff.m_shieldMask,5,'native shield initialization retains mask when there is no visible shield');
+ assert.ok(f.actions.every(value=>value===null));assert.equal(f.buff.priority,0);assert.equal(f.buff.overrideKey,'fear');
+});
+
+test('Reset priority receives a value copy of both config references and writes priority before override effects',()=>{
+ const f=resetPipelineFixture(),current={template:f.template,data:f.data};f.options.readConfig=()=>current;
+ f.options.calculatePriority=snapshot=>{assert.notEqual(snapshot,current);assert.equal(snapshot.data,f.data);current.data=null;assert.equal(snapshot.data,f.data);return-12;};
+ f.options.resetOverride=()=>{assert.equal(f.buff.priority,-12);};f.run();assert.equal(f.buff.priority,-12);
+});
+
+test('Reset reads action configuration after attribute effects and stack flags from one earlier captured data object',()=>{
+ const f=resetPipelineFixture(),replacement={eventToActions:[]},original=f.data,load=f.options.loadAttributes,loadActions=f.options.loadActions;f.options.loadAttributes=(attributes,stack)=>{
+  assert.equal(attributes,original.attributes);assert.equal(stack,1);assert.equal(f.buff.m_stackCnt,1);load(attributes,stack);f.state.template=replacement;};
+ f.options.loadActions=actions=>{assert.equal(actions,replacement.eventToActions);loadActions(actions);};f.run();
+});
+
+for(const phase of ['context','blackboard','lifetime','triggers','attributes','actions','priority','override','status','final'])
+test('composed Reset cancels the remaining phases when lifecycle ends during '+phase,()=>{
+ const f=resetPipelineFixture(),names={context:'resetContext',blackboard:'resetBlackboard',lifetime:'resetLifetime',triggers:'resetTriggers',attributes:'loadAttributes',
+  actions:'loadActions',priority:'calculatePriority',override:'resetOverride',status:'initializeStatus',final:'initializeFinalFlags'},key=names[phase],original=f.options[key];
+ f.options[key]=(...args)=>{const value=original(...args);f.state.active=false;return value;};assert.equal(f.run(),null);
+ const seen=f.phases.filter(x=>typeof x==='string'&&x!=='break-dispose');assert.equal(seen.at(-1),phase);
+});
+
+test('Reset phase failure preserves earlier mutations, skips later phases and permits retry through the same receiver',()=>{
+ const f=resetPipelineFixture(),original=f.options.loadActions;let fail=true;f.options.loadActions=(...args)=>{if(fail)throw Error('action failure');return original(...args);};
+ const reset=fearProjectileResetBuff(f.options);assert.throws(()=>reset.run(),/action failure/);assert.equal(f.buff.m_stackCnt,1);assert.equal(f.buff.m_attributeAdditions[1],2n<<32n);
+ assert.equal(f.buff.priority,undefined);assert.ok(!f.phases.includes('override'));fail=false;assert.deepEqual(reset.run(),{durationKey:'duration'});
+});
+
+test('Reset guards recursive entry before lifecycle probes and null data is dereferenced after stack count write',()=>{
+ const f=resetPipelineFixture();let reset,nested;f.options.isActive=()=>{nested=reset.run();return true;};reset=fearProjectileResetBuff(f.options);reset.run();assert.equal(nested,null);
+ const g=resetPipelineFixture();g.options.readData=()=>null;assert.throws(g.run,/null native/);assert.equal(g.buff.m_stackCnt,1);assert.ok(!g.phases.includes('attributes'));
+});
+
 test('original fear modes initialize general before shared combat/attack and retain one shared ranged ability',()=>{
  const source=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),graph=source.modeSwitch.graph;
  const resolve=ref=>ref.m_PathID==='0'?null:ref.m_PathID;

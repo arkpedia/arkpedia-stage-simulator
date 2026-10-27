@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 135 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 143 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -1401,6 +1401,55 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 124-method bundle. Continuation40545156330 at3b7defc7 passed; existing
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
+
+### Reset override keys and composed initialization pipeline
+
+The143-method artifact additionally retains BuffData.GetOverrideKey, both
+BuffContainer override-key methods, Buff's override-key accessors, the
+Character card-UID getter and the two HGString.Format overloads called by
+Reset. Encoded metadata literals bind the exact format `{0}{1}` and separator
+`^`. Disabled overriding returns System.String.Empty, bound through its actual
+IL2CPP_TYPE_STRING metadata entry and static field0. Otherwise null/empty
+overrideKey falls back to buffKey; whitespace and nullable buffKey are preserved.
+
+For independentCharacterSource=false, Reset installs that key directly. For an
+independent source it tests the original source's Character type, rereads data,
+formats key plus `^`, then tests the selected Character for Unity null. A valid
+Character contributes its signed card UID through the integer Format overload.
+Reset writes the resulting key, reads the installed property again, and only
+then calls EnsureOverrideIndependentKey(base,key). A missing or destroyed
+Character instead uses GetOverrideKeyCandidate(base) before the common setter.
+Disabling overriding does not skip this independent-source suffix handling.
+
+`fearProjectileResetBuffOverride` implements this branch order with explicit
+formatting, type/Unity validity, card-UID and container receivers. The retained
+candidate method scans existing keys using native StartsWith and disposes the
+enumerator on match, exhaustion and exception. Ensure performs TryGetValue,
+ContainsKey, Remove and Add in order; these container effects are retained source,
+not yet certified as a concrete runtime binding.
+
+`fearProjectileResetBuff` composes context, blackboard/lifecycle preparation,
+lifetime, triggers, stack initialization, attributes, actions, priority, override,
+status and final flags in the retained default order. It sets stack count1,
+copies both stack-refresh flags from one captured data object, reads template
+actions after attribute effects, and passes a value copy of BuffConfig's two
+references to priority calculation. Lifecycle invalidation or an exception stops
+later phases while preserving earlier mutations; retry and reentry are covered.
+
+A composed test uses the concrete phase implementations and checks blackboard
+duration/interval overrides, Q32.32 timing, rebuilt attributes, priority2000,
+the card-specific override key and installed shield/status flags. A second pass
+reuses a pooled buff, preserves its new allocation UID/validity, clears old
+actions and status flags, and retains the native stale shield mask when no
+visible shield exists. Per-phase cancellation, late template reads, config
+snapshot identity and partial failure/retry are also covered. All852 focused
+native/fear/family/miner tests pass. The source producer reproduces143 methods.
+
+Continuation40550004465 at93014b95 passed; full40550025781 at the same commit
+remains active. The earlier full40540699414 ate8664584 passed. Full native
+pointer/audio/container effects, runtime frame/cross-version parity and live
+controller/stage integration remain open. No enemy/stage support, receipt or
+public catalogue gate changes; new stages remain test-only.
 
 ### Reset configuration, source context and audio-hook ordering
 

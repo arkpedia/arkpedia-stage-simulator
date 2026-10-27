@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,135);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,143);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -225,6 +225,41 @@ test('immediate recycle source enumerates stored pairs and pointer lists before 
  }
  at(q.outerMoveNext,0x4dd4158,'dword ptr [rbx + 0xc], eax');at(q.outerMoveNext,0x4dd41b6,'dword ptr [rbx + 0xc], eax');
  assert.ok(!instructions(m).some(i=>i.mnemonic==='call'&&i.operands==='0x183991a80'),'flush does not filter by current frame');
+});
+
+test('Reset override source binds exact separators, independent card UID keys and container migration ordering',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.resetOverride;
+ const reset=castMethod(c,'Buff','Reset'),key=castMethod(c,'BuffData','GetOverrideKey');
+ const at=(m,rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ assert.deepEqual(q.dataFields.map(f=>[f.name,f.offset]),[['disableOverride',0x30],['overrideKey',0x38],['buffKey',0x18],['independentCharacterSource',0x50]]);
+ assert.deepEqual(q.literals.map(x=>x.value),['{0}{1}','{0}{1}','^']);assert.ok(q.literals.every(x=>x.encodedUsage>>>29===5));
+ assert.equal(q.emptyStringTypeLoad.name,'String');assert.equal(q.emptyStringTypeLoad.field.name,'Empty');assert.equal(q.emptyStringTypeLoad.field.offset,0);
+ at(key,q.disableReadRva,'byte ptr [rbx + 0x30], cl');at(key,q.keyEmptyTestCallRva,'0x1850d34b0');at(key,q.keyFallbackReadRva,'rax, qword ptr [rbx + 0x18]');
+ at(reset,q.independentFlagReadRva,'byte ptr [rcx + 0x50], bpl');at(reset,q.sharedKeyCallRva,'0x18225d010');
+ assert.equal(q.characterType.name,'Character');at(reset,q.characterSourceSelectionRva,'rbp, r15');at(reset,q.independentKeyCallRva,'0x18225d010');
+ at(reset,q.baseFormatCallRva,'0x181c5ab80');at(reset,q.characterNullTestCallRva,'0x185ebec60');at(reset,q.cardUidCallRva,'0x1807fa6b0');
+ at(reset,q.cardFormatCallRva,'0x181c5a9d0');at(reset,q.independentSetterCallRva,'0x1839b80d0');at(reset,q.independentGetterCallRva,'0x1839b6f70');
+ at(reset,q.ensureIndependentCallRva,'0x1839c05d0');at(reset,q.candidateCallRva,'0x1839c1b40');at(reset,q.sharedKeySetterCallRva,'0x1839b80d0');
+ const candidate=castMethod(c,'BuffContainer','GetOverrideKeyCandidate'),ensure=castMethod(c,'BuffContainer','EnsureOverrideIndependentKey');
+ at(candidate,q.candidateStartsWithCallRva,'0x1850d7940');for(const rva of [q.candidateFoundDisposeCallRva,q.candidateExhaustedDisposeCallRva,q.candidateExceptionDisposeCallRva])at(candidate,rva,'0x180511a50');
+ for(const [rva,target] of [[q.ensureTryGetCallRva,'0x184c0e320'],[q.ensureContainsCallRva,'0x184c0b160'],[q.ensureRemoveCallRva,'0x184cdd5f0'],[q.ensureAddCallRva,'0x184c0b0d0']])at(ensure,rva,target);
+ assert.ok(c.methods.some(m=>m.type==='HGString'&&m.entryRva===0x1c5ab80));assert.ok(c.methods.some(m=>m.type==='HGString'&&m.entryRva===0x1c5a9d0));assert.ok(castMethod(c,'Character','get_cardUid'));
+ assert.equal(q.nativeFormattingEffectsVerified,false);assert.equal(q.nativeOverrideContainerEffectsVerified,false);assert.equal(q.liveResetOverridePhaseVerified,false);
+});
+
+test('Reset pipeline source binds stack initialization, config value snapshot and final phase order',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.resetPipeline,m=castMethod(c,'Buff','Reset');
+ const at=(rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ assert.deepEqual(q.stackFields.map(f=>[f.name,f.offset]),[['m_stackCnt',0x8c],['m_refreshRemainingTimeWhenStackMax',0x94],['m_clearAllStackCntWhenTimeUp',0x95],['<priority>k__BackingField',0x20c]]);
+ assert.equal(q.templateActionsField.name,'eventToActions');assert.equal(q.templateActionsField.offset,0x28);
+ at(q.stackDataReadRva,'rdx, qword ptr [r14 + 8]');at(q.stackCountWriteRva,'dword ptr [rsi + 0x8c], 1');
+ at(q.refreshStackWriteRva,'byte ptr [rsi + 0x94], al');at(q.clearStacksWriteRva,'byte ptr [rsi + 0x95], al');at(q.loadAttributesCallRva,'0x1839b4460');
+ at(q.templateReadRva,'rdx, qword ptr [r14]');at(q.templateActionsReadRva,'rdx, qword ptr [rdx + 0x28]');at(q.loadActionsCallRva,'0x1839b4250');
+ at(q.configSnapshotReadRva,'xmm0, xmmword ptr [r14]');at(q.configSnapshotWriteRva,'xmmword ptr [rsp + 0x70], xmm0');at(q.calculatePriorityCallRva,'0x1839b3140');
+ at(q.priorityWriteRva,'dword ptr [rsi + 0x20c], ebx');at(q.statusInitCallRva,'0x1839b3da0');at(q.statusWriteRva,'byte ptr [rsi + 0x1e5], al');
+ at(q.slowdownWriteRva,'byte ptr [rsi + 0x1e6], al');at(q.elementalBreakCallRva,'0x1839b3ad0');at(q.elementalBreakWriteRva,'byte ptr [rsi + 0x1f0], al');at(q.shieldSourceCallRva,'0x1839b3fa0');
+ assert.ok(q.loadAttributesCallRva<q.loadActionsCallRva&&q.loadActionsCallRva<q.calculatePriorityCallRva&&q.priorityWriteRva<q.statusInitCallRva&&q.statusInitCallRva<q.elementalBreakCallRva&&q.elementalBreakCallRva<q.shieldSourceCallRva);
+ assert.equal(q.fullResetEffectsVerified,false);assert.equal(q.liveResetPipelineVerified,false);
 });
 
 test('Reset context source binds unboxed BuffConfig fallback, character audio virtual dispatch and ordered pointer/flag captures',()=>{
