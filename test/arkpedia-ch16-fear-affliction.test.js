@@ -23,6 +23,7 @@ import {fearProjectileBuffIdentity,fearProjectileResetBuffLifecycle} from '../se
 import {fearProjectileBuffTimer,fearProjectileResetBuffTriggers,fearProjectileBuffDurationKey,fearProjectileResetBuffLifetime,fearProjectileModifyBuffLifetime} from '../server/sim/content/chapter16-fear-buff-timing.js';
 import {fearProjectileResetBuffBlackboard,fearProjectileBuffPrefixAssignments,fearProjectileBuffBlackboardWrites,fearProjectileBuffBlackboardReads,fearProjectileBuffBlackboardPairs} from '../server/sim/content/chapter16-fear-buff-blackboard.js';
 import {fearProjectileFloatToRaw,fearProjectileFloorToInt} from '../server/sim/content/chapter16-fear-fixed-values.js';
+import {fearProjectileLoadBuffActions} from '../server/sim/content/chapter16-fear-buff-actions.js';
 import {fearProjectileBuffRecyclePool,fearProjectileDefaultBuffPool} from '../server/sim/content/chapter16-fear-buff-pool.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
@@ -208,6 +209,65 @@ test('finish and native-frame queue use concrete buff recycle identity before th
  finish.run();queue.update();assert.equal(buff.instanceUid,1);assert.equal(buff.m_isValid,true);assert.equal(recycled,0);
  f.b.kill(f.source,null);frame=11;queue.update();assert.equal(recycled,1);assert.equal(buff.instanceUid,0);assert.equal(buff.m_isValid,false);assert.equal(p.lock(old),null);
  identity.allocate(buff);assert.equal(buff.instanceUid,2);assert.equal(p.lock(old),null);assert.equal(p.lock(p.capture(buff)),buff);queue.release();assert.deepEqual(f.b.errors,[]);
+});
+
+function actionLoadingFixture(overrides={}){
+ const actions=Array.from({length:105},()=>({old:true})),dictionary=[{key:0,value:{action:{name:'start'}}},{key:75,value:{action:null}}],events=[];let active=true;
+ const loader=fearProjectileLoadBuffActions({readActions:()=>actions,readDictionaryCount:()=>dictionary.length,readDictionaryEntry:i=>dictionary[i],
+  readActionArray:container=>container.action,isAssignable:action=>{events.push(action);return true;},isActive:()=>active,...overrides});
+ return{actions,dictionary,events,loader,set active(value){active=value;}};
+}
+
+test('action loading clears exactly104 slots and installs selected references without cloning or execution',()=>{
+ const f=actionLoadingFixture(),outside=f.actions[104],root=f.dictionary[0].value.action;f.loader.run();
+ assert.equal(f.actions[0],root);assert.equal(f.actions[75],null);assert.ok(f.actions.slice(1,104).every(value=>value===null));
+ assert.equal(f.actions[104],outside);assert.deepEqual(f.events,[root]);
+});
+
+test('action loading observes duplicate events in order including a final null action',()=>{
+ const f=actionLoadingFixture();f.dictionary[1].key=0;f.loader.run();assert.equal(f.actions[0],null);assert.equal(f.events.length,1);
+});
+
+test('action loading uses first entry event and second entry action after distinct reads',()=>{
+ let reads=0;const first={key:0,value:{action:{name:'first'}}},second={key:75,value:{action:{name:'second'}}};
+ const f=actionLoadingFixture({readDictionaryCount:()=>1,readDictionaryEntry:()=>++reads===1?first:second});
+ f.loader.run();assert.equal(reads,2);assert.equal(f.actions[0],second.value.action);assert.equal(f.actions[75],null);
+});
+
+test('action loading captures destination before dictionary reads but rereads array during each clear',()=>{
+ const old=Array(104).fill('old'),fresh=Array(104).fill('fresh');let current=old,reads=0;
+ const f=actionLoadingFixture({readActions:()=>{reads++;if(reads===3)current=fresh;return current;},readDictionaryEntry:i=>{current=old;return f.dictionary[i];}});
+ f.loader.run();assert.deepEqual(old.slice(0,3),[null,null,'old']);assert.deepEqual(fresh.slice(1,3),['fresh',null]);
+ assert.equal(fresh[0],f.dictionary[0].value.action,'first destination was captured before the read redirected current');
+});
+
+test('action loader requires valid array bounds and preserves earlier clears after short-array failure',()=>{
+ const actions=Array(3).fill('old'),f=actionLoadingFixture({readActions:()=>actions});
+ assert.throws(()=>f.loader.run(),/event index/);assert.deepEqual(actions,[null,null,null]);
+ const g=actionLoadingFixture();g.dictionary[0].key=-1;assert.throws(()=>g.loader.run(),/event index/);assert.ok(g.actions.slice(0,104).every(v=>v===null));
+});
+
+test('action loader checks nonnull action assignability before event bounds and skips the check for null actions',()=>{
+ const f=actionLoadingFixture({isAssignable:()=>false});f.dictionary[0].key=-1;assert.throws(()=>f.loader.run(),/not assignable/);
+ const g=actionLoadingFixture({isAssignable:()=>{throw Error('null check');}});g.dictionary.length=1;g.dictionary[0].value.action=null;g.loader.run();
+ assert.equal(g.actions[0],null);
+});
+
+test('action loader rereads live dictionary count after assignment',()=>{
+ let f;f=actionLoadingFixture({isAssignable:()=>{f.dictionary.length=1;return true;}});f.loader.run();assert.equal(f.actions[0],f.dictionary[0].value.action);assert.equal(f.events.length,0);
+});
+
+test('action loader rejects a missing EventToAction wrapper rather than treating it as a null action',()=>{
+ const f=actionLoadingFixture();f.dictionary[0].value=null;assert.throws(()=>f.loader.run(),/nonnull EventToAction/);assert.ok(f.actions.slice(0,104).every(v=>v===null));
+});
+
+for(const point of ['readActions','readDictionaryCount','readDictionaryEntry','readActionArray','isAssignable'])test('action loader stops after lifecycle invalidation during '+point,()=>{
+ let f;f=actionLoadingFixture({[point]:()=>{f.active=false;return undefined;}});assert.equal(f.loader.run(),null);assert.equal(f.loader.run(),null);
+});
+
+test('action loader guards recursive acquisition and permits subsequent configuration after a callback error',()=>{
+ let f,fail=true;f=actionLoadingFixture({readDictionaryCount:()=>{assert.equal(f.loader.run(),null);if(fail)throw Error('count');return f.dictionary.length;}});
+ assert.throws(()=>f.loader.run(),/count/);fail=false;f.loader.run();assert.equal(f.actions[0],f.dictionary[0].value.action);
 });
 
 function pairAssignmentFixture(overrides={}){

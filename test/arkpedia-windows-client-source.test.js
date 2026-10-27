@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,113);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,114);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -225,6 +225,18 @@ test('immediate recycle source enumerates stored pairs and pointer lists before 
  }
  at(q.outerMoveNext,0x4dd4158,'dword ptr [rbx + 0xc], eax');at(q.outerMoveNext,0x4dd41b6,'dword ptr [rbx + 0xc], eax');
  assert.ok(!instructions(m).some(i=>i.mnemonic==='call'&&i.operands==='0x183991a80'),'flush does not filter by current frame');
+});
+
+test('buff action loader source binds104 cleared slots, separate dictionary reads and identity event conversion',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.actionLoading;
+ const m=castMethod(c,'Buff','_LoadActions'),at=(rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ assert.equal(q.clearSlotCount,104);at(q.clearWriteRva,'qword ptr [rcx], rdi');at(q.clearLimitRva,'ebx, 0x68');at(q.countCallRva,'0x184ab9030');
+ at(q.firstEntryCallRva,'0x184ab9220');at(q.eventConvertCallRva,'0x1828a66d0');at(q.secondEntryCallRva,'0x184ab9220');
+ at(q.actionArrayReadRva,'rbx, qword ptr [rbx + 0x10]');at(q.assignabilityCallRva,'0x18040ffa0');at(q.eventWriteRva,'qword ptr [rcx], rbx');
+ assert.deepEqual(q.specifications.map(s=>s.definition.name),['get_Count','get_Item','Convert']);assert.ok(q.specifications.every(s=>s.nativeMapping===null));
+ assert.deepEqual(q.specifications[0].instantiations.class.arguments.map(a=>a.name),['Event','EventToAction']);
+ const chunk=q.conversion.chunks[0],raw=Buffer.from(chunk.base64,'base64');assert.equal(raw.toString('hex'),'8bc1c3');assert.equal(sha(raw),chunk.sha256);
+ assert.equal(q.nativeDictionaryEffectsVerified,false);assert.equal(q.nativeArrayAssignabilityVerified,false);assert.equal(q.liveActionLoadingPhaseVerified,false);
 });
 
 test('ordinary pair assignment source binds empty-destination AddRange and raw whole-pair replacement',()=>{

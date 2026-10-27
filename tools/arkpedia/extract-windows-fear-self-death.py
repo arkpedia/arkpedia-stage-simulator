@@ -731,6 +731,26 @@ assert add_range_spec['declaringType'] == 'List`1' and add_range_spec['definitio
 assert add_range_spec['instantiations']['class']['arguments'][0]['typeIndex'] == pair['index']
 assert v['quad'](v['b'], priority['pointer_table'] + add_range_spec['nativeMapping']['methodPointerIndex'] * 8) - v['image_base'] == 0x450dea0
 result['modeSwitch']['buffNotification']['blackboardPairAssignments']['addRangeSpecification'] = add_range_spec
+methods.append(c['method'](buff, c['unique'](lambda r: r['name'] == '_LoadActions', buff['methods'])))
+action_specs = [priority['specification'](i) for i in [3646, 219361, 264123]]
+assert [s['definition']['name'] for s in action_specs] == ['get_Count', 'get_Item', 'Convert']
+assert all(s['nativeMapping'] is None for s in action_specs)
+convert_rva = 0x28a66d0
+pos = v['offset'](v['image_base'] + convert_rva)
+convert_raw = v['b'][pos:pos + 3]
+assert convert_raw.hex() == '8bc1c3'
+convert_ins = list(Cs(CS_ARCH_X86, CS_MODE_64).disasm(convert_raw, v['image_base'] + convert_rva))
+assert [(i.mnemonic, i.op_str) for i in convert_ins] == [('mov', 'eax, ecx'), ('ret', '')]
+result['modeSwitch']['buffNotification']['actionLoading'] = {
+    'specifications': action_specs, 'clearSlotCount': 104,
+    'clearWriteRva': 0x39b4336, 'clearLimitRva': 0x39b4340, 'countCallRva': 0x39b435a,
+    'firstEntryCallRva': 0x39b4380, 'eventConvertCallRva': 0x39b4390, 'secondEntryCallRva': 0x39b43aa,
+    'actionArrayReadRva': 0x39b43bd, 'assignabilityCallRva': 0x39b43d9, 'eventWriteRva': 0x39b43f7,
+    'conversion': {'entryRva': convert_rva, 'chunks': [{'beginRva': convert_rva, 'endRva': convert_rva + len(convert_raw), 'unwindRva': None,
+        'boundary': 'Reviewed complete Int32 enum conversion identity leaf', 'base64': base64.b64encode(convert_raw).decode(), 'sha256': v['sha'](convert_raw),
+        'instructions': [{'rva': i.address - v['image_base'], 'size': i.size, 'mnemonic': i.mnemonic, 'operands': i.op_str} for i in convert_ins]}]},
+    'nativeDictionaryEffectsVerified': False, 'nativeArrayAssignabilityVerified': False, 'liveActionLoadingPhaseVerified': False,
+}
 pool = c['type_row']('ObjectPool`1', 'Torappu.ObjectPool')
 pool_methods = []
 for index in [147561, 147566, 147567, 147558, 147559, 147563, 147564, 147568, 147569]:

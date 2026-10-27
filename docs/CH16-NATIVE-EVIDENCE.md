@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 113 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 114 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -1288,6 +1288,33 @@ modification, trigger configuration and concrete timer initialization together.
 All707 focused native/fear/family/miner tests pass. The113-method evidence bundle
 reproduces; full Reset and live controller/stage integration remain open. No
 source/support/receipt/catalogue gate changed.
+
+### Buff.Reset action-array loading
+
+The114-method artifact additionally retains Buff._LoadActions. It clears
+indices0..103 of m_actions, rereading the array for each clear. ActionDict
+get_Count/get_Item specifications bind Event and EventToAction arguments without
+fabricating concrete native mappings. The selected enum conversion is a reviewed
+complete three-byte Int32 identity leaf. Each dictionary iteration captures the
+destination array, reads an entry for its event, reads the entry again for its
+action-array reference, performs native assignability checking for nonnull
+actions, then writes the selected event slot. Later duplicates overwrite earlier
+ones; null actions still write a slot. Dictionary count is sampled each loop.
+
+`fearProjectileLoadBuffActions` implements that selected sequence with explicit
+native dictionary, EventToAction-value and assignability receivers. It does not
+clone or run action arrays. Earlier clears/writes survive errors, short arrays
+fail at their first out-of-range clear, and type checking precedes event bounds
+checking for nonnull actions. Lifecycle invalidation stops at each receiver and
+recursive loading is rejected.
+
+Tests cover exact clear extent, retained action identity, duplicates/null actions,
+separate event/action reads, live destination and dictionary changes, range/type
+errors, missing wrappers, retry, reentry and lifecycle cancellation. All722
+focused native/fear/family/miner tests pass; --check reproduces the114-method
+bundle. Continuation40542047673 atcd06bdff passed; existing full40540699414 at
+e8664584 is still active. Full Reset, native dictionary/array type effects and
+live controller/stage integration remain open. All gates remain intact.
 
 ### ClearRunTimeData default cleanup ordering
 
