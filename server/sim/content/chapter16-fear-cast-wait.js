@@ -36,12 +36,12 @@ export function fearProjectileWaitFrameCount(cachedDurationRaw,deltaPlayTime){
  return Math.max(1,Number(BigInt.asIntN(32,rounded>>32n)));
 }
 
-export function fearProjectileAttackWait(b,{owner,frameCount,isCastActive,subscribeAttackEvent,onReady}){
- if(!owner||!Number.isInteger(owner.deploySeq)||!Number.isInteger(frameCount)||frameCount<1||frameCount>0x7fffffff||
-  [isCastActive,subscribeAttackEvent,onReady].some(fn=>typeof fn!=='function'))
-  throw new TypeError('Fear cast wait requires an owner life, native frame count, lifecycle and event callers');
+export function fearProjectileAttackWait(b,{owner,cachedDurationRaw,readDeltaPlayTime,isCastActive,subscribeAttackEvent,onReady}){
+ if(!owner||!Number.isInteger(owner.deploySeq)||typeof cachedDurationRaw!=='bigint'||cachedDurationRaw<minRaw||cachedDurationRaw>maxRaw||
+  [readDeltaPlayTime,isCastActive,subscribeAttackEvent,onReady].some(fn=>typeof fn!=='function'))
+  throw new TypeError('Fear cast wait requires an owner life, cached native duration, deltaPlayTime and lifecycle/event callers');
  const life=owner.deploySeq;
- let ended=false,started=false,received=false,resuming=false,index=0,unsubscribe=null,endHandle=null,removeHandle=null;
+ let ended=false,started=false,received=false,resuming=false,index=0,frameCount=null,unsubscribe=null,endHandle=null,removeHandle=null;
  const release=()=>{
   if(ended)return false;
   ended=true;
@@ -71,6 +71,8 @@ export function fearProjectileAttackWait(b,{owner,frameCount,isCastActive,subscr
      if(typeof dispose!=='function')throw new TypeError('Fear cast event caller must return an unsubscribe function');
      if(!active()){dispose();return null;}
      unsubscribe=dispose;
+     const deltaPlayTime=readDeltaPlayTime();if(!active())return null;
+     frameCount=fearProjectileWaitFrameCount(cachedDurationRaw,deltaPlayTime);
      // Both selected FP and float waiters yield at index0 before checking the
      // predicate. An event during subscription still cannot finish this resume.
      return{waiting:true,index,frameCount};

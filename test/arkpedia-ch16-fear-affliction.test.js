@@ -49,15 +49,46 @@ test('computed native count drives timeout without using the visual clip duratio
  assert.deepEqual(f.wait.resume(),{waiting:false,cause:'timeout'});assert.equal(f.wait.framesWaited,4);
 });
 
-function castWaitFixture(overrides={}){
+function castWaitFixture({frameCount=3,...overrides}={}){
  const f=fixture(),events=[];let receive=()=>{},unsubscribed=0;
- const wait=fearProjectileAttackWait(f.b,{owner:f.source,frameCount:3,isCastActive:()=>true,
+ const wait=fearProjectileAttackWait(f.b,{owner:f.source,cachedDurationRaw:BigInt(frameCount)*fpOne,readDeltaPlayTime:()=>1,isCastActive:()=>true,
   subscribeAttackEvent:({owner,event,onEvent})=>{
    assert.equal(owner,f.source);assert.equal(event,19);receive=onEvent;events.push('subscribe');
    return()=>{unsubscribed++;events.push('unsubscribe');};
   },onReady:({cause})=>events.push(cause),...overrides});
  return{...f,events,wait,receive:()=>receive(),get unsubscribed(){return unsubscribed;}};
 }
+
+test('cast wait samples deltaPlayTime once at first resume and freezes its native frame limit',()=>{
+ let delta=.25,reads=0,duration=3n*fpOne;
+ const f=castWaitFixture({cachedDurationRaw:duration,readDeltaPlayTime:()=>{reads++;return delta;}});
+ assert.equal(reads,0);duration=99n*fpOne;delta=2;
+ assert.deepEqual(f.wait.resume(),{waiting:true,index:0,frameCount:2});assert.equal(reads,1);
+ delta=.01;assert.deepEqual(f.wait.resume(),{waiting:true,index:1,frameCount:2});
+ assert.deepEqual(f.wait.resume(),{waiting:false,cause:'timeout'});assert.equal(reads,1);
+});
+
+test('attack registration precedes timing sampling and an event during sampling still yields',()=>{
+ let f,reads=0;f=castWaitFixture({readDeltaPlayTime:()=>{
+  assert.deepEqual(f.events,['subscribe']);f.receive();reads++;
+  assert.equal(f.wait.resume(),null);return .1;
+ }});
+ assert.deepEqual(f.wait.resume(),{waiting:true,index:0,frameCount:30});
+ assert.deepEqual(f.wait.resume(),{waiting:false,cause:'event'});assert.equal(reads,1);
+ assert.deepEqual(f.events,['subscribe','unsubscribe','event']);
+});
+
+test('cancellation during native timing sampling removes the attack subscription without readiness',()=>{
+ let f;f=castWaitFixture({readDeltaPlayTime:()=>{f.b.emit('battleEnd',{});return NaN;}});
+ assert.equal(f.wait.resume(),null);assert.equal(f.wait.resume(),null);assert.equal(f.unsubscribed,1);
+ assert.deepEqual(f.events,['subscribe','unsubscribe']);assert.deepEqual(f.b.errors,[]);
+});
+
+test('invalid sampled timing closes the wait and cannot leave a live attack-event handler',()=>{
+ const f=castWaitFixture({readDeltaPlayTime:()=>Infinity});
+ assert.throws(()=>f.wait.resume(),/deltaPlayTime/);assert.equal(f.unsubscribed,1);
+ f.receive();assert.equal(f.wait.resume(),null);assert.deepEqual(f.events,['subscribe','unsubscribe']);
+});
 
 test('event-free selected cast reaches its bounded wait limit without inventing an attack event',()=>{
  const f=castWaitFixture();assert.deepEqual(f.wait.resume(),{waiting:true,index:0,frameCount:3});
@@ -109,7 +140,7 @@ test('bounded cast readiness can create one independent flight which survives la
  const f=fixture();f.source.base.atk=175;f.source.markDirty();f.target.nativeUid=1;
  const source=fearProjectileSourceReference(f.b,f.source),damage=fearProjectileDamageAction(f.b,source);
  let flight,births=0;
- const wait=fearProjectileAttackWait(f.b,{owner:f.source,frameCount:1,isCastActive:()=>true,
+ const wait=fearProjectileAttackWait(f.b,{owner:f.source,cachedDurationRaw:fpOne,readDeltaPlayTime:()=>1,isCastActive:()=>true,
   subscribeAttackEvent:()=>()=>{},onReady:()=>{
    births++;
    flight=fearProjectileFlight(f.b,{from:{x:0,y:0,z:0},initialTarget:{x:1,y:0,z:0},

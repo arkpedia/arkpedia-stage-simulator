@@ -501,8 +501,8 @@ Hosted native-source validation fetches and reproduces this bounded file.
 ### Bounded attack-event wait
 
 `fearProjectileAttackWait` ports the selected wait-for-attack-event branch with
-`_interuptIfTargetDead=0`. It receives the native converted positive frame count
-and explicit coroutine resumes. Initial resume registers Entity.Event19 and
+`_interuptIfTargetDead=0`. It receives cached native duration, an explicit
+deltaPlayTime reader and coroutine resumes. Initial resume registers Entity.Event19 and
 yields at index0; later resumes finish on a received event or increment/check
 the bounded count. An event during registration still cannot bypass that first
 yield. Handler removal and receipt clearing precede the readiness callback.
@@ -534,3 +534,15 @@ FP static initialization and BattleController.get_deltaPlayTime are retained
 alongside the earlier division/float conversion/MathUtil.RoundToInt bodies.
 Actual cached-duration production and battle coroutine scheduling remain caller
 integration obligations; no visual-clip duration is substituted for attack time.
+
+The wait controller now calls that conversion internally after attack-event
+registration on its first resume. Cached duration is captured as a raw value;
+deltaPlayTime is read exactly once at wait initialization, and later resumes
+reuse the converted limit. The native cast-start virtual slot101 resolves to
+AbstractAnimatedAbility.GetDuration and stores `m_cachedDuration` at0x118;
+the FP waiter's resumption branch bypasses its timing initialization. Tests
+change timing between construction and initialization, change it again while
+waiting, deliver an event during timing sampling, and cancel or reject malformed
+timing after registration without leaking an event handler. These inputs still
+come from explicit native-state callers; engine sampling and coroutine cadence
+are not inferred from a generic simulation step.

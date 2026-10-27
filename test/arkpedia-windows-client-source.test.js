@@ -894,6 +894,21 @@ test('cast frame conversion binds rounded division, FP ties-to-even and reserved
  at(castMethod(c,'BattleController','get_deltaPlayTime'),0x3991401,'0x185a3ad10');
 });
 
+test('cast start captures virtual GetDuration before the iterator initializes its frame count',()=>{
+ const c=read(castPath),slot=c.resolvedSlots.find(s=>s.type==='RangedAttack'&&s.slot===101);
+ assert.equal(slot.name,'GetDuration');assert.equal(slot.declaringType,'AbstractAnimatedAbility');
+ assert.equal(slot.entryRva,castMethod(c,'AbstractAnimatedAbility','GetDuration').entryRva);
+ assert.equal(c.fields.EasyToStartAbility.fields.find(f=>f.name==='m_cachedDuration').offset,0x118);
+ const start=instructions(castMethod(c,'EasyToStartAbility','OnCastStart'));
+ assert.ok(start.some(i=>i.rva===0xc27a9d&&i.operands==='rax, qword ptr [rdx + 0x788]'));
+ assert.ok(start.some(i=>i.rva===0xc27aad&&i.operands==='qword ptr [rbx + 0x118], rax'));
+ const waiter=instructions(castMethod(c,'<WaitWhileForFixedSeconds>d__6','MoveNext'));
+ assert.ok(waiter.some(i=>i.rva===0x396bd07&&i.operands==='0x18396bdaa'));
+ assert.ok(waiter.some(i=>i.rva===0x396bd38&&i.operands==='0x183991370'));
+ // Resumption enters the predicate branch, after one-time timing conversion.
+ assert.ok(waiter.some(i=>i.rva===0x396bdae&&i.operands==='rcx, qword ptr [rdi + 0x28]'));
+});
+
 test('cast event wait binds its selected predicate, mandatory initial yield and handler cleanup',()=>{
  const c=read('data/candidates/arkpedia-windows-cast-lifecycle-source.json');
  assert.deepEqual(c.eventWaitDelegateBindings.map(r=>[r.callerLoadRva,r.name]),[
