@@ -1,5 +1,48 @@
 # Development priorities
 
+### 27 October: projectile hit mode, safety count and independent source lifetime
+
+Previous checkpoint `7976aa09` made concrete source progress. Continuation
+`40485854598` has passed native-source and every browser except live 17-12;
+both focused platform jobs are also live. Full matrix `40484748212` remains live
+on `5319bc8a`. Preserve both handles; do not restart on observation timeout or
+cancel the continuation just to push another source-only checkpoint.
+
+The actual projectile MonoScripts identify SimpleProjectile and HitBehaviour.
+New evidence retains 17 complete native methods covering hit-count/lifetime
+getters, projectile ticking/reach/trace-hit/stop and hit-behaviour area dispatch.
+SimpleProjectile serialized field layout matches the selected Windows hierarchy;
+HitBehaviour has an explicit unmatched CN `_exceptFlyCharacter=0` field. That
+difference is not assumed inert or claimed to establish cross-version parity.
+
+LifeType is an unsigned-byte enum, with LIMITED=1 and INFINITY=2. These raw byte
+defaults must not use the signed Int32 zigzag decoder. The common signed enum
+reader now asserts its underlying kind; all its existing cast/selector artifacts
+still reproduce unchanged. The projectile producer uses the correct byte decoder.
+
+The prefab's `_hitNumType=2` makes get_limitedHitNum false, so `_maxHitNum=1` must
+not be mistaken for a single-recipient explosion. GetMaxHitNum passes the original
+value, mode and safety value128 to the actual Misc.GetLifeValue<Int32> usage. Its
+reviewed two-return leaf returns safety128 for INFINITY, zero for IMMEDIATELY and
+the supplied value otherwise. The leaf has one internal branch, no calls or stack
+changes, and both returns are fully decoded; no next-method boundary was used.
+Blackboard/max-block overrides are disabled in the original prefab. The safety
+bound is retained explicitly rather than relabeling it as mathematically unlimited.
+
+OnTick retains the independent lifetime-expiry and virtual stopWhenSourceInvalid
+paths. The source config has finite lifetime10, managedBySource=false and
+stopWhenSourceInvalid=false. Source death alone therefore does not justify
+erasing born output. Event5 self-death, buff/action application, identity reuse
+and reentrant impact order still need controller integration/lifecycle tests.
+
+All 35 source checks and 81 combined source/Fear/family cases pass. The projectile
+producer and unchanged cast/selector producers reproduce with --check; hosted
+source CI is configured to reproduce the new artifact after script binding.
+Next finish the event5/projectile action ownership and remaining selector/context
+gaps, then integrate test-only16-9 through exact support/receipt gates. Full
+Chapter16/17 and operator/module scope remains open. No merge, deployment or
+public promotion; four known quarantine deletions remain unstaged.
+
 ### 27 October: reference-shared priority filtering and native UID tie source
 
 The preceding `c6a502ee` checkpoint made concrete source progress and was saved

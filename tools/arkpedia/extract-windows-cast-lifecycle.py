@@ -89,6 +89,9 @@ def fields(t):
 
 
 def enum(t):
+    underlying = unique(lambda f: f['name'] == 'value__', t['fields'])
+    tp = v['offset'](quad(b, v['type_table'] + underlying['typeIndex'] * 8))
+    assert (uint(b, tp + 8) >> 16) & 255 == 8, 'This decoder accepts signed Int32 enums only'
     out = []
     for f in t['fields']:
         if f['name'] == 'value__':

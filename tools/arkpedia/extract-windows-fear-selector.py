@@ -113,7 +113,7 @@ for key in enum_fields:
     if key == '_postFilter':
         # Only the selected value is needed; do not claim a complete later
         # FilterType table from the reader's one-byte integer decoder.
-        t = {**t, 'fields': [f for f in t['fields'] if f['name'] == 'HATRED_DES']}
+        t = {**t, 'fields': [f for f in t['fields'] if f['name'] in ['value__', 'HATRED_DES']]}
     enums[key] = {**c['enum'](t), 'partial': key == '_postFilter'}
 fields = {t['name']: {'typeIndex': t['index'], 'fields': c['fields'](t)} for t in [advanced, options]}
 # Il2Cpp field offsets for boxed value types include the object header. All

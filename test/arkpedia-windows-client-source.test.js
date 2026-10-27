@@ -67,10 +67,57 @@ const castPath='data/candidates/arkpedia-windows-cast-lifecycle-source.json';
 const minerTalentsPath='data/candidates/arkpedia-windows-miner-talents-source.json';
 const fearSelectorPath='data/candidates/arkpedia-windows-fear-selector-source.json';
 const priorityPath='data/candidates/arkpedia-windows-filter-priority-source.json';
+const projectilePath='data/candidates/arkpedia-windows-fear-projectile-source.json';
 const instructions=method=>method.chunks.flatMap(c=>c.instructions);
 const castMethod=(c,type,name)=>{
  const matches=c.methods.filter(m=>m.type===type&&m.name===name);assert.equal(matches.length,1);return matches[0];
 };
+
+test('fear projectile source pins complete native methods and exact original script references',()=>{
+ const c=read(projectilePath);assert.equal(c.methods.length,17);
+ for(const p of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+p.path,import.meta.url))),p.sha256);
+ for(const method of [...c.methods,c.lifeValueLeaf])for(const chunk of method.chunks){
+  const raw=Buffer.from(chunk.base64,'base64');assert.equal(raw.length,chunk.endRva-chunk.beginRva);assert.equal(sha(raw),chunk.sha256);
+ }
+ const [simple,hit]=c.prefabScriptBridges;
+ assert.equal(simple.scriptIdentity.m_ClassName,'SimpleProjectile');assert.equal(simple.serializedFieldParity,true);
+ assert.equal(hit.scriptIdentity.m_ClassName,'HitBehaviour');assert.equal(hit.serializedFieldParity,false);
+ assert.deepEqual(hit.unmatchedSerializedFields,{_exceptFlyCharacter:0});
+ for(const field of ['runtimeDispatchVerified','frameParity','crossVersionParity'])assert.equal(c[field],false);
+});
+
+test('raw byte LifeType and the complete two-return helper prevent a false single-target cap',()=>{
+ const c=read(projectilePath);assert.equal(c.lifeType.underlyingType,'System.Byte');
+ assert.deepEqual(c.lifeType.fields.map(f=>[f.name,f.value]),[['IMMEDIATELY',0],['LIMITED',1],['INFINITY',2],['CUSTOM',3]]);
+ assert.deepEqual(c.lifeType.fields.map(f=>f.encodedHex),['00','01','02','03'],'unsigned byte enum values are not signed-int zigzag');
+ const simple=JSON.parse(c.prefabScriptBridges[0].originalJson);
+ assert.equal(simple._maxHitNum,1);assert.equal(simple._hitNumType,2);assert.equal(simple._getMaxHitNumFromBB,0);assert.equal(simple._limitedMaxHitNumToSourceBlockedCnt,0);
+ const limited=instructions(castMethod(c,'SimpleProjectile','get_limitedHitNum'));
+ assert.ok(limited.some(i=>i.rva===0x6b78fc&&i.mnemonic==='cmp'&&i.operands==='byte ptr [rbx + 0x191], 2'));
+ assert.ok(limited.some(i=>i.rva===0x6b7903&&i.mnemonic==='setne'));
+ const max=instructions(castMethod(c,'SimpleProjectile','GetMaxHitNum'));
+ assert.ok(max.some(i=>i.rva===0x6b763c&&i.operands==='r8d, 0x80'));
+ assert.ok(max.some(i=>i.mnemonic==='call'&&i.operands==='0x'+(c.imageBase+c.lifeValueLeaf.entryRva).toString(16)));
+ assert.equal(c.lifeValueLeaf.name,'GetLifeValue');assert.equal(c.lifeValueLeaf.typeArgument.name,'Int32');
+ assert.equal(c.lifeValueLeaf.encodedUsage>>>29,6);assert.equal(c.lifeValueLeaf.chunks[0].unwindRva,null);
+ const leaf=instructions(c.lifeValueLeaf);assert.deepEqual(leaf.map(i=>i.mnemonic),['test','je','cmp','cmovne','mov','ret','xor','ret']);
+ let cursor=c.lifeValueLeaf.entryRva;for(const i of leaf){assert.equal(i.rva,cursor);cursor+=i.size;}
+ assert.equal(cursor,c.lifeValueLeaf.chunks[0].endRva);assert.equal(leaf[1].operands,'0x18402c5df');
+ assert.equal(leaf[3].operands,'r8d, ecx');assert.equal(leaf[4].operands,'eax, r8d');
+});
+
+test('fear projectile source death uses the explicit stop switch while finite lifetime remains independent',()=>{
+ const c=read(projectilePath),simple=JSON.parse(c.prefabScriptBridges[0].originalJson);
+ assert.equal(simple._stopWhenSourceInvalid,0);assert.equal(simple._managedBySource,0);
+ assert.equal(simple._lifeTimeType,1);assert.equal(simple._lifeTime,10);assert.equal(simple._getLifeTimeFromBB,0);
+ assert.equal(simple._stopAfterFirstHit,0);assert.equal(simple._stopAfterMaxHit,0);
+ assert.equal(c.resolvedSlots.find(s=>s.slot===40).name,'get_stopWhenSourceInvalid');
+ const tick=instructions(castMethod(c,'Projectile','OnTick'));
+ assert.ok(tick.some(i=>i.rva===0x67af63&&i.operands==='ecx, 0x28'));
+ assert.ok(tick.some(i=>i.rva===0x67af72&&i.mnemonic==='je'&&i.operands==='0x18067afc4'));
+ assert.equal(read('data/candidates/arkpedia-ch16-enemy-support.json').enemies.enemy_10128_fearpj.policy,null);
+ assert.equal(read('data/arkpedia-stages.json').stages.some(s=>s.code==='16-9'),false);
+});
 
 test('priority filtering binds generic definitions and reference-sharing without inventing a concrete native mapping',()=>{
  const c=read(priorityPath);assert.equal(c.genericMethods.length,3);assert.equal(c.methods.length,6);

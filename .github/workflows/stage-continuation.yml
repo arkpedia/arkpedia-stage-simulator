@@ -46,6 +46,8 @@ jobs:
         run: python tools/arkpedia/extract-windows-fear-selector.py --check
       - name: Reproduce generic priority filtering and native UID tie evidence
         run: python tools/arkpedia/extract-windows-filter-priority.py --check
+      - name: Reproduce projectile lifetime, hit count and byte-enum evidence
+        run: python tools/arkpedia/extract-windows-fear-projectile.py --check
       - name: Independently reproduce complete native graphs and indexed components
         run: |
           python tools/arkpedia/extract-ch16-artillery.py --check
