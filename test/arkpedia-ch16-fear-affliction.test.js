@@ -69,6 +69,60 @@ import {fearProjectileInlineInit} from '../server/sim/content/chapter16-fear-pro
 import {fearProjectileSetTraceTarget,fearProjectileBorn} from '../server/sim/content/chapter16-fear-projectile-born.js';
 import {fearProjectileBaseBorn,fearProjectileDefaultOnBorn,fearProjectileActionBirth,fearProjectileActionContextSetters,fearProjectileControllerRunActions} from '../server/sim/content/chapter16-fear-projectile-action-born.js';
 import {fearProjectileActionControllerInit,fearProjectileRegisterActions} from '../server/sim/content/chapter16-fear-projectile-action-init.js';
+import {fearProjectileRangedActions,fearProjectileActiveBuffs,fearProjectilePreprocessActions,fearProjectilePreprocessDamage} from '../server/sim/content/chapter16-fear-projectile-action-provider.js';
+
+function projectileProviderFixture(){
+ const owner={atkRaw:175n*(1n<<32n)},ability={owner,m_actions:[{damage:true,m_cachedAtk:0n}],_activeBuffs:[]},events=[],
+  damageOptions={isValidUnity:value=>value!=null&&!value.destroyed,readAtkRaw:value=>value.atkRaw},
+  options={readOwner:value=>{events.push('owner');return value.owner;},isValidUnity:damageOptions.isValidUnity,safeCount:actions=>{events.push('count');return actions?.length??0;},
+   readElement:(actions,index)=>{events.push(['item',index]);if(index>=actions.length)throw RangeError('native list bounds');return actions[index];},castDamageNode:value=>value?.damage?value:null,
+   preprocessNode:(node,source)=>{events.push(['node',node,source]);fearProjectilePreprocessDamage(damageOptions)(node,source);}};
+ return{owner,ability,events,damageOptions,options,run:()=>fearProjectileRangedActions({preprocess:fearProjectilePreprocessActions(options)})(ability,0,{})};
+}
+test('ranged event0 preprocesses the captured list but returns the newly fetched list',()=>{
+ const f=projectileProviderFixture(),old=f.ability.m_actions,replacement=[];const run=fearProjectileRangedActions({preprocess:(ability,actions)=>{assert.equal(actions,old);ability.m_actions=replacement;}});
+ assert.equal(run(f.ability,0,{}),replacement);for(const event of [-1,1,2,3,4,5,6,7])assert.equal(run(f.ability,event,{}),null);
+});
+test('preprocessing samples owner/count once, indexes matching nodes twice and leaves other nodes alone',()=>{
+ const f=projectileProviderFixture(),node=f.ability.m_actions[0];f.ability.m_actions.push(null,{other:true});assert.equal(f.run(),f.ability.m_actions);
+ assert.equal(node.m_cachedAtk,f.owner.atkRaw);assert.deepEqual(f.events.filter(e=>Array.isArray(e)&&e[0]==='item'),[['item',0],['item',0],['item',1],['item',2]]);
+ assert.equal(f.events.filter(e=>e==='owner').length,1);assert.equal(f.events.filter(e=>e==='count').length,1);
+});
+test('invalid preprocessing owner skips collection access; null action lists use safe count',()=>{
+ const f=projectileProviderFixture();f.owner.destroyed=true;f.options.safeCount=()=>{throw Error('unexpected count');};f.run();assert.deepEqual(f.events,['owner']);
+ const g=projectileProviderFixture();g.ability.m_actions=null;assert.equal(g.run(),null);assert.deepEqual(g.events,['owner','count']);
+});
+test('preprocessing captures its bound and owner while allowing node callbacks to replace the ability fields',()=>{
+ const f=projectileProviderFixture(),old=f.ability.m_actions,node=old[0];old.push({damage:true});const call=f.options.preprocessNode;
+ f.options.preprocessNode=(value,owner)=>{call(value,owner);if(value===node){old.push({damage:true,m_cachedAtk:77n});f.ability.owner={atkRaw:1n};f.ability.m_actions=[];}};
+ assert.deepEqual(f.run(),[]);assert.equal(old[1].m_cachedAtk,f.owner.atkRaw);assert.equal(old[2].m_cachedAtk,77n);
+});
+test('second node fetch and repeated casts preserve list/indexer mutations',()=>{
+ const f=projectileProviderFixture(),first=f.ability.m_actions[0],replacement={damage:true},seen=[];let reads=0;
+ f.options.readElement=()=>++reads===1?first:replacement;const cast=f.options.castDamageNode;f.options.castDamageNode=value=>{seen.push(value);return cast(value);};f.run();
+ assert.deepEqual(seen,[first,replacement,replacement]);assert.equal(first.m_cachedAtk,0n);assert.equal(replacement.m_cachedAtk,f.owner.atkRaw);
+});
+test('lost second damage interface raises after earlier node effects and does not continue traversal',()=>{
+ const f=projectileProviderFixture(),first=f.ability.m_actions[0],second={damage:true};f.ability.m_actions.push(second);let reads=0;
+ f.options.readElement=()=>++reads<=2?first:reads===3?second:{};assert.throws(f.run,/null native object/);assert.equal(first.m_cachedAtk,f.owner.atkRaw);assert.equal(second.m_cachedAtk,undefined);
+});
+test('shrinking a captured preprocessing list exposes the native index failure without resetting cached nodes',()=>{
+ const f=projectileProviderFixture(),node=f.ability.m_actions[0];f.ability.m_actions.push({damage:true});const call=f.options.preprocessNode;
+ f.options.preprocessNode=(...args)=>{call(...args);f.ability.m_actions.length=1;};assert.throws(f.run,/bounds/);assert.equal(node.m_cachedAtk,f.owner.atkRaw);
+});
+test('successive projectile preprocessing overwrites the same shared damage node cache',()=>{
+ const f=projectileProviderFixture(),node=f.ability.m_actions[0],first=f.run();f.owner.atkRaw=225n*(1n<<32n);const second=f.run();
+ assert.equal(first,second);assert.equal(first[0],node);assert.equal(node.m_cachedAtk,f.owner.atkRaw);
+});
+test('damage preprocessing writes native minus-one FP for an invalid source and samples valid ATK before null node check',()=>{
+ const f=projectileProviderFixture(),node={};f.owner.destroyed=true;f.damageOptions.readAtkRaw=()=>{throw Error('unexpected ATK');};fearProjectilePreprocessDamage(f.damageOptions)(node,f.owner);assert.equal(node.m_cachedAtk,-(1n<<32n));
+ f.owner.destroyed=false;f.damageOptions.readAtkRaw=()=>{throw Error('ATK first');};assert.throws(()=>fearProjectilePreprocessDamage(f.damageOptions)(null,f.owner),/ATK first/);
+});
+test('active buff provider returns its nullable shared field; providers require explicit typed callers',()=>{
+ const ability={_activeBuffs:null};assert.equal(fearProjectileActiveBuffs(ability),null);ability._activeBuffs=[];assert.equal(fearProjectileActiveBuffs(ability),ability._activeBuffs);
+ assert.throws(()=>fearProjectileRangedActions({}),/preprocessor/);assert.throws(()=>fearProjectilePreprocessActions({}),/callers/);assert.throws(()=>fearProjectilePreprocessDamage({}),/callers/);
+ const f=projectileProviderFixture();f.options.safeCount=()=>1.5;assert.throws(f.run,/Int32/);f.damageOptions.readAtkRaw=()=>175;assert.throws(()=>fearProjectilePreprocessDamage(f.damageOptions)({},f.owner),/FP raw/);
+});
 
 function projectileActionInitFixture(){
  const events=[],board={},buffs=[{buff:true}],attachments={},projectile={m_type:0},ability={board,buffs,attachments},
@@ -5821,20 +5875,26 @@ test('bounded wait, controller/factory birth and Init, event5 self-death and ind
   setHpInternal:()=>f.b.kill(f.source,null)});
  const activation=fearProjectileSelfDeathActivation(f.b,{owner:f.source,readAbnormalFlag:()=>false,readAbnormalCombo:()=>false,
   switchMode:()=>handoff.run(),createImmunityBuff:()=>true,instantKill:()=>suicide.run()});
- const source=fearProjectileSourceReference(f.b,f.source),damage=fearProjectileDamageAction(f.b,source),events=[];
+ const source=fearProjectileSourceReference(f.b,f.source),events=[];let damage;
  let flight;const start=projectileLaunchFixture();f.source.uid=11;f.target.uid=12;
  start.ability.m_owner=start.pointers.capture(f.source);start.ability.m_inputTarget.value=start.pointers.capture(f.target);start.ability.m_castTargets=[start.pointers.capture(f.target)];
  start.start.canSpell=(owner,ability)=>{assert.equal(owner,f.source);assert.equal(ability,start.ability);return true;};
  start.start.onEvent=(_ability,event,runAction)=>{assert.equal(event,4);assert.equal(runAction,false);events.push('event4');};
  start.start.onOwnerSpell=owner=>{assert.equal(owner,f.source);assert.equal(start.sources.getValue(start.ctx.m_source),f.source);assert.equal(start.references.peek(start.ctx.m_mainTarget),f.target);};
- const hitMount={},birth=controllerCreationFixture(),initialization=projectileInitFixture(),inner=projectileInlineFixture(),born=projectileBornFixture(),actionBirth=projectileActionBornFixture(),
+ const hitMount={},birth=controllerCreationFixture(),initialization=projectileInitFixture(),inner=projectileInlineFixture(),born=projectileBornFixture(),actionBirth=projectileActionBornFixture(),actionInit=projectileActionInitFixture(),provider=projectileProviderFixture(),
   nativeProjectile=JSON.parse(read('data/candidates/arkpedia-ch16-fear-projectile-source.json').projectiles['dyn/battle/prefabs/[uc]projectiles/projectile_enemy_fearpj.prefab'].find(row=>row.pathId==='3827519080143594587').originalJson);
  start.rangedOptions.readHitMountPoint=target=>{assert.equal(target,f.target);return hitMount;};
  start.controller._factory=birth.factory;start.projectile.transform={};birth.queue.splice(0,birth.queue.length,start.projectile);f.source.effectReplacePairs=[];
  start.ctx=actionBirth.g.context;start.ability.context=start.ctx;start.start.pushSource=actionBirth.g.options.pushPointer;start.start.popSource=actionBirth.g.options.popPointer;
- Object.assign(start.projectile,{_actionController:{projectile:start.projectile,actions:Array(7).fill(null),blackboard:{}},context:start.ctx,_managedBySource:Boolean(nativeProjectile._managedBySource),m_ExtraLogIds:[],
+ Object.assign(start.projectile,{_actionController:{...actionInit.controller,_useSelfBlackboard:Boolean(nativeProjectile._actionController._useSelfBlackboard),actions:Array(7).fill(null)},context:start.ctx,_managedBySource:Boolean(nativeProjectile._managedBySource),m_ExtraLogIds:[],
   _mainEffect:nativeProjectile._mainEffect,_randomDelayToBorn:nativeProjectile._randomDelayToBorn,m_targetsAlreadyHit:new Map(),m_eventCallbacks:Array(7).fill(null),m_behaviours:[{}],m_behavioursInited:false,_bodyTransform:start.projectile.transform});
  Object.assign(start.mount,{mapPosition:{x:0,y:0},height:0});Object.assign(start.ability,{uid:13,damageMissFlag:false});
+ const sharedDamage={damage:true,m_cachedAtk:0n};Object.assign(start.ability,{board:{},_activeBuffs:[],m_actions:[sharedDamage]});
+ provider.options.readOwner=ability=>start.pointers.lock(ability.m_owner);provider.damageOptions.readAtkRaw=owner=>fearProjectileFloatToRaw(owner.s.atk);
+ const preprocessDamage=fearProjectilePreprocessDamage(provider.damageOptions);
+ provider.options.preprocessNode=(node,owner)=>{preprocessDamage(node,owner);damage=fearProjectileDamageAction(f.b,{...source,cachedAtk:Math.fround(Number(node.m_cachedAtk)/2**32)});};
+ actionInit.options.getActiveBuffs=fearProjectileActiveBuffs;actionInit.options.getProjectileActions=fearProjectileRangedActions({preprocess:fearProjectilePreprocessActions(provider.options)});
+ initialization.initOptions.initActionController=fearProjectileActionControllerInit(actionInit.options);
  Object.assign(inner.inlineOptions,{getLifeTime:()=>nativeProjectile._lifeTime,getKeepAlreadyHitTime:()=>fearProjectileFloatToRaw(nativeProjectile._keepAlreadyHitTime)});
  Object.assign(born.traceOptions,{castEntity:value=>value===f.target?value:null,castMountPoint:value=>value===hitMount?value:null,readMountOwner:()=>start.pointers.capture(f.target),readMapPosition:()=>({x:1,y:0})});
  inner.inlineOptions.setTraceTarget=fearProjectileSetTraceTarget(born.traceOptions);
@@ -5873,6 +5933,7 @@ test('bounded wait, controller/factory birth and Init, event5 self-death and ind
  start.start.castTargets=fearProjectileTargetCasting(start.options);
  const spell=fearProjectileSpell(f.b,{owner:f.source,onSpellStart:start.runStart,isCasting:()=>casting,emitSpellEnd:()=>{
   for(const stack of Object.values(start.ctx))assert.equal(stack._size,1);assert.deepEqual(actionBirth.snapshots.takeSnapshot(),actionBirth.managed.prior);assert.equal(start.projectile.borned,true);assert.equal(actionBirth.events.includes('disposed'),true);
+  assert.equal(sharedDamage.m_cachedAtk,175n*fpOne);assert.deepEqual(start.projectile._actionController.actions[0],[sharedDamage]);assert.equal(start.projectile._actionController.blackboard,start.ability.board);assert.equal(start.projectile._actionController.m_addBuffsToTargetCnt,0);
   assert.deepEqual(start.ability.m_projectiles,[start.pointers.capture(start.projectile)]);assert.deepEqual(initialization.managed,[]);assert.equal(inner.scheduled.length,0);assert.deepEqual(born.events.find(e=>e[0]==='effect'),['effect',start.projectile,nativeProjectile._mainEffect]);events.push('event5');assert.equal(activation.run(),null);},
  mayBeginPostDelay:()=>{throw Error('removed owner');},beginPostDelay:()=>{throw Error('removed owner');}});
  const wait=fearProjectileAttackWait(f.b,{owner:f.source,cachedDurationRaw:fpOne,readDeltaPlayTime:()=>1,

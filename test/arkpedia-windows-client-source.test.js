@@ -20,6 +20,20 @@ function settingsFixture(){
  return{...f,settings:{version:f.pin.version,source:f.pin.source,file}};
 }
 
+test('action provider source retains shared list reread, captured traversal and native damage cache write',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-projectile-action-provider-source.json'),parent=read('data/candidates/arkpedia-windows-fear-projectile-source.json');
+ assert.deepEqual(c.methods.map(m=>[m.index,m.entryRva]),[[80001,0xbfb750],[54641,0x390fa70],[80968,0xc1dba0],[86256,0xd7a0e0]]);
+ for(const source of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+source.path,import.meta.url))),source.sha256);
+ for(const m of c.methods){if(m.index!==80968)assert.deepEqual(m,parent.methods.find(r=>r.index===m.index));for(const chunk of m.chunks){const raw=Buffer.from(chunk.base64,'base64');assert.equal(sha(raw),chunk.sha256);assert.equal(raw.length,chunk.endRva-chunk.beginRva);}}
+ assert.deepEqual(c.virtualSlots.map(s=>[s.slot,s.name]),[[44,'GetActiveBuffs'],[45,'GetProjectileActions'],[65,'PreprocessActionsForProjectile']]);assert.equal(c.interfaceBinding.methods[1].name,'PreprocessForProjectile');assert.deepEqual(c.interfaceBinding,parent.preprocessing.interfaceBindings[0]);
+ assert.deepEqual(c.fields.map(f=>[f.name,f.offset]),[['m_actions',504],['_activeBuffs',400],['m_cachedAtk',40]]);assert.deepEqual(c.directCalls.map(r=>[r.name,r.entryRva]),[['get_owner',0x3911530],['get_atk',0x3a29060]]);
+ const at=(method,rva,operands)=>assert.ok(instructions(c.methods[method]).some(i=>i.rva===rva&&i.operands===operands),'Action provider instruction '+rva.toString(16));
+ for(const [rva,operands]of [[0xbfb79d,'edi, edi'],[0xbfb7ba,'rdi, qword ptr [rbx + 0x1f8]'],[0xbfb7db,'qword ptr [rax + 0x548]'],[0xbfb7e1,'rax, qword ptr [rbx + 0x1f8]']])at(0,rva,operands);
+ for(const [rva,operands]of [[0x390faf1,'0x183911530'],[0x390fb16,'0x185ebee90'],[0x390fb42,'0x183f64f60'],[0x390fb47,'r14d, eax'],[0x390fbd2,'r9'],[0x390fbdf,'0x18040ffa0'],[0x390fbf8,'0x1800053d0'],[0x390fc0a,'0x18040ffa0'],[0x390fc22,'0x18040ffa0'],[0x390fc2e,'ecx, 1'],[0x390fc39,'0x180004cc0'],[0x390fc40,'ebp, r14d']])at(1,rva,operands);
+ at(2,0xc1dbdf,'rax, qword ptr [rbx + 0x190]');for(const [rva,operands]of [[0xd7a158,'0x185ebee90'],[0xd7a16b,'0x183a29060'],[0xd7a189,'ecx, [rdx - 1]'],[0xd7a18c,'0x185a3da10'],[0xd7a196,'qword ptr [rdi + 0x28], rax']])at(3,rva,operands);
+ assert.equal(c.testOnly,true);for(const key of ['runtimeDispatchVerified','frameParity','crossVersionParity','nativeCollectionAndInterfaceEffectsVerified','nativeAtkGetterEffectsVerified','independentDamageNodePerProjectileVerified','hotfixDispatchVerified','liveActionProviderVerified'])assert.equal(c[key],false);
+});
+
 test('action Init source retains seven-event registration, slot bindings, list replacement and reset ordering',()=>{
  const c=read('data/candidates/arkpedia-windows-fear-projectile-action-init-source.json'),parent=read('data/candidates/arkpedia-windows-fear-projectile-source.json');
  assert.deepEqual(c.methods.map(m=>[m.index,m.entryRva]),[[62270,0x6a1340],[62272,0x6a1ed0]]);

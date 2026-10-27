@@ -3499,3 +3499,29 @@ and Fear/miner contracts also remain required. Collection internals,
 Blackboard.Of effects, concrete ability preprocessing, hotfix dispatch and live
 runtime parity remain explicit/unverified; this checkpoint admits no enemy,
 stage or public catalogue entry.
+
+## Shared action preprocessing checkpoint
+
+The test-only `chapter16-fear-projectile-action-provider.js` adapter follows
+RangedAttack.GetProjectileActions (80001, RVA 0xbfb750), default Ability
+PreprocessActionsForProjectile (54641, RVA 0x390fa70), active-buff access
+(80968, RVA 0xc1dba0) and ApplyDamage.PreprocessForProjectile (86256,
+RVA 0xd7a0e0). Its extractor retains complete native bodies, checksum-bound
+parents, fields, concrete slots and the damage-source interface binding.
+
+Only event 0 preprocesses actions. It captures the existing action list for the
+virtual call and rereads the field for its return. The preprocessor captures
+owner and safe count once, fetches matching entries twice, and preserves the
+three interface casts. ApplyDamage writes current native FP ATK into the shared
+node or native FP minus one when its source fails Unity validity. Repeated
+projectile initialization can overwrite that same node; there is no invented
+per-projectile node clone or immutable cache.
+
+All 1,533 focused tests pass, including mutation, failure and repeated-cache
+coverage. The long bounded-wait/controller/factory/Init/birth/self-death/flight
+composition now uses the real action initialization and provider adapters,
+checks the event-0 node registration and 175 FP cache before event 5, then
+observes 175 damage after source retirement. Collection/interface internals,
+native ATK getter effects, attachment lookup, damage-node construction,
+hotfixes and live/frame/cross-version parity remain held. The new work changes
+no stage, enemy support, receipt or catalogue admission gate.
