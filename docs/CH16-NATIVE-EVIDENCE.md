@@ -1402,6 +1402,36 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
 
+### SwitchMode action and void Unit dispatch
+
+The209-method ordinary bundle adds Unit.SwitchToDefaultMode's complete wrapper;
+the indexed Unit.SwitchMode and action-node bodies remain unchanged. Metadata
+binds their signatures to void SwitchMode(index,restartFSM) and void
+SwitchToDefaultMode(restartFSM). Trailing zero ABI registers are method-info
+arguments, not extra Boolean controls. Checked metadata usage binds the Unit
+cast type and string literal31621 to the exact UTF-8 key "mode".
+
+`fearProjectileSwitchModeNode` selects a target, casts nonnull entities to Unit,
+then rejects Unity-invalid Units before reading mode configuration. Optional
+TryReadInt starts with an out Int32 value0; success uses its output and failure
+rereads/stores the literal _modeIndex fallback. That selection occurs before
+the restore-default branch, including blackboard access when restoring default.
+The restart flag is read after lookup effects. A completed void Unit dispatch
+returns action success=true even if the Unit adapter reports no actual change;
+exceptions still propagate. This keeps Unit-operation results separate from
+the action's Boolean condition result.
+
+Tests cover invalid/null casts, literal and blackboard indices, failed lookup
+output replacement, restore ordering, mutable flags and exceptions. The checked
+self-death graph now runs its SwitchMode node through target selection and this
+adapter; a no-change Unit receiver does not prevent later immunity/AlwaysNext/
+kill actions. Unit casting, native TryReadInt internals, concrete mode effects,
+hotfixes and full live controller/stage/frame parity remain unverified. Source/
+support/receipt/catalogue gates remain unchanged and this checkpoint remains
+local outside pending upload authorization.
+
+All1222 focused native/fear/family/miner tests and evidence reproduction pass.
+
 ### Target getters and by-reference Entity pointer fields
 
 The208-method ordinary bundle adds five complete getters: Modifier source/

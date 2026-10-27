@@ -100911,6 +100911,239 @@
   },
   {
    "image": "Assembly-CSharp.dll",
+   "typeIndex": 10204,
+   "namespace": "Torappu.Battle",
+   "type": "Unit",
+   "index": 68054,
+   "name": "SwitchToDefaultMode",
+   "token": 100731351,
+   "virtualSlot": 65535,
+   "parameterCount": 1,
+   "entryRva": 8737376,
+   "chunks": [
+    {
+     "beginRva": 8737376,
+     "endRva": 8737551,
+     "unwindRva": 119940228,
+     "sha256": "42f15d000900cdb115995831e042d83c597c7a9a1df3573960b89bea619c7c00",
+     "base64": "SIlcJAhXSIPsMIA9yNdrBwAPtvpIi9l1E0iNDWBXKQfoK7K7/8YFrddrBwFIiwVNVykHTIuAuAAAAEmLiEACAABIhcl1UDgNNHRvB3YISIsL6Bq/xP9IixNIi8tIi4IYCgAASIuSIAoAAP/QRTPJSMdEJCgAAAAARTPAQIh8JCBIi9BIi8voNfr//0iLXCRASIPEMF/DRTPJRA+2x0iL00iLXCRASIPEMF/pQRh/Ag==",
+     "instructions": [
+      {
+       "rva": 8737376,
+       "mnemonic": "mov",
+       "operands": "qword ptr [rsp + 8], rbx"
+      },
+      {
+       "rva": 8737381,
+       "mnemonic": "push",
+       "operands": "rdi"
+      },
+      {
+       "rva": 8737382,
+       "mnemonic": "sub",
+       "operands": "rsp, 0x30"
+      },
+      {
+       "rva": 8737386,
+       "mnemonic": "cmp",
+       "operands": "byte ptr [rip + 0x76bd7c8], 0"
+      },
+      {
+       "rva": 8737393,
+       "mnemonic": "movzx",
+       "operands": "edi, dl"
+      },
+      {
+       "rva": 8737396,
+       "mnemonic": "mov",
+       "operands": "rbx, rcx"
+      },
+      {
+       "rva": 8737399,
+       "mnemonic": "jne",
+       "operands": "0x18085528c"
+      },
+      {
+       "rva": 8737401,
+       "mnemonic": "lea",
+       "operands": "rcx, [rip + 0x7295760]"
+      },
+      {
+       "rva": 8737408,
+       "mnemonic": "call",
+       "operands": "0x1804104b0"
+      },
+      {
+       "rva": 8737413,
+       "mnemonic": "mov",
+       "operands": "byte ptr [rip + 0x76bd7ad], 1"
+      },
+      {
+       "rva": 8737420,
+       "mnemonic": "mov",
+       "operands": "rax, qword ptr [rip + 0x729574d]"
+      },
+      {
+       "rva": 8737427,
+       "mnemonic": "mov",
+       "operands": "r8, qword ptr [rax + 0xb8]"
+      },
+      {
+       "rva": 8737434,
+       "mnemonic": "mov",
+       "operands": "rcx, qword ptr [r8 + 0x240]"
+      },
+      {
+       "rva": 8737441,
+       "mnemonic": "test",
+       "operands": "rcx, rcx"
+      },
+      {
+       "rva": 8737444,
+       "mnemonic": "jne",
+       "operands": "0x1808552f6"
+      },
+      {
+       "rva": 8737446,
+       "mnemonic": "cmp",
+       "operands": "byte ptr [rip + 0x76f7434], cl"
+      },
+      {
+       "rva": 8737452,
+       "mnemonic": "jbe",
+       "operands": "0x1808552b6"
+      },
+      {
+       "rva": 8737454,
+       "mnemonic": "mov",
+       "operands": "rcx, qword ptr [rbx]"
+      },
+      {
+       "rva": 8737457,
+       "mnemonic": "call",
+       "operands": "0x1804a11d0"
+      },
+      {
+       "rva": 8737462,
+       "mnemonic": "mov",
+       "operands": "rdx, qword ptr [rbx]"
+      },
+      {
+       "rva": 8737465,
+       "mnemonic": "mov",
+       "operands": "rcx, rbx"
+      },
+      {
+       "rva": 8737468,
+       "mnemonic": "mov",
+       "operands": "rax, qword ptr [rdx + 0xa18]"
+      },
+      {
+       "rva": 8737475,
+       "mnemonic": "mov",
+       "operands": "rdx, qword ptr [rdx + 0xa20]"
+      },
+      {
+       "rva": 8737482,
+       "mnemonic": "call",
+       "operands": "rax"
+      },
+      {
+       "rva": 8737484,
+       "mnemonic": "xor",
+       "operands": "r9d, r9d"
+      },
+      {
+       "rva": 8737487,
+       "mnemonic": "mov",
+       "operands": "qword ptr [rsp + 0x28], 0"
+      },
+      {
+       "rva": 8737496,
+       "mnemonic": "xor",
+       "operands": "r8d, r8d"
+      },
+      {
+       "rva": 8737499,
+       "mnemonic": "mov",
+       "operands": "byte ptr [rsp + 0x20], dil"
+      },
+      {
+       "rva": 8737504,
+       "mnemonic": "mov",
+       "operands": "rdx, rax"
+      },
+      {
+       "rva": 8737507,
+       "mnemonic": "mov",
+       "operands": "rcx, rbx"
+      },
+      {
+       "rva": 8737510,
+       "mnemonic": "call",
+       "operands": "0x180854d20"
+      },
+      {
+       "rva": 8737515,
+       "mnemonic": "mov",
+       "operands": "rbx, qword ptr [rsp + 0x40]"
+      },
+      {
+       "rva": 8737520,
+       "mnemonic": "add",
+       "operands": "rsp, 0x30"
+      },
+      {
+       "rva": 8737524,
+       "mnemonic": "pop",
+       "operands": "rdi"
+      },
+      {
+       "rva": 8737525,
+       "mnemonic": "ret",
+       "operands": ""
+      },
+      {
+       "rva": 8737526,
+       "mnemonic": "xor",
+       "operands": "r9d, r9d"
+      },
+      {
+       "rva": 8737529,
+       "mnemonic": "movzx",
+       "operands": "r8d, dil"
+      },
+      {
+       "rva": 8737533,
+       "mnemonic": "mov",
+       "operands": "rdx, rbx"
+      },
+      {
+       "rva": 8737536,
+       "mnemonic": "mov",
+       "operands": "rbx, qword ptr [rsp + 0x40]"
+      },
+      {
+       "rva": 8737541,
+       "mnemonic": "add",
+       "operands": "rsp, 0x30"
+      },
+      {
+       "rva": 8737545,
+       "mnemonic": "pop",
+       "operands": "rdi"
+      },
+      {
+       "rva": 8737546,
+       "mnemonic": "jmp",
+       "operands": "0x183046b50"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "image": "Assembly-CSharp.dll",
    "typeIndex": 9524,
    "namespace": "Torappu.Battle",
    "type": "Modifier",
@@ -134098,6 +134331,114 @@
      "nativeUnityAndBlackboardEffectsVerified": false,
      "nativeAttributeQueryEffectsVerified": false,
      "livePredicateNodeDispatchVerified": false
+    },
+    "switchModeNode": {
+     "fields": [
+      {
+       "index": 98520,
+       "name": "_modeIndex",
+       "typeIndex": 52804,
+       "offset": 16,
+       "typeData": 36888,
+       "typeBits": 2148007937
+      },
+      {
+       "index": 98521,
+       "name": "_loadModeFromBlackboard",
+       "typeIndex": 38774,
+       "offset": 20,
+       "typeData": 36824,
+       "typeBits": 2147614721
+      },
+      {
+       "index": 98522,
+       "name": "_restoreDefault",
+       "typeIndex": 38774,
+       "offset": 21,
+       "typeData": 36824,
+       "typeBits": 2147614721
+      },
+      {
+       "index": 98523,
+       "name": "_restartFSM",
+       "typeIndex": 38774,
+       "offset": 22,
+       "typeData": 36824,
+       "typeBits": 2147614721
+      },
+      {
+       "index": 98524,
+       "name": "_targetType",
+       "typeIndex": 91891,
+       "offset": 24,
+       "typeData": 12109,
+       "typeBits": 2148597761
+      }
+     ],
+     "unitCalls": [
+      {
+       "index": 68052,
+       "name": "SwitchMode",
+       "entryRva": 8736912,
+       "returnKind": 1,
+       "parameters": [
+        {
+         "index": 65738,
+         "name": "index",
+         "typeIndex": 52803
+        },
+        {
+         "index": 65739,
+         "name": "restartFSM",
+         "typeIndex": 38773
+        }
+       ]
+      },
+      {
+       "index": 68054,
+       "name": "SwitchToDefaultMode",
+       "entryRva": 8737376,
+       "returnKind": 1,
+       "parameters": [
+        {
+         "index": 65744,
+         "name": "restartFSM",
+         "typeIndex": 38773
+        }
+       ]
+      }
+     ],
+     "unitType": {
+      "loadRva": 13917973,
+      "encodedUsage": 537020655,
+      "index": 74871,
+      "definitionIndex": 10204,
+      "name": "Unit"
+     },
+     "modeKey": {
+      "loadRva": 13918102,
+      "encodedUsage": 2684417803,
+      "index": 31621,
+      "length": 4,
+      "metadataFileOffset": 1743069,
+      "hex": "6d6f6465",
+      "value": "mode"
+     },
+     "targetReadRva": 13917959,
+     "targetCallRva": 13917968,
+     "validityCallRva": 13918079,
+     "loadFlagReadRva": 13918088,
+     "tryReadIntCallRva": 13918120,
+     "fallbackIndexReadRva": 13918135,
+     "restoreFlagReadRva": 13918147,
+     "switchCallRva": 13918164,
+     "switchSuccessRva": 13918169,
+     "restoreCallRva": 13918180,
+     "restoreSuccessRva": 13918185,
+     "nativeUnitCastVerified": false,
+     "nativeBlackboardTryReadVerified": false,
+     "nativeUnitModeEffectsVerified": false,
+     "liveSwitchModeNodeVerified": false
     },
     "targetGetters": {
      "methods": [

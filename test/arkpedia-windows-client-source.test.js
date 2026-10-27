@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,208);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,209);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -531,6 +531,18 @@ test('context snapshot source binds distinct capture/push orders and closed refe
   'rcx, qword ptr [rdi + 0x48]','rcx, qword ptr [rdi + 0x58]'].entries())at(duplicate,q.pushFieldReads[index],args);
  for(const [index,target]of ['0x184be7ef0','0x184be7ef0','0x184be7ef0','0x18490b650','0x18490b820','0x184be7ef0','0x184be7ef0','0x18490b650','0x18490b790','0x184be7ef0'].entries())at(duplicate,q.pushCalls[index],target);
  assert.equal(q.nativeContextStackEffectsVerified,false);assert.equal(q.nativeNestedValueCopiesVerified,false);assert.equal(q.liveContextSnapshotsVerified,false);
+});
+
+test('SwitchMode node source binds the mode key, void Unit signatures and true-after-dispatch results',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.newBuff.switchModeNode,m=c.methods.find(m=>m.type==='SwitchMode'&&m.name==='Execute');
+ assert.deepEqual(q.fields.map(f=>[f.name,f.offset]),[['_modeIndex',16],['_loadModeFromBlackboard',20],['_restoreDefault',21],['_restartFSM',22],['_targetType',24]]);
+ assert.deepEqual(q.unitCalls.map(m=>[m.index,m.name,m.returnKind,m.parameters.map(p=>p.name)]),[[68052,'SwitchMode',1,['index','restartFSM']],[68054,'SwitchToDefaultMode',1,['restartFSM']]]);
+ assert.equal(q.unitType.encodedUsage>>>29,1);assert.equal(q.unitType.name,'Unit');assert.equal(q.modeKey.encodedUsage>>>29,5);assert.equal(q.modeKey.index,31621);assert.equal(q.modeKey.value,'mode');assert.equal(q.modeKey.hex,'6d6f6465');
+ const at=(rva,args)=>assert.ok(instructions(m).some(i=>i.rva===rva&&i.operands===args));
+ at(q.targetReadRva,'edx, dword ptr [rdi + 0x18]');at(q.targetCallRva,'0x180ced380');at(q.validityCallRva,'0x185ebec60');at(q.loadFlagReadRva,'byte ptr [rdi + 0x14], al');at(q.tryReadIntCallRva,'0x182167520');at(q.fallbackIndexReadRva,'edx, dword ptr [rdi + 0x10]');
+ at(q.restoreFlagReadRva,'byte ptr [rdi + 0x15], 0');at(q.switchCallRva,'0x180855090');at(q.switchSuccessRva,'al, 1');at(q.restoreCallRva,'0x180855260');at(q.restoreSuccessRva,'al, 1');
+ assert.ok(c.methods.some(m=>m.index===68054&&m.entryRva===0x855260));
+ for(const name of ['nativeUnitCastVerified','nativeBlackboardTryReadVerified','nativeUnitModeEffectsVerified','liveSwitchModeNodeVerified'])assert.equal(q[name],false);
 });
 
 test('target getter source binds raw container ownership and six by-reference pointer Lock tails',()=>{

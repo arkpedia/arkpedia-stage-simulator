@@ -2101,6 +2101,51 @@ result['modeSwitch']['buffNotification']['newBuff']['predicateNodes'] = {
     'nativeAttributeQueryEffectsVerified': False, 'livePredicateNodeDispatchVerified': False,
 }
 context_stack_canonical = []
+switch_node_unit = c['type_row']('Unit', 'Torappu.Battle')
+switch_node_calls = []
+for index, entry, names in [(68052, 0x855090, ['index', 'restartFSM']), (68054, 0x855260, ['restartFSM'])]:
+    row = c['unique'](lambda r: r['index'] == index, switch_node_unit['methods'])
+    record = c['method'](switch_node_unit, row)
+    assert record['entryRva'] == entry
+    if not any(m['index'] == index and m['image'] == record['image'] for m in methods):
+        methods.append(record)
+    pos = v['method_start'] + index * 32
+    return_type = v['sint'](v['m'], pos + 8)
+    return_pos = v['offset'](v['quad'](v['b'], v['type_table'] + return_type * 8))
+    assert (v['uint'](v['b'], return_pos + 8) >> 16) & 255 == 1
+    start, count = v['sint'](v['m'], pos + 12), struct.unpack_from('<H', v['m'], pos + 30)[0]
+    parameters = []
+    for n in range(count):
+        pp = v['uint'](v['m'], 88) + (start + n) * 12
+        parameters.append({'index': start + n, 'name': v['text'](v['uint'](v['m'], pp)), 'typeIndex': v['sint'](v['m'], pp + 8)})
+    assert [p['name'] for p in parameters] == names
+    switch_node_calls.append({'index': index, 'name': row['name'], 'entryRva': entry, 'returnKind': 1, 'parameters': parameters})
+switch_node_type_load, switch_node_key_load = 0xd45f15, 0xd45f96
+switch_node_usage = []
+for rva, tag in [(switch_node_type_load, 1), (switch_node_key_load, 5)]:
+    pos = v['offset'](v['image_base'] + rva)
+    assert v['b'][pos:pos + 3] == bytes.fromhex('488b15')
+    target = rva + 7 + struct.unpack_from('<i', v['b'], pos + 3)[0]
+    usage = v['quad'](v['b'], v['offset'](v['image_base'] + target))
+    assert usage >> 29 == tag
+    switch_node_usage.append({'loadRva': rva, 'encodedUsage': usage, 'index': (usage & 0x1ffffffe) >> 1})
+unit_type_pos = v['offset'](v['quad'](v['b'], v['type_table'] + switch_node_usage[0]['index'] * 8))
+assert v['quad'](v['b'], unit_type_pos) == switch_node_unit['index']
+mode_key_index = switch_node_usage[1]['index']
+assert mode_key_index == 31621
+mode_key_length, mode_key_data = struct.unpack_from('<II', v['m'], v['uint'](v['m'], 8) + mode_key_index * 8)
+mode_key_pos = v['uint'](v['m'], 16) + mode_key_data
+assert mode_key_length == 4 and v['m'][mode_key_pos:mode_key_pos + 4] == b'mode'
+result['modeSwitch']['buffNotification']['newBuff']['switchModeNode'] = {
+    'fields': [f for f in fields['SwitchMode'] if not f['typeBits'] & 16], 'unitCalls': switch_node_calls,
+    'unitType': {**switch_node_usage[0], 'definitionIndex': switch_node_unit['index'], 'name': 'Unit'},
+    'modeKey': {**switch_node_usage[1], 'length': 4, 'metadataFileOffset': mode_key_pos, 'hex': '6d6f6465', 'value': 'mode'},
+    'targetReadRva': 0xd45f07, 'targetCallRva': 0xd45f10, 'validityCallRva': 0xd45f7f,
+    'loadFlagReadRva': 0xd45f88, 'tryReadIntCallRva': 0xd45fa8, 'fallbackIndexReadRva': 0xd45fb7,
+    'restoreFlagReadRva': 0xd45fc3, 'switchCallRva': 0xd45fd4, 'switchSuccessRva': 0xd45fd9,
+    'restoreCallRva': 0xd45fe4, 'restoreSuccessRva': 0xd45fe9,
+    'nativeUnitCastVerified': False, 'nativeBlackboardTryReadVerified': False, 'nativeUnitModeEffectsVerified': False, 'liveSwitchModeNodeVerified': False,
+}
 target_getter_methods = []
 for type_index, name, entry in [(8933, 'get_owner', 0x39b6ff0), (8933, 'get_source', 0x39b7460),
     (8931, 'get_owner', 0x39d8230), (9524, 'get_source', 0x671d50), (9524, 'get_target', 0x671f30),

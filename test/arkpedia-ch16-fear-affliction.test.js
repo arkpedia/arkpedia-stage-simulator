@@ -49,6 +49,38 @@ import {fearProjectileActionUtil,FEAR_ACTION_SOURCE_FROM_BUFF} from '../server/s
 import {fearProjectilePredicateNodes} from '../server/sim/content/chapter16-fear-predicate-nodes.js';
 import {fearProjectileActionTargets} from '../server/sim/content/chapter16-fear-action-targets.js';
 import {fearProjectileActionTargetGetters} from '../server/sim/content/chapter16-fear-target-getters.js';
+import {fearProjectileSwitchModeNode} from '../server/sim/content/chapter16-fear-switch-mode-node.js';
+
+function switchModeNodeFixture(){
+ const unit={},board={},ref={value:{}},events=[],node={_targetType:0,_modeIndex:1,_loadModeFromBlackboard:false,_restoreDefault:false,_restartFSM:true},options={
+  getEntity:(actual,target)=>{assert.equal(actual,ref);assert.equal(target,0);return unit;},asUnit:value=>value,isDestroyedOrNull:value=>value==null||value.destroyed===true,
+  tryReadInt:(actual,key,out)=>{assert.equal(actual,board);assert.equal(key,'mode');assert.equal(out.value,0);events.push('lookup');return false;},
+  switchByIndex:(...args)=>{events.push(['switch',...args]);return false;},switchToDefaultMode:(...args)=>{events.push(['restore',...args]);return false;}};
+ return{unit,board,ref,events,node,options,api:()=>fearProjectileSwitchModeNode(options)};
+}
+test('mode action returns true after void Unit dispatch even when its adapter reports no change',()=>{
+ const f=switchModeNodeFixture();assert.equal(f.api().execute(f.node,null,1,f.ref),true);assert.deepEqual(f.events,[['switch',f.unit,1,true]]);
+});
+test('mode action rejects invalid Units before reading mode fields and does not cast a null entity',()=>{
+ const f=switchModeNodeFixture();f.options.getEntity=()=>null;f.options.asUnit=()=>{throw Error('unexpected cast');};Object.defineProperty(f.node,'_loadModeFromBlackboard',{get(){throw Error('unexpected mode fields');}});
+ assert.equal(f.api().execute(f.node,null,1,f.ref),false);assert.deepEqual(f.events,[]);
+ const g=switchModeNodeFixture();g.options.asUnit=()=>null;assert.equal(g.api().execute(g.node,null,1,g.ref),false);
+});
+test('mode action uses successful mode lookup and overwrites failed lookup output with the live fallback',()=>{
+ const f=switchModeNodeFixture();f.node._loadModeFromBlackboard=true;
+ f.options.tryReadInt=(board,key,out)=>{assert.equal(board,f.board);assert.equal(key,'mode');out.value=4;return true;};assert.equal(f.api().execute(f.node,f.board,1,f.ref),true);assert.deepEqual(f.events,[['switch',f.unit,4,true]]);
+ let output;f.events.length=0;f.options.tryReadInt=(_board,_key,out)=>{output=out;out.value=99;f.node._modeIndex=2;return false;};f.api().execute(f.node,f.board,1,f.ref);assert.equal(output.value,2);assert.deepEqual(f.events,[['switch',f.unit,2,true]]);
+});
+test('mode action performs lookup before restore-default dispatch and samples restart flags after lookup effects',()=>{
+ const f=switchModeNodeFixture();f.node._loadModeFromBlackboard=true;f.node._restoreDefault=true;
+ assert.throws(()=>f.api().execute(f.node,null,1,f.ref),/null native object/);assert.deepEqual(f.events,[]);
+ f.options.tryReadInt=(_board,_key,out)=>{f.events.push('lookup');out.value=7;f.node._restartFSM=false;return true;};
+ assert.equal(f.api().execute(f.node,f.board,1,f.ref),true);assert.deepEqual(f.events,['lookup',['restore',f.unit,false]]);
+});
+test('mode action propagates blackboard and Unit exceptions without manufacturing a successful result',()=>{
+ const f=switchModeNodeFixture();f.node._loadModeFromBlackboard=true;f.options.tryReadInt=()=>{throw Error('mode lookup failed');};assert.throws(()=>f.api().execute(f.node,f.board,1,f.ref),/mode lookup failed/);assert.deepEqual(f.events,[]);
+ f.node._loadModeFromBlackboard=false;f.options.switchByIndex=()=>{throw Error('mode effect failed');};assert.throws(()=>f.api().execute(f.node,null,1,f.ref),/mode effect failed/);
+});
 
 test('native target getters lock stored pointers and leave the container owner as its direct reference',()=>{
  const entity={uid:7},pointers=fearProjectileContextPointers({readUid:value=>value.uid,isDestroyedOrNull:value=>value==null||value.destroyed===true,isActive:()=>true}),
@@ -363,13 +395,16 @@ for(const blocked of ['none','LEVITATE','FROZEN','STUNNED','SLEEPING'])test('che
   readAttributes:entity=>{assert.equal(entity,f.owner);return attributes;},readBlackboardInt:()=>{throw Error('unexpected graph blackboard lookup');},
   queryFlag:(actual,flag)=>{assert.equal(actual,attributes);events.push([...flags].find(pair=>pair[1]===flag)[0]);return status.getAbnormalFlag(flag);},
   queryCombo:(actual,combo)=>{assert.equal(actual,attributes);assert.equal(combo,combos.get('SLEEPING'));events.push('SLEEPING');return blocked==='SLEEPING';}});
+ const modeNode=fearProjectileSwitchModeNode({getEntity:selector.getEntity,asUnit:entity=>entity===f.owner?entity:null,isDestroyedOrNull:entity=>entity==null||entity.destroyed===true,
+  tryReadInt:()=>{throw Error('unexpected graph mode lookup');},switchByIndex:(unit,index,restart)=>{assert.equal(unit,f.owner);assert.equal(index,1);assert.equal(restart,true);events.push('mode');return false;},switchToDefaultMode:()=>{throw Error('unexpected graph default mode');}});
  f.options.readOwner=getters.readBuffOwner;f.options.readSource=getters.readBuffSource;
  f.buff.m_actions[0]=native.actions.map(raw=>{
   const kind=raw.$type.split('+').at(-1),node={...raw,allowedSource:63,condition:kind==='AlwaysNext'?0:1};
   if(kind==='CheckAbnormalFlag'){node._targetType=targets.get(raw._targetType);node._abnormalFlag=flags.get(raw._abnormalFlag);node.execute=(...args)=>predicates.executeFlag(node,...args);}
   else if(kind==='CheckAbnormalCombo'){node._targetType=targets.get(raw._targetType);node._abnormalCombo=combos.get(raw._abnormalCombo);node.execute=(...args)=>predicates.executeCombo(node,...args);}
   else if(kind==='AlwaysNext')node.execute=predicates.executeAlwaysNext;
-  else node.execute=(_board,sourceType)=>{assert.equal(sourceType,1);if(kind==='SwitchMode'){assert.equal(raw._modeIndex,1);events.push('mode');return true;}if(kind==='CreateBuff'){events.push('immunity');return false;}assert.equal(kind,'InstantKill');events.push('kill');return false;};
+  else if(kind==='SwitchMode'){node._targetType=targets.get(raw._targetType);node.execute=(...args)=>modeNode.execute(node,...args);}
+  else node.execute=(_board,sourceType)=>{assert.equal(sourceType,1);if(kind==='CreateBuff'){events.push('immunity');return false;}assert.equal(kind,'InstantKill');events.push('kill');return false;};
   return node;
  });
  const result=f.adapter().run(0,true),checks=['LEVITATE','FROZEN','STUNNED','SLEEPING'];assert.equal(result.target,f.owner);
