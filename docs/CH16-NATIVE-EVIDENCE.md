@@ -264,3 +264,30 @@ methods for further emission/order review. Raw code extraction does not itself
 prove the runtime hotfix state, native frame order, Global/CN version parity,
 fear launch/death sequencing, local talent selection or new enemy/stage support.
 The event-free fear skeleton still receives no invented OnAttack marker.
+
+### Projectile preprocessing and movement evidence
+
+`extract-windows-fear-projectile.py --check` now retains the ordinary birth
+chain through `RangedAttack.CreateProjectile`, `BattleController.CreateProjectile`,
+the root `Projectile.Init` overload at RVA `0x678950`, and `ActionController.Init`.
+The controller requests actions through virtual slot 45. The default event-zero
+branch of `RangedAttack.GetProjectileActions` preprocesses its existing `m_actions`
+list through slot 65 (`Ability.PreprocessActionsForProjectile`) and returns that
+same list. The preprocessor passes `ability.owner` to slot 1 of the exact
+`IDamageOrHealSourceNode` interface. Explicit `Projectile.RegisterActions` has a
+separate boolean-gated path using `projectile.source`; ordinary controller
+registration does not perform preprocessing. An independently cached damage node
+for every projectile is therefore unproven. The internal damage-action port's
+explicit cached-ATK argument does not establish that ownership or birth timing.
+
+`extract-windows-fear-movement.py --check` binds the original movement component
+and retains nine complete default methods. `OnInit` and `OnTick` contain embedded
+six-entry switch tables in their chained PE ranges. Each table's exact bytes,
+index bias, bounds check and instruction-boundary targets are retained separately
+from executable bytes; the shared strict native reader remains unchanged.
+Windows `MoveType` value 1 is `TRACE_TARGET_WITH_SPEED`, selecting initialization
+at `0xa7c3aa` and ticking at `0xa7ca2c`. Six original CN fields have no matching
+Windows hierarchy field and remain explicit differences even though their values
+are zero. The selected arithmetic, BasicMovement calls, arrival callbacks and
+callback lifetime still need review before launch/delivery integration. These
+artifacts grant no runtime/frame/cross-version parity or additional stage support.
