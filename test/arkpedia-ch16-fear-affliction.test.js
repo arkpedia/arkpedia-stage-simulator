@@ -43,7 +43,34 @@ import {fearProjectileBuffAttributeProvider} from '../server/sim/content/chapter
 import {fearProjectileRunBuffActions} from '../server/sim/content/chapter16-fear-buff-run-actions.js';
 import {fearProjectileContextGuards} from '../server/sim/content/chapter16-fear-context-guard.js';
 import {fearProjectileContextSnapshots} from '../server/sim/content/chapter16-fear-context-snapshot.js';
-import {fearProjectileContextPointerStacks,fearProjectileContextValueStacks,fearProjectileManagedReferenceStacks,fearProjectileManagedValueStacks,fearProjectileManagedPointerStacks} from '../server/sim/content/chapter16-fear-context-stacks.js';
+import {fearProjectileContextPointerStacks,fearProjectileContextValueStacks,fearProjectileManagedReferenceStacks,fearProjectileManagedValueStacks,fearProjectileManagedPointerStacks,fearProjectileManagedArrayResize} from '../server/sim/content/chapter16-fear-context-stacks.js';
+
+test('managed array resize preserves equal-length arrays, handles null storage and rejects negative size before receiver access',()=>{
+ const events=[],resize=fearProjectileManagedArrayResize({allocateArray:length=>{events.push(['allocate',length]);return Array(length).fill(null);},copyArray:()=>{throw Error('unexpected copy');}}),
+  original=[{}],stack={_array:original};resize(stack,1);assert.equal(stack._array,original);assert.deepEqual(events,[]);
+ resize({_array:null},0);assert.deepEqual(events,[['allocate',0]]);
+ const missing={get _array(){throw Error('unexpected receiver access');}};assert.throws(()=>resize(missing,-1),/nonnegative/);assert.throws(()=>resize(null,-1),/nonnegative/);
+ assert.throws(()=>resize(null,1),/null native receiver/);assert.throws(()=>resize(stack,2**31),/Int32/);
+});
+test('managed array resize copies the smaller prefix and publishes only after copying completes',()=>{
+ const values=[{},{},{}],stack={_array:values},events=[],resize=fearProjectileManagedArrayResize({allocateArray:length=>{events.push(['allocate',length]);return Array(length).fill(null);},
+  copyArray:(source,sourceIndex,destination,destinationIndex,length)=>{assert.equal(stack._array,source);assert.equal(sourceIndex,0);assert.equal(destinationIndex,0);events.push(['copy',length]);for(let i=0;i<length;i++)destination[i]=source[i];}});
+ resize(stack,5);assert.deepEqual(events,[['allocate',5],['copy',3]]);assert.notEqual(stack._array,values);assert.deepEqual(stack._array,[...values,null,null]);
+ const grown=stack._array;events.length=0;resize(stack,2);assert.notEqual(stack._array,grown);assert.deepEqual(stack._array,values.slice(0,2));assert.deepEqual(events,[['allocate',2],['copy',2]]);
+});
+test('managed array resize captures source before allocation but samples copy length after allocation',()=>{
+ const original=[{},{},{}],replacement=Array(5).fill(null),other=[],stack={_array:original},resize=fearProjectileManagedArrayResize({
+  allocateArray:length=>{assert.equal(length,5);original.length=1;stack._array=other;return replacement;},
+  copyArray:(source,si,destination,di,length)=>{assert.equal(source,original);assert.equal(stack._array,other);assert.equal(destination,replacement);assert.equal(length,1);destination[0]=source[0];}});
+ resize(stack,5);assert.equal(stack._array,replacement);assert.equal(replacement[0],original[0]);
+});
+test('managed array resize leaves byref storage unchanged on allocation/copy errors and permits retry',()=>{
+ const original=[{}],stack={_array:original};let failure='allocate',attempt;
+ const resize=fearProjectileManagedArrayResize({allocateArray:length=>{if(failure==='allocate')throw Error('allocation failed');attempt=Array(length).fill(null);return attempt;},
+  copyArray:(source,si,destination,di,length)=>{destination[0]=source[0];if(failure==='copy')throw Error('array copy failed');}});
+ assert.throws(()=>resize(stack,4),/allocation failed/);assert.equal(stack._array,original);failure='copy';assert.throws(()=>resize(stack,4),/array copy failed/);assert.equal(stack._array,original);assert.equal(attempt[0],original[0]);
+ failure=null;resize(stack,4);assert.equal(stack._array,attempt);assert.equal(stack._array[0],original[0]);
+});
 
 test('managed ObjectPtr storage captures pointer fields before resizing and clears references before returning Pop copies',()=>{
  const obj={uid:7},pointer={obj,cachedUid:7},storage={_array:[],_size:0,_version:0},
@@ -58,9 +85,10 @@ test('managed ObjectPtr storage captures pointer fields before resizing and clea
 function managedActionContextFixture(){
  const f=actionDispatchFixture(),g=contextGuardsFixture(),pointers=fearProjectileContextPointers({readUid:value=>value.uid,
   isDestroyedOrNull:value=>value==null||value.destroyed===true,isActive:()=>true}),
-  resizeArray=(stack,length)=>{const old=stack._array;stack._array=Array.from({length},(_,i)=>i<old.length?old[i]:null);},
-  ptr=fearProjectileManagedPointerStacks({copyPointer:pointers.copy,resizeArray}),refs=fearProjectileManagedReferenceStacks({resizeArray}),
-  mf=managedValueFixture('Modifier'),af=managedValueFixture('AttackInfo'),modifier=fearProjectileManagedValueStacks({...mf.options,resizeArray}),attack=fearProjectileManagedValueStacks({...af.options,resizeArray}),
+  resize=(copyValue,defaultValue)=>fearProjectileManagedArrayResize({allocateArray:length=>Array.from({length},defaultValue),
+   copyArray:(source,si,destination,di,length)=>{for(let i=0;i<length;i++)destination[di+i]=copyValue(source[si+i]);}}),
+  ptr=fearProjectileManagedPointerStacks({copyPointer:pointers.copy,resizeArray:resize(pointers.copy,()=>({obj:null,cachedUid:0}))}),refs=fearProjectileManagedReferenceStacks({resizeArray:resize(value=>value,()=>null)}),
+  mf=managedValueFixture('Modifier'),af=managedValueFixture('AttackInfo'),modifier=fearProjectileManagedValueStacks({...mf.options,resizeArray:resize(mf.options.copyValue,mf.options.defaultValue)}),attack=fearProjectileManagedValueStacks({...af.options,resizeArray:resize(af.options.copyValue,af.options.defaultValue)}),
   pointerFields=new Set(['m_source','m_target','m_buff','m_projectile','m_tile','m_mainBuff']),
   wrap=(api,defaultValue,copyValue)=>fearProjectileContextValueStacks({readCount:api.count,peekStored:api.peek,popStored:api.pop,defaultValue,copyValue}),
   pointerContext=fearProjectileContextPointerStacks({readCount:ptr.count,peekStored:ptr.peek,popStored:ptr.pop,pushStored:ptr.push,wrapPointer:pointers.capture,copyPointer:pointers.copy,lockPointer:pointers.lock}),

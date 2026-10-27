@@ -2,6 +2,22 @@
 const nonnull=value=>{if(value==null)throw new TypeError('Fear context stack dereferenced a null native receiver');return value;};
 const count=(readCount,stack)=>{const value=readCount(nonnull(stack));if(!Number.isInteger(value)||value<-(2**31)||value>=2**31)throw new TypeError('Fear context stack requires native Int32 counts');return value;};
 
+// Selected Array.Resize<T> wrapper over a byref stack array field. Allocation
+// includes the selected array class initialization; Array.Copy stays explicit.
+export function fearProjectileManagedArrayResize({allocateArray,copyArray}){
+ if([allocateArray,copyArray].some(fn=>typeof fn!=='function'))throw new TypeError('Fear array resize requires native allocation and Array.Copy callers');
+ return(stack,newSize)=>{
+  if(!Number.isInteger(newSize)||newSize<-(2**31)||newSize>=2**31)throw new TypeError('Fear array resize requires native Int32 size');
+  if(newSize<0)throw new RangeError('Fear array resize requires nonnegative size');
+  nonnull(stack);const old=stack._array;
+  if(old==null){stack._array=allocateArray(newSize);return;}
+  if(old.length===newSize)return;
+  const replacement=allocateArray(newSize),length=Math.min(old.length,newSize);
+  copyArray(old,0,replacement,0,length);
+  stack._array=replacement;
+ };
+}
+
 // Canonical Stack<Object> storage only. Array.Resize remains an explicit byref
 // caller; value structs and ObjectPtr structs require their own specializations.
 export function fearProjectileManagedReferenceStacks({resizeArray}){

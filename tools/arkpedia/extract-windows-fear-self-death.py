@@ -1865,6 +1865,57 @@ result['modeSwitch']['buffNotification']['newBuff']['managedPointerStack'] = {
     'nativeConcreteContextDispatchVerified': False, 'nativeArrayResizeVerified': False,
     'nativeGcBarrierVerified': False, 'livePointerStackStorageVerified': False,
 }
+array_resize_methods = []
+for index, expected_entry in [(205814, 0x3e71cf0), (205813, 0x3e70400), (205845, 0x3e6bdf0), (205761, 0x3e70660)]:
+    if index == 205761:
+        definition, class_inst, method_inst = struct.unpack_from('<iii', v['b'], priority['spec_start'] + index * 12)
+        assert (definition, class_inst, method_inst) == (216298, -1, 12499)
+        spec = {'index': index, 'definition': c['unique'](lambda r: r['index'] == definition, c['type_row']('Array', 'System')['methods']),
+            'declaringType': 'Array', 'declaringTypeIndex': c['type_row']('Array', 'System')['index'],
+            'classInstantiation': class_inst, 'methodInstantiation': method_inst, 'nativeMapping': priority['mapping'][index],
+            'nestedMethodArgument': result['modeSwitch']['buffNotification']['newBuff']['managedPointerStack']['nestedSignature']}
+    else:
+        spec = priority['specification'](index)
+    assert spec['declaringType'] == 'Array' and spec['definition']['index'] == 216298
+    entry = v['quad'](v['b'], priority['pointer_table'] + spec['nativeMapping']['methodPointerIndex'] * 8) - v['image_base']
+    assert entry == expected_entry
+    array_resize_methods.append({**spec, 'entryRva': entry, 'chunks': c['code'](entry)})
+stack_type = v['types'][38203]
+stack_token = v['uint'](v['m'], v['type_start'] + stack_type['index'] * 88 + 84)
+stack_module = c['module']('mscorlib.dll')
+stack_module_pos = v['offset'](v['image_base'] + stack_module['rva'])
+stack_ranges = v['offset'](v['quad'](v['b'], stack_module_pos + 72))
+stack_definitions = v['offset'](v['quad'](v['b'], stack_module_pos + 88))
+stack_range = c['unique'](lambda r: r[0] == stack_token, [struct.unpack_from('<Iii', v['b'], stack_ranges + n * 12) for n in range(v['quad'](v['b'], stack_module_pos + 64))])
+assert stack_range == (0x200061f, 1444, 8)
+resize_rgctx = stack_definitions + (stack_range[1] + 7) * 16
+assert v['uint'](v['b'], resize_rgctx) == 3
+resize_descriptor = v['offset'](v['quad'](v['b'], resize_rgctx + 8))
+assert v['sint'](v['b'], resize_descriptor) == 205737
+assert struct.unpack_from('<iii', v['b'], priority['spec_start'] + 205737 * 12) == (216298, -1, 5331)
+array_type = c['type_row']('Array', 'System')
+copy_row = c['unique'](lambda r: r['index'] == 216439, array_type['methods'])
+copy_table = v['offset'](v['image_base'] + stack_module['methodPointerTableRva'])
+assert v['quad'](v['b'], copy_table + ((copy_row['token'] & 0xffffff) - 1) * 8) - v['image_base'] == 0x51ce8a0
+copy_pos = v['method_start'] + copy_row['index'] * 32
+copy_parameter_start = v['sint'](v['m'], copy_pos + 12)
+assert struct.unpack_from('<H', v['m'], copy_pos + 30)[0] == 5
+copy_parameters = []
+for n in range(5):
+    pos = v['uint'](v['m'], 88) + (copy_parameter_start + n) * 12
+    copy_parameters.append({'index': copy_parameter_start + n, 'name': v['text'](v['uint'](v['m'], pos)), 'typeIndex': v['sint'](v['m'], pos + 8)})
+assert [p['name'] for p in copy_parameters] == ['sourceArray', 'sourceIndex', 'destinationArray', 'destinationIndex', 'length']
+result['modeSwitch']['buffNotification']['newBuff']['managedArrayResize'] = {
+    'canonicalMethods': array_resize_methods,
+    'stackGenericBinding': {'typeIndex': 38203, 'token': stack_token, 'start': 1444, 'length': 8, 'slot': 7,
+        'specificationIndex': 205737, 'methodDefinition': 216298, 'methodInstantiation': 5331,
+        'entryHex': v['b'][resize_rgctx:resize_rgctx + 16].hex(), 'descriptorHex': v['b'][resize_descriptor:resize_descriptor + 12].hex()},
+    'copyTarget': {'definition': copy_row, 'entryRva': 0x51ce8a0, 'parameters': copy_parameters, 'bodyVerified': False},
+    'referenceAllocateCallRva': 0x3e71d3b, 'referenceCopyLengthReadRva': 0x3e71d40,
+    'referenceCopyCallRva': 0x3e71d63, 'referencePublishRva': 0x3e71d6b,
+    'nativeClassInitializationAndAllocationVerified': False, 'nativeArrayCopyEffectsVerified': False,
+    'nativeConcreteGenericDispatchVerified': False, 'liveArrayResizeVerified': False,
+}
 context_stack_canonical = []
 for index in [24503, 24504, 24505, 24506, 24513, 24514, 24515, 24509, 24510, 24511, 24517, 24518, 24519]:
     spec = priority['specification'](index)

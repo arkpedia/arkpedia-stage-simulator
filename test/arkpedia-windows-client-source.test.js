@@ -533,6 +533,23 @@ test('context snapshot source binds distinct capture/push orders and closed refe
  assert.equal(q.nativeContextStackEffectsVerified,false);assert.equal(q.nativeNestedValueCopiesVerified,false);assert.equal(q.liveContextSnapshotsVerified,false);
 });
 
+test('managed Array.Resize source binds Stack RGCTX slot7, four canonical wrappers and the five-argument Copy target',()=>{
+ const q=read('data/candidates/arkpedia-windows-fear-self-death-source.json').modeSwitch.buffNotification.newBuff.managedArrayResize;
+ assert.deepEqual(q.canonicalMethods.map(m=>[m.index,m.entryRva]),[[205814,0x3e71cf0],[205813,0x3e70400],[205845,0x3e6bdf0],[205761,0x3e70660]]);
+ for(const method of q.canonicalMethods){assert.equal(method.definition.index,216298);assert.equal(method.declaringType,'Array');assert.ok(method.nativeMapping);
+  for(const chunk of method.chunks){const bytes=Buffer.from(chunk.base64,'base64');assert.equal(bytes.length,chunk.endRva-chunk.beginRva);assert.equal(sha(bytes),chunk.sha256);}
+  const at=(offset,args)=>assert.ok(instructions(method).some(i=>i.rva===method.entryRva+offset&&i.operands===args));
+  at(0x14,'edx, edx');at(0x21,'rbp, qword ptr [rcx]');at(0x29,'dword ptr [rbp + 0x18], edx');
+  at(0x4b,'0x180410010');at(0x50,'edx, dword ptr [rbp + 0x18]');at(0x58,'edx, edi');at(0x73,'0x1851ce8a0');at(0x7b,'qword ptr [rsi], rbx');
+ }
+ const binding=q.stackGenericBinding;assert.deepEqual([binding.typeIndex,binding.token,binding.start,binding.length,binding.slot,binding.specificationIndex,binding.methodDefinition,binding.methodInstantiation],[38203,0x200061f,1444,8,7,205737,216298,5331]);
+ assert.equal(Buffer.from(binding.entryHex,'hex').length,16);assert.equal(Buffer.from(binding.descriptorHex,'hex').length,12);
+ assert.equal(q.copyTarget.definition.index,216439);assert.equal(q.copyTarget.entryRva,0x51ce8a0);assert.equal(q.copyTarget.bodyVerified,false);
+ assert.deepEqual(q.copyTarget.parameters.map(p=>p.name),['sourceArray','sourceIndex','destinationArray','destinationIndex','length']);
+ assert.deepEqual(q.copyTarget.parameters.map(p=>p.typeIndex),[36107,52803,36107,52803,52803]);
+ for(const name of ['nativeClassInitializationAndAllocationVerified','nativeArrayCopyEffectsVerified','nativeConcreteGenericDispatchVerified','liveArrayResizeVerified'])assert.equal(q[name],false);
+});
+
 test('managed pointer stack source binds the nested ObjectPtr<Object> canonical signature and complete sixteen-byte storage bodies',()=>{
  const q=read('data/candidates/arkpedia-windows-fear-self-death-source.json').modeSwitch.buffNotification.newBuff.managedPointerStack;
  assert.equal(q.valueWidth,16);assert.equal(q.classInstantiation,12499);assert.equal(q.nestedSignature.definitionIndex,1324);assert.equal(q.nestedSignature.name,'ObjectPtr`1');

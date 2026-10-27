@@ -1402,6 +1402,37 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
 
+### Managed Array.Resize wrapper and publication ordering
+
+Four additional complete canonical Array.Resize<T> specifications retain
+the reference, Modifier, AttackInfo and ObjectPtr<Object> wrappers. Stack's
+mscorlib type-token RGCTX range1444/8 binds slot7 to Resize definition216298
+with generic method instantiation5331. The pointer specialization separately
+uses the previously checked nested method argument12499. Array.Copy's direct
+target0x51ce8a0 resolves through mscorlib's own table to definition216439,
+with five parameters: sourceArray/sourceIndex/destinationArray/destinationIndex/
+length. Its method-info argument is separate from those parameters. Copy body
+effects and concrete RGCTX execution are not certified by this binding.
+
+`fearProjectileManagedArrayResize` checks signed Int32 size before dereferencing
+the byref array field, rejects negative sizes, allocates directly for null
+storage, and preserves the original array when lengths already match. On changed
+length it captures the old array, allocates a replacement, samples the old length
+after allocation, copies min(oldLength,newSize) elements from index0 to index0,
+and publishes the replacement only after copying succeeds. Allocation includes
+the selected class-initialization receiver; native allocation and Array.Copy
+remain explicit. The202 ordinary methods and all earlier records are unchanged.
+
+Tests cover null/equal-size paths, growth/shrinkage, invalid sizes, source capture
+and length-read order, allocation/copy exceptions and retry. All ten context
+stacks in the composed action/guard tests now use this resize wrapper with
+separate typed allocation/copy fixtures. Full native copy/default/allocation/GC
+effects and controller/stage integration remain open. Source/support/receipt/
+catalogue gates remain unchanged and all new stages remain test-only. This
+checkpoint remains local outside pending upload authorization.
+
+All1168 focused native/fear/family/miner tests pass for this wrapper checkpoint.
+
 ### Managed ObjectPtr stack storage and composed action guards
 
 Four additional canonical specifications retain complete Stack<ObjectPtr<Object>>
