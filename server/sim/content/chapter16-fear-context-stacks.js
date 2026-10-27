@@ -2,6 +2,26 @@
 const nonnull=value=>{if(value==null)throw new TypeError('Fear context stack dereferenced a null native receiver');return value;};
 const count=(readCount,stack)=>{const value=readCount(nonnull(stack));if(!Number.isInteger(value)||value<-(2**31)||value>=2**31)throw new TypeError('Fear context stack requires native Int32 counts');return value;};
 
+// Array.Copy's entry guards and fast-copy dispatch. The fallback receiver must
+// perform the remaining native bounds, type, conversion and exception behavior.
+export function fearProjectileManagedArrayCopy({readRank,tryFastCopy,copyFallback}){
+ if([readRank,tryFastCopy,copyFallback].some(fn=>typeof fn!=='function'))throw new TypeError('Fear array copy requires native rank, fast-copy and fallback callers');
+ const rank=value=>{const result=readRank(value);if(!Number.isInteger(result)||result<0||result>255)throw new TypeError('Fear array copy requires native byte ranks');return result;};
+ return(source,sourceIndex,destination,destinationIndex,length)=>{
+  for(const value of [sourceIndex,destinationIndex,length])if(!Number.isInteger(value)||value<-(2**31)||value>=2**31)throw new TypeError('Fear array copy requires native Int32 indices and length');
+  if(source==null)throw new TypeError('Fear array copy source is null');
+  if(destination==null)throw new TypeError('Fear array copy destination is null');
+  if(length<0)throw new RangeError('Fear array copy length is negative');
+  const sourceRank=rank(source),destinationRank=rank(destination);
+  if(sourceRank!==destinationRank)throw new TypeError('Fear array copy ranks differ');
+  if(sourceIndex<0)throw new RangeError('Fear array copy source index is negative');
+  if(destinationIndex<0)throw new RangeError('Fear array copy destination index is negative');
+  const copied=tryFastCopy(source,sourceIndex,destination,destinationIndex,length);
+  if(typeof copied!=='boolean')throw new TypeError('Fear array fast-copy requires native Boolean result');
+  if(!copied)copyFallback(source,sourceIndex,destination,destinationIndex,length);
+ };
+}
+
 // Selected Array.Resize<T> wrapper over a byref stack array field. Allocation
 // includes the selected array class initialization; Array.Copy stays explicit.
 export function fearProjectileManagedArrayResize({allocateArray,copyArray}){

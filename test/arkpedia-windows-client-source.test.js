@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,202);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,203);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -531,6 +531,22 @@ test('context snapshot source binds distinct capture/push orders and closed refe
   'rcx, qword ptr [rdi + 0x48]','rcx, qword ptr [rdi + 0x58]'].entries())at(duplicate,q.pushFieldReads[index],args);
  for(const [index,target]of ['0x184be7ef0','0x184be7ef0','0x184be7ef0','0x18490b650','0x18490b820','0x184be7ef0','0x184be7ef0','0x18490b650','0x18490b790','0x184be7ef0'].entries())at(duplicate,q.pushCalls[index],target);
  assert.equal(q.nativeContextStackEffectsVerified,false);assert.equal(q.nativeNestedValueCopiesVerified,false);assert.equal(q.liveContextSnapshotsVerified,false);
+});
+
+test('managed Array.Copy source retains complete entry guards, native fast-copy body and bounded rank leaf',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.newBuff.managedArrayCopy,
+  method=c.methods.find(m=>m.index===q.method.index&&m.image===q.method.image);
+ assert.equal(method.type,'Array');assert.equal(method.name,'Copy');assert.equal(method.parameterCount,5);assert.equal(method.entryRva,0x51ce8a0);
+ for(const body of [method,q.rankReader,q.fastCopy])for(const chunk of body.chunks){const bytes=Buffer.from(chunk.base64,'base64');assert.equal(bytes.length,chunk.endRva-chunk.beginRva);assert.equal(sha(bytes),chunk.sha256);}
+ assert.deepEqual(instructions(q.rankReader).map(i=>[i.mnemonic,i.operands]),[['mov','rax, qword ptr [rcx]'],['movzx','eax, byte ptr [rax + 0x12e]'],['ret','']]);
+ assert.equal(q.rankReader.chunks[0].endRva-q.rankReader.chunks[0].beginRva,11);
+ const at=(rva,args)=>assert.ok(instructions(method).some(i=>i.rva===rva&&i.operands===args));
+ at(q.sourceNullTestRva,'rcx, rcx');at(q.destinationNullTestRva,'r8, r8');at(q.lengthTestRva,'r13d, r13d');
+ at(q.sourceRankCallRva,'0x180489ae0');at(q.destinationRankCallRva,'0x180489ae0');at(q.rankComparisonRva,'ebx, eax');
+ at(q.sourceIndexTestRva,'r15d, r15d');at(q.destinationIndexTestRva,'r14d, r14d');
+ at(q.fastCopyCallRva,'0x1804892f0');at(q.fastCopyResultBranchRva,'0x1851cea98');at(q.fallbackFirstCallRva,'0x180489a90');
+ assert.equal(q.fastCopy.entryRva,0x4892f0);assert.ok(instructions(q.fastCopy).some(i=>i.rva===0x489330&&i.operands==='qword ptr [rcx + 0x10], 0'));
+ for(const name of ['nativeFastCopyEffectsVerified','nativeFallbackConversionAndExceptionEffectsVerified','nativeRuntimeArrayLayoutVerified','liveArrayCopyVerified'])assert.equal(q[name],false);
 });
 
 test('managed Array.Resize source binds Stack RGCTX slot7, four canonical wrappers and the five-argument Copy target',()=>{

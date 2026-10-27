@@ -1916,6 +1916,32 @@ result['modeSwitch']['buffNotification']['newBuff']['managedArrayResize'] = {
     'nativeClassInitializationAndAllocationVerified': False, 'nativeArrayCopyEffectsVerified': False,
     'nativeConcreteGenericDispatchVerified': False, 'liveArrayResizeVerified': False,
 }
+copy_method = c['method'](array_type, copy_row, 'mscorlib.dll')
+assert copy_method['entryRva'] == 0x51ce8a0
+methods.append(copy_method)
+rank_entry = 0x489ae0
+rank_pos = v['offset'](v['image_base'] + rank_entry)
+rank_raw = v['b'][rank_pos:rank_pos + 11]
+assert rank_raw.hex() == '488b010fb6802e010000c3'
+assert v['b'][rank_pos + 11:rank_pos + 16] == bytes.fromhex('cc' * 5)
+rank_decoded = list(Cs(CS_ARCH_X86, CS_MODE_64).disasm(rank_raw, v['image_base'] + rank_entry))
+assert [i.mnemonic for i in rank_decoded] == ['mov', 'movzx', 'ret'] and sum(i.size for i in rank_decoded) == 11
+rank_chunks = [{'beginRva': rank_entry, 'endRva': rank_entry + 11, 'unwindRva': None,
+    'boundary': 'Reviewed complete eleven-byte array class rank-byte load leaf; no stack changes; five following INT3 bytes',
+    'base64': base64.b64encode(rank_raw).decode(), 'sha256': v['sha'](rank_raw),
+    'instructions': [{'rva': i.address - v['image_base'], 'size': i.size, 'mnemonic': i.mnemonic, 'operands': i.op_str} for i in rank_decoded]}]
+result['modeSwitch']['buffNotification']['newBuff']['managedArrayCopy'] = {
+    'method': {'index': copy_method['index'], 'image': 'mscorlib.dll', 'entryRva': copy_method['entryRva']},
+    'rankReader': {'entryRva': rank_entry, 'chunks': rank_chunks},
+    'fastCopy': {'entryRva': 0x4892f0, 'chunks': c['code'](0x4892f0)},
+    'sourceNullTestRva': 0x51ce8cb, 'destinationNullTestRva': 0x51ce8d4, 'lengthTestRva': 0x51ce8e5,
+    'sourceRankCallRva': 0x51ce8ee, 'destinationRankCallRva': 0x51ce8f8, 'rankComparisonRva': 0x51ce8fd,
+    'sourceIndexTestRva': 0x51ce905, 'destinationIndexTestRva': 0x51ce90e,
+    'fastCopyCallRva': 0x51ce928, 'fastCopyResultBranchRva': 0x51ce92f,
+    'fallbackFirstCallRva': 0x51ce93a,
+    'nativeFastCopyEffectsVerified': False, 'nativeFallbackConversionAndExceptionEffectsVerified': False,
+    'nativeRuntimeArrayLayoutVerified': False, 'liveArrayCopyVerified': False,
+}
 context_stack_canonical = []
 for index in [24503, 24504, 24505, 24506, 24513, 24514, 24515, 24509, 24510, 24511, 24517, 24518, 24519]:
     spec = priority['specification'](index)

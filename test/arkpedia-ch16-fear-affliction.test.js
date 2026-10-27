@@ -43,7 +43,31 @@ import {fearProjectileBuffAttributeProvider} from '../server/sim/content/chapter
 import {fearProjectileRunBuffActions} from '../server/sim/content/chapter16-fear-buff-run-actions.js';
 import {fearProjectileContextGuards} from '../server/sim/content/chapter16-fear-context-guard.js';
 import {fearProjectileContextSnapshots} from '../server/sim/content/chapter16-fear-context-snapshot.js';
-import {fearProjectileContextPointerStacks,fearProjectileContextValueStacks,fearProjectileManagedReferenceStacks,fearProjectileManagedValueStacks,fearProjectileManagedPointerStacks,fearProjectileManagedArrayResize} from '../server/sim/content/chapter16-fear-context-stacks.js';
+import {fearProjectileContextPointerStacks,fearProjectileContextValueStacks,fearProjectileManagedReferenceStacks,fearProjectileManagedValueStacks,fearProjectileManagedPointerStacks,fearProjectileManagedArrayResize,fearProjectileManagedArrayCopy} from '../server/sim/content/chapter16-fear-context-stacks.js';
+
+test('managed array copy rejects null arrays and negative length before reading ranks or dispatching copy',()=>{
+ const copy=fearProjectileManagedArrayCopy({readRank:()=>{throw Error('unexpected rank');},tryFastCopy:()=>{throw Error('unexpected fast copy');},copyFallback:()=>{throw Error('unexpected fallback');}});
+ assert.throws(()=>copy(null,0,null,0,-1),/source is null/);assert.throws(()=>copy([],0,null,0,-1),/destination is null/);assert.throws(()=>copy([],0,[],0,-1),/length is negative/);
+});
+test('managed array copy samples both ranks before index checks and preserves native argument order',()=>{
+ const source=[],destination=[],events=[],options={readRank:value=>{events.push(value===source?'source-rank':'destination-rank');return value===source?1:2;},
+  tryFastCopy:()=>{throw Error('unexpected fast copy');},copyFallback:()=>{throw Error('unexpected fallback');}};
+ assert.throws(()=>fearProjectileManagedArrayCopy(options)(source,-1,destination,-2,0),/ranks differ/);assert.deepEqual(events,['source-rank','destination-rank']);
+ options.readRank=()=>1;assert.throws(()=>fearProjectileManagedArrayCopy(options)(source,-1,destination,-2,0),/source index is negative/);assert.throws(()=>fearProjectileManagedArrayCopy(options)(source,0,destination,-2,0),/destination index is negative/);
+});
+test('managed array copy returns on fast-copy success and enters the fallback only on false',()=>{
+ const source=[{},{}],destination=[null,null],args=[source,1,destination,0,1],events=[];let fast=true;
+ const copy=fearProjectileManagedArrayCopy({readRank:()=>1,tryFastCopy:(...actual)=>{assert.deepEqual(actual,args);events.push('fast');destination[0]=source[1];return fast;},
+  copyFallback:(...actual)=>{assert.deepEqual(actual,args);events.push('fallback');assert.equal(destination[0],source[1]);}});
+ assert.equal(copy(...args),undefined);assert.deepEqual(events,['fast']);fast=false;copy(...args);assert.deepEqual(events,['fast','fast','fallback']);
+});
+test('managed array copy propagates dispatch failures and retains partial destination effects without retrying',()=>{
+ const source=[{},{}],destination=[null,null],options={readRank:()=>1,tryFastCopy:()=>{destination[0]=source[0];throw Error('fast failure');},copyFallback:()=>{throw Error('unexpected fallback');}};
+ assert.throws(()=>fearProjectileManagedArrayCopy(options)(source,0,destination,0,2),/fast failure/);assert.equal(destination[0],source[0]);
+ options.tryFastCopy=()=>false;options.copyFallback=()=>{destination[1]=source[1];throw Error('fallback failure');};
+ assert.throws(()=>fearProjectileManagedArrayCopy(options)(source,0,destination,0,2),/fallback failure/);assert.equal(destination[1],source[1]);
+ options.tryFastCopy=()=>0;assert.throws(()=>fearProjectileManagedArrayCopy(options)(source,0,destination,0,2),/native Boolean/);
+});
 
 test('managed array resize preserves equal-length arrays, handles null storage and rejects negative size before receiver access',()=>{
  const events=[],resize=fearProjectileManagedArrayResize({allocateArray:length=>{events.push(['allocate',length]);return Array(length).fill(null);},copyArray:()=>{throw Error('unexpected copy');}}),
@@ -86,7 +110,8 @@ function managedActionContextFixture(){
  const f=actionDispatchFixture(),g=contextGuardsFixture(),pointers=fearProjectileContextPointers({readUid:value=>value.uid,
   isDestroyedOrNull:value=>value==null||value.destroyed===true,isActive:()=>true}),
   resize=(copyValue,defaultValue)=>fearProjectileManagedArrayResize({allocateArray:length=>Array.from({length},defaultValue),
-   copyArray:(source,si,destination,di,length)=>{for(let i=0;i<length;i++)destination[di+i]=copyValue(source[si+i]);}}),
+   copyArray:fearProjectileManagedArrayCopy({readRank:()=>1,tryFastCopy:(source,si,destination,di,length)=>{for(let i=0;i<length;i++)destination[di+i]=copyValue(source[si+i]);return true;},
+    copyFallback:()=>{throw Error('unexpected typed array fallback');}})}),
   ptr=fearProjectileManagedPointerStacks({copyPointer:pointers.copy,resizeArray:resize(pointers.copy,()=>({obj:null,cachedUid:0}))}),refs=fearProjectileManagedReferenceStacks({resizeArray:resize(value=>value,()=>null)}),
   mf=managedValueFixture('Modifier'),af=managedValueFixture('AttackInfo'),modifier=fearProjectileManagedValueStacks({...mf.options,resizeArray:resize(mf.options.copyValue,mf.options.defaultValue)}),attack=fearProjectileManagedValueStacks({...af.options,resizeArray:resize(af.options.copyValue,af.options.defaultValue)}),
   pointerFields=new Set(['m_source','m_target','m_buff','m_projectile','m_tile','m_mainBuff']),
@@ -110,7 +135,7 @@ function managedActionContextFixture(){
   setTarget:guards.setTarget,setTile:guards.setTile,disposeGuard:guards.dispose,runActionArray:()=>snapshots.takeSnapshot(),copySnapshot:snapshots.copySnapshot});
  return{f,g,snapshots,guards,pointerFields,prior:snapshots.takeSnapshot()};
 }
-for(const mode of ['success','exception','cancel','nested'])test('action context uses managed storage through '+mode+' and restores every outer frame',()=>{
+for(const mode of ['success','exception','cancel','nested','deep-nested'])test('action context uses managed storage through '+mode+' and restores every outer frame',()=>{
  const {f,g,snapshots,guards,pointerFields,prior}=managedActionContextFixture();
  f.options.runActionArray=()=>{
   assert.ok(g.fields.every(field=>g.context[field]._size===2));
@@ -118,6 +143,12 @@ for(const mode of ['success','exception','cancel','nested'])test('action context
   if(mode==='nested'){
    const guard=guards.begin(g.context),target={uid:200};assert.ok(g.fields.every(field=>g.context[field]._size===3));guards.setTarget(guard,target);
    assert.equal(snapshots.takeSnapshot().target,target);guards.dispose(guard);assert.equal(snapshots.takeSnapshot().target,f.owner);
+  }
+  if(mode==='deep-nested'){
+   const frames=[];for(let i=0;i<6;i++)frames.push(guards.begin(g.context));
+   assert.ok(g.fields.every(field=>g.context[field]._size===8&&g.context[field]._array.length===8));
+   for(const guard of frames.toReversed())guards.dispose(guard);
+   assert.ok(g.fields.every(field=>g.context[field]._size===2));assert.equal(snapshots.takeSnapshot().target,f.owner);
   }
   const result=snapshots.takeSnapshot();if(mode==='cancel')f.state.active=false;return result;
  };

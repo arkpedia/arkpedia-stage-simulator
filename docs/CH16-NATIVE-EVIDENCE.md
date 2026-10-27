@@ -1402,6 +1402,35 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
 
+### Managed Array.Copy entry guards and fast-path dispatch
+
+The203-method ordinary bundle adds the complete five-parameter mscorlib
+Array.Copy body at0x51ce8a0. Its native fast-copy callee at0x4892f0 is retained
+separately with complete PE unwind bounds. A reviewed11-byte native rank leaf
+loads the array's class and its unsigned rank byte at+0x12e, then returns;
+five following INT3 bytes delimit this no-stack-change leaf. The shared strict
+reader remains unchanged. Earlier ordinary methods and evidence stay intact.
+
+`fearProjectileManagedArrayCopy` implements entry validation and dispatch:
+source null, destination null, negative length, source rank, destination rank,
+rank mismatch, negative source index, negative destination index, then the
+five-argument fast-copy call. A true result returns directly; false enters the
+explicit native fallback receiver with the original arguments. Both paths keep
+partial effects on exceptions. Full fallback bounds, lower-bound adjustment,
+type conversion and exception translation are not replaced by a JavaScript
+array loop. Native fast-copy effects and runtime array layout remain unverified.
+
+The composed context fixture now passes resize copies through these guards and
+dispatch. Six nested guards force all ten stacks through growth and saved-frame
+copy before unwinding back to their originals. Other tests cover failure order,
+rank/index precedence, selected fast/fallback dispatch and partial destination
+effects. Native class initialization/allocation, fast-copy effects, typed value
+defaults/copies and live controller/stage integration remain open. No source/
+support/receipt/catalogue gate changes or new stage admission follow, and this
+checkpoint stays local outside the pending upload authorization.
+
+All1174 focused native/fear/family/miner tests pass for this entry checkpoint.
+
 ### Managed Array.Resize wrapper and publication ordering
 
 Four additional complete canonical Array.Resize<T> specifications retain
