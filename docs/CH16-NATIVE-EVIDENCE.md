@@ -1402,6 +1402,33 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
 
+### BuffData constructor defaults and late base call
+
+The222-method bundle adds complete default BuffData and AttributeModifierData
+constructors. All220 prior method records and earlier evidence remain unchanged.
+Both template-key metadata loads resolve to the exact `empty` string literal.
+Instruction pins retain attribute allocation/construction/publication, reference
+barriers, all explicit defaults and BuffData's late Object constructor call.
+
+`fearProjectileBuffDataConstructor` initializes a fresh allocated attribute
+record, publishes it and invokes the barrier, then writes statusResistable2,
+templateKey `empty`, stack limits1/-1, lifeTimeType1, trigger intervals-1,
+waitFirstTriggerInterval true and priority-1 before calling Object's constructor.
+It preserves fields the native constructor does not write; zeroed native
+allocation remains the caller's responsibility. The default
+`fearProjectileAttributeDataConstructor` only delegates Object construction and
+does not synthesize lists or modifier arrays.
+
+Tests cover constructor order, unchanged fields, callback mutations, null
+allocation/destination, nested construction and retained writes on each failure
+boundary. BuffData.DeepClone and both populated/null-blackboard BuffDB merge
+compositions now use these constructor adapters with explicit zeroed allocation.
+Native allocation, Object construction, hotfix dispatch and barrier effects
+remain unverified. Nested attribute cloning and full controller/stage/frame
+parity remain open; existing source/support/receipt/catalogue gates are unchanged
+and new stages stay test-only. All1339 focused native/fear/family/miner tests
+pass. This checkpoint remains local.
+
 ### BuffData.DeepClone field identity and nested storage
 
 The220-method bundle adds the complete default BuffData.DeepClone body. All219

@@ -2101,6 +2101,36 @@ result['modeSwitch']['buffNotification']['newBuff']['predicateNodes'] = {
     'nativeAttributeQueryEffectsVerified': False, 'livePredicateNodeDispatchVerified': False,
 }
 context_stack_canonical = []
+data_constructors = []
+for ti, index, entry in [(3923, 28665, 0x225d300), (3916, 28601, 0x2161af0)]:
+    t = v['types'][ti]
+    row = c['unique'](lambda r: r['index'] == index, t['methods'])
+    record = c['method'](t, row)
+    assert record['entryRva'] == entry and not any(m['index'] == index for m in methods)
+    methods.append(record)
+    data_constructors.append({'typeIndex': ti, 'type': t['name'], **row, 'entryRva': entry})
+constructor_literals = []
+for rva in [0x225d37a, 0x225d384]:
+    pos = v['offset'](v['image_base'] + rva)
+    assert v['b'][pos:pos + 3] in [bytes.fromhex('488b05'), bytes.fromhex('488b15')]
+    address = rva + 7 + struct.unpack_from('<i', v['b'], pos + 3)[0]
+    usage = v['quad'](v['b'], v['offset'](v['image_base'] + address))
+    assert usage >> 29 == 5 and (usage & 0x1ffffffe) >> 1 == 27738
+    length, start = struct.unpack_from('<II', v['m'], v['uint'](v['m'], 8) + 27738 * 8)
+    raw = v['m'][v['uint'](v['m'], 16) + start:v['uint'](v['m'], 16) + start + length]
+    assert raw == b'empty'
+    constructor_literals.append({'loadRva': rva, 'encodedUsage': usage, 'literalIndex': 27738, 'value': 'empty'})
+result['modeSwitch']['buffNotification']['newBuff']['buffDataConstruction'] = {
+    'methods': data_constructors, 'templateLiterals': constructor_literals,
+    'defaults': {'statusResistable': 2, 'templateKey': 'empty', 'maxStackCnt': 1, 'maxValidStackCnt': -1, 'lifeTimeType': 1,
+        'triggerInterval': -1, 'waitFirstTriggerInterval': True, 'firstTriggerInterval': -1, 'priority': -1},
+    'attributeFields': [f for f in c['fields'](v['types'][3916]) if not f['typeBits'] & 16],
+    'allocateAttributesCallRva': 0x225d348, 'attributeConstructorCallRva': 0x225d35e, 'attributeWriteRva': 0x225d36a, 'attributeBarrierCallRva': 0x225d36d,
+    'statusWriteRva': 0x225d372, 'templateWriteRva': 0x225d381, 'templateBarrierCallRva': 0x225d38b,
+    'maxStackWriteRva': 0x225d392, 'maxValidStackWriteRva': 0x225d39c, 'lifeTypeWriteRva': 0x225d3a3, 'triggerIntervalWriteRva': 0x225d3a7,
+    'waitFirstWriteRva': 0x225d3b1, 'packedFirstIntervalAndPriorityWriteRva': 0x225d3b8, 'baseConstructorCallRva': 0x225d3c3, 'attributeBaseConstructorCallRva': 0x2161b1a,
+    'nativeZeroedAllocationVerified': False, 'nativeBaseConstructorEffectsVerified': False, 'nativeHotfixDispatchVerified': False, 'nativeWriteBarrierEffectsVerified': False, 'liveBuffDataConstructionVerified': False,
+}
 data_clone_row = c['unique'](lambda r: r['index'] == 28664, data_type['methods'])
 data_clone_record = c['method'](data_type, data_clone_row)
 assert data_clone_record['entryRva'] == 0x225cbc0 and not any(m['index'] == 28664 for m in methods)

@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,220);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,222);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -531,6 +531,18 @@ test('context snapshot source binds distinct capture/push orders and closed refe
   'rcx, qword ptr [rdi + 0x48]','rcx, qword ptr [rdi + 0x58]'].entries())at(duplicate,q.pushFieldReads[index],args);
  for(const [index,target]of ['0x184be7ef0','0x184be7ef0','0x184be7ef0','0x18490b650','0x18490b820','0x184be7ef0','0x184be7ef0','0x18490b650','0x18490b790','0x184be7ef0'].entries())at(duplicate,q.pushCalls[index],target);
  assert.equal(q.nativeContextStackEffectsVerified,false);assert.equal(q.nativeNestedValueCopiesVerified,false);assert.equal(q.liveContextSnapshotsVerified,false);
+});
+
+test('BuffData constructor source binds defaults, empty template literal and late base construction',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.newBuff.buffDataConstruction;
+ assert.deepEqual(q.methods.map(m=>[m.type,m.index,m.entryRva]),[['BuffData',28665,0x225d300],['AttributeModifierData',28601,0x2161af0]]);
+ assert.deepEqual(q.defaults,{statusResistable:2,templateKey:'empty',maxStackCnt:1,maxValidStackCnt:-1,lifeTimeType:1,triggerInterval:-1,waitFirstTriggerInterval:true,firstTriggerInterval:-1,priority:-1});
+ assert.equal(q.templateLiterals.length,2);for(const literal of q.templateLiterals){assert.equal(literal.encodedUsage>>>29,5);assert.equal((literal.encodedUsage&0x1ffffffe)>>>1,27738);assert.equal(literal.value,'empty');}
+ assert.deepEqual(q.attributeFields.map(f=>[f.name,f.offset]),[['abnormalFlags',16],['abnormalImmunes',24],['abnormalAntis',32],['abnormalCombos',40],['abnormalComboImmunes',48],['attributeModifiers',56]]);
+ const at=(index,rva,args)=>assert.ok(instructions(c.methods.find(m=>m.index===index)).some(i=>i.rva===rva&&i.operands===args),'BuffData constructor instruction '+rva.toString(16));
+ for(const [key,args]of [['allocateAttributesCallRva','0x180410630'],['attributeConstructorCallRva','0x182161af0'],['attributeWriteRva','qword ptr [rcx], rdi'],['attributeBarrierCallRva','0x18040ff90'],['statusWriteRva','byte ptr [rbx + 0x27], 2'],['templateWriteRva','qword ptr [rcx], rax'],['templateBarrierCallRva','0x18040ff90'],['maxStackWriteRva','dword ptr [rbx + 0x44], 1'],['maxValidStackWriteRva','dword ptr [rbx + 0x4c], 0xffffffff'],['lifeTypeWriteRva','byte ptr [rbx + 0x70], 1'],['triggerIntervalWriteRva','dword ptr [rbx + 0x8c], 0xbf800000'],['waitFirstWriteRva','byte ptr [rbx + 0x90], 1'],['packedFirstIntervalAndPriorityWriteRva','qword ptr [rbx + 0x94], 0xffffffffbf800000'],['baseConstructorCallRva','0x180511a50']])at(28665,q[key],args);
+ at(28601,q.attributeBaseConstructorCallRva,'0x180511a50');assert.ok(q.attributeConstructorCallRva<q.attributeWriteRva&&q.templateBarrierCallRva<q.maxStackWriteRva&&q.packedFirstIntervalAndPriorityWriteRva<q.baseConstructorCallRva);
+ for(const name of ['nativeZeroedAllocationVerified','nativeBaseConstructorEffectsVerified','nativeHotfixDispatchVerified','nativeWriteBarrierEffectsVerified','liveBuffDataConstructionVerified'])assert.equal(q[name],false);
 });
 
 test('BuffData.DeepClone source binds the complete Windows field layout and distinct nested-copy phases',()=>{

@@ -58,6 +58,46 @@ import {fearProjectileBlackboardMerge} from '../server/sim/content/chapter16-fea
 import {fearProjectileDataPairLists} from '../server/sim/content/chapter16-fear-blackboard-list.js';
 import {fearProjectileDataPairListGrowth} from '../server/sim/content/chapter16-fear-blackboard-list-growth.js';
 import {fearProjectileBuffDataClone} from '../server/sim/content/chapter16-fear-buff-data-clone.js';
+import {fearProjectileBuffDataConstructor,fearProjectileAttributeDataConstructor} from '../server/sim/content/chapter16-fear-buff-data-constructor.js';
+
+function buffDataConstructorFixture(){
+ const events=[],created=[],defaults={statusResistable:2,templateKey:'empty',maxStackCnt:1,maxValidStackCnt:-1,lifeTimeType:1,triggerInterval:-1,waitFirstTriggerInterval:true,firstTriggerInterval:-1,priority:-1},
+  attributeBase=value=>events.push(['attribute-base',value]),options={allocateAttributes:()=>{const value={};created.push(value);events.push('allocate');return value;},
+   initializeAttributes:fearProjectileAttributeDataConstructor({objectConstructor:attributeBase}),writeBarrier:(value,field)=>events.push(['barrier',value,field]),objectConstructor:value=>events.push(['base',value])};
+ return{events,created,defaults,options,api:()=>fearProjectileBuffDataConstructor(options)};
+}
+function composeBuffDataConstructor(f){
+ const allocate=f.options.allocateData;f.options.allocateData=()=>{const target=allocate();for(const field of f.evidence.scalarCopies)target[field.field]=field.kind==='bool'?false:field.kind==='string'?null:0;Object.assign(target,{attributes:null,priorityBBKeys:null,blackboard:null});return target;};
+ f.options.initializeData=fearProjectileBuffDataConstructor({allocateAttributes:()=>({abnormalFlags:null,abnormalImmunes:null,abnormalAntis:null,abnormalCombos:null,abnormalComboImmunes:null,attributeModifiers:null}),
+  initializeAttributes:fearProjectileAttributeDataConstructor({objectConstructor:()=>f.events.push('attribute-base')}),writeBarrier:(_target,field)=>f.events.push(['constructor-barrier',field]),objectConstructor:()=>f.events.push('data-base')});
+}
+test('BuffData constructor publishes initialized attributes and defaults before its Object constructor',()=>{
+ const f=buffDataConstructorFixture(),data={buffKey:'keep',blackboard:{},loadFromDB:true};f.options.objectConstructor=value=>{assert.equal(value,data);for(const [key,value]of Object.entries(f.defaults))assert.equal(data[key],value);assert.equal(data.attributes,f.created[0]);f.events.push('base');};
+ f.api()(data);assert.equal(data.buffKey,'keep');assert.equal(data.loadFromDB,true);assert.ok(data.blackboard);assert.deepEqual(f.events,['allocate',['attribute-base',f.created[0]],['barrier',data,'attributes'],['barrier',data,'templateKey'],'base']);
+});
+test('AttributeModifierData default constructor only invokes its base receiver and preserves existing fields',()=>{
+ const data={abnormalFlags:['existing'],attributeModifiers:[]},prior=data.abnormalFlags,calls=[],ctor=fearProjectileAttributeDataConstructor({objectConstructor:value=>calls.push(value)});ctor(data);assert.equal(data.abnormalFlags,prior);assert.deepEqual(Object.keys(data),['abnormalFlags','attributeModifiers']);assert.deepEqual(calls,[data]);
+});
+test('BuffData constructor retains native barrier ordering across callback field changes',()=>{
+ const f=buffDataConstructorFixture(),data={statusResistable:99,maxStackCnt:99};f.options.writeBarrier=(actual,field)=>{assert.equal(actual,data);if(field==='attributes'){assert.equal(data.statusResistable,99);data.buffKey='callback';}else{assert.equal(field,'templateKey');assert.equal(data.statusResistable,2);assert.equal(data.maxStackCnt,99);data.maxStackCnt=8;}};
+ f.api()(data);assert.equal(data.maxStackCnt,1);assert.equal(data.buffKey,'callback');
+});
+for(const phase of ['allocate','attribute-constructor','attribute-barrier','template-barrier','base'])test('BuffData constructor preserves earlier writes on '+phase+' failure',()=>{
+ const f=buffDataConstructorFixture(),data={statusResistable:99,maxStackCnt:99},error=Error(phase);if(phase==='allocate')f.options.allocateAttributes=()=>{throw error;};if(phase==='attribute-constructor')f.options.initializeAttributes=()=>{throw error;};
+ if(phase.endsWith('barrier'))f.options.writeBarrier=(_data,field)=>{if(field===(phase==='attribute-barrier'?'attributes':'templateKey'))throw error;};if(phase==='base')f.options.objectConstructor=()=>{throw error;};
+ assert.throws(()=>f.api()(data),actual=>actual===error);if(phase==='allocate'||phase==='attribute-constructor')assert.equal(data.attributes,undefined);else assert.equal(data.attributes,f.created[0]);
+ assert.equal(data.statusResistable,phase==='allocate'||phase==='attribute-constructor'||phase==='attribute-barrier'?99:2);assert.equal(data.maxStackCnt,phase==='base'?1:99);
+});
+test('BuffData constructor rejects a null attribute allocation before initialization and a null destination after it',()=>{
+ const f=buffDataConstructorFixture();f.options.allocateAttributes=()=>null;assert.throws(()=>f.api()({}),/null native object/);assert.deepEqual(f.events,[]);
+ const g=buffDataConstructorFixture();assert.throws(()=>g.api()(null),/null native object/);assert.deepEqual(g.events,['allocate',['attribute-base',g.created[0]]]);
+});
+test('BuffData constructor allows nested construction with independent attribute allocations',()=>{
+ const f=buffDataConstructorFixture(),outer={},inner={};let nested=false,ctor;f.options.initializeAttributes=()=>{if(!nested){nested=true;ctor(inner);}};ctor=f.api();ctor(outer);assert.notEqual(outer.attributes,inner.attributes);assert.equal(outer.maxStackCnt,1);assert.equal(inner.maxStackCnt,1);assert.equal(f.created.length,2);
+});
+test('BuffData.DeepClone composes zeroed allocation and concrete default constructors before copying',()=>{
+ const f=buffDataCloneFixture();composeBuffDataConstructor(f);f.source.blackboard=null;f.source.templateKey='configured';const clone=f.clone()(f.source);assert.equal(clone.templateKey,'configured');assert.equal(clone.statusResistable,255);assert.equal(clone.blackboard,null);assert.equal(Object.keys(clone).length,37);assert.ok(f.events.indexOf('data-base')<f.events.indexOf('attributes'));assert.deepEqual(clone.attributes,f.source.attributes);
+});
 
 function buffDataCloneFixture(){
  const evidence=JSON.parse(readFileSync(new URL('../data/candidates/arkpedia-windows-fear-self-death-source.json',import.meta.url),'utf8')).modeSwitch.buffNotification.newBuff.buffDataClone,
@@ -106,7 +146,7 @@ for(const phase of ['allocateData','initializeData','cloneAttributes','clonePrio
  const f=buffDataCloneFixture(),error=Error(phase);f.options[phase]=()=>{throw error;};assert.throws(()=>f.clone()(f.source),actual=>actual===error);if(phase==='initializeBlackboard'){assert.equal(f.target.blackboard,null);assert.equal(f.target.buffKey,f.source.buffKey);}
 });
 for(const empty of [false,true])test('BuffDB clone/merge composes typed DataPair storage and growth with '+(empty?'null':'populated')+' source blackboard',()=>{
- const f=buffDataCloneFixture(),m=f.lists;f.source.templateKey='empty';if(empty)f.source.blackboard=null;const original=f.source.blackboard;m.options.addWithResize=m.growth().addWithResize;const storage=m.api(),out={value:null},template={},
+ const f=buffDataCloneFixture(),m=f.lists;composeBuffDataConstructor(f);f.source.templateKey='empty';if(empty)f.source.blackboard=null;const original=f.source.blackboard;m.options.addWithResize=m.growth().addWithResize;const storage=m.api(),out={value:null},template={},
   merge=fearProjectileBlackboardMerge({allocateList:()=>({_items:null,_size:0,_version:0}),initializeList:storage.initialize,readCount:storage.readCount,readItem:storage.getItem,setItem:storage.setItem,addItem:storage.add,
    compareIgnoreCase:(a,b)=>a.toLowerCase()===b.toLowerCase()?0:1}),database=fearProjectileBuffDatabase({tryGetBuffData:(_key,ref)=>{ref.value=f.source;return true;},tryGetTemplate:(key,ref)=>{assert.equal(key,'empty');ref.value=template;return true;},deepClone:f.clone(),mergeBlackboard:merge});
  assert.equal(database.tryGetKey('key',out,m.list([m.pair('atk',2),m.pair('HP',3)])),true);assert.equal(out.value.template,template);assert.equal(out.value.data,f.target);assert.notEqual(out.value.data,f.source);assert.equal(out.value.data.blackboard._size,2);
