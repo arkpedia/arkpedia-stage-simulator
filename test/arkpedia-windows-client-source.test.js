@@ -533,6 +533,21 @@ test('context snapshot source binds distinct capture/push orders and closed refe
  assert.equal(q.nativeContextStackEffectsVerified,false);assert.equal(q.nativeNestedValueCopiesVerified,false);assert.equal(q.liveContextSnapshotsVerified,false);
 });
 
+test('context value source binds complete Modifier and AttackInfo instance fields, closed references and primitive widths',()=>{
+ const q=read('data/candidates/arkpedia-windows-fear-self-death-source.json').modeSwitch.buffNotification.newBuff.contextStructLayouts;
+ assert.deepEqual(q.layouts.map(t=>[t.typeIndex,t.name,t.width,t.boxedHeaderSize]),[[9524,'Modifier',136,16],[8913,'AttackInfo',40,16]]);
+ assert.deepEqual(q.layouts[0].fields.map(f=>[f.name,f.unboxedOffset]),[['m_source',0],['m_target',16],['m_value',32],['ignoreForSp',40],['sharedFlagMask',44],['ignoreMissFlag',48],['ignoreCancelReasonMask',52],['realDelta',56],['extraData',64],['customKeys',72],['<targetType>k__BackingField',80],['<deltaType>k__BackingField',84],['<damageType>k__BackingField',88],['<applyWay>k__BackingField',92],['<cancelReason>k__BackingField',96],['<attackType>k__BackingField',100],['<elementType>k__BackingField',104],['<originAtk>k__BackingField',112],['<originValue>k__BackingField',120],['<playerSide>k__BackingField',128]]);
+ assert.deepEqual(q.layouts[1].fields.map(f=>[f.name,f.unboxedOffset]),[['damageType',0],['originAtk',8],['atk',16],['atkScale',24],['atkAddition',32]]);
+ for(const field of q.layouts.flatMap(t=>t.fields)){assert.equal(field.typeBits&16,0);assert.equal(field.offset-field.unboxedOffset,16);}
+ assert.deepEqual(q.genericFields.map(f=>[f.field,f.definitionIndex,f.definitionName,f.argument.typeIndex,f.argument.name,f.argument.kind]),[['m_source',1324,'ObjectPtr`1',9044,'Entity',18],['m_target',1324,'ObjectPtr`1',9044,'Entity',18],['customKeys',38190,'List`1',36784,'String',14]]);
+ for(const field of q.genericFields){assert.equal(Buffer.from(field.definitionTypeHex,'hex').length,16);assert.equal(Buffer.from(field.argument.typeHex,'hex').length,16);}
+ assert.equal(q.enumTypes.length,10);assert.ok(q.enumTypes.every(t=>((t.underlyingField.typeBits>>>16)&255)===8));
+ assert.deepEqual(q.fpType.instanceFields.map(f=>[f.name,f.offset,(f.typeBits>>>16)&255]),[['_serializedValue',16,10]]);
+ const modifierField=name=>q.layouts[0].fields.find(f=>f.name===name),fpFields=[...['m_value','realDelta','extraData','<originAtk>k__BackingField','<originValue>k__BackingField'].map(modifierField),...q.layouts[1].fields.filter(f=>f.name!=='damageType')];
+ assert.ok(fpFields.every(f=>f.typeData===34370&&((f.typeBits>>>16)&255)===17));assert.equal((modifierField('ignoreForSp').typeBits>>>16)&255,2);assert.equal((modifierField('sharedFlagMask').typeBits>>>16)&255,8);
+ for(const name of ['nativePaddingAndByteEncodingVerified','nativeGcAndPointerAddressEffectsVerified','liveTypedContextValuesVerified'])assert.equal(q[name],false);
+});
+
 test('native fast-copy source binds reviewed field readers, typed branches, byte movement and write notification',()=>{
  const q=read('data/candidates/arkpedia-windows-fear-self-death-source.json').modeSwitch.buffNotification.newBuff.managedArrayCopy,flow=q.fastCopyFlow;
  assert.deepEqual(flow.reviewedLeaves.map(m=>[m.name,m.entryRva]),[['length',0x7990],['valueType',0x428be0],['flagsBit2',0x428890],['unbox',0x388ec0],['elementSizeThunk',0x445270],['elementSize',0x4465f0]]);

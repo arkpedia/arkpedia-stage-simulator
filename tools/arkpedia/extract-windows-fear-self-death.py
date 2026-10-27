@@ -1976,6 +1976,52 @@ result['modeSwitch']['buffNotification']['newBuff']['managedArrayCopy']['fastCop
     'nativeSubclassAndCastEffectsVerified': False, 'nativeMemoryAndGcEffectsVerified': False,
     'nativeExceptionConstructionVerified': False, 'liveFastCopyVerified': False,
 }
+context_struct_layouts = []
+for type_index, width, expected in [(9524, 136, [
+    ('m_source', 0), ('m_target', 16), ('m_value', 32), ('ignoreForSp', 40), ('sharedFlagMask', 44),
+    ('ignoreMissFlag', 48), ('ignoreCancelReasonMask', 52), ('realDelta', 56), ('extraData', 64), ('customKeys', 72),
+    ('<targetType>k__BackingField', 80), ('<deltaType>k__BackingField', 84), ('<damageType>k__BackingField', 88),
+    ('<applyWay>k__BackingField', 92), ('<cancelReason>k__BackingField', 96), ('<attackType>k__BackingField', 100),
+    ('<elementType>k__BackingField', 104), ('<originAtk>k__BackingField', 112), ('<originValue>k__BackingField', 120), ('<playerSide>k__BackingField', 128)]),
+    (8913, 40, [('damageType', 0), ('originAtk', 8), ('atk', 16), ('atkScale', 24), ('atkAddition', 32)])]:
+    t = v['types'][type_index]
+    instance_fields = [{**f, 'unboxedOffset': f['offset'] - 16} for f in c['fields'](t) if not f['typeBits'] & 16]
+    assert [(f['name'], f['unboxedOffset']) for f in instance_fields] == expected
+    context_struct_layouts.append({'typeIndex': type_index, 'namespace': t['namespace'], 'name': t['name'], 'width': width,
+        'boxedHeaderSize': 16, 'fields': instance_fields})
+context_struct_generics = []
+for name, expected_definition, expected_argument, expected_kind in [('m_source', 1324, 9044, 18), ('m_target', 1324, 9044, 18), ('customKeys', 38190, 36784, 14)]:
+    field = c['unique'](lambda f: f['name'] == name, context_struct_layouts[0]['fields'])
+    assert (field['typeBits'] >> 16) & 255 == 21
+    generic = v['offset'](field['typeData'])
+    definition_pos = v['offset'](v['quad'](v['b'], generic))
+    definition_index = v['quad'](v['b'], definition_pos)
+    assert definition_index == expected_definition
+    inst = v['offset'](v['quad'](v['b'], generic + 8))
+    assert v['quad'](v['b'], inst) == 1
+    args = v['offset'](v['quad'](v['b'], inst + 8))
+    argument_pos = v['offset'](v['quad'](v['b'], args))
+    argument_index, argument_bits = v['quad'](v['b'], argument_pos), v['uint'](v['b'], argument_pos + 8)
+    assert argument_index == expected_argument and (argument_bits >> 16) & 255 == expected_kind
+    context_struct_generics.append({'field': name, 'definitionIndex': definition_index, 'definitionName': v['types'][definition_index]['name'],
+        'definitionTypeHex': v['b'][definition_pos:definition_pos + 16].hex(),
+        'argument': {'typeIndex': argument_index, 'name': v['types'][argument_index]['name'], 'kind': expected_kind,
+            'typeHex': v['b'][argument_pos:argument_pos + 16].hex()}})
+context_struct_enums = []
+for index in [8705, 9523, 9521, 9519, 8704, 34298, 9522, 9520, 8706, 34292]:
+    t = v['types'][index]
+    underlying = c['unique'](lambda f: f['name'] == 'value__', c['fields'](t))
+    assert (underlying['typeBits'] >> 16) & 255 == 8
+    context_struct_enums.append({'typeIndex': index, 'name': t['name'], 'underlyingField': underlying})
+fp_instance_fields = [f for f in c['fields'](v['types'][34370]) if not f['typeBits'] & 16]
+assert len(fp_instance_fields) == 1 and fp_instance_fields[0]['name'] == '_serializedValue' and fp_instance_fields[0]['offset'] == 16
+assert (fp_instance_fields[0]['typeBits'] >> 16) & 255 == 10
+result['modeSwitch']['buffNotification']['newBuff']['contextStructLayouts'] = {
+    'layouts': context_struct_layouts, 'genericFields': context_struct_generics, 'enumTypes': context_struct_enums,
+    'fpType': {'typeIndex': 34370, 'name': 'FP', 'namespace': 'Torappu', 'instanceFields': fp_instance_fields},
+    'nativePaddingAndByteEncodingVerified': False, 'nativeGcAndPointerAddressEffectsVerified': False,
+    'liveTypedContextValuesVerified': False,
+}
 context_stack_canonical = []
 for index in [24503, 24504, 24505, 24506, 24513, 24514, 24515, 24509, 24510, 24511, 24517, 24518, 24519]:
     spec = priority['specification'](index)

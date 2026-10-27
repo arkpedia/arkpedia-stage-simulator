@@ -1402,6 +1402,39 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
 
+### Complete Modifier and AttackInfo field projections
+
+The203 ordinary methods and earlier byte evidence remain unchanged. A new
+layout record retains all20 instance fields of Torappu.Battle.Modifier and all
+five AttackInfo fields, excluding static constants and hotfix delegates.
+Their boxed metadata offsets are related to the136/40-byte native stack copies
+by the16-byte object header. Closed generic field records bind both Modifier
+pointers to ObjectPtr<Entity> and customKeys to List<String>. All ten enum
+underlying fields are signed Int32; Torappu.FP's sole instance field is the
+signed Int64 _serializedValue. No uninflated generic field offsets are used
+to invent ObjectPtr storage layout.
+
+`fearProjectileContextStructValues` provides complete field copies and fresh
+zero defaults. Modifier copies detach both pointer records while preserving
+their object references and UInt32 cached UIDs, retain the custom-key list
+reference, and copy every raw FP, Boolean, mask and enum field. AttackInfo
+copies all five fields. Raw FP values remain signed64-bit BigInts; arbitrary
+Int32 enum bit patterns are preserved without domain normalization. Empty
+values are zero-initialized structs, including atkScale=0, rather than constructor
+results or Modifier.EMPTY. Extra JavaScript properties are outside the layout.
+
+The ten-stack action fixture now uses these complete field projections through
+snapshots, managed stacks, resize, fast-copy and guard disposal. Returned values
+retain pre-disposal FP/pointer fields even after frame mutation, while custom-key
+list identity remains shared. Tests also cover fresh zero records, independent
+pointer copies, signed extremes, unknown enums, missing fields and lossy numeric
+inputs. Native padding/noncanonical Boolean bytes, pointer addresses, GC state,
+full runtime integration and controller/stage/frame parity remain unverified.
+No source/support/receipt/catalogue gate changes or stage promotion follow;
+this checkpoint stays local outside pending upload authorization.
+
+All1188 focused native/fear/family/miner tests pass for this field-layout checkpoint.
+
 ### Native Array.FastCopy control flow
 
 The203 ordinary methods and earlier fast-copy body remain unchanged. Six

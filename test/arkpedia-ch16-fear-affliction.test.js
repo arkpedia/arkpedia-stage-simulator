@@ -44,6 +44,33 @@ import {fearProjectileRunBuffActions} from '../server/sim/content/chapter16-fear
 import {fearProjectileContextGuards} from '../server/sim/content/chapter16-fear-context-guard.js';
 import {fearProjectileContextSnapshots} from '../server/sim/content/chapter16-fear-context-snapshot.js';
 import {fearProjectileContextPointerStacks,fearProjectileContextValueStacks,fearProjectileManagedReferenceStacks,fearProjectileManagedValueStacks,fearProjectileManagedPointerStacks,fearProjectileManagedArrayResize,fearProjectileManagedArrayCopy,fearProjectileNativeArrayFastCopy} from '../server/sim/content/chapter16-fear-context-stacks.js';
+import {fearProjectileContextStructValues} from '../server/sim/content/chapter16-fear-context-values.js';
+
+test('native context struct defaults are fresh zero values rather than constructor or EMPTY constants',()=>{
+ const values=fearProjectileContextStructValues(),a=values.zeroModifier(),b=values.zeroModifier(),attack=values.zeroAttackInfo();
+ assert.equal(Object.keys(a).length,20);assert.equal(a.m_value,0n);assert.equal(a.ignoreForSp,false);assert.equal(a.customKeys,null);assert.deepEqual(a.m_source,{obj:null,cachedUid:0});
+ assert.notEqual(a.m_source,a.m_target);assert.notEqual(a.m_source,b.m_source);a.m_source.cachedUid=5;assert.equal(b.m_source.cachedUid,0);
+ assert.deepEqual(attack,{damageType:0,originAtk:0n,atk:0n,atkScale:0n,atkAddition:0n});
+});
+test('native Modifier field copies detach pointers but retain objects and custom-key list identity',()=>{
+ const values=fearProjectileContextStructValues(),obj={uid:0},keys=['key'],original=values.zeroModifier();
+ original.m_source={obj,cachedUid:0xffffffff};original.m_target={obj,cachedUid:0};original.customKeys=keys;original.ignoreForSp=true;
+ let raw=-9223372036854775808n,integer=-2147483648;for(const field of Object.keys(original)){if(typeof original[field]==='bigint')original[field]=raw++;if(typeof original[field]==='number')original[field]=integer++;}
+ original.extraJsProperty={};const copy=values.copyModifier(original);
+ for(const field of Object.keys(values.zeroModifier()))if(!['m_source','m_target','customKeys'].includes(field))assert.equal(copy[field],original[field]);
+ assert.equal(copy.m_source.obj,obj);assert.equal(copy.m_source.cachedUid,0xffffffff);assert.notEqual(copy.m_source,original.m_source);assert.notEqual(copy.m_target,original.m_target);assert.equal(copy.customKeys,keys);assert.equal(Object.hasOwn(copy,'extraJsProperty'),false);
+ copy.m_source.cachedUid=1;copy.m_target.obj=null;copy.m_value=2n;copy.customKeys.push('shared');assert.equal(original.m_source.cachedUid,0xffffffff);assert.equal(original.m_target.obj,obj);assert.equal(original.m_value,-9223372036854775808n);assert.deepEqual(original.customKeys,['key','shared']);
+});
+test('native AttackInfo copy preserves all signed raw FP bits and unchecked Int32 enum values',()=>{
+ const values=fearProjectileContextStructValues(),original={damageType:-2147483648,originAtk:-9223372036854775808n,atk:9223372036854775807n,atkScale:1n,atkAddition:-1n},copy=values.copyAttackInfo(original);
+ assert.deepEqual(copy,original);assert.notEqual(copy,original);copy.atk=0n;assert.equal(original.atk,9223372036854775807n);
+});
+test('native context struct copies reject incomplete or lossy field projections',()=>{
+ const values=fearProjectileContextStructValues(),modifier=values.zeroModifier(),attack=values.zeroAttackInfo();
+ assert.throws(()=>values.copyModifier({m_value:0n}),/complete native fields/);assert.throws(()=>values.copyAttackInfo({...attack,atk:1}),/Int64 raw FP/);
+ assert.throws(()=>values.copyAttackInfo({...attack,atk:1n<<63n}),/Int64 raw FP/);assert.throws(()=>values.copyModifier({...modifier,sharedFlagMask:2**31}),/Int32/);
+ assert.throws(()=>values.copyModifier({...modifier,ignoreForSp:0}),/native Boolean/);assert.throws(()=>values.copyModifier({...modifier,m_source:{obj:null,cachedUid:2**32}}),/UInt32/);
+});
 
 function nativeFastCopyFixture(){
  const objectClass={typeBits:0,flags132:0},klass={rank:1,elementClass:objectClass,elementSize:8},events=[],
@@ -164,6 +191,7 @@ test('managed ObjectPtr storage captures pointer fields before resizing and clea
 function managedActionContextFixture(){
  const f=actionDispatchFixture(),g=contextGuardsFixture(),pointers=fearProjectileContextPointers({readUid:value=>value.uid,
   isDestroyedOrNull:value=>value==null||value.destroyed===true,isActive:()=>true}),
+  structs=fearProjectileContextStructValues(),
   resize=(copyValue,defaultValue,width=8)=>{
    const objectClass={typeBits:0,flags132:0},klass={rank:1,elementClass:width===8?objectClass:{typeBits:-2147483648,flags132:0},elementSize:width},
     unexpected=()=>{throw Error('unexpected typed-array conversion');},tryFastCopy=fearProjectileNativeArrayFastCopy({objectClass,readArrayClass:()=>klass,
@@ -173,7 +201,9 @@ function managedActionContextFixture(){
    return fearProjectileManagedArrayResize({allocateArray:length=>Array.from({length},defaultValue),copyArray:fearProjectileManagedArrayCopy({readRank:()=>1,tryFastCopy,copyFallback:unexpected})});
   },
   ptr=fearProjectileManagedPointerStacks({copyPointer:pointers.copy,resizeArray:resize(pointers.copy,()=>({obj:null,cachedUid:0}),16)}),refs=fearProjectileManagedReferenceStacks({resizeArray:resize(value=>value,()=>null)}),
-  mf=managedValueFixture('Modifier'),af=managedValueFixture('AttackInfo'),modifier=fearProjectileManagedValueStacks({...mf.options,resizeArray:resize(mf.options.copyValue,mf.options.defaultValue,136)}),attack=fearProjectileManagedValueStacks({...af.options,resizeArray:resize(af.options.copyValue,af.options.defaultValue,40)}),
+  mf={options:{copyValue:structs.copyModifier,defaultValue:structs.zeroModifier},value:{...structs.zeroModifier(),m_value:7n,customKeys:['context-key'],m_source:{obj:{uid:300},cachedUid:300}}},
+  af={options:{copyValue:structs.copyAttackInfo,defaultValue:structs.zeroAttackInfo},value:{...structs.zeroAttackInfo(),atk:7n}},
+  modifier=fearProjectileManagedValueStacks({...mf.options,specialization:'Modifier',resizeArray:resize(mf.options.copyValue,mf.options.defaultValue,136)}),attack=fearProjectileManagedValueStacks({...af.options,specialization:'AttackInfo',resizeArray:resize(af.options.copyValue,af.options.defaultValue,40)}),
   pointerFields=new Set(['m_source','m_target','m_buff','m_projectile','m_tile','m_mainBuff']),
   wrap=(api,defaultValue,copyValue)=>fearProjectileContextValueStacks({readCount:api.count,peekStored:api.peek,popStored:api.pop,defaultValue,copyValue}),
   pointerContext=fearProjectileContextPointerStacks({readCount:ptr.count,peekStored:ptr.peek,popStored:ptr.pop,pushStored:ptr.push,wrapPointer:pointers.capture,copyPointer:pointers.copy,lockPointer:pointers.lock}),
@@ -216,9 +246,21 @@ for(const mode of ['success','exception','cancel','nested','deep-nested'])test('
  else{const result=f.adapter().run(24,true);if(mode==='cancel')assert.equal(result,null);else{assert.equal(result.source,f.source);assert.equal(result.target,f.owner);assert.equal(result.buff,f.buff);assert.equal(result.tile,f.owner.tile);}}
  assert.ok(g.fields.every(field=>g.context[field]._size===1));assert.deepEqual(snapshots.takeSnapshot(),prior);
  for(const field of g.fields){const stack=g.context[field];if(pointerFields.has(field))assert.deepEqual(stack._array[1],{obj:null,cachedUid:0});
-  else if(field==='m_modifier')assert.equal(stack._array[1].owner,null);else if(field==='m_atkInfo')assert.equal(stack._array[1].raw[0],7);else assert.equal(stack._array[1],null);}
+  else if(field==='m_modifier')assert.equal(stack._array[1].customKeys,null);else if(field==='m_atkInfo')assert.equal(stack._array[1].atk,7n);else assert.equal(stack._array[1],null);}
  guards.dispose({m_context:g.context});const versions=g.fields.map(field=>g.context[field]._version);guards.dispose({m_context:g.context});assert.deepEqual(g.fields.map(field=>g.context[field]._version),versions);
- const empty=snapshots.takeSnapshot();assert.equal(empty.source,null);assert.equal(empty.ability,null);assert.ok(empty.modifier.raw.every(v=>v===0));assert.ok(empty.atkInfo.raw.every(v=>v===0));
+ const empty=snapshots.takeSnapshot();assert.equal(empty.source,null);assert.equal(empty.ability,null);assert.deepEqual(empty.modifier,fearProjectileContextStructValues().zeroModifier());assert.deepEqual(empty.atkInfo,fearProjectileContextStructValues().zeroAttackInfo());
+});
+test('action snapshot copies retain complete native value fields across guard disposal without deep-cloning shared keys',()=>{
+ const {f,g,snapshots,prior}=managedActionContextFixture(),keys=prior.modifier.customKeys;
+ f.options.runActionArray=()=>{
+  const modifier=g.context.m_modifier._array[1],attack=g.context.m_atkInfo._array[1];modifier.m_value=-9223372036854775808n;modifier.ignoreForSp=true;modifier.sharedFlagMask=-2147483648;
+  modifier['<originAtk>k__BackingField']=3n;attack.atk=9223372036854775807n;const snapshot=snapshots.takeSnapshot();
+  modifier.m_value=0n;modifier.m_source.cachedUid=99;attack.atk=0n;return snapshot;
+ };
+ const result=f.adapter().run(24,true);assert.equal(result.modifier.m_value,-9223372036854775808n);assert.equal(result.modifier.ignoreForSp,true);assert.equal(result.modifier.sharedFlagMask,-2147483648);
+ assert.equal(result.modifier['<originAtk>k__BackingField'],3n);assert.equal(result.modifier.m_source.cachedUid,300);assert.equal(result.atkInfo.atk,9223372036854775807n);
+ assert.deepEqual(snapshots.takeSnapshot(),prior);result.modifier.m_source.cachedUid=1;result.modifier.customKeys.push('shared-after-return');
+ assert.equal(snapshots.takeSnapshot().modifier.m_source.cachedUid,300);assert.equal(result.modifier.customKeys,keys);assert.deepEqual(keys,['context-key','shared-after-return']);
 });
 test('managed pointer storage retains stale UID fields while context locking rejects a recycled source',()=>{
  const {f,g,snapshots,prior}=managedActionContextFixture();f.options.runActionArray=()=>{f.source.uid++;assert.equal(g.context.m_source._array[1].cachedUid,100);return snapshots.takeSnapshot();};
