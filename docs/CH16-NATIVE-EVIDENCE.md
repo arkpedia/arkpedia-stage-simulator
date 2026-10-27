@@ -569,7 +569,7 @@ inputs and stage support receipts remain integration obligations.
 ### Self-death template action conditions
 
 `extract-windows-fear-self-death.py --check` retains the original
-`fearpj_m0_t[switch_to_die]` template and 190 complete default node/runner/entity/mode/FSM
+`fearpj_m0_t[switch_to_die]` template and 191 complete default node/runner/entity/mode/FSM
 methods. The chain checks unset LEVITATE, FROZEN, STUNNED and SLEEPING on
 BUFF_OWNER, switches TARGET to mode1 with FSM restart, creates the immunity
 buff on BUFF_OWNER, then runs AlwaysNext and InstantKill on TARGET.
@@ -1401,6 +1401,40 @@ All775 focused native/fear/family/miner tests pass; --check reproduces the
 124-method bundle. Continuation40545156330 at3b7defc7 passed; existing
 full40540699414 ate8664584 is still active. Native config effects, full Reset
 and live controller/stage integration remain open; all gates remain unchanged.
+
+### Concrete buff attribute provider and load-to-evaluation composition
+
+The191-method bundle adds complete Buff.GetValue evidence, reusing the retained
+get_isEnabled body. The buffAttributeProvider record binds actual-enable at
+0x1ec, all four modifier-array offsets, ordered output writes, return branches
+and the original1.0 neutral-scaler constant. The default getter reads actual
+enable directly; no manual/late/finished or attribute-mask condition is added.
+Native interface/hotfix dispatch remains explicitly unverified.
+
+`fearProjectileBuffAttributeProvider` returns the selected addition, multiplier,
+final addition and final scaler from separate fresh array reads when enabled.
+It retains earlier output writes on later bounds/null failures. Disabled buffs
+write finalAddition0, multiplier0, addition0, finalScaler1 in native order and
+return false without reading arrays. Invalid enum bounds are therefore not
+checked by this disabled branch. The existing provider out storage is reused.
+Actual enable is sampled once; reentrant writes and lifecycle cancellation
+retain native partial ordering.
+
+Tests cover actual-vs-manual/finished behavior, neutral output order, live array
+replacement after output writes, partial failures, null output precedence,
+getter sampling, cancellation and nested calls. A composed loaded buff now runs
+concrete attribute loading, enable/disable, modifier registration/removal,
+dirty marking, provider reads and evaluation: an addition raises the base stat
+from100 to102 and disabling restores100. The fixture's set/encryption adapters
+do not certify native HashSet equality or obscured conversion.
+All1087 focused native/fear/family/miner tests pass; --check reproduces191
+methods. This checkpoint is local. Approved0524e2b1 continuation passed on
+attempt2; original full40558578137 remains active.
+
+Native interface/hotfix dispatch, HashSet iteration/equality, obscured values,
+range storage, actions, effect refresh, snapshot consumption and full controller/
+stage/frame integration remain open. Source/support/receipt/catalogue gates
+remain unchanged and all new stages remain test-only.
 
 ### Native attribute evaluation and cached reads
 

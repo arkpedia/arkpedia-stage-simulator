@@ -1615,6 +1615,29 @@ result['modeSwitch']['buffNotification']['newBuff']['attributeValues'] = {
     'cacheCaptureRva': 0x3959617, 'cacheEncodeCallRva': 0x3959629, 'cacheCopyWrites': [0x3959640, 0x3959649, 0x3959653],
     'nativeProviderDispatchVerified': False, 'nativeRangeStorageVerified': False, 'nativeValueConversionVerified': False, 'liveAttributeValuesVerified': False,
 }
+for name, entry in [('GetValue', 0x39aabd0), ('get_isEnabled', 0x39b69e0)]:
+    row = c['unique'](lambda r: r['name'] == name, buff['methods'])
+    retained = c['method'](buff, row)
+    assert retained['entryRva'] == entry
+    if not any(m['index'] == row['index'] and m['image'] == 'Assembly-CSharp.dll' for m in methods):
+        methods.append(retained)
+provider_one_load = 0x39aad2a
+pos = v['offset'](v['image_base'] + provider_one_load)
+assert v['b'][pos:pos + 4] == bytes.fromhex('f30f1005')
+target = provider_one_load + 8 + struct.unpack_from('<i', v['b'], pos + 4)[0]
+provider_one_bytes = v['b'][v['offset'](v['image_base'] + target):v['offset'](v['image_base'] + target) + 4]
+assert provider_one_bytes.hex() == '0000803f'
+result['modeSwitch']['buffNotification']['newBuff']['buffAttributeProvider'] = {
+    'fields': [c['unique'](lambda f: f['name'] == name, c['fields'](buff)) for name in
+        ['m_isActuallyEnabled', 'm_attributeAdditions', 'm_attributeMultipliers', 'm_attributeFinalAdditions', 'm_attributeFinalScalers']],
+    'one': {'loadRva': provider_one_load, 'valueRva': target, 'hex': provider_one_bytes.hex(), 'value': 1.0},
+    'enabledCallRva': 0x39aac5e, 'getterActualReadRva': 0x39b6a37,
+    'arrayReads': [0x39aac7c, 0x39aac9d, 0x39aacbb, 0x39aacde],
+    'enabledOutputWrites': [0x39aac9a, 0x39aacb8, 0x39aacdb, 0x39aacfe],
+    'disabledOutputWrites': [0x39aad32, 0x39aad35, 0x39aad38, 0x39aad45],
+    'enabledTrueRva': 0x39aad01, 'disabledFalseRva': 0x39aad48,
+    'nativeInterfaceDispatchVerified': False, 'nativeProviderHotfixVerified': False, 'liveBuffProviderVerified': False,
+}
 for index in [147561, 147566, 147567, 147558, 147559, 147563, 147564, 147568, 147569]:
     spec = priority['specification'](index)
     assert spec['declaringTypeIndex'] == pool['index']

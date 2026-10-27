@@ -39,6 +39,7 @@ import {fearProjectileAttributeModifiers,fearProjectileAbnormalDirty,fearProject
 import {fearProjectileBuffCombos,FEAR_COMBO_FLAG_MASKS} from '../server/sim/content/chapter16-fear-buff-combos.js';
 import {fearProjectileRuntimeSnapshot,fearProjectileTakeBuffSnapshot} from '../server/sim/content/chapter16-fear-buff-snapshot.js';
 import {fearProjectileAttributeValues} from '../server/sim/content/chapter16-fear-attribute-values.js';
+import {fearProjectileBuffAttributeProvider} from '../server/sim/content/chapter16-fear-buff-provider.js';
 import {fearProjectileBuffRecyclePool,fearProjectileDefaultBuffPool} from '../server/sim/content/chapter16-fear-buff-pool.js';
 import {fearProjectileArrivalLayerMask} from '../server/sim/content/chapter16-fear-layers.js';
 import {fearProjectileAttackWait,fearProjectileWaitFrameCount} from '../server/sim/content/chapter16-fear-cast-wait.js';
@@ -51,6 +52,58 @@ import { chapter16Shadow } from '../server/sim/content/chapter16-shadow.js';
 const read=p=>JSON.parse(readFileSync(new URL('../'+p,import.meta.url)));
 const parentKey='feawpj_a[mcreep_fear]';
 const fpOne=1n<<32n;
+
+function buffProviderFixture(){
+ const buff={m_isActuallyEnabled:true,m_isManuallyEnabled:false,m_isLateEnabled:false,m_isFinished:true,
+  m_attributeAdditions:[2n],m_attributeMultipliers:[3n],m_attributeFinalAdditions:[4n],m_attributeFinalScalers:[5n]},state={active:true};
+ const options={buff,isActive:()=>state.active};return{buff,state,options,adapter:()=>fearProjectileBuffAttributeProvider(options)};
+}
+test('buff provider uses actual enable state and returns all four native array entries without extra mask/finish gates',()=>{
+ const f=buffProviderFixture(),out={};assert.equal(f.adapter().getValue(0,out),true);
+ assert.deepEqual(out,{addition:2n,multiplier:3n,finalAddition:4n,finalScaler:5n});
+});
+test('disabled buff provider resets outputs in native order without touching value arrays or checking their bounds',()=>{
+ const f=buffProviderFixture(),writes=[],out={};f.buff.m_isActuallyEnabled=false;
+ for(const name of ['addition','multiplier','finalAddition','finalScaler'])Object.defineProperty(out,name,{set:value=>writes.push([name,value])});
+ f.buff.m_attributeAdditions=null;assert.equal(f.adapter().getValue(-1,out),false);
+ assert.deepEqual(writes,[['finalAddition',0n],['multiplier',0n],['addition',0n],['finalScaler',fpOne]]);
+});
+test('buff provider rereads each native array after preceding output writes',()=>{
+ const f=buffProviderFixture(),out={set addition(value){assert.equal(value,2n);f.buff.m_attributeMultipliers=[9n];}};
+ assert.equal(f.adapter().getValue(0,out),true);assert.equal(out.multiplier,9n);
+});
+test('buff provider retains earlier outputs on a later missing array and dereferences output storage after the first array lookup',()=>{
+ const f=buffProviderFixture(),out={};f.buff.m_attributeFinalAdditions=null;
+ assert.throws(()=>f.adapter().getValue(0,out),/null native value array/);assert.deepEqual(out,{addition:2n,multiplier:3n});
+ const g=buffProviderFixture();g.buff.m_attributeAdditions=null;assert.throws(()=>g.adapter().getValue(0,null),/null native value array/);
+ const h=buffProviderFixture();assert.throws(()=>h.adapter().getValue(0,null),/null native output/);
+});
+test('buff provider uses the enable getter sample and stops on lifecycle cancellation after an output write',()=>{
+ const f=buffProviderFixture();f.options.readIsEnabled=buff=>{buff.m_isActuallyEnabled=false;return true;};const out={};assert.equal(f.adapter().getValue(0,out),true);
+ const g=buffProviderFixture(),partial={set addition(_value){g.state.active=false;}};assert.equal(g.adapter().getValue(0,partial),null);assert.equal(partial.multiplier,undefined);
+});
+test('buff provider allows separate nested output writes without suppressing native reads',()=>{
+ const f=buffProviderFixture();let adapter,nested;const out={set addition(_value){nested={};adapter.getValue(0,nested);}};
+ adapter=f.adapter();assert.equal(adapter.getValue(0,out),true);assert.equal(nested.finalScaler,5n);assert.equal(out.finalScaler,5n);
+});
+test('loaded buff modifiers compose concrete activation, registration, dirty marking and attribute evaluation',()=>{
+ const f=attributeValuesFixture(),enabled=buffEnabledFixture(),native=modifierFixture(),combo=comboFixture(),buff=enabled.buff;
+ Object.assign(f.attributes,native.attributes);f.attributes.m_abnormalComboMgr=combo.manager;
+ for(const field of ['m_attributeAdditions','m_attributeMultipliers','m_attributeFinalAdditions','m_attributeFinalScalers'])buff[field]=Array(38).fill(0n);
+ const data={attributeModifiers:[{attributeType:0,formulaItem:0,value:2,loadFromBlackboard:false,fetchBaseValueFromSourceEntity:false}]};
+ fearProjectileLoadBuffAttributes({buff,attributes:data,stackCount:1,isActive:()=>true,tryGetFP:()=>{throw Error('unexpected lookup');},getBlackboardKey:()=>{throw Error('unexpected key');},
+  readSource:()=>null,isDestroyedOrNull:()=>true,readSourceAttribute:()=>{throw Error('unexpected source attribute');},captureSnapshot:()=>{throw Error('unexpected snapshot');}}).run();
+ const readMask=(value,slot)=>value[['attributeMask','abnormalFlagMask','abnormalImmuneMask','abnormalAntiMask','abnormalComboMask','abnormalComboImmuneMask'][slot]],
+  dirty=fearProjectileMarkAttributeDirty({attributes:f.attributes,isActive:()=>true,decodeCachedValue:()=>{throw Error('unexpected conversion');},invokeDelegate:()=>{}});
+ Object.assign(native.options,{attributes:f.attributes,readMask,pushCombo:(_manager,value,immune)=>combo.adapter().push(value,immune),popCombo:(_manager,value,immune)=>combo.adapter().pop(value,immune),
+  markAttributeDirty:(_attrs,index)=>dirty.run(index),calculateAbnormalDirty:(_attrs,value)=>fearProjectileAbnormalDirty({attributes:f.attributes,isActive:()=>true,readMask,invokeDelegate:()=>{}}).run(value)});
+ enabled.options.readAttributes=()=>f.attributes;enabled.options.addModifier=(_attrs,value)=>native.adapter().add(value);enabled.options.removeModifier=(_attrs,value)=>native.adapter().remove(value);
+ f.options.openModifiers=set=>{const iterator=set.values();let current;return{moveNext:()=>{const next=iterator.next();current=next.value;return!next.done;},current:()=>current,dispose:()=>{}};};
+ f.options.getModifierValue=(value,index,out)=>fearProjectileBuffAttributeProvider({buff:value,isActive:()=>true}).getValue(index,out);
+ const values=f.adapter();assert.equal(values.getValue(0),100n*fpOne);
+ enabled.adapter().set(true);assert.equal(f.attributes.m_attributeModifiers[0].has(buff),true);assert.equal(f.attributes.m_dirtyMask,1n);assert.equal(values.getValue(0),102n*fpOne);
+ enabled.adapter().set(false);assert.equal(f.attributes.m_attributeModifiers[0].has(buff),false);assert.equal(values.getValue(0),100n*fpOne);
+});
 
 function attributeValuesFixture(count=38){
  const encode=value=>{const bytes=Buffer.alloc(40);bytes.writeBigInt64LE(value);return bytes;},decode=bytes=>new DataView(bytes.buffer,bytes.byteOffset,bytes.byteLength).getBigInt64(0,true),

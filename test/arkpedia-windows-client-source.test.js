@@ -53,7 +53,7 @@ test('buff activation context binds event0 target to owner and preserves the com
 });
 
 test('self-death source binds the original template and native chain-stop versus AlwaysNext behavior',()=>{
- const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,190);
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json');assert.equal(c.methods.length,191);
  for(const s of Object.values(c.sources))assert.equal(sha(readFileSync(new URL('../'+s.path,import.meta.url))),s.sha256);
  assert.equal(sha(c.template.originalJson),c.template.sha256);assert.equal(c.eventKey,0);
  for(const m of c.methods)for(const ch of m.chunks){
@@ -452,6 +452,20 @@ test('attribute evaluation source binds reusable provider outputs, exact formula
  at(calc,q.cacheCopyWrites[0],'xmmword ptr [rdi + rcx*8 + 0x20], xmm0');at(calc,q.cacheCopyWrites[1],'xmmword ptr [rdi + rcx*8 + 0x30], xmm1');at(calc,q.cacheCopyWrites[2],'qword ptr [rdi + rcx*8 + 0x40], xmm0');
  at(q.clamp,0x5a5c4f2,'0x1851df0c0');at(q.clamp,0x5a5c51b,'0x1851df0f0');
  assert.equal(q.nativeProviderDispatchVerified,false);assert.equal(q.nativeRangeStorageVerified,false);assert.equal(q.nativeValueConversionVerified,false);assert.equal(q.liveAttributeValuesVerified,false);
+});
+
+test('buff provider source binds actual enable state and ordered four-array or neutral output writes',()=>{
+ const c=read('data/candidates/arkpedia-windows-fear-self-death-source.json'),q=c.modeSwitch.buffNotification.newBuff.buffAttributeProvider,
+  m=castMethod(c,'Buff','GetValue'),enabled=castMethod(c,'Buff','get_isEnabled');
+ const at=(method,rva,args)=>assert.ok(instructions(method).some(i=>i.rva===rva&&i.operands===args));
+ assert.equal(m.parameterCount,5);assert.deepEqual(q.fields.map(f=>[f.name,f.offset]),[['m_isActuallyEnabled',0x1ec],['m_attributeAdditions',0x50],
+  ['m_attributeMultipliers',0x48],['m_attributeFinalAdditions',0x58],['m_attributeFinalScalers',0x60]]);
+ assert.equal(q.one.hex,'0000803f');assert.equal(q.one.value,1);at(m,q.enabledCallRva,'0x1839b69e0');at(enabled,q.getterActualReadRva,'eax, byte ptr [rbx + 0x1ec]');
+ for(const [index,args]of ['rax, qword ptr [rbx + 0x50]','rax, qword ptr [rbx + 0x48]','rcx, qword ptr [rbx + 0x58]','rcx, qword ptr [rbx + 0x60]'].entries())at(m,q.arrayReads[index],args);
+ for(const [index,args]of ['qword ptr [rdi], rax','qword ptr [rsi], rax','qword ptr [rax], rcx','qword ptr [rax], rcx'].entries())at(m,q.enabledOutputWrites[index],args);
+ for(const [index,args]of ['qword ptr [rcx], rax','qword ptr [rsi], rax','qword ptr [rdi], rax','qword ptr [rcx], rax'].entries())at(m,q.disabledOutputWrites[index],args);
+ at(m,q.enabledTrueRva,'al, 1');at(m,q.disabledFalseRva,'al, al');
+ assert.equal(q.nativeInterfaceDispatchVerified,false);assert.equal(q.nativeProviderHotfixVerified,false);assert.equal(q.liveBuffProviderVerified,false);
 });
 
 test('native admission source binds signed Int16 counters, combo fallback and Enemy raw-WALK levitation',()=>{
