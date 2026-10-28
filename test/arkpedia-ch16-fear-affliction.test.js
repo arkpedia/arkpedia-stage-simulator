@@ -73,6 +73,68 @@ import {fearProjectileRangedActions,fearProjectileActiveBuffs,fearProjectilePrep
 import {fearProjectileAttachmentFamilyGroup,fearProjectileAbilityAttachments,fearProjectileEntityAttachments} from '../server/sim/content/chapter16-fear-projectile-attachments.js';
 import {fearProjectileActionNodeConstructor,fearProjectileDamageNodeConstructors,fearProjectileNewDamageNode,fearProjectileRangedDamageNode,fearProjectileDamageNodeProperties} from '../server/sim/content/chapter16-fear-projectile-damage-node.js';
 import {fearProjectileAttackDataProperties,fearProjectileMergeAttackScale,fearProjectileCreateDamageNode,fearProjectileAlwaysNextConstructor,fearProjectileBasicAttackData} from '../server/sim/content/chapter16-fear-projectile-attack-data.js';
+import {fearProjectileSetAbilityBlackboard,fearProjectileBaseAbilityData,fearProjectileStandardAbilityData} from '../server/sim/content/chapter16-fear-projectile-base-data.js';
+
+function projectileBaseDataFixture(){
+ const events=[],owner={uid:22},ability={_metadata:{blackboardPrefix:''},_selector:null,m_behaviours:[]},board=new Map([['atk_scale',1]]),data={blackboard:board,familyGroup:0,rangeRadius:0},
+  writeBarrier=(...args)=>events.push(['barrier',...args]),copyOptions=value=>({...value}),
+  options={captureOwnerPointer:value=>({obj:value,cachedUid:value?.uid??0}),copyPointer:value=>({...value}),writeBarrier,
+   copyOptionsTail:value=>{events.push(['tail',value.familyGroup]);return{familyGroup:value.familyGroup,rangeRadius:value.rangeRadius};},copyOptions,
+   allocateBlackboard:()=>{events.push('allocate');return new Map();},constructEmptyBlackboard:()=>events.push('empty'),
+   constructCopyBlackboard:(value,source)=>{events.push(['copy',source]);for(const pair of source??[])value.set(...pair);},
+   isNullOrEmpty:value=>value==null||value==='',generatePrefixBlackboard:(source,prefix)=>{events.push(['prefix',source,prefix]);return new Map([['prefix-result',prefix]]);},
+   setBlackboard:(...args)=>fearProjectileSetAbilityBlackboard({writeBarrier})(...args),readBlackboard:value=>value.board,
+   isValidUnity:value=>value!=null&&!value.destroyed,setSelectorData:(value,selected)=>events.push(['selector',value,selected])},
+  standard={copyOptions,baseDoSetData:(...args)=>fearProjectileBaseAbilityData(options)(...args),readLength:array=>array.length,readElement:(array,index)=>array[index],
+   readBlackboard:value=>value.board,setBehaviourData:(value,selected)=>{events.push(['behaviour',value,selected]);value.board=selected;},generatePurposeMask:()=>{events.push('purpose');return 7;}};
+ return{events,owner,ability,board,data,options,standard,run:()=>fearProjectileBaseAbilityData(options)(ability,owner,data),runStandard:()=>fearProjectileStandardAbilityData(standard)(ability,owner,data)};
+}
+test('base data captures owner, clones provided blackboard and publishes updated Options before selector setup',()=>{
+ const f=projectileBaseDataFixture();f.ability._selector={};f.run();assert.deepEqual(f.ability.m_owner,{obj:f.owner,cachedUid:22});assert.notEqual(f.ability.board,f.board);assert.deepEqual(f.ability.board,f.board);
+ assert.equal(f.data.blackboard,f.ability.board);assert.notEqual(f.ability.options,f.data);assert.equal(f.ability.options.blackboard,f.ability.board);assert.equal(f.events.at(-1)[0],'selector');
+});
+test('null incoming blackboard creates an empty instance without prefix lookup',()=>{
+ const f=projectileBaseDataFixture();f.data.blackboard=null;f.options.isNullOrEmpty=()=>{throw Error('unexpected prefix');};f.run();assert.equal(f.ability.board.size,0);assert.equal(f.events.includes('empty'),true);
+});
+test('prefix lookup rereads both the source blackboard and prefix after the string query',()=>{
+ const f=projectileBaseDataFixture(),replacement=new Map();f.ability._metadata.blackboardPrefix='old';f.options.isNullOrEmpty=()=>{f.data.blackboard=replacement;f.ability._metadata.blackboardPrefix='new';return false;};f.run();
+ assert.deepEqual(f.events.find(e=>e[0]==='prefix'),['prefix',replacement,'new']);assert.equal(f.events.filter(e=>e[0]==='tail').length,2);
+});
+test('copy constructor uses captured source even if allocation mutates the caller Options',()=>{
+ const f=projectileBaseDataFixture(),allocate=f.options.allocateBlackboard;f.options.allocateBlackboard=()=>{f.data.blackboard=new Map([['wrong',2]]);return allocate();};f.run();assert.deepEqual(f.ability.board,f.board);
+});
+test('options use the fresh blackboard getter after setter callbacks, then preserve the value copy across selector work',()=>{
+ const f=projectileBaseDataFixture(),replacement=new Map();f.options.setBlackboard=(ability,board)=>{ability.board=replacement;};f.ability._selector={};
+ f.options.setSelectorData=()=>{f.data.familyGroup=4;};f.run();assert.equal(f.data.blackboard,replacement);assert.equal(f.ability.options.blackboard,replacement);assert.equal(f.ability.options.familyGroup,0);
+});
+test('selector validity probe and subsequent setter use independently fetched selector references',()=>{
+ const f=projectileBaseDataFixture(),first={},second={};f.ability._selector=first;f.options.isValidUnity=value=>{assert.equal(value,first);f.ability._selector=second;return true;};f.run();assert.equal(f.events.at(-1)[1],second);
+});
+test('selector becoming null still samples blackboard before failing, after Options publication',()=>{
+ const f=projectileBaseDataFixture();f.ability._selector={};f.options.isValidUnity=()=>{f.ability._selector=null;return true;};let reads=0;f.options.readBlackboard=value=>{reads++;return value.board;};
+ assert.throws(f.run,/null native object/);assert.equal(reads,2);assert.ok(f.ability.options);assert.equal(f.data.blackboard,f.ability.board);
+});
+test('base allocation failure retains owner publication and leaves original Options board intact',()=>{
+ const f=projectileBaseDataFixture();f.options.allocateBlackboard=()=>null;assert.throws(f.run,/null native object/);assert.equal(f.ability.m_owner.obj,f.owner);assert.equal(f.data.blackboard,f.board);assert.equal(f.ability.options,undefined);
+});
+test('standard data mutates a copy of Options and visits behaviours before generating purpose',()=>{
+ const f=projectileBaseDataFixture(),one={},two={};f.ability.m_behaviours=[one,two];f.runStandard();assert.equal(f.data.blackboard,f.board);assert.notEqual(f.ability.board,f.board);
+ assert.equal(one.board,f.ability.board);assert.equal(two.board,f.ability.board);assert.equal(f.ability.m_purposeMask,7);assert.equal(f.events.at(-1),'purpose');
+});
+test('standard behaviour iteration follows a freshly fetched array and blackboard after each callback',()=>{
+ const f=projectileBaseDataFixture(),one={},two={},replacement=new Map();f.ability.m_behaviours=[one];f.standard.setBehaviourData=(value,board)=>{f.events.push(['seen',value,board]);if(value===one){f.ability.m_behaviours=[one,two];f.ability.board=replacement;}};f.runStandard();
+ assert.equal(f.events.filter(e=>e[0]==='seen').length,2);assert.equal(f.events.filter(e=>e[0]==='seen')[1][2],replacement);
+});
+test('null behaviour samples blackboard before failing and prevents purpose publication',()=>{
+ const f=projectileBaseDataFixture();f.ability.m_behaviours=[null];let reads=0;f.standard.readBlackboard=value=>{reads++;return value.board;};assert.throws(f.runStandard,/null native object/);assert.equal(reads,1);assert.equal(f.ability.m_purposeMask,undefined);
+});
+test('null array after a behaviour callback fails before next boundary or purpose generation',()=>{
+ const f=projectileBaseDataFixture();f.ability.m_behaviours=[{}];f.standard.setBehaviourData=()=>{f.ability.m_behaviours=null;};assert.throws(f.runStandard,/null native object/);assert.equal(f.events.includes('purpose'),false);
+});
+test('base/standard data require explicit typed callers and native scalar results',()=>{
+ for(const fn of [fearProjectileSetAbilityBlackboard,fearProjectileBaseAbilityData,fearProjectileStandardAbilityData])assert.throws(()=>fn({}),/callers/);
+ const f=projectileBaseDataFixture();f.standard.generatePurposeMask=()=>1.5;assert.throws(f.runStandard,/Int32/);f.options.isValidUnity=()=>0;assert.throws(f.run,/Boolean/);
+});
 
 function projectileAttackDataFixture(){
  const construction=projectileDamageNodeFixture(),events=[],ability={...construction.ability,_atkScale:1,_atkScaleKey:'atk_scale',_epDamageRatio:0,_elementDamageType:0,_damageType:2,_extraDamageType:0,m_actions:['old']},owner={},board=new Map(),data={blackboard:board,familyGroup:0},
@@ -6052,17 +6114,21 @@ test('bounded wait, controller/factory birth and Init, event5 self-death and ind
  const damageSettings=read('data/candidates/arkpedia-windows-fear-projectile-damage-node-source.json').fearComponent.selectedFields,construction=projectileDamageNodeFixture();
  Object.assign(start.ability,{_useCachedAtkOnly:Boolean(damageSettings._useCachedAtkOnly),_transferSource:Boolean(damageSettings._transferSource),_attackType:damageSettings._attackType,_useDynamicAttackType:Boolean(damageSettings._useDynamicAttackType)});
  const attackData=projectileAttackDataFixture(),attackSettings=read('data/candidates/arkpedia-windows-fear-projectile-attack-data-source.json').fearComponent.selectedFields;
- Object.assign(start.ability,attackSettings,{m_actions:[],_activeBuffs:[]});attackData.options.baseDoSetData=(ability,owner,options)=>{assert.equal(owner,f.source);ability.board=options.blackboard;};
+ const baseData=projectileBaseDataFixture(),baseSource=read('data/candidates/arkpedia-windows-fear-projectile-base-data-source.json').fearComponent,
+  attackGroup=read('data/candidates/arkpedia-windows-fear-projectile-attachments-source.json').familyGroup.values.find(row=>row.name==='ATTACK').value;
+ Object.assign(start.ability,attackSettings,{m_actions:[],_activeBuffs:[],m_behaviours:[],_metadata:baseSource.metadata,_selector:null});assert.equal(baseSource.selector.m_PathID,'0');
+ baseData.options.captureOwnerPointer=start.pointers.capture;baseData.options.copyPointer=start.pointers.copy;baseData.standard.generatePurposeMask=()=>0;
+ attackData.options.baseDoSetData=fearProjectileStandardAbilityData(baseData.standard);
  attackData.options.createDamageNode=fearProjectileCreateDamageNode({newDamageNode:construction.make,writeBarrier:()=>{}});
- fearProjectileBasicAttackData(attackData.options)(start.ability,f.source,{blackboard:new Map()});
+ const initialBoard=new Map();fearProjectileBasicAttackData(attackData.options)(start.ability,f.source,{blackboard:initialBoard,familyGroup:attackGroup});
+ assert.notEqual(start.ability.board,initialBoard);assert.equal(start.ability.options.blackboard,start.ability.board);assert.equal(start.pointers.lock(start.ability.m_owner),f.source);
  const sharedDamage=start.ability.m_damageNode;assert.equal(sharedDamage.m_cachedAtk,-fpOne);assert.equal(sharedDamage._damageType,2);assert.equal(sharedDamage._applyWay,2);assert.deepEqual(start.ability.m_actions,[sharedDamage]);
  provider.options.castDamageNode=value=>value===sharedDamage?value:null;
  provider.options.readOwner=ability=>start.pointers.lock(ability.m_owner);provider.damageOptions.readAtkRaw=owner=>fearProjectileFloatToRaw(owner.s.atk);
  const preprocessDamage=fearProjectilePreprocessDamage(provider.damageOptions);
  provider.options.preprocessNode=(node,owner)=>{preprocessDamage(node,owner);damage=fearProjectileDamageAction(f.b,{...source,cachedAtk:Math.fround(Number(node.m_cachedAtk)/2**32)});};
  actionInit.options.getActiveBuffs=fearProjectileActiveBuffs;actionInit.options.getProjectileActions=fearProjectileRangedActions({preprocess:fearProjectilePreprocessActions(provider.options)});
- const attackGroup=read('data/candidates/arkpedia-windows-fear-projectile-attachments-source.json').familyGroup.values.find(row=>row.name==='ATTACK').value;
- start.ability.options={familyGroup:attackGroup};f.source.m_abilityAttachments=Array(5).fill(null);f.source.m_abilityAttachments[attackGroup]=[];
+ f.source.m_abilityAttachments=Array(5).fill(null);f.source.m_abilityAttachments[attackGroup]=[];
  const attachments=fearProjectileAbilityAttachments({readOwner:ability=>start.pointers.lock(ability.m_owner),isNullUnity:value=>value==null||value.destroyed===true,
   readFamilyGroup:fearProjectileAttachmentFamilyGroup,getEntityAttachments:fearProjectileEntityAttachments({readLength:array=>array.length,readElement:(array,index)=>array[index]})});
  start.start.getAttachments=attachments;actionInit.options.getAttachments=attachments;

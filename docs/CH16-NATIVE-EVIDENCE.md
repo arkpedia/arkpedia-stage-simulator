@@ -3618,3 +3618,34 @@ blackboard loss, callback mutations, list replacement, null publication and
 FP overflow. Base AbilityStandard data setup, native Options/blackboard/list
 effects, elemental-node internals, hotfixes and live/frame/cross-version parity
 remain explicit/unverified. No stage or enemy admission gate changed.
+
+## Base ability data checkpoint
+
+The test-only `chapter16-fear-projectile-base-data.js` adapter follows default
+Ability.DoSetData (54596, RVA 0x390eac0), AbilityStandard.DoSetData (54678,
+RVA 0x3909480), and the blackboard setter (54559, RVA 0x3911b30). The extractor
+retains all three complete bodies, owner/metadata/Options/behaviour fields,
+the actual ObjectPtr<Entity>.op_Implicit method specification, blackboard
+constructor/prefix method identities, Behaviour.SetData slot 6 and the concrete
+purpose-generation slot 92. It does not relabel owner conversion as a direct
+Wrap call. Native generic mapping and pointer runtime effects remain held.
+
+Base setup publishes the captured owner before inspecting Options, selects
+empty/copy/prefix blackboard construction, calls the setter, then uses a fresh
+getter to update the local Options before publishing its value copy. Selector
+validity and selector invocation use separate field reads; a null second
+selector still permits the blackboard getter before the null failure. Standard
+setup passes an Options copy into base setup, traverses the live behaviour
+array with fresh blackboard reads, and only then stores the generated purpose
+mask. Nulls and callback failures retain earlier publication without rollback.
+
+All 1,581 focused tests and extractor/Fear/miner contracts pass. The long Fear
+birth test now composes base/standard setup ahead of attack action construction,
+checks owner identity and the copied Options/shared blackboard references, and
+preserves those through projectile initialization, source retirement and later
+damage. Fear's retained metadata has an empty prefix and null selector. The
+test supplies an empty ability-behaviour array and an explicit purpose caller;
+this is not proof of canonical behaviour population or purpose generation.
+Blackboard/pointer/value-copy internals, concrete selector/behaviour effects,
+hotfixes and live/frame/cross-version parity remain open. No support, stage,
+receipt or public catalogue admission gate changed.
