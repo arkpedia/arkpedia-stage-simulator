@@ -28,11 +28,20 @@ test('hash corruption and missing snapshots are rejected', async () => {
   await assert.rejects(() => loadCanonicalEnemyTables({ lock: lockFor(bytes), cacheDir, fetchImpl: async () => ({ ok: false, status: 404 }) }), /HTTP 404/);
 });
 
-test('the committed lock pins the preview data commit and byte hashes', async () => {
+// arkpedia-data's importer publishes the raw tables nightly (source/data/simulator/raw/), and the
+// lock pins one of its main commits; re-pinning moves the commit, so only its shape is held here.
+test('the committed lock pins an arkpedia-data commit and the raw tables by bytes and hash', async () => {
   const lock = JSON.parse(await import('node:fs/promises').then(fs => fs.readFile(new URL('../data/arkpedia-canonical.lock.json', import.meta.url), 'utf8')));
   assert.equal(lock.repository, 'arkpedia/arkpedia-data');
-  assert.equal(lock.commit, '79e81a8a872b2ecc592647d81a864ccbf1f8ca06');
-  for (const file of Object.values(lock.files)) { assert.match(file.sha256, /^[a-f0-9]{64}$/); assert.ok(file.bytes > 0); }
+  assert.match(lock.commit, /^[a-f0-9]{40}$/);
+  assert.deepEqual(Object.keys(lock.files).sort(), ['enemy_database', 'enemy_handbook_table']);
+  for (const file of Object.values(lock.files)) {
+    assert.match(file.path, /^source\/data\/simulator\/raw\/[a-z_]+\.json$/);
+    assert.match(file.sha256, /^[a-f0-9]{64}$/);
+    assert.ok(file.bytes > 0);
+  }
+  assert.equal(lock.upstream.repository, 'ArknightsAssets/ArknightsGamedata');
+  assert.match(lock.upstream.commit, /^[a-f0-9]{40}$/);
 });
 
 test('canonical bytes compile into candidate enemy records', async () => {
