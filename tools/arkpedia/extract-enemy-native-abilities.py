@@ -13,7 +13,9 @@ templates the kept content names are copied from the pinned Global
 buff_template_data (data/arkpedia-mvp.json behaviors.source).
 
   python tools/arkpedia/extract-enemy-native-abilities.py [--check]
+  python tools/arkpedia/extract-enemy-native-abilities.py --prefab enemy_3010_mcreep --output data/candidates/mcreep-native.json
 """
+import argparse
 import hashlib
 import json
 import math
@@ -27,8 +29,22 @@ import UnityPy
 
 C = ROOT / '.cache/arkpedia/cn-native-source'
 OUT = ROOT / 'data/arkpedia-enemy-native-abilities.json'
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--check', action='store_true')
+parser.add_argument('--prefab', action='append', default=[], help='Exact enemy prefab key to retain for candidate review; repeatable')
+parser.add_argument('--output', type=Path, help='Candidate output path (required with --prefab)')
+args = parser.parse_args()
+if args.prefab and not args.output:
+    parser.error('--prefab requires --output; preserve the reviewed default evidence')
+if args.output:
+    OUT = args.output.resolve()
+if args.prefab and OUT == ROOT / 'data/arkpedia-enemy-native-abilities.json':
+    parser.error('targeted extraction must not replace the reviewed default evidence')
 index_raw = (ROOT / 'data/arkpedia-enemy-clock-source.json').read_bytes()
 index = json.loads(index_raw)
+selected = {f'dyn/battle/prefabs/enemies/{key}.prefab' for key in args.prefab}
+if selected - index['prefabs'].keys():
+    parser.error('Prefab missing from pinned timing index: ' + ', '.join(sorted(selected - index['prefabs'].keys())))
 source = json.loads((ROOT / 'data/arkpedia-cn-enemy-native-source.json').read_bytes())
 bundles = {r['path']: r for r in source['bundles']}
 # Component object names whose content a reviewed feature reads.
@@ -73,8 +89,10 @@ def template_keys(v):
 
 wanted = {}
 for path, p in index['prefabs'].items():
+    if selected and path not in selected:
+        continue
     for c in p['clockComponents']:
-        if c['objectName'] in OBJECTS: wanted.setdefault(p['bundle'], []).append((path, c))
+        if selected or c['objectName'] in OBJECTS: wanted.setdefault(p['bundle'], []).append((path, c))
 components = {}
 used_templates = set()
 for bundle in sorted(wanted):
@@ -87,6 +105,10 @@ for bundle in sorted(wanted):
         text = canonical(data)
         assert hashlib.sha256(text.encode()).hexdigest() == c['originalDataSha256'], (path, c['pathId'])
         rows = components.setdefault(path, [])
+        if selected:
+            # A preceding component may already have retained this one as a reference.
+            # Upgrade it to the indexed identity rather than emitting duplicate path IDs.
+            rows[:] = [r for r in rows if r['pathId'] != c['pathId']]
         rows.append({'pathId': c['pathId'], 'objectName': c['objectName'], 'originalJson': text})
         # Referenced same-bundle MonoBehaviours, transitively; each keeps its own digest.
         seen, todo = {r['pathId'] for r in rows}, list(local_refs(data))
@@ -111,10 +133,14 @@ result = {'schemaVersion': 1,
     'objects': OBJECTS,
     'prefabs': {k: sorted(v, key=lambda r: int(r['pathId'])) for k, v in sorted(components.items())},
     'templates': dict(sorted(templates.items()))}
+if selected:
+    result['scope'] = 'Candidate native component evidence from existing pinned bundles and timing index. No behavior, runtime or public admission approval.'
+    result['objects'] = sorted({c['objectName'] for rows in components.values() for c in rows if not c.get('referenced')})
 text = json.dumps(result, ensure_ascii=False, indent=1) + '\n'
-if '--check' in sys.argv:
+if args.check:
     if OUT.read_text() != text: sys.exit('Enemy native ability evidence is stale')
     print('Enemy native ability evidence matches the pinned bundles')
 else:
+    OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(text)
     print('Wrote', sum(len(v) for v in components.values()), 'components from', len(components), 'prefabs')
