@@ -709,9 +709,9 @@ test('Tile-denial enemy: dying marks its tile unavailable', () => {
 });
 test('Inspired movement: the buff only applies while Inspired', () => {
   const key = 'enemy_1078_sotisc', h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
-  assert.equal(e.findBuff('ab:inspiredMove'), null);
-  h.b.addBuff(e, { key: 'ab:inspired', persist: true }); h.run(1);
-  assert.ok(e.findBuff('ab:inspiredMove'));
+  assert.equal(e.findBuff('enemy_talent_strength[move_speed]'), null);
+  h.b.addBuff(e, { key: 'enemy_9D0_talent_strength', persist: true }); h.run(1);
+  assert.ok(e.findBuff('enemy_talent_strength[move_speed]'));
 });
 test('Inspired extra target applies only while Inspired', () => {
   const key = 'enemy_1079_sotisp', h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);

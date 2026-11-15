@@ -1,3 +1,4 @@
+import {strengthAura,inspiredTargets} from './arkpedia-enemy-inspiration.js';
 import {deathSpawn,spawnEnemyAbilities} from './arkpedia-enemy-summons.js';
 import {basicEnemyAbilities} from './arkpedia-enemy-basic-effects.js';
 import {hurt,areaAlliesInTiles} from './arkpedia-enemy-effects.js';
@@ -344,14 +345,7 @@ export const featureAbilities = Object.freeze({
     };
   },
   // Strength aura (Herald) or the Inspired movement bonus.
-  strengthAura: (p) => p.mode === 'inspired' ? ({
-    tick(b, e) {
-      if (e.findBuff?.('ab:inspired')) b.addBuff(e, { key: 'ab:inspiredMove', duration: 0.7, visible: true,
-        mods: { moveMul: 1 + (p.move ?? 0), atkPct: p.atkPct ?? 0, aspd: p.aspd ?? 0 } });
-    },
-  }) : ({
-    tick(b, e) { for (const u of b.enemies) if (u.alive) b.addBuff(u, { key: `ab:strength:${e.id}`, duration: 0.7, visible: true, mods: { atkPct: p.atkPct, defFlat: p.defFlat } }); },
-  }),
+  strengthAura,
   pulseCharged,
   pulseCaster,
   pompeii,
@@ -365,9 +359,7 @@ export const featureAbilities = Object.freeze({
     spawn(b, e) { e.flying = true; b.addBuff(e, { key: 'ab:invisible', persist: true, flags: { stealth: true } }); },
   }),
   // Inspired extra target.
-  inspiredTargets: ({ base, inspired }) => ({
-    tick(b, e) { e.profile.maxTargets = e.findBuff?.('ab:inspired') ? inspired : base; },
-  }),
+  inspiredTargets,
   // Tile denial: mark the death tile unavailable for deployment.
   tileDenied: () => ({
     death(c, b, e) { b.noDeployTiles ??= new Set(); b.noDeployTiles.add(`${e.tileR},${e.tileC}`); },

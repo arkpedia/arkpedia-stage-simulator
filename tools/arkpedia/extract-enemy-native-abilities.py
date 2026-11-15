@@ -34,6 +34,14 @@ bundles = {r['path']: r for r in source['bundles']}
 # Component object names whose content a reviewed feature reads.
 OBJECTS = ['DefDown', 'enhance', 'Blink', 'enemy_1220_dzoms', 'enemy_1220_dzoms_2', 'enemy_1221_dzomg', 'enemy_1221_dzomg_2', 'ColdAttack', 'StunAttack', 'StormAura', 'Lasso', 'blink', 'dmg_res', 'buff_to_blocker', 'Boomb']
 SCOPED_OBJECTS = {
+    'enemy_1080_sotidp': ['enemy_1080_sotidp','Default','Strength'],
+    'enemy_1080_sotidp_2': ['enemy_1080_sotidp_2','Default','Strength'],
+    'enemy_1078_sotisc': ['enemy_1078_sotisc','Default','Strength'],
+    'enemy_1078_sotisc_2': ['enemy_1078_sotisc_2','Default','Strength'],
+    'enemy_1082_soticn': ['enemy_1082_soticn','Default','Strength'],
+    'enemy_1082_soticn_2': ['enemy_1082_soticn_2','Default','Strength'],
+    'enemy_1083_sotiab': ['enemy_1083_sotiab','Default','Strength'],
+
     'enemy_10095_crgst':['enemy_10095_crgst','Default','Combat','unblockable','check'],
     'enemy_10095_crgst_2':['enemy_10095_crgst_2','Default','Combat','unblockable','check'],
     'enemy_1335_bldrat':['enemy_1335_bldrat','Default','Combat','BloodHit'],
@@ -421,6 +429,14 @@ for bundle in sorted(wanted):
         # Explicit per-prefab sibling scopes avoid copying extraction branches
         # when a new family uses attack hooks or companion target selectors.
         sibling_names = {
+            'enemy_1080_sotidp': {'Strength'},
+            'enemy_1080_sotidp_2': {'Strength'},
+            'enemy_1078_sotisc': {'Strength'},
+            'enemy_1078_sotisc_2': {'Strength'},
+            'enemy_1082_soticn': {'Strength'},
+            'enemy_1082_soticn_2': {'Strength'},
+            'enemy_1083_sotiab': {'Strength'},
+
             'enemy_10095_crgst': {'unblockable','check'},
             'enemy_10095_crgst_2': {'unblockable','check'},
             'enemy_1335_bldrat': {'Combat','BloodHit'},

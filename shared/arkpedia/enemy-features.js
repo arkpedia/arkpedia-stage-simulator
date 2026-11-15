@@ -1,3 +1,4 @@
+import {isNativeInspiration,inspirationNative,nativeInspirationAbility} from './enemy-inspiration-features.js';
 // SPDX-License-Identifier: GPL-3.0-or-later
 import {ZEALOUS_EXTRA_FEATURES} from './enemy-zealous-extra-features.js';
 import {GNAWBEAST_FEATURES} from './enemy-gnawbeast-features.js';
@@ -996,18 +997,18 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => text === 'Attacks deal Physical damage to all surrounding units.'
       || text === 'When inside Originium pollution or an Active Originium Storm, attacks deal Physical damage to all surrounding allied units and all your units inside Originium pollution or Active Originium Storms.' },
   // Guerrilla Herald: a battlefield-wide ATK/DEF buff for every enemy.
-  'talent:strength': { covers: r => (sig(r, 'strength', ['atk', 'def'])
+  'talent:strength': { covers: (r,n) => (!isNativeInspiration(r)||inspirationNative(r,n))&&((sig(r, 'strength', ['atk', 'def'])
       && r.abilities.some(a => a.text === 'Increases the ATK and DEF of enemy units when on the battlefield.'))
       || (sig(r, 'strength', ['move_speed']) && r.abilities.some(a => a.text === 'When Inspired, gains Movement Speed.'))
       || (sig(r, 'strength', ['atk']) && r.abilities.some(a => a.text === 'When Inspired, gains greatly increased ATK.'))
-      || (sig(r, 'strength', ['attack_speed']) && r.abilities.some(a => a.text === 'When Inspired, gains greatly increased ASPD.')),
-    ability: { kind: 'strengthAura', params: r => sig(r, 'strength', ['move_speed'])
+      || (sig(r, 'strength', ['attack_speed']) && r.abilities.some(a => a.text === 'When Inspired, gains greatly increased ASPD.'))),
+    ability: r=>isNativeInspiration(r)?nativeInspirationAbility(r):({ kind: 'strengthAura', params: r => sig(r, 'strength', ['move_speed'])
       ? { mode: 'inspired', move: r.talents.bb['strength.move_speed'] }
       : sig(r, 'strength', ['atk'])
         ? { mode: 'inspired', atkPct: r.talents.bb['strength.atk'] }
         : sig(r, 'strength', ['attack_speed'])
           ? { mode: 'inspired', aspd: r.talents.bb['strength.attack_speed'] }
-          : { mode: 'aura', atkPct: r.talents.bb['strength.atk'], defFlat: r.talents.bb['strength.def'] } },
+          : { mode: 'aura', atkPct: r.talents.bb['strength.atk'], defFlat: r.talents.bb['strength.def'] } }),
     note: 'all living enemies +atk%/+def while the Herald lives, or Inspired movement/ATK/ASPD',
     explains: text => text === 'Increases the ATK and DEF of enemy units when on the battlefield.'
       || text === 'When Inspired, gains Movement Speed.'

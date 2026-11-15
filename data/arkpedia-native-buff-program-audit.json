@@ -2,16 +2,16 @@
   "schemaVersion": 1,
   "scope": "Only retained native templates/prefabs, not the complete game corpus. Refusals report the first compiler blocker per template. Compilability never grants enemy or stage admission.",
   "source": {
-    "data/arkpedia-enemy-native-abilities.json": "d509e82f89f141b00645418cfb0748a894bb321d00f40313f5ebf37fa4f6960b",
-    "data/arkpedia-enemy-support.json": "b8c2a66351b002c42cd4a88e57158c7ab93fd49be65b5927529a868e755b9d28",
+    "data/arkpedia-enemy-native-abilities.json": "38e7b42e753c4f66cb47875b0eff8598396abc401b27bf110641f7c39893c2c0",
+    "data/arkpedia-enemy-support.json": "c5c6cdb5e77646c15855dea3829bf4abdfd4cd61eee84b144f3eb326bad2e16c",
     "shared/arkpedia/behavior.js": "88b4616bf16a17e2a29153b48ae04e0a4f7b2bcebc28214bce3e98c104cef712",
     "shared/arkpedia/behavior-native-compiler.js": "89c3f4110d1c8a1f37c0fce794aadf0efe87756d93408f3224a116aad07cc2b0",
     "shared/arkpedia/behavior-program.js": "f908848a62b2c23e0e8c97194b8d6f6a1f54b6f020042ffa0c3bb35bf593bc6e"
   },
-  "retainedPrefabs": 352,
-  "templates": 220,
+  "retainedPrefabs": 359,
+  "templates": 226,
   "compiled": 6,
-  "refused": 214,
+  "refused": 220,
   "results": [
     {
       "key": "Dark_Effect_x_4",
@@ -307,6 +307,13 @@
         "enemy_1074_dbskar_2",
         "enemy_1075_dmgswd",
         "enemy_1075_dmgswd_2",
+        "enemy_1078_sotisc",
+        "enemy_1078_sotisc_2",
+        "enemy_1080_sotidp",
+        "enemy_1080_sotidp_2",
+        "enemy_1082_soticn",
+        "enemy_1082_soticn_2",
+        "enemy_1083_sotiab",
         "enemy_1084_sotidm",
         "enemy_1084_sotidm_2",
         "enemy_1084_sotidm_3",
@@ -2023,6 +2030,64 @@
       "reason": "Unsupported native behaviour: event ON_TAKE_DAMAGE"
     },
     {
+      "key": "enemy_strength_talent_finish_listener[atk]",
+      "consumers": [
+        "enemy_1083_sotiab"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action FinishBuffsById"
+    },
+    {
+      "key": "enemy_strength_talent_finish_listener[atk_speed]",
+      "consumers": [
+        "enemy_1082_soticn",
+        "enemy_1082_soticn_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action FinishBuffsById"
+    },
+    {
+      "key": "enemy_strength_talent_finish_listener[move_speed]",
+      "consumers": [
+        "enemy_1078_sotisc",
+        "enemy_1078_sotisc_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action FinishBuffsById"
+    },
+    {
+      "key": "enemy_strength_talent_start_listener[atk]",
+      "consumers": [
+        "enemy_1083_sotiab"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: create buff"
+    },
+    {
+      "key": "enemy_strength_talent_start_listener[atk_speed]",
+      "consumers": [
+        "enemy_1082_soticn",
+        "enemy_1082_soticn_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: create buff"
+    },
+    {
+      "key": "enemy_strength_talent_start_listener[move_speed]",
+      "consumers": [
+        "enemy_1078_sotisc",
+        "enemy_1078_sotisc_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: create buff"
+    },
+    {
       "key": "enemy_sybox_t[logkilled]",
       "consumers": [
         "enemy_2035_sybox"
@@ -2965,12 +3030,20 @@
         "enemy_mdrock_s_1[effect_c_creator]",
         "enemy_mdrock_s_2[shield][refresh]",
         "enemy_mmelee_touched_rope[continues]",
+        "enemy_strength_talent_finish_listener[atk]",
+        "enemy_strength_talent_finish_listener[atk_speed]",
+        "enemy_strength_talent_finish_listener[move_speed]",
         "skzfbx_m1_a[effect]",
         "trap_lrcore[finishFx][core]"
       ],
       "consumers": [
         "enemy_10092_hlslp",
         "enemy_1073_dscout_2",
+        "enemy_1078_sotisc",
+        "enemy_1078_sotisc_2",
+        "enemy_1082_soticn",
+        "enemy_1082_soticn_2",
+        "enemy_1083_sotiab",
         "enemy_1121_lifbos",
         "enemy_1121_lifbos_2",
         "enemy_1410_mmelee",
@@ -3241,11 +3314,19 @@
         "enemy_ltseal_t[attack_effect]",
         "enemy_ltseal_t[damage]",
         "enemy_sfhu_atkspeed_dec[resist]",
-        "enemy_sfpin_power_attack[resist]"
+        "enemy_sfpin_power_attack[resist]",
+        "enemy_strength_talent_start_listener[atk]",
+        "enemy_strength_talent_start_listener[atk_speed]",
+        "enemy_strength_talent_start_listener[move_speed]"
       ],
       "consumers": [
         "enemy_1072_dlancer",
         "enemy_1072_dlancer_2",
+        "enemy_1078_sotisc",
+        "enemy_1078_sotisc_2",
+        "enemy_1082_soticn",
+        "enemy_1082_soticn_2",
+        "enemy_1083_sotiab",
         "enemy_1117_liiprr",
         "enemy_1117_liiprr_2",
         "enemy_1120_vofwiz",

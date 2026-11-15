@@ -23,7 +23,7 @@ export function auditEnemyRuntimePlans(records,support){
     kinds:[...kinds].sort(([a],[b])=>a.localeCompare(b)).map(([kind,instances])=>({kind,instances}))};
 }
 export async function buildEnemyRuntimePlanReport(){
-  const inputs=['data/arkpedia-enemy-records.json','data/arkpedia-enemy-support.json','shared/arkpedia/enemy-runtime-compiler.js','shared/arkpedia/enemy-runtime-plan.js','shared/arkpedia/behavior.js','shared/arkpedia/behavior-native-compiler.js','shared/arkpedia/behavior-program.js','shared/arkpedia/native-buff-programs.js','shared/arkpedia/enemy-gnawbeast-features.js','shared/arkpedia/enemy-zealous-extra-features.js'];
+  const inputs=['data/arkpedia-enemy-records.json','data/arkpedia-enemy-support.json','shared/arkpedia/enemy-runtime-compiler.js','shared/arkpedia/enemy-runtime-plan.js','shared/arkpedia/behavior.js','shared/arkpedia/behavior-native-compiler.js','shared/arkpedia/behavior-program.js','shared/arkpedia/native-buff-programs.js','shared/arkpedia/enemy-gnawbeast-features.js','shared/arkpedia/enemy-zealous-extra-features.js','shared/arkpedia/enemy-inspiration-features.js'];
   const raw=await Promise.all(inputs.map(p=>readFile(new URL(p,root))));
   return {schemaVersion:1,scope:'Compiled execution plans for already-admitted records; source admission remains separate. Plans belong in shared enemy-definition components, not a duplicated global payload.',
     source:Object.fromEntries(inputs.map((p,i)=>[p,sha(raw[i])])),
