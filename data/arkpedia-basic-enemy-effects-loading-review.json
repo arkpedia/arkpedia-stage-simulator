@@ -1,0 +1,167 @@
+{
+  "schemaVersion": 1,
+  "scope": "Move 17 existing independent effect factories into one selected module; legacy factory lookup uses the same function objects. No source admission or parameters changed.",
+  "sourceSha256": {
+    "server/sim/content/arkpedia-enemy-runtime-index.js": "5f3a631077924f55747b3efa23f8997407cdadd2d533bff7376e80712ec3b812",
+    "server/sim/content/enemies.js": "c76f64b8d435ec4b357431165abb9c4942eabeae6deb9687b8a4691c62e96e91",
+    "test/arkpedia-shared-enemy-core.test.js": "141184eaed9c931f7e4cb143e469299c5dea0792b21805ac705200341ea88f9d",
+    "server/sim/content/arkpedia-enemy-basic-effects.js": "49befecc9d9519f9c839f2a96bbb3fb37d53054ce105c5b35123d71dfac33698"
+  },
+  "browserImport": {
+    "selectedFamilies": [
+      "basicEffects",
+      "builtins",
+      "jesselton",
+      "flamechaser",
+      "bladeKnight"
+    ],
+    "sharedFormsLoaded": true,
+    "legacyEnemyCatalogLoaded": false,
+    "errors": []
+  },
+  "browserStages": [
+    {
+      "stage": "af-2",
+      "beforeBattleRequests": 278,
+      "enemies": [
+        "enemy_1000_gopro_2",
+        "enemy_1014_rogue",
+        "enemy_1019_jshoot",
+        "enemy_1020_obsv",
+        "enemy_1023_jmage",
+        "enemy_1033_handax_2"
+      ],
+      "loaded": {
+        "loaded": [
+          "arkpedia-enemy-basic-effects"
+        ],
+        "pending": 0
+      },
+      "devices": {
+        "loaded": [
+          "manual"
+        ],
+        "pending": 0
+      },
+      "errors": [],
+      "restart": {
+        "loaded": {
+          "loaded": [
+            "arkpedia-enemy-basic-effects"
+          ],
+          "pending": 0
+        },
+        "devices": {
+          "loaded": [
+            "manual"
+          ],
+          "pending": 0
+        },
+        "errors": []
+      },
+      "moduleRequests": 358,
+      "moduleBytes": 455402
+    },
+    {
+      "stage": "af-3",
+      "beforeBattleRequests": 278,
+      "enemies": [
+        "enemy_1000_gopro_3",
+        "enemy_1007_slime_3",
+        "enemy_1004_mslime_2",
+        "enemy_1056_ganwar_2",
+        "enemy_1010_demon"
+      ],
+      "loaded": {
+        "loaded": [
+          "arkpedia-enemy-basic-effects"
+        ],
+        "pending": 0
+      },
+      "devices": {
+        "loaded": [],
+        "pending": 0
+      },
+      "errors": [],
+      "restart": {
+        "loaded": {
+          "loaded": [
+            "arkpedia-enemy-basic-effects"
+          ],
+          "pending": 0
+        },
+        "devices": {
+          "loaded": [],
+          "pending": 0
+        },
+        "errors": []
+      },
+      "moduleRequests": 357,
+      "moduleBytes": 452871
+    },
+    {
+      "stage": "aw-s-2",
+      "beforeBattleRequests": 278,
+      "enemies": [
+        "enemy_1099_nbkght_2",
+        "enemy_1239_ltbow_2",
+        "enemy_1242_ltsmag",
+        "enemy_1102_sdkght_2",
+        "enemy_1101_plkght_2",
+        "enemy_1103_wdkght_2"
+      ],
+      "loaded": {
+        "loaded": [
+          "arkpedia-enemy-basic-effects",
+          "arkpedia-enemy-flux-casters",
+          "arkpedia-enemy-magic-circuit"
+        ],
+        "pending": 0
+      },
+      "devices": {
+        "loaded": [],
+        "pending": 0
+      },
+      "errors": [],
+      "restart": {
+        "loaded": {
+          "loaded": [
+            "arkpedia-enemy-basic-effects",
+            "arkpedia-enemy-flux-casters",
+            "arkpedia-enemy-magic-circuit"
+          ],
+          "pending": 0
+        },
+        "devices": {
+          "loaded": [],
+          "pending": 0
+        },
+        "errors": []
+      },
+      "moduleRequests": 373,
+      "moduleBytes": 503106
+    }
+  ],
+  "validation": {
+    "focusedTests": 16,
+    "focusedFailures": 0,
+    "stageSmoke": {
+      "scope": "10-second constructor/runtime smoke for every available compiled stage; not a playable-clear or fidelity certificate",
+      "available": 969,
+      "completed": 969,
+      "failures": []
+    },
+    "fullSimulationContent": {
+      "tests": 1802,
+      "pass": 1797,
+      "fail": 2,
+      "skipped": 3
+    },
+    "baselineFailures": "Same two Chimera pollution tests established before the loading refactors."
+  },
+  "limits": [
+    "A stage selecting other legacy abilities can still load the catalog.",
+    "Browser measurements cover simulation/shared JavaScript responses, excluding data, artwork and other application scripts.",
+    "No new native-fidelity claim."
+  ]
+}
