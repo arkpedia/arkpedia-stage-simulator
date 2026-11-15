@@ -56,7 +56,7 @@ not imply that every listed stage becomes playable.
 | stage-rules | Invalid or incompatible variant rule receipt | 154 |
 | device | Burdenbeast Traveler | 150 |
 | enemy | enemy_2119_dyshhj_2 | 148 |
-| enemy-alias | Stage-local enemy has unimplemented definition fields | 118 |
+| enemy-alias | Stage-local enemy has unimplemented definition fields | 114 |
 | mode | reclamation | 106 |
 | device | Statuegeist | 94 |
 | stage-rules | Invalid rune parameter: level_predefine_tokens_random_spawn_on_tile.tile | 92 |

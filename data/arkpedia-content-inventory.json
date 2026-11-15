@@ -60249,21 +60249,6 @@
       "status": "blocked",
       "blockers": [
         {
-          "kind": "enemy-alias",
-          "id": "enemy_1105_tyokai_a",
-          "message": "Stage-local enemy has unimplemented definition fields"
-        },
-        {
-          "kind": "enemy-alias",
-          "id": "enemy_1105_tyokai_b",
-          "message": "Stage-local enemy has unimplemented definition fields"
-        },
-        {
-          "kind": "enemy-alias",
-          "id": "enemy_1105_tyokai_d",
-          "message": "Stage-local enemy has unimplemented definition fields"
-        },
-        {
           "kind": "device",
           "id": "Barricade"
         },
@@ -60272,18 +60257,14 @@
           "id": "trap_143_rnfcar"
         },
         {
-          "kind": "enemy",
+          "kind": "enemy-supply",
           "id": "enemy_1105_tyokai_a",
-          "reasons": [
-            "missing support decision"
-          ]
+          "message": "Missing or unsupported supply card: trap_141_sheltr"
         },
         {
-          "kind": "enemy",
+          "kind": "enemy-supply",
           "id": "enemy_1105_tyokai_b",
-          "reasons": [
-            "missing support decision"
-          ]
+          "message": "Missing or unsupported supply card: trap_143_rnfcar"
         },
         {
           "kind": "enemy",
@@ -60313,11 +60294,9 @@
           ]
         },
         {
-          "kind": "enemy",
+          "kind": "enemy-supply",
           "id": "enemy_1105_tyokai_d",
-          "reasons": [
-            "missing support decision"
-          ]
+          "message": "Missing or unsupported supply card: trap_145_edd"
         },
         {
           "kind": "enemy",
@@ -60447,7 +60426,9 @@
           "Barricade"
         ],
         "tokens": [
-          "trap_143_rnfcar"
+          "trap_141_sheltr",
+          "trap_143_rnfcar",
+          "trap_145_edd"
         ]
       },
       "localSources": [
@@ -126512,11 +126493,6 @@
       "status": "blocked",
       "blockers": [
         {
-          "kind": "enemy-alias",
-          "id": "enemy_1428_lrsoul_a",
-          "message": "Stage-local enemy has unimplemented definition fields"
-        },
-        {
           "kind": "device",
           "id": "Theresa, Black-crowned Sage"
         },
@@ -126558,13 +126534,6 @@
           "kind": "enemy-parameters",
           "id": "enemy_2081_skztxs",
           "message": "Unsupported original enemy parameter: enemy_2081_skztxs.Blink.location"
-        },
-        {
-          "kind": "enemy",
-          "id": "enemy_1428_lrsoul_a",
-          "reasons": [
-            "missing support decision"
-          ]
         },
         {
           "kind": "enemy",
@@ -126791,11 +126760,6 @@
       "status": "blocked",
       "blockers": [
         {
-          "kind": "enemy-alias",
-          "id": "enemy_1428_lrsoul_a",
-          "message": "Stage-local enemy has unimplemented definition fields"
-        },
-        {
           "kind": "device",
           "id": "Theresa, Black-crowned Sage"
         },
@@ -126849,13 +126813,6 @@
             "skill:swallowAnim",
             "native-ability-wrappers:enemy_2090_skzjbc",
             "native-abilities:enemy_2090_skzjbc"
-          ]
-        },
-        {
-          "kind": "enemy",
-          "id": "enemy_1428_lrsoul_a",
-          "reasons": [
-            "missing support decision"
           ]
         },
         {
@@ -163342,11 +163299,6 @@
       "blockers": [
         {
           "kind": "enemy-alias",
-          "id": "enemy_1105_tyokai_2",
-          "message": "Stage-local enemy has unimplemented definition fields"
-        },
-        {
-          "kind": "enemy-alias",
           "id": "enemy_1112_emppnt_2",
           "message": "Stage-local enemy has unimplemented definition fields"
         },
@@ -163362,11 +163314,6 @@
         {
           "kind": "conditional",
           "id": "isw-no_level_obt_roguelike_ro5_dlc1_level_rogue5_sv-6_dlc1"
-        },
-        {
-          "kind": "enemy-parameters",
-          "id": "enemy_1105_tyokai_2",
-          "message": "Missing original enemy supply parameters: enemy_1105_tyokai_2"
         },
         {
           "kind": "enemy",
@@ -178922,11 +178869,6 @@
       "blockers": [
         {
           "kind": "enemy-alias",
-          "id": "enemy_1105_tyokai_2",
-          "message": "Stage-local enemy has unimplemented definition fields"
-        },
-        {
-          "kind": "enemy-alias",
           "id": "enemy_1112_emppnt_2",
           "message": "Stage-local enemy has unimplemented definition fields"
         },
@@ -178942,11 +178884,6 @@
         {
           "kind": "conditional",
           "id": "isw-no_level_obt_roguelike_ro5_level_rogue5_sv-6"
-        },
-        {
-          "kind": "enemy-parameters",
-          "id": "enemy_1105_tyokai_2",
-          "message": "Missing original enemy supply parameters: enemy_1105_tyokai_2"
         },
         {
           "kind": "enemy",
@@ -306278,28 +306215,9 @@
       "status": "blocked",
       "blockers": [
         {
-          "kind": "enemy-alias",
-          "id": "enemy_1002_nsabr_s1",
-          "message": "Stage-local enemy has unimplemented definition fields"
-        },
-        {
-          "kind": "enemy-alias",
-          "id": "enemy_1002_nsabr_s2",
-          "message": "Stage-local enemy has unimplemented definition fields"
-        },
-        {
-          "kind": "enemy",
-          "id": "enemy_1002_nsabr_s1",
-          "reasons": [
-            "missing support decision"
-          ]
-        },
-        {
-          "kind": "enemy",
-          "id": "enemy_1002_nsabr_s2",
-          "reasons": [
-            "missing support decision"
-          ]
+          "kind": "compile",
+          "id": "unknown_stage_guide_01",
+          "message": "Missing stage name"
         }
       ],
       "dependencies": {
@@ -329142,7 +329060,6 @@
         "cf-ex-1_challenge_mode",
         "cf-ex-5",
         "cf-ex-5_challenge_mode",
-        "cr-mo-1",
         "dt-ex-2",
         "dt-ex-2_challenge_mode",
         "fm-4",
@@ -329160,9 +329077,7 @@
         "isw-df_level_obt_roguelike_ro3_level_rogue3_b-4-b",
         "isw-df_level_obt_roguelike_ro4_level_rogue4_b-4-c",
         "isw-df_level_obt_roguelike_ro4_level_rogue4_b-4",
-        "isw-df_level_obt_roguelike_ro4_level_rogue4_b-5-b",
         "isw-df_level_obt_roguelike_ro4_level_rogue4_b-5-c",
-        "isw-df_level_obt_roguelike_ro4_level_rogue4_b-5-d",
         "isw-df_level_obt_roguelike_ro4_level_rogue4_b-5",
         "isw-df_level_obt_roguelike_ro4_level_rogue4_b-8",
         "isw-df_level_obt_roguelike_ro4_levelreplacers_level_rogue4_b-4_r1",
@@ -329248,7 +329163,6 @@
         "tn-4_orientation_trial_act4bossrush_tm04",
         "tn-4_spectacular_trial_act4bossrush_ex04",
         "tn-4_ultimate_trial_act4bossrush_fin04",
-        "unknown_stage_guide_01",
         "wr-ex-5",
         "wr-ex-5_challenge_mode",
         "wr-ex-7",
@@ -352288,16 +352202,6 @@
       "soleReportedBlockerStages": []
     },
     {
-      "kind": "enemy",
-      "id": "enemy_1105_tyokai_b",
-      "stages": [
-        "cr-mo-1",
-        "kazimierz_camp_r_01",
-        "mn-7"
-      ],
-      "soleReportedBlockerStages": []
-    },
-    {
       "kind": "stage-data",
       "reason": "Scheduled tide activation requires a controller",
       "stages": [
@@ -354128,15 +354032,6 @@
       "id": "Unsupported additive enemy rune attribute: max_hp"
     },
     {
-      "kind": "enemy",
-      "id": "enemy_1105_tyokai_a",
-      "stages": [
-        "cr-mo-1",
-        "kazimierz_camp_r_01"
-      ],
-      "soleReportedBlockerStages": []
-    },
-    {
       "kind": "stage-rules",
       "reason": "Unsupported stage environment controller: env_006_act25side_extra",
       "stages": [
@@ -354748,15 +354643,6 @@
       "id": "Unsupported original enemy parameter: enemy_2081_skztxs.Blink.location"
     },
     {
-      "kind": "enemy",
-      "id": "enemy_1428_lrsoul_a",
-      "stages": [
-        "isw-df_level_obt_roguelike_ro4_level_rogue4_b-5-b",
-        "isw-df_level_obt_roguelike_ro4_level_rogue4_b-5-d"
-      ],
-      "soleReportedBlockerStages": []
-    },
-    {
       "kind": "device",
       "id": "Guardian Bulwark",
       "stages": [
@@ -354954,16 +354840,6 @@
     },
     {
       "kind": "enemy-parameters",
-      "reason": "Missing original enemy supply parameters: enemy_1105_tyokai_2",
-      "stages": [
-        "isw-no_level_obt_roguelike_ro5_dlc1_level_rogue5_sv-6_dlc1",
-        "isw-no_level_obt_roguelike_ro5_level_rogue5_sv-6"
-      ],
-      "soleReportedBlockerStages": [],
-      "id": "Missing original enemy supply parameters: enemy_1105_tyokai_2"
-    },
-    {
-      "kind": "enemy-parameters",
       "reason": "Unsupported original enemy skill/SP override: enemy_1144_merlgd_2",
       "stages": [
         "isw-no_level_obt_roguelike_ro5_dlc1_level_rogue5_sv-7_dlc1",
@@ -355060,6 +354936,15 @@
       ],
       "soleReportedBlockerStages": [],
       "id": "Unsupported stage-local enemy behavior"
+    },
+    {
+      "kind": "enemy",
+      "id": "enemy_1105_tyokai_b",
+      "stages": [
+        "kazimierz_camp_r_01",
+        "mn-7"
+      ],
+      "soleReportedBlockerStages": []
     },
     {
       "kind": "enemy-alias",
@@ -358579,12 +358464,31 @@
       "soleReportedBlockerStages": []
     },
     {
-      "kind": "enemy",
-      "id": "enemy_1105_tyokai_d",
+      "kind": "enemy-supply",
+      "reason": "Missing or unsupported supply card: trap_141_sheltr",
       "stages": [
         "cr-mo-1"
       ],
-      "soleReportedBlockerStages": []
+      "soleReportedBlockerStages": [],
+      "id": "Missing or unsupported supply card: trap_141_sheltr"
+    },
+    {
+      "kind": "enemy-supply",
+      "reason": "Missing or unsupported supply card: trap_143_rnfcar",
+      "stages": [
+        "cr-mo-1"
+      ],
+      "soleReportedBlockerStages": [],
+      "id": "Missing or unsupported supply card: trap_143_rnfcar"
+    },
+    {
+      "kind": "enemy-supply",
+      "reason": "Missing or unsupported supply card: trap_145_edd",
+      "stages": [
+        "cr-mo-1"
+      ],
+      "soleReportedBlockerStages": [],
+      "id": "Missing or unsupported supply card: trap_145_edd"
     },
     {
       "kind": "enemy",
@@ -365764,6 +365668,14 @@
     },
     {
       "kind": "enemy",
+      "id": "enemy_1105_tyokai_a",
+      "stages": [
+        "kazimierz_camp_r_01"
+      ],
+      "soleReportedBlockerStages": []
+    },
+    {
+      "kind": "enemy",
       "id": "enemy_1105_tyokai_c",
       "stages": [
         "kazimierz_camp_r_01"
@@ -370851,20 +370763,15 @@
       ]
     },
     {
-      "kind": "enemy",
-      "id": "enemy_1002_nsabr_s1",
+      "kind": "compile",
+      "reason": "Missing stage name",
       "stages": [
         "unknown_stage_guide_01"
       ],
-      "soleReportedBlockerStages": []
-    },
-    {
-      "kind": "enemy",
-      "id": "enemy_1002_nsabr_s2",
-      "stages": [
+      "soleReportedBlockerStages": [
         "unknown_stage_guide_01"
       ],
-      "soleReportedBlockerStages": []
+      "id": "Missing stage name"
     },
     {
       "kind": "device-instance",

@@ -17,7 +17,7 @@ const prefix = ['Flying unit.', 'Does not count towards the defeated enemies cou
 const supply = reward => ({ abilities: [...prefix, reward], native: sponsorNative,
   numbers: { 'loot.cnt': n => Number.isSafeInteger(n) && n > 0 },
   strings: { 'loot.token_key': s => typeof s === 'string' && /^trap_[a-z0-9_]+$/.test(s) },
-  groups: { loot: 'cnt,token_key' } });
+  groups: { loot: 'cnt,token_key' }, inactiveSpRecovery: 1 });
 /** Each new feature-backed alias is one bounded contract, not arbitrary
  * inheritance. Parameter values and native predicate must both be reviewed. */
 export const FEATURE_ALIAS_CONTRACTS = Object.freeze({

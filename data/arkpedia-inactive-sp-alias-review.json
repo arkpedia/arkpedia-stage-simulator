@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "scope": "Accept exact native inactive SP recovery defaults in bounded stage-local aliases without introducing another prefab or model.",
+  "sourceSha256": {
+    "shared/arkpedia/enemy-aliases.js": "86a79e5d5727394343f87c2ebf94fc7cc87d0b0f9c9beae8c7b73be571a7d344",
+    "tools/arkpedia/stage-enemy-aliases.mjs": "de4f3b2dd125fbe3e025e0b070893c2e077c57fa974353d13bfa4d166d43f448",
+    "test/arkpedia-stage-inactive-sp-aliases.test.js": "ec80f152859558c2c2d0bdc55c4777a8439cf5cfa2357837842a958fc36e18a6",
+    "data/arkpedia-content-inventory.json": "ed8adae1bd7a4908aae9e8c0a6afe8dd420368dd12e73770e7bb8ab6cc412ba1",
+    "data/arkpedia-library-report.json": "94f94249ec052fe4d1ba6b1a3676f9b064529c6f8cb099154551209751cbdd06",
+    "data/arkpedia-library.json": "1424f91619284e3e7e0d442816b093762c28ac0f80c09330286f5a1d4b5bf77a",
+    "docs/REMAINING.md": "eb46fa66e53a2dd7469cf359c4fe9eef627b76460c3ed94e4a55d1644550e51b"
+  },
+  "originalLevels": [
+    {
+      "id": "cr-mo-1",
+      "source": {
+        "repository": "Kengxxiao/ArknightsGameData",
+        "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+        "path": "zh_CN/gamedata/levels/activities/act32side/level_act32side_mo01.json",
+        "sha256": "b16366ade271271fbbe6d91d4bf9b0e018bfc494be52a854aee6047a1153cfd4",
+        "gitBlob": "a3de5e03fdec091b4527071b052782e8e2519c23",
+        "stageTable": {
+          "path": "zh_CN/gamedata/excel/stage_table.json",
+          "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+          "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+          "stageId": "act32side_mo01",
+          "levelId": "Activities/act32side/level_act32side_mo01"
+        }
+      }
+    },
+    {
+      "id": "isw-no_level_obt_roguelike_ro5_dlc1_level_rogue5_sv-6_dlc1",
+      "source": {
+        "repository": "Kengxxiao/ArknightsGameData",
+        "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+        "path": "zh_CN/gamedata/levels/obt/roguelike/ro5/dlc1/level_rogue5_sv-6_dlc1.json",
+        "sha256": "a5985c3c4ca837213691c8e75550286dcb5798a5384ce6a3bf26c99dbd5ddde1",
+        "gitBlob": "9a053b359afe5881922ee3761dfa1cfa130f201c"
+      }
+    },
+    {
+      "id": "isw-no_level_obt_roguelike_ro5_level_rogue5_sv-6",
+      "source": {
+        "repository": "Kengxxiao/ArknightsGameData",
+        "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+        "path": "zh_CN/gamedata/levels/obt/roguelike/ro5/level_rogue5_sv-6.json",
+        "sha256": "6d22a92d4f353204f11c5180efd55acc598ca3901265eef9cf569698ee7614b5",
+        "gitBlob": "02c1a2a5e1a5db8712c37920055ec7ddbce0aa26"
+      }
+    },
+    {
+      "id": "unknown_stage_guide_01",
+      "source": {
+        "repository": "Kengxxiao/ArknightsGameData",
+        "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+        "path": "zh_CN/gamedata/levels/obt/guide/level_guide_01.json",
+        "sha256": "ce69e4acc31e821e1058c67961966bf9a14f9d5fd4e4a8255123382470f41482",
+        "gitBlob": "d78fa1b73b94a621e72177ee26ef407347dc261a",
+        "stageTable": {
+          "path": "zh_CN/gamedata/excel/stage_table.json",
+          "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+          "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+          "stageId": "guide_01",
+          "levelId": "Obt/Guide/level_guide_01"
+        }
+      }
+    }
+  ],
+  "contract": {
+    "spRecoveryPerSec": 1,
+    "skills": 0,
+    "spCapacity": 0,
+    "initialSp": 0,
+    "allowedPrefabs": "Existing basic-stats-and-attacks admission, or an explicit feature alias inactiveSpRecovery contract. Sponsor contracts now opt in; Cheering Drone already did."
+  },
+  "validation": {
+    "focusedSourceAliasTests": 11,
+    "failures": 0,
+    "availableStageReferencesComparedWithParent": 970,
+    "allAvailableStageBundlesIdentical": true,
+    "note": "No runtime or available bundle changed; the prior 970-stage smoke remains applicable to the identical payloads."
+  },
+  "coverage": {
+    "enemies": 721,
+    "availableStages": 970,
+    "newStages": []
+  },
+  "limits": [
+    "Four affected stages retain their remaining device, enemy, environment, conditional-program or missing-title blockers.",
+    "No new enemy behavior or active SP system is granted admission."
+  ]
+}

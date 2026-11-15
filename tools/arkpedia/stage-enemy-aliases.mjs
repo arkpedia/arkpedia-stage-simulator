@@ -24,9 +24,16 @@ export function compileStageEnemyAlias(ref, records, support) {
     || Object.keys(ref).some(k => !['useDb', 'id', 'level', 'overwrittenData'].includes(k))) throw Error('Unsupported stage-local enemy reference');
   const data = ref.overwrittenData, base = data?.prefabKey?.m_defined && data.prefabKey.m_value;
   const contract = FEATURE_ALIAS_CONTRACTS[base];
+  // The native default regeneration value has no consumer in these bounded
+  // definitions: either an ordinary feature-free prefab, or an explicit alias
+  // contract, with no skills and no SP capacity/initial charge.
+  const inactiveSpValue = contract?.inactiveSpRecovery
+    ?? (support.enemies[base]?.policy === 'basic-stats-and-attacks' ? 1 : null);
+  const inactiveSp = inactiveSpValue != null && !data?.skills?.length
+    && (data?.spData == null || data.spData.maxSp === 0 && data.spData.initSp === 0);
   if (!data || Object.keys(data).some(key => !FIELDS.has(key)) || Object.entries(data.attributes ?? {})
     .some(([key, field]) => !ATTRIBUTES.has(key) && field?.m_defined && field.m_value !== 0 && field.m_value !== false
-      && !(key === 'spRecoveryPerSec' && contract?.inactiveSpRecovery === field.m_value && !data.spData?.maxSp && !data.spData?.initSp)))
+      && !(key === 'spRecoveryPerSec' && inactiveSp && inactiveSpValue === field.m_value)))
     throw Error('Stage-local enemy has unimplemented definition fields');
   const original = records.enemies[base]?.levels[0];
   const featureAlias = !!contract && support.enemies[base]?.policy === 'stats-attacks-and-features';
