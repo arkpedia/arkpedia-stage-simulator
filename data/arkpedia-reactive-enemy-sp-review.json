@@ -1,0 +1,37 @@
+{
+ "schemaVersion": 1,
+ "scope": "Reusable noncasting SP account and accepted-recipient cancellation phase. Controlled compiled-plan fixtures only; no new enemy or stage admission.",
+ "sourceSha256": {
+  "server/sim/damage.js": "90ae64c441d393257019926e0c66bccca922d9a8a3cda68a46bd69a662d7422a",
+  "server/sim/content/arkpedia-enemy-sp-account.js": "37e20b3b5dc381f0d4b87e2f9d93c3bbb9831c98695561e6515ac2eb2f8b4ef3",
+  "server/sim/content/arkpedia-enemy-runtime-index.js": "48361940b65b1eea83afb2682f546c0c9528a737cda5f7f8225589746c5c290b"
+ },
+ "tests": {
+  "integrationPassed": 101,
+  "stageSmokesPassed": 967,
+  "secondsPerStage": 10
+ },
+ "browser": {
+  "scope": "Controlled browser fixture injects a reactive SP plan on a basic enemy in 0-1; verifies lazy loading, initial and hit SP, noSp, noncasting readiness and barrier preservation. Does not admit Dream Tiles or certify an original stage.",
+  "before": {
+   "loaded": [],
+   "pending": 0
+  },
+  "after": {
+   "loaded": [
+    "arkpedia-enemy-sp-account"
+   ],
+   "pending": 0
+  },
+  "initial": 2,
+  "first": 3,
+  "blocked": 3,
+  "final": 7,
+  "active": false,
+  "hpBefore": 550,
+  "hpAfter": 550,
+  "barrier": 100,
+  "errors": [],
+  "pageErrors": []
+ }
+}

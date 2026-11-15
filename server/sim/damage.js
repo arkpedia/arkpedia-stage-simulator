@@ -372,6 +372,17 @@ export function dealDamage(battle, source, target, dmgIn) {
     ts = target.s;
     if (ts.flags.invulnerable || sleepBlocks(target, hs, dmg) || liftoffEvades(target, hs, dmg)) return 0;
   }
+  // Accepted incoming HP modifiers, after hit protection/dodge and before
+  // mitigation or shields. Unlike the observational beforeTargetModifier
+  // receipt, a recipient can cancel this attempt without mutating DamageInfo
+  // shared by an area attack. Fixed/unmodified damage still enters this phase.
+  if (battle._hooks.targetDamageModifier) {
+    const ctx = { source: hs, target, dmg, credit: source, targetLife, cancel: false };
+    battle.emit('targetDamageModifier', ctx);
+    if (ctx.cancel || dmg.cancel || !retainsDamageLife(target, targetLife)) return 0;
+    ts = target.s;
+    if (ts.flags.invulnerable || sleepBlocks(target, hs, dmg) || liftoffEvades(target, hs, dmg)) return 0;
+  }
   // 频次 units (flags hitCount / hitCountArts): every damage instance removes exactly 1 HP (maxHp = hits needed);
   // hitCountArts ignores physical instances. The instance keeps its own DamageInfo, so `damaged` handlers still
   // recognise their own (tagged) damage — never re-create such a loss with a fresh loseHp.
