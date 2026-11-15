@@ -13,7 +13,8 @@ def exact(value, key=''):
     return str(value) if key == 'm_PathID' else value
 
 
-def read_prefabs(cache, manifest, bundle, group, keys, *, uncensored=True):
+def read_prefabs(cache, manifest, bundle, group, keys, *, uncensored=True,
+                 component_types=('MonoBehaviour',)):
     row = next(r for r in manifest['abInfos'] if r['name'] == bundle)
     raw = (cache / 'bundles' / bundle).read_bytes()
     assert len(raw) == row['abSize'] and hashlib.md5(raw).hexdigest() == row['md5'], bundle
@@ -28,9 +29,9 @@ def read_prefabs(cache, manifest, bundle, group, keys, *, uncensored=True):
             for component in data['m_Component']:
                 obj = by_id[component['component']['m_PathID']]
                 value = obj.read_typetree()
-                if obj.type.name == 'MonoBehaviour':
+                if obj.type.name in component_types:
                     components.append({'object': data['m_Name'], 'pathId': str(obj.path_id), 'data': exact(value)})
-                elif obj.type.name == 'Transform':
+                if obj.type.name == 'Transform':
                     for child in value['m_Children']:
                         transform = by_id[child['m_PathID']].read_typetree()
                         walk(by_id[transform['m_GameObject']['m_PathID']])
