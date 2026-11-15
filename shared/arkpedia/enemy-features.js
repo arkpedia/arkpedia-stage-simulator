@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import {SURFING_INSTRUCTOR_FEATURES} from './enemy-surfing-instructor-features.js';
 import {LOGGED_CHEST_FEATURE} from './enemy-logged-chest-features.js';
 import {isDerisiveAudience,derisiveAudienceNative} from './enemy-ordinary-element-features.js';
 import { BEJEWELED_FEATURES } from './enemy-bejeweled-features.js';
@@ -389,6 +390,7 @@ const NATIVE_ONLY_FEATURES = Object.freeze({
 });
 
 export const ENEMY_FEATURES = Object.freeze({
+  ...SURFING_INSTRUCTOR_FEATURES,
   'native:loggedChest': LOGGED_CHEST_FEATURE,
   ...BEJEWELED_FEATURES,
   'ability:More likely to be attacked': { covers: r => r.stats.tauntLevel > 0, note: 'record taunt level participates in ordinary priority' },

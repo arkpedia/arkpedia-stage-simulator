@@ -2,6 +2,7 @@
 // Fixed import paths only. Register a reusable kind once, then reference it from
 // compiled enemy plans. No source predicates or native evidence ship here.
 export const ENEMY_RUNTIME_INDEX=Object.freeze([
+  {key:'arkpedia-enemy-conditional-protection',load:()=>import('./arkpedia-enemy-conditional-protection.js'),exports:{unblockedSanctuary:'unblockedSanctuary'}},
   {key:'arkpedia-enemy-passive-body',load:()=>import('./arkpedia-enemy-passive-body.js'),exports:{loggedEnemyBody:'loggedEnemyBody'}},
   {key:"arkpedia-enemy-damage-adaptation",load:()=>import("./arkpedia-enemy-damage-adaptation.js"),exports:{"damageAdaptation":"damageAdaptation"}},
   {key:"arkpedia-enemy-passengers",load:()=>import("./arkpedia-enemy-passengers.js"),exports:{"beachBus":"beachBus"}},
@@ -23,7 +24,7 @@ export const ENEMY_RUNTIME_INDEX=Object.freeze([
   {key:"arkpedia-enemy-dorothy",load:()=>import("./arkpedia-enemy-dorothy.js"),exports:{"dorothyTraps":"dorothyTraps"}},
   {key:"arkpedia-enemy-damage-share",load:()=>import("./arkpedia-enemy-damage-share.js"),exports:{"markedEnemyDamageShare":"markedEnemyDamageShare"}},
   {key:"arkpedia-enemy-power-armor-engineers",load:()=>import("./arkpedia-enemy-power-armor-engineers.js"),exports:{"powerArmorEngineer":"powerArmorEngineer"}},
-  {key:"arkpedia-enemy-power-armor-drivers",load:()=>import("./arkpedia-enemy-power-armor-drivers.js"),exports:{"powerArmorDriver":"powerArmorDriver","unblockedSanctuary":"unblockedSanctuary"}},
+  {key:"arkpedia-enemy-power-armor-drivers",load:()=>import("./arkpedia-enemy-power-armor-drivers.js"),exports:{"powerArmorDriver":"powerArmorDriver"}},
   {key:"arkpedia-enemy-death-conversion",load:()=>import("./arkpedia-enemy-death-conversion.js"),exports:{"deathConversionAura":"deathConversionAura"}},
   {key:"arkpedia-enemy-projectiles-runtime",load:()=>import("./arkpedia-enemy-projectiles-runtime.js"),exports:{"blockedMeleeProjectileAttack":"blockedMeleeProjectileAttack"}},
   {key:"arkpedia-enemy-exhausted-flame",load:()=>import("./arkpedia-enemy-exhausted-flame.js"),exports:{"exhaustedFlame":"exhaustedFlame"}},

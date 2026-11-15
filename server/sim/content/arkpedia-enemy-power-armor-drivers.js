@@ -11,14 +11,4 @@ export function powerArmorDriver({sp,ranged,attackAnim}) {
     },
   };
 }
-export function unblockedSanctuary({reduction}) {
-  const key='lysytc[damage_resistance]';
-  const update=(b,e)=>{
-    if(e.blockedBy)b.removeBuff(e,key);
-    else if(!e.findBuff(key)&&!e.findBuff('lysytc[damage_reduce]'))b.applyStatus(e,'sanctuary',{key,source:e,value:reduction});
-  };
-  return {
-    spawn(b,e){update(b,e);for(const event of ['blocked','unblocked'])b.on(event,({enemy})=>{if(enemy===e)update(b,e);},{owner:e});},
-    tick:update,
-  };
-}
+export {unblockedSanctuary} from './arkpedia-enemy-conditional-protection.js';
