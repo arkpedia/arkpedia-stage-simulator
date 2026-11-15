@@ -6,6 +6,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { buildStageLibrary, publishStageLibrary, stageCapabilityPriorities, assertPreservedStageAvailability } from '../tools/arkpedia/stage-library.mjs';
 import { createStageLibraryLoader, validateStageLibrary } from '../shared/arkpedia/stage-library.js';
+import enemyRecords from '../data/arkpedia-enemy-records.json' with {type:'json'};
 import { applyStage, resolveStage, loadStageCatalogue } from '../shared/arkpedia/stages.js';
 const definition = { key: 'enemy_a', name: 'Shared enemy', skills: [], talents: { bb: {} } };
 const sourceStage = (atk = 100) => ({ code: 'A', name: 'A stage', battle: { max_life: 3 },
@@ -78,6 +79,21 @@ test('normal/challenge stage graphs share the original wave program as a separat
   stage.waveProgram.waves.push({ corrupted: true });
   assert.deepEqual((await loader.load(b)).waveProgram, waveProgram);
 });
+test('catalogue enemy plans live in shared definitions while challenge statistics remain independent', async () => {
+  const id='enemy_1117_liiprr',base=structuredClone(enemyRecords.enemies[id].levels[0]);
+  const library=await build({ids:['a','b'],plan:async(c,key)=>{
+    const result=await plan(c,key),row=structuredClone(base);if(key==='b')row.stats.atk*=2;
+    return {...result,stage:{...result.stage,enemies:{[id]:row}}};
+  }});
+  const graphs=library.manifest.stages.map(s=>JSON.parse(library.objects.get(s.bundle)));
+  assert.equal(graphs[0].enemies[id].definition,graphs[1].enemies[id].definition);
+  assert.notEqual(graphs[0].enemies[id].stats,graphs[1].enemies[id].stats);
+  const loader=createStageLibraryLoader(fetchObjects(library.objects)),loaded=await loader.load(library.manifest.stages[0]);
+  const runtime=loaded.enemies[id].runtimeFeatures;assert.equal(runtime.schemaVersion,1);
+  assert.equal(runtime.entries.find(e=>e.ability)?.ability.kind,'sniperPrisoner');
+  assert.equal(base.runtimeFeatures,undefined);assert.equal(loaded.enemies[id].stats.atk,base.stats.atk);
+});
+
 test('installing a stage is atomic and switching does not retain previous enemy/support overrides', async () => {
   const library = await build({ plan: async (c, id) => {
     const row = await plan(c, id); if (id === 'a') row.stage.operators = { support_only: { id: 'support_only' } };

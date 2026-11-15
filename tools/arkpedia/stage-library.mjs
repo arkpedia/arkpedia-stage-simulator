@@ -8,6 +8,7 @@ import { writeJSONAtomic } from './write-json.mjs';
 import { publishComponentObjects } from './component-store.mjs';
 import { validateStageLibrary } from '../../shared/arkpedia/stage-library.js';
 import { groupStageBlockers } from './content-priorities.mjs';
+import { withCompiledEnemyRuntime } from '../../shared/arkpedia/enemy-runtime-compiler.js';
 const encode = value => JSON.stringify(value) + '\n';
 const digest = bytes => createHash('sha256').update(bytes).digest('hex');
 
@@ -17,8 +18,10 @@ export function packStage(id, stage, put) {
   const { geometry, pathing, waveProgram, enemies = {}, operators = {}, contentAddition, contentRuleRefresh, ...definition } = stage;
   return put({ schemaVersion: 1, kind: 'stage', id, definition: put(definition), geometry: put(geometry), pathing: put(pathing),
     ...(waveProgram ? { waveProgram: put(waveProgram) } : {}),
-    enemies: Object.fromEntries(Object.entries(enemies).map(([key, { stats, ...record }]) =>
-      [key, { definition: put(record), stats: put(stats) }])),
+    enemies: Object.fromEntries(Object.entries(enemies).map(([key, source]) => {
+      const { stats, ...record } = source.abilities && source.talents?.groups ? withCompiledEnemyRuntime(source) : source;
+      return [key, { definition: put(record), stats: put(stats) }];
+    })),
     ...(Object.keys(operators).length ? { operators: Object.fromEntries(Object.entries(operators).map(([key, record]) => [key, put(record)])) } : {}) });
 }
 

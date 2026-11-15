@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { applyCompiledEnemyFeatures } from './arkpedia-enemy-plan.js';
 import { damageAdaptation } from './arkpedia-enemy-damage-adaptation.js';
 import { beachBus } from './arkpedia-enemy-passengers.js';
 import { ropeBreakableDodge } from './arkpedia-enemy-rope-reactions.js';
@@ -200,6 +201,7 @@ const ABILITIES = Object.freeze({
 /** Apply one spawned enemy's feature traits and abilities (its record is `e.def.raw`). */
 export function applyEnemyFeatures(battle, e) {
   const record = e.def?.raw;
+  if (record?.runtimeFeatures) return applyCompiledEnemyFeatures(battle, e, record.runtimeFeatures, kind => Object.hasOwn(ABILITIES, kind) ? ABILITIES[kind] : null);
   // Only compiled catalogue records (shared/arkpedia/enemy-records.js) carry features.
   if (!record?.abilities || !record.talents?.groups) return;
   const abilities = [];
@@ -225,3 +227,5 @@ export function installEnemyFeatures(battle) {
   battle.regularEnemyFeatures = true;
   battle.on('enemySpawn', ({ enemy }) => applyEnemyFeatures(battle, enemy), { priority: 90 });
 }
+
+export const ENEMY_FEATURE_ABILITY_KINDS = Object.freeze(Object.keys(ABILITIES));
