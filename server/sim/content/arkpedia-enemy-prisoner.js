@@ -22,8 +22,7 @@ export function nativePrisoner(p) {
     if (mode === 1) a.listenerAt = b.time + p.warningDelay;
     if (a.free && p.freeAll && !a.freedOthers) {
       a.freedOthers = true; // Guard before callbacks: a chain can release another Recidivist.
-      for (const u of b.enemies.slice().filter(u => u !== e && sameSideSelectable(e, u)))
-        for (const ab of u.mem.ab?.list ?? []) ab.liberate?.(b, u, ab);
+      liberatePrisoners(b, e);
     }
   };
   const stance = (e, a) => {
@@ -76,4 +75,9 @@ export function prisonerAttackSpeedAura(p) {
     tick: update,
     death(_c, _b, _e, a) { a.aura.clear(); },
   };
+}
+
+export function liberatePrisoners(b, e) {
+  for (const u of b.enemies.slice().filter(u => u !== e && sameSideSelectable(e, u)))
+    for (const ab of u.mem.ab?.list ?? []) ab.liberate?.(b, u, ab);
 }

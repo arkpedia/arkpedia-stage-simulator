@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "scope": "Native contracts and local gameplay review, including explicit source-base/sparse-level parameter overlay. No compiled-client or frame/pixel parity certificate.",
+  "enemies": [
+    "enemy_1516_jakill"
+  ],
+  "sources": {
+    "data/arkpedia-enemy-records.json": "b75ba11f79473268f8408b28df67165101997fbf8ec8bdcfaa6f68354111b3a8",
+    "data/arkpedia-enemy-native-abilities.json": "86a331dcf2992e973272c328ee84da0c42630344164327d9fda201d6bfef6289",
+    "data/arkpedia-jesselton-animations.json": "dd7aee8bf4b8fbe0820e6acb319263c42a66f439fb5a233d96832f5a57763460",
+    "shared/arkpedia/enemy-jesselton-features.js": "f59704db1056db79668bb507209192296e099cc438e4ecf5cec312328adbc171",
+    "server/sim/content/arkpedia-enemy-jesselton.js": "e0b03d4ff7f583aafa3e300e95261c8b28b5cb40981997b6ee2380ac88a8e927",
+    "server/sim/content/arkpedia-enemy-prisoner.js": "7d116fdf7122fc38696e20096522cdb7cf34cf5694dc737e892d31f2ca6a58fc"
+  },
+  "tests": {
+    "focused": 7,
+    "combined": 80,
+    "stageSmoke": {
+      "passed": 955,
+      "seconds": 10
+    }
+  },
+  "artwork": {
+    "scope": "Chromium clip decoding/finite poses and idle body rendering; no native combat/frame/pixel parity claim",
+    "browser": "Chrome/156.0.8078.79",
+    "results": [
+      {
+        "viewport": "desktop",
+        "models": [
+          {
+            "id": "enemy_1516_jakill",
+            "version": "3.8.99",
+            "clips": 12,
+            "width": 387.0958709716797,
+            "height": 506.03862154483795
+          }
+        ],
+        "errors": [],
+        "failures": []
+      },
+      {
+        "viewport": "mobile",
+        "models": [
+          {
+            "id": "enemy_1516_jakill",
+            "version": "3.8.99",
+            "clips": 12,
+            "width": 387.0958709716797,
+            "height": 506.03862154483795
+          }
+        ],
+        "errors": [],
+        "failures": []
+      }
+    ]
+  },
+  "coverage": {
+    "enemies": 702,
+    "totalEnemies": 2163,
+    "stages": 955,
+    "totalStages": 3892
+  }
+}

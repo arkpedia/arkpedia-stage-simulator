@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { jesselton } from './arkpedia-enemy-jesselton.js';
 import { sniperPrisoner, nativePrisoner, prisonerAttackSpeedAura } from './arkpedia-enemy-prisoner.js';
 import { depositor } from './arkpedia-enemy-depositor.js';
 import { witherDevourer } from './arkpedia-enemy-devour.js';
@@ -112,7 +113,7 @@ const ABILITIES = Object.freeze({
   }),
   reborn: params => rebornAbility(params),
   ...featureAbilities,
-  rotEater, witherTank, steamTank, theresis, epochGuard, witherDevourer, depositor, sniperPrisoner, nativePrisoner, prisonerAttackSpeedAura,
+  rotEater, witherTank, steamTank, theresis, epochGuard, witherDevourer, depositor, jesselton, sniperPrisoner, nativePrisoner, prisonerAttackSpeedAura,
   // 持续损失生命: `amount` HP every second, sourceless.
   periodicLoss: ({ amount }) => ({ iv: 1, tick(b, e) { if (amount > 0) b.dealDamage(null, e, periodicDamage(amount)); } }),
   swim: ({ atk }) => ({

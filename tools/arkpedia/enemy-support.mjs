@@ -54,6 +54,7 @@ export async function buildEnemySupport() {
     source: { records: { path: 'data/arkpedia-enemy-records.json', sha256: sha(recordsRaw) }, nativeTimingIndex: { path: 'data/arkpedia-enemy-clock-source.json', sha256: sha(indexRaw) },
       nativeAbilities: { path: 'data/arkpedia-enemy-native-abilities.json', sha256: sha(nativeRaw) },
       environmentNativeSource: { path: 'data/arkpedia-environment-native-source.json', sha256: sha(await readFile(new URL('data/arkpedia-environment-native-source.json', root))) },
+      jesseltonAnimations: { path: 'data/arkpedia-jesselton-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-jesselton-animations.json', root))) },
       prisonerLeaderAnimations: { path: 'data/arkpedia-prisoner-leaders-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-prisoner-leaders-animations.json', root))) },
       sniperPrisonerAnimations: { path: 'data/arkpedia-sniper-prisoner-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-sniper-prisoner-animations.json', root))) },
       epochGuardAnimations: { path: 'data/arkpedia-epoch-guard-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-epoch-guard-animations.json', root))) },

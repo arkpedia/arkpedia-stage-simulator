@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { isJesselton, jesseltonNative, jesseltonExplains, JESSELTON_ABILITY } from './enemy-jesselton-features.js';
 import { isPrisonerLeader, prisonerLeaderNative, PRISONER_LEADER_ABILITY, PRISONER_SPEED_AURA } from './enemy-prisoner-leaders-features.js';
 import { isSelfFearEnemy, selfFearNative } from './enemy-self-fear.js';
 import { isSniperPrisoner, SNIPER_PRISONER_ABILITY, SNIPER_PRISONER_PRIORITY } from './enemy-prisoner-features.js';
@@ -205,9 +206,9 @@ function coversDeathBlast(r, group) {
 }
 function rebornFamily(group) {
   return { [`talent:${group}`]: {
-    covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan'
+    covers: (r, n) => isJesselton(r) ? jesseltonNative(r,n) : isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan'
       || (r.talents.groups[group].includes('duration') && r.talents.groups[group].every(p => REBORN_PARAMS.has(p))),
-    ability: r => isBladeKnight(r) || r.key === 'enemy_1522_captan' ? null : { kind: 'reborn', params: () => ({ dur: r.talents.bb[`${group}.duration`], hpRatio: r.talents.bb[`${group}.hp_ratio`] ?? 1,
+    ability: r => isJesselton(r) || isBladeKnight(r) || r.key === 'enemy_1522_captan' ? null : { kind: 'reborn', params: () => ({ dur: r.talents.bb[`${group}.duration`], hpRatio: r.talents.bb[`${group}.hp_ratio`] ?? 1,
       invincible: r.talents.bb[`${group}.invincible`] ?? 0 }) },
     note: 'reborn(): first KO → rebirth of duration s, then hp_ratio of max HP and invincible s', explains: /^Rebirth$/ } };
 }
@@ -459,6 +460,8 @@ export const ENEMY_FEATURES = Object.freeze({
     matchesRecord: isPrisonerLeader, covers: prisonerLeaderNative },
   'ability:When freed for the first time, immediately frees all other enemies': {
     matchesRecord: isPrisonerLeader, covers: prisonerLeaderNative, nativeClaim: () => ({ active: 1 }) },
+  'skill:ironsandstorm': { matchesRecord: isJesselton, covers: jesseltonNative, nativeClaim: () => ({ wrappers: 1, active: 1 }) },
+  'skill:armorpiercing': { matchesRecord: isJesselton, covers: jesseltonNative, nativeClaim: () => ({ wrappers: 1 }) },
   // 嘲讽: "More likely to be targeted by attacks" — taunt level +taunt_level.
   'talent:taunt': { covers: r => sig(r, 'taunt', ['taunt_level']), ability: { kind: 'taunt', params: r => ({ n: r.talents.bb['taunt.taunt_level'] }) },
     note: 'taunt level', explains: /^More likely to be targeted by attacks\.$/ },
@@ -1186,9 +1189,9 @@ export const ENEMY_FEATURES = Object.freeze({
   // enhance (沸血骑士团): each enemy-side unit killed anywhere on the field (isolation ignored) gives one permanent stack of
   // ATK +atk (×) and ASPD +attack_speed, up to max_stack_cnt (PRTS 沸血骑士团学徒 天赋 corroborates: 场上每有一名敌方单位
   // 死亡时 攻击力+10%，攻击速度+5，最多叠加10次).
-  'talent:enhance': { covers: (r, nat) => sig(r, 'enhance', ['atk', 'attack_speed', 'max_stack_cnt']) && isAllyDeathEnhance(r, nat),
-    ability: { kind: 'allyDeathStacks', params: r => ({ atk: r.talents.bb['enhance.atk'], aspd: r.talents.bb['enhance.attack_speed'], max: r.talents.bb['enhance.max_stack_cnt'] }) },
-    note: 'stacks ATK/ASPD per enemy-side death', explains: /^Each time an enemy is defeated, gains ATK and ASPD, stacking up to 10 times\.$/ },
+  'talent:enhance': { covers: (r, nat) => isJesselton(r) ? jesseltonNative(r,nat) : sig(r, 'enhance', ['atk', 'attack_speed', 'max_stack_cnt']) && isAllyDeathEnhance(r, nat),
+    ability: r => isJesselton(r) ? JESSELTON_ABILITY : { kind: 'allyDeathStacks', params: r => ({ atk: r.talents.bb['enhance.atk'], aspd: r.talents.bb['enhance.attack_speed'], max: r.talents.bb['enhance.max_stack_cnt'] }) },
+    note: 'reviewed form enhancement or stacks ATK/ASPD per enemy-side death', explains: (text,r) => isJesselton(r) ? jesseltonExplains(text) : /^Each time an enemy is defeated, gains ATK and ASPD, stacking up to 10 times\.$/.test(text) },
   'ability:First Form': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan' && (sig(r, 'Reborn', ['duration', 'location', 'reborn_invincible.duration']) || sig(r, 'Reborn', ['location'])) && r.skills.some(x => x.prefabKey === 'SummonBmbmot'),
     ability: { kind: 'pancho', params: () => ({}) }, nativeClaim: () => ({ wrappers: 5 }),
     note: 'Pancho: two forms, summons, water cannon, burst shot, whirlwind and form-two stats' },
