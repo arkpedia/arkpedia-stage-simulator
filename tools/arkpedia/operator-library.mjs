@@ -6,6 +6,8 @@ import { createHash } from 'node:crypto';
 import { writeJSONAtomic } from './write-json.mjs';
 import { publishComponentObjects } from './component-store.mjs';
 import { catalogueFor } from '../../shared/arkpedia/loadout.js';
+import {assertRegularOperator as assertSourceOperator} from '../../shared/arkpedia/operators.js';
+import {checkOperatorSupportIndex,publishOperatorSupportIndex} from './operator-support-index.mjs';
 
 // Summaries contain only picker/build constraints, never simulated stats.
 export function operatorSummary(op) {
@@ -18,7 +20,8 @@ export function operatorSummary(op) {
 }
 
 export function buildOperatorLibrary(snapshot) {
-  catalogueFor(snapshot); // Validate registered source records before publication.
+  const sourceValidation={assertOperator:assertSourceOperator};
+  catalogueFor(snapshot,sourceValidation); // Validate source registrations, even before refreshing the runtime index.
   const objects = new Map();
   const put = value => {
     const bytes = JSON.stringify(value) + '\n', hash = createHash('sha256').update(bytes).digest('hex');
@@ -31,13 +34,14 @@ export function buildOperatorLibrary(snapshot) {
     common: { ...common, sd: { ...sdConfig, models: {} } },
     roster: Object.fromEntries(Object.entries(operators).map(([id, op]) => [id, operatorSummary(op)])),
     operators: pack(operators), tokens: pack(tokens), models: pack(models) };
-  if (JSON.stringify(catalogueFor({ operators: bootstrap.roster })) !== JSON.stringify(catalogueFor(snapshot)))
+  if (JSON.stringify(catalogueFor({ operators: bootstrap.roster },sourceValidation)) !== JSON.stringify(catalogueFor(snapshot,sourceValidation)))
     throw Error('Operator summaries changed build constraints');
   return { bootstrap, objects };
 }
 
 export async function publishOperatorLibrary({ bootstrap, objects }, root) {
   await publishComponentObjects(objects, root);
+  await publishOperatorSupportIndex(pathToFileURL(join(root,'shared/arkpedia/operator-support-index.js')));
   // Publish after every referenced object is available. Existing tabs keep their pinned graph.
   await writeJSONAtomic(join(root, 'data/arkpedia-operators.json'), bootstrap, { space: 0 });
 }
@@ -45,6 +49,7 @@ export async function publishOperatorLibrary({ bootstrap, objects }, root) {
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const root = resolve(new URL('../..', import.meta.url).pathname);
   const snapshot = JSON.parse(await readFile(join(root, 'data/arkpedia-mvp.json'), 'utf8'));
+  if(process.argv.includes('--check'))await checkOperatorSupportIndex();
   const built = buildOperatorLibrary(snapshot);
   if (process.argv.includes('--check')) {
     if (JSON.stringify(built.bootstrap) !== JSON.stringify(JSON.parse(await readFile(join(root, 'data/arkpedia-operators.json'), 'utf8'))))

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Regular-stage adapters are opt-in. Stronghold's mode kits are migration candidates,
 // not evidence that a character is supported in ordinary Arknights stages.
+import {assertSupportedOperator} from './operator-support-contract.js';
 import { MEDIC_OPERATORS } from './medic-operators.js';
 import { CASTER_OPERATORS } from './caster-operators.js';
 import { GUARD_OPERATORS } from './guard-operators.js';
@@ -512,15 +513,5 @@ export const REGULAR_OPERATORS = Object.freeze({
 });
 
 export function assertRegularOperator(op) {
-  const support = REGULAR_OPERATORS[op?.id];
-  const skillIds = support?.skillIds ?? (support?.skillId == null ? [] : [support.skillId]);
-  if (!support || !Array.isArray(op.skills) || op.skills.length !== skillIds.length
-    || op.skills.some((skill, index) => skill.id !== skillIds[index]))
-    throw new Error(`Unsupported regular-stage operator or skill: ${op?.id}`);
-  for (const talent of op.talents ?? [])
-    for (const candidate of talent.candidates)
-      for (const { key } of candidate.blackboard ?? [])
-        if (!support.talentKeys.includes(key))
-          throw new Error(`Unsupported talent ${key}: ${op.id}`);
-  return support;
+  return assertSupportedOperator(op, REGULAR_OPERATORS[op?.id]);
 }

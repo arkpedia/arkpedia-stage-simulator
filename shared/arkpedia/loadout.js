@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import { validateLoadout } from "./squad.js";
-import { assertRegularOperator } from "./operators.js";
+import { assertRegularOperator } from "./operator-support.js";
 const bb = (rows) =>
   Object.fromEntries((rows ?? []).map((r) => [r.key, r.valueStr ?? r.value]));
 const phaseNumber = (phase) => Number(String(phase).replace("PHASE_", ""));
@@ -31,10 +31,10 @@ export function skillRankCap(op, skillId, elite) {
     ? Math.min(rankCaps[elite], skill.levels.length) : 0;
 }
 
-export function catalogueFor(data) {
+export function catalogueFor(data, {assertOperator = assertRegularOperator} = {}) {
   return Object.fromEntries(
     Object.values(data.operators).map((op) => {
-      assertRegularOperator(op);
+      assertOperator(op);
       return [
         op.id,
         {

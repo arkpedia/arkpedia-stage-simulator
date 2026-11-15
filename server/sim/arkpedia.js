@@ -37,7 +37,7 @@ import { regularModelKey } from '../../shared/arkpedia/facing.js';
 import { selectedRegularSummon } from './content/arkpedia-summon-deck.js';
 import { assertClosurEnemyCompatibility } from '../../shared/arkpedia/closur-enemy-compatibility.js';
 import { catalogueFor, recordFor, fixedSquadBuilds } from '../../shared/arkpedia/loadout.js';
-import { REGULAR_OPERATORS } from '../../shared/arkpedia/operators.js';
+import { REGULAR_OPERATORS } from '../../shared/arkpedia/operator-support.js';
 import { assertRegularEnemies } from '../../shared/arkpedia/enemies.js';
 import { installEnemyFeatures,enemyRuntimeFor } from './content/arkpedia-enemy-runtime.js';
 import { sealsStageRoute } from './content/arkpedia-stage-route-blocking.js';
