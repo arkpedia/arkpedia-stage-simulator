@@ -18,6 +18,7 @@ const keySet = (ids, dimensions = standard, bindings = []) => Object.fromEntries
 // A family is one adapter to an existing source compiler, never a second copy
 // of its mechanics. Arbitrary branch identities are validated at stage import.
 export const DEVICE_FAMILIES = {
+  carapaceDefinition: { module: 'stage-carapaces', variants: keySet(['']) },
   twigsDefinition: { module: 'stage-twigs', variants: keySet([''], standard, ['branchId','actionIndex','pollutionLow','pollutionHigh']) },
   capturableDeviceDefinition: { module: 'stage-capturable-devices', keyed: true,
     variants: keySet(['trap_057_wpnsts'], { level: levels(90), skillLevel: [1], skillIndex: [0, 1] }) },

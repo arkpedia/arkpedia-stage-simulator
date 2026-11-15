@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "scope": "Gameplay/card-flow/source checkpoint. Carapace mesh rendering and Nethersea controller remain pending; not original-client parity.",
+  "enemies": [
+    "enemy_1434_dsshel"
+  ],
+  "devices": [
+    "trap_156_dsshell"
+  ],
+  "sources": {
+    "data/arkpedia-enemy-native-abilities.json": "f94acce45602c22ce3fcb9d0f38c23ed3d9fb11d43ba15582f450713230df3ef",
+    "data/arkpedia-device-native-source.json": "a0e42e06ba3849bdb8c9403ab4c823433b2c7209bd7813b7a46457795d37c8f0",
+    "data/arkpedia-device-source.json": "699e47110f1837d0693ade9566de35eec0ed47b9382d7bf96532ad12221350bf",
+    "data/arkpedia-device-runtime.json": "f1ee935daa09b5361003d7a30c4162a3504c5e863b3929b9b8a5243d5c813181",
+    "shared/arkpedia/stage-carapaces.js": "41b79a13c827a5740ab7232e29009b64c084184c77acf92063146c122e4e13f0",
+    "shared/arkpedia/enemy-depositor-features.js": "56b8984a2843a2e10fc592e11bd3d5d5017bb4d8601297d43f87f9ecdfb054fb",
+    "server/sim/content/arkpedia-stage-carapaces.js": "526a86a96038c99849656eaeb023f51e26218616132956ea5ecc7d30eec34303",
+    "server/sim/content/arkpedia-enemy-depositor.js": "31d2585adecaa6760ea07b3e3589e723e100d6f2f80bf711b03a4d40ebeb247b",
+    "server/sim/content/arkpedia-card-redeploy.js": "2a327e18bfa9597b0dd7e428f18df54ff66f82bb346e7a002a8d9a09396cd30c",
+    "server/sim/content/arkpedia-platforms.js": "388dc8bfda7791d7c5fa019dd5cb67530453c95cd1f14a6f48a42840e90333a7",
+    "server/sim/arkpedia.js": "1de7914b8533ad15089e89fe1579d32090ea4feb892b8f661065f95d4a5e6c9d"
+  },
+  "tests": {
+    "focused": 8,
+    "combined": 274,
+    "stageSmoke": {
+      "passed": 926,
+      "seconds": 10
+    }
+  },
+  "artwork": {
+    "depositor": {
+      "scope": "Chromium clip decoding/finite poses and idle body rendering; no native combat/frame/pixel parity claim",
+      "browser": "Chrome/156.0.8078.79",
+      "results": [
+        {
+          "viewport": "desktop",
+          "models": [
+            {
+              "id": "enemy_1434_dsshel",
+              "version": "3.8.99",
+              "clips": 5,
+              "width": 278.7145767211914,
+              "height": 260.2586302757263
+            }
+          ],
+          "errors": [],
+          "failures": []
+        },
+        {
+          "viewport": "mobile",
+          "models": [
+            {
+              "id": "enemy_1434_dsshel",
+              "version": "3.8.99",
+              "clips": 5,
+              "width": 278.7145767211914,
+              "height": 260.2586302757263
+            }
+          ],
+          "errors": [],
+          "failures": []
+        }
+      ]
+    },
+    "carapace": {
+      "approved": false,
+      "reason": "Original Unity mesh/Animation body requires a separate exporter and renderer; Spine importer refused it."
+    }
+  }
+}

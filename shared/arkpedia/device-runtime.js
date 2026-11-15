@@ -38,6 +38,7 @@ export const gramophoneDefinition = single('gramophoneDefinition');
 export const manualDeviceDefinition = keyed('manualDeviceDefinition');
 export const powerArmorDeviceDefinition = keyed('powerArmorDeviceDefinition');
 export const rewardDeviceDefinition = keyed('rewardDeviceDefinition');
+export const carapaceDefinition = single('carapaceDefinition');
 export const twigsDefinition = single('twigsDefinition');
 export const sceneryDefinition = keyed('sceneryDefinition');
 export const turretDefinition = single('turretDefinition');

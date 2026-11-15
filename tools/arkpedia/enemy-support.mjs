@@ -54,6 +54,8 @@ export async function buildEnemySupport() {
     source: { records: { path: 'data/arkpedia-enemy-records.json', sha256: sha(recordsRaw) }, nativeTimingIndex: { path: 'data/arkpedia-enemy-clock-source.json', sha256: sha(indexRaw) },
       nativeAbilities: { path: 'data/arkpedia-enemy-native-abilities.json', sha256: sha(nativeRaw) },
       environmentNativeSource: { path: 'data/arkpedia-environment-native-source.json', sha256: sha(await readFile(new URL('data/arkpedia-environment-native-source.json', root))) },
+      epochGuardAnimations: { path: 'data/arkpedia-epoch-guard-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-epoch-guard-animations.json', root))) },
+      devourAnimations: { path: 'data/arkpedia-devour-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-devour-animations.json', root))) },
       theresisAnimations: { path: 'data/arkpedia-theresis-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-theresis-animations.json', root))) },
       steamTankAnimations: { path: 'data/arkpedia-steam-tank-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-steam-tank-animations.json', root))) },
       witherTankAnimations: { path: 'data/arkpedia-wither-tank-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-wither-tank-animations.json', root))) },

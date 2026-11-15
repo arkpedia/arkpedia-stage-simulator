@@ -30,9 +30,9 @@ def digest(value):
 prefabs, bundles = {}, []
 for path, group, keys in [
     ('pkgrps/btl_pfb_tokens_0.ab', 'tokens', ['trap_086_larva', 'trap_075_bgarmn', 'trap_076_bgarms', 'trap_077_rmtarmn', 'trap_078_rmtarms', 'trap_050_blizzard', 'trap_002_emp', 'trap_005_sensor', 'trap_008_farm', 'trap_057_wpnsts', 'trap_018_bomb', 'trap_019_electric', 'trap_007_ballis', 'trap_013_blower', 'trap_014_tower', 'trap_009_battery', 'trap_006_antidr', 'trap_043_dupilr', 'trap_044_duruin', 'trap_045_dublst', 'trap_001_crate', 'trap_015_tree', 'trap_016_peon', 'trap_017_wooden_broke', 'trap_012_mine', 'trap_011_ore', 'trap_062_magicstart', 'trap_063_magicturn', 'trap_064_magiccircle']),
-    ('pkgrps/btl_pfb_tokens_1.ab', 'tokens', ['trap_161_lrcage', 'trap_098_mire']),
+    ('pkgrps/btl_pfb_tokens_1.ab', 'tokens', ['trap_156_dsshell', 'trap_161_lrcage', 'trap_098_mire']),
     ('pkgrps/btl_pfb_tokens_3.ab', 'tokens', ['trap_757_skzbox', 'trap_758_skzmbx', 'trap_759_skzwyx', 'trap_760_skztzs']),
-    ('battle/prefabs/[uc]skills.ab', 'skills', ['sktok_larva', 'sktok_bgarmn_1', 'sktok_bgarms_1', 'sktok_rmtarmn_1', 'sktok_rmtarms_1', 'sktok_blizzard', 'sktok_blizzard_2', 'sktok_emp', 'sktok_sensor', 'sktok_farm', 'sktok_wpnsts_1', 'sktok_wpnsts_2', 'sktok_bomb', 'sktok_electric', 'sktok_ballis', 'sktok_blower', 'sktok_tower', 'sktok_antidr', 'sktok_dupilr', 'sktok_dublst', 'sktok_tree', 'sktok_mine', 'sktok_ore', 'sktok_magiccircle', 'sktok_skzmbx', 'sktok_mire']),
+    ('battle/prefabs/[uc]skills.ab', 'skills', ['sktok_dsshell', 'sktok_larva', 'sktok_bgarmn_1', 'sktok_bgarms_1', 'sktok_rmtarmn_1', 'sktok_rmtarms_1', 'sktok_blizzard', 'sktok_blizzard_2', 'sktok_emp', 'sktok_sensor', 'sktok_farm', 'sktok_wpnsts_1', 'sktok_wpnsts_2', 'sktok_bomb', 'sktok_electric', 'sktok_ballis', 'sktok_blower', 'sktok_tower', 'sktok_antidr', 'sktok_dupilr', 'sktok_dublst', 'sktok_tree', 'sktok_mine', 'sktok_ore', 'sktok_magiccircle', 'sktok_skzmbx', 'sktok_mire']),
     ('battle/prefabs/[uc]tiles.ab', 'tiles', ['tile_mire', 'tile_reed', 'tile_reedf', 'tile_reedw']),
     ('battle/prefabs/[uc]projectiles.ab', 'projectiles', ['projectile_chr_electric_shock', 'projectile_chr_electric_shock_effect', 'projectile_ballis', 'projectile_chr_tower_1', 'projectile_chr_tower_2']),
 ]:

@@ -62,7 +62,7 @@ export function validateStaticDeviceInstances(devices, level, instances = {}) {
     const matching = all.filter(p => p.inst?.characterKey === d.key && p.position?.row === d.row && p.position?.col === d.col);
     if (matching.length !== 1) throw Error(`Missing or ambiguous original device instance: ${d.key}`);
     const p = matching[0];
-    const spec = stageDeviceSpec(d), instanced = spec.powerArmor || spec.reward || spec.magicCircuit || spec.manual || spec.capturable || spec.electricCoil || spec.turret || spec.flowGenerator || spec.gramophone || spec.demolition || spec.scenery || spec.mine;
+    const spec = stageDeviceSpec(d), instanced = spec.carapace || spec.powerArmor || spec.reward || spec.magicCircuit || spec.manual || spec.capturable || spec.electricCoil || spec.turret || spec.flowGenerator || spec.gramophone || spec.demolition || spec.scenery || spec.mine;
     if (spec.twigs) {
       instances[`${d.key}:${d.row}:${d.col}`] = compileTwigsInstance(p, level);
       continue;
@@ -108,7 +108,7 @@ export async function prepareStageDeviceInstances({ root, rules, compiledRules, 
     const path = 'data/arkpedia-flux-reflector-source.json', bytes = await readFile(join(root, path));
     sources.push({ path, sha256: createHash('sha256').update(bytes).digest('hex') });
   }
-  if (devices.some(d => stageDeviceSpec(d)?.twigs || stageDeviceSpec(d)?.powerArmor || stageDeviceSpec(d)?.reward || stageDeviceSpec(d)?.magicCircuit || stageDeviceSpec(d)?.manual || stageDeviceSpec(d)?.capturable || stageDeviceSpec(d)?.electricCoil || stageDeviceSpec(d)?.turret || stageDeviceSpec(d)?.flowGenerator || stageDeviceSpec(d)?.gramophone || stageDeviceSpec(d)?.demolition || stageDeviceSpec(d)?.scenery || stageDeviceSpec(d)?.mine)) {
+  if (devices.some(d => stageDeviceSpec(d)?.carapace || stageDeviceSpec(d)?.twigs || stageDeviceSpec(d)?.powerArmor || stageDeviceSpec(d)?.reward || stageDeviceSpec(d)?.magicCircuit || stageDeviceSpec(d)?.manual || stageDeviceSpec(d)?.capturable || stageDeviceSpec(d)?.electricCoil || stageDeviceSpec(d)?.turret || stageDeviceSpec(d)?.flowGenerator || stageDeviceSpec(d)?.gramophone || stageDeviceSpec(d)?.demolition || stageDeviceSpec(d)?.scenery || stageDeviceSpec(d)?.mine)) {
     const path = 'data/arkpedia-device-native-source.json', bytes = await readFile(join(root, path));
     sources.push({ path, sha256: createHash('sha256').update(bytes).digest('hex') });
   }

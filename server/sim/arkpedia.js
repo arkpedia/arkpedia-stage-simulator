@@ -27,6 +27,7 @@ import { installStageEnvironments } from './content/arkpedia-stage-environments.
 import { stageCardBaseCost, stageCardRespawnTime } from './content/arkpedia-stage-card-cost.js';
 import { stageCardDeploymentBlocked } from '../../shared/arkpedia/stage-card-rules.js';
 import { cardLockError } from './content/arkpedia-card-locks.js';
+import { cardRedeployRatio } from './content/arkpedia-card-redeploy.js';
 import { forbiddenStageTiles, stageBuildableType } from '../../shared/arkpedia/stage-deployment-tiles.js';
 import { enemyRuntimeRecord } from '../../shared/arkpedia/enemy-features.js';
 import { excludedStageOperators, stageSquadLimit, stageUsesFixedSquad } from '../../shared/arkpedia/stage-roster.js';
@@ -51,6 +52,7 @@ import { assertRegularEnemies } from '../../shared/arkpedia/enemies.js';
 import { installEnemyFeatures } from './content/arkpedia-enemy-features.js';
 import { StageDemolition } from './content/arkpedia-stage-demolition.js';
 import { StageScenery, sealsStageRoute } from './content/arkpedia-stage-scenery.js';
+import { StageCarapaces } from './content/arkpedia-stage-carapaces.js';
 import { StageReeds } from './content/arkpedia-stage-reeds.js';
 import { StageMire } from './content/arkpedia-stage-mire.js';
 import { StageWater } from './content/arkpedia-stage-water.js';
@@ -316,6 +318,7 @@ export class StandardBattle extends Battle {
     this.stageFlowGenerators = new StageFlowGenerators(this, data.stage.devices ?? []);
     this.stageGramophones = new StageGramophones(this, data.stage.devices ?? []);
     this.stageDemolition = new StageDemolition(this);
+    this.stageCarapaces = new StageCarapaces(this, data.stage.devices ?? []);
     this.stageScenery = new StageScenery(this, data.stage.devices ?? [], data.stage.geometry);
     this.stageBranches = new StageBranchScheduler(this, data.stage.waveProgram?.branches, data.stage.rules);
     this.stagePowerArmor = new StagePowerArmor(this, (data.stage.devices ?? []).filter(d => stageDeviceSpec(d)?.powerArmor));
@@ -651,6 +654,7 @@ export class StandardBattle extends Battle {
       unit.skill.gainSp(def.talents.reduce((sum, talent) => sum + (talent.bb.sp ?? 0), 0), "talent");
     entry.deployments++;
     entry.unit = unit;
+    delete entry.redeployRatios;
     if (fromSkill) entry.readyAt = this.time;
     this.operatorServices.consumeFiveStarVanguardSecondCard(this, id);
     this.operatorServices.consumeSaileachCard(this, id);
@@ -698,7 +702,8 @@ export class StandardBattle extends Battle {
   _remove(unit, reason, killer, permanent) {
     if (unit.side === "ally" && unit.kind === "op") {
       const entry = this.bench[unit.defId];
-      if (entry) entry.readyAt = entry.noCard || entry.removedFromDeck ? Infinity : this.time + unit.base.respawnTime * unit.s.redeployMul;
+      if (entry) entry.readyAt = entry.noCard || entry.removedFromDeck ? Infinity
+        : this.time + unit.base.respawnTime * unit.s.redeployMul * cardRedeployRatio(entry);
       permanent = true;
     }
     super._remove(unit, reason, killer, permanent);

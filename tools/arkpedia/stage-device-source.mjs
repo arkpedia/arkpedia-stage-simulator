@@ -9,7 +9,7 @@ const TABLES = {
   skill_table: '3793979c8672129489135e97727bfd9f9fd32873',
   range_table: '8ade26d87026ee7649ff8a2d1636e7c3426959c8',
 };
-const IDS = ['trap_086_larva', 'trap_075_bgarmn', 'trap_076_bgarms', 'trap_077_rmtarmn', 'trap_078_rmtarms', 'trap_098_mire', 'trap_050_blizzard', 'trap_010_frosts', 'trap_011_ore', 'trap_002_emp', 'trap_005_sensor', 'trap_008_farm', 'trap_057_wpnsts', 'trap_018_bomb', 'trap_019_electric', 'trap_007_ballis', 'trap_013_blower', 'trap_014_tower', 'trap_009_battery', 'trap_006_antidr', 'trap_043_dupilr', 'trap_044_duruin', 'trap_045_dublst', 'trap_001_crate', 'trap_015_tree', 'trap_016_peon', 'trap_012_mine', 'trap_161_lrcage', 'trap_062_magicstart', 'trap_063_magicturn', 'trap_064_magiccircle'];
+const IDS = ['trap_156_dsshell', 'trap_086_larva', 'trap_075_bgarmn', 'trap_076_bgarms', 'trap_077_rmtarmn', 'trap_078_rmtarms', 'trap_098_mire', 'trap_050_blizzard', 'trap_010_frosts', 'trap_011_ore', 'trap_002_emp', 'trap_005_sensor', 'trap_008_farm', 'trap_057_wpnsts', 'trap_018_bomb', 'trap_019_electric', 'trap_007_ballis', 'trap_013_blower', 'trap_014_tower', 'trap_009_battery', 'trap_006_antidr', 'trap_043_dupilr', 'trap_044_duruin', 'trap_045_dublst', 'trap_001_crate', 'trap_015_tree', 'trap_016_peon', 'trap_012_mine', 'trap_161_lrcage', 'trap_062_magicstart', 'trap_063_magicturn', 'trap_064_magiccircle'];
 export async function buildStageDeviceSource() {
   const tables = {}, files = {};
   for (const [name, gitBlob] of Object.entries(TABLES)) {

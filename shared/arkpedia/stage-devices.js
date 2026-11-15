@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { carapaceNativeReviewed } from './stage-carapaces.js';
 import { twigsNativeReviewed } from './stage-twigs.js';
 import { powerArmorDeviceNativeReviewed } from './stage-power-armor.js';
 import { magicCircuitNativeReviewed, resonatorNativeReviewed, fluxReflectorNativeReviewed } from './stage-magic-circuit.js';
@@ -18,6 +19,7 @@ import { capturableDeviceNativeReviewed } from './stage-capturable-devices.js';
 // Reviewed stage devices. The source data only carries position and name; the
 // device parameters live here with their source descriptions.
 export const STAGE_DEVICES = Object.freeze({
+  'Excrescent Carapace': Object.freeze({ keys: Object.freeze(['trap_156_dsshell']), carapace: true, staticLevelReview: true, maxLevel: 30 }),
   "'Twigs That Crave'": Object.freeze({keys:Object.freeze(['trap_086_larva']),twigs:true,scheduled:true,staticLevelReview:true,maxLevel:30}),
   'R-31 Heavy Power Armor': Object.freeze({keys:Object.freeze(['trap_075_bgarmn']),powerArmor:true,staticLevelReview:true,maxLevel:30}),
   'R-31a Heavy Power Armor': Object.freeze({keys:Object.freeze(['trap_076_bgarms']),powerArmor:true,staticLevelReview:true,maxLevel:30}),
@@ -111,6 +113,7 @@ export const SUPPORTED_STAGE_DEVICE_NAMES = Object.freeze(Object.keys(STAGE_DEVI
 export function stageDeviceSpec(device) {
   const spec = STAGE_DEVICES[device?.name];
   if (!spec || spec.keys && !spec.keys.includes(device.key) || spec.staticLevelReview && !spec.scheduled && device.hidden !== false
+    || spec.carapace && !carapaceNativeReviewed()
     || spec.twigs && !twigsNativeReviewed()
     || spec.powerArmor && !powerArmorDeviceNativeReviewed(device.key)
     || spec.reward && !rewardDeviceNativeReviewed(device.key)

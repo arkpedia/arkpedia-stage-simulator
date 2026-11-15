@@ -25,6 +25,159 @@
   }
  },
  "devices": {
+  "trap_156_dsshell": {
+   "name": "赘生甲壳",
+   "description": null,
+   "sortIndex": 1350,
+   "spTargetType": "NONE",
+   "spTargetId": null,
+   "canUseGeneralPotentialItem": true,
+   "canUseActivityPotentialItem": false,
+   "potentialItemId": null,
+   "activityPotentialItemId": null,
+   "classicPotentialItemId": null,
+   "nationId": null,
+   "groupId": null,
+   "teamId": null,
+   "mainPower": {
+    "nationId": null,
+    "groupId": null,
+    "teamId": null
+   },
+   "subPower": null,
+   "displayNumber": null,
+   "appellation": "Neoplastic Shell",
+   "position": "NONE",
+   "tagList": null,
+   "itemUsage": null,
+   "itemDesc": null,
+   "itemObtainApproach": null,
+   "isNotObtainable": false,
+   "isSpChar": false,
+   "maxPotentialLevel": 0,
+   "rarity": "TIER_1",
+   "profession": "TRAP",
+   "subProfessionId": "notchar2",
+   "trait": null,
+   "phases": [
+    {
+     "characterPrefabKey": "trap_156_dsshell",
+     "rangeId": null,
+     "maxLevel": 30,
+     "attributesKeyFrames": [
+      {
+       "level": 1,
+       "data": {
+        "maxHp": 3000,
+        "atk": 0,
+        "def": 320,
+        "magicResistance": 0,
+        "cost": 0,
+        "blockCnt": 20,
+        "moveSpeed": 1,
+        "attackSpeed": 100,
+        "baseAttackTime": 1,
+        "respawnTime": 35,
+        "hpRecoveryPerSec": 0,
+        "spRecoveryPerSec": 1,
+        "maxDeployCount": 1,
+        "maxDeckStackCnt": 0,
+        "tauntLevel": 0,
+        "massLevel": 0,
+        "baseForceLevel": 0,
+        "stunImmune": false,
+        "silenceImmune": false,
+        "sleepImmune": false,
+        "frozenImmune": false,
+        "levitateImmune": false,
+        "disarmedCombatImmune": false,
+        "fearedImmune": false,
+        "palsyImmune": false,
+        "attractImmune": false,
+        "teleportImmune": false,
+        "groundBoundImmune": false
+       }
+      },
+      {
+       "level": 30,
+       "data": {
+        "maxHp": 5000,
+        "atk": 0,
+        "def": 100,
+        "magicResistance": 0,
+        "cost": 0,
+        "blockCnt": 20,
+        "moveSpeed": 1,
+        "attackSpeed": 100,
+        "baseAttackTime": 1,
+        "respawnTime": 35,
+        "hpRecoveryPerSec": 0,
+        "spRecoveryPerSec": 1,
+        "maxDeployCount": 1,
+        "maxDeckStackCnt": 0,
+        "tauntLevel": 0,
+        "massLevel": 0,
+        "baseForceLevel": 0,
+        "stunImmune": false,
+        "silenceImmune": false,
+        "sleepImmune": false,
+        "frozenImmune": false,
+        "levitateImmune": false,
+        "disarmedCombatImmune": false,
+        "fearedImmune": false,
+        "palsyImmune": false,
+        "attractImmune": false,
+        "teleportImmune": false,
+        "groundBoundImmune": false
+       }
+      }
+     ],
+     "evolveCost": null
+    }
+   ],
+   "skills": [
+    {
+     "skillId": "sktok_dsshell",
+     "overridePrefabKey": null,
+     "overrideTokenKey": null,
+     "levelUpCostCond": [],
+     "unlockCond": {
+      "phase": "PHASE_0",
+      "level": 1
+     }
+    }
+   ],
+   "displayTokenDict": null,
+   "talents": [
+    {
+     "candidates": [
+      {
+       "unlockCondition": {
+        "phase": "PHASE_0",
+        "level": 1
+       },
+       "requiredPotentialRank": 0,
+       "prefabKey": "0",
+       "name": null,
+       "description": null,
+       "rangeId": null,
+       "blackboard": [
+        {
+         "key": "respawn_time",
+         "value": -0.35,
+         "valueStr": null
+        }
+       ],
+       "tokenKey": null,
+       "isHideTalent": true
+      }
+     ]
+    }
+   ],
+   "potentialRanks": [],
+   "favorKeyFrames": null,
+   "allSkillLvlup": []
+  },
   "trap_086_larva": {
    "name": "“汲营枯枝” ",
    "description": null,
@@ -4982,6 +5135,31 @@
   }
  },
  "skills": {
+  "sktok_dsshell": {
+   "skillId": "sktok_dsshell",
+   "iconId": "sktok_dsshell",
+   "hidden": false,
+   "levels": [
+    {
+     "name": "赘生甲壳",
+     "rangeId": null,
+     "description": "可将高台干员部署于其上；\\n<赘生甲壳>被摧毁时，其上干员再部署时间-35%",
+     "skillType": "PASSIVE",
+     "durationType": "NONE",
+     "spData": {
+      "spType": 8,
+      "levelUpCost": null,
+      "maxChargeTime": 1,
+      "spCost": 1,
+      "initSp": 0,
+      "increment": 0
+     },
+     "prefabId": "sktok_dsshell",
+     "duration": -1,
+     "blackboard": []
+    }
+   ]
+  },
   "sktok_larva": {
    "skillId": "sktok_larva",
    "iconId": null,
