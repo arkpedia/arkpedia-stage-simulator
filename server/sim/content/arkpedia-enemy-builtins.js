@@ -85,6 +85,10 @@ export const builtinEnemyAbilities=Object.freeze({
   splashCorrosion: ({ ratio }) => ({
     dealt(c, b, e) {
       if (!c.dmg?.isAttack || !c.target) return;
+      // The ordinary packet already damages the primary; this adapter owns
+      // its Corrosion as well as the four-neighbour splash. EpDamage's source
+      // feature is descriptive here and does not attach a second hit adapter.
+      if (ratio > 0) elem(b, e, c.target, 'erosion', e.s.atk * ratio);
       for (const u of areaAlliesInTiles(b, e, c.target.tileR, c.target.tileC, 'plus', 1)) {
         if (!u.alive || u === c.target) continue;
         hurt(b, e, u, c.dmg.amount ?? 0, c.dmg.type ?? 'phys');

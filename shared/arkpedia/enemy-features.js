@@ -538,7 +538,9 @@ export const ENEMY_FEATURES = Object.freeze({
     note: 'block weight 3; the first blocker takes ATK × Crash.atk_scale', explains: /^Can only be blocked by units with at least 3 Block, and deals Physical damage by colliding/,
   },
   'talent:Crash': { covers: r => sig(r, 'Crash', ['atk_scale']), note: 'collision damage is attached by the handbook-line feature' },
-  'talent:DeathRattle': { covers: r => sig(r, 'DeathRattle', ['enemy_key']), ability: { kind: 'deathSpawn', params: r => ({ key: r.talents.bb['DeathRattle.enemy_key'], cnt: 1 }) },
+  'talent:DeathRattle': { covers: r => sig(r, 'DeathRattle', ['enemy_key']) && /^enemy_[a-z0-9_]+$/.test(r.talents.bbStr['DeathRattle.enemy_key']??''),
+    ability: { kind: 'deathSpawn', params: r => ({ key: r.talents.bbStr['DeathRattle.enemy_key'], cnt: 1 }) },
+    dependsOn: r => [r.talents.bbStr['DeathRattle.enemy_key']].filter(Boolean),
     note: 'spawns the named crew enemy on death', explains: /will continue battle after the vehicle is destroyed$/ },
   'talent:Drown': { covers: r => sig(r, 'Drown', ['damage']) && r.abilities.some(a => /^Quickly loses HP while under the effects of 'Erosion'$/.test(a.text)),
     ability: { kind: 'drown', params: r => ({ damage: r.talents.bb['Drown.damage'] }) },
@@ -1247,11 +1249,6 @@ export const ENEMY_FEATURES = Object.freeze({
     ability: { kind: 'swim', params: r => ({ atk: r.talents.bb['Swim.atk'] ?? 0 }) },
     note: 'immune to Erosion; while flooded, ATK +Swim.atk and Invisible', explains: /^Immune to Erosion\. While in water/ },
   'talent:Swim': { covers: r => sig(r, 'Swim', ['atk']), note: 'swim behaviour is attached by the handbook-line feature' },
-  'ability:Attacks deal damage to the target and all allied units in the target\'s four adjacent tiles, additionally inflicting <$ba.dt.erosion>Corrosion Damage</>': {
-    covers: r => sig(r, 'EpDamage', ['attack@ep_damage_ratio']) && r.talents.bb['EpDamage.attack@ep_damage_ratio'] > 0,
-    ability: { kind: 'splashCorrosion', params: r => ({ ratio: r.talents.bb['EpDamage.attack@ep_damage_ratio'] }) },
-    note: 'four-neighbour splash plus erosion equal to ATK × ep_damage_ratio', explains: /four adjacent tiles/, nativeClaim: () => ({ active: 1 }) },
-  'talent:EpDamage': { covers: r => sig(r, 'EpDamage', ['attack@ep_damage_ratio']), note: 'splash erosion is attached by the handbook-line feature' },
   'ability:First Form': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan' && (sig(r, 'Reborn', ['duration', 'location', 'reborn_invincible.duration']) || sig(r, 'Reborn', ['location'])) && r.skills.some(x => x.prefabKey === 'SummonBmbmot'),
     ability: { kind: 'pancho', params: () => ({}) }, nativeClaim: () => ({ wrappers: 5 }),
     note: 'Pancho: two forms, summons, water cannon, burst shot, whirlwind and form-two stats' },
@@ -1277,8 +1274,9 @@ export const ENEMY_FEATURES = Object.freeze({
   'talent:Swim': { covers: r => sig(r, 'Swim', ['atk']), note: 'swim behaviour is attached by the handbook-line feature' },
   'ability:Attacks deal damage to the target and all allied units in the target\'s four adjacent tiles, additionally inflicting <$ba.dt.erosion>Corrosion Damage</>': {
     covers: r => sig(r, 'EpDamage', ['attack@ep_damage_ratio']) && r.talents.bb['EpDamage.attack@ep_damage_ratio'] > 0,
+    stageMultipliers: {'EpDamage.attack@ep_damage_ratio': value=>Number.isFinite(value)&&value>0},
     ability: { kind: 'splashCorrosion', params: r => ({ ratio: r.talents.bb['EpDamage.attack@ep_damage_ratio'] }) },
-    note: 'four-neighbour splash plus erosion equal to ATK × ep_damage_ratio', explains: /four adjacent tiles/ },
+    note: 'primary and four-neighbour Corrosion equal to ATK × ep_damage_ratio', explains: /four adjacent tiles/ },
   'talent:EpDamage': { covers: r => sig(r, 'EpDamage', ['attack@ep_damage_ratio']), note: 'splash erosion is attached by the handbook-line feature' },
   'ability:Attacks 2 targets simultaneously': { covers: r => r.applyWay === 'RANGED' && r.stats.rangeRadius > 0, trait: { maxTargets: 2 }, note: 'two ranged targets per attack' },
 });
