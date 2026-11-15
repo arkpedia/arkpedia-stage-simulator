@@ -2,6 +2,7 @@
 // Fixed import paths only. Register a reusable kind once, then reference it from
 // compiled enemy plans. No source predicates or native evidence ship here.
 export const ENEMY_RUNTIME_INDEX=Object.freeze([
+  {key:'arkpedia-enemy-departure-gains',load:()=>import('./arkpedia-enemy-departure-gains.js'),exports:{nearbyDepartureGains:'nearbyDepartureGains',blockedAttackMode:'blockedAttackMode'}},
   {key:'arkpedia-enemy-sp-account',load:()=>import('./arkpedia-enemy-sp-account.js'),exports:{reactiveEnemySpAccount:'reactiveEnemySpAccount'}},
   {key:'arkpedia-enemy-projectiles',load:()=>import('./arkpedia-enemy-projectiles.js'),exports:{projectileSingleAttack:'projectileSingleAttack'}},
   {key:'arkpedia-enemy-barrier-aura',load:()=>import('./arkpedia-enemy-barrier-aura.js'),exports:{rechargingBarrierAura:'rechargingBarrierAura'}},

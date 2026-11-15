@@ -1,0 +1,57 @@
+{
+ "schemaVersion": 1,
+ "scope": "Repair two already-registered Flayer records with shared departure gains and ordinary attack modes. Serialized-source contracts and simulator tests; not original native frame/collision/VFX parity.",
+ "sourceSha256": {
+  "shared/arkpedia/enemy-flayer-features.js": "df528f6cb605fac6b28c8dc88f734533847c02ba0001a19198426fddda5752e3",
+  "server/sim/content/arkpedia-enemy-departure-gains.js": "127cd9111d0bc7d92f1f4f7f70d51767da56ac92778670ec76776eb633da1563",
+  "shared/arkpedia/enemy-features.js": "4233d2724b129adc97032693ae0346c0c6409265b77d84f4223261e0dc75ad6e",
+  "data/arkpedia-enemy-native-abilities.json": "8b422385852e35670b2e5cf253b7229f0bb4499a89abb97def049d32308de114",
+  "data/arkpedia-library.json": "748560f02ee429fdad96b937795439268ee5bb2c84aa23762da6662926c32d4c"
+ },
+ "enemies": [
+  "enemy_1364_spnaxe",
+  "enemy_1364_spnaxe_2"
+ ],
+ "parameters": {
+  "radius": 1,
+  "healMaxHpRatio": 0.15,
+  "atkPerStack": 0.1,
+  "maxStacks": 15,
+  "unblockedAttackScale": 0.5,
+  "blockedAttackScale": 1,
+  "event": "ON_OWNER_FINISH",
+  "excludedBuff": "enemy_bmbcar2_passive",
+  "playerProfessionMask": 639
+ },
+ "tests": {
+  "integrationPassed": 202,
+  "allStageSmokesPassed": 969,
+  "secondsPerStage": 10,
+  "availableStagesRemoved": []
+ },
+ "browser": {
+  "scope": "Controlled compiled-plan fixture injects a Flayer and its required Blood Amber record into 0-1; verifies lazy departure/attack component preparation, healing and ATK gain, and owner cleanup. Not an original-stage or native-frame certificate.",
+  "before": {
+   "loaded": [],
+   "pending": 0
+  },
+  "after": {
+   "loaded": [
+    "arkpedia-enemy-departure-gains",
+    "enemies"
+   ],
+   "pending": 0
+  },
+  "hp": 5000,
+  "atk": 900,
+  "maxHp": 20000,
+  "afterDeath": {
+   "hp": 8000,
+   "atk": 990.0000000000001,
+   "stacks": 1
+  },
+  "listeners": 0,
+  "errors": [],
+  "pageErrors": []
+ }
+}

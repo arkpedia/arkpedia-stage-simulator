@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import {SAINT_STATUE_FEATURES} from './enemy-saint-statue-features.js';
 import {corruptionDamageValue} from './enemy-corruption-contracts.js';
+import {isFlayer,flayerNative,FLAYER_DEPARTURE_ABILITY,FLAYER_FEATURES} from './enemy-flayer-features.js';
 import {SURFING_INSTRUCTOR_FEATURES} from './enemy-surfing-instructor-features.js';
 import {LOGGED_CHEST_FEATURE} from './enemy-logged-chest-features.js';
 import {isDerisiveAudience,derisiveAudienceNative} from './enemy-ordinary-element-features.js';
@@ -383,6 +384,7 @@ const HATEDRINKER_TEXT = 'Gains increased ATK for each Reborn Creation on the ba
 // component. These explicit keys keep the support gate honest without inventing a behaviour for a prop (the Beacon is
 // picked up by the Altar Keeper, not by its own code).
 const NATIVE_ONLY_FEATURES = Object.freeze({
+  enemy_1364_spnaxe:'native:flayerAttackMode',enemy_1364_spnaxe_2:'native:flayerAttackMode',
   enemy_10091_hlsttu: ['native:saintBody','native:saintAttack'], enemy_10091_hlsttu_2: ['native:saintBody','native:saintAttack'],
   enemy_2035_sybox: 'native:loggedChest', enemy_2059_smbox: 'native:loggedChest',
   enemy_1189_krgaxe: 'native:icefieldWarrior', enemy_1189_krgaxe_2: 'native:icefieldWarrior',
@@ -393,6 +395,7 @@ const NATIVE_ONLY_FEATURES = Object.freeze({
 });
 
 export const ENEMY_FEATURES = Object.freeze({
+  ...FLAYER_FEATURES,
   ...SAINT_STATUE_FEATURES,
   ...SURFING_INSTRUCTOR_FEATURES,
   'native:loggedChest': LOGGED_CHEST_FEATURE,
@@ -562,14 +565,14 @@ export const ENEMY_FEATURES = Object.freeze({
     ability: { kind: 'stunAttack', params: r => ({ every: 3, duration: r.skills[0].bb.stun }) },
     note: 'every third attack stuns the target area', nativeClaim: () => ({ wrappers: 1 }),
     explains: /^After several attacks, <\$ba\.stun>Stuns<\/> friendly units in an area\.$/ },
-  'talent:Attack': { covers: (r, n) => r.prefabKey==='enemy_1245_ltseal' ? crimsonFormationNative(r,n) : isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan' || (
+  'talent:Attack': { covers: (r, n) => isFlayer(r)?flayerNative(r,n):r.prefabKey==='enemy_1245_ltseal' ? crimsonFormationNative(r,n) : isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan' || (
       ((sig(r, 'Attack', ['enemy_key'])
         || sig(r, 'Attack', ['attack@projectile_delay_time', 'attack@projectile_radius', 'delay', 'enemy_key']))
         && r.abilities.some(a => /^Will be reborn as a <[^>]+> after falling in battle for the first time$/.test(a.text)))
       || (sig(r, 'Attack', ['atk', 'attack@ranged_atk_scale', 'hp_ratio', 'max_stack_cnt', 'range_radius']) && r.abilities.some(a => a.text.startsWith('Recovers a portion of HP')))),
     // Attack is also a descriptive group on unrelated families. Only its
     // reviewed enemy-key form owns a child-spawning component.
-    ability: r => r.talents.bbStr['Attack.enemy_key'] ? { kind: 'deathSpawn', params: r => ({ key: r.talents.bbStr['Attack.enemy_key'], cnt: 1 }) } : null,
+    ability: r => isFlayer(r)?FLAYER_DEPARTURE_ABILITY:r.talents.bbStr['Attack.enemy_key'] ? { kind: 'deathSpawn', params: r => ({ key: r.talents.bbStr['Attack.enemy_key'], cnt: 1 }) } : null,
     note: 'reborn as its reviewed child on death', dependsOn: r => [r.talents.bbStr['Attack.enemy_key']].filter(Boolean),
     explains: /^Will be reborn as a <[^>]+> after falling in battle for the first time$/ },
   // Technical Scout: reveals camouflaged/stealthed allies within range to its own targeting.

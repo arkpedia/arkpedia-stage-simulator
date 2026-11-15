@@ -34,6 +34,8 @@ bundles = {r['path']: r for r in source['bundles']}
 # Component object names whose content a reviewed feature reads.
 OBJECTS = ['DefDown', 'enhance', 'Blink', 'enemy_1220_dzoms', 'enemy_1220_dzoms_2', 'enemy_1221_dzomg', 'enemy_1221_dzomg_2', 'ColdAttack', 'StunAttack', 'StormAura', 'Lasso', 'blink', 'dmg_res', 'buff_to_blocker', 'Boomb']
 SCOPED_OBJECTS = {
+    'enemy_1364_spnaxe':['enemy_1364_spnaxe','Default','Combat','Attack','Selector','Summon'],
+    'enemy_1364_spnaxe_2':['enemy_1364_spnaxe_2','Default','Combat','Attack','Selector','Summon'],
     'enemy_10091_hlsttu': ['enemy_10091_hlsttu','Default','Attack','Trigger','CircleShield','Passive','Effect'],
     'enemy_10091_hlsttu_2': ['enemy_10091_hlsttu_2','Default','Attack','Trigger','CircleShield','Passive','Effect'],
     'enemy_1262_durplc': ['enemy_1262_durplc','Default','Combat','Resist'],
@@ -414,6 +416,8 @@ for bundle in sorted(wanted):
         # Explicit per-prefab sibling scopes avoid copying extraction branches
         # when a new family uses attack hooks or companion target selectors.
         sibling_names = {
+            'enemy_1364_spnaxe': {'Attack'},
+            'enemy_1364_spnaxe_2': {'Attack'},
             'enemy_10091_hlsttu': {'CircleShield','Attack'},
             'enemy_10091_hlsttu_2': {'CircleShield','Attack'},
             'enemy_1262_durplc': {'Resist'},
