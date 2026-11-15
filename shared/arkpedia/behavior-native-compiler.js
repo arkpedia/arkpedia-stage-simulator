@@ -82,6 +82,18 @@ export function compileNativeBuffProgram(entry,templateFor){
           _multiplierByKey:false,_multiplierKey:'cnt',_damageTargetType:'TARGET',_triggerOnCalculateDamage:false,_isEnvDamage:false,
           _ignoreCancelReasonMask:'NONE',_forceDisplayDamageNum:false},'fixed HP loss');
         actions.push({op:'loss',key:text(node._damageKey)});
+      }else if(name==='AdvancedApplyDamage'){
+        const damageType={PHYSICAL:'phys',MAGICAL:'arts',PURE:'true'}[node._damageType];
+        if(!damageType)fail('damage type');
+        exact(node,{$type:type(name),_targetType:'TARGET',_damageType:node._damageType,_atkScaleVar:node._atkScaleVar,
+          _defaultAtkScale:node._defaultAtkScale,_applyWay:'ALL',_baseOnHostAtk:false,_emitSourceOnCalculateDamage:false,
+          _attackType:'NORMAL',_forceUseProjectileCachedAtk:false,_ignoreForSp:false,_ignoreMissFlag:'NONE',
+          _ignoreCancelReasonMask:'NONE',_modifierKey:'',_assignRealDamageToBB:false,_skipModifierEvent:false},'ordinary source damage');
+        actions.push({op:'damage',type:damageType,scaleKey:text(node._atkScaleVar),defaultScale:finite(node._defaultAtkScale,0)});
+      }else if(name==='InstantKill'){
+        exact(node,{$type:type(name),_targetType:'TARGET',_killSource:true,_noSource:false,_withdrawIfRallyPoint:false,
+          _resultIfInRallyPointMode:false,_skipReborn:false,_noReason:false,_markReachExit:false,_switchState:false},'source kill');
+        actions.push({op:'kill',who:'source'});
       }else if(name==='CreateBuff'){
         exact(node,{$type:type(name),_buff:node._buff,_buffOwner:node._buffOwner,_isDerivedBuff:false,_finishDerivedBuffIfParentFinish:false},'create buff');
         actions.push({op:'create',who:binding(node._buffOwner),...childBuff(node._buff,depth)});

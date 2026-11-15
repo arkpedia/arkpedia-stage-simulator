@@ -2,15 +2,15 @@
   "schemaVersion": 1,
   "scope": "Only retained native templates/prefabs, not the complete game corpus. Refusals report the first compiler blocker per template. Compilability never grants enemy or stage admission.",
   "source": {
-    "data/arkpedia-enemy-native-abilities.json": "eb928e93c7d7f30d866170fd339cc03d298ca80d2ec89f40339059c4de20d1b3",
-    "data/arkpedia-enemy-support.json": "db51c151b259bd1fcb37dcdd3ae8ddcfcf874bc50430ebc10ecfddb814fd6f57",
+    "data/arkpedia-enemy-native-abilities.json": "1f8522e8f712471049d4adc50fd8226dbb3eb2ba69490ed93d11c26ff4529e63",
+    "data/arkpedia-enemy-support.json": "efa23d579c5ec8a6c6fd36237ab3e63ed1770755f741e4c77a3420da26436df9",
     "shared/arkpedia/behavior.js": "88b4616bf16a17e2a29153b48ae04e0a4f7b2bcebc28214bce3e98c104cef712",
-    "shared/arkpedia/behavior-native-compiler.js": "89c3f4110d1c8a1f37c0fce794aadf0efe87756d93408f3224a116aad07cc2b0",
-    "shared/arkpedia/behavior-program.js": "f908848a62b2c23e0e8c97194b8d6f6a1f54b6f020042ffa0c3bb35bf593bc6e"
+    "shared/arkpedia/behavior-native-compiler.js": "abd32bcf14335e8b2be3b7ada3cf39e2d454cd9aa1b2b9308a9c663a0081dcf3",
+    "shared/arkpedia/behavior-program.js": "5f60d38fe927e70645d204a6c4c0b489bb6494357eba562d4b83d24190bbd5b7"
   },
-  "retainedPrefabs": 362,
-  "templates": 226,
-  "compiled": 6,
+  "retainedPrefabs": 363,
+  "templates": 227,
+  "compiled": 7,
   "refused": 220,
   "results": [
     {
@@ -41,7 +41,7 @@
       ],
       "unsupportedConsumers": [],
       "compiled": false,
-      "reason": "Unsupported native behaviour: action AdvancedApplyDamage"
+      "reason": "Unsupported native behaviour: ordinary source damage"
     },
     {
       "key": "apply_damage[magic][on_trigger]",
@@ -50,7 +50,7 @@
       ],
       "unsupportedConsumers": [],
       "compiled": false,
-      "reason": "Unsupported native behaviour: action AdvancedApplyDamage"
+      "reason": "Unsupported native behaviour: ordinary source damage"
     },
     {
       "key": "apply_damage[physical][ignore_sp]",
@@ -60,7 +60,7 @@
       ],
       "unsupportedConsumers": [],
       "compiled": false,
-      "reason": "Unsupported native behaviour: action AdvancedApplyDamage"
+      "reason": "Unsupported native behaviour: ordinary source damage"
     },
     {
       "key": "bldrat_t_1[blood]",
@@ -729,6 +729,18 @@
       "unsupportedConsumers": [],
       "compiled": false,
       "reason": "Unsupported native behaviour: event ON_APPLIED_MODIFIER"
+    },
+    {
+      "key": "enemy_catrdg_crash",
+      "consumers": [
+        "enemy_5010_catrdg"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": true,
+      "programSha256": "4d80d3b215f849333d559a14e2952a6ce56311c1e40f0e09f1ff49e4a4c267aa",
+      "bytes": 214,
+      "templateCount": 1,
+      "requiredBlackboard": []
     },
     {
       "key": "enemy_cbjedi_bleed",
@@ -1926,7 +1938,7 @@
         "enemy_9033_acdeer"
       ],
       "compiled": false,
-      "reason": "Unsupported native behaviour: action AdvancedApplyDamage"
+      "reason": "Unsupported native behaviour: ordinary source damage"
     },
     {
       "key": "enemy_smedzi_blink[end_effect]",
@@ -2019,7 +2031,7 @@
       ],
       "unsupportedConsumers": [],
       "compiled": false,
-      "reason": "Unsupported native behaviour: action AdvancedApplyDamage"
+      "reason": "Unsupported native behaviour: ordinary source damage"
     },
     {
       "key": "enemy_stormcoord[lock_hp]",
@@ -2938,7 +2950,7 @@
       ]
     },
     {
-      "reason": "Unsupported native behaviour: action AdvancedApplyDamage",
+      "reason": "Unsupported native behaviour: ordinary source damage",
       "templates": [
         "apply_damage[magic][ignore_sp]",
         "apply_damage[magic][on_trigger]",

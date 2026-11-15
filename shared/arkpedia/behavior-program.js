@@ -18,7 +18,7 @@ export function prepareBehaviorProgram(input){
   fields(input,'schemaVersion entry templates');if(input.schemaVersion!==1)fail('version');string(input.entry);
   if(!object(input.templates))fail('templates');
   const keys=Object.keys(input.templates);if(!keys.length||keys.length>64)fail('template count');
-  let count=0;const required=new Map(),edges=new Map();
+  let count=0;const required=new Map(),optional=new Set(),edges=new Map();
   const operand=(key,positive=false)=>{string(key);required.set(key,positive||required.get(key)||false);};
   const visit=(nodes,refs,depth=0)=>{
     if(!Array.isArray(nodes)||depth>16)fail('depth/list');
@@ -27,6 +27,8 @@ export function prepareBehaviorProgram(input){
       switch(n?.op){
         case 'when':fields(n,'op condition yes no');condition(n.condition,depth+1);visit(n.yes,refs,depth+1);visit(n.no,refs,depth+1);break;
         case 'release':fields(n,'op who');binding(n.who);break;
+        case 'kill':fields(n,'op who');if(n.who!=='source')fail('kill binding');break;
+        case 'damage':fields(n,'op type scaleKey defaultScale');if(!['phys','arts','true'].includes(n.type))fail('damage type');string(n.scaleKey);finite(n.defaultScale);optional.add(n.scaleKey);break;
         case 'loss':fields(n,'op key');operand(n.key);break;
         case 'create':
           fields(n,'op who key template clock');binding(n.who);string(n.key);string(n.template);refs.add(n.template);
@@ -83,6 +85,7 @@ export function prepareBehaviorProgram(input){
   const validateBlackboard=bb=>{
     if(!object(bb))fail('blackboard');const result={};
     for(const[key,positive]of required){if(!Object.hasOwn(bb,key))fail(`missing blackboard ${key}`);finite(bb[key],positive?Number.MIN_VALUE:0);Object.defineProperty(result,key,{value:bb[key],enumerable:true});}
+    for(const key of optional)if(!required.has(key)&&Object.hasOwn(bb,key)){finite(bb[key]);Object.defineProperty(result,key,{value:bb[key],enumerable:true});}
     return Object.freeze(result);
   };
   const predicate=(n,c)=>{
@@ -100,8 +103,10 @@ export function prepareBehaviorProgram(input){
       if(n.op==='when'){runNodes(predicate(n.condition,c)?n.yes:n.no,c);continue;}
       if(n.op==='release'){const u=c[n.who];if(u?.alive&&u.deployed)c.battle._unblock(u);continue;}
       if(n.op==='loss'){if(c.target?.alive&&c.target.deployed)c.battle.loseHp(c.target,c.blackboard[n.key],{source:c.source,tags:[c.buffKey,'dot']});continue;}
+      if(n.op==='damage'){if(c.source?.alive&&c.source.deployed&&c.source.deploySeq===c.sourceLife&&c.target?.alive&&c.target.deployed&&c.target.deploySeq===c.targetLife)c.battle.dealDamage(c.source,c.target,{amount:c.source.s.atk*(c.blackboard[n.scaleKey]??n.defaultScale),type:n.type,isAttack:true,isSkill:false,applyWay:'all',canDodge:c.damageMissable,tags:[c.buffKey]});continue;}
+      if(n.op==='kill'){const u=c[n.who];if(u?.alive&&u.deployed&&u.deploySeq===c.sourceLife)c.battle.kill(u,c.source);continue;}
       const owner=c[n.who];if(!owner?.alive||!owner.deployed)continue;
-      const child={...c,owner,target:owner,buffKey:n.key};
+      const child={...c,owner,target:owner,targetLife:owner.deploySeq,buffKey:n.key};
       const fire=event=>runNodes(graph.templates[n.template].events[event]??[],child);
       if(n.clock===null){fire('ON_BUFF_START');continue;}
       const prior=owner.findBuff(n.key);
@@ -112,11 +117,12 @@ export function prepareBehaviorProgram(input){
     }
   };
   const prepared=Object.freeze({graph,requiredBlackboard:Object.freeze([...required.keys()]),validateBlackboard,
-    run(event,{battle,unit,source=unit,target=unit,blackboard={},buffKey=graph.entry}){
+    run(event,{battle,unit,source=unit,target=unit,blackboard={},buffKey=graph.entry,damageMissable=true}){
       if(!EVENTS.has(event))fail('event');
       const bb=validateBlackboard(blackboard);
       if(!battle||!unit||!source)fail('owner/source');
-      runNodes(graph.templates[graph.entry].events[event]??[],{battle,owner:unit,source,target,blackboard:bb,buffKey});
+      if(typeof damageMissable!=='boolean')fail('missability');
+      runNodes(graph.templates[graph.entry].events[event]??[],{battle,owner:unit,source,target,blackboard:bb,buffKey,damageMissable,sourceLife:source.deploySeq,targetLife:target?.deploySeq});
     }});
   cache.set(input,prepared);cache.set(graph,prepared);return prepared;
 }

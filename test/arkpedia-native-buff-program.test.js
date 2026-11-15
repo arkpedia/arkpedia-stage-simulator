@@ -153,3 +153,44 @@ test('longest shared-child path is bounded even if a shorter path visited that c
   for(let i=0;i<13;i++)templates[`long${i}`]={events:{ON_BUFF_START:[create(i<12?`long${i+1}`:'shared0')]}};
   assert.throws(()=>prepareBehaviorProgram({schemaVersion:1,entry:'root',templates}),/cycle\/depth/);
 });
+
+test('native source damage and self-destruction compile in order with an optional native scale default',()=>{
+ const program=compile('enemy_catrdg_crash'),runtime=prepareBehaviorProgram(program);
+ assert.deepEqual(program.templates.enemy_catrdg_crash.events.ON_BUFF_START,[
+  {op:'damage',type:'phys',scaleKey:'atk_scale',defaultScale:1},{op:'kill',who:'source'}]);
+ assert.deepEqual(runtime.requiredBlackboard,[]);
+ const source={...unit(),deploySeq:1,s:{atk:400,flags:{}}},target={...unit(),deploySeq:2},calls=[];
+ const battle={dealDamage:(s,t,d)=>calls.push({s,t,d}),kill:(u,k)=>calls.push({u,k})};
+ runtime.run('ON_BUFF_START',{battle,unit:target,source,damageMissable:false});
+ assert.equal(calls[0].s,source);assert.equal(calls[0].t,target);assert.equal(calls[0].d.amount,400);
+ assert.equal(calls[0].d.canDodge,false);assert.equal(calls[1].u,source);assert.equal(calls[1].k,source);
+ calls.length=0;runtime.run('ON_BUFF_START',{battle,unit:target,source,blackboard:{atk_scale:1.5}});
+ assert.equal(calls[0].d.amount,600);
+ for(const atk_scale of[-1,NaN,Infinity])assert.throws(()=>runtime.run('ON_BUFF_START',{battle,unit:target,source,blackboard:{atk_scale}}));
+ assert.equal(calls.length,2);
+});
+test('native damage and source-kill dialect refuses altered bindings, flags and hidden fields before mutation',()=>{
+ for(const edit of[
+  ns=>ns[0]._targetType='SOURCE',ns=>ns[0]._baseOnHostAtk=true,ns=>ns[0]._damageType='ELEMENT',
+  ns=>ns[0]._emitSourceOnCalculateDamage=true,ns=>ns[0]._applyWay='RANGED',ns=>ns[0]._attackType='SKILL',
+  ns=>ns[0]._ignoreMissFlag='ALL',ns=>ns[0]._forceUseProjectileCachedAtk=true,ns=>ns[0]._skipModifierEvent=true,
+  ns=>ns[0].hidden=true,ns=>ns[1]._killSource=false,ns=>ns[1]._noSource=true,ns=>ns[1]._markReachExit=true,
+  ns=>ns[1]._skipReborn=true,ns=>ns[1]._switchState=true,
+ ]){const ts=structuredClone(evidence.templates);edit(ts.enemy_catrdg_crash.eventToActions.ON_BUFF_START);assert.throws(()=>compile('enemy_catrdg_crash',ts));}
+});
+test('a damage callback redeploying the source cannot make the later source-kill destroy its new life',()=>{
+ const runtime=prepareBehaviorProgram(compile('enemy_catrdg_crash'));
+ const source={...unit(),deploySeq:1,s:{atk:400,flags:{}}},target={...unit(),deploySeq:2};let kills=0;
+ runtime.run('ON_BUFF_START',{unit:target,source,battle:{dealDamage:()=>source.deploySeq++,kill:()=>kills++}});
+ assert.equal(kills,0);
+});
+test('compiled source damage uses the ordinary defence, evade and kill pipeline',async()=>{
+ const {makeBattle,chessRec}=await import('./helpers/battleHarness.js');
+ const guard=chessRec({id:'crash_guard',stats:{maxHp:2000,def:150},skill:null});
+ const h=makeBattle({content:'none',autoFinish:false,units:[{chessId:guard.chessId,row:10,col:6}],defs:{chess:{[guard.chessId]:guard}}});
+ h.b.start();const source=h.b.spawnEnemy('slug',{pos:[10,6]}),target=h.b.allyUnits[0];source.base.atk=400;source.markDirty();
+ const p=prepareBehaviorProgram(compile('enemy_catrdg_crash')),hp=target.hp;
+ h.b.addBuff(target,{key:'test:dodge',mods:{dodgePhys:1}});
+ p.run('ON_BUFF_START',{battle:h.b,unit:target,source,damageMissable:false});
+ assert.equal(hp-target.hp,250);assert.equal(source.alive,false);assert.deepEqual(h.b.errors,[]);
+});

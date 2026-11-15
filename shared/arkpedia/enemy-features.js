@@ -1,3 +1,4 @@
+import {WEAKSAUCE_FEATURE} from './enemy-weaksauce-features.js';
 import {TREE_SHIELD_FEATURES} from './enemy-tree-shield-features.js';
 import {SIEGEBREAKER_FEATURES} from './enemy-siegebreaker-features.js';
 import {isNativeInspiration,inspirationNative,nativeInspirationAbility} from './enemy-inspiration-features.js';
@@ -405,6 +406,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...FLAYER_FEATURES,
   ...SAINT_STATUE_FEATURES,
   ...SIEGEBREAKER_FEATURES,
+  'ability:-':WEAKSAUCE_FEATURE,
   ...TREE_SHIELD_FEATURES,
   ...SURFING_INSTRUCTOR_FEATURES,
   'native:loggedChest': LOGGED_CHEST_FEATURE,

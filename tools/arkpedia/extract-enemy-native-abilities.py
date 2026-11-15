@@ -34,6 +34,7 @@ bundles = {r['path']: r for r in source['bundles']}
 # Component object names whose content a reviewed feature reads.
 OBJECTS = ['DefDown', 'enhance', 'Blink', 'enemy_1220_dzoms', 'enemy_1220_dzoms_2', 'enemy_1221_dzomg', 'enemy_1221_dzomg_2', 'ColdAttack', 'StunAttack', 'StormAura', 'Lasso', 'blink', 'dmg_res', 'buff_to_blocker', 'Boomb']
 SCOPED_OBJECTS = {
+    'enemy_5010_catrdg': ['enemy_5010_catrdg','Default','Crash'],
     'enemy_10069_ftlsj': ['enemy_10069_ftlsj','Default','Combat'],
     'enemy_10069_ftlsj_2': ['enemy_10069_ftlsj_2','Default','Combat'],
     'enemy_1080_sotidp': ['enemy_1080_sotidp','Default','Strength'],
@@ -379,6 +380,18 @@ for bundle in sorted(wanted):
             go = by[int(d['m_GameObject']['m_PathID'])].read_typetree()['m_Name']
             rows.append({'pathId': ref, 'objectName': go, 'referenced': True, 'sha256': hashlib.sha256(t.encode()).hexdigest(), 'originalJson': t})
             todo.extend(local_refs(d))
+        # Weaksauce's contact circle is a sibling of its native range-buff component.
+        if path.endswith('/enemy_5010_catrdg.prefab'):
+            for r in list(rows):
+                d = json.loads(r['originalJson'])
+                if r['objectName'] != 'Crash': continue
+                go = by[int(d['m_GameObject']['m_PathID'])].read_typetree()
+                for sibling in go['m_Component']:
+                    ref = str(sibling['component']['m_PathID']); obj = by[int(ref)]
+                    if ref in seen or obj.type.name not in ('Transform', 'CircleCollider2D'): continue
+                    seen.add(ref); text = canonical(exact(obj.read_typetree()))
+                    rows.append({'pathId': ref, 'objectName': 'Crash', 'referenced': True,
+                                 'sha256': hashlib.sha256(text.encode()).hexdigest(), 'originalJson': text})
         # Tree cutters use separate unit and tile circles, both stored beside
         # their trigger rather than through a serialized ability reference.
         if path.rsplit('/', 1)[-1] in ('enemy_1097_cclmbjk.prefab', 'enemy_1097_cclmbjk_2.prefab'):
@@ -432,6 +445,7 @@ for bundle in sorted(wanted):
         # Explicit per-prefab sibling scopes avoid copying extraction branches
         # when a new family uses attack hooks or companion target selectors.
         sibling_names = {
+            'enemy_5010_catrdg': {'Crash'},
             'enemy_10069_ftlsj': {'Combat'},
             'enemy_10069_ftlsj_2': {'Combat'},
             'enemy_1080_sotidp': {'Strength'},
