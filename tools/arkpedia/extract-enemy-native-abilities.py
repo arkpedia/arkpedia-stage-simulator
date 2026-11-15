@@ -34,6 +34,8 @@ bundles = {r['path']: r for r in source['bundles']}
 # Component object names whose content a reviewed feature reads.
 OBJECTS = ['DefDown', 'enhance', 'Blink', 'enemy_1220_dzoms', 'enemy_1220_dzoms_2', 'enemy_1221_dzomg', 'enemy_1221_dzomg_2', 'ColdAttack', 'StunAttack', 'StormAura', 'Lasso', 'blink', 'dmg_res', 'buff_to_blocker', 'Boomb']
 SCOPED_OBJECTS = {
+    'enemy_10069_ftlsj': ['enemy_10069_ftlsj','Default','Combat'],
+    'enemy_10069_ftlsj_2': ['enemy_10069_ftlsj_2','Default','Combat'],
     'enemy_1080_sotidp': ['enemy_1080_sotidp','Default','Strength'],
     'enemy_1080_sotidp_2': ['enemy_1080_sotidp_2','Default','Strength'],
     'enemy_1078_sotisc': ['enemy_1078_sotisc','Default','Strength'],
@@ -430,6 +432,8 @@ for bundle in sorted(wanted):
         # Explicit per-prefab sibling scopes avoid copying extraction branches
         # when a new family uses attack hooks or companion target selectors.
         sibling_names = {
+            'enemy_10069_ftlsj': {'Combat'},
+            'enemy_10069_ftlsj_2': {'Combat'},
             'enemy_1080_sotidp': {'Strength'},
             'enemy_1080_sotidp_2': {'Strength'},
             'enemy_1078_sotisc': {'Strength'},

@@ -82,6 +82,7 @@ export async function buildEnemySupport() {
       fattyAnimations: { path: 'data/arkpedia-fatty-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-fatty-animations.json', root))) },
       bladeAnimations: { path: 'data/arkpedia-blade-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-blade-animations.json', root))) },
       knightAnimations: { path: 'data/arkpedia-knight-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-knight-animations.json', root))) },
+      treeShieldAnimations: { path: 'data/arkpedia-tree-shield-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-tree-shield-animations.json', root))) },
       siegebreakerAnimations: { path: 'data/arkpedia-siegebreaker-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-siegebreaker-animations.json', root))) },
       gnawbeastAnimations: { path: 'data/arkpedia-gnawbeasts-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-gnawbeasts-animations.json', root))) },
       snackAnimations: { path: 'data/arkpedia-snack-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-snack-animations.json', root))) } },
