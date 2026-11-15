@@ -34,6 +34,8 @@ bundles = {r['path']: r for r in source['bundles']}
 # Component object names whose content a reviewed feature reads.
 OBJECTS = ['DefDown', 'enhance', 'Blink', 'enemy_1220_dzoms', 'enemy_1220_dzoms_2', 'enemy_1221_dzomg', 'enemy_1221_dzomg_2', 'ColdAttack', 'StunAttack', 'StormAura', 'Lasso', 'blink', 'dmg_res', 'buff_to_blocker', 'Boomb']
 SCOPED_OBJECTS = {
+    'enemy_10052_cjshld': ['enemy_10052_cjshld','Default','Combat','Ability0'],
+    'enemy_10052_cjshld_2': ['enemy_10052_cjshld_2','Default','Combat','Ability0'],
     'enemy_10019_sgmum': ['enemy_10019_sgmum','Default','Combat','hit_ad','hit_ap'],
     'enemy_10019_sgmum_2': ['enemy_10019_sgmum_2','Default','Combat','hit_ad','hit_ap'],
     'enemy_1263_durbus': ['enemy_1263_durbus','Default','Combat','Bus','Selector'],

@@ -7,7 +7,7 @@ all blocked stage IDs are in `data/arkpedia-content-inventory.json`.
 |---|---:|---:|
 | Operator forms | 431 | 431 |
 | Source skills registered | 949 | 949 |
-| Enemies supported | 708 | 2163 |
+| Enemies supported | 710 | 2163 |
 | Capability-checked combat stages | 959 | 3892 |
 
 The generated library can load 959 stages; 2933

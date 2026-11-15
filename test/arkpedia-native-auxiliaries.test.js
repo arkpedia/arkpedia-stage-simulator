@@ -117,3 +117,14 @@ test('named infinite empty helpers do not invent gameplay; all newly covered bas
     assert.equal(enemySupport(ENEMY_RECORDS.enemies[id], index.prefabs, changed).policy, null, kind);
   }
 });
+
+for (const id of ['enemy_10052_cjshld', 'enemy_10052_cjshld_2']) test(`${id} uses source taunt and rejects gameplay concealed by its idle effect`, () => {
+  const decision=enemySupport(ENEMY_RECORDS.enemies[id],index.prefabs,evidence);
+  assert.ok(decision.policy);assert.deepEqual(decision.native[id].auxiliaryComponents[0].templates,['empty']);
+  const {h,b,target,spawn}=fixture(id,3),e=spawn(id);assert.equal(e.s.taunt,1);assert.equal(b._checkBlock(e),true);
+  h.run(.1);assert.equal(target.hp,target.s.maxHp-e.s.atk);b.kill(e,target);assert.equal(b.killed,1);assert.deepEqual(b.errors,[]);
+  const changed=structuredClone(evidence),row=changed.prefabs[`dyn/battle/prefabs/enemies/${id}.prefab`]
+    .find(r=>JSON.parse(r.originalJson)._buffs?.[0]?.buffKey==='enemy_cjshld_effect');
+  const c=JSON.parse(row.originalJson);c._buffs[0].attributes.abnormalFlags.push(5);row.originalJson=JSON.stringify(c);
+  assert.equal(enemySupport(ENEMY_RECORDS.enemies[id],index.prefabs,changed).policy,null);
+});
