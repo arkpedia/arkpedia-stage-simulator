@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import {SAINT_STATUE_FEATURES} from './enemy-saint-statue-features.js';
 import {SURFING_INSTRUCTOR_FEATURES} from './enemy-surfing-instructor-features.js';
 import {LOGGED_CHEST_FEATURE} from './enemy-logged-chest-features.js';
 import {isDerisiveAudience,derisiveAudienceNative} from './enemy-ordinary-element-features.js';
@@ -381,6 +382,7 @@ const HATEDRINKER_TEXT = 'Gains increased ATK for each Reborn Creation on the ba
 // component. These explicit keys keep the support gate honest without inventing a behaviour for a prop (the Beacon is
 // picked up by the Altar Keeper, not by its own code).
 const NATIVE_ONLY_FEATURES = Object.freeze({
+  enemy_10091_hlsttu: ['native:saintBody','native:saintAttack'], enemy_10091_hlsttu_2: ['native:saintBody','native:saintAttack'],
   enemy_2035_sybox: 'native:loggedChest', enemy_2059_smbox: 'native:loggedChest',
   enemy_1189_krgaxe: 'native:icefieldWarrior', enemy_1189_krgaxe_2: 'native:icefieldWarrior',
   enemy_1112_emppnt: 'native:imperialShell', enemy_1112_emppnt_2: 'native:imperialShell',
@@ -390,6 +392,7 @@ const NATIVE_ONLY_FEATURES = Object.freeze({
 });
 
 export const ENEMY_FEATURES = Object.freeze({
+  ...SAINT_STATUE_FEATURES,
   ...SURFING_INSTRUCTOR_FEATURES,
   'native:loggedChest': LOGGED_CHEST_FEATURE,
   ...BEJEWELED_FEATURES,
@@ -1304,7 +1307,7 @@ export function recordFeatureIds(record) {
     ...record.abilities.map(a => `ability:${a.text}`),
     ...Object.keys(record.talents.groups).map(g => `talent:${g}`),
     ...record.skills.map(s => `skill:${s.prefabKey}`),
-    ...(NATIVE_ONLY_FEATURES[record.key] ? [NATIVE_ONLY_FEATURES[record.key]] : []),
+    ...(NATIVE_ONLY_FEATURES[record.key] ? [NATIVE_ONLY_FEATURES[record.key]].flat() : []),
   ])];
 }
 

@@ -32,11 +32,10 @@ function auxiliaryBuff(buff, nat) {
 /** Account only for verified, always-attached stateless visual/kill-log buffs.
  * These produce no combat state. Unknown actions, selectors and attributes
  * remain gameplay blockers, even when their names look like logging. */
-export function nativeAuxiliaryClaims(prefab, nat) {
-  const refs = prefab.clockComponents.flatMap(c => ['_commonAbilities', '_generalAbilities']
-    .flatMap(k => c.fields[k] ?? []).filter(ref => ref.m_FileID === 0 && ref.m_PathID !== '0'));
+export function nativeAuxiliaryReferences(refs, nat) {
   const components = [];
   for (const ref of refs) {
+    if (ref?.m_FileID !== 0 || ref.m_PathID === '0') continue;
     const c = nat.$ref(ref);
     if (!c || Object.keys(c).sort().join() !== componentKeys
       || c.m_Script?.m_FileID !== 1 || c.m_Script.m_PathID !== '3800760148018415462'
@@ -47,4 +46,12 @@ export function nativeAuxiliaryClaims(prefab, nat) {
     components.push({ pathId: ref.m_PathID, templates: c._buffs.map(buff => buff.templateKey) });
   }
   return { active: components.length, components };
+}
+
+/** The global classifier and explicit mixed-component reviews share the same
+ * component validation; callers can identify the exact mode-owned references. */
+export function nativeAuxiliaryClaims(prefab, nat) {
+  const refs = prefab.clockComponents.flatMap(c => ['_commonAbilities', '_generalAbilities']
+    .flatMap(k => c.fields[k] ?? []));
+  return nativeAuxiliaryReferences(refs, nat);
 }

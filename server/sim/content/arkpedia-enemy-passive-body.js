@@ -3,10 +3,11 @@ import {stageOutcomeCounter} from './arkpedia-stage-outcomes.js';
 /** Shared birth-phase mapping: the source delay holds movement, targeting and
  * attacks while its original Start clip plays. This follows the existing image
  * birth mapping; it is not a claim about compiled native frame ordering. */
-export function passiveEnemyBody({immunities=[],birthDelay=0,birthDuration=birthDelay,birthClip='Start',attackAnim}){
+export function passiveEnemyBody({immunities=[],birthDelay=0,birthDuration=birthDelay,birthClip='Start',attackAnim,markerKeys=[]}){
   return {
     spawn(b,e,a){
       e.def={...e.def,immune:new Set([...e.def.immune,...immunities]),...(attackAnim?{attackAnim}: {})};
+      for(const key of markerKeys)b.addBuff(e,{key,persist:true});
       if(!(birthDelay>0))return;
       a.visual=`passiveBirth:${e.id}:${e.deploySeq}`;a.visualEnd=b.time+birthDuration;
       e.mem.regularFormVisual={clip:birthClip,loop:false,speed:1,playId:a.visual};

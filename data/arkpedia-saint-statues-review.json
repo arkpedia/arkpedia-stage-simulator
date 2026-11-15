@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "scope": "Saint Statues composed from shared barrier, passive body and projectile plans. Center-based aura/selection mapping; no native frame or pixel parity certificate.",
+  "sources": {
+    "shared/arkpedia/enemy-saint-statue-features.js": "c2dd4622a6b925435a57ed8a0e565380c543d7602976b1708dcecf5002a05375",
+    "shared/arkpedia/enemy-native-auxiliaries.js": "e91f15b30954c701f183034a360ce01459bb95b53a147fb448da5f3898668cf6",
+    "server/sim/content/arkpedia-enemy-passive-body.js": "b22d6d5a9be1e1427bb792f21680da4414ea0866097a91e1017440ffe2a27d21",
+    "data/arkpedia-saint-statues-animations.json": "a81dbf91323942642299cca8617db0c7996e2e0af3572e7e13c84c5894c9d167",
+    "test/arkpedia-saint-statues.test.js": "8c835d21b098a8d6f6d62bd6b8675974276e8bb716b077fd87d9a213bdf520f9",
+    "data/arkpedia-enemy-native-abilities.json": "43b99168fb596680350f7d1b25884a6d4a5c418890e77352c6c94aa8370d2a2d"
+  },
+  "assetCommit": "56c68862942f0ac809b810194bf37dc6b81aa0fd",
+  "artwork": {
+    "scope": "Chromium clip decoding/finite poses and idle body rendering; no native combat/frame/pixel parity claim",
+    "browser": "Chrome/156.0.8078.79",
+    "results": [
+      {
+        "viewport": "desktop",
+        "models": [
+          {
+            "id": "enemy_10091_hlsttu",
+            "version": "3.8.99",
+            "clips": 4,
+            "width": 402.24102783203125,
+            "height": 486.5413513183594
+          },
+          {
+            "id": "enemy_10091_hlsttu_2",
+            "version": "3.8.99",
+            "clips": 4,
+            "width": 445.71051025390625,
+            "height": 518.7337646484375
+          }
+        ],
+        "errors": [],
+        "failures": []
+      },
+      {
+        "viewport": "mobile",
+        "models": [
+          {
+            "id": "enemy_10091_hlsttu",
+            "version": "3.8.99",
+            "clips": 4,
+            "width": 402.24102783203125,
+            "height": 486.5413513183594
+          },
+          {
+            "id": "enemy_10091_hlsttu_2",
+            "version": "3.8.99",
+            "clips": 4,
+            "width": 445.71051025390625,
+            "height": 518.7337646484375
+          }
+        ],
+        "errors": [],
+        "failures": []
+      }
+    ]
+  },
+  "browser": {
+    "scope": "Controlled browser fixture injects two precompiled Saint Statues into 0-1; verifies shared lazy components and barrier ownership. Not an original-stage playthrough.",
+    "before": {
+      "loaded": [],
+      "pending": 0
+    },
+    "after": {
+      "loaded": [
+        "arkpedia-enemy-barrier-aura",
+        "arkpedia-enemy-passive-body",
+        "arkpedia-enemy-projectiles"
+      ],
+      "pending": 0
+    },
+    "maximumHp": 550,
+    "initial": 44,
+    "remaining": 55,
+    "retained": 55,
+    "statues": [
+      {
+        "id": "enemy_10091_hlsttu",
+        "counted": false,
+        "immobile": true,
+        "selfShield": 0
+      },
+      {
+        "id": "enemy_10091_hlsttu_2",
+        "counted": false,
+        "immobile": true,
+        "selfShield": 0
+      }
+    ],
+    "errors": [],
+    "pageErrors": []
+  },
+  "tests": {
+    "combinedPassed": 215,
+    "finalNativePassed": 15,
+    "availableStageSmoke": 961,
+    "admittedDatabaseLevels": 782
+  }
+}

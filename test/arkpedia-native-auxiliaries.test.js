@@ -4,7 +4,8 @@ import assert from 'node:assert/strict';
 import { makeBattle, chessRec } from './helpers/battleHarness.js';
 import { ENEMY_RECORDS } from './helpers/enemyHarness.js';
 import { installEnemyFeatures } from '../server/sim/content/arkpedia-enemy-features.js';
-import { enemySupport } from '../shared/arkpedia/enemy-support.js';
+import { nativeAuxiliaryClaims } from '../shared/arkpedia/enemy-native-auxiliaries.js';
+import { enemySupport,nativeComponents } from '../shared/arkpedia/enemy-support.js';
 import support from '../data/arkpedia-enemy-support.json' with { type: 'json' };
 import evidence from '../data/arkpedia-enemy-native-abilities.json' with { type: 'json' };
 import index from '../data/arkpedia-enemy-clock-source.json' with { type: 'json' };
@@ -88,8 +89,14 @@ test('automatic evidence intake admits only helpers already covered by the exact
   }
   // Empty handbook/skill lists are insufficient: retained native buffs carry
   // real flags, immunities or actions, so these stay blocked.
-  for (const id of ['enemy_10092_hlslp', 'enemy_1230_dsbudr_3', 'enemy_1442_dsgun', 'enemy_1529_dsdevr_2', 'enemy_2035_sybox'])
+  for (const id of ['enemy_10092_hlslp', 'enemy_1230_dsbudr_3', 'enemy_1442_dsgun', 'enemy_1529_dsdevr_2'])
     assert.equal(enemySupport(ENEMY_RECORDS.enemies[id], index.prefabs, evidence).policy, null, id);
+  // Chest Seaborn now has an explicit gameplay registration. Its immunities
+  // must still prevent the cosmetic-only classifier from claiming the buff.
+  const chest='enemy_2035_sybox',path=`dyn/battle/prefabs/enemies/${chest}.prefab`;
+  assert.equal(nativeAuxiliaryClaims(index.prefabs[path],nativeComponents(evidence,chest)).active,0);
+  const reviewed=enemySupport(ENEMY_RECORDS.enemies[chest],index.prefabs,evidence);
+  assert.equal(reviewed.policy,'stats-attacks-and-features');assert.ok(reviewed.features.includes('native:loggedChest'));
 });
 
 test('named infinite empty helpers do not invent gameplay; all newly covered basic bodies retain ordinary damage and death', () => {

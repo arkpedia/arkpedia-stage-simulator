@@ -2,9 +2,10 @@
 // Fixed import paths only. Register a reusable kind once, then reference it from
 // compiled enemy plans. No source predicates or native evidence ship here.
 export const ENEMY_RUNTIME_INDEX=Object.freeze([
+  {key:'arkpedia-enemy-projectiles',load:()=>import('./arkpedia-enemy-projectiles.js'),exports:{projectileSingleAttack:'projectileSingleAttack'}},
   {key:'arkpedia-enemy-barrier-aura',load:()=>import('./arkpedia-enemy-barrier-aura.js'),exports:{rechargingBarrierAura:'rechargingBarrierAura'}},
   {key:'arkpedia-enemy-conditional-protection',load:()=>import('./arkpedia-enemy-conditional-protection.js'),exports:{unblockedSanctuary:'unblockedSanctuary'}},
-  {key:'arkpedia-enemy-passive-body',load:()=>import('./arkpedia-enemy-passive-body.js'),exports:{loggedEnemyBody:'loggedEnemyBody'}},
+  {key:'arkpedia-enemy-passive-body',load:()=>import('./arkpedia-enemy-passive-body.js'),exports:{loggedEnemyBody:'loggedEnemyBody',passiveEnemyBody:'passiveEnemyBody'}},
   {key:"arkpedia-enemy-damage-adaptation",load:()=>import("./arkpedia-enemy-damage-adaptation.js"),exports:{"damageAdaptation":"damageAdaptation"}},
   {key:"arkpedia-enemy-passengers",load:()=>import("./arkpedia-enemy-passengers.js"),exports:{"beachBus":"beachBus"}},
   {key:"arkpedia-enemy-rope-reactions",load:()=>import("./arkpedia-enemy-rope-reactions.js"),exports:{"ropeBreakableDodge":"ropeBreakableDodge"}},
