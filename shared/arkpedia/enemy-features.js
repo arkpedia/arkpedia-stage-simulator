@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { BEJEWELED_FEATURES } from './enemy-bejeweled-features.js';
 import { isBeachBus, BEACH_BUS_FEATURE } from './enemy-beach-bus-features.js';
 import { FLYING_BOOTS_FEATURE } from './enemy-flying-boots-features.js';
 import { isJesselton, jesseltonNative, jesseltonExplains, JESSELTON_ABILITY } from './enemy-jesselton-features.js';
@@ -377,6 +378,8 @@ const NATIVE_ONLY_FEATURES = Object.freeze({
 });
 
 export const ENEMY_FEATURES = Object.freeze({
+  ...BEJEWELED_FEATURES,
+  'ability:More likely to be attacked': { covers: r => r.stats.tauntLevel > 0, note: 'record taunt level participates in ordinary priority' },
   'talent:Bus': BEACH_BUS_FEATURE,
   'talent:PhysicalEvade': FLYING_BOOTS_FEATURE,
   'ability:Spawns an <@eb.key>Excrescent Carapace</> at its location when defeated.': DEPOSITOR_FEATURE,
