@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "scope": "Keep a delayed death-spawn callback eligible before normal victory. The pending callback owns completion until live children take over; no content parameters or admission changed.",
+  "sourceSha256": {
+    "server/sim/content/arkpedia-enemy-summons.js": "72e26a3d3661e38d77c05ee061181c38f742a68e235c56d2d18516152a5a684d",
+    "test/arkpedia-delayed-spawn-victory.test.js": "c0c40a2e41af02ccc2ea60d4f6f8b76fda8908784f170fc4c373e7efbd27aa0e"
+  },
+  "reproduction": {
+    "parent": "enemy_1130_infstr",
+    "before": {
+      "time": 0.03333333333333333,
+      "reason": "cleared",
+      "children": 0
+    },
+    "regressionBefore": {
+      "tests": 16,
+      "passed": 2,
+      "failed": 14
+    }
+  },
+  "validation": {
+    "affectedAdmittedDefinitions": 13,
+    "focusedAndEnemyBossTests": 468,
+    "failures": 0,
+    "edgeCases": [
+      "A last parent waits for all children and their defeat.",
+      "Repeated kill does not double the callback.",
+      "Escaping produces no held death-spawn timer.",
+      "Timeout still ends before a pending child and prevents later execution.",
+      "Disabled counts do not hold victory; immediate children need no pending timer."
+    ],
+    "stageSmoke": {
+      "scope": "10-second constructor/runtime smoke for every available compiled stage; not a playable-clear or fidelity certificate",
+      "available": 969,
+      "completed": 969,
+      "failures": []
+    }
+  },
+  "browser": [
+    {
+      "stage": "od-ex-1",
+      "beforeBattleRequests": 38,
+      "enemies": [
+        "enemy_1130_infstr",
+        "enemy_1137_plasm",
+        "enemy_1132_sarchn",
+        "enemy_1133_harchn_2",
+        "enemy_1138_tumor",
+        "enemy_1132_sarchn_2"
+      ],
+      "loaded": {
+        "loaded": [
+          "arkpedia-enemy-summons",
+          "enemies",
+          "arkpedia-enemy-spiders"
+        ],
+        "pending": 0
+      },
+      "devices": {
+        "loaded": [],
+        "pending": 0
+      },
+      "errors": [],
+      "restart": {
+        "loaded": {
+          "loaded": [
+            "arkpedia-enemy-summons",
+            "enemies",
+            "arkpedia-enemy-spiders"
+          ],
+          "pending": 0
+        },
+        "devices": {
+          "loaded": [],
+          "pending": 0
+        },
+        "errors": []
+      },
+      "delayedVictory": {
+        "scope": "Controlled last-parent fixture using the loaded compiled OD-EX-1 graph with main waves removed; not a stage clear.",
+        "beforeRelease": {
+          "time": 0.1,
+          "finished": false,
+          "children": 0
+        },
+        "afterRelease": {
+          "time": 0.3333333333333333,
+          "finished": false,
+          "children": 2
+        },
+        "afterDefeat": {
+          "finished": true,
+          "reason": "cleared"
+        },
+        "errors": []
+      },
+      "moduleRequests": 139,
+      "moduleBytes": 475215
+    }
+  ],
+  "limits": [
+    "Controlled browser fixture removes main waves from the compiled OD-EX-1 graph; it is not a stage clear.",
+    "Existing family timing, positions and native-fidelity limits remain unchanged."
+  ]
+}

@@ -42,7 +42,9 @@ export const deathSpawnDelayed = ({ key, cnt, delay = 0 }) => ({
     if (c.reason !== 'killed' || !key || !(cnt > 0)) return;
     const route = remainingRoute(e);
     const spawn = () => spawnChildren(b, e, key, cnt, { route });
-    if (delay > 0) b.after(delay, spawn); else spawn();
+    // The defeated parent no longer holds victory. Its pending children take
+    // that ownership until the callback creates their live bodies.
+    if (delay > 0) b.after(delay, spawn, {holdsBattle:true}); else spawn();
   },
 });
 
