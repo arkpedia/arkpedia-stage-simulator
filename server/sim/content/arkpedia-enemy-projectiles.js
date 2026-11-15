@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import {ordinaryEnemyAttackSequence} from './arkpedia-enemy-attack-sequence.js';
 import { ALLY_COLLIDER_RADIUS } from '../constants.js';
 import { areaSelectable } from '../targeting.js';
 import { makeDamageInfo } from '../damage.js';
@@ -40,6 +41,22 @@ export function delayedAreaAttack({ delay, radius, type, priorityBuff = null, st
 export function projectileBoxAttack(params) { return projectileAreaAttack({ ...params, type: 'phys', visual: 'mortar' }); }
 export function projectileCircleAttack(params) { return projectileAreaAttack(params); }
 export function projectileSingleAttack(params) { return projectileAreaAttack({ ...params, singleTarget: true }); }
+/** Native animation markers share one ordinary cast sequence. Every captured
+ * deployment receives one projectile per release; released shots then belong
+ * to the ordinary projectile lifecycle and survive source death. */
+export function animatedProjectileAttack({animation,...transport}){
+  validateProjectileAnimation({animation});
+  const shot=projectileSingleAttack(transport);
+  return ordinaryEnemyAttackSequence(()=>animation,(b,e,target,cast)=>
+    shot.attack({targets:[target],attackId:cast.attackId},b,e));
+}
+function validateProjectileAnimation({animation}){
+  if(!animation||typeof animation.clip!=='string'||!animation.clip||!Number.isFinite(animation.duration)||animation.duration<=0
+    ||!Array.isArray(animation.releases)||!animation.releases.length||animation.releases.length>64
+    ||animation.releases.some((t,i)=>!Number.isFinite(t)||t<0||t>animation.duration||i>0&&t<=animation.releases[i-1]))
+    throw Error('Invalid projectile attack animation');
+}
+animatedProjectileAttack.validate=validateProjectileAnimation;
 /** One blocking target receives melee damage; unblocked targets share the
  * ordinary projectile transport. A shot retains its ranged scale if the
  * shooter becomes blocked before impact. */

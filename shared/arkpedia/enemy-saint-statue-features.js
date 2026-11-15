@@ -2,7 +2,7 @@
 import {nativeAuxiliaryReferences} from './enemy-native-auxiliaries.js';
 import clocks from '../../data/arkpedia-saint-statues-animations.json' with {type:'json'};
 import {sameOutcomeValue as same,emptyOutcomeAttributes as empty} from './enemy-outcome-contracts.js';
-const ids=['enemy_10091_hlsttu','enemy_10091_hlsttu_2'];
+const ids=['enemy_10091_hlsttu','enemy_10091_hlsttu_2','enemy_10091_hlsttu_3'];
 const fields=(v,w)=>!!v&&Object.entries(w).every(([k,x])=>same(v[k],x));
 const node=(v,name)=>v?.$type===`Torappu.Battle.Action.Nodes+${name}, Assembly-CSharp`;
 const zero=v=>v?.m_FileID===0&&v.m_PathID==='0';
@@ -61,17 +61,20 @@ function shieldTemplates(n){
 }
 export const isSaintStatue=r=>ids.includes(r.prefabKey);
 export function saintStatueNative(r,n){
+ const matriarch=r.prefabKey==='enemy_10091_hlsttu_3';
  if(!isSaintStatue(r)||r.level!==0||r.applyWay!=='RANGED'||r.stats.dmgType!=='arts'||r.stats.motion!=='WALK'||!r.notCountInTotal
-  ||r.skills.length||r.sp||!same(r.talents.groups,{CircleShield:['interval','range_radius','shield_add_rate','shield_max_rate']})
-  ||!same(r.talents.bb,{'CircleShield.interval':1,'CircleShield.range_radius':2.5,'CircleShield.shield_max_rate':.5,'CircleShield.shield_add_rate':.02})
+  ||r.skills.length||r.sp||!same(r.talents.groups,{CircleShield:['interval','range_radius','shield_add_rate','shield_max_rate'],...(matriarch?{AttackTargetNum:['attack@max_target']}:{})})
+  ||!same(r.talents.bb,{'CircleShield.interval':1,'CircleShield.range_radius':matriarch?3.5:2.5,'CircleShield.shield_max_rate':matriarch?1.5:.5,'CircleShield.shield_add_rate':matriarch ? .06 : .02,...(matriarch?{'AttackTargetNum.attack@max_target':3}:{})})
   ||Object.keys(r.talents.bbStr).length)return false;
  const root=n[r.prefabKey]?.find(c=>'_modes'in c),mode=n.$ref(root?._modes[0]),attack=n.$ref(mode?._attack),passive=n.$ref(root?._commonAbilities[0]);
- if(!root||root._modes.length!==1||root._commonAbilities.length!==1||root._sideTypeIndex!==1||root._delayToBorn!==0
+ if(!root||root._modes.length!==1||root._commonAbilities.length!==(matriarch?2:1)||root._sideTypeIndex!==1||root._delayToBorn!==0
   ||mode?._generalAbilities.length!==1||!zero(mode._combat)||!fields(attack,{_projectileKey:'projectile_enemy_hlsttu',_damageType:2,
-   _atkScale:1,_activeBuffs:[],_waitForAttackEvent:0,_preDelay:0,_timeMode:0,_projectileDestination:0})
+   _atkScale:1,_activeBuffs:[],_waitForAttackEvent:matriarch?1:0,_preDelay:0,_timeMode:0,_projectileDestination:0})
   ||!fields(n.$ref(mode._attackTrigger),{m_Script:{m_FileID:1,m_PathID:'8607874384982393801'},_minTargetNum:1,_keepTarget:0}))return false;
  if([...root._modes,...root._commonAbilities,...mode._generalAbilities,mode._attack,mode._attackTrigger,root._animator].some(ref=>ref.m_FileID!==0))return false;
- if(nativeAuxiliaryReferences(mode._generalAbilities,n).active!==1)return false;
+ if(nativeAuxiliaryReferences(mode._generalAbilities,n).active!==1
+  ||nativeAuxiliaryReferences(root._commonAbilities.slice(1),n).active!==(matriarch?1:0))return false;
+ if(matriarch&&!statueAttackTargetCount(n,attack))return false;
  const body=passive?._buffs?.[0],mark=passive?._buffs?.[1];
  if(passive?._buffs.length!==2||!fields(body,{templateKey:'empty',lifeTimeType:2,isSilenceable:0,isStunnable:0,isFreezable:0})
   ||!same(body.attributes,{abnormalFlags:[22],abnormalImmunes:[0,33,25,11,31],abnormalAntis:[],abnormalCombos:[],abnormalComboImmunes:[0],attributeModifiers:[]})
@@ -81,21 +84,41 @@ export function saintStatueNative(r,n){
   triggerLifeType:2,waitFirstTriggerInterval:1,isSilenceable:0,isStunnable:0,isFreezable:0})||!empty(buff.attributes)||!shieldTemplates(n))return false;
  const graphic=n.$ref(root._animator),clock=clocks.enemies[r.prefabKey];
  if(n.$ref(graphic?._skeleton)?.skeletonDataAsset?.m_PathID!==clock.source.skeletonDataPathId)return false;
+ if(matriarch&&(!same(clock.events.Attack,[{time:Math.fround(25/30),name:'OnAttack',int:0,float:0,string:''}])
+  ||clock.durations.Attack!==Math.fround(48/30)
+  ||!graphic._animations.some(a=>a.animKey==='Attack'&&a.animName==='Attack'&&a.speed===1&&!a.loop)))return false;
  const p=n.$projectile('projectile_enemy_hlsttu'),life=p.find(c=>'_lifeTime'in c),move=p.find(c=>'_moveType'in c);
  return p.length===3&&p.every(c=>['-8797129986015012478','-1429203677512073985','6834194400804168919'].includes(c.m_Script?.m_PathID))
   &&fields(life?._actionController,{_addExtraBuffsWhenReached:0,_extraBuffsInTheEnd:[],_useSelfBlackboard:0,_onlyAddBuffsToTraceTarget:0})
   &&fields(life,{_lifeTime:10,_stopWhenSourceInvalid:0,_maxHitNum:1,_stopAfterMaxHit:1,_alwaysHitTraceTargetInTheEnd:1})
   &&fields(move,{_moveType:1,_speed:10,_delayToStart:0,_flyToTargetLocationOnly:0,_forceReachedWhenTimeup:1});
 }
+// Native target count is a talent-fed override of this attack selector,
+// rather than a second attack loop or three repeated hits on one operator.
+function statueAttackTargetCount(n,attack){
+ const target=n.AttackTargetNum?.find(c=>c.m_Script?.m_PathID==='4865767822664548221'),binding=n.$siblings(target).find(c=>'_overwriteTalentKey'in c);
+ const selector=n.$ref(attack._selector);
+ return fields(target,{m_Enabled:1,_selector:{m_FileID:0,m_PathID:'0'},_interruptAbilityOnDetach:1})
+  &&fields(binding,{m_Script:{m_FileID:1,m_PathID:'-2726233351382997147'},m_Enabled:1,_attachInDummy:0,_overwriteTalentKey:'',_defaultModeIndex:-1,_attackBlackboardModeIndex:-1,
+   _extraAttackBlackboardModeIndices:[],_checkValidBySkillIndex:[],_applyTalentScale:0,_applyBlackboardBySkill:0,_applyStrBlackboardBySkill:0,_influenceSkillBlackboard:0,
+   _fromRawDataToSkill:0,_applyTalentRange:0,_scaleCertainKeyFlag:0,_scaleCertainKeyList:[],_scaleModeIndices:[]})
+  &&fields(selector,{m_Script:{m_FileID:1,m_PathID:'7080728813803358465'},_targetSide:2,_targetMotion:1,_targetCategory:1,
+   _postFilter:4,_ignoreTargetFree:0,_ignoreAllyTargetFree:0,_forceIgnoreCamouflage:0,_limitTargetNum:1,
+   _maxTargetKey:'max_target',_maxNum:1,_excludeOwner:0,_needProfessionMask:0,_ignoreHitRange:0});
+}
 const feature={matchesRecord:isSaintStatue,covers:saintStatueNative};
 export const SAINT_STATUE_FEATURES={
- 'talent:CircleShield':{...feature,explains:/^Enemies within range gain a Barrier proportionate to their Max HP every second \(capped\)$/,
+ 'talent:AttackTargetNum':{matchesRecord:r=>r.prefabKey==='enemy_10091_hlsttu_3',covers:saintStatueNative,
+  explains:text=>text==='Attacks 3 enemies simultaneously',trait:{maxTargets:3}},
+ 'talent:CircleShield':{...feature,explains:/^Enemies within range gain a Barrier proportionate to their Max HP every second \(capped(?: with a higher limit)?\)$/,
   ability:{kind:'rechargingBarrierAura',params:r=>({key:'hlsttu_t[shield]',interval:r.talents.bb['CircleShield.interval'],radius:r.talents.bb['CircleShield.range_radius'],
    addRate:r.talents.bb['CircleShield.shield_add_rate'],maxRate:r.talents.bb['CircleShield.shield_max_rate'],
    excludedBuffs:['enemy_hlsttu_self_mark','enemy_hlslp_self_mark'],types:['phys','arts'],ignoreTargetFree:true,ignoreAllyTargetFree:true})}},
  // This explicit mixed review owns Passive plus the exact mode-local cosmetic
  // Effect classified above. The global counter must not add that Effect again.
- 'native:saintBody':{...feature,nativeClaim:()=>({active:2}),trait:{flags:{noMove:true}},ability:{kind:'passiveEnemyBody',params:r=>({
-  immunities:['stun','fear','levitate','disarm','sleep'],markerKeys:['enemy_hlsttu_self_mark'],attackAnim:{dur:clocks.enemies[r.prefabKey].durations.Attack,hit:0}})}},
- 'native:saintAttack':{...feature,ability:{kind:'projectileSingleAttack',params:()=>({type:'arts',speed:10,lifetime:10})}},
+ 'native:saintBody':{...feature,nativeClaim:(_p,n)=>({active:n.enemy_10091_hlsttu_3?3:2}),trait:{flags:{noMove:true}},ability:{kind:'passiveEnemyBody',params:r=>({
+  immunities:['stun','fear','levitate','disarm','sleep'],markerKeys:['enemy_hlsttu_self_mark'],attackAnim:{dur:clocks.enemies[r.prefabKey].durations.Attack,hit:r.prefabKey==='enemy_10091_hlsttu_3'?clocks.enemies[r.prefabKey].events.Attack[0].time:0}})}},
+ 'native:saintAttack':{...feature,ability:r=>({kind:r.prefabKey==='enemy_10091_hlsttu_3'?'animatedProjectileAttack':'projectileSingleAttack',
+  params:()=>({type:'arts',speed:10,lifetime:10,...(r.prefabKey==='enemy_10091_hlsttu_3'?{animation:{clip:'Attack',
+   duration:clocks.enemies[r.prefabKey].durations.Attack,releases:clocks.enemies[r.prefabKey].events.Attack.map(e=>e.time)}}:{})})})},
 };

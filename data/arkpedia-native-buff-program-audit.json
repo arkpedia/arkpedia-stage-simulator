@@ -2,13 +2,13 @@
   "schemaVersion": 1,
   "scope": "Only retained native templates/prefabs, not the complete game corpus. Refusals report the first compiler blocker per template. Compilability never grants enemy or stage admission.",
   "source": {
-    "data/arkpedia-enemy-native-abilities.json": "2e2702688699f5b2449f8c2062c0a8637a7ee567a18a039b8f546f035c5131d9",
-    "data/arkpedia-enemy-support.json": "f45754173e40b9b35ed50003b4d553e1d25543051e3517099ec9f47310acdde5",
+    "data/arkpedia-enemy-native-abilities.json": "d509e82f89f141b00645418cfb0748a894bb321d00f40313f5ebf37fa4f6960b",
+    "data/arkpedia-enemy-support.json": "b8c2a66351b002c42cd4a88e57158c7ab93fd49be65b5927529a868e755b9d28",
     "shared/arkpedia/behavior.js": "88b4616bf16a17e2a29153b48ae04e0a4f7b2bcebc28214bce3e98c104cef712",
     "shared/arkpedia/behavior-native-compiler.js": "89c3f4110d1c8a1f37c0fce794aadf0efe87756d93408f3224a116aad07cc2b0",
     "shared/arkpedia/behavior-program.js": "f908848a62b2c23e0e8c97194b8d6f6a1f54b6f020042ffa0c3bb35bf593bc6e"
   },
-  "retainedPrefabs": 351,
+  "retainedPrefabs": 352,
   "templates": 220,
   "compiled": 6,
   "refused": 214,
@@ -276,6 +276,7 @@
         "enemy_10086_hltigr_2",
         "enemy_10091_hlsttu",
         "enemy_10091_hlsttu_2",
+        "enemy_10091_hlsttu_3",
         "enemy_10092_hlslp",
         "enemy_10095_crgst",
         "enemy_10095_crgst_2",
@@ -2154,7 +2155,8 @@
       "key": "hlsttu_t[shield]",
       "consumers": [
         "enemy_10091_hlsttu",
-        "enemy_10091_hlsttu_2"
+        "enemy_10091_hlsttu_2",
+        "enemy_10091_hlsttu_3"
       ],
       "unsupportedConsumers": [],
       "compiled": false,
@@ -2164,7 +2166,8 @@
       "key": "hlsttu_t[to_enemy]",
       "consumers": [
         "enemy_10091_hlsttu",
-        "enemy_10091_hlsttu_2"
+        "enemy_10091_hlsttu_2",
+        "enemy_10091_hlsttu_3"
       ],
       "unsupportedConsumers": [],
       "compiled": false,
@@ -2174,7 +2177,8 @@
       "key": "hlsttu_t[trigger_shield]",
       "consumers": [
         "enemy_10091_hlsttu",
-        "enemy_10091_hlsttu_2"
+        "enemy_10091_hlsttu_2",
+        "enemy_10091_hlsttu_3"
       ],
       "unsupportedConsumers": [],
       "compiled": false,
@@ -2267,6 +2271,7 @@
     {
       "key": "log_killed",
       "consumers": [
+        "enemy_10091_hlsttu_3",
         "enemy_1105_tyokai",
         "enemy_1105_tyokai_2",
         "enemy_1106_byokai",
@@ -2749,6 +2754,7 @@
         "enemy_10019_sgmum_2",
         "enemy_10091_hlsttu",
         "enemy_10091_hlsttu_2",
+        "enemy_10091_hlsttu_3",
         "enemy_10092_hlslp",
         "enemy_1060_emouse",
         "enemy_1060_emouse_2",
@@ -2804,6 +2810,7 @@
         "skzcy_t[first_step]"
       ],
       "consumers": [
+        "enemy_10091_hlsttu_3",
         "enemy_1089_ltlntc",
         "enemy_1089_ltlntc_2",
         "enemy_1092_mdgint",
@@ -3586,7 +3593,8 @@
       ],
       "consumers": [
         "enemy_10091_hlsttu",
-        "enemy_10091_hlsttu_2"
+        "enemy_10091_hlsttu_2",
+        "enemy_10091_hlsttu_3"
       ],
       "unsupportedConsumers": []
     },
@@ -3597,7 +3605,8 @@
       ],
       "consumers": [
         "enemy_10091_hlsttu",
-        "enemy_10091_hlsttu_2"
+        "enemy_10091_hlsttu_2",
+        "enemy_10091_hlsttu_3"
       ],
       "unsupportedConsumers": []
     },

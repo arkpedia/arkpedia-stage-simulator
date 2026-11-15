@@ -387,7 +387,7 @@ const HATEDRINKER_TEXT = 'Gains increased ATK for each Reborn Creation on the ba
 // picked up by the Altar Keeper, not by its own code).
 const NATIVE_ONLY_FEATURES = Object.freeze({
   enemy_1364_spnaxe:'native:flayerAttackMode',enemy_1364_spnaxe_2:'native:flayerAttackMode',
-  enemy_10091_hlsttu: ['native:saintBody','native:saintAttack'], enemy_10091_hlsttu_2: ['native:saintBody','native:saintAttack'],
+  enemy_10091_hlsttu: ['native:saintBody','native:saintAttack'], enemy_10091_hlsttu_2: ['native:saintBody','native:saintAttack'], enemy_10091_hlsttu_3: ['native:saintBody','native:saintAttack'],
   enemy_2035_sybox: 'native:loggedChest', enemy_2059_smbox: 'native:loggedChest',
   enemy_1189_krgaxe: 'native:icefieldWarrior', enemy_1189_krgaxe_2: 'native:icefieldWarrior',
   enemy_1112_emppnt: 'native:imperialShell', enemy_1112_emppnt_2: 'native:imperialShell',
