@@ -1,3 +1,4 @@
+import {deathSpawn,spawnEnemyAbilities} from './arkpedia-enemy-summons.js';
 import {basicEnemyAbilities} from './arkpedia-enemy-basic-effects.js';
 import {hurt,areaAlliesInTiles} from './arkpedia-enemy-effects.js';
 export {hurt,areaAlliesInTiles} from './arkpedia-enemy-effects.js';
@@ -247,6 +248,7 @@ const ELK_FAIL_SCALE = 2;
 /** Shared ability builders for data-driven features (each documented at its definition below). */
 export const featureAbilities = Object.freeze({
   ...basicEnemyAbilities,
+  ...spawnEnemyAbilities,
   ammoAttack,
   ammoSummoner,
   blockedCartBlast,
@@ -301,8 +303,6 @@ export const featureAbilities = Object.freeze({
     },
   }) : ep(element, ratio),
   lowHpBuff: ({ ratio, mods }) => lowHpBuff(ratio, mods),
-  deathSpawn: ({ key, cnt }) => deathSpawn(key, cnt),
-  deathSpawnDelayed: ({ key, cnt, delay }) => deathSpawnDelayed({ key, cnt, delay }),
   deathBoom: params => deathBoom(params),
   refraction: ({ res }) => refraction(res),
   times: ({ artsOnly }) => times(artsOnly),
@@ -453,11 +453,6 @@ export const featureAbilities = Object.freeze({
       for (const other of b.enemies) if (other !== e && other.alive && String(other.defId).includes('duspfr')) { other.noBoom = true; b.kill(other, e); }
     },
   }),
-  // Prototype distributor: periodic helper spawn.
-  periodicSpawn: ({ key, count, cooldown, init }) => ({
-    spawn(b, e, a) { a.next = b.time + init; },
-    tick(b, e, a) { if (b.time >= a.next) { a.next = b.time + cooldown; spawnChildren(b, e, key, count); } },
-  }),
   // Bloodborn Spawn: Arts damage scaled by the target's blocking count.
   blockDamageUp: ({ ratio, addOn }) => ({
     hitOut(c, b, e) {
@@ -596,15 +591,6 @@ export const featureAbilities = Object.freeze({
   lasso: ({ scale, duration }) => ({
     hitOut(c, b, e) { if (c.dmg.isAttack) { c.dmg.amount = e.s.atk * scale; c.dmg.type = 'arts'; } },
     dealt(c, b, e) { if (c.dmg?.isAttack && c.target) b.applyStatus(c.target, 'stun', { duration, source: e }); },
-  }),
-  // 1321: drop three Seeds of Withering every cooldown seconds, starting after init.
-  seedSummoner: ({ key, count, cooldown, init }) => ({
-    spawn(b, e, a) { a.next = b.time + init; },
-    tick(b, e, a) {
-      if (!e.alive || b.time < a.next) return;
-      a.next = b.time + cooldown;
-      for (let i = 0; i < count; i++) spawnChildren(b, e, key, 1, { pos: [e.y, e.x + (i - (count - 1) / 2) * 0.4] });
-    },
   }),
   // 1320: the first hit is 1.5x and splashes the target's box; later hits are normal.
   firstSplash: ({ scale }) => ({
@@ -1142,11 +1128,6 @@ const lowHpBuff = (ratio, mods, key = 'ab:lowhp') => ({
   },
 });
 
-/** Death spawn ("被击倒后生成N个<X>"). */
-const deathSpawn = (key, cnt, extra = {}) => ({
-  death(c, b, e) { if (c.reason === 'killed' && key && cnt > 0) spawnChildren(b, e, key, cnt, extra); },
-});
-
 /**
  * Death explosion on the allies within r it can select (areaAllies — PRTS 高能源石虫 / 冰爆源石虫 / 卷心籽 死亡爆炸 "…无视迷彩，
  * 不可对空", no 无视无法选择: a 隐匿 ally is spared; the dead enemy blocks nobody).
@@ -1162,16 +1143,6 @@ const deathBoom = ({ scale, type = 'phys', r = BOOM_RADIUS, status = null, eleme
       if (element && epRatio > 0 && u.alive) elem(b, e, u, element, atk * epRatio);
       if (status && u.alive) b.applyStatus(u, status.key, { duration: status.dur, source: e, value: status.value });
     }
-  },
-});
-
-/** A delayed split ("Splits into N <X> upon death"): the children follow the dead parent's remaining route. */
-const deathSpawnDelayed = ({ key, cnt, delay = 0 }) => ({
-  death(c, b, e) {
-    if (c.reason !== 'killed' || !key || !(cnt > 0)) return;
-    const route = remainingRoute(e);
-    const spawn = () => spawnChildren(b, e, key, cnt, { route });
-    if (delay > 0) b.after(delay, spawn); else spawn();
   },
 });
 

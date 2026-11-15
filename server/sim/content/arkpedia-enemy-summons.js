@@ -30,3 +30,37 @@ export function scatterFragments(b, e, key, count, {
     }, { holdsBattle: true });
   }
 }
+
+/** Death spawn ("被击倒后生成N个<X>"). */
+export const deathSpawn = (key, cnt, extra = {}) => ({
+  death(c, b, e) { if (c.reason === 'killed' && key && cnt > 0) spawnChildren(b, e, key, cnt, extra); },
+});
+
+/** A delayed split ("Splits into N <X> upon death"): the children follow the dead parent's remaining route. */
+export const deathSpawnDelayed = ({ key, cnt, delay = 0 }) => ({
+  death(c, b, e) {
+    if (c.reason !== 'killed' || !key || !(cnt > 0)) return;
+    const route = remainingRoute(e);
+    const spawn = () => spawnChildren(b, e, key, cnt, { route });
+    if (delay > 0) b.after(delay, spawn); else spawn();
+  },
+});
+
+export const spawnEnemyAbilities=Object.freeze({
+  // Prototype distributor: periodic helper spawn.
+  periodicSpawn: ({ key, count, cooldown, init }) => ({
+    spawn(b, e, a) { a.next = b.time + init; },
+    tick(b, e, a) { if (b.time >= a.next) { a.next = b.time + cooldown; spawnChildren(b, e, key, count); } },
+  }),
+  // Existing Withering Apostle timing and staggered positions.
+  seedSummoner: ({ key, count, cooldown, init }) => ({
+    spawn(b, e, a) { a.next = b.time + init; },
+    tick(b, e, a) {
+      if (!e.alive || b.time < a.next) return;
+      a.next = b.time + cooldown;
+      for (let i = 0; i < count; i++) spawnChildren(b, e, key, 1, { pos: [e.y, e.x + (i - (count - 1) / 2) * 0.4] });
+    },
+  }),
+  deathSpawn: ({ key, cnt }) => deathSpawn(key, cnt),
+  deathSpawnDelayed: ({ key, cnt, delay }) => deathSpawnDelayed({ key, cnt, delay }),
+});

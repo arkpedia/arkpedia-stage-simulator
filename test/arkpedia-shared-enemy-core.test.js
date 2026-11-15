@@ -3,6 +3,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import *as legacy from '../server/sim/content/enemies.js';
 import *as runtime from '../server/sim/content/arkpedia-enemy-ability-runtime.js';
+import {spawnEnemyAbilities} from '../server/sim/content/arkpedia-enemy-summons.js';
 import {basicEnemyAbilities} from '../server/sim/content/arkpedia-enemy-basic-effects.js';
 import *as forms from '../server/sim/content/arkpedia-enemy-forms.js';
 import *as effects from '../server/sim/content/arkpedia-enemy-effects.js';
@@ -19,7 +20,7 @@ test('legacy exports and selected-stage helpers share the same implementations',
  for(const name of['elem','alliesInTiles','EROSION','hurt','areaAlliesInTiles'])assert.equal(legacy[name],effects[name],name);
  for(const name of['remainingRoute','stayRoute','spawnChildren'])assert.equal(legacy[name],spawns[name],name);
  for(const name of['rebornAbility','huskAbility','setHits','hitCount','isHitCount','setForm','HUSK_REBIRTH'])assert.equal(legacy[name],forms[name],name);
- for(const[name,make]of Object.entries(basicEnemyAbilities))assert.equal(legacy.featureAbilities[name],make,name);
+ for(const[name,make]of Object.entries({...basicEnemyAbilities,...spawnEnemyAbilities}))assert.equal(legacy.featureAbilities[name],make,name);
  assert.equal(legacyInfection,touchInfection);
 });
 test('cross-entry attachment uses one ability list, hook set and battle-result state',()=>{

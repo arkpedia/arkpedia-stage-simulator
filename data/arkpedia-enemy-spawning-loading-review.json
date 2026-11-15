@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "scope": "Move existing death, delayed-death, periodic and seed spawn factories into the catalog-independent shared summons module. Legacy lookup and selected runtime use identical factories.",
+  "sourceSha256": {
+    "server/sim/content/arkpedia-enemy-runtime-index.js": "276499a8f63bb9680fee1540af09d3d08b7ae66fcdb30128f0416a650b2f734b",
+    "server/sim/content/arkpedia-enemy-summons.js": "3c1dfb0a6755e5c58f3b94a165fb9b12b79d7a56ca5e75c5f465614d783ca112",
+    "server/sim/content/enemies.js": "e7ef2894b51f67e1aa1a4f3c351a0991751596d62cd92fb5f0de9dab3a40625a",
+    "test/arkpedia-shared-enemy-core.test.js": "caf515139dc734892ecc0414ae63f59ec12646f3a6e5144fc6311e945ff8ecfe"
+  },
+  "validation": {
+    "focusedTests": 198,
+    "legacyEnemyBossTransformationCrewTests": 287,
+    "failures": 0,
+    "stageSmoke": {
+      "scope": "10-second constructor/runtime smoke for every available compiled stage; not a playable-clear or fidelity certificate",
+      "available": 969,
+      "completed": 969,
+      "failures": []
+    }
+  },
+  "browserImport": {
+    "selectedFamilies": [
+      "spawning",
+      "basicEffects",
+      "builtins",
+      "jesselton",
+      "flamechaser",
+      "bladeKnight"
+    ],
+    "sharedFormsLoaded": true,
+    "legacyEnemyCatalogLoaded": false,
+    "errors": []
+  },
+  "browserStage": [
+    {
+      "stage": "victoria_camp_r_19",
+      "beforeBattleRequests": 278,
+      "enemies": [
+        "enemy_1071_dftman",
+        "enemy_1267_nhpbr",
+        "enemy_1269_nhfly",
+        "enemy_1274_stmram",
+        "enemy_1268_nhnrs",
+        "enemy_1270_nhstlk",
+        "enemy_1321_wdarft",
+        "enemy_1271_nhkodo",
+        "enemy_1270_nhstlk_2",
+        "enemy_1267_nhpbr_2",
+        "enemy_1274_stmram_2",
+        "enemy_1268_nhnrs_2",
+        "enemy_1271_nhkodo_2",
+        "enemy_1266_nhapos"
+      ],
+      "loaded": {
+        "loaded": [
+          "arkpedia-enemy-summons",
+          "arkpedia-enemy-rot-eater",
+          "enemies",
+          "arkpedia-enemy-devour",
+          "arkpedia-enemy-wither-caster"
+        ],
+        "pending": 0
+      },
+      "devices": {
+        "loaded": [
+          "twigs"
+        ],
+        "pending": 0
+      },
+      "errors": [],
+      "seedCheck": {
+        "childPrepared": true,
+        "spawned": 3,
+        "errors": []
+      },
+      "restart": {
+        "loaded": {
+          "loaded": [
+            "arkpedia-enemy-summons",
+            "arkpedia-enemy-rot-eater",
+            "enemies",
+            "arkpedia-enemy-devour",
+            "arkpedia-enemy-wither-caster"
+          ],
+          "pending": 0
+        },
+        "devices": {
+          "loaded": [
+            "twigs"
+          ],
+          "pending": 0
+        },
+        "errors": []
+      },
+      "moduleRequests": 385,
+      "moduleBytes": 558068
+    }
+  ],
+  "limits": [
+    "Existing spawn timing and placement are preserved; extraction does not certify native BornBugs offsets or delayed release.",
+    "The Victoria stage still selects other legacy abilities and therefore still imports the enemy catalog.",
+    "Controlled browser spawning is not a stage clear."
+  ]
+}
