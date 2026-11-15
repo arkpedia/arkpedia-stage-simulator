@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-import { huskAbility, elem } from './enemies.js';
+import {huskAbility} from './arkpedia-enemy-forms.js';
+import {elem} from './arkpedia-enemy-effects.js';
 
 /** Reuse the shared hit-count/rebirth lifecycle. All transition presentation is
  * local to this deployment and follows the original prefab's animation roles. */

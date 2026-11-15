@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "scope": "Extract existing rebirth, husk, hit-count and form helpers into one catalog-independent module. No enemy parameters or behavior changed.",
+  "sourceSha256": {
+    "server/sim/content/arkpedia-enemy-flamechaser.js": "ab9bb1114c27ffb54ead950f8858fd834bd5e3311315d177219c127c85b3f5dc",
+    "server/sim/content/arkpedia-enemy-jesselton.js": "12b5aff3114e7784a81b5672a5897773a721d9d811c099eb5e06f00ad47687f6",
+    "server/sim/content/arkpedia-enemy-stat-debuff-runtime.js": "b7ed94b8f82e0a3a4500b7e7c572bab61eecd87de01bb7486badff9bd50b3327",
+    "server/sim/content/enemies.js": "03d9e557b6cd1e9374919f079cb360989d2f9bf1918a47bbb70c91d707ba4a03",
+    "test/arkpedia-shared-enemy-core.test.js": "8e7049cb30b05433ea594bc664365f68b5c571c12d211378f36562478c010c2c",
+    "server/sim/content/arkpedia-enemy-forms.js": "eeb076d168fc5ecfce94aff56f553b017c76f895845f74ee6d70020657a3d1f2"
+  },
+  "selectedFamilyBrowser": {
+    "selectedFamilies": [
+      "jesselton",
+      "flamechaser",
+      "bladeKnight"
+    ],
+    "sharedFormsLoaded": true,
+    "legacyEnemyCatalogLoaded": false,
+    "errors": []
+  },
+  "validation": {
+    "enemyFamilyAndPlanTests": 48,
+    "legacyTransformationAndSharedApiTests": 41,
+    "failures": 0,
+    "stageSmoke": {
+      "scope": "10-second constructor/runtime smoke for every available compiled stage; not a playable-clear or fidelity certificate",
+      "available": 969,
+      "completed": 969,
+      "failures": []
+    }
+  },
+  "browserStageMeasurements": [
+    {
+      "stage": "0-1",
+      "beforeBattleRequests": 278,
+      "enemies": [
+        "enemy_1007_slime",
+        "enemy_1002_nsabr"
+      ],
+      "loaded": {
+        "loaded": [],
+        "pending": 0
+      },
+      "devices": {
+        "loaded": [],
+        "pending": 0
+      },
+      "errors": [],
+      "restart": {
+        "loaded": {
+          "loaded": [],
+          "pending": 0
+        },
+        "devices": {
+          "loaded": [],
+          "pending": 0
+        },
+        "errors": []
+      },
+      "moduleRequests": 356,
+      "moduleBytes": 449806
+    },
+    {
+      "stage": "mb-8",
+      "beforeBattleRequests": 278,
+      "enemies": [
+        "enemy_1516_jakill",
+        "enemy_1116_liprr",
+        "enemy_1117_liiprr",
+        "enemy_1120_vofwiz",
+        "enemy_1118_lidbox",
+        "enemy_1121_lifbos",
+        "enemy_1119_vofsd"
+      ],
+      "loaded": {
+        "loaded": [
+          "arkpedia-enemy-jesselton",
+          "enemies",
+          "arkpedia-enemy-prisoner"
+        ],
+        "pending": 0
+      },
+      "devices": {
+        "loaded": [
+          "manual"
+        ],
+        "pending": 0
+      },
+      "errors": [],
+      "restart": {
+        "loaded": {
+          "loaded": [
+            "arkpedia-enemy-jesselton",
+            "enemies",
+            "arkpedia-enemy-prisoner"
+          ],
+          "pending": 0
+        },
+        "devices": {
+          "loaded": [
+            "manual"
+          ],
+          "pending": 0
+        },
+        "errors": []
+      },
+      "moduleRequests": 379,
+      "moduleBytes": 554937
+    },
+    {
+      "stage": "tw-3",
+      "beforeBattleRequests": 278,
+      "enemies": [
+        "enemy_1087_ltwolf",
+        "enemy_1086_ltsodr",
+        "enemy_1054_norshd",
+        "enemy_1088_ltsmer"
+      ],
+      "loaded": {
+        "loaded": [
+          "arkpedia-enemy-gramophones"
+        ],
+        "pending": 0
+      },
+      "devices": {
+        "loaded": [
+          "gramophones"
+        ],
+        "pending": 0
+      },
+      "errors": [],
+      "restart": {
+        "loaded": {
+          "loaded": [
+            "arkpedia-enemy-gramophones"
+          ],
+          "pending": 0
+        },
+        "devices": {
+          "loaded": [
+            "gramophones"
+          ],
+          "pending": 0
+        },
+        "errors": []
+      },
+      "moduleRequests": 361,
+      "moduleBytes": 457969
+    }
+  ],
+  "limits": [
+    "Selected families import without the legacy enemy catalog; other abilities in the same stage can still require it.",
+    "MB-8 still selects the catalog and adds 734 measured simulation/shared response bytes after this split.",
+    "Native fidelity is unchanged by extraction."
+  ]
+}

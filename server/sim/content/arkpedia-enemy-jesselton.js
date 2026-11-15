@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import { ordinaryEnemyAttackSequence } from './arkpedia-enemy-attack-sequence.js';
 import { projectileSingleAttack } from './arkpedia-enemy-projectiles.js';
-import { rebornAbility } from './enemies.js';
+import { rebornAbility } from './arkpedia-enemy-forms.js';
 import { canTargetAlly, sortAllyTargets } from '../targeting.js';
 import { liberatePrisoners } from './arkpedia-enemy-prisoner.js';
 export function jesselton(p) {
