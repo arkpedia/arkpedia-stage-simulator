@@ -34,15 +34,16 @@ const escape = (s) =>
       ],
   );
 const app = document.querySelector("#app");
-let StandardBattle, prepareRegularOperatorRuntime, operatorRuntime, regularSummonCards, selectedRegularSummon,
+let StandardBattle, prepareRegularOperatorRuntime, operatorRuntime, prepareRegularEnemyRuntime, enemyRuntime, regularSummonCards, selectedRegularSummon,
   summonPlacementError, deployRegularSummon, retreatRegularSummon;
 async function loadBattleRuntime() {
-  const [engine, summons, runtime] = await Promise.all([
+  const [engine, summons, runtime, enemies] = await Promise.all([
     import('/sim/arkpedia.js'), import('/sim/content/arkpedia-summon-deck.js'),
-    import('/sim/content/arkpedia-operator-runtime.js'),
+    import('/sim/content/arkpedia-operator-runtime.js'), import('/sim/content/arkpedia-enemy-runtime.js'),
   ]);
   ({ StandardBattle } = engine);
   ({ prepareRegularOperatorRuntime } = runtime);
+  ({ prepareRegularEnemyRuntime } = enemies);
   ({ regularSummonCards, selectedRegularSummon, summonPlacementError, deployRegularSummon, retreatRegularSummon } = summons);
 }
 let renderer,
@@ -381,7 +382,9 @@ async function start() {
     if (data.stage.mode) selection.modeRules = validateStageModeRules(data.stage, Object.fromEntries(
       [...document.querySelectorAll('[data-mode-rule]')].map(input => [input.dataset.modeRule, input.value === '' ? NaN : Number(input.value)])));
     const battleIds = await operatorLibrary.prepareBattle(selection);
-    operatorRuntime = await prepareRegularOperatorRuntime(battleIds);
+    const [operators, enemies] = await Promise.all([prepareRegularOperatorRuntime(battleIds), prepareRegularEnemyRuntime(data.enemies)]);
+    operatorRuntime = operators; enemyRuntime = enemies.runtime;
+    data.enemies = enemies.records;
     // Never gate the battle on optional chibi downloads: start the simulation now, let the
     // skeletons stream in behind it. A missing/slow chibi uses a visible marker
     // which the renderer replaces when the original model arrives.
@@ -389,7 +392,7 @@ async function start() {
     void operatorLibrary.ensureModels(battleIds).then(() => {
       if (!loadingRenderer.destroyed) return loadingRenderer.preload(battleIds, () => {});
     }).catch((error) => console.error('chibi preload failed', error));
-    battle = new StandardBattle(data, selection, { seed: Date.now(), operatorRuntime });
+    battle = new StandardBattle(data, selection, { seed: Date.now(), operatorRuntime, enemyRuntime });
     metrics = createBattleMetrics(battle);
     selectedToken = null;
     speed = 1;
@@ -582,7 +585,7 @@ function restart() {
   workspace.querySelector("#deployment").innerHTML = "";
   damagePanel.close();
   metrics.dispose();
-  battle = new StandardBattle(data, selection, { seed: Date.now(), operatorRuntime });
+  battle = new StandardBattle(data, selection, { seed: Date.now(), operatorRuntime, enemyRuntime });
   metrics = createBattleMetrics(battle);
   battle.setViewport(landscapeRequired ? "preview" : viewport);
   paused = true;

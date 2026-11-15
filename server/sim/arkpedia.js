@@ -29,7 +29,6 @@ import { stageCardDeploymentBlocked } from '../../shared/arkpedia/stage-card-rul
 import { cardLockError } from './content/arkpedia-card-locks.js';
 import { cardRedeployRatio } from './content/arkpedia-card-redeploy.js';
 import { forbiddenStageTiles, stageBuildableType } from '../../shared/arkpedia/stage-deployment-tiles.js';
-import { enemyRuntimeRecord } from '../../shared/arkpedia/enemy-features.js';
 import { excludedStageOperators, stageSquadLimit, stageUsesFixedSquad } from '../../shared/arkpedia/stage-roster.js';
 import { Battle } from './Battle.js';
 import { RegularDisplacement } from './regular-displacement.js';
@@ -49,7 +48,7 @@ import { assertClosurEnemyCompatibility } from '../../shared/arkpedia/closur-ene
 import { catalogueFor, recordFor, fixedSquadBuilds } from '../../shared/arkpedia/loadout.js';
 import { REGULAR_OPERATORS } from '../../shared/arkpedia/operators.js';
 import { assertRegularEnemies } from '../../shared/arkpedia/enemies.js';
-import { installEnemyFeatures } from './content/arkpedia-enemy-features.js';
+import { installEnemyFeatures,enemyRuntimeFor } from './content/arkpedia-enemy-runtime.js';
 import { StageDemolition } from './content/arkpedia-stage-demolition.js';
 import { StageScenery, sealsStageRoute } from './content/arkpedia-stage-scenery.js';
 import { StageCarapaces } from './content/arkpedia-stage-carapaces.js';
@@ -193,12 +192,14 @@ export function stageAdapter(source) {
 }
 
 export class StandardBattle extends Battle {
-  constructor(data, selection, { seed = 1, operatorRuntime = null } = {}) {
+  constructor(data, selection, { seed = 1, operatorRuntime = null, enemyRuntime = null } = {}) {
     data = applyStageModeRules(data, selection?.modeRules);
     const waveProgram = resolveStageRandomWaves(data.stage.waveProgram, seed);
     if (waveProgram !== data.stage.waveProgram) data = { ...data, stage: { ...data.stage, waveProgram } };
     if (data.stage?.operators) data = { ...data, operators: { ...data.operators, ...data.stage.operators } };
     assertRegularEnemies(data);
+    enemyRuntime=enemyRuntimeFor(enemyRuntime);
+    enemyRuntime.assertPrepared(data.enemies);
     const predefined = data.stage.waveProgram?.predefined?.entries;
     const fixed = stageUsesFixedSquad(data.stage)
       ? predefined ? predefined.filter(e => e.kind === 'card').map(e => e.build) : fixedSquadBuilds(data) : null;
@@ -246,7 +247,7 @@ export class StandardBattle extends Battle {
       ...stageAdapter(data.stage),
       seed,
       data: new DataSource({ chess, enemies: Object.fromEntries(Object.entries(data.enemies)
-        .map(([id, record]) => [id, enemyRuntimeRecord(record)])), tokens: data.tokens }),
+        .map(([id, record]) => [id, enemyRuntime.record(record)])), tokens: data.tokens }),
       content: "none",
       timeLimit: config.max_play_time === -1 ? Infinity : (config.max_play_time ?? 300),
       flags: {
@@ -262,6 +263,7 @@ export class StandardBattle extends Battle {
       ],
     });
     this.operatorRuntime = operatorRuntime;
+    this.enemyRuntime = enemyRuntime;
     this.operatorServices = services;
     this.regularDisplacement = new RegularDisplacement(this);
     this.stageForbiddenTiles = new Set(forbiddenStageTiles(data.stage).map(p => `${p.row},${p.col}`));
