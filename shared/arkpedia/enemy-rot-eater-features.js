@@ -4,7 +4,7 @@ export function rotEaterNative(r, n) {
   if (r.prefabKey !== 'enemy_1266_nhapos' || r.skills.length || r.applyWay !== 'MELEE'
     || !same(r.talents.groups, { PollutedArea: ['Polluted_damage_high', 'Polluted_damage_low',
       'guaranteed_percentage', 'max_percentage', 'range_Radius'] })
-    || r.talents.bb['PollutedArea.guaranteed_percentage'] !== .2
+    || ![.2, 1].includes(r.talents.bb['PollutedArea.guaranteed_percentage'])
     || r.talents.bb['PollutedArea.max_percentage'] !== .8) return false;
   const aura = n.PollutedArea?.find(c => '_buffs' in c), birth = aura?._passiveBuffs?.[0];
   if (aura?._buffs.length !== 1 || aura._removeBuffWhenTargetLeave !== 1 || aura._removeBuffWhenAbilityDetached !== 1

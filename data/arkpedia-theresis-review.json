@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-15",
+  "scope": "Theresis narrative actor, Kaltsit-specific scripted cast and reusable lethal swept wave; original body, not native effect/frame parity.",
+  "sources": [
+    {
+      "path": "shared/arkpedia/enemy-theresis-features.js",
+      "sha256": "dc1247b4620bdcf7ff7f850bf6de9758320f0ca5b4af4ff30daa53f5839f8df0"
+    },
+    {
+      "path": "server/sim/content/arkpedia-enemy-theresis.js",
+      "sha256": "0dc7ecbf427309647980b23fe6e938a4ee630e1aca75f0401046f67768246329"
+    },
+    {
+      "path": "server/sim/content/arkpedia-piercing-wave.js",
+      "sha256": "4f097e00a0293c8858f04134128796d7b281c1604a2b1a0034735fe0a7a0d9f8"
+    },
+    {
+      "path": "data/arkpedia-theresis-animations.json",
+      "sha256": "eb043af907a6deab27d084befbb351bdc4afa9a8985bd4bed4312ff05b5e06a3"
+    },
+    {
+      "path": "test/arkpedia-theresis.test.js",
+      "sha256": "04b20159267d79032a94f1f3597188a57ec17918f4202f611528ad2e3f6a76c5"
+    }
+  ],
+  "validation": {
+    "initialCombinedTests": 210,
+    "finalFocusedTestsWithRotEater": 11,
+    "stageSmokes": 919,
+    "controlledStage": "11-17",
+    "browser": {
+      "scope": "Chromium clip decoding/finite poses and idle body rendering; no native combat/frame/pixel parity claim",
+      "browser": "Chrome/156.0.8078.79",
+      "results": [
+        {
+          "viewport": "desktop",
+          "models": [
+            {
+              "id": "enemy_1276_telex",
+              "version": "3.8.99",
+              "clips": 4,
+              "width": 684.7888793945312,
+              "height": 557.9846115112305
+            }
+          ],
+          "errors": [],
+          "failures": []
+        },
+        {
+          "viewport": "mobile",
+          "models": [
+            {
+              "id": "enemy_1276_telex",
+              "version": "3.8.99",
+              "clips": 4,
+              "width": 684.7888793945312,
+              "height": 557.9846115112305
+            }
+          ],
+          "errors": [],
+          "failures": []
+        }
+      ]
+    }
+  },
+  "assetCommit": "58e4c0f1d659a3054876a0c00685c5122adf1cfe",
+  "limits": [
+    "Captured 2D bearing and root-board collision are local mappings.",
+    "Untargetability maps the handbook outcome in addition to native invincibility.",
+    "Native effects/audio and compiled ordering unverified."
+  ]
+}

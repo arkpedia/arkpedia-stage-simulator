@@ -7,7 +7,18 @@ import { installEnemyFeatures } from '../server/sim/content/arkpedia-enemy-featu
 import { rotEaterNative } from '../shared/arkpedia/enemy-rot-eater-features.js';
 import { nativeComponents } from '../shared/arkpedia/enemy-support.js';
 import evidence from '../data/arkpedia-enemy-native-abilities.json' with { type: 'json' };
+import { applyStageEnemyBlackboard } from '../shared/arkpedia/stage-enemy-talents.js';
 const id = 'enemy_1266_nhapos';
+test('original stage full-strength floor changes one fresh record and rejects other percentages', () => {
+  const original = ENEMY_RECORDS.enemies[id].levels[0];
+  const override = { level: original.level, blackboard: [{ key: 'PollutedArea.guaranteed_percentage', value: 1, valueStr: null }] };
+  const modified = applyStageEnemyBlackboard(original, override);
+  assert.equal(modified.talents.bb['PollutedArea.guaranteed_percentage'], 1);
+  assert.equal(original.talents.bb['PollutedArea.guaranteed_percentage'], .2);
+  assert.equal(rotEaterNative(modified, nativeComponents(evidence, id)), true);
+  for (const value of [0, .5, 2, NaN]) assert.throws(() => applyStageEnemyBlackboard(original,
+    { ...override, blackboard: [{ ...override.blackboard[0], value }] }));
+});
 test('Rot Eater admission rejects altered progress attributes and bounds', () => {
   const record = ENEMY_RECORDS.enemies[id].levels[0];
   assert.equal(rotEaterNative(record, nativeComponents(evidence, id)), true);

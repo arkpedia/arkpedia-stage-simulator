@@ -1,5 +1,8 @@
 # Steam Tank source preparation
 
+Historical source-preparation checkpoint. The implemented adapter is reviewed in
+[ENEMY-STEAM-TANK-REVIEW.md](ENEMY-STEAM-TANK-REVIEW.md).
+
 This family remains outside public enemy admission. The original base and
 Scorching prefabs, their Cannon components and both shared projectile prefabs
 are now retained by the pinned enemy evidence extractor.

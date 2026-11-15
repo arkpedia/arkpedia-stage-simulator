@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import { isSelfFearEnemy, selfFearNative } from './enemy-self-fear.js';
+import { THERESIS_FEATURE } from './enemy-theresis-features.js';
 import { STEAM_TANK_FEATURE } from './enemy-steam-tank-features.js';
 import { WITHER_TANK_FEATURES } from './enemy-wither-tank-features.js';
 import { rotEaterNative } from './enemy-rot-eater-features.js';
@@ -368,6 +369,7 @@ const NATIVE_ONLY_FEATURES = Object.freeze({
 });
 
 export const ENEMY_FEATURES = Object.freeze({
+  'skill:InfiniteAttack': THERESIS_FEATURE,
   'skill:Cannon': STEAM_TANK_FEATURE,
   ...WITHER_TANK_FEATURES,
   'talent:DamageOrBullet': AMMO_THEFT_FEATURE,
@@ -728,6 +730,7 @@ export const ENEMY_FEATURES = Object.freeze({
       || text === 'When carrying a Soul Maelstrom, expends all Soul Maelstroms to deal continuous Arts damage to the target and all your units in a line.' },
   // Rot Eater: scales with the defeated count and emits a pollution aura.
   'talent:PollutedArea': { covers: rotEaterNative,
+    stageOverrides: { 'PollutedArea.guaranteed_percentage': value => value === 1 },
     ability: { kind: 'rotEater', params: r => ({ low: r.talents.bb['PollutedArea.Polluted_damage_low'], high: r.talents.bb['PollutedArea.Polluted_damage_high'],
       radius: r.talents.bb['PollutedArea.range_Radius'], guaranteed: r.talents.bb['PollutedArea.guaranteed_percentage'], max: r.talents.bb['PollutedArea.max_percentage'] }) },
     note: 'defeated-count stat scaling and a pollution aura',

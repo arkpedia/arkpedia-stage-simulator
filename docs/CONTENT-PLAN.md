@@ -533,3 +533,12 @@ Seven focused and the initial 208 combined tests pass; all 918 available stages
 pass smoke checks and controlled 11-18 completion passes. Admission reaches
 690/2,163 enemies. Twelve original body clips pass desktop/mobile checks.
 See ENEMY-STEAM-TANK-REVIEW.md.
+
+2026-11-15 — Theresis checkpoint: the narrative actor uses its original
+Kaltsit-only selector and Attack event, shared timed cast and reusable swept
+piercing wave. Existing rebirth handlers remain active. Original 11-17 resolves
+its literal full-strength Rot Eater floor, keeps starting Life Points and emits
+one lethal slash at pre-placed Kaltsit. Initial 210 combined and final eleven
+focused checks pass; all 919 compiled stages pass smoke checks. Four original
+body clips pass desktop/mobile review. Admission reaches 691/2,163 enemies.
+See ENEMY-THERESIS-REVIEW.md.
