@@ -16,8 +16,8 @@ test('every admitted database level declares the children emitted by standard sp
  }
 });
 test('compiled spawn primitives reject omitted or malformed enemy identities and counts',()=>{
- for(const kind of['deathSpawn','deathSpawnDelayed','periodicSpawn']){
-  const count=kind==='periodicSpawn'?'count':'cnt',base={key:'enemy_child',[count]:1};
+ for(const kind of['deathSpawn','deathSpawnDelayed','periodicSpawn','seedSummoner']){
+  const count=['periodicSpawn','seedSummoner'].includes(kind)?'count':'cnt',base={key:'enemy_child',[count]:1};
   const plan=params=>({schemaVersion:1,properties:{},entries:[{id:'native:spawnFixture',ability:{kind,params}}]});
   assert.deepEqual(enemyRuntimeSpawnDependencies(plan(base)),['enemy_child']);
   for(const params of[{[count]:1},{...base,key:''},{...base,key:'../enemy_child'},{...base,[count]:NaN},{...base,[count]:-1},{key:'enemy_child'}])
@@ -44,3 +44,15 @@ for(const[parent,child]of[['enemy_10077_mpbarr','enemy_10073_mpcar'],['enemy_100
   h.b.start();const owner=h.b.spawnEnemy(parent,{pos:[9,6]});h.b.addBuff(owner,{key:'hold',flags:{noMove:true}});
   h.run(3.2);assert.equal(h.b.enemies.filter(e=>e.defId===child).length,1);assert.deepEqual(h.b.errors,[]);
  });
+
+test('Withering Apostle carries its seed record and emits three children from that prepared graph',()=>{
+ const parent='enemy_1321_wdarft',child='enemy_1269_nhfly';
+ assert.ok(support.enemies[parent].spawns.includes(child));
+ const defs=Object.fromEntries([parent,child].map(id=>[id,withCompiledEnemyRuntime(records.enemies[id].levels[0])]));
+ const h=makeBattle({content:'none',autoFinish:false,timeLimit:60,defs:{enemies:defs},setup:installEnemyFeatures});
+ h.b.start();const owner=h.b.spawnEnemy(parent,{pos:[9,6]});h.b.addBuff(owner,{key:'hold',flags:{noMove:true}});
+ const seeds=[];h.b.on('enemySpawn',({enemy})=>{if(enemy.defId===child)seeds.push(enemy);});
+ h.run(9.9);assert.equal(seeds.length,0);h.run(.3);assert.equal(seeds.length,3);
+ h.run(10);assert.equal(seeds.length,6);assert.deepEqual(h.b.errors,[]);
+ assert.throws(()=>auditEnemyRuntimePlans({[parent]:records.enemies[parent]},{[parent]:{...support.enemies[parent],spawns:[]}}),/Undeclared enemy runtime spawn dependency/);
+});

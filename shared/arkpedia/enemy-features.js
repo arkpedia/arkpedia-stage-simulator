@@ -925,6 +925,7 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: /^Periodically summons several <Seeds of Decay>$/ },
   'ability:Periodically summons several <Seeds of Withering>': { covers: r => r.abilities.some(a => a.text === 'Periodically summons several <Seeds of Withering>'),
     ability: { kind: 'seedSummoner', params: () => ({ key: 'enemy_1269_nhfly', count: 3, cooldown: 10, init: 10 }) },
+    dependsOn: () => ['enemy_1269_nhfly'],
     nativeClaim: () => ({ wrappers: 1 }), note: 'three Seeds of Withering every 10 s',
     explains: /^Periodically summons several <Seeds of Withering>$/ },
   // 1320: a three-Block gate and a first-attack splash.

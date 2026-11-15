@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "scope": "Include the existing seedSummoner kind in spawn dependency validation and declare the base Withering Apostle child. Preserve existing timing, placement and counts.",
+  "sourceSha256": {
+    "data/arkpedia-enemy-runtime-plan-report.json": "0edca7f87bc01196905e032d2d65c6cfe489d1f476c965772beca05389086b7e",
+    "data/arkpedia-enemy-support.json": "689cf3305a0ac23204391c469fd04a6ef4e1cb5b48d50125c2f1f56b5d379a42",
+    "data/arkpedia-regular-enemies.json": "a176027c3cc32e288a7128d8933a0604dbe50e9ce3d752eb0afb36219af4a958",
+    "shared/arkpedia/enemy-features.js": "a8a1851d3a6eedae30e9bb68ee1f6b8838f71fe5aeb636b7a12256d22bfdc997",
+    "shared/arkpedia/enemy-runtime-plan.js": "61c93dd3049ce13bc241d0c6649bc3c818b635d0b0482a821df550a56fc15a28",
+    "test/arkpedia-enemy-runtime-loading.test.js": "8437d215f5f2c206ed648f1755ed26bfb01e112d7de4c12b54fc39c087acb8ae",
+    "test/arkpedia-enemy-spawn-contracts.test.js": "29eb51c21b3b29f887d1bb82f49b266bd51a1a1d20a883fd602d395b265c369b"
+  },
+  "validation": {
+    "focusedTests": 195,
+    "focusedFailures": 0,
+    "controlledRuntime": "No children before first clock; three after 10 s, six after 20 s, no missing definitions.",
+    "loader": "Missing child rejected before module import; complete graph prepares successfully.",
+    "stageSmoke": {
+      "scope": "10-second constructor/runtime smoke for every available compiled stage; not a playable-clear or fidelity certificate",
+      "available": 969,
+      "completed": 969,
+      "failures": []
+    }
+  },
+  "browser": [
+    {
+      "stage": "victoria_camp_r_19",
+      "beforeBattleRequests": 278,
+      "enemies": [
+        "enemy_1071_dftman",
+        "enemy_1267_nhpbr",
+        "enemy_1269_nhfly",
+        "enemy_1274_stmram",
+        "enemy_1268_nhnrs",
+        "enemy_1270_nhstlk",
+        "enemy_1321_wdarft",
+        "enemy_1271_nhkodo",
+        "enemy_1270_nhstlk_2",
+        "enemy_1267_nhpbr_2",
+        "enemy_1274_stmram_2",
+        "enemy_1268_nhnrs_2",
+        "enemy_1271_nhkodo_2",
+        "enemy_1266_nhapos"
+      ],
+      "loaded": {
+        "loaded": [
+          "arkpedia-enemy-rot-eater",
+          "arkpedia-enemy-devour",
+          "arkpedia-enemy-wither-caster",
+          "enemies"
+        ],
+        "pending": 0
+      },
+      "devices": {
+        "loaded": [
+          "twigs"
+        ],
+        "pending": 0
+      },
+      "errors": [],
+      "seedCheck": {
+        "childPrepared": true,
+        "spawned": 3,
+        "errors": []
+      },
+      "restart": {
+        "loaded": {
+          "loaded": [
+            "arkpedia-enemy-rot-eater",
+            "arkpedia-enemy-devour",
+            "arkpedia-enemy-wither-caster",
+            "enemies"
+          ],
+          "pending": 0
+        },
+        "devices": {
+          "loaded": [
+            "twigs"
+          ],
+          "pending": 0
+        },
+        "errors": []
+      },
+      "moduleRequests": 384,
+      "moduleBytes": 557086
+    }
+  ],
+  "coverage": {
+    "supportedEnemies": 717,
+    "availableCombatStages": 969
+  },
+  "limits": [
+    "The available Victoria graph already contained the child explicitly, so no stage count changes.",
+    "Existing elite Decay handbook mapping is unchanged; this is not a complete native BornBugs audit.",
+    "Browser spawn is controlled inside the loaded stage, not a stage clear."
+  ]
+}

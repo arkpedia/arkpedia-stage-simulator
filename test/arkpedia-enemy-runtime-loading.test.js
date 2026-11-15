@@ -62,3 +62,11 @@ test('standard child dependencies are required before module loading and their o
  const source={enemy_parent:parent,enemy_child:record('child')};await runtime.prepare(source);assert.equal(loads,2);
  runtime.assertPrepared(source);
 });
+
+test('seed children are required before importing the summoner module',async()=>{
+ let loads=0;const runtime=createEnemyRuntime([{key:'seeds',exports:{seedSummoner:'make'},load:async()=>{loads++;return{make:()=>({})};}}]);
+ const parent=record('seedSummoner');parent.key='enemy_parent';parent.runtimeFeatures.entries[0].ability.params={key:'enemy_child',count:3};
+ assert.throws(()=>runtime.prepare({enemy_parent:parent}),/Missing enemy runtime spawn dependency/);assert.equal(loads,0);
+ assert.throws(()=>runtime.assertPrepared({enemy_parent:parent}),/Missing enemy runtime spawn dependency/);
+ const source={enemy_parent:parent,enemy_child:record()};await runtime.prepare(source);runtime.assertPrepared(source);assert.equal(loads,1);
+});

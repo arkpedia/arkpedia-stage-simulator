@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-const SPAWN_COUNTS=Object.freeze({deathSpawn:'cnt',deathSpawnDelayed:'cnt',periodicSpawn:'count'});
+const SPAWN_COUNTS=Object.freeze({deathSpawn:'cnt',deathSpawnDelayed:'cnt',periodicSpawn:'count',seedSummoner:'count'});
 const object=(v,path)=>{
   if(!v||typeof v!=='object'||Array.isArray(v)||![Object.prototype,null].includes(Object.getPrototypeOf(v)))
     throw Error(`Invalid enemy runtime plan object: ${path}`);
