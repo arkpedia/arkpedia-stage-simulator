@@ -1715,7 +1715,10 @@ function prisoner(ab, { freeAll = false } = {}) {
     }
   };
   return {
-    liberate, confine,
+    liberate(b, e, a) {
+      if (!e.alive || a.free) return;
+      liberate(b, e, a); e.atkCd = e.s.interval;
+    }, confine,
     spawn(b, e, a) {
       a.n = 0; a.free = false;
       b.addBuff(e, { key: 'ab:confined', persist: true, visible: true, mods: { aspd: t('confinement.attack_speed'), defFlat: t('confinement.def') } });

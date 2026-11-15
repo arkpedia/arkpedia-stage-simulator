@@ -3,6 +3,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { makeBattle,chessRec,enemyRec } from './helpers/battleHarness.js';
 import { ENEMY_RECORDS } from './helpers/enemyHarness.js';
+import { RegularDisplacement } from '../server/sim/regular-displacement.js';
 import { installEnemyFeatures } from '../server/sim/content/arkpedia-enemy-features.js';
 import { enemySupport,nativeComponents } from '../shared/arkpedia/enemy-support.js';
 import { beachBusNative } from '../shared/arkpedia/enemy-beach-bus-features.js';
@@ -15,7 +16,7 @@ function fixture(id=ids[0],block=0){
   const h=makeBattle({content:'none',autoFinish:false,captureNoisy:true,timeLimit:300,defs:{enemies:{...real,
     cargo:enemyRec({key:'cargo',speed:0,hp:10000}),boss:enemyRec({key:'boss',rank:'BOSS',speed:0}),
     fly:enemyRec({key:'fly',motion:'FLY',speed:0})},chess:{[op.chessId]:op}},
-    kits:{[op.chessId]:()=>({trait:{noAttack:true}})},units:[{chessId:op.chessId,row:9,col:4}],setup:installEnemyFeatures});
+    kits:{[op.chessId]:()=>({trait:{noAttack:true}})},units:[{chessId:op.chessId,row:9,col:4}],setup:b=>{b.regularDisplacement=new RegularDisplacement(b);installEnemyFeatures(b);}});
   h.b.start();const e=h.b.spawnEnemy(id,{pos:[9,4]}),a=e.mem.ab.list.find(a=>a.passengers);
   return{...h,e,a,container:a.passengers,op:h.b.allyUnits[0],spawn:(key='cargo',pos=[9,4.2])=>h.b.spawnEnemy(key,{pos})};
 }
@@ -44,6 +45,11 @@ test('passenger attack/route clocks stay suspended while following a moving carr
   const f=fixture(),u=f.spawn();u.atkCd=2;f.run(.1);const leg=u.route.legIdx,cd=u.atkCd;
   f.e.x=7;f.e.y=10;f.run(2);assert.equal(u.x,7);assert.equal(u.y,10);assert.equal(u.route.legIdx,leg);assert.equal(u.atkCd,cd);
   assert.equal(u.canAct,false);assert.deepEqual(f.b.errors,[]);
+});
+test('boarding ends active displacement immediately, including release before the next tick',()=>{
+  const f=fixture(),u=f.spawn();f.b.regularDisplacement.begin(u,{vx:5,vy:0,hard:.1,options:{}});assert.ok(u.mem.regularShift);
+  assert.equal(f.container.capture(u),true);assert.equal(u.mem.regularShift,undefined);
+  f.container.release();f.e.x=9;const x=u.x,y=u.y;f.run(.1);assert.equal(u.x,x);assert.equal(u.y,y);assert.deepEqual(f.b.errors,[]);
 });
 test('defeat unloads passengers on independent copies of the carrier remaining route without a second spawn',()=>{
   const f=fixture(),a=f.spawn(),b=f.spawn();f.run(.1);const count=f.b.total;

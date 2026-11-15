@@ -16,6 +16,9 @@ export class RegularDisplacement {
     battle.on('death', ({ unit }) => {
       if (unit.mem.regularShift) this.finish(unit, unit.mem.regularShift);
     }, { priority: 1000 });
+    battle.on('enemyHidden', ({ enemy, hidden }) => {
+      if (hidden && enemy.mem.regularShift) this.finish(enemy, enemy.mem.regularShift);
+    }, { priority: 1000 });
   }
 
   canForce(e) {

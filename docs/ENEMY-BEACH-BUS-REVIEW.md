@@ -42,3 +42,10 @@ Passenger visual effects, compiled-client selection/suspension semantics,
 native particles/audio and frame/pixel parity remain outside this review.
 Two reusable carrier records unlock three stages. Admission reaches 706 of
 2,163 enemies and 959 of 3,892 combat stages.
+
+A subsequent integration check also covers boarding and releasing during the
+same simulation tick: entering the hidden state now immediately ends an active
+push/pull through the shared displacement controller. Field-wide liberation
+also resets ordinary prisoners' attack intervals exactly once, matching the
+native controller's external liberation behavior. The integration suite passes
+224 tests across prisoners, devices, carriers, displacement and enemy features.

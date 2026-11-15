@@ -9,13 +9,13 @@ import { enemySupport, nativeComponents } from '../shared/arkpedia/enemy-support
 import evidence from '../data/arkpedia-enemy-native-abilities.json' with { type: 'json' };
 import index from '../data/arkpedia-enemy-clock-source.json' with { type: 'json' };
 const ids = ['enemy_1120_vofwiz','enemy_1120_vofwiz_2','enemy_1121_lifbos','enemy_1121_lifbos_2'];
-const sniper = 'enemy_1117_liiprr';
+const sniper = 'enemy_1117_liiprr', ordinary = 'enemy_1116_liprr';
 const state = e => e.mem.ab.list.find(a => a.confine);
 function fixture(id = ids[0]) {
   const ops = ['prison_target','prison_decoy','prison_spare'].map((id, i) => chessRec({ id,
     stats: { maxHp: 1e6, atk: 0, def: 0, res: 0, blockCnt: i ? 0 : 10, tauntLevel: i ? 99 : 0 }, skill: null }));
   const h = makeBattle({ content: 'none', autoFinish: false, captureNoisy: true, timeLimit: 300,
-    defs: { enemies: Object.fromEntries([...ids,sniper].map(id => { const r = structuredClone(ENEMY_RECORDS.enemies[id].levels[0]);
+    defs: { enemies: Object.fromEntries([...ids,sniper,ordinary].map(id => { const r = structuredClone(ENEMY_RECORDS.enemies[id].levels[0]);
       r.stats.moveSpeed = 0; return [id, r]; })), chess: Object.fromEntries(ops.map(op => [op.chessId, op])) },
     kits: Object.fromEntries(ops.map(op => [op.chessId, () => ({ trait: { noAttack: true } })])),
     units: ops.map((op, i) => ({ chessId: op.chessId, row: 9, col: 4 + i })), setup: installEnemyFeatures });
@@ -90,6 +90,11 @@ test('ordinary Recidivist attacks self-liberate on the fourth cast and release C
   assert.equal(f.a.free,true); assert.equal(state(c).free,true); assert.equal(f.a.freedOthers,true);
   assert.ok(f.hits.length >= 4); assert.ok(f.hits.every(h=>h.dmg.type==='phys' && h.dmg.applyWay==='melee'));
   assert.equal(f.e.s.def,f.e.base.def); assert.equal(f.e.s.atk,f.e.base.atk*1.5); assert.deepEqual(f.b.errors, []);
+});
+test('field-wide liberation restarts ordinary prisoners once and preserves an already-free cooldown', () => {
+  const f=fixture(ids[2]),u=f.b.spawnEnemy(ordinary,{pos:[7,4]}),a=state(u);u.atkCd=.1;
+  f.a.liberate(f.b,f.e,f.a);assert.equal(a.free,true);assert.equal(u.atkCd,u.s.interval);
+  u.atkCd=.25;a.liberate(f.b,u,a);assert.equal(u.atkCd,.25);assert.deepEqual(f.b.errors,[]);
 });
 test('liberation chains terminate before revisiting a Recidivist', () => {
   const f = fixture(ids[2]), other = f.b.spawnEnemy(ids[3],{pos:[8,4]});
