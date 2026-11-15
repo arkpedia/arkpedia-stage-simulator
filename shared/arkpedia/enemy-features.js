@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import {ZEALOUS_EXTRA_FEATURES} from './enemy-zealous-extra-features.js';
 import {GNAWBEAST_FEATURES} from './enemy-gnawbeast-features.js';
 import {SAINT_STATUE_FEATURES} from './enemy-saint-statue-features.js';
 import {corruptionDamageValue} from './enemy-corruption-contracts.js';
@@ -453,6 +454,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...DEATH_ENEMY_FEATURES,
   ...DUEL_ENEMY_FEATURES,
   ...AREA_ENEMY_FEATURES,
+  ...ZEALOUS_EXTRA_FEATURES,
   ...GNAWBEAST_FEATURES,
   ...SUPPLY_ENEMY_FEATURES,
   ...KNIGHT_FEATURES,

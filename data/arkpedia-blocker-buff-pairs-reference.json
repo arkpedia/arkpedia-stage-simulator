@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "scope": "Secondary public native-method evidence for type-1 nonempty blocker/blockee buff pairs. Binary extraction, runtime XLua and gameplay observation were not independently executed.",
+  "repository": "wfrfred/ArkBattle",
+  "commit": "097db62efa5d4d5a86bdc5268f5f426d6610dd8e",
+  "file": {
+    "url": "https://github.com/wfrfred/ArkBattle/blob/097db62efa5d4d5a86bdc5268f5f426d6610dd8e/docs/research/evidence/blocking-native-20261023/modes/76914.asm",
+    "gitBlob": "1fc787d76d6cfdb36a6de5aa4bb67cf03784759c",
+    "sha256": "8a70c6c789d0f2c5b22d2d5114f88bee7d5b4d692a0a30fe6c56e7929c238201"
+  },
+  "reportedBinaryInputs": {
+    "dll": {
+      "sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+      "bytes": 218523112
+    },
+    "metadata": {
+      "sha256": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f",
+      "bytes": 45805368
+    }
+  },
+  "method": {
+    "name": "Torappu.Battle.Enemy.SpecialBlockCondition.CheckBlockable",
+    "metadataIndex": 76914,
+    "address": "0x180a9af70",
+    "finding": "For type 1 and pairs with both keys nonempty, return OR across pairs of (blocker contains blockerBuffKey AND blockee contains blockeeBuffKey).",
+    "dispatch": "0x180a9afd1\u20130x180a9afd4 selects the type-1 branch at 0x180a9b1b2.",
+    "nonemptyPair": "0x180a9b29e\u20130x180a9b2cf queries both ContainsBuff methods and accumulates the conjunction.",
+    "scopeLimit": "Other condition types and empty-key wildcard forms are not exposed by the simulator component."
+  }
+}

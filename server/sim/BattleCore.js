@@ -1,4 +1,5 @@
 // Shared combat engine; Battle.js prepares the public full-content entry point.
+import {blockerBuffPairsMatch} from './blocker-buff-pairs.js';
 // server/sim/Battle.js — one field simulation (normal / unite / boss / hidden). Public API: DESIGN §5.1.
 //
 //   const b = new Battle({ seed, kind, modeId, round, stage|stageId, rect, timeLimit, players, spawns, routes,
@@ -1276,6 +1277,7 @@ export class Battle {
     const cap = u.s.blockCnt;
     if (cap <= 0) return false;
     if (e.profile?.requiredBlock && cap < e.profile.requiredBlock) return false;
+    if (!blockerBuffPairsMatch(u,e)) return false;
     let used = 0;
     for (const x of u.blocking) used += x.blockWeight ?? 1;
     return used + w <= cap;
