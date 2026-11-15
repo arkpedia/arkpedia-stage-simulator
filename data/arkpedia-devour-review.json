@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "scope": "Checkpoint of retained source, behavior and card-flow regressions, and original body rendering; not original-client parity.",
+  "enemies": [
+    "enemy_1271_nhkodo",
+    "enemy_1271_nhkodo_2"
+  ],
+  "sources": {
+    "data/arkpedia-enemy-native-abilities.json": "877a916b796959a57c88222d4aedea60d06b3146c5f39bd53f73c2c1cbabda5c",
+    "data/arkpedia-devour-animations.json": "252386ce964d16f4da37cf27ffffdb464d1883067e11f55ea5ae869349fdcdf6",
+    "shared/arkpedia/enemy-devour-features.js": "c7c190c0f255fb1a32d88e1bf9eb0825b2937d4b18ae49b0ebd5f7de42389935",
+    "server/sim/content/arkpedia-enemy-devour.js": "4f82013aadb2fd8738a8c7ee0880168557bf99c28a7caa0a4e37f43b8ff61fb4",
+    "server/sim/content/arkpedia-card-locks.js": "56b8fce4ce2e0c03918618354b4bae89e43fc82c9f444a1cd3819a68b0193d4a",
+    "server/sim/arkpedia.js": "8125841b5b054c8650b93a79a4db53ef611945335ca2b36cb938f02295b6e9a9",
+    "public/arkpedia/app.js": "a1a3ad67af5e04fb5ee866fe2fe3bf6c6292b22a802ee2906afa98d88c04dfcf"
+  },
+  "tests": {
+    "focused": 7,
+    "combined": 250,
+    "stageSmoke": {
+      "passed": 925,
+      "seconds": 10
+    }
+  },
+  "artwork": {
+    "scope": "Chromium clip decoding/finite poses and idle body rendering; no native combat/frame/pixel parity claim",
+    "browser": "Chrome/156.0.8078.79",
+    "results": [
+      {
+        "viewport": "desktop",
+        "models": [
+          {
+            "id": "enemy_1271_nhkodo",
+            "version": "3.8.99",
+            "clips": 10,
+            "width": 499.27479553222656,
+            "height": 554.2941045761108
+          },
+          {
+            "id": "enemy_1271_nhkodo_2",
+            "version": "3.8.99",
+            "clips": 10,
+            "width": 499.27479553222656,
+            "height": 554.2941045761108
+          }
+        ],
+        "errors": [],
+        "failures": []
+      },
+      {
+        "viewport": "mobile",
+        "models": [
+          {
+            "id": "enemy_1271_nhkodo",
+            "version": "3.8.99",
+            "clips": 10,
+            "width": 499.27479553222656,
+            "height": 554.2941045761108
+          },
+          {
+            "id": "enemy_1271_nhkodo_2",
+            "version": "3.8.99",
+            "clips": 10,
+            "width": 499.27479553222656,
+            "height": 554.2941045761108
+          }
+        ],
+        "errors": [],
+        "failures": []
+      }
+    ]
+  }
+}

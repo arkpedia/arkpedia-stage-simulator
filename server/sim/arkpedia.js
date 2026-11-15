@@ -26,6 +26,7 @@ import { installStageTerrain } from './content/arkpedia-stage-terrain.js';
 import { installStageEnvironments } from './content/arkpedia-stage-environments.js';
 import { stageCardBaseCost, stageCardRespawnTime } from './content/arkpedia-stage-card-cost.js';
 import { stageCardDeploymentBlocked } from '../../shared/arkpedia/stage-card-rules.js';
+import { cardLockError } from './content/arkpedia-card-locks.js';
 import { forbiddenStageTiles, stageBuildableType } from '../../shared/arkpedia/stage-deployment-tiles.js';
 import { enemyRuntimeRecord } from '../../shared/arkpedia/enemy-features.js';
 import { excludedStageOperators, stageSquadLimit, stageUsesFixedSquad } from '../../shared/arkpedia/stage-roster.js';
@@ -425,6 +426,8 @@ export class StandardBattle extends Battle {
     return this._placementError(id, row, col);
   }
   deploymentRestrictionError(id) {
+    const held = cardLockError(this.bench[id]);
+    if (held) return held;
     return this.bench[id] && stageCardDeploymentBlocked(this.stageCardRules, this.data.getChess(id))
       ? "This operator's class cannot deploy in this stage." : null;
   }

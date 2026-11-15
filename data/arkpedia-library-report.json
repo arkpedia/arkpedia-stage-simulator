@@ -1,12 +1,12 @@
 {
   "combatStages": 3892,
-  "available": 919,
-  "blocked": 2973,
-  "componentObjects": 6134,
-  "componentBytes": 13573351,
-  "manifestBytes": 1407421,
-  "inlineStageBytes": 19059751,
-  "referencedComponentBytes": 20098719,
+  "available": 925,
+  "blocked": 2967,
+  "componentObjects": 6179,
+  "componentBytes": 13735565,
+  "manifestBytes": 1407525,
+  "inlineStageBytes": 19238770,
+  "referencedComponentBytes": 20284382,
   "priorities": [
     {
       "kind": "branch-program",
@@ -1181,6 +1181,7 @@
         "lt-4_lt_06_04",
         "lt-4_lt_09_04",
         "lt-4_lt_11_04",
+        "lt-4_lt_15_04",
         "lt-5_lt_02_05",
         "lt-5_lt_03_05",
         "lt-5_lt_06_05",
@@ -7137,51 +7138,6 @@
     },
     {
       "kind": "enemy",
-      "id": "enemy_1271_nhkodo",
-      "stages": [
-        "11-14",
-        "11-14_adverse_environment",
-        "11-15",
-        "11-15_adverse_environment",
-        "11-16",
-        "ig-11_act1multi_rm01",
-        "ig-14_act1multi_rm07",
-        "ig-1_act2vmulti_01",
-        "ig-3_act1multi_05",
-        "ig-ex-11_act1multi_rm_ex01",
-        "ig-ex-14_act1multi_rm_ex07",
-        "ig-ex-1_act2vmulti_ex01",
-        "ig-ex-3_act1multi_ex05",
-        "ig-s-2_act2multi_hard_02",
-        "isw-df_level_obt_roguelike_ro4_level_rogue4_b-5",
-        "isw-df_level_obt_roguelike_ro4_level_rogue4_b-5-c",
-        "isw-df_level_obt_roguelike_ro4_levelreplacers_level_rogue4_b-5_r1",
-        "isw-no_level_obt_roguelike_ro2_level_rogue2_2-6",
-        "isw-no_level_obt_roguelike_ro3_level_rogue3_4-5",
-        "isw-no_level_obt_roguelike_ro4_level_rogue4_3-2",
-        "isw-no_level_obt_roguelike_ro4_level_rogue4_d-2",
-        "isw-no_level_obt_roguelike_ro4_levelreplacers_level_rogue4_3-2_r1",
-        "isw-no_level_obt_roguelike_ro4_levelreplacers_level_rogue4_3-2_r2",
-        "isw-sp_level_obt_roguelike_ro4_level_rogue4_t-6",
-        "isw-sp_level_obt_roguelike_ro4_levelreplacers_level_rogue4_t-6_r1",
-        "level_crisis_v2_01-06",
-        "level_crisis_v2_04-03",
-        "lt-4_lt_15_04",
-        "lt-4_lt_15_04_ex",
-        "ra-no_level_obt_sandbox_sandbox_1_level_sandbox1_57",
-        "vec-sp06_act1break_sp06",
-        "victoria_camp_r_19"
-      ],
-      "soleReportedBlockerStages": [
-        "11-14",
-        "11-15",
-        "11-15_adverse_environment",
-        "11-16",
-        "vec-sp06_act1break_sp06"
-      ]
-    },
-    {
-      "kind": "enemy",
       "id": "enemy_1281_sgcar_2",
       "stages": [
         "cg-8",
@@ -10417,39 +10373,6 @@
         "ta-s-4_challenge_mode"
       ],
       "soleReportedBlockerStages": []
-    },
-    {
-      "kind": "enemy",
-      "id": "enemy_1271_nhkodo_2",
-      "stages": [
-        "11-16_adverse_environment",
-        "h11-1_adverse_environment",
-        "h11-3_adverse_environment",
-        "h11-4_adverse_environment",
-        "ig-14_act1multi_rm07",
-        "ig-3_act1multi_05",
-        "ig-ex-14_act1multi_rm_ex07",
-        "ig-ex-3_act1multi_ex05",
-        "isw-df_level_obt_roguelike_ro4_level_rogue4_b-5",
-        "isw-df_level_obt_roguelike_ro4_level_rogue4_b-5-c",
-        "isw-df_level_obt_roguelike_ro4_levelreplacers_level_rogue4_b-5_r1",
-        "isw-no_level_obt_roguelike_ro4_level_rogue4_5-3",
-        "isw-no_level_obt_roguelike_ro4_levelreplacers_level_rogue4_5-3_r1",
-        "isw-no_level_obt_roguelike_ro4_levelreplacers_level_rogue4_5-3_r2",
-        "isw-no_level_obt_roguelike_ro5_level_rogue5_fs-5",
-        "lt-4_lt_15_04",
-        "lt-4_lt_15_04_ex",
-        "ra-no_level_obt_sandbox_sandbox_1_level_sandbox1_06",
-        "ra-no_level_obt_sandbox_sandbox_1_level_sandbox1_06_t",
-        "rm-h7",
-        "vec-11_act1break_11",
-        "victoria_camp_r_19"
-      ],
-      "soleReportedBlockerStages": [
-        "11-16_adverse_environment",
-        "h11-1_adverse_environment",
-        "h11-3_adverse_environment"
-      ]
     },
     {
       "kind": "enemy",
@@ -14100,7 +14023,9 @@
         "level_crisis_v2_04-03",
         "level_crisis_v2_04-05"
       ],
-      "soleReportedBlockerStages": []
+      "soleReportedBlockerStages": [
+        "level_crisis_v2_01-06"
+      ]
     },
     {
       "kind": "enemy",
@@ -23908,6 +23833,22 @@
       "soleReportedBlockerStages": []
     },
     {
+      "kind": "compile",
+      "reason": "Unsupported enemy talent multiplier: enemy_1266_nhapos.PollutedArea.Polluted_damage_low",
+      "stages": [
+        "11-12_adverse_environment",
+        "11-15_adverse_environment",
+        "11-7_adverse_environment",
+        "11-8_adverse_environment"
+      ],
+      "soleReportedBlockerStages": [
+        "11-12_adverse_environment",
+        "11-15_adverse_environment",
+        "11-7_adverse_environment",
+        "11-8_adverse_environment"
+      ]
+    },
+    {
       "kind": "device",
       "id": "Throne of Blood",
       "stages": [
@@ -25324,20 +25265,6 @@
         "zt-ex-7_challenge_mode"
       ],
       "soleReportedBlockerStages": []
-    },
-    {
-      "kind": "compile",
-      "reason": "Unsupported enemy talent multiplier: enemy_1266_nhapos.PollutedArea.Polluted_damage_low",
-      "stages": [
-        "11-12_adverse_environment",
-        "11-7_adverse_environment",
-        "11-8_adverse_environment"
-      ],
-      "soleReportedBlockerStages": [
-        "11-12_adverse_environment",
-        "11-7_adverse_environment",
-        "11-8_adverse_environment"
-      ]
     },
     {
       "kind": "stage-rules",
@@ -27766,6 +27693,18 @@
       "soleReportedBlockerStages": []
     },
     {
+      "kind": "compile",
+      "reason": "Unsupported enemy skill multiplier: enemy_1272_nhtank.PollutedRangedAtk.polluted_damage_high",
+      "stages": [
+        "h11-1_adverse_environment",
+        "h11-3_adverse_environment"
+      ],
+      "soleReportedBlockerStages": [
+        "h11-1_adverse_environment",
+        "h11-3_adverse_environment"
+      ]
+    },
+    {
       "kind": "enemy-parameters",
       "reason": "Unsupported original enemy parameter: enemy_1544_cledub.M1_t.trig_cnt",
       "stages": [
@@ -29870,7 +29809,9 @@
       "stages": [
         "11-14_adverse_environment"
       ],
-      "soleReportedBlockerStages": []
+      "soleReportedBlockerStages": [
+        "11-14_adverse_environment"
+      ]
     },
     {
       "kind": "device",

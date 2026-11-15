@@ -961,7 +961,7 @@ function drawHud() {
     const alive = b.unit?.alive,
       cool = Number.isFinite(b.readyAt) ? Math.max(0, Math.ceil(b.readyAt - battle.time)) : 0;
     const restriction = battle.deploymentRestrictionError(id);
-    const cost = restriction ? 'Deployment restricted' : b.kind === 'summon'
+    const cost = restriction ? restriction : b.kind === 'summon'
       ? !b.owner.alive || !b.owner.deployed ? 'Summoner absent'
         : b.stock <= 0 ? b.config.tacticalPoint ? 'Tactical point set' : b.config.deckMarker ? `${b.record.stats.cost} DP · deck marker` : 'None remaining'
         : cool ? `${cool}s · ${b.stock} left` : `${b.record.stats.cost} DP · ${b.stock} left`

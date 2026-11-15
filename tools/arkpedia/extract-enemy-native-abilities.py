@@ -34,6 +34,8 @@ bundles = {r['path']: r for r in source['bundles']}
 # Component object names whose content a reviewed feature reads.
 OBJECTS = ['DefDown', 'enhance', 'Blink', 'enemy_1220_dzoms', 'enemy_1220_dzoms_2', 'enemy_1221_dzomg', 'enemy_1221_dzomg_2', 'ColdAttack', 'StunAttack', 'StormAura', 'Lasso', 'blink', 'dmg_res', 'buff_to_blocker', 'Boomb']
 SCOPED_OBJECTS = {
+    'enemy_1271_nhkodo': ['enemy_1271_nhkodo', 'Default', 'S1', 'Combat', 'Devour', 'Stronger', 'Selector'],
+    'enemy_1271_nhkodo_2': ['enemy_1271_nhkodo_2', 'Default', 'S1', 'Combat', 'Devour', 'Stronger', 'Selector'],
     'enemy_2064_skzwdd': ['enemy_2064_skzwdd', 'Default', 'M1', 'Combat', 'MultiAttack'],
     'enemy_1276_telex': ['enemy_1276_telex', 'Default', 'Attack', 'Invincible', 'InfiniteAttack'],
     'enemy_1273_stmgun': ['enemy_1273_stmgun', 'Default', 'Attack', 'Cannon'],
@@ -389,6 +391,8 @@ for bundle in sorted(wanted):
         # Explicit per-prefab sibling scopes avoid copying extraction branches
         # when a new family uses attack hooks or companion target selectors.
         sibling_names = {
+            'enemy_1271_nhkodo': {'Combat','Devour','Stronger','Selector','S1'},
+            'enemy_1271_nhkodo_2': {'Combat','Devour','Stronger','Selector','S1'},
             'enemy_2064_skzwdd': {'Combat','MultiAttack'},
             'enemy_1276_telex': {'Attack','Invincible','InfiniteAttack','Trigger'},
             'enemy_1273_stmgun': {'Attack','Cannon','Trigger'},
