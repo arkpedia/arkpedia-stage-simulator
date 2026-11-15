@@ -13,7 +13,7 @@ export function ordinaryEnemyAttackSequence(select, fire) {
     cancel: finish,
     spawn(_b, e, a) { e.profile.deferHit = true; e.profile.shot = 'none'; a.sequence = 0; },
     attack(c, b, e, a) {
-      const target = c.targets[0], animation = select(b, e, a);
+      const target = c.targets[0], animation = select(b, e, a, c);
       if (!target) return;
       a.priorNoAttack = e.profile.noAttack;
       a.cast = { target, life: target.deploySeq, targets: c.targets.map(unit => ({ unit, life: unit.deploySeq })), attackId: b._attackSeq, animation,

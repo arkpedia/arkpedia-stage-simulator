@@ -82,6 +82,8 @@ export async function buildEnemySupport() {
       fattyAnimations: { path: 'data/arkpedia-fatty-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-fatty-animations.json', root))) },
       bladeAnimations: { path: 'data/arkpedia-blade-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-blade-animations.json', root))) },
       knightAnimations: { path: 'data/arkpedia-knight-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-knight-animations.json', root))) },
+      expletiveFeatures: { path: 'shared/arkpedia/enemy-expletive-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-expletive-features.js', root))) },
+      expletiveAnimations: { path: 'data/arkpedia-expletives-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-expletives-animations.json', root))) },
       nightCrawlerFeatures: { path: 'shared/arkpedia/enemy-night-crawler-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-night-crawler-features.js', root))) },
       weaksauceFeatures: { path: 'shared/arkpedia/enemy-weaksauce-features.js', sha256: sha(await readFile(new URL('shared/arkpedia/enemy-weaksauce-features.js', root))) },
       treeShieldAnimations: { path: 'data/arkpedia-tree-shield-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-tree-shield-animations.json', root))) },

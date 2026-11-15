@@ -1,9 +1,10 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+import {EXPLETIVE_FEATURE,EXPLETIVE_DESCRIPTION} from './enemy-expletive-features.js';
 import {NIGHT_CRAWLER_FEATURES} from './enemy-night-crawler-features.js';
 import {WEAKSAUCE_FEATURE} from './enemy-weaksauce-features.js';
 import {TREE_SHIELD_FEATURES} from './enemy-tree-shield-features.js';
 import {SIEGEBREAKER_FEATURES} from './enemy-siegebreaker-features.js';
 import {isNativeInspiration,inspirationNative,nativeInspirationAbility} from './enemy-inspiration-features.js';
-// SPDX-License-Identifier: GPL-3.0-or-later
 import {ZEALOUS_EXTRA_FEATURES} from './enemy-zealous-extra-features.js';
 import {GNAWBEAST_FEATURES} from './enemy-gnawbeast-features.js';
 import {SAINT_STATUE_FEATURES} from './enemy-saint-statue-features.js';
@@ -408,6 +409,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...FLAYER_FEATURES,
   ...SAINT_STATUE_FEATURES,
   ...SIEGEBREAKER_FEATURES,
+  [`ability:${EXPLETIVE_DESCRIPTION}`]:EXPLETIVE_FEATURE,
   ...NIGHT_CRAWLER_FEATURES,
   'ability:-':WEAKSAUCE_FEATURE,
   ...TREE_SHIELD_FEATURES,

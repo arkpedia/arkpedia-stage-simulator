@@ -4,7 +4,7 @@
 export const ENEMY_RUNTIME_INDEX=Object.freeze([
   {key:'arkpedia-enemy-environment-stats',load:()=>import('./arkpedia-enemy-environment-stats.js'),exports:{environmentStatBonus:'environmentStatBonus'}},
   {key:'arkpedia-enemy-contact-program',load:()=>import('./arkpedia-enemy-contact-program.js'),exports:{contactBuffProgram:'contactBuffProgram'}},
-  {key:'arkpedia-enemy-melee-sequence',load:()=>import('./arkpedia-enemy-melee-sequence.js'),exports:{animatedMeleeAttack:'animatedMeleeAttack'}},
+  {key:'arkpedia-enemy-melee-sequence',load:()=>import('./arkpedia-enemy-melee-sequence.js'),exports:{animatedMeleeAttack:'animatedMeleeAttack',markedRangedMeleeAttack:'markedRangedMeleeAttack'}},
   {key:'arkpedia-enemy-inspiration',load:()=>import('./arkpedia-enemy-inspiration.js'),exports:{strengthAura:'strengthAura',inspiredTargets:'inspiredTargets',statMarkerAura:'statMarkerAura',markerStatBonus:'markerStatBonus'}},
   {key:'arkpedia-enemy-blocker-pairs',load:()=>import('./arkpedia-enemy-blocker-pairs.js'),exports:{pairedBlockerBuffs:'pairedBlockerBuffs'}},
   {key:'arkpedia-enemy-charged-loss',load:()=>import('./arkpedia-enemy-charged-loss.js'),exports:{chargedMeleePeriodicLoss:'chargedMeleePeriodicLoss',chargedMeleeBuffProgram:'chargedMeleeBuffProgram'}},
