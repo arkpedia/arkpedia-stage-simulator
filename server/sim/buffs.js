@@ -169,7 +169,8 @@ export function makeBuff(b) {
     flagImmunities: Array.isArray(b.flagImmunities) ? [...new Set(b.flagImmunities.filter(k => k === 'stealth' || k === 'camou'))] : null,
     onTick: b.onTick ?? null,
     interval: b.interval ?? 0,
-    _acc: 0,
+    _acc: b.interval > 0 && Number.isFinite(b.firstTickDelay) && b.firstTickDelay >= 0
+      ? b.interval - b.firstTickDelay : 0,
     onExpire: b.onExpire ?? null,
     onRemove: b.onRemove ?? null,
     tags: b.tags ?? [],

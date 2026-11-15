@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import {GNAWBEAST_FEATURES} from './enemy-gnawbeast-features.js';
 import {SAINT_STATUE_FEATURES} from './enemy-saint-statue-features.js';
 import {corruptionDamageValue} from './enemy-corruption-contracts.js';
 import {isFlayer,flayerNative,FLAYER_DEPARTURE_ABILITY,FLAYER_FEATURES} from './enemy-flayer-features.js';
@@ -452,6 +453,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...DEATH_ENEMY_FEATURES,
   ...DUEL_ENEMY_FEATURES,
   ...AREA_ENEMY_FEATURES,
+  ...GNAWBEAST_FEATURES,
   ...SUPPLY_ENEMY_FEATURES,
   ...KNIGHT_FEATURES,
   ...BLADE_FEATURES,

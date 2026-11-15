@@ -148,12 +148,13 @@ function projectileAreaAttack({ speed, lifetime, width, height, radius, type, no
 
 /** Shared attack-recovery charge selection. Silence delays spending but does
  * not stop ordinary attacks from charging up to the source's actual capacity. */
-export function chargedAttacks(ordinary, charged, { initialSp, cost, increment, maxSp = cost }) {
+export function chargedAttacks(ordinary, charged, { initialSp, cost, increment, maxSp = cost,
+  silenceBlocksSpend = true, respectNoSp = false }) {
   return {
     spawn(b, e, a) { ordinary.spawn(b, e); a.charge = initialSp; },
     attack(c, b, e, a) {
-      const release = a.charge >= cost && !e.s.flags.silence;
-      a.charge = release ? a.charge - cost : Math.min(maxSp, a.charge + increment);
+      const release = a.charge >= cost && !(silenceBlocksSpend && e.s.flags.silence);
+      a.charge = release ? a.charge - cost : respectNoSp && e.s.flags.noSp ? a.charge : Math.min(maxSp, a.charge + increment);
       (release ? charged : ordinary).attack(c, b, e);
     },
   };
