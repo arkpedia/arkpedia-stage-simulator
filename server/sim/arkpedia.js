@@ -21,7 +21,7 @@ import { cardLockError } from './content/arkpedia-card-locks.js';
 import { cardRedeployRatio } from './content/arkpedia-card-redeploy.js';
 import { forbiddenStageTiles, stageBuildableType } from '../../shared/arkpedia/stage-deployment-tiles.js';
 import { excludedStageOperators, stageSquadLimit, stageUsesFixedSquad } from '../../shared/arkpedia/stage-roster.js';
-import { Battle } from './Battle.js';
+import { Battle } from './BattleCore.js';
 import { RegularDisplacement } from './regular-displacement.js';
 import { StageWaveScheduler, stageWaveSpawns } from './content/arkpedia-stage-waves.js';
 import { StageBranchScheduler } from './content/arkpedia-stage-branches.js';
