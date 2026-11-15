@@ -1,3 +1,5 @@
+import {hurt,areaAlliesInTiles} from './arkpedia-enemy-effects.js';
+export {hurt,areaAlliesInTiles} from './arkpedia-enemy-effects.js';
 import {reborn,husk,rebirthCooldowns,rebirthCleanse,setHits,hitCount,isHitCount,setForm,HUSK_REBIRTH,rebornAbility,huskAbility} from './arkpedia-enemy-forms.js';
 export {setHits,hitCount,isHitCount,setForm,HUSK_REBIRTH,rebornAbility,huskAbility} from './arkpedia-enemy-forms.js';
 // server/sim/content/enemies.js — enemy special types (特训敌人) and individual enemy abilities (DESIGN §7).
@@ -978,16 +980,6 @@ export function registerMeta() {}
 // ---------------------------------------------------------------------------------------------------------------
 // helpers (exported for bosses.js)
 
-/**
- * Skill / ability damage (no dodge unless asked). `ignoreSelect` = no selection the target's 无法选择 effects stop
- * (abilities that "无视无法选择", direct picks, a flying unit's blast credited to a ground leader): it also reaches an
- * airborne 起飞 ally, which a ground enemy's damage otherwise skips (damage.js, targeting.js evadesGround).
- */
-export function hurt(b, src, tgt, amount, type = 'phys', { canDodge = false, tags = [], isSkill = true, ignoreSelect = false } = {}) {
-  if (!tgt || !tgt.alive || !(amount > 0)) return 0;
-  return b.dealDamage(src, tgt, { amount, type, canDodge, isSkill, ignoreSelect, tags: ['enemyAbility', ...tags] });
-}
-
 /** Allies within radius that enemy `e` could target (ranged rules: stealth / untargetable skipped). */
 export function targetsNear(b, e, r, { ranged = true, x = e.x, y = e.y } = {}) {
   return b.alliesInRadius(x, y, r).filter((a) => canTargetAlly(e, a, ranged));
@@ -1007,11 +999,6 @@ export function allTargets(b, e) {
  */
 export function areaAllies(b, src, x, y, r) {
   return b.alliesInRadius(x, y, r).filter((a) => areaSelectable(src, a));
-}
-
-/** alliesInTiles for an area effect of `src` (周围四格 / 周围八格 / cross / 3×3 areas — 格子判定): areaSelectable. */
-export function areaAlliesInTiles(b, src, r, c, shape = 'plus', n = 1) {
-  return alliesInTiles(b, r, c, shape, n).filter((a) => areaSelectable(src, a));
 }
 
 /** Every ally on the field a whole-field ability of `src` selects ("对场上所有我方单位…": 【大潮】, 【斥退】 …). */

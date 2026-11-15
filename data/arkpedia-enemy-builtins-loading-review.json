@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "scope": "Remove the common builtin ability group dependency on the legacy enemy catalog. Existing damage and tile-area helpers move unchanged to the shared effects module; unused featureAbilities import is removed.",
+  "sourceSha256": {
+    "server/sim/content/arkpedia-enemy-builtins.js": "55aaafd1afbed95b1881f203cd2f0cb668626b3dfae815b6fb82f3723971a5c3",
+    "server/sim/content/arkpedia-enemy-effects.js": "32b06dfecfe27d388b04d54b3cd605b6102377b961e9abb3a48462796bae8a8f",
+    "server/sim/content/enemies.js": "a774cdb0cc9922411b4d41ec53da3643ef518907b76c6ec8bc9372be27ebe8ea",
+    "test/arkpedia-shared-enemy-core.test.js": "75721d1f93389d7315c1786ec32928301db1f261bd193bc8d753a728697fc970"
+  },
+  "browser": {
+    "selectedFamilies": [
+      "builtins",
+      "jesselton",
+      "flamechaser",
+      "bladeKnight"
+    ],
+    "sharedFormsLoaded": true,
+    "legacyEnemyCatalogLoaded": false,
+    "errors": []
+  },
+  "validation": {
+    "sharedApiAndRuntimePlanTests": 16,
+    "passed": 16,
+    "integrationTests": 54,
+    "integrationPassed": 52,
+    "baselineChimeraFailures": 2,
+    "stageSmoke": {
+      "scope": "10-second constructor/runtime smoke for every available compiled stage; not a playable-clear or fidelity certificate",
+      "available": 969,
+      "completed": 969,
+      "failures": []
+    }
+  },
+  "limits": [
+    "A stage may still select the legacy catalog for other abilities.",
+    "No new enemy admission or native fidelity claim."
+  ]
+}

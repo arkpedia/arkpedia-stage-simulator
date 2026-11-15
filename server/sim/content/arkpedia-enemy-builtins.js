@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-import { featureAbilities,rebornAbility,elem,hurt,areaAlliesInTiles } from './enemies.js';
+import {rebornAbility} from './arkpedia-enemy-forms.js';
+import {elem,hurt,areaAlliesInTiles} from './arkpedia-enemy-effects.js';
 import { periodicDamage } from '../damage.js';
 export const builtinEnemyAbilities=Object.freeze({
   permanentStatusResistance: ({value}) => ({spawn(b,e){

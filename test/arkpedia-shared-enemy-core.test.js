@@ -15,7 +15,7 @@ function fixture(){
 }
 test('legacy exports and selected-stage helpers share the same implementations',()=>{
  for(const name of['installFeatureDispatch','abOf','attach','T','silenced','canCast','enterEnemyHusk'])assert.equal(legacy[name],runtime[name],name);
- for(const name of['elem','alliesInTiles','EROSION'])assert.equal(legacy[name],effects[name],name);
+ for(const name of['elem','alliesInTiles','EROSION','hurt','areaAlliesInTiles'])assert.equal(legacy[name],effects[name],name);
  for(const name of['remainingRoute','stayRoute','spawnChildren'])assert.equal(legacy[name],spawns[name],name);
  for(const name of['rebornAbility','huskAbility','setHits','hitCount','isHitCount','setForm','HUSK_REBIRTH'])assert.equal(legacy[name],forms[name],name);
  assert.equal(legacyInfection,touchInfection);
