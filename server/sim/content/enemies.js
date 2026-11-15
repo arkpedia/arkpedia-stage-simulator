@@ -562,7 +562,7 @@ export const featureAbilities = Object.freeze({
     tick(b, e, a) {
       if (b.time < a.next) return;
       a.next = b.time + interval;
-      for (let t = 1; t * hitInterval <= duration; t++) b.every(t * hitInterval, () => {
+      for (let t = 1; t * hitInterval <= duration; t++) b.after(t * hitInterval, () => {
         for (const u of b.alliesInRadius(e.x, e.y, 1.5)) { hurt(b, e, u, e.s.atk * scale, 'arts', { tags: ['flame'] }); elem(b, e, u, 'burn', e.s.atk * ep); }
       });
     },
@@ -589,7 +589,7 @@ export const featureAbilities = Object.freeze({
   bombard: ({ delay, radius }) => ({
     attack(c, b, e) {
       const t = c.target; if (!t) return;
-      b.every(delay ?? 1, () => { for (const u of b.alliesInRadius(t.x, t.y, radius ?? 1.1)) hurt(b, e, u, e.s.atk, 'phys', { tags: ['bombard'] }); });
+      b.after(delay ?? 1, () => { for (const u of b.alliesInRadius(t.x, t.y, radius ?? 1.1)) hurt(b, e, u, e.s.atk, 'phys', { tags: ['bombard'] }); });
     },
   }),
   // Ursus Civilian: spared at the objective, one life lost if killed.
@@ -614,8 +614,8 @@ export const featureAbilities = Object.freeze({
       const target = e.target ?? b.alliesInRadius(e.x, e.y, 8).sort((p, q) => Math.hypot(p.x - e.x, p.y - e.y) - Math.hypot(q.x - e.x, q.y - e.y))[0];
       if (!target) return;
       a.next = b.time + cooldown; a.target = target;
-      for (let t = 1; t <= duration; t++) b.every(t, () => { if (target.alive) hurt(b, e, target, e.s.atk * scale, 'arts', { tags: ['deathEye'] }); });
-      b.every(duration, () => { for (const u of b.alliesInRadius(target.x, target.y, 1.5)) elem(b, e, u, 'apoptosis', e.s.atk * ep); });
+      for (let t = 1; t <= duration; t++) b.after(t, () => { if (target.alive) hurt(b, e, target, e.s.atk * scale, 'arts', { tags: ['deathEye'] }); });
+      b.after(duration, () => { for (const u of b.alliesInRadius(target.x, target.y, 1.5)) elem(b, e, u, 'apoptosis', e.s.atk * ep); });
     },
   }),
   // Dublinn Phalanx: refresh a DEF buff equal to def times the other Phalanx units.
@@ -636,7 +636,7 @@ export const featureAbilities = Object.freeze({
       a.souls--; a.next = b.time + (cooldown || 15); this.cast(b, e, a);
     },
     cast(b, e, a) {
-      for (let t = 1; t <= 5; t++) b.every(0.5 * t, () => {
+      for (let t = 1; t <= 5; t++) b.after(0.5 * t, () => {
         for (const u of b.alliesInRadius(e.x, e.y, 1.4)) hurt(b, e, u, e.s.atk * scale, 'arts', { tags: ['orb'] });
       });
     },
@@ -657,7 +657,7 @@ export const featureAbilities = Object.freeze({
       if (!target || a.souls <= 0) return;
       const dx = target.x - e.x, dy = target.y - e.y, len = Math.hypot(dx, dy) || 1, ux = dx / len, uy = dy / len;
       const dmg = e.s.atk * (scale + ladder * (a.souls - 1)); a.souls = 0;
-      for (let t = 1; t <= 3; t++) b.every(0.5 * t, () => {
+      for (let t = 1; t <= 3; t++) b.after(0.5 * t, () => {
         for (const u of b.allyUnits) {
           const px = u.x - e.x, py = u.y - e.y, proj = px * ux + py * uy, perp = Math.abs(px * uy - py * ux);
           if (proj >= -0.2 && proj <= 7 && perp <= 0.8) hurt(b, e, u, dmg, 'arts', { tags: ['laser'] });
