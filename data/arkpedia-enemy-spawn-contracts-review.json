@@ -1,0 +1,57 @@
+{
+ "schemaVersion": 1,
+ "scope": "Standard spawn plan validation and complete declared child records. Existing custom-controller behavior remains separately reviewed.",
+ "sourceSha256": {
+  "shared/arkpedia/enemy-runtime-plan.js": "c6ffca85a1e6884dde07f4e40867004fa64186493f8a9f13d3edc996cc7f32f5",
+  "shared/arkpedia/enemy-features.js": "3cc1e2c19211b92dff9f29595494393dca886ad054c2af2ceb3215a58e99a569",
+  "server/sim/content/arkpedia-enemy-runtime.js": "4501d5256047525fc6240140a6598df0a69549ba199e7dccb9c7a01bda4f241d",
+  "tools/arkpedia/enemy-runtime-plans.mjs": "cad353a296e7c3048156ef29cc2219a74a3d8b1fcd98254b0b18988238a18f21",
+  "data/arkpedia-library.json": "6c8e03e91845d6b715d50f1c7306314431ccc9c1b41b0838fad19d18a70750c2"
+ },
+ "standardKinds": [
+  "deathSpawn",
+  "deathSpawnDelayed",
+  "periodicSpawn"
+ ],
+ "addedDependencies": {
+  "enemy_10077_mpbarr": "enemy_10073_mpcar",
+  "enemy_10077_mpbarr_2": "enemy_10073_mpcar_2"
+ },
+ "removedPhantomAttackSpawns": [
+  "enemy_1245_ltseal",
+  "enemy_1364_spnaxe",
+  "enemy_1364_spnaxe_2",
+  "enemy_1522_captan"
+ ],
+ "tests": {
+  "integrationPassed": 206,
+  "databaseLevelsAudited": 782,
+  "allStageSmokesPassed": 969,
+  "secondsPerStage": 10,
+  "availableStagesRemoved": []
+ },
+ "browser": {
+  "scope": "Controlled compiled-plan fixture injects both Auto Meal Distributor variants and their helpers into 0-1. Missing dependencies fail before imports; complete input spawns each helper. Not an original-stage or native timing certificate.",
+  "before": {
+   "loaded": [],
+   "pending": 0
+  },
+  "refusal": "Missing enemy runtime spawn dependency: enemy_10077_mpbarr -> enemy_10073_mpcar",
+  "afterRefusal": {
+   "loaded": [],
+   "pending": 0
+  },
+  "after": {
+   "loaded": [
+    "enemies"
+   ],
+   "pending": 0
+  },
+  "children": {
+   "enemy_10073_mpcar": 1,
+   "enemy_10073_mpcar_2": 1
+  },
+  "errors": [],
+  "pageErrors": []
+ }
+}

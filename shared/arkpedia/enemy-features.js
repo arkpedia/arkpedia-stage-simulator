@@ -567,7 +567,9 @@ export const ENEMY_FEATURES = Object.freeze({
         || sig(r, 'Attack', ['attack@projectile_delay_time', 'attack@projectile_radius', 'delay', 'enemy_key']))
         && r.abilities.some(a => /^Will be reborn as a <[^>]+> after falling in battle for the first time$/.test(a.text)))
       || (sig(r, 'Attack', ['atk', 'attack@ranged_atk_scale', 'hp_ratio', 'max_stack_cnt', 'range_radius']) && r.abilities.some(a => a.text.startsWith('Recovers a portion of HP')))),
-    ability: { kind: 'deathSpawn', params: r => ({ key: r.talents.bbStr['Attack.enemy_key'], cnt: 1 }) },
+    // Attack is also a descriptive group on unrelated families. Only its
+    // reviewed enemy-key form owns a child-spawning component.
+    ability: r => r.talents.bbStr['Attack.enemy_key'] ? { kind: 'deathSpawn', params: r => ({ key: r.talents.bbStr['Attack.enemy_key'], cnt: 1 }) } : null,
     note: 'reborn as its reviewed child on death', dependsOn: r => [r.talents.bbStr['Attack.enemy_key']].filter(Boolean),
     explains: /^Will be reborn as a <[^>]+> after falling in battle for the first time$/ },
   // Technical Scout: reveals camouflaged/stealthed allies within range to its own targeting.
@@ -655,6 +657,7 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: /^Controls <Purifying Flames> that move along the ground/ },
   'ability:Periodically summons 1 <Confused Maintenance Helper>': { covers: r => r.abilities.some(a => a.text === 'Periodically summons 1 <Confused Maintenance Helper>'),
     ability: { kind: 'periodicSpawn', params: r => ({ key: r.skills[0]?.bbStr?.enemy_key ?? 'enemy_10073_mpcar', count: 1, cooldown: r.skills[0]?.cooldown ?? 5, init: r.skills[0]?.initCooldown ?? 3 }) },
+    dependsOn:r=>[r.skills[0]?.bbStr?.enemy_key??'enemy_10073_mpcar'],
     nativeClaim: () => ({ wrappers: 1 }), note: 'one confused helper every cooldown', explains: /^Periodically summons 1 <Confused Maintenance Helper>$/ },
   'skill:SummonFireBall2': { covers: r => r.skills.some(s => s.prefabKey === 'SummonFireBall2'), note: 'second reviewed summon timer' },
   // Tombkeeper Grotesque: the first lethal hit turns it into a stone statue, then it revives airborne.
@@ -677,6 +680,7 @@ export const ENEMY_FEATURES = Object.freeze({
   // Prototype Auto Meal Distributor: summons one maintenance helper every few seconds.
   'ability:Periodically summons 1 <Rampaging Maintenance Helper>': { covers: r => r.abilities.some(a => /^Periodically summons 1 <(Rampaging|Confused) Maintenance Helper>$/.test(a.text)),
     ability: { kind: 'periodicSpawn', params: r => ({ key: r.skills[0]?.bbStr?.enemy_key ?? 'enemy_10073_mpcar_2', count: 1, cooldown: r.skills[0]?.cooldown ?? 5, init: r.skills[0]?.initCooldown ?? 3 }) },
+    dependsOn:r=>[r.skills[0]?.bbStr?.enemy_key??'enemy_10073_mpcar_2'],
     nativeClaim: () => ({ wrappers: 1 }), note: 'one helper every cooldown', explains: /^Periodically summons 1 <(Rampaging|Confused) Maintenance Helper>$/ },
   'skill:Spawn': { covers: r => r.skills.some(s => s.prefabKey === 'Spawn'), note: 'native Spawn skill consumed by periodicSpawn' },
   // Bloodborn Spawn: Arts damage scaled by the target's blocking count, and a Blood Amber death spawn.

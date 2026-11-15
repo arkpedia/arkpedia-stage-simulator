@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+const SPAWN_COUNTS=Object.freeze({deathSpawn:'cnt',deathSpawnDelayed:'cnt',periodicSpawn:'count'});
 const object=(v,path)=>{
   if(!v||typeof v!=='object'||Array.isArray(v)||![Object.prototype,null].includes(Object.getPrototypeOf(v)))
     throw Error(`Invalid enemy runtime plan object: ${path}`);
@@ -40,10 +41,23 @@ export function validateEnemyRuntimePlan(plan,{knownKinds}={}){
       if(typeof kind!=='string'||!/^[A-Za-z]\w*$/.test(kind)||knownKinds&&!knownKinds.has(kind))throw Error(`Unknown enemy runtime kind: ${kind}`);
       object(params,`${path}.params`);
       if(Object.hasOwn(params,'$infinity'))throw Error(`Invalid enemy runtime parameters: ${path}`);
+      if(Object.hasOwn(SPAWN_COUNTS,kind)){
+        const count=params[SPAWN_COUNTS[kind]];
+        if(typeof params.key!=='string'||!/^enemy_[a-z0-9_]+$/i.test(params.key)||!Number.isSafeInteger(count)||count<0)
+          throw Error(`Invalid enemy spawn parameters: ${path}/${kind}`);
+      }
     }
   }
   jsonValue(plan,'plan');
   return plan;
+}
+
+/** Standard spawning primitives expose their required enemy records in data.
+ * Custom controllers retain their explicitly reviewed source dependencies. */
+export function enemyRuntimeSpawnDependencies(plan){
+  validateEnemyRuntimePlan(plan);
+  return [...new Set(plan.entries.filter(e=>e.ability&&Object.hasOwn(SPAWN_COUNTS,e.ability.kind))
+    .map(e=>e.ability.params.key))];
 }
 
 /** Restore tagged timer sentinels and give every factory its own parameters. */

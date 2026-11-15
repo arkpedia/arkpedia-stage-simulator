@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { pathToFileURL } from 'node:url';
 import { compileEnemyRuntimePlan } from '../../shared/arkpedia/enemy-runtime-compiler.js';
-import { validateEnemyRuntimePlan } from '../../shared/arkpedia/enemy-runtime-plan.js';
+import { validateEnemyRuntimePlan,enemyRuntimeSpawnDependencies } from '../../shared/arkpedia/enemy-runtime-plan.js';
 import { ENEMY_FEATURE_ABILITY_KINDS } from '../../server/sim/content/arkpedia-enemy-features.js';
 import { writeJSONAtomic } from './write-json.mjs';
 const root=new URL('../../',import.meta.url),sha=v=>createHash('sha256').update(v).digest('hex');
@@ -13,6 +13,8 @@ export function auditEnemyRuntimePlans(records,support){
   for(const[id,entry]of Object.entries(records).sort(([a],[b])=>a.localeCompare(b)))if(support[id]?.policy)
     for(const record of Object.values(entry.levels)){
       const plan=validateEnemyRuntimePlan(compileEnemyRuntimePlan(record),{knownKinds});
+      for(const child of enemyRuntimeSpawnDependencies(plan))if(!(support[id].spawns??[]).includes(child))
+        throw Error(`Undeclared enemy runtime spawn dependency: ${id} -> ${child}`);
       plans.push({id,level:record.level,plan});properties+=Object.keys(plan.properties).length;entries+=plan.entries.length;
       for(const entry of plan.entries){if(entry.trait)traits++;if(entry.ability){abilities++;kinds.set(entry.ability.kind,(kinds.get(entry.ability.kind)??0)+1);}}
     }

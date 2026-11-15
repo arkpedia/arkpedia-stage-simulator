@@ -49,3 +49,16 @@ test('a selected modern family loads its fixed module while a simple enemy needs
   assert.deepEqual(runtime.stats().loaded,['arkpedia-enemy-rope-reactions']);
   assert.ok(ENEMY_RUNTIME_INDEX.length>40);
 });
+test('standard child dependencies are required before module loading and their own adapters are prepared together',async()=>{
+ let loads=0;
+ const runtime=createEnemyRuntime([
+  {key:'spawn',exports:{deathSpawn:'spawn'},load:async()=>{loads++;return{spawn:()=>({})};}},
+  {key:'child',exports:{child:'child'},load:async()=>{loads++;return{child:()=>({})};}},
+ ]);
+ const parent=record('deathSpawn');parent.key='enemy_parent';
+ parent.runtimeFeatures.entries[0].ability.params={key:'enemy_child',cnt:1};
+ assert.throws(()=>runtime.prepare({enemy_parent:parent}),/Missing enemy runtime spawn dependency/);assert.equal(loads,0);
+ assert.throws(()=>runtime.assertPrepared({enemy_parent:parent}),/Missing enemy runtime spawn dependency/);
+ const source={enemy_parent:parent,enemy_child:record('child')};await runtime.prepare(source);assert.equal(loads,2);
+ runtime.assertPrepared(source);
+});

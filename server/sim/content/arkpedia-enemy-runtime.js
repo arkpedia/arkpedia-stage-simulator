@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import { ENEMY_RUNTIME_INDEX } from './arkpedia-enemy-runtime-index.js';
-import { validateEnemyRuntimePlan } from '../../../shared/arkpedia/enemy-runtime-plan.js';
+import { validateEnemyRuntimePlan,enemyRuntimeSpawnDependencies } from '../../../shared/arkpedia/enemy-runtime-plan.js';
 import { applyCompiledEnemyFeatures } from './arkpedia-enemy-plan.js';
 
 export function createEnemyRuntime(index=ENEMY_RUNTIME_INDEX,{legacy=null}={}){
@@ -37,6 +37,8 @@ export function createEnemyRuntime(index=ENEMY_RUNTIME_INDEX,{legacy=null}={}){
         continue;
       }
       validateEnemyRuntimePlan(plan,{knownKinds});
+      for(const child of enemyRuntimeSpawnDependencies(plan))if(!Object.hasOwn(records,child))
+        throw Error(`Missing enemy runtime spawn dependency: ${record.key} -> ${child}`);
       for(const entry of plan.entries)if(entry.ability)kinds.add(entry.ability.kind);
     }
     return [...kinds];
