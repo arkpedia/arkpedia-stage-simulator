@@ -92,6 +92,14 @@ import { TAGGED_PROJECTILE_ENEMY_FEATURES } from './enemy-tagged-projectile-feat
 
 /** The group's parameter keys are exactly `params`. */
 const sig = (r, g, params) => JSON.stringify(r.talents.groups[g] ?? null) === JSON.stringify([...params].sort());
+const dormantCompanionFlame = r => /^enemy_1174_duholy(?:_2)?$/.test(r.prefabKey) && r.level === 0
+  && r.skills.length === 1 && r.skills[0].prefabKey === 'Flame'
+  && ['priority','cooldown','initCooldown','spCost'].every(k => r.skills[0][k] === 0)
+  && Object.keys(r.skills[0].bb).length === 5 && Object.entries({ 'duspfr_flame[cd].duration': 7, 'duspfr_flame[cd].cooldown': 10,
+    atk_scale: .2, ep_damage_ratio: 1, hit_interval: .5 }).every(([k,v]) => r.skills[0].bb[k] === v)
+  && Object.keys(r.skills[0].bbStr).length === 0;
+const flameRecord = r => r.skills.some(s => s.prefabKey === 'Flame')
+  && (/^enemy_1173_duspfr(?:_2)?$/.test(r.prefabKey) || dormantCompanionFlame(r));
 const ELEMENT_TERMS = Object.freeze({ 'ba.dt.neural': 'neural', 'ba.dt.burning': 'burn', 'ba.dt.apoptosis': 'apoptosis', 'ba.dt.erosion': 'erosion' });
 /** The one element an enemy's handbook lines name (null when none or several). */
 export function elementOf(r) {
@@ -646,8 +654,10 @@ export const ENEMY_FEATURES = Object.freeze({
   // Dublinn Flamerazer: a 10.6 s burning aura every 6 s, and a death blast that also kills other Flamerazers.
   'skill:DeadBoom': { covers: r => r.skills.some(s => s.prefabKey === 'DeadBoom'),
     note: 'death blast driven by the Flamerazer skill', explains: /^Upon death, explodes and deals Arts damage, knocking down nearby Tattered Pillars and instantly defeating other <Dublinn Flamerazers>$/ },
-  'skill:Flame': { covers: r => r.skills.some(s => s.prefabKey === 'Flame'),
-    ability: { kind: 'flamerazer', params: r => ({ duration: r.skills[0].bb['duspfr_flame[cd].duration'], interval: r.skills[0].bb['duspfr_flame[cd].interval'],
+  // Companion Guards also carry dormant Flame database rows. Their pinned
+  // prefabs have no Flame wrapper: a skill's name alone must not attach a kit.
+  'skill:Flame': { covers: flameRecord, matchesRecord: flameRecord,
+    ability: r => dormantCompanionFlame(r) ? null : { kind: 'flamerazer', params: r => ({ duration: r.skills[0].bb['duspfr_flame[cd].duration'], interval: r.skills[0].bb['duspfr_flame[cd].interval'],
       hitInterval: r.skills[0].bb.hit_interval, scale: r.skills[0].bb.atk_scale, ep: r.skills[0].bb.ep_damage_ratio, deathScale: r.skills[1]?.bb.atk_scale ?? 1 }) },
     nativeClaim: p => String(p.rootName ?? p.key ?? p.prefabKey ?? '').includes('duspfr') ? { wrappers: 2 } : {}, note: 'burning aura and death blast',
     explains: text => text === 'Continuously deals Arts damage and <$ba.dt.burning>Burn damage</> for the skill duration'

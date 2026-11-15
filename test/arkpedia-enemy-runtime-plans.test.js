@@ -87,3 +87,12 @@ test('stage-disabled Rat King timers survive JSON without becoming null or activ
     assert.throws(()=>validateEnemyRuntimePlan(bad),/infinity/);
   }
 });
+
+test('configurable mode statistics leave compiled behavior parameters and feature selection unchanged',()=>{
+  for(const[,entry]of supported)for(const row of Object.values(entry.levels)){
+    const scaled=structuredClone(row);
+    for(const key of ['maxHp','atk','def','moveSpeed'])scaled.stats[key]*=2;
+    scaled.stats.res+=15;
+    assert.deepEqual(compileEnemyRuntimePlan(scaled),compileEnemyRuntimePlan(row),`${row.key}@${row.level}`);
+  }
+});
