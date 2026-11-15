@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import { mkdtemp, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { buildStageLibrary, publishStageLibrary, stageCapabilityPriorities } from '../tools/arkpedia/stage-library.mjs';
+import { buildStageLibrary, publishStageLibrary, stageCapabilityPriorities, assertPreservedStageAvailability } from '../tools/arkpedia/stage-library.mjs';
 import { createStageLibraryLoader, validateStageLibrary } from '../shared/arkpedia/stage-library.js';
 import { applyStage, resolveStage, loadStageCatalogue } from '../shared/arkpedia/stages.js';
 const definition = { key: 'enemy_a', name: 'Shared enemy', skills: [], talents: { bb: {} } };
@@ -110,6 +110,22 @@ test('manifest publication is atomic, immutable objects are verified, and legacy
     const invalid = structuredClone(library.manifest); invalid.stages[0].bundle = '../outside';
     assert.throws(() => validateStageLibrary(invalid), /reference/);
   } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+test('publication preserves every available stage even when other additions hide a net coverage gain', async () => {
+  const first = await build();
+  const larger = await build({ ids: ['b', 'new-1', 'new-2', 'blocked'] });
+  assert.ok(larger.report.available > first.report.available);
+  assert.throws(() => assertPreservedStageAvailability(first.manifest, larger.manifest), /remove 1 loadable stages: a/);
+  const switched = await build({ plan: async (c,id) => ({ ...await plan(c,id), blockers: id === 'a' ? [{kind:'device',id:'weather'}] : [] }) });
+  assert.throws(() => assertPreservedStageAvailability(first.manifest, switched.manifest), /stages: a/);
+  const root = await mkdtemp(join(tmpdir(), 'stage-preservation-'));
+  try {
+    await publishStageLibrary(first,root);const path=join(root,'data','arkpedia-library.json'),before=await readFile(path,'utf8');
+    await assert.rejects(publishStageLibrary(larger,root),/stages: a/);assert.equal(await readFile(path,'utf8'),before);
+    await publishStageLibrary(larger,root,{allowRemovals:true});
+    assert.equal(JSON.parse(await readFile(path,'utf8')).stages.some(s=>s.id==='a'),false);
+  } finally { await rm(root,{recursive:true,force:true}); }
 });
 
 test('explicit bootstrap reuse preserves controlled home-page fixtures but never overrides a selected stage', async () => {

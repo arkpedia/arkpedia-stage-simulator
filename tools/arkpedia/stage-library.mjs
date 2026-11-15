@@ -87,9 +87,24 @@ export async function buildStageLibrary(context, { ids, plan = (context, id) => 
   return { manifest, objects, report };
 }
 
+/** Compare identities, not net totals: a larger library can still lose a stage. */
+export function assertPreservedStageAvailability(previous, next) {
+  const available = new Set(next.stages.filter(s => s.availability === 'available').map(s => s.id));
+  const removed = (previous.stages ?? []).filter(s => s.availability === 'available' && !available.has(s.id))
+    .map(s => s.id).sort();
+  if (removed.length) throw Error(`Stage library would remove ${removed.length} loadable stages: ${removed.join(', ')}. Fix the regression, or use --allow-removals after reviewing an intentional withdrawal.`);
+}
+
 /** Write immutable objects first. The atomic manifest replacement is the only
  * publication point; old objects remain usable by already-open clients. */
-export async function publishStageLibrary({ manifest, objects, report }, root, { publish = writeJSONAtomic } = {}) {
+export async function publishStageLibrary({ manifest, objects, report }, root, { publish = writeJSONAtomic, allowRemovals = false } = {}) {
+  validateStageLibrary(manifest);
+  if (!allowRemovals) {
+    let previous;
+    try { previous = JSON.parse(await readFile(join(root, 'data', 'arkpedia-library.json'), 'utf8')); }
+    catch (error) { if (error.code !== 'ENOENT') throw error; }
+    if (previous) assertPreservedStageAvailability(previous, manifest);
+  }
   await publishComponentObjects(objects, root);
   await publish(join(root, 'data', 'arkpedia-library.json'), validateStageLibrary(manifest), { space: 0 });
   await writeJSONAtomic(join(root, 'data', 'arkpedia-library-report.json'), report);
@@ -98,6 +113,6 @@ export async function publishStageLibrary({ manifest, objects, report }, root, {
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const context = await loadContentContext({ ...(process.env.ARKPEDIA_CONTENT_SOURCE ? { source: resolve(process.env.ARKPEDIA_CONTENT_SOURCE) } : {}) });
   const library = await buildStageLibrary(context, { onProgress: p => console.error(`${p.processed}/${p.total}: ${p.available} loadable stages`) });
-  await publishStageLibrary(library, context.root);
+  await publishStageLibrary(library, context.root, { allowRemovals: process.argv.includes('--allow-removals') });
   const { priorities, ...summary } = library.report; console.log(JSON.stringify(summary, null, 2));
 }

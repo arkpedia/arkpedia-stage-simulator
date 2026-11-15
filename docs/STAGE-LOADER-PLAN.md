@@ -61,3 +61,10 @@ flat timeline remains only for older standalone snapshots and controlled fixture
 Route clock waits and predefined operator/card activation are implemented; see
 `STAGE-CAPABILITIES-REVIEW.md`. Configurable numerical rules for individual
 Integrated Strategies stages are documented in `STAGE-MODE-RULES-REVIEW.md`.
+
+Library publication now checks availability by stage identity before writing
+objects or replacing the manifest. A net increase cannot hide the loss of an
+older loadable stage. Intentional withdrawals have an explicit
+`npm run content:library -- --allow-removals` maintenance override after review;
+ordinary content additions preserve every currently available stage. The guard
+is exercised alongside atomic publication and immutable-component validation.
