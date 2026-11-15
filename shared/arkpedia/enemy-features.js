@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import { isSelfFearEnemy, selfFearNative } from './enemy-self-fear.js';
+import { isSniperPrisoner, SNIPER_PRISONER_ABILITY, SNIPER_PRISONER_PRIORITY } from './enemy-prisoner-features.js';
 import { DEPOSITOR_FEATURE } from './enemy-depositor-features.js';
 import { DEVOUR_FEATURES } from './enemy-devour-features.js';
 import { EPOCH_GUARD_FEATURE } from './enemy-epoch-guard-features.js';
@@ -373,6 +374,7 @@ const NATIVE_ONLY_FEATURES = Object.freeze({
 
 export const ENEMY_FEATURES = Object.freeze({
   'ability:Spawns an <@eb.key>Excrescent Carapace</> at its location when defeated.': DEPOSITOR_FEATURE,
+  'ability:Prioritizes attacking Imprisonment Devices': SNIPER_PRISONER_PRIORITY,
   ...DEVOUR_FEATURES,
   'ability:Attacks hit 2 times when on a Mark of Epoch.': EPOCH_GUARD_FEATURE,
   'skill:InfiniteAttack': THERESIS_FEATURE,
@@ -444,7 +446,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...rebornFamily('Reborn'), ...rebornFamily('reborn'),
   // 禁锢 → 解放: starts imprisoned (ASPD/DEF from confinement), freed after `times` attacks with the liberty buffs.
   'talent:confinement': { covers: r => CONFINEMENT_SIGS.some(p => sig(r, 'confinement', p)) && LIBERTY_SIGS.some(p => sig(r, 'liberty', p)),
-    ability: { kind: 'prisoner', params: () => ({ freeAll: false }) }, note: 'prisoner(): confined until times attacks, then liberty',
+    ability: r => isSniperPrisoner(r) ? SNIPER_PRISONER_ABILITY : { kind: 'prisoner', params: () => ({ freeAll: false }) }, note: 'prisoner(): confined until times attacks, then liberty',
     explains: /^(Starts imprisoned\. When imprisoned, ASPD is reduced|Freed after a few attacks, gaining increased ATK)/ },
   'talent:liberty': { covers: r => CONFINEMENT_SIGS.some(p => sig(r, 'confinement', p)) && LIBERTY_SIGS.some(p => sig(r, 'liberty', p)),
     note: 'the liberty buffs of the confinement feature' },
