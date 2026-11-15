@@ -1,0 +1,176 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-15",
+  "scope": "Select all operator adapters by existing ownership registries; shared summon deck and compact facing projection eliminate unrelated eager dependencies.",
+  "sourceFiles": {
+    "docs/OPERATOR-RUNTIME-LOADING-REVIEW.md": "d462cd230b256c395d4dc711a1eaa0ce4e90de5f87204ac97f154890cf44e9f7",
+    "public/arkpedia/app.js": "fb154a7f5d88ca93db1002fb8f8c686b31e049dcfafae20eebed5eb517da5b50",
+    "server/sim/arkpedia.js": "81812b40e63d22433622c83d476105c5afbc02cfbdc0a73198c0abb16a8f8721",
+    "server/sim/content/arkpedia-advanced-snipers.js": "c20c87e32d9999df9acb37ce10f0feec83cdd223cc5f9acac4ce03a322c9be17",
+    "server/sim/content/arkpedia-caster-expansion.js": "fa0f235e7e5ffc6da6911f453e292fb512d2d10a00811d0dc34f2345755e1c13",
+    "server/sim/content/arkpedia-casters.js": "7694802302ad21052518a1317fe2f7e6250836baa08f99114a8373fa284e334a",
+    "server/sim/content/arkpedia-defenders.js": "1a9d9949f47737fabfa14610bb7fc9f70bf7aa252619677367b2e8adc19b0d37",
+    "server/sim/content/arkpedia-ela-mines.js": "f1fc793d3e865fb9d8b848b631eb96a7bd9d537717d5801eaa606fec194d1a82",
+    "server/sim/content/arkpedia-five-star-defender-second.js": "3da81005e0ae95eeeb03277ac0f6f93cdc5c60609c066d05088fd532b09059ef",
+    "server/sim/content/arkpedia-five-star-guard-fourth.js": "8cf2740f75c79518e59e3baf905255bdc1a5986025b1c713772de9190bed5f9f",
+    "server/sim/content/arkpedia-five-star-guard-third.js": "556bba0d5f382704493d03a6de3f5136bcffc8948fd3b6c9a821db5a6efdbca6",
+    "server/sim/content/arkpedia-five-star-medic-third.js": "93137d27d1d8d647f7229a0253fe1a9785179f779d83db9b942ad7fe79a6e435",
+    "server/sim/content/arkpedia-five-star-vanguard-second.js": "5e5e998d49f4019d3b50018ec1c287f2ccf93afa19c2251830502342c30f6638",
+    "server/sim/content/arkpedia-five-star-vanguards.js": "68dcfe0cdfa77fecf945032067a69bf8d867d4f482bb184c111702285dc0e17a",
+    "server/sim/content/arkpedia-guard-expansion.js": "f64528f989f3b5c95c6ce3a8485ed9391804e0b5fce408d672a21ce9f5cac437",
+    "server/sim/content/arkpedia-guard-six-star-fourth.js": "f045eb5504fe32ae5e1f807fdbf12298c3a2c5d09178c1f42d12ad40f761068c",
+    "server/sim/content/arkpedia-guard-six-star-third.js": "395fe6b346f07bbb4b02447262f5ada87d8847f4cf3b6394c1a5a3ab70ff08e0",
+    "server/sim/content/arkpedia-guards.js": "b49f542d24ce1470504c633fa61771430ccda59e6bb6457ea5a89228d631d590",
+    "server/sim/content/arkpedia-operator-runtime-index.js": "832462778cd13063a9075238b375af23eacdeda3846739b3a9eee653907988ef",
+    "server/sim/content/arkpedia-robot-expansion.js": "cac76d30cb5c76e479e559b313b64db8072ed3903ba1d0c7ddc6c7e4522aaae3",
+    "server/sim/content/arkpedia-sniper-expansion.js": "42c6240456ad952e62b2b282255bc896145fac85ea49be8a839b3742701a083e",
+    "server/sim/content/arkpedia-sniper-six-star.js": "74c64f61c01be234333d813603aae0987b869b93565f43833d0f3a721e47077d",
+    "server/sim/content/arkpedia-snipers.js": "ed32fa94838844e59d5380cc07d89b2d326eb9bc0117cbd9299c528ab0d53500",
+    "server/sim/content/arkpedia-specialists.js": "7f66df65a2d64861719ed975e7043aa446c9ed3c4a38ad411e1dd45f7d0dc74f",
+    "server/sim/content/arkpedia-stage-magic-circuit.js": "88f3d83c17d82822754c85d25766059b9310dc0db61e7018e59ba87be27d3b47",
+    "server/sim/content/arkpedia-summon-deck.js": "f4dcf937d4a774a2a186f9c335445d42b7037c952d904cbafceee579432df00d",
+    "server/sim/content/arkpedia-summons.js": "667ef7b9818f1f851a7fa9e0edcd10e5250b0ae1da25fc570ad0ed0ebbeccc2e",
+    "server/sim/content/arkpedia-support-expansion.js": "2fe209c4af6f4bd40f554de85fbf6a4adb1ce1539000965d704db19e46e16a29",
+    "server/sim/content/arkpedia-thorns.js": "22dc00591dd794f0c9526d13cd5e2c4c9bb9606dda520c94b7fbe81cac843790",
+    "server/sim/content/arkpedia-tinman.js": "985268c1cf06d54014ad69ccb055d5e9a00952c16413558c1db6ac36d471758d",
+    "server/sim/content/arkpedia-vanguards.js": "1c00adebefea02cc4b41cec2220ce29f84b4bc4211ab370b381bd26298028ea7",
+    "shared/arkpedia/summon-build-conditions.js": "d263d59431410375b3e6bdad5d7accca5b489321b33381144a82c8af577995fe",
+    "test/arkpedia-magic-circuit.test.js": "34da81a7ae42a4ba9c6281d02a24e48a200ede1d7ca52a11d07427bd85260b92",
+    "test/arkpedia-operator-runtime-loading.test.js": "f184074f4edb82996ad2748d391d774133296d14f9c1eb4c83f1813470cfbfe6",
+    "tools/arkpedia/operator-runtime-index.mjs": "1924bf02f46f4488c9f5c0c8482d4b9c0004a679de66738809bce2e7f412f899",
+    "tools/arkpedia/review-operator-library.mjs": "5c6386d238097e942fa92ddbfa756329a1b6eca71e3a031eb6a4ca8630e0c2aa"
+  },
+  "checks": {
+    "allSummons": {
+      "path": "/tmp/operator-family-all-summons-tests.log",
+      "sha256": "082726a236f5b430094733ded5c846766b4323a622c93fc9e1e00dac3d7f89e0"
+    },
+    "runtimeAndProjection": {
+      "path": "/tmp/operator-family-final-runtime-tests.log",
+      "sha256": "9886501093864bfedc2076fa9324da887ab6ba37c9161f71bcdbf52fd456ec93"
+    },
+    "browser": {
+      "path": ".cache/arkpedia/operator-library-review/results.json",
+      "sha256": "63716e9e1a960d44d29406412be0da63a2c7510fdc25eca6585ebbc26ede5941"
+    },
+    "index": {
+      "path": "/tmp/operator-family-index-check.log",
+      "sha256": "87f60ad0416d8424baabe909e2ecaf47a14363076aaf2d47db8f7ec2013490ec"
+    }
+  },
+  "summonIntegrationTestsPassed": 1722,
+  "runtimeAndProjectionTestsPassed": 11,
+  "operatorFormsCompared": 431,
+  "registeredSkills": 949,
+  "browserCasesPassed": 2,
+  "guardedAdapters": 242,
+  "sharedAdapters": 0,
+  "footprintCheckpoint": {
+    "schemaVersion": 1,
+    "scope": "Uncompressed static source closure plus explicitly selected adapter imports. Excludes roster/stage/model transfers and optional dynamic visual effects; not native fidelity or load-time certification.",
+    "ids": [
+      "char_123_fang",
+      "char_124_kroos"
+    ],
+    "adapters": [],
+    "common": {
+      "modules": 473,
+      "bytes": 3400904,
+      "sha256": "36bbb9665e0813ffb87b15955a2b86c895959c5c09889ac4fe04f796d02c47d1"
+    },
+    "selected": {
+      "modules": 473,
+      "bytes": 3400904,
+      "sha256": "36bbb9665e0813ffb87b15955a2b86c895959c5c09889ac4fe04f796d02c47d1"
+    },
+    "eager": {
+      "modules": 1241,
+      "bytes": 96012154,
+      "sha256": "6d43fcbac2063f2d8a276c7d790ee685340dc3271d4faa25fefec02acf7f3a95"
+    },
+    "largestSelected": [
+      {
+        "path": "data/arkpedia-device-native-source.json",
+        "bytes": 1091998,
+        "sha256": "3884a28fa535a6fb5762f72db726e909d9e2287cd9f7a332fe984f22def8a80f"
+      },
+      {
+        "path": "server/sim/content/enemies.js",
+        "bytes": 249664,
+        "sha256": "dde150a7e1ebc721e901498e87ae99c42845a57b9a08a96a36fe2cf17f9737a8"
+      },
+      {
+        "path": "server/sim/Battle.js",
+        "bytes": 148928,
+        "sha256": "3cca336d803e5c77d6783b26f7762bc0541746b8edfd39dce7c9e98192a7aeed"
+      },
+      {
+        "path": "data/arkpedia-device-source.json",
+        "bytes": 127139,
+        "sha256": "4c757b0a2cf8a4b1a58c19b0cf78175198dbb7de49e22fe7cd5df709ad9b0416"
+      },
+      {
+        "path": "shared/arkpedia/enemy-features.js",
+        "bytes": 122356,
+        "sha256": "d786c135f009d5ca479913a0a23bc8f36ee9ded1b2ce70087f226f2af5e611f0"
+      },
+      {
+        "path": "server/sim/content/arkpedia-operator-runtime-index.js",
+        "bytes": 82835,
+        "sha256": "832462778cd13063a9075238b375af23eacdeda3846739b3a9eee653907988ef"
+      },
+      {
+        "path": "server/sim/arkpedia.js",
+        "bytes": 50596,
+        "sha256": "81812b40e63d22433622c83d476105c5afbc02cfbdc0a73198c0abb16a8f8721"
+      },
+      {
+        "path": "server/sim/damage.js",
+        "bytes": 49242,
+        "sha256": "952ec2bcee338b847347255423c19825082356f7f1e25647bf66a1637f426bff"
+      },
+      {
+        "path": "server/sim/ai.js",
+        "bytes": 49144,
+        "sha256": "dfc75644e63768b9264de0e7fca106dac9a469e81095c088d305c4acb9c97d17"
+      },
+      {
+        "path": "server/sim/professions.js",
+        "bytes": 39138,
+        "sha256": "5325c2507fe2379e05f9e4daa72497e79fef3e34dd6b4320a0cdc0dea8ed8957"
+      },
+      {
+        "path": "server/sim/skills.js",
+        "bytes": 37635,
+        "sha256": "57450d20301687bd697fe8235ade82987239ede6964d7d334f92d48632264ca9"
+      },
+      {
+        "path": "data/arkpedia-regular-enemies.json",
+        "bytes": 36628,
+        "sha256": "d458708b302161b20d055e5b712e0d636ce47a2fd7bdec9a254242e7706ddcb3"
+      },
+      {
+        "path": "server/sim/simdata.js",
+        "bytes": 34700,
+        "sha256": "f1fc99d2596e0cf39a4fd176e7a05b3362c3757efa4e5d988a55d13f1c2a087f"
+      },
+      {
+        "path": "server/sim/grid.js",
+        "bytes": 31111,
+        "sha256": "8804e507c8454013cfffbdec5675674c70b1443380ab70d0fcc06b3373dbb7ae"
+      },
+      {
+        "path": "shared/arkpedia/summons.js",
+        "bytes": 29855,
+        "sha256": "cdc32917ac26eeeb179e48f1edecdf1821764d7967066be5f6bb4f35f94e9a11"
+      }
+    ]
+  },
+  "footprintNote": "Measured before the subsequent Burdenbeast component addition. Uncompressed static closure, not startup time, network transfer or memory usage.",
+  "previousSelectedBytes": 8469373,
+  "remaining": [
+    "Native operator/module fidelity is separate from controller registration.",
+    "Selecting one summoner still loads the legacy compound summon controller and its helper imports.",
+    "Full stage/enemy catalogue support remains incomplete."
+  ]
+}

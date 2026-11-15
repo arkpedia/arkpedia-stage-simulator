@@ -301,6 +301,7 @@ export function prepareLemuenKit(b, u, { contracts } = {}) {
       ...(n === 2 ? { mods: { atkPct: s.bb.atk, aspd: s.bb.attack_speed } } : {}),
       onStart: () => { controller.nextMarkAt = null; controller.startSkill(); },
       onAmmoReplenish: ({ count }) => { ammo.replenish(count); controller.syncAmmo(); },
+      onAmmoConsume: ({ count }) => { ammo.consumeExternal(count); controller.syncAmmo(); },
       onEnd: ({ reason }) => controller.endSkill(reason) },
   };
   return { kit, controller, links, ammo, talents };

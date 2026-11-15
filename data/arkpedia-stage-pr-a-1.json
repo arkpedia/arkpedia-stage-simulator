@@ -1,1930 +1,2033 @@
 {
- "code": "PR-A-1",
- "name": "Defense",
- "description": "A mission to acquire the materials needed for the Promotion of Defender and Medic Operators.\nThe battle will be easier if you employ Defender and Medic Operators well.\n<Poison Haze> Operators lose HP constantly.",
- "battle": {
-  "max_life": 5,
-  "unit_limit": 8,
-  "initial_dp": 10,
-  "max_dp": 99,
-  "dp_per_second": 1,
-  "dp_recovery_interval_seconds": 1
- },
- "mapTags": [],
- "mapTagSource": null,
- "geometry": {
-  "slug": "pr-a-1",
-  "rows": 7,
-  "cols": 10,
-  "tileLegend": [
-   {
-    "key": "tile_forbidden",
-    "height": "high",
-    "walkable": false,
-    "deployable": "none",
-    "flyable": true
-   },
-   {
-    "key": "tile_start",
-    "height": "low",
-    "walkable": true,
-    "deployable": "none",
-    "flyable": true
-   },
-   {
-    "key": "tile_road",
-    "height": "low",
-    "walkable": true,
-    "deployable": "melee",
-    "flyable": true
-   },
-   {
-    "key": "tile_wall",
-    "height": "high",
-    "walkable": false,
-    "deployable": "ranged",
-    "flyable": true
-   },
-   {
-    "key": "tile_end",
-    "height": "low",
-    "walkable": true,
-    "deployable": "none",
-    "flyable": true
-   }
-  ],
-  "tileGrid": [
-   [
-    0,
-    1,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0
-   ],
-   [
-    0,
-    2,
-    2,
-    0,
-    3,
-    3,
-    0,
-    2,
-    2,
-    1
-   ],
-   [
-    0,
-    0,
-    2,
-    2,
-    2,
-    2,
-    2,
-    2,
-    0,
-    0
-   ],
-   [
-    1,
-    2,
-    2,
-    0,
-    3,
-    3,
-    3,
-    2,
-    2,
-    1
-   ],
-   [
-    0,
-    0,
-    2,
-    3,
-    3,
-    3,
-    0,
-    2,
-    0,
-    0
-   ],
-   [
-    0,
-    0,
-    2,
-    2,
-    2,
-    2,
-    2,
-    2,
-    0,
-    0
-   ],
-   [
-    0,
-    0,
-    0,
-    0,
-    4,
-    4,
-    0,
-    0,
-    0,
-    0
-   ]
-  ],
-  "routes": [
-   {
-    "motion": "walk",
-    "start": {
-     "row": 3,
-     "col": 0
-    },
-    "end": {
-     "row": 6,
-     "col": 5
-    },
-    "checkpoints": [
-     {
-      "type": "move",
-      "position": {
-       "row": 3,
-       "col": 2
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 2,
-       "col": 2
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 2,
-       "col": 7
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 5,
-       "col": 7
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 5,
-       "col": 5
-      }
-     }
-    ],
-    "waits": []
-   },
-   {
-    "motion": "walk",
-    "start": {
-     "row": 1,
-     "col": 9
-    },
-    "end": {
-     "row": 6,
-     "col": 4
-    },
-    "checkpoints": [
-     {
-      "type": "move",
-      "position": {
-       "row": 1,
-       "col": 7
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 2,
-       "col": 7
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 2,
-       "col": 2
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 5,
-       "col": 2
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 5,
-       "col": 4
-      }
-     }
-    ],
-    "waits": []
-   },
-   {
-    "motion": null,
-    "placeholder": true,
-    "start": null,
-    "end": null,
-    "checkpoints": [],
-    "waits": []
-   },
-   {
-    "motion": "walk",
-    "start": {
-     "row": 1,
-     "col": 9
-    },
-    "end": {
-     "row": 6,
-     "col": 5
-    },
-    "checkpoints": [
-     {
-      "type": "move",
-      "position": {
-       "row": 1,
-       "col": 7
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 3,
-       "col": 7
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 5,
-       "col": 7
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 5,
-       "col": 5
-      }
-     }
-    ],
-    "waits": [
-     {
-      "type": "wait_for_seconds",
-      "after_checkpoint": 1,
-      "seconds": 30
-     }
-    ]
-   },
-   {
-    "motion": "walk",
-    "start": {
-     "row": 0,
-     "col": 1
-    },
-    "end": {
-     "row": 6,
-     "col": 4
-    },
-    "checkpoints": [
-     {
-      "type": "move",
-      "position": {
-       "row": 1,
-       "col": 1
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 1,
-       "col": 2
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 5,
-       "col": 2
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 5,
-       "col": 4
-      }
-     }
-    ],
-    "waits": []
-   },
-   {
-    "motion": "walk",
-    "start": {
-     "row": 1,
-     "col": 9
-    },
-    "end": {
-     "row": 6,
-     "col": 5
-    },
-    "checkpoints": [
-     {
-      "type": "move",
-      "position": {
-       "row": 1,
-       "col": 7
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 5,
-       "col": 7
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 5,
-       "col": 5
-      }
-     }
-    ],
-    "waits": []
-   },
-   {
-    "motion": "walk",
-    "start": {
-     "row": 3,
-     "col": 9
-    },
-    "end": {
-     "row": 6,
-     "col": 4
-    },
-    "checkpoints": [
-     {
-      "type": "move",
-      "position": {
-       "row": 3,
-       "col": 7
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 2,
-       "col": 7
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 2,
-       "col": 2
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 5,
-       "col": 2
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 5,
-       "col": 4
-      }
-     }
-    ],
-    "waits": []
-   },
-   {
-    "motion": "walk",
-    "start": {
-     "row": 3,
-     "col": 0
-    },
-    "end": {
-     "row": 6,
-     "col": 4
-    },
-    "checkpoints": [
-     {
-      "type": "move",
-      "position": {
-       "row": 3,
-       "col": 2
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 5,
-       "col": 2
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 5,
-       "col": 4
-      }
-     }
-    ],
-    "waits": []
-   },
-   {
-    "motion": "walk",
-    "start": {
-     "row": 3,
-     "col": 9
-    },
-    "end": {
-     "row": 6,
-     "col": 5
-    },
-    "checkpoints": [
-     {
-      "type": "move",
-      "position": {
-       "row": 3,
-       "col": 7
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 5,
-       "col": 7
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 5,
-       "col": 5
-      }
-     }
-    ],
-    "waits": []
-   },
-   {
-    "motion": "walk",
-    "start": {
-     "row": 0,
-     "col": 1
-    },
-    "end": {
-     "row": 6,
-     "col": 5
-    },
-    "checkpoints": [
-     {
-      "type": "move",
-      "position": {
-       "row": 1,
-       "col": 1
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 1,
-       "col": 2
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 2,
-       "col": 2
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 2,
-       "col": 7
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 5,
-       "col": 7
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 5,
-       "col": 5
-      }
-     }
-    ],
-    "waits": []
-   }
-  ],
-  "waves": [
-   {
-    "index": 0,
-    "duration": 167.8,
-    "pre_delay": 0,
-    "post_delay": 0,
-    "max_wait_for_next_wave": null,
-    "spawns": [
-     {
-      "enemy": "Originium Slug α",
-      "enemy_id": "enemy_1007_slime_2",
-      "count": 2,
-      "time": 3,
-      "interval": 0.8,
-      "route": 0,
-      "fragment": 0
-     },
-     {
-      "enemy": "Originium Slug α",
-      "enemy_id": "enemy_1007_slime_2",
-      "count": 2,
-      "time": 12,
-      "interval": 0.8,
-      "route": 0,
-      "fragment": 0
-     },
-     {
-      "enemy": "Originium Slug α",
-      "enemy_id": "enemy_1007_slime_2",
-      "count": 2,
-      "time": 14,
-      "interval": 0.8,
-      "route": 1,
-      "fragment": 0
-     },
-     {
-      "enemy": "Originium Slug α",
-      "enemy_id": "enemy_1007_slime_2",
-      "count": 2,
-      "time": 23,
-      "interval": 0.8,
-      "route": 1,
-      "fragment": 0
-     },
-     {
-      "enemy": "Veteran Junkman",
-      "enemy_id": "enemy_1030_wteeth_2",
-      "count": 1,
-      "time": 41.8,
-      "route": 3,
-      "fragment": 1
-     },
-     {
-      "enemy": "Soldier",
-      "enemy_id": "enemy_1002_nsabr",
-      "count": 2,
-      "time": 41.8,
-      "interval": 18,
-      "route": 4,
-      "fragment": 1
-     },
-     {
-      "enemy": "Soldier",
-      "enemy_id": "enemy_1002_nsabr",
-      "count": 2,
-      "time": 43.8,
-      "interval": 18,
-      "route": 0,
-      "fragment": 1
-     },
-     {
-      "enemy": "Soldier",
-      "enemy_id": "enemy_1002_nsabr",
-      "count": 2,
-      "time": 45.8,
-      "interval": 18,
-      "route": 5,
-      "fragment": 1
-     },
-     {
-      "enemy": "Soldier",
-      "enemy_id": "enemy_1002_nsabr",
-      "count": 2,
-      "time": 47.8,
-      "interval": 18,
-      "route": 6,
-      "fragment": 1
-     },
-     {
-      "enemy": "Veteran Junkman",
-      "enemy_id": "enemy_1030_wteeth_2",
-      "count": 1,
-      "time": 93.8,
-      "route": 7,
-      "fragment": 2
-     },
-     {
-      "enemy": "Veteran Junkman",
-      "enemy_id": "enemy_1030_wteeth_2",
-      "count": 1,
-      "time": 105.8,
-      "route": 8,
-      "fragment": 2
-     },
-     {
-      "enemy": "Dual Swordsman",
-      "enemy_id": "enemy_1014_rogue",
-      "count": 2,
-      "time": 100.8,
-      "interval": 0.7,
-      "route": 6,
-      "fragment": 2
-     },
-     {
-      "enemy": "Veteran Junkman",
-      "enemy_id": "enemy_1030_wteeth_2",
-      "count": 1,
-      "time": 102.8,
-      "route": 1,
-      "fragment": 2
-     },
-     {
-      "enemy": "Dual Swordsman",
-      "enemy_id": "enemy_1014_rogue",
-      "count": 2,
-      "time": 113.8,
-      "interval": 0.7,
-      "route": 9,
-      "fragment": 2
-     },
-     {
-      "enemy": "Veteran Junkman",
-      "enemy_id": "enemy_1030_wteeth_2",
-      "count": 1,
-      "time": 115.8,
-      "route": 9,
-      "fragment": 2
-     },
-     {
-      "enemy": "Veteran Junkman",
-      "enemy_id": "enemy_1030_wteeth_2",
-      "count": 1,
-      "time": 167.8,
-      "route": 1,
-      "fragment": 3
-     },
-     {
-      "enemy": "Veteran Junkman",
-      "enemy_id": "enemy_1030_wteeth_2",
-      "count": 1,
-      "time": 158.8,
-      "route": 8,
-      "fragment": 3
-     },
-     {
-      "enemy": "Veteran Junkman",
-      "enemy_id": "enemy_1030_wteeth_2",
-      "count": 1,
-      "time": 167.8,
-      "route": 9,
-      "fragment": 3
-     },
-     {
-      "enemy": "Veteran Junkman",
-      "enemy_id": "enemy_1030_wteeth_2",
-      "count": 1,
-      "time": 158.8,
-      "route": 7,
-      "fragment": 3
-     }
-    ]
-   }
-  ],
-  "spawnTiles": [
-   {
-    "key": "tile_start",
-    "row": 0,
-    "col": 1,
-    "routes": [
-     4,
-     9,
-     9,
-     9
-    ]
-   },
-   {
-    "key": "tile_start",
-    "row": 1,
-    "col": 9,
-    "routes": [
-     1,
-     1,
-     3,
-     5,
-     1,
-     1
-    ]
-   },
-   {
-    "key": "tile_start",
-    "row": 3,
-    "col": 0,
-    "routes": [
-     0,
-     0,
-     0,
-     7,
-     7
-    ]
-   },
-   {
-    "key": "tile_start",
-    "row": 3,
-    "col": 9,
-    "routes": [
-     6,
-     8,
-     6,
-     8
-    ]
-   }
-  ],
-  "objectiveTiles": [
-   {
-    "key": "tile_end",
-    "row": 6,
-    "col": 4,
-    "routes": [
-     1,
-     1,
-     4,
-     6,
-     7,
-     6,
-     1,
-     1,
-     7
-    ]
-   },
-   {
-    "key": "tile_end",
-    "row": 6,
-    "col": 5,
-    "routes": [
-     0,
-     0,
-     3,
-     0,
-     5,
-     8,
-     9,
-     9,
-     8,
-     9
-    ]
-   }
-  ],
-  "enemyConfigurations": [
-   {
-    "enemy_id": "enemy_1002_nsabr",
-    "slug": "soldier",
-    "name": "Soldier",
-    "database_level": 0
-   },
-   {
-    "enemy_id": "enemy_1007_slime_2",
-    "slug": "originium_slug_enemy_1007_slime_2",
-    "name": "Originium Slug α",
-    "database_level": 0
-   },
-   {
-    "enemy_id": "enemy_1014_rogue",
-    "slug": "dual_swordsman",
-    "name": "Dual Swordsman",
-    "database_level": 0
-   },
-   {
-    "enemy_id": "enemy_1030_wteeth_2",
-    "slug": "veteran_junkman",
-    "name": "Veteran Junkman",
-    "database_level": 0
-   }
-  ],
-  "suppliedUnits": {
-   "fixed_squad": [],
-   "deployable_tokens": []
+  "code": "PR-A-1",
+  "name": "Defense",
+  "description": "A mission to acquire the materials needed for the Promotion of Defender and Medic Operators.\nThe battle will be easier if you employ Defender and Medic Operators well.\n<Poison Haze> Operators lose HP constantly.",
+  "battle": {
+    "max_life": 5,
+    "unit_limit": 8,
+    "initial_dp": 10,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1,
+    "max_play_time": -1
   },
-  "hasConditionalSpawns": false
- },
- "devices": [],
- "tokens": [],
- "pathing": {
-  "schemaVersion": 1,
-  "syntheticRoutes": [],
-  "producer": "Arkpedia stage browser / buildPlaybackPaths",
-  "stage": "PR-A-1",
-  "geometryHash": "b7f06439b7303d9039683362f22de61236baa447c2d567c68b8850ed1d1f270a",
-  "moveScale": 0.65,
-  "paths": {
-   "0": {
-    "points": [
-     [
-      0,
-      3
-     ],
-     [
-      1,
-      3
-     ],
-     [
-      2,
-      3
-     ],
-     [
-      2,
-      2
-     ],
-     [
-      3,
-      2
-     ],
-     [
-      4,
-      2
-     ],
-     [
-      5,
-      2
-     ],
-     [
-      6,
-      2
-     ],
-     [
-      7,
-      2
-     ],
-     [
-      7,
-      3
-     ],
-     [
-      7,
-      4
-     ],
-     [
-      7,
-      5
-     ],
-     [
-      6,
-      5
-     ],
-     [
-      5,
-      5
-     ],
-     [
-      5,
-      6
-     ]
+  "mapTags": [],
+  "mapTagSource": null,
+  "geometry": {
+    "slug": "pr-a-1",
+    "rows": 7,
+    "cols": 10,
+    "tileLegend": [
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_start",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      }
     ],
-    "distances": [
-     0,
-     1,
-     2,
-     3,
-     4,
-     5,
-     6,
-     7,
-     8,
-     9,
-     10,
-     11,
-     12,
-     13,
-     14
-    ],
-    "length": 14,
-    "breaks": [],
-    "flying": false,
-    "holds": [],
-    "nodes": [
-     [
-      0,
-      3
-     ],
-     [
-      2,
-      3
-     ],
-     [
-      2,
-      2
-     ],
-     [
-      7,
-      2
-     ],
-     [
-      7,
-      5
-     ],
-     [
-      5,
-      5
-     ],
-     [
-      5,
-      6
-     ]
-    ]
-   },
-   "1": {
-    "points": [
-     [
-      9,
-      1
-     ],
-     [
-      8,
-      1
-     ],
-     [
-      7,
-      1
-     ],
-     [
-      7,
-      2
-     ],
-     [
-      6,
-      2
-     ],
-     [
-      5,
-      2
-     ],
-     [
-      4,
-      2
-     ],
-     [
-      3,
-      2
-     ],
-     [
-      2,
-      2
-     ],
-     [
-      2,
-      3
-     ],
-     [
-      2,
-      4
-     ],
-     [
-      2,
-      5
-     ],
-     [
-      3,
-      5
-     ],
-     [
-      4,
-      5
-     ],
-     [
-      4,
-      6
-     ]
-    ],
-    "distances": [
-     0,
-     1,
-     2,
-     3,
-     4,
-     5,
-     6,
-     7,
-     8,
-     9,
-     10,
-     11,
-     12,
-     13,
-     14
-    ],
-    "length": 14,
-    "breaks": [],
-    "flying": false,
-    "holds": [],
-    "nodes": [
-     [
-      9,
-      1
-     ],
-     [
-      7,
-      1
-     ],
-     [
-      7,
-      2
-     ],
-     [
-      2,
-      2
-     ],
-     [
-      2,
-      5
-     ],
-     [
-      4,
-      5
-     ],
-     [
-      4,
-      6
-     ]
-    ]
-   },
-   "3": {
-    "points": [
-     [
-      9,
-      1
-     ],
-     [
-      8,
-      1
-     ],
-     [
-      7,
-      1
-     ],
-     [
-      7,
-      2
-     ],
-     [
-      7,
-      3
-     ],
-     [
-      7,
-      4
-     ],
-     [
-      7,
-      5
-     ],
-     [
-      6,
-      5
-     ],
-     [
-      5,
-      5
-     ],
-     [
-      5,
-      6
-     ]
-    ],
-    "distances": [
-     0,
-     1,
-     2,
-     3,
-     4,
-     5,
-     6,
-     7,
-     8,
-     9
-    ],
-    "length": 9,
-    "breaks": [],
-    "flying": false,
-    "holds": [
-     {
-      "at": 4,
-      "seconds": 30,
-      "point": [
-       7,
-       3
+    "tileGrid": [
+      [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
       ],
-      "tunnel": false
-     }
+      [
+        0,
+        2,
+        2,
+        0,
+        3,
+        3,
+        0,
+        2,
+        2,
+        1
+      ],
+      [
+        0,
+        0,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        0,
+        0
+      ],
+      [
+        1,
+        2,
+        2,
+        0,
+        3,
+        3,
+        3,
+        2,
+        2,
+        1
+      ],
+      [
+        0,
+        0,
+        2,
+        3,
+        3,
+        3,
+        0,
+        2,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        4,
+        4,
+        0,
+        0,
+        0,
+        0
+      ]
     ],
-    "nodes": [
-     [
-      9,
-      1
-     ],
-     [
-      7,
-      1
-     ],
-     [
-      7,
-      3
-     ],
-     [
-      7,
-      5
-     ],
-     [
-      5,
-      5
-     ],
-     [
-      5,
-      6
-     ]
+    "routes": [
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 0
+        },
+        "end": {
+          "row": 6,
+          "col": 5
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 5
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 9
+        },
+        "end": {
+          "row": 6,
+          "col": 4
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 4
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": null,
+        "placeholder": true,
+        "start": null,
+        "end": null,
+        "checkpoints": [],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 9
+        },
+        "end": {
+          "row": 6,
+          "col": 5
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 5
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 1,
+            "seconds": 30
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 0,
+          "col": 1
+        },
+        "end": {
+          "row": 6,
+          "col": 4
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 4
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 9
+        },
+        "end": {
+          "row": 6,
+          "col": 5
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 5
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 9
+        },
+        "end": {
+          "row": 6,
+          "col": 4
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 4
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 0
+        },
+        "end": {
+          "row": 6,
+          "col": 4
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 4
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 9
+        },
+        "end": {
+          "row": 6,
+          "col": 5
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 5
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 0,
+          "col": 1
+        },
+        "end": {
+          "row": 6,
+          "col": 5
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 5
+            }
+          }
+        ],
+        "waits": []
+      }
+    ],
+    "waves": [
+      {
+        "index": 0,
+        "duration": 167.8,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Originium Slug α",
+            "enemy_id": "enemy_1007_slime_2",
+            "count": 2,
+            "time": 3,
+            "interval": 0.8,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Originium Slug α",
+            "enemy_id": "enemy_1007_slime_2",
+            "count": 2,
+            "time": 12,
+            "interval": 0.8,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Originium Slug α",
+            "enemy_id": "enemy_1007_slime_2",
+            "count": 2,
+            "time": 14,
+            "interval": 0.8,
+            "route": 1,
+            "fragment": 0
+          },
+          {
+            "enemy": "Originium Slug α",
+            "enemy_id": "enemy_1007_slime_2",
+            "count": 2,
+            "time": 23,
+            "interval": 0.8,
+            "route": 1,
+            "fragment": 0
+          },
+          {
+            "enemy": "Veteran Junkman",
+            "enemy_id": "enemy_1030_wteeth_2",
+            "count": 1,
+            "time": 41.8,
+            "route": 3,
+            "fragment": 1
+          },
+          {
+            "enemy": "Soldier",
+            "enemy_id": "enemy_1002_nsabr",
+            "count": 2,
+            "time": 41.8,
+            "interval": 18,
+            "route": 4,
+            "fragment": 1
+          },
+          {
+            "enemy": "Soldier",
+            "enemy_id": "enemy_1002_nsabr",
+            "count": 2,
+            "time": 43.8,
+            "interval": 18,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Soldier",
+            "enemy_id": "enemy_1002_nsabr",
+            "count": 2,
+            "time": 45.8,
+            "interval": 18,
+            "route": 5,
+            "fragment": 1
+          },
+          {
+            "enemy": "Soldier",
+            "enemy_id": "enemy_1002_nsabr",
+            "count": 2,
+            "time": 47.8,
+            "interval": 18,
+            "route": 6,
+            "fragment": 1
+          },
+          {
+            "enemy": "Veteran Junkman",
+            "enemy_id": "enemy_1030_wteeth_2",
+            "count": 1,
+            "time": 93.8,
+            "route": 7,
+            "fragment": 2
+          },
+          {
+            "enemy": "Veteran Junkman",
+            "enemy_id": "enemy_1030_wteeth_2",
+            "count": 1,
+            "time": 105.8,
+            "route": 8,
+            "fragment": 2
+          },
+          {
+            "enemy": "Dual Swordsman",
+            "enemy_id": "enemy_1014_rogue",
+            "count": 2,
+            "time": 100.8,
+            "interval": 0.7,
+            "route": 6,
+            "fragment": 2
+          },
+          {
+            "enemy": "Veteran Junkman",
+            "enemy_id": "enemy_1030_wteeth_2",
+            "count": 1,
+            "time": 102.8,
+            "route": 1,
+            "fragment": 2
+          },
+          {
+            "enemy": "Dual Swordsman",
+            "enemy_id": "enemy_1014_rogue",
+            "count": 2,
+            "time": 113.8,
+            "interval": 0.7,
+            "route": 9,
+            "fragment": 2
+          },
+          {
+            "enemy": "Veteran Junkman",
+            "enemy_id": "enemy_1030_wteeth_2",
+            "count": 1,
+            "time": 115.8,
+            "route": 9,
+            "fragment": 2
+          },
+          {
+            "enemy": "Veteran Junkman",
+            "enemy_id": "enemy_1030_wteeth_2",
+            "count": 1,
+            "time": 167.8,
+            "route": 1,
+            "fragment": 3
+          },
+          {
+            "enemy": "Veteran Junkman",
+            "enemy_id": "enemy_1030_wteeth_2",
+            "count": 1,
+            "time": 158.8,
+            "route": 8,
+            "fragment": 3
+          },
+          {
+            "enemy": "Veteran Junkman",
+            "enemy_id": "enemy_1030_wteeth_2",
+            "count": 1,
+            "time": 167.8,
+            "route": 9,
+            "fragment": 3
+          },
+          {
+            "enemy": "Veteran Junkman",
+            "enemy_id": "enemy_1030_wteeth_2",
+            "count": 1,
+            "time": 158.8,
+            "route": 7,
+            "fragment": 3
+          }
+        ]
+      }
+    ],
+    "spawnTiles": [
+      {
+        "key": "tile_start",
+        "row": 0,
+        "col": 1,
+        "routes": [
+          4,
+          9,
+          9,
+          9
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 1,
+        "col": 9,
+        "routes": [
+          1,
+          1,
+          3,
+          5,
+          1,
+          1
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 3,
+        "col": 0,
+        "routes": [
+          0,
+          0,
+          0,
+          7,
+          7
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 3,
+        "col": 9,
+        "routes": [
+          6,
+          8,
+          6,
+          8
+        ]
+      }
+    ],
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 6,
+        "col": 4,
+        "routes": [
+          1,
+          1,
+          4,
+          6,
+          7,
+          6,
+          1,
+          1,
+          7
+        ]
+      },
+      {
+        "key": "tile_end",
+        "row": 6,
+        "col": 5,
+        "routes": [
+          0,
+          0,
+          3,
+          0,
+          5,
+          8,
+          9,
+          9,
+          8,
+          9
+        ]
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_1002_nsabr",
+        "slug": "soldier",
+        "name": "Soldier",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1007_slime_2",
+        "slug": "originium_slug_enemy_1007_slime_2",
+        "name": "Originium Slug α",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1014_rogue",
+        "slug": "dual_swordsman",
+        "name": "Dual Swordsman",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1030_wteeth_2",
+        "slug": "veteran_junkman",
+        "name": "Veteran Junkman",
+        "database_level": 0
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [],
+      "deployable_tokens": []
+    },
+    "hasConditionalSpawns": false
+  },
+  "devices": [],
+  "tokens": [],
+  "pathing": {
+    "schemaVersion": 1,
+    "syntheticRoutes": [],
+    "producer": "Arkpedia stage browser / buildPlaybackPaths",
+    "stage": "PR-A-1",
+    "geometryHash": "b7f06439b7303d9039683362f22de61236baa447c2d567c68b8850ed1d1f270a",
+    "moveScale": 0.65,
+    "paths": {
+      "0": {
+        "points": [
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            6,
+            2
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            7,
+            3
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            5,
+            6
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "length": 14,
+        "breaks": [],
+        "flying": false,
+        "holds": [],
+        "nodes": [
+          [
+            0,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            5,
+            6
+          ]
+        ]
+      },
+      "1": {
+        "points": [
+          [
+            9,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            6,
+            2
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            6
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "length": 14,
+        "breaks": [],
+        "flying": false,
+        "holds": [],
+        "nodes": [
+          [
+            9,
+            1
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            6
+          ]
+        ]
+      },
+      "3": {
+        "points": [
+          [
+            9,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            7,
+            3
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            5,
+            6
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "length": 9,
+        "breaks": [],
+        "flying": false,
+        "holds": [
+          {
+            "at": 4,
+            "seconds": 30,
+            "point": [
+              7,
+              3
+            ],
+            "tunnel": false
+          }
+        ],
+        "nodes": [
+          [
+            9,
+            1
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            7,
+            3
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            5,
+            6
+          ]
+        ]
+      },
+      "4": {
+        "points": [
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            6
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "length": 9,
+        "breaks": [],
+        "flying": false,
+        "holds": [],
+        "nodes": [
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            6
+          ]
+        ]
+      },
+      "5": {
+        "points": [
+          [
+            9,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            7,
+            3
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            5,
+            6
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "length": 9,
+        "breaks": [],
+        "flying": false,
+        "holds": [],
+        "nodes": [
+          [
+            9,
+            1
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            5,
+            6
+          ]
+        ]
+      },
+      "6": {
+        "points": [
+          [
+            9,
+            3
+          ],
+          [
+            8,
+            3
+          ],
+          [
+            7,
+            3
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            6,
+            2
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            6
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "length": 14,
+        "breaks": [],
+        "flying": false,
+        "holds": [],
+        "nodes": [
+          [
+            9,
+            3
+          ],
+          [
+            7,
+            3
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            6
+          ]
+        ]
+      },
+      "7": {
+        "points": [
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            6
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "length": 7,
+        "breaks": [],
+        "flying": false,
+        "holds": [],
+        "nodes": [
+          [
+            0,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            6
+          ]
+        ]
+      },
+      "8": {
+        "points": [
+          [
+            9,
+            3
+          ],
+          [
+            8,
+            3
+          ],
+          [
+            7,
+            3
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            5,
+            6
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "length": 7,
+        "breaks": [],
+        "flying": false,
+        "holds": [],
+        "nodes": [
+          [
+            9,
+            3
+          ],
+          [
+            7,
+            3
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            5,
+            6
+          ]
+        ]
+      },
+      "9": {
+        "points": [
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            6,
+            2
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            7,
+            3
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            5,
+            6
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "length": 14,
+        "breaks": [],
+        "flying": false,
+        "holds": [],
+        "nodes": [
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            5,
+            6
+          ]
+        ]
+      }
+    }
+  },
+  "art": null,
+  "gates": null,
+  "fixedSquad": null,
+  "enemies": {
+    "enemy_1007_slime_2": {
+      "key": "enemy_1007_slime_2",
+      "prefabKey": "enemy_1007_slime_2",
+      "name": "Originium Slug α",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 1050,
+        "atk": 185,
+        "def": 0,
+        "res": 0,
+        "moveSpeed": 1,
+        "bat": 1.7,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 0,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "infection"
+      ]
+    },
+    "enemy_1030_wteeth_2": {
+      "key": "enemy_1030_wteeth_2",
+      "prefabKey": "enemy_1030_wteeth_2",
+      "name": "Veteran Junkman",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 7500,
+        "atk": 600,
+        "def": 70,
+        "res": 20,
+        "moveSpeed": 0.8,
+        "bat": 3,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 2,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1002_nsabr": {
+      "key": "enemy_1002_nsabr",
+      "prefabKey": "enemy_1002_nsabr",
+      "name": "Soldier",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 1650,
+        "atk": 200,
+        "def": 100,
+        "res": 0,
+        "moveSpeed": 1.1,
+        "bat": 2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1014_rogue": {
+      "key": "enemy_1014_rogue",
+      "prefabKey": "enemy_1014_rogue",
+      "name": "Dual Swordsman",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 2000,
+        "atk": 350,
+        "def": 100,
+        "res": 0,
+        "moveSpeed": 1.1,
+        "bat": 1.2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    }
+  },
+  "rules": {
+    "variant": null,
+    "source": {
+      "repository": "Kengxxiao/ArknightsGameData",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "path": "zh_CN/gamedata/levels/obt/promote/level_promote_a_1.json",
+      "sha256": "3a45da306aca4aa7c67b841c0a4f298ce5c1280c2874e4400901f468d37b6c09",
+      "gitBlob": "76197bb13675f1aaa5a89ba342c31b4c59386d92",
+      "stageTable": {
+        "path": "zh_CN/gamedata/excel/stage_table.json",
+        "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+        "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+        "stageId": "pro_a_1",
+        "levelId": "Obt/Promote/level_promote_a_1"
+      }
+    },
+    "battle": {
+      "max_play_time": -1
+    },
+    "enemies": {},
+    "enemyAdd": {},
+    "hiddenGroups": {}
+  },
+  "environment": [
+    {
+      "kind": "periodic_damage",
+      "damage": 10,
+      "interval": 0.5
+    }
+  ],
+  "contentRuleRefresh": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/pr-a-1.json",
+          "sha256": "807b748274731c511e44069b472eec0928f1f06a199f4b07ab80787c2acf38c0"
+        },
+        {
+          "path": "stage-geometry/pr-a-1.json",
+          "sha256": "b7f06439b7303d9039683362f22de61236baa447c2d567c68b8850ed1d1f270a"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        }
+      ],
+      "localFiles": [
+        {
+          "path": "data/stage-rules/pr-a-1.json",
+          "sha256": "93bf175c67f36362c6584992da3b23cda783d787de5680058310ca0ef489a905"
+        },
+        {
+          "path": "data/stage-rules/levels/1ca4b9aaa5bfc1ca46120342ff488d30ad07005adb122c53f85d1a8e87e74762.json",
+          "sha256": "1ca4b9aaa5bfc1ca46120342ff488d30ad07005adb122c53f85d1a8e87e74762"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/76197bb13675f1aaa5a89ba342c31b4c59386d92.json",
+          "sha256": "3a45da306aca4aa7c67b841c0a4f298ce5c1280c2874e4400901f468d37b6c09"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/76197bb13675f1aaa5a89ba342c31b4c59386d92.json",
+          "sha256": "3a45da306aca4aa7c67b841c0a4f298ce5c1280c2874e4400901f468d37b6c09"
+        },
+        {
+          "path": "data/arkpedia-environment-native-source.json",
+          "sha256": "f85082fa9b085a473e1424de3d2c6d0097ced0297de0636a62baf60789d76de2"
+        }
+      ]
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 10,
+        "spawned": 2,
+        "errors": 0
+      },
+      "waveSchedule": {
+        "id": "pr-a-1",
+        "seconds": 194.73333333333332,
+        "spawned": 29,
+        "expected": 29,
+        "dynamicSpawns": 0,
+        "reason": "cleared",
+        "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+      },
+      "browserStartup": {
+        "id": "pr-a-1",
+        "seconds": 20,
+        "errors": [],
+        "units": 6,
+        "canvas": true,
+        "scope": "Mobile landscape browser startup and canvas runtime; not a fidelity approval"
+      }
+    },
+    "changed": [
+      "rules",
+      "battle",
+      "environment"
     ]
-   },
-   "4": {
-    "points": [
-     [
-      1,
-      0
-     ],
-     [
-      1,
-      1
-     ],
-     [
-      2,
-      1
-     ],
-     [
-      2,
-      2
-     ],
-     [
-      2,
-      3
-     ],
-     [
-      2,
-      4
-     ],
-     [
-      2,
-      5
-     ],
-     [
-      3,
-      5
-     ],
-     [
-      4,
-      5
-     ],
-     [
-      4,
-      6
-     ]
-    ],
-    "distances": [
-     0,
-     1,
-     2,
-     3,
-     4,
-     5,
-     6,
-     7,
-     8,
-     9
-    ],
-    "length": 9,
-    "breaks": [],
-    "flying": false,
-    "holds": [],
-    "nodes": [
-     [
-      1,
-      0
-     ],
-     [
-      1,
-      1
-     ],
-     [
-      2,
-      1
-     ],
-     [
-      2,
-      5
-     ],
-     [
-      4,
-      5
-     ],
-     [
-      4,
-      6
-     ]
-    ]
-   },
-   "5": {
-    "points": [
-     [
-      9,
-      1
-     ],
-     [
-      8,
-      1
-     ],
-     [
-      7,
-      1
-     ],
-     [
-      7,
-      2
-     ],
-     [
-      7,
-      3
-     ],
-     [
-      7,
-      4
-     ],
-     [
-      7,
-      5
-     ],
-     [
-      6,
-      5
-     ],
-     [
-      5,
-      5
-     ],
-     [
-      5,
-      6
-     ]
-    ],
-    "distances": [
-     0,
-     1,
-     2,
-     3,
-     4,
-     5,
-     6,
-     7,
-     8,
-     9
-    ],
-    "length": 9,
-    "breaks": [],
-    "flying": false,
-    "holds": [],
-    "nodes": [
-     [
-      9,
-      1
-     ],
-     [
-      7,
-      1
-     ],
-     [
-      7,
-      5
-     ],
-     [
-      5,
-      5
-     ],
-     [
-      5,
-      6
-     ]
-    ]
-   },
-   "6": {
-    "points": [
-     [
-      9,
-      3
-     ],
-     [
-      8,
-      3
-     ],
-     [
-      7,
-      3
-     ],
-     [
-      7,
-      2
-     ],
-     [
-      6,
-      2
-     ],
-     [
-      5,
-      2
-     ],
-     [
-      4,
-      2
-     ],
-     [
-      3,
-      2
-     ],
-     [
-      2,
-      2
-     ],
-     [
-      2,
-      3
-     ],
-     [
-      2,
-      4
-     ],
-     [
-      2,
-      5
-     ],
-     [
-      3,
-      5
-     ],
-     [
-      4,
-      5
-     ],
-     [
-      4,
-      6
-     ]
-    ],
-    "distances": [
-     0,
-     1,
-     2,
-     3,
-     4,
-     5,
-     6,
-     7,
-     8,
-     9,
-     10,
-     11,
-     12,
-     13,
-     14
-    ],
-    "length": 14,
-    "breaks": [],
-    "flying": false,
-    "holds": [],
-    "nodes": [
-     [
-      9,
-      3
-     ],
-     [
-      7,
-      3
-     ],
-     [
-      7,
-      2
-     ],
-     [
-      2,
-      2
-     ],
-     [
-      2,
-      5
-     ],
-     [
-      4,
-      5
-     ],
-     [
-      4,
-      6
-     ]
-    ]
-   },
-   "7": {
-    "points": [
-     [
-      0,
-      3
-     ],
-     [
-      1,
-      3
-     ],
-     [
-      2,
-      3
-     ],
-     [
-      2,
-      4
-     ],
-     [
-      2,
-      5
-     ],
-     [
-      3,
-      5
-     ],
-     [
-      4,
-      5
-     ],
-     [
-      4,
-      6
-     ]
-    ],
-    "distances": [
-     0,
-     1,
-     2,
-     3,
-     4,
-     5,
-     6,
-     7
-    ],
-    "length": 7,
-    "breaks": [],
-    "flying": false,
-    "holds": [],
-    "nodes": [
-     [
-      0,
-      3
-     ],
-     [
-      2,
-      3
-     ],
-     [
-      2,
-      5
-     ],
-     [
-      4,
-      5
-     ],
-     [
-      4,
-      6
-     ]
-    ]
-   },
-   "8": {
-    "points": [
-     [
-      9,
-      3
-     ],
-     [
-      8,
-      3
-     ],
-     [
-      7,
-      3
-     ],
-     [
-      7,
-      4
-     ],
-     [
-      7,
-      5
-     ],
-     [
-      6,
-      5
-     ],
-     [
-      5,
-      5
-     ],
-     [
-      5,
-      6
-     ]
-    ],
-    "distances": [
-     0,
-     1,
-     2,
-     3,
-     4,
-     5,
-     6,
-     7
-    ],
-    "length": 7,
-    "breaks": [],
-    "flying": false,
-    "holds": [],
-    "nodes": [
-     [
-      9,
-      3
-     ],
-     [
-      7,
-      3
-     ],
-     [
-      7,
-      5
-     ],
-     [
-      5,
-      5
-     ],
-     [
-      5,
-      6
-     ]
-    ]
-   },
-   "9": {
-    "points": [
-     [
-      1,
-      0
-     ],
-     [
-      1,
-      1
-     ],
-     [
-      2,
-      1
-     ],
-     [
-      2,
-      2
-     ],
-     [
-      3,
-      2
-     ],
-     [
-      4,
-      2
-     ],
-     [
-      5,
-      2
-     ],
-     [
-      6,
-      2
-     ],
-     [
-      7,
-      2
-     ],
-     [
-      7,
-      3
-     ],
-     [
-      7,
-      4
-     ],
-     [
-      7,
-      5
-     ],
-     [
-      6,
-      5
-     ],
-     [
-      5,
-      5
-     ],
-     [
-      5,
-      6
-     ]
-    ],
-    "distances": [
-     0,
-     1,
-     2,
-     3,
-     4,
-     5,
-     6,
-     7,
-     8,
-     9,
-     10,
-     11,
-     12,
-     13,
-     14
-    ],
-    "length": 14,
-    "breaks": [],
-    "flying": false,
-    "holds": [],
-    "nodes": [
-     [
-      1,
-      0
-     ],
-     [
-      1,
-      1
-     ],
-     [
-      2,
-      1
-     ],
-     [
-      2,
-      2
-     ],
-     [
-      7,
-      2
-     ],
-     [
-      7,
-      5
-     ],
-     [
-      5,
-      5
-     ],
-     [
-      5,
-      6
-     ]
-    ]
-   }
   }
- },
- "art": null,
- "gates": null,
- "fixedSquad": null,
- "enemies": {
-  "enemy_1007_slime_2": {
-   "key": "enemy_1007_slime_2",
-   "prefabKey": "enemy_1007_slime_2",
-   "name": "Originium Slug α",
-   "level": 0,
-   "rank": "NORMAL",
-   "applyWay": "MELEE",
-   "stats": {
-    "maxHp": 1050,
-    "atk": 185,
-    "def": 0,
-    "res": 0,
-    "moveSpeed": 1,
-    "bat": 1.7,
-    "aspd": 100,
-    "rangeRadius": 0,
-    "rawRangeRadius": 0,
-    "blockCnt": 1,
-    "massLevel": 0,
-    "lpr": 1,
-    "hpRecoveryPerSec": 0,
-    "elementRes": 0,
-    "elementDmgRes": 0,
-    "hitRatePhys": 0,
-    "hitRateArts": 0,
-    "dmgType": "phys",
-    "dmgTypes": [
-     "phys"
-    ],
-    "motion": "WALK",
-    "immunities": {
-     "stun": false,
-     "silence": false,
-     "sleep": false,
-     "frozen": false,
-     "levitate": false
-    },
-    "otherImmunities": [],
-    "tauntLevel": 0
-   },
-   "abilities": [],
-   "talents": {
-    "bb": {},
-    "bbStr": {},
-    "groups": {}
-   },
-   "skills": [],
-   "notCountInTotal": false,
-   "tags": [
-    "infection"
-   ]
-  },
-  "enemy_1030_wteeth_2": {
-   "key": "enemy_1030_wteeth_2",
-   "prefabKey": "enemy_1030_wteeth_2",
-   "name": "Veteran Junkman",
-   "level": 0,
-   "rank": "NORMAL",
-   "applyWay": "MELEE",
-   "stats": {
-    "maxHp": 7500,
-    "atk": 600,
-    "def": 70,
-    "res": 20,
-    "moveSpeed": 0.8,
-    "bat": 3,
-    "aspd": 100,
-    "rangeRadius": 0,
-    "rawRangeRadius": 0,
-    "blockCnt": 1,
-    "massLevel": 2,
-    "lpr": 1,
-    "hpRecoveryPerSec": 0,
-    "elementRes": 0,
-    "elementDmgRes": 0,
-    "hitRatePhys": 0,
-    "hitRateArts": 0,
-    "dmgType": "phys",
-    "dmgTypes": [
-     "phys"
-    ],
-    "motion": "WALK",
-    "immunities": {
-     "stun": false,
-     "silence": false,
-     "sleep": false,
-     "frozen": false,
-     "levitate": false
-    },
-    "otherImmunities": [],
-    "tauntLevel": 0
-   },
-   "abilities": [],
-   "talents": {
-    "bb": {},
-    "bbStr": {},
-    "groups": {}
-   },
-   "skills": [],
-   "notCountInTotal": false,
-   "tags": []
-  },
-  "enemy_1002_nsabr": {
-   "key": "enemy_1002_nsabr",
-   "prefabKey": "enemy_1002_nsabr",
-   "name": "Soldier",
-   "level": 0,
-   "rank": "NORMAL",
-   "applyWay": "MELEE",
-   "stats": {
-    "maxHp": 1650,
-    "atk": 200,
-    "def": 100,
-    "res": 0,
-    "moveSpeed": 1.1,
-    "bat": 2,
-    "aspd": 100,
-    "rangeRadius": 0,
-    "rawRangeRadius": 0,
-    "blockCnt": 1,
-    "massLevel": 1,
-    "lpr": 1,
-    "hpRecoveryPerSec": 0,
-    "elementRes": 0,
-    "elementDmgRes": 0,
-    "hitRatePhys": 0,
-    "hitRateArts": 0,
-    "dmgType": "phys",
-    "dmgTypes": [
-     "phys"
-    ],
-    "motion": "WALK",
-    "immunities": {
-     "stun": false,
-     "silence": false,
-     "sleep": false,
-     "frozen": false,
-     "levitate": false
-    },
-    "otherImmunities": [],
-    "tauntLevel": 0
-   },
-   "abilities": [],
-   "talents": {
-    "bb": {},
-    "bbStr": {},
-    "groups": {}
-   },
-   "skills": [],
-   "notCountInTotal": false,
-   "tags": []
-  },
-  "enemy_1014_rogue": {
-   "key": "enemy_1014_rogue",
-   "prefabKey": "enemy_1014_rogue",
-   "name": "Dual Swordsman",
-   "level": 0,
-   "rank": "NORMAL",
-   "applyWay": "MELEE",
-   "stats": {
-    "maxHp": 2000,
-    "atk": 350,
-    "def": 100,
-    "res": 0,
-    "moveSpeed": 1.1,
-    "bat": 1.2,
-    "aspd": 100,
-    "rangeRadius": 0,
-    "rawRangeRadius": 0,
-    "blockCnt": 1,
-    "massLevel": 1,
-    "lpr": 1,
-    "hpRecoveryPerSec": 0,
-    "elementRes": 0,
-    "elementDmgRes": 0,
-    "hitRatePhys": 0,
-    "hitRateArts": 0,
-    "dmgType": "phys",
-    "dmgTypes": [
-     "phys"
-    ],
-    "motion": "WALK",
-    "immunities": {
-     "stun": false,
-     "silence": false,
-     "sleep": false,
-     "frozen": false,
-     "levitate": false
-    },
-    "otherImmunities": [],
-    "tauntLevel": 0
-   },
-   "abilities": [],
-   "talents": {
-    "bb": {},
-    "bbStr": {},
-    "groups": {}
-   },
-   "skills": [],
-   "notCountInTotal": false,
-   "tags": []
-  }
- }
 }

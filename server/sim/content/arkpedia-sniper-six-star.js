@@ -87,6 +87,7 @@ export function customizeSniperSixStarKit({ battle: b, id, def, unit: u, kit }) 
   kit.skill.id = s.id; kit.skill.name = s.name;
 }
 export function installSniperSixStar({ battle: b, unit: u, def }) {
+  if (!SNIPER_SIX_STAR_OPERATORS[def.charId]) return;
   if (def.charId !== SCHWARZ) return;
   u.mem.schwarzOpening = true;
   b.on('tick', () => {

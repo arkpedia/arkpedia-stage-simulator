@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Diagnostic S1/S2 summon lifecycle. Attack and skill adapters are separate gates.
+import { stageSummonCost, stageCardRespawnTime } from './arkpedia-stage-card-cost.js';
 import {mcgrafAttackKit,MCGRAF_ATTACK_CONTRACT} from './arkpedia-mcnist-attacks.js';
 import {selectedMcGrafBuild} from './arkpedia-mcgraf-source.js';
 import {MCNIST_ID as ID,MCGRAF_ID as TOKEN,mechanistNativeInputs,mechanistSourceComponent} from './arkpedia-mcnist-source.js';
@@ -53,7 +54,7 @@ export class McGrafLifecycle{
   const tile=b.grid.tile(row,col);
   if(tile.height!=='LOW'||!['MELEE','ALL'].includes(tile.build)||b.grid.isObstacle(row,col))return 'Choose a low-ground deployment tile.';
   if(b.unitAt(row,col)||b.tileReservation(row,col)||b.downOn(row,col))return 'Tile is occupied or reserved.';
-  if(!canSpendDp(b,this.u.ownerId,this.record.stats.cost))return 'Not enough DP.';
+  if(!canSpendDp(b,this.u.ownerId,stageSummonCost(this.b, this.record)))return 'Not enough DP.';
   return null;
  }
  visual(s,clip,loop=false){const back=s.unit.dir==='UP';s.unit.mem.regularModelFacing=back?'back':'front';
@@ -72,7 +73,7 @@ export class McGrafLifecycle{
  place(row,col,dir='RIGHT'){
   const error=this.placementError(row,col);if(error)throw Error(error);
   if(!['UP','DOWN','LEFT','RIGHT'].includes(dir))throw Error('Choose a facing direction.');
-  const b=this.b,paid=this.record.stats.cost,oldReady=this.readyAt;this.placing=true;this.stock=0;b.addDp(this.u.ownerId,-paid);let token,created;
+  const b=this.b,paid=stageSummonCost(this.b, this.record),oldReady=this.readyAt;this.placing=true;this.stock=0;b.addDp(this.u.ownerId,-paid);let token,created;
   try{
    const combat=this.combatContract?mcgrafAttackKit(b,this.u,this.barriers,{contract:this.combatContract}):null;
    token=b.spawnToken(this.u,TOKEN,row,col,{dir,def:this.def,kit:{trait:combat?.trait??{noAttack:true},talents:[],skill:this.lifetimeSpec(),
@@ -87,7 +88,7 @@ export class McGrafLifecycle{
  }
  finish(s,{remove=false,reason='removed'}={}){
   if(!s||s.finished)return;s.finished=true;if(this.point===s)this.point=null;
-  if(this.valid()){this.stock=1;this.readyAt=this.b.time+this.record.stats.respawnTime;}
+  if(this.valid()){this.stock=1;this.readyAt=this.b.time+stageCardRespawnTime(this.b, this.record);}
   if(remove&&present(s.unit)&&s.unit.deploySeq===s.seq)this.b._remove(s.unit,`mcgraf-${reason}`,null,true);
  }
  retreat(t){if(!canDeployInViewport(this.b.viewport)||this.b.finished||!this.valid()||this.point?.unit!==t||!present(t)||t.deploySeq!==this.point.seq)throw Error('Select the current McGraf in fullscreen.');

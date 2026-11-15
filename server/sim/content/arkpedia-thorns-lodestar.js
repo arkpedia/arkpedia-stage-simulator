@@ -336,4 +336,7 @@ export function customizeThornsLodestarKit({battle:b,id,unit:u,kit}){
   const prepared=prepare(b,u,{contract});
   Object.assign(kit,prepared.kit);u.mem.thornsController=prepared.controller;
 }
-export function installThornsLodestar({unit:u}){u.mem.thornsController?.install();}
+export function installThornsLodestar({ unit: u, def }) {
+  if (def.charId !== ID) return;
+  u.mem.thornsController?.install();
+}

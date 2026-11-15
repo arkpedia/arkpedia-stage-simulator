@@ -235,6 +235,16 @@ export class Grid {
     this._fields.clear();
   }
 
+  /** Replace one effective tile without mutating a shared legend entry. */
+  setTile(r, c, tile) {
+    if (!this.inRect(r, c)) return;
+    const k = r * COLS + c;
+    this.tiles[k] = Object.freeze({ ...tile });
+    this.unblockable[k] = tile.pass === 'ALL' && !isBlockableTile(tile) ? 1 : 0;
+    this.version++;
+    this._fields.clear();
+  }
+
   /** Any obstacle (crate or block) on the tile. */
   isObstacle(r, c) { return this.inBounds(r, c) && this.obstacle[r * COLS + c] !== 0; }
   /** An obstacle-like (cost-1000) crate on the tile. */

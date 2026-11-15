@@ -3,12 +3,13 @@
  "name": "Omen",
  "description": "Condition:\nThe cost of all ranged Operators is tripled.",
  "battle": {
-  "max_life": 10,
+  "max_life": 1,
   "unit_limit": 8,
   "initial_dp": 10,
   "max_dp": 99,
   "dp_per_second": 1,
-  "dp_recovery_interval_seconds": 1
+  "dp_recovery_interval_seconds": 1,
+  "max_play_time": -1
  },
  "mapTags": [],
  "mapTagSource": null,
@@ -944,8 +945,8 @@
    "rank": "NORMAL",
    "applyWay": "MELEE",
    "stats": {
-    "maxHp": 1050,
-    "atk": 185,
+    "maxHp": 1260,
+    "atk": 222,
     "def": 0,
     "res": 0,
     "moveSpeed": 1,
@@ -996,9 +997,9 @@
    "rank": "NORMAL",
    "applyWay": "MELEE",
    "stats": {
-    "maxHp": 1700,
-    "atk": 250,
-    "def": 50,
+    "maxHp": 2040,
+    "atk": 300,
+    "def": 60,
     "res": 0,
     "moveSpeed": 1.1,
     "bat": 2,
@@ -1046,9 +1047,9 @@
    "rank": "NORMAL",
    "applyWay": "NONE",
    "stats": {
-    "maxHp": 800,
+    "maxHp": 960,
     "atk": 0,
-    "def": 50,
+    "def": 60,
     "res": 0,
     "moveSpeed": 0.9,
     "bat": 2.3,
@@ -1103,9 +1104,9 @@
    "rank": "NORMAL",
    "applyWay": "MELEE",
    "stats": {
-    "maxHp": 1650,
-    "atk": 200,
-    "def": 100,
+    "maxHp": 1980,
+    "atk": 240,
+    "def": 120,
     "res": 0,
     "moveSpeed": 1.1,
     "bat": 2,
@@ -1153,9 +1154,9 @@
    "rank": "NORMAL",
    "applyWay": "MELEE",
    "stats": {
-    "maxHp": 2050,
-    "atk": 240,
-    "def": 250,
+    "maxHp": 2460,
+    "atk": 288,
+    "def": 300,
     "res": 0,
     "moveSpeed": 1,
     "bat": 2,
@@ -1203,9 +1204,9 @@
    "rank": "NORMAL",
    "applyWay": "RANGED",
    "stats": {
-    "maxHp": 1550,
-    "atk": 180,
-    "def": 50,
+    "maxHp": 1860,
+    "atk": 216,
+    "def": 60,
     "res": 0,
     "moveSpeed": 1,
     "bat": 2.7,
@@ -1253,9 +1254,9 @@
    "rank": "NORMAL",
    "applyWay": "MELEE",
    "stats": {
-    "maxHp": 5000,
-    "atk": 500,
-    "def": 50,
+    "maxHp": 6000,
+    "atk": 600,
+    "def": 60,
     "res": 20,
     "moveSpeed": 0.8,
     "bat": 3,
@@ -1295,5 +1296,102 @@
    "notCountInTotal": false,
    "tags": []
   }
+ },
+ "rules": {
+  "variant": "challenge_mode",
+  "source": {
+   "repository": "Kengxxiao/ArknightsGameData",
+   "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+   "path": "zh_CN/gamedata/levels/obt/main/level_main_01-04.json",
+   "sha256": "fd7d0335d2df4932327a01cb6321c5d211d35b8a761a7ef659f85c5fbf106870",
+   "gitBlob": "966c540b4b9fe3cdbc421380f9367faaf9c2921c",
+   "stageTable": {
+    "path": "zh_CN/gamedata/excel/stage_table.json",
+    "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+    "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+    "stageId": "main_01-04",
+    "levelId": "Obt/Main/level_main_01-04"
+   }
+  },
+  "battle": {
+   "max_play_time": -1,
+   "max_life": 1
+  },
+  "enemies": {
+   "atk": 1.2,
+   "def": 1.2,
+   "maxHp": 1.2
+  },
+  "enemyAdd": {},
+  "hiddenGroups": {},
+  "allyCards": [
+   {
+    "attribute": "cost",
+    "professionMask": 1023,
+    "buildableMask": 2,
+    "scale": 3
+   }
+  ]
+ },
+ "tokens": [],
+ "contentRuleRefresh": {
+  "schemaVersion": 1,
+  "source": {
+   "repository": "arkpedia/arkpedia-data",
+   "commit": "66232ee06377d791fb130248d680764c286e5c99",
+   "files": [
+    {
+     "path": "stages/1-4_challenge_mode.json",
+     "sha256": "ca5e9bb9fac9454c2b4d92ecb558dacab9cedaf9436b573e76b619d438ac4155"
+    },
+    {
+     "path": "stage-geometry/1-4.json",
+     "sha256": "810021a477b6ec3f63cf91f18987158ee70c323f14242c9ed239ae5c6f964c91"
+    },
+    {
+     "path": "stage-devices.json",
+     "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+    }
+   ],
+   "localFiles": [
+    {
+     "path": "data/stage-rules/1-4_challenge_mode.json",
+     "sha256": "2dab4ffd102c6a296fe1dab9f32e4ff3dd172c0d50ee3406a692659d690523fd"
+    },
+    {
+     "path": "data/stage-rules/levels/2d03a8c2e9c25af42174a3dffc6555909aaa4fa49ad4d56f6e4b32faf2f6363f.json",
+     "sha256": "2d03a8c2e9c25af42174a3dffc6555909aaa4fa49ad4d56f6e4b32faf2f6363f"
+    }
+   ]
+  },
+  "validation": {
+   "smoke": {
+    "seconds": 10,
+    "spawned": 1,
+    "errors": 0
+   },
+   "waveSchedule": {
+    "id": "1-4_challenge_mode",
+    "seconds": 152.23333333333332,
+    "spawned": 39,
+    "expected": 39,
+    "reason": "cleared",
+    "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+   },
+   "browser": {
+    "id": "1-4_challenge_mode",
+    "seconds": 20,
+    "errors": [],
+    "units": 3,
+    "canvas": true,
+    "scope": "Browser startup and 600 simulation ticks; not full gameplay or visual fidelity approval"
+   }
+  },
+  "changed": [
+   "rules",
+   "battle",
+   "enemies",
+   "tokens"
+  ]
  }
 }

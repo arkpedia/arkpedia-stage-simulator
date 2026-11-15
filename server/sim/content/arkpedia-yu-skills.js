@@ -305,4 +305,7 @@ export function customizeYuKit({ battle, id, unit, kit }) {
   const prepared = prepareYuSkills(battle, unit, { contract: YU_SKILL_CONTRACT });
   Object.assign(kit, prepared.kit);
 }
-export function installYu({ unit }) { unit.mem.yuController?.install(); }
+export function installYu({ unit, def }) {
+  if (def.charId !== YU_ID) return;
+  unit.mem.yuController?.install();
+}

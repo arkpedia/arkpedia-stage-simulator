@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { SUPPORT_EXPANSION_OPERATORS } from '../../../shared/arkpedia/support-expansion-operators.js';
 import evidence from '../../../data/arkpedia-support-expansion-prefabs.json' with { type: 'json' };
 import { absoluteRangeKeys, sortEnemyTargets } from '../targeting.js';
 
@@ -7,6 +8,7 @@ const retainedDollBuff = (buff, unit) => buff.persist ||
   (unit.skill.id === 'skchr_vrdant_1' && buff.key === unit.skill._buffKey);
 
 export function customizeSupportExpansionKit({ id, def, unit, kit }) {
+  if (!SUPPORT_EXPANSION_OPERATORS[id]) return;
   const skill = def.skill;
   if (!skill) return;
   const bb = skill.bb;
@@ -205,6 +207,7 @@ function installVerdant(battle, unit, def) {
 }
 
 export function installSupportExpansion({ battle, unit, def }) {
+  if (!SUPPORT_EXPANSION_OPERATORS[def.charId]) return;
   const talent = def.talents[0]?.bb;
   if (unit.defId === 'char_272_strong') {
     unit.profile.windup = models(unit.defId).hits.Attack[0];

@@ -3,12 +3,13 @@
  "name": "Beyond Cure",
  "description": "Condition:\nThe cost of Caster Operators is doubled.",
  "battle": {
-  "max_life": 3,
+  "max_life": 1,
   "unit_limit": 10,
   "initial_dp": 10,
   "max_dp": 99,
   "dp_per_second": 1,
-  "dp_recovery_interval_seconds": 1
+  "dp_recovery_interval_seconds": 1,
+  "max_play_time": -1
  },
  "mapTags": [],
  "mapTagSource": null,
@@ -1897,9 +1898,9 @@
    "rank": "ELITE",
    "applyWay": "RANGED",
    "stats": {
-    "maxHp": 7000,
-    "atk": 240,
-    "def": 120,
+    "maxHp": 7700.000000000001,
+    "atk": 264,
+    "def": 132,
     "res": 50,
     "moveSpeed": 0.7,
     "bat": 3.8,
@@ -1952,9 +1953,9 @@
    "rank": "NORMAL",
    "applyWay": "MELEE",
    "stats": {
-    "maxHp": 1700,
-    "atk": 250,
-    "def": 50,
+    "maxHp": 1870.0000000000002,
+    "atk": 275,
+    "def": 55.00000000000001,
     "res": 0,
     "moveSpeed": 1.1,
     "bat": 2,
@@ -2002,9 +2003,9 @@
    "rank": "NORMAL",
    "applyWay": "MELEE",
    "stats": {
-    "maxHp": 2650,
-    "atk": 350,
-    "def": 85,
+    "maxHp": 2915.0000000000005,
+    "atk": 385.00000000000006,
+    "def": 93.50000000000001,
     "res": 0,
     "moveSpeed": 1.1,
     "bat": 2,
@@ -2052,9 +2053,9 @@
    "rank": "ELITE",
    "applyWay": "MELEE",
    "stats": {
-    "maxHp": 6000,
-    "atk": 600,
-    "def": 800,
+    "maxHp": 6600.000000000001,
+    "atk": 660,
+    "def": 880.0000000000001,
     "res": 0,
     "moveSpeed": 0.75,
     "bat": 2.6,
@@ -2102,9 +2103,9 @@
    "rank": "NORMAL",
    "applyWay": "MELEE",
    "stats": {
-    "maxHp": 2500,
-    "atk": 250,
-    "def": 400,
+    "maxHp": 2750,
+    "atk": 275,
+    "def": 440.00000000000006,
     "res": 0,
     "moveSpeed": 1,
     "bat": 2,
@@ -2152,9 +2153,9 @@
    "rank": "NORMAL",
    "applyWay": "RANGED",
    "stats": {
-    "maxHp": 1550,
-    "atk": 180,
-    "def": 50,
+    "maxHp": 1705.0000000000002,
+    "atk": 198.00000000000003,
+    "def": 55.00000000000001,
     "res": 0,
     "moveSpeed": 1,
     "bat": 2.7,
@@ -2202,9 +2203,9 @@
    "rank": "NORMAL",
    "applyWay": "RANGED",
    "stats": {
-    "maxHp": 1600,
-    "atk": 200,
-    "def": 50,
+    "maxHp": 1760.0000000000002,
+    "atk": 220.00000000000003,
+    "def": 55.00000000000001,
     "res": 50,
     "moveSpeed": 0.8,
     "bat": 4,
@@ -2252,9 +2253,9 @@
    "rank": "BOSS",
    "applyWay": "ALL",
    "stats": {
-    "maxHp": 10500,
-    "atk": 1000,
-    "def": 150,
+    "maxHp": 11550.000000000002,
+    "atk": 1100,
+    "def": 165,
     "res": 30,
     "moveSpeed": 0.6,
     "bat": 3,
@@ -2323,9 +2324,9 @@
    "rank": "NORMAL",
    "applyWay": "NONE",
    "stats": {
-    "maxHp": 4000,
+    "maxHp": 4400,
     "atk": 0,
-    "def": 150,
+    "def": 165,
     "res": 20,
     "moveSpeed": 0.8,
     "bat": 2,
@@ -2392,9 +2393,9 @@
    "rank": "ELITE",
    "applyWay": "MELEE",
    "stats": {
-    "maxHp": 8000,
-    "atk": 750,
-    "def": 80,
+    "maxHp": 8800,
+    "atk": 825.0000000000001,
+    "def": 88,
     "res": 30,
     "moveSpeed": 0.75,
     "bat": 3.3,
@@ -2442,9 +2443,9 @@
    "rank": "NORMAL",
    "applyWay": "MELEE",
    "stats": {
-    "maxHp": 5000,
-    "atk": 500,
-    "def": 50,
+    "maxHp": 5500,
+    "atk": 550,
+    "def": 55.00000000000001,
     "res": 20,
     "moveSpeed": 0.8,
     "bat": 3,
@@ -2492,9 +2493,9 @@
    "rank": "NORMAL",
    "applyWay": "MELEE",
    "stats": {
-    "maxHp": 1650,
-    "atk": 200,
-    "def": 100,
+    "maxHp": 1815.0000000000002,
+    "atk": 220.00000000000003,
+    "def": 110.00000000000001,
     "res": 0,
     "moveSpeed": 1.1,
     "bat": 2,
@@ -2534,5 +2535,102 @@
    "notCountInTotal": false,
    "tags": []
   }
+ },
+ "rules": {
+  "variant": "challenge_mode",
+  "source": {
+   "repository": "Kengxxiao/ArknightsGameData",
+   "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+   "path": "zh_CN/gamedata/levels/obt/main/level_main_02-10.json",
+   "sha256": "fcd0053135697378848b3e77788416c33b2c0a80681158a12f3a7ea82347153b",
+   "gitBlob": "1a343832a753c56659ee0fd3fc994ddb61812547",
+   "stageTable": {
+    "path": "zh_CN/gamedata/excel/stage_table.json",
+    "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+    "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+    "stageId": "main_02-10",
+    "levelId": "Obt/Main/level_main_02-10"
+   }
+  },
+  "battle": {
+   "max_play_time": -1,
+   "max_life": 1
+  },
+  "enemies": {
+   "atk": 1.1,
+   "maxHp": 1.1,
+   "def": 1.1
+  },
+  "enemyAdd": {},
+  "hiddenGroups": {},
+  "allyCards": [
+   {
+    "attribute": "cost",
+    "professionMask": 1,
+    "buildableMask": 3,
+    "scale": 2
+   }
+  ]
+ },
+ "tokens": [],
+ "contentRuleRefresh": {
+  "schemaVersion": 1,
+  "source": {
+   "repository": "arkpedia/arkpedia-data",
+   "commit": "66232ee06377d791fb130248d680764c286e5c99",
+   "files": [
+    {
+     "path": "stages/2-10_challenge_mode.json",
+     "sha256": "909ebdeda8a7a95cb8cf2418eb3eae9444ad92c3a8d4f5da2f918ad933db3ffa"
+    },
+    {
+     "path": "stage-geometry/2-10.json",
+     "sha256": "c0d3126a35d38e686794addb81a476a8c3c32cb4f7de05b364c99712bc0d1d62"
+    },
+    {
+     "path": "stage-devices.json",
+     "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+    }
+   ],
+   "localFiles": [
+    {
+     "path": "data/stage-rules/2-10_challenge_mode.json",
+     "sha256": "5bbb8a3f23e6fd135bdb853f5677de14bb50f9790838946a8f7778a7310ea7d7"
+    },
+    {
+     "path": "data/stage-rules/levels/87cbc72f0797aad6a778bc5407c552ddcc01dbfa620d3b0f463978035ef3c166.json",
+     "sha256": "87cbc72f0797aad6a778bc5407c552ddcc01dbfa620d3b0f463978035ef3c166"
+    }
+   ]
+  },
+  "validation": {
+   "smoke": {
+    "seconds": 10,
+    "spawned": 2,
+    "errors": 0
+   },
+   "waveSchedule": {
+    "id": "2-10_challenge_mode",
+    "seconds": 189.73333333333332,
+    "spawned": 36,
+    "expected": 36,
+    "reason": "cleared",
+    "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+   },
+   "browser": {
+    "id": "2-10_challenge_mode",
+    "seconds": 18.6,
+    "errors": [],
+    "units": 3,
+    "canvas": true,
+    "scope": "Browser startup and 600 simulation ticks; not full gameplay or visual fidelity approval"
+   }
+  },
+  "changed": [
+   "rules",
+   "battle",
+   "enemies",
+   "tokens"
+  ]
  }
 }

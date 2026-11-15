@@ -188,8 +188,8 @@ function syncAura(b, u, def) {
 }
 
 export function installFiveStarGuardThird({ battle: b, unit: u, def }) {
+  if (!FIVE_STAR_GUARD_THIRD_OPERATORS[def.charId]) return;
   const id = def.charId, talent = def.talents[0];
-  if (!FIVE_STAR_GUARD_THIRD_OPERATORS[id]) return;
   if (id === 'char_140_whitew' && talent) u.profile.onEachHit = (b, u, e) => {
     if (e.alive) b.applyStatus(e, 'silence', { source: u, duration: talent.bb.duration });
   };

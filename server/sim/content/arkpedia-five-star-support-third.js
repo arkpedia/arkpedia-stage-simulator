@@ -258,8 +258,8 @@ function pushFEater(b, u, target, bb) {
   b.push(target, bb.force, { from: u, dir: { x: u.fwd[1], y: u.fwd[0] } });
 }
 
-// Native displacement is instantaneous in this engine. Check the complete
-// travelled segment for the source .33 collider, excluding direct victims.
+// Sweep each actual travelled segment for the source .33 collider, excluding
+// direct victims. Regular stages call this while the force is in motion.
 function segmentDist(e, x0, y0, x1, y1) {
   const dx = x1 - x0, dy = y1 - y0, length = dx * dx + dy * dy;
   const t = length > 0 ? Math.max(0, Math.min(1, ((e.x - x0) * dx + (e.y - y0) * dy) / length)) : 0;
@@ -267,6 +267,23 @@ function segmentDist(e, x0, y0, x1, y1) {
 }
 function pushEnforcer(b, u, target, bb, second, direct = new Set([target])) {
   if (!target?.alive) return;
+  if (b.regularDisplacement) {
+    const brushed = new Set();
+    if (second) b.applyStatus(target, 'stun', { source: u, duration: bb['forcer_s_2[hit_directly].stun'] });
+    b.push(target, bb.force, { from: u, dir: { x: u.fwd[1], y: u.fwd[0] }, fixedAngle: second, effect: true,
+      onTravel: second ? ({ from, to }) => {
+        for (const enemy of b.enemies) {
+          if (direct.has(enemy) || brushed.has(enemy) || !canTargetEnemy(u, enemy, { canHitFly: false })
+            || segmentDist(enemy, from.x, from.y, to.x, to.y) > bb.projectile_range + 1e-9) continue;
+          brushed.add(enemy);
+          b.applyStatus(enemy, 'stun', { key: 'enforcer:brush', source: u, duration: bb['forcer_s_2[brush].stun'] });
+        }
+      } : null,
+      onCollision: ({ tile }) => {
+        if (tile?.height === 'HIGH') b.applyStatus(target, 'stun', { source: u, duration: bb.stun });
+      } });
+    return;
+  }
   const x0 = target.x, y0 = target.y, expected = b.pushDistance(target, bb.force);
   const moved = b.push(target, bb.force, { from: u, dir: { x: u.fwd[1], y: u.fwd[0] }, fixedAngle: second });
   if (second) {

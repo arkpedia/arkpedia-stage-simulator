@@ -2,10 +2,11 @@
 // Linked Ray/Sandbeast controller. Selected builds use the complete kit.
 // Serialized graphs remain in the
 // source audit; phase clocks below are explicit executable contracts.
+import { stageCardRespawnTime } from './arkpedia-stage-card-cost.js';
 import evidence from '../../../data/arkpedia-ray-prefabs.json' with { type: 'json' };
 import { RayMagazine, SandbeastMagazine } from './arkpedia-ray-magazine.js';
 import { RayCombatLinks, RAY_ID, SANDBEAST_ID, SCOUT_MARK,
-  rayCandidates, rayFireEvent } from './arkpedia-ray-combat.js';
+  rayCandidates, rayFireEvent, rayPlacementKeys } from './arkpedia-ray-combat.js';
 import { bodyInKeys } from '../body.js';
 const live = u => u?.alive && u.deployed && !u.hidden && !u._removing;
 const model = u => evidence.models[RAY_ID][['LEFT', 'UP'].includes(u.dir) ? 'Back' : 'Front'];
@@ -180,6 +181,8 @@ export function customizeRayKit({ battle: b, id, def, unit: u, kit }) {
 
 export function installRay({ battle: b, unit: u, def }) {
   if (def.charId !== RAY_ID) return;
+  u.mem.regularSummonFactory = createSandbeast;
+  u.mem.regularSummonPlacementKeys = rayPlacementKeys;
   const controller = u.mem.rayController, links = u.mem.rayLinks;
   links.installDamageScale();
   controller.timer = b.every(b.dt, () => controller.tick(), { owner: u });
@@ -237,7 +240,7 @@ export function createSandbeast(b, state, row, col) {
     // Explicit execution contract: an absent native extra_add default is mapped
     // to zero here. It is not presented as a recovered serialized value.
     t.mem.rayMagazine.finish(links.magazine, { emptySeed: 0 });
-    clock = r.stats.respawnTime;
+    clock = stageCardRespawnTime(b, r);
     const ratio = u.skill.active && u.skill.id === 'skchr_ray_2' ? 1 + u.def.skill.bb.respawn_time : 1;
     state.readyAt = b.time + clock * ratio;
     if (!live(u)) recharge.cancel();

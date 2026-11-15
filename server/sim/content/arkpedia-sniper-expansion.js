@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { SNIPER_EXPANSION_OPERATORS } from '../../../shared/arkpedia/sniper-expansion-operators.js';
 import { resolveHit } from '../ai.js';
 import { absoluteRangeKeys } from '../targeting.js';
 import { bodyInKeys } from '../body.js';
@@ -29,6 +30,7 @@ function throwCaper(battle, unit, profile, target, info) {
 }
 
 export function customizeSniperExpansionKit({ id, def, kit }) {
+  if (!SNIPER_EXPANSION_OPERATORS[id]) return;
   if (!['char_366_acdrop', 'char_4100_caper'].includes(id) || !def.skill) return;
   const skill = def.skill, bb = skill.bb;
   // Remove text-inferred talent/skill effects; each field is bound to its prefab.
@@ -58,6 +60,7 @@ export function customizeSniperExpansionKit({ id, def, kit }) {
 }
 
 export function installSniperExpansion({ battle, unit, def }) {
+  if (!SNIPER_EXPANSION_OPERATORS[def.charId]) return;
   const talent = def.talents[0]?.bb;
   if (def.charId === 'char_366_acdrop' && talent) {
     // acdrop_t_1 ON_OUTPUT_MODIFIER: EnsureDmgOrHeal uses range2-2 for

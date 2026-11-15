@@ -1,0 +1,3037 @@
+{
+  "code": "CB-10",
+  "name": "1:11A.M.",
+  "description": "When a farce is mixed with alcohol and brought to a boil, perhaps the only ones who will remember what happened are those who watched from the outside.",
+  "battle": {
+    "max_life": 3,
+    "unit_limit": 9,
+    "initial_dp": 10,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1,
+    "max_play_time": -1
+  },
+  "rules": {
+    "variant": null,
+    "source": {
+      "repository": "Kengxxiao/ArknightsGameData",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "path": "zh_CN/gamedata/levels/activities/act5d0/level_act5d0_10.json",
+      "sha256": "6d130dcf5cfca9365d4352919f67b358acee84ddb94da5e4694e5b62deaeccb9",
+      "gitBlob": "930f15e7ae75e4fb1cdc5182f52384adad0b7dfb",
+      "stageTable": {
+        "path": "zh_CN/gamedata/excel/stage_table.json",
+        "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+        "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+        "stageId": "act5d0_10",
+        "levelId": "Activities/ACT5D0/level_act5d0_10"
+      }
+    },
+    "battle": {
+      "max_play_time": -1
+    },
+    "enemies": {},
+    "enemyAdd": {},
+    "hiddenGroups": {}
+  },
+  "mapTags": [],
+  "mapTagSource": null,
+  "geometry": {
+    "slug": "cb-10",
+    "rows": 8,
+    "cols": 12,
+    "tileLegend": [
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_floor",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      },
+      {
+        "key": "tile_start",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_healing",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true,
+        "blackboard": {
+          "HP_RECOVERY_PER_SEC_BY_MAX_HP_RATIO": 0.02
+        }
+      },
+      {
+        "key": "tile_fence",
+        "height": "low",
+        "walkable": false,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_telin",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_telout",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      }
+    ],
+    "tileGrid": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        2,
+        3,
+        3,
+        3,
+        4,
+        4,
+        3,
+        3,
+        3,
+        2,
+        5
+      ],
+      [
+        1,
+        2,
+        3,
+        4,
+        2,
+        3,
+        6,
+        2,
+        3,
+        3,
+        2,
+        5
+      ],
+      [
+        0,
+        2,
+        3,
+        4,
+        3,
+        4,
+        4,
+        3,
+        4,
+        3,
+        2,
+        5
+      ],
+      [
+        5,
+        2,
+        2,
+        4,
+        3,
+        4,
+        4,
+        3,
+        4,
+        3,
+        3,
+        0
+      ],
+      [
+        5,
+        2,
+        2,
+        2,
+        2,
+        6,
+        3,
+        2,
+        4,
+        3,
+        2,
+        1
+      ],
+      [
+        5,
+        3,
+        2,
+        2,
+        2,
+        7,
+        7,
+        3,
+        3,
+        3,
+        2,
+        1
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        8,
+        0,
+        0,
+        9,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "routes": [
+      {
+        "motion": null,
+        "placeholder": true,
+        "start": null,
+        "end": null,
+        "checkpoints": [],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 0
+        },
+        "end": {
+          "row": 6,
+          "col": 11
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 7,
+              "col": 4
+            }
+          },
+          {
+            "type": "appear_at_pos",
+            "position": {
+              "row": 7,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 10
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 90
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 4,
+            "seconds": 10
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 4,
+          "col": 0
+        },
+        "end": {
+          "row": 6,
+          "col": 11
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 9
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 3
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 0
+        },
+        "end": {
+          "row": 5,
+          "col": 11
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 10
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 10
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 3
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 11
+        },
+        "end": {
+          "row": 1,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 10
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 2
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 3
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 11
+        },
+        "end": {
+          "row": 2,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 10
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 1
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 3
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 4,
+          "col": 0
+        },
+        "end": {
+          "row": 6,
+          "col": 11
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 9
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 11
+        },
+        "end": {
+          "row": 1,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 3
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 4,
+          "col": 0
+        },
+        "end": {
+          "row": 5,
+          "col": 11
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 8
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 11
+        },
+        "end": {
+          "row": 1,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 10
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 2
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 11
+        },
+        "end": {
+          "row": 2,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 10
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 3
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 0
+        },
+        "end": {
+          "row": 5,
+          "col": 11
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 10
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 10
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 0
+        },
+        "end": {
+          "row": 6,
+          "col": 11
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 9
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 20
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 0
+        },
+        "end": {
+          "row": 5,
+          "col": 11
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 9
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 100
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 11
+        },
+        "end": {
+          "row": 2,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 10
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 2
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 15
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 11
+        },
+        "end": {
+          "row": 1,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 10
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 3
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 90
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 0
+        },
+        "end": {
+          "row": 6,
+          "col": 11
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 9
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 1,
+            "seconds": 10
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 11
+        },
+        "end": {
+          "row": 2,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 10
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 1
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 4,
+          "col": 0
+        },
+        "end": {
+          "row": 5,
+          "col": 11
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 9
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 1,
+            "seconds": 10
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 11
+        },
+        "end": {
+          "row": 2,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 10
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 3
+            }
+          }
+        ],
+        "waits": []
+      }
+    ],
+    "waves": [
+      {
+        "index": 0,
+        "duration": 180,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "'Rat King'",
+            "enemy_id": "enemy_1509_mousek",
+            "count": 1,
+            "time": 0,
+            "route": 1,
+            "fragment": 1
+          },
+          {
+            "enemy": "Sicilian",
+            "enemy_id": "enemy_1055_ganman",
+            "count": 2,
+            "time": 5,
+            "interval": 15,
+            "route": 2,
+            "fragment": 2
+          },
+          {
+            "enemy": "Sicilian",
+            "enemy_id": "enemy_1055_ganman",
+            "count": 1,
+            "time": 5,
+            "route": 3,
+            "fragment": 2
+          },
+          {
+            "enemy": "Sicilian",
+            "enemy_id": "enemy_1055_ganman",
+            "count": 2,
+            "time": 10,
+            "interval": 15,
+            "route": 4,
+            "fragment": 2
+          },
+          {
+            "enemy": "Sicilian",
+            "enemy_id": "enemy_1055_ganman",
+            "count": 1,
+            "time": 10,
+            "route": 5,
+            "fragment": 2
+          },
+          {
+            "enemy": "Sicilian",
+            "enemy_id": "enemy_1055_ganman",
+            "count": 1,
+            "time": 27,
+            "route": 6,
+            "fragment": 2
+          },
+          {
+            "enemy": "Sicilian",
+            "enemy_id": "enemy_1055_ganman",
+            "count": 1,
+            "time": 31,
+            "route": 7,
+            "fragment": 2
+          },
+          {
+            "enemy": "Brawler",
+            "enemy_id": "enemy_1056_ganwar",
+            "count": 1,
+            "time": 39,
+            "route": 8,
+            "fragment": 2
+          },
+          {
+            "enemy": "Brawler",
+            "enemy_id": "enemy_1056_ganwar",
+            "count": 1,
+            "time": 43,
+            "route": 9,
+            "fragment": 2
+          },
+          {
+            "enemy": "Sicilian",
+            "enemy_id": "enemy_1055_ganman",
+            "count": 3,
+            "time": 56,
+            "interval": 11,
+            "route": 10,
+            "fragment": 3
+          },
+          {
+            "enemy": "Sicilian",
+            "enemy_id": "enemy_1055_ganman",
+            "count": 3,
+            "time": 56,
+            "interval": 11,
+            "route": 11,
+            "fragment": 3
+          },
+          {
+            "enemy": "Greytail",
+            "enemy_id": "enemy_1060_emouse",
+            "count": 1,
+            "time": 78,
+            "route": 12,
+            "fragment": 3
+          },
+          {
+            "enemy": "Greytail",
+            "enemy_id": "enemy_1060_emouse",
+            "count": 1,
+            "time": 80,
+            "route": 13,
+            "fragment": 3
+          },
+          {
+            "enemy": "Greytail",
+            "enemy_id": "enemy_1060_emouse",
+            "count": 1,
+            "time": 77,
+            "route": 14,
+            "fragment": 3
+          },
+          {
+            "enemy": "Greytail",
+            "enemy_id": "enemy_1060_emouse",
+            "count": 1,
+            "time": 79,
+            "route": 15,
+            "fragment": 3
+          },
+          {
+            "enemy": "Marksman",
+            "enemy_id": "enemy_1057_gansho",
+            "count": 1,
+            "time": 85,
+            "route": 16,
+            "fragment": 3
+          },
+          {
+            "enemy": "Marksman",
+            "enemy_id": "enemy_1057_gansho",
+            "count": 1,
+            "time": 83,
+            "route": 17,
+            "fragment": 3
+          },
+          {
+            "enemy": "Greytail",
+            "enemy_id": "enemy_1060_emouse",
+            "count": 1,
+            "time": 115,
+            "route": 14,
+            "fragment": 4
+          },
+          {
+            "enemy": "Greytail",
+            "enemy_id": "enemy_1060_emouse",
+            "count": 1,
+            "time": 117,
+            "route": 12,
+            "fragment": 4
+          },
+          {
+            "enemy": "Marksman",
+            "enemy_id": "enemy_1057_gansho",
+            "count": 3,
+            "time": 115,
+            "interval": 25,
+            "route": 18,
+            "fragment": 4
+          },
+          {
+            "enemy": "Sicilian",
+            "enemy_id": "enemy_1055_ganman",
+            "count": 4,
+            "time": 103,
+            "interval": 15,
+            "route": 18,
+            "fragment": 4
+          },
+          {
+            "enemy": "Marksman",
+            "enemy_id": "enemy_1057_gansho",
+            "count": 3,
+            "time": 130,
+            "interval": 25,
+            "route": 19,
+            "fragment": 4
+          },
+          {
+            "enemy": "Sicilian",
+            "enemy_id": "enemy_1055_ganman",
+            "count": 4,
+            "time": 103,
+            "interval": 15,
+            "route": 19,
+            "fragment": 4
+          }
+        ]
+      }
+    ],
+    "spawnTiles": [
+      {
+        "key": "tile_start",
+        "row": 1,
+        "col": 11,
+        "routes": [
+          4,
+          10,
+          14,
+          15,
+          17,
+          14
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 2,
+        "col": 11,
+        "routes": [
+          5,
+          7,
+          9,
+          19,
+          19
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 3,
+        "col": 11,
+        "routes": []
+      },
+      {
+        "key": "tile_start",
+        "row": 4,
+        "col": 0,
+        "routes": [
+          2,
+          6,
+          8,
+          18,
+          18
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 5,
+        "col": 0,
+        "routes": [
+          3,
+          11,
+          16
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 6,
+        "col": 0,
+        "routes": [
+          1,
+          12,
+          13,
+          12
+        ]
+      }
+    ],
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 1,
+        "col": 0,
+        "routes": [
+          4,
+          7,
+          9,
+          15
+        ]
+      },
+      {
+        "key": "tile_end",
+        "row": 2,
+        "col": 0,
+        "routes": [
+          5,
+          10,
+          14,
+          17,
+          14,
+          19,
+          19
+        ]
+      },
+      {
+        "key": "tile_end",
+        "row": 5,
+        "col": 11,
+        "routes": [
+          3,
+          8,
+          11,
+          13,
+          18,
+          18
+        ]
+      },
+      {
+        "key": "tile_end",
+        "row": 6,
+        "col": 11,
+        "routes": [
+          1,
+          2,
+          6,
+          12,
+          16,
+          12
+        ]
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_1055_ganman",
+        "slug": "sicilian",
+        "name": "Sicilian",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1056_ganwar",
+        "slug": "brawler",
+        "name": "Brawler",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1057_gansho",
+        "slug": "marksman",
+        "name": "Marksman",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1060_emouse",
+        "slug": "greytail",
+        "name": "Greytail",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1509_mousek",
+        "slug": "rat_king",
+        "name": "'Rat King'",
+        "database_level": 0
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [],
+      "deployable_tokens": []
+    },
+    "hasConditionalSpawns": false
+  },
+  "terrain": [],
+  "conditionalHandled": false,
+  "devices": [],
+  "tokens": [],
+  "pathing": {
+    "schemaVersion": 1,
+    "syntheticRoutes": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "producer": "Arkpedia stage browser / buildPlaybackPaths",
+    "stage": "CB-10",
+    "geometryHash": "db789cf91d1cbfd8ecfc1304906b015b178842480d28bb2f3f2fd4444f9e92b2",
+    "moveScale": 0.65,
+    "paths": {
+      "1": {
+        "points": [
+          [
+            0,
+            6
+          ],
+          [
+            1,
+            6
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            7,
+            7
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            9,
+            1
+          ],
+          [
+            9,
+            5
+          ],
+          [
+            10,
+            6
+          ],
+          [
+            11,
+            6
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "2": {
+        "points": [
+          [
+            0,
+            4
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            9,
+            2
+          ],
+          [
+            9,
+            6
+          ],
+          [
+            11,
+            6
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "3": {
+        "points": [
+          [
+            0,
+            5
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            6,
+            2
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            10,
+            1
+          ],
+          [
+            10,
+            5
+          ],
+          [
+            11,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "4": {
+        "points": [
+          [
+            11,
+            1
+          ],
+          [
+            10,
+            1
+          ],
+          [
+            8,
+            2
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "5": {
+        "points": [
+          [
+            11,
+            2
+          ],
+          [
+            10,
+            3
+          ],
+          [
+            8,
+            6
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            0,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "6": {
+        "points": [
+          [
+            0,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            9,
+            2
+          ],
+          [
+            9,
+            6
+          ],
+          [
+            11,
+            6
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "7": {
+        "points": [
+          [
+            11,
+            2
+          ],
+          [
+            9,
+            5
+          ],
+          [
+            8,
+            6
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "8": {
+        "points": [
+          [
+            0,
+            4
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            11,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "9": {
+        "points": [
+          [
+            11,
+            2
+          ],
+          [
+            10,
+            2
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "10": {
+        "points": [
+          [
+            11,
+            1
+          ],
+          [
+            10,
+            1
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            0,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "11": {
+        "points": [
+          [
+            0,
+            5
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            9,
+            1
+          ],
+          [
+            10,
+            1
+          ],
+          [
+            10,
+            5
+          ],
+          [
+            11,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "12": {
+        "points": [
+          [
+            0,
+            6
+          ],
+          [
+            1,
+            6
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            9,
+            2
+          ],
+          [
+            9,
+            6
+          ],
+          [
+            11,
+            6
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "13": {
+        "points": [
+          [
+            0,
+            6
+          ],
+          [
+            1,
+            6
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            9,
+            4
+          ],
+          [
+            11,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "14": {
+        "points": [
+          [
+            11,
+            1
+          ],
+          [
+            10,
+            1
+          ],
+          [
+            8,
+            6
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            0,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "15": {
+        "points": [
+          [
+            11,
+            1
+          ],
+          [
+            10,
+            1
+          ],
+          [
+            8,
+            6
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "16": {
+        "points": [
+          [
+            0,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            8,
+            2
+          ],
+          [
+            9,
+            3
+          ],
+          [
+            9,
+            6
+          ],
+          [
+            11,
+            6
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "17": {
+        "points": [
+          [
+            11,
+            1
+          ],
+          [
+            10,
+            2
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            0,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "18": {
+        "points": [
+          [
+            0,
+            4
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            8,
+            2
+          ],
+          [
+            9,
+            5
+          ],
+          [
+            11,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "19": {
+        "points": [
+          [
+            11,
+            2
+          ],
+          [
+            10,
+            2
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            0,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "breaks": [],
+        "holds": []
+      }
+    }
+  },
+  "art": null,
+  "gates": null,
+  "fixedSquad": null,
+  "enemies": {
+    "enemy_1509_mousek": {
+      "key": "enemy_1509_mousek",
+      "prefabKey": "enemy_1509_mousek",
+      "name": "Rat King",
+      "level": 0,
+      "rank": "BOSS",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 22000,
+        "atk": 470,
+        "def": 350,
+        "res": 30,
+        "moveSpeed": 0.6,
+        "bat": 3.4,
+        "aspd": 100,
+        "rangeRadius": 2.5,
+        "rawRangeRadius": 2.5,
+        "blockCnt": 1,
+        "massLevel": 5,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "arts",
+        "dmgTypes": [
+          "arts"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": true,
+          "silence": true,
+          "sleep": false,
+          "frozen": true,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "[Singing Sands] Targets a unit with the highest Max HP, dealing heavy physical damage to the target and nearby allied units within a cross area",
+          "format": "NORMAL"
+        },
+        {
+          "text": "[Sand Tomb] Targets a unit with the lowest Max HP, continuously inflicting Arts damage to the target and nearby allies, also reducing their ATK",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Appears with a Barrier that can absorb a large amount of Arts damage, gains significantly increased DEF while Barrier is active",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Deals more damage when HP drops below half",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "shield.dynamic": 4667,
+          "defup.def": 3000,
+          "enrage.hp_ratio": 0.5,
+          "enrage.damage_scale": 1.5
+        },
+        "bbStr": {},
+        "groups": {
+          "shield": [
+            "dynamic"
+          ],
+          "defup": [
+            "def"
+          ],
+          "enrage": [
+            "damage_scale",
+            "hp_ratio"
+          ]
+        }
+      },
+      "skills": [
+        {
+          "prefabKey": "SandStorm",
+          "priority": 0,
+          "cooldown": 25,
+          "initCooldown": 65,
+          "spCost": 0,
+          "bb": {
+            "damage": 70,
+            "atk": -0.7,
+            "duration": 15
+          },
+          "bbStr": {}
+        },
+        {
+          "prefabKey": "DriftSand",
+          "priority": 0,
+          "cooldown": 15,
+          "initCooldown": 20,
+          "spCost": 0,
+          "bb": {
+            "damage": 1200
+          },
+          "bbStr": {}
+        }
+      ],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1055_ganman": {
+      "key": "enemy_1055_ganman",
+      "prefabKey": "enemy_1055_ganman",
+      "name": "Sicilian",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 2700,
+        "atk": 250,
+        "def": 100,
+        "res": 10,
+        "moveSpeed": 1,
+        "bat": 2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1056_ganwar": {
+      "key": "enemy_1056_ganwar",
+      "prefabKey": "enemy_1056_ganwar",
+      "name": "Brawler",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 3200,
+        "atk": 290,
+        "def": 250,
+        "res": 0,
+        "moveSpeed": 0.95,
+        "bat": 0.4,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1060_emouse": {
+      "key": "enemy_1060_emouse",
+      "prefabKey": "enemy_1060_emouse",
+      "name": "Greytail",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 3000,
+        "atk": 700,
+        "def": 250,
+        "res": 20,
+        "moveSpeed": 0.9,
+        "bat": 3.2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 2,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": true,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "DEF significantly increases when the Barrier is present.",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Movement Speed significantly increases when the Barrier is destroyed.",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "shield.dynamic": 2000,
+          "shield.def": 1250,
+          "speedup.move_speed": 2
+        },
+        "bbStr": {},
+        "groups": {
+          "shield": [
+            "def",
+            "dynamic"
+          ],
+          "speedup": [
+            "move_speed"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1057_gansho": {
+      "key": "enemy_1057_gansho",
+      "prefabKey": "enemy_1057_gansho",
+      "name": "Marksman",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 3000,
+        "atk": 180,
+        "def": 150,
+        "res": 0,
+        "moveSpeed": 1,
+        "bat": 3,
+        "aspd": 100,
+        "rangeRadius": 1.7,
+        "rawRangeRadius": 1.7,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Shoots 3 times in a row",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Prioritizes attacking the Command Terminal",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    }
+  },
+  "contentAddition": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/cb-10.json",
+          "sha256": "ef694626b23288a0fc73f6a0fd91badb4f588d2702fc37f3c80ef0434ce60269"
+        },
+        {
+          "path": "stage-geometry/cb-10.json",
+          "sha256": "db789cf91d1cbfd8ecfc1304906b015b178842480d28bb2f3f2fd4444f9e92b2"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        }
+      ],
+      "localFiles": [
+        {
+          "path": "data/stage-rules/cb-10.json",
+          "sha256": "2baa5ffd215984fd0f500c81cf47b7303aafc8fa999ea0eaf8344669f45eca4a"
+        },
+        {
+          "path": "data/stage-rules/levels/ffca8c1114deed22be3628d13334958f22128a1b19bb54e165a8b6b404357f60.json",
+          "sha256": "ffca8c1114deed22be3628d13334958f22128a1b19bb54e165a8b6b404357f60"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/930f15e7ae75e4fb1cdc5182f52384adad0b7dfb.json",
+          "sha256": "6d130dcf5cfca9365d4352919f67b358acee84ddb94da5e4694e5b62deaeccb9"
+        }
+      ]
+    },
+    "dependencies": {
+      "enemies": [
+        "enemy_1055_ganman",
+        "enemy_1056_ganwar",
+        "enemy_1057_gansho",
+        "enemy_1060_emouse",
+        "enemy_1509_mousek"
+      ],
+      "devices": [],
+      "tokens": []
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 10,
+        "spawned": 3,
+        "errors": 0
+      },
+      "publicReview": "pending",
+      "waveSchedule": {
+        "id": "cb-10",
+        "seconds": 208.33333333333334,
+        "spawned": 39,
+        "expected": 39,
+        "dynamicSpawns": 0,
+        "reason": "cleared",
+        "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+      },
+      "browserStartup": {
+        "id": "cb-10",
+        "seconds": 20,
+        "errors": [],
+        "units": 5,
+        "canvas": true,
+        "scope": "Mobile landscape browser startup and canvas runtime; not a fidelity approval"
+      }
+    }
+  }
+}

@@ -1,0 +1,1526 @@
+{
+ "code": "DC-4",
+ "name": "Nowhere to Run",
+ "description": "Condition: \n<Marksmen> are invisible.",
+ "battle": {
+  "max_life": 1,
+  "unit_limit": 8,
+  "initial_dp": 15,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1,
+  "max_play_time": -1
+ },
+ "rules": {
+  "variant": "challenge_mode",
+  "source": {
+   "repository": "Kengxxiao/ArknightsGameData",
+   "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+   "path": "zh_CN/gamedata/levels/activities/act14mini/level_act14mini_04.json",
+   "sha256": "1e6151212f69f6aafa1b13e8f6fa270d4f2519c85dff84a604a907b872841b8a",
+   "gitBlob": "c5635a26411ab78feeb6a8be1fc43866a7b6a077",
+   "stageTable": {
+    "path": "zh_CN/gamedata/excel/stage_table.json",
+    "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+    "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+    "stageId": "act14mini_04",
+    "levelId": "Activities/act14mini/level_act14mini_04"
+   }
+  },
+  "battle": {
+   "max_play_time": -1,
+   "max_life": 1
+  },
+  "enemies": {
+   "atk": 1.2,
+   "def": 1.2,
+   "maxHp": 1.2
+  },
+  "enemyAdd": {},
+  "hiddenGroups": {},
+  "enemyDynamicAbilities": {
+   "enemy_1057_gansho": [
+    "invisible"
+   ]
+  }
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "dc-4",
+  "rows": 8,
+  "cols": 10,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_fence_bound",
+    "height": "low",
+    "walkable": false,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_telout",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_telin",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    1,
+    2,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    2,
+    1
+   ],
+   [
+    0,
+    3,
+    3,
+    4,
+    3,
+    5,
+    0,
+    4,
+    3,
+    0
+   ],
+   [
+    0,
+    3,
+    4,
+    0,
+    3,
+    6,
+    3,
+    3,
+    3,
+    7
+   ],
+   [
+    8,
+    3,
+    3,
+    3,
+    6,
+    3,
+    4,
+    0,
+    3,
+    0
+   ],
+   [
+    0,
+    3,
+    4,
+    4,
+    4,
+    3,
+    4,
+    4,
+    3,
+    0
+   ],
+   [
+    0,
+    2,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    2,
+    0
+   ],
+   [
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 5
+    },
+    "end": {
+     "row": 3,
+     "col": 5
+    },
+    "checkpoints": [],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 125
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 4
+    },
+    "end": {
+     "row": 4,
+     "col": 4
+    },
+    "checkpoints": [],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 95
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 1
+    },
+    "end": {
+     "row": 4,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 3
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 1
+    },
+    "end": {
+     "row": 4,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 1
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 8
+    },
+    "end": {
+     "row": 4,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 35
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 28
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 9
+    },
+    "end": {
+     "row": 3,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 3
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 1
+    },
+    "end": {
+     "row": 3,
+     "col": 5
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 0
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 3,
+       "col": 9
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 2
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 10
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 2,
+      "seconds": 5
+     }
+    ]
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 214,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Fanatic",
+      "enemy_id": "enemy_1059_buster",
+      "count": 1,
+      "time": 0,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Bully",
+      "enemy_id": "enemy_1058_traink",
+      "count": 1,
+      "time": 0,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sicilian",
+      "enemy_id": "enemy_1055_ganman",
+      "count": 1,
+      "time": 3,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Sicilian",
+      "enemy_id": "enemy_1055_ganman",
+      "count": 4,
+      "time": 15,
+      "interval": 12,
+      "route": 3,
+      "fragment": 1
+     },
+     {
+      "enemy": "Sicilian",
+      "enemy_id": "enemy_1055_ganman",
+      "count": 4,
+      "time": 19,
+      "interval": 12,
+      "route": 3,
+      "fragment": 1
+     },
+     {
+      "enemy": "Marksman",
+      "enemy_id": "enemy_1057_gansho",
+      "count": 1,
+      "time": 21,
+      "route": 4,
+      "fragment": 1
+     },
+     {
+      "enemy": "Marksman",
+      "enemy_id": "enemy_1057_gansho",
+      "count": 1,
+      "time": 40,
+      "route": 4,
+      "fragment": 1
+     },
+     {
+      "enemy": "Brawler",
+      "enemy_id": "enemy_1056_ganwar",
+      "count": 1,
+      "time": 68,
+      "route": 3,
+      "fragment": 2
+     },
+     {
+      "enemy": "Brawler",
+      "enemy_id": "enemy_1056_ganwar",
+      "count": 4,
+      "time": 76,
+      "interval": 13,
+      "route": 3,
+      "fragment": 2
+     },
+     {
+      "enemy": "Marksman",
+      "enemy_id": "enemy_1057_gansho",
+      "count": 4,
+      "time": 81,
+      "interval": 15,
+      "route": 4,
+      "fragment": 2
+     },
+     {
+      "enemy": "Marksman",
+      "enemy_id": "enemy_1057_gansho",
+      "count": 5,
+      "time": 134,
+      "interval": 20,
+      "route": 4,
+      "fragment": 3
+     },
+     {
+      "enemy": "Bully",
+      "enemy_id": "enemy_1058_traink",
+      "count": 1,
+      "time": 134,
+      "route": 5,
+      "fragment": 3
+     },
+     {
+      "enemy": "Bully",
+      "enemy_id": "enemy_1058_traink",
+      "count": 1,
+      "time": 201,
+      "route": 6,
+      "fragment": 3
+     },
+     {
+      "enemy": "Fanatic",
+      "enemy_id": "enemy_1059_buster",
+      "count": 2,
+      "time": 141,
+      "interval": 25,
+      "route": 7,
+      "fragment": 3
+     },
+     {
+      "enemy": "Greytail",
+      "enemy_id": "enemy_1060_emouse",
+      "count": 2,
+      "time": 151,
+      "interval": 25,
+      "route": 8,
+      "fragment": 3
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 0,
+    "routes": [
+     5,
+     6
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 9,
+    "routes": [
+     7
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 7,
+    "col": 1,
+    "routes": [
+     2,
+     3,
+     3,
+     3,
+     3,
+     8
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 7,
+    "col": 8,
+    "routes": [
+     4,
+     4,
+     4,
+     4
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 3,
+    "col": 5,
+    "routes": [
+     0,
+     5,
+     6,
+     7,
+     8
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 4,
+    "col": 4,
+    "routes": [
+     1,
+     2,
+     3,
+     3,
+     4,
+     4,
+     3,
+     3,
+     4,
+     4
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1055_ganman",
+    "slug": "sicilian",
+    "name": "Sicilian",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1056_ganwar",
+    "slug": "brawler",
+    "name": "Brawler",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1057_gansho",
+    "slug": "marksman",
+    "name": "Marksman",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1058_traink",
+    "slug": "bully",
+    "name": "Bully",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1059_buster",
+    "slug": "fanatic",
+    "name": "Fanatic",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1060_emouse",
+    "slug": "greytail",
+    "name": "Greytail",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": [
+    {
+     "unit": "Roadblock",
+     "unit_id": "trap_001_crate",
+     "count": 0,
+     "level": 1,
+     "elite": 0,
+     "potential": 0,
+     "skill_index": 0,
+     "skill_level": 1
+    }
+   ]
+  },
+  "hasConditionalSpawns": false,
+  "source": "cn"
+ },
+ "terrain": [],
+ "conditionalHandled": false,
+ "devices": [],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8
+  ],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "DC-4",
+  "geometryHash": "f8031b9e479f52d757f48f369e8ec0bd0ae2b98357bda34cfa0b91861c6871cd",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "1": {
+    "points": [
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "2": {
+    "points": [
+     [
+      1,
+      7
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      4,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "3": {
+    "points": [
+     [
+      1,
+      7
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      4,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "4": {
+    "points": [
+     [
+      8,
+      7
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "5": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "6": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "7": {
+    "points": [
+     [
+      9,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "8": {
+    "points": [
+     [
+      1,
+      7
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      0,
+      4
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      5,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "breaks": [],
+    "holds": []
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1059_buster": {
+   "key": "enemy_1059_buster",
+   "prefabKey": "enemy_1059_buster",
+   "name": "Fanatic",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 10800,
+    "atk": 840,
+    "def": 600,
+    "res": 0,
+    "moveSpeed": 0.8,
+    "bat": 5,
+    "aspd": 100,
+    "rangeRadius": 1.3,
+    "rawRangeRadius": 1.3,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Prioritizes attacking the Command Terminal",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "atkup.atk_scale": 1.5
+    },
+    "bbStr": {},
+    "groups": {
+     "atkup": [
+      "atk_scale"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1058_traink": {
+   "key": "enemy_1058_traink",
+   "prefabKey": "enemy_1058_traink",
+   "name": "Bully",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 19200,
+    "atk": 960,
+    "def": 960,
+    "res": 20,
+    "moveSpeed": 1.2,
+    "bat": 3.5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 4,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Can only be blocked by Operators with 3 or more Block",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1055_ganman": {
+   "key": "enemy_1055_ganman",
+   "prefabKey": "enemy_1055_ganman",
+   "name": "Sicilian",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3240,
+    "atk": 300,
+    "def": 120,
+    "res": 10,
+    "moveSpeed": 1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1057_gansho": {
+   "key": "enemy_1057_gansho",
+   "prefabKey": "enemy_1057_gansho",
+   "name": "Marksman",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 3600,
+    "atk": 216,
+    "def": 180,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 3,
+    "aspd": 100,
+    "rangeRadius": 1.7,
+    "rawRangeRadius": 1.7,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Shoots 3 times in a row",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Prioritizes attacking the Command Terminal",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1056_ganwar": {
+   "key": "enemy_1056_ganwar",
+   "prefabKey": "enemy_1056_ganwar",
+   "name": "Brawler",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3840,
+    "atk": 348,
+    "def": 300,
+    "res": 0,
+    "moveSpeed": 0.95,
+    "bat": 0.4,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1060_emouse": {
+   "key": "enemy_1060_emouse",
+   "prefabKey": "enemy_1060_emouse",
+   "name": "Greytail",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3600,
+    "atk": 840,
+    "def": 300,
+    "res": 20,
+    "moveSpeed": 0.9,
+    "bat": 3.2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": true,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "DEF significantly increases when the Barrier is present.",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Movement Speed significantly increases when the Barrier is destroyed.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "shield.dynamic": 2000,
+     "shield.def": 1250,
+     "speedup.move_speed": 2
+    },
+    "bbStr": {},
+    "groups": {
+     "shield": [
+      "def",
+      "dynamic"
+     ],
+     "speedup": [
+      "move_speed"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ },
+ "contentAddition": {
+  "schemaVersion": 1,
+  "source": {
+   "repository": "arkpedia/arkpedia-data",
+   "commit": "66232ee06377d791fb130248d680764c286e5c99",
+   "files": [
+    {
+     "path": "stages/dc-4_challenge_mode.json",
+     "sha256": "8e9efdc8a0f7530d4d5e5b2242845b03f3cd8929e17cd470a6c02d2d5db3c26b"
+    },
+    {
+     "path": "stage-geometry/dc-4.json",
+     "sha256": "f8031b9e479f52d757f48f369e8ec0bd0ae2b98357bda34cfa0b91861c6871cd"
+    },
+    {
+     "path": "stage-devices.json",
+     "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+    }
+   ],
+   "localFiles": [
+    {
+     "path": "data/stage-rules/dc-4_challenge_mode.json",
+     "sha256": "4eb74545cfcc40587ed44a726cf7e8e8d51d14933d47554009c21bdcfa46be33"
+    },
+    {
+     "path": "data/stage-rules/levels/8ecafa233d530902005593fa5031de564d8add62431f72ad4cc8b9b9940b7206.json",
+     "sha256": "8ecafa233d530902005593fa5031de564d8add62431f72ad4cc8b9b9940b7206"
+    },
+    {
+     "path": "data/arkpedia-native-stage-rules.json",
+     "sha256": "979774b472d0f3c75f86efc2dfc27673480adcddbe8fab5b3066909481e47527"
+    },
+    {
+     "path": ".cache/arkpedia/original-level-blobs/c5635a26411ab78feeb6a8be1fc43866a7b6a077.json",
+     "sha256": "1e6151212f69f6aafa1b13e8f6fa270d4f2519c85dff84a604a907b872841b8a"
+    }
+   ]
+  },
+  "dependencies": {
+   "enemies": [
+    "enemy_1055_ganman",
+    "enemy_1056_ganwar",
+    "enemy_1057_gansho",
+    "enemy_1058_traink",
+    "enemy_1059_buster",
+    "enemy_1060_emouse"
+   ],
+   "devices": [],
+   "tokens": []
+  },
+  "validation": {
+   "smoke": {
+    "seconds": 3.8666666666666667,
+    "spawned": 3,
+    "errors": 0
+   },
+   "publicReview": "pending",
+   "waveSchedule": {
+    "id": "dc-4_challenge_mode",
+    "seconds": 243.23333333333332,
+    "spawned": 33,
+    "expected": 33,
+    "reason": "cleared",
+    "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+   },
+   "browser": {
+    "id": "dc-4_challenge_mode",
+    "seconds": 3.8666666666666667,
+    "errors": [],
+    "units": 3,
+    "canvas": true,
+    "scope": "Browser startup and simulation smoke; not a playable clear or frame fidelity approval"
+   }
+  }
+ }
+}

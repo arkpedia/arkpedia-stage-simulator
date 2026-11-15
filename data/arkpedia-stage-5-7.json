@@ -1,0 +1,2217 @@
+{
+  "code": "5-7",
+  "name": "In Life and in Death",
+  "description": "Frost Drones greatly reduce the Attack Speed of our nearby units. Counter them with operators or Jammers to prevent them from using their abilities. \n<Jammer> can stop nearby enemy drones from firing, greatly reduce their speed, and prevent them from activating special abilities after being deployed.",
+  "battle": {
+    "max_life": 3,
+    "unit_limit": 8,
+    "initial_dp": 10,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1,
+    "max_play_time": -1
+  },
+  "rules": {
+    "variant": null,
+    "source": {
+      "repository": "Kengxxiao/ArknightsGameData",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "path": "zh_CN/gamedata/levels/obt/main/level_main_05-07.json",
+      "sha256": "0f386b2835c4ff1f12f083fb388965fa2ae3112b00ba31b5c9d344fece5d13f6",
+      "gitBlob": "20cf0df47730b8885e44eb3057c2a5fd3312fee3",
+      "stageTable": {
+        "path": "zh_CN/gamedata/excel/stage_table.json",
+        "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+        "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+        "stageId": "main_05-07",
+        "levelId": "Obt/Main/level_main_05-07"
+      }
+    },
+    "battle": {
+      "max_play_time": -1
+    },
+    "enemies": {},
+    "enemyAdd": {},
+    "hiddenGroups": {}
+  },
+  "mapTags": [],
+  "mapTagSource": null,
+  "geometry": {
+    "slug": "5-7",
+    "rows": 8,
+    "cols": 12,
+    "tileLegend": [
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_floor",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_start",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_flystart",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      }
+    ],
+    "tileGrid": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        2,
+        3,
+        4,
+        4,
+        2,
+        4,
+        4,
+        0,
+        4,
+        2,
+        5
+      ],
+      [
+        1,
+        4,
+        4,
+        4,
+        4,
+        3,
+        4,
+        4,
+        2,
+        4,
+        2,
+        5
+      ],
+      [
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        4,
+        4,
+        3,
+        4,
+        0,
+        4,
+        4,
+        4,
+        4,
+        2,
+        5
+      ],
+      [
+        1,
+        4,
+        4,
+        2,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        2,
+        5
+      ],
+      [
+        1,
+        3,
+        4,
+        3,
+        4,
+        2,
+        4,
+        4,
+        4,
+        4,
+        2,
+        5
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        6,
+        0
+      ]
+    ],
+    "routes": [
+      {
+        "motion": null,
+        "placeholder": true,
+        "start": null,
+        "end": null,
+        "checkpoints": [],
+        "waits": []
+      },
+      {
+        "motion": "fly",
+        "start": {
+          "row": 6,
+          "col": 5
+        },
+        "end": {
+          "row": 6,
+          "col": 0
+        },
+        "checkpoints": [],
+        "waits": [
+          {
+            "type": "wait_current_fragment_time",
+            "after_checkpoint": -1,
+            "seconds": 220
+          }
+        ]
+      },
+      {
+        "motion": "fly",
+        "start": {
+          "row": 2,
+          "col": 5
+        },
+        "end": {
+          "row": 2,
+          "col": 0
+        },
+        "checkpoints": [],
+        "waits": [
+          {
+            "type": "wait_current_fragment_time",
+            "after_checkpoint": -1,
+            "seconds": 220
+          }
+        ]
+      },
+      {
+        "motion": "fly",
+        "start": {
+          "row": 4,
+          "col": 2
+        },
+        "end": {
+          "row": 4,
+          "col": 0
+        },
+        "checkpoints": [],
+        "waits": [
+          {
+            "type": "wait_current_fragment_time",
+            "after_checkpoint": -1,
+            "seconds": 220
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 11
+        },
+        "end": {
+          "row": 5,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 9
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 3
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 11
+        },
+        "end": {
+          "row": 5,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 9
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 3.5
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 4,
+          "col": 11
+        },
+        "end": {
+          "row": 5,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 9
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 4
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 11
+        },
+        "end": {
+          "row": 5,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 9
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 11
+        },
+        "end": {
+          "row": 5,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 9
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 4,
+          "col": 11
+        },
+        "end": {
+          "row": 5,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 9
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 11
+        },
+        "end": {
+          "row": 1,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 9
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 4
+          }
+        ]
+      },
+      {
+        "motion": "fly",
+        "start": {
+          "row": 7,
+          "col": 10
+        },
+        "end": {
+          "row": 1,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 0,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 7,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 0,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 7,
+              "col": 2
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "fly",
+        "start": {
+          "row": 6,
+          "col": 11
+        },
+        "end": {
+          "row": 6,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 5
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 11
+        },
+        "end": {
+          "row": 1,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 9
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "fly",
+        "start": {
+          "row": 5,
+          "col": 11
+        },
+        "end": {
+          "row": 5,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 4
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "fly",
+        "start": {
+          "row": 3,
+          "col": 11
+        },
+        "end": {
+          "row": 3,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 7
+            }
+          }
+        ],
+        "waits": []
+      }
+    ],
+    "waves": [
+      {
+        "index": 0,
+        "duration": 182.8,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Frost",
+            "enemy_id": "enemy_1042_frostd",
+            "count": 1,
+            "time": 0,
+            "route": 1,
+            "fragment": 0
+          },
+          {
+            "enemy": "Frost",
+            "enemy_id": "enemy_1042_frostd",
+            "count": 1,
+            "time": 0,
+            "route": 2,
+            "fragment": 0
+          },
+          {
+            "enemy": "Frost",
+            "enemy_id": "enemy_1042_frostd",
+            "count": 1,
+            "time": 0,
+            "route": 3,
+            "fragment": 0
+          },
+          {
+            "enemy": "Originium Slug β",
+            "enemy_id": "enemy_1007_slime_3",
+            "count": 3,
+            "time": 4,
+            "interval": 10,
+            "route": 4,
+            "fragment": 1
+          },
+          {
+            "enemy": "Originium Slug β",
+            "enemy_id": "enemy_1007_slime_3",
+            "count": 3,
+            "time": 4.3,
+            "interval": 10,
+            "route": 4,
+            "fragment": 1
+          },
+          {
+            "enemy": "Originium Slug β",
+            "enemy_id": "enemy_1007_slime_3",
+            "count": 3,
+            "time": 4.5,
+            "interval": 10,
+            "route": 5,
+            "fragment": 1
+          },
+          {
+            "enemy": "Originium Slug β",
+            "enemy_id": "enemy_1007_slime_3",
+            "count": 3,
+            "time": 4.8,
+            "interval": 10,
+            "route": 5,
+            "fragment": 1
+          },
+          {
+            "enemy": "Originium Slug β",
+            "enemy_id": "enemy_1007_slime_3",
+            "count": 3,
+            "time": 5,
+            "interval": 10,
+            "route": 6,
+            "fragment": 1
+          },
+          {
+            "enemy": "Originium Slug β",
+            "enemy_id": "enemy_1007_slime_3",
+            "count": 3,
+            "time": 5.3,
+            "interval": 10,
+            "route": 6,
+            "fragment": 1
+          },
+          {
+            "enemy": "Originium Slug β",
+            "enemy_id": "enemy_1007_slime_3",
+            "count": 3,
+            "time": 39.3,
+            "interval": 10,
+            "route": 4,
+            "fragment": 2
+          },
+          {
+            "enemy": "Originium Slug β",
+            "enemy_id": "enemy_1007_slime_3",
+            "count": 3,
+            "time": 39.6,
+            "interval": 10,
+            "route": 4,
+            "fragment": 2
+          },
+          {
+            "enemy": "Originium Slug β",
+            "enemy_id": "enemy_1007_slime_3",
+            "count": 3,
+            "time": 39.8,
+            "interval": 10,
+            "route": 5,
+            "fragment": 2
+          },
+          {
+            "enemy": "Originium Slug β",
+            "enemy_id": "enemy_1007_slime_3",
+            "count": 3,
+            "time": 40.1,
+            "interval": 10,
+            "route": 5,
+            "fragment": 2
+          },
+          {
+            "enemy": "Originium Slug β",
+            "enemy_id": "enemy_1007_slime_3",
+            "count": 3,
+            "time": 40.3,
+            "interval": 10,
+            "route": 6,
+            "fragment": 2
+          },
+          {
+            "enemy": "Originium Slug β",
+            "enemy_id": "enemy_1007_slime_3",
+            "count": 3,
+            "time": 40.6,
+            "interval": 10,
+            "route": 6,
+            "fragment": 2
+          },
+          {
+            "enemy": "Light-Armored Soldier Leader",
+            "enemy_id": "enemy_1015_litamr_2",
+            "count": 1,
+            "time": 51.3,
+            "route": 7,
+            "fragment": 2
+          },
+          {
+            "enemy": "Spec Ops Soldier",
+            "enemy_id": "enemy_1037_lunsbr",
+            "count": 2,
+            "time": 61.3,
+            "interval": 1,
+            "route": 7,
+            "fragment": 2
+          },
+          {
+            "enemy": "Spec Ops Soldier",
+            "enemy_id": "enemy_1037_lunsbr",
+            "count": 3,
+            "time": 79.3,
+            "interval": 10,
+            "route": 8,
+            "fragment": 3
+          },
+          {
+            "enemy": "Light-Armored Soldier Leader",
+            "enemy_id": "enemy_1015_litamr_2",
+            "count": 2,
+            "time": 79.3,
+            "interval": 13,
+            "route": 9,
+            "fragment": 3
+          },
+          {
+            "enemy": "Breaker",
+            "enemy_id": "enemy_1039_breakr",
+            "count": 1,
+            "time": 75.3,
+            "route": 10,
+            "fragment": 3
+          },
+          {
+            "enemy": "Breaker",
+            "enemy_id": "enemy_1039_breakr",
+            "count": 1,
+            "time": 83.3,
+            "route": 10,
+            "fragment": 3
+          },
+          {
+            "enemy": "Breaker",
+            "enemy_id": "enemy_1039_breakr",
+            "count": 1,
+            "time": 90.3,
+            "route": 10,
+            "fragment": 3
+          },
+          {
+            "enemy": "Arts Master A1",
+            "enemy_id": "enemy_1041_lazerd",
+            "count": 3,
+            "time": 114.3,
+            "interval": 1.5,
+            "route": 11,
+            "fragment": 4
+          },
+          {
+            "enemy": "Arts Master A1",
+            "enemy_id": "enemy_1041_lazerd",
+            "count": 3,
+            "time": 126.3,
+            "interval": 1.5,
+            "route": 11,
+            "fragment": 4
+          },
+          {
+            "enemy": "Arts Master A1",
+            "enemy_id": "enemy_1041_lazerd",
+            "count": 1,
+            "time": 136.3,
+            "route": 12,
+            "fragment": 4
+          },
+          {
+            "enemy": "Breaker",
+            "enemy_id": "enemy_1039_breakr",
+            "count": 1,
+            "time": 121.3,
+            "route": 13,
+            "fragment": 4
+          },
+          {
+            "enemy": "Breaker",
+            "enemy_id": "enemy_1039_breakr",
+            "count": 1,
+            "time": 124.3,
+            "route": 13,
+            "fragment": 4
+          },
+          {
+            "enemy": "Breaker",
+            "enemy_id": "enemy_1039_breakr",
+            "count": 1,
+            "time": 128.3,
+            "route": 13,
+            "fragment": 4
+          },
+          {
+            "enemy": "Breaker",
+            "enemy_id": "enemy_1039_breakr",
+            "count": 1,
+            "time": 131.3,
+            "route": 13,
+            "fragment": 4
+          },
+          {
+            "enemy": "Spec Ops Soldier",
+            "enemy_id": "enemy_1037_lunsbr",
+            "count": 3,
+            "time": 122.3,
+            "interval": 9,
+            "route": 7,
+            "fragment": 4
+          },
+          {
+            "enemy": "Spec Ops Soldier",
+            "enemy_id": "enemy_1037_lunsbr",
+            "count": 3,
+            "time": 122.8,
+            "interval": 9,
+            "route": 7,
+            "fragment": 4
+          },
+          {
+            "enemy": "Arts Master A1",
+            "enemy_id": "enemy_1041_lazerd",
+            "count": 3,
+            "time": 159.8,
+            "interval": 1.5,
+            "route": 11,
+            "fragment": 5
+          },
+          {
+            "enemy": "Arts Master A1",
+            "enemy_id": "enemy_1041_lazerd",
+            "count": 3,
+            "time": 169.8,
+            "interval": 1.5,
+            "route": 11,
+            "fragment": 5
+          },
+          {
+            "enemy": "Arts Master A1",
+            "enemy_id": "enemy_1041_lazerd",
+            "count": 3,
+            "time": 179.8,
+            "interval": 1.5,
+            "route": 11,
+            "fragment": 5
+          },
+          {
+            "enemy": "Breaker",
+            "enemy_id": "enemy_1039_breakr",
+            "count": 1,
+            "time": 166.8,
+            "route": 13,
+            "fragment": 5
+          },
+          {
+            "enemy": "Breaker",
+            "enemy_id": "enemy_1039_breakr",
+            "count": 1,
+            "time": 169.8,
+            "route": 13,
+            "fragment": 5
+          },
+          {
+            "enemy": "Breaker",
+            "enemy_id": "enemy_1039_breakr",
+            "count": 1,
+            "time": 173.8,
+            "route": 13,
+            "fragment": 5
+          },
+          {
+            "enemy": "Breaker",
+            "enemy_id": "enemy_1039_breakr",
+            "count": 1,
+            "time": 176.8,
+            "route": 13,
+            "fragment": 5
+          },
+          {
+            "enemy": "Arts Master A1",
+            "enemy_id": "enemy_1041_lazerd",
+            "count": 1,
+            "time": 176.8,
+            "route": 14,
+            "fragment": 5
+          },
+          {
+            "enemy": "Arts Master A1",
+            "enemy_id": "enemy_1041_lazerd",
+            "count": 1,
+            "time": 176.8,
+            "route": 15,
+            "fragment": 5
+          },
+          {
+            "enemy": "Veteran Butcher",
+            "enemy_id": "enemy_1034_laxe_2",
+            "count": 1,
+            "time": 181.8,
+            "route": 7,
+            "fragment": 5
+          },
+          {
+            "enemy": "Veteran Butcher",
+            "enemy_id": "enemy_1034_laxe_2",
+            "count": 1,
+            "time": 182.8,
+            "route": 8,
+            "fragment": 5
+          },
+          {
+            "enemy": "Veteran Butcher",
+            "enemy_id": "enemy_1034_laxe_2",
+            "count": 1,
+            "time": 181.8,
+            "route": 13,
+            "fragment": 5
+          },
+          {
+            "enemy": "Light-Armored Soldier Leader",
+            "enemy_id": "enemy_1015_litamr_2",
+            "count": 3,
+            "time": 159.8,
+            "interval": 8,
+            "route": 7,
+            "fragment": 5
+          },
+          {
+            "enemy": "Spec Ops Soldier",
+            "enemy_id": "enemy_1037_lunsbr",
+            "count": 3,
+            "time": 159.8,
+            "interval": 8,
+            "route": 9,
+            "fragment": 5
+          }
+        ]
+      }
+    ],
+    "spawnTiles": [
+      {
+        "key": "tile_start",
+        "row": 1,
+        "col": 11,
+        "routes": []
+      },
+      {
+        "key": "tile_start",
+        "row": 2,
+        "col": 11,
+        "routes": [
+          10,
+          10,
+          10,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 4,
+        "col": 11,
+        "routes": [
+          6,
+          6,
+          6,
+          6,
+          9,
+          9
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 5,
+        "col": 11,
+        "routes": [
+          5,
+          5,
+          5,
+          5,
+          7,
+          7,
+          7,
+          7,
+          14,
+          7,
+          7
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 6,
+        "col": 11,
+        "routes": [
+          4,
+          4,
+          4,
+          4,
+          8,
+          12,
+          8
+        ]
+      },
+      {
+        "key": "tile_flystart",
+        "row": 7,
+        "col": 10,
+        "routes": [
+          11,
+          11,
+          11,
+          11,
+          11
+        ]
+      }
+    ],
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 1,
+        "col": 0,
+        "routes": [
+          10,
+          10,
+          10,
+          11,
+          11,
+          13,
+          13,
+          13,
+          13,
+          11,
+          11,
+          11,
+          13,
+          13,
+          13,
+          13,
+          13
+        ]
+      },
+      {
+        "key": "tile_end",
+        "row": 2,
+        "col": 0,
+        "routes": [
+          2
+        ]
+      },
+      {
+        "key": "tile_end",
+        "row": 4,
+        "col": 0,
+        "routes": [
+          3
+        ]
+      },
+      {
+        "key": "tile_end",
+        "row": 5,
+        "col": 0,
+        "routes": [
+          4,
+          4,
+          5,
+          5,
+          6,
+          6,
+          4,
+          4,
+          5,
+          5,
+          6,
+          6,
+          7,
+          7,
+          8,
+          9,
+          7,
+          7,
+          14,
+          7,
+          8,
+          7,
+          9
+        ]
+      },
+      {
+        "key": "tile_end",
+        "row": 6,
+        "col": 0,
+        "routes": [
+          1,
+          12
+        ]
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_1007_slime_3",
+        "slug": "originium_slug_enemy_1007_slime_3",
+        "name": "Originium Slug β",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1015_litamr_2",
+        "slug": "light_armored_soldier_leader",
+        "name": "Light-Armored Soldier Leader",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1034_laxe_2",
+        "slug": "veteran_butcher",
+        "name": "Veteran Butcher",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1037_lunsbr",
+        "slug": "spec_ops_soldier",
+        "name": "Spec Ops Soldier",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1039_breakr",
+        "slug": "breaker",
+        "name": "Breaker",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1041_lazerd",
+        "slug": "arts_master_a1",
+        "name": "Arts Master A1",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1042_frostd",
+        "slug": "frost",
+        "name": "Frost",
+        "database_level": 0
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [],
+      "deployable_tokens": [
+        {
+          "unit": "Jammer",
+          "unit_id": "trap_006_antidr",
+          "count": 1,
+          "level": 10,
+          "elite": 0,
+          "potential": 0,
+          "skill_index": 0,
+          "skill_level": 1
+        }
+      ]
+    },
+    "hasConditionalSpawns": false
+  },
+  "terrain": [],
+  "conditionalHandled": false,
+  "devices": [],
+  "tokens": [
+    {
+      "unitId": "trap_006_antidr",
+      "name": "Jammer",
+      "count": 1,
+      "kind": "jammer",
+      "supplyCard": true,
+      "hp": 1000,
+      "cost": 40,
+      "cooldown": 5,
+      "refundRatio": 0.5,
+      "taunt": 1,
+      "rangedBuildOnly": true,
+      "moveMul": 0.5,
+      "range": [
+        [
+          3,
+          0
+        ],
+        [
+          2,
+          -1
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          1,
+          -2
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          0,
+          -3
+        ],
+        [
+          0,
+          -2
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          -1,
+          -2
+        ],
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          -1,
+          2
+        ],
+        [
+          -2,
+          -1
+        ],
+        [
+          -2,
+          0
+        ],
+        [
+          -2,
+          1
+        ],
+        [
+          -3,
+          0
+        ]
+      ],
+      "description": "Drones in range cannot attack or use silenceable abilities and move at half speed. Enemies prioritize this device. Cannot be healed.",
+      "def": 0,
+      "block": 3,
+      "position": "NONE",
+      "behavior": "range-supply"
+    }
+  ],
+  "pathing": {
+    "schemaVersion": 1,
+    "syntheticRoutes": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "producer": "Arkpedia stage browser / buildPlaybackPaths",
+    "stage": "5-7",
+    "geometryHash": "cf511534726eea9f2752654bde1fde09df12b71ef30ebb1573340ea81b01034e",
+    "moveScale": 0.65,
+    "paths": {
+      "1": {
+        "points": [
+          [
+            5,
+            6
+          ],
+          [
+            0,
+            6
+          ]
+        ],
+        "distances": [
+          0,
+          1
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "2": {
+        "points": [
+          [
+            5,
+            2
+          ],
+          [
+            0,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "3": {
+        "points": [
+          [
+            2,
+            4
+          ],
+          [
+            0,
+            4
+          ]
+        ],
+        "distances": [
+          0,
+          1
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "4": {
+        "points": [
+          [
+            11,
+            6
+          ],
+          [
+            9,
+            6
+          ],
+          [
+            0,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "5": {
+        "points": [
+          [
+            11,
+            5
+          ],
+          [
+            9,
+            5
+          ],
+          [
+            0,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "6": {
+        "points": [
+          [
+            11,
+            4
+          ],
+          [
+            9,
+            4
+          ],
+          [
+            0,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "7": {
+        "points": [
+          [
+            11,
+            5
+          ],
+          [
+            9,
+            5
+          ],
+          [
+            0,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "8": {
+        "points": [
+          [
+            11,
+            6
+          ],
+          [
+            9,
+            6
+          ],
+          [
+            0,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "9": {
+        "points": [
+          [
+            11,
+            4
+          ],
+          [
+            9,
+            4
+          ],
+          [
+            0,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "10": {
+        "points": [
+          [
+            11,
+            2
+          ],
+          [
+            9,
+            2
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "11": {
+        "points": [
+          [
+            10,
+            7
+          ],
+          [
+            8,
+            0
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            3,
+            0
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "12": {
+        "points": [
+          [
+            11,
+            6
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            0,
+            6
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "13": {
+        "points": [
+          [
+            11,
+            2
+          ],
+          [
+            9,
+            2
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "14": {
+        "points": [
+          [
+            11,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            0,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "15": {
+        "points": [
+          [
+            11,
+            3
+          ],
+          [
+            7,
+            3
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      }
+    }
+  },
+  "art": null,
+  "gates": null,
+  "fixedSquad": null,
+  "enemies": {
+    "enemy_1042_frostd": {
+      "key": "enemy_1042_frostd",
+      "prefabKey": "enemy_1042_frostd",
+      "name": "Frost",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "NONE",
+      "stats": {
+        "maxHp": 6500,
+        "atk": 100,
+        "def": 600,
+        "res": 30,
+        "moveSpeed": 0.9,
+        "bat": 1,
+        "aspd": 100,
+        "rangeRadius": 2.5,
+        "rawRangeRadius": 2.5,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "none",
+        "dmgTypes": [
+          "none"
+        ],
+        "motion": "FLY",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Flying unit.",
+          "format": "NORMAL"
+        },
+        {
+          "text": "All friendly units within range have reduced ASPD",
+          "format": "SILENCE"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "atkSpeedDown.attack_speed": -0.5,
+          "defup.range_radius": 2.5
+        },
+        "bbStr": {},
+        "groups": {
+          "atkSpeedDown": [
+            "attack_speed"
+          ],
+          "defup": [
+            "range_radius"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "drone"
+      ]
+    },
+    "enemy_1007_slime_3": {
+      "key": "enemy_1007_slime_3",
+      "prefabKey": "enemy_1007_slime_3",
+      "name": "Originium Slug β",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 1550,
+        "atk": 240,
+        "def": 0,
+        "res": 0,
+        "moveSpeed": 1,
+        "bat": 1.7,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 0,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "infection"
+      ]
+    },
+    "enemy_1015_litamr_2": {
+      "key": "enemy_1015_litamr_2",
+      "prefabKey": "enemy_1015_litamr_2",
+      "name": "Light-Armored Soldier Leader",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 3700,
+        "atk": 300,
+        "def": 500,
+        "res": 0,
+        "moveSpeed": 1,
+        "bat": 2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1037_lunsbr": {
+      "key": "enemy_1037_lunsbr",
+      "prefabKey": "enemy_1037_lunsbr",
+      "name": "Spec Ops Soldier",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 3200,
+        "atk": 350,
+        "def": 50,
+        "res": 0,
+        "moveSpeed": 1.1,
+        "bat": 2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1039_breakr": {
+      "key": "enemy_1039_breakr",
+      "prefabKey": "enemy_1039_breakr",
+      "name": "Breaker",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 3500,
+        "atk": 410,
+        "def": 50,
+        "res": 25,
+        "moveSpeed": 1.9,
+        "bat": 1.4,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 2.2,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1041_lazerd": {
+      "key": "enemy_1041_lazerd",
+      "prefabKey": "enemy_1041_lazerd",
+      "name": "Arts Master A1",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 2700,
+        "atk": 220,
+        "def": 100,
+        "res": 65,
+        "moveSpeed": 1.5,
+        "bat": 2.15,
+        "aspd": 100,
+        "rangeRadius": 1.8,
+        "rawRangeRadius": 1.8,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "arts",
+        "dmgTypes": [
+          "arts"
+        ],
+        "motion": "FLY",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Flying unit.",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "drone"
+      ]
+    },
+    "enemy_1034_laxe_2": {
+      "key": "enemy_1034_laxe_2",
+      "prefabKey": "enemy_1034_laxe_2",
+      "name": "Veteran Butcher",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 14000,
+        "atk": 950,
+        "def": 270,
+        "res": 30,
+        "moveSpeed": 0.7,
+        "bat": 3.5,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 3,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    }
+  },
+  "contentAddition": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/5-7.json",
+          "sha256": "ce8fd7556d983ce0c10a1ec1db99d80ae72b2a1240075054b15ed838f8ef981f"
+        },
+        {
+          "path": "stage-geometry/5-7.json",
+          "sha256": "cf511534726eea9f2752654bde1fde09df12b71ef30ebb1573340ea81b01034e"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        }
+      ],
+      "localFiles": [
+        {
+          "path": "data/stage-rules/5-7.json",
+          "sha256": "b818a7d463555a18675dd18fd93aef3a0c11b39244427f57655b302ec9cad8fb"
+        },
+        {
+          "path": "data/stage-rules/levels/14df0850cb7aa5c53a602de11a8906d7f9f99475ffb950a0c2167181fd7a2f91.json",
+          "sha256": "14df0850cb7aa5c53a602de11a8906d7f9f99475ffb950a0c2167181fd7a2f91"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/20cf0df47730b8885e44eb3057c2a5fd3312fee3.json",
+          "sha256": "0f386b2835c4ff1f12f083fb388965fa2ae3112b00ba31b5c9d344fece5d13f6"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/20cf0df47730b8885e44eb3057c2a5fd3312fee3.json",
+          "sha256": "0f386b2835c4ff1f12f083fb388965fa2ae3112b00ba31b5c9d344fece5d13f6"
+        }
+      ]
+    },
+    "dependencies": {
+      "enemies": [
+        "enemy_1007_slime_3",
+        "enemy_1015_litamr_2",
+        "enemy_1034_laxe_2",
+        "enemy_1037_lunsbr",
+        "enemy_1039_breakr",
+        "enemy_1041_lazerd",
+        "enemy_1042_frostd"
+      ],
+      "devices": [],
+      "tokens": [
+        "trap_006_antidr"
+      ]
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 8.566666666666666,
+        "spawned": 9,
+        "errors": 0
+      },
+      "publicReview": "pending",
+      "waveSchedule": {
+        "id": "5-7",
+        "seconds": 219.29999999999998,
+        "spawned": 91,
+        "expected": 91,
+        "dynamicSpawns": 0,
+        "reason": "cleared",
+        "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+      },
+      "browserStartup": {
+        "id": "5-7",
+        "seconds": 8.566666666666666,
+        "errors": [],
+        "units": 9,
+        "canvas": true,
+        "scope": "Mobile landscape browser startup and canvas runtime; not a fidelity approval"
+      }
+    }
+  },
+  "contentRuleRefresh": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/5-7.json",
+          "sha256": "ce8fd7556d983ce0c10a1ec1db99d80ae72b2a1240075054b15ed838f8ef981f"
+        },
+        {
+          "path": "stage-geometry/5-7.json",
+          "sha256": "cf511534726eea9f2752654bde1fde09df12b71ef30ebb1573340ea81b01034e"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        }
+      ],
+      "localFiles": [
+        {
+          "path": "data/stage-rules/5-7.json",
+          "sha256": "b818a7d463555a18675dd18fd93aef3a0c11b39244427f57655b302ec9cad8fb"
+        },
+        {
+          "path": "data/stage-rules/levels/14df0850cb7aa5c53a602de11a8906d7f9f99475ffb950a0c2167181fd7a2f91.json",
+          "sha256": "14df0850cb7aa5c53a602de11a8906d7f9f99475ffb950a0c2167181fd7a2f91"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/20cf0df47730b8885e44eb3057c2a5fd3312fee3.json",
+          "sha256": "0f386b2835c4ff1f12f083fb388965fa2ae3112b00ba31b5c9d344fece5d13f6"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/20cf0df47730b8885e44eb3057c2a5fd3312fee3.json",
+          "sha256": "0f386b2835c4ff1f12f083fb388965fa2ae3112b00ba31b5c9d344fece5d13f6"
+        },
+        {
+          "path": "data/arkpedia-device-source.json",
+          "sha256": "64515531475bbde6c454f96b0a2c797edffc6f986c27d504539602d979b6fb7a"
+        },
+        {
+          "path": "data/arkpedia-device-native-source.json",
+          "sha256": "7340512aaf1e3ddeff9a9c6fb77a6b92e64513e9abc1951e89b780ccb10bd09c"
+        }
+      ]
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 8.566666666666666,
+        "spawned": 9,
+        "errors": 0
+      }
+    },
+    "changed": [
+      "tokens"
+    ]
+  }
+}

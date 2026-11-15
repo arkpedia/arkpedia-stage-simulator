@@ -1,0 +1,1622 @@
+{
+ "code": "9-12",
+ "name": "Apparitional Waves",
+ "description": "Eliminate one, and there are even more. The enemy pours forth endlessly, only the city itself seeming to pay the price.\n<Tattered Pillar> Can be knocked down by neighboring Operators, dealing True damage to the two tiles it falls on and forming rubble that blocks routes.\n<Demolition Device> Directly knocks down a Tattered Pillar one tile in front.\n<Active Originium> Operators deployed on it and enemies who have passed it will take constant damage, but their ATK and ASPD will be increased significantly.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1,
+  "max_play_time": -1
+ },
+ "rules": {
+  "variant": null,
+  "source": {
+   "repository": "Kengxxiao/ArknightsGameData",
+   "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+   "path": "zh_CN/gamedata/levels/obt/main/level_main_09-10.json",
+   "sha256": "0513d6834a37b253b8bda40841035de7c7fa7cc8a161d58b16ac5f8f6495bcdf",
+   "gitBlob": "3ad0e50d537d350b41429c112eb135cd05640ea0",
+   "stageTable": {
+    "path": "zh_CN/gamedata/excel/stage_table.json",
+    "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+    "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+    "stageId": "main_09-10",
+    "levelId": "Obt/Main/level_main_09-10"
+   }
+  },
+  "battle": {
+   "max_play_time": -1
+  },
+  "enemies": {},
+  "enemyAdd": {},
+  "hiddenGroups": {}
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "9-12",
+  "rows": 9,
+  "cols": 11,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_fence",
+    "height": "low",
+    "walkable": false,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_infection",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true,
+    "blackboard": {
+     "atk": 0.5,
+     "attack_speed": 50,
+     "damage": 180,
+     "duration": 300
+    }
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    2,
+    2,
+    0
+   ],
+   [
+    0,
+    3,
+    0,
+    1,
+    1,
+    0,
+    2,
+    1,
+    1,
+    3,
+    0
+   ],
+   [
+    0,
+    3,
+    0,
+    1,
+    4,
+    3,
+    5,
+    1,
+    1,
+    3,
+    0
+   ],
+   [
+    0,
+    3,
+    3,
+    1,
+    3,
+    4,
+    1,
+    1,
+    2,
+    1,
+    0
+   ],
+   [
+    6,
+    3,
+    0,
+    1,
+    1,
+    3,
+    7,
+    1,
+    2,
+    1,
+    0
+   ],
+   [
+    0,
+    1,
+    0,
+    3,
+    4,
+    0,
+    4,
+    1,
+    1,
+    1,
+    0
+   ],
+   [
+    5,
+    3,
+    3,
+    1,
+    1,
+    1,
+    1,
+    1,
+    2,
+    2,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 0
+    },
+    "end": {
+     "row": 5,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 7,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 15
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 0
+    },
+    "end": {
+     "row": 5,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 7,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 14
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 0
+    },
+    "end": {
+     "row": 5,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 7,
+       "col": 1
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 6
+    },
+    "end": {
+     "row": 5,
+     "col": 0
+    },
+    "checkpoints": [],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 6
+    },
+    "end": {
+     "row": 5,
+     "col": 0
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 6
+    },
+    "end": {
+     "row": 5,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 6
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 0
+    },
+    "end": {
+     "row": 5,
+     "col": 0
+    },
+    "checkpoints": [],
+    "waits": []
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 193,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Dublinn Scout",
+      "enemy_id": "enemy_1166_dusbr",
+      "count": 1,
+      "time": 5,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Dublinn Scout",
+      "enemy_id": "enemy_1166_dusbr",
+      "count": 1,
+      "time": 5,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Dublinn Scout",
+      "enemy_id": "enemy_1166_dusbr",
+      "count": 2,
+      "time": 19.5,
+      "interval": 1,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Dublinn Scout",
+      "enemy_id": "enemy_1166_dusbr",
+      "count": 2,
+      "time": 27,
+      "interval": 2,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Dublinn Scout",
+      "enemy_id": "enemy_1166_dusbr",
+      "count": 2,
+      "time": 36,
+      "interval": 2,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Dublinn Scout",
+      "enemy_id": "enemy_1166_dusbr",
+      "count": 2,
+      "time": 46,
+      "interval": 2,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Dublinn Flying Soldier",
+      "enemy_id": "enemy_1171_durokt",
+      "count": 1,
+      "time": 71,
+      "route": 3,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Phalanx Infantry",
+      "enemy_id": "enemy_1169_duphlx",
+      "count": 1,
+      "time": 82,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Phalanx Infantry",
+      "enemy_id": "enemy_1169_duphlx",
+      "count": 1,
+      "time": 89,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Phalanx Infantry",
+      "enemy_id": "enemy_1169_duphlx",
+      "count": 1,
+      "time": 93,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Shadowcaster",
+      "enemy_id": "enemy_1168_dumage",
+      "count": 3,
+      "time": 78,
+      "interval": 15,
+      "route": 4,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Phalanx Infantry",
+      "enemy_id": "enemy_1169_duphlx",
+      "count": 1,
+      "time": 98,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Phalanx Infantry",
+      "enemy_id": "enemy_1169_duphlx",
+      "count": 1,
+      "time": 108,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Flying Soldier",
+      "enemy_id": "enemy_1171_durokt",
+      "count": 1,
+      "time": 94,
+      "route": 4,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Flying Soldier",
+      "enemy_id": "enemy_1171_durokt",
+      "count": 1,
+      "time": 103,
+      "route": 4,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Heavy Defender",
+      "enemy_id": "enemy_1170_dushld",
+      "count": 1,
+      "time": 78,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Heavy Defender",
+      "enemy_id": "enemy_1170_dushld",
+      "count": 1,
+      "time": 88,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Heavy Defender",
+      "enemy_id": "enemy_1170_dushld",
+      "count": 2,
+      "time": 98,
+      "interval": 5,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Heavy Defender",
+      "enemy_id": "enemy_1170_dushld",
+      "count": 2,
+      "time": 113,
+      "interval": 5,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Tombkeeper Grotesque",
+      "enemy_id": "enemy_1172_dugago",
+      "count": 1,
+      "time": 153,
+      "route": 5,
+      "fragment": 2
+     },
+     {
+      "enemy": "Tombkeeper Grotesque",
+      "enemy_id": "enemy_1172_dugago",
+      "count": 1,
+      "time": 188,
+      "route": 5,
+      "fragment": 2
+     },
+     {
+      "enemy": "Dublinn Flying Soldier",
+      "enemy_id": "enemy_1171_durokt",
+      "count": 1,
+      "time": 146,
+      "route": 4,
+      "fragment": 2
+     },
+     {
+      "enemy": "Dublinn Flying Soldier",
+      "enemy_id": "enemy_1171_durokt",
+      "count": 2,
+      "time": 156,
+      "interval": 3,
+      "route": 4,
+      "fragment": 2
+     },
+     {
+      "enemy": "Dublinn Flying Soldier",
+      "enemy_id": "enemy_1171_durokt",
+      "count": 1,
+      "time": 164,
+      "route": 4,
+      "fragment": 2
+     },
+     {
+      "enemy": "Dublinn Flying Soldier",
+      "enemy_id": "enemy_1171_durokt",
+      "count": 2,
+      "time": 170,
+      "interval": 3,
+      "route": 4,
+      "fragment": 2
+     },
+     {
+      "enemy": "Dublinn Heavy Defender",
+      "enemy_id": "enemy_1170_dushld",
+      "count": 2,
+      "time": 148,
+      "interval": 20,
+      "route": 2,
+      "fragment": 2
+     },
+     {
+      "enemy": "Dublinn Heavy Defender",
+      "enemy_id": "enemy_1170_dushld",
+      "count": 2,
+      "time": 158,
+      "interval": 15,
+      "route": 2,
+      "fragment": 2
+     },
+     {
+      "enemy": "Tombkeeper Grotesque",
+      "enemy_id": "enemy_1172_dugago",
+      "count": 1,
+      "time": 178,
+      "route": 6,
+      "fragment": 2
+     },
+     {
+      "enemy": "Tombkeeper Grotesque",
+      "enemy_id": "enemy_1172_dugago",
+      "count": 1,
+      "time": 193,
+      "route": 6,
+      "fragment": 2
+     },
+     {
+      "enemy": "Dublinn Shadowcaster",
+      "enemy_id": "enemy_1168_dumage",
+      "count": 2,
+      "time": 156,
+      "interval": 20,
+      "route": 2,
+      "fragment": 2
+     },
+     {
+      "enemy": "Dublinn Shadowcaster",
+      "enemy_id": "enemy_1168_dumage",
+      "count": 1,
+      "time": 177,
+      "route": 2,
+      "fragment": 2
+     },
+     {
+      "enemy": "Dublinn Shadowcaster",
+      "enemy_id": "enemy_1168_dumage",
+      "count": 1,
+      "time": 178,
+      "route": 2,
+      "fragment": 2
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 3,
+    "col": 6,
+    "routes": [
+     3,
+     4,
+     4,
+     4,
+     5,
+     5,
+     4,
+     4,
+     4,
+     4
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 7,
+    "col": 0,
+    "routes": [
+     0,
+     1,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     6,
+     6,
+     2,
+     2,
+     2
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 5,
+    "col": 0,
+    "routes": [
+     0,
+     1,
+     2,
+     2,
+     2,
+     2,
+     3,
+     2,
+     2,
+     2,
+     4,
+     2,
+     2,
+     4,
+     4,
+     2,
+     2,
+     2,
+     2,
+     5,
+     5,
+     4,
+     4,
+     4,
+     4,
+     2,
+     2,
+     6,
+     6,
+     2,
+     2,
+     2
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1166_dusbr",
+    "slug": "dublinn_scout",
+    "name": "Dublinn Scout",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1168_dumage",
+    "slug": "dublinn_shadowcaster",
+    "name": "Dublinn Shadowcaster",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1169_duphlx",
+    "slug": "dublinn_phalanx_infantry",
+    "name": "Dublinn Phalanx Infantry",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1170_dushld",
+    "slug": "dublinn_heavy_defender",
+    "name": "Dublinn Heavy Defender",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1171_durokt",
+    "slug": "dublinn_flying_soldier",
+    "name": "Dublinn Flying Soldier",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1172_dugago",
+    "slug": "tombkeeper_grotesque",
+    "name": "Tombkeeper Grotesque",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": [
+    {
+     "unit": "Demolition Device",
+     "unit_id": "trap_045_dublst",
+     "count": 1,
+     "level": 1,
+     "elite": 0,
+     "potential": 0,
+     "skill_index": 0,
+     "skill_level": 1
+    }
+   ]
+  },
+  "hasConditionalSpawns": false
+ },
+ "terrain": [
+  {
+   "row": 5,
+   "col": 6,
+   "kind": "infection",
+   "damage": 180,
+   "atk": 0.5,
+   "aspd": 50,
+   "duration": 300
+  }
+ ],
+ "conditionalHandled": false,
+ "devices": [
+  {
+   "col": 3,
+   "description": "Can only be attacked by adjacent allied units",
+   "hidden": false,
+   "key": "trap_043_dupilr",
+   "kind": "device",
+   "name": "Tattered Pillar",
+   "row": 6,
+   "alias": "trap_043_dupilr#1",
+   "instance": {
+    "level": 1,
+    "skillLevel": 1
+   }
+  },
+  {
+   "col": 5,
+   "description": "Can only be attacked by adjacent allied units",
+   "hidden": false,
+   "key": "trap_043_dupilr",
+   "kind": "device",
+   "name": "Tattered Pillar",
+   "row": 5,
+   "alias": "trap_043_dupilr#2",
+   "instance": {
+    "level": 1,
+    "skillLevel": 1
+   }
+  },
+  {
+   "col": 4,
+   "description": "Can only be attacked by adjacent allied units",
+   "hidden": false,
+   "key": "trap_043_dupilr",
+   "kind": "device",
+   "name": "Tattered Pillar",
+   "row": 4,
+   "alias": "trap_043_dupilr#3",
+   "instance": {
+    "level": 1,
+    "skillLevel": 1
+   }
+  },
+  {
+   "col": 5,
+   "description": "Can only be attacked by adjacent allied units",
+   "hidden": false,
+   "key": "trap_043_dupilr",
+   "kind": "device",
+   "name": "Tattered Pillar",
+   "row": 3,
+   "alias": "trap_043_dupilr#4",
+   "instance": {
+    "level": 1,
+    "skillLevel": 1
+   }
+  },
+  {
+   "col": 9,
+   "description": "Can only be attacked by adjacent allied units",
+   "hidden": false,
+   "key": "trap_043_dupilr",
+   "kind": "device",
+   "name": "Tattered Pillar",
+   "row": 2,
+   "alias": "trap_043_dupilr#5",
+   "instance": {
+    "level": 1,
+    "skillLevel": 1
+   }
+  }
+ ],
+ "tokens": [
+  {
+   "unitId": "trap_045_dublst",
+   "name": "Demolition Device",
+   "count": 1,
+   "supplyCard": true,
+   "hp": 100,
+   "cost": 5,
+   "cooldown": 5,
+   "maxActive": 1,
+   "refundRatio": 0,
+   "anyBuildOnly": true,
+   "chooseFacing": true,
+   "damage": 2000,
+   "force": 1,
+   "delay": 1.149999976158142,
+   "range": [
+    [
+     0,
+     0
+    ],
+    [
+     0,
+     1
+    ]
+   ],
+   "description": "After a short delay, deals 2000 True damage and pushes ground enemies in front. Topples Tattered Pillars. Consumed after use.",
+   "def": 0,
+   "block": 0,
+   "position": "NONE",
+   "behavior": "demolition"
+  }
+ ],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "9-12",
+  "geometryHash": "4bca098afeee474fa47f7e5f7bd99eeea5e4783523a8fa6d50aff9192b650f51",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      0,
+      7
+     ],
+     [
+      1,
+      7
+     ],
+     [
+      0,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "1": {
+    "points": [
+     [
+      0,
+      7
+     ],
+     [
+      1,
+      7
+     ],
+     [
+      0,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "2": {
+    "points": [
+     [
+      0,
+      7
+     ],
+     [
+      1,
+      7
+     ],
+     [
+      0,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "3": {
+    "points": [
+     [
+      6,
+      3
+     ],
+     [
+      0,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "4": {
+    "points": [
+     [
+      6,
+      3
+     ],
+     [
+      0,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "5": {
+    "points": [
+     [
+      6,
+      3
+     ],
+     [
+      0,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "6": {
+    "points": [
+     [
+      0,
+      7
+     ],
+     [
+      0,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1166_dusbr": {
+   "key": "enemy_1166_dusbr",
+   "prefabKey": "enemy_1166_dusbr",
+   "name": "Dublinn Scout",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3000,
+    "atk": 280,
+    "def": 110,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "<$ba.refraction>Refraction</>",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "refracting.magic_resistance": 70
+    },
+    "bbStr": {},
+    "groups": {
+     "refracting": [
+      "magic_resistance"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1171_durokt": {
+   "key": "enemy_1171_durokt",
+   "prefabKey": "enemy_1171_durokt",
+   "name": "Dublinn Flying Soldier",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "ALL",
+   "stats": {
+    "maxHp": 6000,
+    "atk": 400,
+    "def": 350,
+    "res": 0,
+    "moveSpeed": 0.8,
+    "bat": 3,
+    "aspd": 100,
+    "rangeRadius": 1.3,
+    "rawRangeRadius": 1.3,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "<$ba.float>Low-Altitude Hovering</>",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "refracting.magic_resistance": 70
+    },
+    "bbStr": {},
+    "groups": {
+     "refracting": [
+      "magic_resistance"
+     ]
+    }
+   },
+   "skills": [
+    {
+     "prefabKey": "RecoverAnim",
+     "priority": 0,
+     "cooldown": 0,
+     "initCooldown": 0,
+     "spCost": 0,
+     "bb": {},
+     "bbStr": {}
+    }
+   ],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1168_dumage": {
+   "key": "enemy_1168_dumage",
+   "prefabKey": "enemy_1168_dumage",
+   "name": "Dublinn Shadowcaster",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 4500,
+    "atk": 300,
+    "def": 150,
+    "res": 20,
+    "moveSpeed": 1.1,
+    "bat": 3,
+    "aspd": 100,
+    "rangeRadius": 2.5,
+    "rawRangeRadius": 2.5,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "<$ba.refraction>Refraction</>",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "refracting.magic_resistance": 70
+    },
+    "bbStr": {},
+    "groups": {
+     "refracting": [
+      "magic_resistance"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1170_dushld": {
+   "key": "enemy_1170_dushld",
+   "prefabKey": "enemy_1170_dushld",
+   "name": "Dublinn Heavy Defender",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 7000,
+    "atk": 700,
+    "def": 750,
+    "res": 0,
+    "moveSpeed": 0.7,
+    "bat": 4,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 4,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "<$ba.refraction>Refraction</>",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "refracting.magic_resistance": 70
+    },
+    "bbStr": {},
+    "groups": {
+     "refracting": [
+      "magic_resistance"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1169_duphlx": {
+   "key": "enemy_1169_duphlx",
+   "prefabKey": "enemy_1169_duphlx",
+   "name": "Dublinn Phalanx Infantry",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 4000,
+    "atk": 300,
+    "def": 300,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 2.5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 1.5,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "When other Phalanx Infantry are nearby, DEF increases (stacks)",
+     "format": "NORMAL"
+    },
+    {
+     "text": "<$ba.refraction>Refraction</>",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "refracting.magic_resistance": 70,
+     "auraDefup.def": 200
+    },
+    "bbStr": {},
+    "groups": {
+     "refracting": [
+      "magic_resistance"
+     ],
+     "auraDefup": [
+      "def"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1172_dugago": {
+   "key": "enemy_1172_dugago",
+   "prefabKey": "enemy_1172_dugago",
+   "name": "Tombkeeper Grotesque",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "ALL",
+   "stats": {
+    "maxHp": 10000,
+    "atk": 550,
+    "def": 550,
+    "res": 0,
+    "moveSpeed": 0.5,
+    "bat": 4,
+    "aspd": 100,
+    "rangeRadius": 1.6,
+    "rawRangeRadius": 1.6,
+    "blockCnt": 1,
+    "massLevel": 4,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys",
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "After first defeat, temporarily transforms into a stone statue with extremely high DEF, then revives as an aerial unit",
+     "format": "NORMAL"
+    },
+    {
+     "text": "<$ba.refraction>Refraction</>",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "refracting.magic_resistance": 70,
+     "stone.magic_resistance": 30,
+     "stone.def": 800,
+     "stone.duration": 10
+    },
+    "bbStr": {},
+    "groups": {
+     "refracting": [
+      "magic_resistance"
+     ],
+     "stone": [
+      "def",
+      "duration",
+      "magic_resistance"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "originiumartscraft"
+   ]
+  }
+ },
+ "contentAddition": {
+  "schemaVersion": 1,
+  "source": {
+   "repository": "arkpedia/arkpedia-data",
+   "commit": "66232ee06377d791fb130248d680764c286e5c99",
+   "files": [
+    {
+     "path": "stages/9-12.json",
+     "sha256": "e4eaac58dde53f7ab644ab9552bf402d2ad3e81bffdf9e560f0c0cf9f14677f9"
+    },
+    {
+     "path": "stage-geometry/9-12.json",
+     "sha256": "4bca098afeee474fa47f7e5f7bd99eeea5e4783523a8fa6d50aff9192b650f51"
+    },
+    {
+     "path": "stage-devices.json",
+     "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+    }
+   ],
+   "localFiles": [
+    {
+     "path": "data/stage-rules/9-12.json",
+     "sha256": "8c0e985298836d8dfa06792e1f673a579aecc32b45538e95af335c27e42f5bb1"
+    },
+    {
+     "path": "data/stage-rules/levels/963aa6d27417be1771a32292406e758bb12ae324a0cc3c3a94eb26d4d6cbec1c.json",
+     "sha256": "963aa6d27417be1771a32292406e758bb12ae324a0cc3c3a94eb26d4d6cbec1c"
+    },
+    {
+     "path": ".cache/arkpedia/original-level-blobs/3ad0e50d537d350b41429c112eb135cd05640ea0.json",
+     "sha256": "0513d6834a37b253b8bda40841035de7c7fa7cc8a161d58b16ac5f8f6495bcdf"
+    },
+    {
+     "path": ".cache/arkpedia/original-level-blobs/3ad0e50d537d350b41429c112eb135cd05640ea0.json",
+     "sha256": "0513d6834a37b253b8bda40841035de7c7fa7cc8a161d58b16ac5f8f6495bcdf"
+    }
+   ]
+  },
+  "dependencies": {
+   "enemies": [
+    "enemy_1166_dusbr",
+    "enemy_1168_dumage",
+    "enemy_1169_duphlx",
+    "enemy_1170_dushld",
+    "enemy_1171_durokt",
+    "enemy_1172_dugago"
+   ],
+   "devices": [
+    "Tattered Pillar"
+   ],
+   "tokens": [
+    "trap_045_dublst"
+   ]
+  },
+  "validation": {
+   "smoke": {
+    "seconds": 10,
+    "spawned": 7,
+    "errors": 0
+   },
+   "publicReview": "pending",
+   "browserStartup": {
+    "id": "9-12",
+    "seconds": 20,
+    "errors": [],
+    "units": 8,
+    "canvas": true,
+    "scope": "Mobile landscape browser startup and canvas runtime; not a fidelity approval"
+   }
+  }
+ },
+ "contentRuleRefresh": {
+  "schemaVersion": 1,
+  "source": {
+   "repository": "arkpedia/arkpedia-data",
+   "commit": "66232ee06377d791fb130248d680764c286e5c99",
+   "files": [
+    {
+     "path": "stages/9-12.json",
+     "sha256": "e4eaac58dde53f7ab644ab9552bf402d2ad3e81bffdf9e560f0c0cf9f14677f9"
+    },
+    {
+     "path": "stage-geometry/9-12.json",
+     "sha256": "4bca098afeee474fa47f7e5f7bd99eeea5e4783523a8fa6d50aff9192b650f51"
+    },
+    {
+     "path": "stage-devices.json",
+     "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+    }
+   ],
+   "localFiles": [
+    {
+     "path": "data/stage-rules/9-12.json",
+     "sha256": "8c0e985298836d8dfa06792e1f673a579aecc32b45538e95af335c27e42f5bb1"
+    },
+    {
+     "path": "data/stage-rules/levels/963aa6d27417be1771a32292406e758bb12ae324a0cc3c3a94eb26d4d6cbec1c.json",
+     "sha256": "963aa6d27417be1771a32292406e758bb12ae324a0cc3c3a94eb26d4d6cbec1c"
+    },
+    {
+     "path": ".cache/arkpedia/original-level-blobs/3ad0e50d537d350b41429c112eb135cd05640ea0.json",
+     "sha256": "0513d6834a37b253b8bda40841035de7c7fa7cc8a161d58b16ac5f8f6495bcdf"
+    },
+    {
+     "path": "data/arkpedia-device-source.json",
+     "sha256": "64515531475bbde6c454f96b0a2c797edffc6f986c27d504539602d979b6fb7a"
+    },
+    {
+     "path": "data/arkpedia-device-native-source.json",
+     "sha256": "7340512aaf1e3ddeff9a9c6fb77a6b92e64513e9abc1951e89b780ccb10bd09c"
+    },
+    {
+     "path": ".cache/arkpedia/original-level-blobs/3ad0e50d537d350b41429c112eb135cd05640ea0.json",
+     "sha256": "0513d6834a37b253b8bda40841035de7c7fa7cc8a161d58b16ac5f8f6495bcdf"
+    },
+    {
+     "path": ".cache/arkpedia/original-level-blobs/3ad0e50d537d350b41429c112eb135cd05640ea0.json",
+     "sha256": "0513d6834a37b253b8bda40841035de7c7fa7cc8a161d58b16ac5f8f6495bcdf"
+    },
+    {
+     "path": "data/arkpedia-device-source.json",
+     "sha256": "64515531475bbde6c454f96b0a2c797edffc6f986c27d504539602d979b6fb7a"
+    },
+    {
+     "path": "data/arkpedia-device-native-source.json",
+     "sha256": "7340512aaf1e3ddeff9a9c6fb77a6b92e64513e9abc1951e89b780ccb10bd09c"
+    }
+   ]
+  },
+  "validation": {
+   "smoke": {
+    "seconds": 10,
+    "spawned": 7,
+    "errors": 0
+   },
+   "waveSchedule": {
+    "id": "9-12",
+    "seconds": 218.79999999999998,
+    "spawned": 45,
+    "expected": 45,
+    "dynamicSpawns": 0,
+    "reason": "cleared",
+    "scope": "Diagnostic route/wave sweep with controlled pillar collapse and raised life, using the compiled stage time limit; not a playable clear or fidelity approval"
+   }
+  },
+  "changed": [
+   "devices"
+  ],
+  "deviceRefresh": true
+ }
+}

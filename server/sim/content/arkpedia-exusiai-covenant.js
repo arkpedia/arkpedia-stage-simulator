@@ -352,4 +352,7 @@ export function customizeExusiaiCovenantKit({ battle: b, id, unit: u, kit }) {
   prepared.kit.skill.silenceable = false;
   Object.assign(kit, prepared.kit);
 }
-export function installExusiaiCovenant({ unit: u }) { u.mem.exusiaiCovenantController?.install(); }
+export function installExusiaiCovenant({ unit: u, def }) {
+  if (def.charId !== ID) return;
+  u.mem.exusiaiCovenantController?.install();
+}

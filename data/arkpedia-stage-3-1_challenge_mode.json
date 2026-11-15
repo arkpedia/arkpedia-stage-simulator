@@ -3,12 +3,13 @@
  "name": "Meeting",
  "description": "Condition:\nThe cost of all ranged Operators is doubled.",
  "battle": {
-  "max_life": 3,
+  "max_life": 1,
   "unit_limit": 8,
   "initial_dp": 10,
   "max_dp": 99,
   "dp_per_second": 1,
-  "dp_recovery_interval_seconds": 1
+  "dp_recovery_interval_seconds": 1,
+  "max_play_time": -1
  },
  "mapTags": [],
  "mapTagSource": null,
@@ -1097,8 +1098,8 @@
    "rank": "NORMAL",
    "applyWay": "MELEE",
    "stats": {
-    "maxHp": 1050,
-    "atk": 185,
+    "maxHp": 1260,
+    "atk": 222,
     "def": 0,
     "res": 0,
     "moveSpeed": 1,
@@ -1149,8 +1150,8 @@
    "rank": "NORMAL",
    "applyWay": "MELEE",
    "stats": {
-    "maxHp": 1700,
-    "atk": 260,
+    "maxHp": 2040,
+    "atk": 312,
     "def": 0,
     "res": 20,
     "moveSpeed": 1.9,
@@ -1201,9 +1202,9 @@
    "rank": "NORMAL",
    "applyWay": "RANGED",
    "stats": {
-    "maxHp": 1400,
-    "atk": 240,
-    "def": 100,
+    "maxHp": 1680,
+    "atk": 288,
+    "def": 120,
     "res": 0,
     "moveSpeed": 0.9,
     "bat": 2.4,
@@ -1251,9 +1252,9 @@
    "rank": "NORMAL",
    "applyWay": "RANGED",
    "stats": {
-    "maxHp": 1900,
-    "atk": 310,
-    "def": 150,
+    "maxHp": 2280,
+    "atk": 372,
+    "def": 180,
     "res": 0,
     "moveSpeed": 0.9,
     "bat": 2.4,
@@ -1301,9 +1302,9 @@
    "rank": "NORMAL",
    "applyWay": "MELEE",
    "stats": {
-    "maxHp": 2200,
-    "atk": 300,
-    "def": 90,
+    "maxHp": 2640,
+    "atk": 360,
+    "def": 108,
     "res": 20,
     "moveSpeed": 1,
     "bat": 2,
@@ -1356,8 +1357,8 @@
    "rank": "NORMAL",
    "applyWay": "MELEE",
    "stats": {
-    "maxHp": 3000,
-    "atk": 370,
+    "maxHp": 3600,
+    "atk": 444,
     "def": 0,
     "res": 20,
     "moveSpeed": 1.9,
@@ -1408,9 +1409,9 @@
    "rank": "NORMAL",
    "applyWay": "RANGED",
    "stats": {
-    "maxHp": 1600,
-    "atk": 200,
-    "def": 50,
+    "maxHp": 1920,
+    "atk": 240,
+    "def": 60,
     "res": 50,
     "moveSpeed": 0.8,
     "bat": 4,
@@ -1458,8 +1459,8 @@
    "rank": "NORMAL",
    "applyWay": "MELEE",
    "stats": {
-    "maxHp": 1550,
-    "atk": 240,
+    "maxHp": 1860,
+    "atk": 288,
     "def": 0,
     "res": 0,
     "moveSpeed": 1,
@@ -1510,9 +1511,9 @@
    "rank": "NORMAL",
    "applyWay": "RANGED",
    "stats": {
-    "maxHp": 1550,
-    "atk": 220,
-    "def": 50,
+    "maxHp": 1860,
+    "atk": 264,
+    "def": 60,
     "res": 0,
     "moveSpeed": 0.9,
     "bat": 3,
@@ -1567,9 +1568,9 @@
    "rank": "ELITE",
    "applyWay": "MELEE",
    "stats": {
-    "maxHp": 8000,
-    "atk": 750,
-    "def": 80,
+    "maxHp": 9600,
+    "atk": 900,
+    "def": 96,
     "res": 30,
     "moveSpeed": 0.75,
     "bat": 3.3,
@@ -1609,5 +1610,102 @@
    "notCountInTotal": false,
    "tags": []
   }
+ },
+ "rules": {
+  "variant": "challenge_mode",
+  "source": {
+   "repository": "Kengxxiao/ArknightsGameData",
+   "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+   "path": "zh_CN/gamedata/levels/obt/main/level_main_03-01.json",
+   "sha256": "62a7ba3d7cdcd54163ac01ad8bce2cd3629e45b03e96f50a0a835b5a6ddce14e",
+   "gitBlob": "6dc87b234760418d64f0354e617a17470c09fc63",
+   "stageTable": {
+    "path": "zh_CN/gamedata/excel/stage_table.json",
+    "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+    "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+    "stageId": "main_03-01",
+    "levelId": "Obt/Main/level_main_03-01"
+   }
+  },
+  "battle": {
+   "max_play_time": -1,
+   "max_life": 1
+  },
+  "enemies": {
+   "maxHp": 1.2,
+   "atk": 1.2,
+   "def": 1.2
+  },
+  "enemyAdd": {},
+  "hiddenGroups": {},
+  "allyCards": [
+   {
+    "attribute": "cost",
+    "professionMask": 1023,
+    "buildableMask": 2,
+    "scale": 2
+   }
+  ]
+ },
+ "tokens": [],
+ "contentRuleRefresh": {
+  "schemaVersion": 1,
+  "source": {
+   "repository": "arkpedia/arkpedia-data",
+   "commit": "66232ee06377d791fb130248d680764c286e5c99",
+   "files": [
+    {
+     "path": "stages/3-1_challenge_mode.json",
+     "sha256": "abeff76c8f24755dc01800f8720a5291ecd000ea2af5cfbeec59685bc3490693"
+    },
+    {
+     "path": "stage-geometry/3-1.json",
+     "sha256": "7fd7e9146474cab0e0c6ac2a36edad82a0d852a6506c1a46a354dcef373a2b50"
+    },
+    {
+     "path": "stage-devices.json",
+     "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+    }
+   ],
+   "localFiles": [
+    {
+     "path": "data/stage-rules/3-1_challenge_mode.json",
+     "sha256": "e6af69e860afcf2e1abeae8f14f352cfe3025211e4c93be7322d8b237ad0bba7"
+    },
+    {
+     "path": "data/stage-rules/levels/9364a18c394178d3a9c020c70cf4fad2077a71f00586b7c56bfe3abf46a32801.json",
+     "sha256": "9364a18c394178d3a9c020c70cf4fad2077a71f00586b7c56bfe3abf46a32801"
+    }
+   ]
+  },
+  "validation": {
+   "smoke": {
+    "seconds": 10,
+    "spawned": 2,
+    "errors": 0
+   },
+   "waveSchedule": {
+    "id": "3-1_challenge_mode",
+    "seconds": 201.53333333333333,
+    "spawned": 83,
+    "expected": 83,
+    "reason": "cleared",
+    "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+   },
+   "browser": {
+    "id": "3-1_challenge_mode",
+    "seconds": 20,
+    "errors": [],
+    "units": 6,
+    "canvas": true,
+    "scope": "Browser startup and 600 simulation ticks; not full gameplay or visual fidelity approval"
+   }
+  },
+  "changed": [
+   "rules",
+   "battle",
+   "enemies",
+   "tokens"
+  ]
  }
 }

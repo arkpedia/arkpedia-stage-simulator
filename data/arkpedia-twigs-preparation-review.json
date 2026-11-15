@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-15",
+  "scope": "Source and instance preparation only. Device is not registered or available in public stage admission.",
+  "sources": [
+    {
+      "path": "shared/arkpedia/stage-twigs.js",
+      "sha256": "0a45a2c36a6565333bb1bb775c32b66bc6888d8ad971795d2625a7c7537ce07e"
+    },
+    {
+      "path": "tools/arkpedia/stage-twigs.mjs",
+      "sha256": "7ceb40330a6bb6fd9a462a1ec387ad492fe625c3fe48f1a523b7dd4432a41282"
+    },
+    {
+      "path": "server/sim/content/arkpedia-corruption.js",
+      "sha256": "c1dbf634709a9c774b9aa98e3731d210c05b53ceeef595d7d00d6cf5c4200836"
+    },
+    {
+      "path": "test/arkpedia-stage-twigs.test.js",
+      "sha256": "e7408703a89cf70eaa778b9eb931aa3ea0700373de4fb147603bb35df7cd82b9"
+    }
+  ],
+  "acceptedInstances": 147,
+  "rejected": [
+    {
+      "file": ".cache/arkpedia/original-level-blobs/58dcd3497fdc8220bc3912eae9fec1e5b798aa74.json",
+      "alias": "trap_086_larva#2",
+      "error": "Unknown or duplicate Twigs blackboard key",
+      "blackboard": [
+        {
+          "key": "branch_id",
+          "value": 0,
+          "valueStr": "route2"
+        },
+        {
+          "key": "action_index",
+          "value": 0,
+          "valueStr": null
+        },
+        {
+          "key": "Polluted_damage_low",
+          "value": 100,
+          "valueStr": null
+        },
+        {
+          "key": "Polluted_damage_low",
+          "value": 50,
+          "valueStr": null
+        }
+      ]
+    }
+  ],
+  "remaining": [
+    "Runtime low-HP mode and source animation binding",
+    "Stage progress trigger",
+    "Death branch integration and totals",
+    "Device artwork and desktop/mobile interaction"
+  ],
+  "validation": {
+    "combinedTests": 45,
+    "instanceTests": 8,
+    "acceptedCachedPlacements": 147,
+    "refusedAmbiguousPlacements": 1
+  }
+}

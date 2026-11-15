@@ -95,6 +95,7 @@ export function customizeVigilKit({battle:b,id,def,unit:u,kit}) {
 }
 export function installVigil({battle:b,unit:u,def}) {
   if(def.charId !== ID) return;
+  u.mem.regularSummonFactory = createWolfpack;
   b.on('deploy',({unit}) => {
     if(unit !== u) return;
     const state=b.regularSummons?.get(`summon:${ID}`);

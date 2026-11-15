@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Derived enemy support: an enemy is supported when everything it uses has an
-// approved implementation. Today that is the stat-only tier, enemies with no
+// approved implementation. This includes the basic stat-only tier: enemies with no
 // skills, no talents and no handbook abilities at any level whose original
 // prefab has no native ability wrappers or active general/common abilities
 // (data/arkpedia-enemy-clock-source.json), plus every feature the registry
@@ -8,6 +8,7 @@
 // that read original component content get it from the retained native ability
 // evidence (data/arkpedia-enemy-native-abilities.json), keyed like the index.
 import { enemyFeature, recordFeatureIds } from './enemy-features.js';
+import { nativeAuxiliaryClaims } from './enemy-native-auxiliaries.js';
 
 /** Native ability counts of one original prefab entry of the timing index. */
 export function prefabAbilityCounts(prefab) {
@@ -21,25 +22,37 @@ export const prefabPath = prefabKey => `dyn/battle/prefabs/enemies/${prefabKey}.
 /** The retained original components of one prefab: indexed components parsed and grouped by object name, plus
  * `$ref(pathId)` for any retained component (referenced ones included) and `$template(key)` for retained buff templates. */
 export function nativeComponents(evidence, prefabKey) {
-  const out = {}, byId = new Map();
+  const out = {}, byId = new Map(), ancestry = new Map();
   for (const c of evidence?.prefabs?.[prefabPath(prefabKey)] ?? []) {
     const data = JSON.parse(c.originalJson);
     byId.set(c.pathId, data);
+    ancestry.set(data, c.ancestors ?? []);
     if (!c.referenced) (out[c.objectName] ??= []).push(data);
   }
   Object.defineProperty(out, '$ref', { value: ref => byId.get(String(ref?.m_PathID ?? ref)) ?? null });
+  Object.defineProperty(out, '$ancestors', { value: ref => ancestry.get(ref?.m_GameObject ? ref : byId.get(String(ref?.m_PathID ?? ref))) ?? [] });
+  Object.defineProperty(out, '$siblings', { value: ref => {
+    const component = ref?.m_GameObject ? ref : byId.get(String(ref?.m_PathID ?? ref)), go = component?.m_GameObject?.m_PathID;
+    return go == null ? [] : [...byId.values()].filter(c => c.m_GameObject?.m_PathID === go);
+  } });
   Object.defineProperty(out, '$template', { value: key => evidence?.templates?.[key] ?? null });
+  Object.defineProperty(out, '$buff', { value: key => evidence?.buffDatabase?.[key] ?? null });
+  Object.defineProperty(out, '$projectile', { value: key => (evidence?.projectiles?.[key] ?? []).map(row => JSON.parse(row.originalJson)) });
+  Object.defineProperty(out, '$projectileRef', { value: (key, ref) => {
+    const row = evidence?.projectiles?.[key]?.find(row => row.pathId === String(ref?.m_PathID ?? ref));
+    return row ? JSON.parse(row.originalJson) : null;
+  } });
+  Object.defineProperty(out, '$range', { value: key => evidence?.ranges?.[key] ?? null });
   return out;
 }
 
 /** Support decision for one catalogue entry; `reasons` names everything still missing. */
-// One reviewed native claim that is not expressible from the shared flying feature: the
-// targeteer's single active component is the flying controller itself.
-const RECORD_NATIVE_CLAIMS = Object.freeze({ enemy_1112_emppnt: Object.freeze({ active: 1 }), enemy_1161_tidmag: Object.freeze({ active: 1 }), enemy_1160_hvyslr: Object.freeze({ active: 1 }) });
+// Legacy native claims outside the reviewed component-level auxiliary classifier.
+const RECORD_NATIVE_CLAIMS = Object.freeze({ enemy_1161_tidmag: Object.freeze({ active: 1 }), enemy_1160_hvyslr: Object.freeze({ active: 1 }) });
 
 export function enemySupport(entry, prefabs, evidence = {}) {
   const levels = Object.values(entry.levels), reasons = [], features = [], deps = new Set();
-  const covers = (f, r) => f.covers(r, nativeComponents(evidence, r.prefabKey));
+  const covers = (f, r) => (!f.matchesRecord || f.matchesRecord(r)) && f.covers(r, nativeComponents(evidence, r.prefabKey));
   // A feature is cleared only when it is registered and covers every level that uses it.
   for (const id of [...new Set(levels.flatMap(recordFeatureIds))]) {
     const f = enemyFeature(id), using = levels.filter(r => recordFeatureIds(r).includes(id));
@@ -49,7 +62,8 @@ export function enemySupport(entry, prefabs, evidence = {}) {
       return explains && (typeof explains === 'function' ? explains(text, r) : explains.test(text)) && covers(tf, r);
     }));
     if ((f && using.every(r => covers(f, r))) || explained) features.push(id); else reasons.push(id);
-    if (f?.dependsOn) for (const r of using) for (const key of f.dependsOn(r)) deps.add(key);
+    if (f?.dependsOn) for (const r of using) if (!f.matchesRecord || f.matchesRecord(r))
+      for (const key of f.dependsOn(r)) deps.add(key);
   }
   const native = {};
   for (const key of new Set(levels.map(r => r.prefabKey))) {
@@ -64,7 +78,13 @@ export function enemySupport(entry, prefabs, evidence = {}) {
     }
     claimedActive += RECORD_NATIVE_CLAIMS[key]?.active ?? 0;
     claimedWrappers += RECORD_NATIVE_CLAIMS[key]?.wrappers ?? 0;
-    native[key] = { hierarchySha256: p.hierarchySha256, ...counts, claimedWrappers, claimedActive };
+    // Legacy feature claims are counts, not component identities. They may
+    // already include a log/visual helper; never use that helper twice to fill
+    // an unrelated gap. Mixed claims need an explicit component-level review.
+    const auxiliary = claimedActive === 0 ? nativeAuxiliaryClaims(p, nat) : { active: 0, components: [] };
+    claimedActive += auxiliary.active;
+    native[key] = { hierarchySha256: p.hierarchySha256, ...counts, claimedWrappers, claimedActive,
+      ...(auxiliary.active ? { auxiliaryComponents: auxiliary.components } : {}) };
     if (counts.enemyAbilityWrappers > claimedWrappers) reasons.push(`native-ability-wrappers:${key}`);
     if (counts.activeGeneralOrCommonAbilities > claimedActive) reasons.push(`native-abilities:${key}`);
   }

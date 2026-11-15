@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Exact original components/templates and bounded native dispatch mappings are
 // retained in data/arkpedia-silence-paradigmatic-prefabs.json.
+import { stageCardRespawnTime } from './arkpedia-stage-card-cost.js';
 import evidence from '../../../data/arkpedia-silence-paradigmatic-prefabs.json' with { type: 'json' };
 import { bodyInKeys } from '../body.js';
 import { aggregateMods } from '../buffs.js';
@@ -189,7 +190,7 @@ export function installSilenceParadigmaticDrone(b, token, state) {
     if (unit !== token) return;
     sync();
     if (live(state.owner) && state.owner.skill.active && state.owner.skill.id === 'skchr_slent2_2') {
-      state.stock = Math.min(1, state.stock + 1); state.readyAt = b.time + state.record.stats.respawnTime;
+      state.stock = Math.min(1, state.stock + 1); state.readyAt = b.time + stageCardRespawnTime(b, state.record);
     }
   }, { owner: token });
   sync();

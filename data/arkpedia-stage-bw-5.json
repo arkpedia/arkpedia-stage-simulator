@@ -1,0 +1,1873 @@
+{
+ "code": "BW-5",
+ "name": "An Army of One",
+ "description": "Always seize the foe by the throat.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1,
+  "max_play_time": -1
+ },
+ "rules": {
+  "variant": null,
+  "source": {
+   "repository": "Kengxxiao/ArknightsGameData",
+   "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+   "path": "zh_CN/gamedata/levels/activities/act13mini/level_act13mini_05.json",
+   "sha256": "c4c4517c5801a07c72cd084d97a31856c4aed6b18a0ff3ca6005a5e7e9b9c9df",
+   "gitBlob": "d4fc221bbfabdd17f8bdc5dec2078d0b771e0949",
+   "stageTable": {
+    "path": "zh_CN/gamedata/excel/stage_table.json",
+    "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+    "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+    "stageId": "act13mini_05",
+    "levelId": "Activities/act13mini/level_act13mini_05"
+   }
+  },
+  "battle": {
+   "max_play_time": -1
+  },
+  "enemies": {},
+  "enemyAdd": {},
+  "hiddenGroups": {}
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "bw-5",
+  "rows": 7,
+  "cols": 9,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_telin",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_telout",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    1,
+    2,
+    2,
+    3,
+    4,
+    3,
+    2,
+    2,
+    1
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    5,
+    4,
+    4,
+    4,
+    0
+   ],
+   [
+    1,
+    6,
+    6,
+    6,
+    2,
+    6,
+    6,
+    6,
+    7
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    2,
+    4,
+    4,
+    4,
+    0
+   ],
+   [
+    1,
+    2,
+    2,
+    3,
+    2,
+    3,
+    2,
+    2,
+    1
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    7,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 8
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 30
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 0
+    },
+    "end": {
+     "row": 6,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 3
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 2,
+       "col": 4
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 25
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 3
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 8
+    },
+    "end": {
+     "row": 6,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 2,
+       "col": 4
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 20
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 3
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 6,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 3
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 2,
+       "col": 4
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 15
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 3
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 8
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 35
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 8
+    },
+    "end": {
+     "row": 6,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 2,
+       "col": 4
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 15
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 3
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 8
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 8
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 40
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 0
+    },
+    "end": {
+     "row": 6,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 3
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 2,
+       "col": 4
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 25
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 3
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 8
+    },
+    "end": {
+     "row": 6,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 2,
+       "col": 4
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 20
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 3
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 6,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 3
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 2,
+       "col": 4
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 15
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 3
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 8
+    },
+    "end": {
+     "row": 6,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 2,
+       "col": 4
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 15
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 3
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 8
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10
+     }
+    ]
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 176,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Acid Originium Slug α",
+      "enemy_id": "enemy_1004_mslime_2",
+      "count": 1,
+      "time": 7,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sniper",
+      "enemy_id": "enemy_1047_sagent",
+      "count": 1,
+      "time": 28,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sniper",
+      "enemy_id": "enemy_1047_sagent",
+      "count": 1,
+      "time": 12,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sniper Leader",
+      "enemy_id": "enemy_1047_sagent_2",
+      "count": 1,
+      "time": 44,
+      "route": 3,
+      "fragment": 0
+     },
+     {
+      "enemy": "Avenger",
+      "enemy_id": "enemy_1025_reveng",
+      "count": 1,
+      "time": 66,
+      "route": 4,
+      "fragment": 1
+     },
+     {
+      "enemy": "Sniper Leader",
+      "enemy_id": "enemy_1047_sagent_2",
+      "count": 1,
+      "time": 71,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Sniper Leader",
+      "enemy_id": "enemy_1047_sagent_2",
+      "count": 1,
+      "time": 83,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Sniper Leader",
+      "enemy_id": "enemy_1047_sagent_2",
+      "count": 1,
+      "time": 95,
+      "route": 3,
+      "fragment": 1
+     },
+     {
+      "enemy": "Guerrilla Herald Leader",
+      "enemy_id": "enemy_1080_sotidp_2",
+      "count": 1,
+      "time": 99,
+      "route": 5,
+      "fragment": 1
+     },
+     {
+      "enemy": "Acid Originium Slug α",
+      "enemy_id": "enemy_1004_mslime_2",
+      "count": 2,
+      "time": 75,
+      "interval": 2,
+      "route": 6,
+      "fragment": 1
+     },
+     {
+      "enemy": "Acid Originium Slug α",
+      "enemy_id": "enemy_1004_mslime_2",
+      "count": 2,
+      "time": 95,
+      "interval": 1.5,
+      "route": 6,
+      "fragment": 1
+     },
+     {
+      "enemy": "Avenger",
+      "enemy_id": "enemy_1025_reveng",
+      "count": 1,
+      "time": 126,
+      "route": 7,
+      "fragment": 2
+     },
+     {
+      "enemy": "Guerrilla Herald Leader",
+      "enemy_id": "enemy_1080_sotidp_2",
+      "count": 1,
+      "time": 131,
+      "route": 8,
+      "fragment": 2
+     },
+     {
+      "enemy": "Guerrilla Herald Leader",
+      "enemy_id": "enemy_1080_sotidp_2",
+      "count": 1,
+      "time": 139,
+      "route": 9,
+      "fragment": 2
+     },
+     {
+      "enemy": "Guerrilla Herald Leader",
+      "enemy_id": "enemy_1080_sotidp_2",
+      "count": 1,
+      "time": 147,
+      "route": 10,
+      "fragment": 2
+     },
+     {
+      "enemy": "Sniper Leader",
+      "enemy_id": "enemy_1047_sagent_2",
+      "count": 1,
+      "time": 155,
+      "route": 3,
+      "fragment": 2
+     },
+     {
+      "enemy": "Guerrilla Herald Leader",
+      "enemy_id": "enemy_1080_sotidp_2",
+      "count": 1,
+      "time": 155,
+      "route": 11,
+      "fragment": 2
+     },
+     {
+      "enemy": "Avenger",
+      "enemy_id": "enemy_1025_reveng",
+      "count": 1,
+      "time": 163,
+      "route": 5,
+      "fragment": 2
+     },
+     {
+      "enemy": "Acid Originium Slug α",
+      "enemy_id": "enemy_1004_mslime_2",
+      "count": 2,
+      "time": 134,
+      "interval": 2,
+      "route": 6,
+      "fragment": 2
+     },
+     {
+      "enemy": "Acid Originium Slug α",
+      "enemy_id": "enemy_1004_mslime_2",
+      "count": 2,
+      "time": 144,
+      "interval": 1.5,
+      "route": 6,
+      "fragment": 2
+     },
+     {
+      "enemy": "Acid Originium Slug α",
+      "enemy_id": "enemy_1004_mslime_2",
+      "count": 2,
+      "time": 154,
+      "interval": 1.5,
+      "route": 6,
+      "fragment": 2
+     },
+     {
+      "enemy": "Hateful Avenger",
+      "enemy_id": "enemy_1025_reveng_2",
+      "count": 1,
+      "time": 176,
+      "route": 12,
+      "fragment": 3
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 0,
+    "routes": [
+     3,
+     3,
+     10,
+     3
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 8,
+    "routes": [
+     2,
+     2,
+     9
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 3,
+    "col": 0,
+    "routes": [
+     0,
+     4,
+     6,
+     6,
+     7,
+     6,
+     6,
+     6,
+     12
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 5,
+    "col": 0,
+    "routes": [
+     1,
+     1,
+     8
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 5,
+    "col": 8,
+    "routes": [
+     5,
+     11,
+     5
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 3,
+    "col": 8,
+    "routes": [
+     0,
+     4,
+     6,
+     6,
+     7,
+     6,
+     6,
+     6,
+     12
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 6,
+    "col": 4,
+    "routes": [
+     1,
+     2,
+     3,
+     1,
+     2,
+     3,
+     5,
+     8,
+     9,
+     10,
+     3,
+     11,
+     5
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1004_mslime_2",
+    "slug": "acid_originium_slug_enemy_1004_mslime_2",
+    "name": "Acid Originium Slug α",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1025_reveng",
+    "slug": "avenger",
+    "name": "Avenger",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1025_reveng_2",
+    "slug": "hateful_avenger_enemy_1025_reveng_2",
+    "name": "Hateful Avenger",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1047_sagent",
+    "slug": "sniper",
+    "name": "Sniper",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1047_sagent_2",
+    "slug": "sniper_leader",
+    "name": "Sniper Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1080_sotidp_2",
+    "slug": "guerrilla_herald_leader",
+    "name": "Guerrilla Herald Leader",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false,
+  "source": "cn"
+ },
+ "terrain": [],
+ "conditionalHandled": false,
+ "devices": [],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12
+  ],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "BW-5",
+  "geometryHash": "b5799a681e936cdad4acfe6fb1823abd70b06835a93f4a8060d96099fda455d2",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      8,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "1": {
+    "points": [
+     [
+      0,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "2": {
+    "points": [
+     [
+      8,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "3": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "4": {
+    "points": [
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      8,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "5": {
+    "points": [
+     [
+      8,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "6": {
+    "points": [
+     [
+      0,
+      3
+     ],
+     [
+      8,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "7": {
+    "points": [
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      8,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "8": {
+    "points": [
+     [
+      0,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "9": {
+    "points": [
+     [
+      8,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "10": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "11": {
+    "points": [
+     [
+      8,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "12": {
+    "points": [
+     [
+      0,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      8,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1004_mslime_2": {
+   "key": "enemy_1004_mslime_2",
+   "prefabKey": "enemy_1004_mslime_2",
+   "name": "Acid Originium Slug α",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 2780,
+    "atk": 290,
+    "def": 0,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 3.3,
+    "aspd": 100,
+    "rangeRadius": 1.75,
+    "rawRangeRadius": 1.75,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Every attack reduces the enemy's DEF",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "defdown.def": -15
+    },
+    "bbStr": {},
+    "groups": {
+     "defdown": [
+      "def"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1047_sagent": {
+   "key": "enemy_1047_sagent",
+   "prefabKey": "enemy_1047_sagent",
+   "name": "Sniper",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 3000,
+    "atk": 150,
+    "def": 100,
+    "res": 10,
+    "moveSpeed": 0.8,
+    "bat": 4,
+    "aspd": 100,
+    "rangeRadius": 3.5,
+    "rawRangeRadius": 3.5,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "After two attacks, the next attack <$ba.stun>Stuns</> its target",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [
+    {
+     "prefabKey": "stunattack",
+     "priority": 0,
+     "cooldown": 0,
+     "initCooldown": 0,
+     "spCost": 2,
+     "bb": {
+      "stun": 5
+     },
+     "bbStr": {}
+    }
+   ],
+   "sp": {
+    "type": "INCREASE_WHEN_ATTACK",
+    "maxSp": 2,
+    "initSp": 0,
+    "increment": 1
+   },
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1047_sagent_2": {
+   "key": "enemy_1047_sagent_2",
+   "prefabKey": "enemy_1047_sagent_2",
+   "name": "Sniper Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 4000,
+    "atk": 200,
+    "def": 150,
+    "res": 10,
+    "moveSpeed": 0.8,
+    "bat": 4,
+    "aspd": 100,
+    "rangeRadius": 4,
+    "rawRangeRadius": 4,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "After two attacks, the next attack <$ba.stun>Stuns</> its target",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [
+    {
+     "prefabKey": "stunattack",
+     "priority": 1,
+     "cooldown": 1,
+     "initCooldown": 1,
+     "spCost": 2,
+     "bb": {
+      "stun": 15
+     },
+     "bbStr": {}
+    }
+   ],
+   "sp": {
+    "type": "INCREASE_WHEN_ATTACK",
+    "maxSp": 2,
+    "initSp": 0,
+    "increment": 1
+   },
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1025_reveng": {
+   "key": "enemy_1025_reveng",
+   "prefabKey": "enemy_1025_reveng",
+   "name": "Avenger",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 5000,
+    "atk": 300,
+    "def": 200,
+    "res": 50,
+    "moveSpeed": 0.65,
+    "bat": 2.3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Gains significantly increased ATK when HP is under 50%",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "atkup.atk": 1
+    },
+    "bbStr": {},
+    "groups": {
+     "atkup": [
+      "atk"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1080_sotidp_2": {
+   "key": "enemy_1080_sotidp_2",
+   "prefabKey": "enemy_1080_sotidp_2",
+   "name": "Guerrilla Herald Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 10000,
+    "atk": 360,
+    "def": 120,
+    "res": 50,
+    "moveSpeed": 1,
+    "bat": 2.5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": true,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Increases the ATK and DEF of enemy units when on the battlefield.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "strength.atk": 0.1,
+     "strength.def": 100
+    },
+    "bbStr": {},
+    "groups": {
+     "strength": [
+      "atk",
+      "def"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1025_reveng_2": {
+   "key": "enemy_1025_reveng_2",
+   "prefabKey": "enemy_1025_reveng_2",
+   "name": "Hateful Avenger",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 18000,
+    "atk": 480,
+    "def": 230,
+    "res": 50,
+    "moveSpeed": 0.65,
+    "bat": 2.3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Gains significantly increased ATK when HP is under 50%",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "atkup.atk": 1.8
+    },
+    "bbStr": {},
+    "groups": {
+     "atkup": [
+      "atk"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ },
+ "contentAddition": {
+  "schemaVersion": 1,
+  "source": {
+   "repository": "arkpedia/arkpedia-data",
+   "commit": "66232ee06377d791fb130248d680764c286e5c99",
+   "files": [
+    {
+     "path": "stages/bw-5.json",
+     "sha256": "07e6baa41be4fef5585ebbbc2a7a18da0e188f861d8673a3bb5ac91d370df2d8"
+    },
+    {
+     "path": "stage-geometry/bw-5.json",
+     "sha256": "b5799a681e936cdad4acfe6fb1823abd70b06835a93f4a8060d96099fda455d2"
+    },
+    {
+     "path": "stage-devices.json",
+     "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+    }
+   ],
+   "localFiles": [
+    {
+     "path": "data/stage-rules/bw-5.json",
+     "sha256": "ddfde86b0ff262d4d5fb3fe021ec1c89bc2399ed16f2d1d16675bf613e1def28"
+    },
+    {
+     "path": "data/stage-rules/levels/2a9cc0fba2355332934177cfe351d8c71579a4212308a211728da5b51d1c2e04.json",
+     "sha256": "2a9cc0fba2355332934177cfe351d8c71579a4212308a211728da5b51d1c2e04"
+    }
+   ]
+  },
+  "dependencies": {
+   "enemies": [
+    "enemy_1004_mslime_2",
+    "enemy_1025_reveng",
+    "enemy_1025_reveng_2",
+    "enemy_1047_sagent",
+    "enemy_1047_sagent_2",
+    "enemy_1080_sotidp_2"
+   ],
+   "devices": [],
+   "tokens": []
+  },
+  "validation": {
+   "smoke": {
+    "seconds": 10,
+    "spawned": 1,
+    "errors": 0
+   },
+   "publicReview": "pending",
+   "waveSchedule": {
+    "id": "bw-5",
+    "seconds": 194.96666666666667,
+    "spawned": 27,
+    "expected": 27,
+    "reason": "cleared",
+    "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+   },
+   "browser": {
+    "id": "bw-5",
+    "seconds": 10,
+    "errors": [],
+    "units": 1,
+    "canvas": true,
+    "scope": "Headless Chromium, mobile landscape 1440x900: preparation, battle start, canvas and short runtime without page or simulation errors. Original art and full clear not certified."
+   }
+  }
+ }
+}

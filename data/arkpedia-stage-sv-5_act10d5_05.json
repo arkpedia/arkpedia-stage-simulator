@@ -1,0 +1,1529 @@
+{
+ "code": "SV-5",
+ "name": "Breach",
+ "description": "'We just have to hold this junction to win!' -Beware such foolish thoughts.\n<Bush> Operators deployed on it will not be targeted by enemy ranged attacks.\nStage available from 9/29 10:00 A.M. to 10/9 3:59 A.M.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "rules": {
+  "variant": null,
+  "source": {
+   "repository": "Kengxxiao/ArknightsGameData",
+   "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+   "path": "zh_CN/gamedata/levels/activities/act10d5/level_act10d5_05.json",
+   "sha256": "d8833123efe8117b227e5d9d2bdbc6616c138fa6210af0d66ac6f93a1df4f2e7",
+   "gitBlob": "c6bc8796da6d395e834feea5ca0e0058e4248668",
+   "stageTable": {
+    "path": "zh_CN/gamedata/excel/stage_table.json",
+    "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+    "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+    "stageId": "act10d5_05",
+    "levelId": "Activities/ACT10d5/level_act10d5_05"
+   }
+  },
+  "battle": {},
+  "enemies": {},
+  "enemyAdd": {},
+  "hiddenGroups": {}
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "sv-5_act10d5_05",
+  "rows": 8,
+  "cols": 11,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_grass",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_fence",
+    "height": "low",
+    "walkable": false,
+    "deployable": "melee",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    2
+   ],
+   [
+    0,
+    1,
+    1,
+    0,
+    3,
+    0,
+    3,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    2,
+    1,
+    1,
+    0,
+    4,
+    4,
+    4,
+    3,
+    3,
+    0,
+    0
+   ],
+   [
+    2,
+    1,
+    1,
+    5,
+    1,
+    5,
+    1,
+    5,
+    1,
+    5,
+    6
+   ],
+   [
+    2,
+    1,
+    1,
+    5,
+    1,
+    5,
+    1,
+    5,
+    1,
+    5,
+    6
+   ],
+   [
+    2,
+    1,
+    1,
+    0,
+    3,
+    7,
+    0,
+    7,
+    3,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 0
+    },
+    "end": {
+     "row": 5,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 3
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 0
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 3
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 0
+    },
+    "end": {
+     "row": 5,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 2
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 0
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 0
+    },
+    "end": {
+     "row": 5,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 1
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 0
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 0
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 1
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 0
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 10
+    },
+    "end": {
+     "row": 5,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 1
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 10
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 1
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 0
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 2
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 3
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 0
+    },
+    "end": {
+     "row": 5,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 2
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 3
+     }
+    ]
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 185,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Hound Pro",
+      "enemy_id": "enemy_1000_gopro_2",
+      "count": 1,
+      "time": 3,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Hound Pro",
+      "enemy_id": "enemy_1000_gopro_2",
+      "count": 1,
+      "time": 7,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Hound Pro",
+      "enemy_id": "enemy_1000_gopro_2",
+      "count": 3,
+      "time": 11,
+      "interval": 6,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Hound Pro",
+      "enemy_id": "enemy_1000_gopro_2",
+      "count": 3,
+      "time": 12,
+      "interval": 6,
+      "route": 3,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sarkaz Swordsman",
+      "enemy_id": "enemy_1071_dftman",
+      "count": 2,
+      "time": 28,
+      "interval": 8,
+      "route": 4,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sarkaz Swordsman",
+      "enemy_id": "enemy_1071_dftman",
+      "count": 2,
+      "time": 29,
+      "interval": 8,
+      "route": 5,
+      "fragment": 0
+     },
+     {
+      "enemy": "Senior Caster Leader",
+      "enemy_id": "enemy_1018_aoemag_2",
+      "count": 1,
+      "time": 55,
+      "route": 6,
+      "fragment": 1
+     },
+     {
+      "enemy": "Hound Pro",
+      "enemy_id": "enemy_1000_gopro_2",
+      "count": 2,
+      "time": 56,
+      "interval": 5,
+      "route": 4,
+      "fragment": 1
+     },
+     {
+      "enemy": "Hound Pro",
+      "enemy_id": "enemy_1000_gopro_2",
+      "count": 2,
+      "time": 57,
+      "interval": 5,
+      "route": 5,
+      "fragment": 1
+     },
+     {
+      "enemy": "Sarkaz Swordsman",
+      "enemy_id": "enemy_1071_dftman",
+      "count": 3,
+      "time": 64,
+      "interval": 10,
+      "route": 4,
+      "fragment": 1
+     },
+     {
+      "enemy": "Sarkaz Swordsman",
+      "enemy_id": "enemy_1071_dftman",
+      "count": 3,
+      "time": 65,
+      "interval": 10,
+      "route": 4,
+      "fragment": 1
+     },
+     {
+      "enemy": "Senior Caster Leader",
+      "enemy_id": "enemy_1018_aoemag_2",
+      "count": 1,
+      "time": 92,
+      "route": 7,
+      "fragment": 1
+     },
+     {
+      "enemy": "Senior Caster Leader",
+      "enemy_id": "enemy_1018_aoemag_2",
+      "count": 1,
+      "time": 92,
+      "route": 8,
+      "fragment": 1
+     },
+     {
+      "enemy": "Technical Scout",
+      "enemy_id": "enemy_1020_obsv",
+      "count": 2,
+      "time": 55,
+      "interval": 15,
+      "route": 9,
+      "fragment": 1
+     },
+     {
+      "enemy": "Sarkaz Swordsman",
+      "enemy_id": "enemy_1071_dftman",
+      "count": 2,
+      "time": 126,
+      "interval": 8,
+      "route": 4,
+      "fragment": 2
+     },
+     {
+      "enemy": "Sarkaz Swordsman",
+      "enemy_id": "enemy_1071_dftman",
+      "count": 2,
+      "time": 127,
+      "interval": 8,
+      "route": 5,
+      "fragment": 2
+     },
+     {
+      "enemy": "Sarkaz Swordsman",
+      "enemy_id": "enemy_1071_dftman",
+      "count": 6,
+      "time": 134,
+      "interval": 10,
+      "route": 4,
+      "fragment": 2
+     },
+     {
+      "enemy": "Sarkaz Swordsman",
+      "enemy_id": "enemy_1071_dftman",
+      "count": 6,
+      "time": 135,
+      "interval": 10,
+      "route": 5,
+      "fragment": 2
+     },
+     {
+      "enemy": "Senior Caster Leader",
+      "enemy_id": "enemy_1018_aoemag_2",
+      "count": 1,
+      "time": 132,
+      "route": 7,
+      "fragment": 2
+     },
+     {
+      "enemy": "Senior Caster Leader",
+      "enemy_id": "enemy_1018_aoemag_2",
+      "count": 1,
+      "time": 152,
+      "route": 7,
+      "fragment": 2
+     },
+     {
+      "enemy": "Demolitionist",
+      "enemy_id": "enemy_1076_bsthmr",
+      "count": 1,
+      "time": 125,
+      "route": 2,
+      "fragment": 2
+     },
+     {
+      "enemy": "Demolitionist Leader",
+      "enemy_id": "enemy_1076_bsthmr_2",
+      "count": 1,
+      "time": 167,
+      "route": 10,
+      "fragment": 2
+     },
+     {
+      "enemy": "Demolitionist Leader",
+      "enemy_id": "enemy_1076_bsthmr_2",
+      "count": 1,
+      "time": 167,
+      "route": 11,
+      "fragment": 2
+     },
+     {
+      "enemy": "Technical Scout",
+      "enemy_id": "enemy_1020_obsv",
+      "count": 2,
+      "time": 125,
+      "interval": 12,
+      "route": 9,
+      "fragment": 2
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 10,
+    "routes": [
+     8,
+     9,
+     9
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 3,
+    "col": 0,
+    "routes": [
+     3,
+     10
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 4,
+    "col": 0,
+    "routes": [
+     1,
+     5,
+     5,
+     5,
+     5
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 5,
+    "col": 0,
+    "routes": [
+     0,
+     4,
+     6,
+     4,
+     4,
+     4,
+     7,
+     4,
+     4,
+     7,
+     7
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 6,
+    "col": 0,
+    "routes": [
+     2,
+     2,
+     11
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 4,
+    "col": 10,
+    "routes": [
+     1,
+     3,
+     5,
+     6,
+     5,
+     7,
+     9,
+     5,
+     5,
+     7,
+     7,
+     10,
+     9
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 5,
+    "col": 10,
+    "routes": [
+     0,
+     2,
+     4,
+     4,
+     4,
+     4,
+     8,
+     4,
+     4,
+     2,
+     11
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1000_gopro_2",
+    "slug": "hound_pro",
+    "name": "Hound Pro",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1018_aoemag_2",
+    "slug": "senior_caster_leader",
+    "name": "Senior Caster Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1020_obsv",
+    "slug": "technical_scout",
+    "name": "Technical Scout",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1071_dftman",
+    "slug": "sarkaz_swordsman",
+    "name": "Sarkaz Swordsman",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1076_bsthmr",
+    "slug": "demolitionist",
+    "name": "Demolitionist",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1076_bsthmr_2",
+    "slug": "demolitionist_leader",
+    "name": "Demolitionist Leader",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false,
+  "source": "cn"
+ },
+ "terrain": [],
+ "conditionalHandled": false,
+ "devices": [],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11
+  ],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "SV-5",
+  "geometryHash": "20db78880cb079ced3f5ddf246ddfd774e681f5e244a1ea5dfa2e3b76de71ac0",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      0,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      10,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "1": {
+    "points": [
+     [
+      0,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "2": {
+    "points": [
+     [
+      0,
+      6
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      10,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "3": {
+    "points": [
+     [
+      0,
+      3
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "4": {
+    "points": [
+     [
+      0,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      10,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "5": {
+    "points": [
+     [
+      0,
+      4
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "6": {
+    "points": [
+     [
+      0,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "7": {
+    "points": [
+     [
+      0,
+      5
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "8": {
+    "points": [
+     [
+      10,
+      1
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      10,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "9": {
+    "points": [
+     [
+      10,
+      1
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "10": {
+    "points": [
+     [
+      0,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "11": {
+    "points": [
+     [
+      0,
+      6
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      10,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1000_gopro_2": {
+   "key": "enemy_1000_gopro_2",
+   "prefabKey": "enemy_1000_gopro_2",
+   "name": "Hound Pro",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 1700,
+    "atk": 260,
+    "def": 0,
+    "res": 20,
+    "moveSpeed": 1.9,
+    "bat": 1.4,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1071_dftman": {
+   "key": "enemy_1071_dftman",
+   "prefabKey": "enemy_1071_dftman",
+   "name": "Sarkaz Swordsman",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2800,
+    "atk": 300,
+    "def": 70,
+    "res": 50,
+    "moveSpeed": 1,
+    "bat": 2.5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "sarkaz"
+   ]
+  },
+  "enemy_1018_aoemag_2": {
+   "key": "enemy_1018_aoemag_2",
+   "prefabKey": "enemy_1018_aoemag_2",
+   "name": "Senior Caster Leader",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 13500,
+    "atk": 380,
+    "def": 160,
+    "res": 50,
+    "moveSpeed": 0.7,
+    "bat": 3.8,
+    "aspd": 100,
+    "rangeRadius": 2.2,
+    "rawRangeRadius": 2.2,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Deals area damage to Operators on the four cardinal tiles next to the primary target.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1020_obsv": {
+   "key": "enemy_1020_obsv",
+   "prefabKey": "enemy_1020_obsv",
+   "name": "Technical Scout",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 7000,
+    "atk": 270,
+    "def": 100,
+    "res": 20,
+    "moveSpeed": 1,
+    "bat": 2.5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Reveals <$ba.invisible>invisible</> allied units in its surroundings",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "antiinvi.range_radius": 3.3
+    },
+    "bbStr": {},
+    "groups": {
+     "antiinvi": [
+      "range_radius"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1076_bsthmr": {
+   "key": "enemy_1076_bsthmr",
+   "prefabKey": "enemy_1076_bsthmr",
+   "name": "Demolitionist",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 15000,
+    "atk": 1700,
+    "def": 800,
+    "res": 0,
+    "moveSpeed": 0.6,
+    "bat": 5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 4,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Attacks cause an explosion, dealing Splash damage to units around the primary target.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "aoe.attack@bsthmr_range.atk_scale": 0.5
+    },
+    "bbStr": {},
+    "groups": {
+     "aoe": [
+      "attack@bsthmr_range.atk_scale"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1076_bsthmr_2": {
+   "key": "enemy_1076_bsthmr_2",
+   "prefabKey": "enemy_1076_bsthmr_2",
+   "name": "Demolitionist Leader",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 25000,
+    "atk": 2200,
+    "def": 1000,
+    "res": 0,
+    "moveSpeed": 0.6,
+    "bat": 5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 4,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Attacks cause an explosion, dealing Splash damage to units around the primary target.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "aoe.attack@bsthmr_range.atk_scale": 0.5
+    },
+    "bbStr": {},
+    "groups": {
+     "aoe": [
+      "attack@bsthmr_range.atk_scale"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ },
+ "contentAddition": {
+  "schemaVersion": 1,
+  "source": {
+   "repository": "arkpedia/arkpedia-data",
+   "commit": "66232ee06377d791fb130248d680764c286e5c99",
+   "files": [
+    {
+     "path": "stages/sv-5_act10d5_05.json",
+     "sha256": "bb61012e085a1f2f022dd83a9b29802e73d473ddf0b3d79c8e3a1861d0e56785"
+    },
+    {
+     "path": "stage-geometry/sv-5_act10d5_05.json",
+     "sha256": "20db78880cb079ced3f5ddf246ddfd774e681f5e244a1ea5dfa2e3b76de71ac0"
+    },
+    {
+     "path": "stage-devices.json",
+     "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+    }
+   ],
+   "localFiles": [
+    {
+     "path": "data/stage-rules/sv-5_act10d5_05.json",
+     "sha256": "291d61e80deb3b1251dde071111a05fb9d666731565c639addfabc309f9d5243"
+    },
+    {
+     "path": "data/stage-rules/levels/6ab6b717005d4adcf757d2b690840f79747421189c7703e8f0c7ec64ad451352.json",
+     "sha256": "6ab6b717005d4adcf757d2b690840f79747421189c7703e8f0c7ec64ad451352"
+    }
+   ]
+  },
+  "dependencies": {
+   "enemies": [
+    "enemy_1000_gopro_2",
+    "enemy_1018_aoemag_2",
+    "enemy_1020_obsv",
+    "enemy_1071_dftman",
+    "enemy_1076_bsthmr",
+    "enemy_1076_bsthmr_2"
+   ],
+   "devices": [],
+   "tokens": []
+  },
+  "validation": {
+   "smoke": {
+    "seconds": 10,
+    "spawned": 2,
+    "errors": 0
+   },
+   "publicReview": "pending",
+   "waveSchedule": {
+    "id": "sv-5_act10d5_05",
+    "seconds": 200.4,
+    "spawned": 50,
+    "expected": 50,
+    "reason": "cleared",
+    "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+   },
+   "browser": {
+    "id": "sv-5_act10d5_05",
+    "seconds": 10,
+    "errors": [],
+    "units": 2,
+    "canvas": true,
+    "scope": "Headless Chromium, mobile landscape 1440x900: preparation, battle start, canvas and short runtime without page or simulation errors. Original art and full clear not certified."
+   }
+  }
+ }
+}

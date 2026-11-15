@@ -245,6 +245,7 @@ export function normalizeEnemy(key, e) {
   const extra = e.extra ?? {};
   return {
     type: 'enemy',
+    side: e.side === 'neutral' ? 'neutral' : 'enemy',
     id: key,
     key,
     name: e.name ?? key,
@@ -268,7 +269,7 @@ export function normalizeEnemy(key, e) {
     epResistance: num(st.elementRes ?? extra.epResistance ?? e.epResistance, 0),
     epDamageResistance: num(st.elementDmgRes ?? extra.epDamageResistance ?? e.epDamageResistance, 0),
     hpRecoveryPerSec: num(st.hpRecoveryPerSec ?? extra.hpRecoveryPerSec ?? e.hpRecoveryPerSec, 0),
-    notCountInTotal: !!(e.notCountInTotal),
+    notCountInTotal: e.side === 'neutral' || !!e.notCountInTotal || !!e.abilities?.some(a => a.text === 'Does not count towards the defeated enemies counter'),
     hitArea: normHitArea(e.hitArea),   // huge units only (body.js); null = a point
     staticBody: !!e.staticBody,        // 静态刚体: pushes / pulls never move it (Battle._displaceable)
     attackAnim: normAttackAnim(e.attackAnim),   // its attack clip { dur, hit } (ai.js attackStand); null = none known
@@ -375,7 +376,7 @@ export function normalizeRoute(r) {
   if (Array.isArray(r.steps) && r.steps.length) {
     for (const st of r.steps) {
       const t = String(st.t ?? st.type ?? 'move').toUpperCase();
-      cps.push({ type: normCpType(t), pos: pairOf(st.p ?? st.pos) ?? [0, 0], time: num(st.s ?? st.time, 0) });
+      cps.push({ type: normCpType(t), pos: pairOf(st.p ?? st.pos) ?? [0, 0], time: num(st.s ?? st.time, 0), ...(st.clock ? { clock: st.clock } : {}) });
     }
     return { motion, start, end, checkpoints: cps };
   }
@@ -386,7 +387,7 @@ export function normalizeRoute(r) {
       const [type, a, b, t] = cp;
       cps.push({ type: normCpType(type), pos: [num(a), num(b)], time: num(t, 0) });
     } else if (cp && typeof cp === 'object') {
-      cps.push({ type: normCpType(cp.type), pos: pairOf(cp.pos ?? cp.position ?? [cp.row, cp.col]) ?? [0, 0], time: num(cp.time ?? cp.t, 0) });
+      cps.push({ type: normCpType(cp.type), pos: pairOf(cp.pos ?? cp.position ?? [cp.row, cp.col]) ?? [0, 0], time: num(cp.time ?? cp.t, 0), ...(cp.clock ? { clock: cp.clock } : {}) });
     }
   }
   return { motion, start, end, checkpoints: cps };
@@ -394,6 +395,7 @@ export function normalizeRoute(r) {
 
 function normCpType(t) {
   const s = String(t ?? 'MOVE').toUpperCase();
+  if (s === 'WAIT_UNTIL') return s;
   if (s.includes('DISAPPEAR')) return 'DISAPPEAR';
   if (s.includes('APPEAR')) return 'APPEAR';
   if (s.includes('WAIT')) return 'WAIT';

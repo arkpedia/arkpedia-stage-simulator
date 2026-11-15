@@ -1,17 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Stage catalogue: the one place that decides which stage the simulator loads.
-// The global fight data (operators, tokens, enemy records, effects) stays in
-// data/arkpedia-mvp.json; a stage entry either embeds its stage object there
-// (`data: null`, the current 0-1 slice) or names a separate JSON file (the
-// shape a new stage should use, so the 25 MB global payload does not grow).
-//
-// Adding a stage is therefore: build its stage object (code/name/description/
-// battle/mapTags/geometry/pathing/art), save it as data/<file>, and add one
-// entry here. The battle and the renderer consume `data.stage`, so no stage
-// consumers change.
+import { STAGE_LIBRARY_URL, validateStageLibrary, createStageLibraryLoader } from './stage-library.js';
+// The capability-generated library is the primary catalogue. Legacy standalone
+// stage files remain readable for fixtures and older static deployments.
+// Both formats install the same data.stage contract. The library discovers
+// compatible stages from reusable capabilities; it needs no manual stage entry.
 
 /** Parse/validate a catalogue; throws on an entry the client could not use. */
 export function validateStageIndex(index) {
+  if (index?.schemaVersion === 2) return validateStageLibrary(index);
   if (!index || index.schemaVersion !== 1 || !Array.isArray(index.stages) || !index.stages.length)
     throw Error('Invalid stage catalogue');
   const ids = new Set();
@@ -34,6 +30,13 @@ export function resolveStage(index, requested = null, { experimental = false } =
   validateStageIndex(index);
   const id = requested || index.defaultStage;
   const entry = index.stages.find(stage => stage.id === id);
+  if (entry?.availability === 'blocked') {
+    const error = Error(`Stage ${id} needs unimplemented mechanics`);
+    error.code = 'STAGE_UNSUPPORTED'; error.stage = entry;
+    error.blockers = entry.missing.map(i => index.capabilities[i]);
+    error.stages = index.stages.filter(e => e.availability === 'available');
+    throw error;
+  }
   if (entry && (!entry.testOnly || experimental)) return entry;
   if (entry) {
     const error = Error(`Stage ${id} is test-only: open it with ?experimental=1`);
@@ -44,7 +47,7 @@ export function resolveStage(index, requested = null, { experimental = false } =
   }
   const error = Error(`Unknown stage: ${id}`);
   error.code = 'STAGE_NOT_FOUND';
-  error.stages = index.stages.filter(stage => experimental || !stage.testOnly);
+  error.stages = index.stages.filter(stage => stage.availability !== 'blocked' && (experimental || !stage.testOnly));
   throw error;
 }
 
@@ -53,23 +56,49 @@ export function stageDataUrl(entry) {
   return entry.data ? `/data/${entry.data}` : null;
 }
 
+export async function loadStageCatalogue(fetchImpl = fetch) {
+  const response = await fetchImpl(STAGE_LIBRARY_URL);
+  if (response.ok) return validateStageLibrary(await response.json());
+  // An absent library identifies an older deployment. A broken published
+  // library must not silently fall back to stale, unvalidated stage rules.
+  if (response.status !== 404) throw Error('Stage library unavailable');
+  const legacy = await fetchImpl('/data/arkpedia-stages.json');
+  if (!legacy.ok) throw Error('Stage catalogue unavailable');
+  return validateStageIndex(await legacy.json());
+}
+const baseData = new WeakMap(), libraryLoaders = new WeakMap();
+
 /**
  * Resolve and install the selected stage on `data` (`data.stage` stays the
  * public contract used by StandardBattle and StageRenderer). Returns the entry
  * and the installed stage. An embedded entry must already be the global stage.
  */
-export async function applyStage(data, index, requested = null, fetchImpl = fetch, { experimental = false } = {}) {
+export async function applyStage(data, index, requested = null, fetchImpl = fetch, { experimental = false, embeddedDefault = false } = {}) {
   const entry = resolveStage(index, requested, { experimental });
-  if (entry.data) {
+  if (!baseData.has(data)) baseData.set(data, { stage: data.stage, operators: { ...data.operators }, enemies: { ...data.enemies } });
+  const base = baseData.get(data);
+  let stage;
+  // The bootstrap still contains a complete default scene. Explicit opt-in
+  // reuses it for the home page and controlled operator-review fixtures. An
+  // explicit stage selection always uses the capability-generated graph.
+  if (embeddedDefault && !requested && base.stage?.code === entry.code && base.stage.geometry) {
+    stage = base.stage;
+  } else if (entry.bundle) {
+    if (!libraryLoaders.has(fetchImpl)) libraryLoaders.set(fetchImpl, createStageLibraryLoader(fetchImpl));
+    stage = await libraryLoaders.get(fetchImpl).load(entry);
+  } else if (entry.data) {
     const response = await fetchImpl(stageDataUrl(entry));
     if (!response.ok) throw Error(`Stage data unavailable: ${entry.id}`);
-    const stage = await response.json();
+    stage = await response.json();
     if (!stage || typeof stage !== 'object' || !stage.geometry) throw Error(`Stage data is not a stage: ${entry.id}`);
-    data.stage = { ...stage, code: entry.code, name: entry.name, description: entry.description ?? stage.description ?? '' };
-    if (stage.operators && typeof stage.operators === 'object') data.operators = { ...(data.operators ?? {}), ...stage.operators };
-    if (stage.enemies && typeof stage.enemies === 'object') data.enemies = { ...(data.enemies ?? {}), ...stage.enemies };
   } else {
-    if (!data.stage || data.stage.code !== entry.code) throw Error(`Embedded stage is missing: ${entry.id}`);
+    if (!base.stage || base.stage.code !== entry.code) throw Error(`Embedded stage is missing: ${entry.id}`);
+    stage = base.stage;
   }
+  // Commit only after the complete graph resolves. Prior stage overrides never
+  // become the base of the next stage, including fixed-squad support operators.
+  data.stage = { ...stage, code: entry.code, name: entry.name, description: entry.description ?? stage.description ?? '' };
+  data.operators = { ...base.operators, ...stage.operators };
+  data.enemies = { ...base.enemies, ...stage.enemies };
   return { entry, stage: data.stage };
 }

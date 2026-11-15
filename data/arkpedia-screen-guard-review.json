@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-14",
+  "scope": "Arc Screenguard damage-counter admission and shared first-count correction; native body art and shield visuals pending.",
+  "sourceFiles": [
+    {
+      "path": "data/arkpedia-enemy-native-abilities.json",
+      "sha256": "e3530d842a55d10933d11308e07dc74e4fa2ff8883c940341cb0b755f0fba842"
+    },
+    {
+      "path": "shared/arkpedia/enemy-screen-features.js",
+      "sha256": "448f539117afabaa1bd0c5489553f2c74c4672013cd49e7947b2081ffcbd6eff"
+    },
+    {
+      "path": "server/sim/content/enemies.js",
+      "sha256": "0ca590976d023aef662057b99c54646d833dd5b91660a81a360dc6b266868867"
+    },
+    {
+      "path": "test/arkpedia-enemy-screen.test.js",
+      "sha256": "03fae4ceab7799b678ca8e9537f2a4a43d4bc5fdc07fa0065b8619acbb6845fb"
+    },
+    {
+      "path": "tools/arkpedia/extract-enemy-native-abilities.py",
+      "sha256": "9ae110ef9a055f7423e2c9e3dc150a9576364fca73cafc1e619786517a81b329"
+    }
+  ],
+  "reference": {
+    "url": "https://prts.wiki/w/%E5%BC%A7%E5%85%89%E9%95%9C%E5%8D%AB%E9%95%BF?action=raw",
+    "sha256": "509db0e1934c13250f5ff70f9d8097ef9be7ebdc2d6054f61b6a77f71dd80e37",
+    "fact": "Resistance reduction applies only at two or more counts; each count gives -50 DEF and -2 RES, capped at 85 for the leader."
+  },
+  "validation": {
+    "featureRegressionTests": 187,
+    "legacyFamilyTests": 2,
+    "supportedEnemies": 609,
+    "newlySupported": [
+      "enemy_1329_cbshld",
+      "enemy_1329_cbshld_2"
+    ],
+    "newlyAvailableStages": [],
+    "smoke": {
+      "scope": "10-second constructor/runtime smoke for every available compiled stage; not a playable-clear or fidelity certificate",
+      "available": 791,
+      "completed": 791,
+      "failures": [],
+      "uniqueComponentsRead": 5363,
+      "cache": {
+        "cachedBytes": 11760932,
+        "cachedObjects": 5363,
+        "pending": 0
+      }
+    }
+  }
+}

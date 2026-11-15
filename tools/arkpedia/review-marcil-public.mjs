@@ -31,7 +31,7 @@ try {
    if(r.url().startsWith(origin)&&path==='/data/arkpedia-mvp.json')return r.respond({status:200,contentType:'application/json',body:JSON.stringify(data)});
    return r.continue();
   });
-  await page.goto(origin+'/arkpedia/',{waitUntil:'domcontentloaded',timeout:60000});await page.waitForSelector('.roster-item.chosen');
+  await page.goto(origin+'/arkpedia/?snapshot=1',{waitUntil:'domcontentloaded',timeout:60000});await page.waitForSelector('.roster-item.chosen');
   for(const id of await page.$$eval('.roster-item.chosen',es=>es.map(e=>e.dataset.id))){await page.click(`.roster-item[data-id="${id}"]`);await page.click('#toggle');}
   async function choose(id){await page.$eval('#roster-search',(e,name)=>{e.value=name;e.dispatchEvent(new Event('input',{bubbles:true}));},data.operators[id].name);await page.click(`.roster-item[data-id="${id}"]`);}
   await choose(ID);await page.click('#toggle');assert.equal(await page.$eval('#skillId',e=>e.options.length),3);

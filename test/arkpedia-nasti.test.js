@@ -81,3 +81,15 @@ for(const skill of[1,2,3])check(`S${skill} clears unchanged original 0-1 with na
  let u,m,g;for(let n=0;n<9001&&!b.finished;n++){if(!u&&b.dp>=b.cost(ID))u=b.deployOperator(ID,3,5,'RIGHT');if(u&&!g&&b.dp>=b.cost(G))g=b.deployOperator(G,3,3,'RIGHT');if(g&&!m&&b.dp>=b.cost(Mel))m=b.deployOperator(Mel,2,5,'RIGHT');if(u?.skill.ready)b.activateOperator(ID);b.step();}
  const r=b.result(),leaks=r.perPlayer.arkpedia.leaked.filter(e=>e.counted).length;assert.ok(u?.stats.dmg>0);assert.equal(r.reason,'cleared');assert.equal(r.killed,11);assert.equal(leaks,0);assert.deepEqual(b.errors,[]);
 });
+
+check('a missing selected summon factory fails before spending DP, stock or cooldown',()=>{
+ const f=make(),{b,u}=f,state=f.state(),factory=u.mem.regularSummonFactory;
+ const before={dp:b.dp,stock:state.stock,readyAt:state.readyAt,units:b.units.length};
+ delete u.mem.regularSummonFactory;
+ assert.throws(()=>deployRegularSummon(b,CARD,3,5,'RIGHT'),/Missing selected summon factory/);
+ assert.deepEqual({dp:b.dp,stock:state.stock,readyAt:state.readyAt,units:b.units.length},before);
+ u.mem.regularSummonFactory=factory;
+ const token=deployRegularSummon(b,CARD,3,5,'RIGHT');
+ assert.equal(token.ownerUnit,u);assert.equal(state.stock,before.stock-1);
+ assert.ok(b.dp<before.dp);
+});

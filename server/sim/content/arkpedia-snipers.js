@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { SNIPER_OPERATORS } from '../../../shared/arkpedia/sniper-operators.js';
 // Global tables: 57010cb5b2afea112cae57daa756b58676ba6850.
 // Original client skill/character prefab evidence is in data/arkpedia-sniper-prefabs.json.
 
 export function customizeSniperKit({ id, def, unit, kit }) {
+  if (!SNIPER_OPERATORS[id]) return;
   const skill = def.skill;
   if (!skill) return;
   const bb = skill.bb;
@@ -60,6 +62,7 @@ export function customizeSniperKit({ id, def, unit, kit }) {
 }
 
 export function installSniper({ battle, unit, def }) {
+  if (!SNIPER_OPERATORS[def.charId]) return;
   const talent = def.talents[0]?.bb;
   if (unit.defId === 'char_126_shotst' && talent) {
     const normalMultiplier = unit.profile.dmgMul;

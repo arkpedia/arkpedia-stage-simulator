@@ -1,0 +1,1253 @@
+{
+  "code": "IW-3",
+  "name": "Light and Shadow",
+  "description": "Did the light come first, or did the shadow? A truly insignificant conundrum.",
+  "battle": {
+    "max_life": 3,
+    "unit_limit": 8,
+    "initial_dp": 8,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1,
+    "max_play_time": -1
+  },
+  "rules": {
+    "variant": null,
+    "source": {
+      "repository": "Kengxxiao/ArknightsGameData",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "path": "zh_CN/gamedata/levels/activities/act15side/level_act15side_03.json",
+      "sha256": "7c35d674affe684357d9a3e844ed649107a20416243e387d321d2927d6e89651",
+      "gitBlob": "42ffa48fd86fcbba0a23c3631342a84226bbb6ba",
+      "stageTable": {
+        "path": "zh_CN/gamedata/excel/stage_table.json",
+        "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+        "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+        "stageId": "act15side_03",
+        "levelId": "Activities/ACT15side/level_act15side_03"
+      }
+    },
+    "battle": {
+      "max_play_time": -1
+    },
+    "enemies": {},
+    "enemyAdd": {},
+    "hiddenGroups": {}
+  },
+  "mapTags": [],
+  "mapTagSource": null,
+  "geometry": {
+    "slug": "iw-3",
+    "rows": 7,
+    "cols": 11,
+    "tileLegend": [
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_telin",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_floor",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_start",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_telout",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      }
+    ],
+    "tileGrid": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        2,
+        3,
+        3,
+        3,
+        3,
+        2,
+        2,
+        2,
+        4,
+        0
+      ],
+      [
+        0,
+        0,
+        5,
+        5,
+        5,
+        3,
+        5,
+        5,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        5,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        3,
+        5,
+        2,
+        5,
+        3,
+        3,
+        3,
+        2,
+        0,
+        0
+      ],
+      [
+        0,
+        6,
+        0,
+        2,
+        0,
+        5,
+        0,
+        0,
+        2,
+        2,
+        4
+      ],
+      [
+        0,
+        0,
+        0,
+        7,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "routes": [
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 10
+        },
+        "end": {
+          "row": 5,
+          "col": 1
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 1
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 9
+        },
+        "end": {
+          "row": 5,
+          "col": 1
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 0
+            }
+          },
+          {
+            "type": "appear_at_pos",
+            "position": {
+              "row": 6,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 1
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 3
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 10
+        },
+        "end": {
+          "row": 5,
+          "col": 1
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 0
+            }
+          },
+          {
+            "type": "appear_at_pos",
+            "position": {
+              "row": 6,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 1
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 4,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": null,
+        "placeholder": true,
+        "start": null,
+        "end": null,
+        "checkpoints": [],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 9
+        },
+        "end": {
+          "row": 5,
+          "col": 1
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 1
+            }
+          }
+        ],
+        "waits": []
+      }
+    ],
+    "waves": [
+      {
+        "index": 0,
+        "duration": 166,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Grindstone",
+            "enemy_id": "enemy_1195_sfyin",
+            "count": 5,
+            "time": 3,
+            "interval": 11,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Vernacularism",
+            "enemy_id": "enemy_1197_sfshu",
+            "count": 3,
+            "time": 25,
+            "interval": 18,
+            "route": 1,
+            "fragment": 0
+          },
+          {
+            "enemy": "Introspection",
+            "enemy_id": "enemy_1199_sfjin",
+            "count": 1,
+            "time": 45,
+            "route": 2,
+            "fragment": 0
+          },
+          {
+            "enemy": "Vernacularism",
+            "enemy_id": "enemy_1197_sfshu",
+            "count": 4,
+            "time": 91,
+            "interval": 25,
+            "route": 1,
+            "fragment": 1
+          },
+          {
+            "enemy": "Introspection",
+            "enemy_id": "enemy_1199_sfjin",
+            "count": 1,
+            "time": 113,
+            "route": 2,
+            "fragment": 1
+          },
+          {
+            "enemy": "Introspection",
+            "enemy_id": "enemy_1199_sfjin",
+            "count": 1,
+            "time": 155,
+            "route": 2,
+            "fragment": 1
+          },
+          {
+            "enemy": "Introspection",
+            "enemy_id": "enemy_1199_sfjin",
+            "count": 1,
+            "time": 155,
+            "route": 4,
+            "fragment": 1
+          },
+          {
+            "enemy": "Grindstone",
+            "enemy_id": "enemy_1195_sfyin",
+            "count": 2,
+            "time": 96,
+            "interval": 2,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Grindstone",
+            "enemy_id": "enemy_1195_sfyin",
+            "count": 2,
+            "time": 121,
+            "interval": 2,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Grindstone",
+            "enemy_id": "enemy_1195_sfyin",
+            "count": 2,
+            "time": 141,
+            "interval": 2,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Grindstone",
+            "enemy_id": "enemy_1195_sfyin",
+            "count": 2,
+            "time": 161,
+            "interval": 2,
+            "route": 0,
+            "fragment": 1
+          }
+        ]
+      }
+    ],
+    "spawnTiles": [
+      {
+        "key": "tile_start",
+        "row": 1,
+        "col": 9,
+        "routes": [
+          1,
+          1,
+          4
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 5,
+        "col": 10,
+        "routes": [
+          0,
+          2,
+          2,
+          2,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 5,
+        "col": 1,
+        "routes": [
+          0,
+          1,
+          2,
+          1,
+          2,
+          2,
+          4,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_1195_sfyin",
+        "slug": "grindstone",
+        "name": "Grindstone",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1196_msfyin",
+        "slug": "wooden_seal",
+        "name": "Wooden Seal",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1197_sfshu",
+        "slug": "vernacularism",
+        "name": "Vernacularism",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1198_msfshu",
+        "slug": "novel_scroll",
+        "name": "Novel Scroll",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1199_sfjin",
+        "slug": "introspection",
+        "name": "Introspection",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1200_msfjin",
+        "slug": "bronze_mirror",
+        "name": "Bronze Mirror",
+        "database_level": 0
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [],
+      "deployable_tokens": []
+    },
+    "hasConditionalSpawns": false
+  },
+  "terrain": [],
+  "conditionalHandled": false,
+  "devices": [],
+  "tokens": [],
+  "pathing": {
+    "schemaVersion": 1,
+    "syntheticRoutes": [
+      0,
+      1,
+      2,
+      4
+    ],
+    "producer": "Arkpedia stage browser / buildPlaybackPaths",
+    "stage": "IW-3",
+    "geometryHash": "862260e3fe9220703139e7732329f77c5cd10674e1f80fba122a5a9fd5dcda9a",
+    "moveScale": 0.65,
+    "paths": {
+      "0": {
+        "points": [
+          [
+            10,
+            5
+          ],
+          [
+            8,
+            5
+          ],
+          [
+            8,
+            4
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "1": {
+        "points": [
+          [
+            9,
+            1
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "2": {
+        "points": [
+          [
+            10,
+            5
+          ],
+          [
+            8,
+            5
+          ],
+          [
+            8,
+            4
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "4": {
+        "points": [
+          [
+            9,
+            1
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      }
+    }
+  },
+  "art": null,
+  "gates": null,
+  "fixedSquad": null,
+  "enemies": {
+    "enemy_1195_sfyin": {
+      "key": "enemy_1195_sfyin",
+      "prefabKey": "enemy_1195_sfyin",
+      "name": "Grindstone",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 2000,
+        "atk": 310,
+        "def": 0,
+        "res": 20,
+        "moveSpeed": 1.5,
+        "bat": 1.5,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 0,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Spawns 2 <Wooden Seals> when defeated",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "DeadSpawn.cnt": 2
+        },
+        "bbStr": {
+          "DeadSpawn.enemy_key": "enemy_1196_msfyin"
+        },
+        "groups": {
+          "DeadSpawn": [
+            "cnt",
+            "enemy_key"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "animated"
+      ]
+    },
+    "enemy_1196_msfyin": {
+      "key": "enemy_1196_msfyin",
+      "prefabKey": "enemy_1196_msfyin",
+      "name": "Wooden Seal",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "NONE",
+      "stats": {
+        "maxHp": 2,
+        "atk": 0,
+        "def": 0,
+        "res": 0,
+        "moveSpeed": 0.8,
+        "bat": 1,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 0,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "none",
+        "dmgTypes": [
+          "none"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Cannot be blocked.",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Must be damaged 2 times to defeat",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "animated"
+      ]
+    },
+    "enemy_1197_sfshu": {
+      "key": "enemy_1197_sfshu",
+      "prefabKey": "enemy_1197_sfshu",
+      "name": "Vernacularism",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 2500,
+        "atk": 320,
+        "def": 60,
+        "res": 0,
+        "moveSpeed": 1.4,
+        "bat": 1.4,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Spawns 3 <Novel Scrolls> when defeated",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "DeadSpawn.cnt": 3
+        },
+        "bbStr": {
+          "DeadSpawn.enemy_key": "enemy_1198_msfshu"
+        },
+        "groups": {
+          "DeadSpawn": [
+            "cnt",
+            "enemy_key"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "animated"
+      ]
+    },
+    "enemy_1198_msfshu": {
+      "key": "enemy_1198_msfshu",
+      "prefabKey": "enemy_1198_msfshu",
+      "name": "Novel Scroll",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "NONE",
+      "stats": {
+        "maxHp": 3,
+        "atk": 0,
+        "def": 0,
+        "res": 0,
+        "moveSpeed": 0.9,
+        "bat": 1,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 0,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "none",
+        "dmgTypes": [
+          "none"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Cannot be blocked.",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Must be damaged 3 times to defeat",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "animated"
+      ]
+    },
+    "enemy_1199_sfjin": {
+      "key": "enemy_1199_sfjin",
+      "prefabKey": "enemy_1199_sfjin",
+      "name": "Introspection",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 6500,
+        "atk": 700,
+        "def": 750,
+        "res": 0,
+        "moveSpeed": 0.8,
+        "bat": 4,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 3,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 1
+      },
+      "abilities": [
+        {
+          "text": "More likely to be attacked by allied units",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Spawns 1 <Bronze Mirror> when defeated",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "DeadSpawn.cnt": 1
+        },
+        "bbStr": {
+          "DeadSpawn.enemy_key": "enemy_1200_msfjin"
+        },
+        "groups": {
+          "DeadSpawn": [
+            "cnt",
+            "enemy_key"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "animated"
+      ]
+    },
+    "enemy_1200_msfjin": {
+      "key": "enemy_1200_msfjin",
+      "prefabKey": "enemy_1200_msfjin",
+      "name": "Bronze Mirror",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "NONE",
+      "stats": {
+        "maxHp": 30,
+        "atk": 0,
+        "def": 0,
+        "res": 0,
+        "moveSpeed": 0.5,
+        "bat": 1,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 0,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "none",
+        "dmgTypes": [
+          "none"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Cannot be blocked.",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Must be damaged 30 times to defeat",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "animated"
+      ]
+    }
+  },
+  "contentAddition": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/iw-3.json",
+          "sha256": "30fdf9375c8f74062eb6532441afe9c353d1e23a7f9b92f49c24144030e88f19"
+        },
+        {
+          "path": "stage-geometry/iw-3.json",
+          "sha256": "862260e3fe9220703139e7732329f77c5cd10674e1f80fba122a5a9fd5dcda9a"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        }
+      ],
+      "localFiles": [
+        {
+          "path": "data/stage-rules/iw-3.json",
+          "sha256": "c184674da12e6984d7ec4c350270d3c436d69b18dc3b51b5d80efe461102eda7"
+        }
+      ]
+    },
+    "dependencies": {
+      "enemies": [
+        "enemy_1195_sfyin",
+        "enemy_1196_msfyin",
+        "enemy_1197_sfshu",
+        "enemy_1198_msfshu",
+        "enemy_1199_sfjin",
+        "enemy_1200_msfjin"
+      ],
+      "devices": [],
+      "tokens": []
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 10,
+        "spawned": 1,
+        "errors": 0
+      },
+      "publicReview": "pending",
+      "waveSchedule": {
+        "id": "iw-3",
+        "seconds": 218.46666666666667,
+        "spawned": 24,
+        "expected": 24,
+        "reason": "cleared",
+        "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+      },
+      "browser": {
+        "date": "2026-11-13",
+        "engine": "Chromium",
+        "seconds": 10,
+        "errors": 0,
+        "canvas": true,
+        "scope": "Load/runtime smoke; external image assets unavailable"
+      }
+    }
+  }
+}

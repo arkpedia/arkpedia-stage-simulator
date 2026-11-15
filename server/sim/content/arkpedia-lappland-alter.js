@@ -352,4 +352,7 @@ export function customizeLapplandKit({battle:b,id,unit:u,kit}){
   const prepared=prepareLapplandAttacks(b,u,{contract:LAPPLAND_ATTACK_CONTRACT});
   Object.assign(kit,prepared.kit);u.mem.lapplandController=prepared.controller;
 }
-export function installLappland({unit:u}){u.mem.lapplandController?.install();}
+export function installLappland({ unit: u, def }) {
+  if (def.charId !== ID) return;
+  u.mem.lapplandController?.install();
+}

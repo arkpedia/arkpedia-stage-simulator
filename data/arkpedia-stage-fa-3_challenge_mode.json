@@ -1,0 +1,859 @@
+{
+ "code": "FA-3",
+ "name": "Dream of a Racecourse",
+ "description": "Condition:\nDeployment Limit is reduced by 1.",
+ "battle": {
+  "max_life": 1,
+  "unit_limit": 7,
+  "initial_dp": 8,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "rules": {
+  "variant": "challenge_mode",
+  "source": {
+   "repository": "Kengxxiao/ArknightsGameData",
+   "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+   "path": "zh_CN/gamedata/levels/activities/act13d0/level_act13d0_03.json",
+   "sha256": "f8227f92b6ef52bd38f0facdc86cd5da537a5c2031dbc04184855c813482b8b1",
+   "gitBlob": "b2e0e5638762f55d9fe0191fb292162c90544de5",
+   "stageTable": {
+    "path": "zh_CN/gamedata/excel/stage_table.json",
+    "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+    "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+    "stageId": "act13d0_03",
+    "levelId": "Activities/ACT13d0/level_act13d0_03"
+   }
+  },
+  "battle": {
+   "max_life": 1,
+   "unit_limit": 7
+  },
+  "enemies": {
+   "atk": 1.1,
+   "def": 1.1,
+   "maxHp": 1.1
+  },
+  "enemyAdd": {},
+  "hiddenGroups": {}
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "fa-3",
+  "rows": 8,
+  "cols": 11,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    0
+   ],
+   [
+    0,
+    1,
+    2,
+    1,
+    1,
+    1,
+    1,
+    0,
+    0,
+    3,
+    0
+   ],
+   [
+    4,
+    2,
+    2,
+    2,
+    3,
+    3,
+    3,
+    5,
+    1,
+    3,
+    0
+   ],
+   [
+    4,
+    2,
+    2,
+    2,
+    3,
+    3,
+    3,
+    5,
+    1,
+    3,
+    0
+   ],
+   [
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    3,
+    0
+   ],
+   [
+    0,
+    0,
+    5,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 7
+    },
+    "end": {
+     "row": 4,
+     "col": 0
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 7
+    },
+    "end": {
+     "row": 3,
+     "col": 0
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 2
+    },
+    "end": {
+     "row": 3,
+     "col": 0
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   null
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 167,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Sarkaz Swordsman",
+      "enemy_id": "enemy_1071_dftman",
+      "count": 1,
+      "time": 10,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sarkaz Swordsman",
+      "enemy_id": "enemy_1071_dftman",
+      "count": 7,
+      "time": 23,
+      "interval": 10,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sarkaz Swordsman",
+      "enemy_id": "enemy_1071_dftman",
+      "count": 6,
+      "time": 27,
+      "interval": 10,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sarkaz Lancer",
+      "enemy_id": "enemy_1072_dlancer",
+      "count": 3,
+      "time": 23,
+      "interval": 18,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Sarkaz Caster",
+      "enemy_id": "enemy_1022_dmage",
+      "count": 1,
+      "time": 96,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Sarkaz Caster",
+      "enemy_id": "enemy_1022_dmage",
+      "count": 1,
+      "time": 96,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Sarkaz Swordsman",
+      "enemy_id": "enemy_1071_dftman",
+      "count": 2,
+      "time": 116,
+      "interval": 7,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Sarkaz Swordsman",
+      "enemy_id": "enemy_1071_dftman",
+      "count": 2,
+      "time": 116,
+      "interval": 7,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Sarkaz Lancer",
+      "enemy_id": "enemy_1072_dlancer",
+      "count": 2,
+      "time": 106,
+      "interval": 20,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Sarkaz Greatswordsman",
+      "enemy_id": "enemy_1010_demon",
+      "count": 1,
+      "time": 159,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "Sarkaz Greatswordsman",
+      "enemy_id": "enemy_1010_demon",
+      "count": 1,
+      "time": 159,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Sarkaz Lancer",
+      "enemy_id": "enemy_1072_dlancer",
+      "count": 2,
+      "time": 149,
+      "interval": 18,
+      "route": 2,
+      "fragment": 2
+     },
+     {
+      "enemy": "Sarkaz Swordsman",
+      "enemy_id": "enemy_1071_dftman",
+      "count": 2,
+      "time": 139,
+      "interval": 7,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "Sarkaz Swordsman",
+      "enemy_id": "enemy_1071_dftman",
+      "count": 2,
+      "time": 139,
+      "interval": 7,
+      "route": 1,
+      "fragment": 2
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 3,
+    "col": 7,
+    "routes": [
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 4,
+    "col": 7,
+    "routes": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 6,
+    "col": 2,
+    "routes": [
+     2,
+     2,
+     2
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 3,
+    "col": 0,
+    "routes": [
+     1,
+     2,
+     1,
+     1,
+     2,
+     1,
+     2,
+     1
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 4,
+    "col": 0,
+    "routes": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1010_demon",
+    "slug": "sarkaz_greatswordsman",
+    "name": "Sarkaz Greatswordsman",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1022_dmage",
+    "slug": "sarkaz_caster",
+    "name": "Sarkaz Caster",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1071_dftman",
+    "slug": "sarkaz_swordsman",
+    "name": "Sarkaz Swordsman",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1072_dlancer",
+    "slug": "sarkaz_lancer",
+    "name": "Sarkaz Lancer",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false,
+  "source": "cn"
+ },
+ "terrain": [],
+ "conditionalHandled": false,
+ "devices": [],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [
+   0,
+   1,
+   2
+  ],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "FA-3",
+  "geometryHash": "b16bf7717da388b6d8b517c751f56f1551a1207e3998a55aa910a00422ede7b4",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      7,
+      4
+     ],
+     [
+      0,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "1": {
+    "points": [
+     [
+      7,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "2": {
+    "points": [
+     [
+      2,
+      6
+     ],
+     [
+      0,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1071_dftman": {
+   "key": "enemy_1071_dftman",
+   "prefabKey": "enemy_1071_dftman",
+   "name": "Sarkaz Swordsman",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3080.0000000000005,
+    "atk": 330,
+    "def": 77,
+    "res": 50,
+    "moveSpeed": 1,
+    "bat": 2.5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "sarkaz"
+   ]
+  },
+  "enemy_1072_dlancer": {
+   "key": "enemy_1072_dlancer",
+   "prefabKey": "enemy_1072_dlancer",
+   "name": "Sarkaz Lancer",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 6600.000000000001,
+    "atk": 495.00000000000006,
+    "def": 165,
+    "res": 40,
+    "moveSpeed": 0.25,
+    "bat": 4,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Gradually accelerates when moving, and deals additional damage on the first attack after being blocked based upon Movement Speed.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "rush.dlancer_t[trigger].move_speed": 0.5,
+     "rush.dlancer_t[trigger].interval": 0.5,
+     "rush.dlancer_t[trigger].trig_cnt": 25,
+     "firstattack.atk_scale": 600
+    },
+    "bbStr": {},
+    "groups": {
+     "rush": [
+      "dlancer_t[trigger].interval",
+      "dlancer_t[trigger].move_speed",
+      "dlancer_t[trigger].trig_cnt"
+     ],
+     "firstattack": [
+      "atk_scale"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "sarkaz"
+   ]
+  },
+  "enemy_1022_dmage": {
+   "key": "enemy_1022_dmage",
+   "prefabKey": "enemy_1022_dmage",
+   "name": "Sarkaz Caster",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 13200.000000000002,
+    "atk": 550,
+    "def": 220.00000000000003,
+    "res": 50,
+    "moveSpeed": 0.8,
+    "bat": 4,
+    "aspd": 100,
+    "rangeRadius": 2.5,
+    "rawRangeRadius": 2.5,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Uses chains to paralyze allied Operators.",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [
+    {
+     "prefabKey": "lasso",
+     "priority": 1,
+     "cooldown": 0,
+     "initCooldown": 0,
+     "spCost": 0,
+     "bb": {
+      "hit_duration": 20,
+      "atk_scale": 0.35,
+      "range_radius": 3
+     },
+     "bbStr": {}
+    }
+   ],
+   "notCountInTotal": false,
+   "tags": [
+    "sarkaz"
+   ]
+  },
+  "enemy_1010_demon": {
+   "key": "enemy_1010_demon",
+   "prefabKey": "enemy_1010_demon",
+   "name": "Sarkaz Greatswordsman",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 8250,
+    "atk": 660,
+    "def": 253.00000000000003,
+    "res": 50,
+    "moveSpeed": 0.85,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "sarkaz"
+   ]
+  }
+ },
+ "contentAddition": {
+  "schemaVersion": 1,
+  "source": {
+   "repository": "arkpedia/arkpedia-data",
+   "commit": "66232ee06377d791fb130248d680764c286e5c99",
+   "files": [
+    {
+     "path": "stages/fa-3_challenge_mode.json",
+     "sha256": "b9390fc8ba2f13ac7518cc4b8dac2144f832eede5554b99782b129551d53452b"
+    },
+    {
+     "path": "stage-geometry/fa-3.json",
+     "sha256": "b16bf7717da388b6d8b517c751f56f1551a1207e3998a55aa910a00422ede7b4"
+    },
+    {
+     "path": "stage-devices.json",
+     "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+    }
+   ],
+   "localFiles": [
+    {
+     "path": "data/stage-rules/fa-3_challenge_mode.json",
+     "sha256": "107c9691c6b2967bf2d13acc8e13dbd2ff50720c4283e3485dcd6e29040e1ce6"
+    },
+    {
+     "path": "data/stage-rules/levels/68c76fc4b92cdf27c8921f370905cca742cac9ba3fbdb8786263593973e2c08d.json",
+     "sha256": "68c76fc4b92cdf27c8921f370905cca742cac9ba3fbdb8786263593973e2c08d"
+    }
+   ]
+  },
+  "dependencies": {
+   "enemies": [
+    "enemy_1010_demon",
+    "enemy_1022_dmage",
+    "enemy_1071_dftman",
+    "enemy_1072_dlancer"
+   ],
+   "devices": [],
+   "tokens": []
+  },
+  "validation": {
+   "smoke": {
+    "seconds": 10,
+    "spawned": 0,
+    "errors": 0
+   },
+   "publicReview": "pending",
+   "waveSchedule": {
+    "id": "fa-3_challenge_mode",
+    "seconds": 183.53333333333333,
+    "spawned": 33,
+    "expected": 33,
+    "reason": "cleared",
+    "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+   },
+   "browser": {
+    "id": "fa-3_challenge_mode",
+    "seconds": 10,
+    "errors": [],
+    "units": 0,
+    "canvas": true,
+    "scope": "Headless Chromium, mobile landscape 1440x900: preparation, battle start, canvas and short runtime without page or simulation errors. Original art and full clear not certified."
+   }
+  }
+ }
+}

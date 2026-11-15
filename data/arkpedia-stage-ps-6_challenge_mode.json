@@ -1,0 +1,2816 @@
+{
+  "code": "PS-6",
+  "name": "Doubles Match",
+  "description": "Condition: \nGuerrilla Mortar Leaders and 'Brassrust' Olmer Ingra are invisible.",
+  "battle": {
+    "max_life": 1,
+    "unit_limit": 8,
+    "initial_dp": 10,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1
+  },
+  "rules": {
+    "variant": "challenge_mode",
+    "source": {
+      "repository": "Kengxxiao/ArknightsGameData",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "path": "zh_CN/gamedata/levels/activities/act9mini/level_act9mini_06.json",
+      "sha256": "5909c984737c1f4fb7b2f068c0425b3fbf0c9bb0b9c545e0853e5622638a667e",
+      "gitBlob": "80ad3d93a0e2c0a73cba1d63eb35ee5d38f6b2ae",
+      "stageTable": {
+        "path": "zh_CN/gamedata/excel/stage_table.json",
+        "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+        "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+        "stageId": "act9mini_06",
+        "levelId": "Activities/act9mini/level_act9mini_06"
+      }
+    },
+    "battle": {
+      "max_life": 1
+    },
+    "enemies": {
+      "atk": 1.1,
+      "def": 1.1,
+      "maxHp": 1.1
+    },
+    "enemyAdd": {},
+    "hiddenGroups": {},
+    "enemyDynamicAbilities": {
+      "enemy_1082_soticn_2": [
+        "invisible"
+      ],
+      "enemy_1103_wdkght_3": [
+        "invisible"
+      ]
+    }
+  },
+  "mapTags": [],
+  "mapTagSource": null,
+  "geometry": {
+    "slug": "ps-6",
+    "rows": 8,
+    "cols": 12,
+    "tileLegend": [
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_floor",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      },
+      {
+        "key": "tile_start",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_telin",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_telout",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      }
+    ],
+    "tileGrid": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        2,
+        2,
+        0,
+        0,
+        0
+      ],
+      [
+        3,
+        1,
+        1,
+        1,
+        1,
+        4,
+        0,
+        2,
+        5,
+        6,
+        6,
+        7
+      ],
+      [
+        3,
+        1,
+        1,
+        1,
+        1,
+        2,
+        2,
+        0,
+        6,
+        6,
+        6,
+        0
+      ],
+      [
+        3,
+        1,
+        1,
+        1,
+        2,
+        2,
+        6,
+        6,
+        6,
+        6,
+        6,
+        0
+      ],
+      [
+        3,
+        1,
+        1,
+        4,
+        0,
+        2,
+        5,
+        6,
+        6,
+        6,
+        6,
+        7
+      ],
+      [
+        0,
+        1,
+        1,
+        0,
+        2,
+        2,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "routes": [
+      null,
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 0
+        },
+        "end": {
+          "row": 2,
+          "col": 11
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 5
+            }
+          },
+          {
+            "type": "appear_at_pos",
+            "position": {
+              "row": 2,
+              "col": 8
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 3
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 1,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 0
+        },
+        "end": {
+          "row": 5,
+          "col": 11
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 3
+            }
+          },
+          {
+            "type": "appear_at_pos",
+            "position": {
+              "row": 5,
+              "col": 6
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 3
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 1,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 0
+        },
+        "end": {
+          "row": 5,
+          "col": 11
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 3
+            }
+          },
+          {
+            "type": "appear_at_pos",
+            "position": {
+              "row": 5,
+              "col": 6
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 1,
+            "seconds": 60
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 2,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 0
+        },
+        "end": {
+          "row": 2,
+          "col": 11
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 5
+            }
+          },
+          {
+            "type": "appear_at_pos",
+            "position": {
+              "row": 2,
+              "col": 8
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 3
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 1,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 4,
+          "col": 0
+        },
+        "end": {
+          "row": 5,
+          "col": 11
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 3
+            }
+          },
+          {
+            "type": "appear_at_pos",
+            "position": {
+              "row": 5,
+              "col": 6
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 20
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 1,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 0
+        },
+        "end": {
+          "row": 2,
+          "col": 11
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 5
+            }
+          },
+          {
+            "type": "appear_at_pos",
+            "position": {
+              "row": 2,
+              "col": 8
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 20
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 1,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 4,
+          "col": 0
+        },
+        "end": {
+          "row": 5,
+          "col": 11
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 3
+            }
+          },
+          {
+            "type": "appear_at_pos",
+            "position": {
+              "row": 5,
+              "col": 6
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 55
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 1,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 0
+        },
+        "end": {
+          "row": 2,
+          "col": 11
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 5
+            }
+          },
+          {
+            "type": "appear_at_pos",
+            "position": {
+              "row": 2,
+              "col": 8
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 50
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 1,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 0
+        },
+        "end": {
+          "row": 2,
+          "col": 11
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 5
+            }
+          },
+          {
+            "type": "appear_at_pos",
+            "position": {
+              "row": 2,
+              "col": 8
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 55
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 1,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 0
+        },
+        "end": {
+          "row": 5,
+          "col": 11
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 3
+            }
+          },
+          {
+            "type": "appear_at_pos",
+            "position": {
+              "row": 5,
+              "col": 6
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 50
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 1,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 0
+        },
+        "end": {
+          "row": 5,
+          "col": 11
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 5
+            }
+          },
+          {
+            "type": "appear_at_pos",
+            "position": {
+              "row": 2,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 8
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 1,
+            "seconds": 20
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 2,
+            "seconds": 20
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 4,
+            "seconds": 20
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 5,
+            "seconds": 5
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 7,
+            "seconds": 10
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 0
+        },
+        "end": {
+          "row": 2,
+          "col": 11
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 3
+            }
+          },
+          {
+            "type": "appear_at_pos",
+            "position": {
+              "row": 5,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 10
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 5
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 2,
+            "seconds": 10
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 3,
+            "seconds": 10
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 7,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 0
+        },
+        "end": {
+          "row": 5,
+          "col": 11
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 5
+            }
+          },
+          {
+            "type": "appear_at_pos",
+            "position": {
+              "row": 2,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 10
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 1,
+            "seconds": 10
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 3,
+            "seconds": 10
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 6,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 4,
+          "col": 0
+        },
+        "end": {
+          "row": 5,
+          "col": 11
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 3
+            }
+          },
+          {
+            "type": "appear_at_pos",
+            "position": {
+              "row": 5,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 7
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 60
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 1,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 0
+        },
+        "end": {
+          "row": 2,
+          "col": 11
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 5
+            }
+          },
+          {
+            "type": "appear_at_pos",
+            "position": {
+              "row": 2,
+              "col": 8
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 60
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 1,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 0
+        },
+        "end": {
+          "row": 5,
+          "col": 11
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 3
+            }
+          },
+          {
+            "type": "appear_at_pos",
+            "position": {
+              "row": 5,
+              "col": 6
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 1,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 0
+        },
+        "end": {
+          "row": 2,
+          "col": 11
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 5
+            }
+          },
+          {
+            "type": "appear_at_pos",
+            "position": {
+              "row": 2,
+              "col": 8
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 1,
+            "seconds": 5
+          }
+        ]
+      }
+    ],
+    "waves": [
+      {
+        "index": 0,
+        "duration": 223,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Roar Knightclub Elite",
+            "enemy_id": "enemy_1101_plkght_2",
+            "count": 3,
+            "time": 3,
+            "interval": 15,
+            "route": 1,
+            "fragment": 0
+          },
+          {
+            "enemy": "Roar Knightclub Elite",
+            "enemy_id": "enemy_1101_plkght_2",
+            "count": 3,
+            "time": 17,
+            "interval": 15,
+            "route": 2,
+            "fragment": 0
+          },
+          {
+            "enemy": "Guerrilla Herald Leader",
+            "enemy_id": "enemy_1080_sotidp_2",
+            "count": 1,
+            "time": 60,
+            "route": 3,
+            "fragment": 1
+          },
+          {
+            "enemy": "Roar Knightclub Elite",
+            "enemy_id": "enemy_1101_plkght_2",
+            "count": 3,
+            "time": 75,
+            "interval": 12,
+            "route": 2,
+            "fragment": 2
+          },
+          {
+            "enemy": "Roar Knightclub Elite",
+            "enemy_id": "enemy_1101_plkght_2",
+            "count": 3,
+            "time": 73,
+            "interval": 12,
+            "route": 4,
+            "fragment": 2
+          },
+          {
+            "enemy": "Bloodboil Knightclub Elite",
+            "enemy_id": "enemy_1103_wdkght_2",
+            "count": 1,
+            "time": 86,
+            "route": 5,
+            "fragment": 2
+          },
+          {
+            "enemy": "Bloodboil Knightclub Elite",
+            "enemy_id": "enemy_1103_wdkght_2",
+            "count": 1,
+            "time": 86,
+            "route": 6,
+            "fragment": 2
+          },
+          {
+            "enemy": "Rockbreaker Leader",
+            "enemy_id": "enemy_1048_hirman_2",
+            "count": 1,
+            "time": 136,
+            "route": 7,
+            "fragment": 3
+          },
+          {
+            "enemy": "Rockbreaker Leader",
+            "enemy_id": "enemy_1048_hirman_2",
+            "count": 1,
+            "time": 134,
+            "route": 8,
+            "fragment": 3
+          },
+          {
+            "enemy": "Rockbreaker Leader",
+            "enemy_id": "enemy_1048_hirman_2",
+            "count": 1,
+            "time": 136,
+            "route": 9,
+            "fragment": 3
+          },
+          {
+            "enemy": "Rockbreaker Leader",
+            "enemy_id": "enemy_1048_hirman_2",
+            "count": 1,
+            "time": 138,
+            "route": 10,
+            "fragment": 3
+          },
+          {
+            "enemy": "'Left-hand' Tytus Topola",
+            "enemy_id": "enemy_1104_lfkght_3",
+            "count": 1,
+            "time": 146,
+            "route": 11,
+            "fragment": 4
+          },
+          {
+            "enemy": "Guerrilla Mortar Leader",
+            "enemy_id": "enemy_1082_soticn_2",
+            "count": 1,
+            "time": 159,
+            "route": 12,
+            "fragment": 5
+          },
+          {
+            "enemy": "Guerrilla Mortar Leader",
+            "enemy_id": "enemy_1082_soticn_2",
+            "count": 1,
+            "time": 162,
+            "route": 13,
+            "fragment": 6
+          },
+          {
+            "enemy": "Roar Knightclub Elite",
+            "enemy_id": "enemy_1101_plkght_2",
+            "count": 3,
+            "time": 165,
+            "interval": 12,
+            "route": 1,
+            "fragment": 7
+          },
+          {
+            "enemy": "Roar Knightclub Elite",
+            "enemy_id": "enemy_1101_plkght_2",
+            "count": 3,
+            "time": 179,
+            "interval": 12,
+            "route": 2,
+            "fragment": 7
+          },
+          {
+            "enemy": "'Brassrust' Olmer Ingra",
+            "enemy_id": "enemy_1103_wdkght_3",
+            "count": 1,
+            "time": 175,
+            "route": 14,
+            "fragment": 7
+          },
+          {
+            "enemy": "Bloodboil Knightclub Elite",
+            "enemy_id": "enemy_1103_wdkght_2",
+            "count": 1,
+            "time": 175,
+            "route": 15,
+            "fragment": 7
+          },
+          {
+            "enemy": "Guerrilla Herald Leader",
+            "enemy_id": "enemy_1080_sotidp_2",
+            "count": 1,
+            "time": 219,
+            "route": 3,
+            "fragment": 8
+          },
+          {
+            "enemy": "Roar Knightclub Elite",
+            "enemy_id": "enemy_1101_plkght_2",
+            "count": 1,
+            "time": 223,
+            "route": 16,
+            "fragment": 8
+          },
+          {
+            "enemy": "Roar Knightclub Elite",
+            "enemy_id": "enemy_1101_plkght_2",
+            "count": 1,
+            "time": 223,
+            "route": 17,
+            "fragment": 8
+          }
+        ]
+      }
+    ],
+    "spawnTiles": [
+      {
+        "key": "tile_start",
+        "row": 2,
+        "col": 0,
+        "routes": [
+          1,
+          4,
+          8,
+          12,
+          1,
+          17
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 3,
+        "col": 0,
+        "routes": [
+          6,
+          9,
+          15
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 4,
+        "col": 0,
+        "routes": [
+          5,
+          7,
+          14
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 5,
+        "col": 0,
+        "routes": [
+          2,
+          3,
+          2,
+          10,
+          11,
+          13,
+          2,
+          3,
+          16
+        ]
+      }
+    ],
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 2,
+        "col": 11,
+        "routes": [
+          1,
+          4,
+          6,
+          8,
+          9,
+          12,
+          1,
+          15,
+          17
+        ]
+      },
+      {
+        "key": "tile_end",
+        "row": 5,
+        "col": 11,
+        "routes": [
+          2,
+          3,
+          2,
+          5,
+          7,
+          10,
+          11,
+          13,
+          2,
+          14,
+          3,
+          16
+        ]
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_1048_hirman_2",
+        "slug": "rockbreaker_leader",
+        "name": "Rockbreaker Leader",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1080_sotidp_2",
+        "slug": "guerrilla_herald_leader",
+        "name": "Guerrilla Herald Leader",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1082_soticn_2",
+        "slug": "guerrilla_mortar_leader",
+        "name": "Guerrilla Mortar Leader",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1101_plkght_2",
+        "slug": "roar_knightclub_elite",
+        "name": "Roar Knightclub Elite",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1103_wdkght_2",
+        "slug": "bloodboil_knightclub_elite",
+        "name": "Bloodboil Knightclub Elite",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1103_wdkght_3",
+        "slug": "brassrust_olmer_ingra",
+        "name": "'Brassrust' Olmer Ingra",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1104_lfkght_3",
+        "slug": "left_hand_tytus_topola",
+        "name": "'Left-hand' Tytus Topola",
+        "database_level": 0
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [],
+      "deployable_tokens": []
+    },
+    "hasConditionalSpawns": false,
+    "source": "cn"
+  },
+  "terrain": [],
+  "conditionalHandled": false,
+  "devices": [],
+  "tokens": [],
+  "pathing": {
+    "schemaVersion": 1,
+    "syntheticRoutes": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17
+    ],
+    "producer": "Arkpedia stage browser / buildPlaybackPaths",
+    "stage": "PS-6",
+    "geometryHash": "44414017961d8138fc6117abdfe593a06e36f2ffadf5fc1912d21f239678c4b8",
+    "moveScale": 0.65,
+    "paths": {
+      "1": {
+        "points": [
+          [
+            0,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            8,
+            2
+          ],
+          [
+            11,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "2": {
+        "points": [
+          [
+            0,
+            5
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            11,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "3": {
+        "points": [
+          [
+            0,
+            5
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            6
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            11,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "4": {
+        "points": [
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            8,
+            2
+          ],
+          [
+            11,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "5": {
+        "points": [
+          [
+            0,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            11,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "6": {
+        "points": [
+          [
+            0,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            8,
+            2
+          ],
+          [
+            11,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "7": {
+        "points": [
+          [
+            0,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            11,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "8": {
+        "points": [
+          [
+            0,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            8,
+            2
+          ],
+          [
+            11,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "9": {
+        "points": [
+          [
+            0,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            8,
+            2
+          ],
+          [
+            11,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "10": {
+        "points": [
+          [
+            0,
+            5
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            11,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "11": {
+        "points": [
+          [
+            0,
+            5
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            6
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            8,
+            2
+          ],
+          [
+            8,
+            4
+          ],
+          [
+            8,
+            5
+          ],
+          [
+            8,
+            3
+          ],
+          [
+            8,
+            5
+          ],
+          [
+            11,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "12": {
+        "points": [
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            8,
+            4
+          ],
+          [
+            10,
+            2
+          ],
+          [
+            11,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "13": {
+        "points": [
+          [
+            0,
+            5
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            8,
+            2
+          ],
+          [
+            8,
+            3
+          ],
+          [
+            10,
+            5
+          ],
+          [
+            11,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "14": {
+        "points": [
+          [
+            0,
+            4
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            11,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "15": {
+        "points": [
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            8,
+            2
+          ],
+          [
+            11,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "16": {
+        "points": [
+          [
+            0,
+            5
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            11,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "17": {
+        "points": [
+          [
+            0,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            8,
+            2
+          ],
+          [
+            11,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      }
+    }
+  },
+  "art": null,
+  "gates": null,
+  "fixedSquad": null,
+  "enemies": {
+    "enemy_1101_plkght_2": {
+      "key": "enemy_1101_plkght_2",
+      "prefabKey": "enemy_1101_plkght_2",
+      "name": "Roar Knightclub Elite",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 4180,
+        "atk": 462.00000000000006,
+        "def": 110.00000000000001,
+        "res": 0,
+        "moveSpeed": 0.9,
+        "bat": 2.4,
+        "aspd": 100,
+        "rangeRadius": 2,
+        "rawRangeRadius": 2,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": true,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Has significantly increased DEF and RES for a period of time",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "buff.duration": 30,
+          "buff.def": 3000,
+          "buff.magic_resistance": 95
+        },
+        "bbStr": {},
+        "groups": {
+          "buff": [
+            "def",
+            "duration",
+            "magic_resistance"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1080_sotidp_2": {
+      "key": "enemy_1080_sotidp_2",
+      "prefabKey": "enemy_1080_sotidp_2",
+      "name": "Guerrilla Herald Leader",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 11000,
+        "atk": 396.00000000000006,
+        "def": 132,
+        "res": 50,
+        "moveSpeed": 1,
+        "bat": 2.5,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": true,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Increases the ATK and DEF of enemy units when on the battlefield.",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "strength.atk": 0.1,
+          "strength.def": 100
+        },
+        "bbStr": {},
+        "groups": {
+          "strength": [
+            "atk",
+            "def"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1103_wdkght_2": {
+      "key": "enemy_1103_wdkght_2",
+      "prefabKey": "enemy_1103_wdkght_2",
+      "name": "Bloodboil Knightclub Elite",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 14300.000000000002,
+        "atk": 715.0000000000001,
+        "def": 880.0000000000001,
+        "res": 0,
+        "moveSpeed": 0.7,
+        "bat": 2.3,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 3,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": true,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Each time an enemy is defeated, gains ATK and ASPD, stacking up to 10 times.",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "enhance.atk": 0.1,
+          "enhance.attack_speed": 5,
+          "enhance.max_stack_cnt": 10
+        },
+        "bbStr": {},
+        "groups": {
+          "enhance": [
+            "atk",
+            "attack_speed",
+            "max_stack_cnt"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1048_hirman_2": {
+      "key": "enemy_1048_hirman_2",
+      "prefabKey": "enemy_1048_hirman_2",
+      "name": "Rockbreaker Leader",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 14300.000000000002,
+        "atk": 990.0000000000001,
+        "def": 110.00000000000001,
+        "res": 40,
+        "moveSpeed": 0.75,
+        "bat": 3.3,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 3,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": true,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Gains greatly increased RES when blocked",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "MagicResistance.magic_resistance": 50
+        },
+        "bbStr": {},
+        "groups": {
+          "MagicResistance": [
+            "magic_resistance"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1104_lfkght_3": {
+      "key": "enemy_1104_lfkght_3",
+      "prefabKey": "enemy_1104_lfkght_3",
+      "name": "'Left-hand' Tytus Topola",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 22000,
+        "atk": 825.0000000000001,
+        "def": 770.0000000000001,
+        "res": 50,
+        "moveSpeed": 0.75,
+        "bat": 2.5,
+        "aspd": 100,
+        "rangeRadius": 1.3,
+        "rawRangeRadius": 1.3,
+        "blockCnt": 1,
+        "massLevel": 3,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "arts",
+        "dmgTypes": [
+          "arts"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Significantly decreases ATK of the unit with the highest ATK for a period of time",
+          "format": "SILENCE"
+        },
+        {
+          "text": "Rebirth",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "reborn.duration": 5
+        },
+        "bbStr": {},
+        "groups": {
+          "reborn": [
+            "duration"
+          ]
+        }
+      },
+      "skills": [
+        {
+          "prefabKey": "AtkDesWeaken",
+          "priority": 0,
+          "cooldown": 10,
+          "initCooldown": 10,
+          "spCost": 0,
+          "bb": {
+            "atk": -0.5,
+            "duration": 25
+          },
+          "bbStr": {}
+        }
+      ],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1082_soticn_2": {
+      "key": "enemy_1082_soticn_2",
+      "prefabKey": "enemy_1082_soticn_2",
+      "name": "Guerrilla Mortar Leader",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 7150.000000000001,
+        "atk": 649,
+        "def": 605,
+        "res": 20,
+        "moveSpeed": 0.6,
+        "bat": 4.8,
+        "aspd": 100,
+        "rangeRadius": 15,
+        "rawRangeRadius": 15,
+        "blockCnt": 1,
+        "massLevel": 2,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": true,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "When Inspired, gains greatly increased ASPD.",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "strength.attack_speed": 50
+        },
+        "bbStr": {},
+        "groups": {
+          "strength": [
+            "attack_speed"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1103_wdkght_3": {
+      "key": "enemy_1103_wdkght_3",
+      "prefabKey": "enemy_1103_wdkght_3",
+      "name": "'Brassrust' Olmer Ingra",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 16500,
+        "atk": 770.0000000000001,
+        "def": 880.0000000000001,
+        "res": 0,
+        "moveSpeed": 0.7,
+        "bat": 2.3,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 3,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": true,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Each time an enemy is defeated, gains ATK and ASPD, stacking up to 10 times.",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "enhance.atk": 0.1,
+          "enhance.attack_speed": 5,
+          "enhance.max_stack_cnt": 10
+        },
+        "bbStr": {},
+        "groups": {
+          "enhance": [
+            "atk",
+            "attack_speed",
+            "max_stack_cnt"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    }
+  },
+  "contentAddition": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/ps-6_challenge_mode.json",
+          "sha256": "d4c4be1b674ef8dbfc4ee1c586241747d0f1f4b6e5dd82cba94058114dd9ced5"
+        },
+        {
+          "path": "stage-geometry/ps-6.json",
+          "sha256": "44414017961d8138fc6117abdfe593a06e36f2ffadf5fc1912d21f239678c4b8"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        }
+      ],
+      "localFiles": [
+        {
+          "path": "data/stage-rules/ps-6_challenge_mode.json",
+          "sha256": "163b4750f244e54c59d14d74619f265b398c387f1107aa7066f60b75d724591b"
+        },
+        {
+          "path": "data/stage-rules/levels/8fd524cae8ac3594ffca74cb2e8ab0018a26128e185be49362988e426c0e8335.json",
+          "sha256": "8fd524cae8ac3594ffca74cb2e8ab0018a26128e185be49362988e426c0e8335"
+        },
+        {
+          "path": "data/arkpedia-native-stage-rules.json",
+          "sha256": "979774b472d0f3c75f86efc2dfc27673480adcddbe8fab5b3066909481e47527"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/80ad3d93a0e2c0a73cba1d63eb35ee5d38f6b2ae.json",
+          "sha256": "5909c984737c1f4fb7b2f068c0425b3fbf0c9bb0b9c545e0853e5622638a667e"
+        },
+        {
+          "path": "data/arkpedia-enemy-records.json",
+          "sha256": "b75ba11f79473268f8408b28df67165101997fbf8ec8bdcfaa6f68354111b3a8"
+        },
+        {
+          "path": "data/arkpedia-enemy-support.json",
+          "sha256": "742e5ddcdf99d02f65ec263d643196aa887eaf3f7f39ef29b2c60a2591e4b1c1"
+        },
+        {
+          "path": "data/arkpedia-enemy-native-abilities.json",
+          "sha256": "5ae489616c1cdb0a95a834a08d0dd00a3bead122db5ae6cc9f39ffdf865b56cb"
+        },
+        {
+          "path": "data/arkpedia-blade-animations.json",
+          "sha256": "816b89d546105a77860506b90ad6fe5b9d2b0b2fd564ae402935e7dec7d3ffe7"
+        }
+      ]
+    },
+    "dependencies": {
+      "enemies": [
+        "enemy_1048_hirman_2",
+        "enemy_1080_sotidp_2",
+        "enemy_1082_soticn_2",
+        "enemy_1101_plkght_2",
+        "enemy_1103_wdkght_2",
+        "enemy_1103_wdkght_3",
+        "enemy_1104_lfkght_3"
+      ],
+      "devices": [],
+      "tokens": []
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 10,
+        "spawned": 1,
+        "errors": 0
+      },
+      "publicReview": "pending",
+      "waveSchedule": {
+        "id": "ps-6_challenge_mode",
+        "seconds": 241.83333333333334,
+        "spawned": 33,
+        "expected": 33,
+        "dynamicSpawns": 0,
+        "reason": "cleared",
+        "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+      },
+      "browserStartup": {
+        "id": "ps-6_challenge_mode",
+        "seconds": 20,
+        "errors": [],
+        "units": 3,
+        "canvas": true,
+        "scope": "Mobile landscape browser startup and canvas runtime; not a fidelity approval"
+      }
+    }
+  }
+}

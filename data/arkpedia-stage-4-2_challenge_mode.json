@@ -1,1062 +1,1166 @@
 {
- "code": "4-2",
- "name": "A Walk in the Rain",
- "description": "Condition:\nThe DEF of all ally units is halved.",
- "battle": {
-  "max_life": 5,
-  "unit_limit": 8,
-  "initial_dp": 10,
-  "max_dp": 99,
-  "dp_per_second": 1,
-  "dp_recovery_interval_seconds": 1
- },
- "mapTags": [],
- "mapTagSource": null,
- "geometry": {
-  "slug": "4-2",
-  "rows": 7,
-  "cols": 10,
-  "tileLegend": [
-   {
-    "key": "tile_forbidden",
-    "height": "high",
-    "walkable": false,
-    "deployable": "none",
-    "flyable": true
-   },
-   {
-    "key": "tile_start",
-    "height": "low",
-    "walkable": true,
-    "deployable": "none",
-    "flyable": true
-   },
-   {
-    "key": "tile_road",
-    "height": "low",
-    "walkable": true,
-    "deployable": "melee",
-    "flyable": true
-   },
-   {
-    "key": "tile_wall",
-    "height": "high",
-    "walkable": false,
-    "deployable": "ranged",
-    "flyable": true
-   },
-   {
-    "key": "tile_end",
-    "height": "low",
-    "walkable": true,
-    "deployable": "none",
-    "flyable": true
-   }
-  ],
-  "tileGrid": [
-   [
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0
-   ],
-   [
-    1,
-    2,
-    2,
-    2,
-    2,
-    2,
-    2,
-    2,
-    2,
-    1
-   ],
-   [
-    0,
-    3,
-    3,
-    2,
-    3,
-    3,
-    2,
-    3,
-    3,
-    0
-   ],
-   [
-    0,
-    2,
-    2,
-    2,
-    2,
-    2,
-    2,
-    2,
-    3,
-    0
-   ],
-   [
-    0,
-    2,
-    3,
-    3,
-    2,
-    3,
-    3,
-    2,
-    2,
-    4
-   ],
-   [
-    0,
-    2,
-    2,
-    2,
-    2,
-    2,
-    2,
-    2,
-    3,
-    0
-   ],
-   [
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0
-   ]
-  ],
-  "routes": [
-   {
-    "motion": "walk",
-    "start": {
-     "row": 1,
-     "col": 0
-    },
-    "end": {
-     "row": 4,
-     "col": 9
-    },
-    "checkpoints": [
-     {
-      "type": "move",
-      "position": {
-       "row": 1,
-       "col": 3
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 3,
-       "col": 3
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 3,
-       "col": 1
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 5,
-       "col": 1
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 5,
-       "col": 7
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 4,
-       "col": 7
-      }
-     }
-    ],
-    "waits": []
-   },
-   {
-    "motion": "walk",
-    "start": {
-     "row": 1,
-     "col": 9
-    },
-    "end": {
-     "row": 4,
-     "col": 9
-    },
-    "checkpoints": [
-     {
-      "type": "move",
-      "position": {
-       "row": 1,
-       "col": 6
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 3,
-       "col": 6
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 3,
-       "col": 7
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 4,
-       "col": 7
-      }
-     }
-    ],
-    "waits": []
-   }
-  ],
-  "waves": [
-   {
-    "index": 0,
-    "duration": 140,
-    "pre_delay": 0,
-    "post_delay": 0,
-    "max_wait_for_next_wave": null,
-    "spawns": [
-     {
-      "enemy": "Soldier",
-      "enemy_id": "enemy_1002_nsabr",
-      "count": 2,
-      "time": 3,
-      "interval": 3.5,
-      "route": 0,
-      "fragment": 0
-     },
-     {
-      "enemy": "Soldier",
-      "enemy_id": "enemy_1002_nsabr",
-      "count": 1,
-      "time": 18,
-      "route": 0,
-      "fragment": 0
-     },
-     {
-      "enemy": "Soldier",
-      "enemy_id": "enemy_1002_nsabr",
-      "count": 2,
-      "time": 27,
-      "interval": 5,
-      "route": 0,
-      "fragment": 0
-     },
-     {
-      "enemy": "Sarkaz Greatswordsman",
-      "enemy_id": "enemy_1010_demon",
-      "count": 1,
-      "time": 35,
-      "route": 0,
-      "fragment": 0
-     },
-     {
-      "enemy": "Caster Leader",
-      "enemy_id": "enemy_1011_wizard_2",
-      "count": 1,
-      "time": 35,
-      "route": 1,
-      "fragment": 0
-     },
-     {
-      "enemy": "Sarkaz Greatswordsman",
-      "enemy_id": "enemy_1010_demon",
-      "count": 1,
-      "time": 58,
-      "route": 0,
-      "fragment": 1
-     },
-     {
-      "enemy": "Soldier",
-      "enemy_id": "enemy_1002_nsabr",
-      "count": 2,
-      "time": 72,
-      "interval": 9,
-      "route": 0,
-      "fragment": 1
-     },
-     {
-      "enemy": "Soldier",
-      "enemy_id": "enemy_1002_nsabr",
-      "count": 2,
-      "time": 90,
-      "interval": 9,
-      "route": 0,
-      "fragment": 1
-     },
-     {
-      "enemy": "Soldier",
-      "enemy_id": "enemy_1002_nsabr",
-      "count": 1,
-      "time": 84,
-      "route": 0,
-      "fragment": 1
-     },
-     {
-      "enemy": "Soldier",
-      "enemy_id": "enemy_1002_nsabr",
-      "count": 2,
-      "time": 95,
-      "interval": 6,
-      "route": 0,
-      "fragment": 1
-     },
-     {
-      "enemy": "Sarkaz Greatswordsman",
-      "enemy_id": "enemy_1010_demon",
-      "count": 1,
-      "time": 104,
-      "route": 0,
-      "fragment": 1
-     },
-     {
-      "enemy": "Caster Leader",
-      "enemy_id": "enemy_1011_wizard_2",
-      "count": 1,
-      "time": 117,
-      "route": 0,
-      "fragment": 1
-     },
-     {
-      "enemy": "Sarkaz Greatswordsman",
-      "enemy_id": "enemy_1010_demon",
-      "count": 2,
-      "time": 126,
-      "interval": 7,
-      "route": 0,
-      "fragment": 1
-     },
-     {
-      "enemy": "Sarkaz Greatswordsman",
-      "enemy_id": "enemy_1010_demon",
-      "count": 1,
-      "time": 139,
-      "route": 0,
-      "fragment": 1
-     },
-     {
-      "enemy": "Caster Leader",
-      "enemy_id": "enemy_1011_wizard_2",
-      "count": 1,
-      "time": 140,
-      "route": 0,
-      "fragment": 1
-     },
-     {
-      "enemy": "Caster Leader",
-      "enemy_id": "enemy_1011_wizard_2",
-      "count": 1,
-      "time": 65,
-      "route": 1,
-      "fragment": 1
-     },
-     {
-      "enemy": "Rabid Hound Pro",
-      "enemy_id": "enemy_1000_gopro_3",
-      "count": 1,
-      "time": 74,
-      "route": 1,
-      "fragment": 1
-     },
-     {
-      "enemy": "Crossbowman Leader",
-      "enemy_id": "enemy_1003_ncbow_2",
-      "count": 2,
-      "time": 84,
-      "interval": 7,
-      "route": 1,
-      "fragment": 1
-     },
-     {
-      "enemy": "Rabid Hound Pro",
-      "enemy_id": "enemy_1000_gopro_3",
-      "count": 2,
-      "time": 96,
-      "interval": 4,
-      "route": 1,
-      "fragment": 1
-     },
-     {
-      "enemy": "Caster Leader",
-      "enemy_id": "enemy_1011_wizard_2",
-      "count": 2,
-      "time": 103,
-      "interval": 6,
-      "route": 1,
-      "fragment": 1
-     },
-     {
-      "enemy": "Rabid Hound Pro",
-      "enemy_id": "enemy_1000_gopro_3",
-      "count": 2,
-      "time": 117,
-      "interval": 3,
-      "route": 1,
-      "fragment": 1
-     },
-     {
-      "enemy": "Rabid Hound Pro",
-      "enemy_id": "enemy_1000_gopro_3",
-      "count": 1,
-      "time": 127,
-      "route": 1,
-      "fragment": 1
-     },
-     {
-      "enemy": "Caster Leader",
-      "enemy_id": "enemy_1011_wizard_2",
-      "count": 2,
-      "time": 132,
-      "interval": 5,
-      "route": 1,
-      "fragment": 1
-     },
-     {
-      "enemy": "Sarkaz Greatswordsman",
-      "enemy_id": "enemy_1010_demon",
-      "count": 1,
-      "time": 140,
-      "route": 1,
-      "fragment": 1
-     }
-    ]
-   }
-  ],
-  "spawnTiles": [
-   {
-    "key": "tile_start",
-    "row": 1,
-    "col": 0,
-    "routes": [
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0
-    ]
-   },
-   {
-    "key": "tile_start",
-    "row": 1,
-    "col": 9,
-    "routes": [
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1
-    ]
-   }
-  ],
-  "objectiveTiles": [
-   {
-    "key": "tile_end",
-    "row": 4,
-    "col": 9,
-    "routes": [
-     0,
-     0,
-     0,
-     0,
-     1,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1
-    ]
-   }
-  ],
-  "enemyConfigurations": [
-   {
-    "enemy_id": "enemy_1000_gopro_3",
-    "slug": "rabid_hound_pro",
-    "name": "Rabid Hound Pro",
-    "database_level": 0
-   },
-   {
-    "enemy_id": "enemy_1002_nsabr",
-    "slug": "soldier",
-    "name": "Soldier",
-    "database_level": 0
-   },
-   {
-    "enemy_id": "enemy_1003_ncbow_2",
-    "slug": "crossbowman_leader",
-    "name": "Crossbowman Leader",
-    "database_level": 0
-   },
-   {
-    "enemy_id": "enemy_1010_demon",
-    "slug": "sarkaz_greatswordsman",
-    "name": "Sarkaz Greatswordsman",
-    "database_level": 0
-   },
-   {
-    "enemy_id": "enemy_1011_wizard_2",
-    "slug": "caster_leader",
-    "name": "Caster Leader",
-    "database_level": 0
-   }
-  ],
-  "suppliedUnits": {
-   "fixed_squad": [],
-   "deployable_tokens": []
+  "code": "4-2",
+  "name": "A Walk in the Rain",
+  "description": "Condition:\nThe DEF of all ally units is halved.",
+  "battle": {
+    "max_life": 1,
+    "unit_limit": 8,
+    "initial_dp": 10,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1,
+    "max_play_time": -1
   },
-  "hasConditionalSpawns": false
- },
- "devices": [],
- "pathing": {
-  "schemaVersion": 1,
-  "syntheticRoutes": [],
-  "producer": "Arkpedia stage browser / buildPlaybackPaths",
-  "stage": "4-2",
-  "geometryHash": "3de7ea69ed20a1b73e10cc7cfdc7860d7276dd85305123a28d92b3a1e0ba74d8",
-  "moveScale": 0.65,
-  "paths": {
-   "0": {
-    "points": [
-     [
-      0,
-      1
-     ],
-     [
-      1,
-      1
-     ],
-     [
-      2,
-      1
-     ],
-     [
-      3,
-      1
-     ],
-     [
-      3,
-      2
-     ],
-     [
-      3,
-      3
-     ],
-     [
-      2,
-      3
-     ],
-     [
-      1,
-      3
-     ],
-     [
-      1,
-      4
-     ],
-     [
-      1,
-      5
-     ],
-     [
-      2,
-      5
-     ],
-     [
-      3,
-      5
-     ],
-     [
-      4,
-      5
-     ],
-     [
-      5,
-      5
-     ],
-     [
-      6,
-      5
-     ],
-     [
-      7,
-      5
-     ],
-     [
-      7,
-      4
-     ],
-     [
-      8,
-      4
-     ],
-     [
-      9,
-      4
-     ]
+  "mapTags": [],
+  "mapTagSource": null,
+  "geometry": {
+    "slug": "4-2",
+    "rows": 7,
+    "cols": 10,
+    "tileLegend": [
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_start",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      }
     ],
-    "distances": [
-     0,
-     1,
-     2,
-     3,
-     4,
-     5,
-     6,
-     7,
-     8,
-     9,
-     10,
-     11,
-     12,
-     13,
-     14,
-     15,
-     16,
-     17,
-     18
+    "tileGrid": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        1
+      ],
+      [
+        0,
+        3,
+        3,
+        2,
+        3,
+        3,
+        2,
+        3,
+        3,
+        0
+      ],
+      [
+        0,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        3,
+        0
+      ],
+      [
+        0,
+        2,
+        3,
+        3,
+        2,
+        3,
+        3,
+        2,
+        2,
+        4
+      ],
+      [
+        0,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        3,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
     ],
-    "length": 18,
-    "breaks": [],
-    "flying": false,
-    "holds": [],
-    "nodes": [
-     [
-      0,
-      1
-     ],
-     [
-      3,
-      1
-     ],
-     [
-      3,
-      3
-     ],
-     [
-      1,
-      3
-     ],
-     [
-      1,
-      5
-     ],
-     [
-      7,
-      5
-     ],
-     [
-      7,
-      4
-     ],
-     [
-      9,
-      4
-     ]
+    "routes": [
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 0
+        },
+        "end": {
+          "row": 4,
+          "col": 9
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 7
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 9
+        },
+        "end": {
+          "row": 4,
+          "col": 9
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 7
+            }
+          }
+        ],
+        "waits": []
+      }
+    ],
+    "waves": [
+      {
+        "index": 0,
+        "duration": 140,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Soldier",
+            "enemy_id": "enemy_1002_nsabr",
+            "count": 2,
+            "time": 3,
+            "interval": 3.5,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Soldier",
+            "enemy_id": "enemy_1002_nsabr",
+            "count": 1,
+            "time": 18,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Soldier",
+            "enemy_id": "enemy_1002_nsabr",
+            "count": 2,
+            "time": 27,
+            "interval": 5,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Sarkaz Greatswordsman",
+            "enemy_id": "enemy_1010_demon",
+            "count": 1,
+            "time": 35,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Caster Leader",
+            "enemy_id": "enemy_1011_wizard_2",
+            "count": 1,
+            "time": 35,
+            "route": 1,
+            "fragment": 0
+          },
+          {
+            "enemy": "Sarkaz Greatswordsman",
+            "enemy_id": "enemy_1010_demon",
+            "count": 1,
+            "time": 58,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Soldier",
+            "enemy_id": "enemy_1002_nsabr",
+            "count": 2,
+            "time": 72,
+            "interval": 9,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Soldier",
+            "enemy_id": "enemy_1002_nsabr",
+            "count": 2,
+            "time": 90,
+            "interval": 9,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Soldier",
+            "enemy_id": "enemy_1002_nsabr",
+            "count": 1,
+            "time": 84,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Soldier",
+            "enemy_id": "enemy_1002_nsabr",
+            "count": 2,
+            "time": 95,
+            "interval": 6,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Sarkaz Greatswordsman",
+            "enemy_id": "enemy_1010_demon",
+            "count": 1,
+            "time": 104,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Caster Leader",
+            "enemy_id": "enemy_1011_wizard_2",
+            "count": 1,
+            "time": 117,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Sarkaz Greatswordsman",
+            "enemy_id": "enemy_1010_demon",
+            "count": 2,
+            "time": 126,
+            "interval": 7,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Sarkaz Greatswordsman",
+            "enemy_id": "enemy_1010_demon",
+            "count": 1,
+            "time": 139,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Caster Leader",
+            "enemy_id": "enemy_1011_wizard_2",
+            "count": 1,
+            "time": 140,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Caster Leader",
+            "enemy_id": "enemy_1011_wizard_2",
+            "count": 1,
+            "time": 65,
+            "route": 1,
+            "fragment": 1
+          },
+          {
+            "enemy": "Rabid Hound Pro",
+            "enemy_id": "enemy_1000_gopro_3",
+            "count": 1,
+            "time": 74,
+            "route": 1,
+            "fragment": 1
+          },
+          {
+            "enemy": "Crossbowman Leader",
+            "enemy_id": "enemy_1003_ncbow_2",
+            "count": 2,
+            "time": 84,
+            "interval": 7,
+            "route": 1,
+            "fragment": 1
+          },
+          {
+            "enemy": "Rabid Hound Pro",
+            "enemy_id": "enemy_1000_gopro_3",
+            "count": 2,
+            "time": 96,
+            "interval": 4,
+            "route": 1,
+            "fragment": 1
+          },
+          {
+            "enemy": "Caster Leader",
+            "enemy_id": "enemy_1011_wizard_2",
+            "count": 2,
+            "time": 103,
+            "interval": 6,
+            "route": 1,
+            "fragment": 1
+          },
+          {
+            "enemy": "Rabid Hound Pro",
+            "enemy_id": "enemy_1000_gopro_3",
+            "count": 2,
+            "time": 117,
+            "interval": 3,
+            "route": 1,
+            "fragment": 1
+          },
+          {
+            "enemy": "Rabid Hound Pro",
+            "enemy_id": "enemy_1000_gopro_3",
+            "count": 1,
+            "time": 127,
+            "route": 1,
+            "fragment": 1
+          },
+          {
+            "enemy": "Caster Leader",
+            "enemy_id": "enemy_1011_wizard_2",
+            "count": 2,
+            "time": 132,
+            "interval": 5,
+            "route": 1,
+            "fragment": 1
+          },
+          {
+            "enemy": "Sarkaz Greatswordsman",
+            "enemy_id": "enemy_1010_demon",
+            "count": 1,
+            "time": 140,
+            "route": 1,
+            "fragment": 1
+          }
+        ]
+      }
+    ],
+    "spawnTiles": [
+      {
+        "key": "tile_start",
+        "row": 1,
+        "col": 0,
+        "routes": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 1,
+        "col": 9,
+        "routes": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    ],
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 4,
+        "col": 9,
+        "routes": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_1000_gopro_3",
+        "slug": "rabid_hound_pro",
+        "name": "Rabid Hound Pro",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1002_nsabr",
+        "slug": "soldier",
+        "name": "Soldier",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1003_ncbow_2",
+        "slug": "crossbowman_leader",
+        "name": "Crossbowman Leader",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1010_demon",
+        "slug": "sarkaz_greatswordsman",
+        "name": "Sarkaz Greatswordsman",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1011_wizard_2",
+        "slug": "caster_leader",
+        "name": "Caster Leader",
+        "database_level": 0
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [],
+      "deployable_tokens": []
+    },
+    "hasConditionalSpawns": false
+  },
+  "devices": [],
+  "pathing": {
+    "schemaVersion": 1,
+    "syntheticRoutes": [],
+    "producer": "Arkpedia stage browser / buildPlaybackPaths",
+    "stage": "4-2",
+    "geometryHash": "3de7ea69ed20a1b73e10cc7cfdc7860d7276dd85305123a28d92b3a1e0ba74d8",
+    "moveScale": 0.65,
+    "paths": {
+      "0": {
+        "points": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            8,
+            4
+          ],
+          [
+            9,
+            4
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18
+        ],
+        "length": 18,
+        "breaks": [],
+        "flying": false,
+        "holds": [],
+        "nodes": [
+          [
+            0,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            9,
+            4
+          ]
+        ]
+      },
+      "1": {
+        "points": [
+          [
+            9,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            6,
+            1
+          ],
+          [
+            6,
+            2
+          ],
+          [
+            6,
+            3
+          ],
+          [
+            7,
+            3
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            8,
+            4
+          ],
+          [
+            9,
+            4
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "length": 9,
+        "breaks": [],
+        "flying": false,
+        "holds": [],
+        "nodes": [
+          [
+            9,
+            1
+          ],
+          [
+            6,
+            1
+          ],
+          [
+            6,
+            3
+          ],
+          [
+            7,
+            3
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            9,
+            4
+          ]
+        ]
+      }
+    }
+  },
+  "art": null,
+  "gates": null,
+  "fixedSquad": null,
+  "enemies": {
+    "enemy_1002_nsabr": {
+      "key": "enemy_1002_nsabr",
+      "prefabKey": "enemy_1002_nsabr",
+      "name": "Soldier",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 1815.0000000000002,
+        "atk": 220.00000000000003,
+        "def": 110.00000000000001,
+        "res": 0,
+        "moveSpeed": 1.1,
+        "bat": 2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1010_demon": {
+      "key": "enemy_1010_demon",
+      "prefabKey": "enemy_1010_demon",
+      "name": "Sarkaz Greatswordsman",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 8250,
+        "atk": 660,
+        "def": 253.00000000000003,
+        "res": 50,
+        "moveSpeed": 0.85,
+        "bat": 2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 2,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "sarkaz"
+      ]
+    },
+    "enemy_1011_wizard_2": {
+      "key": "enemy_1011_wizard_2",
+      "prefabKey": "enemy_1011_wizard_2",
+      "name": "Caster Leader",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 2640,
+        "atk": 330,
+        "def": 88,
+        "res": 50,
+        "moveSpeed": 0.8,
+        "bat": 4,
+        "aspd": 100,
+        "rangeRadius": 2,
+        "rawRangeRadius": 2,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "arts",
+        "dmgTypes": [
+          "arts"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1000_gopro_3": {
+      "key": "enemy_1000_gopro_3",
+      "prefabKey": "enemy_1000_gopro_3",
+      "name": "Rabid Hound Pro",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 3300.0000000000005,
+        "atk": 407.00000000000006,
+        "def": 0,
+        "res": 20,
+        "moveSpeed": 1.9,
+        "bat": 1.4,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 0,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "infection"
+      ]
+    },
+    "enemy_1003_ncbow_2": {
+      "key": "enemy_1003_ncbow_2",
+      "prefabKey": "enemy_1003_ncbow_2",
+      "name": "Crossbowman Leader",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 2090,
+        "atk": 341,
+        "def": 165,
+        "res": 0,
+        "moveSpeed": 0.9,
+        "bat": 2.4,
+        "aspd": 100,
+        "rangeRadius": 1.9,
+        "rawRangeRadius": 1.9,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    }
+  },
+  "rules": {
+    "variant": "challenge_mode",
+    "source": {
+      "repository": "Kengxxiao/ArknightsGameData",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "path": "zh_CN/gamedata/levels/obt/main/level_main_04-02.json",
+      "sha256": "abbaebbc71d3d173d21ca6a6f96917e77984511328b9a2b3dafafe9892824ea7",
+      "gitBlob": "979ddaaa4e1bbbfbeef1711c9b1381d45c56f6c2",
+      "stageTable": {
+        "path": "zh_CN/gamedata/excel/stage_table.json",
+        "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+        "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+        "stageId": "main_04-02",
+        "levelId": "Obt/Main/level_main_04-02"
+      }
+    },
+    "battle": {
+      "max_play_time": -1,
+      "max_life": 1
+    },
+    "enemies": {
+      "atk": 1.1,
+      "def": 1.1,
+      "maxHp": 1.1
+    },
+    "enemyAdd": {},
+    "hiddenGroups": {},
+    "characterAttributes": [
+      {
+        "professionMask": 1023,
+        "buildableMask": 3,
+        "multipliers": {
+          "def": 0.5
+        }
+      }
     ]
-   },
-   "1": {
-    "points": [
-     [
-      9,
-      1
-     ],
-     [
-      8,
-      1
-     ],
-     [
-      7,
-      1
-     ],
-     [
-      6,
-      1
-     ],
-     [
-      6,
-      2
-     ],
-     [
-      6,
-      3
-     ],
-     [
-      7,
-      3
-     ],
-     [
-      7,
-      4
-     ],
-     [
-      8,
-      4
-     ],
-     [
-      9,
-      4
-     ]
-    ],
-    "distances": [
-     0,
-     1,
-     2,
-     3,
-     4,
-     5,
-     6,
-     7,
-     8,
-     9
-    ],
-    "length": 9,
-    "breaks": [],
-    "flying": false,
-    "holds": [],
-    "nodes": [
-     [
-      9,
-      1
-     ],
-     [
-      6,
-      1
-     ],
-     [
-      6,
-      3
-     ],
-     [
-      7,
-      3
-     ],
-     [
-      7,
-      4
-     ],
-     [
-      9,
-      4
-     ]
+  },
+  "tokens": [],
+  "contentRuleRefresh": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/4-2_challenge_mode.json",
+          "sha256": "421ab2c0492373d3891f178a0eb785395933af3ae673f45a1b02e829263d8ff8"
+        },
+        {
+          "path": "stage-geometry/4-2.json",
+          "sha256": "3de7ea69ed20a1b73e10cc7cfdc7860d7276dd85305123a28d92b3a1e0ba74d8"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        }
+      ],
+      "localFiles": [
+        {
+          "path": "data/stage-rules/4-2_challenge_mode.json",
+          "sha256": "7f2b9057a166dadae31f6e5e8dd679cb92421ead4069bad43529d57cb7b72d54"
+        },
+        {
+          "path": "data/stage-rules/levels/0fd685573d3e4463470675b2b9e53646d553d3ee187f592280e67849bba12f16.json",
+          "sha256": "0fd685573d3e4463470675b2b9e53646d553d3ee187f592280e67849bba12f16"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/979ddaaa4e1bbbfbeef1711c9b1381d45c56f6c2.json",
+          "sha256": "abbaebbc71d3d173d21ca6a6f96917e77984511328b9a2b3dafafe9892824ea7"
+        }
+      ]
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 10,
+        "spawned": 2,
+        "errors": 0
+      },
+      "waveSchedule": {
+        "id": "4-2_challenge_mode",
+        "seconds": 174.63333333333333,
+        "spawned": 35,
+        "expected": 35,
+        "dynamicSpawns": 0,
+        "reason": "cleared",
+        "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+      },
+      "browserStartup": {
+        "id": "4-2_challenge_mode",
+        "seconds": 20,
+        "errors": [],
+        "units": 3,
+        "canvas": true,
+        "scope": "Mobile landscape browser startup and canvas runtime; not a fidelity approval"
+      }
+    },
+    "changed": [
+      "rules",
+      "battle",
+      "enemies",
+      "tokens"
     ]
-   }
   }
- },
- "art": null,
- "gates": null,
- "fixedSquad": null,
- "enemies": {
-  "enemy_1002_nsabr": {
-   "key": "enemy_1002_nsabr",
-   "prefabKey": "enemy_1002_nsabr",
-   "name": "Soldier",
-   "level": 0,
-   "rank": "NORMAL",
-   "applyWay": "MELEE",
-   "stats": {
-    "maxHp": 1650,
-    "atk": 200,
-    "def": 100,
-    "res": 0,
-    "moveSpeed": 1.1,
-    "bat": 2,
-    "aspd": 100,
-    "rangeRadius": 0,
-    "rawRangeRadius": 0,
-    "blockCnt": 1,
-    "massLevel": 1,
-    "lpr": 1,
-    "hpRecoveryPerSec": 0,
-    "elementRes": 0,
-    "elementDmgRes": 0,
-    "hitRatePhys": 0,
-    "hitRateArts": 0,
-    "dmgType": "phys",
-    "dmgTypes": [
-     "phys"
-    ],
-    "motion": "WALK",
-    "immunities": {
-     "stun": false,
-     "silence": false,
-     "sleep": false,
-     "frozen": false,
-     "levitate": false
-    },
-    "otherImmunities": [],
-    "tauntLevel": 0
-   },
-   "abilities": [],
-   "talents": {
-    "bb": {},
-    "bbStr": {},
-    "groups": {}
-   },
-   "skills": [],
-   "notCountInTotal": false,
-   "tags": []
-  },
-  "enemy_1010_demon": {
-   "key": "enemy_1010_demon",
-   "prefabKey": "enemy_1010_demon",
-   "name": "Sarkaz Greatswordsman",
-   "level": 0,
-   "rank": "ELITE",
-   "applyWay": "MELEE",
-   "stats": {
-    "maxHp": 7500,
-    "atk": 600,
-    "def": 230,
-    "res": 50,
-    "moveSpeed": 0.85,
-    "bat": 2,
-    "aspd": 100,
-    "rangeRadius": 0,
-    "rawRangeRadius": 0,
-    "blockCnt": 1,
-    "massLevel": 2,
-    "lpr": 1,
-    "hpRecoveryPerSec": 0,
-    "elementRes": 0,
-    "elementDmgRes": 0,
-    "hitRatePhys": 0,
-    "hitRateArts": 0,
-    "dmgType": "phys",
-    "dmgTypes": [
-     "phys"
-    ],
-    "motion": "WALK",
-    "immunities": {
-     "stun": false,
-     "silence": false,
-     "sleep": false,
-     "frozen": false,
-     "levitate": false
-    },
-    "otherImmunities": [],
-    "tauntLevel": 0
-   },
-   "abilities": [],
-   "talents": {
-    "bb": {},
-    "bbStr": {},
-    "groups": {}
-   },
-   "skills": [],
-   "notCountInTotal": false,
-   "tags": [
-    "sarkaz"
-   ]
-  },
-  "enemy_1011_wizard_2": {
-   "key": "enemy_1011_wizard_2",
-   "prefabKey": "enemy_1011_wizard_2",
-   "name": "Caster Leader",
-   "level": 0,
-   "rank": "NORMAL",
-   "applyWay": "RANGED",
-   "stats": {
-    "maxHp": 2400,
-    "atk": 300,
-    "def": 80,
-    "res": 50,
-    "moveSpeed": 0.8,
-    "bat": 4,
-    "aspd": 100,
-    "rangeRadius": 2,
-    "rawRangeRadius": 2,
-    "blockCnt": 1,
-    "massLevel": 1,
-    "lpr": 1,
-    "hpRecoveryPerSec": 0,
-    "elementRes": 0,
-    "elementDmgRes": 0,
-    "hitRatePhys": 0,
-    "hitRateArts": 0,
-    "dmgType": "arts",
-    "dmgTypes": [
-     "arts"
-    ],
-    "motion": "WALK",
-    "immunities": {
-     "stun": false,
-     "silence": false,
-     "sleep": false,
-     "frozen": false,
-     "levitate": false
-    },
-    "otherImmunities": [],
-    "tauntLevel": 0
-   },
-   "abilities": [],
-   "talents": {
-    "bb": {},
-    "bbStr": {},
-    "groups": {}
-   },
-   "skills": [],
-   "notCountInTotal": false,
-   "tags": []
-  },
-  "enemy_1000_gopro_3": {
-   "key": "enemy_1000_gopro_3",
-   "prefabKey": "enemy_1000_gopro_3",
-   "name": "Rabid Hound Pro",
-   "level": 0,
-   "rank": "NORMAL",
-   "applyWay": "MELEE",
-   "stats": {
-    "maxHp": 3000,
-    "atk": 370,
-    "def": 0,
-    "res": 20,
-    "moveSpeed": 1.9,
-    "bat": 1.4,
-    "aspd": 100,
-    "rangeRadius": 0,
-    "rawRangeRadius": 0,
-    "blockCnt": 1,
-    "massLevel": 0,
-    "lpr": 1,
-    "hpRecoveryPerSec": 0,
-    "elementRes": 0,
-    "elementDmgRes": 0,
-    "hitRatePhys": 0,
-    "hitRateArts": 0,
-    "dmgType": "phys",
-    "dmgTypes": [
-     "phys"
-    ],
-    "motion": "WALK",
-    "immunities": {
-     "stun": false,
-     "silence": false,
-     "sleep": false,
-     "frozen": false,
-     "levitate": false
-    },
-    "otherImmunities": [],
-    "tauntLevel": 0
-   },
-   "abilities": [],
-   "talents": {
-    "bb": {},
-    "bbStr": {},
-    "groups": {}
-   },
-   "skills": [],
-   "notCountInTotal": false,
-   "tags": [
-    "infection"
-   ]
-  },
-  "enemy_1003_ncbow_2": {
-   "key": "enemy_1003_ncbow_2",
-   "prefabKey": "enemy_1003_ncbow_2",
-   "name": "Crossbowman Leader",
-   "level": 0,
-   "rank": "NORMAL",
-   "applyWay": "RANGED",
-   "stats": {
-    "maxHp": 1900,
-    "atk": 310,
-    "def": 150,
-    "res": 0,
-    "moveSpeed": 0.9,
-    "bat": 2.4,
-    "aspd": 100,
-    "rangeRadius": 1.9,
-    "rawRangeRadius": 1.9,
-    "blockCnt": 1,
-    "massLevel": 1,
-    "lpr": 1,
-    "hpRecoveryPerSec": 0,
-    "elementRes": 0,
-    "elementDmgRes": 0,
-    "hitRatePhys": 0,
-    "hitRateArts": 0,
-    "dmgType": "phys",
-    "dmgTypes": [
-     "phys"
-    ],
-    "motion": "WALK",
-    "immunities": {
-     "stun": false,
-     "silence": false,
-     "sleep": false,
-     "frozen": false,
-     "levitate": false
-    },
-    "otherImmunities": [],
-    "tauntLevel": 0
-   },
-   "abilities": [],
-   "talents": {
-    "bb": {},
-    "bbStr": {},
-    "groups": {}
-   },
-   "skills": [],
-   "notCountInTotal": false,
-   "tags": []
-  }
- }
 }

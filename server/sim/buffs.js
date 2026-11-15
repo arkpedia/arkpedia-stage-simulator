@@ -4,14 +4,15 @@
 //          interval, onExpire, onRemove, tags[], shield, shieldHits, persist, status, visible }
 // refresh: 'replace' (default: new instance replaces the old one), 'extend' (keep the longer remaining time,
 // take the new mods), 'stack' (stacks+1 up to maxStacks, timer reset), 'independent' (separate instances with
-// their own timers, at most maxStacks alive — the oldest is dropped), 'keep' (ignore when already present).
+// their own timers, at most maxStacks alive — the oldest is dropped), 'keep' (ignore when already present),
+// 'addTime' (add finite duration to remaining and original duration, retaining source/modifiers/identity).
 // Additive mod keys scale with stacks (value × stacks); *Mul keys multiply (value ^ stacks).
 
 import { COLD_ASPD, COLD_FREEZE_DURATION, FREEZE_RES_DOWN, RESIST_DEFAULT } from './constants.js';
 
 /** Additive mod keys (summed; × stacks). */
 export const ADD_KEYS = Object.freeze([
-  'atkFlat', 'atkFinalFlat', 'atkPct', 'defFlat', 'defFinalFlat', 'defPct', 'hpFlat', 'hpFinalFlat', 'hpPct', 'resFlat', 'resPct', 'aspd', 'batFlat', 'batPct', 'blockCnt',
+  'atkFlat', 'atkFinalFlat', 'atkPct', 'defFlat', 'defFinalFlat', 'defPct', 'hpFlat', 'hpFinalFlat', 'hpPct', 'resFlat', 'resPct', 'aspd', 'aspdPct', 'batFlat', 'batPct', 'blockCnt',
   'rangeExtend', 'defIgnoreFlat', 'defIgnorePct', 'resIgnoreFlat', 'resIgnorePct', 'dodgePhys', 'dodgeArts',
   'spRecoveryFlat', 'maxTargets', 'taunt', 'hpRegen', 'hpRegenRatio', 'epRegen', 'spCostFlat', 'moveFlat', 'movePct', 'massFlat',
   'flatDamageResistance', 'damageHpFloorRatio', 'hitRatePhys', 'hitRateArts', 'blockRadiusScale',
@@ -37,6 +38,12 @@ export const FLAG_KEYS = Object.freeze([
   // 自缚 (the unit's own immobility: 守墓石像's 转换模式, the 自缚 leaders) beside its `noMove` — 束缚 sets noMove too, and
   // only 自缚 makes a unit "不视为可达目标" for 余 S2's teleport (PRTS 余 S2 备注)
   'selfBound', 'healFree', 'noHpRecovery', 'stealthOff', 'undeadable',
+  // Native TARGET_FREE excludes opposing-side selection; it is independent
+  // of ALLY_TARGET_FREE and HEAL_FREE. Legacy untargetable retains its scope.
+  'targetFree',
+  'mireImmune',
+  // Native SKILL_NOT_ACTIVATABLE gates new skill casts independently of Silence.
+  'skillNotActivatable',
 ]);
 
 /**
@@ -52,7 +59,7 @@ export const STATUS = Object.freeze({
   freeze: { flags: { freeze: true, stun: true }, mods: { resFlat: -FREEZE_RES_DOWN }, enemyOnlyMods: true, immune: 'frozen' },
   // 寒冷: ASPD −30. A second cold while this one remains applies 冻结 for max(remaining, incoming)
   // (Battle.applyStatus; PRTS 术语释义 寒冷 「持续时间取双方之中最高」).
-  cold: { flags: { cold: true }, mods: { aspd: COLD_ASPD } },
+  cold: { flags: { cold: true }, mods: { aspd: COLD_ASPD }, immune: 'cold' },
   // 沉睡: 无敌且无法行动 (untargetable, takes no damage — except from `hitSleep` attackers — and blocks nothing)
   sleep: { flags: { sleep: true, noBlock: true }, immune: 'sleep' },
   // value = fraction of speed removed (0.8 ⇒ moveMul 0.2). Default 0.5.
@@ -88,7 +95,7 @@ export const STATUS = Object.freeze({
   fear: { flags: { fear: true, unblockable: true }, immune: 'feared' },
   // 战栗: 被阻挡后无法进行普通攻击
   tremble: { flags: { tremble: true }, immune: 'disarmedcombat' },
-  disarm: { flags: { disarm: true } },
+  disarm: { flags: { disarm: true }, immune: 'disarm' },
   // 隐匿 (ba.invisible): 不阻挡时不成为敌方攻击的目标 (an ally: only the enemy it blocks attacks it — targeting.js)
   stealth: { flags: { stealth: true } },
   // 迷彩 (ba.camou): "不阻挡时不成为敌方普通攻击的目标（无法躲避溅射类攻击）" — an ally's camouflage keeps the enemies off
@@ -157,6 +164,9 @@ export function makeBuff(b) {
     refresh: b.refresh ?? 'replace',
     mods: b.mods ?? null,
     flags: b.flags ?? null,
+    // Reviewed visibility immunities suppress the effective flags while the
+    // original producer remains attached. They do not destroy that producer.
+    flagImmunities: Array.isArray(b.flagImmunities) ? [...new Set(b.flagImmunities.filter(k => k === 'stealth' || k === 'camou'))] : null,
     onTick: b.onTick ?? null,
     interval: b.interval ?? 0,
     _acc: 0,
@@ -203,6 +213,7 @@ export function aggregateMods(buffs) {
   const add = Object.create(null);
   const mul = Object.create(null);
   const flags = Object.create(null);
+  let flagImmunities;
   let shield = 0;
   let permRangeExtend = 0;
   let sluggishMoveMul = 1;
@@ -271,11 +282,13 @@ export function aggregateMods(buffs) {
       }
     }
     if (b.flags) for (const k in b.flags) if (b.flags[k]) flags[k] = true;
+    if (b.flagImmunities?.length) { flagImmunities ??= new Set(); for (const k of b.flagImmunities) flagImmunities.add(k); }
     if (b.shield > 0) shield += b.shield;
   }
   // Apply after unrelated multipliers so Fragile composes independently of
   // source insertion order. Weaker owned channels resume after removal/expiry.
   for (const k of Object.keys(sanctuary)) mul[k] = (mul[k] ?? 1) * sanctuary[k];
+  for (const k of flagImmunities ?? []) flags[k] = false;
   for (const k of Object.keys(inspire)) add[k] = (add[k] ?? 0) + inspire[k].value;
   for (const k of Object.keys(stolen)) add[k] = (add[k] ?? 0) + stolen[k];
   if (pozemkaDefMul !== 1) mul.defMul = (mul.defMul ?? 1) * pozemkaDefMul;

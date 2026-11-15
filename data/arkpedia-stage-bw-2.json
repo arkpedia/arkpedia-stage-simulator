@@ -1,0 +1,1399 @@
+{
+ "code": "BW-2",
+ "name": "Scorch and Frost",
+ "description": "Do not let the rushing bugs blind you to the artillery aiming at your defenses from afar.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1,
+  "max_play_time": -1
+ },
+ "rules": {
+  "variant": null,
+  "source": {
+   "repository": "Kengxxiao/ArknightsGameData",
+   "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+   "path": "zh_CN/gamedata/levels/activities/act13mini/level_act13mini_02.json",
+   "sha256": "c1146690e9dcdcd2c3792327ceb1fa91a02ec619767cf62df885a1dd41407056",
+   "gitBlob": "78fffdbbdc06aa0c33ce3ef1b2543a376a20a53d",
+   "stageTable": {
+    "path": "zh_CN/gamedata/excel/stage_table.json",
+    "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+    "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+    "stageId": "act13mini_02",
+    "levelId": "Activities/act13mini/level_act13mini_02"
+   }
+  },
+  "battle": {
+   "max_play_time": -1
+  },
+  "enemies": {},
+  "enemyAdd": {},
+  "hiddenGroups": {}
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "bw-2",
+  "rows": 7,
+  "cols": 9,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    1,
+    1,
+    1,
+    2,
+    3,
+    3,
+    3,
+    0
+   ],
+   [
+    0,
+    4,
+    4,
+    4,
+    1,
+    3,
+    1,
+    3,
+    0
+   ],
+   [
+    0,
+    4,
+    0,
+    4,
+    1,
+    3,
+    1,
+    3,
+    0
+   ],
+   [
+    0,
+    4,
+    0,
+    4,
+    1,
+    3,
+    1,
+    3,
+    0
+   ],
+   [
+    2,
+    4,
+    0,
+    4,
+    4,
+    4,
+    1,
+    4,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    2,
+    0,
+    5,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "fly",
+    "start": {
+     "row": 4,
+     "col": 0
+    },
+    "end": {
+     "row": 5,
+     "col": 0
+    },
+    "checkpoints": [],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 20
+     }
+    ]
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 6,
+     "col": 2
+    },
+    "end": {
+     "row": 5,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 0
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 4
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 2
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 2
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 2,
+      "seconds": 3
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 3,
+      "seconds": 10
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 4
+    },
+    "end": {
+     "row": 6,
+     "col": 7
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 7
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 5
+    },
+    "end": {
+     "row": 6,
+     "col": 7
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 7
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 0
+    },
+    "end": {
+     "row": 6,
+     "col": 7
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 7
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 0
+    },
+    "end": {
+     "row": 6,
+     "col": 7
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 7
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 20
+     }
+    ]
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 140,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Oneiros",
+      "enemy_id": "enemy_1070_iced",
+      "count": 1,
+      "time": 0,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Bombtail-G",
+      "enemy_id": "enemy_1040_bombd_2",
+      "count": 1,
+      "time": 0,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 1,
+      "time": 10,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 4,
+      "time": 8,
+      "interval": 10,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Acid Originium Slug α",
+      "enemy_id": "enemy_1004_mslime_2",
+      "count": 5,
+      "time": 8,
+      "interval": 10,
+      "route": 3,
+      "fragment": 1
+     },
+     {
+      "enemy": "Invisible Crossbowman Leader",
+      "enemy_id": "enemy_1019_jshoot_2",
+      "count": 1,
+      "time": 20,
+      "route": 4,
+      "fragment": 1
+     },
+     {
+      "enemy": "Mortar Gunner Leader",
+      "enemy_id": "enemy_1024_mortar_2",
+      "count": 2,
+      "time": 51,
+      "interval": 40,
+      "route": 5,
+      "fragment": 2
+     },
+     {
+      "enemy": "Acid Originium Slug",
+      "enemy_id": "enemy_1004_mslime",
+      "count": 8,
+      "time": 53,
+      "interval": 12,
+      "route": 3,
+      "fragment": 2
+     },
+     {
+      "enemy": "Acid Originium Slug α",
+      "enemy_id": "enemy_1004_mslime_2",
+      "count": 4,
+      "time": 55,
+      "interval": 20,
+      "route": 3,
+      "fragment": 2
+     },
+     {
+      "enemy": "Invisible Crossbowman Leader",
+      "enemy_id": "enemy_1019_jshoot_2",
+      "count": 2,
+      "time": 63,
+      "interval": 15,
+      "route": 2,
+      "fragment": 2
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 5,
+      "time": 108,
+      "interval": 6,
+      "route": 2,
+      "fragment": 2
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 5,
+      "time": 128,
+      "interval": 3,
+      "route": 3,
+      "fragment": 2
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 4,
+    "routes": [
+     2,
+     2,
+     2,
+     2
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 5,
+    "col": 0,
+    "routes": [
+     4,
+     5
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 6,
+    "col": 5,
+    "routes": [
+     3,
+     3,
+     3,
+     3
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 6,
+    "col": 7,
+    "routes": [
+     2,
+     2,
+     3,
+     4,
+     5,
+     3,
+     3,
+     2,
+     2,
+     3
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1004_mslime",
+    "slug": "acid_originium_slug_enemy_1004_mslime",
+    "name": "Acid Originium Slug",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1004_mslime_2",
+    "slug": "acid_originium_slug_enemy_1004_mslime_2",
+    "name": "Acid Originium Slug α",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1007_slime_3",
+    "slug": "originium_slug_enemy_1007_slime_3",
+    "name": "Originium Slug β",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1019_jshoot_2",
+    "slug": "invisible_crossbowman_leader",
+    "name": "Invisible Crossbowman Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1024_mortar_2",
+    "slug": "mortar_gunner_leader",
+    "name": "Mortar Gunner Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1040_bombd_2",
+    "slug": "bombtail_g",
+    "name": "Bombtail-G",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1070_iced",
+    "slug": "oneiros",
+    "name": "Oneiros",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false,
+  "source": "cn"
+ },
+ "terrain": [],
+ "conditionalHandled": false,
+ "devices": [],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "BW-2",
+  "geometryHash": "e79657c4526c8826291069d4fc4f639da754d1aa2e9010f3521991e94f3ec676",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      0,
+      4
+     ],
+     [
+      0,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "1": {
+    "points": [
+     [
+      2,
+      6
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      0,
+      4
+     ],
+     [
+      0,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "2": {
+    "points": [
+     [
+      4,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      7,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "3": {
+    "points": [
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      7,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "4": {
+    "points": [
+     [
+      0,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      7,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "5": {
+    "points": [
+     [
+      0,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      7,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "breaks": [],
+    "holds": []
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1070_iced": {
+   "key": "enemy_1070_iced",
+   "prefabKey": "enemy_1070_iced",
+   "name": "Oneiros",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 4000,
+    "atk": 500,
+    "def": 180,
+    "res": 30,
+    "moveSpeed": 0.6,
+    "bat": 1,
+    "aspd": 100,
+    "rangeRadius": 2.5,
+    "rawRangeRadius": 2.5,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "FLY",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Flying unit.",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Can launch a warhead to deal AoE Arts damage and apply the <$ba.cold>Cold</> effect to targets",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [
+    {
+     "prefabKey": "bomb",
+     "priority": 0,
+     "cooldown": 5,
+     "initCooldown": 5,
+     "spCost": 0,
+     "bb": {
+      "freeze": 10
+     },
+     "bbStr": {}
+    }
+   ],
+   "notCountInTotal": false,
+   "tags": [
+    "drone"
+   ]
+  },
+  "enemy_1040_bombd_2": {
+   "key": "enemy_1040_bombd_2",
+   "prefabKey": "enemy_1040_bombd_2",
+   "name": "Bombtail-G",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 6000,
+    "atk": 1500,
+    "def": 220,
+    "res": 30,
+    "moveSpeed": 0.6,
+    "bat": 5,
+    "aspd": 100,
+    "rangeRadius": 2,
+    "rawRangeRadius": 2,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "FLY",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Flying unit.",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Can launch a warhead to deal AoE physical damage",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Gains significantly increased Movement Speed after launching warhead",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [
+    {
+     "prefabKey": "boomb",
+     "priority": 0,
+     "cooldown": 1,
+     "initCooldown": 1,
+     "spCost": 0,
+     "bb": {
+      "move_speed": 2
+     },
+     "bbStr": {}
+    }
+   ],
+   "notCountInTotal": false,
+   "tags": [
+    "drone"
+   ]
+  },
+  "enemy_1007_slime_3": {
+   "key": "enemy_1007_slime_3",
+   "prefabKey": "enemy_1007_slime_3",
+   "name": "Originium Slug β",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 1550,
+    "atk": 240,
+    "def": 0,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 1.7,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1004_mslime_2": {
+   "key": "enemy_1004_mslime_2",
+   "prefabKey": "enemy_1004_mslime_2",
+   "name": "Acid Originium Slug α",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 2780,
+    "atk": 290,
+    "def": 0,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 3.3,
+    "aspd": 100,
+    "rangeRadius": 1.75,
+    "rawRangeRadius": 1.75,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Every attack reduces the enemy's DEF",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "defdown.def": -15
+    },
+    "bbStr": {},
+    "groups": {
+     "defdown": [
+      "def"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1019_jshoot_2": {
+   "key": "enemy_1019_jshoot_2",
+   "prefabKey": "enemy_1019_jshoot_2",
+   "name": "Invisible Crossbowman Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 2700,
+    "atk": 310,
+    "def": 130,
+    "res": 20,
+    "moveSpeed": 0.9,
+    "bat": 2.7,
+    "aspd": 100,
+    "rangeRadius": 2.2,
+    "rawRangeRadius": 2.2,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "<$ba.invisible>Invisible</>",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1024_mortar_2": {
+   "key": "enemy_1024_mortar_2",
+   "prefabKey": "enemy_1024_mortar_2",
+   "name": "Mortar Gunner Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 5000,
+    "atk": 550,
+    "def": 150,
+    "res": 0,
+    "moveSpeed": 0.8,
+    "bat": 4.5,
+    "aspd": 100,
+    "rangeRadius": 7,
+    "rawRangeRadius": 7,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Capable of extremely long ranged-attacks",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Shells deal area damage to target and any allied units in the surrounding 8 tiles",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1004_mslime": {
+   "key": "enemy_1004_mslime",
+   "prefabKey": "enemy_1004_mslime",
+   "name": "Acid Originium Slug",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 2080,
+    "atk": 180,
+    "def": 80,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 3,
+    "aspd": 100,
+    "rangeRadius": 1.8,
+    "rawRangeRadius": 1.8,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Every attack reduces the enemy's DEF",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "defdown.def": -10
+    },
+    "bbStr": {},
+    "groups": {
+     "defdown": [
+      "def"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  }
+ },
+ "contentAddition": {
+  "schemaVersion": 1,
+  "source": {
+   "repository": "arkpedia/arkpedia-data",
+   "commit": "66232ee06377d791fb130248d680764c286e5c99",
+   "files": [
+    {
+     "path": "stages/bw-2.json",
+     "sha256": "5ff4e4c4ee9d74c6e5534e51cdb29bba8c3c5d5074f605c07bea9cdee3c11b0b"
+    },
+    {
+     "path": "stage-geometry/bw-2.json",
+     "sha256": "e79657c4526c8826291069d4fc4f639da754d1aa2e9010f3521991e94f3ec676"
+    },
+    {
+     "path": "stage-devices.json",
+     "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+    }
+   ],
+   "localFiles": [
+    {
+     "path": "data/stage-rules/bw-2.json",
+     "sha256": "0ec0c940d997904a0987e78bb6b23b768cab300e73fe42fad4771cbd1f05c095"
+    }
+   ]
+  },
+  "dependencies": {
+   "enemies": [
+    "enemy_1004_mslime",
+    "enemy_1004_mslime_2",
+    "enemy_1007_slime_3",
+    "enemy_1019_jshoot_2",
+    "enemy_1024_mortar_2",
+    "enemy_1040_bombd_2",
+    "enemy_1070_iced"
+   ],
+   "devices": [],
+   "tokens": []
+  },
+  "validation": {
+   "smoke": {
+    "seconds": 10,
+    "spawned": 4,
+    "errors": 0
+   },
+   "publicReview": "pending",
+   "waveSchedule": {
+    "id": "bw-2",
+    "seconds": 158.46666666666667,
+    "spawned": 39,
+    "expected": 39,
+    "reason": "cleared",
+    "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+   },
+   "browser": {
+    "date": "2026-11-13",
+    "engine": "Chromium",
+    "seconds": 10,
+    "errors": 0,
+    "canvas": true,
+    "scope": "Load/runtime smoke; external image assets unavailable"
+   }
+  }
+ }
+}

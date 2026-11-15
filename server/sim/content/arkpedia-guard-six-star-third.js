@@ -160,6 +160,7 @@ export function customizeGuardSixStarThirdKit({ battle: b, id, def, unit: u, kit
   kit.skill.id = s.id; kit.skill.name = s.name;
 }
 export function installGuardSixStarThird({ battle: b, unit: u, def }) {
+  if (!GUARD_SIX_STAR_THIRD_OPERATORS[def.charId]) return;
   if (def.charId !== VIVIANA) return;
   u.mem.vivianaBaseRange = u.rangeGrid;
   u.mem.vivianaStealTargets = new Set(); u.mem.vivianaStolen = 0;

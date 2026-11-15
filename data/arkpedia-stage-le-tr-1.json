@@ -1,0 +1,733 @@
+{
+  "code": "LE-TR-1",
+  "name": "Op. 599",
+  "description": "The most important thing is to nail down the fundamentals.\n<Waste Energy Interference> Natural SP recovery speed reduced.\n<Realigned Flux> Restores natural SP recovery speed of allied Operators within.",
+  "battle": {
+    "max_life": 5,
+    "unit_limit": 8,
+    "initial_dp": 10,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1,
+    "max_play_time": -1
+  },
+  "rules": {
+    "variant": null,
+    "source": {
+      "repository": "Kengxxiao/ArknightsGameData",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "path": "zh_CN/gamedata/levels/activities/act18side/level_act18side_tr01.json",
+      "sha256": "ea0f2757e310f48d28b7e71a42453e048c8e708277787ba281aad7ae885cecb4",
+      "gitBlob": "b2791db5b6dedfb23fd80e7e5a664ef5d453a46b",
+      "stageTable": {
+        "path": "zh_CN/gamedata/excel/stage_table.json",
+        "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+        "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+        "stageId": "act18side_tr01",
+        "levelId": "Activities/act18side/level_act18side_tr01"
+      }
+    },
+    "battle": {
+      "max_play_time": -1
+    },
+    "enemies": {},
+    "enemyAdd": {},
+    "hiddenGroups": {}
+  },
+  "environment": [
+    {
+      "kind": "character_in_magiccircuit_env",
+      "sp_recover_ratio": -0.5,
+      "character_in_magiccircuit[normal].sp_recover_ratio": 0.5
+    }
+  ],
+  "mapTags": [],
+  "mapTagSource": null,
+  "geometry": {
+    "slug": "le-tr-1",
+    "rows": 6,
+    "cols": 9,
+    "tileLegend": [
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      },
+      {
+        "key": "tile_start",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_rcm_operator",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      }
+    ],
+    "tileGrid": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        3,
+        0,
+        2,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        2,
+        2,
+        2,
+        0,
+        2,
+        0,
+        0
+      ],
+      [
+        4,
+        2,
+        2,
+        3,
+        2,
+        2,
+        2,
+        5,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "routes": [
+      {
+        "motion": "walk",
+        "start": {
+          "row": 4,
+          "col": 0
+        },
+        "end": {
+          "row": 1,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 6
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": null,
+        "placeholder": true,
+        "start": null,
+        "end": null,
+        "checkpoints": [],
+        "waits": []
+      }
+    ],
+    "waves": [
+      {
+        "index": 0,
+        "duration": 50,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "'Street Layabout'",
+            "enemy_id": "enemy_1238_ltmob",
+            "count": 2,
+            "time": 0,
+            "interval": 2,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "'Street Layabout'",
+            "enemy_id": "enemy_1238_ltmob",
+            "count": 2,
+            "time": 25,
+            "interval": 1,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "'Street Layabout'",
+            "enemy_id": "enemy_1238_ltmob",
+            "count": 2,
+            "time": 40,
+            "interval": 2,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Mass-Produced Colossus",
+            "enemy_id": "enemy_1240_ltgint",
+            "count": 1,
+            "time": 50,
+            "route": 0,
+            "fragment": 0
+          }
+        ]
+      }
+    ],
+    "spawnTiles": [
+      {
+        "key": "tile_start",
+        "row": 4,
+        "col": 0,
+        "routes": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 1,
+        "col": 0,
+        "routes": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_1238_ltmob",
+        "slug": "street_layabout",
+        "name": "'Street Layabout'",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1240_ltgint",
+        "slug": "mass_produced_colossus",
+        "name": "Mass-Produced Colossus",
+        "database_level": 0
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [
+        {
+          "unit": "Ansel",
+          "unit_id": "char_212_ansel",
+          "level": 55,
+          "elite": 1,
+          "potential": 0,
+          "skill_index": 0,
+          "skill_level": 4,
+          "hidden": true
+        },
+        {
+          "unit": "Adnachiel",
+          "unit_id": "char_211_adnach",
+          "level": 55,
+          "elite": 1,
+          "potential": 0,
+          "skill_index": 0,
+          "skill_level": 4,
+          "hidden": true
+        },
+        {
+          "unit": "Steward",
+          "unit_id": "char_210_stward",
+          "level": 55,
+          "elite": 1,
+          "potential": 0,
+          "skill_index": 0,
+          "skill_level": 4,
+          "hidden": true
+        }
+      ],
+      "deployable_tokens": []
+    },
+    "hasConditionalSpawns": false
+  },
+  "terrain": [],
+  "conditionalHandled": false,
+  "devices": [
+    {
+      "col": 1,
+      "description": "Continually releases Realigned Flux in the deployed direction",
+      "hidden": false,
+      "key": "trap_062_magicstart",
+      "kind": "device",
+      "name": "'Tuba'",
+      "row": 5,
+      "alias": "trap_062_magicstart#1",
+      "instance": {
+        "level": 1,
+        "skillLevel": 1,
+        "direction": "DOWN"
+      }
+    },
+    {
+      "col": 3,
+      "description": "Changes the direction of Realigned Flux",
+      "hidden": false,
+      "key": "trap_063_magicturn",
+      "kind": "device",
+      "name": "L-7 'Whisperer'",
+      "row": 2,
+      "alias": "trap_063_magicturn#1",
+      "instance": {
+        "level": 1,
+        "skillLevel": 1,
+        "direction": "UP"
+      }
+    },
+    {
+      "col": 7,
+      "description": "Changes the direction of Realigned Flux",
+      "hidden": false,
+      "key": "trap_063_magicturn",
+      "kind": "device",
+      "name": "L-7 'Whisperer'",
+      "row": 1,
+      "alias": "trap_063_magicturn#2",
+      "instance": {
+        "level": 1,
+        "skillLevel": 1,
+        "direction": "LEFT"
+      }
+    },
+    {
+      "col": 1,
+      "description": "Blocks 1 enemy",
+      "hidden": false,
+      "key": "char_208_melan",
+      "kind": "operator",
+      "name": "Melantha",
+      "row": 1
+    },
+    {
+      "col": 5,
+      "description": "Blocks 3 enemies",
+      "hidden": false,
+      "key": "char_209_ardign",
+      "kind": "operator",
+      "name": "Cardigan",
+      "row": 4
+    }
+  ],
+  "tokens": [],
+  "pathing": {
+    "schemaVersion": 1,
+    "syntheticRoutes": [
+      0
+    ],
+    "producer": "Arkpedia stage browser / buildPlaybackPaths",
+    "stage": "LE-TR-1",
+    "geometryHash": "225eb7a3afce9d6e43389bfc4ca36aba181adaf7e551aa1e4af3dc2e1cd619a6",
+    "moveScale": 0.65,
+    "paths": {
+      "0": {
+        "points": [
+          [
+            0,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            6,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "breaks": [],
+        "holds": []
+      }
+    }
+  },
+  "art": null,
+  "gates": null,
+  "fixedSquad": [
+    {
+      "unit": "Ansel",
+      "unit_id": "char_212_ansel",
+      "level": 55,
+      "elite": 1,
+      "potential": 0,
+      "skill_index": 0,
+      "skill_level": 4,
+      "hidden": true
+    },
+    {
+      "unit": "Adnachiel",
+      "unit_id": "char_211_adnach",
+      "level": 55,
+      "elite": 1,
+      "potential": 0,
+      "skill_index": 0,
+      "skill_level": 4,
+      "hidden": true
+    },
+    {
+      "unit": "Steward",
+      "unit_id": "char_210_stward",
+      "level": 55,
+      "elite": 1,
+      "potential": 0,
+      "skill_index": 0,
+      "skill_level": 4,
+      "hidden": true
+    }
+  ],
+  "enemies": {
+    "enemy_1238_ltmob": {
+      "key": "enemy_1238_ltmob",
+      "prefabKey": "enemy_1238_ltmob",
+      "name": "'Street Layabout'",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 3500,
+        "atk": 380,
+        "def": 50,
+        "res": 0,
+        "moveSpeed": 1.3,
+        "bat": 2.2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys",
+          "arts"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "When attacking targets outside of Realigned Flux, deals a certain percentage of Arts damage",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "ExAtk.atk_scale": 0.4
+        },
+        "bbStr": {},
+        "groups": {
+          "ExAtk": [
+            "atk_scale"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1240_ltgint": {
+      "key": "enemy_1240_ltgint",
+      "prefabKey": "enemy_1240_ltgint",
+      "name": "Mass-Produced Colossus",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 15000,
+        "atk": 650,
+        "def": 1200,
+        "res": 50,
+        "moveSpeed": 0.75,
+        "bat": 4,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 4,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": true,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Can only be blocked by units with at least 2 Block",
+          "format": "NORMAL"
+        },
+        {
+          "text": "When in Realigned Flux, DEF and RES are greatly reduced",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "Weak.def": -1000,
+          "Weak.magic_resistance": -50
+        },
+        "bbStr": {},
+        "groups": {
+          "Weak": [
+            "def",
+            "magic_resistance"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "originiumartscraft"
+      ]
+    }
+  },
+  "contentAddition": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/le-tr-1.json",
+          "sha256": "fd0442285cf4e6e4c7c755755939d13d1d587518b6e3e4678f8e2555ac6474b7"
+        },
+        {
+          "path": "stage-geometry/le-tr-1.json",
+          "sha256": "225eb7a3afce9d6e43389bfc4ca36aba181adaf7e551aa1e4af3dc2e1cd619a6"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        }
+      ],
+      "localFiles": [
+        {
+          "path": "data/stage-rules/le-tr-1.json",
+          "sha256": "33494cbdaf774ce32227ee0d7beb873ca0f7b89e1b21145abd8d2176c869f63c"
+        },
+        {
+          "path": "data/stage-rules/levels/8415a3f63904e05205d804f607c924b5848e1e9c2ef46eaae79058c45200030a.json",
+          "sha256": "8415a3f63904e05205d804f607c924b5848e1e9c2ef46eaae79058c45200030a"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/b2791db5b6dedfb23fd80e7e5a664ef5d453a46b.json",
+          "sha256": "ea0f2757e310f48d28b7e71a42453e048c8e708277787ba281aad7ae885cecb4"
+        },
+        {
+          "path": "data/arkpedia-device-source.json",
+          "sha256": "1ee27c014b0cdc95426300122922efa9bdeb0a3495e19c84e996e35a70160126"
+        },
+        {
+          "path": "data/arkpedia-flux-reflector-source.json",
+          "sha256": "45d25320b15b31bf029d099db0f88f06ff785ca2356d0b9986eb9569a8a49d75"
+        },
+        {
+          "path": "data/arkpedia-device-native-source.json",
+          "sha256": "0faf3df8b6f8cb6335e91f99dcf346f420a57b42707e53a696742155fded7ef2"
+        },
+        {
+          "path": "data/arkpedia-environment-native-source.json",
+          "sha256": "f85082fa9b085a473e1424de3d2c6d0097ced0297de0636a62baf60789d76de2"
+        }
+      ]
+    },
+    "dependencies": {
+      "enemies": [
+        "enemy_1238_ltmob",
+        "enemy_1240_ltgint"
+      ],
+      "devices": [
+        "'Tuba'",
+        "L-7 'Whisperer'"
+      ],
+      "tokens": []
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 10,
+        "spawned": 2,
+        "errors": 0
+      },
+      "publicReview": "pending",
+      "waveSchedule": {
+        "id": "le-tr-1",
+        "seconds": 84.9,
+        "spawned": 7,
+        "expected": 7,
+        "dynamicSpawns": 0,
+        "reason": "cleared",
+        "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+      },
+      "browserStartup": {
+        "id": "le-tr-1",
+        "seconds": 20,
+        "errors": [],
+        "units": 5,
+        "canvas": true,
+        "scope": "Mobile landscape browser startup and canvas runtime; not a fidelity approval"
+      }
+    }
+  }
+}

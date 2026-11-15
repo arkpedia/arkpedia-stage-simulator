@@ -2,6 +2,7 @@
 // Original prefabs, ranks, selector flags and clips: arkpedia-weedy-prefabs.json.
 // Closed token transfer/rupture clocks and the shared instantaneous push are
 // bounded local mappings, not certified native controller/frame execution.
+import { stageCardRespawnTime } from './arkpedia-stage-card-cost.js';
 import evidence from '../../../data/arkpedia-weedy-prefabs.json' with { type: 'json' };
 import { canTargetEnemy, sortEnemyTargets, absoluteRangeKeys } from '../targeting.js';
 import { resolveHit } from '../ai.js';
@@ -84,8 +85,8 @@ function castThird(b, u, owner, bb, grid) {
           b.dealDamage(u, e, { amount: owner.s.atk * owner.s.atkScaleMul * bb.atk_scale,
             type: 'arts', isAttack: true, isSkill: true, isSplash: true, applyWay: 'ranged', tags: ['weedy:s3'] });
           if (!live(e)) continue;
-          // Native movement is continuous after rupture begins. Initialize the
-          // distance tracker before our immediate push to retain that distance.
+          // Initialize before the force begins so the projectile's first frame
+          // and all subsequent movement receipts contribute to rupture.
           applyDistanceRupture(b, u, e, bb, { key: `weedy:rupture:${u.id}`, tag: 'weedy:rupture' });
           b.push(e, bb.force + (u.defId === TOKEN ? forceBonus(u) : 0),
             { from, dir: { x: from.fwd[1], y: from.fwd[0] } });
@@ -138,6 +139,7 @@ export function customizeWeedyKit({ battle: b, id, def, unit: u, kit }) {
 }
 export function installWeedy({ battle: b, unit: u, def }) {
   if (def.charId !== ID) return;
+  u.mem.regularSummonFactory = createWeedyCannon;
   b.on('death', ({ unit }) => { if (unit === u) {
     u.mem.weedyCast?.watch?.cancel(); u.mem.weedyCast?.release?.cancel();
     u.mem.weedyCast = null; u.mem.regularFormVisual = null;
@@ -196,7 +198,7 @@ export function createWeedyCannon(b, state, row, col, dir) {
       }, { owner: t });
       battle.on('death', ({ unit }) => { if (unit !== t) return;
         t.mem.weedyCast?.watch?.cancel(); t.mem.weedyCast?.release?.cancel(); t.mem.weedyCast = null;
-        state.stock = Math.min(1, state.stock + 1); state.readyAt = battle.time + r.stats.respawnTime;
+        state.stock = Math.min(1, state.stock + 1); state.readyAt = battle.time + stageCardRespawnTime(battle, r);
       }, { owner: t });
     } };
   return b.spawnToken(owner, TOKEN, row, col, { dir, def: r, kit });

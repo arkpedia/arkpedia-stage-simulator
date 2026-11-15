@@ -1,0 +1,451 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-14",
+  "scope": "Historical checkpoint: operator alias enable rules and cardless preplaced actors. Duplicate operator builds remain unsupported; not native frame or full-stage clear certification.",
+  "sourceFiles": [
+    {
+      "path": "shared/arkpedia/stage-rules.js",
+      "sha256": "1109112af46f815151f53e1dbcf0ca592ef9a4a02644772497b20d41089f60fd"
+    },
+    {
+      "path": "tools/arkpedia/stage-predefined-operators.mjs",
+      "sha256": "7511bddb70b03cbf274d161519c35bca2d1e8cf16d702e3bb9ec121eff5dc8f8"
+    },
+    {
+      "path": "tools/arkpedia/stage-waves.mjs",
+      "sha256": "5ffee2993d5ca01aa3701fa4e5791383eedbb19f2790e7542782a8fd281ae631"
+    },
+    {
+      "path": "server/sim/arkpedia.js",
+      "sha256": "1fcd9218086f72f7423a9d007a6cad728d8453fab00469926a8941ee82fd5e57"
+    },
+    {
+      "path": "public/arkpedia/app.js",
+      "sha256": "c081e82ab15e47ea07c639fa0274b6c222ee1fcee9d6a7371e4eb475eb93db7a"
+    },
+    {
+      "path": "tools/arkpedia/review-stage-predefined.mjs",
+      "sha256": "3d57f850aa40102dfb9f3cd97e4b33f0d6a915d98fdbaeb2b881e11a2f191adf"
+    },
+    {
+      "path": "docs/STAGE-PREDEFINED-IDENTITY-REVIEW.md",
+      "sha256": "dc911577fba98ab4bcb25271487b2ecdd686845c9ba52131cd0b269ea8a7515d"
+    }
+  ],
+  "checks": {
+    "focusedTests": {
+      "log": {
+        "path": "/tmp/shared-stage-final-tests.log",
+        "sha256": "415b2f6bf9fc05b02d65f4c0180be1d0f9244c79ec2ee6fe5d01fc44d86fc41c"
+      },
+      "passed": 74,
+      "failed": 0
+    },
+    "allStageSmoke": {
+      "scope": "10-second constructor/runtime smoke for every available compiled stage; not a playable-clear or fidelity certificate",
+      "available": 827,
+      "completed": 827,
+      "failures": [],
+      "uniqueComponentsRead": 5606,
+      "cache": {
+        "cachedBytes": 12278045,
+        "cachedObjects": 5606,
+        "pending": 0
+      }
+    },
+    "inventory": {
+      "path": "data/arkpedia-content-inventory.json",
+      "sha256": "8870737793d99a763f36b0e8c1b11099cf2d0b48e6d7ff2e9bcd66af256b3141"
+    },
+    "browser": [
+      {
+        "id": "tr-4",
+        "mobile": false,
+        "initial": {
+          "bench": [
+            "char_123_fang",
+            "char_192_falco"
+          ],
+          "hidden": [
+            "char_123_fang",
+            "char_192_falco"
+          ],
+          "actors": []
+        },
+        "seconds": 10.933333333333334,
+        "activated": [
+          "char_123_fang",
+          "char_192_falco"
+        ],
+        "hidden": [],
+        "actors": [],
+        "errors": []
+      },
+      {
+        "id": "tr-6",
+        "mobile": false,
+        "initial": {
+          "bench": [
+            "char_122_beagle",
+            "char_009_12fce",
+            "char_501_durin"
+          ],
+          "hidden": [
+            "char_122_beagle",
+            "char_009_12fce"
+          ],
+          "actors": [
+            "char_501_durin"
+          ]
+        },
+        "seconds": 20.933333333333334,
+        "activated": [
+          "char_122_beagle",
+          "char_009_12fce",
+          "char_501_durin"
+        ],
+        "hidden": [],
+        "actors": [
+          "char_501_durin"
+        ],
+        "errors": [],
+        "cardlessRetreat": true
+      },
+      {
+        "id": "1-11",
+        "mobile": false,
+        "initial": {
+          "bench": [
+            "char_210_stward",
+            "char_235_jesica",
+            "char_123_fang",
+            "char_192_falco",
+            "char_121_lava",
+            "char_120_hibisc",
+            "char_208_melan",
+            "char_122_beagle",
+            "char_212_ansel",
+            "char_503_rang",
+            "char_500_noirc",
+            "char_502_nblade",
+            "char_211_adnach"
+          ],
+          "hidden": [
+            "char_211_adnach"
+          ],
+          "actors": []
+        },
+        "seconds": 3.033333333333333,
+        "activated": [
+          "char_211_adnach"
+        ],
+        "hidden": [],
+        "actors": [
+          "char_211_adnach"
+        ],
+        "errors": []
+      },
+      {
+        "id": "cb-3",
+        "mobile": false,
+        "initial": {
+          "bench": [
+            "char_123_fang",
+            "char_208_melan",
+            "char_122_beagle",
+            "char_124_kroos",
+            "char_120_hibisc",
+            "char_213_mostma",
+            "char_325_bison"
+          ],
+          "hidden": [],
+          "actors": [
+            "trap_008_farm",
+            "char_213_mostma",
+            "char_325_bison"
+          ]
+        },
+        "seconds": 0,
+        "activated": [
+          "char_213_mostma",
+          "char_325_bison"
+        ],
+        "hidden": [],
+        "actors": [
+          "trap_008_farm",
+          "char_213_mostma",
+          "char_325_bison"
+        ],
+        "errors": []
+      },
+      {
+        "id": "of-6",
+        "mobile": false,
+        "initial": {
+          "bench": [
+            "char_123_fang",
+            "char_208_melan",
+            "char_122_beagle",
+            "char_124_kroos",
+            "char_120_hibisc",
+            "char_340_shwaz"
+          ],
+          "hidden": [],
+          "actors": [
+            "char_340_shwaz"
+          ]
+        },
+        "seconds": 0,
+        "activated": [
+          "char_340_shwaz"
+        ],
+        "hidden": [],
+        "actors": [
+          "char_340_shwaz"
+        ],
+        "errors": []
+      },
+      {
+        "id": "11-3",
+        "mobile": false,
+        "initial": {
+          "bench": [
+            "char_123_fang",
+            "char_208_melan",
+            "char_122_beagle",
+            "char_124_kroos",
+            "char_120_hibisc",
+            "char_4045_heidi"
+          ],
+          "hidden": [],
+          "actors": [
+            "char_4045_heidi"
+          ]
+        },
+        "seconds": 0,
+        "activated": [
+          "char_4045_heidi"
+        ],
+        "hidden": [],
+        "actors": [
+          "char_4045_heidi"
+        ],
+        "errors": []
+      },
+      {
+        "id": "tw-s-1",
+        "mobile": false,
+        "initial": {
+          "bench": [
+            "char_123_fang",
+            "char_208_melan",
+            "char_122_beagle",
+            "char_124_kroos",
+            "char_120_hibisc"
+          ],
+          "hidden": [],
+          "actors": []
+        },
+        "seconds": 0,
+        "activated": [],
+        "hidden": [],
+        "actors": [],
+        "errors": []
+      },
+      {
+        "id": "tr-4",
+        "mobile": true,
+        "initial": {
+          "bench": [
+            "char_123_fang",
+            "char_192_falco"
+          ],
+          "hidden": [
+            "char_123_fang",
+            "char_192_falco"
+          ],
+          "actors": []
+        },
+        "seconds": 10.933333333333334,
+        "activated": [
+          "char_123_fang",
+          "char_192_falco"
+        ],
+        "hidden": [],
+        "actors": [],
+        "errors": []
+      },
+      {
+        "id": "tr-6",
+        "mobile": true,
+        "initial": {
+          "bench": [
+            "char_122_beagle",
+            "char_009_12fce",
+            "char_501_durin"
+          ],
+          "hidden": [
+            "char_122_beagle",
+            "char_009_12fce"
+          ],
+          "actors": [
+            "char_501_durin"
+          ]
+        },
+        "seconds": 20.933333333333334,
+        "activated": [
+          "char_122_beagle",
+          "char_009_12fce",
+          "char_501_durin"
+        ],
+        "hidden": [],
+        "actors": [
+          "char_501_durin"
+        ],
+        "errors": [],
+        "cardlessRetreat": true
+      },
+      {
+        "id": "1-11",
+        "mobile": true,
+        "initial": {
+          "bench": [
+            "char_210_stward",
+            "char_235_jesica",
+            "char_123_fang",
+            "char_192_falco",
+            "char_121_lava",
+            "char_120_hibisc",
+            "char_208_melan",
+            "char_122_beagle",
+            "char_212_ansel",
+            "char_503_rang",
+            "char_500_noirc",
+            "char_502_nblade",
+            "char_211_adnach"
+          ],
+          "hidden": [
+            "char_211_adnach"
+          ],
+          "actors": []
+        },
+        "seconds": 3.033333333333333,
+        "activated": [
+          "char_211_adnach"
+        ],
+        "hidden": [],
+        "actors": [
+          "char_211_adnach"
+        ],
+        "errors": []
+      },
+      {
+        "id": "cb-3",
+        "mobile": true,
+        "initial": {
+          "bench": [
+            "char_123_fang",
+            "char_208_melan",
+            "char_122_beagle",
+            "char_124_kroos",
+            "char_120_hibisc",
+            "char_213_mostma",
+            "char_325_bison"
+          ],
+          "hidden": [],
+          "actors": [
+            "trap_008_farm",
+            "char_213_mostma",
+            "char_325_bison"
+          ]
+        },
+        "seconds": 0,
+        "activated": [
+          "char_213_mostma",
+          "char_325_bison"
+        ],
+        "hidden": [],
+        "actors": [
+          "trap_008_farm",
+          "char_213_mostma",
+          "char_325_bison"
+        ],
+        "errors": []
+      },
+      {
+        "id": "of-6",
+        "mobile": true,
+        "initial": {
+          "bench": [
+            "char_123_fang",
+            "char_208_melan",
+            "char_122_beagle",
+            "char_124_kroos",
+            "char_120_hibisc",
+            "char_340_shwaz"
+          ],
+          "hidden": [],
+          "actors": [
+            "char_340_shwaz"
+          ]
+        },
+        "seconds": 0,
+        "activated": [
+          "char_340_shwaz"
+        ],
+        "hidden": [],
+        "actors": [
+          "char_340_shwaz"
+        ],
+        "errors": []
+      },
+      {
+        "id": "11-3",
+        "mobile": true,
+        "initial": {
+          "bench": [
+            "char_123_fang",
+            "char_208_melan",
+            "char_122_beagle",
+            "char_124_kroos",
+            "char_120_hibisc",
+            "char_4045_heidi"
+          ],
+          "hidden": [],
+          "actors": [
+            "char_4045_heidi"
+          ]
+        },
+        "seconds": 0,
+        "activated": [
+          "char_4045_heidi"
+        ],
+        "hidden": [],
+        "actors": [
+          "char_4045_heidi"
+        ],
+        "errors": []
+      },
+      {
+        "id": "tw-s-1",
+        "mobile": true,
+        "initial": {
+          "bench": [
+            "char_123_fang",
+            "char_208_melan",
+            "char_122_beagle",
+            "char_124_kroos",
+            "char_120_hibisc"
+          ],
+          "hidden": [],
+          "actors": []
+        },
+        "seconds": 0,
+        "activated": [],
+        "hidden": [],
+        "actors": [],
+        "errors": []
+      }
+    ]
+  }
+}

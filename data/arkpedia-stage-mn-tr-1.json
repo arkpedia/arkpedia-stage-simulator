@@ -1,0 +1,1229 @@
+{
+  "code": "MN-TR-1",
+  "name": "Mock Competition",
+  "description": "A small lesson on the knights competition. Please make good use of the competition rules. \n<Mieszko Coil>Obtain Activation effect when within range of other Mieszko Coils.",
+  "battle": {
+    "max_life": 10,
+    "unit_limit": 8,
+    "initial_dp": 10,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1,
+    "max_play_time": -1
+  },
+  "rules": {
+    "variant": null,
+    "source": {
+      "repository": "Kengxxiao/ArknightsGameData",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "path": "zh_CN/gamedata/levels/activities/act13d5/level_act13d5_tr01.json",
+      "sha256": "dfbd4c0c0e350efec32e7c05b33360f36f8387b0ea633877e811a1d2f45aba5e",
+      "gitBlob": "d9880d6edbb2511256cc2407ce216a210be94d82",
+      "stageTable": {
+        "path": "zh_CN/gamedata/excel/stage_table.json",
+        "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+        "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+        "stageId": "act13d5_tr01",
+        "levelId": "Activities/ACT13D5/level_act13d5_tr01"
+      }
+    },
+    "battle": {
+      "max_play_time": -1
+    },
+    "enemies": {},
+    "enemyAdd": {},
+    "hiddenGroups": {}
+  },
+  "mapTags": [],
+  "mapTagSource": null,
+  "geometry": {
+    "slug": "mn-tr-1",
+    "rows": 6,
+    "cols": 11,
+    "tileLegend": [
+      {
+        "key": "tile_empty",
+        "height": "low",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_floor",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_start",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      }
+    ],
+    "tileGrid": [
+      [
+        0,
+        1,
+        1,
+        1,
+        2,
+        1,
+        2,
+        1,
+        1,
+        1,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        3,
+        4,
+        1,
+        4,
+        1,
+        1,
+        1,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        3,
+        4,
+        3,
+        4,
+        1,
+        3,
+        1,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        1,
+        4,
+        3,
+        4,
+        3,
+        1,
+        1,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        1,
+        5,
+        1,
+        5,
+        1,
+        1,
+        1,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        1,
+        6,
+        1,
+        6,
+        1,
+        1,
+        1,
+        0
+      ]
+    ],
+    "routes": [
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 4
+        },
+        "end": {
+          "row": 0,
+          "col": 4
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 4
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 3
+          }
+        ]
+      },
+      {
+        "motion": null,
+        "placeholder": true,
+        "start": null,
+        "end": null,
+        "checkpoints": [],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 6
+        },
+        "end": {
+          "row": 0,
+          "col": 6
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 6
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 3
+          }
+        ]
+      },
+      {
+        "motion": "fly",
+        "start": {
+          "row": 3,
+          "col": 0
+        },
+        "end": {
+          "row": 3,
+          "col": 10
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 1
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 1
+          }
+        ]
+      },
+      {
+        "motion": "fly",
+        "start": {
+          "row": 3,
+          "col": 0
+        },
+        "end": {
+          "row": 3,
+          "col": 10
+        },
+        "checkpoints": [],
+        "waits": []
+      },
+      {
+        "motion": "fly",
+        "start": {
+          "row": 4,
+          "col": 0
+        },
+        "end": {
+          "row": 5,
+          "col": 5
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 5
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 6
+        },
+        "end": {
+          "row": 0,
+          "col": 6
+        },
+        "checkpoints": [],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 4
+        },
+        "end": {
+          "row": 0,
+          "col": 4
+        },
+        "checkpoints": [],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 4
+        },
+        "end": {
+          "row": 0,
+          "col": 4
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 4
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 1
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 6
+        },
+        "end": {
+          "row": 0,
+          "col": 6
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 6
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 1
+          }
+        ]
+      }
+    ],
+    "waves": [
+      {
+        "index": 0,
+        "duration": 2,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Nameless Independent Knight",
+            "enemy_id": "enemy_1099_nbkght",
+            "count": 1,
+            "time": 0,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Training Gloompincer",
+            "enemy_id": "enemy_1100_scorpn",
+            "count": 1,
+            "time": 0,
+            "route": 2,
+            "fragment": 0
+          }
+        ]
+      },
+      {
+        "index": 1,
+        "duration": 5,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Sponsor Drone",
+            "enemy_id": "enemy_1105_tyokai",
+            "count": 1,
+            "time": 0,
+            "route": 3,
+            "fragment": 0
+          },
+          {
+            "enemy": "Sponsor Drone",
+            "enemy_id": "enemy_1105_tyokai",
+            "count": 1,
+            "time": 4,
+            "route": 5,
+            "fragment": 0
+          },
+          {
+            "enemy": "Nameless Independent Knight",
+            "enemy_id": "enemy_1099_nbkght",
+            "count": 1,
+            "time": 4,
+            "route": 6,
+            "fragment": 0
+          },
+          {
+            "enemy": "Nameless Independent Knight",
+            "enemy_id": "enemy_1099_nbkght",
+            "count": 1,
+            "time": 2,
+            "route": 7,
+            "fragment": 0
+          }
+        ]
+      },
+      {
+        "index": 2,
+        "duration": 14,
+        "pre_delay": 1,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Training Gloompincer",
+            "enemy_id": "enemy_1100_scorpn",
+            "count": 2,
+            "time": 4,
+            "interval": 6,
+            "route": 8,
+            "fragment": 0
+          },
+          {
+            "enemy": "Training Gloompincer",
+            "enemy_id": "enemy_1100_scorpn",
+            "count": 2,
+            "time": 9,
+            "interval": 5,
+            "route": 9,
+            "fragment": 0
+          }
+        ]
+      }
+    ],
+    "spawnTiles": [
+      {
+        "key": "tile_start",
+        "row": 5,
+        "col": 4,
+        "routes": [
+          0,
+          7,
+          8
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 5,
+        "col": 6,
+        "routes": [
+          2,
+          6,
+          9
+        ]
+      }
+    ],
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 0,
+        "col": 4,
+        "routes": [
+          0,
+          7,
+          8
+        ]
+      },
+      {
+        "key": "tile_end",
+        "row": 0,
+        "col": 6,
+        "routes": [
+          2,
+          6,
+          9
+        ]
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_1099_nbkght",
+        "slug": "nameless_independent_knight",
+        "name": "Nameless Independent Knight",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1100_scorpn",
+        "slug": "training_gloompincer",
+        "name": "Training Gloompincer",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1105_tyokai",
+        "slug": "sponsor_drone",
+        "name": "Sponsor Drone",
+        "database_level": 0
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [],
+      "deployable_tokens": [
+        {
+          "unit": "Mieszko Coil",
+          "unit_id": "trap_019_electric",
+          "count": 0,
+          "level": 1,
+          "elite": 0,
+          "potential": 0,
+          "skill_index": 0,
+          "skill_level": 1
+        }
+      ]
+    },
+    "hasConditionalSpawns": false
+  },
+  "terrain": [],
+  "conditionalHandled": false,
+  "devices": [
+    {
+      "col": 5,
+      "description": "Obtain Activation effect when within range of other Mieszko Coils",
+      "hidden": false,
+      "key": "trap_019_electric",
+      "kind": "device",
+      "name": "Mieszko Coil",
+      "row": 2,
+      "alias": "trap_019_electric#1",
+      "instance": {
+        "level": 1,
+        "skillLevel": 1
+      }
+    },
+    {
+      "col": 4,
+      "description": "Blocks 2 enemies",
+      "hidden": true,
+      "key": "char_149_scave",
+      "kind": "operator",
+      "name": "Scavenger",
+      "row": 1
+    },
+    {
+      "col": 6,
+      "description": "Blocks 2 enemies",
+      "hidden": true,
+      "key": "char_240_wyvern",
+      "kind": "operator",
+      "name": "Vanilla",
+      "row": 2
+    },
+    {
+      "col": 6,
+      "description": "Can launch Ranged Attacks that deal 80% of normal ATK",
+      "hidden": true,
+      "key": "char_193_frostl",
+      "kind": "operator",
+      "name": "Frostleaf",
+      "row": 1
+    },
+    {
+      "col": 8,
+      "description": "Attacks aerial enemies first",
+      "hidden": true,
+      "key": "char_133_mm",
+      "kind": "operator",
+      "name": "May",
+      "row": 2
+    },
+    {
+      "col": 5,
+      "description": "Restores the HP of 3 allies simultaneously",
+      "hidden": true,
+      "key": "char_181_flower",
+      "kind": "operator",
+      "name": "Perfumer",
+      "row": 3
+    }
+  ],
+  "tokens": [
+    {
+      "unitId": "trap_019_electric",
+      "name": "Mieszko Coil",
+      "count": 0,
+      "cost": 5,
+      "hp": 100,
+      "def": 0,
+      "block": 0,
+      "position": "NONE",
+      "behavior": "electric-coil",
+      "obstacle": false,
+      "rangedBuildOnly": true,
+      "supplyCard": true,
+      "passive": true,
+      "kind": "electric-coil",
+      "cooldown": 5,
+      "refundRatio": 0.5,
+      "interval": 2.3,
+      "damage": 250,
+      "slow": 1.5,
+      "beamDuration": 0.699999988079071,
+      "width": 0.6499999761581421,
+      "maxTargets": 1,
+      "range": [
+        [
+          2,
+          -1
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          1,
+          -2
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          0,
+          -2
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          -1,
+          -2
+        ],
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          -1,
+          2
+        ],
+        [
+          -2,
+          -1
+        ],
+        [
+          -2,
+          0
+        ],
+        [
+          -2,
+          1
+        ]
+      ],
+      "description": "Links to an earlier coil in range every 2.3 seconds. Each beam deals 250 Arts damage and slows each enemy it touches for 1.5 seconds."
+    }
+  ],
+  "pathing": {
+    "schemaVersion": 1,
+    "syntheticRoutes": [
+      0,
+      2,
+      3,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "producer": "Arkpedia stage browser / buildPlaybackPaths",
+    "stage": "MN-TR-1",
+    "geometryHash": "35e421c3ddb1d85b5f50413829246ea2f90207f3548f65332a1158d1d0ba0376",
+    "moveScale": 0.65,
+    "paths": {
+      "0": {
+        "points": [
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            0
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "2": {
+        "points": [
+          [
+            6,
+            5
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            6,
+            0
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "3": {
+        "points": [
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            10,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "5": {
+        "points": [
+          [
+            0,
+            4
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            5,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "6": {
+        "points": [
+          [
+            6,
+            5
+          ],
+          [
+            6,
+            0
+          ]
+        ],
+        "distances": [
+          0,
+          1
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "7": {
+        "points": [
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            0
+          ]
+        ],
+        "distances": [
+          0,
+          1
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "8": {
+        "points": [
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            0
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "9": {
+        "points": [
+          [
+            6,
+            5
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            6,
+            0
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      }
+    }
+  },
+  "art": null,
+  "gates": null,
+  "fixedSquad": null,
+  "enemies": {
+    "enemy_1099_nbkght": {
+      "key": "enemy_1099_nbkght",
+      "prefabKey": "enemy_1099_nbkght",
+      "name": "Nameless Independent Knight",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 2800,
+        "atk": 280,
+        "def": 150,
+        "res": 0,
+        "moveSpeed": 1.1,
+        "bat": 2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1100_scorpn": {
+      "key": "enemy_1100_scorpn",
+      "prefabKey": "enemy_1100_scorpn",
+      "name": "Training Gloompincer",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 2000,
+        "atk": 380,
+        "def": 450,
+        "res": 30,
+        "moveSpeed": 1,
+        "bat": 2.5,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 0,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "infection"
+      ]
+    },
+    "enemy_1105_tyokai": {
+      "key": "enemy_1105_tyokai",
+      "prefabKey": "enemy_1105_tyokai",
+      "name": "Sponsor Drone",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "NONE",
+      "stats": {
+        "maxHp": 5000,
+        "atk": 0,
+        "def": 150,
+        "res": 20,
+        "moveSpeed": 1,
+        "bat": 1,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 0,
+        "lpr": 0,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "none",
+        "dmgTypes": [
+          "none"
+        ],
+        "motion": "FLY",
+        "immunities": {
+          "stun": false,
+          "silence": true,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Flying unit.",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Does not count towards the defeated enemies counter",
+          "format": "NORMAL"
+        },
+        {
+          "text": "When destroyed, grants a deployable unit",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "loot.cnt": 2
+        },
+        "bbStr": {
+          "loot.token_key": "trap_019_electric"
+        },
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "drone"
+      ]
+    }
+  },
+  "contentAddition": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/mn-tr-1.json",
+          "sha256": "2f3d62738dd8c0844f56515e4db78c7e017a3ae6796f8b8854a3c9d98347cb2b"
+        },
+        {
+          "path": "stage-geometry/mn-tr-1.json",
+          "sha256": "35e421c3ddb1d85b5f50413829246ea2f90207f3548f65332a1158d1d0ba0376"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        }
+      ],
+      "localFiles": [
+        {
+          "path": "data/stage-rules/mn-tr-1.json",
+          "sha256": "d1a6eac3782f348c5df3858f5df7f9dad8f65aa5c963c7e785ea51b11dca8bfe"
+        },
+        {
+          "path": "data/stage-rules/levels/c0a193c0a9c27e5fcb573f6ee05df78a9a20e611ff9d0c60127885c76b6b4976.json",
+          "sha256": "c0a193c0a9c27e5fcb573f6ee05df78a9a20e611ff9d0c60127885c76b6b4976"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/d9880d6edbb2511256cc2407ce216a210be94d82.json",
+          "sha256": "dfbd4c0c0e350efec32e7c05b33360f36f8387b0ea633877e811a1d2f45aba5e"
+        },
+        {
+          "path": "data/arkpedia-device-source.json",
+          "sha256": "5a9307d4d7ac597e487055c22dfdfde1722e1e8f68ab4aa4c2a6793875510568"
+        },
+        {
+          "path": "data/arkpedia-device-native-source.json",
+          "sha256": "13df211e23eefc083ba424753bba4ed69e8f9fdad1a7fdf7bbf1485e40baa161"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/d9880d6edbb2511256cc2407ce216a210be94d82.json",
+          "sha256": "dfbd4c0c0e350efec32e7c05b33360f36f8387b0ea633877e811a1d2f45aba5e"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/d9880d6edbb2511256cc2407ce216a210be94d82.json",
+          "sha256": "dfbd4c0c0e350efec32e7c05b33360f36f8387b0ea633877e811a1d2f45aba5e"
+        },
+        {
+          "path": "data/arkpedia-enemy-records.json",
+          "sha256": "b75ba11f79473268f8408b28df67165101997fbf8ec8bdcfaa6f68354111b3a8"
+        },
+        {
+          "path": "data/arkpedia-enemy-support.json",
+          "sha256": "01ea0da99516ca71101f1606bb7cbd07cb285fde134d5be9b4b78f1b4075595b"
+        },
+        {
+          "path": "data/arkpedia-enemy-native-abilities.json",
+          "sha256": "27805db056930ac37c03f2162b658398a3b91ece0f75ed7501c881d87c6db8e2"
+        },
+        {
+          "path": "data/arkpedia-snack-animations.json",
+          "sha256": "b148315cdfb30499bca571cc3030e9915b88b53e2c7135fe73e18a4764329b9b"
+        },
+        {
+          "path": "data/arkpedia-device-source.json",
+          "sha256": "5a9307d4d7ac597e487055c22dfdfde1722e1e8f68ab4aa4c2a6793875510568"
+        },
+        {
+          "path": "data/arkpedia-device-native-source.json",
+          "sha256": "13df211e23eefc083ba424753bba4ed69e8f9fdad1a7fdf7bbf1485e40baa161"
+        },
+        {
+          "path": "data/arkpedia-mrboom-animations.json",
+          "sha256": "e1769d08bcc9c2639c24603a8876869ef131f409813d3790667ce397efc28a9d"
+        }
+      ]
+    },
+    "dependencies": {
+      "enemies": [
+        "enemy_1099_nbkght",
+        "enemy_1100_scorpn",
+        "enemy_1105_tyokai"
+      ],
+      "devices": [
+        "Mieszko Coil"
+      ],
+      "tokens": [
+        "trap_019_electric"
+      ]
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 10,
+        "spawned": 6,
+        "errors": 0
+      },
+      "publicReview": "pending",
+      "waveSchedule": {
+        "id": "mn-tr-1",
+        "seconds": 29.7,
+        "spawned": 10,
+        "expected": 10,
+        "dynamicSpawns": 0,
+        "reason": "cleared",
+        "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+      },
+      "browserStartup": {
+        "id": "mn-tr-1",
+        "seconds": 20,
+        "errors": [],
+        "units": 10,
+        "canvas": true,
+        "scope": "Mobile landscape browser startup and canvas runtime; not a fidelity approval"
+      }
+    }
+  }
+}

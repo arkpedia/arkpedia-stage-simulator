@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-15",
+  "scope": "Two Wither Caster variants and shared Gramophone channel lifecycle; original body artwork, not native effect or frame parity.",
+  "sources": [
+    {
+      "path": "shared/arkpedia/enemy-wither-caster-features.js",
+      "sha256": "3f0ed160b9d094793e79ce06cd8425d7ae7055e4a04ace12939f230a73a23746"
+    },
+    {
+      "path": "server/sim/content/arkpedia-enemy-wither-caster.js",
+      "sha256": "a009fe05390f9e65410a1326302b7b6bcf5e645b3f82279294d509de17d00a59"
+    },
+    {
+      "path": "server/sim/content/arkpedia-enemy-channel.js",
+      "sha256": "07100873a25242b0f7ec11025ddcbabdfa2bd231ca22cd1b00f36239b9ec362b"
+    },
+    {
+      "path": "server/sim/content/arkpedia-enemy-links.js",
+      "sha256": "274cd18a42484a841d2c7494b9b3e7c1b90ccf91f13ed40338427140a86afc18"
+    },
+    {
+      "path": "server/sim/content/arkpedia-enemy-gramophones.js",
+      "sha256": "3f5e25596cb6a5eb4dfa0e8aec4c1e128225442a6bf8c050c0f2f4c0e4d1703e"
+    },
+    {
+      "path": "data/arkpedia-wither-caster-animations.json",
+      "sha256": "477a2ea5c700fd975eacd9dbe542e345694b59335f9f35d6b073a74d333b3ac3"
+    },
+    {
+      "path": "test/arkpedia-wither-caster.test.js",
+      "sha256": "ae6ec388494c8d460d55adb688f82e7eab966f8a506ef106596bbf18985def5e"
+    }
+  ],
+  "ids": [
+    "enemy_1268_nhnrs",
+    "enemy_1268_nhnrs_2"
+  ],
+  "validation": {
+    "focusedTests": 6,
+    "combinedTests": 197,
+    "stageSmokes": 909,
+    "browser": {
+      "scope": "Chromium clip decoding/finite poses and idle body rendering; no native combat/frame/pixel parity claim",
+      "browser": "Chrome/156.0.8078.79",
+      "results": [
+        {
+          "viewport": "desktop",
+          "models": [
+            {
+              "id": "enemy_1268_nhnrs",
+              "version": "3.8.99",
+              "clips": 8,
+              "width": 302.1492385864258,
+              "height": 447.4258460998535
+            },
+            {
+              "id": "enemy_1268_nhnrs_2",
+              "version": "3.8.99",
+              "clips": 8,
+              "width": 302.1492385864258,
+              "height": 447.4258460998535
+            }
+          ],
+          "errors": [],
+          "failures": []
+        },
+        {
+          "viewport": "mobile",
+          "models": [
+            {
+              "id": "enemy_1268_nhnrs",
+              "version": "3.8.99",
+              "clips": 8,
+              "width": 302.1492385864258,
+              "height": 447.4258460998535
+            },
+            {
+              "id": "enemy_1268_nhnrs_2",
+              "version": "3.8.99",
+              "clips": 8,
+              "width": 302.1492385864258,
+              "height": 447.4258460998535
+            }
+          ],
+          "errors": [],
+          "failures": []
+        }
+      ]
+    }
+  },
+  "assetCommit": "c12a8651c50a096638f18f7bb3eb4098baec2666",
+  "limitations": [
+    "Device admission remains independent.",
+    "Retained target continues after full HP; no source finish action present.",
+    "Ordinary attacks use existing stance model; first windup parity is not certified."
+  ]
+}

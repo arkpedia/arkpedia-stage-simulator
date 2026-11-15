@@ -34,6 +34,17 @@ const server = http.createServer(async (req, res) => {
       res.end(req.method === 'HEAD' ? undefined : bytes);
       return;
     }
+    if (localAssets && url.pathname === '/data/arkpedia-operators.json' && ['GET', 'HEAD'].includes(req.method)) {
+      const source = JSON.parse(await readFile(path.join(root, 'data/arkpedia-operators.json'), 'utf8'));
+      let data = source;
+      try {
+        const snapshot = JSON.parse(await readFile(path.join(root, 'data/arkpedia-mvp.json'), 'utf8'));
+        data = await localAssets.library(source, snapshot.sd.models);
+      } catch { /* No sibling checkout: retain published URLs. */ }
+      res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' });
+      res.end(req.method === 'HEAD' ? undefined : JSON.stringify(data));
+      return;
+    }
     if (localAssets && await localAssets.handle(req, res, url)) return;
   } catch (error) {
     console.error('Local asset unavailable', error.message);

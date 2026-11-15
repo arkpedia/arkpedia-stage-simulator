@@ -1,0 +1,347 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-14",
+  "scope": "Continuous regular-stage force integration and Arc Frontliner admission; not native frame/visual parity. Custom transport links retain separate clocks.",
+  "sourceFiles": [
+    {
+      "path": "server/sim/regular-displacement.js",
+      "sha256": "438401a653a13c7be5b94deb72641e2e19a87f166b6b4d48268700787d7f4c91"
+    },
+    {
+      "path": "server/sim/Battle.js",
+      "sha256": "3c94eedaeb1b89749ca015adfdbf799be3ebcfce6ef785a5960543b498c20d7a"
+    },
+    {
+      "path": "server/sim/ai.js",
+      "sha256": "207220d3179eed559f601af2af996f3b567be7b16a35d5f5df3be19ff621249c"
+    },
+    {
+      "path": "server/sim/units.js",
+      "sha256": "994e9224567f72c926bacc839ed3a1a7be6e3cf225abaf9f014b4b7a1933a090"
+    },
+    {
+      "path": "server/sim/content/arkpedia-enemy-shift.js",
+      "sha256": "1a708e39fc8ffa4bd7415dcba398ca24514b3ae68bd4169beb24e4f00410a36a"
+    },
+    {
+      "path": "shared/arkpedia/enemy-shift-features.js",
+      "sha256": "c3fa2168ea4747a35e33031ad2fcc9a1b81c1e76726eab82c87f7e61f6fb3eab"
+    },
+    {
+      "path": "data/arkpedia-enemy-native-abilities.json",
+      "sha256": "2fa5372432fbac469e58e54b288064d48a816bcc8c40d2cf827cfae57aec8e33"
+    },
+    {
+      "path": "test/arkpedia-displacement.test.js",
+      "sha256": "372001c0b0fc0f827183240105c6f751feb05357726bb3b6e34b4895700c8fc0"
+    },
+    {
+      "path": "test/arkpedia-enemy-shift.test.js",
+      "sha256": "ed16d4f7962b2d5fac25308a176ea29ab04cc79ac2d8dad0bc51296ec6bf171c"
+    },
+    {
+      "path": "docs/DISPLACEMENT-REVIEW.md",
+      "sha256": "7e11c03e6de7f4671672d74a2084f7367d78b6f9fe5ecf5f6634c11d85e1cd54"
+    }
+  ],
+  "reference": {
+    "repository": "ArknightsDevs/Arknights-Universal-Engine",
+    "commit": "84a501a221720aecbd719caaa3d9bf9a22630787",
+    "specBlob": "1d927077e9fcd15f5f750afcdf07f66633a18e7a",
+    "implementationBlob": "cad81c24188ef05e5916700883549252b77d34c1",
+    "use": "Physics research; implementation and collision integration are local."
+  },
+  "validation": {
+    "initialFocusedRegression": {
+      "passed": 128,
+      "failed": 0
+    },
+    "broaderOperatorRegression": {
+      "total": 661,
+      "firstPass": 654,
+      "resolvedFailures": 7,
+      "resolution": "Five timing assumptions updated for continuous force; two Snowsant fixture cases explicitly remove inherited infection tag. All affected files rerun successfully."
+    },
+    "affectedFileRechecks": [
+      {
+        "passed": 288,
+        "failed": 0
+      },
+      {
+        "passed": 121,
+        "failed": 0
+      }
+    ],
+    "lifecycleRecheck": {
+      "passed": 11,
+      "failed": 0
+    },
+    "newlySupported": [
+      "enemy_1328_cbjedi",
+      "enemy_1328_cbjedi_2"
+    ],
+    "supportedAtThisCheckpoint": 611,
+    "newlyAvailableStages": [
+      "tg-1",
+      "tg-1_challenge_mode"
+    ],
+    "smoke": {
+      "scope": "10-second constructor/runtime smoke for every available compiled stage; not a playable-clear or fidelity certificate",
+      "available": 793,
+      "completed": 793,
+      "failures": [],
+      "uniqueComponentsRead": 5379,
+      "cache": {
+        "cachedBytes": 11773618,
+        "cachedObjects": 5379,
+        "pending": 0
+      }
+    },
+    "browser": [
+      {
+        "id": "0-1",
+        "mobile": false,
+        "options": 3892,
+        "componentRequests": 20,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true
+      },
+      {
+        "id": "0-4_challenge_mode",
+        "mobile": false,
+        "options": 3892,
+        "componentRequests": 22,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 2,
+        "canvas": true,
+        "originalWaveProgram": true
+      },
+      {
+        "id": "3-6_challenge_mode",
+        "mobile": false,
+        "options": 3892,
+        "componentRequests": 26,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true,
+        "waveGate": {
+          "heldWave": 1,
+          "blockedFutureSpawns": 19,
+          "releasedWave": 2,
+          "errors": []
+        }
+      },
+      {
+        "id": "bw-8_challenge_mode",
+        "mobile": false,
+        "options": 3892,
+        "componentRequests": 40,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true
+      },
+      {
+        "id": "ps-3_challenge_mode",
+        "mobile": false,
+        "options": 3892,
+        "componentRequests": 26,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true
+      },
+      {
+        "id": "tg-1",
+        "mobile": false,
+        "options": 3892,
+        "componentRequests": 28,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true,
+        "shift": {
+          "x": 1,
+          "immediate": 1,
+          "moving": {
+            "x": 1.584916666666667,
+            "unbalanced": true
+          },
+          "finalX": 2.5650000000000004,
+          "unbalanced": false,
+          "hpLost": 4000,
+          "errors": []
+        }
+      },
+      {
+        "id": "tg-1_challenge_mode",
+        "mobile": false,
+        "options": 3892,
+        "componentRequests": 28,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true,
+        "shift": {
+          "x": 1,
+          "immediate": 1,
+          "moving": {
+            "x": 1.584916666666667,
+            "unbalanced": true
+          },
+          "finalX": 2.5650000000000004,
+          "unbalanced": false,
+          "hpLost": 4000,
+          "errors": []
+        }
+      },
+      {
+        "id": "0-6_challenge_mode",
+        "mobile": false,
+        "blockedBeforeComponentFetch": true
+      },
+      {
+        "id": "0-1",
+        "mobile": true,
+        "options": 3892,
+        "componentRequests": 20,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true
+      },
+      {
+        "id": "0-4_challenge_mode",
+        "mobile": true,
+        "options": 3892,
+        "componentRequests": 22,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 2,
+        "canvas": true,
+        "originalWaveProgram": true
+      },
+      {
+        "id": "3-6_challenge_mode",
+        "mobile": true,
+        "options": 3892,
+        "componentRequests": 32,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true,
+        "waveGate": {
+          "heldWave": 1,
+          "blockedFutureSpawns": 19,
+          "releasedWave": 2,
+          "errors": []
+        }
+      },
+      {
+        "id": "bw-8_challenge_mode",
+        "mobile": true,
+        "options": 3892,
+        "componentRequests": 40,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true
+      },
+      {
+        "id": "ps-3_challenge_mode",
+        "mobile": true,
+        "options": 3892,
+        "componentRequests": 26,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true
+      },
+      {
+        "id": "tg-1",
+        "mobile": true,
+        "options": 3892,
+        "componentRequests": 28,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true,
+        "shift": {
+          "x": 1,
+          "immediate": 1,
+          "moving": {
+            "x": 1.584916666666667,
+            "unbalanced": true
+          },
+          "finalX": 2.5650000000000004,
+          "unbalanced": false,
+          "hpLost": 4000,
+          "errors": []
+        }
+      },
+      {
+        "id": "tg-1_challenge_mode",
+        "mobile": true,
+        "options": 3892,
+        "componentRequests": 28,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true,
+        "shift": {
+          "x": 1,
+          "immediate": 1,
+          "moving": {
+            "x": 1.584916666666667,
+            "unbalanced": true
+          },
+          "finalX": 2.5650000000000004,
+          "unbalanced": false,
+          "hpLost": 4000,
+          "errors": []
+        }
+      },
+      {
+        "id": "0-6_challenge_mode",
+        "mobile": true,
+        "blockedBeforeComponentFetch": true
+      },
+      {
+        "homeFixture": true,
+        "initialDp": 99,
+        "waves": 0
+      }
+    ],
+    "browserScope": "Production graphs on desktop and touch. TG-1 probes hold other enemies and increase life to isolate force movement from stage loss."
+  }
+}

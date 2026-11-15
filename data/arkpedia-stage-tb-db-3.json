@@ -1,0 +1,1003 @@
+{
+  "code": "TB-DB-3",
+  "name": "Daybreak Point - Sense",
+  "description": "The Interlocking Security Competition is one of the few events where Minos allows the Infected to compete in.\nDuring it, such competing athletes are permitted only to spend their free time within competition bounds.\nIt is forbidden to leave the grounds without having obtained permission, on threat of coercive measures.",
+  "battle": {
+    "max_life": 3,
+    "unit_limit": 8,
+    "initial_dp": 10,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1
+  },
+  "rules": {
+    "variant": null,
+    "source": {
+      "repository": "Kengxxiao/ArknightsGameData",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "path": "zh_CN/gamedata/levels/activities/act1lock/level_act1lock_a-03.json",
+      "sha256": "ebc4921ec897a5827d957a0adbfb2bc675c3cef9009ed93187ce50eb2527ab2b"
+    },
+    "battle": {},
+    "enemies": {},
+    "enemyAdd": {},
+    "hiddenGroups": {}
+  },
+  "mapTags": [],
+  "mapTagSource": null,
+  "geometry": {
+    "slug": "tb-db-3",
+    "rows": 7,
+    "cols": 11,
+    "tileLegend": [
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_start",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_floor",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      }
+    ],
+    "tileGrid": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        2,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        2,
+        1
+      ],
+      [
+        0,
+        0,
+        0,
+        4,
+        3,
+        3,
+        3,
+        4,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        2,
+        3,
+        3,
+        3,
+        3,
+        3,
+        4,
+        4,
+        4,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        4,
+        3,
+        3,
+        3,
+        3,
+        3,
+        2,
+        5
+      ],
+      [
+        5,
+        2,
+        3,
+        3,
+        3,
+        3,
+        4,
+        4,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "routes": [
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 0
+        },
+        "end": {
+          "row": 4,
+          "col": 10
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 6
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 10
+        },
+        "end": {
+          "row": 5,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 4
+            }
+          }
+        ],
+        "waits": []
+      },
+      null,
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 0
+        },
+        "end": {
+          "row": 4,
+          "col": 10
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 6
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 0
+        },
+        "end": {
+          "row": 4,
+          "col": 10
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 6
+            }
+          }
+        ],
+        "waits": []
+      }
+    ],
+    "waves": [
+      {
+        "index": 0,
+        "duration": 186,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Soldier",
+            "enemy_id": "enemy_1002_nsabr",
+            "count": 5,
+            "time": 3,
+            "interval": 10,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Soldier",
+            "enemy_id": "enemy_1002_nsabr",
+            "count": 5,
+            "time": 6,
+            "interval": 10,
+            "route": 1,
+            "fragment": 0
+          },
+          {
+            "enemy": "Soldier",
+            "enemy_id": "enemy_1002_nsabr",
+            "count": 2,
+            "time": 49,
+            "interval": 10,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Rioter",
+            "enemy_id": "enemy_1027_mob",
+            "count": 2,
+            "time": 55,
+            "interval": 10,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Soldier",
+            "enemy_id": "enemy_1002_nsabr",
+            "count": 2,
+            "time": 52,
+            "interval": 10,
+            "route": 1,
+            "fragment": 1
+          },
+          {
+            "enemy": "Rioter",
+            "enemy_id": "enemy_1027_mob",
+            "count": 2,
+            "time": 58,
+            "interval": 10,
+            "route": 1,
+            "fragment": 1
+          },
+          {
+            "enemy": "Wraith",
+            "enemy_id": "enemy_1008_ghost",
+            "count": 1,
+            "time": 76,
+            "route": 3,
+            "fragment": 2
+          },
+          {
+            "enemy": "Rioter",
+            "enemy_id": "enemy_1027_mob",
+            "count": 2,
+            "time": 79,
+            "interval": 10,
+            "route": 0,
+            "fragment": 3
+          },
+          {
+            "enemy": "Rioter",
+            "enemy_id": "enemy_1027_mob",
+            "count": 2,
+            "time": 82,
+            "interval": 10,
+            "route": 1,
+            "fragment": 3
+          },
+          {
+            "enemy": "Wraith",
+            "enemy_id": "enemy_1008_ghost",
+            "count": 3,
+            "time": 99,
+            "interval": 10,
+            "route": 4,
+            "fragment": 3
+          },
+          {
+            "enemy": "Junkman",
+            "enemy_id": "enemy_1030_wteeth",
+            "count": 1,
+            "time": 125,
+            "route": 1,
+            "fragment": 4
+          },
+          {
+            "enemy": "Junkman",
+            "enemy_id": "enemy_1030_wteeth",
+            "count": 1,
+            "time": 145,
+            "route": 1,
+            "fragment": 4
+          },
+          {
+            "enemy": "Rioter",
+            "enemy_id": "enemy_1027_mob",
+            "count": 2,
+            "time": 135,
+            "interval": 10,
+            "route": 1,
+            "fragment": 4
+          },
+          {
+            "enemy": "Rioter",
+            "enemy_id": "enemy_1027_mob",
+            "count": 2,
+            "time": 122,
+            "interval": 10,
+            "route": 0,
+            "fragment": 4
+          },
+          {
+            "enemy": "Wraith",
+            "enemy_id": "enemy_1008_ghost",
+            "count": 5,
+            "time": 153,
+            "interval": 5,
+            "route": 4,
+            "fragment": 5
+          },
+          {
+            "enemy": "Rioter",
+            "enemy_id": "enemy_1027_mob",
+            "count": 1,
+            "time": 156,
+            "route": 0,
+            "fragment": 5
+          },
+          {
+            "enemy": "Rioter",
+            "enemy_id": "enemy_1027_mob",
+            "count": 1,
+            "time": 156,
+            "route": 1,
+            "fragment": 5
+          },
+          {
+            "enemy": "Junkman",
+            "enemy_id": "enemy_1030_wteeth",
+            "count": 2,
+            "time": 163,
+            "interval": 10,
+            "route": 0,
+            "fragment": 5
+          },
+          {
+            "enemy": "Wraith",
+            "enemy_id": "enemy_1008_ghost",
+            "count": 5,
+            "time": 166,
+            "interval": 5,
+            "route": 1,
+            "fragment": 5
+          }
+        ]
+      }
+    ],
+    "spawnTiles": [
+      {
+        "key": "tile_start",
+        "row": 1,
+        "col": 0,
+        "routes": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 1,
+        "col": 10,
+        "routes": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 3,
+        "col": 0,
+        "routes": [
+          3,
+          4,
+          4
+        ]
+      }
+    ],
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 4,
+        "col": 10,
+        "routes": [
+          0,
+          0,
+          0,
+          3,
+          0,
+          4,
+          0,
+          4,
+          0,
+          0
+        ]
+      },
+      {
+        "key": "tile_end",
+        "row": 5,
+        "col": 0,
+        "routes": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_1002_nsabr",
+        "slug": "soldier",
+        "name": "Soldier",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1008_ghost",
+        "slug": "wraith",
+        "name": "Wraith",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1027_mob",
+        "slug": "rioter",
+        "name": "Rioter",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1030_wteeth",
+        "slug": "junkman",
+        "name": "Junkman",
+        "database_level": 0
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [],
+      "deployable_tokens": []
+    },
+    "hasConditionalSpawns": false,
+    "source": "cn"
+  },
+  "terrain": [],
+  "conditionalHandled": false,
+  "devices": [],
+  "tokens": [],
+  "pathing": {
+    "schemaVersion": 1,
+    "syntheticRoutes": [
+      0,
+      1,
+      3,
+      4
+    ],
+    "producer": "Arkpedia stage browser / buildPlaybackPaths",
+    "stage": "TB-DB-3",
+    "geometryHash": "84ea412e60f7f8edfed8b09862be5671f8b394082c21451c47c34414e7810810",
+    "moveScale": 0.65,
+    "paths": {
+      "0": {
+        "points": [
+          [
+            0,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            10,
+            4
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "1": {
+        "points": [
+          [
+            10,
+            1
+          ],
+          [
+            6,
+            1
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            0,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "3": {
+        "points": [
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            10,
+            4
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "4": {
+        "points": [
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            10,
+            4
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      }
+    }
+  },
+  "art": null,
+  "gates": null,
+  "fixedSquad": null,
+  "enemies": {
+    "enemy_1002_nsabr": {
+      "key": "enemy_1002_nsabr",
+      "prefabKey": "enemy_1002_nsabr",
+      "name": "Soldier",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 1650,
+        "atk": 200,
+        "def": 100,
+        "res": 0,
+        "moveSpeed": 1.1,
+        "bat": 2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1027_mob": {
+      "key": "enemy_1027_mob",
+      "prefabKey": "enemy_1027_mob",
+      "name": "Rioter",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 1700,
+        "atk": 250,
+        "def": 50,
+        "res": 0,
+        "moveSpeed": 1.1,
+        "bat": 2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 0,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1008_ghost": {
+      "key": "enemy_1008_ghost",
+      "prefabKey": "enemy_1008_ghost",
+      "name": "Wraith",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "NONE",
+      "stats": {
+        "maxHp": 2300,
+        "atk": 100,
+        "def": 120,
+        "res": 35,
+        "moveSpeed": 1.2,
+        "bat": 1,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "none",
+        "dmgTypes": [
+          "none"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Cannot be blocked.",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1030_wteeth": {
+      "key": "enemy_1030_wteeth",
+      "prefabKey": "enemy_1030_wteeth",
+      "name": "Junkman",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 5000,
+        "atk": 500,
+        "def": 50,
+        "res": 20,
+        "moveSpeed": 0.8,
+        "bat": 3,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 2,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    }
+  },
+  "contentAddition": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/tb-db-3.json",
+          "sha256": "6153a2b8ad728ab3218199a3c20432ea82371900273def56d7beda72e6a824df"
+        },
+        {
+          "path": "stage-geometry/tb-db-3.json",
+          "sha256": "84ea412e60f7f8edfed8b09862be5671f8b394082c21451c47c34414e7810810"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        }
+      ],
+      "localFiles": [
+        {
+          "path": "data/stage-rules/tb-db-3.json",
+          "sha256": "961e00fa07a212dbe0cee181aa23ebeb7a8e08044b4d3e9d1c97fd9b2bf365d4"
+        }
+      ]
+    },
+    "dependencies": {
+      "enemies": [
+        "enemy_1002_nsabr",
+        "enemy_1008_ghost",
+        "enemy_1027_mob",
+        "enemy_1030_wteeth"
+      ],
+      "devices": [],
+      "tokens": []
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 10,
+        "spawned": 2,
+        "errors": 0
+      },
+      "publicReview": "pending",
+      "browser": {
+        "date": "2026-11-13",
+        "engine": "Chromium",
+        "seconds": 10,
+        "errors": 0,
+        "canvas": true,
+        "scope": "Load/runtime smoke; external image assets unavailable"
+      },
+      "waveSchedule": {
+        "id": "tb-db-3",
+        "seconds": 202,
+        "spawned": 46,
+        "expected": 46,
+        "reason": "cleared",
+        "scope": "No-deployment route/wave sweep with raised life and time limits; not a playable clear or fidelity approval"
+      }
+    }
+  }
+}

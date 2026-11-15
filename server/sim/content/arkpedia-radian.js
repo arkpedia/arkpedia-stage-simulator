@@ -173,5 +173,6 @@ export function installRadian({battle: b, unit: u, def}) {
   reviewed(b);
   const owner = u.mem.radianPrepared;
   if (!owner) throw Error('Missing selected Raidian owner');
+  u.mem.regularSummonFactory = createRadianTower;
   delete u.mem.radianPrepared; owner.install();
 }

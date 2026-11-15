@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-15",
+  "scope": "Enemy Dorothy tile traps, original body and reusable casting/projectile components; behavioral checkpoint, not native frame parity",
+  "sourceFiles": {
+    "shared/arkpedia/enemy-dorothy-features.js": "6bab4ba16e74468f90cf7ec0d3c6865dc1ca6383187fd3caa0c3ebe116dfe47e",
+    "server/sim/content/arkpedia-enemy-dorothy.js": "736b80a6b53559d326ded238d84161d79ee7be660b4106bfe5d2b5ae9d8edb48",
+    "server/sim/content/arkpedia-enemy-tile-triggers.js": "995147c7351733e72ab6f5fc5bf0353748d9cb6e5659677c2d12506c9b486f69",
+    "server/sim/content/arkpedia-enemy-timed-casts.js": "3194279a4b2563342e5058bedfcc20492cfa97faeebcec5fca19f849bd54dc96",
+    "public/arkpedia/renderer.js": "99859ef5707fd0d6918bc6c9f02449c33f50eb0f6ce00f982873591b4cd80e2a",
+    "tools/arkpedia/extract-enemy-native-abilities.py": "99fc384a0db379ba7d7ff069fa7c33b269458118c6bd1de5fd7c9b0a08b885d2",
+    "data/arkpedia-enemy-native-abilities.json": "e0462fbbe8ab4496f68691814807f99bd1cb4ba123aa7a4ce07f0b3ee32d670a",
+    "data/arkpedia-dorothy-enemy-animations.json": "4fe241dfdb6e2adaf5b261cc1ef69530d3671102ef0c4631ce404500a6e47e2b",
+    "data/arkpedia-enemy-support.json": "07f33b3194fcb958f2a929c39aa26210f95d8425b701d96ee14a47d1008c2a5e",
+    "data/arkpedia-enemy-artwork.json": "12632f8e03c362c4312761b16b1562bc419b98de7c0a5505d41c0e6ee1825378",
+    "docs/ENEMY-DOROTHY-REVIEW.md": "d35dedd1f01089414b8c895427bc2a82fcacaebd9c11afd9d95ef96d8ee624c2"
+  },
+  "checks": [
+    {
+      "path": "/tmp/dorothy-enemy-tests.log",
+      "sha256": "fe162597e8466b8100bf0b96edb32784f9ce4a2176376879e5f3a5b9ceb3bdeb"
+    },
+    {
+      "path": "/tmp/dorothy-broad-tests.log",
+      "sha256": "dff207ee402000c7f9efb3a5f1bd0bf4fd59240c1f80f3f18a798edd69ff6c39"
+    },
+    {
+      "path": "/tmp/dorothy-stage-smoke.log",
+      "sha256": "da830c49d432e9e8eb68fb31378e62bc02916168cd24ec4a159528ad3de2d5c8"
+    },
+    {
+      "path": "/tmp/dorothy-support-check.log",
+      "sha256": "f8719635b2ddabae390a159becc05db573de8e4bc034a6d43ac0817b6767d5f6"
+    },
+    {
+      "path": "/tmp/dorothy-sd-validation.log",
+      "sha256": "d9ba5502a2ed0b7d15c9b02a909cc75016b8e13bd38b156eaa7a22b1cce28ff6"
+    },
+    {
+      "path": "/tmp/dorothy-operator-library-check.log",
+      "sha256": "799f50a95b65cf3c57390cebcbb465ee09ad9852f80e0ada3a3015191eac52fc"
+    },
+    {
+      "path": "/tmp/dorothy-enemy-art-browser.log",
+      "sha256": "78753edad781aa92e2493c188d7283d97cc255fa63e546fea875b796158ce7ab"
+    },
+    {
+      "path": "/tmp/dorothy-stage-browser.log",
+      "sha256": "bc4a6c3a6e9f5efdf3e9d0960ddc7e24ee7621bfeb8516810533566ffe0fe04c"
+    }
+  ],
+  "coverage": {
+    "supportedEnemies": 659,
+    "totalEnemies": 2163,
+    "loadableStages": 905,
+    "totalCombatStages": 3892,
+    "enemyModels": 445,
+    "deviceModels": 4
+  },
+  "sharedAssets": {
+    "commit": "4d02270b9c95d342e9f19efc986a684261342790",
+    "completeModels": 3722,
+    "publication": "Local immutable commit; no remote push"
+  },
+  "browser": [
+    {
+      "path": ".cache/arkpedia/dorothy-enemy-art-review/review.json",
+      "sha256": "fae4dd78cb8cfe1d3648c6fee778bea89345f5f19924adda44e624a88b261e45"
+    },
+    {
+      "path": ".cache/arkpedia/dorothy-enemy-stage-review/results.json",
+      "sha256": "8bcac25fa1e4f94601989c611f7fe5ce978af5b2cb26e25558cd5217a5ebda6e"
+    }
+  ]
+}

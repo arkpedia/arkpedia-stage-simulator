@@ -35,3 +35,9 @@ export function installClosurRoster(b, builds, { contract } = {}) {
   const result = { floor, atk, selected, recipients };
   b.regularClosurRoster = result; return result;
 }
+
+/** Roster service boundary keeps the reviewed contract with its controller. */
+export function installSelectedClosurRoster(battle, builds) {
+  const selected = builds.filter(build => build.id === ID);
+  if (selected.length) return installClosurRoster(battle, selected, { contract: CLOSUR_ROSTER_CONTRACT });
+}

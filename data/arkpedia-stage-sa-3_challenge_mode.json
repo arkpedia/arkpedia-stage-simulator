@@ -1,0 +1,1901 @@
+{
+ "code": "SA-3",
+ "name": "Gap Road",
+ "description": "Condition: 4 tiles can no longer be deployed upon.\nStage available from 8/26 10:00 A.M. to 9/9 03:59 A.M.",
+ "battle": {
+  "max_life": 1,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "rules": {
+  "variant": "challenge_mode",
+  "source": {
+   "repository": "Kengxxiao/ArknightsGameData",
+   "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+   "path": "zh_CN/gamedata/levels/activities/act7d5/level_act7d5_03.json",
+   "sha256": "06f833614e6295ddd26e2b8391d34afdf5605b01862185093900dbc7c5dc0e72",
+   "gitBlob": "3bd977d2b1830088c3befed8a29990a3f6016a54",
+   "stageTable": {
+    "path": "zh_CN/gamedata/excel/stage_table.json",
+    "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+    "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+    "stageId": "act7d5_03",
+    "levelId": "Activities/ACT7d5/level_act7d5_03"
+   }
+  },
+  "battle": {
+   "max_life": 1
+  },
+  "enemies": {
+   "atk": 1.15,
+   "def": 1.1,
+   "maxHp": 1.2
+  },
+  "enemyAdd": {},
+  "hiddenGroups": {},
+  "forbiddenLocations": [
+   {
+    "row": 4,
+    "col": 2
+   },
+   {
+    "row": 4,
+    "col": 3
+   },
+   {
+    "row": 4,
+    "col": 4
+   },
+   {
+    "row": 5,
+    "col": 4
+   }
+  ]
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "sa-3",
+  "rows": 8,
+  "cols": 11,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_volcano",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true,
+    "blackboard": {
+     "cd_max": 12,
+     "cd_min": 8,
+     "damage": 1000
+    }
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_infection",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true,
+    "blackboard": {
+     "atk": 0.5,
+     "attack_speed": 70,
+     "damage": 160,
+     "duration": 300
+    }
+   },
+   {
+    "key": "tile_infection",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true,
+    "blackboard": {
+     "atk": 0.5,
+     "attack_speed": 70,
+     "damage": 160,
+     "duration": 300
+    }
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    1,
+    1,
+    0,
+    1,
+    1,
+    1,
+    1,
+    0,
+    0
+   ],
+   [
+    2,
+    3,
+    3,
+    3,
+    4,
+    4,
+    3,
+    4,
+    4,
+    3,
+    5
+   ],
+   [
+    0,
+    0,
+    1,
+    1,
+    1,
+    1,
+    6,
+    1,
+    1,
+    0,
+    0
+   ],
+   [
+    2,
+    3,
+    4,
+    4,
+    7,
+    8,
+    8,
+    8,
+    8,
+    3,
+    5
+   ],
+   [
+    0,
+    0,
+    1,
+    1,
+    4,
+    1,
+    1,
+    1,
+    1,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    3,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    2,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 0
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 2
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 0
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 1
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 0
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 0
+    },
+    "end": {
+     "row": 2,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 2
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 0
+    },
+    "end": {
+     "row": 2,
+     "col": 10
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 4
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 4
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 2
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 4
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 4
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 0
+    },
+    "end": {
+     "row": 2,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 0
+    },
+    "end": {
+     "row": 2,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 1
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 0
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 4
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 4
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 0
+    },
+    "end": {
+     "row": 2,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 3
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 3
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 3
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 2,
+      "seconds": 3
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 4
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 4
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 3
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 4
+    },
+    "end": {
+     "row": 4,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 4
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ]
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 193,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Shielded Soldier",
+      "enemy_id": "enemy_1029_shdsbr",
+      "count": 1,
+      "time": 3,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Shielded Soldier",
+      "enemy_id": "enemy_1029_shdsbr",
+      "count": 1,
+      "time": 8,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Shielded Soldier",
+      "enemy_id": "enemy_1029_shdsbr",
+      "count": 2,
+      "time": 15,
+      "interval": 3,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Shielded Soldier",
+      "enemy_id": "enemy_1029_shdsbr",
+      "count": 1,
+      "time": 24,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Shielded Soldier",
+      "enemy_id": "enemy_1029_shdsbr",
+      "count": 2,
+      "time": 29,
+      "interval": 5,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Rabid Hound Pro",
+      "enemy_id": "enemy_1000_gopro_3",
+      "count": 1,
+      "time": 40,
+      "route": 3,
+      "fragment": 2
+     },
+     {
+      "enemy": "Rabid Hound Pro",
+      "enemy_id": "enemy_1000_gopro_3",
+      "count": 2,
+      "time": 46,
+      "interval": 3,
+      "route": 4,
+      "fragment": 2
+     },
+     {
+      "enemy": "Elite Brawler",
+      "enemy_id": "enemy_1056_ganwar_2",
+      "count": 1,
+      "time": 54,
+      "route": 5,
+      "fragment": 3
+     },
+     {
+      "enemy": "Elite Brawler",
+      "enemy_id": "enemy_1056_ganwar_2",
+      "count": 1,
+      "time": 63,
+      "route": 6,
+      "fragment": 3
+     },
+     {
+      "enemy": "Rabid Hound Pro",
+      "enemy_id": "enemy_1000_gopro_3",
+      "count": 3,
+      "time": 59,
+      "interval": 4,
+      "route": 4,
+      "fragment": 3
+     },
+     {
+      "enemy": "Sarkaz Crossbowman",
+      "enemy_id": "enemy_1012_dcross",
+      "count": 1,
+      "time": 71,
+      "route": 7,
+      "fragment": 4
+     },
+     {
+      "enemy": "Sarkaz Crossbowman",
+      "enemy_id": "enemy_1012_dcross",
+      "count": 1,
+      "time": 85,
+      "route": 8,
+      "fragment": 4
+     },
+     {
+      "enemy": "Sarkaz Greatswordsman",
+      "enemy_id": "enemy_1010_demon",
+      "count": 1,
+      "time": 70,
+      "route": 9,
+      "fragment": 4
+     },
+     {
+      "enemy": "Sarkaz Greatswordsman",
+      "enemy_id": "enemy_1010_demon",
+      "count": 2,
+      "time": 82,
+      "interval": 7,
+      "route": 1,
+      "fragment": 4
+     },
+     {
+      "enemy": "Elite Brawler",
+      "enemy_id": "enemy_1056_ganwar_2",
+      "count": 3,
+      "time": 102,
+      "interval": 5,
+      "route": 10,
+      "fragment": 5
+     },
+     {
+      "enemy": "Sarkaz Crossbowman",
+      "enemy_id": "enemy_1012_dcross",
+      "count": 2,
+      "time": 104,
+      "interval": 10,
+      "route": 4,
+      "fragment": 5
+     },
+     {
+      "enemy": "Rabid Hound Pro",
+      "enemy_id": "enemy_1000_gopro_3",
+      "count": 2,
+      "time": 102,
+      "interval": 3,
+      "route": 4,
+      "fragment": 5
+     },
+     {
+      "enemy": "Sarkaz Greatswordsman",
+      "enemy_id": "enemy_1010_demon",
+      "count": 2,
+      "time": 116,
+      "interval": 8,
+      "route": 2,
+      "fragment": 6
+     },
+     {
+      "enemy": "Mortar Gunner",
+      "enemy_id": "enemy_1024_mortar",
+      "count": 1,
+      "time": 124,
+      "route": 11,
+      "fragment": 6
+     },
+     {
+      "enemy": "Mortar Gunner",
+      "enemy_id": "enemy_1024_mortar",
+      "count": 1,
+      "time": 132,
+      "route": 11,
+      "fragment": 6
+     },
+     {
+      "enemy": "Shielded Soldier",
+      "enemy_id": "enemy_1029_shdsbr",
+      "count": 2,
+      "time": 141,
+      "interval": 4,
+      "route": 2,
+      "fragment": 6
+     },
+     {
+      "enemy": "Hateful Avenger",
+      "enemy_id": "enemy_1025_reveng_2",
+      "count": 1,
+      "time": 127,
+      "route": 12,
+      "fragment": 6
+     },
+     {
+      "enemy": "Sarkaz Crossbowman",
+      "enemy_id": "enemy_1012_dcross",
+      "count": 3,
+      "time": 151,
+      "interval": 8,
+      "route": 4,
+      "fragment": 7
+     },
+     {
+      "enemy": "Sarkaz Greatswordsman",
+      "enemy_id": "enemy_1010_demon",
+      "count": 2,
+      "time": 163,
+      "interval": 8,
+      "route": 2,
+      "fragment": 7
+     },
+     {
+      "enemy": "Elite Brawler",
+      "enemy_id": "enemy_1056_ganwar_2",
+      "count": 2,
+      "time": 154,
+      "interval": 3,
+      "route": 2,
+      "fragment": 7
+     },
+     {
+      "enemy": "Mortar Gunner",
+      "enemy_id": "enemy_1024_mortar",
+      "count": 1,
+      "time": 180,
+      "route": 11,
+      "fragment": 8
+     },
+     {
+      "enemy": "Mortar Gunner",
+      "enemy_id": "enemy_1024_mortar",
+      "count": 1,
+      "time": 188,
+      "route": 11,
+      "fragment": 8
+     },
+     {
+      "enemy": "Mortar Gunner",
+      "enemy_id": "enemy_1024_mortar",
+      "count": 1,
+      "time": 193,
+      "route": 11,
+      "fragment": 8
+     },
+     {
+      "enemy": "Hateful Avenger",
+      "enemy_id": "enemy_1025_reveng_2",
+      "count": 1,
+      "time": 177,
+      "route": 13,
+      "fragment": 8
+     },
+     {
+      "enemy": "Elite Brawler",
+      "enemy_id": "enemy_1056_ganwar_2",
+      "count": 2,
+      "time": 179,
+      "interval": 4,
+      "route": 2,
+      "fragment": 8
+     },
+     {
+      "enemy": "Rabid Hound Pro",
+      "enemy_id": "enemy_1000_gopro_3",
+      "count": 3,
+      "time": 181,
+      "interval": 2,
+      "route": 4,
+      "fragment": 8
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 2,
+    "col": 0,
+    "routes": [
+     3,
+     4,
+     4,
+     7,
+     8,
+     4,
+     4,
+     11,
+     11,
+     4,
+     11,
+     11,
+     11,
+     4
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 4,
+    "col": 0,
+    "routes": [
+     0,
+     1,
+     2,
+     2,
+     2,
+     9,
+     1,
+     2,
+     2,
+     2,
+     2,
+     2
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 7,
+    "col": 4,
+    "routes": [
+     5,
+     6,
+     10,
+     12,
+     13
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 2,
+    "col": 10,
+    "routes": [
+     3,
+     4,
+     4,
+     7,
+     8,
+     4,
+     4,
+     11,
+     11,
+     4,
+     11,
+     11,
+     11,
+     4
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 4,
+    "col": 10,
+    "routes": [
+     0,
+     1,
+     2,
+     2,
+     2,
+     5,
+     6,
+     9,
+     1,
+     10,
+     2,
+     2,
+     12,
+     2,
+     2,
+     13,
+     2
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1000_gopro_3",
+    "slug": "rabid_hound_pro",
+    "name": "Rabid Hound Pro",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1010_demon",
+    "slug": "sarkaz_greatswordsman",
+    "name": "Sarkaz Greatswordsman",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1012_dcross",
+    "slug": "sarkaz_crossbowman",
+    "name": "Sarkaz Crossbowman",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1024_mortar",
+    "slug": "mortar_gunner",
+    "name": "Mortar Gunner",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1025_reveng_2",
+    "slug": "hateful_avenger_enemy_1025_reveng_2",
+    "name": "Hateful Avenger",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1029_shdsbr",
+    "slug": "shielded_soldier",
+    "name": "Shielded Soldier",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1056_ganwar_2",
+    "slug": "elite_brawler",
+    "name": "Elite Brawler",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false,
+  "source": "cn"
+ },
+ "terrain": [
+  {
+   "row": 3,
+   "col": 6,
+   "kind": "infection",
+   "damage": 160,
+   "atk": 0.5,
+   "aspd": 70,
+   "duration": 300
+  },
+  {
+   "row": 4,
+   "col": 4,
+   "kind": "infection",
+   "damage": 160,
+   "atk": 0.5,
+   "aspd": 70,
+   "duration": 300
+  }
+ ],
+ "conditionalHandled": false,
+ "devices": [],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13
+  ],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "SA-3",
+  "geometryHash": "741809f76abfd0737f6b645563eb7e77019dcf67e611ca8279c8df209a08ef68",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      0,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "1": {
+    "points": [
+     [
+      0,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "2": {
+    "points": [
+     [
+      0,
+      4
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "3": {
+    "points": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "4": {
+    "points": [
+     [
+      0,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "5": {
+    "points": [
+     [
+      4,
+      7
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "6": {
+    "points": [
+     [
+      4,
+      7
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "7": {
+    "points": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "8": {
+    "points": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "9": {
+    "points": [
+     [
+      0,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "10": {
+    "points": [
+     [
+      4,
+      7
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "11": {
+    "points": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "12": {
+    "points": [
+     [
+      4,
+      7
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "13": {
+    "points": [
+     [
+      4,
+      7
+     ],
+     [
+      4,
+      6
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      10,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "breaks": [],
+    "holds": []
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1029_shdsbr": {
+   "key": "enemy_1029_shdsbr",
+   "prefabKey": "enemy_1029_shdsbr",
+   "name": "Shielded Soldier",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2460,
+    "atk": 276,
+    "def": 275,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1000_gopro_3": {
+   "key": "enemy_1000_gopro_3",
+   "prefabKey": "enemy_1000_gopro_3",
+   "name": "Rabid Hound Pro",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3600,
+    "atk": 425.49999999999994,
+    "def": 0,
+    "res": 20,
+    "moveSpeed": 1.9,
+    "bat": 1.4,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1056_ganwar_2": {
+   "key": "enemy_1056_ganwar_2",
+   "prefabKey": "enemy_1056_ganwar_2",
+   "name": "Elite Brawler",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 5040,
+    "atk": 436.99999999999994,
+    "def": 330,
+    "res": 0,
+    "moveSpeed": 0.95,
+    "bat": 0.4,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1010_demon": {
+   "key": "enemy_1010_demon",
+   "prefabKey": "enemy_1010_demon",
+   "name": "Sarkaz Greatswordsman",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 9000,
+    "atk": 690,
+    "def": 253.00000000000003,
+    "res": 50,
+    "moveSpeed": 0.85,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "sarkaz"
+   ]
+  },
+  "enemy_1012_dcross": {
+   "key": "enemy_1012_dcross",
+   "prefabKey": "enemy_1012_dcross",
+   "name": "Sarkaz Crossbowman",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 7200,
+    "atk": 517.5,
+    "def": 220.00000000000003,
+    "res": 50,
+    "moveSpeed": 0.8,
+    "bat": 3,
+    "aspd": 100,
+    "rangeRadius": 2.2,
+    "rawRangeRadius": 2.2,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "sarkaz"
+   ]
+  },
+  "enemy_1024_mortar": {
+   "key": "enemy_1024_mortar",
+   "prefabKey": "enemy_1024_mortar",
+   "name": "Mortar Gunner",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 3960,
+    "atk": 459.99999999999994,
+    "def": 165,
+    "res": 0,
+    "moveSpeed": 0.8,
+    "bat": 4.5,
+    "aspd": 100,
+    "rangeRadius": 7,
+    "rawRangeRadius": 7,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Capable of extremely long ranged-attacks",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Shells deal area damage to target and any allied units in the surrounding 8 tiles",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1025_reveng_2": {
+   "key": "enemy_1025_reveng_2",
+   "prefabKey": "enemy_1025_reveng_2",
+   "name": "Hateful Avenger",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 21600,
+    "atk": 552,
+    "def": 253.00000000000003,
+    "res": 50,
+    "moveSpeed": 0.65,
+    "bat": 2.3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Gains significantly increased ATK when HP is under 50%",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "atkup.atk": 1.8
+    },
+    "bbStr": {},
+    "groups": {
+     "atkup": [
+      "atk"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ },
+ "contentAddition": {
+  "schemaVersion": 1,
+  "source": {
+   "repository": "arkpedia/arkpedia-data",
+   "commit": "66232ee06377d791fb130248d680764c286e5c99",
+   "files": [
+    {
+     "path": "stages/sa-3_challenge_mode.json",
+     "sha256": "660a8eedc03ed04b66d0809953ded94c16f63c214e6fb74c2b6834ced63a3581"
+    },
+    {
+     "path": "stage-geometry/sa-3.json",
+     "sha256": "741809f76abfd0737f6b645563eb7e77019dcf67e611ca8279c8df209a08ef68"
+    },
+    {
+     "path": "stage-devices.json",
+     "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+    }
+   ],
+   "localFiles": [
+    {
+     "path": "data/stage-rules/sa-3_challenge_mode.json",
+     "sha256": "773162b5a9fd07f7385c590bb98a7a3bc0896a0287c16f7abf253408e7f6183d"
+    },
+    {
+     "path": "data/stage-rules/levels/2792cb1f914a4c54631b99791dd2b97363f2518cfc132a68c56b19f2dd41afb1.json",
+     "sha256": "2792cb1f914a4c54631b99791dd2b97363f2518cfc132a68c56b19f2dd41afb1"
+    },
+    {
+     "path": ".cache/arkpedia/original-level-blobs/3bd977d2b1830088c3befed8a29990a3f6016a54.json",
+     "sha256": "06f833614e6295ddd26e2b8391d34afdf5605b01862185093900dbc7c5dc0e72"
+    }
+   ]
+  },
+  "dependencies": {
+   "enemies": [
+    "enemy_1000_gopro_3",
+    "enemy_1010_demon",
+    "enemy_1012_dcross",
+    "enemy_1024_mortar",
+    "enemy_1025_reveng_2",
+    "enemy_1029_shdsbr",
+    "enemy_1056_ganwar_2"
+   ],
+   "devices": [],
+   "tokens": []
+  },
+  "validation": {
+   "smoke": {
+    "seconds": 10,
+    "spawned": 2,
+    "errors": 0
+   },
+   "publicReview": "pending",
+   "waveSchedule": {
+    "id": "sa-3_challenge_mode",
+    "seconds": 212.23333333333332,
+    "spawned": 50,
+    "expected": 50,
+    "reason": "cleared",
+    "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+   },
+   "browser": {
+    "id": "sa-3_challenge_mode",
+    "seconds": 18.4,
+    "errors": [],
+    "units": 4,
+    "canvas": true,
+    "scope": "Browser startup and 600 simulation ticks; not full gameplay or visual fidelity approval"
+   }
+  }
+ }
+}

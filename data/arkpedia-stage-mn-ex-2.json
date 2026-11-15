@@ -1,0 +1,2876 @@
+{
+  "code": "MN-EX-2",
+  "name": "Symmetrical Glaciers",
+  "description": "Devices used in some arenas to lower the temperature and avoid heatstroke. It can provide refreshment to the audience while simultaneously complicating the competition. Frost Skull Knight, from Sami, once held a great advantage here. \n<Bush>Operators deployed on this tile will not be targeted by enemy ranged attacks.\n<Originium Ice Crystal>Periodically releases a frigid wave that will inflict Cold to affected allied units.",
+  "battle": {
+    "max_life": 3,
+    "unit_limit": 9,
+    "initial_dp": 10,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1,
+    "max_play_time": -1
+  },
+  "rules": {
+    "variant": null,
+    "source": {
+      "repository": "Kengxxiao/ArknightsGameData",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "path": "zh_CN/gamedata/levels/activities/act13d5/level_act13d5_ex02.json",
+      "sha256": "e4fe152b96f13e720ac4f2ad57df50c0fcfc20370f40efc3fcd1d11dbb344b0f",
+      "gitBlob": "b841ceb4191673ad24a87a6f02b5350b72d3efe4",
+      "stageTable": {
+        "path": "zh_CN/gamedata/excel/stage_table.json",
+        "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+        "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+        "stageId": "act13d5_ex02",
+        "levelId": "Activities/ACT13D5/level_act13d5_ex02"
+      }
+    },
+    "battle": {
+      "max_play_time": -1
+    },
+    "enemies": {},
+    "enemyAdd": {},
+    "hiddenGroups": {}
+  },
+  "mapTags": [],
+  "mapTagSource": null,
+  "geometry": {
+    "slug": "mn-ex-2",
+    "rows": 9,
+    "cols": 13,
+    "tileLegend": [
+      {
+        "key": "tile_empty",
+        "height": "low",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      },
+      {
+        "key": "tile_floor",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_start",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_grass",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      }
+    ],
+    "tileGrid": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ],
+      [
+        0,
+        2,
+        3,
+        4,
+        4,
+        4,
+        3,
+        3,
+        3,
+        3,
+        5,
+        6,
+        0
+      ],
+      [
+        0,
+        1,
+        3,
+        1,
+        4,
+        3,
+        3,
+        1,
+        4,
+        4,
+        4,
+        1,
+        0
+      ],
+      [
+        0,
+        1,
+        3,
+        3,
+        3,
+        3,
+        7,
+        3,
+        3,
+        3,
+        3,
+        1,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        4,
+        4,
+        1,
+        3,
+        3,
+        4,
+        4,
+        3,
+        1,
+        0
+      ],
+      [
+        0,
+        6,
+        5,
+        3,
+        3,
+        3,
+        3,
+        4,
+        4,
+        1,
+        3,
+        1,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        2,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "routes": [
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 1
+        },
+        "end": {
+          "row": 7,
+          "col": 10
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 10
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 11
+        },
+        "end": {
+          "row": 2,
+          "col": 1
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 10
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 2
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 1
+        },
+        "end": {
+          "row": 7,
+          "col": 10
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 10
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 11
+        },
+        "end": {
+          "row": 2,
+          "col": 1
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 10
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 2
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 1
+        },
+        "end": {
+          "row": 7,
+          "col": 10
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 10
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_current_fragment_time",
+            "after_checkpoint": 0,
+            "seconds": 16
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 1
+        },
+        "end": {
+          "row": 7,
+          "col": 10
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 10
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_current_fragment_time",
+            "after_checkpoint": 1,
+            "seconds": 16
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 1
+        },
+        "end": {
+          "row": 7,
+          "col": 10
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 10
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_current_fragment_time",
+            "after_checkpoint": 2,
+            "seconds": 16
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 11
+        },
+        "end": {
+          "row": 2,
+          "col": 1
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 10
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 2
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_current_fragment_time",
+            "after_checkpoint": 0,
+            "seconds": 15
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 11
+        },
+        "end": {
+          "row": 2,
+          "col": 1
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 10
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 2
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_current_fragment_time",
+            "after_checkpoint": 0,
+            "seconds": 16
+          }
+        ]
+      },
+      {
+        "motion": "fly",
+        "start": {
+          "row": 0,
+          "col": 0
+        },
+        "end": {
+          "row": 8,
+          "col": 12
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 6
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 10
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 1
+        },
+        "end": {
+          "row": 7,
+          "col": 10
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 10
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 15
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 11
+        },
+        "end": {
+          "row": 2,
+          "col": 1
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 10
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 2
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 3
+          }
+        ]
+      },
+      {
+        "motion": "fly",
+        "start": {
+          "row": 0,
+          "col": 0
+        },
+        "end": {
+          "row": 8,
+          "col": 12
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 6
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 30
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 1
+        },
+        "end": {
+          "row": 7,
+          "col": 10
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 10
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 11
+        },
+        "end": {
+          "row": 2,
+          "col": 1
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 10
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 2
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 40
+          }
+        ]
+      }
+    ],
+    "waves": [
+      {
+        "index": 0,
+        "duration": 179,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Nameless Elite Knight",
+            "enemy_id": "enemy_1099_nbkght_2",
+            "count": 1,
+            "time": 3,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Training Gloompincer",
+            "enemy_id": "enemy_1100_scorpn",
+            "count": 1,
+            "time": 3,
+            "route": 1,
+            "fragment": 0
+          },
+          {
+            "enemy": "Nameless Elite Knight",
+            "enemy_id": "enemy_1099_nbkght_2",
+            "count": 2,
+            "time": 28,
+            "interval": 9,
+            "route": 2,
+            "fragment": 0
+          },
+          {
+            "enemy": "Training Gloompincer",
+            "enemy_id": "enemy_1100_scorpn",
+            "count": 1,
+            "time": 30,
+            "route": 3,
+            "fragment": 0
+          },
+          {
+            "enemy": "Nameless Elite Knight",
+            "enemy_id": "enemy_1099_nbkght_2",
+            "count": 1,
+            "time": 54,
+            "route": 4,
+            "fragment": 1
+          },
+          {
+            "enemy": "Nameless Elite Knight",
+            "enemy_id": "enemy_1099_nbkght_2",
+            "count": 1,
+            "time": 52,
+            "route": 5,
+            "fragment": 1
+          },
+          {
+            "enemy": "Nameless Elite Knight",
+            "enemy_id": "enemy_1099_nbkght_2",
+            "count": 1,
+            "time": 50,
+            "route": 6,
+            "fragment": 1
+          },
+          {
+            "enemy": "Vicious Training Gloompincer",
+            "enemy_id": "enemy_1100_scorpn_2",
+            "count": 1,
+            "time": 50,
+            "route": 7,
+            "fragment": 1
+          },
+          {
+            "enemy": "Vicious Training Gloompincer",
+            "enemy_id": "enemy_1100_scorpn_2",
+            "count": 1,
+            "time": 50,
+            "route": 8,
+            "fragment": 1
+          },
+          {
+            "enemy": "Cheering Sponsor Drone",
+            "enemy_id": "enemy_1106_byokai",
+            "count": 1,
+            "time": 50,
+            "route": 9,
+            "fragment": 1
+          },
+          {
+            "enemy": "Nameless Elite Knight",
+            "enemy_id": "enemy_1099_nbkght_2",
+            "count": 2,
+            "time": 69,
+            "interval": 4,
+            "route": 2,
+            "fragment": 1
+          },
+          {
+            "enemy": "Vicious Training Gloompincer",
+            "enemy_id": "enemy_1100_scorpn_2",
+            "count": 1,
+            "time": 77,
+            "route": 3,
+            "fragment": 1
+          },
+          {
+            "enemy": "Nameless Elite Knight",
+            "enemy_id": "enemy_1099_nbkght_2",
+            "count": 2,
+            "time": 89,
+            "interval": 4,
+            "route": 2,
+            "fragment": 2
+          },
+          {
+            "enemy": "Blade Helmet Knightclub Trainee",
+            "enemy_id": "enemy_1104_lfkght",
+            "count": 1,
+            "time": 98,
+            "route": 10,
+            "fragment": 2
+          },
+          {
+            "enemy": "Roar Knightclub Trainee",
+            "enemy_id": "enemy_1101_plkght",
+            "count": 1,
+            "time": 88,
+            "route": 11,
+            "fragment": 2
+          },
+          {
+            "enemy": "Independent Knight Shielder",
+            "enemy_id": "enemy_1102_sdkght",
+            "count": 1,
+            "time": 115,
+            "route": 0,
+            "fragment": 2
+          },
+          {
+            "enemy": "Cheering Sponsor Drone",
+            "enemy_id": "enemy_1106_byokai",
+            "count": 1,
+            "time": 90,
+            "route": 12,
+            "fragment": 2
+          },
+          {
+            "enemy": "Roar Knightclub Trainee",
+            "enemy_id": "enemy_1101_plkght",
+            "count": 2,
+            "time": 110,
+            "interval": 6,
+            "route": 3,
+            "fragment": 2
+          },
+          {
+            "enemy": "Vicious Training Gloompincer",
+            "enemy_id": "enemy_1100_scorpn_2",
+            "count": 1,
+            "time": 127,
+            "route": 3,
+            "fragment": 3
+          },
+          {
+            "enemy": "Nameless Elite Knight",
+            "enemy_id": "enemy_1099_nbkght_2",
+            "count": 2,
+            "time": 161,
+            "interval": 3,
+            "route": 13,
+            "fragment": 3
+          },
+          {
+            "enemy": "Cheering Sponsor Drone",
+            "enemy_id": "enemy_1106_byokai",
+            "count": 1,
+            "time": 159,
+            "route": 12,
+            "fragment": 3
+          },
+          {
+            "enemy": "Vicious Training Gloompincer",
+            "enemy_id": "enemy_1100_scorpn_2",
+            "count": 2,
+            "time": 144,
+            "interval": 6,
+            "route": 3,
+            "fragment": 3
+          },
+          {
+            "enemy": "Independent Knight Shielder",
+            "enemy_id": "enemy_1102_sdkght",
+            "count": 1,
+            "time": 145,
+            "route": 0,
+            "fragment": 3
+          },
+          {
+            "enemy": "Bloodboil Knightclub Elite",
+            "enemy_id": "enemy_1103_wdkght_2",
+            "count": 1,
+            "time": 139,
+            "route": 14,
+            "fragment": 3
+          },
+          {
+            "enemy": "Vicious Training Gloompincer",
+            "enemy_id": "enemy_1100_scorpn_2",
+            "count": 2,
+            "time": 166,
+            "interval": 2,
+            "route": 3,
+            "fragment": 3
+          },
+          {
+            "enemy": "Vicious Training Gloompincer",
+            "enemy_id": "enemy_1100_scorpn_2",
+            "count": 2,
+            "time": 176,
+            "interval": 3,
+            "route": 3,
+            "fragment": 3
+          }
+        ]
+      }
+    ],
+    "spawnTiles": [
+      {
+        "key": "tile_start",
+        "row": 2,
+        "col": 11,
+        "routes": [
+          1,
+          3,
+          7,
+          8,
+          3,
+          11,
+          3,
+          3,
+          3,
+          14,
+          3,
+          3
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 6,
+        "col": 1,
+        "routes": [
+          0,
+          2,
+          4,
+          5,
+          6,
+          2,
+          2,
+          10,
+          0,
+          13,
+          0
+        ]
+      }
+    ],
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 2,
+        "col": 1,
+        "routes": [
+          1,
+          3,
+          7,
+          8,
+          3,
+          11,
+          3,
+          3,
+          3,
+          14,
+          3,
+          3
+        ]
+      },
+      {
+        "key": "tile_end",
+        "row": 7,
+        "col": 10,
+        "routes": [
+          0,
+          2,
+          4,
+          5,
+          6,
+          2,
+          2,
+          10,
+          0,
+          13,
+          0
+        ]
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_1099_nbkght_2",
+        "slug": "nameless_elite_knight",
+        "name": "Nameless Elite Knight",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1100_scorpn",
+        "slug": "training_gloompincer",
+        "name": "Training Gloompincer",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1100_scorpn_2",
+        "slug": "vicious_training_gloompincer",
+        "name": "Vicious Training Gloompincer",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1101_plkght",
+        "slug": "roar_knightclub_trainee",
+        "name": "Roar Knightclub Trainee",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1102_sdkght",
+        "slug": "independent_knight_shielder",
+        "name": "Independent Knight Shielder",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1103_wdkght_2",
+        "slug": "bloodboil_knightclub_elite",
+        "name": "Bloodboil Knightclub Elite",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1104_lfkght",
+        "slug": "blade_helmet_knightclub_trainee",
+        "name": "Blade Helmet Knightclub Trainee",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1106_byokai",
+        "slug": "cheering_sponsor_drone",
+        "name": "Cheering Sponsor Drone",
+        "database_level": 0
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [],
+      "deployable_tokens": []
+    },
+    "hasConditionalSpawns": false
+  },
+  "terrain": [],
+  "conditionalHandled": false,
+  "devices": [
+    {
+      "col": 5,
+      "description": null,
+      "hidden": false,
+      "key": "trap_010_frosts",
+      "kind": "device",
+      "name": "Originium Ice Crystal",
+      "row": 5,
+      "alias": "trap_010_frosts#1"
+    },
+    {
+      "col": 7,
+      "description": null,
+      "hidden": false,
+      "key": "trap_010_frosts",
+      "kind": "device",
+      "name": "Originium Ice Crystal",
+      "row": 3,
+      "alias": "trap_010_frosts#2"
+    }
+  ],
+  "tokens": [],
+  "pathing": {
+    "schemaVersion": 1,
+    "syntheticRoutes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "producer": "Arkpedia stage browser / buildPlaybackPaths",
+    "stage": "MN-EX-2",
+    "geometryHash": "4e68f6570ac957f4bd3156b12594e51004859459b77144415d12ccf21836fcd6",
+    "moveScale": 0.65,
+    "paths": {
+      "0": {
+        "points": [
+          [
+            1,
+            6
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            6,
+            6
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            10,
+            4
+          ],
+          [
+            10,
+            7
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "1": {
+        "points": [
+          [
+            11,
+            2
+          ],
+          [
+            10,
+            2
+          ],
+          [
+            6,
+            2
+          ],
+          [
+            6,
+            3
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "2": {
+        "points": [
+          [
+            1,
+            6
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            6,
+            6
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            10,
+            4
+          ],
+          [
+            10,
+            7
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "3": {
+        "points": [
+          [
+            11,
+            2
+          ],
+          [
+            10,
+            2
+          ],
+          [
+            6,
+            2
+          ],
+          [
+            6,
+            3
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "4": {
+        "points": [
+          [
+            1,
+            6
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            6,
+            6
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            10,
+            4
+          ],
+          [
+            10,
+            7
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "5": {
+        "points": [
+          [
+            1,
+            6
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            6,
+            6
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            10,
+            4
+          ],
+          [
+            10,
+            7
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "6": {
+        "points": [
+          [
+            1,
+            6
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            4,
+            6
+          ],
+          [
+            6,
+            6
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            10,
+            4
+          ],
+          [
+            10,
+            7
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "7": {
+        "points": [
+          [
+            11,
+            2
+          ],
+          [
+            10,
+            2
+          ],
+          [
+            6,
+            2
+          ],
+          [
+            6,
+            3
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "8": {
+        "points": [
+          [
+            11,
+            2
+          ],
+          [
+            10,
+            2
+          ],
+          [
+            6,
+            2
+          ],
+          [
+            6,
+            3
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "9": {
+        "points": [
+          [
+            0,
+            0
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            12,
+            8
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "10": {
+        "points": [
+          [
+            1,
+            6
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            6,
+            6
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            10,
+            4
+          ],
+          [
+            10,
+            7
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "11": {
+        "points": [
+          [
+            11,
+            2
+          ],
+          [
+            10,
+            2
+          ],
+          [
+            6,
+            2
+          ],
+          [
+            6,
+            3
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "12": {
+        "points": [
+          [
+            0,
+            0
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            12,
+            8
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "13": {
+        "points": [
+          [
+            1,
+            6
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            6,
+            6
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            10,
+            4
+          ],
+          [
+            10,
+            7
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "14": {
+        "points": [
+          [
+            11,
+            2
+          ],
+          [
+            10,
+            2
+          ],
+          [
+            6,
+            2
+          ],
+          [
+            6,
+            3
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "breaks": [],
+        "holds": []
+      }
+    }
+  },
+  "art": null,
+  "gates": null,
+  "fixedSquad": null,
+  "enemies": {
+    "enemy_1099_nbkght_2": {
+      "key": "enemy_1099_nbkght_2",
+      "prefabKey": "enemy_1099_nbkght_2",
+      "name": "Nameless Elite Knight",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 3800,
+        "atk": 360,
+        "def": 150,
+        "res": 0,
+        "moveSpeed": 1.1,
+        "bat": 2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1100_scorpn": {
+      "key": "enemy_1100_scorpn",
+      "prefabKey": "enemy_1100_scorpn",
+      "name": "Training Gloompincer",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 2000,
+        "atk": 380,
+        "def": 450,
+        "res": 30,
+        "moveSpeed": 1,
+        "bat": 2.5,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 0,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "infection"
+      ]
+    },
+    "enemy_1100_scorpn_2": {
+      "key": "enemy_1100_scorpn_2",
+      "prefabKey": "enemy_1100_scorpn_2",
+      "name": "Vicious Training Gloompincer",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 3000,
+        "atk": 450,
+        "def": 700,
+        "res": 50,
+        "moveSpeed": 1,
+        "bat": 2.5,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 0,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "infection"
+      ]
+    },
+    "enemy_1106_byokai": {
+      "key": "enemy_1106_byokai",
+      "prefabKey": "enemy_1106_byokai",
+      "name": "Cheering Sponsor Drone",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "NONE",
+      "stats": {
+        "maxHp": 5000,
+        "atk": 0,
+        "def": 150,
+        "res": 20,
+        "moveSpeed": 1,
+        "bat": 1,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 0,
+        "lpr": 0,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "none",
+        "dmgTypes": [
+          "none"
+        ],
+        "motion": "FLY",
+        "immunities": {
+          "stun": false,
+          "silence": true,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Flying unit.",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Does not count towards the defeated enemies counter",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Upon death, significantly increase ASPD and DEF of our units on the field for a period.",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "buff.duration": 20,
+          "buff.attack_speed": 100,
+          "buff.def": 0.5
+        },
+        "bbStr": {},
+        "groups": {
+          "buff": [
+            "attack_speed",
+            "def",
+            "duration"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "drone"
+      ]
+    },
+    "enemy_1101_plkght": {
+      "key": "enemy_1101_plkght",
+      "prefabKey": "enemy_1101_plkght",
+      "name": "Roar Knightclub Trainee",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 2800,
+        "atk": 300,
+        "def": 100,
+        "res": 0,
+        "moveSpeed": 0.9,
+        "bat": 2.4,
+        "aspd": 100,
+        "rangeRadius": 2,
+        "rawRangeRadius": 2,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": true,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Has significantly increased DEF and RES for a period of time",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "buff.duration": 30,
+          "buff.def": 3000,
+          "buff.magic_resistance": 95
+        },
+        "bbStr": {},
+        "groups": {
+          "buff": [
+            "def",
+            "duration",
+            "magic_resistance"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1104_lfkght": {
+      "key": "enemy_1104_lfkght",
+      "prefabKey": "enemy_1104_lfkght",
+      "name": "Blade Helmet Knightclub Trainee",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 10000,
+        "atk": 550,
+        "def": 700,
+        "res": 50,
+        "moveSpeed": 0.75,
+        "bat": 2.5,
+        "aspd": 100,
+        "rangeRadius": 1.3,
+        "rawRangeRadius": 1.3,
+        "blockCnt": 1,
+        "massLevel": 3,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "arts",
+        "dmgTypes": [
+          "arts"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Significantly decreases ATK of the unit with the highest ATK for a period of time",
+          "format": "SILENCE"
+        },
+        {
+          "text": "Rebirth",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "reborn.duration": 5
+        },
+        "bbStr": {},
+        "groups": {
+          "reborn": [
+            "duration"
+          ]
+        }
+      },
+      "skills": [
+        {
+          "prefabKey": "AtkDesWeaken",
+          "priority": 0,
+          "cooldown": 25,
+          "initCooldown": 25,
+          "spCost": 0,
+          "bb": {
+            "atk": -0.5,
+            "duration": 25
+          },
+          "bbStr": {}
+        }
+      ],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1102_sdkght": {
+      "key": "enemy_1102_sdkght",
+      "prefabKey": "enemy_1102_sdkght",
+      "name": "Independent Knight Shielder",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 8000,
+        "atk": 700,
+        "def": 1000,
+        "res": 0,
+        "moveSpeed": 0.7,
+        "bat": 3,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 4,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1103_wdkght_2": {
+      "key": "enemy_1103_wdkght_2",
+      "prefabKey": "enemy_1103_wdkght_2",
+      "name": "Bloodboil Knightclub Elite",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 13000,
+        "atk": 650,
+        "def": 800,
+        "res": 0,
+        "moveSpeed": 0.7,
+        "bat": 2.3,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 3,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": true,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Each time an enemy is defeated, gains ATK and ASPD, stacking up to 10 times.",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "enhance.atk": 0.1,
+          "enhance.attack_speed": 5,
+          "enhance.max_stack_cnt": 10
+        },
+        "bbStr": {},
+        "groups": {
+          "enhance": [
+            "atk",
+            "attack_speed",
+            "max_stack_cnt"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    }
+  },
+  "contentAddition": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/mn-ex-2.json",
+          "sha256": "3ccaba9f2566029b6800040c4550d1f4ff9e6467cd33e15fec74c249a19bf504"
+        },
+        {
+          "path": "stage-geometry/mn-ex-2.json",
+          "sha256": "4e68f6570ac957f4bd3156b12594e51004859459b77144415d12ccf21836fcd6"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        }
+      ],
+      "localFiles": [
+        {
+          "path": "data/stage-rules/mn-ex-2.json",
+          "sha256": "1bed25ddf4d38f7bf054038ccd5cbd4238b054bb3e4180e581816ee2e108bd50"
+        },
+        {
+          "path": "data/stage-rules/levels/2c7621b0cfb95f8cdc3906246cd126ca1742076823f64838855f67132cace57d.json",
+          "sha256": "2c7621b0cfb95f8cdc3906246cd126ca1742076823f64838855f67132cace57d"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/b841ceb4191673ad24a87a6f02b5350b72d3efe4.json",
+          "sha256": "e4fe152b96f13e720ac4f2ad57df50c0fcfc20370f40efc3fcd1d11dbb344b0f"
+        },
+        {
+          "path": "data/arkpedia-device-source.json",
+          "sha256": "5a9307d4d7ac597e487055c22dfdfde1722e1e8f68ab4aa4c2a6793875510568"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/b841ceb4191673ad24a87a6f02b5350b72d3efe4.json",
+          "sha256": "e4fe152b96f13e720ac4f2ad57df50c0fcfc20370f40efc3fcd1d11dbb344b0f"
+        },
+        {
+          "path": "data/arkpedia-enemy-records.json",
+          "sha256": "b75ba11f79473268f8408b28df67165101997fbf8ec8bdcfaa6f68354111b3a8"
+        },
+        {
+          "path": "data/arkpedia-enemy-support.json",
+          "sha256": "1801ea852522c8963fc7f7331f39ecad9eaf7854e36cfd0859eb348da89a366d"
+        },
+        {
+          "path": "data/arkpedia-enemy-native-abilities.json",
+          "sha256": "ef8e10be8d965a39dd66c17656cd7bb2c309e6fc29de1a7776ea2e5e4861a7f0"
+        },
+        {
+          "path": "data/arkpedia-blade-animations.json",
+          "sha256": "8ba6e52835f5e0cd0090dfda95383e81acaf578970d9da9f6b3351a4af5a8555"
+        }
+      ]
+    },
+    "dependencies": {
+      "enemies": [
+        "enemy_1099_nbkght_2",
+        "enemy_1100_scorpn",
+        "enemy_1100_scorpn_2",
+        "enemy_1101_plkght",
+        "enemy_1102_sdkght",
+        "enemy_1103_wdkght_2",
+        "enemy_1104_lfkght",
+        "enemy_1106_byokai"
+      ],
+      "devices": [
+        "Originium Ice Crystal"
+      ],
+      "tokens": []
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 10,
+        "spawned": 2,
+        "errors": 0
+      },
+      "publicReview": "pending",
+      "waveSchedule": {
+        "id": "mn-ex-2",
+        "seconds": 200.56666666666666,
+        "spawned": 34,
+        "expected": 34,
+        "dynamicSpawns": 0,
+        "reason": "cleared",
+        "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+      },
+      "browserStartup": {
+        "id": "mn-ex-2",
+        "seconds": 20,
+        "errors": [],
+        "units": 2,
+        "canvas": true,
+        "scope": "Mobile landscape browser startup and canvas runtime; not a fidelity approval"
+      }
+    }
+  }
+}

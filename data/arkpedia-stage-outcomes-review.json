@@ -1,0 +1,385 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-14",
+  "scope": "Historical checkpoint: shared stage outcomes, Portal deck removal, hover controls and bounded auxiliary evidence intake. Not native frame parity, full-run progression or full-stage clear certification.",
+  "sourceFiles": [
+    {
+      "path": "server/sim/content/arkpedia-stage-outcomes.js",
+      "sha256": "ae51a7d5797f9b068cd0e82ba9a1b2bda59a1dded5e41939299fd32c7850c907"
+    },
+    {
+      "path": "shared/arkpedia/stage-outcomes.js",
+      "sha256": "feac99d798a9c15cc9e0f30a45b8f1396a00c2bc7fd3ffb5667f2d3082cb2f94"
+    },
+    {
+      "path": "server/sim/content/arkpedia-enemy-portal.js",
+      "sha256": "5e2c9a041fa7b85a353917d0358f5f900047510a274924e396061b55fa863785"
+    },
+    {
+      "path": "shared/arkpedia/enemy-outcome-features.js",
+      "sha256": "0e44ec6ff9ff12177751f4e0b33c0cf371e82e248006da5894257ea9be0f9cbb"
+    },
+    {
+      "path": "shared/arkpedia/enemy-outcome-contracts.js",
+      "sha256": "0ae59651ec48d8743f36b2e08bff71e32e64b7c23af733f2f89ef818f6939b61"
+    },
+    {
+      "path": "shared/arkpedia/enemy-portal-features.js",
+      "sha256": "f7016b7ae75af268c95ca58e5d9141be107345f4b36e3efa7a2620d97c0461f3"
+    },
+    {
+      "path": "shared/arkpedia/enemy-hover-features.js",
+      "sha256": "b8edd899185fbfd15f27c55cf68d727e6b064a20529624a3c2b6ebcc5735d4e7"
+    },
+    {
+      "path": "server/sim/content/enemies.js",
+      "sha256": "4b7deafbcf6d5060e834368875df5f74bd1b1c8375f653389a032ff28c1c3972"
+    },
+    {
+      "path": "data/arkpedia-enemy-native-abilities.json",
+      "sha256": "fac855f93ccebffc941d901a367db88e15020af2465f563be2a3cad4514e9726"
+    },
+    {
+      "path": "data/arkpedia-enemy-support.json",
+      "sha256": "97e43953b4105480faa9b42646ee35d9c8780f15c15082c2cd8bde66e1ff562f"
+    },
+    {
+      "path": "tools/arkpedia/extract-enemy-native-abilities.py",
+      "sha256": "a9774a74425b735a58b73a31dfed6b65766288e4bb8157be9606ffa248c7634b"
+    },
+    {
+      "path": "shared/arkpedia/enemy-flux-ranges.js",
+      "sha256": "00fd607fccbd1481f0565126eb9ab70e4c18d8ee8fa94d54007379c971d999f6"
+    },
+    {
+      "path": "server/sim/arkpedia.js",
+      "sha256": "1fcd9218086f72f7423a9d007a6cad728d8453fab00469926a8941ee82fd5e57"
+    },
+    {
+      "path": "public/arkpedia/app.js",
+      "sha256": "c081e82ab15e47ea07c639fa0274b6c222ee1fcee9d6a7371e4eb475eb93db7a"
+    },
+    {
+      "path": "tools/arkpedia/review-stage-outcomes.mjs",
+      "sha256": "0e8a8a44d546471dd062a3b80477c379dd7b28ae5d3c612b80a89a4dcd1fa3bd"
+    },
+    {
+      "path": "docs/STAGE-OUTCOMES-REVIEW.md",
+      "sha256": "bb0f40eac73dc97271da4f53bab3edeed700b92c631149123ae867ca07cf3d7b"
+    },
+    {
+      "path": "docs/ENEMY-HOVER-REVIEW.md",
+      "sha256": "9bb56644a308958b931b56b8a00c587b74b7299b4cf250bba3d9992540758b4b"
+    },
+    {
+      "path": "docs/ENEMY-AUXILIARY-INTAKE-REVIEW.md",
+      "sha256": "31a9411b5cd1ea4ef19db688a394658b29ffbb78b58d2c973b3244b1fad43140"
+    }
+  ],
+  "checks": {
+    "focusedTests": {
+      "log": {
+        "path": "/tmp/shared-stage-final-tests.log",
+        "sha256": "415b2f6bf9fc05b02d65f4c0180be1d0f9244c79ec2ee6fe5d01fc44d86fc41c"
+      },
+      "passed": 74,
+      "failed": 0
+    },
+    "allStageSmoke": {
+      "scope": "10-second constructor/runtime smoke for every available compiled stage; not a playable-clear or fidelity certificate",
+      "available": 827,
+      "completed": 827,
+      "failures": [],
+      "uniqueComponentsRead": 5606,
+      "cache": {
+        "cachedBytes": 12278045,
+        "cachedObjects": 5606,
+        "pending": 0
+      }
+    },
+    "inventory": {
+      "path": "data/arkpedia-content-inventory.json",
+      "sha256": "8870737793d99a763f36b0e8c1b11099cf2d0b48e6d7ff2e9bcd66af256b3141"
+    },
+    "browser": [
+      {
+        "mobile": false,
+        "scope": "controlled supported-enemy fixtures in the public result UI",
+        "state": {
+          "outcomes": {
+            "counters": {
+              "rogue_thief_reach_exit": 1,
+              "trap_758_skzmbx": 1,
+              "killed": 2,
+              "rogue_first_step": 1
+            },
+            "events": [
+              {
+                "key": "rogue_thief_reach_exit",
+                "value": 1,
+                "time": 0,
+                "enemy": "enemy_2069_skzbox",
+                "instance": 1
+              },
+              {
+                "key": "trap_758_skzmbx",
+                "value": 1,
+                "time": 0,
+                "enemy": "enemy_2069_skzbox",
+                "instance": 2
+              },
+              {
+                "key": "killed",
+                "value": 1,
+                "time": 0,
+                "enemy": "enemy_2091_skzgds",
+                "instance": 3
+              },
+              {
+                "key": "killed",
+                "value": 1,
+                "time": 0,
+                "enemy": "enemy_2070_skzfbx",
+                "instance": 4
+              },
+              {
+                "key": "rogue_first_step",
+                "value": 1,
+                "time": 0,
+                "enemy": "enemy_2067_skzcy",
+                "instance": 6,
+                "operator": "char_123_fang",
+                "operatorInstance": 5,
+                "operatorName": "Fang"
+              }
+            ]
+          },
+          "removed": "char_123_fang",
+          "hover": [
+            {
+              "airborne": true,
+              "speed": 0.35
+            },
+            {
+              "airborne": false,
+              "speed": 0.7
+            }
+          ],
+          "placementError": "This operator has been removed from the squad for this battle.",
+          "errors": []
+        },
+        "summaries": [
+          "Lost Contraptions defeated: 1. Run rewards are not applied by the stage simulator.",
+          "Ingot theft events: 1. The run applies the ingot loss after this stage.",
+          "Windows defeated: 1. Prosperity becomes available in the run after this stage.",
+          "Lost Hovercraft defeated: 1. Run rewards are not applied by the stage simulator.",
+          "Operators removed by Portal: Fang. Return timing belongs to the run."
+        ],
+        "errors": []
+      },
+      {
+        "mobile": true,
+        "scope": "controlled supported-enemy fixtures in the public result UI",
+        "state": {
+          "outcomes": {
+            "counters": {
+              "rogue_thief_reach_exit": 1,
+              "trap_758_skzmbx": 1,
+              "killed": 2,
+              "rogue_first_step": 1
+            },
+            "events": [
+              {
+                "key": "rogue_thief_reach_exit",
+                "value": 1,
+                "time": 0,
+                "enemy": "enemy_2069_skzbox",
+                "instance": 1
+              },
+              {
+                "key": "trap_758_skzmbx",
+                "value": 1,
+                "time": 0,
+                "enemy": "enemy_2069_skzbox",
+                "instance": 2
+              },
+              {
+                "key": "killed",
+                "value": 1,
+                "time": 0,
+                "enemy": "enemy_2091_skzgds",
+                "instance": 3
+              },
+              {
+                "key": "killed",
+                "value": 1,
+                "time": 0,
+                "enemy": "enemy_2070_skzfbx",
+                "instance": 4
+              },
+              {
+                "key": "rogue_first_step",
+                "value": 1,
+                "time": 0,
+                "enemy": "enemy_2067_skzcy",
+                "instance": 6,
+                "operator": "char_123_fang",
+                "operatorInstance": 5,
+                "operatorName": "Fang"
+              }
+            ]
+          },
+          "removed": "char_123_fang",
+          "hover": [
+            {
+              "airborne": true,
+              "speed": 0.35
+            },
+            {
+              "airborne": false,
+              "speed": 0.7
+            }
+          ],
+          "placementError": "This operator has been removed from the squad for this battle.",
+          "errors": []
+        },
+        "summaries": [
+          "Lost Contraptions defeated: 1. Run rewards are not applied by the stage simulator.",
+          "Ingot theft events: 1. The run applies the ingot loss after this stage.",
+          "Windows defeated: 1. Prosperity becomes available in the run after this stage.",
+          "Lost Hovercraft defeated: 1. Run rewards are not applied by the stage simulator.",
+          "Operators removed by Portal: Fang. Return timing belongs to the run."
+        ],
+        "errors": []
+      }
+    ],
+    "runtimeFootprint": {
+      "schemaVersion": 1,
+      "scope": "Uncompressed static source closure plus explicitly selected adapter imports. Excludes roster/stage/model transfers and optional dynamic visual effects; not native fidelity or load-time certification.",
+      "ids": [
+        "char_123_fang",
+        "char_124_kroos"
+      ],
+      "adapters": [
+        "arkpedia-casters",
+        "arkpedia-guards",
+        "arkpedia-snipers",
+        "arkpedia-vanguards",
+        "arkpedia-defenders",
+        "arkpedia-advanced-snipers",
+        "arkpedia-specialists",
+        "arkpedia-guard-expansion",
+        "arkpedia-support-expansion",
+        "arkpedia-caster-expansion",
+        "arkpedia-sniper-expansion",
+        "arkpedia-summons",
+        "arkpedia-robot-expansion",
+        "arkpedia-five-star-vanguards",
+        "arkpedia-five-star-vanguard-second",
+        "arkpedia-five-star-guard-third",
+        "arkpedia-five-star-medic-third",
+        "arkpedia-five-star-defender-second",
+        "arkpedia-sniper-six-star",
+        "arkpedia-guard-six-star-third",
+        "arkpedia-thorns",
+        "arkpedia-guard-six-star-fourth",
+        "arkpedia-tinman",
+        "arkpedia-five-star-guard-fourth"
+      ],
+      "common": {
+        "modules": 452,
+        "bytes": 4457604,
+        "sha256": "4b6a101d2e35ae6a2fcbf85f60670f7af36cf87c6ed1ba8d14187f58f9111553"
+      },
+      "selected": {
+        "modules": 489,
+        "bytes": 8180192,
+        "sha256": "9fa3b652f45ad94b3bbacc9035f72ac2264e224bc1cd65c994d01f8a643ca4b7"
+      },
+      "eager": {
+        "modules": 1209,
+        "bytes": 95717378,
+        "sha256": "300a52a0e1e17fec41210a5202ad856065b825386c4bd4db84694311741e6c25"
+      },
+      "largestSelected": [
+        {
+          "path": "data/arkpedia-device-native-source.json",
+          "bytes": 938760,
+          "sha256": "22010755532c2a00a4b9b8f02fd8efd973613dfd94fb027258b6f0369b53e8a8"
+        },
+        {
+          "path": "data/arkpedia-guard-six-star-third-prefabs.json",
+          "bytes": 626629,
+          "sha256": "052f054f51dc027a068a30f955e9b8966fff37d7cec2c664d93e8b140afdd811"
+        },
+        {
+          "path": "data/arkpedia-five-star-defender-second-prefabs.json",
+          "bytes": 417669,
+          "sha256": "26429d2d6afe5d6d2b181ace9e0777f52b3a73f873a70a1cfea63070929e2595"
+        },
+        {
+          "path": "data/arkpedia-five-star-medic-third-prefabs.json",
+          "bytes": 399062,
+          "sha256": "771391620f51bf387cc7f02a34143bf752a328f1e158e808f60c4a8c518a246e"
+        },
+        {
+          "path": "data/arkpedia-guard-six-star-fourth-prefabs.json",
+          "bytes": 383832,
+          "sha256": "3104e4af05c6c44bfec806a3430bb6bc9b919c83627b38176d5b48c8ac4f93ee"
+        },
+        {
+          "path": "data/arkpedia-five-star-medic-second-prefabs.json",
+          "bytes": 349291,
+          "sha256": "aee48eaa7f0b6821820213d11736a1eae33ade672b26f38f1e0897eed3d76922"
+        },
+        {
+          "path": "data/arkpedia-six-star-medic-prefabs.json",
+          "bytes": 322230,
+          "sha256": "016d843a743371c375e2eb56e957d3ee6cf625578b5707ad80094cc328d08145"
+        },
+        {
+          "path": "data/arkpedia-silence-paradigmatic-prefabs.json",
+          "bytes": 320723,
+          "sha256": "16571c07c12b4f32835c6411eb6432bfbb376a3260518412efa857f447894ab2"
+        },
+        {
+          "path": "data/arkpedia-sniper-six-star-prefabs.json",
+          "bytes": 316579,
+          "sha256": "11da77053eb6451116b1f0aa03cd5454d9b67350767445bf6c8ccf3711e26d3e"
+        },
+        {
+          "path": "data/arkpedia-five-star-support-third-prefabs.json",
+          "bytes": 279120,
+          "sha256": "9eccd2cb0eec7d2185cf24c29db1354192462d33a8b30763579f5ee0fa20e05a"
+        },
+        {
+          "path": "data/arkpedia-tinman-prefabs.json",
+          "bytes": 268547,
+          "sha256": "6104c01785227d9a4f73304f53a20d393af495f279d9d575ca7370c84553dda3"
+        },
+        {
+          "path": "server/sim/content/enemies.js",
+          "bytes": 248905,
+          "sha256": "4b7deafbcf6d5060e834368875df5f74bd1b1c8375f653389a032ff28c1c3972"
+        },
+        {
+          "path": "data/arkpedia-support-expansion-prefabs.json",
+          "bytes": 213006,
+          "sha256": "23edce605279012207a993c5a0f6975bdbfe16a54623c7e32b640a4756e68113"
+        },
+        {
+          "path": "data/arkpedia-summon-prefabs.json",
+          "bytes": 204466,
+          "sha256": "a7c84c29457fe8b137decd78a77f391eab6a6b14e9e228a11f94caa5eecdeb2d"
+        },
+        {
+          "path": "data/arkpedia-five-star-vanguard-prefabs.json",
+          "bytes": 188402,
+          "sha256": "1d5d42fbe3cfd51619424740cd2cb8825281f01133d12ca378d77be503c13e89"
+        }
+      ]
+    },
+    "supportedEnemies": 625,
+    "targetEnemies": 2163
+  }
+}

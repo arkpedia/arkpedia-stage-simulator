@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-import { StandardBattle } from "/sim/arkpedia.js";
 import {
   catalogueFor,
   defaultBuild,
@@ -12,16 +11,20 @@ import { StageRenderer } from "./renderer.js";
 import { absoluteRangeKeys } from "/sim/targeting.js";
 import { classNames, skillIconFile, operatorAssetName, skillDescriptionText } from "/shared/arkpedia/battle-ui.js";
 import { swipeFacing } from "/shared/arkpedia/placement.js";
-import { marcilBenchMana } from '/sim/content/arkpedia-marcil.js';
 import { skillHud, skillSourceFor, ammunitionHud } from "/shared/arkpedia/skill-hud.js";
 import { battleHud } from "/shared/arkpedia/battle-hud.js";
 import { interfaceAssetUrl } from "/shared/arkpedia/interface-assets.js";
 import { requiresLandscape } from "/shared/arkpedia/viewport.js";
 import { flowingShapeDeck, FlowingShapeCopyInteraction } from './muelsyse-copy.js';
 import { summonUnitId } from "/shared/arkpedia/summons.js";
-import { regularSummonCards, selectedRegularSummon, summonPlacementError,
-  deployRegularSummon, retreatRegularSummon } from "/sim/content/arkpedia-summons.js";
-import { applyStage } from "/shared/arkpedia/stages.js";
+import { applyStage, loadStageCatalogue } from "/shared/arkpedia/stages.js";
+import { excludedStageOperators, stageSquadLimit, stageUsesFixedSquad } from '/shared/arkpedia/stage-roster.js';
+import { stageCardDeploymentBlocked, PROFESSION_BITS } from '/shared/arkpedia/stage-card-rules.js';
+import { createBattleMetrics } from '/shared/arkpedia/battle-metrics.js';
+import { createDamagePanel } from './damage-panel.js';
+import { STAGE_MODE_FIELDS, stageModeDefaults, validateStageModeRules } from '/shared/arkpedia/stage-mode-rules.js';
+import { loadOperatorData } from '/shared/arkpedia/operator-library.js';
+import { stageOutcomeSummaries } from '/shared/arkpedia/stage-outcomes.js';
 const escape = (s) =>
   String(s).replace(
     /[&<>"']/g,
@@ -31,6 +34,17 @@ const escape = (s) =>
       ],
   );
 const app = document.querySelector("#app");
+let StandardBattle, prepareRegularOperatorRuntime, operatorRuntime, regularSummonCards, selectedRegularSummon,
+  summonPlacementError, deployRegularSummon, retreatRegularSummon;
+async function loadBattleRuntime() {
+  const [engine, summons, runtime] = await Promise.all([
+    import('/sim/arkpedia.js'), import('/sim/content/arkpedia-summon-deck.js'),
+    import('/sim/content/arkpedia-operator-runtime.js'),
+  ]);
+  ({ StandardBattle } = engine);
+  ({ prepareRegularOperatorRuntime } = runtime);
+  ({ regularSummonCards, selectedRegularSummon, summonPlacementError, deployRegularSummon, retreatRegularSummon } = summons);
+}
 let renderer,
   battle,
   workspace,
@@ -52,32 +66,36 @@ let loading = false,
   landscapeRequired = false;
 let operatorTab = "skill";
 let copyFlow = null;
-const [response, stageResponse] = await Promise.all([
-  fetch("/data/arkpedia-mvp.json"),
-  fetch("/data/arkpedia-stages.json"),
-]);
-if (!response.ok || !stageResponse.ok) throw Error("Stage data unavailable");
-const data = await response.json();
-const stageIndex = await stageResponse.json();
+let metrics, damagePanel;
 const query = new URLSearchParams(location.search);
+const [operatorLibrary, stageIndex] = await Promise.all([
+  loadOperatorData(fetch, { snapshot: query.get('snapshot') === '1' }),
+  loadStageCatalogue(),
+]);
+const data = operatorLibrary.data;
 const experimental = query.get("experimental") === "1";
 const requested = query.get("stage");
 const stageHref = stage => `/arkpedia/?stage=${encodeURIComponent(stage.id)}${experimental ? '&experimental=1' : ''}`;
 let activeStage;
 try {
-  ({ entry: activeStage } = await applyStage(data, stageIndex, requested, fetch, { experimental }));
+  ({ entry: activeStage } = await applyStage(data, stageIndex, requested, fetch, { experimental, embeddedDefault: !requested }));
   document.title = `${data.stage.code} ${data.stage.name} · Arkpedia stage simulator`;
 } catch (error) {
-  const available = (error.stages ?? stageIndex.stages.filter(stage => !stage.testOnly) ?? []).map(stage =>
+  const available = (error.stages ?? stageIndex.stages.filter(stage => !stage.testOnly) ?? []).slice(0, 12).map(stage =>
     `<a href="${stageHref(stage)}">${escape(stage.code)} ${escape(stage.name)}</a>`).join(', ');
   const hint = error.code === 'STAGE_TEST_ONLY'
     ? `This stage is test-only. <a href="/arkpedia/?experimental=1&stage=${encodeURIComponent(error.stage.id)}">Open it in the developer QA view</a>. `
     : '';
-  app.innerHTML = `<div class="frame"><h1>Stage not supported yet</h1><p class="notice">${hint}Available stages: ${available || 'none'}.</p><a href="/arkpedia/">Open ${escape(stageIndex.defaultStage)}</a></div>`;
+  const missing = [...new Set((error.blockers ?? []).map(b => ({ enemy: 'Enemy behavior', device: b.id,
+    mode: 'Special-mode rules', conditional: 'Conditional waves', environment: 'Environment mechanics',
+    'stage-rules': 'Stage modifiers', 'device-instance': 'Device activation', 'wave-program': 'Wave scheduling' })[b.kind] ?? 'Stage mechanics'))];
+  app.innerHTML = `<div class="frame"><h1>${error.stage ? escape(error.stage.code) + ': ' : ''}Stage not supported yet</h1>${missing.length ? `<p class="notice">Still needed: ${missing.map(escape).join(', ')}.</p>` : ''}<p class="notice">${hint}Available stages: ${available || 'none'}.</p><a href="/arkpedia/">Open ${escape(stageIndex.defaultStage)}</a></div>`;
   throw error;
 }
 const catalogue = catalogueFor(data);
-const ops = Object.values(data.operators);
+const squadLimit = stageSquadLimit(data.stage);
+const excludedOperators = excludedStageOperators(data.stage, data.operators);
+const ops = Object.values(data.operators).filter(o => !excludedOperators.has(o.id));
 const rarityFolder = (op) => ["one", "two", "three", "four", "five", "six"][op.rarity - 1];
 const supportPortrait = (op) => {
   const initials = String(op.name).split(/\s+/).map(part => part[0]).join("").slice(0, 2).toUpperCase();
@@ -96,6 +114,16 @@ const summonIcon = id => {
   throw Error('Missing original summon avatar: ' + id);
 };
 function selectedEntry(id = selected) {
+  const device = battle?.manualStageDevices?.entries.get(id) ?? battle?.capturableStageDevices?.entries.get(id) ?? battle?.electricCoils?.entries.get(id) ?? battle?.stageTurrets?.entries.get(id) ?? battle?.stageMagicCircuit?.entries.get(id) ?? battle?.stageFlowGenerators?.entries.get(id) ?? battle?.stageGramophones?.entries.get(id) ?? battle?.stageScenery?.entries.get(id);
+  if (device && !device.supplied) return { ...device, kind: 'stage-device', record: { rangeGrid: device.spec.range } };
+  const supply = typeof id === 'string' && id.startsWith('stage-supply:')
+    ? battle?.units.find(u => u.mem.stageSupplyId === id) : null;
+  if (supply) {
+    const card = supply.mem.stageSupplyDefinition ?? battle.stage.raw.tokens.find(t => t.unitId === supply.mem.stageSupplyToken);
+    return { id, kind: 'stage-supply', name: card.name, unit: supply, state: supply.alive ? 'active' : 'spent',
+      record: { rangeGrid: card.range }, spec: { ...card, passive: true,
+        description: card.description ?? `Stuns enemies on its tile and four adjacent tiles for ${card.stun} seconds. Consumed on release; retreat cancels it without a refund.` } };
+  }
   const entry = battle?.bench[id];
   if (entry) return { ...entry, kind: 'operator', id, record: battle.data.rawChess(id),
     name: data.operators[id].name, icon: icon(data.operators[id]),
@@ -144,13 +172,18 @@ function skillDescription(level) {
 const builds = Object.fromEntries(ops.map((o) => [o.id, defaultBuild(o)]));
 const supportSkills = Object.fromEntries(ops.map((o) => [o.id, defaultBuild(o).skillId]));
 const rankLabel = (rank) => rank > 7 ? `M${rank - 7}` : `Rank ${rank}`;
-const chosen = new Set(data.stage.fixedSquad ? data.stage.fixedSquad.map(entry => entry.unit_id) : ops.slice(0, 5).map((o) => o.id));
+const hasFixedSquad = stageUsesFixedSquad(data.stage);
+const fixedCards = data.stage.waveProgram?.predefined?.entries.filter(e => e.kind === 'card').map(e => e.build.id)
+  ?? data.stage.fixedSquad?.map(entry => entry.unit_id) ?? [];
+const chosen = new Set(hasFixedSquad ? fixedCards : ops.slice(0, Math.min(5, squadLimit)).map((o) => o.id));
 let editing = ops[0].id,
   supportId = "",
   rosterQuery = "";
 function prep() {
   const stages = stageIndex.stages.filter(stage => !stage.testOnly || experimental);
+  const navigationStages = stages.filter(stage => stage.availability !== 'blocked');
   const chapterLabel = (stage) => {
+    if (stage.mode === 'integrated_strategies') return 'Integrated Strategies';
     const code = stage.code;
     if (/^TR-/i.test(code)) return 'Tutorial';
     if (/^S\d/i.test(code)) return 'Side stories';
@@ -164,14 +197,16 @@ function prep() {
     if (!groupedStages.has(label)) groupedStages.set(label, []);
     groupedStages.get(label).push(stage);
   }
-  const stageOptions = [...groupedStages].map(([label, list]) => `<optgroup label="${escape(label)}">${list.map(stage => `<option value="${escape(stageHref(stage))}"${stage.id === activeStage.id ? ' selected' : ''}>${escape(stage.code)} ${escape(stage.name)}${stage.testOnly ? ' · test' : ''}</option>`).join('')}</optgroup>`).join('');
+  const stageOptions = [...groupedStages].map(([label, list]) => `<optgroup label="${escape(label)}">${list.map(stage => `<option value="${escape(stageHref(stage))}"${stage.id === activeStage.id ? ' selected' : ''}>${escape(stage.code)} ${escape(stage.name)}${stage.availability === 'blocked' ? ' · unavailable' : stage.testOnly ? ' · test' : ''}</option>`).join('')}</optgroup>`).join('');
   const stagePicker = stages.length > 1
     ? `<label class="stage-picker">Stage <button type="button" id="stage-prev" aria-label="Previous stage">‹</button><input id="stage-search" type="search" placeholder="Find a stage" autocomplete="off" aria-label="Find a stage"><span id="stage-search-count" class="stage-search-count" role="status" aria-live="polite"></span><select id="stage-select" aria-label="Stages">${stageOptions}</select><button type="button" id="stage-next" aria-label="Next stage">›</button></label>`
     : '';
   app.innerHTML = `<div class="frame"><header class="topline"><div><p class="eyebrow">Arkpedia · prototype</p><h1>Stage simulator</h1></div><span class="muted">${escape(data.stage.code)} ${escape(data.stage.name)}</span></header>
  <div class="prep">${stagePicker}<section class="preview"><div class="stage-title"><span class="stage-code">${escape(data.stage.code)}</span><h2>${escape(data.stage.name)}</h2></div><p class="help">${escape(data.stage.description)}</p><p class="stage-meta">${Object.keys(data.stage.enemies ?? {}).length} enemy types · ${data.stage.geometry?.waves?.length ?? 0} waves · ${data.stage.battle?.max_life ?? '–'} life</p><div class="board" id="board"></div><div class="legend"><span class="spawn">Enemy entry</span><span class="goal">Defence objective</span><span>Raised tiles: ranged operators</span></div>
- ${data.stage.fixedSquad ? `<p class="notice">This stage uses a fixed squad (${data.stage.fixedSquad.length} operators); the squad choices below are ignored in battle.</p>` : ''}<div class="panel help"><h3>How to play</h3><p>Choose your squad, then open the battle workspace. On mobile, rotate to landscape for battle. Drag an operator onto a tile, then choose its facing on the map. You can also select the operator and click a tile. Select a deployed operator to activate a ready skill or retreat.</p></div>
- <p class="notice">This first slice supports ${escape(data.stage.code)} and the ${ops.length} operators shown. Squad capacity is 12 + one distinct maxed support. Modules, other stages and the rest of the roster are still being built.</p></section>
+ ${excludedOperators.size ? `<p class="notice">Unavailable in this stage: ${[...excludedOperators].map(id => escape(data.operators[id]?.name ?? id)).join(', ')}.</p>` : ''}
+ ${data.stage.rules?.deploymentExcludedProfessionMask ? `<p class="notice">Cannot deploy: ${Object.keys(PROFESSION_BITS).filter(profession => stageCardDeploymentBlocked(data.stage.rules, { profession })).map(profession => escape(classNames[profession] ?? profession)).join(', ')}. These operators can remain in your squad for squad talents.</p>` : ''}
+ ${hasFixedSquad ? `<p class="notice">This stage supplies its operators (${fixedCards.length} deployment cards); squad choices below are ignored in battle.</p>` : ''}<div class="panel help"><h3>How to play</h3><p>Choose your squad, then open the battle workspace. On mobile, rotate to landscape for battle. Drag an operator onto a tile, then choose its facing on the map. You can also select the operator and click a tile. Select a deployed operator to activate a ready skill or retreat.</p></div>
+ <p class="notice">${squadLimit < 13 ? `This stage allows ${squadLimit} operators, including support.` : 'Squad capacity is 12 + one distinct maxed support.'} Stages with missing mechanics are marked unavailable. Modules are not simulated.</p></section>
  <section class="panel"><h2>Prepare your squad</h2><p class="help">Select an operator to adjust their build.</p><label class="roster-search">Find an operator<input id="roster-search" type="search" placeholder="Name or class" value="${escape(rosterQuery)}" autocomplete="off" aria-controls="roster"></label><div class="roster" id="roster" aria-label="Available operators"><p class="roster-empty" hidden>No operators match this search.</p></div><div id="build"></div><label class="support">Support · optional, fully maxed<select id="support"><option value="">No support</option></select></label><div id="support-build"></div><div class="prepare-actions"><button class="primary" id="start">Open battle workspace</button></div><p class="error" id="prep-error" role="status" aria-live="polite"></p></section></div>
  <footer>Combat engine from Stronghold Protocol · GPL-3.0-or-later. Unofficial fan simulator; timings are not yet verified frame-for-frame against the game.<div class="links"><a href="https://github.com/arkpedia/arkpedia-stage-simulator" target="_blank" rel="noreferrer">Simulator source</a><a href="https://github.com/arkpedia/arkpedia-sd-assets" target="_blank" rel="noreferrer">Chibi assets & credits</a></div></footer></div>`;
   renderer = new StageRenderer(
@@ -189,9 +224,9 @@ function prep() {
     const counter = document.querySelector("#stage-search-count");
     if (counter) counter.textContent = query ? `${count} match${count === 1 ? "" : "es"}` : "";
   });
-  const activeIndex = stages.findIndex(stage => stage.id === activeStage.id);
-  document.querySelector("#stage-prev")?.addEventListener("click", () => { if (activeIndex > 0) location.href = stageHref(stages[activeIndex - 1]); });
-  document.querySelector("#stage-next")?.addEventListener("click", () => { if (activeIndex >= 0 && activeIndex < stages.length - 1) location.href = stageHref(stages[activeIndex + 1]); });
+  const activeIndex = navigationStages.findIndex(stage => stage.id === activeStage.id);
+  document.querySelector("#stage-prev")?.addEventListener("click", () => { if (activeIndex > 0) location.href = stageHref(navigationStages[activeIndex - 1]); });
+  document.querySelector("#stage-next")?.addEventListener("click", () => { if (activeIndex >= 0 && activeIndex < navigationStages.length - 1) location.href = stageHref(navigationStages[activeIndex + 1]); });
   document.querySelector("#stage-search")?.addEventListener("keydown", (e) => {
     if (e.key === "Escape") { e.target.value = ""; e.target.dispatchEvent(new Event("input", { bubbles: true })); }
     if (e.key === "Enter") {
@@ -201,6 +236,12 @@ function prep() {
   });
   document.querySelector("#stage-select")?.addEventListener("change", (e) => { location.href = e.target.value; });
   document.querySelector("#start").addEventListener("click", start);
+  if (data.stage.mode) {
+    const defaults = stageModeDefaults(data.stage), controls = document.createElement('fieldset');
+    controls.id = 'mode-rules';
+    controls.innerHTML = `<legend>Individual-stage rules</legend><p class="help">Use the values for your run. Collectibles, squad bonuses and progression are not applied automatically.</p><div class="build-form">${STAGE_MODE_FIELDS.map(f => `<label>${f.label}<input type="number" data-mode-rule="${f.key}" min="${f.min}" max="${f.key === 'initialDp' ? data.stage.battle.max_dp : f.max}" step="${f.step}" value="${defaults[f.key]}" required></label>`).join('')}</div>`;
+    document.querySelector('.prepare-actions').before(controls);
+  }
   document.querySelector("#roster-search").addEventListener("input", (e) => {
     rosterQuery = e.target.value;
     filterRoster();
@@ -219,14 +260,12 @@ function filterRoster() {
   }
   document.querySelector('#roster .roster-empty').hidden = matched;
 }
-function renderPrep() {
+let prepRevision = 0;
+async function renderPrep() {
+  const revision = ++prepRevision;
   const active = document.activeElement;
   const focusId = active?.id;
   const focusOperator = active?.classList.contains("roster-item") ? active.dataset.id : null;
-  const op = data.operators[editing],
-    b = builds[editing],
-    available = availableSkills(op, b.elite, b.level),
-    skill = op.skills.find((entry) => entry.id === b.skillId)?.levels[b.skillRank - 1];
   document.querySelector("#roster").innerHTML = ops
     .map(
       (o) =>
@@ -241,6 +280,23 @@ function renderPrep() {
       }),
   );
   filterRoster();
+  document.querySelector('#start').disabled = true;
+  if (data.operators[editing].summaryOnly) {
+    document.querySelector('#build').textContent = 'Loading operator…';
+    try { await operatorLibrary.ensureOperators([editing]); }
+    catch (error) {
+      if (revision !== prepRevision || !document.querySelector('#build')) return;
+      document.querySelector('#prep-error').textContent = `Could not load ${data.operators[editing].name}. Check your connection and retry.`;
+      document.querySelector('#build').innerHTML = '<button id="retry-operator">Retry loading operator</button>';
+      document.querySelector('#retry-operator').onclick = renderPrep;
+      return;
+    }
+    if (revision !== prepRevision || !document.querySelector('#build')) return;
+    document.querySelector('#prep-error').textContent = '';
+  }
+  const op = data.operators[editing], b = builds[editing],
+    available = availableSkills(op, b.elite, b.level),
+    skill = op.skills.find(entry => entry.id === b.skillId)?.levels[b.skillRank - 1];
   document.querySelector("#build").innerHTML =
     `<div class="build-heading"><h3>${escape(op.name)}</h3><button id="toggle">${chosen.has(editing) ? "Remove from squad" : "Add to squad"}</button></div>${op.sourceChannel === 'cn' ? `<p class="help">CN source · ${escape(op.sourceName)} · Original Chinese skill text</p>` : ''}<div class="build-form">
  <label>Elite<select id="elite" ${op.phases.length === 1 ? "disabled" : ""}>${op.phases.map((p, elite) => `<option value="${elite}" ${b.elite === elite ? "selected" : ""}>E${elite}</option>`).join("")}</select></label>
@@ -297,7 +353,12 @@ function renderPrep() {
     supportSkills[supportId] = e.target.value;
     renderPrep();
   });
-  document.querySelector("#start").disabled = chosen.size === 0 || loading;
+  const overLimit = !hasFixedSquad && chosen.size + (supportId ? 1 : 0) > squadLimit;
+  const limitError = `This stage allows at most ${squadLimit} operators, including support.`;
+  const prepError = document.querySelector('#prep-error');
+  if (overLimit) prepError.textContent = limitError;
+  else if (prepError.textContent === limitError) prepError.textContent = '';
+  document.querySelector("#start").disabled = !hasFixedSquad && chosen.size === 0 || loading || overLimit;
   const restoredFocus = focusOperator
     ? document.querySelector(`.roster-item[data-id="${focusOperator}"]`)
     : focusId ? document.getElementById(focusId) : null;
@@ -310,21 +371,26 @@ async function start() {
   const status = document.querySelector("#prep-error");
   status.textContent = "Preparing battlefield…";
   try {
-    await renderer.artReady;
+    await Promise.all([renderer.artReady, loadBattleRuntime()]);
     selection = {
       operators: [...chosen].map((id) => builds[id]),
       support: supportId
         ? { id: supportId, skillId: supportSkills[supportId] }
         : null,
     };
+    if (data.stage.mode) selection.modeRules = validateStageModeRules(data.stage, Object.fromEntries(
+      [...document.querySelectorAll('[data-mode-rule]')].map(input => [input.dataset.modeRule, input.value === '' ? NaN : Number(input.value)])));
+    const battleIds = await operatorLibrary.prepareBattle(selection);
+    operatorRuntime = await prepareRegularOperatorRuntime(battleIds);
     // Never gate the battle on optional chibi downloads: start the simulation now, let the
-    // skeletons stream in behind it. A missing/slow chibi shows as an invisible unit until it
-    // arrives instead of leaving the whole simulator stuck on a loading counter.
-    void renderer.preload(
-      [...chosen, ...(supportId ? [supportId] : [])],
-      () => {},
-    ).catch((error) => console.error('chibi preload failed', error));
-    battle = new StandardBattle(data, selection, { seed: Date.now() });
+    // skeletons stream in behind it. A missing/slow chibi uses a visible marker
+    // which the renderer replaces when the original model arrives.
+    const loadingRenderer = renderer;
+    void operatorLibrary.ensureModels(battleIds).then(() => {
+      if (!loadingRenderer.destroyed) return loadingRenderer.preload(battleIds, () => {});
+    }).catch((error) => console.error('chibi preload failed', error));
+    battle = new StandardBattle(data, selection, { seed: Date.now(), operatorRuntime });
+    metrics = createBattleMetrics(battle);
     selectedToken = null;
     speed = 1;
     showRoutes = false;
@@ -334,10 +400,10 @@ async function start() {
     workspace.innerHTML = `<div class="battle-content"><div class="board battle-board" id="battle-board">
       <header class="battle-header">
         <button id="settings" aria-label="Battle settings" aria-expanded="false" aria-controls="battle-settings">⚙</button>
-        <div class="battle-settings" id="battle-settings" hidden><p>${escape(data.stage.code)} · Collapse <span id="battle-time" aria-label="Battle time"></span></p><button id="routes" aria-pressed="false">Paths</button><button id="restart">Restart</button><button id="exit">Back to squad</button></div>
-        <div class="battle-controls"><button id="speed" aria-label="Battle speed">1×</button><button id="pause" aria-label="Start"><span aria-hidden="true">▶</span></button></div>
+        <div class="battle-settings" id="battle-settings" hidden><p>${escape(data.stage.code)} · ${escape(data.stage.name)} <span id="battle-time" aria-label="Battle time"></span></p><button id="routes" aria-pressed="false">Paths</button><button id="restart">Restart</button><button id="exit">Back to squad</button></div>
+        <div class="battle-controls"><button id="damage" aria-expanded="false" aria-controls="damage-panel">Damage</button><button id="speed" aria-label="Battle speed">1×</button><button id="pause" aria-label="Start"><span aria-hidden="true">▶</span></button></div>
       </header>
-      ${battleReadouts()}<span class="simulation-label">Simulation · ${escape(data.stage.code)}</span><span class="pause-label" id="paused-label" hidden>Paused</span>
+      ${battleReadouts()}<span class="simulation-label">Simulation · ${escape(data.stage.code)}<span id="objective-clock" hidden></span></span><span class="pause-label" id="paused-label" hidden>Paused</span>
       <aside class="command" id="command" aria-label="Selected operator" hidden></aside>
       <div class="field-command" id="field-command" aria-label="Operator actions" hidden></div>
       <button class="facing-cancel" id="facing-cancel" hidden><span aria-hidden="true">×</span>Cancel</button>
@@ -348,6 +414,11 @@ async function start() {
       </div></div><div class="orientation-gate" id="orientation-gate" role="dialog" aria-modal="true" aria-labelledby="orientation-title" aria-describedby="orientation-description" hidden><svg class="rotate-device" aria-hidden="true" viewBox="0 0 100 100"><rect x="33" y="22" width="34" height="56" rx="5"/><path d="M18 55A34 34 0 0 1 60 17M60 17l-13-3M60 17l-7 12M82 45A34 34 0 0 1 40 83M40 83l13 3M40 83l7-12"/></svg><h2 id="orientation-title">Rotate to landscape</h2><p id="orientation-description">Turn your device sideways to deploy and play.<br>Your battle is paused and your squad is saved.</p><button id="portrait-exit">Back to squad</button></div>`;
     document.body.append(workspace);
     const board = workspace.querySelector("#battle-board");
+    damagePanel = createDamagePanel(board, Object.fromEntries(ops.map(op => [op.id, op.name])));
+    workspace.querySelector('#damage').onclick = event => {
+      damagePanel.toggle(event.currentTarget);
+      damagePanel.update(metrics.read());
+    };
     // Move canvases to a full-viewport battle container; preview has no deployment handler.
     renderer.observer.unobserve(renderer.host);
     renderer.host = board;
@@ -436,7 +507,7 @@ async function start() {
     handle.onpointercancel = handle.onlostpointercapture = cancelAim;
     // Click placement remains available outside the picker; it never confirms facing.
     board.onpointerup = (e) => {
-      if (pending || e.target.closest("button, .command, .battle-settings, .deployment-wrap")) return;
+      if (pending || e.target.closest("button, .command, .battle-settings, .deployment-wrap, .damage-panel")) return;
       const tile = renderer.pickAt(e.clientX, e.clientY);
       if (tile) pick(tile.row, tile.col);
     };
@@ -480,16 +551,10 @@ async function start() {
     accumulator = 0;
     app.inert = true;
     app.hidden = true;
-    // Native fullscreen is optional; the viewport workspace remains the supported fallback (e.g. iOS).
-    try {
-      if (
-        window.matchMedia("(min-width: 761px)").matches &&
-        window.self === window.top
-      )
-        await workspace.requestFullscreen?.();
-      if (document.fullscreenElement === workspace)
-        viewport = "native-fullscreen";
-    } catch {}
+    // An optional browser fullscreen request may remain pending. The battle
+    // workspace is ready now; do not keep preparation locked behind that API.
+    if (window.matchMedia("(min-width: 761px)").matches && window.self === window.top)
+      void requestBattleFullscreen(workspace, battle);
     battle.setViewport(landscapeRequired ? "preview" : viewport);
     syncOrientation();
     renderer.resize();
@@ -505,9 +570,20 @@ async function start() {
     if (!workspace) renderPrep();
   }
 }
+async function requestBattleFullscreen(openedWorkspace, openedBattle) {
+  try { await openedWorkspace.requestFullscreen?.(); } catch {}
+  // Leaving or restarting while permission is pending invalidates this result.
+  if (workspace !== openedWorkspace || battle !== openedBattle) return;
+  if (document.fullscreenElement === openedWorkspace) viewport = "native-fullscreen";
+  openedBattle.setViewport(landscapeRequired ? "preview" : viewport);
+  syncOrientation(); renderer.resize(); drawHud();
+}
 function restart() {
   workspace.querySelector("#deployment").innerHTML = "";
-  battle = new StandardBattle(data, selection, { seed: Date.now() });
+  damagePanel.close();
+  metrics.dispose();
+  battle = new StandardBattle(data, selection, { seed: Date.now(), operatorRuntime });
+  metrics = createBattleMetrics(battle);
   battle.setViewport(landscapeRequired ? "preview" : viewport);
   paused = true;
   accumulator = 0;
@@ -519,6 +595,7 @@ function restart() {
 }
 async function exit() {
   paused = true;
+  metrics?.dispose();
   battle?.setViewport("preview");
   viewport = "preview";
   if (document.fullscreenElement)
@@ -529,6 +606,8 @@ async function exit() {
   app.inert = false;
   app.hidden = false;
   workspace = null;
+  metrics = null;
+  damagePanel = null;
   landscapeRequired = false;
   battle = null;
   selected = null;
@@ -540,7 +619,14 @@ function pick(row, col) {
   if (!battle || battle.finished || landscapeRequired) return;
   if (copyFlow?.active) return;
   if (selectedToken) {
-    try { battle.deployToken(selectedToken, row, col); selectedToken = null; }
+    const card = battle.stage.raw.tokens.find(t => t.unitId === selectedToken);
+    if (card?.chooseFacing) {
+      const error = battle.tokenPlacementError(selectedToken, row, col);
+      if (error) battleError = error;
+      else { pending = { kind: 'stage-supply', tokenId: selectedToken, row, col, dir: null }; battleError = ''; }
+      drawHud(); return;
+    }
+    try { const unit = battle.deployToken(selectedToken, row, col); selected = unit.mem.stageSupplyId ?? null; selectedToken = null; }
     catch (e) { battleError = e.message; }
     pending = null;
     drawHud();
@@ -548,7 +634,7 @@ function pick(row, col) {
   }
   battleError = "";
   // Owned devices can deliberately use the enemy targeting side (Stainless).
-  const selectable = battle.units.filter(u => u.side === 'ally' || u.mem.regularSummonCard);
+  const selectable = battle.units.filter(u => u.side === 'ally' || u.mem.regularSummonCard || u.mem.stageDeviceId || u.mem.stageSupplyId);
   const occupied = selectable.find(
     (u) => u.alive && u.deployed && u.tileR === row && u.tileC === col,
   );
@@ -569,8 +655,8 @@ function pick(row, col) {
     return;
   }
   if (occupied) {
-    selected = occupied.kind === 'token' || occupied.kind === 'device' && occupied.mem.regularSummonCard
-      ? summonUnitId(occupied) : occupied.defId;
+    selected = occupied.mem.stageSupplyId ?? occupied.mem.stageDeviceId ?? occupied.mem.stageManualDevice ?? (occupied.kind === 'token' || occupied.kind === 'device' && occupied.mem.regularSummonCard
+      ? summonUnitId(occupied) : occupied.defId);
     pending = null;
     drawHud();
     return;
@@ -588,8 +674,8 @@ function pick(row, col) {
     const unit = selectable.find(
       (u) => u.alive && u.tileR === row && u.tileC === col,
     );
-    selected = unit?.kind === 'token' || unit?.kind === 'device' && unit.mem.regularSummonCard
-      ? summonUnitId(unit) : unit?.defId ?? null;
+    selected = unit?.mem.stageSupplyId ?? unit?.mem.stageDeviceId ?? unit?.mem.stageManualDevice ?? (unit?.kind === 'token' || unit?.kind === 'device' && unit.mem.regularSummonCard
+      ? summonUnitId(unit) : unit?.defId ?? null);
     pending = null;
   }
   drawHud();
@@ -644,13 +730,14 @@ function operatorDetails(build, unit) {
     ["Block", stats?.blockCnt ?? record.stats.blockCnt],
   ];
   return `<p class="operator-build">E${build.elite} · Lv ${build.level}${selection.support?.id === build.id ? " · Support" : ""}</p>
+    ${stageCardDeploymentBlocked(data.stage.rules, record) ? '<p class="notice">This operator’s class cannot deploy in this stage.</p>' : ''}
     <dl class="operator-stats">${numbers.map(([label, value]) => `<div><dt>${label}</dt><dd>${Math.round(value)}</dd></div>`).join("")}</dl>
     <div class="hp-readout"><span>HP</span><strong>${Math.min(Math.ceil(hp), Math.round(maxHp))} / ${Math.round(maxHp)}</strong></div>
     <div class="meter hp"><span style="width:${Math.min(1, Math.max(0, hp / maxHp)) * 100}%"></span></div>
     ${ammunition ? `<p class="sp-readout">${escape(ammunition.text)}</p>` : ''}${rangeDiagram(record.rangeGrid)}`;
 }
 function operatorSkillDetails(build, unit, tokenLevel = null) {
-  const mana = marcilBenchMana(battle, build.id);
+  const mana = battle?.operatorServices.marcilBenchMana(battle, build.id);
   const hud = unit ? skillHud(unit.skill) : mana ? { ...mana, state: 'charging' } : null;
   const level = tokenLevel ?? data.operators[build.id].skills.find((entry) => entry.id === build.skillId)?.levels[build.skillRank - 1];
   const recovery = build.id === 'char_4141_marcil' ? 'Mana' : {
@@ -694,12 +781,17 @@ function updateShelfTrack() {
 }
 function drawHud() {
   if (!workspace || !battle) return;
+  damagePanel.update(metrics.read());
   if (copyFlow && !copyFlow.active) {
     const old = selected;
     cancelPlacement();
     if (selectedEntry(old)?.unit) selected = old;
   }
   const reading = battleHud(battle, paused);
+  const objectiveClock = workspace.querySelector('#objective-clock');
+  objectiveClock.hidden = reading.deadline == null;
+  objectiveClock.textContent = reading.deadline == null ? '' : ` · ${reading.deadline} left`;
+  objectiveClock.setAttribute('aria-label', reading.deadline == null ? '' : `Defeat all enemies: ${reading.deadline} remaining`);
   for (const [id, value] of Object.entries({
     "enemy-count": reading.enemies,
     "life-count": reading.life,
@@ -752,12 +844,16 @@ function drawHud() {
       const card = tokenCards.find(item => item.unitId === button.dataset.token);
       const remaining = battle.mvpStageTokens.get(card.unitId) ?? 0;
       button.querySelector("b").textContent = `×${remaining} · ${card.cost} DP`;
-      button.disabled = remaining <= 0 || battle.finished;
+      const cooldown = Math.max(0, (battle.stageTokenReadyAt.get(card.unitId) ?? 0) - battle.time);
+      if (cooldown > 0) button.querySelector('b').textContent += ` · ${Math.ceil(cooldown)}s`;
+      const active = card.maxActive && battle.allyUnits.filter(u => u.alive && u.mem.stageSupplyToken === card.unitId).length >= card.maxActive;
+      if (active) button.querySelector('b').textContent += ' · Deployed';
+      button.disabled = remaining <= 0 || battle.finished || cooldown > 0 || active;
       button.setAttribute("aria-pressed", String(selectedToken === card.unitId));
     }
   }
   const shelf = workspace.querySelector("#deployment");
-  const cardIds = [...Object.keys(battle.bench), ...regularSummonCards(battle).map(card => card.key)];
+  const cardIds = [...Object.keys(battle.bench).filter(id => !battle.bench[id].noCard && !battle.bench[id].removedFromDeck), ...regularSummonCards(battle).map(card => card.key)];
   // Append new summon cards without rebuilding existing buttons or losing focus.
   for (const id of cardIds) {
     if ([...shelf.children].some(button => button.dataset.id === id)) continue;
@@ -789,6 +885,7 @@ function drawHud() {
         if (
           e.button !== 0 ||
           battle.finished ||
+          battle.deploymentRestrictionError(button.dataset.id) ||
           selectedEntry(button.dataset.id)?.unit?.alive
         )
           return;
@@ -854,7 +951,7 @@ function drawHud() {
   for (const button of shelf.querySelectorAll("button")) {
     const id = button.dataset.id, b = selectedEntry(id);
     // Owner-scoped decks unregister on retirement; their old card has no state.
-    if (!b) {
+    if (!b || b.removedFromDeck) {
       if (selected === id) cancelPlacement();
       button.remove();
       continue;
@@ -863,7 +960,8 @@ function drawHud() {
     if (button.hidden && selected === id) cancelPlacement();
     const alive = b.unit?.alive,
       cool = Number.isFinite(b.readyAt) ? Math.max(0, Math.ceil(b.readyAt - battle.time)) : 0;
-    const cost = b.kind === 'summon'
+    const restriction = battle.deploymentRestrictionError(id);
+    const cost = restriction ? 'Deployment restricted' : b.kind === 'summon'
       ? !b.owner.alive || !b.owner.deployed ? 'Summoner absent'
         : b.stock <= 0 ? b.config.tacticalPoint ? 'Tactical point set' : b.config.deckMarker ? `${b.record.stats.cost} DP · deck marker` : 'None remaining'
         : cool ? `${cool}s · ${b.stock} left` : `${b.record.stats.cost} DP · ${b.stock} left`
@@ -875,12 +973,13 @@ function drawHud() {
     button.classList.toggle("active", selected === id);
     button.setAttribute("aria-pressed", String(selected === id));
     button.setAttribute("aria-label", `${b.name}, ${cost}${id === supportId ? ', Support' : ''}`);
-    button.title = `${b.name}${id === supportId ? ' · Support' : ''}`;
-    button.querySelector(".cost").textContent = alive ? 'IN'
+    button.title = `${b.name}${id === supportId ? ' · Support' : ''}${restriction ? ' · ' + restriction : ''}`;
+    button.querySelector(".cost").textContent = restriction ? 'LOCK'
+      : alive ? 'IN'
       : cool ? cool + 's'
       : b.kind === 'summon' && b.stock <= 0 ? b.config.tacticalPoint ? 'SET' : b.config.deckMarker ? b.record.stats.cost : '—'
       : b.kind === 'summon' ? b.record.stats.cost : battle.cost(id);
-    const mana = marcilBenchMana(battle, id);
+    const mana = battle?.operatorServices.marcilBenchMana(battle, id);
     let manaFrame = button.querySelector('.mana-charge');
     if (mana && !manaFrame) {
       manaFrame = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -914,7 +1013,7 @@ function drawHud() {
   const b = selectedEntry(), unit = b?.unit;
   let highlights = [];
   const command = workspace.querySelector('#command'), field = workspace.querySelector('#field-command');
-  command.hidden = !b || battle.finished;
+  command.hidden = !b || battle.finished || (b.noCard || b.removedFromDeck) && !b.unit;
   command.classList.toggle('placing', !!dragging || !!pending);
   command.inert = !!dragging || !!pending;
   workspace.querySelector('#battle-board').classList.toggle('aiming', !!pending);
@@ -923,7 +1022,45 @@ function drawHud() {
     for (let c = 0; c < data.stage.geometry.cols; c++)
       if (!placementError(selected, r, c)) highlights.push(r * 21 + c);
   field.hidden = !unit || battle.finished || !!pending;
-  if (b) {
+  if (b?.kind === 'stage-device' || b?.kind === 'stage-supply') {
+    field.hidden = true;
+    if (command.dataset.selection !== selected) {
+      command.innerHTML = `<button class="inspector-close" aria-label="Close device details">×</button>
+        <div class="operator-heading"><h2>${escape(b.name)}</h2></div>
+        <div class="command-copy"><p class="device-description"></p><p class="device-status sp-readout"></p>
+        <button id="device-activate" class="primary">Activate</button></div>`;
+      command.dataset.selection = selected; delete command.dataset.alive;
+      command.querySelector('.inspector-close').onclick = () => { cancelPlacement(); drawHud(); };
+      command.querySelector('#device-activate').onclick = () => {
+        try {
+          if (selectedEntry()?.kind === 'stage-supply') battle.retreatStageToken(selected);
+          else if (selectedEntry()?.spec.kind === 'flow-generator') battle.stageFlowGenerators.retreat(selected);
+          else battle.manualStageDevices.activate(selected);
+          battleError = '';
+        } catch (e) { battleError = e.message; }
+        drawHud();
+      };
+    }
+    command.querySelector('.device-description').textContent = b.spec.description;
+    const supply = b.kind === 'stage-supply';
+    const status = supply ? b.state === 'spent' ? 'Used' : b.spec.destructible ? `${Math.ceil(b.unit.hp)} HP` : b.spec.kind === 'obstacle' ? `${Math.ceil(b.unit.hp)} HP · Blocks ${b.unit.s.blockCnt} enemies` : b.spec.kind === 'electric-coil' ? (battle.electricCoils.entries.get(b.id)?.linked ? 'Linked · firing every 2.3s' : 'Needs another coil in range') : b.spec.kind === 'jammer' ? 'Drone interference active' : b.spec.kind === 'battery' ? `Supplies SP · Facing ${b.unit.dir.toLowerCase()}` : b.spec.spCost ? `${Math.floor(b.unit.skill.sp)} / ${b.spec.spCost} SP · ${b.unit.skill.ready ? 'Armed' : 'Charging'}` : `Releases in ${Math.max(0, b.unit.mem.stageSupplyReleaseAt - battle.time).toFixed(1)}s` : b.spec.passive ? b.state === 'spent' ? 'Unavailable' : b.state === 'rebooting'
+      ? `Rebooting · ${Math.max(0, Math.ceil(b.spec.duration - (battle.time - b.activeAt)))}s`
+      : b.spec.statusLabel ? b.spec.statusLabel : b.spec.kind === 'gramophone' ? `${Math.floor(b.sp)} / ${b.spec.spCost} SP · ${b.control === 'neutral' ? 'Neutral' : b.control === 'ally' ? 'Allied control' : 'Enemy control'}${b.switching > 0 ? ' · Switching' : ''}`
+      : b.spec.resonator ? b.activated ? 'Activated · deploy an ally here to emit Flux' : `${Math.floor(b.sp)} / ${b.spec.spCost} SP · ${b.state === 'charging' ? 'Charging' : 'Needs Realigned Flux'}`
+      : b.spec.kind === 'magic-circuit' ? `Emitting ${b.spec.direction.toLowerCase()}`
+      : b.spec.kind === 'flow-generator' ? `Flowing ${b.spec.direction.toLowerCase()}`
+      : b.spec.kind === 'turret' ? `${Math.floor(b.sp)} / ${b.spec.spCost} SP · Fires ${b.spec.direction.toLowerCase()}`
+      : b.spec.kind === 'electric-coil' ? (b.linked ? 'Linked · firing every 2.3s' : 'Needs another coil in range') : `${b.unit.side === 'ally' ? 'Allied' : 'Enemy'} control · Restores SP nearby`
+      : b.state === 'spent' ? 'Used' : b.state === 'active'
+      ? b.spec.permanent ? 'Active · permanent' : `Active · ${Math.max(0, Math.ceil((b.spec.duration || b.spec.finish) - (battle.time - b.activeAt)))}s`
+      : `${Math.floor(b.sp)} / ${b.spec.spCost} SP`;
+    command.querySelector('.device-status').textContent = status;
+    const retreat = supply ? b.spec.retreatable !== false : b.spec.retreatable;
+    const button = command.querySelector('#device-activate'), error = retreat ? b.unit.alive ? null : 'Used' : b.spec.passive ? 'Passive device' : battle.manualStageDevices.error(selected);
+    button.hidden = !retreat && !!b.spec.passive;
+    button.disabled = !!error; button.title = error ?? 'Activate device';
+    button.textContent = b.state === 'spent' ? 'Used' : retreat ? 'Retreat' : b.spec.dpCost ? `Activate · ${b.spec.dpCost} DP` : 'Activate';
+  } else if (b) {
     const skillUnit = skillSourceFor(unit);
     const hud = skillUnit ? skillHud(skillUnit.skill) : null;
     const canActivate = !!((hud?.canActivate || hud?.canCancel)
@@ -1016,7 +1153,8 @@ function drawHud() {
   }
   const hover = dragging?.over ? { ...dragging.over, dir: "RIGHT" } : null;
   const preview = pending || hover;
-  const range = pending?.kind === 'copy' ? absoluteRangeKeys(copyFlow?.rangeGrid ?? [], pending.row, pending.col, pending.dir ?? 'RIGHT') : unit
+  const range = pending?.kind === 'stage-supply' ? absoluteRangeKeys(battle.stage.raw.tokens.find(t => t.unitId === pending.tokenId).range,
+    pending.row, pending.col, pending.dir ?? 'RIGHT') : pending?.kind === 'copy' ? absoluteRangeKeys(copyFlow?.rangeGrid ?? [], pending.row, pending.col, pending.dir ?? 'RIGHT') : unit
     ? highlights
     : preview?.dir
       ? absoluteRangeKeys(
@@ -1030,7 +1168,7 @@ function drawHud() {
     available: b && !unit && !pending ? highlights : [],
     range,
     chosen: preview,
-    operator: preview && pending?.kind !== 'copy' ? b.record.id ?? selected : null,
+    operator: preview && pending?.kind !== 'copy' && pending?.kind !== 'stage-supply' ? b.record.id ?? selected : null,
     routes: showRoutes,
   });
   layoutFacing();
@@ -1047,10 +1185,22 @@ function drawHud() {
     paused = true;
     const result = document.createElement("div");
     result.className = "result";
-    result.innerHTML = `<div class="panel"><p class="eyebrow">Operation ${battle.reason === "cleared" ? "complete" : "ended"}</p><h2>${battle.reason === "cleared" ? "Stage cleared" : battle.reason === "defeated" ? "Defence breached" : "Simulation stopped"}</h2><p class="help">${battle.killed} enemies defeated · ${battle.leakedCount} escaped</p><button class="primary" id="again">Try again</button><button id="back">Back to squad</button></div>`;
+    result.innerHTML = `<div class="panel"><p class="eyebrow">Operation ${battle.reason === "cleared" ? "complete" : "ended"}</p><h2>${battle.reason === "cleared" ? "Stage cleared" : battle.reason === "defeated" ? "Defence breached" : battle.reason === "deadline" ? "Time expired" : "Simulation stopped"}</h2><p class="help">${battle.killed} enemies defeated · ${battle.leakedCount} escaped${battle.reason === "deadline" ? ` · ${Math.max(0, battle.total - battle.killed - battle.leakedCount)} remaining` : ""}</p><button class="primary" id="again">Try again</button><button id="back">Back to squad</button></div>`;
     workspace.querySelector("#battle-board").append(result);
+    for (const text of stageOutcomeSummaries(battle.result().stageOutcomes)) {
+      const summary = document.createElement('p');
+      summary.className = 'help stage-outcomes';
+      summary.textContent = text;
+      result.querySelector('.panel').append(summary);
+    }
     result.querySelector("#again").onclick = restart;
     result.querySelector("#back").onclick = exit;
+    const damage = document.createElement('button');
+    damage.textContent = 'View damage';
+    damage.setAttribute('aria-expanded', 'false');
+    damage.setAttribute('aria-controls', 'damage-panel');
+    damage.onclick = () => { damagePanel.toggle(damage); damagePanel.update(metrics.read()); };
+    result.querySelector('.panel').append(damage);
   }
 }
 function cancelPlacement() {
@@ -1093,6 +1243,9 @@ function confirmFacing(dir) {
     if (pending.kind === 'copy') {
       if (!copyFlow?.confirm(dir)) throw Error('Copy selection was interrupted.');
       copyFlow = null;
+    } else if (pending.kind === 'stage-supply') {
+      const unit = battle.deployToken(pending.tokenId, pending.row, pending.col, dir);
+      selected = unit.mem.stageSupplyId; selectedToken = null;
     } else if (selectedEntry()?.kind === 'summon') selected = summonUnitId(deployRegularSummon(battle, selected, pending.row, pending.col, dir));
     else battle.deployOperator(selected, pending.row, pending.col, dir);
     pending = null;

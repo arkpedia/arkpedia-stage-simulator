@@ -9,11 +9,14 @@ import { readdir, readFile } from 'node:fs/promises';
 import { applyStage } from '../shared/arkpedia/stages.js';
 import { StandardBattle, stageAdapter } from '../server/sim/arkpedia.js';
 import { defaultBuild } from '../shared/arkpedia/loadout.js';
-import support from '../data/arkpedia-enemy-support.json' with { type: 'json' };
+import { assertRegularEnemies } from '../shared/arkpedia/enemies.js';
+import { excludedStageOperators, stageSquadLimit } from '../shared/arkpedia/stage-roster.js';
 import mvp from '../data/arkpedia-mvp.json' with { type: 'json' };
 
 const dataDir = new URL('../data/', import.meta.url);
-export const fileBackedStages = (await readdir(dataDir)).filter(name => /^arkpedia-stage-.+\.json$/.test(name)).sort();
+// Review receipts share the stage prefix but are evidence, not battle bundles.
+export const fileBackedStages = (await readdir(dataDir)).filter(name => /^arkpedia-stage-.+\.json$/.test(name)
+  && !name.endsWith('-review.json')).sort();
 
 export const STAGE_FILE_GROUPS = 4;
 export function stageFileCases(group) {
@@ -30,8 +33,8 @@ export function registerStageFiles(group) {
       const id = file.replace(/^arkpedia-stage-/, '').replace(/\.json$/, '');
       assert.ok(stage.code, `${file} code`);
       assert.ok(stage.enemies && Object.keys(stage.enemies).length, `${id} carries enemy records`);
+      assert.doesNotThrow(() => assertRegularEnemies({ stage, enemies: stage.enemies }), `${id} enemy admission`);
       for (const [enemyId, record] of Object.entries(stage.enemies)) {
-        assert.ok(support.enemies[enemyId]?.policy, `${id} enemy ${enemyId} is supported`);
         assert.equal(record.key, enemyId, `${id} record key`);
       }
       const adapter = stageAdapter(stage);
@@ -41,9 +44,17 @@ export function registerStageFiles(group) {
       for (const config of stage.geometry.enemyConfigurations ?? []) {
         const record = stage.enemies[config.enemy_id];
         if (!record) continue;
+        // Local definitions use the full verified original, not the viewer's
+        // partial override projection. Their runtime shape was checked above.
+        if (Object.hasOwn(stage.enemyAliases ?? {}, config.enemy_id)) continue;
         if (typeof config.database_level === 'number') assert.equal(record.level, config.database_level, `${id} ${config.enemy_id} level`);
         for (const [key, field] of Object.entries({ def: 'def', atk: 'atk', hp: 'maxHp', res: 'res' }))
-          if (typeof config.overrides?.[key] === 'number') assert.equal(record.stats[field], config.overrides[key], `${id} ${config.enemy_id} ${key}`);
+          if (typeof config.overrides?.[key] === 'number') {
+            const expected = config.overrides[key] * (stage.rules?.enemies?.[field] ?? 1)
+              * (stage.rules?.enemyScoped?.[config.enemy_id]?.[field] ?? 1) + (stage.rules?.enemyAdd?.[field] ?? 0)
+              + (stage.rules?.enemyScopedAdd?.[config.enemy_id]?.[field] ?? 0);
+            assert.equal(record.stats[field], expected, `${id} ${config.enemy_id} ${key}`);
+          }
       }
 
       const data = structuredClone(mvp);
@@ -52,7 +63,8 @@ export function registerStageFiles(group) {
       assert.equal(entry.id, id); assert.equal(data.stage.code, stage.code);
       for (const enemyId of Object.keys(stage.enemies)) assert.ok(data.enemies[enemyId], `${id} merged ${enemyId}`);
 
-      const battle = new StandardBattle(data, { operators: Object.values(data.operators).slice(0, 12).map(defaultBuild) });
+      const excluded = excludedStageOperators(stage, data.operators);
+      const battle = new StandardBattle(data, { operators: Object.values(data.operators).filter(op => !excluded.has(op.id)).slice(0, Math.min(12, stageSquadLimit(stage))).map(defaultBuild) });
       battle.setViewport('fullscreen-workspace');
       for (let i = 0; i < Math.round(10 / battle.dt) && !battle.finished; i++) battle.step();
       assert.deepEqual(battle.errors, [], `${id} battle errors`);

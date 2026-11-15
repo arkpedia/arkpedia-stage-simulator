@@ -113,8 +113,8 @@ export function customizeFiveStarVanguardKit({ id, def, unit, kit }) {
 }
 
 export function installFiveStarVanguard({ battle: b, unit: u, def }) {
+  if (!FIVE_STAR_VANGUARD_OPERATORS[def.charId]) return;
   const id = def.charId, talent = def.talents[0]?.bb;
-  if (!FIVE_STAR_VANGUARD_OPERATORS[id]) return;
   if (id === 'char_115_headbr' && def.skill.id === 'skchr_headbr_2') {
     b.on('kill', ({ killer, victim }) => {
       if (live(u) && u.skill.active && live(killer) && killer.def.profession === 'PIONEER' && victim.side === 'enemy')

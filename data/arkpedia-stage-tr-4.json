@@ -1,0 +1,584 @@
+{
+ "code": "TR-4",
+ "name": "Vanguard",
+ "description": "Learn how to use Vanguard Operators and the importance of Blocking",
+ "battle": {
+  "max_life": 1,
+  "unit_limit": 10,
+  "initial_dp": 20,
+  "max_dp": 99,
+  "dp_per_second": 0.0001,
+  "dp_recovery_interval_seconds": 9999,
+  "max_play_time": -1
+ },
+ "rules": {
+  "variant": null,
+  "source": {
+   "repository": "Kengxxiao/ArknightsGameData",
+   "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+   "path": "zh_CN/gamedata/levels/obt/training/level_training_4.json",
+   "sha256": "0424295cb4f8b56f0212fdf34b40123e9e17835da84d024baff6f28c539f58e4",
+   "gitBlob": "08d045de2edfa2e967fe62f8a6118cb0cb2a376d",
+   "stageTable": {
+    "path": "zh_CN/gamedata/excel/stage_table.json",
+    "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+    "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+    "stageId": "tr_04",
+    "levelId": "Obt/Training/level_training_4"
+   }
+  },
+  "battle": {
+   "max_play_time": -1
+  },
+  "enemies": {},
+  "enemyAdd": {},
+  "hiddenGroups": {}
+ },
+ "enemyAliases": {
+  "enemy_1000_gopro_x": "enemy_1000_gopro"
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "tr-4",
+  "rows": 5,
+  "cols": 9,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    1,
+    2,
+    2,
+    2,
+    3,
+    2,
+    3,
+    2,
+    4
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": null,
+    "placeholder": true,
+    "start": null,
+    "end": null,
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 0
+    },
+    "end": {
+     "row": 2,
+     "col": 8
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 2
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 0
+    },
+    "end": {
+     "row": 2,
+     "col": 8
+    },
+    "checkpoints": [],
+    "waits": []
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 11,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Hound",
+      "enemy_id": "enemy_1000_gopro",
+      "count": 1,
+      "time": 3,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": null,
+      "enemy_id": "enemy_1000_gopro_x",
+      "count": 1,
+      "time": 9,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": null,
+      "enemy_id": "enemy_1000_gopro_x",
+      "count": 1,
+      "time": 9.3,
+      "route": 1,
+      "fragment": 1
+     }
+    ]
+   },
+   {
+    "index": 1,
+    "duration": 4,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Hound",
+      "enemy_id": "enemy_1000_gopro",
+      "count": 2,
+      "time": 3,
+      "interval": 1,
+      "route": 2,
+      "fragment": 0
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 2,
+    "col": 0,
+    "routes": [
+     1,
+     1,
+     1,
+     2
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 2,
+    "col": 8,
+    "routes": [
+     1,
+     1,
+     1,
+     2
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1000_gopro",
+    "slug": "hound",
+    "name": "Hound",
+    "database_level": 0,
+    "overrides": {
+     "atk": 160,
+     "hp": 2700
+    }
+   },
+   {
+    "enemy_id": "enemy_1000_gopro_x",
+    "slug": null,
+    "name": "Hound (Weak)",
+    "database_level": null,
+    "overrides": {
+     "atk": 160,
+     "attack_interval": 1.4,
+     "attack_speed": 100,
+     "blockVolume": 0,
+     "frozenImmune": false,
+     "hp": 800,
+     "move_speed": 1.9,
+     "res": 20,
+     "silenceImmune": false,
+     "sleepImmune": false,
+     "stunImmune": false
+    },
+    "source": "stage-local enemy; useDb false"
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [
+    {
+     "unit": "Fang",
+     "unit_id": "char_123_fang",
+     "level": 10,
+     "elite": 0,
+     "potential": 0,
+     "skill_index": 0,
+     "skill_level": 1,
+     "hidden": true
+    },
+    {
+     "unit": "Plume",
+     "unit_id": "char_192_falco",
+     "level": 10,
+     "elite": 0,
+     "potential": 0,
+     "skill_index": 0,
+     "skill_level": 1,
+     "hidden": true
+    }
+   ],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "terrain": [],
+ "conditionalHandled": false,
+ "devices": [],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [
+   1,
+   2
+  ],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "TR-4",
+  "geometryHash": "d907f264d23c1e2df59a7d63a28d7368bd2000eb58ebdc4af5a10124ddec9d9b",
+  "moveScale": 0.65,
+  "paths": {
+   "1": {
+    "points": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      8,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "2": {
+    "points": [
+     [
+      0,
+      2
+     ],
+     [
+      8,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": [
+  {
+   "unit": "Fang",
+   "unit_id": "char_123_fang",
+   "level": 10,
+   "elite": 0,
+   "potential": 0,
+   "skill_index": 0,
+   "skill_level": 1,
+   "hidden": true
+  },
+  {
+   "unit": "Plume",
+   "unit_id": "char_192_falco",
+   "level": 10,
+   "elite": 0,
+   "potential": 0,
+   "skill_index": 0,
+   "skill_level": 1,
+   "hidden": true
+  }
+ ],
+ "enemies": {
+  "enemy_1000_gopro": {
+   "key": "enemy_1000_gopro",
+   "prefabKey": "enemy_1000_gopro",
+   "name": "Hound",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2700,
+    "atk": 160,
+    "def": 0,
+    "res": 20,
+    "moveSpeed": 1.9,
+    "bat": 1.4,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1000_gopro_x": {
+   "key": "enemy_1000_gopro_x",
+   "prefabKey": "enemy_1000_gopro",
+   "name": "猎狗（弱）",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 800,
+    "atk": 160,
+    "def": 0,
+    "res": 20,
+    "moveSpeed": 1.9,
+    "bat": 1.4,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": -1,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ],
+   "assetPrefabKey": "enemy_1000_gopro"
+  }
+ },
+ "contentAddition": {
+  "schemaVersion": 1,
+  "source": {
+   "repository": "arkpedia/arkpedia-data",
+   "commit": "66232ee06377d791fb130248d680764c286e5c99",
+   "files": [
+    {
+     "path": "stages/tr-4.json",
+     "sha256": "fe312317875780a54c6a8eb9bf0ccdecb90eea88ebf7ca150287979624af871c"
+    },
+    {
+     "path": "stage-geometry/tr-4.json",
+     "sha256": "d907f264d23c1e2df59a7d63a28d7368bd2000eb58ebdc4af5a10124ddec9d9b"
+    },
+    {
+     "path": "stage-devices.json",
+     "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+    }
+   ],
+   "localFiles": [
+    {
+     "path": "data/stage-rules/tr-4.json",
+     "sha256": "ba255fb9a83af34ef798ffcf52fb25535bb08d831c8440e2c08756510630c83c"
+    },
+    {
+     "path": "data/stage-rules/levels/9982a35491836564ae89afa4aa9c06aa001b2c6d8e0e3c074f33e72f6cb7317a.json",
+     "sha256": "9982a35491836564ae89afa4aa9c06aa001b2c6d8e0e3c074f33e72f6cb7317a"
+    },
+    {
+     "path": ".cache/arkpedia/original-level-blobs/08d045de2edfa2e967fe62f8a6118cb0cb2a376d.json",
+     "sha256": "0424295cb4f8b56f0212fdf34b40123e9e17835da84d024baff6f28c539f58e4"
+    }
+   ]
+  },
+  "dependencies": {
+   "enemies": [
+    "enemy_1000_gopro",
+    "enemy_1000_gopro_x"
+   ],
+   "devices": [],
+   "tokens": []
+  },
+  "validation": {
+   "smoke": {
+    "seconds": 9.5,
+    "spawned": 3,
+    "errors": 0
+   },
+   "publicReview": "pending",
+   "waveSchedule": {
+    "id": "tr-4",
+    "seconds": 21.5,
+    "spawned": 5,
+    "expected": 5,
+    "reason": "cleared",
+    "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+   },
+   "browser": {
+    "id": "tr-4",
+    "seconds": 9.5,
+    "errors": [],
+    "units": 3,
+    "canvas": true,
+    "scope": "Headless Chromium, mobile landscape 1440x900: preparation, battle start, canvas and short runtime without page or simulation errors. Original art and full clear not certified."
+   }
+  }
+ }
+}

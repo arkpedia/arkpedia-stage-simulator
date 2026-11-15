@@ -1,0 +1,1858 @@
+{
+ "code": "OF-F3",
+ "name": "Carousel",
+ "description": "Hold this position! Why are we holding this position? How should I know?",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1,
+  "max_play_time": -1
+ },
+ "rules": {
+  "variant": null,
+  "source": {
+   "repository": "Kengxxiao/ArknightsGameData",
+   "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+   "path": "zh_CN/gamedata/levels/activities/act3d0/level_act3d0_f03.json",
+   "sha256": "0b4150566b50a637d42e1aa13b8f2c1f4d99613e765cb6b047f1274f4c217325",
+   "gitBlob": "3578fe1d81fa1407d71ebe03b24311e5d09b3bcd",
+   "stageTable": {
+    "path": "zh_CN/gamedata/excel/stage_table.json",
+    "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+    "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+    "stageId": "a003_f03",
+    "levelId": "Activities/ACT3D0/level_act3d0_f03"
+   }
+  },
+  "battle": {
+   "max_play_time": -1
+  },
+  "enemies": {},
+  "enemyAdd": {},
+  "hiddenGroups": {}
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "of-f3",
+  "rows": 8,
+  "cols": 12,
+  "tileLegend": [
+   {
+    "key": "tile_deepwater",
+    "height": "low",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_telout",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_telin",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1
+   ],
+   [
+    0,
+    2,
+    2,
+    3,
+    2,
+    3,
+    2,
+    3,
+    2,
+    2,
+    2,
+    1
+   ],
+   [
+    0,
+    2,
+    4,
+    4,
+    0,
+    0,
+    0,
+    4,
+    0,
+    2,
+    2,
+    5
+   ],
+   [
+    0,
+    3,
+    0,
+    4,
+    3,
+    2,
+    3,
+    2,
+    6,
+    0,
+    2,
+    0
+   ],
+   [
+    0,
+    2,
+    0,
+    7,
+    2,
+    3,
+    2,
+    4,
+    0,
+    0,
+    3,
+    0
+   ],
+   [
+    0,
+    2,
+    2,
+    0,
+    4,
+    0,
+    0,
+    0,
+    4,
+    4,
+    2,
+    0
+   ],
+   [
+    5,
+    2,
+    2,
+    2,
+    3,
+    2,
+    3,
+    2,
+    3,
+    2,
+    2,
+    0
+   ],
+   [
+    0,
+    8,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 0
+    },
+    "end": {
+     "row": 4,
+     "col": 3
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 7,
+       "col": 1
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 3
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 13,
+      "seconds": 10
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 0
+    },
+    "end": {
+     "row": 4,
+     "col": 3
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 7,
+       "col": 1
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 13,
+      "seconds": 10
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 0
+    },
+    "end": {
+     "row": 4,
+     "col": 3
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 7,
+       "col": 1
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 2,
+      "seconds": 5
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 3,
+      "seconds": 5
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 4,
+      "seconds": 5
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 5,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 11
+    },
+    "end": {
+     "row": 4,
+     "col": 3
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 7,
+       "col": 1
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 5
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 2,
+      "seconds": 5
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 3,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": null,
+    "placeholder": true,
+    "start": null,
+    "end": null,
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 0
+    },
+    "end": {
+     "row": 4,
+     "col": 3
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 7,
+       "col": 1
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 6,
+      "seconds": 10
+     }
+    ]
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 171,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Infantry",
+      "enemy_id": "enemy_1046_agent",
+      "count": 1,
+      "time": 4,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Infantry",
+      "enemy_id": "enemy_1046_agent",
+      "count": 3,
+      "time": 9,
+      "interval": 2,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Infantry",
+      "enemy_id": "enemy_1046_agent",
+      "count": 1,
+      "time": 17,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Infantry",
+      "enemy_id": "enemy_1046_agent",
+      "count": 3,
+      "time": 22,
+      "interval": 2,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Infantry",
+      "enemy_id": "enemy_1046_agent",
+      "count": 1,
+      "time": 30,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "Infantry",
+      "enemy_id": "enemy_1046_agent",
+      "count": 3,
+      "time": 35,
+      "interval": 2,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Ergate Leader",
+      "enemy_id": "enemy_1053_norgst_2",
+      "count": 3,
+      "time": 45,
+      "interval": 5,
+      "route": 1,
+      "fragment": 3
+     },
+     {
+      "enemy": "Sniper Leader",
+      "enemy_id": "enemy_1047_sagent_2",
+      "count": 1,
+      "time": 57,
+      "route": 2,
+      "fragment": 3
+     },
+     {
+      "enemy": "Sniper Leader",
+      "enemy_id": "enemy_1047_sagent_2",
+      "count": 1,
+      "time": 57,
+      "route": 3,
+      "fragment": 3
+     },
+     {
+      "enemy": "Ergate Leader",
+      "enemy_id": "enemy_1053_norgst_2",
+      "count": 4,
+      "time": 73,
+      "interval": 5,
+      "route": 1,
+      "fragment": 4
+     },
+     {
+      "enemy": "Agent",
+      "enemy_id": "enemy_1049_eagent",
+      "count": 1,
+      "time": 95,
+      "route": 0,
+      "fragment": 5
+     },
+     {
+      "enemy": "Agent",
+      "enemy_id": "enemy_1049_eagent",
+      "count": 2,
+      "time": 101,
+      "interval": 3,
+      "route": 1,
+      "fragment": 5
+     },
+     {
+      "enemy": "Agent",
+      "enemy_id": "enemy_1049_eagent",
+      "count": 1,
+      "time": 108,
+      "route": 0,
+      "fragment": 6
+     },
+     {
+      "enemy": "Agent",
+      "enemy_id": "enemy_1049_eagent",
+      "count": 2,
+      "time": 114,
+      "interval": 3,
+      "route": 1,
+      "fragment": 6
+     },
+     {
+      "enemy": "Agent",
+      "enemy_id": "enemy_1049_eagent",
+      "count": 1,
+      "time": 121,
+      "route": 0,
+      "fragment": 7
+     },
+     {
+      "enemy": "Sniper Leader",
+      "enemy_id": "enemy_1047_sagent_2",
+      "count": 1,
+      "time": 146,
+      "route": 2,
+      "fragment": 8
+     },
+     {
+      "enemy": "Sniper Leader",
+      "enemy_id": "enemy_1047_sagent_2",
+      "count": 1,
+      "time": 146,
+      "route": 3,
+      "fragment": 8
+     },
+     {
+      "enemy": "Rockbreaker Leader",
+      "enemy_id": "enemy_1048_hirman_2",
+      "count": 3,
+      "time": 132,
+      "interval": 4,
+      "route": 5,
+      "fragment": 8
+     },
+     {
+      "enemy": "Rockbreaker Leader",
+      "enemy_id": "enemy_1048_hirman_2",
+      "count": 3,
+      "time": 157,
+      "interval": 4,
+      "route": 5,
+      "fragment": 9
+     },
+     {
+      "enemy": "Sniper Leader",
+      "enemy_id": "enemy_1047_sagent_2",
+      "count": 1,
+      "time": 171,
+      "route": 2,
+      "fragment": 9
+     },
+     {
+      "enemy": "Sniper Leader",
+      "enemy_id": "enemy_1047_sagent_2",
+      "count": 1,
+      "time": 171,
+      "route": 3,
+      "fragment": 9
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 2,
+    "col": 11,
+    "routes": [
+     3,
+     3,
+     3
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 6,
+    "col": 0,
+    "routes": [
+     0,
+     1,
+     0,
+     1,
+     0,
+     1,
+     1,
+     2,
+     1,
+     0,
+     1,
+     0,
+     1,
+     0,
+     2,
+     5,
+     5,
+     2
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 4,
+    "col": 3,
+    "routes": [
+     0,
+     1,
+     0,
+     1,
+     0,
+     1,
+     1,
+     2,
+     3,
+     1,
+     0,
+     1,
+     0,
+     1,
+     0,
+     2,
+     3,
+     5,
+     5,
+     2,
+     3
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1046_agent",
+    "slug": "infantry",
+    "name": "Infantry",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1047_sagent_2",
+    "slug": "sniper_leader",
+    "name": "Sniper Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1048_hirman_2",
+    "slug": "rockbreaker_leader",
+    "name": "Rockbreaker Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1049_eagent",
+    "slug": "agent",
+    "name": "Agent",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1053_norgst_2",
+    "slug": "ergate_leader",
+    "name": "Ergate Leader",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "terrain": [],
+ "conditionalHandled": false,
+ "devices": [],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [
+   0,
+   1,
+   2,
+   3,
+   5
+  ],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "OF-F3",
+  "geometryHash": "6a9d4c0fe87cde47f9c282cd1f3b4b7ad9b73131dbbc8d67e817d978452e6f27",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      0,
+      6
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      10,
+      6
+     ],
+     [
+      10,
+      2
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      10,
+      6
+     ],
+     [
+      10,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      7
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      3,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "1": {
+    "points": [
+     [
+      0,
+      6
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      10,
+      6
+     ],
+     [
+      10,
+      2
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      10,
+      6
+     ],
+     [
+      10,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      7
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      3,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "2": {
+    "points": [
+     [
+      0,
+      6
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      10,
+      6
+     ],
+     [
+      10,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      7
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      3,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "3": {
+    "points": [
+     [
+      11,
+      2
+     ],
+     [
+      10,
+      2
+     ],
+     [
+      10,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      7
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      3,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "5": {
+    "points": [
+     [
+      0,
+      6
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      10,
+      6
+     ],
+     [
+      10,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      7
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      3,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "breaks": [],
+    "holds": []
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1046_agent": {
+   "key": "enemy_1046_agent",
+   "prefabKey": "enemy_1046_agent",
+   "name": "Infantry",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2500,
+    "atk": 280,
+    "def": 85,
+    "res": 40,
+    "moveSpeed": 1.1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1053_norgst_2": {
+   "key": "enemy_1053_norgst_2",
+   "prefabKey": "enemy_1053_norgst_2",
+   "name": "Ergate Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "NONE",
+   "stats": {
+    "maxHp": 3800,
+    "atk": 100,
+    "def": 260,
+    "res": 45,
+    "moveSpeed": 1.2,
+    "bat": 1,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "none",
+    "dmgTypes": [
+     "none"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Cannot be blocked.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1047_sagent_2": {
+   "key": "enemy_1047_sagent_2",
+   "prefabKey": "enemy_1047_sagent_2",
+   "name": "Sniper Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 4000,
+    "atk": 200,
+    "def": 150,
+    "res": 10,
+    "moveSpeed": 0.8,
+    "bat": 4,
+    "aspd": 100,
+    "rangeRadius": 4,
+    "rawRangeRadius": 4,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "After two attacks, the next attack <$ba.stun>Stuns</> its target",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [
+    {
+     "prefabKey": "stunattack",
+     "priority": 1,
+     "cooldown": 1,
+     "initCooldown": 1,
+     "spCost": 2,
+     "bb": {
+      "stun": 15
+     },
+     "bbStr": {}
+    }
+   ],
+   "sp": {
+    "type": "INCREASE_WHEN_ATTACK",
+    "maxSp": 2,
+    "initSp": 0,
+    "increment": 1
+   },
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1049_eagent": {
+   "key": "enemy_1049_eagent",
+   "prefabKey": "enemy_1049_eagent",
+   "name": "Agent",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 6000,
+    "atk": 300,
+    "def": 150,
+    "res": 50,
+    "moveSpeed": 0.9,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Attacks temporarily reduce allied units' Block",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "ReduceBlockCnt.duration": 5,
+     "ReduceBlockCnt.block_cnt": -1
+    },
+    "bbStr": {},
+    "groups": {
+     "ReduceBlockCnt": [
+      "block_cnt",
+      "duration"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1048_hirman_2": {
+   "key": "enemy_1048_hirman_2",
+   "prefabKey": "enemy_1048_hirman_2",
+   "name": "Rockbreaker Leader",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 13000,
+    "atk": 900,
+    "def": 100,
+    "res": 40,
+    "moveSpeed": 0.75,
+    "bat": 3.3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": true,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Gains greatly increased RES when blocked",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "MagicResistance.magic_resistance": 50
+    },
+    "bbStr": {},
+    "groups": {
+     "MagicResistance": [
+      "magic_resistance"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ },
+ "contentAddition": {
+  "schemaVersion": 1,
+  "source": {
+   "repository": "arkpedia/arkpedia-data",
+   "commit": "66232ee06377d791fb130248d680764c286e5c99",
+   "files": [
+    {
+     "path": "stages/of-f3.json",
+     "sha256": "2b0b849e1bd90c71293487f34fb765f170a709bc8b8ac15d0b1777ba7e079fe2"
+    },
+    {
+     "path": "stage-geometry/of-f3.json",
+     "sha256": "6a9d4c0fe87cde47f9c282cd1f3b4b7ad9b73131dbbc8d67e817d978452e6f27"
+    },
+    {
+     "path": "stage-devices.json",
+     "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+    }
+   ],
+   "localFiles": [
+    {
+     "path": "data/stage-rules/of-f3.json",
+     "sha256": "55030268476217776b42e712548946c31807997f5f86fd24c66a859c581f16ac"
+    },
+    {
+     "path": "data/stage-rules/levels/949893883fbb7377a7a6a43b33fe0468493a55fe5be62327b6307a0a23412723.json",
+     "sha256": "949893883fbb7377a7a6a43b33fe0468493a55fe5be62327b6307a0a23412723"
+    }
+   ]
+  },
+  "dependencies": {
+   "enemies": [
+    "enemy_1046_agent",
+    "enemy_1047_sagent_2",
+    "enemy_1048_hirman_2",
+    "enemy_1049_eagent",
+    "enemy_1053_norgst_2"
+   ],
+   "devices": [],
+   "tokens": []
+  },
+  "validation": {
+   "smoke": {
+    "seconds": 10,
+    "spawned": 2,
+    "errors": 0
+   },
+   "publicReview": "pending",
+   "waveSchedule": {
+    "id": "of-f3",
+    "seconds": 254.63333333333333,
+    "spawned": 38,
+    "expected": 38,
+    "reason": "cleared",
+    "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+   },
+   "browser": {
+    "id": "of-f3",
+    "seconds": 10,
+    "errors": [],
+    "units": 2,
+    "canvas": true,
+    "scope": "Headless Chromium, mobile landscape 1440x900: preparation, battle start, canvas and short runtime without page or simulation errors. Original art and full clear not certified."
+   }
+  }
+ }
+}

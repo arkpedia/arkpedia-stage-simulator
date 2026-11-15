@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { GUARD_OPERATORS } from '../../../shared/arkpedia/guard-operators.js';
 // Regular-stage kits verified against pinned Global skill/talent tables and
 // original Android 26-09-23-17-49-43_b9cc4a charpack/[uc]skills prefabs.
 import { absoluteRangeKeys } from '../targeting.js';
@@ -17,6 +18,7 @@ export const GUARD_CLIENT_EVIDENCE = Object.freeze({
 
 /** Called before SkillRuntime is constructed; does not modify shared definitions. */
 export function customizeGuardKit({ id, def, kit }) {
+  if (!GUARD_OPERATORS[id]) return;
   const skill = def.skill;
   if (!skill) return;
   const bb = skill.bb;
@@ -66,6 +68,7 @@ export function customizeGuardKit({ id, def, kit }) {
 
 /** Called after setup, before deployment, so owned hooks see the initial deploy. */
 export function installGuard({ battle, unit, def }) {
+  if (!GUARD_OPERATORS[def.charId]) return;
   const id = def.charId;
   const talent = def.talents[0];
   if (id === 'char_127_estell') {

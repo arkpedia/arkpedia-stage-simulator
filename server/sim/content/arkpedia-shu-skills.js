@@ -275,4 +275,7 @@ export function customizeShuKit({ battle, id, unit, kit }) {
   const prepared = prepareShuSkills(battle, unit, { contract: SHU_SKILL_CONTRACT });
   Object.assign(kit, prepared.kit);
 }
-export function installShu({ unit }) { unit.mem.shuController?.install(); }
+export function installShu({ unit, def }) {
+  if (def.charId !== SHU_ID) return;
+  unit.mem.shuController?.install();
+}

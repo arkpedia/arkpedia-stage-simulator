@@ -1,0 +1,1238 @@
+{
+  "code": "DM-2",
+  "name": "By Chance",
+  "description": "Several accidental betrayals. Several inevitable rescues.\n<Originium Jetstream>Continuously generates currents of airflow. Operators deployed downstream/upstream will deal increased/decreased damage; Enemies moving downstream/upstream will have increased/decreased Movement Speed.",
+  "battle": {
+    "max_life": 3,
+    "unit_limit": 8,
+    "initial_dp": 10,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1,
+    "max_play_time": -1
+  },
+  "rules": {
+    "variant": null,
+    "source": {
+      "repository": "Kengxxiao/ArknightsGameData",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "path": "zh_CN/gamedata/levels/activities/act9d0/level_act9d0_02.json",
+      "sha256": "6d2ff46ef8fd35afac09148c6355915d8da8a5961b7a24410ce0418e18461db0",
+      "gitBlob": "dc25f68501fb5045729a584b7df25ded742704e8",
+      "stageTable": {
+        "path": "zh_CN/gamedata/excel/stage_table.json",
+        "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+        "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+        "stageId": "act9d0_02",
+        "levelId": "Activities/ACT9D0/level_act9d0_02"
+      }
+    },
+    "battle": {
+      "max_play_time": -1
+    },
+    "enemies": {},
+    "enemyAdd": {},
+    "hiddenGroups": {}
+  },
+  "mapTags": [],
+  "mapTagSource": null,
+  "geometry": {
+    "slug": "dm-2",
+    "rows": 7,
+    "cols": 11,
+    "tileLegend": [
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_floor",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_start",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      }
+    ],
+    "tileGrid": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        2,
+        2,
+        2,
+        3
+      ],
+      [
+        0,
+        1,
+        4,
+        4,
+        4,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        0,
+        4,
+        0,
+        0,
+        0,
+        2,
+        2,
+        2,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        1,
+        1,
+        4,
+        0,
+        2,
+        4,
+        2,
+        0
+      ],
+      [
+        5,
+        1,
+        0,
+        4,
+        1,
+        1,
+        1,
+        2,
+        4,
+        2,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        3,
+        0
+      ]
+    ],
+    "routes": [
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 10
+        },
+        "end": {
+          "row": 5,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 1
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 10
+        },
+        "end": {
+          "row": 5,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 1
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 10
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 9
+        },
+        "end": {
+          "row": 5,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 1
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": null,
+        "placeholder": true,
+        "start": null,
+        "end": null,
+        "checkpoints": [],
+        "waits": []
+      }
+    ],
+    "waves": [
+      {
+        "index": 0,
+        "duration": 184,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Sarkaz Swordsman",
+            "enemy_id": "enemy_1071_dftman",
+            "count": 1,
+            "time": 8,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Sarkaz Swordsman",
+            "enemy_id": "enemy_1071_dftman",
+            "count": 1,
+            "time": 18,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Ergate",
+            "enemy_id": "enemy_1053_norgst",
+            "count": 1,
+            "time": 26,
+            "route": 1,
+            "fragment": 1
+          },
+          {
+            "enemy": "Sarkaz Swordsman",
+            "enemy_id": "enemy_1071_dftman",
+            "count": 2,
+            "time": 30,
+            "interval": 7,
+            "route": 2,
+            "fragment": 1
+          },
+          {
+            "enemy": "Sarkaz Swordsman",
+            "enemy_id": "enemy_1071_dftman",
+            "count": 2,
+            "time": 39,
+            "interval": 3,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Authorized Caster",
+            "enemy_id": "enemy_1051_norwiz",
+            "count": 1,
+            "time": 50,
+            "route": 0,
+            "fragment": 2
+          },
+          {
+            "enemy": "Sarkaz Swordsman",
+            "enemy_id": "enemy_1071_dftman",
+            "count": 2,
+            "time": 59,
+            "interval": 3,
+            "route": 0,
+            "fragment": 2
+          },
+          {
+            "enemy": "Ergate",
+            "enemy_id": "enemy_1053_norgst",
+            "count": 1,
+            "time": 56,
+            "route": 2,
+            "fragment": 2
+          },
+          {
+            "enemy": "Authorized Caster",
+            "enemy_id": "enemy_1051_norwiz",
+            "count": 1,
+            "time": 68,
+            "route": 0,
+            "fragment": 3
+          },
+          {
+            "enemy": "Sarkaz Swordsman",
+            "enemy_id": "enemy_1071_dftman",
+            "count": 2,
+            "time": 77,
+            "interval": 3,
+            "route": 0,
+            "fragment": 3
+          },
+          {
+            "enemy": "Shielded Guard",
+            "enemy_id": "enemy_1052_noramr",
+            "count": 1,
+            "time": 74,
+            "route": 2,
+            "fragment": 3
+          },
+          {
+            "enemy": "Sarkaz Swordsman",
+            "enemy_id": "enemy_1071_dftman",
+            "count": 2,
+            "time": 90,
+            "interval": 3,
+            "route": 0,
+            "fragment": 4
+          },
+          {
+            "enemy": "Sarkaz Swordsman",
+            "enemy_id": "enemy_1071_dftman",
+            "count": 2,
+            "time": 102,
+            "interval": 3,
+            "route": 0,
+            "fragment": 4
+          },
+          {
+            "enemy": "Authorized Caster",
+            "enemy_id": "enemy_1051_norwiz",
+            "count": 1,
+            "time": 109,
+            "route": 0,
+            "fragment": 4
+          },
+          {
+            "enemy": "Ergate",
+            "enemy_id": "enemy_1053_norgst",
+            "count": 2,
+            "time": 99,
+            "interval": 9,
+            "route": 2,
+            "fragment": 4
+          },
+          {
+            "enemy": "Sarkaz Blademaster",
+            "enemy_id": "enemy_1071_dftman_2",
+            "count": 2,
+            "time": 122,
+            "interval": 3,
+            "route": 0,
+            "fragment": 5
+          },
+          {
+            "enemy": "Authorized Caster",
+            "enemy_id": "enemy_1051_norwiz",
+            "count": 2,
+            "time": 130,
+            "interval": 3,
+            "route": 0,
+            "fragment": 5
+          },
+          {
+            "enemy": "Shielded Guard",
+            "enemy_id": "enemy_1052_noramr",
+            "count": 2,
+            "time": 125,
+            "interval": 9,
+            "route": 2,
+            "fragment": 5
+          },
+          {
+            "enemy": "Ergate",
+            "enemy_id": "enemy_1053_norgst",
+            "count": 1,
+            "time": 147,
+            "route": 0,
+            "fragment": 6
+          },
+          {
+            "enemy": "Ergate",
+            "enemy_id": "enemy_1053_norgst",
+            "count": 1,
+            "time": 147,
+            "route": 2,
+            "fragment": 6
+          },
+          {
+            "enemy": "Sarkaz Swordsman",
+            "enemy_id": "enemy_1071_dftman",
+            "count": 2,
+            "time": 151,
+            "interval": 3,
+            "route": 0,
+            "fragment": 6
+          },
+          {
+            "enemy": "Authorized Caster",
+            "enemy_id": "enemy_1051_norwiz",
+            "count": 2,
+            "time": 159,
+            "interval": 5,
+            "route": 0,
+            "fragment": 6
+          },
+          {
+            "enemy": "Sarkaz Blademaster",
+            "enemy_id": "enemy_1071_dftman_2",
+            "count": 3,
+            "time": 171,
+            "interval": 3,
+            "route": 0,
+            "fragment": 6
+          },
+          {
+            "enemy": "Ergate",
+            "enemy_id": "enemy_1053_norgst",
+            "count": 1,
+            "time": 153,
+            "route": 2,
+            "fragment": 6
+          },
+          {
+            "enemy": "Shielded Guard",
+            "enemy_id": "enemy_1052_noramr",
+            "count": 1,
+            "time": 166,
+            "route": 2,
+            "fragment": 6
+          },
+          {
+            "enemy": "Ergate",
+            "enemy_id": "enemy_1053_norgst",
+            "count": 2,
+            "time": 176,
+            "interval": 6,
+            "route": 2,
+            "fragment": 6
+          },
+          {
+            "enemy": "Authorized Caster",
+            "enemy_id": "enemy_1051_norwiz",
+            "count": 2,
+            "time": 181,
+            "interval": 3,
+            "route": 0,
+            "fragment": 6
+          }
+        ]
+      }
+    ],
+    "spawnTiles": [
+      {
+        "key": "tile_start",
+        "row": 1,
+        "col": 10,
+        "routes": [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 6,
+        "col": 9,
+        "routes": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ]
+      }
+    ],
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 5,
+        "col": 0,
+        "routes": [
+          0,
+          0,
+          1,
+          2,
+          0,
+          0,
+          0,
+          2,
+          0,
+          0,
+          2,
+          0,
+          0,
+          0,
+          2,
+          0,
+          0,
+          2,
+          0,
+          2,
+          0,
+          0,
+          0,
+          2,
+          2,
+          2,
+          0
+        ]
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_1051_norwiz",
+        "slug": "authorized_caster",
+        "name": "Authorized Caster",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1052_noramr",
+        "slug": "shielded_guard",
+        "name": "Shielded Guard",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1053_norgst",
+        "slug": "ergate",
+        "name": "Ergate",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1071_dftman",
+        "slug": "sarkaz_swordsman",
+        "name": "Sarkaz Swordsman",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1071_dftman_2",
+        "slug": "sarkaz_blademaster",
+        "name": "Sarkaz Blademaster",
+        "database_level": 0
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [],
+      "deployable_tokens": []
+    },
+    "hasConditionalSpawns": false
+  },
+  "terrain": [],
+  "conditionalHandled": false,
+  "devices": [
+    {
+      "col": 9,
+      "description": null,
+      "hidden": false,
+      "key": "trap_013_blower",
+      "kind": "device",
+      "name": "Originium Flow Generator",
+      "row": 2,
+      "alias": "trap_013_blower#1",
+      "instance": {
+        "level": 1,
+        "skillLevel": 1,
+        "direction": "UP"
+      }
+    },
+    {
+      "col": 8,
+      "description": null,
+      "hidden": false,
+      "key": "trap_013_blower",
+      "kind": "device",
+      "name": "Originium Flow Generator",
+      "row": 2,
+      "alias": "trap_013_blower#2",
+      "instance": {
+        "level": 1,
+        "skillLevel": 1,
+        "direction": "UP"
+      }
+    },
+    {
+      "col": 7,
+      "description": null,
+      "hidden": false,
+      "key": "trap_013_blower",
+      "kind": "device",
+      "name": "Originium Flow Generator",
+      "row": 2,
+      "alias": "trap_013_blower#3",
+      "instance": {
+        "level": 1,
+        "skillLevel": 1,
+        "direction": "UP"
+      }
+    },
+    {
+      "col": 2,
+      "description": null,
+      "hidden": false,
+      "key": "trap_013_blower",
+      "kind": "device",
+      "name": "Originium Flow Generator",
+      "row": 5,
+      "alias": "trap_013_blower#4",
+      "instance": {
+        "level": 1,
+        "skillLevel": 1,
+        "direction": "RIGHT"
+      }
+    },
+    {
+      "col": 5,
+      "description": null,
+      "hidden": false,
+      "key": "trap_013_blower",
+      "kind": "device",
+      "name": "Originium Flow Generator",
+      "row": 2,
+      "alias": "trap_013_blower#5",
+      "instance": {
+        "level": 1,
+        "skillLevel": 1,
+        "direction": "LEFT"
+      }
+    }
+  ],
+  "tokens": [],
+  "pathing": {
+    "schemaVersion": 1,
+    "syntheticRoutes": [
+      0,
+      1,
+      2
+    ],
+    "producer": "Arkpedia stage browser / buildPlaybackPaths",
+    "stage": "DM-2",
+    "geometryHash": "18029a2053f44c46509063b264dc5a76f7fffb71fddcde797112c84583079717",
+    "moveScale": 0.65,
+    "paths": {
+      "0": {
+        "points": [
+          [
+            10,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            0,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "1": {
+        "points": [
+          [
+            10,
+            1
+          ],
+          [
+            9,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            0,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "2": {
+        "points": [
+          [
+            9,
+            6
+          ],
+          [
+            9,
+            3
+          ],
+          [
+            7,
+            3
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            0,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "breaks": [],
+        "holds": []
+      }
+    }
+  },
+  "art": null,
+  "gates": null,
+  "fixedSquad": null,
+  "enemies": {
+    "enemy_1071_dftman": {
+      "key": "enemy_1071_dftman",
+      "prefabKey": "enemy_1071_dftman",
+      "name": "Sarkaz Swordsman",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 2800,
+        "atk": 300,
+        "def": 70,
+        "res": 50,
+        "moveSpeed": 1,
+        "bat": 2.5,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "sarkaz"
+      ]
+    },
+    "enemy_1053_norgst": {
+      "key": "enemy_1053_norgst",
+      "prefabKey": "enemy_1053_norgst",
+      "name": "Ergate",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "NONE",
+      "stats": {
+        "maxHp": 2300,
+        "atk": 100,
+        "def": 120,
+        "res": 40,
+        "moveSpeed": 1.2,
+        "bat": 1,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "none",
+        "dmgTypes": [
+          "none"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Cannot be blocked.",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1051_norwiz": {
+      "key": "enemy_1051_norwiz",
+      "prefabKey": "enemy_1051_norwiz",
+      "name": "Authorized Caster",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 3000,
+        "atk": 320,
+        "def": 100,
+        "res": 50,
+        "moveSpeed": 0.8,
+        "bat": 4,
+        "aspd": 100,
+        "rangeRadius": 1.8,
+        "rawRangeRadius": 1.8,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "arts",
+        "dmgTypes": [
+          "arts"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1052_noramr": {
+      "key": "enemy_1052_noramr",
+      "prefabKey": "enemy_1052_noramr",
+      "name": "Shielded Guard",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 2500,
+        "atk": 200,
+        "def": 400,
+        "res": 0,
+        "moveSpeed": 1,
+        "bat": 2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1071_dftman_2": {
+      "key": "enemy_1071_dftman_2",
+      "prefabKey": "enemy_1071_dftman_2",
+      "name": "Sarkaz Blademaster",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 4000,
+        "atk": 370,
+        "def": 100,
+        "res": 50,
+        "moveSpeed": 1,
+        "bat": 2.5,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "sarkaz"
+      ]
+    }
+  },
+  "contentAddition": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/dm-2.json",
+          "sha256": "90b44a34673e9a5bfb37c9b6952187be5d97a0564c23b5c86d245134aaab0b2d"
+        },
+        {
+          "path": "stage-geometry/dm-2.json",
+          "sha256": "18029a2053f44c46509063b264dc5a76f7fffb71fddcde797112c84583079717"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        }
+      ],
+      "localFiles": [
+        {
+          "path": "data/stage-rules/dm-2.json",
+          "sha256": "543e5e62d4cd0e8b0f1ae67781e4261e8b46810dd4dbbcbd64bf1a1c63875527"
+        },
+        {
+          "path": "data/stage-rules/levels/85d2b566581c2c1c846f562c314c0efce6f99e5879674732b2d34b0f882df673.json",
+          "sha256": "85d2b566581c2c1c846f562c314c0efce6f99e5879674732b2d34b0f882df673"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/dc25f68501fb5045729a584b7df25ded742704e8.json",
+          "sha256": "6d2ff46ef8fd35afac09148c6355915d8da8a5961b7a24410ce0418e18461db0"
+        },
+        {
+          "path": "data/arkpedia-device-source.json",
+          "sha256": "589876c694836e6156390379373e5018d8e44fb136b5a07ffc1965e8646fe471"
+        },
+        {
+          "path": "data/arkpedia-device-native-source.json",
+          "sha256": "232401d42b535d4a146e6daa8bbd47e4e19e900fb9c6b7d2773019da0190d040"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/dc25f68501fb5045729a584b7df25ded742704e8.json",
+          "sha256": "6d2ff46ef8fd35afac09148c6355915d8da8a5961b7a24410ce0418e18461db0"
+        }
+      ]
+    },
+    "dependencies": {
+      "enemies": [
+        "enemy_1051_norwiz",
+        "enemy_1052_noramr",
+        "enemy_1053_norgst",
+        "enemy_1071_dftman",
+        "enemy_1071_dftman_2"
+      ],
+      "devices": [
+        "Originium Flow Generator"
+      ],
+      "tokens": []
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 10,
+        "spawned": 1,
+        "errors": 0
+      },
+      "publicReview": "pending",
+      "waveSchedule": {
+        "id": "dm-2",
+        "seconds": 210.93333333333334,
+        "spawned": 43,
+        "expected": 43,
+        "dynamicSpawns": 0,
+        "reason": "cleared",
+        "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+      },
+      "browserStartup": {
+        "id": "dm-2",
+        "seconds": 20,
+        "errors": [],
+        "units": 7,
+        "canvas": true,
+        "scope": "Mobile landscape browser startup and canvas runtime; not a fidelity approval"
+      }
+    }
+  }
+}

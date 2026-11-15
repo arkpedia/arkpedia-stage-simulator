@@ -28,8 +28,7 @@ export function createLocalAssets(assetRoot) {
     })());
     return revisions.get(commit);
   }
-  return {
-    async snapshot(data) {
+  async function snapshot(data) {
       if (data.sd.repository !== repository) throw Error('Unexpected snapshot asset repository');
       await revision(data.sd.commit);
       const local = structuredClone(data);
@@ -38,12 +37,37 @@ export function createLocalAssets(assetRoot) {
         if (descriptor?.repository === repository && descriptor.commit === data.sd.commit)
           descriptor.localBase = base;
       }
+      // Additive artwork releases retain their own immutable pins. Never use
+      // the main snapshot's local URL for a model from another revision.
+      const modelRevisions = [...new Set(Object.values(local.sd.models ?? {})
+        .map(model => model.assetsCommit).filter(Boolean))];
+      const available = new Set();
+      for (const commit of modelRevisions) {
+        try { await revision(commit); available.add(commit); }
+        catch { /* A partial checkout can still use this model's published URL. */ }
+      }
+      for (const model of Object.values(local.sd.models ?? {})) if (model.assetsCommit) {
+        delete model.localBase;
+        if (available.has(model.assetsCommit)) model.localBase = `/arkpedia-assets/${model.assetsCommit}/`;
+      }
       for (const token of Object.values(local.tokens ?? {})) {
         const remote = `https://raw.githubusercontent.com/${repository}/${data.sd.commit}/`;
         if (typeof token.avatar === 'string' && token.avatar.startsWith(remote))
           token.avatar = base + token.avatar.slice(remote.length);
       }
       return local;
+  }
+  return {
+    snapshot,
+    async library(index, models) {
+      const common = await snapshot({ ...index.common, stage: {}, sd: { ...index.common.sd, models } });
+      const localModelBases = Object.fromEntries(Object.values(common.sd.models)
+        .filter(model => model.assetsCommit && model.localBase).map(model => [model.assetsCommit, model.localBase]));
+      // Model objects remain byte-identical to their content hashes. Transport
+      // configuration belongs to the mutable bootstrap, never its components.
+      delete common.stage;
+      common.sd = { ...common.sd, models: {}, localModelBases };
+      return { ...index, common };
     },
     async handle(req, res, url) {
       if (!url.pathname.startsWith('/arkpedia-assets/')) return false;

@@ -1,0 +1,186 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-15",
+  "scope": "Partial Eblana component checkpoint: conversion aura, immediate hit-count form entry and managed summon ownership. Full boss remains blocked. Includes family matching to prevent unrelated same-name feature dispatch.",
+  "sourceFiles": {
+    "server/sim/content/arkpedia-enemy-death-conversion.js": "ac0d0f3704f994d2ecd4b40d271acc932b3dcce4811e93cf2cc4a0b8a8a28c9c",
+    "server/sim/content/arkpedia-stage-waves.js": "fca9d179f5ad3a6f954f8a7e67235d7eed01ba4b8bfe481e5c122e7de6510488",
+    "server/sim/content/enemies.js": "dde150a7e1ebc721e901498e87ae99c42845a57b9a08a96a36fe2cf17f9737a8",
+    "server/sim/content/arkpedia-enemy-features.js": "91aa1d876937be75d8b2eaae04957be27c77d23767bcd47abd0e348d207ab054",
+    "shared/arkpedia/enemy-eblana-features.js": "b9a1caef853d10fd44b27cdc4d0a59fb92d8295bd40147c97e5537b4f90eb2f1",
+    "shared/arkpedia/enemy-support.js": "ddfb0bd5517462f1e824fab2e34e259b5a46a8b5ea794561b2973f628fa6a00f",
+    "shared/arkpedia/enemy-features.js": "d786c135f009d5ca479913a0a23bc8f36ee9ded1b2ce70087f226f2af5e611f0",
+    "shared/arkpedia/enemy-wine-features.js": "a76cf4a2dc5a21b5bafd21566be3034feda0054ad1b24a5892ee7d9564d415d7",
+    "shared/arkpedia/enemy-gramophone-features.js": "1dfed0d5ab90f2b6642fe73740528828527087cb4bf38afd5119a5a1de2cecb8",
+    "shared/arkpedia/enemy-flux-saxophone-features.js": "9cf030f660d551966940dc85f28be4a7d86a3e2774019a401dcef878f845ee42",
+    "shared/arkpedia/enemy-spider-features.js": "422325fa989dbcf07d700c42db7b5cd876f62c45d260505f456576b66d797b22",
+    "shared/arkpedia/enemy-shredder-features.js": "0d6eb715aa665619cd310047273572ae1219d569f5e0c7e17153882ca69ef149",
+    "shared/arkpedia/enemy-mudrock-features.js": "821f451ab474884b3c2c2fb96666d86af1e36a5fbceea6e6328f452ec15c4a2b",
+    "shared/arkpedia/enemy-knight-features.js": "cd1bbf42cf5b62bb687ff2172a09c5d7eb41b82dc3c9cf9cb3a7a5986c2c5d11",
+    "shared/arkpedia/enemy-firelight-specops-features.js": "7cb3a5dc117c7d0093ab0e48571f6029156d27acdefc7396151be894c3474201",
+    "shared/arkpedia/enemy-flux-caster-features.js": "15c04242e52087e12a21a130bf1426ce3e6a1c69ce8ad8bd2119f837dcd9a364",
+    "shared/arkpedia/enemy-flamechaser-features.js": "bf6be582c097eabc21857035c08c98db1188dfaf53873889647ef33c3a80ddc8",
+    "data/arkpedia-enemy-native-abilities.json": "f0519b4a8c626b6c655169706d74eed815d3c049d2fa2799dae0545414600915",
+    "data/arkpedia-eblana-animations.json": "c549a478c0a544c28c1e56f6e8675f978d45180408c7d1f408619a99c63a0455",
+    "data/arkpedia-enemy-support.json": "029305107a626d0e0035d3ff97e623fba9438a86810634647e3c59ea3062e00a",
+    "test/arkpedia-enemy-eblana-aura.test.js": "1bc1ba1024d7276bf09b6c8893b4f48a73445b4242cc3c3a904d8dfad88d5fd8",
+    "test/arkpedia-stage-waves.test.js": "df3ad05d121389ecbfa8f3e0d6caf3a51dc4a25726c672a3b789d1f8b8a2439d",
+    "test/arkpedia-enemy-flamechaser.test.js": "291cf72f6c3b06282a35fcd221111f4355d34423cf42c8cf4af1bc602f624a9d",
+    "docs/ENEMY-EBLANA-REVIEW.md": "28518230efe1f72497bef0b27578cb94d78dfa07f2e87e8d9038b7686ec0160b"
+  },
+  "coverage": {
+    "enemies": 644,
+    "enemyTarget": 2163,
+    "availableStages": 855,
+    "stageTarget": 3892
+  },
+  "checks": {
+    "regressions": {
+      "log": "/tmp/eblana-aura-regressions.log",
+      "sha256": "9b4e9ddbd43fd8cd7b39ddc5a4f178e78efbbe48e034f0c088d98f6adb84126f"
+    },
+    "source": {
+      "log": "/tmp/eblana-aura-source-check.log",
+      "sha256": "f8719635b2ddabae390a159becc05db573de8e4bc034a6d43ac0817b6767d5f6"
+    },
+    "stageSmoke": {
+      "log": "/tmp/eblana-aura-all-stage-smoke.log",
+      "sha256": "93a18fafa3ae9591e2c49e2ce43fe9071fd4e095c967b9e10c704c66c4ca8b3d"
+    }
+  },
+  "regressionTestsPassed": 626,
+  "stageSmokePassed": 855,
+  "stageSmokeSeconds": 10,
+  "runtimeFootprint": {
+    "schemaVersion": 1,
+    "scope": "Uncompressed static source closure plus explicitly selected adapter imports. Excludes roster/stage/model transfers and optional dynamic visual effects; not native fidelity or load-time certification.",
+    "ids": [
+      "char_123_fang",
+      "char_124_kroos"
+    ],
+    "adapters": [
+      "arkpedia-casters",
+      "arkpedia-guards",
+      "arkpedia-snipers",
+      "arkpedia-vanguards",
+      "arkpedia-defenders",
+      "arkpedia-advanced-snipers",
+      "arkpedia-specialists",
+      "arkpedia-guard-expansion",
+      "arkpedia-support-expansion",
+      "arkpedia-caster-expansion",
+      "arkpedia-sniper-expansion",
+      "arkpedia-summons",
+      "arkpedia-robot-expansion",
+      "arkpedia-five-star-vanguards",
+      "arkpedia-five-star-vanguard-second",
+      "arkpedia-five-star-guard-third",
+      "arkpedia-five-star-medic-third",
+      "arkpedia-five-star-defender-second",
+      "arkpedia-sniper-six-star",
+      "arkpedia-guard-six-star-third",
+      "arkpedia-thorns",
+      "arkpedia-guard-six-star-fourth",
+      "arkpedia-tinman",
+      "arkpedia-five-star-guard-fourth"
+    ],
+    "common": {
+      "modules": 482,
+      "bytes": 4746785,
+      "sha256": "0b55b5fe15cf49de96cc21c3ddc5eb80aba02982998f764031caa82f4a1e720b"
+    },
+    "selected": {
+      "modules": 519,
+      "bytes": 8469373,
+      "sha256": "348eb41835ef55e45bd923c90ef939520353b22ad370b8fb7941363bb7080048"
+    },
+    "eager": {
+      "modules": 1239,
+      "bytes": 96006559,
+      "sha256": "ae7857ad0ea0e31a20153b566b424151af3bd34063264a3dd0b62463cdb55561"
+    },
+    "largestSelected": [
+      {
+        "path": "data/arkpedia-device-native-source.json",
+        "bytes": 1091998,
+        "sha256": "3884a28fa535a6fb5762f72db726e909d9e2287cd9f7a332fe984f22def8a80f"
+      },
+      {
+        "path": "data/arkpedia-guard-six-star-third-prefabs.json",
+        "bytes": 626629,
+        "sha256": "052f054f51dc027a068a30f955e9b8966fff37d7cec2c664d93e8b140afdd811"
+      },
+      {
+        "path": "data/arkpedia-five-star-defender-second-prefabs.json",
+        "bytes": 417669,
+        "sha256": "26429d2d6afe5d6d2b181ace9e0777f52b3a73f873a70a1cfea63070929e2595"
+      },
+      {
+        "path": "data/arkpedia-five-star-medic-third-prefabs.json",
+        "bytes": 399062,
+        "sha256": "771391620f51bf387cc7f02a34143bf752a328f1e158e808f60c4a8c518a246e"
+      },
+      {
+        "path": "data/arkpedia-guard-six-star-fourth-prefabs.json",
+        "bytes": 383832,
+        "sha256": "3104e4af05c6c44bfec806a3430bb6bc9b919c83627b38176d5b48c8ac4f93ee"
+      },
+      {
+        "path": "data/arkpedia-five-star-medic-second-prefabs.json",
+        "bytes": 349291,
+        "sha256": "aee48eaa7f0b6821820213d11736a1eae33ade672b26f38f1e0897eed3d76922"
+      },
+      {
+        "path": "data/arkpedia-six-star-medic-prefabs.json",
+        "bytes": 322230,
+        "sha256": "016d843a743371c375e2eb56e957d3ee6cf625578b5707ad80094cc328d08145"
+      },
+      {
+        "path": "data/arkpedia-silence-paradigmatic-prefabs.json",
+        "bytes": 320723,
+        "sha256": "16571c07c12b4f32835c6411eb6432bfbb376a3260518412efa857f447894ab2"
+      },
+      {
+        "path": "data/arkpedia-sniper-six-star-prefabs.json",
+        "bytes": 316579,
+        "sha256": "11da77053eb6451116b1f0aa03cd5454d9b67350767445bf6c8ccf3711e26d3e"
+      },
+      {
+        "path": "data/arkpedia-five-star-support-third-prefabs.json",
+        "bytes": 279120,
+        "sha256": "9eccd2cb0eec7d2185cf24c29db1354192462d33a8b30763579f5ee0fa20e05a"
+      },
+      {
+        "path": "data/arkpedia-tinman-prefabs.json",
+        "bytes": 268547,
+        "sha256": "6104c01785227d9a4f73304f53a20d393af495f279d9d575ca7370c84553dda3"
+      },
+      {
+        "path": "server/sim/content/enemies.js",
+        "bytes": 249664,
+        "sha256": "dde150a7e1ebc721e901498e87ae99c42845a57b9a08a96a36fe2cf17f9737a8"
+      },
+      {
+        "path": "data/arkpedia-support-expansion-prefabs.json",
+        "bytes": 213006,
+        "sha256": "23edce605279012207a993c5a0f6975bdbfe16a54623c7e32b640a4756e68113"
+      },
+      {
+        "path": "data/arkpedia-summon-prefabs.json",
+        "bytes": 204466,
+        "sha256": "a7c84c29457fe8b137decd78a77f391eab6a6b14e9e228a11f94caa5eecdeb2d"
+      },
+      {
+        "path": "data/arkpedia-five-star-vanguard-prefabs.json",
+        "bytes": 188402,
+        "sha256": "1d5d42fbe3cfd51619424740cd2cb8825281f01133d12ca378d77be503c13e89"
+      }
+    ]
+  },
+  "remaining": [
+    "Eblana phase transitions and wave finish action",
+    "Eblana ordinary and skill attacks",
+    "Level-one talent default resolution",
+    "Boss artwork adoption and native particles"
+  ]
+}

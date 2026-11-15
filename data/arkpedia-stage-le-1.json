@@ -1,0 +1,1025 @@
+{
+  "code": "LE-1",
+  "name": "Tritsch-Tratsch-Polka",
+  "description": "A carefree atmosphere pervades the city's every which where, accompanied by omnipresent merry chatter.\n<Waste Energy Interference> Natural SP recovery speed reduced.\n<Realigned Flux> Restores natural SP recovery speed of allied Operators within.",
+  "battle": {
+    "max_life": 3,
+    "unit_limit": 8,
+    "initial_dp": 10,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1,
+    "max_play_time": -1
+  },
+  "rules": {
+    "variant": null,
+    "source": {
+      "repository": "Kengxxiao/ArknightsGameData",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "path": "zh_CN/gamedata/levels/activities/act18side/level_act18side_01.json",
+      "sha256": "e849febb12e7911ab8154ae0d964519a1e02d4abc129243cc156f31b44b4a87e",
+      "gitBlob": "92cbdb5d8840108e22bd27c976f81e4767fc35e3",
+      "stageTable": {
+        "path": "zh_CN/gamedata/excel/stage_table.json",
+        "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+        "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+        "stageId": "act18side_01",
+        "levelId": "Activities/act18side/level_act18side_01"
+      }
+    },
+    "battle": {
+      "max_play_time": -1
+    },
+    "enemies": {},
+    "enemyAdd": {},
+    "hiddenGroups": {}
+  },
+  "environment": [
+    {
+      "kind": "character_in_magiccircuit_env",
+      "character_in_magiccircuit[normal].sp_recover_ratio": 0.5,
+      "sp_recover_ratio": -0.5
+    }
+  ],
+  "mapTags": [],
+  "mapTagSource": null,
+  "geometry": {
+    "slug": "le-1",
+    "rows": 7,
+    "cols": 9,
+    "tileLegend": [
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_start",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      }
+    ],
+    "tileGrid": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        2
+      ],
+      [
+        0,
+        1,
+        3,
+        0,
+        3,
+        3,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        0,
+        3,
+        1,
+        1,
+        1,
+        1,
+        2
+      ],
+      [
+        0,
+        1,
+        3,
+        4,
+        1,
+        3,
+        3,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        0,
+        3,
+        1,
+        1,
+        1,
+        1,
+        2
+      ],
+      [
+        0,
+        4,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "routes": [
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 8
+        },
+        "end": {
+          "row": 6,
+          "col": 1
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 1
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": null,
+        "placeholder": true,
+        "start": null,
+        "end": null,
+        "checkpoints": [],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 8
+        },
+        "end": {
+          "row": 4,
+          "col": 3
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 4
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 20
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 8
+        },
+        "end": {
+          "row": 4,
+          "col": 3
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 4
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 8
+        },
+        "end": {
+          "row": 4,
+          "col": 3
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 4
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 20
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 8
+        },
+        "end": {
+          "row": 4,
+          "col": 3
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 4
+            }
+          }
+        ],
+        "waits": []
+      }
+    ],
+    "waves": [
+      {
+        "index": 0,
+        "duration": 156,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Tactical Hound",
+            "enemy_id": "enemy_1140_merhd",
+            "count": 3,
+            "time": 7,
+            "interval": 11,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "'Street Performer'",
+            "enemy_id": "enemy_1239_ltbow",
+            "count": 1,
+            "time": 43,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Tactical Hound",
+            "enemy_id": "enemy_1140_merhd",
+            "count": 2,
+            "time": 57,
+            "interval": 3,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "'Street Layabout'",
+            "enemy_id": "enemy_1238_ltmob",
+            "count": 2,
+            "time": 73,
+            "interval": 11,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Tactical Hound",
+            "enemy_id": "enemy_1140_merhd",
+            "count": 2,
+            "time": 100,
+            "interval": 3,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Tactical Hound",
+            "enemy_id": "enemy_1140_merhd",
+            "count": 5,
+            "time": 117,
+            "interval": 7,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Tactical Hound",
+            "enemy_id": "enemy_1140_merhd",
+            "count": 2,
+            "time": 150,
+            "interval": 3,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "'Street Performer'",
+            "enemy_id": "enemy_1239_ltbow",
+            "count": 1,
+            "time": 33,
+            "route": 2,
+            "fragment": 0
+          },
+          {
+            "enemy": "'Street Performer'",
+            "enemy_id": "enemy_1239_ltbow",
+            "count": 3,
+            "time": 67,
+            "interval": 13,
+            "route": 3,
+            "fragment": 0
+          },
+          {
+            "enemy": "'Street Performer'",
+            "enemy_id": "enemy_1239_ltbow",
+            "count": 3,
+            "time": 125,
+            "interval": 9,
+            "route": 3,
+            "fragment": 0
+          },
+          {
+            "enemy": "'Street Performer'",
+            "enemy_id": "enemy_1239_ltbow",
+            "count": 2,
+            "time": 153,
+            "interval": 3,
+            "route": 3,
+            "fragment": 0
+          },
+          {
+            "enemy": "'Street Layabout'",
+            "enemy_id": "enemy_1238_ltmob",
+            "count": 1,
+            "time": 75,
+            "route": 4,
+            "fragment": 0
+          },
+          {
+            "enemy": "'Street Layabout'",
+            "enemy_id": "enemy_1238_ltmob",
+            "count": 3,
+            "time": 106,
+            "interval": 11,
+            "route": 5,
+            "fragment": 0
+          },
+          {
+            "enemy": "'Street Layabout'",
+            "enemy_id": "enemy_1238_ltmob",
+            "count": 3,
+            "time": 140,
+            "interval": 7,
+            "route": 5,
+            "fragment": 0
+          }
+        ]
+      }
+    ],
+    "spawnTiles": [
+      {
+        "key": "tile_start",
+        "row": 1,
+        "col": 8,
+        "routes": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 3,
+        "col": 8,
+        "routes": [
+          4,
+          5,
+          5
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 5,
+        "col": 8,
+        "routes": [
+          2,
+          3,
+          3,
+          3
+        ]
+      }
+    ],
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 4,
+        "col": 3,
+        "routes": [
+          2,
+          3,
+          3,
+          3,
+          4,
+          5,
+          5
+        ]
+      },
+      {
+        "key": "tile_end",
+        "row": 6,
+        "col": 1,
+        "routes": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_1140_merhd",
+        "slug": "tactical_hound",
+        "name": "Tactical Hound",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1238_ltmob",
+        "slug": "street_layabout",
+        "name": "'Street Layabout'",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1239_ltbow",
+        "slug": "street_performer",
+        "name": "'Street Performer'",
+        "database_level": 0
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [],
+      "deployable_tokens": []
+    },
+    "hasConditionalSpawns": false
+  },
+  "terrain": [],
+  "conditionalHandled": false,
+  "devices": [
+    {
+      "col": 0,
+      "description": "Continually releases Realigned Flux in the deployed direction",
+      "hidden": false,
+      "key": "trap_062_magicstart",
+      "kind": "device",
+      "name": "'Tuba'",
+      "row": 1,
+      "alias": "trap_062_magicstart#1",
+      "instance": {
+        "level": 1,
+        "skillLevel": 1,
+        "direction": "RIGHT"
+      }
+    }
+  ],
+  "tokens": [],
+  "pathing": {
+    "schemaVersion": 1,
+    "syntheticRoutes": [
+      0,
+      2,
+      3,
+      4,
+      5
+    ],
+    "producer": "Arkpedia stage browser / buildPlaybackPaths",
+    "stage": "LE-1",
+    "geometryHash": "26ba95ad5073921cd97908eceff4283faec8b582f248896fadb7ad2c3d622e26",
+    "moveScale": 0.65,
+    "paths": {
+      "0": {
+        "points": [
+          [
+            8,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            6
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "2": {
+        "points": [
+          [
+            8,
+            5
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "3": {
+        "points": [
+          [
+            8,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "4": {
+        "points": [
+          [
+            8,
+            3
+          ],
+          [
+            7,
+            3
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "5": {
+        "points": [
+          [
+            8,
+            3
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      }
+    }
+  },
+  "art": null,
+  "gates": null,
+  "fixedSquad": null,
+  "enemies": {
+    "enemy_1140_merhd": {
+      "key": "enemy_1140_merhd",
+      "prefabKey": "enemy_1140_merhd",
+      "name": "Tactical Hound",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 2200,
+        "atk": 310,
+        "def": 0,
+        "res": 20,
+        "moveSpeed": 1.9,
+        "bat": 1.5,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 0,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "infection"
+      ]
+    },
+    "enemy_1239_ltbow": {
+      "key": "enemy_1239_ltbow",
+      "prefabKey": "enemy_1239_ltbow",
+      "name": "'Street Performer'",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 3300,
+        "atk": 330,
+        "def": 80,
+        "res": 10,
+        "moveSpeed": 0.9,
+        "bat": 3.5,
+        "aspd": 100,
+        "rangeRadius": 1.9,
+        "rawRangeRadius": 1.9,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "When attacking targets outside of Realigned Flux, deals an additional hit",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "ExAtk.times": 1
+        },
+        "bbStr": {},
+        "groups": {
+          "ExAtk": [
+            "times"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1238_ltmob": {
+      "key": "enemy_1238_ltmob",
+      "prefabKey": "enemy_1238_ltmob",
+      "name": "'Street Layabout'",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 3500,
+        "atk": 380,
+        "def": 50,
+        "res": 0,
+        "moveSpeed": 1.3,
+        "bat": 2.2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys",
+          "arts"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "When attacking targets outside of Realigned Flux, deals a certain percentage of Arts damage",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "ExAtk.atk_scale": 0.4
+        },
+        "bbStr": {},
+        "groups": {
+          "ExAtk": [
+            "atk_scale"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    }
+  },
+  "contentAddition": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/le-1.json",
+          "sha256": "e6d0e52d6f45fd5c77a64f96627c4a90619451b354e636e8e0e5ae52247df3da"
+        },
+        {
+          "path": "stage-geometry/le-1.json",
+          "sha256": "26ba95ad5073921cd97908eceff4283faec8b582f248896fadb7ad2c3d622e26"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        }
+      ],
+      "localFiles": [
+        {
+          "path": "data/stage-rules/le-1.json",
+          "sha256": "c9371d1bf6773209d96b6b450dcd33bb9a8474c76f48a0f224c0ce025d7aaefd"
+        },
+        {
+          "path": "data/stage-rules/levels/9b95a00e3c29124fea0d37bc0a564bae06ef61154416811af4da3f8573c8a0bc.json",
+          "sha256": "9b95a00e3c29124fea0d37bc0a564bae06ef61154416811af4da3f8573c8a0bc"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/92cbdb5d8840108e22bd27c976f81e4767fc35e3.json",
+          "sha256": "e849febb12e7911ab8154ae0d964519a1e02d4abc129243cc156f31b44b4a87e"
+        },
+        {
+          "path": "data/arkpedia-device-source.json",
+          "sha256": "61350ffeeaec8c34cdae12e1a91bd110125564bb450889aff4b7f8c030e1ad7a"
+        },
+        {
+          "path": "data/arkpedia-device-native-source.json",
+          "sha256": "7308289f84228ef63eb205caea1b6a13616ef40b26e7b03e80766cae47d2f6df"
+        },
+        {
+          "path": "data/arkpedia-environment-native-source.json",
+          "sha256": "f85082fa9b085a473e1424de3d2c6d0097ced0297de0636a62baf60789d76de2"
+        }
+      ]
+    },
+    "dependencies": {
+      "enemies": [
+        "enemy_1140_merhd",
+        "enemy_1238_ltmob",
+        "enemy_1239_ltbow"
+      ],
+      "devices": [
+        "'Tuba'"
+      ],
+      "tokens": []
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 10,
+        "spawned": 1,
+        "errors": 0
+      },
+      "publicReview": "pending",
+      "waveSchedule": {
+        "id": "le-1",
+        "seconds": 166.26666666666665,
+        "spawned": 33,
+        "expected": 33,
+        "dynamicSpawns": 0,
+        "reason": "cleared",
+        "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+      },
+      "browserStartup": {
+        "id": "le-1",
+        "seconds": 20,
+        "errors": [],
+        "units": 3,
+        "canvas": true,
+        "scope": "Mobile landscape browser startup and canvas runtime; not a fidelity approval"
+      },
+      "controlledFlux": {
+        "stage": "le-1",
+        "connected": [
+          true,
+          true
+        ],
+        "before": [
+          1,
+          1
+        ],
+        "after": [
+          1,
+          0.5
+        ],
+        "disconnected": true,
+        "beamTiles": 9,
+        "errors": [],
+        "scope": "Controlled browser deployment and redirection using the original LE-1 Tuba. Confirms connected SP recovery, redirection and visible shared beam overlay; test tiles permitted both deployment types. Not a playable clear or original VFX/frame parity approval."
+      }
+    }
+  }
+}

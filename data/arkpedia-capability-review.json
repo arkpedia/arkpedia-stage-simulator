@@ -1,0 +1,559 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-14",
+  "scope": "Route-clock and predefined-operator checkpoint; not full native-client or all-stage-clear certification.",
+  "manifest": {
+    "path": "data/arkpedia-library.json",
+    "sha256": "9ec986099f4ed8f5b1f34cc5fc3f7e0f3423c889ed4e3893317935d5915a1eea"
+  },
+  "sourceFiles": [
+    {
+      "path": "server/sim/arkpedia.js",
+      "sha256": "9f2a4fdf0db564b0fbcebd6bb3c7c8a58777f81aa6f560fc4ad144bdad9b7553"
+    },
+    {
+      "path": "server/sim/Battle.js",
+      "sha256": "c7260304ca8fef5a7ac758be5d9e8d0e934c7418f0cac4c84ae0c2d3903b3484"
+    },
+    {
+      "path": "server/sim/ai.js",
+      "sha256": "bcf17545368e2bbe9df2633055583d743607c5a054585042fc279e64f2ee5a95"
+    },
+    {
+      "path": "server/sim/simdata.js",
+      "sha256": "f1fc99d2596e0cf39a4fd176e7a05b3362c3757efa4e5d988a55d13f1c2a087f"
+    },
+    {
+      "path": "server/sim/content/enemies.js",
+      "sha256": "d17c787ea92d1327b0a966ace487f01c110871a7bc3f9d02d70205562868d3fa"
+    },
+    {
+      "path": "server/sim/content/arkpedia-stage-waves.js",
+      "sha256": "97d4979c15efd61b3a6af49e8c8fdeca22477d8175044a2c3390a90c4eaa05d3"
+    },
+    {
+      "path": "shared/arkpedia/stage-path.js",
+      "sha256": "fe44c91eda0b8f49d6961f769d461f50797b8a5d54daa277a4bf41fc0865f0ed"
+    },
+    {
+      "path": "tools/arkpedia/stage-predefined-operators.mjs",
+      "sha256": "4fce117ab232f0cd81c00640cea6e80d9b86159688b23f0444872d7f2586fce4"
+    },
+    {
+      "path": "tools/arkpedia/stage-waves.mjs",
+      "sha256": "a97844fd01fafce1d1e4c3045655e259263fd2673cbffb7158c8263fd3db18d7"
+    },
+    {
+      "path": "tools/arkpedia/build-stage.mjs",
+      "sha256": "f4416416cf67b5a8c5bda50a830ddc98a924b9c4e78a1455b4b5b3dd53e8c646"
+    },
+    {
+      "path": "tools/arkpedia/content-inventory.mjs",
+      "sha256": "1a85b86dd60a34ced1dbb3e40fa24f2c885515b03ecbd4a8d11c1a560885f11b"
+    },
+    {
+      "path": "tools/arkpedia/review-stage-predefined.mjs",
+      "sha256": "6bee87dc6e8820a6bbb35061a0b0e78498c52ec506bd43bf27f15ffc07f3b989"
+    },
+    {
+      "path": "data/arkpedia-favor-source.json",
+      "sha256": "7a07a19507560ebb8524c670c57f6ff50eeded0e8b1410367fb390fbef3133f4"
+    },
+    {
+      "path": "test/arkpedia-predefined-operators.test.js",
+      "sha256": "a4612fffa01c712e52e31dff8430c6666feae9ee31eb2cc564dc52f567480a27"
+    },
+    {
+      "path": "test/arkpedia-route-clocks.test.js",
+      "sha256": "4e2faa4d0a431bf718841a211e20acd297fdbcf698e7f254c39ca84f53c912a9"
+    },
+    {
+      "path": "test/arkpedia-stage-waves.test.js",
+      "sha256": "6ad510f49f1fa2eec0753d5ecb76de486a31f0ac6fe40db745690005f435146b"
+    }
+  ],
+  "validation": {
+    "tests": 56,
+    "smoke": {
+      "scope": "10-second constructor/runtime smoke for every available compiled stage; not a playable-clear or fidelity certificate",
+      "available": 772,
+      "completed": 772,
+      "failures": [],
+      "uniqueComponentsRead": 5232,
+      "cache": {
+        "cachedBytes": 11378720,
+        "cachedObjects": 5232,
+        "pending": 0
+      }
+    },
+    "browser": [
+      {
+        "id": "tr-4",
+        "mobile": false,
+        "initial": {
+          "hidden": [
+            "char_123_fang",
+            "char_192_falco"
+          ],
+          "actors": []
+        },
+        "seconds": 10.933333333333334,
+        "activated": [
+          "char_123_fang",
+          "char_192_falco"
+        ],
+        "hidden": [],
+        "actors": [],
+        "errors": []
+      },
+      {
+        "id": "tr-6",
+        "mobile": false,
+        "initial": {
+          "hidden": [
+            "char_122_beagle",
+            "char_009_12fce"
+          ],
+          "actors": [
+            "char_501_durin"
+          ]
+        },
+        "seconds": 20.933333333333334,
+        "activated": [
+          "char_122_beagle",
+          "char_009_12fce",
+          "char_501_durin"
+        ],
+        "hidden": [],
+        "actors": [
+          "char_501_durin"
+        ],
+        "errors": []
+      },
+      {
+        "id": "1-11",
+        "mobile": false,
+        "initial": {
+          "hidden": [
+            "char_211_adnach"
+          ],
+          "actors": []
+        },
+        "seconds": 3.033333333333333,
+        "activated": [
+          "char_211_adnach"
+        ],
+        "hidden": [],
+        "actors": [
+          "char_211_adnach"
+        ],
+        "errors": []
+      },
+      {
+        "id": "tr-4",
+        "mobile": true,
+        "initial": {
+          "hidden": [
+            "char_123_fang",
+            "char_192_falco"
+          ],
+          "actors": []
+        },
+        "seconds": 10.933333333333334,
+        "activated": [
+          "char_123_fang",
+          "char_192_falco"
+        ],
+        "hidden": [],
+        "actors": [],
+        "errors": []
+      },
+      {
+        "id": "tr-6",
+        "mobile": true,
+        "initial": {
+          "hidden": [
+            "char_122_beagle",
+            "char_009_12fce"
+          ],
+          "actors": [
+            "char_501_durin"
+          ]
+        },
+        "seconds": 20.933333333333334,
+        "activated": [
+          "char_122_beagle",
+          "char_009_12fce",
+          "char_501_durin"
+        ],
+        "hidden": [],
+        "actors": [
+          "char_501_durin"
+        ],
+        "errors": []
+      },
+      {
+        "id": "1-11",
+        "mobile": true,
+        "initial": {
+          "hidden": [
+            "char_211_adnach"
+          ],
+          "actors": []
+        },
+        "seconds": 3.033333333333333,
+        "activated": [
+          "char_211_adnach"
+        ],
+        "hidden": [],
+        "actors": [
+          "char_211_adnach"
+        ],
+        "errors": []
+      }
+    ],
+    "routeClockAudit": {
+      "affected": [
+        {
+          "id": "0-11",
+          "checkpoints": 2
+        },
+        {
+          "id": "0-11_challenge_mode",
+          "checkpoints": 2
+        },
+        {
+          "id": "0-3",
+          "checkpoints": 2
+        },
+        {
+          "id": "0-3_challenge_mode",
+          "checkpoints": 2
+        },
+        {
+          "id": "0-7",
+          "checkpoints": 1
+        },
+        {
+          "id": "0-7_challenge_mode",
+          "checkpoints": 1
+        },
+        {
+          "id": "1-6",
+          "checkpoints": 2
+        },
+        {
+          "id": "1-6_challenge_mode",
+          "checkpoints": 2
+        },
+        {
+          "id": "10-12",
+          "checkpoints": 9
+        },
+        {
+          "id": "10-12_adverse_environment",
+          "checkpoints": 9
+        },
+        {
+          "id": "14-11",
+          "checkpoints": 13
+        },
+        {
+          "id": "14-11_adverse_environment",
+          "checkpoints": 13
+        },
+        {
+          "id": "14-19",
+          "checkpoints": 1
+        },
+        {
+          "id": "14-19_adverse_environment",
+          "checkpoints": 1
+        },
+        {
+          "id": "2-10",
+          "checkpoints": 1
+        },
+        {
+          "id": "2-10_challenge_mode",
+          "checkpoints": 1
+        },
+        {
+          "id": "2-5",
+          "checkpoints": 4
+        },
+        {
+          "id": "2-5_challenge_mode",
+          "checkpoints": 4
+        },
+        {
+          "id": "3-3",
+          "checkpoints": 8
+        },
+        {
+          "id": "3-3_challenge_mode",
+          "checkpoints": 8
+        },
+        {
+          "id": "4-1",
+          "checkpoints": 6
+        },
+        {
+          "id": "4-1_challenge_mode",
+          "checkpoints": 6
+        },
+        {
+          "id": "4-7",
+          "checkpoints": 8
+        },
+        {
+          "id": "4-9",
+          "checkpoints": 2
+        },
+        {
+          "id": "4-9_challenge_mode",
+          "checkpoints": 2
+        },
+        {
+          "id": "5-3",
+          "checkpoints": 6
+        },
+        {
+          "id": "5-3_challenge_mode",
+          "checkpoints": 6
+        },
+        {
+          "id": "5-7",
+          "checkpoints": 3
+        },
+        {
+          "id": "5-7_challenge_mode",
+          "checkpoints": 3
+        },
+        {
+          "id": "6-11",
+          "checkpoints": 8
+        },
+        {
+          "id": "6-11_challenge_mode",
+          "checkpoints": 8
+        },
+        {
+          "id": "9-14",
+          "checkpoints": 2
+        },
+        {
+          "id": "9-14_challenge_mode",
+          "checkpoints": 2
+        },
+        {
+          "id": "9-17",
+          "checkpoints": 18
+        },
+        {
+          "id": "9-17_challenge_mode",
+          "checkpoints": 18
+        },
+        {
+          "id": "9-18",
+          "checkpoints": 6
+        },
+        {
+          "id": "9-18_challenge_mode",
+          "checkpoints": 6
+        },
+        {
+          "id": "9-2",
+          "checkpoints": 4
+        },
+        {
+          "id": "9-2_challenge_mode",
+          "checkpoints": 4
+        },
+        {
+          "id": "9-4",
+          "checkpoints": 10
+        },
+        {
+          "id": "9-4_challenge_mode",
+          "checkpoints": 10
+        },
+        {
+          "id": "9-6",
+          "checkpoints": 10
+        },
+        {
+          "id": "9-6_challenge_mode",
+          "checkpoints": 10
+        },
+        {
+          "id": "9-7",
+          "checkpoints": 12
+        },
+        {
+          "id": "9-7_challenge_mode",
+          "checkpoints": 12
+        },
+        {
+          "id": "ap-4",
+          "checkpoints": 4
+        },
+        {
+          "id": "ce-4",
+          "checkpoints": 3
+        },
+        {
+          "id": "ce-5",
+          "checkpoints": 3
+        },
+        {
+          "id": "dc-6",
+          "checkpoints": 1
+        },
+        {
+          "id": "dc-6_challenge_mode",
+          "checkpoints": 1
+        },
+        {
+          "id": "gt-1",
+          "checkpoints": 14
+        },
+        {
+          "id": "gt-3",
+          "checkpoints": 6
+        },
+        {
+          "id": "gt-6",
+          "checkpoints": 11
+        },
+        {
+          "id": "gt-ex-1",
+          "checkpoints": 12
+        },
+        {
+          "id": "gt-hx-2",
+          "checkpoints": 2
+        },
+        {
+          "id": "gt-hx-2_challenge_mode",
+          "checkpoints": 2
+        },
+        {
+          "id": "h5-3",
+          "checkpoints": 10
+        },
+        {
+          "id": "h7-2",
+          "checkpoints": 5
+        },
+        {
+          "id": "h9-1",
+          "checkpoints": 30
+        },
+        {
+          "id": "h9-2",
+          "checkpoints": 6
+        },
+        {
+          "id": "ls-5",
+          "checkpoints": 1
+        },
+        {
+          "id": "mn-ex-2",
+          "checkpoints": 5
+        },
+        {
+          "id": "mn-ex-2_challenge_mode",
+          "checkpoints": 5
+        },
+        {
+          "id": "mn-ex-4",
+          "checkpoints": 8
+        },
+        {
+          "id": "mn-ex-4_challenge_mode",
+          "checkpoints": 8
+        },
+        {
+          "id": "pl-1",
+          "checkpoints": 7
+        },
+        {
+          "id": "pl-1_challenge_mode",
+          "checkpoints": 7
+        },
+        {
+          "id": "pr-a-2",
+          "checkpoints": 4
+        },
+        {
+          "id": "r8-9",
+          "checkpoints": 4
+        },
+        {
+          "id": "r8-9_challenge_mode",
+          "checkpoints": 4
+        },
+        {
+          "id": "ri-2",
+          "checkpoints": 8
+        },
+        {
+          "id": "ri-ex-2",
+          "checkpoints": 4
+        },
+        {
+          "id": "ri-ex-2_challenge_mode",
+          "checkpoints": 4
+        },
+        {
+          "id": "s4-6",
+          "checkpoints": 218
+        },
+        {
+          "id": "s4-9",
+          "checkpoints": 1
+        },
+        {
+          "id": "s9-1",
+          "checkpoints": 2
+        },
+        {
+          "id": "tw-2",
+          "checkpoints": 1
+        },
+        {
+          "id": "tw-5",
+          "checkpoints": 4
+        },
+        {
+          "id": "tw-ex-2",
+          "checkpoints": 5
+        },
+        {
+          "id": "tw-ex-2_challenge_mode",
+          "checkpoints": 5
+        },
+        {
+          "id": "ursus_camp_01",
+          "checkpoints": 12
+        },
+        {
+          "id": "ursus_camp_r_03",
+          "checkpoints": 87
+        },
+        {
+          "id": "yan_camp_02",
+          "checkpoints": 47
+        }
+      ],
+      "failed": []
+    }
+  },
+  "limitations": [
+    "No complete tutorial interaction or native callback/frame calibration.",
+    "Ambiguous instances, unsupported overrides and devices remain blocked.",
+    "Favor interpolation outside exact/constant-phase intervals remains blocked.",
+    "Free-squad predefined actors require separate instance identity support."
+  ]
+}

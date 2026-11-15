@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Selected full S3 summon lifecycle. Public admission and native FX stay separate.
+import { stageCardRespawnTime } from './arkpedia-stage-card-cost.js';
 import {McGrafLifecycle} from './arkpedia-mcgraf-lifecycle.js';
 import {mcgrafAttackKit,MCGRAF_S3_ATTACK_CONTRACT} from './arkpedia-mcnist-attacks.js';
 import {MechanistS3Owner} from './arkpedia-mcnist-s3-owner.js';
@@ -114,7 +115,7 @@ export class McGrafS3Lifecycle extends McGrafLifecycle{
  }
  finishTransport(f){if(f.finished)return;f.finished=true;this.endCommand(f);this.transports.delete(f);if(this.flight===f)this.flight=null;
   if(f.projectile)this.b.projectiles.remove(p=>p===f.projectile);
-  if(this.valid()&&!this.point&&!this.flight&&!this.placing){this.stock=1;this.readyAt=f.commandEndedAt+this.record.stats.respawnTime;}
+  if(this.valid()&&!this.point&&!this.flight&&!this.placing){this.stock=1;this.readyAt=f.commandEndedAt+stageCardRespawnTime(this.b, this.record);}
   if(!this.transports.size){for(const h of this.transportHandles)this.b.off(h);this.transportHandles=[];}
  }
  watchTransports(){if(this.transportHandles.length)return;this.transportHandles=[this.b.on('tick',()=>{for(const f of [...this.transports]){

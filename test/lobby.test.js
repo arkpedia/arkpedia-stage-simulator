@@ -134,6 +134,9 @@ describe('static http server', () => {
     w('public/.hidden', 'hidden');
     w('public/sub/index.html', '<p>sub</p>');
     w('data/config.json', JSON.stringify({ hello: 'world', nested: { a: [1, 2] } }));
+    w(`data/arkpedia-stage-library/objects/${'a'.repeat(64)}.json`, '{"fixture":true}');
+    w('data/arkpedia-stage-library/objects/current.json', '{"fixture":true}');
+    w('data/arkpedia-library.json', '{"fixture":true}');
     w('shared/x.js', 'export const y = 2;');
     srv = await startServer({
       port: 0, host: '127.0.0.1', quiet: true,
@@ -245,6 +248,10 @@ describe('static http server', () => {
     assert.match(versioned.headers['cache-control'], /immutable/);
     const html = await httpReq(srv.port, '/index.html?v=1');
     assert.equal(html.headers['cache-control'], 'no-cache');
+    const component = await httpReq(srv.port, `/data/arkpedia-stage-library/objects/${'a'.repeat(64)}.json`);
+    assert.match(component.headers['cache-control'], /immutable/);
+    assert.equal((await httpReq(srv.port, '/data/arkpedia-stage-library/objects/current.json')).headers['cache-control'], 'no-cache');
+    assert.equal((await httpReq(srv.port, '/data/arkpedia-library.json')).headers['cache-control'], 'no-cache');
   });
 
   test('byte ranges for audio (206 / 416 / If-Range)', async () => {

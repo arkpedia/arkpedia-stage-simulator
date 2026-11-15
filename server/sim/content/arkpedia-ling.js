@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { stageSummonCost, stageCardRespawnTime } from './arkpedia-stage-card-cost.js';
 import { canSpendDp } from './arkpedia-dp-budget.js';
 // Source-selected diagnostic; public enablement requires complete skills/art review.
 import evidence from '../../../data/arkpedia-ling-prefabs.json' with { type: 'json' };
@@ -66,7 +67,7 @@ export function selectedLingBuild(build) {
   const tokenSkill = evidence.tables.tokenSkills[`sktok_ling_soul${index + 1}`].levels[build.skillRank - 1];
   return { build: { ...build }, index, source, bb: flat(source.blackboard), stats, talents,
     tags: [...tags], rangeGrid: grid(phase.rangeId), departure: flat(talents.find(t => t.prefabKey === '2')?.blackboard),
-    token: { id: tokenId, name: tokenSource.name, position: tokenSource.position, stats: tokenStats,
+    token: { id: tokenId, name: tokenSource.name, profession: tokenSource.profession, position: tokenSource.position, stats: tokenStats,
       rangeGrid: grid(tokenPhase.rangeId), talents: tokenTalents,
       skill: { ...tokenSkill, ...tokenSkill.spData, skillId: tokenSkill.prefabId, trigger: { rule: 'NEVER' } } } };
 }
@@ -235,7 +236,7 @@ export class LingDragonDeck {
     if (build !== 'ALL' && build !== position) return position === 'MELEE' ? 'Choose a melee tile.' : 'Choose a high-ground tile.';
     if (b.allyUnits.some(t => present(t) && t.tileR === row && t.tileC === col)) return 'Tile is occupied.';
     if (b.tileReservation(row, col)) return 'Tile is reserved for an operator return.';
-    if (!canSpendDp(b, this.u.ownerId, this.record.stats.cost)) return 'Not enough DP.';
+    if (!canSpendDp(b, this.u.ownerId, stageSummonCost(this.b, this.record))) return 'Not enough DP.';
     return null;
   }
   place(row, col, dir = 'RIGHT') {
@@ -256,8 +257,8 @@ export class LingDragonDeck {
       throw Error('Dragon owner became unavailable.');
     }
     this.attacks.set(t, attack); this.stock--;
-    this.u.player.dp -= this.record.stats.cost;
-    this.readyAt = b.time + this.record.stats.respawnTime;
+    this.u.player.dp -= stageSummonCost(this.b, this.record);
+    this.readyAt = b.time + stageCardRespawnTime(this.b, this.record);
     core.skills?.placed(t);
     return t;
   }

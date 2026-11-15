@@ -6,7 +6,9 @@ export function battleHud(battle, paused) {
   const rate = battle.dpRecoveryRateFor?.('arkpedia') ?? battle.flags.dpPerSec;
   const deployed = battle.allyUnits.filter(unit => unit.alive).length;
   const usedSlots = typeof battle.deployedSlots === 'function' ? battle.deployedSlots() : deployed;
+  const deadline = battle.stageDeadline ? Math.ceil(Math.max(0, battle.stageDeadline.endAt - battle.time - 1e-9)) : null;
   return {
+    deadline: deadline == null ? null : `${Math.floor(deadline / 60)}:${String(deadline % 60).padStart(2, '0')}`,
     enemies: `${battle.killed + battle.leakedCount}/${battle.total}`,
     life: battle.life,
     dp: Math.floor(dp),

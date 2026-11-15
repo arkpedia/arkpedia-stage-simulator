@@ -1,0 +1,1266 @@
+{
+  "code": "LE-5",
+  "name": "Moonlight",
+  "description": "Under the chill of the twin moons, even words seem numb with cold.\n<Waste Energy Interference> Natural SP recovery speed reduced.\n<Realigned Flux> Restores natural SP recovery speed of allied Operators within.",
+  "battle": {
+    "max_life": 3,
+    "unit_limit": 8,
+    "initial_dp": 10,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1,
+    "max_play_time": -1
+  },
+  "rules": {
+    "variant": null,
+    "source": {
+      "repository": "Kengxxiao/ArknightsGameData",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "path": "zh_CN/gamedata/levels/activities/act18side/level_act18side_05.json",
+      "sha256": "31c4650ced7aed464c18f87ca18ea120124cf3543af8ca2e4bdf2b2c9be39ff2",
+      "gitBlob": "624a60d9d14ccf43e4405a91d53ec2c0ccae714c",
+      "stageTable": {
+        "path": "zh_CN/gamedata/excel/stage_table.json",
+        "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+        "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+        "stageId": "act18side_05",
+        "levelId": "Activities/act18side/level_act18side_05"
+      }
+    },
+    "battle": {
+      "max_play_time": -1
+    },
+    "enemies": {},
+    "enemyAdd": {},
+    "hiddenGroups": {}
+  },
+  "environment": [
+    {
+      "kind": "character_in_magiccircuit_env",
+      "sp_recover_ratio": -0.5,
+      "character_in_magiccircuit[normal].sp_recover_ratio": 0.5
+    }
+  ],
+  "mapTags": [],
+  "mapTagSource": null,
+  "geometry": {
+    "slug": "le-5",
+    "rows": 6,
+    "cols": 10,
+    "tileLegend": [
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_floor",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_start",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      },
+      {
+        "key": "tile_fence",
+        "height": "low",
+        "walkable": false,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_magic_circle_h",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      }
+    ],
+    "tileGrid": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        2,
+        2,
+        2,
+        2,
+        3,
+        3,
+        4
+      ],
+      [
+        1,
+        2,
+        5,
+        5,
+        6,
+        6,
+        5,
+        5,
+        5,
+        0
+      ],
+      [
+        0,
+        2,
+        2,
+        2,
+        5,
+        5,
+        0,
+        0,
+        5,
+        0
+      ],
+      [
+        0,
+        7,
+        5,
+        2,
+        2,
+        2,
+        4,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "routes": [
+      {
+        "motion": "walk",
+        "start": {
+          "row": 4,
+          "col": 6
+        },
+        "end": {
+          "row": 2,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 1
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 3
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 4,
+          "col": 6
+        },
+        "end": {
+          "row": 2,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 1
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": null,
+        "placeholder": true,
+        "start": null,
+        "end": null,
+        "checkpoints": [],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 9
+        },
+        "end": {
+          "row": 1,
+          "col": 2
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 5
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 30
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 1,
+            "seconds": 30
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 9
+        },
+        "end": {
+          "row": 1,
+          "col": 2
+        },
+        "checkpoints": [],
+        "waits": []
+      }
+    ],
+    "waves": [
+      {
+        "index": 0,
+        "duration": 174,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "'Street Layabout'",
+            "enemy_id": "enemy_1238_ltmob",
+            "count": 1,
+            "time": 5,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "'Street Performer'",
+            "enemy_id": "enemy_1239_ltbow",
+            "count": 1,
+            "time": 24,
+            "route": 1,
+            "fragment": 1
+          },
+          {
+            "enemy": "'Street Layabout'",
+            "enemy_id": "enemy_1238_ltmob",
+            "count": 2,
+            "time": 37,
+            "interval": 3,
+            "route": 1,
+            "fragment": 2
+          },
+          {
+            "enemy": "'Street Performer'",
+            "enemy_id": "enemy_1239_ltbow",
+            "count": 1,
+            "time": 45,
+            "route": 1,
+            "fragment": 2
+          },
+          {
+            "enemy": "'Street Layabout'",
+            "enemy_id": "enemy_1238_ltmob",
+            "count": 2,
+            "time": 58,
+            "interval": 2,
+            "route": 1,
+            "fragment": 3
+          },
+          {
+            "enemy": "Spire Caster",
+            "enemy_id": "enemy_1241_ltmage",
+            "count": 1,
+            "time": 64,
+            "route": 1,
+            "fragment": 3
+          },
+          {
+            "enemy": "Remnant Field Caster",
+            "enemy_id": "enemy_1244_ltssch",
+            "count": 1,
+            "time": 72,
+            "route": 3,
+            "fragment": 4
+          },
+          {
+            "enemy": "'Street Layabout'",
+            "enemy_id": "enemy_1238_ltmob",
+            "count": 1,
+            "time": 79,
+            "route": 1,
+            "fragment": 4
+          },
+          {
+            "enemy": "Spire Caster",
+            "enemy_id": "enemy_1241_ltmage",
+            "count": 1,
+            "time": 89,
+            "route": 1,
+            "fragment": 4
+          },
+          {
+            "enemy": "'Street Layabout'",
+            "enemy_id": "enemy_1238_ltmob",
+            "count": 1,
+            "time": 104,
+            "route": 1,
+            "fragment": 5
+          },
+          {
+            "enemy": "'Street Layabout'",
+            "enemy_id": "enemy_1238_ltmob",
+            "count": 1,
+            "time": 114,
+            "route": 1,
+            "fragment": 5
+          },
+          {
+            "enemy": "'Street Layabout'",
+            "enemy_id": "enemy_1238_ltmob",
+            "count": 2,
+            "time": 124,
+            "interval": 3,
+            "route": 1,
+            "fragment": 5
+          },
+          {
+            "enemy": "'Street Layabout'",
+            "enemy_id": "enemy_1238_ltmob",
+            "count": 1,
+            "time": 142,
+            "route": 1,
+            "fragment": 6
+          },
+          {
+            "enemy": "Spire Caster",
+            "enemy_id": "enemy_1241_ltmage",
+            "count": 1,
+            "time": 150,
+            "route": 1,
+            "fragment": 6
+          },
+          {
+            "enemy": "'Street Performer'",
+            "enemy_id": "enemy_1239_ltbow",
+            "count": 1,
+            "time": 160,
+            "route": 1,
+            "fragment": 6
+          },
+          {
+            "enemy": "Spire Caster",
+            "enemy_id": "enemy_1241_ltmage",
+            "count": 1,
+            "time": 174,
+            "route": 1,
+            "fragment": 6
+          },
+          {
+            "enemy": "Mass-Produced Colossus",
+            "enemy_id": "enemy_1240_ltgint",
+            "count": 1,
+            "time": 162,
+            "route": 4,
+            "fragment": 6
+          }
+        ]
+      }
+    ],
+    "spawnTiles": [
+      {
+        "key": "tile_start",
+        "row": 1,
+        "col": 9,
+        "routes": [
+          3,
+          4
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 4,
+        "col": 6,
+        "routes": [
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    ],
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 1,
+        "col": 2,
+        "routes": [
+          3,
+          4
+        ]
+      },
+      {
+        "key": "tile_end",
+        "row": 2,
+        "col": 0,
+        "routes": [
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_1238_ltmob",
+        "slug": "street_layabout",
+        "name": "'Street Layabout'",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1239_ltbow",
+        "slug": "street_performer",
+        "name": "'Street Performer'",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1240_ltgint",
+        "slug": "mass_produced_colossus",
+        "name": "Mass-Produced Colossus",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1241_ltmage",
+        "slug": "spire_caster",
+        "name": "Spire Caster",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1244_ltssch",
+        "slug": "remnant_field_caster",
+        "name": "Remnant Field Caster",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1245_ltseal",
+        "slug": null,
+        "name": "Crimson Formation",
+        "database_level": 0
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [],
+      "deployable_tokens": []
+    },
+    "hasConditionalSpawns": false
+  },
+  "terrain": [],
+  "conditionalHandled": false,
+  "devices": [
+    {
+      "col": 8,
+      "description": "Continually releases Realigned Flux in the deployed direction",
+      "hidden": false,
+      "key": "trap_062_magicstart",
+      "kind": "device",
+      "name": "'Tuba'",
+      "row": 0,
+      "alias": "trap_062_magicstart#1",
+      "instance": {
+        "level": 1,
+        "skillLevel": 1,
+        "direction": "UP"
+      }
+    },
+    {
+      "col": 1,
+      "description": "Activates after being charged by Realigned Flux for some time; When activated and an operator is deployed on top, forms a new Realigned Flux",
+      "hidden": false,
+      "key": "trap_064_magiccircle",
+      "kind": "device",
+      "name": "'Resonator'",
+      "row": 4,
+      "alias": "trap_064_magiccircle#1",
+      "instance": {
+        "level": 1,
+        "skillLevel": 1,
+        "direction": "LEFT"
+      }
+    }
+  ],
+  "tokens": [],
+  "pathing": {
+    "schemaVersion": 1,
+    "syntheticRoutes": [
+      0,
+      1,
+      3,
+      4
+    ],
+    "producer": "Arkpedia stage browser / buildPlaybackPaths",
+    "stage": "LE-5",
+    "geometryHash": "b7ca78a5e77dfe2fa6e21ed7305a8f3a2d71279886be93904fb246162c62387a",
+    "moveScale": 0.65,
+    "paths": {
+      "0": {
+        "points": [
+          [
+            6,
+            4
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            0,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "1": {
+        "points": [
+          [
+            6,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            0,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "3": {
+        "points": [
+          [
+            9,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            2,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "4": {
+        "points": [
+          [
+            9,
+            1
+          ],
+          [
+            2,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1
+        ],
+        "breaks": [],
+        "holds": []
+      }
+    }
+  },
+  "art": null,
+  "gates": null,
+  "fixedSquad": null,
+  "enemies": {
+    "enemy_1238_ltmob": {
+      "key": "enemy_1238_ltmob",
+      "prefabKey": "enemy_1238_ltmob",
+      "name": "'Street Layabout'",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 3500,
+        "atk": 380,
+        "def": 50,
+        "res": 0,
+        "moveSpeed": 1.3,
+        "bat": 2.2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys",
+          "arts"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "When attacking targets outside of Realigned Flux, deals a certain percentage of Arts damage",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "ExAtk.atk_scale": 0.4
+        },
+        "bbStr": {},
+        "groups": {
+          "ExAtk": [
+            "atk_scale"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1239_ltbow": {
+      "key": "enemy_1239_ltbow",
+      "prefabKey": "enemy_1239_ltbow",
+      "name": "'Street Performer'",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 3300,
+        "atk": 330,
+        "def": 80,
+        "res": 10,
+        "moveSpeed": 0.9,
+        "bat": 3.5,
+        "aspd": 100,
+        "rangeRadius": 1.9,
+        "rawRangeRadius": 1.9,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "When attacking targets outside of Realigned Flux, deals an additional hit",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "ExAtk.times": 1
+        },
+        "bbStr": {},
+        "groups": {
+          "ExAtk": [
+            "times"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1241_ltmage": {
+      "key": "enemy_1241_ltmage",
+      "prefabKey": "enemy_1241_ltmage",
+      "name": "Spire Caster",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 7000,
+        "atk": 600,
+        "def": 160,
+        "res": 65,
+        "moveSpeed": 0.6,
+        "bat": 7,
+        "aspd": 100,
+        "rangeRadius": 2.2,
+        "rawRangeRadius": 2.2,
+        "blockCnt": 1,
+        "massLevel": 2,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "arts",
+        "dmgTypes": [
+          "arts"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Attacks 2 enemies simultaneously",
+          "format": "NORMAL"
+        },
+        {
+          "text": "When attacking targets outside of Realigned Flux, deals Splash damage",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "AOEDamage.atk_scale": 1
+        },
+        "bbStr": {
+          "AOEDamage.range_id": "x-4"
+        },
+        "groups": {
+          "AOEDamage": [
+            "atk_scale",
+            "range_id"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1244_ltssch": {
+      "key": "enemy_1244_ltssch",
+      "prefabKey": "enemy_1244_ltssch",
+      "name": "Remnant Field Caster",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 15000,
+        "atk": 0,
+        "def": 500,
+        "res": 60,
+        "moveSpeed": 0.3,
+        "bat": 13,
+        "aspd": 100,
+        "rangeRadius": 2.6,
+        "rawRangeRadius": 2.6,
+        "blockCnt": 1,
+        "massLevel": 3,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "arts",
+        "dmgTypes": [
+          "arts"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Prioritizes targets on Realigned Flux, <$ba.stun>Stunning</> them and continually dealing Arts damage while cutting off nearby Realigned Flux",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1245_ltseal": {
+      "key": "enemy_1245_ltseal",
+      "prefabKey": "enemy_1245_ltseal",
+      "name": "Crimson Formation",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "NONE",
+      "stats": {
+        "maxHp": 5,
+        "atk": 150,
+        "def": 0,
+        "res": 0,
+        "moveSpeed": 1,
+        "bat": 0,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 0,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "none",
+        "dmgTypes": [],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {
+          "Life.duration": 10,
+          "Life.hp_ratio": 0.5,
+          "Attack.hp_ratio": 0.5,
+          "Attack.duration": 10
+        },
+        "bbStr": {
+          "Life.range_id": "x-5",
+          "Attack.range_id": "0-1"
+        },
+        "groups": {
+          "Life": [
+            "duration",
+            "hp_ratio",
+            "range_id"
+          ],
+          "Attack": [
+            "duration",
+            "hp_ratio",
+            "range_id"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1240_ltgint": {
+      "key": "enemy_1240_ltgint",
+      "prefabKey": "enemy_1240_ltgint",
+      "name": "Mass-Produced Colossus",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 15000,
+        "atk": 650,
+        "def": 1200,
+        "res": 50,
+        "moveSpeed": 0.75,
+        "bat": 4,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 4,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": true,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Can only be blocked by units with at least 2 Block",
+          "format": "NORMAL"
+        },
+        {
+          "text": "When in Realigned Flux, DEF and RES are greatly reduced",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "Weak.def": -1000,
+          "Weak.magic_resistance": -50
+        },
+        "bbStr": {},
+        "groups": {
+          "Weak": [
+            "def",
+            "magic_resistance"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "originiumartscraft"
+      ]
+    }
+  },
+  "contentAddition": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/le-5.json",
+          "sha256": "d03877b19d6f7bf1f13237e93eb7c15014d5ff407f7aeb075e36fba85dedeff3"
+        },
+        {
+          "path": "stage-geometry/le-5.json",
+          "sha256": "b7ca78a5e77dfe2fa6e21ed7305a8f3a2d71279886be93904fb246162c62387a"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        }
+      ],
+      "localFiles": [
+        {
+          "path": "data/stage-rules/le-5.json",
+          "sha256": "70773193d17ccb970f894495d3baa1b88b79e8bee83871dbcdb5665117212c18"
+        },
+        {
+          "path": "data/stage-rules/levels/c8349a07a7285d2932252199071a1dd57b6f287393b2cf8a25bbbf0229f963d4.json",
+          "sha256": "c8349a07a7285d2932252199071a1dd57b6f287393b2cf8a25bbbf0229f963d4"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/624a60d9d14ccf43e4405a91d53ec2c0ccae714c.json",
+          "sha256": "31c4650ced7aed464c18f87ca18ea120124cf3543af8ca2e4bdf2b2c9be39ff2"
+        },
+        {
+          "path": "data/arkpedia-device-source.json",
+          "sha256": "07f41d868c9727268a263e0213f4a73ec09a86c816efddc2ec55574cc5510b3c"
+        },
+        {
+          "path": "data/arkpedia-device-native-source.json",
+          "sha256": "0b0cff4f652f4d2a2ad874b3b67bf7b41f3cb7c01aa096e8a8334f34b0e4dc71"
+        },
+        {
+          "path": "data/arkpedia-environment-native-source.json",
+          "sha256": "f85082fa9b085a473e1424de3d2c6d0097ced0297de0636a62baf60789d76de2"
+        }
+      ]
+    },
+    "dependencies": {
+      "enemies": [
+        "enemy_1238_ltmob",
+        "enemy_1239_ltbow",
+        "enemy_1240_ltgint",
+        "enemy_1241_ltmage",
+        "enemy_1244_ltssch",
+        "enemy_1245_ltseal"
+      ],
+      "devices": [
+        "'Resonator'",
+        "'Tuba'"
+      ],
+      "tokens": []
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 10,
+        "spawned": 1,
+        "errors": 0
+      },
+      "publicReview": "pending",
+      "waveSchedule": {
+        "id": "le-5",
+        "seconds": 194.53333333333333,
+        "spawned": 20,
+        "expected": 20,
+        "dynamicSpawns": 0,
+        "reason": "cleared",
+        "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+      },
+      "browserStartup": {
+        "id": "le-5",
+        "seconds": 20,
+        "errors": [],
+        "units": 3,
+        "canvas": true,
+        "scope": "Mobile landscape browser startup and canvas runtime; not a fidelity approval"
+      },
+      "fluxInteraction": {
+        "stage": "le-5",
+        "activated": true,
+        "charge": 20,
+        "freed": true,
+        "independentBeam": true,
+        "held": true,
+        "blocked": true,
+        "damage": 450,
+        "released": true,
+        "restored": true,
+        "errors": [],
+        "scope": "Controlled LE-5 browser deployment verifies original Resonator charging, tile release, independent emitted Flux, Field Caster summoning, formation stun/damage, beam exclusion and recovery. Test tiles permit both deployment types and scheduled waves are removed; not a playable clear or original art/frame approval."
+      }
+    }
+  }
+}

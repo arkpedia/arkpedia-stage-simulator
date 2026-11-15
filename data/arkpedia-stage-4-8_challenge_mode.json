@@ -3,12 +3,13 @@
  "name": "Acute Stress Disorder",
  "description": "Condition:\nThe redeployment time of all Operators is doubled.",
  "battle": {
-  "max_life": 3,
+  "max_life": 1,
   "unit_limit": 8,
   "initial_dp": 10,
   "max_dp": 99,
   "dp_per_second": 1,
-  "dp_recovery_interval_seconds": 1
+  "dp_recovery_interval_seconds": 1,
+  "max_play_time": -1
  },
  "mapTags": [],
  "mapTagSource": null,
@@ -2342,9 +2343,9 @@
    "rank": "ELITE",
    "applyWay": "MELEE",
    "stats": {
-    "maxHp": 12000,
-    "atk": 1050,
-    "def": 700,
+    "maxHp": 14400,
+    "atk": 1260,
+    "def": 840,
     "res": 30,
     "moveSpeed": 0.65,
     "bat": 3.5,
@@ -2392,9 +2393,9 @@
    "rank": "ELITE",
    "applyWay": "MELEE",
    "stats": {
-    "maxHp": 7500,
-    "atk": 600,
-    "def": 230,
+    "maxHp": 9000,
+    "atk": 720,
+    "def": 276,
     "res": 50,
     "moveSpeed": 0.85,
     "bat": 2,
@@ -2444,9 +2445,9 @@
    "rank": "NORMAL",
    "applyWay": "MELEE",
    "stats": {
-    "maxHp": 2650,
-    "atk": 350,
-    "def": 85,
+    "maxHp": 3180,
+    "atk": 420,
+    "def": 102,
     "res": 0,
     "moveSpeed": 1.1,
     "bat": 2,
@@ -2494,9 +2495,9 @@
    "rank": "NORMAL",
    "applyWay": "MELEE",
    "stats": {
-    "maxHp": 3000,
-    "atk": 280,
-    "def": 300,
+    "maxHp": 3600,
+    "atk": 336,
+    "def": 360,
     "res": 0,
     "moveSpeed": 1,
     "bat": 2,
@@ -2544,9 +2545,9 @@
    "rank": "NORMAL",
    "applyWay": "MELEE",
    "stats": {
-    "maxHp": 4000,
-    "atk": 350,
-    "def": 200,
+    "maxHp": 4800,
+    "atk": 420,
+    "def": 240,
     "res": 50,
     "moveSpeed": 0.75,
     "bat": 2.5,
@@ -2594,9 +2595,9 @@
    "rank": "NORMAL",
    "applyWay": "MELEE",
    "stats": {
-    "maxHp": 3700,
-    "atk": 300,
-    "def": 500,
+    "maxHp": 4440,
+    "atk": 360,
+    "def": 600,
     "res": 0,
     "moveSpeed": 1,
     "bat": 2,
@@ -2644,9 +2645,9 @@
    "rank": "ELITE",
    "applyWay": "MELEE",
    "stats": {
-    "maxHp": 9000,
-    "atk": 850,
-    "def": 230,
+    "maxHp": 10800,
+    "atk": 1020,
+    "def": 276,
     "res": 30,
     "moveSpeed": 0.7,
     "bat": 3.5,
@@ -2694,9 +2695,9 @@
    "rank": "ELITE",
    "applyWay": "RANGED",
    "stats": {
-    "maxHp": 12000,
-    "atk": 500,
-    "def": 200,
+    "maxHp": 14400,
+    "atk": 600,
+    "def": 240,
     "res": 50,
     "moveSpeed": 0.8,
     "bat": 4,
@@ -2757,5 +2758,102 @@
     "sarkaz"
    ]
   }
+ },
+ "rules": {
+  "variant": "challenge_mode",
+  "source": {
+   "repository": "Kengxxiao/ArknightsGameData",
+   "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+   "path": "zh_CN/gamedata/levels/obt/main/level_main_04-08.json",
+   "sha256": "ee9640839caebd14394e98f4f631e1194def72f8f93b6110a77de9ccf74dbeda",
+   "gitBlob": "840997e00051dade09fc3ce9f629a0b002fc00d3",
+   "stageTable": {
+    "path": "zh_CN/gamedata/excel/stage_table.json",
+    "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+    "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+    "stageId": "main_04-08",
+    "levelId": "Obt/Main/level_main_04-08"
+   }
+  },
+  "battle": {
+   "max_play_time": -1,
+   "max_life": 1
+  },
+  "enemies": {
+   "atk": 1.2,
+   "def": 1.2,
+   "maxHp": 1.2
+  },
+  "enemyAdd": {},
+  "hiddenGroups": {},
+  "allyCards": [
+   {
+    "attribute": "respawnTime",
+    "professionMask": 1023,
+    "buildableMask": 3,
+    "scale": 2
+   }
+  ]
+ },
+ "tokens": [],
+ "contentRuleRefresh": {
+  "schemaVersion": 1,
+  "source": {
+   "repository": "arkpedia/arkpedia-data",
+   "commit": "66232ee06377d791fb130248d680764c286e5c99",
+   "files": [
+    {
+     "path": "stages/4-8_challenge_mode.json",
+     "sha256": "b61a95533342ce7330411973ba2da052b3dd6bc31f95aacba3f26b02ca0f749f"
+    },
+    {
+     "path": "stage-geometry/4-8.json",
+     "sha256": "ecc8c02d00c9a204149c774adcf2bffdea851a9ae72f8d693d7770469275bd5e"
+    },
+    {
+     "path": "stage-devices.json",
+     "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+    }
+   ],
+   "localFiles": [
+    {
+     "path": "data/stage-rules/4-8_challenge_mode.json",
+     "sha256": "a37f4e790bb08970b3d507878e865ee23bc74efe9527acdb2620f8d57b8e0c35"
+    },
+    {
+     "path": "data/stage-rules/levels/46e5de2a1d39c3aa1bc6da6d5efa5d99bce56ff88929e205cf833f7f9af546b2.json",
+     "sha256": "46e5de2a1d39c3aa1bc6da6d5efa5d99bce56ff88929e205cf833f7f9af546b2"
+    }
+   ]
+  },
+  "validation": {
+   "smoke": {
+    "seconds": 10,
+    "spawned": 3,
+    "errors": 0
+   },
+   "waveSchedule": {
+    "id": "4-8_challenge_mode",
+    "seconds": 199.93333333333334,
+    "spawned": 30,
+    "expected": 30,
+    "reason": "cleared",
+    "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+   },
+   "browser": {
+    "id": "4-8_challenge_mode",
+    "seconds": 20,
+    "errors": [],
+    "units": 5,
+    "canvas": true,
+    "scope": "Browser startup and 600 simulation ticks; not full gameplay or visual fidelity approval"
+   }
+  },
+  "changed": [
+   "rules",
+   "battle",
+   "enemies",
+   "tokens"
+  ]
  }
 }

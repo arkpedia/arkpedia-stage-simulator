@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { stageCardRespawnTime } from './arkpedia-stage-card-cost.js';
 import evidence from '../../../data/arkpedia-exusiai-covenant-prefabs.json' with { type: 'json' };
 import { canDeployInViewport } from '../../../shared/arkpedia/squad.js';
 import { summonCardId } from '../../../shared/arkpedia/summons.js';
@@ -46,7 +47,7 @@ export class ExusiaiCovenantCoordinates {
       if (unit === u && !move && this.core.valid()) { this.stock = 1; this.readyAt = b.time; this.deliveries = 0; }
     }, { owner: u }), b.on('death', ({ unit }) => {
       if (unit === this.token) { this.token = null; this.stock = this.core.valid() ? 1 : 0;
-        this.readyAt = b.time + this.def.stats.respawnTime; }
+        this.readyAt = b.time + stageCardRespawnTime(this.b, this.def); }
     }, { owner: u })];
   }
   placementError(row, col) {

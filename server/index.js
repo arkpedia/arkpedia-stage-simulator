@@ -301,6 +301,8 @@ function ifRangeMatches(req, etag, lastModified) {
 
 function cacheControlFor(ext, mountName, segments, query) {
   if (ext === '.html' || ext === '.htm') return 'no-cache';
+  if (mountName === 'data' && segments.length === 3 && segments[0] === 'arkpedia-stage-library'
+    && segments[1] === 'objects' && /^[a-f0-9]{64}\.json$/.test(segments[2])) return IMMUTABLE_CACHE;
   if (/(^|&)v=/.test(query)) return IMMUTABLE_CACHE;
   if (mountName === 'public' && segments.length > 1 && LONG_CACHE_DIRS.includes(segments[0])) return LONG_CACHE;
   return 'no-cache';

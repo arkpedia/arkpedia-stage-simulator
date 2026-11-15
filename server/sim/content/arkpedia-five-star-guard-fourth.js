@@ -173,8 +173,8 @@ export function customizeFiveStarGuardFourthKit({ id, def, unit, kit }) {
 }
 
 export function installFiveStarGuardFourth({ battle: b, unit: u, def }) {
+  if (!FIVE_STAR_GUARD_FOURTH_OPERATORS[def.charId]) return;
   const id = def.charId, t = def.talents[0];
-  if (!FIVE_STAR_GUARD_FOURTH_OPERATORS[id]) return;
   if (id === 'char_4106_bryota') {
     b.on('hit', ({ source, target, dmg }) => {
       if (source === u && target.side === 'enemy' && dmg.isAttack && target.blockedBy !== u)

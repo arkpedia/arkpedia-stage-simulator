@@ -1,0 +1,1733 @@
+{
+ "code": "BW-7",
+ "name": "Slippery Snow",
+ "description": "Be careful walking on the snowy streets. One slip, and you have no idea where you'll end up.\n<Originium Ice Crystal> Periodically releases a frigid wave that will inflict Cold to affected allied units.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1,
+  "max_play_time": -1
+ },
+ "rules": {
+  "variant": null,
+  "source": {
+   "repository": "Kengxxiao/ArknightsGameData",
+   "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+   "path": "zh_CN/gamedata/levels/activities/act13mini/level_act13mini_07.json",
+   "sha256": "268a0832a98b62f4be62c2df46bbc361c95bccfaf7ae0e8bc08b5c8ec21515fa",
+   "gitBlob": "f3297381dda0316a7f7da2c6ae716fbc0e8c9d37",
+   "stageTable": {
+    "path": "zh_CN/gamedata/excel/stage_table.json",
+    "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+    "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+    "stageId": "act13mini_07",
+    "levelId": "Activities/act13mini/level_act13mini_07"
+   }
+  },
+  "battle": {
+   "max_play_time": -1
+  },
+  "enemies": {},
+  "enemyAdd": {},
+  "hiddenGroups": {}
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "bw-7",
+  "rows": 7,
+  "cols": 10,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_telin",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_telout",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    1,
+    2,
+    2,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    4
+   ],
+   [
+    0,
+    5,
+    5,
+    5,
+    5,
+    5,
+    5,
+    5,
+    3,
+    0
+   ],
+   [
+    6,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    0
+   ],
+   [
+    0,
+    5,
+    5,
+    5,
+    5,
+    5,
+    5,
+    5,
+    5,
+    0
+   ],
+   [
+    1,
+    2,
+    2,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    6
+   ],
+   [
+    0,
+    7,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 35
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 0
+    },
+    "end": {
+     "row": 5,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 3
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 8
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 0
+    },
+    "end": {
+     "row": 5,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 2
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 8
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 0
+    },
+    "end": {
+     "row": 5,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 8
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 5,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 9
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 6,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 3
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 5,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 9
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 6,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 15
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 3
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 0
+    },
+    "end": {
+     "row": 5,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 2
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 5,
+     "col": 9
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 9
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 6,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 3
+     }
+    ]
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 214,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Frostfang",
+      "enemy_id": "enemy_1065_snwolf",
+      "count": 1,
+      "time": 10,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Frostfang",
+      "enemy_id": "enemy_1065_snwolf",
+      "count": 2,
+      "time": 25,
+      "interval": 5,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Yeti Icecleaver",
+      "enemy_id": "enemy_1069_icebrk",
+      "count": 1,
+      "time": 40,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Ergate Leader",
+      "enemy_id": "enemy_1053_norgst_2",
+      "count": 1,
+      "time": 50,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Ergate Leader",
+      "enemy_id": "enemy_1053_norgst_2",
+      "count": 1,
+      "time": 55,
+      "route": 3,
+      "fragment": 1
+     },
+     {
+      "enemy": "Ergate Leader",
+      "enemy_id": "enemy_1053_norgst_2",
+      "count": 1,
+      "time": 60,
+      "route": 4,
+      "fragment": 1
+     },
+     {
+      "enemy": "Infused Glacial Originium Slug",
+      "enemy_id": "enemy_1067_snslime",
+      "count": 3,
+      "time": 70,
+      "interval": 5,
+      "route": 5,
+      "fragment": 1
+     },
+     {
+      "enemy": "Frostfang",
+      "enemy_id": "enemy_1065_snwolf",
+      "count": 3,
+      "time": 95,
+      "interval": 3,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "Yeti Caster",
+      "enemy_id": "enemy_1068_snmage",
+      "count": 1,
+      "time": 105,
+      "route": 6,
+      "fragment": 2
+     },
+     {
+      "enemy": "Ergate Leader",
+      "enemy_id": "enemy_1053_norgst_2",
+      "count": 3,
+      "time": 115,
+      "interval": 3,
+      "route": 7,
+      "fragment": 2
+     },
+     {
+      "enemy": "Infused Glacial Originium Slug",
+      "enemy_id": "enemy_1067_snslime",
+      "count": 3,
+      "time": 127,
+      "interval": 3,
+      "route": 5,
+      "fragment": 2
+     },
+     {
+      "enemy": "Yeti Icecleaver",
+      "enemy_id": "enemy_1069_icebrk",
+      "count": 1,
+      "time": 135,
+      "route": 8,
+      "fragment": 2
+     },
+     {
+      "enemy": "Ergate Leader",
+      "enemy_id": "enemy_1053_norgst_2",
+      "count": 3,
+      "time": 150,
+      "interval": 2,
+      "route": 7,
+      "fragment": 3
+     },
+     {
+      "enemy": "Yeti Caster",
+      "enemy_id": "enemy_1068_snmage",
+      "count": 1,
+      "time": 155,
+      "route": 9,
+      "fragment": 3
+     },
+     {
+      "enemy": "Yeti Caster",
+      "enemy_id": "enemy_1068_snmage",
+      "count": 1,
+      "time": 165,
+      "route": 9,
+      "fragment": 3
+     },
+     {
+      "enemy": "Infused Glacial Originium Slug",
+      "enemy_id": "enemy_1067_snslime",
+      "count": 3,
+      "time": 160,
+      "interval": 3,
+      "route": 5,
+      "fragment": 3
+     },
+     {
+      "enemy": "Yeti Icecleaver",
+      "enemy_id": "enemy_1069_icebrk",
+      "count": 1,
+      "time": 170,
+      "route": 8,
+      "fragment": 3
+     },
+     {
+      "enemy": "Infused Glacial Originium Slug",
+      "enemy_id": "enemy_1067_snslime",
+      "count": 3,
+      "time": 175,
+      "interval": 2,
+      "route": 5,
+      "fragment": 3
+     },
+     {
+      "enemy": "Yeti Icecleaver Leader",
+      "enemy_id": "enemy_1069_icebrk_2",
+      "count": 1,
+      "time": 190,
+      "route": 8,
+      "fragment": 3
+     },
+     {
+      "enemy": "Yeti Caster Leader",
+      "enemy_id": "enemy_1068_snmage_2",
+      "count": 1,
+      "time": 205,
+      "route": 8,
+      "fragment": 3
+     },
+     {
+      "enemy": "Yeti Caster",
+      "enemy_id": "enemy_1068_snmage",
+      "count": 1,
+      "time": 200,
+      "route": 5,
+      "fragment": 3
+     },
+     {
+      "enemy": "Ergate Leader",
+      "enemy_id": "enemy_1053_norgst_2",
+      "count": 3,
+      "time": 210,
+      "interval": 2,
+      "route": 7,
+      "fragment": 3
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 0,
+    "routes": [
+     0,
+     0,
+     1,
+     5,
+     0,
+     6,
+     5,
+     8,
+     9,
+     9,
+     5,
+     8,
+     5,
+     8,
+     8,
+     5
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 5,
+    "col": 0,
+    "routes": [
+     2,
+     3,
+     4,
+     7,
+     7,
+     7
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 3,
+    "col": 0,
+    "routes": [
+     0,
+     0,
+     1,
+     0,
+     8,
+     8,
+     8,
+     8
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 5,
+    "col": 9,
+    "routes": [
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     5,
+     7,
+     9,
+     9,
+     5,
+     5,
+     5,
+     7
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1053_norgst_2",
+    "slug": "ergate_leader",
+    "name": "Ergate Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1065_snwolf",
+    "slug": "frostfang",
+    "name": "Frostfang",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1067_snslime",
+    "slug": "infused_glacial_originium_slug_enemy_1067_snslime",
+    "name": "Infused Glacial Originium Slug",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1068_snmage",
+    "slug": "yeti_caster",
+    "name": "Yeti Caster",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1068_snmage_2",
+    "slug": "yeti_caster_leader",
+    "name": "Yeti Caster Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1069_icebrk",
+    "slug": "yeti_icecleaver",
+    "name": "Yeti Icecleaver",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1069_icebrk_2",
+    "slug": "yeti_icecleaver_leader",
+    "name": "Yeti Icecleaver Leader",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false,
+  "source": "cn"
+ },
+ "terrain": [],
+ "conditionalHandled": false,
+ "devices": [
+  {
+   "col": 3,
+   "description": null,
+   "hidden": false,
+   "key": "trap_010_frosts",
+   "kind": "device",
+   "name": "Originium Ice Crystal",
+   "row": 4
+  },
+  {
+   "col": 6,
+   "description": null,
+   "hidden": false,
+   "key": "trap_010_frosts",
+   "kind": "device",
+   "name": "Originium Ice Crystal",
+   "row": 4
+  }
+ ],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "BW-7",
+  "geometryHash": "6ba113dcfda0df40274d6b09f9536e396b2d7cca7610a1eda8ad5b93c5ac4fd6",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "1": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "2": {
+    "points": [
+     [
+      0,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      9,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "3": {
+    "points": [
+     [
+      0,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      9,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "4": {
+    "points": [
+     [
+      0,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      9,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "5": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      9,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "6": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      9,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "7": {
+    "points": [
+     [
+      0,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      9,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "8": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "9": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      9,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "breaks": [],
+    "holds": []
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1065_snwolf": {
+   "key": "enemy_1065_snwolf",
+   "prefabKey": "enemy_1065_snwolf",
+   "name": "Frostfang",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3150,
+    "atk": 350,
+    "def": 0,
+    "res": 30,
+    "moveSpeed": 1.9,
+    "bat": 1.4,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Attack power increases when attacking <$ba.frozen>Frozen</> targets",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "atkup.atk_scale": 1.5
+    },
+    "bbStr": {},
+    "groups": {
+     "atkup": [
+      "atk_scale"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1069_icebrk": {
+   "key": "enemy_1069_icebrk",
+   "prefabKey": "enemy_1069_icebrk",
+   "name": "Yeti Icecleaver",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 16000,
+    "atk": 830,
+    "def": 500,
+    "res": 20,
+    "moveSpeed": 0.7,
+    "bat": 3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 1.9,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Attack power increases greatly when attacking <$ba.frozen>Frozen</> targets",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "atkup.atk_scale": 2.5
+    },
+    "bbStr": {},
+    "groups": {
+     "atkup": [
+      "atk_scale"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1053_norgst_2": {
+   "key": "enemy_1053_norgst_2",
+   "prefabKey": "enemy_1053_norgst_2",
+   "name": "Ergate Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "NONE",
+   "stats": {
+    "maxHp": 3800,
+    "atk": 100,
+    "def": 260,
+    "res": 45,
+    "moveSpeed": 1.2,
+    "bat": 1,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "none",
+    "dmgTypes": [
+     "none"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Cannot be blocked.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1067_snslime": {
+   "key": "enemy_1067_snslime",
+   "prefabKey": "enemy_1067_snslime",
+   "name": "Infused Glacial Originium Slug",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3250,
+    "atk": 300,
+    "def": 0,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 1.7,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 1.75,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Upon death, deals Physical damage in an area and applies <$ba.cold>Cold</> to affected targets",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "boom.atk_scale": 2,
+     "boom.freeze": 10
+    },
+    "bbStr": {},
+    "groups": {
+     "boom": [
+      "atk_scale",
+      "freeze"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1068_snmage": {
+   "key": "enemy_1068_snmage",
+   "prefabKey": "enemy_1068_snmage",
+   "name": "Yeti Caster",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 5000,
+    "atk": 320,
+    "def": 200,
+    "res": 50,
+    "moveSpeed": 0.8,
+    "bat": 4.5,
+    "aspd": 100,
+    "rangeRadius": 2.2,
+    "rawRangeRadius": 2.2,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "After two attacks, the next attack applies the <$ba.cold>Cold</> effect",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [
+    {
+     "prefabKey": "coldattack",
+     "priority": 0,
+     "cooldown": 0,
+     "initCooldown": 0,
+     "spCost": 2,
+     "bb": {
+      "freeze": 10
+     },
+     "bbStr": {}
+    }
+   ],
+   "sp": {
+    "type": "INCREASE_WHEN_ATTACK",
+    "maxSp": 2,
+    "initSp": 0,
+    "increment": 1
+   },
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1069_icebrk_2": {
+   "key": "enemy_1069_icebrk_2",
+   "prefabKey": "enemy_1069_icebrk_2",
+   "name": "Yeti Icecleaver Leader",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 25000,
+    "atk": 1100,
+    "def": 600,
+    "res": 20,
+    "moveSpeed": 0.7,
+    "bat": 3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 1.9,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Attack power increases greatly when attacking <$ba.frozen>Frozen</> targets",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "atkup.atk_scale": 3
+    },
+    "bbStr": {},
+    "groups": {
+     "atkup": [
+      "atk_scale"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1068_snmage_2": {
+   "key": "enemy_1068_snmage_2",
+   "prefabKey": "enemy_1068_snmage_2",
+   "name": "Yeti Caster Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 8000,
+    "atk": 400,
+    "def": 250,
+    "res": 50,
+    "moveSpeed": 0.8,
+    "bat": 4,
+    "aspd": 100,
+    "rangeRadius": 2.2,
+    "rawRangeRadius": 2.2,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "After two attacks, the next attack applies the <$ba.cold>Cold</> effect",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [
+    {
+     "prefabKey": "coldattack",
+     "priority": 0,
+     "cooldown": 0,
+     "initCooldown": 0,
+     "spCost": 2,
+     "bb": {
+      "freeze": 10
+     },
+     "bbStr": {}
+    }
+   ],
+   "sp": {
+    "type": "INCREASE_WHEN_ATTACK",
+    "maxSp": 2,
+    "initSp": 0,
+    "increment": 1
+   },
+   "notCountInTotal": false,
+   "tags": []
+  }
+ },
+ "contentAddition": {
+  "schemaVersion": 1,
+  "source": {
+   "repository": "arkpedia/arkpedia-data",
+   "commit": "66232ee06377d791fb130248d680764c286e5c99",
+   "files": [
+    {
+     "path": "stages/bw-7.json",
+     "sha256": "50242b02889bcaea7af9204992f16c6a1faffdfce9ec07ba3659d21409c56abd"
+    },
+    {
+     "path": "stage-geometry/bw-7.json",
+     "sha256": "6ba113dcfda0df40274d6b09f9536e396b2d7cca7610a1eda8ad5b93c5ac4fd6"
+    },
+    {
+     "path": "stage-devices.json",
+     "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+    }
+   ],
+   "localFiles": [
+    {
+     "path": "data/stage-rules/bw-7.json",
+     "sha256": "b20d6925d9e02dc3a94ca1c9921084de4b346d36d45a0629ac3c2285c6d2474a"
+    },
+    {
+     "path": "data/stage-rules/levels/dd4024cd0112cc57119399a80862ca0cc3e21293535cb4b31b0fd6b9069ed520.json",
+     "sha256": "dd4024cd0112cc57119399a80862ca0cc3e21293535cb4b31b0fd6b9069ed520"
+    },
+    {
+     "path": ".cache/arkpedia/original-level-blobs/f3297381dda0316a7f7da2c6ae716fbc0e8c9d37.json",
+     "sha256": "268a0832a98b62f4be62c2df46bbc361c95bccfaf7ae0e8bc08b5c8ec21515fa"
+    },
+    {
+     "path": "data/arkpedia-device-source.json",
+     "sha256": "b6c7693eef49400e8d674687c5f3b0eaef1da772e57e0b01417c8ec636cbda44"
+    }
+   ]
+  },
+  "dependencies": {
+   "enemies": [
+    "enemy_1053_norgst_2",
+    "enemy_1065_snwolf",
+    "enemy_1067_snslime",
+    "enemy_1068_snmage",
+    "enemy_1068_snmage_2",
+    "enemy_1069_icebrk",
+    "enemy_1069_icebrk_2"
+   ],
+   "devices": [
+    "Originium Ice Crystal"
+   ],
+   "tokens": []
+  },
+  "validation": {
+   "smoke": {
+    "seconds": 10,
+    "spawned": 0,
+    "errors": 0
+   },
+   "publicReview": "pending",
+   "waveSchedule": {
+    "id": "bw-7",
+    "seconds": 252.76666666666665,
+    "spawned": 39,
+    "expected": 39,
+    "reason": "cleared",
+    "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+   },
+   "browser": {
+    "id": "bw-7",
+    "seconds": 20,
+    "errors": [],
+    "units": 1,
+    "canvas": true,
+    "scope": "Mobile landscape developer stage, start and advance 600 ticks; fallback rendering, no frame/art fidelity approval"
+   }
+  }
+ }
+}

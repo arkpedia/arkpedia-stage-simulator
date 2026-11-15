@@ -1,0 +1,1721 @@
+{
+  "code": "BH-4",
+  "name": "Tactical Coordination",
+  "description": "Condition:\nCrownslayer has significantly increased weight, and Skullshatterer has significantly increased HP.",
+  "battle": {
+    "max_life": 1,
+    "unit_limit": 8,
+    "initial_dp": 3,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1
+  },
+  "rules": {
+    "variant": "challenge_mode",
+    "source": {
+      "repository": "Kengxxiao/ArknightsGameData",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "path": "zh_CN/gamedata/levels/activities/act15d5/level_act15d5_04.json",
+      "sha256": "35bed1288ccdad3ddbab4124dd8939c733315ed165003428f45fd609ee2209fc",
+      "gitBlob": "f18af2b14cf7bc0f11725241642203b77a16b38d",
+      "stageTable": {
+        "path": "zh_CN/gamedata/excel/stage_table.json",
+        "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+        "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+        "stageId": "act15d5_04",
+        "levelId": "Activities/ACT15d5/level_act15d5_04"
+      }
+    },
+    "battle": {
+      "max_life": 1
+    },
+    "enemies": {
+      "atk": 1.1,
+      "def": 1,
+      "maxHp": 1.1
+    },
+    "enemyAdd": {},
+    "hiddenGroups": {},
+    "enemyScoped": {
+      "enemy_1500_skulsr": {
+        "maxHp": 2
+      }
+    },
+    "enemyScopedAdd": {
+      "enemy_1502_crowns": {
+        "massLevel": 4
+      }
+    }
+  },
+  "mapTags": [],
+  "mapTagSource": null,
+  "geometry": {
+    "slug": "bh-4",
+    "rows": 8,
+    "cols": 12,
+    "tileLegend": [
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_telin",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_floor",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      },
+      {
+        "key": "tile_hole",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_start",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_telout",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      }
+    ],
+    "tileGrid": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        2,
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        0,
+        4,
+        0,
+        0
+      ],
+      [
+        0,
+        2,
+        0,
+        5,
+        5,
+        5,
+        3,
+        5,
+        6,
+        5,
+        3,
+        0
+      ],
+      [
+        0,
+        2,
+        0,
+        5,
+        3,
+        5,
+        3,
+        5,
+        0,
+        5,
+        3,
+        0
+      ],
+      [
+        0,
+        2,
+        0,
+        5,
+        3,
+        5,
+        5,
+        5,
+        3,
+        5,
+        3,
+        0
+      ],
+      [
+        0,
+        2,
+        0,
+        5,
+        0,
+        0,
+        3,
+        5,
+        0,
+        5,
+        3,
+        0
+      ],
+      [
+        0,
+        7,
+        2,
+        5,
+        5,
+        5,
+        5,
+        5,
+        3,
+        5,
+        2,
+        8
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "routes": [
+      null,
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 1
+        },
+        "end": {
+          "row": 2,
+          "col": 8
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 0
+            }
+          },
+          {
+            "type": "appear_at_pos",
+            "position": {
+              "row": 6,
+              "col": 11
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 9
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 30
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 2,
+            "seconds": 150
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 1
+        },
+        "end": {
+          "row": 2,
+          "col": 8
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 7
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 50
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 6,
+            "seconds": 5
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 8,
+            "seconds": 10
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 1
+        },
+        "end": {
+          "row": 2,
+          "col": 8
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 0
+            }
+          },
+          {
+            "type": "appear_at_pos",
+            "position": {
+              "row": 6,
+              "col": 11
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 9
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 10
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 2,
+            "seconds": 3
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 1
+        },
+        "end": {
+          "row": 2,
+          "col": 8
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 2
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 1
+        },
+        "end": {
+          "row": 2,
+          "col": 8
+        },
+        "checkpoints": [],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 1
+        },
+        "end": {
+          "row": 2,
+          "col": 8
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 3
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 1
+        },
+        "end": {
+          "row": 2,
+          "col": 8
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 2
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 5
+          }
+        ]
+      }
+    ],
+    "waves": [
+      {
+        "index": 0,
+        "duration": 165,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Crownslayer",
+            "enemy_id": "enemy_1502_crowns",
+            "count": 1,
+            "time": 3,
+            "route": 1,
+            "fragment": 0
+          },
+          {
+            "enemy": "Skullshatterer",
+            "enemy_id": "enemy_1500_skulsr",
+            "count": 1,
+            "time": 3,
+            "route": 2,
+            "fragment": 0
+          },
+          {
+            "enemy": "Wraith",
+            "enemy_id": "enemy_1008_ghost",
+            "count": 1,
+            "time": 45,
+            "route": 3,
+            "fragment": 1
+          },
+          {
+            "enemy": "Dual Swordsman Leader",
+            "enemy_id": "enemy_1014_rogue_2",
+            "count": 1,
+            "time": 20,
+            "route": 4,
+            "fragment": 1
+          },
+          {
+            "enemy": "Dual Swordsman Leader",
+            "enemy_id": "enemy_1014_rogue_2",
+            "count": 3,
+            "time": 32,
+            "interval": 10,
+            "route": 4,
+            "fragment": 1
+          },
+          {
+            "enemy": "Rabid Hound Pro",
+            "enemy_id": "enemy_1000_gopro_3",
+            "count": 2,
+            "time": 35,
+            "interval": 10,
+            "route": 5,
+            "fragment": 1
+          },
+          {
+            "enemy": "Shielded Senior Caster",
+            "enemy_id": "enemy_1036_amraoe",
+            "count": 1,
+            "time": 37,
+            "route": 6,
+            "fragment": 1
+          },
+          {
+            "enemy": "Rabid Hound Pro",
+            "enemy_id": "enemy_1000_gopro_3",
+            "count": 2,
+            "time": 55,
+            "interval": 2,
+            "route": 5,
+            "fragment": 1
+          },
+          {
+            "enemy": "Wraith",
+            "enemy_id": "enemy_1008_ghost",
+            "count": 2,
+            "time": 74,
+            "interval": 22,
+            "route": 3,
+            "fragment": 2
+          },
+          {
+            "enemy": "Dual Swordsman Leader",
+            "enemy_id": "enemy_1014_rogue_2",
+            "count": 3,
+            "time": 86,
+            "interval": 12,
+            "route": 4,
+            "fragment": 2
+          },
+          {
+            "enemy": "Rabid Hound Pro",
+            "enemy_id": "enemy_1000_gopro_3",
+            "count": 1,
+            "time": 89,
+            "route": 5,
+            "fragment": 2
+          },
+          {
+            "enemy": "Rabid Hound Pro",
+            "enemy_id": "enemy_1000_gopro_3",
+            "count": 2,
+            "time": 101,
+            "interval": 1,
+            "route": 5,
+            "fragment": 2
+          },
+          {
+            "enemy": "Rabid Hound Pro",
+            "enemy_id": "enemy_1000_gopro_3",
+            "count": 2,
+            "time": 113,
+            "interval": 1,
+            "route": 5,
+            "fragment": 2
+          },
+          {
+            "enemy": "Heavy Defender Leader",
+            "enemy_id": "enemy_1006_shield_2",
+            "count": 1,
+            "time": 103,
+            "route": 4,
+            "fragment": 2
+          },
+          {
+            "enemy": "Wraith",
+            "enemy_id": "enemy_1008_ghost",
+            "count": 2,
+            "time": 122,
+            "interval": 22,
+            "route": 3,
+            "fragment": 3
+          },
+          {
+            "enemy": "Dual Swordsman Leader",
+            "enemy_id": "enemy_1014_rogue_2",
+            "count": 5,
+            "time": 117,
+            "interval": 12,
+            "route": 5,
+            "fragment": 3
+          },
+          {
+            "enemy": "Rabid Hound Pro",
+            "enemy_id": "enemy_1000_gopro_3",
+            "count": 5,
+            "time": 125,
+            "interval": 10,
+            "route": 5,
+            "fragment": 3
+          },
+          {
+            "enemy": "Heavy Defender Leader",
+            "enemy_id": "enemy_1006_shield_2",
+            "count": 2,
+            "time": 132,
+            "interval": 18,
+            "route": 4,
+            "fragment": 3
+          },
+          {
+            "enemy": "Defense Crusher",
+            "enemy_id": "enemy_1045_hammer",
+            "count": 1,
+            "time": 156,
+            "route": 7,
+            "fragment": 3
+          }
+        ]
+      }
+    ],
+    "spawnTiles": [
+      {
+        "key": "tile_start",
+        "row": 6,
+        "col": 1,
+        "routes": [
+          1,
+          2,
+          3,
+          4,
+          4,
+          5,
+          6,
+          5,
+          3,
+          4,
+          5,
+          5,
+          5,
+          4,
+          3,
+          5,
+          5,
+          4,
+          7
+        ]
+      }
+    ],
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 2,
+        "col": 8,
+        "routes": [
+          1,
+          2,
+          3,
+          4,
+          4,
+          5,
+          6,
+          5,
+          3,
+          4,
+          5,
+          5,
+          5,
+          4,
+          3,
+          5,
+          5,
+          4,
+          7
+        ]
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_1000_gopro_3",
+        "slug": "rabid_hound_pro",
+        "name": "Rabid Hound Pro",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1006_shield_2",
+        "slug": "heavy_defender_leader",
+        "name": "Heavy Defender Leader",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1008_ghost",
+        "slug": "wraith",
+        "name": "Wraith",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1014_rogue_2",
+        "slug": "dual_swordsman_leader",
+        "name": "Dual Swordsman Leader",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1036_amraoe",
+        "slug": "shielded_senior_caster",
+        "name": "Shielded Senior Caster",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1045_hammer",
+        "slug": "defense_crusher",
+        "name": "Defense Crusher",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1500_skulsr",
+        "slug": "skullshatterer",
+        "name": "Skullshatterer",
+        "database_level": 1
+      },
+      {
+        "enemy_id": "enemy_1502_crowns",
+        "slug": "crownslayer",
+        "name": "Crownslayer",
+        "database_level": 1
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [],
+      "deployable_tokens": []
+    },
+    "hasConditionalSpawns": false,
+    "source": "cn"
+  },
+  "terrain": [],
+  "conditionalHandled": false,
+  "devices": [
+    {
+      "col": 7,
+      "description": null,
+      "hidden": false,
+      "key": "trap_001_crate",
+      "kind": "device",
+      "name": "Roadblock",
+      "row": 5,
+      "alias": "trap_001_crate#1",
+      "instance": {
+        "level": 1,
+        "skillLevel": 1
+      }
+    }
+  ],
+  "tokens": [],
+  "pathing": {
+    "schemaVersion": 1,
+    "syntheticRoutes": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "producer": "Arkpedia stage browser / buildPlaybackPaths",
+    "stage": "BH-4",
+    "geometryHash": "07d1f78a20a7ab8d53f4ef79e8c19f2f2259700688ff2a2d385f4fa7a47449f4",
+    "moveScale": 0.65,
+    "paths": {
+      "1": {
+        "points": [
+          [
+            1,
+            6
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            11,
+            6
+          ],
+          [
+            9,
+            6
+          ],
+          [
+            9,
+            2
+          ],
+          [
+            8,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "2": {
+        "points": [
+          [
+            1,
+            6
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            7,
+            6
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            8,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "3": {
+        "points": [
+          [
+            1,
+            6
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            11,
+            6
+          ],
+          [
+            9,
+            6
+          ],
+          [
+            9,
+            2
+          ],
+          [
+            8,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "4": {
+        "points": [
+          [
+            1,
+            6
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            8,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "5": {
+        "points": [
+          [
+            1,
+            6
+          ],
+          [
+            8,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "6": {
+        "points": [
+          [
+            1,
+            6
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            8,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "7": {
+        "points": [
+          [
+            1,
+            6
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            8,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      }
+    }
+  },
+  "art": null,
+  "gates": null,
+  "fixedSquad": null,
+  "enemies": {
+    "enemy_1502_crowns": {
+      "key": "enemy_1502_crowns",
+      "prefabKey": "enemy_1502_crowns",
+      "name": "Crownslayer",
+      "level": 1,
+      "rank": "BOSS",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 11000,
+        "atk": 605,
+        "def": 150,
+        "res": 50,
+        "moveSpeed": 1.4,
+        "bat": 2.8,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 5,
+        "lpr": 2,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "When blocked, can quickly move behind the unit",
+          "format": "SILENCE"
+        }
+      ],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [
+        {
+          "prefabKey": "blink",
+          "priority": 1,
+          "cooldown": 15,
+          "initCooldown": 15,
+          "spCost": 0,
+          "bb": {
+            "dist": 1.5
+          },
+          "bbStr": {}
+        }
+      ],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1500_skulsr": {
+      "key": "enemy_1500_skulsr",
+      "prefabKey": "enemy_1500_skulsr",
+      "name": "Skullshatterer",
+      "level": 1,
+      "rank": "BOSS",
+      "applyWay": "ALL",
+      "stats": {
+        "maxHp": 66000,
+        "atk": 1430.0000000000002,
+        "def": 240,
+        "res": 30,
+        "moveSpeed": 0.6,
+        "bat": 3,
+        "aspd": 100,
+        "rangeRadius": 2.6,
+        "rawRangeRadius": 2.6,
+        "blockCnt": 1,
+        "massLevel": 5,
+        "lpr": 2,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": true,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Launches grenades when not being blocked, significantly reducing the DEF of the target and surrounding allies for a short period of time",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Gains significantly increased ATK when HP is under 50%",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "atkup.atk": 0.5,
+          "atkup.hp_ratio": 0.5,
+          "defdown.def": -0.5
+        },
+        "bbStr": {},
+        "groups": {
+          "atkup": [
+            "atk",
+            "hp_ratio"
+          ],
+          "defdown": [
+            "def"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1014_rogue_2": {
+      "key": "enemy_1014_rogue_2",
+      "prefabKey": "enemy_1014_rogue_2",
+      "name": "Dual Swordsman Leader",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 3300.0000000000005,
+        "atk": 495.00000000000006,
+        "def": 120,
+        "res": 0,
+        "moveSpeed": 1.1,
+        "bat": 1.2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1000_gopro_3": {
+      "key": "enemy_1000_gopro_3",
+      "prefabKey": "enemy_1000_gopro_3",
+      "name": "Rabid Hound Pro",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 3300.0000000000005,
+        "atk": 407.00000000000006,
+        "def": 0,
+        "res": 20,
+        "moveSpeed": 1.9,
+        "bat": 1.4,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 0,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "infection"
+      ]
+    },
+    "enemy_1036_amraoe": {
+      "key": "enemy_1036_amraoe",
+      "prefabKey": "enemy_1036_amraoe",
+      "name": "Shielded Senior Caster",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 9350,
+        "atk": 418.00000000000006,
+        "def": 400,
+        "res": 20,
+        "moveSpeed": 0.7,
+        "bat": 3.8,
+        "aspd": 100,
+        "rangeRadius": 2.2,
+        "rawRangeRadius": 2.2,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "arts",
+        "dmgTypes": [
+          "arts"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Deals area damage to Operators on the four cardinal tiles next to the primary target.",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1008_ghost": {
+      "key": "enemy_1008_ghost",
+      "prefabKey": "enemy_1008_ghost",
+      "name": "Wraith",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "NONE",
+      "stats": {
+        "maxHp": 2530,
+        "atk": 110.00000000000001,
+        "def": 120,
+        "res": 35,
+        "moveSpeed": 1.2,
+        "bat": 1,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "none",
+        "dmgTypes": [
+          "none"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Cannot be blocked.",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1006_shield_2": {
+      "key": "enemy_1006_shield_2",
+      "prefabKey": "enemy_1006_shield_2",
+      "name": "Heavy Defender Leader",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 11000,
+        "atk": 660,
+        "def": 1000,
+        "res": 0,
+        "moveSpeed": 0.75,
+        "bat": 2.6,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 3,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1045_hammer": {
+      "key": "enemy_1045_hammer",
+      "prefabKey": "enemy_1045_hammer",
+      "name": "Defense Crusher",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 11000,
+        "atk": 1100,
+        "def": 1000,
+        "res": 0,
+        "moveSpeed": 0.5,
+        "bat": 3.5,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 2.5,
+        "blockCnt": 1,
+        "massLevel": 4,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "After two attacks, the next attack <$ba.stun>Stuns</> its target",
+          "format": "SILENCE"
+        }
+      ],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [
+        {
+          "prefabKey": "stuncombat",
+          "priority": 0,
+          "cooldown": 1,
+          "initCooldown": 1,
+          "spCost": 2,
+          "bb": {
+            "stun": 7
+          },
+          "bbStr": {}
+        }
+      ],
+      "sp": {
+        "type": "INCREASE_WHEN_ATTACK",
+        "maxSp": 2,
+        "initSp": 0,
+        "increment": 1
+      },
+      "notCountInTotal": false,
+      "tags": []
+    }
+  },
+  "contentAddition": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/bh-4_challenge_mode.json",
+          "sha256": "efb19fc54a6cbfb539387a5ee1db475a7f30a3691cd5f504049a61bfeb577848"
+        },
+        {
+          "path": "stage-geometry/bh-4.json",
+          "sha256": "07d1f78a20a7ab8d53f4ef79e8c19f2f2259700688ff2a2d385f4fa7a47449f4"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        }
+      ],
+      "localFiles": [
+        {
+          "path": "data/stage-rules/bh-4_challenge_mode.json",
+          "sha256": "23de972d437f5beba33077aa8de204cf7730caf7f024efad7f493bde4aa7fe9f"
+        },
+        {
+          "path": "data/stage-rules/levels/ba2c653a962110b13baafcfdf915a7210a5325ea550edc6d80b9c302d36e4f2b.json",
+          "sha256": "ba2c653a962110b13baafcfdf915a7210a5325ea550edc6d80b9c302d36e4f2b"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/f18af2b14cf7bc0f11725241642203b77a16b38d.json",
+          "sha256": "35bed1288ccdad3ddbab4124dd8939c733315ed165003428f45fd609ee2209fc"
+        },
+        {
+          "path": "data/arkpedia-device-source.json",
+          "sha256": "b2c32f793804ba7351c50c6c80da05437c72e8e32bb847156f5f67bda1a91806"
+        },
+        {
+          "path": "data/arkpedia-device-native-source.json",
+          "sha256": "ff706a182a37094c64a5bb9fe37fadef0f08d1dce60e56375aa3caea39a93b03"
+        }
+      ]
+    },
+    "dependencies": {
+      "enemies": [
+        "enemy_1000_gopro_3",
+        "enemy_1006_shield_2",
+        "enemy_1008_ghost",
+        "enemy_1014_rogue_2",
+        "enemy_1036_amraoe",
+        "enemy_1045_hammer",
+        "enemy_1500_skulsr",
+        "enemy_1502_crowns"
+      ],
+      "devices": [
+        "Roadblock"
+      ],
+      "tokens": []
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 10,
+        "spawned": 2,
+        "errors": 0
+      },
+      "publicReview": "pending",
+      "waveSchedule": {
+        "id": "bh-4_challenge_mode",
+        "seconds": 191.46666666666667,
+        "spawned": 38,
+        "expected": 38,
+        "dynamicSpawns": 0,
+        "reason": "cleared",
+        "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+      },
+      "browserStartup": {
+        "id": "bh-4_challenge_mode",
+        "seconds": 20,
+        "errors": [],
+        "units": 3,
+        "canvas": true,
+        "scope": "Mobile landscape browser startup and canvas runtime; not a fidelity approval"
+      }
+    }
+  }
+}

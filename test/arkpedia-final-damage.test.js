@@ -10,6 +10,22 @@ function fixture() {
  h.step();const b=h.b,u=h.unit('guard'),e=h.enemies()[0];u.atkCd=e.atkCd=1000;return{h,b,u,e};
 }
 const near=(a,e)=>assert.ok(Math.abs(a-e)<1e-7,`${a} != ${e}`);
+test('native unmodified sourceless damage preserves protection and shields without applying damage multipliers', () => {
+ const { b, u, e } = fixture(); let finalCalls = 0, receipts = 0;
+ b.addBuff(u, { key: 'test:resistance', mods: { dmgTakenMul: .5, trueTakenMul: .5, flatDamageResistance: 1000 } });
+ b.on('damageFinal', ctx => { finalCalls++; ctx.amount *= .5; });
+ b.on('damaged', ctx => { if (ctx.target === u) receipts++; });
+ const damage = { amount: 40, type: 'true', sourceless: true, unmodified: true, noSp: true };
+ b.addBuff(u, { key: 'test:shield', shield: 15 });
+ const hp = u.hp;
+ near(b.dealDamage(null, u, damage), 25); near(hp - u.hp, 25);
+ assert.equal(finalCalls, 0); assert.equal(receipts, 1);
+ b.addBuff(u, { key: 'test:protection', flags: { invulnerable: true } });
+ near(b.dealDamage(null, u, damage), 0); b.removeBuff(u, 'test:protection');
+ near(b.dealDamage(e, u, { ...damage, sourceless: false }), 0);
+ assert.equal(finalCalls, 1, 'ordinary sourced damage cannot opt into this contract');
+ assert.deepEqual(b.errors, []);
+});
 test('damaged retains requested amount and exposes actual HP loss after floors and shields',()=>{
  const{b,u,e}=fixture();const receipts=[];b.on('damaged',ctx=>{if(ctx.target===u)receipts.push(ctx);});
  b.addBuff(u,{key:'test:floor',flags:{undeadable:true}});u.hp=1;

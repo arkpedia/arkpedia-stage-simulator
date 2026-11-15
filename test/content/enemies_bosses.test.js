@@ -69,12 +69,15 @@ test('stats-only enemies attach no ability and fight with their data stats', () 
   }
 });
 
-test('沉默: exactly the abilities whose handbook line is SILENCE-flagged can be silenced (every authored enemy)', () => {
+test('沉默: authored abilities follow reviewed native Silence predicates, falling back to handbook flags', () => {
   const h = arena();
   h.step();
   for (const key of [...Object.keys(KITS), ...Object.keys(BOSS_KITS)]) {
     const e = put(h, key, [10, 7]);
-    const data = E[key].abilities.some((a) => a.format === 'SILENCE');
+    // Native projectile_on_killed checks Silence even though the older handbook
+    // omits its SILENCE label. See WITHERER-REVIEW.md and arkpedia-witherer.test.js.
+    const data = ['enemy_1267_nhpbr', 'enemy_1267_nhpbr_2'].includes(key)
+      || E[key].abilities.some((a) => a.format === 'SILENCE');
     const kit = !!(e.mem.ab && e.mem.ab.list.some((a) => a && (a.sil || a.silAware)));
     assert.equal(kit, data, `${nm(key)}: ${E[key].abilities.map((a) => `[${a.format}]${a.text}`).join(' / ')}`);
     h.b.kill(e, null);
@@ -647,7 +650,7 @@ test('GitHub #93: 深溟巢涌者 keeps walking with the 炎佑 dragon in range;
 });
 
 for (const key of ['enemy_1267_nhpbr', 'enemy_1267_nhpbr_2']) {
-  test(`${nm(key)}: death releases 污染秽蚀 — ground allies within ${tb(key, 'PollutedDie.projectile_range')} lose ${tb(key, 'PollutedDie.polluted_damage_low')} HP/s`, () => {
+  test(`${nm(key)}: death releases 污染秽蚀 — ground allies within 1.7 lose ${tb(key, 'PollutedDie.polluted_damage_low')} HP/s`, () => {
     const h = arena({ units: [{ chessId: 't_wall', row: 10, col: 6 }] });
     h.step();
     const e = put(h, key, [10, 7]);
@@ -1128,6 +1131,8 @@ for (const key of ['enemy_1425_lrcmra', 'enemy_1425_lrcmra_2']) {
     h.step();
     const e = put(h, key, [11, 6]);
     h.run(1.3);
+    assert.notEqual(e.mem.ab.atkType, 'arts', 'native 56/30-second cast has not finished');
+    h.run(1.7); // 0.5-second detection + cast + first aura pulse.
     assert.equal(e.mem.ab.atkType, 'arts');
     const w = h.unit('t_wall');
     approx(w.s.spRecovery, CHESS.t_wall.stats.spRecovery * (1 + tb(key, 'OrigAura.sp_recover_ratio')));
@@ -1628,7 +1633,7 @@ test(`${nm('enemy_2005_axetro')}: stacking ATK/ASPD while attacking, reset after
   const h = arena({ units: [{ chessId: 't_wall', row: 10, col: 6 }] });
   h.step();
   const e = put(h, 'enemy_2005_axetro', [10, 7]);
-  h.runUntil(() => e.stats.attacks >= 3, 30);
+  h.runUntil(() => (e.findBuff('ab:axeStack')?.stacks ?? 0) >= 3, 30);
   assert.equal(e.findBuff('ab:axeStack').stacks, 3);
   h.b.retreat(h.unit('t_wall'), { permanent: true });
   h.run(tb('enemy_2005_axetro', 'checker.delay') + 1);

@@ -348,6 +348,7 @@ a {
 .battle-header button { border: 0; border-radius: 0; color: #fff; background: #202326ca; }
 #settings { width: 64px; height: 64px; padding: 0; font: 44px system-ui; }
 .battle-controls { display: flex; gap: 4px; }
+.battle-controls #damage { font-size: 16px; }
 .battle-controls button { height: 64px; width: 76px; padding: 0; font: 600 32px Rajdhani, sans-serif; }
 .battle-header button:hover { background: #4a4f53e6; }
 .battle-settings { position: absolute; left: 0; top: 72px; width: 180px; display: grid; padding: 10px; gap: 8px; border: 1px solid #ffffff55; background: #141b20f5; }
@@ -460,7 +461,19 @@ a {
 .status-note { position: absolute; z-index: 5; bottom: calc(var(--shelf-height) + 26px); left: 20px; max-width: min(42vw,480px); color: #f4f4f4; background: #141c25b0; padding: 4px 8px; font-size: 11px; pointer-events: none; }
 .battle-board:has(.command:not([hidden])) .status-note { left: calc(var(--inspector-width) + 12px); max-width: 28vw; }
 .result { position: absolute; inset: 0; z-index: 20; display: grid; place-items: center; background: #10171b99; }
-.result .panel { max-width: 360px; text-align: center; display: grid; gap: 12px; padding: 26px; }
+.result .panel { max-width: 360px; max-height: calc(100% - 24px); overflow-y: auto; min-height: 0; text-align: center; display: grid; gap: 12px; padding: 26px; }
+.damage-panel { position: absolute; z-index: 22; top: 88px; right: max(12px, env(safe-area-inset-right)); width: min(640px, calc(100% - 24px)); max-height: calc(100% - 190px); display: flex; flex-direction: column; padding: 14px; background: #111b25f5; border: 1px solid #82929b; color: #f5f7fa; box-shadow: 0 12px 36px #0008; }
+.damage-panel[hidden] { display: none; }
+.damage-panel header { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.damage-panel h2 { font-size: 18px; margin: 0; }
+.damage-panel header button { min-width: 44px; min-height: 44px; font-size: 24px; }
+.damage-panel p { font-size: 12px; line-height: 1.5; margin: 4px 0 12px; color: #b8c9d6; }
+.damage-scroll { min-height: 0; overflow: auto; overscroll-behavior: contain; }
+.damage-panel table { width: 100%; border-collapse: collapse; font-size: 12px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.damage-panel th, .damage-panel td { padding: 8px; text-align: right; border-bottom: 1px solid #ffffff20; }
+.damage-panel th:first-child { text-align: left; }
+.damage-panel thead { position: sticky; top: 0; background: #182632; }
+@media (max-height: 500px) { .damage-panel { top: 58px; max-height: calc(100% - 156px); padding: 8px; } .damage-panel p { margin-bottom: 4px; } }
 .meter { height: 5px; width: 160px; border-radius: 2px; background: #0d181d; overflow: hidden; margin-top: 6px; }
 .meter span { display: block; height: 100%; background: #9bd538; }
 .meter.active span { background: #ffa235; }
@@ -662,9 +675,10 @@ footer {
 .mana-charge path { fill: none; stroke: #9bd958; stroke-width: 2px; vector-effect: non-scaling-stroke; stroke-dasharray: 100; }
 
 /* Deployable token strip (stage cards such as Roadblock). */
-.token-strip { position: absolute; z-index: 9; left: 50%; bottom: calc(max(6px, env(safe-area-inset-bottom)) + 92px); transform: translateX(-50%); display: flex; gap: 6px; max-width: calc(100vw - 24px); overflow-x: auto; }
+.token-strip { position: absolute; z-index: 9; left: 50%; bottom: calc(max(6px, env(safe-area-inset-bottom)) + var(--shelf-height) + 62px); transform: translateX(-50%); display: flex; gap: 6px; max-width: calc(100vw - 24px); overflow-x: auto; }
 .token-strip[hidden] { display: none; }
 .token-strip button { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid #ffffff66; background: #181d25e6; color: #f4f1e8; font: inherit; font-size: 13px; white-space: nowrap; cursor: pointer; }
 .token-strip button[aria-pressed="true"] { border-color: #f3d27a; box-shadow: 0 0 0 1px #f3d27a inset; }
-.token-strip button:disabled { opacity: .45; cursor: not-allowed; }
+.token-strip button:disabled { opacity: 1; color: #b8c2cc; background: #232a33; border-color: #73808d; cursor: not-allowed; }
+.token-strip button:disabled b { color: #c5b681; }
 .token-strip b { font-weight: 500; color: #f3d27a; }

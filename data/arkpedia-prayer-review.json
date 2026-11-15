@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-15",
+  "scope": "Two Prayer variants, shared beginning-selection timed global debuff; original body gallery, not frame or effect parity.",
+  "sources": [
+    {
+      "path": "shared/arkpedia/enemy-prayer-features.js",
+      "sha256": "b285d460e1c82879b4dfb5c03865ebd4fa33d96978ee798e01963b446258cab6"
+    },
+    {
+      "path": "server/sim/content/arkpedia-enemy-global-debuff.js",
+      "sha256": "25765a2cc397b9c502bb6d7ac1f9db3697457ae2a72aae75c7525979a206c305"
+    },
+    {
+      "path": "server/sim/content/arkpedia-enemy-timed-casts.js",
+      "sha256": "3410d93f1971ab347f88502b27b052a1f1d7ca314675f7f96998a3d76c09d69d"
+    },
+    {
+      "path": "data/arkpedia-prayer-animations.json",
+      "sha256": "b9c10f5fde6a359213b326c0275fb68558699d9c3b3752526d29d35ebc3e7598"
+    },
+    {
+      "path": "test/arkpedia-enemy-prayer.test.js",
+      "sha256": "93cfeb8312ea53b21246d55345e04da5ffb45299a0676b76c501f6689fe53f0b"
+    }
+  ],
+  "ids": [
+    "enemy_10085_hllevi",
+    "enemy_10085_hllevi_2"
+  ],
+  "validation": {
+    "focusedTests": 6,
+    "combinedTests": 192,
+    "browser": {
+      "scope": "Chromium clip decoding/finite poses and idle body rendering; no native combat/frame/pixel parity claim",
+      "browser": "Chrome/156.0.8078.79",
+      "results": [
+        {
+          "viewport": "desktop",
+          "models": [
+            {
+              "id": "enemy_10085_hllevi",
+              "version": "3.8.99",
+              "clips": 5,
+              "width": 408.2085418701172,
+              "height": 413.8937864303589
+            },
+            {
+              "id": "enemy_10085_hllevi_2",
+              "version": "3.8.99",
+              "clips": 5,
+              "width": 418.2467727661133,
+              "height": 413.8937864303589
+            }
+          ],
+          "errors": [],
+          "failures": []
+        },
+        {
+          "viewport": "mobile",
+          "models": [
+            {
+              "id": "enemy_10085_hllevi",
+              "version": "3.8.99",
+              "clips": 5,
+              "width": 408.2085418701172,
+              "height": 413.8937864303589
+            },
+            {
+              "id": "enemy_10085_hllevi_2",
+              "version": "3.8.99",
+              "clips": 5,
+              "width": 418.2467727661133,
+              "height": 413.8937864303589
+            }
+          ],
+          "errors": [],
+          "failures": []
+        }
+      ]
+    }
+  },
+  "assetCommit": "0d20e28d1220450154f78acbb3948f2be41eaaf5",
+  "enumSources": [
+    {
+      "name": "SelectTargetTiming",
+      "repository": "AdoreJc/ArknightsDB",
+      "commit": "95ce0f0823f233389fa97e0d7fc9d1759e58464e",
+      "path": "source/dump/SelectTargetTiming.md",
+      "gitBlob": "bf682027f4cd7c07874de2cc4a367fa27bdcb87f"
+    },
+    {
+      "name": "OverrideType",
+      "repository": "AdoreJc/ArknightsDB",
+      "commit": "95ce0f0823f233389fa97e0d7fc9d1759e58464e",
+      "path": "source/dump/OverrideType.md",
+      "gitBlob": "ed4de2b732e087a785a482247af20273cc1ea014"
+    }
+  ]
+}

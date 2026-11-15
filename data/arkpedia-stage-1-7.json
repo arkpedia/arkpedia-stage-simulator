@@ -8,7 +8,8 @@
   "initial_dp": 10,
   "max_dp": 99,
   "dp_per_second": 1,
-  "dp_recovery_interval_seconds": 1
+  "dp_recovery_interval_seconds": 1,
+  "max_play_time": -1
  },
  "mapTags": [],
  "mapTagSource": null,
@@ -1396,5 +1397,134 @@
    "notCountInTotal": false,
    "tags": []
   }
+ },
+ "rules": {
+  "variant": null,
+  "source": {
+   "repository": "Kengxxiao/ArknightsGameData",
+   "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+   "path": "zh_CN/gamedata/levels/obt/main/level_main_01-07.json",
+   "sha256": "b3dd22a0a30fbf787949b2fa92e03e40078c5a4d24e7afcbdc47a57d6f21148c",
+   "gitBlob": "53d7ccbd1fe93b270ca64b3b259114ff8589cf36",
+   "stageTable": {
+    "path": "zh_CN/gamedata/excel/stage_table.json",
+    "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+    "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+    "stageId": "main_01-07",
+    "levelId": "Obt/Main/level_main_01-07"
+   }
+  },
+  "battle": {
+   "max_play_time": -1
+  },
+  "enemies": {},
+  "enemyAdd": {},
+  "hiddenGroups": {}
+ },
+ "tokens": [],
+ "devices": [
+  {
+   "col": 3,
+   "description": null,
+   "hidden": false,
+   "key": "trap_002_emp",
+   "kind": "device",
+   "name": "Stun Generator",
+   "row": 3,
+   "instance": {
+    "level": 10,
+    "skillLevel": 1
+   }
+  }
+ ],
+ "contentRuleRefresh": {
+  "schemaVersion": 1,
+  "source": {
+   "repository": "arkpedia/arkpedia-data",
+   "commit": "66232ee06377d791fb130248d680764c286e5c99",
+   "files": [
+    {
+     "path": "stages/1-7.json",
+     "sha256": "723ded8a469261407e6371b1ae5dfaa6953a389ac379f74a55c967a529399963"
+    },
+    {
+     "path": "stage-geometry/1-7.json",
+     "sha256": "e4e7abe0055c437d1f5bca68592c3d02fed593633124139af1be8bf4f48baa91"
+    },
+    {
+     "path": "stage-devices.json",
+     "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+    }
+   ],
+   "localFiles": [
+    {
+     "path": "data/stage-rules/1-7.json",
+     "sha256": "1a6db2d09be69effc399fbd6a4cb04adf22d3c790a0423d217fafae4e4910419"
+    },
+    {
+     "path": "data/stage-rules/levels/ca7375c8579ae8b7405211ccae46185f8c06789222068f7f48e4b3810cec450b.json",
+     "sha256": "ca7375c8579ae8b7405211ccae46185f8c06789222068f7f48e4b3810cec450b"
+    },
+    {
+     "path": ".cache/arkpedia/original-level-blobs/53d7ccbd1fe93b270ca64b3b259114ff8589cf36.json",
+     "sha256": "b3dd22a0a30fbf787949b2fa92e03e40078c5a4d24e7afcbdc47a57d6f21148c"
+    },
+    {
+     "path": "data/arkpedia-device-source.json",
+     "sha256": "f9623a01f452afca937832c49269aa3b7b64d3bda9822d1ae16dde6f56b63f1d"
+    },
+    {
+     "path": "data/arkpedia-device-native-source.json",
+     "sha256": "5cf42ec7ab1d2702e623f225436a22e97475707fd7b249e008f889325da368d2"
+    },
+    {
+     "path": ".cache/arkpedia/original-level-blobs/53d7ccbd1fe93b270ca64b3b259114ff8589cf36.json",
+     "sha256": "b3dd22a0a30fbf787949b2fa92e03e40078c5a4d24e7afcbdc47a57d6f21148c"
+    }
+   ]
+  },
+  "validation": {
+   "smoke": {
+    "seconds": 10,
+    "spawned": 1,
+    "errors": 0
+   },
+   "waveSchedule": {
+    "id": "1-7",
+    "seconds": 136.46666666666667,
+    "spawned": 41,
+    "expected": 41,
+    "reason": "cleared",
+    "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+   },
+   "deviceInteraction": {
+    "id": "1-7",
+    "before": {
+     "dp": 99,
+     "state": "ready"
+    },
+    "after": {
+     "dp": 89,
+     "state": "active",
+     "cost": 10,
+     "kind": "blast"
+    },
+    "end": {
+     "state": "spent",
+     "sp": 0,
+     "alive": false,
+     "errors": [],
+     "slots": 0
+    },
+    "scope": "Real map click and button activation; battle time advanced and life/DP raised for UI review"
+   }
+  },
+  "changed": [
+   "rules",
+   "battle",
+   "tokens",
+   "devices"
+  ],
+  "deviceRefresh": true
  }
 }

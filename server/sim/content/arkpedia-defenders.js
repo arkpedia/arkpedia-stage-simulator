@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { DEFENDER_OPERATORS } from '../../../shared/arkpedia/defender-operators.js';
 // See data/arkpedia-defender-prefabs.json for original selectors/buff formulas.
 export const DEFENDER_CLIENT_EVIDENCE = Object.freeze({
   version: '26-09-23-17-49-43_b9cc4a',
@@ -12,6 +13,7 @@ export const DEFENDER_CLIENT_EVIDENCE = Object.freeze({
 
 /** Before SkillRuntime construction; each deployment receives its own kit. */
 export function customizeDefenderKit({ id, def, kit }) {
+  if (!DEFENDER_OPERATORS[id]) return;
   const skill = def.skill;
   if (!skill) return;
   const bb = skill.bb;
@@ -76,6 +78,7 @@ export function customizeDefenderKit({ id, def, kit }) {
 
 /** After setup, before deployment, so hooks exist for the first incoming hit. */
 export function installDefender({ battle, unit, def }) {
+  if (!DEFENDER_OPERATORS[def.charId]) return;
   const id = def.charId, talent = def.talents[0]?.bb;
   if (id === 'char_381_bubble') {
     battle.on('damaged', ({ source, target, dmg }) => {

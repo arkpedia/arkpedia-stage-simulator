@@ -7,13 +7,17 @@ import mvp from '../data/arkpedia-mvp.json' with { type: 'json' };
 import { ENEMY_RECORDS as records, enemyRecord, spawnAny } from './helpers/enemyHarness.js';
 
 const keys = Object.keys(records.enemies);
-test('the catalogue compiles every Global enemy at every database level from pinned sources', () => {
-  assert.equal(records.summary.enemies, 1552);assert.equal(keys.length, 1552);
+test('the catalogue preserves every Global enemy and adds absent CN IDs at every database level', () => {
+  assert.equal(records.summary.enemies, 2163);assert.equal(keys.length, 2163);
+  assert.deepEqual(records.summary.sourceCounts, { global: 1552, cn: 611 });
+  const cn = keys.filter(key => records.enemies[key].sourceChannel === 'cn').sort();
+  assert.equal(cn.length, 611); assert.deepEqual(cn, records.source.supplements[0].addedIds);
   assert.equal(records.summary.records, keys.reduce((n, k) => n + Object.keys(records.enemies[k].levels).length, 0));
   assert.match(records.source.commit, /^[0-9a-f]{40}$/);
   for (const f of Object.values(records.source.files)) assert.match(f.sha256, /^[0-9a-f]{64}$/);
   assert.equal(records.levelRule, 'level 0 merged with the selected level');
-  assert.equal(records.levelRuleDivergences.length, 4, 'pinned level-rule divergences');
+  assert.equal(records.levelRuleDivergences.filter(row => !cn.includes(row.key)).length, 4, 'Global level-rule divergences are unchanged');
+  assert.equal(records.levelRuleDivergences.length, 5, 'one additional CN level-rule divergence is retained');
 });
 test('every record normalizes into a finite engine definition', () => {
   for (const key of keys) for (const [level, r] of Object.entries(records.enemies[key].levels)) {

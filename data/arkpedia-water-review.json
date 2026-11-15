@@ -1,0 +1,288 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-14",
+  "scope": "Permanent deep water, variant source contracts and semantic tile rendering; not full clears or native frame-parity certification.",
+  "manifest": {
+    "path": "data/arkpedia-library.json",
+    "sha256": "308965fd0a0350858437ff207c517fba00c27c8b6f9f720d3412b6b9d9c34bbb"
+  },
+  "sourceFiles": [
+    {
+      "path": "data/arkpedia-water-source.json",
+      "sha256": "12b8186c36f2033fb082b425c9975a38fd72c29cc56c899a43b60368ef39109f"
+    },
+    {
+      "path": "tools/arkpedia/stage-water.mjs",
+      "sha256": "8e56d006b6590fe8b9d04ccb2b5079c51ef2a5151d736fd6039dff85711caabe"
+    },
+    {
+      "path": "server/sim/content/arkpedia-stage-water.js",
+      "sha256": "b53c9286339d9a579f5c1c4e5cf8434f4a97d32ed44ae91e1066ad6c15b12509"
+    },
+    {
+      "path": "server/sim/damage.js",
+      "sha256": "f1e9b8f6d6c682b411b6b8d8453ceee63f6c3e55572bb948bc1e8f4fa493f589"
+    },
+    {
+      "path": "shared/arkpedia/stage-tile-view.js",
+      "sha256": "8ae8e3b17ba4f55f0a5caacacf5f148c8976166ae00fcc0af12fce1db4da65a6"
+    },
+    {
+      "path": "public/arkpedia/renderer.js",
+      "sha256": "0eef15570c153552e5dc825c8cbc8aa4417bbd7dc3801e11cfe14ac07871886b"
+    }
+  ],
+  "validation": {
+    "waterDamageTests": 34,
+    "compilerSchedulerTests": 65,
+    "coreDamageTests": 71,
+    "semanticTileTests": 1,
+    "smoke": {
+      "scope": "10-second constructor/runtime smoke for every available compiled stage; not a playable-clear or fidelity certificate",
+      "available": 791,
+      "completed": 791,
+      "failures": [],
+      "uniqueComponentsRead": 5363,
+      "cache": {
+        "cachedBytes": 11760932,
+        "cachedObjects": 5363,
+        "pending": 0
+      }
+    },
+    "waterBrowser": [
+      {
+        "id": "cg-5",
+        "mobile": false,
+        "diagnosticSpawn": true,
+        "tiles": 11,
+        "loss": 40,
+        "contacted": true,
+        "platform": {
+          "before": "Place a floating platform before deploying here.",
+          "after": null,
+          "stopped": true
+        },
+        "errors": []
+      },
+      {
+        "id": "dh-7",
+        "mobile": false,
+        "diagnosticSpawn": true,
+        "tiles": 31,
+        "loss": 40,
+        "contacted": true,
+        "platform": {
+          "before": "Place a floating platform before deploying here.",
+          "after": null,
+          "stopped": true
+        },
+        "errors": []
+      },
+      {
+        "id": "bol_var",
+        "mobile": false,
+        "diagnosticSpawn": true,
+        "tiles": 40,
+        "loss": 40,
+        "contacted": true,
+        "platform": {
+          "before": "Place a floating platform before deploying here.",
+          "after": null,
+          "stopped": true
+        },
+        "errors": []
+      },
+      {
+        "id": "cg-5",
+        "mobile": true,
+        "diagnosticSpawn": true,
+        "tiles": 11,
+        "loss": 40,
+        "contacted": true,
+        "platform": {
+          "before": "Place a floating platform before deploying here.",
+          "after": null,
+          "stopped": true
+        },
+        "errors": []
+      },
+      {
+        "id": "dh-7",
+        "mobile": true,
+        "diagnosticSpawn": true,
+        "tiles": 31,
+        "loss": 40,
+        "contacted": true,
+        "platform": {
+          "before": "Place a floating platform before deploying here.",
+          "after": null,
+          "stopped": true
+        },
+        "errors": []
+      },
+      {
+        "id": "bol_var",
+        "mobile": true,
+        "diagnosticSpawn": true,
+        "tiles": 40,
+        "loss": 40,
+        "contacted": true,
+        "platform": {
+          "before": "Place a floating platform before deploying here.",
+          "after": null,
+          "stopped": true
+        },
+        "errors": []
+      }
+    ],
+    "libraryBrowser": [
+      {
+        "id": "0-1",
+        "mobile": false,
+        "options": 3892,
+        "componentRequests": 9,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true
+      },
+      {
+        "id": "0-4_challenge_mode",
+        "mobile": false,
+        "options": 3892,
+        "componentRequests": 11,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 2,
+        "canvas": true,
+        "originalWaveProgram": true
+      },
+      {
+        "id": "3-6_challenge_mode",
+        "mobile": false,
+        "options": 3892,
+        "componentRequests": 15,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true,
+        "waveGate": {
+          "heldWave": 1,
+          "blockedFutureSpawns": 19,
+          "releasedWave": 2,
+          "errors": []
+        }
+      },
+      {
+        "id": "bw-8_challenge_mode",
+        "mobile": false,
+        "options": 3892,
+        "componentRequests": 29,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true
+      },
+      {
+        "id": "ps-3_challenge_mode",
+        "mobile": false,
+        "options": 3892,
+        "componentRequests": 15,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true
+      },
+      {
+        "id": "0-6_challenge_mode",
+        "mobile": false,
+        "blockedBeforeComponentFetch": true
+      },
+      {
+        "id": "0-1",
+        "mobile": true,
+        "options": 3892,
+        "componentRequests": 9,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true
+      },
+      {
+        "id": "0-4_challenge_mode",
+        "mobile": true,
+        "options": 3892,
+        "componentRequests": 11,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 2,
+        "canvas": true,
+        "originalWaveProgram": true
+      },
+      {
+        "id": "3-6_challenge_mode",
+        "mobile": true,
+        "options": 3892,
+        "componentRequests": 15,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true,
+        "waveGate": {
+          "heldWave": 1,
+          "blockedFutureSpawns": 19,
+          "releasedWave": 2,
+          "errors": []
+        }
+      },
+      {
+        "id": "bw-8_challenge_mode",
+        "mobile": true,
+        "options": 3892,
+        "componentRequests": 29,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true
+      },
+      {
+        "id": "ps-3_challenge_mode",
+        "mobile": true,
+        "options": 3892,
+        "componentRequests": 15,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true
+      },
+      {
+        "id": "0-6_challenge_mode",
+        "mobile": true,
+        "blockedBeforeComponentFetch": true
+      },
+      {
+        "homeFixture": true,
+        "initialDp": 99,
+        "waves": 0
+      }
+    ]
+  }
+}

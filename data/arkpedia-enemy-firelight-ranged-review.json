@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-14",
+  "scope": "Historical source-gated Firelight ranged enemy and initial Reeds ignition checkpoint. Native controller bodies, exact frame ordering, effects, ballistic geometry and playable clears are not certified.",
+  "sourceFiles": {
+    "shared/arkpedia/enemy-firelight-ranged-features.js": "25c9a88b04e850bb7f621f9aaa63b97a6643d339fe573a07a2ad21d4518a38df",
+    "server/sim/content/arkpedia-enemy-firelight-ranged.js": "e2e4eeb7c4aeb6a9d23cd137d01ea4b5fe6916f9e10fe975948b72ec5ea6954d",
+    "shared/arkpedia/enemy-wine-features.js": "69a757a1fb97dab325194f1e11fd6f0193552544adb12c9ab3f1c8c05d6da677",
+    "shared/arkpedia/enemy-features.js": "8d5d75db21847ad3b85ad83eead5487e16b6a892062ec1fbc298d6d7179ab86b",
+    "server/sim/content/arkpedia-enemy-features.js": "2ec41a5b4064250cc4a571396e245a1636eb3e5e8a4cb2ed2a7fdbb760426005",
+    "server/sim/content/arkpedia-enemy-projectiles.js": "04600d3078ff4d12626f3456d33c44d3933ccfa5ea3a142caad3f791cb284d00",
+    "server/sim/content/arkpedia-enemy-yeti.js": "7d3d8030c60fb97c546e337d1e5407c42adcaa4238d27d6f687d4f5c9ee7a304",
+    "server/sim/content/arkpedia-stage-reeds.js": "4ba52c02a0688606c33f5da054ef8dec7cf9aa62da3aa7bfe7eeaae397322404",
+    "shared/arkpedia/stage-reeds.js": "502b3efef2181514e8db2792375bc79e3775933d42cb29fba2867d057f1df54f",
+    "shared/arkpedia/stage-rules.js": "ceee9b1d34212d76925d9854fa98eec4a9329ed0324883fef77a6fcc740c1ab8",
+    "tools/arkpedia/stage-reeds.mjs": "c427561d97ac46cb3da42f78466675e36b423dd2591b5a735fe218e337fcedf4",
+    "tools/arkpedia/extract-enemy-native-abilities.py": "a80bb0f2de557ffad0abb55cf746dda93f8853d358e0eb73856c190b53ca502f",
+    "data/arkpedia-firelight-ranged-animations.json": "8ccd13e82d547931ad91bb6db878c8ef22b7e5c6c7d1b642a5f9ca458deeecb1",
+    "data/arkpedia-projectile-event-source.json": "0c55255cb91b6d7ef8b4ff807efe4ea4c01d334efc3f8735e505761f81e82319",
+    "data/arkpedia-enemy-native-abilities.json": "d12c87adf52764b1deefee14d79fddba28dc1de6d8ad520beb942cd9c4d781a7",
+    "data/arkpedia-enemy-support.json": "7826fb6d172d99136dca9be50560cf9f275a0098bc3bc509a23325884de9c190",
+    "data/arkpedia-enemy-artwork.json": "b54bf15fc72bdf2519632a8e5e67efc82fb43c32d9a39f1f23394dbfbaaa27f9",
+    "test/arkpedia-enemy-firelight-ranged.test.js": "863e17ccc830bc1c1a7bb30c2d873cb3bfda5c5d8306a207c585490fe4ec97a9",
+    "test/arkpedia-stage-reeds.test.js": "b70e3344a7717c6879fa2439007e719be400e837ca5f9e6695d6798578209c68",
+    "tools/arkpedia/review-firelight-ranged.mjs": "43380620f0fb3de61b3be8ce4b3c56190843168709d47328efbae0e9708a2189",
+    "docs/ENEMY-FIRELIGHT-RANGED-REVIEW.md": "fce826961198d7c0740d8f8f043dff5fd258caafb7c696394744c5cec3b29858"
+  },
+  "coverage": {
+    "enemies": 637,
+    "enemyTarget": 2163,
+    "availableStages": 845,
+    "stageTarget": 3892,
+    "models": 425
+  },
+  "checks": {
+    "regressions": {
+      "log": "/tmp/firelight-ranged-regressions.log",
+      "sha256": "7a53754534a5f0200708e24bc79d21156302e60c81e21caa12f7dff828845aad"
+    },
+    "stageSmoke": {
+      "log": "/tmp/firelight-ranged-all-stage-smoke.log",
+      "sha256": "01b31e4f73856846121d31b361dace928864e0aa984e7e631c3150462691fe38"
+    },
+    "source": {
+      "log": "/tmp/firelight-ranged-source-check.log",
+      "sha256": "f8719635b2ddabae390a159becc05db573de8e4bc034a6d43ac0817b6767d5f6"
+    },
+    "operatorLibrary": {
+      "log": "/tmp/firelight-ranged-operator-library-check.log",
+      "sha256": "a982c655c4a467904426b5258d14a8360b0c311b030597e559b850e82c0780ae"
+    },
+    "sdTests": {
+      "log": "/tmp/firelight-ranged-sd-tests.log",
+      "sha256": "14693b7b3e6f451412989a923fad9188c2d5f808e5f365933300dcb49ab9a80f"
+    },
+    "sdValidation": {
+      "log": "/tmp/firelight-ranged-sd-validate.log",
+      "sha256": "64e1f75863579fce8c434393561019130161c4476671e03f7fbc9a2ffa2c6a22"
+    },
+    "artworkBrowser": {
+      "log": "/tmp/firelight-ranged-art-browser.log",
+      "sha256": "7a83fff1a27ba9f39a66bbf6ff889a49f7c7ae4cc3766a307b01c339b8e4c748"
+    }
+  },
+  "regressionTestsPassed": 309,
+  "stageSmokePassed": 845,
+  "stageSmokeSeconds": 10,
+  "sdTestsPassed": 93,
+  "sdCompleteModels": 3698,
+  "sdAssetsCommit": "859f08bcd43d91eea431a2cfe7272e7022c18f73",
+  "browser": [
+    {
+      "mobile": false,
+      "scope": "Original stage and lazy models; diagnostic deployment/forced attacks, not a playable clear",
+      "stage": "FC-3",
+      "id": "enemy_1289_dubmb",
+      "phases": [
+        {
+          "charge": 1,
+          "projectiles": 1
+        },
+        {
+          "charge": 2,
+          "projectiles": 1
+        },
+        {
+          "charge": 0,
+          "projectiles": 1
+        }
+      ],
+      "mode": 0,
+      "errors": []
+    },
+    {
+      "mobile": false,
+      "scope": "Original stage and lazy models; diagnostic deployment/forced attacks, not a playable clear",
+      "stage": "FC-5",
+      "id": "enemy_1290_duflm",
+      "phases": [
+        {
+          "charge": null,
+          "projectiles": 1
+        }
+      ],
+      "mode": 1,
+      "errors": [],
+      "death": {
+        "alive": false,
+        "burning": 1,
+        "errors": []
+      }
+    },
+    {
+      "mobile": true,
+      "scope": "Original stage and lazy models; diagnostic deployment/forced attacks, not a playable clear",
+      "stage": "FC-3",
+      "id": "enemy_1289_dubmb",
+      "phases": [
+        {
+          "charge": 1,
+          "projectiles": 1
+        },
+        {
+          "charge": 2,
+          "projectiles": 1
+        },
+        {
+          "charge": 0,
+          "projectiles": 1
+        }
+      ],
+      "mode": 0,
+      "errors": []
+    },
+    {
+      "mobile": true,
+      "scope": "Original stage and lazy models; diagnostic deployment/forced attacks, not a playable clear",
+      "stage": "FC-5",
+      "id": "enemy_1290_duflm",
+      "phases": [
+        {
+          "charge": null,
+          "projectiles": 1
+        }
+      ],
+      "mode": 1,
+      "errors": [],
+      "death": {
+        "alive": false,
+        "burning": 1,
+        "errors": []
+      }
+    }
+  ],
+  "runtimeFootprint": {
+    "ids": [
+      "char_123_fang",
+      "char_124_kroos"
+    ],
+    "adapters": 24,
+    "common": {
+      "modules": 474,
+      "bytes": 4707304,
+      "sha256": "b486aae17b2fc73b4692949357df147b77c47e07d24d0fac45ddf46cef8fa92f"
+    },
+    "selected": {
+      "modules": 511,
+      "bytes": 8429892,
+      "sha256": "101c84f39cfdffdd709a9593a44c39debeb86d6b58e46d53a0a5e4e913ba9e2c"
+    },
+    "eager": {
+      "modules": 1231,
+      "bytes": 95967078,
+      "sha256": "1c42ffcf422a780356741a257740400535be8dbb45aa5be55197ae01510323b4"
+    }
+  }
+}

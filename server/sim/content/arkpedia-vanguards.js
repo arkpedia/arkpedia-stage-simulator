@@ -82,8 +82,9 @@ function conditionalBuff(battle, unit, key, mods, active) {
 
 /** Owned talent hooks are installed before deployment, and removed on retreat. */
 export function installVanguard({ battle, unit, def }) {
+  if (!VANGUARD_OPERATORS[def.charId]) return;
   const id = def.charId, talent = def.talents[0]?.bb;
-  if (!VANGUARD_OPERATORS[id] || !talent) return;
+  if (!talent) return;
   if (id === 'char_198_blackd') {
     const sync = () => {
       if (!unit.alive || !unit.deployed) return;

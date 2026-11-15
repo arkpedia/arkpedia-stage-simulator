@@ -1,0 +1,1216 @@
+{
+  "code": "TW-TR-1",
+  "name": "Contested Devices",
+  "description": "Though we are not soldiers, we must familiarize ourselves with the ways of violence.\n<'Gramophone'>Both allied and enemy units will fight for control over this device; When activated, deals Arts damage to enemies and heals allies",
+  "battle": {
+    "max_life": 5,
+    "unit_limit": 6,
+    "initial_dp": 10,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1,
+    "max_play_time": -1
+  },
+  "rules": {
+    "variant": null,
+    "source": {
+      "repository": "Kengxxiao/ArknightsGameData",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "path": "zh_CN/gamedata/levels/activities/act11d0/level_training_a1.json",
+      "sha256": "7fc1ad578771128e23eee1a88a26da7909dd99aab1dfddeee74af929c202a7d0",
+      "gitBlob": "e57c29479c91809b46475a340ab2687dbd23c7ce",
+      "stageTable": {
+        "path": "zh_CN/gamedata/excel/stage_table.json",
+        "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+        "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+        "stageId": "act11d0_tr01",
+        "levelId": "Activities/ACT11D0/level_training_a1"
+      }
+    },
+    "battle": {
+      "max_play_time": -1
+    },
+    "enemies": {},
+    "enemyAdd": {},
+    "hiddenGroups": {}
+  },
+  "mapTags": [],
+  "mapTagSource": null,
+  "geometry": {
+    "slug": "tw-tr-1",
+    "rows": 7,
+    "cols": 10,
+    "tileLegend": [
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_floor",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_start",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      }
+    ],
+    "tileGrid": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        2,
+        1,
+        1,
+        1,
+        1,
+        1,
+        3
+      ],
+      [
+        4,
+        1,
+        1,
+        0,
+        5,
+        0,
+        2,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        1,
+        1,
+        5,
+        0,
+        5,
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        1,
+        2,
+        1,
+        2,
+        1,
+        1,
+        3
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        5,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "routes": [
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 6
+        },
+        "end": {
+          "row": 3,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 2
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 10
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 20
+          }
+        ]
+      },
+      {
+        "motion": null,
+        "placeholder": true,
+        "start": null,
+        "end": null,
+        "checkpoints": [],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 9
+        },
+        "end": {
+          "row": 2,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 2
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 3
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 9
+        },
+        "end": {
+          "row": 2,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 2
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 4,
+          "col": 9
+        },
+        "end": {
+          "row": 3,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 2
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 2
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 4,
+          "col": 9
+        },
+        "end": {
+          "row": 3,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 2
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 4,
+          "col": 9
+        },
+        "end": {
+          "row": 3,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 2
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 3
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 4,
+          "col": 9
+        },
+        "end": {
+          "row": 3,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 2
+            }
+          }
+        ],
+        "waits": []
+      }
+    ],
+    "waves": [
+      {
+        "index": 0,
+        "duration": 41,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Leithanian Whisperer",
+            "enemy_id": "enemy_1088_ltsmer",
+            "count": 1,
+            "time": 0,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Leithanian Rebel",
+            "enemy_id": "enemy_1086_ltsodr",
+            "count": 1,
+            "time": 3,
+            "route": 2,
+            "fragment": 0
+          },
+          {
+            "enemy": "Leithanian Rebel",
+            "enemy_id": "enemy_1086_ltsodr",
+            "count": 1,
+            "time": 13,
+            "route": 3,
+            "fragment": 0
+          },
+          {
+            "enemy": "Winterwisp Hound",
+            "enemy_id": "enemy_1087_ltwolf",
+            "count": 1,
+            "time": 16,
+            "route": 4,
+            "fragment": 1
+          },
+          {
+            "enemy": "Winterwisp Hound",
+            "enemy_id": "enemy_1087_ltwolf",
+            "count": 1,
+            "time": 20,
+            "route": 5,
+            "fragment": 1
+          },
+          {
+            "enemy": "Leithanian Whisperer",
+            "enemy_id": "enemy_1088_ltsmer",
+            "count": 1,
+            "time": 30,
+            "route": 6,
+            "fragment": 1
+          },
+          {
+            "enemy": "Leithanian Rebel",
+            "enemy_id": "enemy_1086_ltsodr",
+            "count": 2,
+            "time": 36,
+            "interval": 5,
+            "route": 7,
+            "fragment": 1
+          },
+          {
+            "enemy": "Leithanian Rebel",
+            "enemy_id": "enemy_1086_ltsodr",
+            "count": 1,
+            "time": 39,
+            "route": 3,
+            "fragment": 1
+          }
+        ]
+      }
+    ],
+    "spawnTiles": [
+      {
+        "key": "tile_start",
+        "row": 1,
+        "col": 9,
+        "routes": [
+          2,
+          3,
+          3
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 4,
+        "col": 9,
+        "routes": [
+          4,
+          5,
+          6,
+          7
+        ]
+      }
+    ],
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 2,
+        "col": 0,
+        "routes": [
+          2,
+          3,
+          3
+        ]
+      },
+      {
+        "key": "tile_end",
+        "row": 3,
+        "col": 0,
+        "routes": [
+          0,
+          4,
+          5,
+          6,
+          7
+        ]
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_1086_ltsodr",
+        "slug": "leithanian_rebel",
+        "name": "Leithanian Rebel",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1087_ltwolf",
+        "slug": "winterwisp_hound",
+        "name": "Winterwisp Hound",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1088_ltsmer",
+        "slug": "leithanian_whisperer",
+        "name": "Leithanian Whisperer",
+        "database_level": 0
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [
+        {
+          "unit": "Jessica",
+          "unit_id": "char_235_jesica",
+          "level": 40,
+          "elite": 1,
+          "potential": 0,
+          "skill_index": 0,
+          "skill_level": 5,
+          "hidden": true
+        },
+        {
+          "unit": "Melantha",
+          "unit_id": "char_208_melan",
+          "level": 40,
+          "elite": 1,
+          "potential": 0,
+          "skill_index": 0,
+          "skill_level": 5,
+          "hidden": true
+        },
+        {
+          "unit": "Projekt Red",
+          "unit_id": "char_144_red",
+          "level": 50,
+          "elite": 1,
+          "potential": 0,
+          "skill_index": 0,
+          "skill_level": 6,
+          "hidden": true
+        }
+      ],
+      "deployable_tokens": []
+    },
+    "hasConditionalSpawns": false
+  },
+  "terrain": [],
+  "conditionalHandled": false,
+  "devices": [
+    {
+      "col": 4,
+      "description": "Attacks the enemy with the highest Max HP first",
+      "hidden": false,
+      "key": "trap_014_tower",
+      "kind": "device",
+      "name": "L-44 'Gramophone'",
+      "row": 3,
+      "alias": null,
+      "instance": {
+        "level": 1,
+        "skillLevel": 1
+      }
+    },
+    {
+      "col": 3,
+      "description": "Blocks 3 enemies",
+      "hidden": true,
+      "key": "char_150_snakek",
+      "kind": "operator",
+      "name": "Cuora",
+      "row": 1
+    },
+    {
+      "col": 3,
+      "description": "Restores the HP of allies",
+      "hidden": true,
+      "key": "char_212_ansel",
+      "kind": "operator",
+      "name": "Ansel",
+      "row": 3
+    },
+    {
+      "col": 4,
+      "description": "Blocks 3 enemies",
+      "hidden": true,
+      "key": "char_122_beagle",
+      "kind": "operator",
+      "name": "Beagle",
+      "row": 4
+    },
+    {
+      "col": 4,
+      "description": "Restores the HP of allies",
+      "hidden": true,
+      "key": "char_120_hibisc",
+      "kind": "operator",
+      "name": "Hibiscus",
+      "row": 2
+    }
+  ],
+  "tokens": [],
+  "pathing": {
+    "schemaVersion": 1,
+    "syntheticRoutes": [
+      0,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "producer": "Arkpedia stage browser / buildPlaybackPaths",
+    "stage": "TW-TR-1",
+    "geometryHash": "ec4e1fd435d7504d6be717402191a8c69de899cfb9f284bce087a56bea0eb6d5",
+    "moveScale": 0.65,
+    "paths": {
+      "0": {
+        "points": [
+          [
+            6,
+            3
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "2": {
+        "points": [
+          [
+            9,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            0,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "3": {
+        "points": [
+          [
+            9,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            0,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "4": {
+        "points": [
+          [
+            9,
+            4
+          ],
+          [
+            8,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "5": {
+        "points": [
+          [
+            9,
+            4
+          ],
+          [
+            8,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "6": {
+        "points": [
+          [
+            9,
+            4
+          ],
+          [
+            8,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "7": {
+        "points": [
+          [
+            9,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      }
+    }
+  },
+  "art": null,
+  "gates": null,
+  "fixedSquad": [
+    {
+      "unit": "Jessica",
+      "unit_id": "char_235_jesica",
+      "level": 40,
+      "elite": 1,
+      "potential": 0,
+      "skill_index": 0,
+      "skill_level": 5,
+      "hidden": true
+    },
+    {
+      "unit": "Melantha",
+      "unit_id": "char_208_melan",
+      "level": 40,
+      "elite": 1,
+      "potential": 0,
+      "skill_index": 0,
+      "skill_level": 5,
+      "hidden": true
+    },
+    {
+      "unit": "Projekt Red",
+      "unit_id": "char_144_red",
+      "level": 50,
+      "elite": 1,
+      "potential": 0,
+      "skill_index": 0,
+      "skill_level": 6,
+      "hidden": true
+    }
+  ],
+  "enemies": {
+    "enemy_1088_ltsmer": {
+      "key": "enemy_1088_ltsmer",
+      "prefabKey": "enemy_1088_ltsmer",
+      "name": "Leithanian Whisperer",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 6000,
+        "atk": 300,
+        "def": 200,
+        "res": 50,
+        "moveSpeed": 0.85,
+        "bat": 3,
+        "aspd": 100,
+        "rangeRadius": 3.5,
+        "rawRangeRadius": 3.5,
+        "blockCnt": 1,
+        "massLevel": 3,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "arts",
+        "dmgTypes": [
+          "arts"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": true,
+          "silence": true,
+          "sleep": false,
+          "frozen": true,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Continuously casts at the nearest non-enemy controlled 'Gramophone' within attack range to attempt to seize control of it.",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [
+        {
+          "prefabKey": "charge",
+          "priority": 0,
+          "cooldown": 15,
+          "initCooldown": 0,
+          "spCost": 0,
+          "bb": {
+            "hit_duration": 25,
+            "sp": -2,
+            "duration": 25
+          },
+          "bbStr": {}
+        }
+      ],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1086_ltsodr": {
+      "key": "enemy_1086_ltsodr",
+      "prefabKey": "enemy_1086_ltsodr",
+      "name": "Leithanian Rebel",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 3000,
+        "atk": 130,
+        "def": 130,
+        "res": 20,
+        "moveSpeed": 1.1,
+        "bat": 2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "arts",
+        "dmgTypes": [
+          "arts"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1087_ltwolf": {
+      "key": "enemy_1087_ltwolf",
+      "prefabKey": "enemy_1087_ltwolf",
+      "name": "Winterwisp Hound",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 2800,
+        "atk": 300,
+        "def": 0,
+        "res": 20,
+        "moveSpeed": 1.9,
+        "bat": 1.4,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 0,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    }
+  },
+  "contentAddition": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/tw-tr-1.json",
+          "sha256": "6c3f58e67d92578547b73d4faa72634cdbf0b227010679abfcdbe820b7945292"
+        },
+        {
+          "path": "stage-geometry/tw-tr-1.json",
+          "sha256": "ec4e1fd435d7504d6be717402191a8c69de899cfb9f284bce087a56bea0eb6d5"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        }
+      ],
+      "localFiles": [
+        {
+          "path": "data/stage-rules/tw-tr-1.json",
+          "sha256": "0333507631cd6e6aa2510f934250a9767f5c0d011cd616471c080d8488c35951"
+        },
+        {
+          "path": "data/stage-rules/levels/cd97795fb23a7adcd1a3d79d4b2f65df9fa1240dc9bc61fa7b153378b98d7cf1.json",
+          "sha256": "cd97795fb23a7adcd1a3d79d4b2f65df9fa1240dc9bc61fa7b153378b98d7cf1"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/e57c29479c91809b46475a340ab2687dbd23c7ce.json",
+          "sha256": "7fc1ad578771128e23eee1a88a26da7909dd99aab1dfddeee74af929c202a7d0"
+        },
+        {
+          "path": "data/arkpedia-device-source.json",
+          "sha256": "da24a8d4ea37b0f01e7fafccea15133b7f14ff237a3adf168df38826e1691908"
+        },
+        {
+          "path": "data/arkpedia-device-native-source.json",
+          "sha256": "e5c240a52b37e343ef67d711a39f808ecc29faff4a12f172841c207cbab9bd83"
+        },
+        {
+          "path": "data/arkpedia-gramophone-animations.json",
+          "sha256": "94ec11d995d54647f1286e467afd30ee0ed78ba903526a72d5e042e0f7a19ff3"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/e57c29479c91809b46475a340ab2687dbd23c7ce.json",
+          "sha256": "7fc1ad578771128e23eee1a88a26da7909dd99aab1dfddeee74af929c202a7d0"
+        }
+      ]
+    },
+    "dependencies": {
+      "enemies": [
+        "enemy_1086_ltsodr",
+        "enemy_1087_ltwolf",
+        "enemy_1088_ltsmer"
+      ],
+      "devices": [
+        "L-44 'Gramophone'"
+      ],
+      "tokens": []
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 10,
+        "spawned": 3,
+        "errors": 0
+      },
+      "publicReview": "pending",
+      "waveSchedule": {
+        "id": "tw-tr-1",
+        "seconds": 55,
+        "spawned": 9,
+        "expected": 9,
+        "dynamicSpawns": 0,
+        "reason": "cleared",
+        "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+      },
+      "browserStartup": {
+        "id": "tw-tr-1",
+        "seconds": 20,
+        "errors": [],
+        "units": 5,
+        "canvas": true,
+        "scope": "Mobile landscape browser startup and canvas runtime; not a fidelity approval"
+      }
+    }
+  }
+}

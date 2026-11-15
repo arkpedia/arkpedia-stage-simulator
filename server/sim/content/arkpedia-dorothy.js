@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { stageCardRespawnTime } from './arkpedia-stage-card-cost.js';
 import evidence from '../../../data/arkpedia-dorothy-prefabs.json' with { type: 'json' };
 import { resolveHit } from '../ai.js';
 import { canTargetEnemy } from '../targeting.js';
@@ -58,6 +59,7 @@ export function customizeDorothyKit({ battle: b, id, def, unit: u, kit }) {
 }
 export function installDorothy({ battle: b, unit: u, def }) {
   if (def.charId !== ID) return;
+  u.mem.regularSummonFactory = createDorothyResonator;
   b.on('deploy', ({ unit }) => {
     if (unit !== u) return;
     u.mem.dorothyStacks = 0;
@@ -76,7 +78,7 @@ export function installDorothy({ battle: b, unit: u, def }) {
     for (let i = 0; i < count && choices.length; i++) {
       const key = choices.splice(Math.floor(b.rng() * choices.length), 1)[0];
       const t = createDorothyResonator(b, state, Math.floor(key / 21), key % 21);
-      if (t) { t.mem.regularSummonCard = state.key; state.readyAt = b.time + state.record.stats.respawnTime; }
+      if (t) { t.mem.regularSummonCard = state.key; state.readyAt = b.time + stageCardRespawnTime(b, state.record); }
     }
   }, { owner: u });
   b.on('tick', () => {

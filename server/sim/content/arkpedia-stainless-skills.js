@@ -52,7 +52,10 @@ export function customizeStainlessKit({ battle, id, unit, kit }) {
   const prepared = prepareStainlessSkills(battle, unit, { contract: STAINLESS_SKILL_CONTRACT });
   Object.assign(kit, prepared.kit);
 }
-export function installStainless({ unit }) { unit.mem.stainlessController?.install(); }
+export function installStainless({ unit, def }) {
+  if (def.charId !== STAINLESS_ID) return;
+  unit.mem.stainlessController?.install();
+}
 
 export class StainlessSkills {
   constructor(core) { this.core = core; this.b = core.b; this.u = core.u; this.record = core.record; this.accepting = false; }

@@ -45,7 +45,21 @@
     "audit:arkpedia-devices": "node tools/arkpedia/device-audit.mjs",
     "coverage:arkpedia-assets": "node tools/arkpedia/asset-coverage.mjs",
     "sync:arkpedia-canonical": "node tools/arkpedia/sync-canonical-enemies.mjs",
-    "refresh:arkpedia-enemies": "node tools/arkpedia/canonical-enemy-records.mjs"
+    "refresh:arkpedia-enemies": "node tools/arkpedia/canonical-enemy-records.mjs",
+    "content": "node tools/arkpedia/content.mjs",
+    "content:inventory": "node tools/arkpedia/content-inventory.mjs",
+    "content:library": "node tools/arkpedia/stage-library.mjs",
+    "content:library:check": "node tools/arkpedia/check-stage-library.mjs",
+    "content:library:review": "node tools/arkpedia/review-stage-library.mjs",
+    "content:operators": "node tools/arkpedia/operator-library.mjs",
+    "content:operators:check": "node tools/arkpedia/operator-library.mjs --check",
+    "content:runtime": "node tools/arkpedia/operator-runtime-index.mjs",
+    "content:runtime:check": "node tools/arkpedia/operator-runtime-index.mjs --check",
+    "content:devices": "node tools/arkpedia/device-runtime.mjs",
+    "content:devices:check": "node tools/arkpedia/device-runtime.mjs --check",
+    "content:rules": "node tools/arkpedia/stage-rule-receipt.mjs",
+    "content:rules:batch": "node tools/arkpedia/stage-rule-batch.mjs",
+    "content:enemy-records": "node tools/arkpedia/enemy-records.mjs"
   },
   "engines": {
     "node": ">=22"

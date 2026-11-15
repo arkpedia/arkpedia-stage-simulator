@@ -1,0 +1,2818 @@
+{
+  "code": "MN-8",
+  "name": "General Chamber of Commerce",
+  "description": "Unshakeable and omnipresent. The future belongs to the Kazimierz General Chamber of Commerce. \n<Medical Rune>Operators deployed on this tile will restore HP over time.",
+  "battle": {
+    "max_life": 3,
+    "unit_limit": 9,
+    "initial_dp": 10,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1,
+    "max_play_time": -1
+  },
+  "rules": {
+    "variant": null,
+    "source": {
+      "repository": "Kengxxiao/ArknightsGameData",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "path": "zh_CN/gamedata/levels/activities/act13d5/level_act13d5_08.json",
+      "sha256": "3a66e721f4281dc32e05143df85ac64726b534a0f8f8fe95af8ccf7cc484a0fa",
+      "gitBlob": "92de0a7db0c900142b0b4a4d10616ce331a5d0d8",
+      "stageTable": {
+        "path": "zh_CN/gamedata/excel/stage_table.json",
+        "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+        "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+        "stageId": "act13d5_08",
+        "levelId": "Activities/ACT13D5/level_act13d5_08"
+      }
+    },
+    "battle": {
+      "max_play_time": -1
+    },
+    "enemies": {},
+    "enemyAdd": {},
+    "hiddenGroups": {}
+  },
+  "mapTags": [],
+  "mapTagSource": null,
+  "geometry": {
+    "slug": "mn-8",
+    "rows": 8,
+    "cols": 15,
+    "tileLegend": [
+      {
+        "key": "tile_empty",
+        "height": "low",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_floor",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_telin",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      },
+      {
+        "key": "tile_start",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_healing",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true,
+        "blackboard": {
+          "HP_RECOVERY_PER_SEC_BY_MAX_HP_RATIO": 0.03
+        }
+      },
+      {
+        "key": "tile_telout",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      }
+    ],
+    "tileGrid": [
+      [
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ],
+      [
+        0,
+        2,
+        3,
+        4,
+        4,
+        4,
+        4,
+        5,
+        4,
+        4,
+        4,
+        4,
+        3,
+        2,
+        0
+      ],
+      [
+        0,
+        1,
+        6,
+        4,
+        6,
+        1,
+        6,
+        1,
+        6,
+        1,
+        6,
+        4,
+        6,
+        1,
+        0
+      ],
+      [
+        0,
+        1,
+        6,
+        4,
+        6,
+        7,
+        4,
+        4,
+        8,
+        2,
+        6,
+        4,
+        6,
+        1,
+        0
+      ],
+      [
+        0,
+        1,
+        6,
+        4,
+        6,
+        7,
+        4,
+        4,
+        8,
+        2,
+        6,
+        4,
+        6,
+        1,
+        0
+      ],
+      [
+        0,
+        1,
+        6,
+        4,
+        6,
+        1,
+        1,
+        9,
+        1,
+        6,
+        6,
+        4,
+        6,
+        1,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        4,
+        4,
+        4,
+        3,
+        1,
+        3,
+        4,
+        4,
+        4,
+        1,
+        1,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        7,
+        1,
+        7,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ]
+    ],
+    "routes": [
+      {
+        "motion": "fly",
+        "start": {
+          "row": 7,
+          "col": 12
+        },
+        "end": {
+          "row": 7,
+          "col": 14
+        },
+        "checkpoints": [],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 50
+          }
+        ]
+      },
+      {
+        "motion": "fly",
+        "start": {
+          "row": 7,
+          "col": 11
+        },
+        "end": {
+          "row": 7,
+          "col": 14
+        },
+        "checkpoints": [],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 50
+          }
+        ]
+      },
+      {
+        "motion": "fly",
+        "start": {
+          "row": 6,
+          "col": 12
+        },
+        "end": {
+          "row": 7,
+          "col": 14
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 7,
+              "col": 12
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 50
+          }
+        ]
+      },
+      {
+        "motion": "fly",
+        "start": {
+          "row": 6,
+          "col": 11
+        },
+        "end": {
+          "row": 7,
+          "col": 14
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 7,
+              "col": 11
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 50
+          }
+        ]
+      },
+      {
+        "motion": "fly",
+        "start": {
+          "row": 6,
+          "col": 2
+        },
+        "end": {
+          "row": 7,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 7,
+              "col": 2
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 50
+          }
+        ]
+      },
+      {
+        "motion": "fly",
+        "start": {
+          "row": 6,
+          "col": 1
+        },
+        "end": {
+          "row": 7,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 7,
+              "col": 1
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 50
+          }
+        ]
+      },
+      {
+        "motion": "fly",
+        "start": {
+          "row": 7,
+          "col": 2
+        },
+        "end": {
+          "row": 7,
+          "col": 0
+        },
+        "checkpoints": [],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 50
+          }
+        ]
+      },
+      {
+        "motion": "fly",
+        "start": {
+          "row": 7,
+          "col": 1
+        },
+        "end": {
+          "row": 7,
+          "col": 0
+        },
+        "checkpoints": [],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 50
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 4,
+          "col": 5
+        },
+        "end": {
+          "row": 4,
+          "col": 9
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 6
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 3
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 4,
+          "col": 5
+        },
+        "end": {
+          "row": 4,
+          "col": 9
+        },
+        "checkpoints": [],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 5
+        },
+        "end": {
+          "row": 3,
+          "col": 9
+        },
+        "checkpoints": [],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 7,
+          "col": 8
+        },
+        "end": {
+          "row": 1,
+          "col": 13
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 11
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 11
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 3
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 7,
+          "col": 8
+        },
+        "end": {
+          "row": 1,
+          "col": 13
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 11
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 11
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 7,
+          "col": 6
+        },
+        "end": {
+          "row": 1,
+          "col": 1
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 3
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 13
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 7,
+          "col": 6
+        },
+        "end": {
+          "row": 1,
+          "col": 1
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 3
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 20
+          }
+        ]
+      },
+      {
+        "motion": "fly",
+        "start": {
+          "row": 6,
+          "col": 0
+        },
+        "end": {
+          "row": 6,
+          "col": 14
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 12
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 12
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 1,
+            "seconds": 12
+          }
+        ]
+      },
+      {
+        "motion": "fly",
+        "start": {
+          "row": 2,
+          "col": 0
+        },
+        "end": {
+          "row": 2,
+          "col": 14
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 2
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 10
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 7,
+          "col": 6
+        },
+        "end": {
+          "row": 4,
+          "col": 9
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 7
+            }
+          },
+          {
+            "type": "appear_at_pos",
+            "position": {
+              "row": 5,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 7
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 5
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 3,
+            "seconds": 2
+          }
+        ]
+      },
+      {
+        "motion": null,
+        "placeholder": true,
+        "start": null,
+        "end": null,
+        "checkpoints": [],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 7,
+          "col": 8
+        },
+        "end": {
+          "row": 3,
+          "col": 9
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 11
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 11
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 7
+            }
+          },
+          {
+            "type": "appear_at_pos",
+            "position": {
+              "row": 5,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 7
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 5
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 3,
+            "seconds": 2
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 7,
+          "col": 6
+        },
+        "end": {
+          "row": 1,
+          "col": 1
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 3
+            }
+          }
+        ],
+        "waits": []
+      }
+    ],
+    "waves": [
+      {
+        "index": 0,
+        "duration": 137,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Sponsor Drone",
+            "enemy_id": "enemy_1105_tyokai",
+            "count": 1,
+            "time": 0,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Sponsor Drone",
+            "enemy_id": "enemy_1105_tyokai",
+            "count": 1,
+            "time": 0,
+            "route": 1,
+            "fragment": 0
+          },
+          {
+            "enemy": "Sponsor Drone",
+            "enemy_id": "enemy_1105_tyokai",
+            "count": 1,
+            "time": 0,
+            "route": 2,
+            "fragment": 0
+          },
+          {
+            "enemy": "Sponsor Drone",
+            "enemy_id": "enemy_1105_tyokai",
+            "count": 1,
+            "time": 0,
+            "route": 3,
+            "fragment": 0
+          },
+          {
+            "enemy": "Sponsor Drone",
+            "enemy_id": "enemy_1105_tyokai",
+            "count": 1,
+            "time": 0,
+            "route": 4,
+            "fragment": 0
+          },
+          {
+            "enemy": "Sponsor Drone",
+            "enemy_id": "enemy_1105_tyokai",
+            "count": 1,
+            "time": 0,
+            "route": 5,
+            "fragment": 0
+          },
+          {
+            "enemy": "Sponsor Drone",
+            "enemy_id": "enemy_1105_tyokai",
+            "count": 1,
+            "time": 0,
+            "route": 6,
+            "fragment": 0
+          },
+          {
+            "enemy": "Sponsor Drone",
+            "enemy_id": "enemy_1105_tyokai",
+            "count": 1,
+            "time": 0,
+            "route": 7,
+            "fragment": 0
+          },
+          {
+            "enemy": "Nameless Independent Knight",
+            "enemy_id": "enemy_1099_nbkght",
+            "count": 1,
+            "time": 8,
+            "route": 8,
+            "fragment": 1
+          },
+          {
+            "enemy": "Nameless Independent Knight",
+            "enemy_id": "enemy_1099_nbkght",
+            "count": 1,
+            "time": 16,
+            "route": 9,
+            "fragment": 1
+          },
+          {
+            "enemy": "Nameless Independent Knight",
+            "enemy_id": "enemy_1099_nbkght",
+            "count": 1,
+            "time": 29,
+            "route": 10,
+            "fragment": 1
+          },
+          {
+            "enemy": "Nameless Independent Knight",
+            "enemy_id": "enemy_1099_nbkght",
+            "count": 1,
+            "time": 32,
+            "route": 9,
+            "fragment": 1
+          },
+          {
+            "enemy": "Training Gloompincer",
+            "enemy_id": "enemy_1100_scorpn",
+            "count": 1,
+            "time": 42,
+            "route": 10,
+            "fragment": 2
+          },
+          {
+            "enemy": "Roar Knightclub Trainee",
+            "enemy_id": "enemy_1101_plkght",
+            "count": 1,
+            "time": 46,
+            "route": 11,
+            "fragment": 2
+          },
+          {
+            "enemy": "Nameless Independent Knight",
+            "enemy_id": "enemy_1099_nbkght",
+            "count": 2,
+            "time": 44,
+            "interval": 5,
+            "route": 9,
+            "fragment": 2
+          },
+          {
+            "enemy": "Training Gloompincer",
+            "enemy_id": "enemy_1100_scorpn",
+            "count": 1,
+            "time": 57,
+            "route": 9,
+            "fragment": 3
+          },
+          {
+            "enemy": "Roar Knightclub Trainee",
+            "enemy_id": "enemy_1101_plkght",
+            "count": 1,
+            "time": 63,
+            "route": 12,
+            "fragment": 3
+          },
+          {
+            "enemy": "Nameless Independent Knight",
+            "enemy_id": "enemy_1099_nbkght",
+            "count": 2,
+            "time": 65,
+            "interval": 6,
+            "route": 10,
+            "fragment": 3
+          },
+          {
+            "enemy": "Training Gloompincer",
+            "enemy_id": "enemy_1100_scorpn",
+            "count": 1,
+            "time": 72,
+            "route": 9,
+            "fragment": 3
+          },
+          {
+            "enemy": "Bloodboil Knightclub Trainee",
+            "enemy_id": "enemy_1103_wdkght",
+            "count": 1,
+            "time": 78,
+            "route": 13,
+            "fragment": 4
+          },
+          {
+            "enemy": "Bloodboil Knightclub Trainee",
+            "enemy_id": "enemy_1103_wdkght",
+            "count": 1,
+            "time": 93,
+            "route": 13,
+            "fragment": 4
+          },
+          {
+            "enemy": "Bloodboil Knightclub Trainee",
+            "enemy_id": "enemy_1103_wdkght",
+            "count": 1,
+            "time": 108,
+            "route": 14,
+            "fragment": 4
+          },
+          {
+            "enemy": "Nameless Independent Knight",
+            "enemy_id": "enemy_1099_nbkght",
+            "count": 2,
+            "time": 83,
+            "interval": 5,
+            "route": 9,
+            "fragment": 4
+          },
+          {
+            "enemy": "Nameless Independent Knight",
+            "enemy_id": "enemy_1099_nbkght",
+            "count": 2,
+            "time": 89,
+            "interval": 7,
+            "route": 10,
+            "fragment": 4
+          },
+          {
+            "enemy": "Training Gloompincer",
+            "enemy_id": "enemy_1100_scorpn",
+            "count": 1,
+            "time": 97,
+            "route": 9,
+            "fragment": 4
+          },
+          {
+            "enemy": "Training Gloompincer",
+            "enemy_id": "enemy_1100_scorpn",
+            "count": 1,
+            "time": 102,
+            "route": 10,
+            "fragment": 4
+          },
+          {
+            "enemy": "Roar Knightclub Trainee",
+            "enemy_id": "enemy_1101_plkght",
+            "count": 2,
+            "time": 90,
+            "interval": 10,
+            "route": 12,
+            "fragment": 4
+          },
+          {
+            "enemy": "Roar Knightclub Trainee",
+            "enemy_id": "enemy_1101_plkght",
+            "count": 2,
+            "time": 120,
+            "interval": 10,
+            "route": 12,
+            "fragment": 4
+          },
+          {
+            "enemy": "Nameless Independent Knight",
+            "enemy_id": "enemy_1099_nbkght",
+            "count": 2,
+            "time": 112,
+            "interval": 4,
+            "route": 9,
+            "fragment": 4
+          },
+          {
+            "enemy": "Nameless Independent Knight",
+            "enemy_id": "enemy_1099_nbkght",
+            "count": 2,
+            "time": 119,
+            "interval": 6,
+            "route": 10,
+            "fragment": 4
+          },
+          {
+            "enemy": "Training Gloompincer",
+            "enemy_id": "enemy_1100_scorpn",
+            "count": 1,
+            "time": 135,
+            "route": 10,
+            "fragment": 4
+          },
+          {
+            "enemy": "Training Gloompincer",
+            "enemy_id": "enemy_1100_scorpn",
+            "count": 1,
+            "time": 129,
+            "route": 9,
+            "fragment": 4
+          },
+          {
+            "enemy": "Training Gloompincer",
+            "enemy_id": "enemy_1100_scorpn",
+            "count": 1,
+            "time": 137,
+            "route": 9,
+            "fragment": 4
+          }
+        ]
+      },
+      {
+        "index": 1,
+        "duration": 30,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Cheering Sponsor Drone",
+            "enemy_id": "enemy_1106_byokai",
+            "count": 1,
+            "time": 3,
+            "route": 15,
+            "fragment": 0
+          },
+          {
+            "enemy": "Cheering Sponsor Drone",
+            "enemy_id": "enemy_1106_byokai",
+            "count": 1,
+            "time": 28,
+            "route": 16,
+            "fragment": 0
+          },
+          {
+            "enemy": "Corrupted Knight",
+            "enemy_id": "enemy_1513_dekght",
+            "count": 1,
+            "time": 12,
+            "route": 17,
+            "fragment": 0
+          },
+          {
+            "enemy": "Withered Knight",
+            "enemy_id": "enemy_1513_dekght_2",
+            "count": 1,
+            "time": 12,
+            "route": 19,
+            "fragment": 0
+          },
+          {
+            "enemy": "Training Gloompincer",
+            "enemy_id": "enemy_1100_scorpn",
+            "count": 1,
+            "time": 1,
+            "route": 12,
+            "fragment": 0
+          },
+          {
+            "enemy": "Training Gloompincer",
+            "enemy_id": "enemy_1100_scorpn",
+            "count": 2,
+            "time": 0,
+            "interval": 6,
+            "route": 20,
+            "fragment": 0
+          },
+          {
+            "enemy": "Nameless Independent Knight",
+            "enemy_id": "enemy_1099_nbkght",
+            "count": 2,
+            "time": 23,
+            "interval": 7,
+            "route": 20,
+            "fragment": 0
+          },
+          {
+            "enemy": "Training Gloompincer",
+            "enemy_id": "enemy_1100_scorpn",
+            "count": 1,
+            "time": 15,
+            "route": 12,
+            "fragment": 0
+          }
+        ]
+      }
+    ],
+    "spawnTiles": [
+      {
+        "key": "tile_start",
+        "row": 3,
+        "col": 5,
+        "routes": [
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 4,
+        "col": 5,
+        "routes": [
+          8,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 7,
+        "col": 6,
+        "routes": [
+          13,
+          13,
+          14,
+          17,
+          20,
+          20
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 7,
+        "col": 8,
+        "routes": [
+          11,
+          12,
+          12,
+          12,
+          19,
+          12,
+          12
+        ]
+      }
+    ],
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 1,
+        "col": 1,
+        "routes": [
+          13,
+          13,
+          14,
+          20,
+          20
+        ]
+      },
+      {
+        "key": "tile_end",
+        "row": 1,
+        "col": 13,
+        "routes": [
+          11,
+          12,
+          12,
+          12,
+          12,
+          12
+        ]
+      },
+      {
+        "key": "tile_end",
+        "row": 3,
+        "col": 9,
+        "routes": [
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          19
+        ]
+      },
+      {
+        "key": "tile_end",
+        "row": 4,
+        "col": 9,
+        "routes": [
+          8,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          17
+        ]
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_1099_nbkght",
+        "slug": "nameless_independent_knight",
+        "name": "Nameless Independent Knight",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1100_scorpn",
+        "slug": "training_gloompincer",
+        "name": "Training Gloompincer",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1101_plkght",
+        "slug": "roar_knightclub_trainee",
+        "name": "Roar Knightclub Trainee",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1103_wdkght",
+        "slug": "bloodboil_knightclub_trainee",
+        "name": "Bloodboil Knightclub Trainee",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1105_tyokai",
+        "slug": "sponsor_drone",
+        "name": "Sponsor Drone",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1106_byokai",
+        "slug": "cheering_sponsor_drone",
+        "name": "Cheering Sponsor Drone",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1513_dekght",
+        "slug": "corrupted_knight",
+        "name": "Corrupted Knight",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1513_dekght_2",
+        "slug": "withered_knight",
+        "name": "Withered Knight",
+        "database_level": 0
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [],
+      "deployable_tokens": [
+        {
+          "unit": "Mieszko Coil",
+          "unit_id": "trap_019_electric",
+          "count": 0,
+          "level": 1,
+          "elite": 0,
+          "potential": 0,
+          "skill_index": 0,
+          "skill_level": 1
+        }
+      ]
+    },
+    "hasConditionalSpawns": false
+  },
+  "terrain": [],
+  "conditionalHandled": false,
+  "devices": [],
+  "tokens": [
+    {
+      "unitId": "trap_019_electric",
+      "name": "Mieszko Coil",
+      "count": 0,
+      "cost": 5,
+      "hp": 100,
+      "def": 0,
+      "block": 0,
+      "position": "NONE",
+      "behavior": "electric-coil",
+      "obstacle": false,
+      "rangedBuildOnly": true,
+      "supplyCard": true,
+      "passive": true,
+      "kind": "electric-coil",
+      "cooldown": 5,
+      "refundRatio": 0.5,
+      "interval": 2.3,
+      "damage": 250,
+      "slow": 1.5,
+      "beamDuration": 0.699999988079071,
+      "width": 0.6499999761581421,
+      "maxTargets": 1,
+      "range": [
+        [
+          2,
+          -1
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          1,
+          -2
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          0,
+          -2
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          -1,
+          -2
+        ],
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          -1,
+          2
+        ],
+        [
+          -2,
+          -1
+        ],
+        [
+          -2,
+          0
+        ],
+        [
+          -2,
+          1
+        ]
+      ],
+      "description": "Links to an earlier coil in range every 2.3 seconds. Each beam deals 250 Arts damage and slows each enemy it touches for 1.5 seconds."
+    }
+  ],
+  "pathing": {
+    "schemaVersion": 1,
+    "syntheticRoutes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      19,
+      20
+    ],
+    "producer": "Arkpedia stage browser / buildPlaybackPaths",
+    "stage": "MN-8",
+    "geometryHash": "0e060fb0f662ae04413e07c77328415fd65e770362261f5342ec6bc34da372f3",
+    "moveScale": 0.65,
+    "paths": {
+      "0": {
+        "points": [
+          [
+            12,
+            7
+          ],
+          [
+            14,
+            7
+          ]
+        ],
+        "distances": [
+          0,
+          1
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "1": {
+        "points": [
+          [
+            11,
+            7
+          ],
+          [
+            14,
+            7
+          ]
+        ],
+        "distances": [
+          0,
+          1
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "2": {
+        "points": [
+          [
+            12,
+            6
+          ],
+          [
+            12,
+            7
+          ],
+          [
+            14,
+            7
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "3": {
+        "points": [
+          [
+            11,
+            6
+          ],
+          [
+            11,
+            7
+          ],
+          [
+            14,
+            7
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "4": {
+        "points": [
+          [
+            2,
+            6
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            0,
+            7
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "5": {
+        "points": [
+          [
+            1,
+            6
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            0,
+            7
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "6": {
+        "points": [
+          [
+            2,
+            7
+          ],
+          [
+            0,
+            7
+          ]
+        ],
+        "distances": [
+          0,
+          1
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "7": {
+        "points": [
+          [
+            1,
+            7
+          ],
+          [
+            0,
+            7
+          ]
+        ],
+        "distances": [
+          0,
+          1
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "8": {
+        "points": [
+          [
+            5,
+            4
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            9,
+            4
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "9": {
+        "points": [
+          [
+            5,
+            4
+          ],
+          [
+            9,
+            4
+          ]
+        ],
+        "distances": [
+          0,
+          1
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "10": {
+        "points": [
+          [
+            5,
+            3
+          ],
+          [
+            9,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "11": {
+        "points": [
+          [
+            8,
+            7
+          ],
+          [
+            8,
+            6
+          ],
+          [
+            11,
+            6
+          ],
+          [
+            11,
+            1
+          ],
+          [
+            13,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "12": {
+        "points": [
+          [
+            8,
+            7
+          ],
+          [
+            8,
+            6
+          ],
+          [
+            11,
+            6
+          ],
+          [
+            11,
+            1
+          ],
+          [
+            13,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "13": {
+        "points": [
+          [
+            6,
+            7
+          ],
+          [
+            6,
+            6
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "14": {
+        "points": [
+          [
+            6,
+            7
+          ],
+          [
+            6,
+            6
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "15": {
+        "points": [
+          [
+            0,
+            6
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            12,
+            6
+          ],
+          [
+            14,
+            6
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "16": {
+        "points": [
+          [
+            0,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            14,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "17": {
+        "points": [
+          [
+            6,
+            7
+          ],
+          [
+            6,
+            6
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            9,
+            4
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "19": {
+        "points": [
+          [
+            8,
+            7
+          ],
+          [
+            8,
+            6
+          ],
+          [
+            11,
+            6
+          ],
+          [
+            11,
+            1
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            7,
+            3
+          ],
+          [
+            9,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "20": {
+        "points": [
+          [
+            6,
+            7
+          ],
+          [
+            6,
+            6
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      }
+    }
+  },
+  "art": null,
+  "gates": null,
+  "fixedSquad": null,
+  "enemies": {
+    "enemy_1105_tyokai": {
+      "key": "enemy_1105_tyokai",
+      "prefabKey": "enemy_1105_tyokai",
+      "name": "Sponsor Drone",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "NONE",
+      "stats": {
+        "maxHp": 5000,
+        "atk": 0,
+        "def": 150,
+        "res": 20,
+        "moveSpeed": 1,
+        "bat": 1,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 0,
+        "lpr": 0,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "none",
+        "dmgTypes": [
+          "none"
+        ],
+        "motion": "FLY",
+        "immunities": {
+          "stun": false,
+          "silence": true,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Flying unit.",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Does not count towards the defeated enemies counter",
+          "format": "NORMAL"
+        },
+        {
+          "text": "When destroyed, grants a deployable unit",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "loot.cnt": 1
+        },
+        "bbStr": {
+          "loot.token_key": "trap_019_electric"
+        },
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "drone"
+      ]
+    },
+    "enemy_1099_nbkght": {
+      "key": "enemy_1099_nbkght",
+      "prefabKey": "enemy_1099_nbkght",
+      "name": "Nameless Independent Knight",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 2800,
+        "atk": 280,
+        "def": 150,
+        "res": 0,
+        "moveSpeed": 1.1,
+        "bat": 2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1100_scorpn": {
+      "key": "enemy_1100_scorpn",
+      "prefabKey": "enemy_1100_scorpn",
+      "name": "Training Gloompincer",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 2000,
+        "atk": 380,
+        "def": 450,
+        "res": 30,
+        "moveSpeed": 1,
+        "bat": 2.5,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 0,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "infection"
+      ]
+    },
+    "enemy_1101_plkght": {
+      "key": "enemy_1101_plkght",
+      "prefabKey": "enemy_1101_plkght",
+      "name": "Roar Knightclub Trainee",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 2800,
+        "atk": 300,
+        "def": 100,
+        "res": 0,
+        "moveSpeed": 0.9,
+        "bat": 2.4,
+        "aspd": 100,
+        "rangeRadius": 2,
+        "rawRangeRadius": 2,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": true,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Has significantly increased DEF and RES for a period of time",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "buff.duration": 30,
+          "buff.def": 3000,
+          "buff.magic_resistance": 95
+        },
+        "bbStr": {},
+        "groups": {
+          "buff": [
+            "def",
+            "duration",
+            "magic_resistance"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1103_wdkght": {
+      "key": "enemy_1103_wdkght",
+      "prefabKey": "enemy_1103_wdkght",
+      "name": "Bloodboil Knightclub Trainee",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 9000,
+        "atk": 500,
+        "def": 800,
+        "res": 0,
+        "moveSpeed": 0.7,
+        "bat": 2.3,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 3,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": true,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Each time an enemy is defeated, gains ATK and ASPD, stacking up to 10 times.",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "enhance.atk": 0.1,
+          "enhance.attack_speed": 5,
+          "enhance.max_stack_cnt": 10
+        },
+        "bbStr": {},
+        "groups": {
+          "enhance": [
+            "atk",
+            "attack_speed",
+            "max_stack_cnt"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1106_byokai": {
+      "key": "enemy_1106_byokai",
+      "prefabKey": "enemy_1106_byokai",
+      "name": "Cheering Sponsor Drone",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "NONE",
+      "stats": {
+        "maxHp": 5000,
+        "atk": 0,
+        "def": 150,
+        "res": 20,
+        "moveSpeed": 1,
+        "bat": 1,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 0,
+        "lpr": 0,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "none",
+        "dmgTypes": [
+          "none"
+        ],
+        "motion": "FLY",
+        "immunities": {
+          "stun": false,
+          "silence": true,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Flying unit.",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Does not count towards the defeated enemies counter",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Upon death, significantly increase ASPD and DEF of our units on the field for a period.",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "buff.duration": 20,
+          "buff.attack_speed": 100,
+          "buff.def": 0.5
+        },
+        "bbStr": {},
+        "groups": {
+          "buff": [
+            "attack_speed",
+            "def",
+            "duration"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "drone"
+      ]
+    },
+    "enemy_1513_dekght": {
+      "key": "enemy_1513_dekght",
+      "prefabKey": "enemy_1513_dekght",
+      "name": "Corrupted Knight",
+      "level": 0,
+      "rank": "BOSS",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 40000,
+        "atk": 1200,
+        "def": 1200,
+        "res": 30,
+        "moveSpeed": 0.65,
+        "bat": 4,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 6,
+        "lpr": 2,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": true,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Attacks deal Physical damage to the target and adjacent allied units",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Does charged attacks, dealing heavy Physical damage to the targets and any adjacent units",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Gains greatly increased ATK, ASPD, and Movement Speed when <Withered Knight> dies",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "aoe.attack@dekght[aoe].atk_scale": 1,
+          "triggerrage.atk": 0.8,
+          "triggerrage.attack_speed": 100,
+          "triggerrage.move_speed": 1.5
+        },
+        "bbStr": {
+          "aoe.attack@dekght[aoe].range_id": "x-5"
+        },
+        "groups": {
+          "aoe": [
+            "attack@dekght[aoe].atk_scale",
+            "attack@dekght[aoe].range_id"
+          ],
+          "triggerrage": [
+            "atk",
+            "attack_speed",
+            "move_speed"
+          ]
+        }
+      },
+      "skills": [
+        {
+          "prefabKey": "ChargeAttack",
+          "priority": 0,
+          "cooldown": 22,
+          "initCooldown": 22,
+          "spCost": 0,
+          "bb": {
+            "atk_scale": 3,
+            "dekght[aoe].atk_scale": 3,
+            "duration": 4
+          },
+          "bbStr": {
+            "dekght[aoe].range_id": "x-5"
+          }
+        }
+      ],
+      "notCountInTotal": false,
+      "tags": [
+        "sarkaz"
+      ]
+    },
+    "enemy_1513_dekght_2": {
+      "key": "enemy_1513_dekght_2",
+      "prefabKey": "enemy_1513_dekght_2",
+      "name": "Withered Knight",
+      "level": 0,
+      "rank": "BOSS",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 40000,
+        "atk": 500,
+        "def": 600,
+        "res": 70,
+        "moveSpeed": 0.65,
+        "bat": 4,
+        "aspd": 100,
+        "rangeRadius": 2.5,
+        "rawRangeRadius": 2.5,
+        "blockCnt": 1,
+        "massLevel": 6,
+        "lpr": 2,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "arts",
+        "dmgTypes": [
+          "arts"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": true,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Attacks 2 targets simultaneously",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Fires explosive arrows at three targets which explode after a short delay, dealing high Arts damage to the target and surrounding four tiles",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Gains greatly increased ATK, ASPD, and Movement Speed when <Corrupted Knight> dies",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "triggerrage.atk": 0.8,
+          "triggerrage.attack_speed": 100,
+          "triggerrage.move_speed": 1.5
+        },
+        "bbStr": {},
+        "groups": {
+          "triggerrage": [
+            "atk",
+            "attack_speed",
+            "move_speed"
+          ]
+        }
+      },
+      "skills": [
+        {
+          "prefabKey": "TripleAttack",
+          "priority": 0,
+          "cooldown": 22,
+          "initCooldown": 22,
+          "spCost": 0,
+          "bb": {
+            "dekght_2[aoe].interval": 2.5,
+            "dekght_2[aoe].atk_scale": 1.6
+          },
+          "bbStr": {
+            "dekght_2[aoe].range_id": "x-5"
+          }
+        }
+      ],
+      "notCountInTotal": false,
+      "tags": [
+        "sarkaz"
+      ]
+    }
+  },
+  "contentAddition": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/mn-8.json",
+          "sha256": "ac8f0642924f9f1eaf0a501fedb8bd104137100ae1cd1c15d4b1ceb8c72e28f2"
+        },
+        {
+          "path": "stage-geometry/mn-8.json",
+          "sha256": "0e060fb0f662ae04413e07c77328415fd65e770362261f5342ec6bc34da372f3"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        }
+      ],
+      "localFiles": [
+        {
+          "path": "data/stage-rules/mn-8.json",
+          "sha256": "bc857dd25176f8c52afb0fddc701d91c68cf2407160ebc0bcade0a02b4ac73ef"
+        },
+        {
+          "path": "data/stage-rules/levels/f4c0c6e2067cd63b7c2c703c133802801e8eb593aa2c85ac1f16d162cb02bca4.json",
+          "sha256": "f4c0c6e2067cd63b7c2c703c133802801e8eb593aa2c85ac1f16d162cb02bca4"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/92de0a7db0c900142b0b4a4d10616ce331a5d0d8.json",
+          "sha256": "3a66e721f4281dc32e05143df85ac64726b534a0f8f8fe95af8ccf7cc484a0fa"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/92de0a7db0c900142b0b4a4d10616ce331a5d0d8.json",
+          "sha256": "3a66e721f4281dc32e05143df85ac64726b534a0f8f8fe95af8ccf7cc484a0fa"
+        },
+        {
+          "path": "data/arkpedia-enemy-records.json",
+          "sha256": "b75ba11f79473268f8408b28df67165101997fbf8ec8bdcfaa6f68354111b3a8"
+        },
+        {
+          "path": "data/arkpedia-enemy-support.json",
+          "sha256": "6c581a930d21814c39927d67b93e1c16952d734eef3da8f02bde83a2a834d17b"
+        },
+        {
+          "path": "data/arkpedia-enemy-native-abilities.json",
+          "sha256": "b24e3f13ffe7e3ccdc1cdf2522e5e383ee3a5cb4994a4d732ba1ddc889ffeda9"
+        },
+        {
+          "path": "data/arkpedia-snack-animations.json",
+          "sha256": "b148315cdfb30499bca571cc3030e9915b88b53e2c7135fe73e18a4764329b9b"
+        },
+        {
+          "path": "data/arkpedia-enemy-records.json",
+          "sha256": "b75ba11f79473268f8408b28df67165101997fbf8ec8bdcfaa6f68354111b3a8"
+        },
+        {
+          "path": "data/arkpedia-enemy-support.json",
+          "sha256": "6c581a930d21814c39927d67b93e1c16952d734eef3da8f02bde83a2a834d17b"
+        },
+        {
+          "path": "data/arkpedia-enemy-native-abilities.json",
+          "sha256": "b24e3f13ffe7e3ccdc1cdf2522e5e383ee3a5cb4994a4d732ba1ddc889ffeda9"
+        },
+        {
+          "path": "data/arkpedia-knight-animations.json",
+          "sha256": "b7d86e8a73b280e36c2048f66a913d34fd1592fd7988c2e70a63ee73d4a175d8"
+        },
+        {
+          "path": "data/arkpedia-device-source.json",
+          "sha256": "5a9307d4d7ac597e487055c22dfdfde1722e1e8f68ab4aa4c2a6793875510568"
+        },
+        {
+          "path": "data/arkpedia-device-native-source.json",
+          "sha256": "13df211e23eefc083ba424753bba4ed69e8f9fdad1a7fdf7bbf1485e40baa161"
+        },
+        {
+          "path": "data/arkpedia-mrboom-animations.json",
+          "sha256": "e1769d08bcc9c2639c24603a8876869ef131f409813d3790667ce397efc28a9d"
+        }
+      ]
+    },
+    "dependencies": {
+      "enemies": [
+        "enemy_1099_nbkght",
+        "enemy_1100_scorpn",
+        "enemy_1101_plkght",
+        "enemy_1103_wdkght",
+        "enemy_1105_tyokai",
+        "enemy_1106_byokai",
+        "enemy_1513_dekght",
+        "enemy_1513_dekght_2"
+      ],
+      "devices": [],
+      "tokens": [
+        "trap_019_electric"
+      ]
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 10,
+        "spawned": 9,
+        "errors": 0
+      },
+      "publicReview": "pending",
+      "waveSchedule": {
+        "id": "mn-8",
+        "seconds": 198.73333333333332,
+        "spawned": 51,
+        "expected": 51,
+        "dynamicSpawns": 0,
+        "reason": "cleared",
+        "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+      },
+      "browserStartup": {
+        "id": "mn-8",
+        "seconds": 20,
+        "errors": [],
+        "units": 10,
+        "canvas": true,
+        "scope": "Mobile landscape browser startup and canvas runtime; not a fidelity approval"
+      }
+    }
+  }
+}

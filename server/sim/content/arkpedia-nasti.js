@@ -322,5 +322,6 @@ export function installNasti({battle: b, unit: u, def}) {
   reviewed(b);
   const owner = u.mem.nastiPrepared;
   if (!owner) throw Error('Missing selected Nasti owner');
+  u.mem.regularSummonFactory = createNastiDevice;
   delete u.mem.nastiPrepared; owner.install();
 }

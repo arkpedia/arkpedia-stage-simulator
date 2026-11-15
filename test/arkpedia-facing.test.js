@@ -1,10 +1,17 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { spriteFacing } from "../shared/arkpedia/facing.js";
+import { spriteFacing, enemyModelKey } from "../shared/arkpedia/facing.js";
 import { swipeFacing } from "../shared/arkpedia/placement.js";
 import { StandardBattle } from "../server/sim/arkpedia.js";
 import data from "../data/arkpedia-mvp.json" with { type: "json" };
 import { defaultBuild } from "../shared/arkpedia/loadout.js";
+
+test('database variants reuse their native prefab body and explicit stage artwork aliases take precedence',()=>{
+ assert.equal(enemyModelKey('enemy_variant',{prefabKey:'enemy_original'}),'enemy/enemy_original/default/default');
+ assert.equal(enemyModelKey('enemy_variant',{prefabKey:'enemy_original',assetPrefabKey:'enemy_stage_original'}),
+  'enemy/enemy_stage_original/default/default');
+ assert.equal(enemyModelKey('enemy_variant',{}),'enemy/enemy_variant/default/default');
+});
 
 test("enemy sprite follows movement instead of its fixed deploy direction, preserving waits and vertical legs", () => {
   const unit = {

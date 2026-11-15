@@ -1,0 +1,769 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-14",
+  "scope": "Shared original wave model, source route matching and capability-driven loading; not complete stage or native-client fidelity certification.",
+  "manifest": {
+    "path": "data/arkpedia-library.json",
+    "sha256": "363a4143abb759272ece0782d50f06ccb30166f3cd4b1a42c20b66aca8a21e2d",
+    "source": {
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "deviceTableSha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274",
+      "enemyRecords": {
+        "records": {
+          "path": "data/arkpedia-enemy-records.json",
+          "sha256": "b75ba11f79473268f8408b28df67165101997fbf8ec8bdcfaa6f68354111b3a8"
+        },
+        "nativeTimingIndex": {
+          "path": "data/arkpedia-enemy-clock-source.json",
+          "sha256": "56d6b96a60a11ce111401b0afff0fd4f68dde5843c7758de0e91e2d9e78a5f80"
+        },
+        "nativeAbilities": {
+          "path": "data/arkpedia-enemy-native-abilities.json",
+          "sha256": "6dc189f95546740e155dfbcd9919881855daf5301cc10e438f159f8ed2ff3920"
+        },
+        "whispererAnimations": {
+          "path": "data/arkpedia-whisperer-animations.json",
+          "sha256": "06f4b24eaf76bf8baf571d176efd8edb421418c038575919b64146b2df206f3a"
+        },
+        "ratKingAnimations": {
+          "path": "data/arkpedia-ratking-animations.json",
+          "sha256": "23fa04bd2dee3bbbe8d9bddaa4b3e3bc6835c0f19256e135e0f3ab53b44371a7"
+        },
+        "spiderAnimations": {
+          "path": "data/arkpedia-spider-animations.json",
+          "sha256": "0200b555de705b47d14207abf631553acf94fdbcf5b49ea62dff217ae7293bc1"
+        },
+        "fluxFieldAnimations": {
+          "path": "data/arkpedia-flux-field-animations.json",
+          "sha256": "f80199b954e4199f6b866a9f368cfb3610e81e27047b457c17aa3b4db863b563"
+        },
+        "fluxSaxophoneAnimations": {
+          "path": "data/arkpedia-flux-saxophone-animations.json",
+          "sha256": "650d35397fe31b2de9d8012427b80e8dda0eb0934c9d8d2049d0f7e9f623307a"
+        },
+        "gertrudeAnimations": {
+          "path": "data/arkpedia-gertrude-animations.json",
+          "sha256": "79ea43a2a68cc4e3c3ae9e99919a40aed3fc600bae6ae7224acdcf6d60e9e3e9"
+        },
+        "magicCircuitAnimations": {
+          "path": "data/arkpedia-magic-circuit-animations.json",
+          "sha256": "aa63cd58f51b8abfe16d40e91ea929e98581c7e7af6ef4a658454634c5f8c647"
+        },
+        "infantryAnimations": {
+          "path": "data/arkpedia-infantry-animations.json",
+          "sha256": "3b3190792fd549977da336bb664d615cf273be63bda87f01a71845f9e05d1049"
+        },
+        "mudrockAnimations": {
+          "path": "data/arkpedia-mudrock-animations.json",
+          "sha256": "a216cd8767bcc02ea9570ba86f5031b3f6188b65d48b064e2986c5a89afe1a88"
+        },
+        "wineAnimations": {
+          "path": "data/arkpedia-wine-animations.json",
+          "sha256": "81e0681f8536effaeddc4160c6384664b3d1033827a715f0ed1448218ac54d9f"
+        },
+        "fattyAnimations": {
+          "path": "data/arkpedia-fatty-animations.json",
+          "sha256": "c8d6b6cb3f1c65896b029b30db0434ca54ca7ebfd590775ff47cc5325b6baab2"
+        },
+        "bladeAnimations": {
+          "path": "data/arkpedia-blade-animations.json",
+          "sha256": "816b89d546105a77860506b90ad6fe5b9d2b0b2fd564ae402935e7dec7d3ffe7"
+        },
+        "knightAnimations": {
+          "path": "data/arkpedia-knight-animations.json",
+          "sha256": "b7d86e8a73b280e36c2048f66a913d34fd1592fd7988c2e70a63ee73d4a175d8"
+        },
+        "snackAnimations": {
+          "path": "data/arkpedia-snack-animations.json",
+          "sha256": "b148315cdfb30499bca571cc3030e9915b88b53e2c7135fe73e18a4764329b9b"
+        }
+      }
+    }
+  },
+  "sourceFiles": [
+    {
+      "path": "tools/arkpedia/stage-waves.mjs",
+      "sha256": "e101656da0d72b7d3bcd9ec8b3afacebe8b0705a16da4c145d47d42e646127dc"
+    },
+    {
+      "path": "server/sim/content/arkpedia-stage-waves.js",
+      "sha256": "df7fabea59a4dbcab3961a16747821b6b69bdfda73ba86ec6e54bffa4d2bbc0d"
+    },
+    {
+      "path": "server/sim/arkpedia.js",
+      "sha256": "f979e76a53700ddc76a56a2a02452ccbfec202054e3dfea48e419dbbe5fcac35"
+    },
+    {
+      "path": "tools/arkpedia/content-inventory.mjs",
+      "sha256": "334662aa70e848f6abd1694f5c446221454eca286c5e80720b16521c27e1794e"
+    },
+    {
+      "path": "tools/arkpedia/content-priorities.mjs",
+      "sha256": "1fa32d7a8b5c1ce376eeac0fe3c19bc0b5d6dac0182d187ececca1c69f92681e"
+    },
+    {
+      "path": "tools/arkpedia/build-stage.mjs",
+      "sha256": "23e2738dd7bacdaf65e1a21b771f8bb57ae51f44471f35e6cdb5644d4b5783dc"
+    },
+    {
+      "path": "tools/arkpedia/stage-library.mjs",
+      "sha256": "444384ba0c4eedae80659248687b6dd046bb164054faf8860150bc88a0e6109a"
+    },
+    {
+      "path": "shared/arkpedia/stage-library.js",
+      "sha256": "fa90ada6a0f19f2a708b49a3560139d7f4911918bacdc018c4733eeb94ec793c"
+    },
+    {
+      "path": "tools/arkpedia/stage-device-instances.mjs",
+      "sha256": "c5d1e9d7d39af53bec4c7c6cea2a30f44c90dfe3e8e121173817cbf3462587a9"
+    },
+    {
+      "path": "tools/arkpedia/review-stage-library.mjs",
+      "sha256": "8a361390394ed6fd2bba770b46650a202cb907066c07cd2c1f9130f416ed7b0b"
+    },
+    {
+      "path": "tools/arkpedia/review-stage-wave-routes.mjs",
+      "sha256": "e83c55de445bcf41c03fd591336e2d11ac4865db65eb76aef65fa13e4bd20750"
+    },
+    {
+      "path": "test/arkpedia-stage-waves.test.js",
+      "sha256": "0a3f3e06fb628b3638ccefba191a19d84b1ab94de31b6a84844e7b70c59c68b3"
+    },
+    {
+      "path": "test/arkpedia-content-playthrough.test.js",
+      "sha256": "9ea7b7e48ce15caa4bb45b37b73dc02f1b8a4207ad2b480abc7b3ab94f27b4c9"
+    },
+    {
+      "path": "test/arkpedia-stage-library.test.js",
+      "sha256": "5c4bf310f22ff3e1f75ab8ef4e97ae4b3604ecff8eb4225efeba6e33820750d8"
+    },
+    {
+      "path": "test/arkpedia-content-addition.test.js",
+      "sha256": "2d2a6ed761887c246ec9ce2d3782b2d33a2f1ea76716ffbb1ad31e4ca2d23b20"
+    }
+  ],
+  "validation": {
+    "finalFocusedTests": {
+      "passed": 39,
+      "failed": 0,
+      "command": "node --test test/arkpedia-stage-waves.test.js test/arkpedia-content-playthrough.test.js test/arkpedia-stage-library.test.js test/arkpedia-content-addition.test.js"
+    },
+    "legalPlaythrough": {
+      "stage": "5-4",
+      "enemies": 52,
+      "paths": [
+        "legacy viewer",
+        "compiled original wave program"
+      ]
+    },
+    "smoke": {
+      "scope": "10-second constructor/runtime smoke for every available compiled stage; not a playable-clear or fidelity certificate",
+      "available": 769,
+      "completed": 769,
+      "failures": [],
+      "uniqueComponentsRead": 5224,
+      "cache": {
+        "cachedBytes": 11490893,
+        "cachedObjects": 5224,
+        "pending": 0
+      }
+    },
+    "browser": [
+      {
+        "id": "0-1",
+        "mobile": false,
+        "options": 3892,
+        "componentRequests": 9,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true
+      },
+      {
+        "id": "0-4_challenge_mode",
+        "mobile": false,
+        "options": 3892,
+        "componentRequests": 11,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 2,
+        "canvas": true,
+        "originalWaveProgram": true
+      },
+      {
+        "id": "3-6_challenge_mode",
+        "mobile": false,
+        "options": 3892,
+        "componentRequests": 15,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true,
+        "waveGate": {
+          "heldWave": 1,
+          "blockedFutureSpawns": 19,
+          "releasedWave": 2,
+          "errors": []
+        }
+      },
+      {
+        "id": "bw-8_challenge_mode",
+        "mobile": false,
+        "options": 3892,
+        "componentRequests": 29,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true
+      },
+      {
+        "id": "ps-3_challenge_mode",
+        "mobile": false,
+        "options": 3892,
+        "componentRequests": 15,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true
+      },
+      {
+        "id": "0-6_challenge_mode",
+        "mobile": false,
+        "blockedBeforeComponentFetch": true
+      },
+      {
+        "id": "0-1",
+        "mobile": true,
+        "options": 3892,
+        "componentRequests": 9,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true
+      },
+      {
+        "id": "0-4_challenge_mode",
+        "mobile": true,
+        "options": 3892,
+        "componentRequests": 11,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 2,
+        "canvas": true,
+        "originalWaveProgram": true
+      },
+      {
+        "id": "3-6_challenge_mode",
+        "mobile": true,
+        "options": 3892,
+        "componentRequests": 15,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true,
+        "waveGate": {
+          "heldWave": 1,
+          "blockedFutureSpawns": 19,
+          "releasedWave": 2,
+          "errors": []
+        }
+      },
+      {
+        "id": "bw-8_challenge_mode",
+        "mobile": true,
+        "options": 3892,
+        "componentRequests": 29,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true
+      },
+      {
+        "id": "ps-3_challenge_mode",
+        "mobile": true,
+        "options": 3892,
+        "componentRequests": 15,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true
+      },
+      {
+        "id": "0-6_challenge_mode",
+        "mobile": true,
+        "blockedBeforeComponentFetch": true
+      },
+      {
+        "homeFixture": true,
+        "initialDp": 99,
+        "waves": 0
+      }
+    ],
+    "hiddenRoutes": [
+      {
+        "id": "aw-8_challenge_mode",
+        "scope": "Original waves with diagnostic high life and no deployed operators; route origins, not a stage clear",
+        "originalLevelSha256": "de0b954aff4349da89a18f42da2bc7d0608f1a39fb63eac7b48feffcfcfa6720",
+        "actions": [
+          {
+            "enemyKey": "enemy_1073_dscout",
+            "originalRoute": 2,
+            "compiledRoute": 1,
+            "expected": {
+              "row": 7,
+              "col": 5
+            },
+            "observed": {
+              "enemyKey": "enemy_1073_dscout",
+              "row": 7,
+              "col": 5,
+              "time": 0
+            }
+          },
+          {
+            "enemyKey": "enemy_1073_dscout",
+            "originalRoute": 16,
+            "compiledRoute": 13,
+            "expected": {
+              "row": 8,
+              "col": 1
+            },
+            "observed": {
+              "enemyKey": "enemy_1073_dscout",
+              "row": 8,
+              "col": 1,
+              "time": 99
+            }
+          },
+          {
+            "enemyKey": "enemy_1073_dscout",
+            "originalRoute": 26,
+            "compiledRoute": 13,
+            "expected": {
+              "row": 8,
+              "col": 1
+            },
+            "observed": {
+              "enemyKey": "enemy_1073_dscout",
+              "row": 8,
+              "col": 1,
+              "time": 162
+            }
+          },
+          {
+            "enemyKey": "enemy_1073_dscout",
+            "originalRoute": 35,
+            "compiledRoute": 13,
+            "expected": {
+              "row": 8,
+              "col": 1
+            },
+            "observed": {
+              "enemyKey": "enemy_1073_dscout",
+              "row": 8,
+              "col": 1,
+              "time": 220
+            }
+          }
+        ]
+      },
+      {
+        "id": "ga-ex-7_challenge_mode",
+        "scope": "Original waves with diagnostic high life and no deployed operators; route origins, not a stage clear",
+        "originalLevelSha256": "25b89b8eaac3b9f41a938f25634763e270aec0842277f49b5bba790aef041c5f",
+        "actions": [
+          {
+            "enemyKey": "enemy_1215_ptrarc",
+            "originalRoute": 9,
+            "compiledRoute": 7,
+            "expected": {
+              "row": 4,
+              "col": 6
+            },
+            "observed": {
+              "enemyKey": "enemy_1215_ptrarc",
+              "row": 4,
+              "col": 6,
+              "time": 102
+            }
+          },
+          {
+            "enemyKey": "enemy_1215_ptrarc",
+            "originalRoute": 10,
+            "compiledRoute": 8,
+            "expected": {
+              "row": 3,
+              "col": 5
+            },
+            "observed": {
+              "enemyKey": "enemy_1215_ptrarc",
+              "row": 3,
+              "col": 5,
+              "time": 102
+            }
+          },
+          {
+            "enemyKey": "enemy_1215_ptrarc",
+            "originalRoute": 13,
+            "compiledRoute": 10,
+            "expected": {
+              "row": 4,
+              "col": 6
+            },
+            "observed": {
+              "enemyKey": "enemy_1215_ptrarc",
+              "row": 4,
+              "col": 6,
+              "time": 153
+            }
+          },
+          {
+            "enemyKey": "enemy_1215_ptrarc",
+            "originalRoute": 18,
+            "compiledRoute": 12,
+            "expected": {
+              "row": 4,
+              "col": 4
+            },
+            "observed": {
+              "enemyKey": "enemy_1215_ptrarc",
+              "row": 4,
+              "col": 4,
+              "time": 189
+            }
+          },
+          {
+            "enemyKey": "enemy_1215_ptrarc",
+            "originalRoute": 19,
+            "compiledRoute": 13,
+            "expected": {
+              "row": 3,
+              "col": 6
+            },
+            "observed": {
+              "enemyKey": "enemy_1215_ptrarc",
+              "row": 3,
+              "col": 6,
+              "time": 189
+            }
+          },
+          {
+            "enemyKey": "enemy_1216_cansld_2",
+            "originalRoute": 25,
+            "compiledRoute": 16,
+            "expected": {
+              "row": 3,
+              "col": 11
+            },
+            "observed": {
+              "enemyKey": "enemy_1216_cansld_2",
+              "row": 3,
+              "col": 11,
+              "time": 259
+            }
+          },
+          {
+            "enemyKey": "enemy_1215_ptrarc",
+            "originalRoute": 26,
+            "compiledRoute": 5,
+            "expected": {
+              "row": 4,
+              "col": 5
+            },
+            "observed": {
+              "enemyKey": "enemy_1215_ptrarc",
+              "row": 4,
+              "col": 5,
+              "time": 234
+            }
+          },
+          {
+            "enemyKey": "enemy_1215_ptrarc",
+            "originalRoute": 27,
+            "compiledRoute": 10,
+            "expected": {
+              "row": 4,
+              "col": 6
+            },
+            "observed": {
+              "enemyKey": "enemy_1215_ptrarc",
+              "row": 4,
+              "col": 6,
+              "time": 234
+            }
+          },
+          {
+            "enemyKey": "enemy_1215_ptrarc",
+            "originalRoute": 28,
+            "compiledRoute": 6,
+            "expected": {
+              "row": 3,
+              "col": 4
+            },
+            "observed": {
+              "enemyKey": "enemy_1215_ptrarc",
+              "row": 3,
+              "col": 4,
+              "time": 234
+            }
+          },
+          {
+            "enemyKey": "enemy_1215_ptrarc",
+            "originalRoute": 29,
+            "compiledRoute": 8,
+            "expected": {
+              "row": 3,
+              "col": 5
+            },
+            "observed": {
+              "enemyKey": "enemy_1215_ptrarc",
+              "row": 3,
+              "col": 5,
+              "time": 234
+            }
+          },
+          {
+            "enemyKey": "enemy_1215_ptrarc",
+            "originalRoute": 30,
+            "compiledRoute": 12,
+            "expected": {
+              "row": 4,
+              "col": 4
+            },
+            "observed": {
+              "enemyKey": "enemy_1215_ptrarc",
+              "row": 4,
+              "col": 4,
+              "time": 234
+            }
+          },
+          {
+            "enemyKey": "enemy_1215_ptrarc",
+            "originalRoute": 31,
+            "compiledRoute": 13,
+            "expected": {
+              "row": 3,
+              "col": 6
+            },
+            "observed": {
+              "enemyKey": "enemy_1215_ptrarc",
+              "row": 3,
+              "col": 6,
+              "time": 234
+            }
+          }
+        ]
+      },
+      {
+        "id": "iw-ex-7_challenge_mode",
+        "scope": "Original waves with diagnostic high life and no deployed operators; route origins, not a stage clear",
+        "originalLevelSha256": "709c8b8bb1b1f5f89cc678dc086250662b02d39518866067f056376633909a9b",
+        "actions": [
+          {
+            "enemyKey": "enemy_1209_sfden_2",
+            "originalRoute": 2,
+            "compiledRoute": 2,
+            "expected": {
+              "row": 6,
+              "col": 3
+            },
+            "observed": {
+              "enemyKey": "enemy_1209_sfden_2",
+              "row": 6,
+              "col": 3,
+              "time": 0
+            }
+          },
+          {
+            "enemyKey": "enemy_1209_sfden_2",
+            "originalRoute": 15,
+            "compiledRoute": 13,
+            "expected": {
+              "row": 2,
+              "col": 11
+            },
+            "observed": {
+              "enemyKey": "enemy_1209_sfden_2",
+              "row": 2,
+              "col": 11,
+              "time": 115
+            }
+          }
+        ]
+      },
+      {
+        "id": "le-ex-4_challenge_mode",
+        "scope": "Original waves with diagnostic high life and no deployed operators; route origins, not a stage clear",
+        "originalLevelSha256": "30cd71fd91d61f7d21d7bcccf322dee5303387b7f94bdb683e164e1f768af447",
+        "actions": [
+          {
+            "enemyKey": "enemy_1241_ltmage_2",
+            "originalRoute": 15,
+            "compiledRoute": 4,
+            "expected": {
+              "row": 5,
+              "col": 0
+            },
+            "observed": {
+              "enemyKey": "enemy_1241_ltmage_2",
+              "row": 5,
+              "col": 0,
+              "time": 155
+            }
+          },
+          {
+            "enemyKey": "enemy_1241_ltmage_2",
+            "originalRoute": 22,
+            "compiledRoute": 4,
+            "expected": {
+              "row": 5,
+              "col": 0
+            },
+            "observed": {
+              "enemyKey": "enemy_1241_ltmage_2",
+              "row": 5,
+              "col": 0,
+              "time": 219
+            }
+          }
+        ]
+      },
+      {
+        "id": "ps-3_challenge_mode",
+        "scope": "Original waves with diagnostic high life and no deployed operators; route origins, not a stage clear",
+        "originalLevelSha256": "6cc55f312a33e95c788a6da6c1ab9658978a3fcea6b503e4b4fbc53f5f89d395",
+        "actions": [
+          {
+            "enemyKey": "enemy_1018_aoemag",
+            "originalRoute": 7,
+            "compiledRoute": 6,
+            "expected": {
+              "row": 1,
+              "col": 0
+            },
+            "observed": {
+              "enemyKey": "enemy_1018_aoemag",
+              "row": 1,
+              "col": 0,
+              "time": 33
+            }
+          },
+          {
+            "enemyKey": "enemy_1018_aoemag",
+            "originalRoute": 11,
+            "compiledRoute": 6,
+            "expected": {
+              "row": 1,
+              "col": 0
+            },
+            "observed": {
+              "enemyKey": "enemy_1018_aoemag",
+              "row": 1,
+              "col": 0,
+              "time": 76
+            }
+          },
+          {
+            "enemyKey": "enemy_1044_zomstr",
+            "originalRoute": 13,
+            "compiledRoute": 7,
+            "expected": {
+              "row": 5,
+              "col": 0
+            },
+            "observed": {
+              "enemyKey": "enemy_1044_zomstr",
+              "row": 5,
+              "col": 0,
+              "time": 104
+            }
+          },
+          {
+            "enemyKey": "enemy_1018_aoemag",
+            "originalRoute": 18,
+            "compiledRoute": 6,
+            "expected": {
+              "row": 1,
+              "col": 0
+            },
+            "observed": {
+              "enemyKey": "enemy_1018_aoemag",
+              "row": 1,
+              "col": 0,
+              "time": 152
+            }
+          },
+          {
+            "enemyKey": "enemy_1044_zomstr_2",
+            "originalRoute": 20,
+            "compiledRoute": 7,
+            "expected": {
+              "row": 5,
+              "col": 0
+            },
+            "observed": {
+              "enemyKey": "enemy_1044_zomstr_2",
+              "row": 5,
+              "col": 0,
+              "time": 175
+            }
+          }
+        ]
+      }
+    ],
+    "blockerReports": {
+      "groups": 3501,
+      "inventoryAndLibraryMembershipMatch": true
+    },
+    "priorChecks": {
+      "battleFixedSquadEnemySupportPassed": 26,
+      "broadStageRegression": {
+        "passed": 1211,
+        "failed": 1,
+        "followup": "Forbidden token placement error ordering corrected; 23 targeted checks passed."
+      }
+    }
+  },
+  "sizes": {
+    "componentObjects": 5224,
+    "componentBytes": 11490893,
+    "manifestBytes": 1368964,
+    "manifestGzipBytes": 233899,
+    "selectedStage": {
+      "id": "0-1",
+      "objects": 9,
+      "bytes": 8734,
+      "gzipBytes": 3659
+    },
+    "bootstrap": {
+      "bytes": 27802377,
+      "gzipBytes": 1378085
+    }
+  },
+  "limitations": [
+    "3123 combat stages still have missing capabilities; operator registration does not certify all skills/modules.",
+    "Scheduled predefined activation, random/branch actions and additional mode controllers remain unsupported.",
+    "Presentation actions complete headlessly; native callbacks, animation lead time and coroutine timing are not calibrated.",
+    "Untagged summons and unowned battle timers conservatively retain global battle lifetime; native wave membership needs further work.",
+    "Route wait clock bases need separate verification against captured wave/fragment origins.",
+    "All-stage smoke covers ten seconds, not full clears. Bootstrap and eager behavior imports remain to be split."
+  ]
+}

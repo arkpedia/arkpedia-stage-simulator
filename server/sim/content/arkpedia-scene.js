@@ -85,6 +85,7 @@ export function customizeSceneKit({ battle: b, id, def, unit: u, kit }) {
 }
 export function installScene({ battle: b, unit: u, def }) {
   if (def.charId !== OWNER) return;
+  u.mem.regularSummonFactory = createSceneBuggyCam;
   b.every(b.dt, () => syncOwner(b, u), { owner: u });
   b.on('deploy', () => { if (live(u)) syncOwner(b, u); }, { owner: u });
   b.on('death', ({ unit: dead }) => {

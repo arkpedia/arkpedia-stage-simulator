@@ -1,0 +1,82 @@
+{
+  "scope": "Shared supplied-worker behavior, original stump occupancy, and stage stock rules; not native frame/visual certification",
+  "sources": {
+    "shared/arkpedia/stage-workers.js": "9ff8736ea27834072c295b787af2c02a06944c823fd590cab1c93dfe402653dd",
+    "server/sim/content/arkpedia-stage-workers.js": "53e64da51b8920f5316c006417dc2d4fc8ab7bc86fff86092e3ea9d957b7044c",
+    "test/arkpedia-stage-workers.test.js": "c75d770bcbaad93fe9b52b190bd8d6c0fca1306811be36194badf2d00b79cea6",
+    "shared/arkpedia/stage-rules.js": "a57840ee57665f5007bb42a3e9c2de5e447bc5dafa1b96e5dbab8f4eb806ad5e",
+    "test/arkpedia-stage-token-rules.test.js": "dde789af364d3b1fd7896d6b6b2276017a148739c3ef173e2a63add198f0b7d3",
+    "data/arkpedia-device-native-source.json": "715526932e5816fef444f036b1e1abd058db22f3155bd345fffe16735bc85e3c",
+    "data/arkpedia-device-source.json": "a6b7b2713d7cf6506d42155ffbe64c117e29b2de70dad9b5a26e3940a3463891"
+  },
+  "checks": {
+    "workerMineSceneryTests": 17,
+    "workerStockRuleTests": 18,
+    "librarySmoke": {
+      "available": 805,
+      "completed": 805,
+      "failures": []
+    },
+    "browser": [
+      {
+        "mobile": false,
+        "before": {
+          "row": 1,
+          "col": 3,
+          "dir": "UP",
+          "stock": 7,
+          "hp": 100
+        },
+        "state": {
+          "treeCleared": true,
+          "workerWithdrawn": true,
+          "attacks": 8,
+          "tile": {
+            "glyph": "E",
+            "key": "tile_wooden_wall",
+            "height": "HIGH",
+            "build": "RANGED",
+            "pass": "FLY",
+            "terrain": null,
+            "special": "end"
+          },
+          "occupied": false,
+          "errors": []
+        },
+        "errors": []
+      },
+      {
+        "mobile": true,
+        "before": {
+          "row": 1,
+          "col": 3,
+          "dir": "UP",
+          "stock": 7,
+          "hp": 100
+        },
+        "state": {
+          "treeCleared": true,
+          "workerWithdrawn": true,
+          "attacks": 8,
+          "tile": {
+            "glyph": "E",
+            "key": "tile_wooden_wall",
+            "height": "HIGH",
+            "build": "RANGED",
+            "pass": "FLY",
+            "terrain": null,
+            "special": "end"
+          },
+          "occupied": false,
+          "errors": []
+        },
+        "errors": []
+      }
+    ]
+  },
+  "limitations": [
+    "Original worker and mushroom artwork/animation pending",
+    "Target ties on artificially overlapping trees use source instance order",
+    "Current graph checkpoint predates FA-5 Challenge stock-rule rebuild"
+  ]
+}

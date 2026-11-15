@@ -114,6 +114,7 @@ function interpolate(frames, level) {
 }
 /** Convert only supported operators and explicitly implement their talents. Unsupported records fail closed. */
 export function recordFor(build, data) {
+  if (data.operators[build.id]?.summaryOnly) throw Error(`Operator record must be loaded before simulation: ${build.id}`);
   validateLoadout(build, catalogueFor(data));
   const op = data.operators[build.id],
     phase = op.phases[build.elite];
@@ -169,6 +170,7 @@ export function recordFor(build, data) {
     modifiers.dodgePhys = talents[0]?.bb.prob ?? 0;
   if (support.mechanic === "dodge-arts")
     modifiers.dodgeArts = talents[0]?.bb.prob ?? 0;
+  const baseCardStats = { cost: stats.cost, respawnTime: stats.respawnTime };
   if (support.talentCostStat !== false)
     for (const talent of talents) {
       stats.cost += talent.bb.cost ?? 0;
@@ -205,6 +207,7 @@ export function recordFor(build, data) {
     // Source faction identifiers, distinct from descriptive gameplay tags.
     tags: op.factionTags ?? [op.nationId, op.groupId, op.teamId].filter(value => typeof value === 'string' && value),
     stats,
+    baseCardStats,
     rangeGrid: support.defaultSkillRangeIds?.includes(build.skillId) ? level.rangeGrid : phase.rangeGrid,
     dmgType:
       op.profession === "MEDIC"

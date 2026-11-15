@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { stageCardRespawnTime } from './arkpedia-stage-card-cost.js';
 import evidence from '../../../data/arkpedia-phantom-prefabs.json' with { type: 'json' };
 import { normalizeToken } from '../simdata.js';
 import { absoluteRangeKeys } from '../targeting.js';
@@ -93,8 +94,13 @@ export function createPhantomClone(battle, state, row, col, dir) {
       // Original charge_token[finish] calls RechargeToken ON_FINISH. The
       // independent token redeploy delay starts on removal, not on deployment.
       state.stock = Math.min(1, state.stock + 1);
-      state.readyAt = b.time + state.record.stats.respawnTime;
+      state.readyAt = b.time + stageCardRespawnTime(b, state.record);
     }, { owner: u });
   };
   return battle.spawnToken(state.owner, TOKEN, row, col, { dir, def: state.record, kit });
+}
+
+export function installPhantom({ unit, def }) {
+  if (def.charId !== OWNER) return;
+  unit.mem.regularSummonFactory = createPhantomClone;
 }

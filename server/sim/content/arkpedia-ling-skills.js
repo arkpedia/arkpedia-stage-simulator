@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Selected-source bridge. Public approval is separately source/artwork-bound.
+import { stageCardRespawnTime } from './arkpedia-stage-card-cost.js';
 import { flattenBlackboard } from '../simdata.js';
 import { absoluteRangeKeys, areaSelectable } from '../targeting.js';
 import { bodyInKeys } from '../body.js';
@@ -54,7 +55,7 @@ export class LingSkills {
     d.stock = Math.min(d.record.stats.maxDeckStackCnt, d.stock + count);
     // NORMAL recycling follows the existing summon-card cooldown mapping;
     // direct skill stock awards do not start a new placement cooldown.
-    if (recycle) d.readyAt = this.b.time + d.record.stats.respawnTime;
+    if (recycle) d.readyAt = this.b.time + stageCardRespawnTime(this.b, d.record);
   }
   higherMods() {
     const bb = this.tokenBB;
@@ -200,4 +201,7 @@ export function customizeLingKit({ battle, id, unit, kit }) {
   prepared.record.token.arkpedia = { ...unit.def.raw.arkpedia };
   Object.assign(kit, prepared.kit);
 }
-export function installLing({ unit }) { unit.mem.lingController?.install(); }
+export function installLing({ unit, def }) {
+  if (def.charId !== LING_ID) return;
+  unit.mem.lingController?.install();
+}

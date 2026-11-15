@@ -1,0 +1,455 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-14",
+  "scope": "Historical Reeds controller, Special Ops Soldier and FC-1 admission checkpoint. Native C# ticker bodies and occupancy timer pause/reset semantics are not independently verified. Tests do not certify playable clears, original flame VFX or frame fidelity.",
+  "sourceFiles": [
+    {
+      "path": "shared/arkpedia/stage-reeds.js",
+      "sha256": "f42d7194fd2ffff576e0fe390b855b0a6d7cd988a034223a0b6bbe98bb01f913"
+    },
+    {
+      "path": "shared/arkpedia/stage-rules.js",
+      "sha256": "9faf9d948bb8f02c25bb9ff2ef96e03f8a71d53fb32099bcf1c2f6f6d1a5dad3"
+    },
+    {
+      "path": "shared/arkpedia/stage-outcomes.js",
+      "sha256": "0afa661b325f52dbf77885bda2b215180f2b6cd059bbb590ca391c57b5deb96d"
+    },
+    {
+      "path": "shared/arkpedia/enemy-contact-contracts.js",
+      "sha256": "98529d86ada7e9a177d3a9cc2709641d25dbb9651af685301f6f4177578b2cb7"
+    },
+    {
+      "path": "shared/arkpedia/enemy-reeds-features.js",
+      "sha256": "10ba25c10dba4fb1540db94dfba08be3c6a8e0838808144d31dcaa9b91407812"
+    },
+    {
+      "path": "shared/arkpedia/enemy-mire-features.js",
+      "sha256": "220f33a6c80ab52f5563c36d31b1fc5e1734e248ebf1d7c3f50ae6e01b03123e"
+    },
+    {
+      "path": "shared/arkpedia/enemy-features.js",
+      "sha256": "eafbbfc831b456e5fd6b538e24e74d025ade184d0dd4e156afe4409dd64c1c4c"
+    },
+    {
+      "path": "server/sim/content/arkpedia-stage-reeds.js",
+      "sha256": "259e48b9fea0600df87abb166e5dd2361fdda2e39252f027d857ac34a403f3ff"
+    },
+    {
+      "path": "server/sim/content/arkpedia-stage-outcomes.js",
+      "sha256": "ba1da0d82e251de2a265889690e10a65686744a857e51d93812b76e716444cf5"
+    },
+    {
+      "path": "server/sim/content/arkpedia-enemy-reeds.js",
+      "sha256": "ad13a9e3e8e031002ee774dc2eafe8388a61449821eeaf430b1be5d4dc677cca"
+    },
+    {
+      "path": "server/sim/content/arkpedia-enemy-features.js",
+      "sha256": "27f205a4d015bf12bd6657fe0859bdf0b35bf6c98742c539e8854d96c0d178a5"
+    },
+    {
+      "path": "server/sim/arkpedia.js",
+      "sha256": "d16569e0076813df05aee93317c0422172d6e53f2079ac21ba262e4d556fc772"
+    },
+    {
+      "path": "public/arkpedia/renderer.js",
+      "sha256": "b8d9cfe5f3dbcdf35c1f0a82608215559f1e0a4192ef7f2f51d881d6225c2b63"
+    },
+    {
+      "path": "tools/arkpedia/stage-reeds.mjs",
+      "sha256": "94e3778cd31d549156d49b6d21993711774bf6cf0b5773978e9c4c73c6596873"
+    },
+    {
+      "path": "tools/arkpedia/build-stage.mjs",
+      "sha256": "ae964d7e804fcaae53afe06540bbea3812c503c0e61ead7e98c4648db5fffe63"
+    },
+    {
+      "path": "tools/arkpedia/content-inventory.mjs",
+      "sha256": "b79e440261fdd78a9eb3656740fd7499bcfb2d92580af30fe3ce090d0aa68693"
+    },
+    {
+      "path": "tools/arkpedia/extract-enemy-native-abilities.py",
+      "sha256": "644bfebb08950aa62db8ca18813651a4c599b0336027d62c20a5b9fdac0dca22"
+    },
+    {
+      "path": "tools/arkpedia/extract-device-native-source.py",
+      "sha256": "593a5d0fa312cd5ef1a3fdf8388c75239b4a4f16a1ecc715647c6f8aeac59a34"
+    },
+    {
+      "path": "tools/arkpedia/review-stage-reeds.mjs",
+      "sha256": "5ab540f1ad04b6df6ed69d0369195a9d39622168f3804b0bf22aac63f782a90c"
+    },
+    {
+      "path": "data/arkpedia-device-native-source.json",
+      "sha256": "3884a28fa535a6fb5762f72db726e909d9e2287cd9f7a332fe984f22def8a80f"
+    },
+    {
+      "path": "data/arkpedia-enemy-native-abilities.json",
+      "sha256": "699bafd3f38431a2927e405ff25ddda4f33ea40d04f6c2b7e044a29250ff4feb"
+    },
+    {
+      "path": "data/arkpedia-enemy-support.json",
+      "sha256": "29b2060f4039c773f15ad8337fd0e80b41626131ab38ce3ebd5b597200090fe4"
+    },
+    {
+      "path": "data/arkpedia-regular-enemies.json",
+      "sha256": "7bb3a08ae6f4d05f639dcfcdeab66a0b7d019d1c1090959602f0e2e9cba41c9a"
+    },
+    {
+      "path": "data/arkpedia-enemy-artwork.json",
+      "sha256": "1e0b926cc081bdedd4372b192702f75ca191bc18dcc2bd63f314295e1f0ad642"
+    },
+    {
+      "path": "test/arkpedia-stage-reeds.test.js",
+      "sha256": "d972bee8b20c23c72d872bcb1f6f2f280391a4fce7dc5f30b205f368c13b8a51"
+    },
+    {
+      "path": "test/arkpedia-enemy-reeds.test.js",
+      "sha256": "25f02349996cd59279d35e0302c0239ef95f10339b4f706391d40f28000bb184"
+    },
+    {
+      "path": "test/arkpedia-stage-mire.test.js",
+      "sha256": "06a27b600c96285b3595bfff93f0a30bf2c3464a8ec76d5288e3881cb4e8d281"
+    },
+    {
+      "path": "docs/STAGE-REEDS-REVIEW.md",
+      "sha256": "2d87fae22666f7960ef7122dbf3d9bcb1dc5b17270eb7497dfc17d96e0ff1460"
+    }
+  ],
+  "checks": {
+    "tests": {
+      "passed": 223,
+      "failed": 0,
+      "log": {
+        "path": "/tmp/reeds-integration-tests.log",
+        "sha256": "d384e8f3394bd479f4431a16cefb5a2672644ee3b5367fdeab443fc4718d46c8"
+      }
+    },
+    "stageSmoke": {
+      "passed": 828,
+      "failed": 0,
+      "seconds": 10,
+      "log": {
+        "path": "/tmp/reeds-all-stage-smoke.log",
+        "sha256": "6dda91cea05998df80f7be3e8419c02395dfced8db55a0403b2f6cecfdf84a7b"
+      }
+    },
+    "source": {
+      "path": "/tmp/reeds-source-check.log",
+      "sha256": "f8719635b2ddabae390a159becc05db573de8e4bc034a6d43ac0817b6767d5f6"
+    },
+    "browser": [
+      {
+        "mobile": false,
+        "scope": "Original FC-1 loading with diagnostic deployment/ignition and forced result; not a playable clear",
+        "sourceStage": "FC-1",
+        "camouflaged": true,
+        "entryStealthExpired": true,
+        "burning": 1,
+        "camouflageRemoved": true,
+        "hpLost": 40,
+        "burnGauge": 40,
+        "originalTimers": [
+          15,
+          20,
+          5
+        ],
+        "reedsTiles": 13,
+        "mireTiles": 10,
+        "errors": [],
+        "summary": "Reeds at battle end: 1 burning, 0 cooling, 12 unlit.",
+        "outcomes": {
+          "tileStates": [
+            {
+              "key": "tile_reed_mode",
+              "row": 1,
+              "col": 3,
+              "value": 1
+            },
+            {
+              "key": "tile_reed_mode",
+              "row": 1,
+              "col": 4,
+              "value": 0
+            },
+            {
+              "key": "tile_reed_mode",
+              "row": 1,
+              "col": 5,
+              "value": 0
+            },
+            {
+              "key": "tile_reed_mode",
+              "row": 2,
+              "col": 3,
+              "value": 0
+            },
+            {
+              "key": "tile_reed_mode",
+              "row": 3,
+              "col": 3,
+              "value": 0
+            },
+            {
+              "key": "tile_reed_mode",
+              "row": 3,
+              "col": 4,
+              "value": 0
+            },
+            {
+              "key": "tile_reed_mode",
+              "row": 3,
+              "col": 5,
+              "value": 0
+            },
+            {
+              "key": "tile_reed_mode",
+              "row": 4,
+              "col": 2,
+              "value": 0
+            },
+            {
+              "key": "tile_reed_mode",
+              "row": 4,
+              "col": 3,
+              "value": 0
+            },
+            {
+              "key": "tile_reed_mode",
+              "row": 4,
+              "col": 4,
+              "value": 0
+            },
+            {
+              "key": "tile_reed_mode",
+              "row": 4,
+              "col": 5,
+              "value": 0
+            },
+            {
+              "key": "tile_reed_mode",
+              "row": 4,
+              "col": 6,
+              "value": 0
+            },
+            {
+              "key": "tile_reed_mode",
+              "row": 4,
+              "col": 7,
+              "value": 0
+            }
+          ],
+          "counters": {},
+          "events": []
+        }
+      },
+      {
+        "mobile": true,
+        "scope": "Original FC-1 loading with diagnostic deployment/ignition and forced result; not a playable clear",
+        "sourceStage": "FC-1",
+        "camouflaged": true,
+        "entryStealthExpired": true,
+        "burning": 1,
+        "camouflageRemoved": true,
+        "hpLost": 40,
+        "burnGauge": 40,
+        "originalTimers": [
+          15,
+          20,
+          5
+        ],
+        "reedsTiles": 13,
+        "mireTiles": 10,
+        "errors": [],
+        "summary": "Reeds at battle end: 1 burning, 0 cooling, 12 unlit.",
+        "outcomes": {
+          "tileStates": [
+            {
+              "key": "tile_reed_mode",
+              "row": 1,
+              "col": 3,
+              "value": 1
+            },
+            {
+              "key": "tile_reed_mode",
+              "row": 1,
+              "col": 4,
+              "value": 0
+            },
+            {
+              "key": "tile_reed_mode",
+              "row": 1,
+              "col": 5,
+              "value": 0
+            },
+            {
+              "key": "tile_reed_mode",
+              "row": 2,
+              "col": 3,
+              "value": 0
+            },
+            {
+              "key": "tile_reed_mode",
+              "row": 3,
+              "col": 3,
+              "value": 0
+            },
+            {
+              "key": "tile_reed_mode",
+              "row": 3,
+              "col": 4,
+              "value": 0
+            },
+            {
+              "key": "tile_reed_mode",
+              "row": 3,
+              "col": 5,
+              "value": 0
+            },
+            {
+              "key": "tile_reed_mode",
+              "row": 4,
+              "col": 2,
+              "value": 0
+            },
+            {
+              "key": "tile_reed_mode",
+              "row": 4,
+              "col": 3,
+              "value": 0
+            },
+            {
+              "key": "tile_reed_mode",
+              "row": 4,
+              "col": 4,
+              "value": 0
+            },
+            {
+              "key": "tile_reed_mode",
+              "row": 4,
+              "col": 5,
+              "value": 0
+            },
+            {
+              "key": "tile_reed_mode",
+              "row": 4,
+              "col": 6,
+              "value": 0
+            },
+            {
+              "key": "tile_reed_mode",
+              "row": 4,
+              "col": 7,
+              "value": 0
+            }
+          ],
+          "counters": {},
+          "events": []
+        }
+      }
+    ],
+    "artworkBrowser": {
+      "scope": "Chromium clip decoding/finite poses and idle body rendering; no native combat/frame/pixel parity claim",
+      "browser": "Chrome/156.0.8078.79",
+      "results": [
+        {
+          "viewport": "desktop",
+          "models": [
+            {
+              "id": "enemy_1286_dumcy",
+              "version": "3.8.99",
+              "clips": 5,
+              "width": 444.3779754638672,
+              "height": 377.51713514328003
+            },
+            {
+              "id": "enemy_1286_dumcy_2",
+              "version": "3.8.99",
+              "clips": 5,
+              "width": 444.3779754638672,
+              "height": 377.57694959640503
+            }
+          ],
+          "errors": [],
+          "failures": []
+        },
+        {
+          "viewport": "mobile",
+          "models": [
+            {
+              "id": "enemy_1286_dumcy",
+              "version": "3.8.99",
+              "clips": 5,
+              "width": 444.3779754638672,
+              "height": 377.51713514328003
+            },
+            {
+              "id": "enemy_1286_dumcy_2",
+              "version": "3.8.99",
+              "clips": 5,
+              "width": 444.3779754638672,
+              "height": 377.57694959640503
+            }
+          ],
+          "errors": [],
+          "failures": []
+        }
+      ]
+    },
+    "runtimeFootprint": {
+      "ids": [
+        "char_123_fang",
+        "char_124_kroos"
+      ],
+      "adapters": 24,
+      "common": {
+        "modules": 468,
+        "bytes": 4669443,
+        "sha256": "02f08b538725ba55e7fbac9beb7fe4e7d7bcff61541e146e965c582517e6978b"
+      },
+      "selected": {
+        "modules": 505,
+        "bytes": 8392031,
+        "sha256": "4a91631cd7c446dbe3c8c3cec8fede8c1509856d5b75a5068fa7326e3469b15c"
+      },
+      "eager": {
+        "modules": 1225,
+        "bytes": 95929217,
+        "sha256": "977ecd1fb02473453b8629723754f7f85b7902d86eee5658a6e9ada52ace9d3b"
+      }
+    },
+    "sdTests": {
+      "passed": 93,
+      "log": {
+        "path": "/tmp/reeds-sd-tests.log",
+        "sha256": "5cf702122d83c88d9d5ee91ed21feaf70410b3b37e4b99d0b12ac208a69fa5e8"
+      }
+    },
+    "sdValidation": {
+      "path": "/tmp/reeds-sd-validate.log",
+      "sha256": "13db0c06d263f2a218d4161b0aa16ca59e578dab40040642cb9886c5d1abf5ab"
+    }
+  },
+  "counts": {
+    "supportedEnemies": 631,
+    "totalEnemies": 2163,
+    "loadableStages": 828,
+    "totalStages": 3892,
+    "enemyArtwork": 419
+  },
+  "artworkCommit": {
+    "sha": "cbc99a687537ff79f21f29d1db68b83db959335b",
+    "local": true
+  },
+  "secondaryReferences": [
+    {
+      "url": "https://arknights.wiki.gg/wiki/Reeds",
+      "scope": "Published terrain behavior; not native code"
+    },
+    {
+      "url": "https://github.com/AdoreJc/ArknightsDB/blob/95ce0f0823f233389fa97e0d7fc9d1759e58464e/source/dump/ReedTile.md",
+      "gitBlob": "f281530b4d41591b265ff54a6594063a5f4e6520",
+      "scope": "Class fields and method declarations only; no executable bodies"
+    }
+  ]
+}

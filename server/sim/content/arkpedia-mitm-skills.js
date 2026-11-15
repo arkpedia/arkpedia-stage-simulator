@@ -24,7 +24,10 @@ export function customizeMitmKit({ battle, id, unit, kit }) {
   const prepared = prepareMitmSkills(battle, unit, { contract: MITM_SKILL_CONTRACT });
   Object.assign(kit, prepared.kit);
 }
-export function installMitm({ unit }) { unit.mem.mitmController?.install(); }
+export function installMitm({ unit, def }) {
+  if (def.charId !== MITM_ID) return;
+  unit.mem.mitmController?.install();
+}
 
 function verify() {
   const s1 = component('-3546622456979472834'), s2 = component('-6833631102932632390');

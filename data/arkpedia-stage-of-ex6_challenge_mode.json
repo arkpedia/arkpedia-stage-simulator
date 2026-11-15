@@ -1,0 +1,1699 @@
+{
+  "code": "OF-EX6",
+  "name": "Perfect Ending",
+  "description": "Condition:\nNumber of available Roadblocks is reduced by 50%.",
+  "battle": {
+    "max_life": 1,
+    "unit_limit": 9,
+    "initial_dp": 10,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1,
+    "max_play_time": -1
+  },
+  "rules": {
+    "variant": "challenge_mode",
+    "source": {
+      "repository": "Kengxxiao/ArknightsGameData",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "path": "zh_CN/gamedata/levels/activities/act3d0/level_act3d0_ex06.json",
+      "sha256": "b8f79eee230345de4f95be30c1140b9789e4a6390ca8c80286ebf095aebc5df2",
+      "gitBlob": "3c0533a975d9009f87e9dae97379ea2afe30fe3d",
+      "stageTable": {
+        "path": "zh_CN/gamedata/excel/stage_table.json",
+        "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+        "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+        "stageId": "a003_ex06",
+        "levelId": "Activities/ACT3D0/level_act3d0_ex06"
+      }
+    },
+    "battle": {
+      "max_play_time": -1,
+      "max_life": 1
+    },
+    "enemies": {
+      "atk": 1.1,
+      "def": 1.1,
+      "maxHp": 1.2
+    },
+    "enemyAdd": {},
+    "hiddenGroups": {},
+    "tokenCountAdd": {
+      "trap_001_crate": -6
+    }
+  },
+  "mapTags": [],
+  "mapTagSource": null,
+  "geometry": {
+    "slug": "of-ex6",
+    "rows": 9,
+    "cols": 13,
+    "tileLegend": [
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_start",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_floor",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_volspread",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true,
+        "blackboard": {
+          "cd_max": 40,
+          "cd_min": 40,
+          "damage": 1000
+        }
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      }
+    ],
+    "tileGrid": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        2,
+        0,
+        2,
+        3,
+        2,
+        2,
+        2,
+        3,
+        3,
+        3,
+        3,
+        1
+      ],
+      [
+        0,
+        2,
+        4,
+        2,
+        0,
+        0,
+        4,
+        0,
+        5,
+        5,
+        0,
+        3,
+        0
+      ],
+      [
+        6,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        6
+      ],
+      [
+        0,
+        2,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        2,
+        4,
+        0,
+        2,
+        0
+      ],
+      [
+        1,
+        2,
+        0,
+        1,
+        2,
+        3,
+        2,
+        2,
+        6,
+        5,
+        2,
+        2,
+        0
+      ],
+      [
+        0,
+        2,
+        5,
+        0,
+        5,
+        2,
+        5,
+        4,
+        2,
+        5,
+        2,
+        5,
+        0
+      ],
+      [
+        0,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        5,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "routes": [
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 0
+        },
+        "end": {
+          "row": 3,
+          "col": 12
+        },
+        "checkpoints": [],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 3
+        },
+        "end": {
+          "row": 5,
+          "col": 8
+        },
+        "checkpoints": [],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": null,
+        "placeholder": true,
+        "start": null,
+        "end": null,
+        "checkpoints": [],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 0
+        },
+        "end": {
+          "row": 3,
+          "col": 12
+        },
+        "checkpoints": [],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 0
+        },
+        "end": {
+          "row": 3,
+          "col": 12
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 1
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 0
+        },
+        "end": {
+          "row": 3,
+          "col": 12
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 1
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 3
+        },
+        "end": {
+          "row": 5,
+          "col": 8
+        },
+        "checkpoints": [],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 12
+        },
+        "end": {
+          "row": 3,
+          "col": 0
+        },
+        "checkpoints": [],
+        "waits": []
+      }
+    ],
+    "waves": [
+      {
+        "index": 0,
+        "duration": 297,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Infantry",
+            "enemy_id": "enemy_1046_agent",
+            "count": 1,
+            "time": 5,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Infantry",
+            "enemy_id": "enemy_1046_agent",
+            "count": 1,
+            "time": 13,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Infantry",
+            "enemy_id": "enemy_1046_agent",
+            "count": 1,
+            "time": 15,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Infantry",
+            "enemy_id": "enemy_1046_agent",
+            "count": 1,
+            "time": 20,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Infantry",
+            "enemy_id": "enemy_1046_agent",
+            "count": 1,
+            "time": 24,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Infantry",
+            "enemy_id": "enemy_1046_agent",
+            "count": 2,
+            "time": 25,
+            "interval": 1,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Infantry",
+            "enemy_id": "enemy_1046_agent",
+            "count": 1,
+            "time": 35,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Infantry",
+            "enemy_id": "enemy_1046_agent",
+            "count": 2,
+            "time": 36,
+            "interval": 3,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Infantry",
+            "enemy_id": "enemy_1046_agent",
+            "count": 1,
+            "time": 42,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Infantry",
+            "enemy_id": "enemy_1046_agent",
+            "count": 2,
+            "time": 47,
+            "interval": 1,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Infantry Leader",
+            "enemy_id": "enemy_1046_agent_2",
+            "count": 1,
+            "time": 63,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Infantry Leader",
+            "enemy_id": "enemy_1046_agent_2",
+            "count": 3,
+            "time": 68,
+            "interval": 11,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Infantry Leader",
+            "enemy_id": "enemy_1046_agent_2",
+            "count": 3,
+            "time": 74,
+            "interval": 13,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Infantry",
+            "enemy_id": "enemy_1046_agent",
+            "count": 6,
+            "time": 70,
+            "interval": 8,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Rockbreaker Leader",
+            "enemy_id": "enemy_1048_hirman_2",
+            "count": 2,
+            "time": 90,
+            "interval": 25,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Ergate Leader",
+            "enemy_id": "enemy_1053_norgst_2",
+            "count": 1,
+            "time": 100,
+            "route": 1,
+            "fragment": 1
+          },
+          {
+            "enemy": "Sniper Leader",
+            "enemy_id": "enemy_1047_sagent_2",
+            "count": 2,
+            "time": 100,
+            "interval": 10,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Rockbreaker Leader",
+            "enemy_id": "enemy_1048_hirman_2",
+            "count": 1,
+            "time": 139,
+            "route": 0,
+            "fragment": 2
+          },
+          {
+            "enemy": "Rockbreaker Leader",
+            "enemy_id": "enemy_1048_hirman_2",
+            "count": 2,
+            "time": 161,
+            "interval": 30,
+            "route": 0,
+            "fragment": 2
+          },
+          {
+            "enemy": "Infantry Leader",
+            "enemy_id": "enemy_1046_agent_2",
+            "count": 5,
+            "time": 141,
+            "interval": 15,
+            "route": 3,
+            "fragment": 2
+          },
+          {
+            "enemy": "Sniper Leader",
+            "enemy_id": "enemy_1047_sagent_2",
+            "count": 6,
+            "time": 144,
+            "interval": 12,
+            "route": 0,
+            "fragment": 2
+          },
+          {
+            "enemy": "Heavy Defender Type-N",
+            "enemy_id": "enemy_1054_norshd",
+            "count": 1,
+            "time": 134,
+            "route": 4,
+            "fragment": 2
+          },
+          {
+            "enemy": "Heavy Defender Type-N",
+            "enemy_id": "enemy_1054_norshd",
+            "count": 3,
+            "time": 146,
+            "interval": 25,
+            "route": 5,
+            "fragment": 2
+          },
+          {
+            "enemy": "Ergate Leader",
+            "enemy_id": "enemy_1053_norgst_2",
+            "count": 1,
+            "time": 144,
+            "route": 6,
+            "fragment": 2
+          },
+          {
+            "enemy": "Ergate Leader",
+            "enemy_id": "enemy_1053_norgst_2",
+            "count": 1,
+            "time": 154,
+            "route": 6,
+            "fragment": 2
+          },
+          {
+            "enemy": "Ergate Leader",
+            "enemy_id": "enemy_1053_norgst_2",
+            "count": 2,
+            "time": 164,
+            "interval": 1.3,
+            "route": 6,
+            "fragment": 2
+          },
+          {
+            "enemy": "Ergate Leader",
+            "enemy_id": "enemy_1053_norgst_2",
+            "count": 1,
+            "time": 181,
+            "route": 6,
+            "fragment": 2
+          },
+          {
+            "enemy": "Ergate Leader",
+            "enemy_id": "enemy_1053_norgst_2",
+            "count": 1,
+            "time": 191,
+            "route": 6,
+            "fragment": 2
+          },
+          {
+            "enemy": "Ergate Leader",
+            "enemy_id": "enemy_1053_norgst_2",
+            "count": 2,
+            "time": 201,
+            "interval": 1.3,
+            "route": 6,
+            "fragment": 2
+          },
+          {
+            "enemy": "Ergate Leader",
+            "enemy_id": "enemy_1053_norgst_2",
+            "count": 1,
+            "time": 232,
+            "route": 6,
+            "fragment": 3
+          },
+          {
+            "enemy": "Ergate Leader",
+            "enemy_id": "enemy_1053_norgst_2",
+            "count": 1,
+            "time": 242,
+            "route": 6,
+            "fragment": 3
+          },
+          {
+            "enemy": "Ergate Leader",
+            "enemy_id": "enemy_1053_norgst_2",
+            "count": 2,
+            "time": 252,
+            "interval": 1.3,
+            "route": 6,
+            "fragment": 3
+          },
+          {
+            "enemy": "Ergate Leader",
+            "enemy_id": "enemy_1053_norgst_2",
+            "count": 1,
+            "time": 269,
+            "route": 6,
+            "fragment": 3
+          },
+          {
+            "enemy": "Ergate Leader",
+            "enemy_id": "enemy_1053_norgst_2",
+            "count": 1,
+            "time": 279,
+            "route": 6,
+            "fragment": 3
+          },
+          {
+            "enemy": "Ergate Leader",
+            "enemy_id": "enemy_1053_norgst_2",
+            "count": 2,
+            "time": 289,
+            "interval": 1.3,
+            "route": 6,
+            "fragment": 3
+          },
+          {
+            "enemy": "Heavy Defender Type-S",
+            "enemy_id": "enemy_1054_norshd_2",
+            "count": 4,
+            "time": 222,
+            "interval": 25,
+            "route": 3,
+            "fragment": 3
+          },
+          {
+            "enemy": "Infantry Leader",
+            "enemy_id": "enemy_1046_agent_2",
+            "count": 6,
+            "time": 224,
+            "interval": 14,
+            "route": 3,
+            "fragment": 3
+          },
+          {
+            "enemy": "Agent",
+            "enemy_id": "enemy_1049_eagent",
+            "count": 3,
+            "time": 234,
+            "interval": 23,
+            "route": 7,
+            "fragment": 3
+          },
+          {
+            "enemy": "Agent",
+            "enemy_id": "enemy_1049_eagent",
+            "count": 2,
+            "time": 254,
+            "interval": 23,
+            "route": 7,
+            "fragment": 3
+          },
+          {
+            "enemy": "Sniper Leader",
+            "enemy_id": "enemy_1047_sagent_2",
+            "count": 7,
+            "time": 231,
+            "interval": 11,
+            "route": 0,
+            "fragment": 3
+          }
+        ]
+      }
+    ],
+    "spawnTiles": [
+      {
+        "key": "tile_start",
+        "row": 1,
+        "col": 0,
+        "routes": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 1,
+        "col": 12,
+        "routes": [
+          7,
+          7
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 5,
+        "col": 0,
+        "routes": [
+          3,
+          4,
+          5,
+          3,
+          3
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 5,
+        "col": 3,
+        "routes": [
+          1,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6
+        ]
+      }
+    ],
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 3,
+        "col": 0,
+        "routes": [
+          7,
+          7
+        ]
+      },
+      {
+        "key": "tile_end",
+        "row": 3,
+        "col": 12,
+        "routes": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          3,
+          0,
+          4,
+          5,
+          3,
+          3,
+          0
+        ]
+      },
+      {
+        "key": "tile_end",
+        "row": 5,
+        "col": 8,
+        "routes": [
+          1,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6
+        ]
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_1046_agent",
+        "slug": "infantry",
+        "name": "Infantry",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1046_agent_2",
+        "slug": "infantry_leader",
+        "name": "Infantry Leader",
+        "database_level": 0,
+        "overrides": {
+          "atk": 400
+        }
+      },
+      {
+        "enemy_id": "enemy_1047_sagent_2",
+        "slug": "sniper_leader",
+        "name": "Sniper Leader",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1048_hirman_2",
+        "slug": "rockbreaker_leader",
+        "name": "Rockbreaker Leader",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1049_eagent",
+        "slug": "agent",
+        "name": "Agent",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1053_norgst_2",
+        "slug": "ergate_leader",
+        "name": "Ergate Leader",
+        "database_level": 0,
+        "overrides": {
+          "def": 600,
+          "hp": 4500,
+          "res": 20
+        }
+      },
+      {
+        "enemy_id": "enemy_1054_norshd",
+        "slug": "heavy_defender_type_n",
+        "name": "Heavy Defender Type-N",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1054_norshd_2",
+        "slug": "heavy_defender_type_s",
+        "name": "Heavy Defender Type-S",
+        "database_level": 0
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [],
+      "deployable_tokens": [
+        {
+          "unit": "Roadblock",
+          "unit_id": "trap_001_crate",
+          "count": 6,
+          "level": 1,
+          "elite": 0,
+          "potential": 0,
+          "skill_index": 0,
+          "skill_level": 1
+        }
+      ]
+    },
+    "hasConditionalSpawns": false
+  },
+  "terrain": [],
+  "conditionalHandled": false,
+  "devices": [],
+  "tokens": [
+    {
+      "unitId": "trap_001_crate",
+      "name": "Roadblock",
+      "count": 6,
+      "kind": "obstacle",
+      "hp": 100,
+      "def": 0,
+      "res": 0,
+      "block": 3,
+      "taunt": 0,
+      "cost": 5,
+      "cooldown": 5,
+      "refundRatio": 0.5,
+      "blockRadiusSquare": 0.20000000298023224,
+      "range": [],
+      "groundBuildOnly": true,
+      "supplyCard": true,
+      "obstacle": "crate",
+      "description": "Changes enemy routes and blocks up to three enemies. Enemies can destroy it when blocked. Retreat to clear the tile.",
+      "position": "NONE",
+      "behavior": "roadblock"
+    }
+  ],
+  "pathing": {
+    "schemaVersion": 1,
+    "syntheticRoutes": [
+      0,
+      1,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "producer": "Arkpedia stage browser / buildPlaybackPaths",
+    "stage": "OF-EX6",
+    "geometryHash": "1302347b08743d2797942d960ec61de89b0224e83da104e6fb0795aec133fdba",
+    "moveScale": 0.65,
+    "paths": {
+      "0": {
+        "points": [
+          [
+            0,
+            1
+          ],
+          [
+            12,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "1": {
+        "points": [
+          [
+            3,
+            5
+          ],
+          [
+            8,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "3": {
+        "points": [
+          [
+            0,
+            5
+          ],
+          [
+            12,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "4": {
+        "points": [
+          [
+            0,
+            5
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            12,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "5": {
+        "points": [
+          [
+            0,
+            5
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            12,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "6": {
+        "points": [
+          [
+            3,
+            5
+          ],
+          [
+            8,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "7": {
+        "points": [
+          [
+            12,
+            1
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1
+        ],
+        "breaks": [],
+        "holds": []
+      }
+    }
+  },
+  "art": null,
+  "gates": null,
+  "fixedSquad": null,
+  "enemies": {
+    "enemy_1046_agent": {
+      "key": "enemy_1046_agent",
+      "prefabKey": "enemy_1046_agent",
+      "name": "Infantry",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 3000,
+        "atk": 308,
+        "def": 93.50000000000001,
+        "res": 40,
+        "moveSpeed": 1.1,
+        "bat": 2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1046_agent_2": {
+      "key": "enemy_1046_agent_2",
+      "prefabKey": "enemy_1046_agent_2",
+      "name": "Infantry Leader",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 4440,
+        "atk": 440.00000000000006,
+        "def": 110.00000000000001,
+        "res": 40,
+        "moveSpeed": 1.1,
+        "bat": 2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1048_hirman_2": {
+      "key": "enemy_1048_hirman_2",
+      "prefabKey": "enemy_1048_hirman_2",
+      "name": "Rockbreaker Leader",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 15600,
+        "atk": 990.0000000000001,
+        "def": 110.00000000000001,
+        "res": 40,
+        "moveSpeed": 0.75,
+        "bat": 3.3,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 3,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": true,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Gains greatly increased RES when blocked",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "MagicResistance.magic_resistance": 50
+        },
+        "bbStr": {},
+        "groups": {
+          "MagicResistance": [
+            "magic_resistance"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1053_norgst_2": {
+      "key": "enemy_1053_norgst_2",
+      "prefabKey": "enemy_1053_norgst_2",
+      "name": "Ergate Leader",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "NONE",
+      "stats": {
+        "maxHp": 5400,
+        "atk": 110.00000000000001,
+        "def": 660,
+        "res": 20,
+        "moveSpeed": 1.2,
+        "bat": 1,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "none",
+        "dmgTypes": [
+          "none"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Cannot be blocked.",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1047_sagent_2": {
+      "key": "enemy_1047_sagent_2",
+      "prefabKey": "enemy_1047_sagent_2",
+      "name": "Sniper Leader",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 4800,
+        "atk": 220.00000000000003,
+        "def": 165,
+        "res": 10,
+        "moveSpeed": 0.8,
+        "bat": 4,
+        "aspd": 100,
+        "rangeRadius": 4,
+        "rawRangeRadius": 4,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "After two attacks, the next attack <$ba.stun>Stuns</> its target",
+          "format": "SILENCE"
+        }
+      ],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [
+        {
+          "prefabKey": "stunattack",
+          "priority": 1,
+          "cooldown": 1,
+          "initCooldown": 1,
+          "spCost": 2,
+          "bb": {
+            "stun": 15
+          },
+          "bbStr": {}
+        }
+      ],
+      "sp": {
+        "type": "INCREASE_WHEN_ATTACK",
+        "maxSp": 2,
+        "initSp": 0,
+        "increment": 1
+      },
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1054_norshd": {
+      "key": "enemy_1054_norshd",
+      "prefabKey": "enemy_1054_norshd",
+      "name": "Heavy Defender Type-N",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 12000,
+        "atk": 770.0000000000001,
+        "def": 880.0000000000001,
+        "res": 0,
+        "moveSpeed": 0.75,
+        "bat": 2.6,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 3,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1054_norshd_2": {
+      "key": "enemy_1054_norshd_2",
+      "prefabKey": "enemy_1054_norshd_2",
+      "name": "Heavy Defender Type-S",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 16800,
+        "atk": 770.0000000000001,
+        "def": 1100,
+        "res": 0,
+        "moveSpeed": 0.75,
+        "bat": 2.6,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 3,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1049_eagent": {
+      "key": "enemy_1049_eagent",
+      "prefabKey": "enemy_1049_eagent",
+      "name": "Agent",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 7200,
+        "atk": 330,
+        "def": 165,
+        "res": 50,
+        "moveSpeed": 0.9,
+        "bat": 2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 2,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "arts",
+        "dmgTypes": [
+          "arts"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Attacks temporarily reduce allied units' Block",
+          "format": "SILENCE"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "ReduceBlockCnt.duration": 5,
+          "ReduceBlockCnt.block_cnt": -1
+        },
+        "bbStr": {},
+        "groups": {
+          "ReduceBlockCnt": [
+            "block_cnt",
+            "duration"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    }
+  },
+  "contentAddition": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/of-ex6_challenge_mode.json",
+          "sha256": "c7c92b84c2a6cba44acf31744d8da4c72eb38d057d5969bbcfe4962e44faa701"
+        },
+        {
+          "path": "stage-geometry/of-ex6.json",
+          "sha256": "a87958455a6020a0249df060d7bf52c2ea8de6089e0161047edca08b2524bd5b"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        }
+      ],
+      "localFiles": [
+        {
+          "path": "data/stage-rules/of-ex6_challenge_mode.json",
+          "sha256": "00ef8e8c07a51d080b4786e95ed5788f51dafadcdb9a28c4c4eb21822d24b72a"
+        },
+        {
+          "path": "data/stage-rules/levels/8126635ee893cbb4f909714ac6ea02a1af828d60be3df370dff6ef1d385d3ba6.json",
+          "sha256": "8126635ee893cbb4f909714ac6ea02a1af828d60be3df370dff6ef1d385d3ba6"
+        }
+      ]
+    },
+    "dependencies": {
+      "enemies": [
+        "enemy_1046_agent",
+        "enemy_1046_agent_2",
+        "enemy_1047_sagent_2",
+        "enemy_1048_hirman_2",
+        "enemy_1049_eagent",
+        "enemy_1053_norgst_2",
+        "enemy_1054_norshd",
+        "enemy_1054_norshd_2"
+      ],
+      "devices": [],
+      "tokens": [
+        "trap_001_crate"
+      ]
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 10,
+        "spawned": 1,
+        "errors": 0
+      },
+      "publicReview": "pending",
+      "waveSchedule": {
+        "id": "of-ex6_challenge_mode",
+        "seconds": 325.73333333333335,
+        "spawned": 87,
+        "expected": 87,
+        "reason": "cleared",
+        "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+      },
+      "browser": {
+        "id": "of-ex6_challenge_mode",
+        "seconds": 10,
+        "errors": [],
+        "units": 1,
+        "canvas": true,
+        "scope": "Headless Chromium, mobile landscape 1440x900: preparation, battle start, canvas and short runtime without page or simulation errors. Original art and full clear not certified."
+      }
+    }
+  },
+  "contentRuleRefresh": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/of-ex6_challenge_mode.json",
+          "sha256": "c7c92b84c2a6cba44acf31744d8da4c72eb38d057d5969bbcfe4962e44faa701"
+        },
+        {
+          "path": "stage-geometry/of-ex6.json",
+          "sha256": "a87958455a6020a0249df060d7bf52c2ea8de6089e0161047edca08b2524bd5b"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        }
+      ],
+      "localFiles": [
+        {
+          "path": "data/stage-rules/of-ex6_challenge_mode.json",
+          "sha256": "00ef8e8c07a51d080b4786e95ed5788f51dafadcdb9a28c4c4eb21822d24b72a"
+        },
+        {
+          "path": "data/stage-rules/levels/8126635ee893cbb4f909714ac6ea02a1af828d60be3df370dff6ef1d385d3ba6.json",
+          "sha256": "8126635ee893cbb4f909714ac6ea02a1af828d60be3df370dff6ef1d385d3ba6"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/3c0533a975d9009f87e9dae97379ea2afe30fe3d.json",
+          "sha256": "b8f79eee230345de4f95be30c1140b9789e4a6390ca8c80286ebf095aebc5df2"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/3c0533a975d9009f87e9dae97379ea2afe30fe3d.json",
+          "sha256": "b8f79eee230345de4f95be30c1140b9789e4a6390ca8c80286ebf095aebc5df2"
+        },
+        {
+          "path": "data/arkpedia-device-source.json",
+          "sha256": "64515531475bbde6c454f96b0a2c797edffc6f986c27d504539602d979b6fb7a"
+        },
+        {
+          "path": "data/arkpedia-device-native-source.json",
+          "sha256": "7340512aaf1e3ddeff9a9c6fb77a6b92e64513e9abc1951e89b780ccb10bd09c"
+        }
+      ]
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 10,
+        "spawned": 1,
+        "errors": 0
+      }
+    },
+    "changed": [
+      "tokens"
+    ]
+  }
+}

@@ -172,8 +172,8 @@ export function customizeFiveStarDefenderSecondKit({ battle: b, id, def, unit: u
   kit.skill.id = s.id; kit.skill.name = s.name;
 }
 export function installFiveStarDefenderSecond({ battle: b, unit: u, def }) {
+  if (!FIVE_STAR_DEFENDER_SECOND_OPERATORS[def.charId]) return;
   const id = def.charId, talent = def.talents[0]?.bb;
-  if (!FIVE_STAR_DEFENDER_SECOND_OPERATORS[id]) return;
   if (id === NEARL) {
     const sync = () => syncNearl(b, u, def);
     b.on('tick', sync, { owner: u }); b.on('deploy', sync, { owner: u }); b.on('death', sync, { owner: u });

@@ -3,12 +3,13 @@
  "name": "Infection",
  "description": "Condition:\nThe cost of Caster Operators is tripled.",
  "battle": {
-  "max_life": 15,
+  "max_life": 1,
   "unit_limit": 8,
   "initial_dp": 10,
   "max_dp": 99,
   "dp_per_second": 1,
-  "dp_recovery_interval_seconds": 1
+  "dp_recovery_interval_seconds": 1,
+  "max_play_time": -1
  },
  "mapTags": [],
  "mapTagSource": null,
@@ -777,9 +778,9 @@
    "rank": "NORMAL",
    "applyWay": "MELEE",
    "stats": {
-    "maxHp": 2050,
-    "atk": 240,
-    "def": 250,
+    "maxHp": 2460,
+    "atk": 288,
+    "def": 300,
     "res": 0,
     "moveSpeed": 1,
     "bat": 2,
@@ -827,8 +828,8 @@
    "rank": "NORMAL",
    "applyWay": "MELEE",
    "stats": {
-    "maxHp": 550,
-    "atk": 130,
+    "maxHp": 660,
+    "atk": 156,
     "def": 0,
     "res": 0,
     "moveSpeed": 1,
@@ -879,9 +880,9 @@
    "rank": "NORMAL",
    "applyWay": "MELEE",
    "stats": {
-    "maxHp": 1650,
-    "atk": 200,
-    "def": 100,
+    "maxHp": 1980,
+    "atk": 240,
+    "def": 120,
     "res": 0,
     "moveSpeed": 1.1,
     "bat": 2,
@@ -921,5 +922,102 @@
    "notCountInTotal": false,
    "tags": []
   }
+ },
+ "rules": {
+  "variant": "challenge_mode",
+  "source": {
+   "repository": "Kengxxiao/ArknightsGameData",
+   "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+   "path": "zh_CN/gamedata/levels/obt/main/level_main_00-07.json",
+   "sha256": "f61ee5a53b5f1ab89c19118bc3d4568c308bcef0a7b7d81c47aba1f8b21ac9f9",
+   "gitBlob": "ab6334a70473c67a6af3c24efca06d3f90d8481c",
+   "stageTable": {
+    "path": "zh_CN/gamedata/excel/stage_table.json",
+    "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+    "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+    "stageId": "main_00-07",
+    "levelId": "Obt/Main/level_main_00-07"
+   }
+  },
+  "battle": {
+   "max_play_time": -1,
+   "max_life": 1
+  },
+  "enemies": {
+   "atk": 1.2,
+   "def": 1.2,
+   "maxHp": 1.2
+  },
+  "enemyAdd": {},
+  "hiddenGroups": {},
+  "allyCards": [
+   {
+    "attribute": "cost",
+    "professionMask": 1,
+    "buildableMask": 3,
+    "scale": 3
+   }
+  ]
+ },
+ "tokens": [],
+ "contentRuleRefresh": {
+  "schemaVersion": 1,
+  "source": {
+   "repository": "arkpedia/arkpedia-data",
+   "commit": "66232ee06377d791fb130248d680764c286e5c99",
+   "files": [
+    {
+     "path": "stages/0-7_challenge_mode.json",
+     "sha256": "99c7063352640df5a10671d5c70ffa058ced7239310c447bfe4abed2d1600131"
+    },
+    {
+     "path": "stage-geometry/0-7.json",
+     "sha256": "2cefe0edb685e314e73cd632ee88a2ec3abbcb3ee3fa18ef2280336039b4de6b"
+    },
+    {
+     "path": "stage-devices.json",
+     "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+    }
+   ],
+   "localFiles": [
+    {
+     "path": "data/stage-rules/0-7_challenge_mode.json",
+     "sha256": "50effc21df21bb91ca17340ffe27133d2aeeec45b300f2579d18406e33bf1f24"
+    },
+    {
+     "path": "data/stage-rules/levels/a77c710cf2e927aa35208394bdf2b74bb78a9937583c082fa4c2d35091e83f7c.json",
+     "sha256": "a77c710cf2e927aa35208394bdf2b74bb78a9937583c082fa4c2d35091e83f7c"
+    }
+   ]
+  },
+  "validation": {
+   "smoke": {
+    "seconds": 10,
+    "spawned": 2,
+    "errors": 0
+   },
+   "waveSchedule": {
+    "id": "0-7_challenge_mode",
+    "seconds": 113.56666666666666,
+    "spawned": 20,
+    "expected": 20,
+    "reason": "cleared",
+    "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+   },
+   "browser": {
+    "id": "0-7_challenge_mode",
+    "seconds": 20,
+    "errors": [],
+    "units": 4,
+    "canvas": true,
+    "scope": "Browser startup and 600 simulation ticks; not full gameplay or visual fidelity approval"
+   }
+  },
+  "changed": [
+   "rules",
+   "battle",
+   "enemies",
+   "tokens"
+  ]
  }
 }

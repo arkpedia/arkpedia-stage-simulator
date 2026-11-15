@@ -7,12 +7,12 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { buildStageCoverage } from '../tools/arkpedia/stage-coverage.mjs';
 
 const sourceStages = new URL('../../arkpedia-data/source/data/stages/', import.meta.url);
-test('every main stage is built or classified by its first blocker', { skip: existsSync(sourceStages) ? false : 'the arkpedia-data source checkout is not present' }, () => {
-  const report = buildStageCoverage();
+test('every main stage is catalogued or classified by its first blocker', { skip: existsSync(sourceStages) ? false : 'the arkpedia-data source checkout is not present' }, async () => {
+  const report = await buildStageCoverage();
   assert.ok(report.total > report.built);
   const mainBuilt = readdirSync(sourceStages).filter(name => name.endsWith('.json')).filter((name) => {
     const stage = JSON.parse(readFileSync(new URL(name, sourceStages), 'utf8'));
-    return stage.stage_type === 'main' && existsSync(new URL(`arkpedia-stage-${stage.slug}.json`, new URL('../data/', import.meta.url)));
+    return stage.stage_type === 'main' && stage.battle && (stage.slug === '0-1' || existsSync(new URL(`arkpedia-stage-${stage.slug}.json`, new URL('../data/', import.meta.url))));
   }).length;
   assert.equal(report.built, mainBuilt);
   assert.equal(Object.values(report.byReason).reduce((sum, n) => sum + n, 0), report.total - report.built);

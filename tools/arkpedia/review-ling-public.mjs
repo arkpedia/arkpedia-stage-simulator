@@ -62,7 +62,7 @@ try {
     return r.respond({ status: 200, contentType: 'application/json', body: JSON.stringify(data) });
    return r.continue();
   });
-  await page.goto(origin + '/arkpedia/', { waitUntil: 'domcontentloaded', timeout: 60000 });
+  await page.goto(origin + '/arkpedia/?snapshot=1', { waitUntil: 'domcontentloaded', timeout: 60000 });
   await page.waitForSelector('.roster-item.chosen');
   for (const id of await page.$$eval('.roster-item.chosen', es => es.map(e => e.dataset.id))) {
    await page.click(`.roster-item[data-id="${id}"]`); await page.click('#toggle');

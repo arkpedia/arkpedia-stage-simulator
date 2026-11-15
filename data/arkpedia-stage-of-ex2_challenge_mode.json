@@ -1,0 +1,1480 @@
+{
+ "code": "OF-EX2",
+ "name": "Grand Opening",
+ "description": "Condition:\nEnemies have significantly higher DEF.",
+ "battle": {
+  "max_life": 1,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1,
+  "max_play_time": -1
+ },
+ "rules": {
+  "variant": "challenge_mode",
+  "source": {
+   "repository": "Kengxxiao/ArknightsGameData",
+   "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+   "path": "zh_CN/gamedata/levels/activities/act3d0/level_act3d0_ex02.json",
+   "sha256": "e351c1c996d3d97f5f414f5f38e986c557e841daf035d0bf79852b3e6c876668",
+   "gitBlob": "29eedaecf1171800a570f2105a2610ed4e6883a6",
+   "stageTable": {
+    "path": "zh_CN/gamedata/excel/stage_table.json",
+    "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+    "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+    "stageId": "a003_ex02",
+    "levelId": "Activities/ACT3D0/level_act3d0_ex02"
+   }
+  },
+  "battle": {
+   "max_play_time": -1,
+   "max_life": 1
+  },
+  "enemies": {
+   "atk": 1.1,
+   "def": 1.5,
+   "maxHp": 1.1
+  },
+  "enemyAdd": {},
+  "hiddenGroups": {}
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "of-ex2",
+  "rows": 8,
+  "cols": 12,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_volspread",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true,
+    "blackboard": {
+     "cd_max": 12,
+     "cd_min": 8,
+     "damage": 300
+    }
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    1,
+    0,
+    0,
+    2,
+    3,
+    4,
+    4,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    2,
+    2,
+    2,
+    0,
+    0,
+    1,
+    4,
+    4,
+    2,
+    2,
+    0
+   ],
+   [
+    0,
+    5,
+    5,
+    5,
+    5,
+    4,
+    4,
+    4,
+    4,
+    4,
+    1,
+    0
+   ],
+   [
+    0,
+    5,
+    5,
+    5,
+    5,
+    4,
+    4,
+    0,
+    2,
+    4,
+    2,
+    0
+   ],
+   [
+    0,
+    5,
+    5,
+    0,
+    2,
+    2,
+    4,
+    2,
+    0,
+    4,
+    4,
+    6
+   ],
+   [
+    0,
+    3,
+    3,
+    0,
+    2,
+    1,
+    4,
+    4,
+    4,
+    4,
+    4,
+    6
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 1
+    },
+    "end": {
+     "row": 5,
+     "col": 11
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 9
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 2
+    },
+    "end": {
+     "row": 6,
+     "col": 11
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 6
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 6
+    },
+    "end": {
+     "row": 5,
+     "col": 11
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 9
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 2
+    },
+    "end": {
+     "row": 6,
+     "col": 11
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 6
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10
+     }
+    ]
+   },
+   {
+    "motion": null,
+    "placeholder": true,
+    "start": null,
+    "end": null,
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 6
+    },
+    "end": {
+     "row": 6,
+     "col": 11
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 9
+      }
+     }
+    ],
+    "waits": []
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 195,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Infantry Leader",
+      "enemy_id": "enemy_1046_agent_2",
+      "count": 1,
+      "time": 8,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Infantry Leader",
+      "enemy_id": "enemy_1046_agent_2",
+      "count": 1,
+      "time": 17,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Infantry Leader",
+      "enemy_id": "enemy_1046_agent_2",
+      "count": 1,
+      "time": 20,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Infantry Leader",
+      "enemy_id": "enemy_1046_agent_2",
+      "count": 2,
+      "time": 33,
+      "interval": 2,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Infantry Leader",
+      "enemy_id": "enemy_1046_agent_2",
+      "count": 2,
+      "time": 33,
+      "interval": 2,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Shielded Guard Leader",
+      "enemy_id": "enemy_1052_noramr_2",
+      "count": 1,
+      "time": 48,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "Infantry Leader",
+      "enemy_id": "enemy_1046_agent_2",
+      "count": 2,
+      "time": 48,
+      "interval": 2,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Shielded Guard Leader",
+      "enemy_id": "enemy_1052_noramr_2",
+      "count": 1,
+      "time": 51,
+      "route": 2,
+      "fragment": 2
+     },
+     {
+      "enemy": "Rockbreaker Leader",
+      "enemy_id": "enemy_1048_hirman_2",
+      "count": 1,
+      "time": 64,
+      "route": 3,
+      "fragment": 3
+     },
+     {
+      "enemy": "Authorized Caster Leader",
+      "enemy_id": "enemy_1051_norwiz_2",
+      "count": 3,
+      "time": 67,
+      "interval": 9,
+      "route": 0,
+      "fragment": 3
+     },
+     {
+      "enemy": "Shielded Guard Leader",
+      "enemy_id": "enemy_1052_noramr_2",
+      "count": 2,
+      "time": 73,
+      "interval": 7,
+      "route": 2,
+      "fragment": 3
+     },
+     {
+      "enemy": "Agent",
+      "enemy_id": "enemy_1049_eagent",
+      "count": 2,
+      "time": 67,
+      "interval": 15,
+      "route": 1,
+      "fragment": 3
+     },
+     {
+      "enemy": "Shielded Guard Leader",
+      "enemy_id": "enemy_1052_noramr_2",
+      "count": 2,
+      "time": 108,
+      "interval": 2,
+      "route": 2,
+      "fragment": 4
+     },
+     {
+      "enemy": "Shielded Guard Leader",
+      "enemy_id": "enemy_1052_noramr_2",
+      "count": 2,
+      "time": 118,
+      "interval": 2,
+      "route": 2,
+      "fragment": 4
+     },
+     {
+      "enemy": "Rockbreaker Leader",
+      "enemy_id": "enemy_1048_hirman_2",
+      "count": 1,
+      "time": 114,
+      "route": 0,
+      "fragment": 4
+     },
+     {
+      "enemy": "Authorized Caster Leader",
+      "enemy_id": "enemy_1051_norwiz_2",
+      "count": 3,
+      "time": 108,
+      "interval": 9,
+      "route": 1,
+      "fragment": 4
+     },
+     {
+      "enemy": "Heavy Defender Type-S",
+      "enemy_id": "enemy_1054_norshd_2",
+      "count": 1,
+      "time": 144,
+      "route": 5,
+      "fragment": 5
+     },
+     {
+      "enemy": "Infantry Leader",
+      "enemy_id": "enemy_1046_agent_2",
+      "count": 2,
+      "time": 162,
+      "interval": 2,
+      "route": 0,
+      "fragment": 6
+     },
+     {
+      "enemy": "Infantry Leader",
+      "enemy_id": "enemy_1046_agent_2",
+      "count": 2,
+      "time": 162,
+      "interval": 2,
+      "route": 1,
+      "fragment": 6
+     },
+     {
+      "enemy": "Heavy Defender Type-S",
+      "enemy_id": "enemy_1054_norshd_2",
+      "count": 1,
+      "time": 168,
+      "route": 5,
+      "fragment": 6
+     },
+     {
+      "enemy": "Authorized Caster Leader",
+      "enemy_id": "enemy_1051_norwiz_2",
+      "count": 2,
+      "time": 174,
+      "interval": 9,
+      "route": 2,
+      "fragment": 6
+     },
+     {
+      "enemy": "Infantry Leader",
+      "enemy_id": "enemy_1046_agent_2",
+      "count": 2,
+      "time": 174,
+      "interval": 2,
+      "route": 1,
+      "fragment": 6
+     },
+     {
+      "enemy": "Infantry Leader",
+      "enemy_id": "enemy_1046_agent_2",
+      "count": 2,
+      "time": 174,
+      "interval": 2,
+      "route": 0,
+      "fragment": 6
+     },
+     {
+      "enemy": "Agent",
+      "enemy_id": "enemy_1049_eagent",
+      "count": 2,
+      "time": 185,
+      "interval": 7,
+      "route": 0,
+      "fragment": 6
+     },
+     {
+      "enemy": "Agent",
+      "enemy_id": "enemy_1049_eagent",
+      "count": 2,
+      "time": 185,
+      "interval": 7,
+      "route": 1,
+      "fragment": 6
+     },
+     {
+      "enemy": "Heavy Defender Type-S",
+      "enemy_id": "enemy_1054_norshd_2",
+      "count": 1,
+      "time": 195,
+      "route": 2,
+      "fragment": 6
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 6,
+    "routes": [
+     2,
+     2,
+     2,
+     2,
+     5,
+     5,
+     2,
+     2
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 6,
+    "col": 1,
+    "routes": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 6,
+    "col": 2,
+    "routes": [
+     1,
+     1,
+     1,
+     3,
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 5,
+    "col": 11,
+    "routes": [
+     0,
+     0,
+     0,
+     0,
+     2,
+     0,
+     2,
+     2,
+     2,
+     0,
+     0,
+     2,
+     0,
+     0,
+     2
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 6,
+    "col": 11,
+    "routes": [
+     1,
+     1,
+     1,
+     3,
+     1,
+     1,
+     5,
+     1,
+     5,
+     1,
+     1
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1046_agent_2",
+    "slug": "infantry_leader",
+    "name": "Infantry Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1048_hirman_2",
+    "slug": "rockbreaker_leader",
+    "name": "Rockbreaker Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1049_eagent",
+    "slug": "agent",
+    "name": "Agent",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1051_norwiz_2",
+    "slug": "authorized_caster_leader",
+    "name": "Authorized Caster Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1052_noramr_2",
+    "slug": "shielded_guard_leader",
+    "name": "Shielded Guard Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1054_norshd_2",
+    "slug": "heavy_defender_type_s",
+    "name": "Heavy Defender Type-S",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "terrain": [],
+ "conditionalHandled": false,
+ "devices": [],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [
+   0,
+   1,
+   2,
+   3,
+   5
+  ],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "OF-EX2",
+  "geometryHash": "71c58f3952983cffecd51f1b6398f9a75ee6330d916091a7d1c5dc2e8d5ae3b4",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      1,
+      6
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      11,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "1": {
+    "points": [
+     [
+      2,
+      6
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      11,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "2": {
+    "points": [
+     [
+      6,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      11,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "3": {
+    "points": [
+     [
+      2,
+      6
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      11,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "5": {
+    "points": [
+     [
+      6,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      11,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ],
+    "breaks": [],
+    "holds": []
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1046_agent_2": {
+   "key": "enemy_1046_agent_2",
+   "prefabKey": "enemy_1046_agent_2",
+   "name": "Infantry Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 4070.0000000000005,
+    "atk": 363.00000000000006,
+    "def": 150,
+    "res": 40,
+    "moveSpeed": 1.1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1052_noramr_2": {
+   "key": "enemy_1052_noramr_2",
+   "prefabKey": "enemy_1052_noramr_2",
+   "name": "Shielded Guard Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 4070.0000000000005,
+    "atk": 330,
+    "def": 750,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1048_hirman_2": {
+   "key": "enemy_1048_hirman_2",
+   "prefabKey": "enemy_1048_hirman_2",
+   "name": "Rockbreaker Leader",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 14300.000000000002,
+    "atk": 990.0000000000001,
+    "def": 150,
+    "res": 40,
+    "moveSpeed": 0.75,
+    "bat": 3.3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": true,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Gains greatly increased RES when blocked",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "MagicResistance.magic_resistance": 50
+    },
+    "bbStr": {},
+    "groups": {
+     "MagicResistance": [
+      "magic_resistance"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1051_norwiz_2": {
+   "key": "enemy_1051_norwiz_2",
+   "prefabKey": "enemy_1051_norwiz_2",
+   "name": "Authorized Caster Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 4400,
+    "atk": 385.00000000000006,
+    "def": 300,
+    "res": 50,
+    "moveSpeed": 0.8,
+    "bat": 4,
+    "aspd": 100,
+    "rangeRadius": 1.8,
+    "rawRangeRadius": 1.8,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1049_eagent": {
+   "key": "enemy_1049_eagent",
+   "prefabKey": "enemy_1049_eagent",
+   "name": "Agent",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 6600.000000000001,
+    "atk": 330,
+    "def": 225,
+    "res": 50,
+    "moveSpeed": 0.9,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Attacks temporarily reduce allied units' Block",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "ReduceBlockCnt.duration": 5,
+     "ReduceBlockCnt.block_cnt": -1
+    },
+    "bbStr": {},
+    "groups": {
+     "ReduceBlockCnt": [
+      "block_cnt",
+      "duration"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1054_norshd_2": {
+   "key": "enemy_1054_norshd_2",
+   "prefabKey": "enemy_1054_norshd_2",
+   "name": "Heavy Defender Type-S",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 15400.000000000002,
+    "atk": 770.0000000000001,
+    "def": 1500,
+    "res": 0,
+    "moveSpeed": 0.75,
+    "bat": 2.6,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ },
+ "contentAddition": {
+  "schemaVersion": 1,
+  "source": {
+   "repository": "arkpedia/arkpedia-data",
+   "commit": "66232ee06377d791fb130248d680764c286e5c99",
+   "files": [
+    {
+     "path": "stages/of-ex2_challenge_mode.json",
+     "sha256": "5a4984b076f39f710f18033ed4f6f0e61117501931d174f511cee61b44c420a9"
+    },
+    {
+     "path": "stage-geometry/of-ex2.json",
+     "sha256": "71c58f3952983cffecd51f1b6398f9a75ee6330d916091a7d1c5dc2e8d5ae3b4"
+    },
+    {
+     "path": "stage-devices.json",
+     "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+    }
+   ],
+   "localFiles": [
+    {
+     "path": "data/stage-rules/of-ex2_challenge_mode.json",
+     "sha256": "54fced15608677d2f968b4d0203c5a8821b60d4ee5127870638bcb5d72a9fcac"
+    },
+    {
+     "path": "data/stage-rules/levels/8531ba33589d787526c8bdd7208ab286eb4fd571fa219bf5dcfe0d413dac894a.json",
+     "sha256": "8531ba33589d787526c8bdd7208ab286eb4fd571fa219bf5dcfe0d413dac894a"
+    }
+   ]
+  },
+  "dependencies": {
+   "enemies": [
+    "enemy_1046_agent_2",
+    "enemy_1048_hirman_2",
+    "enemy_1049_eagent",
+    "enemy_1051_norwiz_2",
+    "enemy_1052_noramr_2",
+    "enemy_1054_norshd_2"
+   ],
+   "devices": [],
+   "tokens": []
+  },
+  "validation": {
+   "smoke": {
+    "seconds": 10,
+    "spawned": 1,
+    "errors": 0
+   },
+   "publicReview": "pending",
+   "waveSchedule": {
+    "id": "of-ex2_challenge_mode",
+    "seconds": 236.2,
+    "spawned": 44,
+    "expected": 44,
+    "reason": "cleared",
+    "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+   },
+   "browser": {
+    "id": "of-ex2_challenge_mode",
+    "seconds": 10,
+    "errors": [],
+    "units": 1,
+    "canvas": true,
+    "scope": "Headless Chromium, mobile landscape 1440x900: preparation, battle start, canvas and short runtime without page or simulation errors. Original art and full clear not certified."
+   }
+  }
+ }
+}

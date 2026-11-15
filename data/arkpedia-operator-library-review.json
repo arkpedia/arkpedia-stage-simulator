@@ -1,0 +1,386 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-14",
+  "scope": "Demand-loaded operator/summon records and model metadata; preparation defers combat runtime. Not full native fidelity or complete per-mechanic runtime code splitting.",
+  "sourceFiles": [
+    {
+      "path": "data/arkpedia-operators.json",
+      "sha256": "39230002894b2e2a10efdaa7d574d0ca39f9ac1f2ece7c8b528308ea8e05e077"
+    },
+    {
+      "path": "shared/arkpedia/operator-library.js",
+      "sha256": "ef8fbd479cd5959cc2ca6497523cd8a0cd67f8e9e7e59835f5cf4f00b5ec9e14"
+    },
+    {
+      "path": "shared/arkpedia/component-store.js",
+      "sha256": "f73f1772b6f57331bbddffee30fbb2230ee651a650be29cd9ec229c7b33bcdbb"
+    },
+    {
+      "path": "tools/arkpedia/operator-library.mjs",
+      "sha256": "27220b6ddf6bf803db02b695069fbcdba2bad38285ebfaabc07cbeb46182d8c8"
+    },
+    {
+      "path": "tools/arkpedia/component-store.mjs",
+      "sha256": "3cb8dd7d8f1041b5b64fe18e3104b3960cd3231d1a2c90273ddbfada993d7c70"
+    },
+    {
+      "path": "public/arkpedia/app.js",
+      "sha256": "c05271711cdcbf009a37f70dc293fa9fe99a60297a480771dba70205c33fb3fc"
+    },
+    {
+      "path": "public/arkpedia/renderer.js",
+      "sha256": "3d8046b53a75131a17556ae8211a88f1b30769d9d8079d3bfe9b3be2814002f4"
+    },
+    {
+      "path": "server/sim/content/arkpedia-marcil-party.js",
+      "sha256": "9a15d260cb142e1e85d8820d8db83790e173c9593faae4f4d7205f91cf0a5bec"
+    },
+    {
+      "path": "server/sim/arkpedia.js",
+      "sha256": "5a772d73dd937feee2b14dc75225e3548fee8e68e38dcee7e48515dab207c8f4"
+    },
+    {
+      "path": "tools/arkpedia/review-operator-library.mjs",
+      "sha256": "d3b729b55f11f7041ba91d25f0924830e85430d70e64c6f6879b1574451d31b7"
+    }
+  ],
+  "payloads": [
+    {
+      "path": "data/arkpedia-mvp.json",
+      "bytes": 27802377,
+      "gzipBytes": 1378085
+    },
+    {
+      "path": "data/arkpedia-operators.json",
+      "bytes": 517664,
+      "gzipBytes": 131722
+    }
+  ],
+  "validation": {
+    "operatorPartyTests": 98,
+    "sharedStoreTests": 8,
+    "stageLoadoutTests": 11,
+    "operatorRuntimeMagicCircuitTests": 7,
+    "operatorBrowser": [
+      {
+        "mobile": false,
+        "initialOperatorRecords": 1,
+        "initialModelRecords": 0,
+        "fullSnapshotRequested": false,
+        "failedDownloadRetried": true,
+        "staleSelectionIgnored": true,
+        "bench": [
+          "char_123_fang",
+          "char_208_melan",
+          "char_122_beagle",
+          "char_124_kroos",
+          "char_120_hibisc",
+          "char_2023_ling"
+        ],
+        "tokens": [
+          "token_10020_ling_soul1",
+          "token_10020_ling_soul2",
+          "token_10020_ling_soul3"
+        ],
+        "errors": []
+      },
+      {
+        "mobile": true,
+        "initialOperatorRecords": 1,
+        "initialModelRecords": 0,
+        "fullSnapshotRequested": false,
+        "failedDownloadRetried": true,
+        "staleSelectionIgnored": true,
+        "bench": [
+          "char_123_fang",
+          "char_208_melan",
+          "char_122_beagle",
+          "char_124_kroos",
+          "char_120_hibisc",
+          "char_2023_ling"
+        ],
+        "tokens": [
+          "token_10020_ling_soul1",
+          "token_10020_ling_soul2",
+          "token_10020_ling_soul3"
+        ],
+        "errors": []
+      }
+    ],
+    "libraryBrowser": [
+      {
+        "id": "0-1",
+        "mobile": false,
+        "options": 3892,
+        "componentRequests": 20,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true
+      },
+      {
+        "id": "0-4_challenge_mode",
+        "mobile": false,
+        "options": 3892,
+        "componentRequests": 22,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 2,
+        "canvas": true,
+        "originalWaveProgram": true
+      },
+      {
+        "id": "3-6_challenge_mode",
+        "mobile": false,
+        "options": 3892,
+        "componentRequests": 27,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true,
+        "waveGate": {
+          "heldWave": 1,
+          "blockedFutureSpawns": 19,
+          "releasedWave": 2,
+          "errors": []
+        }
+      },
+      {
+        "id": "bw-8_challenge_mode",
+        "mobile": false,
+        "options": 3892,
+        "componentRequests": 40,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true
+      },
+      {
+        "id": "ps-3_challenge_mode",
+        "mobile": false,
+        "options": 3892,
+        "componentRequests": 32,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true
+      },
+      {
+        "id": "0-6_challenge_mode",
+        "mobile": false,
+        "blockedBeforeComponentFetch": true
+      },
+      {
+        "id": "0-1",
+        "mobile": true,
+        "options": 3892,
+        "componentRequests": 20,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true
+      },
+      {
+        "id": "0-4_challenge_mode",
+        "mobile": true,
+        "options": 3892,
+        "componentRequests": 28,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 2,
+        "canvas": true,
+        "originalWaveProgram": true
+      },
+      {
+        "id": "3-6_challenge_mode",
+        "mobile": true,
+        "options": 3892,
+        "componentRequests": 32,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true,
+        "waveGate": {
+          "heldWave": 1,
+          "blockedFutureSpawns": 19,
+          "releasedWave": 2,
+          "errors": []
+        }
+      },
+      {
+        "id": "bw-8_challenge_mode",
+        "mobile": true,
+        "options": 3892,
+        "componentRequests": 40,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true
+      },
+      {
+        "id": "ps-3_challenge_mode",
+        "mobile": true,
+        "options": 3892,
+        "componentRequests": 26,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true
+      },
+      {
+        "id": "0-6_challenge_mode",
+        "mobile": true,
+        "blockedBeforeComponentFetch": true
+      },
+      {
+        "homeFixture": true,
+        "initialDp": 99,
+        "waves": 0
+      }
+    ],
+    "predefinedBrowser": [
+      {
+        "id": "tr-4",
+        "mobile": false,
+        "initial": {
+          "hidden": [
+            "char_123_fang",
+            "char_192_falco"
+          ],
+          "actors": []
+        },
+        "seconds": 10.933333333333334,
+        "activated": [
+          "char_123_fang",
+          "char_192_falco"
+        ],
+        "hidden": [],
+        "actors": [],
+        "errors": []
+      },
+      {
+        "id": "tr-6",
+        "mobile": false,
+        "initial": {
+          "hidden": [
+            "char_122_beagle",
+            "char_009_12fce"
+          ],
+          "actors": [
+            "char_501_durin"
+          ]
+        },
+        "seconds": 20.933333333333334,
+        "activated": [
+          "char_122_beagle",
+          "char_009_12fce",
+          "char_501_durin"
+        ],
+        "hidden": [],
+        "actors": [
+          "char_501_durin"
+        ],
+        "errors": []
+      },
+      {
+        "id": "1-11",
+        "mobile": false,
+        "initial": {
+          "hidden": [
+            "char_211_adnach"
+          ],
+          "actors": []
+        },
+        "seconds": 3.033333333333333,
+        "activated": [
+          "char_211_adnach"
+        ],
+        "hidden": [],
+        "actors": [
+          "char_211_adnach"
+        ],
+        "errors": []
+      },
+      {
+        "id": "tr-4",
+        "mobile": true,
+        "initial": {
+          "hidden": [
+            "char_123_fang",
+            "char_192_falco"
+          ],
+          "actors": []
+        },
+        "seconds": 10.933333333333334,
+        "activated": [
+          "char_123_fang",
+          "char_192_falco"
+        ],
+        "hidden": [],
+        "actors": [],
+        "errors": []
+      },
+      {
+        "id": "tr-6",
+        "mobile": true,
+        "initial": {
+          "hidden": [
+            "char_122_beagle",
+            "char_009_12fce"
+          ],
+          "actors": [
+            "char_501_durin"
+          ]
+        },
+        "seconds": 20.933333333333334,
+        "activated": [
+          "char_122_beagle",
+          "char_009_12fce",
+          "char_501_durin"
+        ],
+        "hidden": [],
+        "actors": [
+          "char_501_durin"
+        ],
+        "errors": []
+      },
+      {
+        "id": "1-11",
+        "mobile": true,
+        "initial": {
+          "hidden": [
+            "char_211_adnach"
+          ],
+          "actors": []
+        },
+        "seconds": 3.033333333333333,
+        "activated": [
+          "char_211_adnach"
+        ],
+        "hidden": [],
+        "actors": [
+          "char_211_adnach"
+        ],
+        "errors": []
+      }
+    ]
+  }
+}

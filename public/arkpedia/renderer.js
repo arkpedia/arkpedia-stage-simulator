@@ -3,21 +3,22 @@ import * as THREE from "/vendor/three.module.js";
 import { fitCamera, syncThreeCamera, pickTile } from "/js/render/projection.js";
 import { BattleActor } from "./battle-actor.js";
 import { HeartCandleActor } from "./heart-candle.js";
-import { loadTragodiaStageEffects } from "./tragodia-assets.js";
-import { loadAphrissaStageEffects } from "./aphrissa-assets.js";
 import { EffectOnlyActor } from "./effect-only-actor.js";
 import { regularVisualHeight } from "./regular-form-visual.js";
 import { createAssets } from "/js/assets.js";
 import { regionEdges } from "/shared/arkpedia/placement.js";
 import { rangeStripes } from "/shared/arkpedia/battle-ui.js";
-import { spriteFacing, regularModelKey } from "/shared/arkpedia/facing.js";
+import { spriteFacing, regularModelKey, enemyModelKey, stageDeviceModelKeys } from "/shared/arkpedia/facing.js";
 import { skillHud, skillSourceFor, ammunitionHud } from "/shared/arkpedia/skill-hud.js";
 import { regularTokenIdsFor } from "/shared/arkpedia/summons.js";
-import { artBase } from "/shared/arkpedia/stage-art.js";
+import { modelEntry } from '/shared/arkpedia/model-entry.js';
+import { FLUX_REFLECTOR_PORTS } from '/shared/arkpedia/flux-reflector-ports.js';
+import { dirVec } from '/shared/direction.js';
 import { loadStageArt } from "./stage-art.js";
 import { loadGates } from "./gates.js";
 import { loadSkillParticles, SkillParticleLayer } from "./particles.js";
 import { FallbackActor } from "./fallback-actor.js";
+import { stageTileView } from '/shared/arkpedia/stage-tile-view.js';
 const P = globalThis.PIXI;
 const tileRangeStripes = rangeStripes();
 const models = createAssets({
@@ -81,28 +82,26 @@ export class StageRenderer {
     const g = data.stage.geometry;
     this.rect = { r0: 0, r1: g.rows - 1, c0: 0, c1: g.cols - 1 };
     this.tiles = [];
-    this.heightAt = (r, c) => (g.tileGrid[r]?.[c] === 1 ? 0.38 : 0);
+    this.heightAt = (r, c) => stageTileView(g.tileLegend[g.tileGrid[r]?.[c]]).height;
     for (let row = 0; row < g.rows; row++)
       for (let col = 0; col < g.cols; col++) {
         const type = g.tileGrid[row][col];
         const height = this.heightAt(row, col);
-        const color = ["#172329", "#59666b", "#35464b", "#aa4b40", "#377787"][
-          type
-        ];
+        const view = stageTileView(g.tileLegend[type]), color = view.color;
         const mesh = new THREE.Mesh(
           new THREE.BoxGeometry(0.97, 0.97, 0.18 + height),
           new THREE.MeshStandardMaterial({ color, roughness: 0.92 }),
         );
         mesh.position.set(col, row, (height - 0.18) / 2);
         this.scene.add(mesh);
-        this.tiles.push({ mesh, row, col, type, color });
-        if (type === 1 || type === 2) {
+        this.tiles.push({ mesh, row, col, type, color, label: view.label });
+        if (view.focusable) {
           const button = document.createElement("button");
           button.className = "tile-hit";
           button.type = "button";
           button.setAttribute(
             "aria-label",
-            `${type === 1 ? "Raised" : "Ground"} tile, row ${row + 1}, column ${col + 1}`,
+            `${view.label}, row ${row + 1}, column ${col + 1}`,
           );
           button.onclick = () => this.onPick(row, col);
           button.onfocus = () => {
@@ -174,19 +173,7 @@ export class StageRenderer {
     }
   }
   entry(key) {
-    const m = this.data.sd.models[key];
-    if (!m) throw Error("Missing animation model " + key);
-    const base = artBase(m.assetsCommit ? { ...this.data.sd, commit: m.assetsCommit } : this.data.sd);
-    return {
-      skel: base + m.skeleton.path,
-      atlas: base + m.atlas.path,
-      textures: m.textures.map((t) => base + t.path),
-      pma: m.premultipliedAlpha,
-      anims: m.animationRoles ?? {},
-      animations: m.animations ?? {},
-      hits: m.hits,
-      bounds: m.bounds,
-    };
+    return modelEntry(this.data.sd,key);
   }
   nativeEffectPasses() {
     return [this.nativeEffects, ...(this.externalNativeEffects ? [] : this.ownedNativeEffects.values())].filter(Boolean);
@@ -204,6 +191,7 @@ export class StageRenderer {
   async preload(ids, onProgress) {
     if (!this.externalNativeEffects) {
       if (ids.includes('char_1042_phatm2') && !this.nativeEffects) {
+        const { loadTragodiaStageEffects } = await import('./tragodia-assets.js');
         const pass = await loadTragodiaStageEffects({three: THREE, renderer: this.three,
           descriptor: this.data.nativeEffects?.tragodia, heightAt: (row,col) => this.heightAt(row,col)});
         if (this.destroyed) { pass.dispose(); throw Error('Stage renderer was closed while loading cage assets'); }
@@ -211,21 +199,24 @@ export class StageRenderer {
       } else if (!ids.includes('char_1042_phatm2') && this.nativeEffects) {
         this.nativeEffects.dispose(); this.nativeEffects = null;
       }
-      await this.ownNativeEffects('aphrissa', ids.includes('char_4229_aphris'), () => loadAphrissaStageEffects({three: THREE,
-        stage: this, descriptor: this.data.nativeEffects?.aphrissa}));
+      await this.ownNativeEffects('aphrissa', ids.includes('char_4229_aphris'), async () => {
+        const { loadAphrissaStageEffects } = await import('./aphrissa-assets.js');
+        return loadAphrissaStageEffects({three: THREE, stage: this, descriptor: this.data.nativeEffects?.aphrissa});
+      });
     }
     const tokenIds = regularTokenIdsFor(ids);
     // Only preload skeletons that exist in this SD snapshot. Records without a model get a labelled
     // fallback marker in render(), instead of rejecting the whole preload and hiding every unit.
-    const keys = [
+    const keys = [...new Set([
       ...[...ids, ...tokenIds].flatMap((id) =>
         ["front", "back"].map((f) => `operator/${id}/default/${f}`),
       ),
       ...tokenIds.map(id => `operator/${id}/default/down`),
       ...Object.keys(this.data.enemies).map(
-        (id) => `enemy/${id}/default/default`,
+        (id) => enemyModelKey(id, this.data.enemies[id]),
       ),
-    ].filter((key) => this.data.sd.models[key]);
+      ...stageDeviceModelKeys(this.data.stage),
+    ])].filter((key) => this.data.sd.models[key]);
     let done = 0;
     // Small concurrency cap; renderer waits for the complete selected squad rather than drawing missing operators.
     const pending = keys.filter((k) => !this.preloaded.has(k));
@@ -325,6 +316,35 @@ export class StageRenderer {
         .drawPolygon(points.flatMap((p) => [p.x, p.y]))
         .endFill();
     };
+    for (const tile of this.currentBattle?.stageReeds?.tiles.values() ?? []) {
+      polygon(tile.row, tile.col, tile.mode === 1 ? 0xef6d38 : tile.mode === 2 ? 0x69b1c1 : 0x7b9a53,
+        tile.mode === 1 ? .34 : .15, tile.mode === 1 ? 2 : 1, .06);
+    }
+    for (const tile of this.currentBattle?.stageEpoch?.tiles.values() ?? [])
+      polygon(tile.row, tile.col, 0x9877d5, .22, 1, .04);
+    for (const e of this.currentBattle?.stageMagicCircuit?.entries.values() ?? []) {
+      if(e.spec.resonator)polygon(e.row,e.col,e.activated?0x40c9ff:0x6b7f99,e.activated?0.25:0.12,2,0.15);
+      if(e.spec.reflector&&e.unit.alive&&e.unit.deployed){
+        const height=this.heightAt(e.row,e.col)+0.05;
+        const ends=FLUX_REFLECTOR_PORTS[e.unit.dir].map(dir=>{const [dr,dc]=dirVec(dir);
+          return this.projection.project(e.col+dc*.42,e.row+dr*.42,height);});
+        const center=this.projection.project(e.col,e.row,height);
+        g.lineStyle(7,0xe7cb80,.9).moveTo(ends[0].x,ends[0].y).lineTo(center.x,center.y).lineTo(ends[1].x,ends[1].y);
+      }
+    }
+    for (const route of this.currentBattle?.stageMagicCircuit?.field?.routes.values() ?? []) {
+      g.lineStyle(5, 0x40c9ff, 0.75);
+      for (const [i, cell] of route.path.entries()) {
+        const p = this.projection.project(cell.col, cell.row, this.heightAt(cell.row, cell.col) + 0.04);
+        if (i) g.lineTo(p.x, p.y); else g.moveTo(p.x, p.y);
+      }
+    }
+    for (const {row, col} of this.data.stage.rules?.forbiddenLocations ?? []) {
+      polygon(row, col, 0xd74b4b, 0.18, 1, 0.05);
+      const points = this.corners(row, col, 0.22);
+      g.lineStyle(3, 0xef7777, 0.9);
+      for (const [a, b] of [[0, 2], [1, 3]]) g.moveTo(points[a].x, points[a].y).lineTo(points[b].x, points[b].y);
+    }
     if (state.routes) {
       const seen = new Set();
       for (const path of Object.values(this.data.stage.pathing.paths)) {
@@ -461,11 +481,13 @@ export class StageRenderer {
     this.candleStatus.textContent = [
       battle?.enemies.some(e => e.alive && e.mem?.entelechiaHost) ? 'Heart Candle artwork: temporary marker' : '',
       battle?.inesState?.sentry ? 'Shadow Sentry artwork: temporary marker' : '',
+      battle?.projectiles.list.some(p => p.data?.enemyTileTrigger) ? 'Enemy trap artwork: temporary markers' : '',
+      battle?.stageEpoch?.tiles.size ? 'Mark of Epoch artwork: temporary tile overlay' : '',
     ].filter(Boolean).join(' · ');
     if (battle) {
       const live = new Set();
       for (const u of battle.units) {
-        if (!u.alive) continue;
+        if (!u.alive || u.mem.effectOnly) continue;
         live.add(u.id);
         // Reviewed original abilities can explicitly face the Front skeleton
         // while healing, even when the operator is deployed facing up.
@@ -481,14 +503,17 @@ export class StageRenderer {
         }
         let view = this.views.get(u.id);
         const sameLife=!!view&&view.unit===u&&view.life===u.deploySeq;
-        const replacing = !!view && (view.key !== key || !sameLife);
+        // Streamed models can arrive after a unit's fallback was created. The
+        // model key and deployment are unchanged, but the actor must upgrade.
+        const replacing = !!view && (view.key !== key || !sameLife
+          || view.actor instanceof FallbackActor && this.preloaded.has(key));
         if (replacing) {
           view.actor.destroy(); view.hp.destroy(); this.views.delete(u.id); view = null;
         }
         if (!view) {
           const loaded = this.preloaded.get(key);
           const heartCandle = u.defId === 'enemy_5601_entlec' && u.mem?.entelechiaHost;
-          const effectOnly = nativePasses.some(pass => pass.isActor?.(u) === true);
+          const effectOnly = !!u.mem?.stageSurfaceOnly || nativePasses.some(pass => pass.isActor?.(u) === true);
           const skillIndex = this.data.operators[u.defId]?.skills.findIndex(skill => skill.id === u.skill?.id);
           const actor = effectOnly ? new EffectOnlyActor(P, { gaugeHeight: 280 })
             : heartCandle ? new HeartCandleActor(P)
@@ -503,8 +528,13 @@ export class StageRenderer {
           this.views.set(u.id, view);
         }
         view.unit = u;
+        const gramophone = battle.stageGramophones?.entries.get(u.mem?.stageDeviceId);
+        view.actor.setSide?.(gramophone?.control ?? u.side);
+        const capture = battle.capturableStageDevices?.entries.get(u.mem?.stageDeviceId);
+        if (capture) view.actor.spine.alpha = capture.state === 'rebooting' ? .45 : 1;
         // An owner may take its unit off the field visually without ending its life (Ch'en the Dawnstreak S2).
         view.actor.spine.visible = view.hp.visible = !u.mem?.regularHidden;
+        if(u.mem?.stageSurfaceOnly)view.hp.visible=false;
         const point = this.projection.project(
           u.x,
           u.y,
@@ -546,6 +576,18 @@ export class StageRenderer {
             .endFill();
         }
         const skill = u.side === "ally" || u.mem?.regularModelFacing ? skillHud(skillSourceFor(u)?.skill) : null;
+        const ammo = u.side === 'enemy' ? u.mem?.enemyAmmo : null;
+        if (capture?.state === 'rebooting') {
+          const fraction = Math.max(0, Math.min(1, (battle.time - capture.activeAt) / capture.spec.duration));
+          view.hp.beginFill(0x263238, .95).drawRect(x, y + 7, w, 4).endFill();
+          view.hp.beginFill(0xffa235).drawRect(x, y + 7, w * fraction, 4).endFill();
+        }
+        if (ammo) {
+          const gap = 2, width = Math.min(10, (w - (ammo.max - 1) * gap) / ammo.max);
+          for (let i = 0; i < ammo.max; i++) view.hp
+            .beginFill(i < ammo.current ? 0xffb454 : 0x263238, .95)
+            .drawRect(x + i * (width + gap), y + 7, width, 4).endFill();
+        }
         if (skill) {
           // The green SP gauge sits immediately below HP; orange counts down an active skill.
           view.hp
@@ -639,8 +681,9 @@ export class StageRenderer {
     }
     for (const t of this.tiles) {
       if (!t.button) continue;
-      const label = operatorLabels.get(`${t.row},${t.col}`) ||
-        `${t.type === 1 ? "Raised" : "Ground"} tile, row ${t.row + 1}, column ${t.col + 1}`;
+      const label = (battle?.stageScenery?.brokenStumps.has(`${t.row},${t.col}`) ? "Destroyed stump. Deployment prohibited. " :
+        battle?.stageForbiddenTiles?.has(`${t.row},${t.col}`) ? "Deployment prohibited. " : "") + (operatorLabels.get(`${t.row},${t.col}`) ||
+        `${t.label}, row ${t.row + 1}, column ${t.col + 1}`);
       if (t.button.getAttribute("aria-label") !== label)
         t.button.setAttribute("aria-label", label);
     }
@@ -650,6 +693,23 @@ export class StageRenderer {
       this.pixi.stage.addChild(this.fx);
     }
     this.fx.clear();
+    for (const { row, col } of battle?.stageScenery?.brokenStumps.values() ?? []) {
+      const points = [[-.38, -.38], [.38, -.38], [.38, .38], [-.38, .38]]
+        .map(([x, y]) => this.projection.project(col + x, row + y, this.heightAt(row, col) + .025));
+      this.fx.lineStyle(2, 0x94745c, .9).beginFill(0x302622, .92)
+        .drawPolygon(points.flatMap(p => [p.x, p.y])).endFill();
+      this.fx.lineStyle(2, 0xd8a079, .9).moveTo(points[0].x, points[0].y).lineTo(points[2].x, points[2].y)
+        .moveTo(points[1].x, points[1].y).lineTo(points[3].x, points[3].y).lineStyle(0);
+    }
+    // Shared controller geometry supplies a lightweight fallback visual; no
+    // per-stage copies of the native coil artwork or simulation clocks.
+    for (const beam of battle?.electricCoils?.beams ?? []) {
+      if (beam.remaining <= 0 || !beam.target.alive) continue;
+      const a = this.projection.project(beam.source.x, beam.source.y, this.heightAt(beam.source.tileR, beam.source.tileC) + .45);
+      const z = this.projection.project(beam.target.x, beam.target.y, this.heightAt(beam.target.tileR, beam.target.tileC) + .45);
+      this.fx.lineStyle(7, 0x65dce8, .25).moveTo(a.x, a.y).lineTo(z.x, z.y)
+        .lineStyle(2, 0xc2faff, .95).moveTo(a.x, a.y).lineTo(z.x, z.y).lineStyle(0);
+    }
     const sentry = battle?.inesState?.sentry;
     if (sentry) {
       const p = this.projection.project(sentry.x, sentry.y,
@@ -677,6 +737,12 @@ export class StageRenderer {
     }
     // Source-timed projectile markers use the authoritative combat position and
     // remain visible through the actual dwell window, including after retreat.
+    for (const projectile of (battle?.projectiles.list ?? []).filter(p => p.data?.enemyTileTrigger)) {
+      const {row,col,armed}=projectile.data.enemyTileTrigger;
+      const point=this.projection.project(col,row,this.heightAt(row,col)+.03),radius=point.s*.22;
+      this.fx.lineStyle(2,armed?0xff735e:0xdfbd77,.9).beginFill(0x4b201d,.35)
+        .drawEllipse(point.x,point.y,radius,radius*.5).endFill().lineStyle(0);
+    }
     for (const projectile of [
       ...(battle?.projectiles.list ?? []).filter(p => p.data?.arkpediaTrackedVisual),
       ...(battle?.regularVisualProjectiles ?? []),

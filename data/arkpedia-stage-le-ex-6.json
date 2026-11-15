@@ -1,0 +1,2010 @@
+{
+  "code": "LE-EX-6",
+  "name": "Four-Part Harmony",
+  "description": "Amateur choirs pay little heed to being conducted, and new conductors can only do so much—the most they are capable of is focusing on two parts at a time.\n<Waste Energy Interference> Natural SP recovery speed reduced.\n<Realigned Flux> Restores natural SP recovery speed of allied Operators within.",
+  "battle": {
+    "max_life": 3,
+    "unit_limit": 8,
+    "initial_dp": 10,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1,
+    "max_play_time": -1
+  },
+  "rules": {
+    "variant": null,
+    "source": {
+      "repository": "Kengxxiao/ArknightsGameData",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "path": "zh_CN/gamedata/levels/activities/act18side/level_act18side_ex06.json",
+      "sha256": "7966f2890be28fa014fc577ab0607424a564bdd923560d86b04e992e1c653dba",
+      "gitBlob": "439e85722a1101649006041fcb4192a4c717f8f5",
+      "stageTable": {
+        "path": "zh_CN/gamedata/excel/stage_table.json",
+        "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+        "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+        "stageId": "act18side_ex06",
+        "levelId": "Activities/act18side/level_act18side_ex06"
+      }
+    },
+    "battle": {
+      "max_play_time": -1
+    },
+    "enemies": {},
+    "enemyAdd": {},
+    "hiddenGroups": {}
+  },
+  "environment": [
+    {
+      "kind": "character_in_magiccircuit_env",
+      "sp_recover_ratio": -0.5,
+      "character_in_magiccircuit[normal].sp_recover_ratio": 0.5
+    }
+  ],
+  "mapTags": [],
+  "mapTagSource": null,
+  "geometry": {
+    "slug": "le-ex-6",
+    "rows": 7,
+    "cols": 11,
+    "tileLegend": [
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_start",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      },
+      {
+        "key": "tile_floor",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      }
+    ],
+    "tileGrid": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        2,
+        2,
+        2,
+        3,
+        4,
+        4,
+        4,
+        0,
+        4,
+        1
+      ],
+      [
+        0,
+        4,
+        0,
+        4,
+        0,
+        2,
+        3,
+        2,
+        3,
+        2,
+        0
+      ],
+      [
+        0,
+        2,
+        3,
+        2,
+        3,
+        5,
+        0,
+        4,
+        0,
+        4,
+        0
+      ],
+      [
+        0,
+        4,
+        0,
+        4,
+        0,
+        4,
+        3,
+        2,
+        3,
+        2,
+        0
+      ],
+      [
+        1,
+        2,
+        3,
+        2,
+        2,
+        2,
+        0,
+        4,
+        4,
+        4,
+        1
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "routes": [
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 0
+        },
+        "end": {
+          "row": 3,
+          "col": 5
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 5
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 1,
+            "seconds": 180
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 0
+        },
+        "end": {
+          "row": 3,
+          "col": 5
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 5
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 3
+        },
+        "end": {
+          "row": 3,
+          "col": 5
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 5
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 2
+        },
+        "end": {
+          "row": 3,
+          "col": 5
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 5
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 1
+        },
+        "end": {
+          "row": 3,
+          "col": 5
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 5
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 0
+        },
+        "end": {
+          "row": 3,
+          "col": 5
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 5
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 120
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 10
+        },
+        "end": {
+          "row": 3,
+          "col": 5
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 5
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 10
+        },
+        "end": {
+          "row": 3,
+          "col": 5
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 5
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 1,
+            "seconds": 50
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 0
+        },
+        "end": {
+          "row": 3,
+          "col": 5
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 5
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 0
+        },
+        "end": {
+          "row": 3,
+          "col": 5
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 5
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 50
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 10
+        },
+        "end": {
+          "row": 3,
+          "col": 5
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 5
+            }
+          }
+        ],
+        "waits": []
+      }
+    ],
+    "waves": [
+      {
+        "index": 0,
+        "duration": 219,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Remnant Official Saxophonist",
+            "enemy_id": "enemy_1243_ltswar_2",
+            "count": 1,
+            "time": 0,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Blackwater Originium Slug α",
+            "enemy_id": "enemy_1246_aslime_2",
+            "count": 2,
+            "time": 10,
+            "interval": 1,
+            "route": 2,
+            "fragment": 1
+          },
+          {
+            "enemy": "Blackwater Originium Slug α",
+            "enemy_id": "enemy_1246_aslime_2",
+            "count": 3,
+            "time": 20,
+            "interval": 1,
+            "route": 3,
+            "fragment": 1
+          },
+          {
+            "enemy": "Blackwater Originium Slug α",
+            "enemy_id": "enemy_1246_aslime_2",
+            "count": 3,
+            "time": 30,
+            "interval": 1,
+            "route": 4,
+            "fragment": 1
+          },
+          {
+            "enemy": "Enhanced Mass-Produced Colossus",
+            "enemy_id": "enemy_1240_ltgint_2",
+            "count": 1,
+            "time": 30,
+            "route": 1,
+            "fragment": 1
+          },
+          {
+            "enemy": "Remnant Official Saxophonist",
+            "enemy_id": "enemy_1243_ltswar_2",
+            "count": 1,
+            "time": 47,
+            "route": 5,
+            "fragment": 1
+          },
+          {
+            "enemy": "'Street Drunk'",
+            "enemy_id": "enemy_1238_ltmob_2",
+            "count": 1,
+            "time": 68,
+            "route": 6,
+            "fragment": 2
+          },
+          {
+            "enemy": "'Street Musician'",
+            "enemy_id": "enemy_1239_ltbow_2",
+            "count": 1,
+            "time": 80,
+            "route": 6,
+            "fragment": 2
+          },
+          {
+            "enemy": "'Street Drunk'",
+            "enemy_id": "enemy_1238_ltmob_2",
+            "count": 2,
+            "time": 87,
+            "interval": 1,
+            "route": 6,
+            "fragment": 2
+          },
+          {
+            "enemy": "'Street Musician'",
+            "enemy_id": "enemy_1239_ltbow_2",
+            "count": 1,
+            "time": 103,
+            "route": 6,
+            "fragment": 2
+          },
+          {
+            "enemy": "Remnant Principal Violinist",
+            "enemy_id": "enemy_1242_ltsmag_2",
+            "count": 1,
+            "time": 121,
+            "route": 7,
+            "fragment": 3
+          },
+          {
+            "enemy": "Enhanced Mass-Produced Colossus",
+            "enemy_id": "enemy_1240_ltgint_2",
+            "count": 1,
+            "time": 124,
+            "route": 1,
+            "fragment": 3
+          },
+          {
+            "enemy": "'Street Drunk'",
+            "enemy_id": "enemy_1238_ltmob_2",
+            "count": 2,
+            "time": 129,
+            "interval": 2,
+            "route": 8,
+            "fragment": 3
+          },
+          {
+            "enemy": "'Street Drunk'",
+            "enemy_id": "enemy_1238_ltmob_2",
+            "count": 2,
+            "time": 137,
+            "interval": 2,
+            "route": 8,
+            "fragment": 3
+          },
+          {
+            "enemy": "Enhanced Mass-Produced Colossus",
+            "enemy_id": "enemy_1240_ltgint_2",
+            "count": 1,
+            "time": 149,
+            "route": 1,
+            "fragment": 3
+          },
+          {
+            "enemy": "Remnant Official Saxophonist",
+            "enemy_id": "enemy_1243_ltswar_2",
+            "count": 1,
+            "time": 161,
+            "route": 9,
+            "fragment": 3
+          },
+          {
+            "enemy": "'Street Musician'",
+            "enemy_id": "enemy_1239_ltbow_2",
+            "count": 1,
+            "time": 182,
+            "route": 6,
+            "fragment": 4
+          },
+          {
+            "enemy": "Battleworn Spire Caster",
+            "enemy_id": "enemy_1241_ltmage_2",
+            "count": 1,
+            "time": 191,
+            "route": 10,
+            "fragment": 4
+          },
+          {
+            "enemy": "'Street Musician'",
+            "enemy_id": "enemy_1239_ltbow_2",
+            "count": 1,
+            "time": 195,
+            "route": 6,
+            "fragment": 4
+          },
+          {
+            "enemy": "Battleworn Spire Caster",
+            "enemy_id": "enemy_1241_ltmage_2",
+            "count": 2,
+            "time": 214,
+            "interval": 5,
+            "route": 10,
+            "fragment": 4
+          }
+        ]
+      }
+    ],
+    "spawnTiles": [
+      {
+        "key": "tile_start",
+        "row": 1,
+        "col": 0,
+        "routes": [
+          5,
+          8,
+          8
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 1,
+        "col": 10,
+        "routes": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          7,
+          6,
+          6,
+          6
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 5,
+        "col": 0,
+        "routes": [
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          9
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 5,
+        "col": 10,
+        "routes": [
+          10,
+          10
+        ]
+      }
+    ],
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 3,
+        "col": 5,
+        "routes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          1,
+          5,
+          6,
+          6,
+          6,
+          6,
+          6,
+          1,
+          7,
+          1,
+          8,
+          8,
+          1,
+          9,
+          6,
+          6,
+          10,
+          6,
+          10
+        ]
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_1238_ltmob_2",
+        "slug": "street_drunk",
+        "name": "'Street Drunk'",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1239_ltbow_2",
+        "slug": "street_musician",
+        "name": "'Street Musician'",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1240_ltgint_2",
+        "slug": "enhanced_mass_produced_colossus",
+        "name": "Enhanced Mass-Produced Colossus",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1241_ltmage_2",
+        "slug": "battleworn_spire_caster",
+        "name": "Battleworn Spire Caster",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1242_ltsmag_2",
+        "slug": "remnant_principal_violinist",
+        "name": "Remnant Principal Violinist",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1243_ltswar_2",
+        "slug": "remnant_official_saxophonist",
+        "name": "Remnant Official Saxophonist",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1246_aslime_2",
+        "slug": "blackwater_originium_slug_enemy_1246_aslime_2",
+        "name": "Blackwater Originium Slug α",
+        "database_level": 0
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [],
+      "deployable_tokens": []
+    },
+    "hasConditionalSpawns": false
+  },
+  "terrain": [],
+  "conditionalHandled": false,
+  "devices": [
+    {
+      "col": 5,
+      "description": "Continually releases Realigned Flux in the deployed direction",
+      "hidden": false,
+      "key": "trap_062_magicstart",
+      "kind": "device",
+      "name": "'Tuba'",
+      "row": 6,
+      "alias": "trap_062_magicstart#1",
+      "instance": {
+        "level": 1,
+        "skillLevel": 1,
+        "direction": "DOWN"
+      }
+    }
+  ],
+  "tokens": [],
+  "pathing": {
+    "schemaVersion": 1,
+    "syntheticRoutes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "producer": "Arkpedia stage browser / buildPlaybackPaths",
+    "stage": "LE-EX-6",
+    "geometryHash": "422fc30ad25300131fba9417dfaf42b19cdba9c2e9e2e02575d952292a5a05dc",
+    "moveScale": 0.65,
+    "paths": {
+      "0": {
+        "points": [
+          [
+            0,
+            5
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "1": {
+        "points": [
+          [
+            0,
+            5
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "2": {
+        "points": [
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "3": {
+        "points": [
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "4": {
+        "points": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "5": {
+        "points": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "6": {
+        "points": [
+          [
+            10,
+            1
+          ],
+          [
+            9,
+            1
+          ],
+          [
+            9,
+            5
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "7": {
+        "points": [
+          [
+            10,
+            1
+          ],
+          [
+            9,
+            1
+          ],
+          [
+            9,
+            3
+          ],
+          [
+            9,
+            5
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "8": {
+        "points": [
+          [
+            0,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "9": {
+        "points": [
+          [
+            0,
+            5
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "10": {
+        "points": [
+          [
+            10,
+            5
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      }
+    }
+  },
+  "art": null,
+  "gates": null,
+  "fixedSquad": null,
+  "enemies": {
+    "enemy_1243_ltswar_2": {
+      "key": "enemy_1243_ltswar_2",
+      "prefabKey": "enemy_1243_ltswar_2",
+      "name": "Remnant Official Saxophonist",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "ALL",
+      "stats": {
+        "maxHp": 20000,
+        "atk": 1000,
+        "def": 700,
+        "res": 20,
+        "moveSpeed": 0.8,
+        "bat": 4.5,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 4,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "When blowing at full force, fires ranged attacks in all 4 directions, dealing high Physical damage to allies hit. These attacks can be blocked by Realigned Flux",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [
+        {
+          "prefabKey": "FourDirAttack",
+          "priority": 1,
+          "cooldown": 20,
+          "initCooldown": 10,
+          "spCost": 0,
+          "bb": {
+            "atk_scale": 1.5
+          },
+          "bbStr": {}
+        }
+      ],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1246_aslime_2": {
+      "key": "enemy_1246_aslime_2",
+      "prefabKey": "enemy_1246_aslime_2",
+      "name": "Blackwater Originium Slug α",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 3500,
+        "atk": 370,
+        "def": 0,
+        "res": 0,
+        "moveSpeed": 1,
+        "bat": 1.7,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 0,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Can appear in the battlefield",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "infection"
+      ]
+    },
+    "enemy_1240_ltgint_2": {
+      "key": "enemy_1240_ltgint_2",
+      "prefabKey": "enemy_1240_ltgint_2",
+      "name": "Enhanced Mass-Produced Colossus",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 20000,
+        "atk": 800,
+        "def": 1400,
+        "res": 50,
+        "moveSpeed": 0.75,
+        "bat": 4,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 4,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": true,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Can only be blocked by units with at least 2 Block",
+          "format": "NORMAL"
+        },
+        {
+          "text": "When in Realigned Flux, DEF and RES are greatly reduced",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "Weak.def": -1200,
+          "Weak.magic_resistance": -50
+        },
+        "bbStr": {},
+        "groups": {
+          "Weak": [
+            "def",
+            "magic_resistance"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "originiumartscraft"
+      ]
+    },
+    "enemy_1238_ltmob_2": {
+      "key": "enemy_1238_ltmob_2",
+      "prefabKey": "enemy_1238_ltmob_2",
+      "name": "'Street Drunk'",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 4500,
+        "atk": 520,
+        "def": 50,
+        "res": 0,
+        "moveSpeed": 1.3,
+        "bat": 2.2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys",
+          "arts"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "When attacking targets outside of Realigned Flux, deals a certain percentage of Arts damage",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "ExAtk.atk_scale": 0.4
+        },
+        "bbStr": {},
+        "groups": {
+          "ExAtk": [
+            "atk_scale"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1239_ltbow_2": {
+      "key": "enemy_1239_ltbow_2",
+      "prefabKey": "enemy_1239_ltbow_2",
+      "name": "'Street Musician'",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 4000,
+        "atk": 360,
+        "def": 120,
+        "res": 10,
+        "moveSpeed": 0.9,
+        "bat": 3.5,
+        "aspd": 100,
+        "rangeRadius": 1.9,
+        "rawRangeRadius": 1.9,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "When attacking targets outside of Realigned Flux, deals an additional hit",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "ExAtk.times": 1
+        },
+        "bbStr": {},
+        "groups": {
+          "ExAtk": [
+            "times"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1242_ltsmag_2": {
+      "key": "enemy_1242_ltsmag_2",
+      "prefabKey": "enemy_1242_ltsmag_2",
+      "name": "Remnant Principal Violinist",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 18000,
+        "atk": 650,
+        "def": 550,
+        "res": 40,
+        "moveSpeed": 0.4,
+        "bat": 5,
+        "aspd": 100,
+        "rangeRadius": 2.4,
+        "rawRangeRadius": 2.4,
+        "blockCnt": 1,
+        "massLevel": 3,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "arts",
+        "dmgTypes": [
+          "arts"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Attacks can travel along Realigned Flux, dealing damage to all connected units",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "EmitProjectile.attack@atk_scale_2": 0.5,
+          "EmitProjectile.attack@max_target": 2
+        },
+        "bbStr": {},
+        "groups": {
+          "EmitProjectile": [
+            "attack@atk_scale_2",
+            "attack@max_target"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1241_ltmage_2": {
+      "key": "enemy_1241_ltmage_2",
+      "prefabKey": "enemy_1241_ltmage_2",
+      "name": "Battleworn Spire Caster",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 9000,
+        "atk": 780,
+        "def": 240,
+        "res": 65,
+        "moveSpeed": 0.6,
+        "bat": 7,
+        "aspd": 100,
+        "rangeRadius": 2.2,
+        "rawRangeRadius": 2.2,
+        "blockCnt": 1,
+        "massLevel": 2,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "arts",
+        "dmgTypes": [
+          "arts"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Attacks 2 enemies simultaneously",
+          "format": "NORMAL"
+        },
+        {
+          "text": "When attacking targets outside of Realigned Flux, deals Splash damage",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "AOEDamage.atk_scale": 1
+        },
+        "bbStr": {
+          "AOEDamage.range_id": "x-4"
+        },
+        "groups": {
+          "AOEDamage": [
+            "atk_scale",
+            "range_id"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    }
+  },
+  "contentAddition": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/le-ex-6.json",
+          "sha256": "85b29b5d7b178ae60e1e6826c13f30a725816670baf9aa85a43ce599cfa06bc0"
+        },
+        {
+          "path": "stage-geometry/le-ex-6.json",
+          "sha256": "422fc30ad25300131fba9417dfaf42b19cdba9c2e9e2e02575d952292a5a05dc"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        }
+      ],
+      "localFiles": [
+        {
+          "path": "data/stage-rules/le-ex-6.json",
+          "sha256": "7aaeac1cdf5c0df2bf2d0769ce14658170e1ba272d93c5d909230adac3206d5c"
+        },
+        {
+          "path": "data/stage-rules/levels/1dc425b127ad4a728634897ee8e376a18df8a97f910aed97037a2269052f4460.json",
+          "sha256": "1dc425b127ad4a728634897ee8e376a18df8a97f910aed97037a2269052f4460"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/439e85722a1101649006041fcb4192a4c717f8f5.json",
+          "sha256": "7966f2890be28fa014fc577ab0607424a564bdd923560d86b04e992e1c653dba"
+        },
+        {
+          "path": "data/arkpedia-device-source.json",
+          "sha256": "07f41d868c9727268a263e0213f4a73ec09a86c816efddc2ec55574cc5510b3c"
+        },
+        {
+          "path": "data/arkpedia-device-native-source.json",
+          "sha256": "0b0cff4f652f4d2a2ad874b3b67bf7b41f3cb7c01aa096e8a8334f34b0e4dc71"
+        },
+        {
+          "path": "data/arkpedia-environment-native-source.json",
+          "sha256": "f85082fa9b085a473e1424de3d2c6d0097ced0297de0636a62baf60789d76de2"
+        }
+      ]
+    },
+    "dependencies": {
+      "enemies": [
+        "enemy_1238_ltmob_2",
+        "enemy_1239_ltbow_2",
+        "enemy_1240_ltgint_2",
+        "enemy_1241_ltmage_2",
+        "enemy_1242_ltsmag_2",
+        "enemy_1243_ltswar_2",
+        "enemy_1246_aslime_2"
+      ],
+      "devices": [
+        "'Tuba'"
+      ],
+      "tokens": []
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 10,
+        "spawned": 1,
+        "errors": 0
+      },
+      "publicReview": "pending",
+      "waveSchedule": {
+        "id": "le-ex-6",
+        "seconds": 247.23333333333332,
+        "spawned": 29,
+        "expected": 29,
+        "dynamicSpawns": 0,
+        "reason": "cleared",
+        "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+      },
+      "browserStartup": {
+        "id": "le-ex-6",
+        "seconds": 20,
+        "errors": [],
+        "units": 4,
+        "canvas": true,
+        "scope": "Mobile landscape browser startup and canvas runtime; not a fidelity approval"
+      }
+    }
+  }
+}

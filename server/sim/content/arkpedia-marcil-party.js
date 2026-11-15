@@ -2,7 +2,6 @@
 // Source deck-talent diagnostic; Marcille's public kit remains unregistered.
 import { MARCIL_ID as ID, validateMarcilDefinition, marcilSourceComponent as component }
   from './arkpedia-marcil-source.js';
-import data from '../../../data/arkpedia-mvp.json' with { type: 'json' };
 
 export const MARCIL_PARTY_CONTRACT = Object.freeze({
   scope: 'Selected E2 squad talent for four Laios-party operator cards, including support and bench',
@@ -47,9 +46,7 @@ export function installMarcilParty(b, { contract } = {}) {
     const def = b.data.getChess(id);
     if (!def || def.id !== id || def.charId !== id || def.raw.arkpedia?.isToken
       || def.raw.isToken || !def.profession) continue;
-    const expected = id === ID ? record.tags : data.operators[id]?.factionTags
-      ?? [data.operators[id]?.nationId, data.operators[id]?.groupId, data.operators[id]?.teamId]
-        .filter(t => typeof t === 'string' && t);
+    const expected = id === ID ? record.tags : b.regularFactionTags?.[id] ?? [];
     if (def.tags.includes('laios') && !expected.includes('laios'))
       throw Error('Unreviewed Marcille party member source');
     if (expected.includes('laios') && JSON.stringify(def.tags) !== JSON.stringify(expected))

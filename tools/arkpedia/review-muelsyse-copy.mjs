@@ -91,7 +91,7 @@ try {
       }
       return r.continue();
     });
-    await page.goto(origin + '/arkpedia/', { waitUntil: 'domcontentloaded' });
+    await page.goto(origin + '/arkpedia/?snapshot=1', { waitUntil: 'domcontentloaded' });
     await page.waitForSelector('.roster-item.chosen');
     assert.equal(await page.$(`.roster-item[data-id="${ID}"]`), null);
     for (const id of await page.$$eval('.roster-item.chosen', es => es.map(e => e.dataset.id))) {

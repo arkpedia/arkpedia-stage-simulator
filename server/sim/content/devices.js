@@ -1,3 +1,4 @@
+import { updateMire } from './terrain-mire.js';
 // server/sim/content/devices.js — stage devices & special terrain (data/stages.json, research 05 §2.3–2.4).
 //
 // The engine already spawns active 阻隔工事 crates (obstacle devices, 100 HP) and marks active 射击台/mounds as
@@ -353,6 +354,7 @@ function enterTerrain(battle, st, u, code) {
   if (m.terrain === code) return;
   // leaving a tile ends its effect — except 活性源石's, which runs out on its own (touchInfection)
   if (m.terrain && m.terrain !== TERRAIN.infection) battle.removeBuff(u, BUFF[m.terrain]);
+  if (m.terrain === TERRAIN.mire) updateMire(battle, u, false);
   m.terrain = code;
   m.terrainSince = battle.time;
   m.mireStacks = 0;
@@ -380,7 +382,7 @@ function enterTerrain(battle, st, u, code) {
  * tick (infectionDamage) is true damage no unit deals (无来源), tagged 'terrain' = 环境伤害 (PRTS 自然环境 lists 活性源石),
  * not 'dot' [ASSUMED: PRTS 伤害分类's list of BUFF damage does not name it].
  */
-function touchInfection(battle, st, u) {
+export function touchInfection(battle, st, u) {
   const I = st.infection;
   const key = BUFF[TERRAIN.infection];
   const b = u.findBuff(key);
@@ -388,27 +390,8 @@ function touchInfection(battle, st, u) {
   battle.addBuff(u, { key, duration: I.duration, mods: { atkPct: I.atk, aspd: I.aspd }, interval: 1, onTick: infectionDamage(battle, I.damage) });
 }
 
-/** Layers an enemy gains per 【陷入沼泽】 trigger at 重量 ≥ heavyWeight (PRTS 沼泽控制: "若其重量大于等于3，改为获得2层"). */
-const MIRE_HEAVY_LAYERS = 2;
-
-/**
- * 沼泽 (PRTS 沼泽控制 备注): a unit in the mire triggers its 【陷入沼泽】 "每秒…一次" (the device skill charges in 1 s) — an
- * enemy gains 1 layer of ASPD −5 % and move speed −5 % (2 layers at 重量 ≥ heavyWeight, the skill's `value` 3), any other
- * unit 1 layer of ASPD −5 % only; at most 10 layers; "上述减益于单位不再位于沼泽之中时解除" (enterTerrain).
- * [ASSUMED] the first trigger comes on entering, then one every second.
- */
-function tickMire(battle, st, u) {
-  const M = st.mire, m = u.mem;
-  const due = 1 + Math.floor((battle.time - m.terrainSince + 1e-9) / M.interval);
-  if (due <= m.mireTriggers) return;
-  const enemy = u.side === 'enemy';
-  const per = enemy && num(u.s.massLevel, 0) >= M.heavyWeight ? MIRE_HEAVY_LAYERS : 1;
-  const n = Math.min(M.max, m.mireStacks + per * (due - m.mireTriggers));
-  m.mireTriggers = due;
-  if (n === m.mireStacks) return;
-  m.mireStacks = n;
-  battle.addBuff(u, { key: BUFF[TERRAIN.mire], refresh: 'replace', mods: enemy ? { aspd: M.aspdPer * n, moveMul: Math.max(0, 1 + M.movePer * n) } : { aspd: M.aspdPer * n } });
-}
+/** Original contact triggers immediately, then once per second. */
+function tickMire(battle, st, u) { updateMire(battle, u, true, st.mire); }
 
 /**
  * Terrain code under a unit (0 = none). Air units (Unit.isFlying: flyers, hovering 近地悬浮 and levitated enemies) and

@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-14",
+  "scope": "One-shot HP-checker buff for both Waker-Uppers; not native frame parity.",
+  "sourceFiles": [
+    {
+      "path": "shared/arkpedia/enemy-hp-buff-features.js",
+      "sha256": "de184a45587b46a68a156356689e7a2c131d452b804927eaba3753baadc327ca"
+    },
+    {
+      "path": "shared/arkpedia/enemy-features.js",
+      "sha256": "f22feb445220344aebd7489f06019cf893d54968842044b5dc73c65b67e0cdc2"
+    },
+    {
+      "path": "server/sim/content/arkpedia-enemy-hp-buff.js",
+      "sha256": "3d2f2084208dd7e947ab583b6eecb6bebd392270852d143c02df834f8098f256"
+    },
+    {
+      "path": "data/arkpedia-enemy-native-abilities.json",
+      "sha256": "2fa5372432fbac469e58e54b288064d48a816bcc8c40d2cf827cfae57aec8e33"
+    },
+    {
+      "path": "test/arkpedia-enemy-hp-buff.test.js",
+      "sha256": "ceb41e43fd43a71346163e95a4597fd0ad4d74c00ba13be2b7081ff3c16cfab7"
+    },
+    {
+      "path": "tools/arkpedia/extract-enemy-native-abilities.py",
+      "sha256": "93ef1896e34b33ff928fc9315ca6e47df54086380ae72731b0388c1b0f47cf64"
+    }
+  ],
+  "validation": {
+    "passed": 182,
+    "failed": 0,
+    "supportedEnemies": 613,
+    "newlySupported": [
+      "enemy_1264_durgrd",
+      "enemy_1264_durgrd_2"
+    ],
+    "availableStages": 793,
+    "newlyAvailableStages": [],
+    "note": "Rebuilding all source stages changes blocker details but adds no loadable stage; other mechanics still block their appearances."
+  },
+  "artworkReview": "data/arkpedia-reaction-enemy-artwork-review.json"
+}

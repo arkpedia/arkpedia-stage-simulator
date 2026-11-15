@@ -208,5 +208,7 @@ export function installWang({battle: b, unit: u, def}) {
   reviewed(b);
   const owner = u.mem.wangPrepared;
   if (!owner) throw Error('Missing selected Wang owner');
+  u.mem.regularSummonFactory = (battle, state, row, col) => createWangStone(battle, state, row, col);
+  u.mem.regularSummonAllowsEnemy = wangPlacementAllowsEnemy;
   delete u.mem.wangPrepared; owner.install();
 }

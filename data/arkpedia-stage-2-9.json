@@ -8,7 +8,8 @@
   "initial_dp": 10,
   "max_dp": 99,
   "dp_per_second": 1,
-  "dp_recovery_interval_seconds": 1
+  "dp_recovery_interval_seconds": 1,
+  "max_play_time": -1
  },
  "mapTags": [],
  "mapTagSource": null,
@@ -2402,5 +2403,88 @@
    "notCountInTotal": false,
    "tags": []
   }
+ },
+ "rules": {
+  "variant": null,
+  "source": {
+   "repository": "Kengxxiao/ArknightsGameData",
+   "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+   "path": "zh_CN/gamedata/levels/obt/main/level_main_02-09.json",
+   "sha256": "f4cb68b8281b6888fd1c4c46cefaecf03b4b5dd6b34a606b26f93c0a6f2fd8a8",
+   "gitBlob": "eb677c6852b889a4d694330174ea0e9b0d6aaaef",
+   "stageTable": {
+    "path": "zh_CN/gamedata/excel/stage_table.json",
+    "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+    "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+    "stageId": "main_02-09",
+    "levelId": "Obt/Main/level_main_02-09"
+   }
+  },
+  "battle": {
+   "max_play_time": -1
+  },
+  "enemies": {},
+  "enemyAdd": {},
+  "hiddenGroups": {}
+ },
+ "tokens": [],
+ "contentRuleRefresh": {
+  "schemaVersion": 1,
+  "source": {
+   "repository": "arkpedia/arkpedia-data",
+   "commit": "66232ee06377d791fb130248d680764c286e5c99",
+   "files": [
+    {
+     "path": "stages/2-9.json",
+     "sha256": "5b1c077c0058ae13507995862f95d761b765730ceb5c5c04b3ce8607894b99b4"
+    },
+    {
+     "path": "stage-geometry/2-9.json",
+     "sha256": "737de582195f0f19cefe443bddbc5b9fbd5d28ad9f6617efec6b4284703fde6f"
+    },
+    {
+     "path": "stage-devices.json",
+     "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+    }
+   ],
+   "localFiles": [
+    {
+     "path": "data/stage-rules/2-9.json",
+     "sha256": "b81fdb26a87b908c858c1f3db2c691337488e5cbd40b84235ed533b0eae31224"
+    },
+    {
+     "path": "data/stage-rules/levels/32c2378b70ca65ace127201e2d960cf5c1383761b4b167fb5947540e6aabfd85.json",
+     "sha256": "32c2378b70ca65ace127201e2d960cf5c1383761b4b167fb5947540e6aabfd85"
+    }
+   ]
+  },
+  "validation": {
+   "smoke": {
+    "seconds": 10,
+    "spawned": 0,
+    "errors": 0
+   },
+   "waveSchedule": {
+    "id": "2-9",
+    "seconds": 255.63333333333333,
+    "spawned": 52,
+    "expected": 52,
+    "reason": "cleared",
+    "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+   },
+   "browser": {
+    "id": "2-9",
+    "seconds": 20,
+    "errors": [],
+    "units": 3,
+    "canvas": true,
+    "scope": "Browser startup and 600 simulation ticks; not full gameplay or visual fidelity approval"
+   }
+  },
+  "changed": [
+   "rules",
+   "battle",
+   "tokens"
+  ]
  }
 }

@@ -133,6 +133,7 @@ export function customizeWindflitKit({ battle: b, id, def, unit: u, kit }) {
 }
 export function installWindflit({ battle: b, unit: u, def }) {
   if (def.charId !== ID) return;
+  u.mem.regularSummonFactory = createWindflitBattery;
   u.mem.windflitEmitted = null;
   b.on('deploy', () => syncOwner(b, u), { owner: u });
   b.on('death', ({ unit }) => { if (unit === u) {

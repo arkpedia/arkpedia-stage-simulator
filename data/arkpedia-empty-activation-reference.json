@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "scope": "Secondary public native-method evidence for failed predefined alias activation. Binary extraction and XLua overrides were not independently executed.",
+  "repository": "wfrfred/ArkBattle",
+  "commit": "097db62efa5d4d5a86bdc5268f5f426d6610dd8e",
+  "files": [
+    {
+      "url": "https://github.com/wfrfred/ArkBattle/blob/097db62efa5d4d5a86bdc5268f5f426d6610dd8e/docs/research/evidence/scheduler-action-fields-20261107/action-fields-bodies.json",
+      "gitBlob": "0daf528db4d528f69fe3a2f6ec97bfdba592fde7"
+    },
+    {
+      "url": "https://github.com/wfrfred/ArkBattle/blob/097db62efa5d4d5a86bdc5268f5f426d6610dd8e/docs/research/evidence/scheduler-action-fields-20261107/field-extra-bodies.json",
+      "gitBlob": "4b7c89a1b03c0a2b5548029e91ea23dc1915cda0"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Torappu.Battle.Scheduler.TryActivePredefined",
+      "address": "0x1809834c0",
+      "bytesSha256": "dbb4d20582cd54557a67b65edc97339cc48d04376a9924d8914c76a984111c56",
+      "finding": "Tries hidden-card activation and predefined-instance spawning. If neither succeeds, ordinary non-sandbox path logs an error and returns false."
+    },
+    {
+      "name": "Torappu.Battle.Scheduler/<_DoActivatePredefined>d__154.MoveNext",
+      "address": "0x18098cbc0",
+      "bytesSha256": "b9a176cd593d9d62332b76144e88973bf2ca32e28d770a42548be76b50553c5f",
+      "finding": "Ignores the TryActivePredefined return value, invokes the action callback and completes its coroutine. Exact yield timing is not certified by the simulator."
+    }
+  ]
+}

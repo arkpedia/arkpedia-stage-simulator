@@ -77,6 +77,7 @@ export function customizeAlannaKit({ battle: b, id, def, unit: u, kit }) {
 }
 export function installAlanna({ battle: b, unit: u, def }) {
   if (def.charId !== ID) return;
+  u.mem.regularSummonFactory = createAlannaDevice;
   // Native forceTick1/.1 owner aura has one talent buff across every device's
   // shared marker. Per-device DEF modifiers would incorrectly stack.
   b.every(.1, () => syncOwner(b, u), { owner: u });

@@ -1,0 +1,1011 @@
+{
+  "code": "SV-4",
+  "name": "Hundred-Metre Dash",
+  "description": "Condition:\nEnemies have increased Movement Speed.\nStage available from 9/29 10:00 A.M. to 10/9 3:59 A.M.",
+  "battle": {
+    "max_life": 1,
+    "unit_limit": 8,
+    "initial_dp": 10,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1
+  },
+  "rules": {
+    "variant": "challenge_mode",
+    "source": {
+      "repository": "Kengxxiao/ArknightsGameData",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "path": "zh_CN/gamedata/levels/activities/act10d5/level_act10d5_04.json",
+      "sha256": "131063da5a7c3329216718269d89e990e294977ce233a2bacc4ce19f2287ba28",
+      "gitBlob": "5ae1666ed09166f08a17049a914e94848dd1201f",
+      "stageTable": {
+        "path": "zh_CN/gamedata/excel/stage_table.json",
+        "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+        "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+        "stageId": "act10d5_04",
+        "levelId": "Activities/ACT10d5/level_act10d5_04"
+      }
+    },
+    "battle": {
+      "max_life": 1
+    },
+    "enemies": {
+      "atk": 1,
+      "def": 1.1,
+      "maxHp": 1.2,
+      "moveSpeed": 1.5
+    },
+    "enemyAdd": {},
+    "hiddenGroups": {}
+  },
+  "mapTags": [],
+  "mapTagSource": null,
+  "geometry": {
+    "slug": "sv-4_act10d5_04",
+    "rows": 8,
+    "cols": 11,
+    "tileLegend": [
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_floor",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      },
+      {
+        "key": "tile_fence",
+        "height": "low",
+        "walkable": false,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_start",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      }
+    ],
+    "tileGrid": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        2,
+        2,
+        3,
+        3,
+        0,
+        1,
+        1,
+        4,
+        5
+      ],
+      [
+        0,
+        1,
+        0,
+        1,
+        1,
+        1,
+        3,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        1,
+        3,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        2,
+        2,
+        2,
+        2,
+        2,
+        0,
+        0,
+        1,
+        0
+      ],
+      [
+        6,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "routes": [
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 0
+        },
+        "end": {
+          "row": 2,
+          "col": 10
+        },
+        "checkpoints": [],
+        "waits": []
+      }
+    ],
+    "waves": [
+      {
+        "index": 0,
+        "duration": 219,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Hound Pro",
+            "enemy_id": "enemy_1000_gopro_2",
+            "count": 2,
+            "time": 3,
+            "interval": 3,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Hound Pro",
+            "enemy_id": "enemy_1000_gopro_2",
+            "count": 2,
+            "time": 7,
+            "interval": 3,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Hound Pro",
+            "enemy_id": "enemy_1000_gopro_2",
+            "count": 3,
+            "time": 17,
+            "interval": 3,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Breaker",
+            "enemy_id": "enemy_1039_breakr",
+            "count": 3,
+            "time": 25,
+            "interval": 3,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Breaker",
+            "enemy_id": "enemy_1039_breakr",
+            "count": 3,
+            "time": 33,
+            "interval": 3,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Breaker",
+            "enemy_id": "enemy_1039_breakr",
+            "count": 2,
+            "time": 57,
+            "interval": 2,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Breaker",
+            "enemy_id": "enemy_1039_breakr",
+            "count": 2,
+            "time": 61,
+            "interval": 2,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Sarkaz Lancer",
+            "enemy_id": "enemy_1072_dlancer",
+            "count": 2,
+            "time": 69,
+            "interval": 1,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Breaker",
+            "enemy_id": "enemy_1039_breakr",
+            "count": 3,
+            "time": 79,
+            "interval": 3,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Sarkaz Lancer",
+            "enemy_id": "enemy_1072_dlancer",
+            "count": 2,
+            "time": 89,
+            "interval": 1,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Breaker",
+            "enemy_id": "enemy_1039_breakr",
+            "count": 3,
+            "time": 94,
+            "interval": 3,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Breaker",
+            "enemy_id": "enemy_1039_breakr",
+            "count": 2,
+            "time": 118,
+            "interval": 2,
+            "route": 0,
+            "fragment": 2
+          },
+          {
+            "enemy": "Breaker",
+            "enemy_id": "enemy_1039_breakr",
+            "count": 3,
+            "time": 123,
+            "interval": 2,
+            "route": 0,
+            "fragment": 2
+          },
+          {
+            "enemy": "Wraith",
+            "enemy_id": "enemy_1008_ghost",
+            "count": 3,
+            "time": 130,
+            "interval": 3,
+            "route": 0,
+            "fragment": 2
+          },
+          {
+            "enemy": "Breaker",
+            "enemy_id": "enemy_1039_breakr",
+            "count": 4,
+            "time": 140,
+            "interval": 2,
+            "route": 0,
+            "fragment": 2
+          },
+          {
+            "enemy": "Wraith",
+            "enemy_id": "enemy_1008_ghost",
+            "count": 4,
+            "time": 150,
+            "interval": 2,
+            "route": 0,
+            "fragment": 2
+          },
+          {
+            "enemy": "Breaker",
+            "enemy_id": "enemy_1039_breakr",
+            "count": 4,
+            "time": 155,
+            "interval": 2,
+            "route": 0,
+            "fragment": 2
+          },
+          {
+            "enemy": "Wraith",
+            "enemy_id": "enemy_1008_ghost",
+            "count": 4,
+            "time": 150,
+            "interval": 2,
+            "route": 0,
+            "fragment": 2
+          },
+          {
+            "enemy": "Sarkaz Lancer",
+            "enemy_id": "enemy_1072_dlancer",
+            "count": 2,
+            "time": 179,
+            "interval": 1,
+            "route": 0,
+            "fragment": 3
+          },
+          {
+            "enemy": "Wraith",
+            "enemy_id": "enemy_1008_ghost",
+            "count": 2,
+            "time": 184,
+            "interval": 2,
+            "route": 0,
+            "fragment": 3
+          },
+          {
+            "enemy": "Sarkaz Lancer",
+            "enemy_id": "enemy_1072_dlancer",
+            "count": 2,
+            "time": 191,
+            "interval": 1,
+            "route": 0,
+            "fragment": 3
+          },
+          {
+            "enemy": "Wraith",
+            "enemy_id": "enemy_1008_ghost",
+            "count": 2,
+            "time": 201,
+            "interval": 2,
+            "route": 0,
+            "fragment": 3
+          },
+          {
+            "enemy": "Bully",
+            "enemy_id": "enemy_1058_traink",
+            "count": 2,
+            "time": 186,
+            "interval": 2,
+            "route": 0,
+            "fragment": 3
+          },
+          {
+            "enemy": "Breaker",
+            "enemy_id": "enemy_1039_breakr",
+            "count": 2,
+            "time": 196,
+            "interval": 3,
+            "route": 0,
+            "fragment": 3
+          },
+          {
+            "enemy": "Breaker",
+            "enemy_id": "enemy_1039_breakr",
+            "count": 2,
+            "time": 206,
+            "interval": 3,
+            "route": 0,
+            "fragment": 3
+          },
+          {
+            "enemy": "Breaker",
+            "enemy_id": "enemy_1039_breakr",
+            "count": 2,
+            "time": 216,
+            "interval": 3,
+            "route": 0,
+            "fragment": 3
+          }
+        ]
+      }
+    ],
+    "spawnTiles": [
+      {
+        "key": "tile_start",
+        "row": 6,
+        "col": 0,
+        "routes": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 2,
+        "col": 10,
+        "routes": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_1000_gopro_2",
+        "slug": "hound_pro",
+        "name": "Hound Pro",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1008_ghost",
+        "slug": "wraith",
+        "name": "Wraith",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1039_breakr",
+        "slug": "breaker",
+        "name": "Breaker",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1058_traink",
+        "slug": "bully",
+        "name": "Bully",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1072_dlancer",
+        "slug": "sarkaz_lancer",
+        "name": "Sarkaz Lancer",
+        "database_level": 0
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [],
+      "deployable_tokens": []
+    },
+    "hasConditionalSpawns": false,
+    "source": "cn"
+  },
+  "terrain": [],
+  "conditionalHandled": false,
+  "devices": [
+    {
+      "col": 2,
+      "description": null,
+      "hidden": false,
+      "key": "trap_013_blower",
+      "kind": "device",
+      "name": "Originium Flow Generator",
+      "row": 3,
+      "alias": "trap_013_blower#1",
+      "instance": {
+        "level": 1,
+        "skillLevel": 1,
+        "direction": "RIGHT"
+      }
+    },
+    {
+      "col": 6,
+      "description": null,
+      "hidden": false,
+      "key": "trap_013_blower",
+      "kind": "device",
+      "name": "Originium Flow Generator",
+      "row": 2,
+      "alias": "trap_013_blower#2",
+      "instance": {
+        "level": 1,
+        "skillLevel": 1,
+        "direction": "RIGHT"
+      }
+    }
+  ],
+  "tokens": [],
+  "pathing": {
+    "schemaVersion": 1,
+    "syntheticRoutes": [
+      0
+    ],
+    "producer": "Arkpedia stage browser / buildPlaybackPaths",
+    "stage": "SV-4",
+    "geometryHash": "b2e25bc120be4f399705727f9ae4d3c4642ab707cf0a5309ef62cae2d8ad78ef",
+    "moveScale": 0.65,
+    "paths": {
+      "0": {
+        "points": [
+          [
+            0,
+            6
+          ],
+          [
+            10,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1
+        ],
+        "breaks": [],
+        "holds": []
+      }
+    }
+  },
+  "art": null,
+  "gates": null,
+  "fixedSquad": null,
+  "enemies": {
+    "enemy_1000_gopro_2": {
+      "key": "enemy_1000_gopro_2",
+      "prefabKey": "enemy_1000_gopro_2",
+      "name": "Hound Pro",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 2040,
+        "atk": 260,
+        "def": 0,
+        "res": 20,
+        "moveSpeed": 2.8499999999999996,
+        "bat": 1.4,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 0,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "infection"
+      ]
+    },
+    "enemy_1039_breakr": {
+      "key": "enemy_1039_breakr",
+      "prefabKey": "enemy_1039_breakr",
+      "name": "Breaker",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 4200,
+        "atk": 410,
+        "def": 55.00000000000001,
+        "res": 25,
+        "moveSpeed": 2.8499999999999996,
+        "bat": 1.4,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 2.2,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1072_dlancer": {
+      "key": "enemy_1072_dlancer",
+      "prefabKey": "enemy_1072_dlancer",
+      "name": "Sarkaz Lancer",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 7200,
+        "atk": 450,
+        "def": 165,
+        "res": 40,
+        "moveSpeed": 0.375,
+        "bat": 4,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 3,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Gradually accelerates when moving, and deals additional damage on the first attack after being blocked based upon Movement Speed.",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "rush.dlancer_t[trigger].move_speed": 0.5,
+          "rush.dlancer_t[trigger].interval": 0.5,
+          "rush.dlancer_t[trigger].trig_cnt": 25,
+          "firstattack.atk_scale": 600
+        },
+        "bbStr": {},
+        "groups": {
+          "rush": [
+            "dlancer_t[trigger].interval",
+            "dlancer_t[trigger].move_speed",
+            "dlancer_t[trigger].trig_cnt"
+          ],
+          "firstattack": [
+            "atk_scale"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "sarkaz"
+      ]
+    },
+    "enemy_1008_ghost": {
+      "key": "enemy_1008_ghost",
+      "prefabKey": "enemy_1008_ghost",
+      "name": "Wraith",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "NONE",
+      "stats": {
+        "maxHp": 2760,
+        "atk": 100,
+        "def": 132,
+        "res": 35,
+        "moveSpeed": 1.7999999999999998,
+        "bat": 1,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "none",
+        "dmgTypes": [
+          "none"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Cannot be blocked.",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1058_traink": {
+      "key": "enemy_1058_traink",
+      "prefabKey": "enemy_1058_traink",
+      "name": "Bully",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 19200,
+        "atk": 800,
+        "def": 880.0000000000001,
+        "res": 20,
+        "moveSpeed": 1.7999999999999998,
+        "bat": 3.5,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 4,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Can only be blocked by Operators with 3 or more Block",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    }
+  },
+  "contentAddition": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/sv-4_challenge_mode.json",
+          "sha256": "9f9f6f6d9565c582ac3bc21430174b7a8bde1a7d1649fe75c59dd560ae821a7b"
+        },
+        {
+          "path": "stage-geometry/sv-4_act10d5_04.json",
+          "sha256": "b2e25bc120be4f399705727f9ae4d3c4642ab707cf0a5309ef62cae2d8ad78ef"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        }
+      ],
+      "localFiles": [
+        {
+          "path": "data/stage-rules/sv-4_challenge_mode.json",
+          "sha256": "dcc93f788dac322819844ab85f8a579b71552e3c999c730fb99d61688fa4402f"
+        },
+        {
+          "path": "data/stage-rules/levels/37aa0f05b1cda6af0ed1276ad297b2c26310ed188a7d7f4b332519a1049d8d53.json",
+          "sha256": "37aa0f05b1cda6af0ed1276ad297b2c26310ed188a7d7f4b332519a1049d8d53"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/5ae1666ed09166f08a17049a914e94848dd1201f.json",
+          "sha256": "131063da5a7c3329216718269d89e990e294977ce233a2bacc4ce19f2287ba28"
+        },
+        {
+          "path": "data/arkpedia-device-source.json",
+          "sha256": "589876c694836e6156390379373e5018d8e44fb136b5a07ffc1965e8646fe471"
+        },
+        {
+          "path": "data/arkpedia-device-native-source.json",
+          "sha256": "232401d42b535d4a146e6daa8bbd47e4e19e900fb9c6b7d2773019da0190d040"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/5ae1666ed09166f08a17049a914e94848dd1201f.json",
+          "sha256": "131063da5a7c3329216718269d89e990e294977ce233a2bacc4ce19f2287ba28"
+        }
+      ]
+    },
+    "dependencies": {
+      "enemies": [
+        "enemy_1000_gopro_2",
+        "enemy_1008_ghost",
+        "enemy_1039_breakr",
+        "enemy_1058_traink",
+        "enemy_1072_dlancer"
+      ],
+      "devices": [
+        "Originium Flow Generator"
+      ],
+      "tokens": []
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 10,
+        "spawned": 3,
+        "errors": 0
+      },
+      "publicReview": "pending",
+      "waveSchedule": {
+        "id": "sv-4_challenge_mode",
+        "seconds": 237.83333333333334,
+        "spawned": 67,
+        "expected": 67,
+        "dynamicSpawns": 0,
+        "reason": "cleared",
+        "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+      },
+      "browserStartup": {
+        "id": "sv-4_challenge_mode",
+        "seconds": 20,
+        "errors": [],
+        "units": 7,
+        "canvas": true,
+        "scope": "Mobile landscape browser startup and canvas runtime; not a fidelity approval"
+      }
+    }
+  }
+}

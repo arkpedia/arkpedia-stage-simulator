@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Source-fed mine/deck adapter; native compiled event dispatch is unverified.
+import { stageSummonCost, stageCardRespawnTime } from './arkpedia-stage-card-cost.js';
 import evidence from '../../../data/arkpedia-ela-prefabs.json' with { type: 'json' };
 import { sourceCandidate } from '../../../shared/arkpedia/summons.js';
-import { summonPlacementError } from './arkpedia-summons.js';
+import { summonPlacementError } from './arkpedia-summon-deck.js';
 import { bodyInRadius } from '../body.js';
 import { canTargetEnemy } from '../targeting.js';
 
@@ -134,8 +135,8 @@ export class ElaMineDeck {
     if (error) throw Error(error);
     const token = this._create(row, col);
     if (!token) throw Error('Ela mine placement failed.');
-    this.b.getPlayer(this.u.ownerId).dp -= this.record.stats.cost;
-    this.state.stock--; this.state.readyAt = this.b.time + this.record.stats.respawnTime;
+    this.b.getPlayer(this.u.ownerId).dp -= stageSummonCost(this.b, this.record);
+    this.state.stock--; this.state.readyAt = this.b.time + stageCardRespawnTime(this.b, this.record);
     this.syncStock(); return token;
   }
   _create(row, col) {

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { stageSummonCost, stageCardRespawnTime } from './arkpedia-stage-card-cost.js';
 import { canSpendDp } from './arkpedia-dp-budget.js';
 // Selected-source diagnostic. Complete skills/art/public approval stay separate.
 import evidence from '../../../data/arkpedia-magallan-prefabs.json' with { type: 'json' };
@@ -66,7 +67,7 @@ export function selectedMagallanBuild(build) {
   tokenStats.maxDeployCount += stock.max_deploy_count ?? 0;
   tokenStats.maxDeckStackCnt += stock.max_deck_stack_cnt ?? 0;
   const tokenSkill = evidence.tables.tokenSkills[`sktok_mgllan_drone${index + 1}`].levels[build.skillRank - 1];
-  const token = { id: tokenId, name: tokenSource.name, position: tokenSource.position, stats: tokenStats,
+  const token = { id: tokenId, name: tokenSource.name, profession: tokenSource.profession, position: tokenSource.position, stats: tokenStats,
     rangeGrid: grid(tokenPhase.rangeId), talents: tokenTalents,
     skill: { ...tokenSkill, ...tokenSkill.spData, skillId: tokenSkill.prefabId, trigger: { rule: 'NEVER' } } };
   return { build: { ...build }, index, source, bb: flat(source.blackboard), stats, talents,
@@ -225,7 +226,7 @@ export class MagallanDroneDeck {
       return position === 'MELEE' ? 'Choose a melee tile.' : position === 'RANGED' ? 'Choose a high-ground tile.' : 'Choose a deployable tile.';
     if (b.allyUnits.some(t => present(t) && t.tileR === row && t.tileC === col)) return 'Tile is occupied.';
     if (b.tileReservation(row, col)) return 'Tile is reserved for an operator return.';
-    if (!canSpendDp(b, this.u.ownerId, this.record.stats.cost)) return 'Not enough DP.';
+    if (!canSpendDp(b, this.u.ownerId, stageSummonCost(this.b, this.record))) return 'Not enough DP.';
     return null;
   }
   place(row, col, dir = 'RIGHT') {
@@ -252,8 +253,8 @@ export class MagallanDroneDeck {
       throw Error('Drone owner became unavailable.');
     }
     this.attacks.set(t, attack); this.stock--;
-    this.u.player.dp -= this.record.stats.cost;
-    this.readyAt = b.time + this.record.stats.respawnTime;
+    this.u.player.dp -= stageSummonCost(this.b, this.record);
+    this.readyAt = b.time + stageCardRespawnTime(this.b, this.record);
     core.skills?.syncToken(t);
     return t;
   }
@@ -273,7 +274,7 @@ export class MagallanDroneDeck {
     attack.stop(); this.attacks.delete(t);
     if (this.recycling.has(t) && this.core.valid()) {
       this.stock = Math.min(this.record.stats.maxDeckStackCnt, this.stock + 1);
-      this.readyAt = this.b.time + this.record.stats.respawnTime;
+      this.readyAt = this.b.time + stageCardRespawnTime(this.b, this.record);
     }
   }
   tick() { for (const attack of this.attacks.values()) attack.tick(); }

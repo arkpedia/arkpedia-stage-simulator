@@ -1,0 +1,1221 @@
+{
+  "code": "AW-S-2",
+  "name": "The Journey",
+  "description": "Has he brought light, or simply revealed that others walk in darkness?\n<Fixed Squad> You may only deploy certain Operators.\n<Mr. Boom> Stun all enemies in the four adjacent tiles for a long duration.",
+  "battle": {
+    "max_life": 3,
+    "unit_limit": 8,
+    "initial_dp": 20,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1,
+    "max_play_time": -1
+  },
+  "rules": {
+    "variant": null,
+    "source": {
+      "repository": "Kengxxiao/ArknightsGameData",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "path": "zh_CN/gamedata/levels/activities/act12mini/level_act12mini_sub-2-1.json",
+      "sha256": "550c73a5ebafc882ca4beabf0a036024824b4123832369ca3b7b002bcaba2bf6",
+      "gitBlob": "187182bec87daadc3c11640d4a267e039f43fbeb",
+      "stageTable": {
+        "path": "zh_CN/gamedata/excel/stage_table.json",
+        "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+        "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+        "stageId": "act12mini_s02",
+        "levelId": "Activities/act12mini/level_act12mini_sub-2-1"
+      }
+    },
+    "battle": {
+      "max_play_time": -1
+    },
+    "enemies": {},
+    "enemyAdd": {},
+    "hiddenGroups": {}
+  },
+  "mapTags": [],
+  "mapTagSource": null,
+  "geometry": {
+    "slug": "aw-s-2",
+    "rows": 7,
+    "cols": 11,
+    "tileLegend": [
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_start",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      }
+    ],
+    "tileGrid": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        2,
+        0,
+        0,
+        3,
+        2,
+        0,
+        0,
+        0,
+        2,
+        1
+      ],
+      [
+        0,
+        2,
+        0,
+        0,
+        0,
+        2,
+        2,
+        4,
+        4,
+        2,
+        0
+      ],
+      [
+        0,
+        2,
+        2,
+        2,
+        2,
+        0,
+        2,
+        2,
+        4,
+        2,
+        0
+      ],
+      [
+        0,
+        0,
+        4,
+        4,
+        2,
+        2,
+        0,
+        2,
+        2,
+        2,
+        0
+      ],
+      [
+        0,
+        0,
+        4,
+        4,
+        4,
+        2,
+        2,
+        0,
+        4,
+        4,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "routes": [
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 0
+        },
+        "end": {
+          "row": 6,
+          "col": 6
+        },
+        "checkpoints": [],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 10
+        },
+        "end": {
+          "row": 1,
+          "col": 4
+        },
+        "checkpoints": [],
+        "waits": []
+      }
+    ],
+    "waves": [
+      {
+        "index": 0,
+        "duration": 89,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Nameless Elite Knight",
+            "enemy_id": "enemy_1099_nbkght_2",
+            "count": 2,
+            "time": 5,
+            "interval": 5,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Nameless Elite Knight",
+            "enemy_id": "enemy_1099_nbkght_2",
+            "count": 2,
+            "time": 20,
+            "interval": 5,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Nameless Elite Knight",
+            "enemy_id": "enemy_1099_nbkght_2",
+            "count": 2,
+            "time": 35,
+            "interval": 2,
+            "route": 0,
+            "fragment": 2
+          },
+          {
+            "enemy": "'Street Musician'",
+            "enemy_id": "enemy_1239_ltbow_2",
+            "count": 1,
+            "time": 41,
+            "route": 0,
+            "fragment": 2
+          },
+          {
+            "enemy": "Nameless Elite Knight",
+            "enemy_id": "enemy_1099_nbkght_2",
+            "count": 2,
+            "time": 51,
+            "interval": 2,
+            "route": 0,
+            "fragment": 3
+          },
+          {
+            "enemy": "Remnant Violinist",
+            "enemy_id": "enemy_1242_ltsmag",
+            "count": 1,
+            "time": 57,
+            "route": 0,
+            "fragment": 3
+          },
+          {
+            "enemy": "Elite Knight Shielder",
+            "enemy_id": "enemy_1102_sdkght_2",
+            "count": 3,
+            "time": 63,
+            "interval": 4,
+            "route": 1,
+            "fragment": 4
+          },
+          {
+            "enemy": "Nameless Elite Knight",
+            "enemy_id": "enemy_1099_nbkght_2",
+            "count": 2,
+            "time": 80,
+            "interval": 1,
+            "route": 0,
+            "fragment": 5
+          },
+          {
+            "enemy": "Roar Knightclub Elite",
+            "enemy_id": "enemy_1101_plkght_2",
+            "count": 2,
+            "time": 84,
+            "interval": 1,
+            "route": 0,
+            "fragment": 5
+          },
+          {
+            "enemy": "Nameless Elite Knight",
+            "enemy_id": "enemy_1099_nbkght_2",
+            "count": 2,
+            "time": 88,
+            "interval": 1,
+            "route": 0,
+            "fragment": 5
+          }
+        ]
+      },
+      {
+        "index": 1,
+        "duration": 81,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Nameless Elite Knight",
+            "enemy_id": "enemy_1099_nbkght_2",
+            "count": 3,
+            "time": 6,
+            "interval": 3,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Bloodboil Knightclub Elite",
+            "enemy_id": "enemy_1103_wdkght_2",
+            "count": 1,
+            "time": 6,
+            "route": 1,
+            "fragment": 0
+          },
+          {
+            "enemy": "Remnant Violinist",
+            "enemy_id": "enemy_1242_ltsmag",
+            "count": 1,
+            "time": 24,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Nameless Elite Knight",
+            "enemy_id": "enemy_1099_nbkght_2",
+            "count": 2,
+            "time": 24,
+            "interval": 1,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Nameless Elite Knight",
+            "enemy_id": "enemy_1099_nbkght_2",
+            "count": 2,
+            "time": 34,
+            "interval": 1,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Nameless Elite Knight",
+            "enemy_id": "enemy_1099_nbkght_2",
+            "count": 2,
+            "time": 38,
+            "interval": 1,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Elite Knight Shielder",
+            "enemy_id": "enemy_1102_sdkght_2",
+            "count": 2,
+            "time": 24,
+            "interval": 4,
+            "route": 1,
+            "fragment": 1
+          },
+          {
+            "enemy": "Nameless Elite Knight",
+            "enemy_id": "enemy_1099_nbkght_2",
+            "count": 2,
+            "time": 51,
+            "interval": 1,
+            "route": 0,
+            "fragment": 2
+          },
+          {
+            "enemy": "Roar Knightclub Elite",
+            "enemy_id": "enemy_1101_plkght_2",
+            "count": 2,
+            "time": 55,
+            "interval": 1,
+            "route": 0,
+            "fragment": 2
+          },
+          {
+            "enemy": "Elite Knight Shielder",
+            "enemy_id": "enemy_1102_sdkght_2",
+            "count": 1,
+            "time": 51,
+            "route": 1,
+            "fragment": 2
+          },
+          {
+            "enemy": "Remnant Violinist",
+            "enemy_id": "enemy_1242_ltsmag",
+            "count": 1,
+            "time": 71,
+            "route": 0,
+            "fragment": 3
+          },
+          {
+            "enemy": "Remnant Violinist",
+            "enemy_id": "enemy_1242_ltsmag",
+            "count": 1,
+            "time": 81,
+            "route": 0,
+            "fragment": 3
+          },
+          {
+            "enemy": "Bloodboil Knightclub Elite",
+            "enemy_id": "enemy_1103_wdkght_2",
+            "count": 2,
+            "time": 76,
+            "interval": 5,
+            "route": 1,
+            "fragment": 3
+          }
+        ]
+      }
+    ],
+    "spawnTiles": [
+      {
+        "key": "tile_start",
+        "row": 1,
+        "col": 0,
+        "routes": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 1,
+        "col": 10,
+        "routes": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    ],
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 1,
+        "col": 4,
+        "routes": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "key": "tile_end",
+        "row": 6,
+        "col": 6,
+        "routes": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_1099_nbkght_2",
+        "slug": "nameless_elite_knight",
+        "name": "Nameless Elite Knight",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1101_plkght_2",
+        "slug": "roar_knightclub_elite",
+        "name": "Roar Knightclub Elite",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1102_sdkght_2",
+        "slug": "elite_knight_shielder",
+        "name": "Elite Knight Shielder",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1103_wdkght_2",
+        "slug": "bloodboil_knightclub_elite",
+        "name": "Bloodboil Knightclub Elite",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1239_ltbow_2",
+        "slug": "street_musician",
+        "name": "'Street Musician'",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1242_ltsmag",
+        "slug": "remnant_violinist",
+        "name": "Remnant Violinist",
+        "database_level": 0
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [
+        {
+          "unit": "Młynar",
+          "unit_id": "char_4064_mlynar",
+          "level": 90,
+          "elite": 2,
+          "potential": 0,
+          "skill_index": 2,
+          "skill_level": 10
+        },
+        {
+          "unit": "Texas",
+          "unit_id": "char_102_texas",
+          "level": 30,
+          "elite": 2,
+          "potential": 0,
+          "skill_index": 1,
+          "skill_level": 7
+        },
+        {
+          "unit": "Cuora",
+          "unit_id": "char_150_snakek",
+          "level": 30,
+          "elite": 2,
+          "potential": 0,
+          "skill_index": 1,
+          "skill_level": 7
+        },
+        {
+          "unit": "Nearl",
+          "unit_id": "char_148_nearl",
+          "level": 30,
+          "elite": 2,
+          "potential": 0,
+          "skill_index": 0,
+          "skill_level": 7
+        },
+        {
+          "unit": "Ptilopsis",
+          "unit_id": "char_128_plosis",
+          "level": 30,
+          "elite": 2,
+          "potential": 0,
+          "skill_index": 1,
+          "skill_level": 7
+        },
+        {
+          "unit": "Silence",
+          "unit_id": "char_108_silent",
+          "level": 30,
+          "elite": 2,
+          "potential": 0,
+          "skill_index": 1,
+          "skill_level": 7
+        },
+        {
+          "unit": "Croissant",
+          "unit_id": "char_201_moeshd",
+          "level": 30,
+          "elite": 2,
+          "potential": 0,
+          "skill_index": 1,
+          "skill_level": 7
+        }
+      ],
+      "deployable_tokens": [
+        {
+          "unit": "Mr. Boom",
+          "unit_id": "trap_018_bomb",
+          "count": 5,
+          "level": 1,
+          "elite": 0,
+          "potential": 0,
+          "skill_index": 0,
+          "skill_level": 1
+        }
+      ]
+    },
+    "hasConditionalSpawns": false,
+    "source": "cn"
+  },
+  "terrain": [],
+  "conditionalHandled": false,
+  "devices": [],
+  "tokens": [
+    {
+      "unitId": "trap_018_bomb",
+      "name": "Mr. Boom",
+      "count": 5,
+      "groundBuildOnly": true,
+      "supplyCard": true,
+      "cooldown": 5,
+      "maxActive": 1,
+      "release": 2,
+      "stun": 12,
+      "range": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          -1,
+          0
+        ]
+      ],
+      "cost": 5,
+      "hp": 100,
+      "def": 0,
+      "block": 0,
+      "position": "NONE",
+      "behavior": "stun-pulse"
+    }
+  ],
+  "pathing": {
+    "schemaVersion": 1,
+    "syntheticRoutes": [
+      0,
+      1
+    ],
+    "producer": "Arkpedia stage browser / buildPlaybackPaths",
+    "stage": "AW-S-2",
+    "geometryHash": "44bbb5bf0b17728dfa1539c015d6556e3fda2c63d0def9c05397aac7b12d83eb",
+    "moveScale": 0.65,
+    "paths": {
+      "0": {
+        "points": [
+          [
+            0,
+            1
+          ],
+          [
+            6,
+            6
+          ]
+        ],
+        "distances": [
+          0,
+          1
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "1": {
+        "points": [
+          [
+            10,
+            1
+          ],
+          [
+            4,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1
+        ],
+        "breaks": [],
+        "holds": []
+      }
+    }
+  },
+  "art": null,
+  "gates": null,
+  "fixedSquad": [
+    {
+      "unit": "Młynar",
+      "unit_id": "char_4064_mlynar",
+      "level": 90,
+      "elite": 2,
+      "potential": 0,
+      "skill_index": 2,
+      "skill_level": 10
+    },
+    {
+      "unit": "Texas",
+      "unit_id": "char_102_texas",
+      "level": 30,
+      "elite": 2,
+      "potential": 0,
+      "skill_index": 1,
+      "skill_level": 7
+    },
+    {
+      "unit": "Cuora",
+      "unit_id": "char_150_snakek",
+      "level": 30,
+      "elite": 2,
+      "potential": 0,
+      "skill_index": 1,
+      "skill_level": 7
+    },
+    {
+      "unit": "Nearl",
+      "unit_id": "char_148_nearl",
+      "level": 30,
+      "elite": 2,
+      "potential": 0,
+      "skill_index": 0,
+      "skill_level": 7
+    },
+    {
+      "unit": "Ptilopsis",
+      "unit_id": "char_128_plosis",
+      "level": 30,
+      "elite": 2,
+      "potential": 0,
+      "skill_index": 1,
+      "skill_level": 7
+    },
+    {
+      "unit": "Silence",
+      "unit_id": "char_108_silent",
+      "level": 30,
+      "elite": 2,
+      "potential": 0,
+      "skill_index": 1,
+      "skill_level": 7
+    },
+    {
+      "unit": "Croissant",
+      "unit_id": "char_201_moeshd",
+      "level": 30,
+      "elite": 2,
+      "potential": 0,
+      "skill_index": 1,
+      "skill_level": 7
+    }
+  ],
+  "enemies": {
+    "enemy_1099_nbkght_2": {
+      "key": "enemy_1099_nbkght_2",
+      "prefabKey": "enemy_1099_nbkght_2",
+      "name": "Nameless Elite Knight",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 3800,
+        "atk": 360,
+        "def": 150,
+        "res": 0,
+        "moveSpeed": 1.1,
+        "bat": 2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1239_ltbow_2": {
+      "key": "enemy_1239_ltbow_2",
+      "prefabKey": "enemy_1239_ltbow_2",
+      "name": "'Street Musician'",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 4000,
+        "atk": 360,
+        "def": 120,
+        "res": 10,
+        "moveSpeed": 0.9,
+        "bat": 3.5,
+        "aspd": 100,
+        "rangeRadius": 1.9,
+        "rawRangeRadius": 1.9,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "When attacking targets outside of Realigned Flux, deals an additional hit",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "ExAtk.times": 1
+        },
+        "bbStr": {},
+        "groups": {
+          "ExAtk": [
+            "times"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1242_ltsmag": {
+      "key": "enemy_1242_ltsmag",
+      "prefabKey": "enemy_1242_ltsmag",
+      "name": "Remnant Violinist",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 12000,
+        "atk": 500,
+        "def": 450,
+        "res": 40,
+        "moveSpeed": 0.4,
+        "bat": 5,
+        "aspd": 100,
+        "rangeRadius": 2.4,
+        "rawRangeRadius": 2.4,
+        "blockCnt": 1,
+        "massLevel": 3,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "arts",
+        "dmgTypes": [
+          "arts"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Attacks can travel along Realigned Flux, dealing damage to all connected units",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "EmitProjectile.attack@atk_scale_2": 0.5,
+          "EmitProjectile.attack@max_target": 2
+        },
+        "bbStr": {},
+        "groups": {
+          "EmitProjectile": [
+            "attack@atk_scale_2",
+            "attack@max_target"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1102_sdkght_2": {
+      "key": "enemy_1102_sdkght_2",
+      "prefabKey": "enemy_1102_sdkght_2",
+      "name": "Elite Knight Shielder",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 12000,
+        "atk": 700,
+        "def": 1300,
+        "res": 0,
+        "moveSpeed": 0.7,
+        "bat": 3,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 4,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1101_plkght_2": {
+      "key": "enemy_1101_plkght_2",
+      "prefabKey": "enemy_1101_plkght_2",
+      "name": "Roar Knightclub Elite",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 3800,
+        "atk": 420,
+        "def": 100,
+        "res": 0,
+        "moveSpeed": 0.9,
+        "bat": 2.4,
+        "aspd": 100,
+        "rangeRadius": 2,
+        "rawRangeRadius": 2,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": true,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Has significantly increased DEF and RES for a period of time",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "buff.duration": 30,
+          "buff.def": 3000,
+          "buff.magic_resistance": 95
+        },
+        "bbStr": {},
+        "groups": {
+          "buff": [
+            "def",
+            "duration",
+            "magic_resistance"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1103_wdkght_2": {
+      "key": "enemy_1103_wdkght_2",
+      "prefabKey": "enemy_1103_wdkght_2",
+      "name": "Bloodboil Knightclub Elite",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 13000,
+        "atk": 650,
+        "def": 800,
+        "res": 0,
+        "moveSpeed": 0.7,
+        "bat": 2.3,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 3,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": true,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Each time an enemy is defeated, gains ATK and ASPD, stacking up to 10 times.",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "enhance.atk": 0.1,
+          "enhance.attack_speed": 5,
+          "enhance.max_stack_cnt": 10
+        },
+        "bbStr": {},
+        "groups": {
+          "enhance": [
+            "atk",
+            "attack_speed",
+            "max_stack_cnt"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    }
+  },
+  "contentAddition": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/aw-s-2.json",
+          "sha256": "3e6bb70565b795dfbd467492adbfaed76ba8fc069aeb251fbca75dbf2b64fb94"
+        },
+        {
+          "path": "stage-geometry/aw-s-2.json",
+          "sha256": "44bbb5bf0b17728dfa1539c015d6556e3fda2c63d0def9c05397aac7b12d83eb"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        }
+      ],
+      "localFiles": [
+        {
+          "path": "data/stage-rules/aw-s-2.json",
+          "sha256": "299f3555a398d4f1e97fc1b422d41080d93118656917aa34763494c85a08a9b5"
+        },
+        {
+          "path": "data/stage-rules/levels/e6beffb33bf815c66e16f07464a8181e202ee952e252da7f1821821a61dad6f9.json",
+          "sha256": "e6beffb33bf815c66e16f07464a8181e202ee952e252da7f1821821a61dad6f9"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/187182bec87daadc3c11640d4a267e039f43fbeb.json",
+          "sha256": "550c73a5ebafc882ca4beabf0a036024824b4123832369ca3b7b002bcaba2bf6"
+        },
+        {
+          "path": "data/arkpedia-device-source.json",
+          "sha256": "07f41d868c9727268a263e0213f4a73ec09a86c816efddc2ec55574cc5510b3c"
+        },
+        {
+          "path": "data/arkpedia-device-native-source.json",
+          "sha256": "0b0cff4f652f4d2a2ad874b3b67bf7b41f3cb7c01aa096e8a8334f34b0e4dc71"
+        },
+        {
+          "path": "data/arkpedia-mrboom-animations.json",
+          "sha256": "e1769d08bcc9c2639c24603a8876869ef131f409813d3790667ce397efc28a9d"
+        }
+      ]
+    },
+    "dependencies": {
+      "enemies": [
+        "enemy_1099_nbkght_2",
+        "enemy_1101_plkght_2",
+        "enemy_1102_sdkght_2",
+        "enemy_1103_wdkght_2",
+        "enemy_1239_ltbow_2",
+        "enemy_1242_ltsmag"
+      ],
+      "devices": [],
+      "tokens": [
+        "trap_018_bomb"
+      ]
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 10,
+        "spawned": 1,
+        "errors": 0
+      },
+      "publicReview": "pending",
+      "waveSchedule": {
+        "id": "aw-s-2",
+        "seconds": 212.33333333333334,
+        "spawned": 41,
+        "expected": 41,
+        "dynamicSpawns": 0,
+        "reason": "cleared",
+        "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+      },
+      "browserStartup": {
+        "id": "aw-s-2",
+        "seconds": 20,
+        "errors": [],
+        "units": 2,
+        "canvas": true,
+        "scope": "Mobile landscape browser startup and canvas runtime; not a fidelity approval"
+      }
+    }
+  }
+}

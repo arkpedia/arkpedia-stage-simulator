@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { ADVANCED_SNIPER_OPERATORS } from '../../../shared/arkpedia/advanced-sniper-operators.js';
 import evidence from '../../../data/arkpedia-advanced-sniper-prefabs.json' with { type: 'json' };
 import { resolveHit } from '../ai.js';
 import { bodyInKeys } from '../body.js';
@@ -43,6 +44,7 @@ function throwShuriken(battle, unit, profile, target, info) {
 }
 
 export function customizeAdvancedSniperKit({ id, def, unit, kit }) {
+  if (!ADVANCED_SNIPER_OPERATORS[id]) return;
   const skill = def.skill;
   if (!skill) return;
   const bb = skill.bb;
@@ -125,6 +127,7 @@ export function customizeAdvancedSniperKit({ id, def, unit, kit }) {
 }
 
 export function installAdvancedSniper({ battle, unit, def }) {
+  if (!ADVANCED_SNIPER_OPERATORS[def.charId]) return;
   const talent = def.talents[0]?.bb;
   if (unit.defId === 'char_118_yuki') {
     unit.profile.windup = evidence.shirayuki.hits.Attack[0];

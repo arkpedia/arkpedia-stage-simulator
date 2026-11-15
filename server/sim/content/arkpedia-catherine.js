@@ -110,6 +110,7 @@ export function customizeCatherineKit({ battle: b, id, def, unit: u, kit }) {
 }
 export function installCatherine({ battle: b, unit: u, def }) {
   if (def.charId !== ID) return;
+  u.mem.regularSummonFactory = createCatherineDevice;
   b.every(.1, () => syncOwner(b, u, { attrs: false }), { owner: u });
   b.every(.2, () => syncAttr(b, u), { owner: u });
   b.on('deploy', () => syncOwner(b, u), { owner: u });

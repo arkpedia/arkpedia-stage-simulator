@@ -3,34 +3,76 @@
 // and native timing index (shared/arkpedia/enemy-support.js), plus the retained
 // native ability evidence, each component of which must hash to the index.
 //   node tools/arkpedia/enemy-support.mjs [--check]
-import { readFile, writeFile } from 'node:fs/promises';
+import { readFile } from 'node:fs/promises';
+import { writeJSONAtomic } from './write-json.mjs';
+import { checkDeviceRuntime } from './device-runtime.mjs';
 import { createHash } from 'node:crypto';
 import { deriveEnemySupport } from '../../shared/arkpedia/enemy-support.js';
+import nativeSource from '../../data/arkpedia-cn-native-source.json' with { type: 'json' };
 const root = new URL('../../', import.meta.url), OUT = new URL('data/arkpedia-enemy-support.json', root), REGISTRY = new URL('data/arkpedia-regular-enemies.json', root);
 const sha = b => createHash('sha256').update(b).digest('hex');
+/** Shared talent/handbook names can collide. An addition must not silently
+ * unregister previously admitted enemies. Intentional withdrawals use the
+ * explicit --allow-removals maintenance flag after reviewing the listed IDs. */
+export function assertPreservedEnemySupport(previous, next) {
+  const removed = Object.entries(previous.enemies ?? {}).filter(([, row]) => row.policy)
+    .map(([id]) => id).filter(id => !next.enemies[id]?.policy).sort();
+  if (removed.length) throw Error(`Enemy support would remove ${removed.length} registered records: ${removed.join(', ')}. Fix the regression, or use --allow-removals for an intentional withdrawal.`);
+}
 /** The evidence, refused unless every indexed component hashes to the index entry it names, every referenced one to
  * its own recorded digest, and its templates come from the pinned buff_template_data. */
 export function verifiedNative(evidence, prefabs, indexSha, templatePin) {
   if (evidence.source.sha256 !== indexSha) throw Error('Native ability evidence was extracted from another timing index');
   if (JSON.stringify(evidence.source.templates) !== JSON.stringify(templatePin)) throw Error('Native ability evidence names another template source');
+  const projectilePin = nativeSource.bundles.find(row => row.path === 'battle/prefabs/[uc]projectiles.ab');
+  if (JSON.stringify(evidence.source.projectiles) !== JSON.stringify(projectilePin)) throw Error('Native projectile evidence names another source');
+  const database = evidence.source.buffDatabase;
+  if (database?.commit !== nativeSource.source.commit || database?.gitBlob !== 'b588d86b514d61c0025c0d9534f2a4e548aae302'
+    || database.sha256 !== '836e1fa34398d7abcbbff7d044d7fc0e425bf628a71017c6dd05a96c4fbb79ec')
+    throw Error('Native enemy status database names another source');
+  for (const rows of Object.values(evidence.projectiles ?? {})) for (const row of rows)
+    if (sha(row.originalJson) !== row.sha256) throw Error('Native projectile evidence digest mismatch');
   for (const [path, comps] of Object.entries(evidence.prefabs)) for (const c of comps) {
     const entry = c.referenced ? null : prefabs[path]?.clockComponents.find(x => x.pathId === c.pathId);
     const ok = c.referenced ? sha(c.originalJson) === c.sha256 && prefabs[path]
       : entry && entry.objectName === c.objectName && sha(c.originalJson) === entry.originalDataSha256;
     if (!ok) throw Error(`Native ability evidence does not match the timing index: ${path} ${c.pathId}`);
+    if (c.ancestors && (!entry || JSON.stringify(c.ancestors) !== JSON.stringify(entry.ancestors)))
+      throw Error(`Native ability hierarchy does not match the timing index: ${path} ${c.pathId}`);
   }
   return evidence;
 }
 export async function buildEnemySupport() {
+  await checkDeviceRuntime();
   const recordsRaw = await readFile(new URL('data/arkpedia-enemy-records.json', root)), indexRaw = await readFile(new URL('data/arkpedia-enemy-clock-source.json', root));
   const nativeRaw = await readFile(new URL('data/arkpedia-enemy-native-abilities.json', root));
   const records = JSON.parse(recordsRaw), prefabs = JSON.parse(indexRaw).prefabs, native = verifiedNative(JSON.parse(nativeRaw), prefabs, sha(indexRaw), JSON.parse(await readFile(new URL('data/arkpedia-mvp.json', root))).behaviors.source);
   const enemies = deriveEnemySupport(records.enemies, prefabs, native);
   const supported = Object.values(enemies).filter(e => e.policy).length;
   return { schemaVersion: 1,
-    scope: 'Derived regular-stage enemy support. An enemy is supported only when everything it uses has an approved implementation; today that is the stat-only tier. Not a claim of game-frame parity.',
+    scope: 'Derived regular-stage admission from reviewed record and native-feature predicates. Includes basic stat-only enemies and implemented features; see each decision and its documented limits. Not a certificate of client-frame or visual parity.',
     source: { records: { path: 'data/arkpedia-enemy-records.json', sha256: sha(recordsRaw) }, nativeTimingIndex: { path: 'data/arkpedia-enemy-clock-source.json', sha256: sha(indexRaw) },
-      nativeAbilities: { path: 'data/arkpedia-enemy-native-abilities.json', sha256: sha(nativeRaw) } },
+      nativeAbilities: { path: 'data/arkpedia-enemy-native-abilities.json', sha256: sha(nativeRaw) },
+      environmentNativeSource: { path: 'data/arkpedia-environment-native-source.json', sha256: sha(await readFile(new URL('data/arkpedia-environment-native-source.json', root))) },
+      witherCasterAnimations: { path: 'data/arkpedia-wither-caster-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-wither-caster-animations.json', root))) },
+      prayerAnimations: { path: 'data/arkpedia-prayer-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-prayer-animations.json', root))) },
+      shredderAnimations: { path: 'data/arkpedia-shredder-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-shredder-animations.json', root))) },
+      deviceNativeSource: { path: 'data/arkpedia-device-native-source.json', sha256: sha(await readFile(new URL('data/arkpedia-device-native-source.json', root))) },
+      deviceRuntime: { path: 'data/arkpedia-device-runtime.json', sha256: sha(await readFile(new URL('data/arkpedia-device-runtime.json', root))) },
+      whispererAnimations: { path: 'data/arkpedia-whisperer-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-whisperer-animations.json', root))) },
+      ratKingAnimations: { path: 'data/arkpedia-ratking-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-ratking-animations.json', root))) },
+      spiderAnimations: { path: 'data/arkpedia-spider-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-spider-animations.json', root))) },
+      fluxFieldAnimations: { path: 'data/arkpedia-flux-field-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-flux-field-animations.json', root))) },
+      fluxSaxophoneAnimations: { path: 'data/arkpedia-flux-saxophone-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-flux-saxophone-animations.json', root))) },
+      gertrudeAnimations: { path: 'data/arkpedia-gertrude-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-gertrude-animations.json', root))) },
+      magicCircuitAnimations: { path: 'data/arkpedia-magic-circuit-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-magic-circuit-animations.json', root))) },
+      infantryAnimations: { path: 'data/arkpedia-infantry-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-infantry-animations.json', root))) },
+      mudrockAnimations: { path: 'data/arkpedia-mudrock-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-mudrock-animations.json', root))) },
+      wineAnimations: { path: 'data/arkpedia-wine-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-wine-animations.json', root))) },
+      fattyAnimations: { path: 'data/arkpedia-fatty-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-fatty-animations.json', root))) },
+      bladeAnimations: { path: 'data/arkpedia-blade-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-blade-animations.json', root))) },
+      knightAnimations: { path: 'data/arkpedia-knight-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-knight-animations.json', root))) },
+      snackAnimations: { path: 'data/arkpedia-snack-animations.json', sha256: sha(await readFile(new URL('data/arkpedia-snack-animations.json', root))) } },
     summary: { enemies: Object.keys(enemies).length, supported, unsupported: Object.keys(enemies).length - supported },
     enemies };
 }
@@ -43,5 +85,17 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   if (process.argv.includes('--check')) {
     if (await readFile(OUT, 'utf8') !== text || await readFile(REGISTRY, 'utf8') !== registry) { console.error('Enemy support files are stale'); process.exit(1); }
     console.log('Enemy support matches the catalogue and timing index');
-  } else { await writeFile(OUT, text); await writeFile(REGISTRY, registry); console.log(`Wrote ${text.length} + ${registry.length} bytes`); }
+  } else {
+    if (!process.argv.includes('--allow-removals')) {
+      let previous;
+      try { previous = JSON.parse(await readFile(OUT, 'utf8')); }
+      catch (error) { if (error.code !== 'ENOENT') throw error; }
+      if (previous) assertPreservedEnemySupport(previous, support);
+    }
+    // Validate before publication, then replace complete files; the compact
+    // runtime registry is the final publication step.
+    await writeJSONAtomic(OUT, support, {space:0});
+    await writeJSONAtomic(REGISTRY, JSON.parse(registry), {space:1});
+    console.log(`Wrote ${text.length} + ${registry.length} bytes`);
+  }
 }

@@ -39,6 +39,7 @@
 //   heal (bool: heal-type skill for the trigger rule), canActivate() (temporary cast eligibility),
 //   isExhausted() (no uses remain), onStart(ctx), onEnd(ctx), onHit(ctx), onAttack(ctx), onTick(ctx),
 //   onAmmoReplenish(ctx) mirrors an accepted external grant into a controller-owned ammo account.
+//   onAmmoConsume(ctx) mirrors external consumption; it is independent of the optional ammoUsed event.
 //   completeOnAttack: false lets a source ability controller end its multi-event instant cast itself.
 //   holdSpWhileActive: true keeps a source-controlled instant account locked independently of dispellable buffs.
 // ctx passed to spec callbacks: { battle, unit, skill, bb, target?, dealt?, targets?, dt?, reason? }; onAttack's ctx
@@ -194,7 +195,7 @@ export class SkillRuntime {
   get exhausted() { return typeof this.spec.isExhausted === 'function' && !!this.spec.isExhausted(); }
   // A target condition can prevent a cast without consuming SP or hiding the
   // full-SP ready indicator. Battle-wide use limits are distinct exhaustion.
-  get castEligible() { return !this.exhausted && (typeof this.spec.canActivate !== 'function' || !!this.spec.canActivate()); }
+  get castEligible() { return !this.unit.s.flags.skillNotActivatable && !this.exhausted && (typeof this.spec.canActivate !== 'function' || !!this.spec.canActivate()); }
   // Native SetSkillCastWithNoSp is a casting permission, not recovered SP.
   // Keep the real account untouched and expose readiness to the ordinary HUD.
   get manualCastWithoutSp() {
@@ -647,6 +648,20 @@ export class SkillRuntime {
     this.ammoLeft += count;
     this.ammoReplenished += count;
     if (count > 0) this._call('onAmmoReplenish', { count });
+    return count;
+  }
+  // External consumption does not run attack hooks, grant SP, or restore the
+  // replenishment allowance. Native effects choose whether to emit ammoUsed.
+  consumeAmmo(n, { triggerEvent = false } = {}) {
+    if (!this.active || this.kind !== 'ammo' || !Number.isFinite(n) || n <= 0) return 0;
+    const count = Math.min(Math.floor(n), this.ammoLeft);
+    if (count <= 0) return 0;
+    const activation = this.activations;
+    this.ammoLeft -= count;
+    this._call('onAmmoConsume', { count });
+    if (triggerEvent && this.battle._hooks.ammoUsed)
+      this.battle.emit('ammoUsed', { unit: this.unit, left: this.ammoLeft, skill: this });
+    if (this.active && this.activations === activation && this.ammoLeft <= 0) this.end('ammo');
     return count;
   }
   extend(seconds) { if (this.active && Number.isFinite(this.timeLeft) && Number.isFinite(seconds)) this.timeLeft += seconds; }

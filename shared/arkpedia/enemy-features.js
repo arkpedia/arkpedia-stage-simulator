@@ -1,4 +1,36 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { isSelfFearEnemy, selfFearNative } from './enemy-self-fear.js';
+import { WITHER_CASTER_FEATURE } from './enemy-wither-caster-features.js';
+import { PRAYER_FEATURE } from './enemy-prayer-features.js';
+import { AMMO_THEFT_FEATURE } from './enemy-ammo-theft-features.js';
+import { HEAVY_POWER_ARMOR_FEATURES } from './enemy-heavy-power-armor.js';
+import { DOROTHY_ENEMY_FEATURES } from './enemy-dorothy-features.js';
+import { AWAKEN_DAMAGE_SHARE_FEATURE } from './enemy-awaken-features.js';
+import { POWER_ARMOR_ENGINEER_FEATURES } from './enemy-power-armor-engineers.js';
+import { POWER_ARMOR_DRIVER_FEATURES } from './enemy-power-armor-drivers.js';
+import { isAssaultPowerArmor, assaultPowerArmorNative, ASSAULT_POWER_ARMOR_ABILITY } from './enemy-power-armor-features.js';
+import { EBLANA_AURA_FEATURE } from './enemy-eblana-features.js';
+import { isExhaustedFlame, exhaustedFlameNative, EXHAUSTED_FLAME_ABILITY } from './enemy-exhausted-flame-features.js';
+import { FIRELIGHT_SPECOPS_FEATURES } from './enemy-firelight-specops-features.js';
+import { isFlamecaller, flamecallerNative, FLAMECALLER_ABILITY, FLAMECALLER_TEXT } from './enemy-firelight-ranged-features.js';
+import { FLAMECHASER_FEATURES, FLAMECHASER_AURA, FLAMECHASER_BURN, FLAMECHASER_GUARD_BURN, isFlamechaser, flamechaserNative } from './enemy-flamechaser-features.js';
+import { FLUX_FIELD_FEATURES, crimsonFormationNative } from './enemy-flux-field-features.js';
+import { FLUX_CASTER_FEATURES } from './enemy-flux-caster-features.js';
+import { FLUX_SAXOPHONE_FEATURES } from './enemy-flux-saxophone-features.js';
+import { GERTRUDE_FEATURES } from './enemy-gertrude-features.js';
+import { ICEFIELD_FEATURES, icefieldCasterNative, icefieldBerserkerNative, isIcefieldBerserker } from './enemy-icefield-features.js';
+import { MAGIC_CIRCUIT_ENEMY_FEATURES } from './enemy-magic-circuit-features.js';
+import { BEACON_FEATURE } from './enemy-beacon-features.js';
+import { EPOCH_MARK_FEATURE, isDreadkaz, dreadkazNative, DREADKAZ_ABILITY, DREADKAZ_TEXT, EPOCH_MARK } from './enemy-epoch-features.js';
+import { SPIDER_FEATURE, mutantSpider, mutantSpiderNative } from './enemy-spider-features.js';
+import { INFANTRY_FEATURES } from './enemy-infantry-features.js';
+import { DIRECTIONAL_FEATURES } from './enemy-directional-features.js';
+import { BLADE_FEATURES, bladeNative, isBladeKnight } from './enemy-blade-features.js';
+import { KNIGHT_FEATURES } from './enemy-knight-features.js';
+import { SUPPLY_ENEMY_FEATURES } from './enemy-supply-features.js';
+import { isSwampRover, swampRoverNative, SWAMP_ROVER_AURA, ROVER_REVEAL, MIRE_IMMUNITY } from './enemy-reveal-features.js';
+import { reedsSoldierNative, REEDS_SOLDIER_TEXT } from './enemy-reeds-features.js';
+import { gloompincerNative, GLOOMPINCER_TEXT } from './enemy-mire-features.js';
 // Enemy feature registry: behaviour attaches by feature, not by enemy id. A
 // feature is a handbook ability line (`ability:<text>`), a talent group
 // (`talent:<group>`) or a skill prefab key (`skill:<prefabKey>`). Each entry is
@@ -8,9 +40,42 @@
 //                    (checked for every database level of every enemy using it);
 //                    `native` holds the record prefab's retained original
 //                    components by object name (enemy-support.js nativeComponents);
+//   matchesRecord(record) — optional cheap family match, shared by runtime
+//     dispatch and dependency collection. A reused skill name alone is not a
+//     family identity. This match never replaces native admission checks.
 //   trait          — a spawn-time behaviour the battle applies (applyEnemyFeatures).
 // An enemy is supported only when every feature it uses is registered and
 // covered (shared/arkpedia/enemy-support.js).
+import { cheeringDrone, cheeringAbility, CHEERING_DESCRIPTION } from './enemy-drone-features.js';
+import { axeDamageRamp, axeRampAbility, AXE_DESCRIPTION } from './enemy-ramp-features.js';
+import { AREA_ENEMY_FEATURES } from './enemy-area-features.js';
+import { DUEL_ENEMY_FEATURES } from './enemy-duel-features.js';
+import { DEATH_ENEMY_FEATURES } from './enemy-death-features.js';
+import { REACTIVE_ENEMY_FEATURES } from './enemy-reactive-features.js';
+import { SCREEN_ENEMY_FEATURES } from './enemy-screen-features.js';
+import { SHIFT_ENEMY_FEATURES } from './enemy-shift-features.js';
+import { wakerRageNative } from './enemy-hp-buff-features.js';
+import { SHREDDER_FEATURES } from './enemy-shredder-features.js';
+import { OUTCOME_ENEMY_FEATURES, windowNative } from './enemy-outcome-features.js';
+import { PORTAL_FEATURES, portalNative } from './enemy-portal-features.js';
+import { dublinnHoverNative, lostHovercraftNative, hoverGroundVisual } from './enemy-hover-features.js';
+import { PROJECTILE_ENEMY_FEATURES } from './enemy-projectile-features.js';
+import { sarkazStandbyNative, SARKAZ_ALARM_FEATURES } from './enemy-sarkaz-alarm-features.js';
+import { stormNative } from './originium-pollution-features.js';
+import { CHIMERA_ENEMY_FEATURES } from './enemy-chimera-features.js';
+import { POMPEII_ENEMY_FEATURES } from './enemy-pompeii-features.js';
+import { PULSE_ENEMY_FEATURES } from './enemy-pulse-features.js';
+import { CHARGE_ENEMY_FEATURES } from './enemy-charge-features.js';
+import { withererNative } from './enemy-witherer-features.js';
+import { MARKSMAN_ENEMY_FEATURES, fanaticNative } from './enemy-marksman-features.js';
+import { BARRIER_ENEMY_FEATURES } from './enemy-barrier-features.js';
+import { GRAMOPHONE_ENEMY_FEATURES } from './enemy-gramophone-features.js';
+import { RAT_KING_FEATURES, ratKingNative } from './enemy-ratking-features.js';
+import { MUDROCK_FEATURES, mudrockNative } from './enemy-mudrock-features.js';
+import { brokenBlades, brokenBladesNative, BROKEN_BLADE_ABILITY, BROKEN_BLADE_TEXT, lampBearer, lampBearerNative, LAMP_FEATURES, porcelainCaster, porcelainCasterNative, PORCELAIN_FEATURES } from './enemy-wine-features.js';
+import { SNACK_ENEMY_FEATURES, cart, cartNative, cartAbility } from './enemy-snack-features.js';
+import { AMMO_ENEMY_FEATURES } from './enemy-ammo-features.js';
+import { TAGGED_PROJECTILE_ENEMY_FEATURES } from './enemy-tagged-projectile-features.js';
 
 /** The group's parameter keys are exactly `params`. */
 const sig = (r, g, params) => JSON.stringify(r.talents.groups[g] ?? null) === JSON.stringify([...params].sort());
@@ -21,17 +86,90 @@ export function elementOf(r) {
   return found.size === 1 ? [...found][0] : null;
 }
 /** One feature per spelling of a talent group with an exact parameter signature. */
-function family(groups, params, ability, extra, note, dependsOn = null, explains = null) {
+function family(groups, params, ability, extra, note, dependsOn = null, explains = null, stageMultipliers = null) {
   return Object.fromEntries(groups.map(g => [`talent:${g}`, { covers: r => sig(r, g, params) && extra(r), ability: ability(g), note,
-    ...(dependsOn ? { dependsOn } : {}), ...(explains ? { explains } : {}) }]));
+    ...(dependsOn ? { dependsOn } : {}), ...(explains ? { explains } : {}), ...(stageMultipliers ? { stageMultipliers } : {}) }]));
 }
 /** One feature per group, accepting any of several exact parameter signatures. */
-function familyAny(groups, signatures, ability, extra, note, dependsOn = null, explains = null) {
+function familyAny(groups, signatures, ability, extra, note, dependsOn = null, explains = null, stageMultipliers = null) {
   return Object.fromEntries(groups.map(g => [`talent:${g}`, { covers: r => signatures.some(signature => sig(r, g, signature)) && extra(r), ability: ability(g), note,
-    ...(dependsOn ? { dependsOn } : {}), ...(explains ? { explains } : {}) }]));
+    ...(dependsOn ? { dependsOn } : {}), ...(explains ? { explains } : {}), ...(stageMultipliers ? { stageMultipliers } : {}) }]));
 }
 const CONFINEMENT_SIGS = [['attack_speed', 'max_stack_cnt', 'max_valid_stack_cnt', 'times']], LIBERTY_SIGS = [['atk'], ['atk', 'def_penetrate'], ['atk', 'hp_recovery_per_sec', 'magic_resistance']];
 const REBORN_PARAMS = new Set(['duration', 'hp_ratio', 'invincible']);
+
+const crusherPrefab = r => ['enemy_1045_hammer', 'enemy_1045_hammer_2'].includes(r.prefabKey);
+function isDefenseCrusher(r, nat) {
+  if (!crusherPrefab(r) || r.skills.length !== 1 || r.applyWay !== 'MELEE') return false;
+  const s = r.skills[0], rows = nat.StunCombat ?? [];
+  const wrapper = rows.find(c => '_familyMask' in c), cast = rows.find(c => '_activeBuffs' in c);
+  const buff = cast?._activeBuffs?.[0];
+  return s.prefabKey === 'stuncombat' && s.spCost === 2 && s.cooldown === 1 && s.initCooldown === 1
+    && Object.keys(s.bb).join() === 'stun' && s.bb.stun === 7
+    && r.sp?.type === 'INCREASE_WHEN_ATTACK' && r.sp.maxSp === 2 && r.sp.initSp === 0 && r.sp.increment === 1
+    && wrapper?._ignoreSilence === 0 && wrapper._maxTriggerTime === -1 && wrapper._familyMask === 3
+    && wrapper._immuneStunWhenAffecting === 0 && wrapper._resetMainAbilityCdWhenCastEnd === 0
+    && wrapper._trigger?.m_PathID === '0' && wrapper._castLikeAttack === 0
+    && cast?._waitForAttackEvent === 1 && cast._animKey === 'Attack' && cast._endAnimKey === 'Idle'
+    && cast._timeMode === 0 && cast._atkScale === 1 && cast._damageType === 1 && cast._allowNoTarget === 0
+    && cast._alwaysIncludeTarget === 1 && cast._selector?.m_PathID === '0' && cast._selectTargetSource === 2
+    && cast._activeBuffs.length === 1 && buff?.buffKey === 'stun' && buff.loadFromDB === 1 && buff.statusResistable === 2
+    && buff.blackboard?.length === 0;
+}
+
+function isRockbreaker(r, nat) {
+  if (!['enemy_1048_hirman', 'enemy_1048_hirman_2'].includes(r.prefabKey) || r.skills.length
+    || r.applyWay !== 'MELEE' || !sig(r, 'MagicResistance', ['magic_resistance'])) return false;
+  const toggle = (nat.MagicResistance ?? []).find(c => '_buffs' in c), checker = toggle && nat.$ref?.(toggle._checker);
+  const buff = toggle?._buffs?.[0], modifiers = buff?.attributes?.attributeModifiers, mod = modifiers?.[0];
+  return r.talents.bb['MagicResistance.magic_resistance'] === (r.prefabKey.endsWith('_2') ? 50 : 40)
+    && checker?._blockMinCnt === 1 && checker._blockMaxCnt === -1 && checker._useBlockAsMin === 1
+    && checker._buffsToBlockee?.length === 0
+    && toggle?._isInverseToggle === 0 && toggle._selector?.m_PathID === '0' && toggle._buffsWhenToggleOff?.length === 0
+    && toggle._unmanagedBuffsWhenToggleOn?.length === 0
+    && toggle._buffs.length === 1 && buff?.buffKey === 'hirman_t_buff' && buff.lifeTimeType === 2 && buff.isSilenceable === 1
+    && modifiers?.length === 1 && mod.attributeType === 3 && mod.formulaItem === 0 && mod.loadFromBlackboard === 1
+    && mod.fetchBaseValueFromSourceEntity === 0 && mod.value === 0;
+}
+
+// Bombtail's single-use projectile cast. Admit only the reviewed normal/elite
+// prefabs and wrapper semantics; a similarly named skill is not enough.
+function isBombtail(r, nat) {
+  if (!['enemy_1040_bombd', 'enemy_1040_bombd_2'].includes(r.prefabKey) || r.skills.length !== 1) return false;
+  const s = r.skills[0];
+  return s.prefabKey === 'boomb' && s.cooldown === 1 && s.initCooldown === 1 && s.spCost === 0
+    && Object.keys(s.bb).join() === 'move_speed' && s.bb.move_speed === 2
+    && r.stats.motion === 'FLY' && r.stats.dmgType === 'phys'
+    && isDroneBombNative(nat.Boomb ?? [], nat, r.prefabKey.replace('enemy_1040_', 'projectile_'), 1);
+}
+function isOneiros(r, nat) {
+  if (r.prefabKey !== 'enemy_1070_iced' || r.skills.length !== 1) return false;
+  const s = r.skills[0];
+  return s.prefabKey === 'bomb' && s.cooldown === 5 && s.initCooldown === 5 && s.spCost === 0
+    && Object.keys(s.bb).join() === 'freeze' && s.bb.freeze === 10
+    && r.stats.motion === 'FLY' && r.stats.dmgType === 'arts'
+    && isDroneBombNative(nat.Bomb ?? [], nat, 'projectile_iced', 2, true);
+}
+function isDroneBombNative(rows, nat, projectileKey, damageType, cold = false) {
+  const wrapper = rows.find(c => '_familyMask' in c), cast = rows.find(c => '_projectileKey' in c);
+  const trigger = wrapper && nat.$ref?.(wrapper._trigger);
+  const projectile = nat.$projectile?.(projectileKey) ?? [];
+  const motion = projectile.find(c => '_speed' in c), hit = projectile.find(c => '_targetOptions' in c);
+  const lifetime = projectile.find(c => '_lifeTime' in c), collider = projectile.find(c => 'm_Size' in c);
+  const buffs = cast?._activeBuffs ?? [];
+  return wrapper?._maxTriggerTime === 1 && wrapper._ignoreSilence === 1 && wrapper._immuneStunWhenAffecting === 0
+    && wrapper._familyMask === 3 && wrapper._castLikeAttack === 0 && wrapper._overwriteInitCooldown === -1
+    && trigger?._minTargetNum === 1 && trigger._keepTarget === 0
+    && cast?._projectileKey === projectileKey && cast._atkScale === 1 && cast._damageType === damageType
+    && cast._waitForAttackEvent === 1 && cast._animKey === 'Attack' && cast._endAnimKey === 'Idle_2'
+    && cast._fireAttackFinishWhenProjectileInvalid === 1 && Math.abs(cast._minPostDelayWhenProjectileInvalid - 0.667) < 1e-6
+    && (cold ? buffs.length === 1 && buffs[0].buffKey === 'e2c_cold' && buffs[0].loadFromDB === 1 && buffs[0].statusResistable === 2
+      : buffs.length === 0) && Array.isArray(cast._extraProjectileKeys) && cast._extraProjectileKeys.length === 0
+    && motion?._speed === 5 && motion._flyToTargetLocationOnly === 0
+    && hit?._onlyCheckHitWhenReachTarget === 1 && hit._ignoreCamouflage === 1
+    && lifetime?._lifeTime === 10 && lifetime._canHitSameTargetMultipleTimes === 0 && lifetime._stopWhenSourceInvalid === 0
+    && collider?.m_Size?.x === 3 && collider.m_Size.y === 3 && collider.m_Offset?.x === 0 && collider.m_Offset.y === 0;
+}
 
 // The reviewed death-blast handbook lines. Each names the damage its explosion deals; the talent blackboard carries
 // the multiplier (and, for the cold/elemental variants, the status duration and elemental ratio).
@@ -58,9 +196,9 @@ function coversDeathBlast(r, group) {
 }
 function rebornFamily(group) {
   return { [`talent:${group}`]: {
-    covers: r => r.key === 'enemy_1522_captan'
+    covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan'
       || (r.talents.groups[group].includes('duration') && r.talents.groups[group].every(p => REBORN_PARAMS.has(p))),
-    ability: r => r.key === 'enemy_1522_captan' ? null : { kind: 'reborn', params: () => ({ dur: r.talents.bb[`${group}.duration`], hpRatio: r.talents.bb[`${group}.hp_ratio`] ?? 1,
+    ability: r => isBladeKnight(r) || r.key === 'enemy_1522_captan' ? null : { kind: 'reborn', params: () => ({ dur: r.talents.bb[`${group}.duration`], hpRatio: r.talents.bb[`${group}.hp_ratio`] ?? 1,
       invincible: r.talents.bb[`${group}.invincible`] ?? 0 }) },
     note: 'reborn(): first KO → rebirth of duration s, then hp_ratio of max HP and invincible s', explains: /^Rebirth$/ } };
 }
@@ -162,7 +300,25 @@ function isYetiColdAttack(r, nat) {
   const rows = nat.ColdAttack ?? [], wrapper = rows.find(c => '_familyMask' in c), ability = rows.find(c => '_waitForAttackEvent' in c);
   if (!wrapper || !ability || r.skills.length !== 1) return false;
   const skill = r.skills[0], buff = ability._activeBuffs?.[0];
-  return skill.prefabKey === 'coldattack' && skill.bb.freeze === 10
+  const projectile = nat.$projectile('projectile_enemy_snow_magic_ball');
+  const motion = projectile.find(c => '_speed' in c), life = projectile.find(c => '_lifeTime' in c);
+  const ordinary = (nat.Attack ?? []).find(c => '_projectileKey' in c);
+  return ['enemy_1068_snmage', 'enemy_1068_snmage_2'].includes(r.prefabKey)
+    && skill.prefabKey === 'coldattack' && Number.isFinite(skill.bb.freeze) && skill.bb.freeze > 0
+    && Object.keys(skill.bb).join() === 'freeze' && Object.keys(skill.bbStr).length === 0
+    && skill.priority === 0 && skill.cooldown === 0 && skill.initCooldown === 0 && skill.spCost === 2
+    && r.sp?.type === 'INCREASE_WHEN_ATTACK' && r.sp.maxSp === 2 && r.sp.increment === 1
+    && Number.isInteger(r.sp.initSp) && r.sp.initSp >= 0 && r.sp.initSp <= 2
+    && motion?._speed === 10 && motion._moveType === 1 && motion._delayToStart === 0 && motion._deltaSpeedPerSec === 0
+    && motion._flyToTargetLocationOnly === 0 && motion._forceReachedWhenTimeup === 1
+    && life?._lifeTime === 10 && life._maxHitNum === 1 && life._hitNumType === 1 && life._stopAfterMaxHit === 1
+    && life._stopWhenSourceInvalid === 0 && life._alwaysHitTraceTargetInTheEnd === 1
+    && life._canHitSameTargetMultipleTimes === 0 && life._actionController?._dontAddBuffs === 0
+    && [ordinary, ability].every(a => a?._projectileKey === 'projectile_enemy_snow_magic_ball' && a._atkScale === 1
+      && a._damageType === 2 && a._attackType === 1 && a._timeMode === 0 && a._useCachedAtkOnly === 0
+      && a._waitForAttackEvent === 1 && a._selector?.m_PathID === '0' && a._extraProjectileKeys?.length === 0)
+    && ordinary._activeBuffs?.length === 0 && ability._activeBuffs?.length === 1
+    && buff?.isDamageMissable === 0 && buff.statusResistable === 2 && buff.lifeTimeType === 1
     && r.abilities.some(a => a.text === 'After two attacks, the next attack applies the <$ba.cold>Cold</> effect')
     && wrapper._familyMask === 3 && wrapper._trigger?.m_PathID === '0' && wrapper._castLikeAttack === 0
     && wrapper._ignoreSilence === 0 && wrapper._overwriteInitCooldown === -1 && wrapper._checkParentActive === 0
@@ -201,12 +357,65 @@ const HATEDRINKER_TEXT = 'Gains increased ATK for each Reborn Creation on the ba
 // component. These explicit keys keep the support gate honest without inventing a behaviour for a prop (the Beacon is
 // picked up by the Altar Keeper, not by its own code).
 const NATIVE_ONLY_FEATURES = Object.freeze({
+  enemy_1189_krgaxe: 'native:icefieldWarrior', enemy_1189_krgaxe_2: 'native:icefieldWarrior',
+  enemy_1112_emppnt: 'native:imperialShell', enemy_1112_emppnt_2: 'native:imperialShell',
   enemy_1421_lrchld: 'native:beacon', enemy_1421_lrchld_2: 'native:beacon',
   enemy_10072_mpprhd: 'native:prtsProp', enemy_10072_mpprhd_2: 'native:prtsProp',
   enemy_10082_mpweak: 'native:prtsProp', enemy_10082_mpweak_2: 'native:prtsProp',
 });
 
 export const ENEMY_FEATURES = Object.freeze({
+  'talent:DamageOrBullet': AMMO_THEFT_FEATURE,
+  'skill:Roar': PRAYER_FEATURE,
+  'skill:Heallarva': WITHER_CASTER_FEATURE,
+  'talent:DamageSplit': AWAKEN_DAMAGE_SHARE_FEATURE,
+  ...POWER_ARMOR_DRIVER_FEATURES,
+  ...HEAVY_POWER_ARMOR_FEATURES,
+  ...DOROTHY_ENEMY_FEATURES,
+  ...POWER_ARMOR_ENGINEER_FEATURES,
+  ...ICEFIELD_FEATURES,
+  ...AMMO_ENEMY_FEATURES,
+  ...SNACK_ENEMY_FEATURES,
+  ...TAGGED_PROJECTILE_ENEMY_FEATURES,
+  ...MARKSMAN_ENEMY_FEATURES,
+  ...BARRIER_ENEMY_FEATURES,
+  ...GRAMOPHONE_ENEMY_FEATURES,
+  ...MUDROCK_FEATURES,
+  ...RAT_KING_FEATURES,
+  ...LAMP_FEATURES,
+  ...PORCELAIN_FEATURES,
+  'skill:SummonToken': SPIDER_FEATURE,
+  ...INFANTRY_FEATURES,
+  ...MAGIC_CIRCUIT_ENEMY_FEATURES,
+  ...FLUX_CASTER_FEATURES,
+  ...FLUX_SAXOPHONE_FEATURES,
+  ...GERTRUDE_FEATURES,
+  // Native talent names are not globally unique. Keep both reviewed Weak
+  // contracts; adding Virtual Images must not replace Flux Colossi.
+  'talent:Weak': {
+    covers: (r, n) => MAGIC_CIRCUIT_ENEMY_FEATURES['talent:Weak'].covers(r, n) || GERTRUDE_FEATURES['talent:Weak'].covers(r, n),
+    ability: r => (r.prefabKey === 'enemy_1248_ltholo' ? GERTRUDE_FEATURES : MAGIC_CIRCUIT_ENEMY_FEATURES)['talent:Weak'].ability,
+    explains: MAGIC_CIRCUIT_ENEMY_FEATURES['talent:Weak'].explains,
+  },
+  ...FLUX_FIELD_FEATURES,
+  ...REACTIVE_ENEMY_FEATURES,
+  ...SCREEN_ENEMY_FEATURES,
+  ...SHIFT_ENEMY_FEATURES,
+  ...SHREDDER_FEATURES,
+  ...OUTCOME_ENEMY_FEATURES,
+  ...PORTAL_FEATURES,
+  ...DEATH_ENEMY_FEATURES,
+  ...DUEL_ENEMY_FEATURES,
+  ...AREA_ENEMY_FEATURES,
+  ...SUPPLY_ENEMY_FEATURES,
+  ...KNIGHT_FEATURES,
+  ...BLADE_FEATURES,
+  ...DIRECTIONAL_FEATURES,
+  ...PROJECTILE_ENEMY_FEATURES,
+  ...PULSE_ENEMY_FEATURES,
+  ...POMPEII_ENEMY_FEATURES,
+  ...SARKAZ_ALARM_FEATURES,
+  ...CHARGE_ENEMY_FEATURES,
   // Handbook lines restating what the record's stats already model.
   'ability:Flying unit.': { covers: r => r.stats.motion === 'FLY', note: 'motion FLY' },
   'ability:Regenerates HP over time.': { covers: r => r.stats.hpRecoveryPerSec > 0, note: 'hpRecoveryPerSec' },
@@ -231,16 +440,23 @@ export const ENEMY_FEATURES = Object.freeze({
     note: 'taunt level', explains: /^More likely to be targeted by attacks\.$/ },
   // Crownslayer: a cooldown blink past the blocker, proven against the reviewed Blink wrapper/ability pair.
   'skill:blink': { covers: (r, nat) => isCrownslayerBlink(r, nat) || isCheckpointBlink(r, nat),
+    stageSkillCooldown: { blink: (r, skill) => r.prefabKey === 'enemy_1502_crowns' && skill.cooldown === 15 && skill.initCooldown === 15 },
     ability: { kind: 'blink', params: r => r.skills[0].cooldown === 0 && r.skills[0].spCost === 2 ? { mode: 'attacks', every: r.skills[0].spCost ?? 2, dist: r.skills[0].bb.dist ?? 1.5 }
-      : { mode: 'blocked', dist: r.skills[0].bb.dist ?? 1.5, cooldown: r.skills[0].cooldown, initCooldown: r.skills[0].initCooldown } },
+      : { mode: 'blocked', dist: r.skills[0].bb.dist ?? 1.5,
+        cooldown: r.skills[0].cooldown * (r.stageSkillCooldownScale ?? 1), initCooldown: r.skills[0].initCooldown * (r.stageSkillCooldownScale ?? 1) } },
     note: 'blink past the blocker, or towards the next checkpoint after several attacks', nativeClaim: () => ({ wrappers: 1 }),
     explains: text => text === 'When blocked, can quickly move behind the unit'
       || text === 'After several attacks, moves towards the next checkpoint for the next attack' },
   // Yeti Caster: every third attack applies the reviewed 10 s Cold.
-  'skill:coldattack': { covers: (r, nat) => isYetiColdAttack(r, nat),
-    ability: { kind: 'coldAttack', params: r => ({ every: 3, duration: r.skills[0].bb.freeze }) },
+  'skill:coldattack': { covers: (r, nat) => isYetiColdAttack(r, nat) || icefieldCasterNative(r, nat),
+    ability: { kind: 'coldAttack', params: r => ({ duration: r.skills[0].bb.freeze,
+      initialSp: r.sp.initSp, cost: r.skills[0].spCost, increment: r.sp.increment,
+      ...(r.prefabKey.startsWith('enemy_1192_krgscr') ? {maxTargets:2,groundOnly:true} : {}) }) },
+    stageSkillOverrides: { coldattack: { freeze: value => Number.isFinite(value) && value > 0 } },
+    stageSpOverrides: { initSp: (value, sp) => Number.isInteger(value) && value >= 0 && value <= sp.maxSp },
     note: 'every third attack applies Cold', nativeClaim: () => ({ wrappers: 1 }),
-    explains: /^After two attacks, the next attack applies the <\$ba\.cold>Cold<\/> effect$/ },
+    explains: (text,r) => /^After two attacks, the next attack applies the <\$ba\.cold>Cold<\/> effect$/.test(text)
+      || r.prefabKey.startsWith('enemy_1192_krgscr') && /^(?:Every 3rd attack inflicts <\$ba\.cold>Cold<\/> to the target|Attacks 2 enemies simultaneously)$/.test(text) },
   'ability:Upon death, deals Physical damage in an area and causes Originium pollution.': {
     covers: r => sig(r, 'Boom', ['atk_scale']) && r.abilities.some(a => a.text === 'Upon death, deals Physical damage in an area and causes Originium pollution.'),
     ability: { kind: 'causticSlug', params: r => ({ scale: r.talents.bb['Boom.atk_scale'] }) },
@@ -251,7 +467,7 @@ export const ENEMY_FEATURES = Object.freeze({
     ability: { kind: 'bmbmot', params: r => ({ scale: r.talents.bb['Boom.atk_scale'], epRatio: r.talents.bb['Boom.ep_damage_ratio'] }) },
     note: 'death blast Physical + Corrosion; Bleed drains hp_ratio of max HP per second', explains: /^Death deals Physical damage and .*Corrosion damage/,
   },
-  'talent:Bleed': { covers: r => sig(r, 'Bleed', ['hp_ratio']), ability: { kind: 'bleed', params: r => ({ ratio: r.talents.bb['Bleed.hp_ratio'] }) },
+  'talent:Bleed': { covers: (r,n) => isExhaustedFlame(r) ? exhaustedFlameNative(r,n) : sig(r, 'Bleed', ['hp_ratio']), ability: r => isExhaustedFlame(r) ? null : { kind: 'bleed', params: r => ({ ratio: r.talents.bb['Bleed.hp_ratio'] }) },
     note: 'loses hp_ratio of max HP per second' },
   'ability:Enemies prioritize attacking this unit, unit will deplete Life Points upon dying': {
     covers: r => sig(r, 'Dead', ['value']) && r.talents.bb['Dead.value'] < 0,
@@ -260,7 +476,10 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: /^Enemies prioritize attacking this unit/,
   },
   'talent:Dead': { covers: r => sig(r, 'Dead', ['value']), note: 'death life loss is attached by the handbook-line feature' },
-  'ability:Does not count towards the defeated enemies counter': { covers: r => r.abilities.some(a => a.text === 'Does not count towards the defeated enemies counter'), note: 'not counted as a defeat' },
+  'ability:Does not count towards the defeated enemies counter': { covers: r => r.abilities.some(a => a.text === 'Does not count towards the defeated enemies counter'), note: 'normalization excludes these records before scheduled and direct-spawn totals are computed' },
+  'ability:More likely to be attacked by allied units': {
+    covers: r => r.stats.tauntLevel === 1,
+    note: 'source base taunt level +1 participates in ordinary target priority; does not override blockers or explicit skill priority' },
   'ability:Can only be blocked by units with at least 3 Block, and deals Physical damage by colliding with player\'s units': {
     covers: r => sig(r, 'Crash', ['atk_scale']) && r.talents.bb['Crash.atk_scale'] > 0,
     ability: { kind: 'crash', params: r => ({ scale: r.talents.bb['Crash.atk_scale'], block: 3 }) },
@@ -272,16 +491,24 @@ export const ENEMY_FEATURES = Object.freeze({
   'talent:Drown': { covers: r => sig(r, 'Drown', ['damage']) && r.abilities.some(a => /^Quickly loses HP while under the effects of 'Erosion'$/.test(a.text)),
     ability: { kind: 'drown', params: r => ({ damage: r.talents.bb['Drown.damage'] }) },
     note: 'takes Drown.damage True damage per second while Erosion is active', explains: /^Quickly loses HP while under the effects of 'Erosion'$/ },
-  'skill:stuncombat': { covers: r => r.skills.some(s => s.prefabKey === 'stuncombat' && s.spCost === 3 && s.bb.stun > 0),
-    ability: { kind: 'stunAttack', params: r => ({ every: 3, duration: r.skills[0].bb.stun }) },
-    note: 'every third attack stuns the target for the skill duration', nativeClaim: () => ({ wrappers: 1 }),
-    explains: /^<\$ba\.stun>Stuns<\/> ?(?:friendly|allied) units? after several attacks$/ },
+  'skill:stuncombat': { covers: (r, nat) => crusherPrefab(r) ? isDefenseCrusher(r, nat)
+    : r.skills.some(s => s.prefabKey === 'stuncombat' && s.spCost === 3 && s.bb.stun > 0),
+    ability: r => crusherPrefab(r)
+      ? { kind: 'chargedMeleeStun', params: r => ({ duration: r.skills[0].bb.stun,
+        cooldown: r.skills[0].cooldown, initialCooldown: r.skills[0].initCooldown }) }
+      : { kind: 'stunAttack', params: r => ({ every: 3, duration: r.skills[0].bb.stun }) },
+    note: 'reviewed stun target shape; Crushers charge two ordinary attacks and retain readiness during silence', nativeClaim: () => ({ wrappers: 1 }),
+    explains: /^(?:<\$ba\.stun>Stuns<\/> ?(?:friendly|allied) units? after several attacks|After two attacks, the next attack <\$ba\.stun>Stuns<\/> its target)$/ },
+  'talent:MagicResistance': { covers: isRockbreaker,
+    ability: { kind: 'blockedRes', params: r => ({ res: r.talents.bb['MagicResistance.magic_resistance'] }) },
+    note: 'flat RES bonus while blocked; removed synchronously on release',
+    explains: /^Gains (?:greatly )?increased RES when blocked$/ },
   // Punisher: every third attack stuns allies in the target's area; on death it is reborn as its reviewed child.
   'skill:StunAttack': { covers: (r, nat) => isPunisherStunAttack(r, nat),
     ability: { kind: 'stunAttack', params: r => ({ every: 3, duration: r.skills[0].bb.stun }) },
     note: 'every third attack stuns the target area', nativeClaim: () => ({ wrappers: 1 }),
     explains: /^After several attacks, <\$ba\.stun>Stuns<\/> friendly units in an area\.$/ },
-  'talent:Attack': { covers: r => r.key === 'enemy_1522_captan' || (
+  'talent:Attack': { covers: (r, n) => r.prefabKey==='enemy_1245_ltseal' ? crimsonFormationNative(r,n) : isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan' || (
       ((sig(r, 'Attack', ['enemy_key'])
         || sig(r, 'Attack', ['attack@projectile_delay_time', 'attack@projectile_radius', 'delay', 'enemy_key']))
         && r.abilities.some(a => /^Will be reborn as a <[^>]+> after falling in battle for the first time$/.test(a.text)))
@@ -309,29 +536,41 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: /^Has a chance to dodge Physical attacks when not blocked$/ },
   // 持续损失生命: `damage` HP lost every second (PRTS "自身每秒损失生命值").
   'talent:periodic_damage': { covers: r => sig(r, 'periodic_damage', ['damage']), ability: { kind: 'periodicLoss', params: r => ({ amount: r.talents.bb['periodic_damage.damage'] }) },
+    stageMultipliers: { 'periodic_damage.damage': value => Number.isFinite(value) && value >= 0 },
     note: 'loses damage HP every second', explains: /^(Will gradually lose HP over time)$/ },
   // 折射 (ba.refraction): RES +magic_resistance while not silenced.
   ...family(['refracting'], ['magic_resistance'], g => ({ kind: 'refraction', params: r => ({ res: r.talents.bb[`${g}.magic_resistance`] }) }),
     r => r.abilities.some(a => a.text.includes('<$ba.refraction>')) || !r.abilities.some(a => a.text.includes('<$ba.refraction>')), 'RES +magic_resistance while not silenced', null, /^<\$ba\.refraction>Refraction<\/>$/),
   // "Gains significantly increased ATK when HP is under 50%": ATK +atk once HP first drops below half.
+  'talent:checker': { covers: axeDamageRamp, note: 'Reset damage stacks after four seconds outside attack/combat state.' },
   'talent:atkup': {
-    covers: r => {
+    covers: (r, nat) => {
+      if (isIcefieldBerserker(r)) return icefieldBerserkerNative(r, nat);
+      if (fanaticNative(r, nat)) return true;
+      if (axeDamageRamp(r, nat)) return true;
       if (sig(r, 'atkup', ['atk_scale'])) return r.abilities.some(a => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(a.text));
       if (sig(r, 'atkup', ['atk']) || sig(r, 'atkup', ['atk', 'hp_ratio'])) return r.abilities.some(a => /under 50%/.test(a.text) && /ATK/.test(a.text));
       return false;
     },
-    ability: { kind: 'atkup', params: r => sig(r, 'atkup', ['atk_scale'])
+    ability: r => isIcefieldBerserker(r) ? { kind: 'atkup', params: r => ({ scale: r.talents.bb['atkup.enemy_krgbsk_t[frozen].atk_scale'] }) }
+      : /^enemy_1059_buster(?:_2)?$/.test(r.prefabKey) ? { kind: 'buildingAttack', params: r => ({ scale: r.talents.bb['atkup.atk_scale'] }) }
+      : r.prefabKey === 'enemy_2005_axetro' ? axeRampAbility : { kind: 'atkup', params: r => sig(r, 'atkup', ['atk_scale'])
       ? { scale: r.talents.bb['atkup.atk_scale'] }
       : { ratio: r.talents.bb['atkup.hp_ratio'] ?? 0.5, atkPct: r.talents.bb['atkup.atk'] } },
-    note: 'ATK ×atk_scale against Frozen, or +atk below the hp_ratio threshold',
-    explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
+    note: 'Reviewed damage stacks with combat-state reset, ATK ×atk_scale against Frozen, or +atk below the hp_ratio threshold',
+    explains: text => text === AXE_DESCRIPTION || /^A berserker of the icefields whose attack power (greatly )?increases when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
+      || /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
   // Dublinn Flying Soldier: low-altitude hovering and its native recovery animation.
-  'ability:<$ba.float>Low-Altitude Hovering</>': { covers: r => r.abilities.some(a => a.text === '<$ba.float>Low-Altitude Hovering</>'),
-    ability: { kind: 'hover', params: () => ({}) }, note: 'flying unit', explains: /^<\$ba\.float>Low-Altitude Hovering<\/>$/ },
-  'skill:RecoverAnim': { covers: r => r.skills.some(s => s.prefabKey === 'RecoverAnim'),
-    nativeClaim: () => ({ wrappers: 1, active: 1 }), note: 'native recovery animation' },
+  'ability:<$ba.float>Low-Altitude Hovering</>': { covers: (r, n) => dublinnHoverNative(r, n) || lostHovercraftNative(r, n),
+    ability: { kind: 'hover', params: r => ({ dropOnControl: true, fallStun: r.prefabKey === 'enemy_2070_skzfbx' ? 0 : .5,
+      passiveAir: r.prefabKey === 'enemy_2070_skzfbx', groundSpeed: r.prefabKey === 'enemy_2070_skzfbx' ? r.talents.bb['1.move_speed'] : 0,
+      groundVisual: hoverGroundVisual(r) }) },
+    note: 'Reviewed Dublinn hovering state: airborne targeting on a ground route, unblockable and displacement-immune until a disabling control; then permanently grounded melee with half-second fall stun. Native attack/recovery animation timing remains uncertified.',
+    explains: /^<\$ba\.float>Low-Altitude Hovering<\/>$/ },
+  'skill:RecoverAnim': { covers: (r, n) => dublinnHoverNative(r, n) || lostHovercraftNative(r, n),
+    nativeClaim: p => ({ wrappers: 1, active: p.rootName === 'enemy_2070_skzfbx' ? 3 : 1 }), note: 'Source one-shot ground recovery has no gameplay actions; native animation timing remains uncertified.' },
   // Worry-Free Cargo Helper: flies and self-destructs on a nearby operator.
   'skill:Boom': { covers: r => r.skills.some(s => s.prefabKey === 'Boom')
       && r.abilities.some(a => a.text === 'Self-destructs immediately when there is an Operator nearby, dealing a large amount of Arts damage to surrounding units'),
@@ -351,6 +590,7 @@ export const ENEMY_FEATURES = Object.freeze({
     ability: { kind: 'tauntEnemy', params: () => ({ taunt: 1 }) }, note: 'higher enemy taunt', explains: /^More likely to get attacked by your units$/ },
   // Purifying Flame: Arts hit that adds Burn and Weakens the target.
   'talent:Weaken': { covers: r => sig(r, 'Weaken', ['atk', 'duration']),
+    stageMultipliers: { 'Weaken.atk': value => Number.isFinite(value) && value >= -1 && value <= 0 },
     ability: { kind: 'purifyingFlame', params: r => ({ atk: r.talents.bb['Weaken.atk'], duration: r.talents.bb['Weaken.duration'],
       ratio: r.talents.bb['epdamage.attack@ep_damage_ratio'] ?? 1 }) },
     note: 'Burn and ATK weakening on hit', explains: /^Controls <Purifying Flames>/ },
@@ -386,6 +626,7 @@ export const ENEMY_FEATURES = Object.freeze({
   // Bloodborn Spawn: Arts damage scaled by the target's blocking count, and a Blood Amber death spawn.
   'talent:DamageUp': { covers: r => sig(r, 'DamageUp', ['add_on', 'scale_ratio'])
       && r.abilities.some(a => a.text.startsWith('Deals Arts damage and gains increased ATK depending on the number of units the target is blocking.')),
+    stageOverrides: { 'DamageUp.scale_ratio': v => Number.isFinite(v) && v >= 0 },
     ability: { kind: 'blockDamageUp', params: r => ({ ratio: r.talents.bb['DamageUp.scale_ratio'], addOn: r.talents.bb['DamageUp.add_on'] }) },
     note: 'Arts attacks scale with the target block count', explains: /^Deals Arts damage and gains increased ATK depending on the number of units the target is blocking\.$/ },
   'ability:Recovers a portion of HP and gains increased ATK when either enemy or friendly units are defeated within range (can stack).': {
@@ -411,11 +652,13 @@ export const ENEMY_FEATURES = Object.freeze({
     ability: { kind: 'deathSpawn', params: r => ({ key: r.talents.bbStr['Summon.enemy_key'], cnt: r.talents.bb['Summon.cnt'] }) },
     note: 'leaves the reviewed child on death', dependsOn: r => [r.talents.bbStr['Summon.enemy_key']].filter(Boolean),
     explains: /^Leaves behind <Blood Amber> when defeated\.$/ },
-  'talent:Passive': { covers: r => (sig(r, 'Passive', ['damage_resistance', 'hp_ratio'])
+  'talent:Passive': { matchesRecord: r => isAssaultPowerArmor(r)
+      || sig(r, 'Passive', ['damage_resistance', 'hp_ratio']) || sig(r, 'Passive', ['magic_max_count', 'phy_max_count']),
+    covers: (r, n) => assaultPowerArmorNative(r, n) || (sig(r, 'Passive', ['damage_resistance', 'hp_ratio'])
       && r.abilities.some(a => a.text === 'When affected by the pulse of a Bloodcalling Altar, will be reborn as a Bloodborn Spawn at the altar.'))
       || (sig(r, 'Passive', ['magic_max_count', 'phy_max_count'])
         && r.abilities.some(a => a.text === 'Does not initially attack; transforms into different forms when certain conditions are met')),
-    ability: { kind: 'decodeBasis', params: r => sig(r, 'Passive', ['magic_max_count', 'phy_max_count']) ? {
+    ability: r => isAssaultPowerArmor(r) ? ASSAULT_POWER_ARMOR_ABILITY : { kind: 'decodeBasis', params: r => sig(r, 'Passive', ['magic_max_count', 'phy_max_count']) ? {
       fuchou: { hp: r.talents.bb['Mode_Fuchou_Passive.max_hp'], atk: r.talents.bb['Mode_Fuchou_Passive.atk'], def: r.talents.bb['Mode_Fuchou_Passive.def'],
         res: r.talents.bb['Mode_Fuchou_Passive.magic_resistance'], move: r.talents.bb['Mode_Fuchou_Passive.move_speed'], bat: r.talents.bb['Mode_Fuchou_Passive.base_attack_time'] },
       youling: { hp: r.talents.bb['Mode_Youling_Passive.max_hp'], atk: r.talents.bb['Mode_Youling_Passive.atk'], def: r.talents.bb['Mode_Youling_Passive.def'],
@@ -423,8 +666,9 @@ export const ENEMY_FEATURES = Object.freeze({
       shushi: { hp: r.talents.bb['Mode_Shushi_Passive.max_hp'], atk: r.talents.bb['Mode_Shushi_Passive.atk'], def: r.talents.bb['Mode_Shushi_Passive.def'],
         res: r.talents.bb['Mode_Shushi_Passive.magic_resistance'], move: r.talents.bb['Mode_Shushi_Passive.move_speed'], bat: r.talents.bb['Mode_Shushi_Passive.base_attack_time'] },
     } : {} },
-    note: 'inert Blood Amber until the altar pulse, or the Decode Basis mode table', nativeClaim: () => ({ active: 1 }),
-    explains: text => /^When affected by the pulse of a Bloodcalling Altar, will be reborn as a Bloodborn Spawn at the altar\.$/.test(text)
+    note: 'Reviewed Assault Power Armor attack modes, inert Blood Amber until the altar pulse, or the Decode Basis mode table', nativeClaim: () => ({ active: 1 }),
+    explains: (text, r) => isAssaultPowerArmor(r) && text === 'Attacks 4 enemies simultaneously'
+      || /^When affected by the pulse of a Bloodcalling Altar, will be reborn as a Bloodborn Spawn at the altar\.$/.test(text)
       || text === 'Does not initially attack; transforms into different forms when certain conditions are met'
       || text === 'Transforms into different forms once it has taken 4 Physical attacks, 4 Arts attacks, or if it is blocked' },
   'ability:Deals long-ranged attacks that explode after a delay, inflicting Physical damage in an area.': {
@@ -439,12 +683,15 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => text === 'Does not deplete Life Points when spared, but will deplete a Life Point upon dying'
       || text === 'Does not count towards the defeated enemies counter' },
   'talent:dead': { covers: r => sig(r, 'dead', ['value']), note: 'the spared civilian life value' },
-  // Steam Tank: at half HP gains ASPD, movement and control immunity.
-  'talent:Rage': { covers: r => sig(r, 'Rage', ['attack_speed', 'move_speed'])
+  // The same source talent key has distinct reviewed HP-checker programs.
+  'talent:Rage': { covers: (r, n) => wakerRageNative(r, n) || sig(r, 'Rage', ['attack_speed', 'move_speed'])
       && r.abilities.some(a => a.text.startsWith('When HP drops to 50%, ASPD and Movement Speed are greatly increased')),
-    ability: { kind: 'steamRage', params: r => ({ aspd: r.talents.bb['Rage.attack_speed'], move: r.talents.bb['Rage.move_speed'] }) },
-    note: 'half-HP ASPD/move boost and control immunity',
-    explains: /^When HP drops to 50%, ASPD and Movement Speed are greatly increased, and becomes immune to most control effects\.$/ },
+    ability: r => r.talents.groups.Rage.includes('duration')
+      ? { kind: 'oneShotHpBuff', params: r => ({ threshold: 1, duration: r.talents.bb['Rage.duration'],
+        aspd: r.talents.bb['Rage.attack_speed'], move: r.talents.bb['Rage.move_speed'], silenceable: true }) }
+      : { kind: 'steamRage', params: r => ({ aspd: r.talents.bb['Rage.attack_speed'], move: r.talents.bb['Rage.move_speed'] }) },
+    note: 'Steam Tank: half-HP permanent boost/control immunity. Waker-Uppers: once below full HP, 30-second ASPD/movement buff; no added control immunity.',
+    explains: /^(?:When HP drops to 50%, ASPD and Movement Speed are greatly increased, and becomes immune to most control effects\.|Upon taking damage for the first time, gains significantly increased ASPD and Movement Speed for a period of time)$/ },
   // Sarkaz Royal Court Caster: Necrosis on normal attacks, plus the DeathEye lock-on cast.
   'talent:empty': { covers: r => sig(r, 'empty', ['attack@ep_damage_ratio']),
     ability: { kind: 'elementOnHit', params: r => ({ element: 'apoptosis', ratio: r.talents.bb['empty.attack@ep_damage_ratio'] }) },
@@ -482,21 +729,16 @@ export const ENEMY_FEATURES = Object.freeze({
     note: 'defeated-count stat scaling and a pollution aura',
     explains: text => text === 'The more enemies defeated, the higher its HP, ATK, and DEF when spawned from the Twigs That Crave'
       || text === 'Releases Corruption, causing your nearby units to continuously lose HP' },
-  // Profane Chimera: pollution aura and Arts attacks while polluted/stormed.
-  'talent:OrigAura': { covers: r => sig(r, 'OrigAura', ['damage', 'sp_recover_ratio'])
-      && r.abilities.some(a => a.text.startsWith('Continuously causes an area of Originium pollution around itself')),
-    ability: { kind: 'profaneChimera', params: r => ({ damage: r.talents.bb['OrigAura.damage'], spRatio: r.talents.bb['OrigAura.sp_recover_ratio'] }) },
-    nativeClaim: () => ({ wrappers: 1 }), note: 'pollution aura and Arts attacks while polluted/stormed',
-    explains: /^Continuously causes an area of Originium pollution around itself when affected by Originium pollution or an Active Originium Storm, and attacks deal Arts damage instead\.$/ },
-  'talent:AtkBoost': { covers: r => sig(r, 'AtkBoost', ['atk']), note: 'the chimera AtkBoost value is 0' },
-  'skill:triggerAnim': { covers: r => r.skills.some(s => s.prefabKey === 'triggerAnim'), note: 'native trigger animation skill' },
+  ...CHIMERA_ENEMY_FEATURES,
   // Caustic Originium Slug: death blast + pollution, and a storm-strength boost when consumed.
-  'talent:Boom': { covers: r => (sig(r, 'Boom', ['atk_scale'])
+  'talent:Boom': { covers: (r,n) => isExhaustedFlame(r) ? exhaustedFlameNative(r,n) : isFlamecaller(r) ? flamecallerNative(r,n) : (sig(r, 'Boom', ['atk_scale'])
       && r.abilities.some(a => a.text === 'Upon death, deals Physical damage in an area and causes Originium pollution.'))
       || sig(r, 'Boom', ['atk_scale', 'ep_damage_ratio']),
+    ability: r => isExhaustedFlame(r) ? EXHAUSTED_FLAME_ABILITY : isFlamecaller(r) ? FLAMECALLER_ABILITY : null,
+    nativeClaim: (_p,n) => n.enemy_1294_duchns ? {active:2} : {},
     note: 'death blast is attached by the handbook-line feature',
     note: 'death blast, pollution and a storm boost when consumed',
-    explains: text => text === 'Upon death, deals Physical damage in an area and causes Originium pollution.'
+    explains: text => FLAMECALLER_TEXT.includes(text) || text === 'Upon death, deals Physical damage in an area and causes Originium pollution.'
       || text === 'Increases the strength of an Active Originium Storm when consumed by it.' },
   'talent:DetectStorm': { covers: r => sig(r, 'DetectStorm', ['range_radius']), note: 'the slug detects the storm' },
   // Chalice of Regret: shares a fraction of nearby non-flying enemies' damage.
@@ -516,12 +758,6 @@ export const ENEMY_FEATURES = Object.freeze({
   'skill:GrabEnd': { covers: r => r.skills.some(s => s.prefabKey === 'GrabEnd'), note: 'PRTS scripted action' },
   'skill:Click': { covers: r => r.skills.some(s => s.prefabKey === 'Click'), note: 'PRTS scripted action' },
   'skill:Angry': { covers: r => r.skills.some(s => s.prefabKey === 'Angry'), note: 'PRTS scripted action' },
-  // Pulse-charged Sarkaz: immune to altar pulses, ordinary attacks become Arts.
-  'ability:When coming into contact with a Pulse Wave, this unit instead takes no damage and will deal Arts damage with normal attacks.': {
-    covers: r => r.abilities.some(a => a.text === 'When coming into contact with a Pulse Wave, this unit instead takes no damage and will deal Arts damage with normal attacks.'),
-    ability: { kind: 'pulseCharged', params: () => ({}) }, nativeClaim: () => ({ active: 3 }),
-    note: 'pulse immunity and Arts normal attacks',
-    explains: /^When coming into contact with a Pulse Wave, this unit instead takes no damage and will deal Arts damage with normal attacks\.$/ },
   // W: the C4 kit is already installed by KITS; the features document the two ability lines.
   'ability:Can use explosives to deal heavy Physical damage to allied units': {
     covers: r => r.abilities.some(a => a.text === 'Can use explosives to deal heavy Physical damage to allied units'),
@@ -538,6 +774,16 @@ export const ENEMY_FEATURES = Object.freeze({
     note: 'artillery charge progress is exposed on the battle; the device is not implemented',
     explains: /^Continuously charges up Londinium Secondary Defense Artillery; when interrupted, the Defense Artillery will lose a portion of its charge progress$/ },
   'skill:charge_gunctrl': { covers: r => r.skills.some(s => s.prefabKey === 'charge_gunctrl'), note: 'artillery charge skill' },
+  'skill:boomb': { covers: isBombtail,
+    ability: { kind: 'bombtail', params: () => ({}) }, nativeClaim: () => ({ wrappers: 1 }),
+    note: 'one non-silenceable projectile cast, 3x3 physical blast, then double movement speed; shared Bombtail runtime',
+    explains: text => text === 'Can launch a warhead to deal AoE physical damage'
+      || text === 'Gains significantly increased Movement Speed after launching warhead' },
+  'skill:bomb': { covers: isOneiros,
+    ability: { kind: 'oneiros', params: r => ({ rangeScale: r.stageSkillRadiusScale ?? 1 }) },
+    stageSkillRadius: (r, scale) => r.prefabKey === 'enemy_1070_iced' && r.skills.length === 1 && scale > 0 && scale <= 10, nativeClaim: () => ({ wrappers: 1 }),
+    note: 'one non-silenceable 3x3 Arts projectile, applying the source Cold duration; no post-cast movement bonus',
+    explains: text => text === 'Can launch a warhead to deal AoE Arts damage and apply the <$ba.cold>Cold</> effect to targets' },
   // Flying text shared by several records.
   'ability:Flying unit.': { covers: r => r.abilities.some(a => a.text === 'Flying unit.'), ability: { kind: 'hover', params: () => ({}) }, note: 'flying unit', explains: /^Flying unit\.$/ },
   // Recon drone: invisible, self-draining, and its attacks charge the artillery (charge state is inert without the device).
@@ -549,7 +795,7 @@ export const ENEMY_FEATURES = Object.freeze({
   'ability:Attacks charge Londinium Secondary Defense Artillery': {
     covers: r => r.abilities.some(a => a.text === 'Attacks charge Londinium Secondary Defense Artillery'),
     note: 'artillery charge is inert without the device', explains: /^Attacks charge Londinium Secondary Defense Artillery$/ },
-  'talent:charge': { covers: r => sig(r, 'charge', ['sp']), note: 'artillery charge amount' },
+  'talent:charge': { covers: (r, n) => sig(r, 'charge', ['sp']) || mudrockNative(r, n), note: 'Artillery charge amount, or Mudrock attack stacks managed by her shared cast/barrier controller.' },
   // Inspired extra target.
   'ability:When Inspired, attacks one additional target.': { covers: r => r.abilities.some(a => a.text === 'When Inspired, attacks one additional target.'),
     ability: { kind: 'inspiredTargets', params: () => ({ base: 1, inspired: 2 }) }, note: 'one extra target while Inspired',
@@ -582,19 +828,19 @@ export const ENEMY_FEATURES = Object.freeze({
   'native:prtsProp': { covers: r => (NATIVE_ONLY_FEATURES[r.key] ?? null) === 'native:prtsProp',
     ability: { kind: 'prtsProp', params: () => ({}) }, nativeClaim: p => String(p.rootName ?? '').includes('10072') ? { active: 1 } : {},
     note: 'inert PRTS controller/node; activation not yet modeled' },
-  // Native-only stage prop: the Beacon has no own behaviour in the supported stages.
-  'native:beacon': { covers: r => (NATIVE_ONLY_FEATURES[r.key] ?? null) === 'native:beacon',
-    note: 'passive stage beacon; pickup belongs to the Altar Keeper', nativeClaim: () => ({ active: 2 }) },
+  'native:beacon': BEACON_FEATURE,
   // Ursus patrol: prioritize the named civilian/Talulah targets.
   'ability:Can use long-ranged weapons to attack <Ursus Civilians> and <Talulah, the Fighter>': {
     covers: r => r.abilities.some(a => a.text === 'Can use long-ranged weapons to attack <Ursus Civilians> and <Talulah, the Fighter>'),
     ability: { kind: 'namedPriority', params: () => ({ names: ['Ursus Civilian', 'Talulah'] }) }, note: 'named-target priority; otherwise normal targeting',
     explains: /^Can use long-ranged weapons to attack <Ursus Civilians> and <Talulah, the Fighter>$/ },
   // Witherer: a lingering corruption zone on death.
-  'talent:PollutedDie': { covers: r => sig(r, 'PollutedDie', ['polluted_damage_high', 'polluted_damage_low', 'projectile_life_time', 'projectile_range'])
+  'talent:PollutedDie': { covers: (r, n) => withererNative(r, n)
       && r.abilities.some(a => a.text === 'Releases Corruption when defeated, causing your nearby units to continuously lose HP'),
     ability: { kind: 'pollutedDie', params: r => ({ range: r.talents.bb['PollutedDie.projectile_range'], life: r.talents.bb['PollutedDie.projectile_life_time'],
       low: r.talents.bb['PollutedDie.polluted_damage_low'], high: r.talents.bb['PollutedDie.polluted_damage_high'] }) },
+    stageMultipliers: { 'PollutedDie.polluted_damage_low': v => Number.isFinite(v) && v >= 0,
+      'PollutedDie.polluted_damage_high': v => Number.isFinite(v) && v >= 0 },
     note: 'leaves a pollution zone on death',
     explains: /^Releases Corruption when defeated, causing your nearby units to continuously lose HP$/ },
   // Rotchaser: an Arts bleed on hit, removed by healing.
@@ -618,8 +864,13 @@ export const ENEMY_FEATURES = Object.freeze({
     nativeClaim: () => ({ wrappers: 1 }), note: 'three Seeds of Withering every 10 s',
     explains: /^Periodically summons several <Seeds of Withering>$/ },
   // 1320: a three-Block gate and a first-attack splash.
-  'ability:Can only be blocked by Operators with 3 or more Block': { covers: r => r.abilities.some(a => a.text === 'Can only be blocked by Operators with 3 or more Block'),
-    ability: { kind: 'requiredBlock', params: () => ({ block: 3 }) }, note: 'needs a blocker with 3 Block',
+  'ability:Can only be blocked by Operators with 3 or more Block': {
+    covers: (r, nat) => r.abilities.some(a => a.text === 'Can only be blocked by Operators with 3 or more Block')
+      && (!['enemy_1058_traink', 'enemy_1058_traink_2'].includes(r.prefabKey)
+        || nat[r.prefabKey]?.[0]?._blockVolume === 3),
+    ability: r => ['enemy_1058_traink', 'enemy_1058_traink_2'].includes(r.prefabKey)
+      ? { kind: 'blockWeight', params: () => ({ n: 3 }) }
+      : { kind: 'requiredBlock', params: () => ({ block: 3 }) }, note: 'Bully occupies three slots; other reviewed gate-only enemies require a blocker with 3 Block',
     explains: /^Can only be blocked by Operators with 3 or more Block$/ },
   'ability:First attack deals Splash damage': { covers: r => r.abilities.some(a => a.text === 'First attack deals Splash damage') && r.skills.some(s => s.prefabKey === 'AOEAttack'),
     ability: { kind: 'firstSplash', params: r => ({ scale: r.talents.bb['AOEAttack.atk_scale'] ?? 1.5 }) },
@@ -636,7 +887,11 @@ export const ENEMY_FEATURES = Object.freeze({
   'ability:Attacks reduce DP when carrying ammo. Ammo capacity: 3': { covers: r => r.abilities.some(a => a.text === 'Attacks reduce DP when carrying ammo. Ammo capacity: 3'),
     ability: { kind: 'dpDrain', params: r => ({ cost: r.talents.bb['1.attack@cost'] ?? 0, sp: r.talents.bb['1.attack@sp'] ?? 0 }) },
     note: 'three ammo: each attack drains DP/SP', explains: /^Attacks reduce DP when carrying ammo\. Ammo capacity: 3$/ },
-  'talent:1': { covers: r => sig(r, '1', ['attack@cost', 'attack@sp']), note: 'the dpDrain ability reads attack@cost/attack@sp' },
+  'talent:Apoptosis': EPOCH_MARK_FEATURE,
+  'talent:1': { covers: (r, n) => sig(r, '1', ['attack@cost', 'attack@sp']) || windowNative(r, n) || portalNative(r, n) || lostHovercraftNative(r, n) || dreadkazNative(r, n),
+    ability: r => isDreadkaz(r) ? DREADKAZ_ABILITY : null,
+    dependsOn: r => isDreadkaz(r) ? [EPOCH_MARK] : [], explains: DREADKAZ_TEXT,
+    note: 'dpDrain reads attack@cost/attack@sp. Window and Portal each require their complete native contract; effect_duration is visual only.' },
   // Instigator: while unblocked, unrevealed civilians/spies cannot be blocked.
   'ability:When not blocked, all unrevealed Civilians or Spies cannot be blocked': { covers: r => r.abilities.some(a => a.text === 'When not blocked, all unrevealed Civilians or Spies cannot be blocked'),
     ability: { kind: 'identityLock', params: () => ({}) }, note: 'locks unrevealed civilian/spy blocking while unblocked',
@@ -693,7 +948,11 @@ export const ENEMY_FEATURES = Object.freeze({
     covers: r => r.abilities.some(a => a.text === 'Able to land directly onto the battlefield.'),
     note: 'Landing is the stage spawn placement', explains: /^Able to land directly onto the battlefield\.$/ },
   // Active Originium Storm: a growing storm aura that damages and slows SP recovery.
-  'talent:StormAura': { covers: r => sig(r, 'StormAura', ['damage', 'damage_step', 'max_damage', 'max_radius', 'radius_step', 'range_radius', 'sp_recover_ratio']),
+  'talent:StormAura': { stageSpInitialization: (r, sp) => r.key === 'enemy_1420_lrmm' && r.skills.length === 0
+      && sp.spType === 'INCREASE_WITH_TIME' && sp.maxSp === 0 && sp.initSp === 0 && sp.increment === 1,
+    covers: (r, n) => stormNative(r, n) && sig(r, 'StormAura', ['damage', 'damage_step', 'max_damage', 'max_radius', 'radius_step', 'range_radius', 'sp_recover_ratio']),
+    stageOverrides: { 'StormAura.max_damage': v => Number.isFinite(v) && v > 0,
+      'StormAura.max_radius': v => Number.isFinite(v) && v > 0, 'StormAura.radius_step': v => Number.isFinite(v) && v >= 0 },
     ability: { kind: 'stormAura', params: r => ({ damage: r.talents.bb['StormAura.damage'], damageStep: r.talents.bb['StormAura.damage_step'],
       maxDamage: r.talents.bb['StormAura.max_damage'], radius: r.talents.bb['StormAura.range_radius'], radiusStep: r.talents.bb['StormAura.radius_step'],
       maxRadius: r.talents.bb['StormAura.max_radius'], spRatio: r.talents.bb['StormAura.sp_recover_ratio'] }) },
@@ -728,16 +987,17 @@ export const ENEMY_FEATURES = Object.freeze({
     ability: { kind: 'targetPriority', params: () => ({ priority: 'lowestHp' }) }, note: 'targets the lowest-HP-fraction ally in range',
     explains: /^Prioritizes attacking the target with the current lowest HP percentage within a small area$/ },
   // Sarkaz Grudgebearer/Bladeweaver: standby until the first injury (or unmove_duration), then combat-ready.
-  'talent:revive': { covers: r => sig(r, 'revive', ['hp_ratio', 'move_speed', 'unmove_duration'])
-      && r.abilities.some(a => /^Starts battle in Standby and will not attack; upon being injured, becomes Combat-Ready/.test(a.text)),
+  'talent:revive': { covers: sarkazStandbyNative,
+    stageOverrides: { 'revive.unmove_duration': value => Number.isFinite(value) && value >= 0 },
     ability: { kind: 'standbyRevive', params: r => ({ ratio: r.talents.bb['revive.hp_ratio'], speed: r.talents.bb['revive.move_speed'],
       unmove: r.talents.bb['revive.unmove_duration'], targets: /attacks two targets/.test(r.abilities.map(a => a.text).join(' ')) ? 2 : 1 }) },
-    note: 'standby until injured or unmove_duration, then combat-ready',
+    note: 'standby disarm persists after temporary self-bind ends; injury/alarm wakes it with additive +move_speed',
     explains: text => /^Starts battle in Standby and will not attack; upon being injured, becomes Combat-Ready/.test(text) },
   // Volleyball cart: ATK stacks per attack, lost on a negative status.
-  'talent:AtkUp': { covers: r => sig(r, 'AtkUp', ['atk', 'max_stack_cnt'])
+  'talent:Atkup': { covers: brokenBladesNative },
+  'talent:AtkUp': { covers: (r, n) => brokenBladesNative(r, n) || sig(r, 'AtkUp', ['atk', 'max_stack_cnt'])
       && r.abilities.some(a => a.text === 'Gains increased ATK with each attack (up to a limit); when affected by certain <$ba.debuff>Negative Statuses</>, these stacks will be lost'),
-    ability: { kind: 'atkUpStacks', params: r => ({ atk: r.talents.bb['AtkUp.atk'], max: r.talents.bb['AtkUp.max_stack_cnt'] }) },
+    ability: r => brokenBlades(r) ? null : { kind: 'atkUpStacks', params: r => ({ atk: r.talents.bb['AtkUp.atk'], max: r.talents.bb['AtkUp.max_stack_cnt'] }) },
     note: 'ATK +atk per attack, capped, cleared by negative statuses',
     explains: /^Gains increased ATK with each attack \(up to a limit\); when affected by certain <\$ba\.debuff>Negative Statuses<\/>, these stacks will be lost$/ },
   // Evade: dodge while unblocked, an initial timed dodge, or a one-time low-HP dodge.
@@ -763,16 +1023,16 @@ export const ENEMY_FEATURES = Object.freeze({
     ability: { kind: 'hitShield', params: r => ({ count: r.talents.bb['Shield.max_block_damage_cnt'] }) },
     note: 'blocks max_block_damage_cnt Physical/Arts hits', explains: /^Blocks 1 instance of Physical or Arts damage$/ },
   // Roar Knightclub: a timed flat DEF/RES buff declared by the record.
-  'talent:buff': { covers: r => sig(r, 'buff', ['def', 'duration', 'magic_resistance'])
+  'talent:buff': { covers: (r, nat) => cheeringDrone(r, nat) || sig(r, 'buff', ['def', 'duration', 'magic_resistance'])
       && r.abilities.some(a => /^(Has significantly increased DEF and RES for a period of time|Starts with significantly increased DEF and RES, persists for a long period\.)$/.test(a.text)),
-    ability: { kind: 'timedStatBuff', params: r => ({ def: r.talents.bb['buff.def'], res: r.talents.bb['buff.magic_resistance'], duration: r.talents.bb['buff.duration'] }) },
-    note: 'timed DEF +def and RES +res', explains: text => /^(Has significantly increased DEF and RES for a period of time|Starts with significantly increased DEF and RES, persists for a long period\.)$/.test(text) },
+    ability: r => r.prefabKey === 'enemy_1106_byokai' ? cheeringAbility : { kind: 'timedStatBuff', params: r => ({ def: r.talents.bb['buff.def'], res: r.talents.bb['buff.magic_resistance'], duration: r.talents.bb['buff.duration'] }) },
+    note: 'Reviewed death reward with cumulative duration, or timed DEF +def and RES +res', explains: text => text === CHEERING_DESCRIPTION || /^(Has significantly increased DEF and RES for a period of time|Starts with significantly increased DEF and RES, persists for a long period\.)$/.test(text) },
   // Sankta: first HP drop below half applies self-fear and a temporary movement multiplier.
-  'talent:SelfFear': { covers: r => sig(r, 'SelfFear', ['fear', 'move_speed', 'speed_duration'])
+  'talent:SelfFear': { matchesRecord: isSelfFearEnemy, covers: (r, n) => selfFearNative(r, n)
       && r.abilities.some(a => a.text === 'Gains <$ba.fear>Fear</> for several seconds when its HP drops below 50% for the first time'),
     ability: { kind: 'selfFear', params: r => ({ fear: r.talents.bb['SelfFear.fear'], moveSpeed: r.talents.bb['SelfFear.move_speed'],
       duration: r.talents.bb['SelfFear.speed_duration'] }) },
-    note: 'first HP<50%: self-fear and move speed for speed_duration',
+    note: 'First living HP check at or below 50%: independent movement multiplier, then resistance-aware self-fear; does not rearm after healing.',
     explains: /^Gains <\$ba\.fear>Fear<\/> for several seconds when its HP drops below 50% for the first time$/ },
   // Tiacauh: flat DEF while blocked; the Ritualist/Shaman also has a reviewed 4× melee attack.
   'talent:Def': { covers: r => sig(r, 'Def', ['def']) && r.abilities.some(a => a.text.startsWith('Gains DEF when blocked')),
@@ -784,13 +1044,23 @@ export const ENEMY_FEATURES = Object.freeze({
     note: 'melee attack ×scale', explains: text => /deals (high )?Physical damage with melee attacks/.test(text) },
   // Reborn-Creation auras. Hatedrinker buffs itself per creation; the ASV buffs the creations and makes their
   // attacks add Necrosis. Both read the bloodsucker marker from E10.
+  [`ability:${MIRE_IMMUNITY}`]: { covers: swampRoverNative, trait: { flags: { mireImmune: true } }, note: 'source mire immunity marker' },
+  [`ability:${REEDS_SOLDIER_TEXT}`]: { covers: reedsSoldierNative, ability: { kind: 'reedsStealth', params: () => ({}) },
+    note: 'Source-polled Reeds invisibility, disabled by attacks/blocking with a three-second restoration delay' },
+  'talent:mire[immune]': { covers: gloompincerNative, trait: { flags: { mireImmune: true } },
+    ability: { kind: 'mireWalker', params: r => ({ speed: r.talents.bb['mire[immune].move_speed'] }) },
+    explains: text => text === GLOOMPINCER_TEXT, note: 'Mire immunity and source-polled movement bonus while in Mire' },
+  ...FLAMECHASER_FEATURES,
+  ...FIRELIGHT_SPECOPS_FEATURES,
+  'talent:Aura': EBLANA_AURA_FEATURE,
   'talent:aura': {
-    covers: r => r.abilities.some(a => a.text === ASV_TEXT) ? !!asvAura(r)
+    stageMultipliers: { 'aura.enemy_dsuply_t[attr_buff].atk': v => Number.isFinite(v) && v >= 0 },
+    covers: (r, n) => isFlamechaser(r) ? flamechaserNative(r, n) : isSwampRover(r) ? swampRoverNative(r, n) : r.abilities.some(a => a.text === ASV_TEXT) ? !!asvAura(r)
       : sig(r, 'aura', ['atk', 'max_valid_stack_cnt']) && r.abilities.some(a => a.text === HATEDRINKER_TEXT),
-    ability: { kind: 'aura', params: r => r.abilities.some(a => a.text === ASV_TEXT)
+    ability: r => isFlamechaser(r) ? FLAMECHASER_AURA : isSwampRover(r) ? SWAMP_ROVER_AURA : { kind: 'aura', params: r => r.abilities.some(a => a.text === ASV_TEXT)
       ? { mode: 'asv', ...asvAura(r) }
       : { mode: 'rebornAtk', atk: r.talents.bb['aura.atk'], max: r.talents.bb['aura.max_valid_stack_cnt'] } },
-    note: 'Hatedrinker self ATK per creation, or ASV creation ATK + Necrosis', explains: text => text === HATEDRINKER_TEXT || text === ASV_TEXT },
+    note: 'reviewed creation and visibility auras', explains: text => text === FLAMECHASER_BURN || text === FLAMECHASER_GUARD_BURN || text === HATEDRINKER_TEXT || text === ASV_TEXT || text === ROVER_REVEAL },
   // 吸血 (vampire): attacks up to max_target and heals heal_scale × the damage actually dealt. The single-target
   // signature omits max_target; the record then keeps the engine's one target.
   ...familyAny(['vampire'], [['attack@max_target', 'heal_scale'], ['heal_scale']], g => ({ kind: 'vampireOnHit', params: r => ({
@@ -799,7 +1069,8 @@ export const ENEMY_FEATURES = Object.freeze({
     'attacks up to max_target and heals heal_scale × damage dealt', null,
     (text, record) => /^Attacks restore HP proportional to damage dealt$/.test(text)
       || /^Restores a certain amount of HP after each attack, based upon damage dealt$/.test(text)
-      || text === `Attacks ${record.talents.bb['vampire.attack@max_target'] ?? 1} enemies simultaneously`),
+      || text === `Attacks ${record.talents.bb['vampire.attack@max_target'] ?? 1} enemies simultaneously`,
+    { 'vampire.heal_scale': v => Number.isFinite(v) && v >= 0 }),
   // Element damage on every attack hit: ATK x attack@ep_damage_ratio of the element its handbook line names.
   ...family(['EpDamage'], ['attack@ep_damage_ratio'], g => ({ kind: 'elementOnHit', params: r => ({ element: elementOf(r), ratio: r.talents.bb[`${g}.attack@ep_damage_ratio`] }) }),
     r => !!elementOf(r), 'element damage on every attack hit', null,
@@ -821,18 +1092,26 @@ export const ENEMY_FEATURES = Object.freeze({
       /^(Every attack deals|Attacks inflict additional|Attacks deal) <\$ba\.dt\.(erosion|neural|apoptosis|burning)>[^<]*<\/>\.?$/.test(text)
       || /^Attacks deal <\$ba\.dt\.apoptosis>Necrosis damage<\/> and jump between \d+ targets, with each jump dealing reduced damage$/.test(text) },
   // "Spawns N <X> when defeated": cnt enemy_key on death; supported only when the spawned enemy is.
-  ...family(['DeadSpawn'], ['cnt', 'enemy_key'], g => ({ kind: 'deathSpawn', params: r => ({ key: r.talents.bbStr[`${g}.enemy_key`], cnt: r.talents.bb[`${g}.cnt`] }) }),
-    r => true, 'spawns cnt enemy_key when killed', r => Object.entries(r.talents.bbStr).filter(([k]) => /^deadspawn\.enemy_key$/i.test(k)).map(([, v]) => v),
-    /^Spawns \d+ <[^>]+> when defeated$/),
+  'talent:DeadSpawn': {
+    covers: (r, n) => brokenBlades(r) ? brokenBladesNative(r, n) : lampBearer(r) ? lampBearerNative(r, n) : porcelainCaster(r) ? porcelainCasterNative(r, n) : sig(r, 'DeadSpawn', ['cnt', 'enemy_key']),
+    ability: r => brokenBlades(r) ? BROKEN_BLADE_ABILITY
+      : lampBearer(r) || porcelainCaster(r) ? { kind: 'fragmentDeath', params: r => ({ child: r.talents.bbStr['DeadSpawn.enemy_key'], count: r.talents.bb['DeadSpawn.cnt'] }) }
+      : { kind: 'deathSpawn', params: r => ({ key: r.talents.bbStr['DeadSpawn.enemy_key'], cnt: r.talents.bb['DeadSpawn.cnt'] }) },
+    dependsOn: r => [r.talents.bbStr['DeadSpawn.enemy_key']].filter(Boolean),
+    explains: text => /^Spawns \d+ <[^>]+> when defeated$/.test(text) || BROKEN_BLADE_TEXT.test(text),
+    stageMultipliers: { 'DeadSpawn.cnt': value => Number.isSafeInteger(value) && value > 0 && value <= 20 },
+    note: 'Shared death children, with native bounded initial attack bonus and remaining-fragment count for broken blades',
+  },
   // "Splits into N <X> upon death" (deathrattle): cnt children after `delay` s, spread around the parent's tile.
-  'talent:deathrattle': { covers: r => (r.skills.length === 0
+  'talent:deathrattle': { covers: (r, n) => mutantSpiderNative(r, n) || (r.skills.length === 0
       && sig(r, 'deathrattle', ['cnt', 'delay', 'enemy_key', 'offset_bound'])
       && r.abilities.some(a => /^Splits into \d+ <[^>]+> upon death$/.test(a.text)))
       || (sig(r, 'deathrattle', ['delay', 'enemy_key'])
         && r.abilities.some(a => /^Will be reborn as a <[^>]+> after falling in battle for the first time$/.test(a.text))),
-    ability: { kind: 'deathSpawnDelayed', params: r => ({ key: r.talents.bbStr['deathrattle.enemy_key'],
+    ability: r => mutantSpider(r) ? null : { kind: 'deathSpawnDelayed', params: r => ({ key: r.talents.bbStr['deathrattle.enemy_key'],
       cnt: r.talents.bb['deathrattle.cnt'] ?? 1, delay: r.talents.bb['deathrattle.delay'] ?? 0 }) },
     note: 'splits/reborn as cnt child(ren) after delay s', dependsOn: r => [r.talents.bbStr['deathrattle.enemy_key']].filter(Boolean),
+    stageAdditions: { 'deathrattle.cnt': value => Number.isSafeInteger(value) && value > 0 && value <= 20 },
     explains: text => /^Splits into \d+ <[^>]+> upon death$/.test(text)
       || /^Will be reborn as a <[^>]+> after falling in battle for the first time$/.test(text) },
   // Reborn Creation (Sarkaz Heirbearer family): damage reduction from the reviewed template plus the blocker's
@@ -854,15 +1133,23 @@ export const ENEMY_FEATURES = Object.freeze({
     note: "blocker's flat ASPD delta, or Frost's ally aura", explains: text => text === "When blocked, significantly reduces the blocker's ASPD"
       || text === 'All friendly units within range have reduced ASPD' },
   // Defender-4: a DEF aura on other enemies within range_radius (silence-aware). Frost shares the range group but has no DEF.
-  'talent:defup': { covers: r => (sig(r, 'defup', ['def', 'range_radius']) && r.abilities.some(a => a.text === 'Increases the DEF of surrounding enemy units'))
+  'talent:defup': { covers: (r, n) => ratKingNative(r, n) || (sig(r, 'defup', ['def', 'range_radius']) && r.abilities.some(a => a.text === 'Increases the DEF of surrounding enemy units'))
       || (sig(r, 'defup', ['range_radius']) && r.abilities.some(a => a.text === 'All friendly units within range have reduced ASPD')),
-    ability: { kind: 'enemyDefAura', params: r => ({ def: r.talents.bb['defup.def'] ?? 0, r: r.talents.bb['defup.range_radius'] }) },
+    stageOverrides: { 'defup.def': v => Number.isFinite(v) && v >= 0 },
+    ability: r => r.prefabKey === 'enemy_1509_mousek' ? null : ({ kind: 'enemyDefAura', params: r => ({ def: r.talents.bb['defup.def'] ?? 0, r: r.talents.bb['defup.range_radius'] }) }),
     note: 'other enemies within range_radius gain DEF +def (zero for Frost)', explains: /^Increases the DEF of surrounding enemy units$/ },
   // Death blast (boom): atk_scale × ATK around the corpse; the cold/elemental variants add their reviewed status or
   // element. Records whose line names anything else (ignite Reeds, seize Gramophones, grant Energy) are not covered.
-  'talent:boom': { covers: r => coversDeathBlast(r, 'boom'),
-    ability: { kind: 'deathBoom', params: r => deathBlastParams(r, 'boom') },
-    note: 'death blast: atk_scale × ATK, with the reviewed cold/elemental rider', explains: deathBlastText },
+  'talent:boom': { covers: (r, n) => coversDeathBlast(r, 'boom') || cartNative(r, n) || GRAMOPHONE_ENEMY_FEATURES['talent:boom'].covers(r, n),
+    ability: r => r.prefabKey.startsWith('enemy_1089_ltlntc') ? GRAMOPHONE_ENEMY_FEATURES['talent:boom'].ability
+      : cart(r) ? cartAbility : { kind: 'deathBoom', params: r => deathBlastParams(r, 'boom') },
+    stageAdditions: { 'boom.attack@s2mode_boom_atk': v => Number.isFinite(v) && v > 0 },
+    stageMultipliers: { 'boom.attack@s2mode_boom_atk': v => Number.isFinite(v) && v > 0,
+      'boom.attack@s2mode_boom_atk_totrap': v => Number.isFinite(v) && v > 0, 'boom.attack@s2mode_ep_fire_damage': v => Number.isFinite(v) && v > 0 },
+    note: 'Reviewed death blasts, or the source-gated Snack Cart block/attack-triggered blast',
+    explains: text => deathBlastText(text) || GRAMOPHONE_ENEMY_FEATURES['talent:boom'].explains.test(text)
+      || /^Detonates when blocked, inflicting Arts damage and <\$ba.dt.burning>Burn damage<\/> to all nearby targets$/.test(text)
+      || text === "Explosion deals a large amount of Arts damage to nearby 'Gelato Stops'" },
   // DefDown: every attack hit adds a permanent, uncapped stack of DEF +defdown.def (flat) to the operator hit
   // (PRTS 酸液源石虫 天赋 corroborates: 防御力-10, 可无限叠加, linear in stacks).
   'talent:defdown': { covers: (r, nat) => sig(r, 'defdown', ['def']) && r.talents.bb['defdown.def'] < 0
@@ -878,24 +1165,24 @@ export const ENEMY_FEATURES = Object.freeze({
   'talent:enhance': { covers: (r, nat) => sig(r, 'enhance', ['atk', 'attack_speed', 'max_stack_cnt']) && isAllyDeathEnhance(r, nat),
     ability: { kind: 'allyDeathStacks', params: r => ({ atk: r.talents.bb['enhance.atk'], aspd: r.talents.bb['enhance.attack_speed'], max: r.talents.bb['enhance.max_stack_cnt'] }) },
     note: 'stacks ATK/ASPD per enemy-side death', explains: /^Each time an enemy is defeated, gains ATK and ASPD, stacking up to 10 times\.$/ },
-  'ability:First Form': { covers: r => r.key === 'enemy_1522_captan' && (sig(r, 'Reborn', ['duration', 'location', 'reborn_invincible.duration']) || sig(r, 'Reborn', ['location'])) && r.skills.some(x => x.prefabKey === 'SummonBmbmot'),
+  'ability:First Form': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan' && (sig(r, 'Reborn', ['duration', 'location', 'reborn_invincible.duration']) || sig(r, 'Reborn', ['location'])) && r.skills.some(x => x.prefabKey === 'SummonBmbmot'),
     ability: { kind: 'pancho', params: () => ({}) }, nativeClaim: () => ({ wrappers: 5 }),
     note: 'Pancho: two forms, summons, water cannon, burst shot, whirlwind and form-two stats' },
-  'ability:Summons <Kites> and <Pancho\'s Explosive Boats> in battle': { covers: r => r.key === 'enemy_1522_captan', note: 'summoned by the pancho ability' },
-  'ability:Attacks the unit with the highest Max HP with its water cannon, continuously dealing Arts and <$ba.dt.erosion>Corrosion damage</>': { covers: r => r.key === 'enemy_1522_captan', note: 'water cannon in the pancho ability' },
-  "ability:The first time HP drops to 0, jumps to a fixed spot and enters Second Form": { covers: r => r.key === 'enemy_1522_captan', note: 'form transition in the pancho ability' },
-  'ability:Second Form': { covers: r => r.key === 'enemy_1522_captan', note: 'form-two state in the pancho ability' },
-  'ability:Gains increased ASPD and periodically attacks all surrounding allied units': { covers: r => r.key === 'enemy_1522_captan', note: 'whirlwind in the pancho ability' },
-  'ability:Attacks the unit with the highest DEF with its small arms, and reduces the target\'s DEF': { covers: r => r.key === 'enemy_1522_captan', note: 'burst shot in the pancho ability' },
-  'ability:When Pancho defeats a unit or is defeated, increases the ASPD and Movement Speed of all enemy units': { covers: r => r.key === 'enemy_1522_captan', note: 'encourage in the pancho ability' },
-  'talent:AttackSpeedUp': { covers: r => r.key === 'enemy_1522_captan', note: 'pancho form-two ASPD' },
-  'talent:Encourage': { covers: r => r.key === 'enemy_1522_captan', note: 'pancho kill buff' },
-  'talent:DeathEncourage': { covers: r => r.key === 'enemy_1522_captan', note: 'pancho death buff' },
-  'skill:SummonFcanon': { covers: r => r.key === 'enemy_1522_captan', note: 'handled by the pancho ability' },
-  'skill:SummonBmbmot': { covers: r => r.key === 'enemy_1522_captan', note: 'handled by the pancho ability' },
-  'skill:WaterCannon': { covers: r => r.key === 'enemy_1522_captan', note: 'handled by the pancho ability' },
-  'skill:Whirlwind': { covers: r => r.key === 'enemy_1522_captan', note: 'handled by the pancho ability' },
-  'skill:BurstShoot': { covers: r => r.key === 'enemy_1522_captan', note: 'handled by the pancho ability' },
+  'ability:Summons <Kites> and <Pancho\'s Explosive Boats> in battle': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'summoned by the pancho ability' },
+  'ability:Attacks the unit with the highest Max HP with its water cannon, continuously dealing Arts and <$ba.dt.erosion>Corrosion damage</>': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'water cannon in the pancho ability' },
+  "ability:The first time HP drops to 0, jumps to a fixed spot and enters Second Form": { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'form transition in the pancho ability' },
+  'ability:Second Form': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'form-two state in the pancho ability' },
+  'ability:Gains increased ASPD and periodically attacks all surrounding allied units': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'whirlwind in the pancho ability' },
+  'ability:Attacks the unit with the highest DEF with its small arms, and reduces the target\'s DEF': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'burst shot in the pancho ability' },
+  'ability:When Pancho defeats a unit or is defeated, increases the ASPD and Movement Speed of all enemy units': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'encourage in the pancho ability' },
+  'talent:AttackSpeedUp': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'pancho form-two ASPD' },
+  'talent:Encourage': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'pancho kill buff' },
+  'talent:DeathEncourage': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'pancho death buff' },
+  'skill:SummonFcanon': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'handled by the pancho ability' },
+  'skill:SummonBmbmot': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'handled by the pancho ability' },
+  'skill:WaterCannon': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'handled by the pancho ability' },
+  'skill:Whirlwind': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'handled by the pancho ability' },
+  'skill:BurstShoot': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'handled by the pancho ability' },
   'ability:Immune to Erosion. While in water, gains increased ATK and <$ba.invisible>Invisibility</>': {
     covers: r => sig(r, 'Swim', ['atk']) && r.talents.bb['Swim.atk'] >= 0,
     ability: { kind: 'swim', params: r => ({ atk: r.talents.bb['Swim.atk'] ?? 0 }) },
@@ -906,24 +1193,24 @@ export const ENEMY_FEATURES = Object.freeze({
     ability: { kind: 'splashCorrosion', params: r => ({ ratio: r.talents.bb['EpDamage.attack@ep_damage_ratio'] }) },
     note: 'four-neighbour splash plus erosion equal to ATK × ep_damage_ratio', explains: /four adjacent tiles/, nativeClaim: () => ({ active: 1 }) },
   'talent:EpDamage': { covers: r => sig(r, 'EpDamage', ['attack@ep_damage_ratio']), note: 'splash erosion is attached by the handbook-line feature' },
-  'ability:First Form': { covers: r => r.key === 'enemy_1522_captan' && (sig(r, 'Reborn', ['duration', 'location', 'reborn_invincible.duration']) || sig(r, 'Reborn', ['location'])) && r.skills.some(x => x.prefabKey === 'SummonBmbmot'),
+  'ability:First Form': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan' && (sig(r, 'Reborn', ['duration', 'location', 'reborn_invincible.duration']) || sig(r, 'Reborn', ['location'])) && r.skills.some(x => x.prefabKey === 'SummonBmbmot'),
     ability: { kind: 'pancho', params: () => ({}) }, nativeClaim: () => ({ wrappers: 5 }),
     note: 'Pancho: two forms, summons, water cannon, burst shot, whirlwind and form-two stats' },
-  'ability:Summons <Kites> and <Pancho\'s Explosive Boats> in battle': { covers: r => r.key === 'enemy_1522_captan', note: 'summoned by the pancho ability' },
-  'ability:Attacks the unit with the highest Max HP with its water cannon, continuously dealing Arts and <$ba.dt.erosion>Corrosion damage</>': { covers: r => r.key === 'enemy_1522_captan', note: 'water cannon in the pancho ability' },
-  "ability:The first time HP drops to 0, jumps to a fixed spot and enters Second Form": { covers: r => r.key === 'enemy_1522_captan', note: 'form transition in the pancho ability' },
-  'ability:Second Form': { covers: r => r.key === 'enemy_1522_captan', note: 'form-two state in the pancho ability' },
-  'ability:Gains increased ASPD and periodically attacks all surrounding allied units': { covers: r => r.key === 'enemy_1522_captan', note: 'whirlwind in the pancho ability' },
-  'ability:Attacks the unit with the highest DEF with its small arms, and reduces the target\'s DEF': { covers: r => r.key === 'enemy_1522_captan', note: 'burst shot in the pancho ability' },
-  'ability:When Pancho defeats a unit or is defeated, increases the ASPD and Movement Speed of all enemy units': { covers: r => r.key === 'enemy_1522_captan', note: 'encourage in the pancho ability' },
-  'talent:AttackSpeedUp': { covers: r => r.key === 'enemy_1522_captan', note: 'pancho form-two ASPD' },
-  'talent:Encourage': { covers: r => r.key === 'enemy_1522_captan', note: 'pancho kill buff' },
-  'talent:DeathEncourage': { covers: r => r.key === 'enemy_1522_captan', note: 'pancho death buff' },
-  'skill:SummonFcanon': { covers: r => r.key === 'enemy_1522_captan', note: 'handled by the pancho ability' },
-  'skill:SummonBmbmot': { covers: r => r.key === 'enemy_1522_captan', note: 'handled by the pancho ability' },
-  'skill:WaterCannon': { covers: r => r.key === 'enemy_1522_captan', note: 'handled by the pancho ability' },
-  'skill:Whirlwind': { covers: r => r.key === 'enemy_1522_captan', note: 'handled by the pancho ability' },
-  'skill:BurstShoot': { covers: r => r.key === 'enemy_1522_captan', note: 'handled by the pancho ability' },
+  'ability:Summons <Kites> and <Pancho\'s Explosive Boats> in battle': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'summoned by the pancho ability' },
+  'ability:Attacks the unit with the highest Max HP with its water cannon, continuously dealing Arts and <$ba.dt.erosion>Corrosion damage</>': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'water cannon in the pancho ability' },
+  "ability:The first time HP drops to 0, jumps to a fixed spot and enters Second Form": { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'form transition in the pancho ability' },
+  'ability:Second Form': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'form-two state in the pancho ability' },
+  'ability:Gains increased ASPD and periodically attacks all surrounding allied units': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'whirlwind in the pancho ability' },
+  'ability:Attacks the unit with the highest DEF with its small arms, and reduces the target\'s DEF': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'burst shot in the pancho ability' },
+  'ability:When Pancho defeats a unit or is defeated, increases the ASPD and Movement Speed of all enemy units': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'encourage in the pancho ability' },
+  'talent:AttackSpeedUp': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'pancho form-two ASPD' },
+  'talent:Encourage': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'pancho kill buff' },
+  'talent:DeathEncourage': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'pancho death buff' },
+  'skill:SummonFcanon': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'handled by the pancho ability' },
+  'skill:SummonBmbmot': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'handled by the pancho ability' },
+  'skill:WaterCannon': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'handled by the pancho ability' },
+  'skill:Whirlwind': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'handled by the pancho ability' },
+  'skill:BurstShoot': { covers: (r, n) => isBladeKnight(r) ? bladeNative(r, n) : r.key === 'enemy_1522_captan', note: 'handled by the pancho ability' },
   'ability:Immune to Erosion. While in water, gains increased ATK and <$ba.invisible>Invisibility</>': {
     covers: r => sig(r, 'Swim', ['atk']) && r.talents.bb['Swim.atk'] >= 0,
     ability: { kind: 'swim', params: r => ({ atk: r.talents.bb['Swim.atk'] ?? 0 }) },
@@ -965,4 +1252,17 @@ export function recordFeatureIds(record) {
     ...record.skills.map(s => `skill:${s.prefabKey}`),
     ...(NATIVE_ONLY_FEATURES[record.key] ? [NATIVE_ONLY_FEATURES[record.key]] : []),
   ])];
+}
+
+/** Small engine-facing properties owned by the same atomic feature as its
+ * behavior. Catalogue/source records remain immutable. */
+export function enemyRuntimeRecord(record) {
+  if (!record?.abilities || !record.talents?.groups) return record;
+  let out = record;
+  for (const id of recordFeatureIds(record)) {
+    const feature = enemyFeature(id);
+    if (!feature?.unitProperties || feature.matchesRecord && !feature.matchesRecord(record)) continue;
+    out = { ...out, ...feature.unitProperties };
+  }
+  return out;
 }

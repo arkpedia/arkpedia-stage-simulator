@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Complete original graphs: arkpedia-pozemka-prefabs.json. Begin/reset,
 // S2 receipt dispatch and token attachment are bounded runtime mappings.
+import { stageCardRespawnTime } from './arkpedia-stage-card-cost.js';
 import evidence from '../../../data/arkpedia-pozemka-prefabs.json' with { type: 'json' };
 import { canTargetEnemy, sortEnemyTargets, absoluteRangeKeys } from '../targeting.js';
 import { bodyInKeys } from '../body.js';
@@ -165,6 +166,7 @@ function installDamage(b, u) {
 }
 export function installPozemka({ battle: b, unit: u, def }) {
   if (def.charId !== ID) return;
+  u.mem.regularSummonFactory = createTypewriter;
   installDamage(b, u);
   b.on('tick', () => {
     if (!live(u)) return;
@@ -203,7 +205,7 @@ export function createTypewriter(b, state, row, col, dir) {
       const c = t.mem.pozemkaCast; if (c) finishCast(battle, t, c, 'death');
       state.stock = Math.min(1, state.stock + 1);
       const ratio = owner.def.skill.id === 'skchr_bgsnow_2' ? r.skill.bb.respawn_time : 1;
-      state.readyAt = battle.time + r.stats.respawnTime * ratio;
+      state.readyAt = battle.time + stageCardRespawnTime(battle, r) * ratio;
     }, { owner: t });
   } };
   return b.spawnToken(owner, TOKEN, row, col, { dir, def: r, kit });

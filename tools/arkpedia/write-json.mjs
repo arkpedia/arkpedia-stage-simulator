@@ -16,11 +16,11 @@ export async function renameWithRetry(source,target,{renameFile=rename,wait=paus
     }
   }
 }
-export async function writeJSONAtomic(path, value) {
+export async function writeJSONAtomic(path, value, { space = 2 } = {}) {
   const target = path instanceof URL ? fileURLToPath(path) : path;
   const temporary = join(dirname(target), `.${basename(target)}.${randomUUID()}.tmp`);
   try {
-    await writeFile(temporary, JSON.stringify(value, null, 2) + '\n', { flag: 'wx' });
+    await writeFile(temporary, JSON.stringify(value, null, space) + '\n', { flag: 'wx' });
     await renameWithRetry(temporary, target);
   } finally {
     await rm(temporary, { force: true });

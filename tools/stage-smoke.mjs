@@ -7,6 +7,7 @@ import mvp from '../data/arkpedia-mvp.json' with { type: 'json' };
 import index from '../data/arkpedia-stages.json' with { type: 'json' };
 import { StandardBattle } from '../server/sim/arkpedia.js';
 import { defaultBuild } from '../shared/arkpedia/loadout.js';
+import { excludedStageOperators, stageSquadLimit } from '../shared/arkpedia/stage-roster.js';
 
 export const STAGE_SMOKE_GROUPS = 4;
 export const publicSmokeStages = index.stages.filter(entry => entry.data);
@@ -16,11 +17,13 @@ export function stageSmokeCases(group) {
 }
 
 export function registerStageSmoke(group) {
-  const selection = { operators: Object.values(mvp.operators).slice(0, 12).map(defaultBuild) };
   for (const entry of stageSmokeCases(group)) {
     test(`${entry.id} starts and runs two seconds`, () => {
       const stage = JSON.parse(readFileSync(new URL(`../data/${entry.data}`, import.meta.url), 'utf8'));
       const data = { ...structuredClone(mvp), stage, enemies: { ...mvp.enemies, ...stage.enemies } };
+      const excluded = excludedStageOperators(stage, data.operators);
+      const selection = { operators: Object.values(data.operators).filter(op => !excluded.has(op.id))
+        .slice(0, Math.min(12, stageSquadLimit(stage))).map(defaultBuild) };
       const battle = new StandardBattle(data, selection);
       battle.setViewport('fullscreen-workspace');
       while (!battle.finished && battle.time < 2) battle.step();

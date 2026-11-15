@@ -1,0 +1,2314 @@
+{
+  "code": "SA-4",
+  "name": "Surrounded",
+  "description": "If you have to fight out in the open, then you might have to think a little harder.\n<Turret> Periodically fires bolts, dealing Physical damage to our units.\nStage available from 8/26 10:00 A.M. to 9/9 03:59 A.M.",
+  "battle": {
+    "max_life": 3,
+    "unit_limit": 8,
+    "initial_dp": 10,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1
+  },
+  "rules": {
+    "variant": null,
+    "source": {
+      "repository": "Kengxxiao/ArknightsGameData",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "path": "zh_CN/gamedata/levels/activities/act7d5/level_act7d5_04.json",
+      "sha256": "413f3c4db274e04eee5d160a190375198fd19d1976713faa0626d0953f92cca0",
+      "gitBlob": "1cc406d5001a5b37b593bda6b8b92b14fab3f46f",
+      "stageTable": {
+        "path": "zh_CN/gamedata/excel/stage_table.json",
+        "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+        "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+        "stageId": "act7d5_04",
+        "levelId": "Activities/ACT7d5/level_act7d5_04"
+      }
+    },
+    "battle": {},
+    "enemies": {},
+    "enemyAdd": {},
+    "hiddenGroups": {}
+  },
+  "mapTags": [],
+  "mapTagSource": null,
+  "geometry": {
+    "slug": "sa-4",
+    "rows": 7,
+    "cols": 11,
+    "tileLegend": [
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      },
+      {
+        "key": "tile_floor",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_start",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      }
+    ],
+    "tileGrid": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        2,
+        2,
+        3,
+        1,
+        3,
+        3,
+        2,
+        4,
+        0
+      ],
+      [
+        4,
+        2,
+        3,
+        1,
+        3,
+        3,
+        3,
+        1,
+        3,
+        2,
+        0
+      ],
+      [
+        0,
+        3,
+        1,
+        1,
+        1,
+        5,
+        1,
+        1,
+        1,
+        3,
+        0
+      ],
+      [
+        0,
+        2,
+        3,
+        1,
+        3,
+        3,
+        3,
+        1,
+        3,
+        2,
+        4
+      ],
+      [
+        0,
+        4,
+        2,
+        3,
+        3,
+        1,
+        3,
+        2,
+        2,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "routes": [
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 1
+        },
+        "end": {
+          "row": 3,
+          "col": 5
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 3
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 120
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 9
+        },
+        "end": {
+          "row": 3,
+          "col": 5
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 7
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 120
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 1
+        },
+        "end": {
+          "row": 3,
+          "col": 5
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 2
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 1,
+            "seconds": 10
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 9
+        },
+        "end": {
+          "row": 3,
+          "col": 5
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 8
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 1,
+            "seconds": 10
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 1
+        },
+        "end": {
+          "row": 3,
+          "col": 5
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 2
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 9
+        },
+        "end": {
+          "row": 3,
+          "col": 5
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 8
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 1
+        },
+        "end": {
+          "row": 3,
+          "col": 5
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 7
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 10
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 9
+        },
+        "end": {
+          "row": 3,
+          "col": 5
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 3
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 10
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 1
+        },
+        "end": {
+          "row": 3,
+          "col": 5
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 2
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 9
+        },
+        "end": {
+          "row": 3,
+          "col": 5
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 8
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 4,
+          "col": 10
+        },
+        "end": {
+          "row": 3,
+          "col": 5
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 7
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 50
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 0
+        },
+        "end": {
+          "row": 3,
+          "col": 5
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 3
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 50
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 1
+        },
+        "end": {
+          "row": 3,
+          "col": 5
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 7
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 10
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 9
+        },
+        "end": {
+          "row": 3,
+          "col": 5
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 3
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 10
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 1
+        },
+        "end": {
+          "row": 3,
+          "col": 5
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 7
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 75
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 9
+        },
+        "end": {
+          "row": 3,
+          "col": 5
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 3
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 75
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 4,
+          "col": 10
+        },
+        "end": {
+          "row": 3,
+          "col": 5
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 8
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 0
+        },
+        "end": {
+          "row": 3,
+          "col": 5
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 2
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 1
+        },
+        "end": {
+          "row": 3,
+          "col": 5
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 3
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 15
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 9
+        },
+        "end": {
+          "row": 3,
+          "col": 5
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 7
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 15
+          }
+        ]
+      }
+    ],
+    "waves": [
+      {
+        "index": 0,
+        "duration": 199,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Spec Ops Caster Leader",
+            "enemy_id": "enemy_1038_lunmag_2",
+            "count": 1,
+            "time": 0,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Spec Ops Caster Leader",
+            "enemy_id": "enemy_1038_lunmag_2",
+            "count": 1,
+            "time": 0,
+            "route": 1,
+            "fragment": 0
+          },
+          {
+            "enemy": "Spec Ops Soldier",
+            "enemy_id": "enemy_1037_lunsbr",
+            "count": 1,
+            "time": 17,
+            "route": 2,
+            "fragment": 1
+          },
+          {
+            "enemy": "Spec Ops Soldier",
+            "enemy_id": "enemy_1037_lunsbr",
+            "count": 1,
+            "time": 17,
+            "route": 3,
+            "fragment": 1
+          },
+          {
+            "enemy": "Spec Ops Soldier",
+            "enemy_id": "enemy_1037_lunsbr",
+            "count": 1,
+            "time": 36,
+            "route": 4,
+            "fragment": 2
+          },
+          {
+            "enemy": "Spec Ops Soldier",
+            "enemy_id": "enemy_1037_lunsbr",
+            "count": 1,
+            "time": 36,
+            "route": 5,
+            "fragment": 2
+          },
+          {
+            "enemy": "Breaker",
+            "enemy_id": "enemy_1039_breakr",
+            "count": 1,
+            "time": 52,
+            "route": 6,
+            "fragment": 3
+          },
+          {
+            "enemy": "Breaker",
+            "enemy_id": "enemy_1039_breakr",
+            "count": 1,
+            "time": 52,
+            "route": 7,
+            "fragment": 3
+          },
+          {
+            "enemy": "Spec Ops Soldier",
+            "enemy_id": "enemy_1037_lunsbr",
+            "count": 2,
+            "time": 70,
+            "interval": 3,
+            "route": 8,
+            "fragment": 4
+          },
+          {
+            "enemy": "Spec Ops Soldier",
+            "enemy_id": "enemy_1037_lunsbr",
+            "count": 2,
+            "time": 70,
+            "interval": 3,
+            "route": 9,
+            "fragment": 4
+          },
+          {
+            "enemy": "Spec Ops Caster",
+            "enemy_id": "enemy_1038_lunmag",
+            "count": 1,
+            "time": 82,
+            "route": 8,
+            "fragment": 4
+          },
+          {
+            "enemy": "Spec Ops Caster",
+            "enemy_id": "enemy_1038_lunmag",
+            "count": 1,
+            "time": 82,
+            "route": 9,
+            "fragment": 4
+          },
+          {
+            "enemy": "Spec Ops Caster",
+            "enemy_id": "enemy_1038_lunmag",
+            "count": 1,
+            "time": 98,
+            "route": 10,
+            "fragment": 5
+          },
+          {
+            "enemy": "Spec Ops Caster",
+            "enemy_id": "enemy_1038_lunmag",
+            "count": 1,
+            "time": 98,
+            "route": 11,
+            "fragment": 5
+          },
+          {
+            "enemy": "Breaker",
+            "enemy_id": "enemy_1039_breakr",
+            "count": 1,
+            "time": 114,
+            "route": 6,
+            "fragment": 6
+          },
+          {
+            "enemy": "Breaker",
+            "enemy_id": "enemy_1039_breakr",
+            "count": 1,
+            "time": 116,
+            "route": 12,
+            "fragment": 6
+          },
+          {
+            "enemy": "Breaker",
+            "enemy_id": "enemy_1039_breakr",
+            "count": 1,
+            "time": 114,
+            "route": 7,
+            "fragment": 6
+          },
+          {
+            "enemy": "Breaker",
+            "enemy_id": "enemy_1039_breakr",
+            "count": 1,
+            "time": 116,
+            "route": 13,
+            "fragment": 6
+          },
+          {
+            "enemy": "Defense Crusher Leader",
+            "enemy_id": "enemy_1045_hammer_2",
+            "count": 1,
+            "time": 134,
+            "route": 14,
+            "fragment": 7
+          },
+          {
+            "enemy": "Defense Crusher Leader",
+            "enemy_id": "enemy_1045_hammer_2",
+            "count": 1,
+            "time": 134,
+            "route": 15,
+            "fragment": 7
+          },
+          {
+            "enemy": "Spec Ops Caster",
+            "enemy_id": "enemy_1038_lunmag",
+            "count": 1,
+            "time": 138,
+            "route": 16,
+            "fragment": 7
+          },
+          {
+            "enemy": "Spec Ops Caster",
+            "enemy_id": "enemy_1038_lunmag",
+            "count": 1,
+            "time": 138,
+            "route": 17,
+            "fragment": 7
+          },
+          {
+            "enemy": "Breaker",
+            "enemy_id": "enemy_1039_breakr",
+            "count": 1,
+            "time": 156,
+            "route": 6,
+            "fragment": 8
+          },
+          {
+            "enemy": "Breaker",
+            "enemy_id": "enemy_1039_breakr",
+            "count": 1,
+            "time": 158,
+            "route": 12,
+            "fragment": 8
+          },
+          {
+            "enemy": "Breaker",
+            "enemy_id": "enemy_1039_breakr",
+            "count": 1,
+            "time": 156,
+            "route": 7,
+            "fragment": 8
+          },
+          {
+            "enemy": "Breaker",
+            "enemy_id": "enemy_1039_breakr",
+            "count": 1,
+            "time": 158,
+            "route": 13,
+            "fragment": 8
+          },
+          {
+            "enemy": "Breaker",
+            "enemy_id": "enemy_1039_breakr",
+            "count": 2,
+            "time": 174,
+            "interval": 9,
+            "route": 8,
+            "fragment": 9
+          },
+          {
+            "enemy": "Breaker",
+            "enemy_id": "enemy_1039_breakr",
+            "count": 2,
+            "time": 174,
+            "interval": 9,
+            "route": 9,
+            "fragment": 9
+          },
+          {
+            "enemy": "Spec Ops Caster Leader",
+            "enemy_id": "enemy_1038_lunmag_2",
+            "count": 1,
+            "time": 182,
+            "route": 10,
+            "fragment": 9
+          },
+          {
+            "enemy": "Spec Ops Caster Leader",
+            "enemy_id": "enemy_1038_lunmag_2",
+            "count": 1,
+            "time": 182,
+            "route": 11,
+            "fragment": 9
+          },
+          {
+            "enemy": "Spec Ops Caster Leader",
+            "enemy_id": "enemy_1038_lunmag_2",
+            "count": 1,
+            "time": 199,
+            "route": 18,
+            "fragment": 10
+          },
+          {
+            "enemy": "Spec Ops Caster Leader",
+            "enemy_id": "enemy_1038_lunmag_2",
+            "count": 1,
+            "time": 199,
+            "route": 19,
+            "fragment": 10
+          }
+        ]
+      }
+    ],
+    "spawnTiles": [
+      {
+        "key": "tile_start",
+        "row": 1,
+        "col": 9,
+        "routes": [
+          3,
+          5,
+          7,
+          9,
+          9,
+          7,
+          13,
+          15,
+          7,
+          13,
+          9,
+          19
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 2,
+        "col": 0,
+        "routes": [
+          11,
+          17,
+          11
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 4,
+        "col": 10,
+        "routes": [
+          10,
+          16,
+          10
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 5,
+        "col": 1,
+        "routes": [
+          2,
+          4,
+          6,
+          8,
+          8,
+          6,
+          12,
+          14,
+          6,
+          12,
+          8,
+          18
+        ]
+      }
+    ],
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 3,
+        "col": 5,
+        "routes": [
+          0,
+          1,
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          8,
+          9,
+          10,
+          11,
+          6,
+          12,
+          7,
+          13,
+          14,
+          15,
+          16,
+          17,
+          6,
+          12,
+          7,
+          13,
+          8,
+          9,
+          10,
+          11,
+          18,
+          19
+        ]
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_1037_lunsbr",
+        "slug": "spec_ops_soldier",
+        "name": "Spec Ops Soldier",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1038_lunmag",
+        "slug": "spec_ops_caster",
+        "name": "Spec Ops Caster",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1038_lunmag_2",
+        "slug": "spec_ops_caster_leader",
+        "name": "Spec Ops Caster Leader",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1039_breakr",
+        "slug": "breaker",
+        "name": "Breaker",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1045_hammer_2",
+        "slug": "defense_crusher_leader",
+        "name": "Defense Crusher Leader",
+        "database_level": 0
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [],
+      "deployable_tokens": []
+    },
+    "hasConditionalSpawns": false,
+    "source": "cn"
+  },
+  "terrain": [],
+  "conditionalHandled": false,
+  "devices": [
+    {
+      "col": 10,
+      "description": null,
+      "hidden": false,
+      "key": "trap_007_ballis",
+      "kind": "device",
+      "name": "Turret",
+      "row": 5,
+      "alias": "trap_007_ballis#1",
+      "instance": {
+        "level": 6,
+        "skillLevel": 1,
+        "direction": "LEFT"
+      }
+    },
+    {
+      "col": 0,
+      "description": null,
+      "hidden": false,
+      "key": "trap_007_ballis",
+      "kind": "device",
+      "name": "Turret",
+      "row": 4,
+      "alias": "trap_007_ballis#2",
+      "instance": {
+        "level": 6,
+        "skillLevel": 1,
+        "direction": "RIGHT"
+      }
+    },
+    {
+      "col": 0,
+      "description": null,
+      "hidden": false,
+      "key": "trap_007_ballis",
+      "kind": "device",
+      "name": "Turret",
+      "row": 1,
+      "alias": "trap_007_ballis#3",
+      "instance": {
+        "level": 6,
+        "skillLevel": 1,
+        "direction": "RIGHT"
+      }
+    },
+    {
+      "col": 10,
+      "description": null,
+      "hidden": false,
+      "key": "trap_007_ballis",
+      "kind": "device",
+      "name": "Turret",
+      "row": 2,
+      "alias": "trap_007_ballis#4",
+      "instance": {
+        "level": 6,
+        "skillLevel": 1,
+        "direction": "LEFT"
+      }
+    },
+    {
+      "col": 4,
+      "description": null,
+      "hidden": false,
+      "key": "trap_007_ballis",
+      "kind": "device",
+      "name": "Turret",
+      "row": 6,
+      "alias": "trap_007_ballis#5",
+      "instance": {
+        "level": 6,
+        "skillLevel": 1,
+        "direction": "DOWN"
+      }
+    },
+    {
+      "col": 6,
+      "description": null,
+      "hidden": false,
+      "key": "trap_007_ballis",
+      "kind": "device",
+      "name": "Turret",
+      "row": 0,
+      "alias": "trap_007_ballis#6",
+      "instance": {
+        "level": 6,
+        "skillLevel": 1,
+        "direction": "UP"
+      }
+    }
+  ],
+  "tokens": [],
+  "pathing": {
+    "schemaVersion": 1,
+    "syntheticRoutes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "producer": "Arkpedia stage browser / buildPlaybackPaths",
+    "stage": "SA-4",
+    "geometryHash": "4487099ac990026c89487d1965ba62ea23819e3c1d28ee09292a4b89da2fda34",
+    "moveScale": 0.65,
+    "paths": {
+      "0": {
+        "points": [
+          [
+            1,
+            3
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "1": {
+        "points": [
+          [
+            9,
+            3
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "2": {
+        "points": [
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "3": {
+        "points": [
+          [
+            9,
+            1
+          ],
+          [
+            9,
+            2
+          ],
+          [
+            8,
+            5
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "4": {
+        "points": [
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "5": {
+        "points": [
+          [
+            9,
+            1
+          ],
+          [
+            9,
+            2
+          ],
+          [
+            8,
+            5
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "6": {
+        "points": [
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            9,
+            2
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "7": {
+        "points": [
+          [
+            9,
+            1
+          ],
+          [
+            9,
+            4
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "8": {
+        "points": [
+          [
+            1,
+            5
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "9": {
+        "points": [
+          [
+            9,
+            1
+          ],
+          [
+            8,
+            5
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "10": {
+        "points": [
+          [
+            10,
+            4
+          ],
+          [
+            8,
+            4
+          ],
+          [
+            9,
+            3
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "11": {
+        "points": [
+          [
+            0,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "12": {
+        "points": [
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            9,
+            2
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "13": {
+        "points": [
+          [
+            9,
+            1
+          ],
+          [
+            9,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "14": {
+        "points": [
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            9,
+            2
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "15": {
+        "points": [
+          [
+            9,
+            1
+          ],
+          [
+            9,
+            4
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "16": {
+        "points": [
+          [
+            10,
+            4
+          ],
+          [
+            8,
+            4
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "17": {
+        "points": [
+          [
+            0,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "18": {
+        "points": [
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "19": {
+        "points": [
+          [
+            9,
+            1
+          ],
+          [
+            9,
+            3
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      }
+    }
+  },
+  "art": null,
+  "gates": null,
+  "fixedSquad": null,
+  "enemies": {
+    "enemy_1038_lunmag_2": {
+      "key": "enemy_1038_lunmag_2",
+      "prefabKey": "enemy_1038_lunmag_2",
+      "name": "Spec Ops Caster Leader",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 6000,
+        "atk": 450,
+        "def": 300,
+        "res": 50,
+        "moveSpeed": 0.8,
+        "bat": 4,
+        "aspd": 100,
+        "rangeRadius": 2.4,
+        "rawRangeRadius": 2.4,
+        "blockCnt": 1,
+        "massLevel": 2,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "arts",
+        "dmgTypes": [
+          "arts"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Attacks two targets simultaneously.",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1037_lunsbr": {
+      "key": "enemy_1037_lunsbr",
+      "prefabKey": "enemy_1037_lunsbr",
+      "name": "Spec Ops Soldier",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 3200,
+        "atk": 350,
+        "def": 50,
+        "res": 0,
+        "moveSpeed": 1.1,
+        "bat": 2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1039_breakr": {
+      "key": "enemy_1039_breakr",
+      "prefabKey": "enemy_1039_breakr",
+      "name": "Breaker",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 3500,
+        "atk": 410,
+        "def": 50,
+        "res": 25,
+        "moveSpeed": 1.9,
+        "bat": 1.4,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 2.2,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1038_lunmag": {
+      "key": "enemy_1038_lunmag",
+      "prefabKey": "enemy_1038_lunmag",
+      "name": "Spec Ops Caster",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 4000,
+        "atk": 400,
+        "def": 250,
+        "res": 50,
+        "moveSpeed": 0.8,
+        "bat": 4,
+        "aspd": 100,
+        "rangeRadius": 2,
+        "rawRangeRadius": 2,
+        "blockCnt": 1,
+        "massLevel": 2,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "arts",
+        "dmgTypes": [
+          "arts"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1045_hammer_2": {
+      "key": "enemy_1045_hammer_2",
+      "prefabKey": "enemy_1045_hammer_2",
+      "name": "Defense Crusher Leader",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 20000,
+        "atk": 1500,
+        "def": 2000,
+        "res": 0,
+        "moveSpeed": 0.5,
+        "bat": 3.5,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 2.5,
+        "blockCnt": 1,
+        "massLevel": 4,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "After two attacks, the next attack <$ba.stun>Stuns</> its target",
+          "format": "SILENCE"
+        }
+      ],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [
+        {
+          "prefabKey": "stuncombat",
+          "priority": 0,
+          "cooldown": 1,
+          "initCooldown": 1,
+          "spCost": 2,
+          "bb": {
+            "stun": 7
+          },
+          "bbStr": {}
+        }
+      ],
+      "sp": {
+        "type": "INCREASE_WHEN_ATTACK",
+        "maxSp": 2,
+        "initSp": 0,
+        "increment": 1
+      },
+      "notCountInTotal": false,
+      "tags": []
+    }
+  },
+  "contentAddition": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/sa-4.json",
+          "sha256": "586dd1d253f9c9dc4c102977f8613f06f22acba34137c124c274a9c56dad06a1"
+        },
+        {
+          "path": "stage-geometry/sa-4.json",
+          "sha256": "4487099ac990026c89487d1965ba62ea23819e3c1d28ee09292a4b89da2fda34"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        }
+      ],
+      "localFiles": [
+        {
+          "path": "data/stage-rules/sa-4.json",
+          "sha256": "f6d954325d1aab25fa1eca320cd141961ee5260fa1f24727977b5da2c499392d"
+        },
+        {
+          "path": "data/stage-rules/levels/ca26deeec1aa8e5cfe141fd457ab05b39518bb6db76f05de753cffd135650986.json",
+          "sha256": "ca26deeec1aa8e5cfe141fd457ab05b39518bb6db76f05de753cffd135650986"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/1cc406d5001a5b37b593bda6b8b92b14fab3f46f.json",
+          "sha256": "413f3c4db274e04eee5d160a190375198fd19d1976713faa0626d0953f92cca0"
+        },
+        {
+          "path": "data/arkpedia-device-source.json",
+          "sha256": "9435d65821a1c76fa90e1d033339cf95585c8203e865e78e50b78c235b76c56d"
+        },
+        {
+          "path": "data/arkpedia-device-native-source.json",
+          "sha256": "ab97b997b09d25d232da323763fc6d5292fe5cefa8f6f66a3771a35b248dbc71"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/1cc406d5001a5b37b593bda6b8b92b14fab3f46f.json",
+          "sha256": "413f3c4db274e04eee5d160a190375198fd19d1976713faa0626d0953f92cca0"
+        }
+      ]
+    },
+    "dependencies": {
+      "enemies": [
+        "enemy_1037_lunsbr",
+        "enemy_1038_lunmag",
+        "enemy_1038_lunmag_2",
+        "enemy_1039_breakr",
+        "enemy_1045_hammer_2"
+      ],
+      "devices": [
+        "Turret"
+      ],
+      "tokens": []
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 10,
+        "spawned": 8,
+        "errors": 0
+      },
+      "publicReview": "pending",
+      "waveSchedule": {
+        "id": "sa-4",
+        "seconds": 218.23333333333332,
+        "spawned": 36,
+        "expected": 36,
+        "dynamicSpawns": 0,
+        "reason": "cleared",
+        "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+      },
+      "browserStartup": {
+        "id": "sa-4",
+        "seconds": 20,
+        "errors": [],
+        "units": 10,
+        "canvas": true,
+        "scope": "Mobile landscape browser startup and canvas runtime; not a fidelity approval"
+      }
+    }
+  }
+}

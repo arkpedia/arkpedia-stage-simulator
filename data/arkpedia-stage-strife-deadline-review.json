@@ -1,0 +1,223 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-15",
+  "scope": "Shared single-wave kill-all deadline; multi-wave transitions and run progression remain unsupported",
+  "sourceFiles": {
+    "shared/arkpedia/stage-environments.js": "7de3629fe85de4576539ac0b535542025b94af8f34ac5bac5cd60ce47c0eaf74",
+    "tools/arkpedia/stage-environments.mjs": "2b886eaf71c161f7dbe515d81b393e27f7b782dd97e2cea4d3a653a764b0d1a1",
+    "server/sim/content/arkpedia-stage-environments.js": "eaae86ac6dee6340ebe0bd5fa75dfffb86081ef3df16952a898cc72d2b19ac2e",
+    "server/sim/Battle.js": "0b5a9bf7a11b6a02c4199387d608f54b2bf87128ee439c2ff0078e1a2df0b413",
+    "shared/arkpedia/battle-hud.js": "e625b0c7cf6b8a45fc967afcd3f1a9a08f0b6e31c3c090e71e822948b37ae5f8",
+    "public/arkpedia/app.js": "f3e2aa1e0f2e04284f92c6a1e9f080a401853a032b5a047e555b5ec8ae6f4865",
+    "test/arkpedia-strife-deadline.test.js": "46a3bdcb1bae975cdf4b9548898a63b23419196a3f35ad2d02deaa3bd9071420",
+    "tools/arkpedia/review-strife-deadline.mjs": "71cc054d1cdbbb96651a29955572c29d33d0f70bfc1bd38287cd023bc993cf34",
+    "data/arkpedia-environment-native-source.json": "f85082fa9b085a473e1424de3d2c6d0097ced0297de0636a62baf60789d76de2",
+    "data/arkpedia-library.json": "4f65bb73b73ed9b590f367f6f38025c302a7ad8a4aaa84555ce43c3906c75238",
+    "docs/STAGE-STRIFE-DEADLINE-REVIEW.md": "53edebcbda37b6ef91104ff9363fd7cc205fb7a1a4898bde0f7278817dde3f11"
+  },
+  "checks": [
+    {
+      "path": "/tmp/strife-deadline-tests.log",
+      "sha256": "6b22f043c48b7498ecf0bde28cab2b797faa055d5043d5455778c92fc97a4e6b"
+    },
+    {
+      "path": "/tmp/strife-deadline-final-tests.log",
+      "sha256": "48668a3f9af1dbec8f43f81338d3013532c1b45edd417de1c2ab051f07208d68"
+    },
+    {
+      "path": "/tmp/strife-all-stage-smoke.log",
+      "sha256": "9f7bef5d6c749bd0b9486d73804ca15c12abc562610c8ab59c0b5a502bce4ab5"
+    },
+    {
+      "path": ".cache/arkpedia/strife-deadline-review/results.json",
+      "sha256": "ae9e8ce03f60d346e9bb2184a442c5addf7c21bcb74a6358cb822d40ee1dd1ac"
+    }
+  ],
+  "validation": {
+    "focusedChecks": 67,
+    "finalStrictChecks": 5,
+    "browserCases": 4,
+    "stageSmoke": {
+      "available": 882,
+      "completed": 882,
+      "failures": 0,
+      "durationSeconds": 10,
+      "scope": "Constructor/runtime smoke, not playable-clear fidelity"
+    }
+  },
+  "coverage": {
+    "operators": {
+      "total": 431,
+      "registered": 431,
+      "skills": 949,
+      "missingSkills": 0
+    },
+    "enemies": {
+      "enemies": 2163,
+      "supported": 646,
+      "unsupported": 1517
+    },
+    "missingStageEnemyRecords": 0,
+    "stages": {
+      "total": 3892,
+      "public": 597,
+      "loadable": 882,
+      "capabilityBlocked": 3010,
+      "testOnly": 341,
+      "ready": 72,
+      "blocked": 2882,
+      "nonCombat": 316,
+      "catalogue": 938,
+      "embedded": 1
+    },
+    "byMode": {
+      "main": {
+        "total": 564,
+        "public": 350,
+        "testOnly": 41,
+        "ready": 2,
+        "blocked": 171,
+        "loadable": 318,
+        "capabilityBlocked": 246
+      },
+      "sub": {
+        "total": 86,
+        "public": 39,
+        "testOnly": 11,
+        "ready": 0,
+        "blocked": 36,
+        "loadable": 48,
+        "capabilityBlocked": 38
+      },
+      "activity": {
+        "total": 2125,
+        "public": 151,
+        "testOnly": 282,
+        "ready": 63,
+        "blocked": 1629,
+        "loadable": 468,
+        "capabilityBlocked": 1657
+      },
+      "event": {
+        "total": 171,
+        "public": 0,
+        "testOnly": 0,
+        "ready": 0,
+        "blocked": 171,
+        "loadable": 0,
+        "capabilityBlocked": 171
+      },
+      "daily": {
+        "total": 35,
+        "public": 31,
+        "testOnly": 4,
+        "ready": 0,
+        "blocked": 0,
+        "loadable": 35,
+        "capabilityBlocked": 0
+      },
+      "campaign": {
+        "total": 35,
+        "public": 3,
+        "testOnly": 3,
+        "ready": 1,
+        "blocked": 28,
+        "loadable": 6,
+        "capabilityBlocked": 29
+      },
+      "integrated_strategies": {
+        "total": 525,
+        "public": 1,
+        "testOnly": 0,
+        "ready": 6,
+        "blocked": 518,
+        "loadable": 7,
+        "capabilityBlocked": 518
+      },
+      "contingency_contract": {
+        "total": 16,
+        "public": 0,
+        "testOnly": 0,
+        "ready": 0,
+        "blocked": 16,
+        "loadable": 0,
+        "capabilityBlocked": 16
+      },
+      "climb_tower": {
+        "total": 227,
+        "public": 22,
+        "testOnly": 0,
+        "ready": 0,
+        "blocked": 205,
+        "loadable": 0,
+        "capabilityBlocked": 227
+      },
+      "reclamation": {
+        "total": 106,
+        "public": 0,
+        "testOnly": 0,
+        "ready": 0,
+        "blocked": 106,
+        "loadable": 0,
+        "capabilityBlocked": 106
+      },
+      "guide": {
+        "total": 2,
+        "public": 0,
+        "testOnly": 0,
+        "ready": 0,
+        "blocked": 2,
+        "loadable": 0,
+        "capabilityBlocked": 2
+      }
+    }
+  },
+  "sourceStageIds": [
+    "vec-sp01_act1break_sp01",
+    "vec-sp01_act1vecb_sp01",
+    "vec-sp01_act2break_sp01",
+    "vec-sp02_act1break_sp02",
+    "vec-sp02_act1vecb_sp02",
+    "vec-sp02_act2break_sp02",
+    "vec-sp03_act1break_sp03",
+    "vec-sp03_act1vecb_sp03",
+    "vec-sp03_act2break_sp03",
+    "vec-sp04_act1break_sp04",
+    "vec-sp04_act1vecb_sp04",
+    "vec-sp04_act2break_sp04",
+    "vec-sp05_act1break_sp05",
+    "vec-sp05_act1vecb_sp05",
+    "vec-sp05_act2break_sp05",
+    "vec-sp06_act1break_sp06",
+    "vec-sp06_act1vecb_sp06",
+    "vec-sp06_act2break_sp06",
+    "vec-sp07_act1break_sp07",
+    "vec-sp07_act1vecb_sp07",
+    "vec-sp08_act1break_sp08",
+    "vec-sp08_act1vecb_sp08",
+    "vec-sp08_act2break_sp10",
+    "vec-sp09_act1break_sp09",
+    "vec-sp09_act2break_sp11",
+    "vec-sp10_act1break_sp10",
+    "vec-sp10_act2break_sp12",
+    "vec-sp11_act1break_sp11",
+    "vec-sp11_act2break_sp13",
+    "vec-sp12_act1break_sp12",
+    "vec-sp12_act2break_sp14",
+    "vec-sp13_act1break_sp13",
+    "vec-sp13_act2break_sp08",
+    "vec-sp14_act1break_sp14",
+    "vec-sp14_act2break_sp09",
+    "vec-sp15_act1break_sp15",
+    "vec-sp15_act2break_sp15",
+    "vec-sp16_act1break_sp16",
+    "vec-sp16_act2break_sp16"
+  ],
+  "unlocked": 19,
+  "limitations": [
+    "One immediate source wave, kill-all objective only",
+    "No tactical equipment, garrison or run progression",
+    "No claim of native sub-frame event ordering",
+    "Browser enemies diagnostically held to test deadline"
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-15",
+  "scope": "Historical Exhausted Flame checkpoint; particle-only artwork and native frame-order parity are not certified. Eblana remains unadmitted.",
+  "sourceFiles": {
+    "shared/arkpedia/enemy-exhausted-flame-features.js": "8e669f45e5d5d4a1a927d96d81fd6e1788b89d1cd9d838936ad15d17d8b13bbb",
+    "server/sim/content/arkpedia-enemy-exhausted-flame.js": "3923570966a082e05a2c5335ecb93b38d7c315573ba395615d5d4e0b080b9119",
+    "server/sim/buffs.js": "e25d9c7e9aca6482258d64fce3d27411b4c404620525632a5005fb7ed3a64901",
+    "server/sim/skills.js": "57450d20301687bd697fe8235ade82987239ede6964d7d334f92d48632264ca9",
+    "shared/arkpedia/enemy-features.js": "70cbc68365bcec533e2b1953766dc3f203926c2030ed16fcbebc260f2c6ba7c5",
+    "server/sim/content/arkpedia-enemy-features.js": "d051d3bafb494ed7709b700f00d898a227c96eb24068b1665023cbb5255e01e4",
+    "tools/arkpedia/extract-enemy-native-abilities.py": "0524da45e68bf946030cdf906bcce83d01520b40a8a9b824817df62388ed0762",
+    "data/arkpedia-enemy-native-abilities.json": "f0519b4a8c626b6c655169706d74eed815d3c049d2fa2799dae0545414600915",
+    "data/arkpedia-enemy-support.json": "5b7db211575215a9e2a048ddc05f5433366dfa717adc2858369a291d10fa665b",
+    "test/arkpedia-enemy-exhausted-flame.test.js": "11021a6f3c4afd79e681c2908e43463741876b5c0f5c6b728fd9f1fef86872dd",
+    "docs/ENEMY-EXHAUSTED-FLAME-REVIEW.md": "c669af17b5ff32fbd4c294509e8751110ee5be08c78e1cfd801413d4d7c99ada"
+  },
+  "coverage": {
+    "enemies": 644,
+    "enemyTarget": 2163,
+    "availableStages": 855,
+    "stageTarget": 3892,
+    "models": 430
+  },
+  "checks": {
+    "regressions": {
+      "log": "/tmp/exhausted-flame-regressions.log",
+      "sha256": "60fcc75b6f54d7308327ec57af945307289f25671d8af36348f734026d7bf10a"
+    },
+    "stageSmoke": {
+      "log": "/tmp/exhausted-flame-all-stage-smoke.log",
+      "sha256": "93a18fafa3ae9591e2c49e2ce43fe9071fd4e095c967b9e10c704c66c4ca8b3d"
+    },
+    "source": {
+      "log": "/tmp/exhausted-flame-source-check.log",
+      "sha256": "f8719635b2ddabae390a159becc05db573de8e4bc034a6d43ac0817b6767d5f6"
+    }
+  },
+  "regressionTestsPassed": 342,
+  "stageSmokePassed": 855,
+  "stageSmokeSeconds": 10,
+  "sharedPrefab": "enemy_1294_duchns",
+  "variants": [
+    "enemy_1294_duchns",
+    "enemy_1294_duchns_2"
+  ],
+  "artwork": "Native prefab has no animator; original particle-only body pending."
+}

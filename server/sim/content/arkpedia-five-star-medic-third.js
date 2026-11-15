@@ -246,8 +246,8 @@ export function customizeFiveStarMedicThirdKit({ battle: b, id, def, unit: u, ki
   kit.skill.heal = true;
 }
 export function installFiveStarMedicThird({ battle: b, unit: u, def }) {
+  if (!FIVE_STAR_MEDIC_THIRD_OPERATORS[def.charId]) return;
   const id = def.charId, talent = def.talents[0]?.bb;
-  if (!FIVE_STAR_MEDIC_THIRD_OPERATORS[id]) return;
   if (id === 'char_4114_harold' && talent) {
     const sync = registerBerryProtection(b, u, talent.ep_damage_resistance,
       a => bodyInKeys(a, u.rangeKeySet) && epRatio(a) > .5, () => true);

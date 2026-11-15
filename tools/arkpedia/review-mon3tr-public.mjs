@@ -77,7 +77,7 @@ try {
       const a = mon3trReview.renderer, p = a.projection.project(c, r, a.heightAt(r, c));
       const box = document.querySelector('#battle-board').getBoundingClientRect(); return { x: p.x + box.x, y: p.y + box.y };
     }, row, col);
-    await page.goto(origin + '/arkpedia/', { waitUntil: 'domcontentloaded' });
+    await page.goto(origin + '/arkpedia/?snapshot=1', { waitUntil: 'domcontentloaded' });
     await page.waitForSelector('.roster-item.chosen');
     for (const id of await page.$$eval('.roster-item.chosen', es => es.map(e => e.dataset.id))) {
       await page.click(`.roster-item[data-id="${id}"]`); await page.click('#toggle');

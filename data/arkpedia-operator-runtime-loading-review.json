@@ -1,0 +1,358 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-14",
+  "scope": "Selected operator runtime, owner-provided summon factories and roster-bound squad services. Source-byte audit and simulator/browser regression evidence; not native frame parity or complete content coverage.",
+  "sources": [
+    {
+      "path": "server/sim/arkpedia.js",
+      "sha256": "f27edaae0c2c9694e6394ef1039ad7fa6e7b024b2b741525c529ef42e16b97a8"
+    },
+    {
+      "path": "server/sim/content/arkpedia-operator-runtime.js",
+      "sha256": "158f415392c73be4a55404524796cf1c9fe051734cfba22c29d96209476836d0"
+    },
+    {
+      "path": "server/sim/content/arkpedia-operator-runtime-eager.js",
+      "sha256": "de117facdea59ce393212d8f0abc2f1cd5914a60f9eb809cd1c80e21885d8b1f"
+    },
+    {
+      "path": "server/sim/content/arkpedia-operator-runtime-index.js",
+      "sha256": "bcf72be77fff58ca43cb7ff9dc4f5395d360a9bd2b60418a6a537fa05967bb25"
+    },
+    {
+      "path": "server/sim/content/arkpedia-operator-service-index.js",
+      "sha256": "0b13a2ef3b81fdac4425f0e48250168ba2450566828de8010b14eec1efb32adb"
+    },
+    {
+      "path": "server/sim/content/arkpedia-summons.js",
+      "sha256": "50e3bdfeec660de03a20d008435c5bc240e79605923d91e469c82096436e9581"
+    },
+    {
+      "path": "shared/arkpedia/summons.js",
+      "sha256": "cdc32917ac26eeeb179e48f1edecdf1821764d7967066be5f6bb4f35f94e9a11"
+    },
+    {
+      "path": "public/arkpedia/app.js",
+      "sha256": "b68627fe78a116dcc39098a462ee5db0bd80a94b633d2690febd2e6a079aa183"
+    },
+    {
+      "path": "tools/arkpedia/operator-runtime-index.mjs",
+      "sha256": "5a7597b61a222fb4e9e9a3052d8ababf50fbb3b98210ef8d7406fb79002b2736"
+    },
+    {
+      "path": "tools/arkpedia/runtime-footprint.mjs",
+      "sha256": "dd2928ab20f025ee6e70511e4e62acf03f9e66b49bdfe5cec5638b208d85d381"
+    },
+    {
+      "path": "tools/arkpedia/review-operator-library.mjs",
+      "sha256": "64c25255887aee5d7b26d0c96ddc1a94dc3eef830a4799644c6502ba19d38af6"
+    },
+    {
+      "path": "test/arkpedia-operator-runtime-loading.test.js",
+      "sha256": "6f92712f9acc483d0d937cac5c11add5c21e80032aeffc5889fddde5f8ba7088"
+    },
+    {
+      "path": "data/arkpedia-runtime-footprint-review.json",
+      "sha256": "06d0aeba6394ae973def03720496ffd48263c587a8f49a7736ef30826c5bb9e8"
+    }
+  ],
+  "coverage": {
+    "operators": 431,
+    "registeredSkills": 949,
+    "adapters": 242,
+    "guardedAdapters": 218,
+    "sharedAdapters": 24,
+    "ownerFactories": 22,
+    "squadServiceModules": 22
+  },
+  "validation": {
+    "factoryRegressionTests": 662,
+    "finalServiceRegressionTests": 479,
+    "operatorManifestFresh": true,
+    "runtimeIndexFresh": true,
+    "browser": [
+      {
+        "mobile": false,
+        "failedDownloadRetried": true,
+        "staleSelectionIgnored": true,
+        "fullSnapshotRequested": false,
+        "initialRuntime": {
+          "loaded": [
+            "arkpedia-casters",
+            "arkpedia-snipers",
+            "arkpedia-defenders",
+            "arkpedia-five-star-guard-fourth",
+            "arkpedia-vanguards",
+            "arkpedia-summons",
+            "arkpedia-guards",
+            "arkpedia-advanced-snipers",
+            "arkpedia-specialists",
+            "arkpedia-support-expansion",
+            "arkpedia-caster-expansion",
+            "arkpedia-guard-expansion",
+            "arkpedia-sniper-expansion",
+            "arkpedia-robot-expansion",
+            "arkpedia-five-star-vanguards",
+            "arkpedia-five-star-vanguard-second",
+            "arkpedia-five-star-guard-third",
+            "arkpedia-five-star-defender-second",
+            "arkpedia-sniper-six-star",
+            "arkpedia-guard-six-star-third",
+            "arkpedia-thorns",
+            "arkpedia-tinman",
+            "arkpedia-guard-six-star-fourth",
+            "arkpedia-five-star-medic-third",
+            "arkpedia-ling-skills"
+          ],
+          "pending": 0
+        },
+        "selectedRuntime": {
+          "loaded": [
+            "arkpedia-casters",
+            "arkpedia-snipers",
+            "arkpedia-defenders",
+            "arkpedia-five-star-guard-fourth",
+            "arkpedia-vanguards",
+            "arkpedia-summons",
+            "arkpedia-guards",
+            "arkpedia-advanced-snipers",
+            "arkpedia-specialists",
+            "arkpedia-support-expansion",
+            "arkpedia-caster-expansion",
+            "arkpedia-guard-expansion",
+            "arkpedia-sniper-expansion",
+            "arkpedia-robot-expansion",
+            "arkpedia-five-star-vanguards",
+            "arkpedia-five-star-vanguard-second",
+            "arkpedia-five-star-guard-third",
+            "arkpedia-five-star-defender-second",
+            "arkpedia-sniper-six-star",
+            "arkpedia-guard-six-star-third",
+            "arkpedia-thorns",
+            "arkpedia-tinman",
+            "arkpedia-guard-six-star-fourth",
+            "arkpedia-five-star-medic-third",
+            "arkpedia-ling-skills",
+            "arkpedia-oblvns"
+          ],
+          "controller": true,
+          "errors": []
+        },
+        "staleFullscreen": {
+          "requests": 2,
+          "currentBattlePreserved": true,
+          "viewportCalls": 0
+        },
+        "resourceCount": 552,
+        "decodedSourceBytes": 15204074
+      },
+      {
+        "mobile": true,
+        "failedDownloadRetried": true,
+        "staleSelectionIgnored": true,
+        "fullSnapshotRequested": false,
+        "initialRuntime": {
+          "loaded": [
+            "arkpedia-casters",
+            "arkpedia-snipers",
+            "arkpedia-defenders",
+            "arkpedia-five-star-guard-fourth",
+            "arkpedia-vanguards",
+            "arkpedia-summons",
+            "arkpedia-guards",
+            "arkpedia-advanced-snipers",
+            "arkpedia-specialists",
+            "arkpedia-sniper-expansion",
+            "arkpedia-robot-expansion",
+            "arkpedia-guard-expansion",
+            "arkpedia-caster-expansion",
+            "arkpedia-support-expansion",
+            "arkpedia-five-star-vanguard-second",
+            "arkpedia-five-star-vanguards",
+            "arkpedia-five-star-guard-third",
+            "arkpedia-five-star-defender-second",
+            "arkpedia-sniper-six-star",
+            "arkpedia-thorns",
+            "arkpedia-guard-six-star-third",
+            "arkpedia-guard-six-star-fourth",
+            "arkpedia-tinman",
+            "arkpedia-five-star-medic-third",
+            "arkpedia-ling-skills"
+          ],
+          "pending": 0
+        },
+        "selectedRuntime": {
+          "loaded": [
+            "arkpedia-casters",
+            "arkpedia-snipers",
+            "arkpedia-defenders",
+            "arkpedia-five-star-guard-fourth",
+            "arkpedia-vanguards",
+            "arkpedia-summons",
+            "arkpedia-guards",
+            "arkpedia-advanced-snipers",
+            "arkpedia-specialists",
+            "arkpedia-sniper-expansion",
+            "arkpedia-robot-expansion",
+            "arkpedia-guard-expansion",
+            "arkpedia-caster-expansion",
+            "arkpedia-support-expansion",
+            "arkpedia-five-star-vanguard-second",
+            "arkpedia-five-star-vanguards",
+            "arkpedia-five-star-guard-third",
+            "arkpedia-five-star-defender-second",
+            "arkpedia-sniper-six-star",
+            "arkpedia-thorns",
+            "arkpedia-guard-six-star-third",
+            "arkpedia-guard-six-star-fourth",
+            "arkpedia-tinman",
+            "arkpedia-five-star-medic-third",
+            "arkpedia-ling-skills",
+            "arkpedia-oblvns"
+          ],
+          "controller": true,
+          "errors": []
+        },
+        "staleFullscreen": {
+          "requests": 2,
+          "currentBattlePreserved": true,
+          "viewportCalls": 0
+        },
+        "resourceCount": 552,
+        "decodedSourceBytes": 15204074
+      }
+    ]
+  },
+  "footprint": {
+    "schemaVersion": 1,
+    "scope": "Uncompressed static source closure plus explicitly selected adapter imports. Excludes roster/stage/model transfers and optional dynamic visual effects; not native fidelity or load-time certification.",
+    "ids": [
+      "char_123_fang",
+      "char_124_kroos"
+    ],
+    "adapters": [
+      "arkpedia-casters",
+      "arkpedia-guards",
+      "arkpedia-snipers",
+      "arkpedia-vanguards",
+      "arkpedia-defenders",
+      "arkpedia-advanced-snipers",
+      "arkpedia-specialists",
+      "arkpedia-guard-expansion",
+      "arkpedia-support-expansion",
+      "arkpedia-caster-expansion",
+      "arkpedia-sniper-expansion",
+      "arkpedia-summons",
+      "arkpedia-robot-expansion",
+      "arkpedia-five-star-vanguards",
+      "arkpedia-five-star-vanguard-second",
+      "arkpedia-five-star-guard-third",
+      "arkpedia-five-star-medic-third",
+      "arkpedia-five-star-defender-second",
+      "arkpedia-sniper-six-star",
+      "arkpedia-guard-six-star-third",
+      "arkpedia-thorns",
+      "arkpedia-guard-six-star-fourth",
+      "arkpedia-tinman",
+      "arkpedia-five-star-guard-fourth"
+    ],
+    "common": {
+      "modules": 445,
+      "bytes": 7316810,
+      "sha256": "a6fef2e6682b5b457e0a19c18489c502671477896c011df09c9bd6d418c05404"
+    },
+    "selected": {
+      "modules": 482,
+      "bytes": 11039398,
+      "sha256": "d78b43001b32c1d1aa575f23557d9934f7cec30611f5f9367034a67623253111"
+    },
+    "eager": {
+      "modules": 1202,
+      "bytes": 98576584,
+      "sha256": "4e7e8ffebabbdd2a9d620be73b127cb0a5e71bfbb08cbdc9c5d081027a08554a"
+    },
+    "largestSelected": [
+      {
+        "path": "data/arkpedia-enemy-native-abilities.json",
+        "bytes": 2893995,
+        "sha256": "277c63562c30554e4bd92258c4a879a18b30abfde448979c4fda824aa79047fc"
+      },
+      {
+        "path": "data/arkpedia-device-native-source.json",
+        "bytes": 938760,
+        "sha256": "22010755532c2a00a4b9b8f02fd8efd973613dfd94fb027258b6f0369b53e8a8"
+      },
+      {
+        "path": "data/arkpedia-guard-six-star-third-prefabs.json",
+        "bytes": 626629,
+        "sha256": "052f054f51dc027a068a30f955e9b8966fff37d7cec2c664d93e8b140afdd811"
+      },
+      {
+        "path": "data/arkpedia-five-star-defender-second-prefabs.json",
+        "bytes": 417669,
+        "sha256": "26429d2d6afe5d6d2b181ace9e0777f52b3a73f873a70a1cfea63070929e2595"
+      },
+      {
+        "path": "data/arkpedia-five-star-medic-third-prefabs.json",
+        "bytes": 399062,
+        "sha256": "771391620f51bf387cc7f02a34143bf752a328f1e158e808f60c4a8c518a246e"
+      },
+      {
+        "path": "data/arkpedia-guard-six-star-fourth-prefabs.json",
+        "bytes": 383832,
+        "sha256": "3104e4af05c6c44bfec806a3430bb6bc9b919c83627b38176d5b48c8ac4f93ee"
+      },
+      {
+        "path": "data/arkpedia-five-star-medic-second-prefabs.json",
+        "bytes": 349291,
+        "sha256": "aee48eaa7f0b6821820213d11736a1eae33ade672b26f38f1e0897eed3d76922"
+      },
+      {
+        "path": "data/arkpedia-six-star-medic-prefabs.json",
+        "bytes": 322230,
+        "sha256": "016d843a743371c375e2eb56e957d3ee6cf625578b5707ad80094cc328d08145"
+      },
+      {
+        "path": "data/arkpedia-silence-paradigmatic-prefabs.json",
+        "bytes": 320723,
+        "sha256": "16571c07c12b4f32835c6411eb6432bfbb376a3260518412efa857f447894ab2"
+      },
+      {
+        "path": "data/arkpedia-sniper-six-star-prefabs.json",
+        "bytes": 316579,
+        "sha256": "11da77053eb6451116b1f0aa03cd5454d9b67350767445bf6c8ccf3711e26d3e"
+      },
+      {
+        "path": "data/arkpedia-five-star-support-third-prefabs.json",
+        "bytes": 279120,
+        "sha256": "9eccd2cb0eec7d2185cf24c29db1354192462d33a8b30763579f5ee0fa20e05a"
+      },
+      {
+        "path": "data/arkpedia-tinman-prefabs.json",
+        "bytes": 268547,
+        "sha256": "6104c01785227d9a4f73304f53a20d393af495f279d9d575ca7370c84553dda3"
+      },
+      {
+        "path": "server/sim/content/enemies.js",
+        "bytes": 248105,
+        "sha256": "0328ae37ca68cf8f685ae36a3913839515a41f3a30a1802c5e33f1cbfcac6d51"
+      },
+      {
+        "path": "data/arkpedia-support-expansion-prefabs.json",
+        "bytes": 213006,
+        "sha256": "23edce605279012207a993c5a0f6975bdbfe16a54623c7e32b640a4756e68113"
+      },
+      {
+        "path": "data/arkpedia-summon-prefabs.json",
+        "bytes": 204466,
+        "sha256": "a7c84c29457fe8b137decd78a77f391eab6a6b14e9e228a11f94caa5eecdeb2d"
+      }
+    ]
+  },
+  "limitations": [
+    "Shared enemy and device evidence and some compound operator adapters remain eager.",
+    "Source closure bytes exclude stage/roster/model transfers and are not load-time or memory measurements.",
+    "Native browser module failures may require reload even though loader bookkeeping permits retry.",
+    "Diagnostic fixtures that deliberately add owners after battle construction must bind services for their modified roster."
+  ]
+}

@@ -65,6 +65,8 @@ for(let rank=1;rank<=10;rank++)test(`S3 rank${rank}: fixed release,1.2 Arts AoE 
  advance(b,.3);assert.equal(hits.length,0);advance(b,.5);
  const arts=tagged(hits,'weedy:s3');assert.equal(arts.length,2);for(const h of arts)near(h.amount,u.s.atk*u.skill.bb.atk_scale);
  assert.ok(e.x>4);near(f.x,4.6);near(outside.hp,1000000);
+ assert.ok(e.mem.regularShift,'the force is still moving after projectile impact');
+ advance(b,1.5); // include settlement and the next rupture sampling boundary
  const pure=tagged(hits,'weedy:rupture');assert.ok(pure.length>0);near(pure.reduce((s,h)=>s+h.amount,0),(e.x-4)*u.skill.bb.value);
  assert.equal(u.skill.active,false);const hp=e.hp;advance(b,.5);near(e.hp,hp);
  e.x+=.2;advance(b,.1);near(e.hp,hp-.2*u.skill.bb.value);
@@ -148,7 +150,9 @@ for(let rank=1;rank<=10;rank++)test(`linked cannon S3 rank${rank}: original rank
  const e=enemy(b,{r:2,c:5}),f=enemy(b,{r:3,c:4});
  assert.deepEqual(t.def.skill.bb,u.skill.bb);assert.equal(t.def.raw.arkpedia.skillRank,rank);
  cast(u);assert.ok(t.mem.weedyCast);advance(b,1);
- const out=tagged(hits,'weedy:s3');assert.equal(out.length,2);
+ const out=tagged(hits,'weedy:s3');assert.equal(out.length,3);
+ assert.deepEqual(out.map(h=>[h.source===t?'cannon':'owner',h.target===e?'upper':'lower']),
+  [['owner','lower'],['cannon','upper'],['cannon','lower']], 'the lower enemy has not left the cannon splash during its continuous push');
  assert.ok(out.some(h=>h.source===t));assert.ok(out.some(h=>h.source===u));
  for(const h of out)near(h.amount,u.s.atk*u.skill.bb.atk_scale);
  assert.ok(e.x>5);assert.ok(f.x>4);assert.equal(t.mem.weedyCast,null);assert.equal(t.skill.noSkill,true);

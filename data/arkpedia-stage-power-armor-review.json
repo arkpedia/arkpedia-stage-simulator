@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-15",
+  "scope": "Dor drivers, Rhine Lab Engineers, dormant R-11 Power Armor and shared branch HP transfer; behavioral checkpoint, not native frame parity",
+  "sourceFiles": {
+    "shared/arkpedia/enemy-power-armor-drivers.js": "69e7d50bc26131b1de716cf0e74fc39a10c3d71794f49acfd11c5dd7b98d8dbc",
+    "shared/arkpedia/enemy-power-armor-engineers.js": "38201733f992ee87137f2c754e9ff6453420640a02433311b65af6bae953b196",
+    "shared/arkpedia/stage-power-armor.js": "42b1db35ced6b164685aeaae76fc1020ea829d073e234c97212a7e92943c3d41",
+    "server/sim/content/arkpedia-enemy-power-armor-drivers.js": "edb9247b344a9ef33754a0975489de968e66b49170842671e8d2503013bf7eb2",
+    "server/sim/content/arkpedia-enemy-power-armor-engineers.js": "e620e8e02358236750863adf3d341c0eafd8a0704d785b794ebc9237d105bd31",
+    "server/sim/content/arkpedia-enemy-links.js": "274cd18a42484a841d2c7494b9b3e7c1b90ccf91f13ed40338427140a86afc18",
+    "server/sim/content/arkpedia-stage-power-armor.js": "2066e4bf31a6af9dfe8edf2fa784bbfbb2ef161ac0387bf40510b18e8c9b2c44",
+    "server/sim/content/arkpedia-stage-branches.js": "4509a822a0c019b2ee1d389ad9a2b8a0fd7b0a4abfc50e9db826c6e9b351dda1",
+    "server/sim/content/arkpedia-stage-waves.js": "df99d306497633874c116cf0b4e516e0138121cb9e76f848f57144fd91c682d6",
+    "tools/arkpedia/stage-device-instances.mjs": "82ebac2631d188092adeae0be032b625ba6cd2a50f9756afa5ad800ae5d8d69b",
+    "tools/arkpedia/stage-branches.mjs": "30d33cdd500d75595dcc2107b07646f16ca52a8b7b6d2ceb0ede3f02d4c658a5",
+    "tools/arkpedia/build-stage.mjs": "603890feb13201003c36c7e5c7215141d883c8e1ac306277de9e7cadfcf17960",
+    "data/arkpedia-enemy-native-abilities.json": "a7f10e38bdf58378a732cbd2817516eedb81563abe3ca8b7606236bef9ffe7e6",
+    "data/arkpedia-device-native-source.json": "70e37af03c03e932d84224829f2f01481744391a22fac09bc2d8549ceba17d77",
+    "data/arkpedia-power-armor-driver-animations.json": "9f47227ccc807508bb2ab557a49cb374a52d036ae18027d25a2dbd4d6c5a192a",
+    "data/arkpedia-power-armor-engineer-animations.json": "93880f4abf3eb96ae453a18888f0f1ad9d57077c58063c0cdb510adc5eb5d556",
+    "data/arkpedia-dormant-power-armor-animations.json": "6d2678cc3d2c2ac845aa3d40ed9b48f9ddcd54abc930c11e82b48c8db54058fe",
+    "data/arkpedia-enemy-support.json": "c978d3587709110e9ff0a61ebe7de1b70b9b246ff6ea85ef4e79e7069a895bf4",
+    "data/arkpedia-enemy-artwork.json": "e7e5612f964ae9c27ba2a6f2cf44cdcef118da5c3541c7d1f3385149c1e935d4",
+    "docs/STAGE-POWER-ARMOR-REVIEW.md": "f6ed3635bf31d571898037ec285898331d23238687f7d20e0d0e9d10b743afa4"
+  },
+  "checks": [
+    {
+      "path": "/tmp/power-armor-family-tests.log",
+      "sha256": "5d8682e2bb3b985f5561f83b1f55c55bf85339ef9bb3ee2f290e003afffb70f0"
+    },
+    {
+      "path": "/tmp/power-armor-broad-regressions.log",
+      "sha256": "a43dccc06b5eabf9fb56a2521be48c44147bf93b27abb82888b7bb1b35487ba4"
+    },
+    {
+      "path": "/tmp/power-armor-final-device-tests.log",
+      "sha256": "5c7682179f92e0a1127468437a9e95eace342bfc747ea7ba4f8a44d3b3390d64"
+    },
+    {
+      "path": "/tmp/power-armor-wave-accounting.log",
+      "sha256": "333cd07c2accbfbcabe93aba31847ee3691e3984dccebfadb92121224d92b39f"
+    },
+    {
+      "path": "/tmp/power-armor-engineer-stage-smoke.log",
+      "sha256": "46a8a72620a3dfcb2182bba2d70fbfe642e9df2da654a982c5ea6abdb849d538"
+    },
+    {
+      "path": "/tmp/power-armor-final-support-check.log",
+      "sha256": "f8719635b2ddabae390a159becc05db573de8e4bc034a6d43ac0817b6767d5f6"
+    },
+    {
+      "path": "/tmp/power-armor-final-library-check.log",
+      "sha256": "8c55c8ae325a33c27b2efd4be4414cd3a8411e236e508542f7deb0292b350d12"
+    },
+    {
+      "path": "/tmp/power-armor-engineer-sd-tests.log",
+      "sha256": "4f46acc46a207077ea71eb85b84e3aafd3b4df35357910a54949edd32ca66c9b"
+    },
+    {
+      "path": "/tmp/power-armor-engineer-sd-validation.log",
+      "sha256": "071bb5f523130bde66cc058a4383581c0647eb7d9cc34979ed024c1e197b6a66"
+    },
+    {
+      "path": ".cache/arkpedia/power-armor-driver-art-review/review.json",
+      "sha256": "83d09ac8c34d011940a9729b38d668c3db0a40cecb4142829bfed3e7e96b6207"
+    },
+    {
+      "path": ".cache/arkpedia/power-armor-engineer-art-review/review.json",
+      "sha256": "efd15c39cefc1a4656765b4c7d0297fe2523b7a53be103857e5c13d1b9468276"
+    },
+    {
+      "path": ".cache/arkpedia/power-armor-stage-review/results.json",
+      "sha256": "05ff8f29a331fd4187eebef8bdba2aaa503e41f3bed26737683da456404f1544"
+    }
+  ],
+  "coverage": {
+    "enemies": 656,
+    "totalEnemies": 2163,
+    "stages": 888,
+    "totalStages": 3892,
+    "enemyModels": 442
+  },
+  "assetCommits": [
+    "1c35c445801c221d69d317488e537bc3a7208238",
+    "0d4e86774f784021043adf8b3c45803d86f141ac"
+  ],
+  "limitations": [
+    "Dormant device artwork remains fallback markers",
+    "R-31 heavy punch sequence not yet admitted",
+    "Browser stage case injects source drivers and device HP; not a playable clear",
+    "Native method-body, frame and complete scoreboard parity not certified"
+  ]
+}

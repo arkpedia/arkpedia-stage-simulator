@@ -1,0 +1,1880 @@
+{
+ "code": "FA-6",
+ "name": "Wildfire",
+ "description": "Originium Slugs get lonely too. And fortunately, they don't burn each other when they get too close.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 25,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "rules": {
+  "variant": null,
+  "source": {
+   "repository": "Kengxxiao/ArknightsGameData",
+   "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+   "path": "zh_CN/gamedata/levels/activities/act13d0/level_act13d0_06.json",
+   "sha256": "bb4bb57c045479550e0c1aa3844ce4cb7de5052b11e1267c720a14c2e7b62652",
+   "gitBlob": "d0a6060692d8f926e2748826ba1ecc91ace4002a",
+   "stageTable": {
+    "path": "zh_CN/gamedata/excel/stage_table.json",
+    "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+    "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+    "stageId": "act13d0_06",
+    "levelId": "Activities/ACT13d0/level_act13d0_06"
+   }
+  },
+  "battle": {},
+  "enemies": {},
+  "enemyAdd": {},
+  "hiddenGroups": {}
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "fa-6",
+  "rows": 8,
+  "cols": 12,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    2,
+    2,
+    2,
+    2,
+    0,
+    0,
+    3,
+    3,
+    0,
+    0,
+    0
+   ],
+   [
+    4,
+    5,
+    0,
+    2,
+    0,
+    2,
+    3,
+    3,
+    5,
+    0,
+    2,
+    0
+   ],
+   [
+    0,
+    5,
+    5,
+    3,
+    5,
+    5,
+    3,
+    5,
+    5,
+    0,
+    2,
+    0
+   ],
+   [
+    4,
+    5,
+    3,
+    5,
+    5,
+    3,
+    5,
+    5,
+    5,
+    5,
+    2,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    2,
+    2,
+    0,
+    2,
+    3,
+    3,
+    3,
+    5,
+    0
+   ],
+   [
+    0,
+    2,
+    2,
+    0,
+    2,
+    2,
+    0,
+    2,
+    3,
+    3,
+    3,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 9
+    },
+    "end": {
+     "row": 2,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 2
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 10
+    },
+    "end": {
+     "row": 4,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 8
+      }
+     }
+    ],
+    "waits": []
+   },
+   null,
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 7
+    },
+    "end": {
+     "row": 2,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 1
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 8
+    },
+    "end": {
+     "row": 4,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 8
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 8
+    },
+    "end": {
+     "row": 4,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 8
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 30
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 7
+    },
+    "end": {
+     "row": 2,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 30
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 9
+    },
+    "end": {
+     "row": 2,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 2
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 15
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 40
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 10
+    },
+    "end": {
+     "row": 4,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     }
+    ],
+    "waits": []
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 184,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 1,
+      "time": 6,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 1,
+      "time": 6,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 2,
+      "time": 12,
+      "interval": 3,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 2,
+      "time": 12,
+      "interval": 3,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 3,
+      "time": 28,
+      "interval": 1,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 3,
+      "time": 31,
+      "interval": 1,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Acid Originium Slug α",
+      "enemy_id": "enemy_1004_mslime_2",
+      "count": 3,
+      "time": 37,
+      "interval": 1,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Acid Originium Slug α",
+      "enemy_id": "enemy_1004_mslime_2",
+      "count": 3,
+      "time": 40,
+      "interval": 1,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 3,
+      "time": 50,
+      "interval": 1,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 3,
+      "time": 53,
+      "interval": 1,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Acid Originium Slug α",
+      "enemy_id": "enemy_1004_mslime_2",
+      "count": 3,
+      "time": 59,
+      "interval": 1,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "Acid Originium Slug α",
+      "enemy_id": "enemy_1004_mslime_2",
+      "count": 3,
+      "time": 62,
+      "interval": 1,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Sniper Leader",
+      "enemy_id": "enemy_1047_sagent_2",
+      "count": 1,
+      "time": 62,
+      "route": 3,
+      "fragment": 2
+     },
+     {
+      "enemy": "Sniper Leader",
+      "enemy_id": "enemy_1047_sagent_2",
+      "count": 1,
+      "time": 62,
+      "route": 4,
+      "fragment": 2
+     },
+     {
+      "enemy": "Rockbreaker Leader",
+      "enemy_id": "enemy_1048_hirman_2",
+      "count": 1,
+      "time": 79,
+      "route": 5,
+      "fragment": 3
+     },
+     {
+      "enemy": "Rockbreaker Leader",
+      "enemy_id": "enemy_1048_hirman_2",
+      "count": 1,
+      "time": 79,
+      "route": 6,
+      "fragment": 3
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 3,
+      "time": 76,
+      "interval": 1,
+      "route": 0,
+      "fragment": 3
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 3,
+      "time": 76,
+      "interval": 1,
+      "route": 1,
+      "fragment": 3
+     },
+     {
+      "enemy": "Acid Originium Slug α",
+      "enemy_id": "enemy_1004_mslime_2",
+      "count": 3,
+      "time": 82,
+      "interval": 1,
+      "route": 0,
+      "fragment": 3
+     },
+     {
+      "enemy": "Acid Originium Slug α",
+      "enemy_id": "enemy_1004_mslime_2",
+      "count": 3,
+      "time": 82,
+      "interval": 1,
+      "route": 1,
+      "fragment": 3
+     },
+     {
+      "enemy": "Sniper Leader",
+      "enemy_id": "enemy_1047_sagent_2",
+      "count": 1,
+      "time": 88,
+      "route": 3,
+      "fragment": 3
+     },
+     {
+      "enemy": "Sniper Leader",
+      "enemy_id": "enemy_1047_sagent_2",
+      "count": 1,
+      "time": 88,
+      "route": 4,
+      "fragment": 3
+     },
+     {
+      "enemy": "Rockbreaker",
+      "enemy_id": "enemy_1048_hirman",
+      "count": 1,
+      "time": 100,
+      "route": 3,
+      "fragment": 4
+     },
+     {
+      "enemy": "Rockbreaker",
+      "enemy_id": "enemy_1048_hirman",
+      "count": 1,
+      "time": 100,
+      "route": 4,
+      "fragment": 4
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 3,
+      "time": 103,
+      "interval": 2,
+      "route": 0,
+      "fragment": 4
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 3,
+      "time": 103,
+      "interval": 2,
+      "route": 1,
+      "fragment": 4
+     },
+     {
+      "enemy": "Acid Originium Slug α",
+      "enemy_id": "enemy_1004_mslime_2",
+      "count": 3,
+      "time": 104,
+      "interval": 2,
+      "route": 0,
+      "fragment": 4
+     },
+     {
+      "enemy": "Acid Originium Slug α",
+      "enemy_id": "enemy_1004_mslime_2",
+      "count": 3,
+      "time": 104,
+      "interval": 2,
+      "route": 1,
+      "fragment": 4
+     },
+     {
+      "enemy": "Sniper Leader",
+      "enemy_id": "enemy_1047_sagent_2",
+      "count": 1,
+      "time": 114,
+      "route": 3,
+      "fragment": 4
+     },
+     {
+      "enemy": "Sniper Leader",
+      "enemy_id": "enemy_1047_sagent_2",
+      "count": 1,
+      "time": 114,
+      "route": 4,
+      "fragment": 4
+     },
+     {
+      "enemy": "'Pompeii'",
+      "enemy_id": "enemy_1050_lslime",
+      "count": 1,
+      "time": 127,
+      "route": 7,
+      "fragment": 5
+     },
+     {
+      "enemy": "'Pompeii'",
+      "enemy_id": "enemy_1050_lslime",
+      "count": 1,
+      "time": 184,
+      "route": 8,
+      "fragment": 5
+     },
+     {
+      "enemy": "Rockbreaker",
+      "enemy_id": "enemy_1048_hirman",
+      "count": 2,
+      "time": 130,
+      "interval": 22,
+      "route": 3,
+      "fragment": 5
+     },
+     {
+      "enemy": "Rockbreaker",
+      "enemy_id": "enemy_1048_hirman",
+      "count": 2,
+      "time": 130,
+      "interval": 22,
+      "route": 4,
+      "fragment": 5
+     },
+     {
+      "enemy": "Sniper Leader",
+      "enemy_id": "enemy_1047_sagent_2",
+      "count": 2,
+      "time": 138,
+      "interval": 36,
+      "route": 3,
+      "fragment": 5
+     },
+     {
+      "enemy": "Sniper Leader",
+      "enemy_id": "enemy_1047_sagent_2",
+      "count": 2,
+      "time": 138,
+      "interval": 36,
+      "route": 4,
+      "fragment": 5
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 2,
+      "time": 130,
+      "interval": 2,
+      "route": 0,
+      "fragment": 5
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 2,
+      "time": 130,
+      "interval": 2,
+      "route": 1,
+      "fragment": 5
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 2,
+      "time": 131,
+      "interval": 2,
+      "route": 1,
+      "fragment": 5
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 2,
+      "time": 131,
+      "interval": 2,
+      "route": 0,
+      "fragment": 5
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 2,
+      "time": 150,
+      "interval": 2,
+      "route": 0,
+      "fragment": 5
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 2,
+      "time": 150,
+      "interval": 2,
+      "route": 1,
+      "fragment": 5
+     },
+     {
+      "enemy": "Acid Originium Slug α",
+      "enemy_id": "enemy_1004_mslime_2",
+      "count": 2,
+      "time": 151,
+      "interval": 2,
+      "route": 1,
+      "fragment": 5
+     },
+     {
+      "enemy": "Acid Originium Slug α",
+      "enemy_id": "enemy_1004_mslime_2",
+      "count": 2,
+      "time": 151,
+      "interval": 2,
+      "route": 0,
+      "fragment": 5
+     },
+     {
+      "enemy": "Rockbreaker",
+      "enemy_id": "enemy_1048_hirman",
+      "count": 1,
+      "time": 171,
+      "route": 3,
+      "fragment": 5
+     },
+     {
+      "enemy": "Rockbreaker",
+      "enemy_id": "enemy_1048_hirman",
+      "count": 1,
+      "time": 171,
+      "route": 4,
+      "fragment": 5
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 4,
+      "time": 164,
+      "interval": 1,
+      "route": 0,
+      "fragment": 5
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 4,
+      "time": 164,
+      "interval": 1,
+      "route": 1,
+      "fragment": 5
+     },
+     {
+      "enemy": "Acid Originium Slug α",
+      "enemy_id": "enemy_1004_mslime_2",
+      "count": 4,
+      "time": 168,
+      "interval": 1,
+      "route": 1,
+      "fragment": 5
+     },
+     {
+      "enemy": "Acid Originium Slug α",
+      "enemy_id": "enemy_1004_mslime_2",
+      "count": 4,
+      "time": 168,
+      "interval": 1,
+      "route": 0,
+      "fragment": 5
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 0,
+    "col": 7,
+    "routes": [
+     3,
+     6,
+     3,
+     3,
+     3,
+     3,
+     3,
+     3
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 0,
+    "col": 8,
+    "routes": [
+     4,
+     5,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 7,
+    "col": 9,
+    "routes": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     7,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 7,
+    "col": 10,
+    "routes": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     8,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 2,
+    "col": 0,
+    "routes": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     3,
+     6,
+     0,
+     0,
+     3,
+     3,
+     0,
+     0,
+     3,
+     7,
+     3,
+     3,
+     0,
+     0,
+     0,
+     0,
+     3,
+     0,
+     0
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 4,
+    "col": 0,
+    "routes": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     4,
+     5,
+     1,
+     1,
+     4,
+     4,
+     1,
+     1,
+     4,
+     8,
+     4,
+     4,
+     1,
+     1,
+     1,
+     1,
+     4,
+     1,
+     1
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1004_mslime_2",
+    "slug": "acid_originium_slug_enemy_1004_mslime_2",
+    "name": "Acid Originium Slug α",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1007_slime_3",
+    "slug": "originium_slug_enemy_1007_slime_3",
+    "name": "Originium Slug β",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1047_sagent_2",
+    "slug": "sniper_leader",
+    "name": "Sniper Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1048_hirman",
+    "slug": "rockbreaker_enemy_1048_hirman",
+    "name": "Rockbreaker",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1048_hirman_2",
+    "slug": "rockbreaker_leader",
+    "name": "Rockbreaker Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1050_lslime",
+    "slug": "pompeii",
+    "name": "'Pompeii'",
+    "database_level": 0,
+    "overrides": {
+     "hp": 30000
+    }
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false,
+  "source": "cn"
+ },
+ "terrain": [],
+ "conditionalHandled": false,
+ "devices": [],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [
+   0,
+   1,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8
+  ],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "FA-6",
+  "geometryHash": "baa4cd34b3fd3ba956e342309f610f99a4dbe97ca7112bb5a5ab2ba08a7a2814",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      9,
+      7
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      0,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "1": {
+    "points": [
+     [
+      10,
+      7
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      0,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "3": {
+    "points": [
+     [
+      7,
+      0
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      0,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "4": {
+    "points": [
+     [
+      8,
+      0
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      0,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "5": {
+    "points": [
+     [
+      8,
+      0
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      0,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "6": {
+    "points": [
+     [
+      7,
+      0
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      0,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "7": {
+    "points": [
+     [
+      9,
+      7
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      0,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "8": {
+    "points": [
+     [
+      10,
+      7
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      0,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1007_slime_3": {
+   "key": "enemy_1007_slime_3",
+   "prefabKey": "enemy_1007_slime_3",
+   "name": "Originium Slug β",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 1550,
+    "atk": 240,
+    "def": 0,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 1.7,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1004_mslime_2": {
+   "key": "enemy_1004_mslime_2",
+   "prefabKey": "enemy_1004_mslime_2",
+   "name": "Acid Originium Slug α",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 2780,
+    "atk": 290,
+    "def": 0,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 3.3,
+    "aspd": 100,
+    "rangeRadius": 1.75,
+    "rawRangeRadius": 1.75,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Every attack reduces the enemy's DEF",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "defdown.def": -15
+    },
+    "bbStr": {},
+    "groups": {
+     "defdown": [
+      "def"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1047_sagent_2": {
+   "key": "enemy_1047_sagent_2",
+   "prefabKey": "enemy_1047_sagent_2",
+   "name": "Sniper Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 4000,
+    "atk": 200,
+    "def": 150,
+    "res": 10,
+    "moveSpeed": 0.8,
+    "bat": 4,
+    "aspd": 100,
+    "rangeRadius": 4,
+    "rawRangeRadius": 4,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "After two attacks, the next attack <$ba.stun>Stuns</> its target",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [
+    {
+     "prefabKey": "stunattack",
+     "priority": 1,
+     "cooldown": 1,
+     "initCooldown": 1,
+     "spCost": 2,
+     "bb": {
+      "stun": 15
+     },
+     "bbStr": {}
+    }
+   ],
+   "sp": {
+    "type": "INCREASE_WHEN_ATTACK",
+    "maxSp": 2,
+    "initSp": 0,
+    "increment": 1
+   },
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1048_hirman_2": {
+   "key": "enemy_1048_hirman_2",
+   "prefabKey": "enemy_1048_hirman_2",
+   "name": "Rockbreaker Leader",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 13000,
+    "atk": 900,
+    "def": 100,
+    "res": 40,
+    "moveSpeed": 0.75,
+    "bat": 3.3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": true,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Gains greatly increased RES when blocked",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "MagicResistance.magic_resistance": 50
+    },
+    "bbStr": {},
+    "groups": {
+     "MagicResistance": [
+      "magic_resistance"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1048_hirman": {
+   "key": "enemy_1048_hirman",
+   "prefabKey": "enemy_1048_hirman",
+   "name": "Rockbreaker",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 10000,
+    "atk": 750,
+    "def": 100,
+    "res": 40,
+    "moveSpeed": 0.75,
+    "bat": 3.3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": true,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Gains increased RES when blocked",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "MagicResistance.magic_resistance": 40
+    },
+    "bbStr": {},
+    "groups": {
+     "MagicResistance": [
+      "magic_resistance"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1050_lslime": {
+   "key": "enemy_1050_lslime",
+   "prefabKey": "enemy_1050_lslime",
+   "name": "'Pompeii'",
+   "level": 0,
+   "rank": "BOSS",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 30000,
+    "atk": 230,
+    "def": 220,
+    "res": 70,
+    "moveSpeed": 0.65,
+    "bat": 3.5,
+    "aspd": 100,
+    "rangeRadius": 3.5,
+    "rawRangeRadius": 3.5,
+    "blockCnt": 1,
+    "massLevel": 4,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": true,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Can attack up to 4 targets at once and ignites targets it attacks, dealing Immolation damage over time",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Self-immolates when blocked, dealing heavy damage",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Gains significantly increased ASPD when HP drops to half",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "selfbuff.attack_speed": 40,
+     "selfbuff.hp_ratio": 0.5,
+     "dot.duration": 10,
+     "dot.damage": 15,
+     "dot.interval": 0.33,
+     "rangedamage.interval": 10,
+     "rangedamage.attack@damage": 750
+    },
+    "bbStr": {},
+    "groups": {
+     "selfbuff": [
+      "attack_speed",
+      "hp_ratio"
+     ],
+     "dot": [
+      "damage",
+      "duration",
+      "interval"
+     ],
+     "rangedamage": [
+      "attack@damage",
+      "interval"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  }
+ },
+ "contentAddition": {
+  "schemaVersion": 1,
+  "source": {
+   "repository": "arkpedia/arkpedia-data",
+   "commit": "66232ee06377d791fb130248d680764c286e5c99",
+   "files": [
+    {
+     "path": "stages/fa-6.json",
+     "sha256": "b2ec03de1d39f3e34556c872d771ef8068e68c71832e57c416f5f77027f75fdb"
+    },
+    {
+     "path": "stage-geometry/fa-6.json",
+     "sha256": "baa4cd34b3fd3ba956e342309f610f99a4dbe97ca7112bb5a5ab2ba08a7a2814"
+    },
+    {
+     "path": "stage-devices.json",
+     "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+    }
+   ],
+   "localFiles": [
+    {
+     "path": "data/stage-rules/fa-6.json",
+     "sha256": "3c83d32c98ca6ed9e1b89f20c7a630c6c26684e4a127ac3067f4dc097aa6b4a1"
+    },
+    {
+     "path": "data/stage-rules/levels/e462ca1d3a56137b9bd2255df71187ff721360f9e55a764fb65797644856be23.json",
+     "sha256": "e462ca1d3a56137b9bd2255df71187ff721360f9e55a764fb65797644856be23"
+    }
+   ]
+  },
+  "dependencies": {
+   "enemies": [
+    "enemy_1004_mslime_2",
+    "enemy_1007_slime_3",
+    "enemy_1047_sagent_2",
+    "enemy_1048_hirman",
+    "enemy_1048_hirman_2",
+    "enemy_1050_lslime"
+   ],
+   "devices": [],
+   "tokens": []
+  },
+  "validation": {
+   "smoke": {
+    "seconds": 10,
+    "spawned": 2,
+    "errors": 0
+   },
+   "publicReview": "pending",
+   "waveSchedule": {
+    "id": "fa-6",
+    "seconds": 213.4,
+    "spawned": 108,
+    "expected": 108,
+    "reason": "cleared",
+    "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+   },
+   "browser": {
+    "id": "fa-6",
+    "seconds": 20,
+    "errors": [],
+    "units": 6,
+    "canvas": true,
+    "scope": "Browser startup/render and simulation advancement only; not a playable clear or full visual-fidelity approval"
+   }
+  }
+ },
+ "contentRuleRefresh": {
+  "schemaVersion": 1,
+  "source": {
+   "repository": "arkpedia/arkpedia-data",
+   "commit": "66232ee06377d791fb130248d680764c286e5c99",
+   "files": [
+    {
+     "path": "stages/fa-6.json",
+     "sha256": "b2ec03de1d39f3e34556c872d771ef8068e68c71832e57c416f5f77027f75fdb"
+    },
+    {
+     "path": "stage-geometry/fa-6.json",
+     "sha256": "baa4cd34b3fd3ba956e342309f610f99a4dbe97ca7112bb5a5ab2ba08a7a2814"
+    },
+    {
+     "path": "stage-devices.json",
+     "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+    }
+   ],
+   "localFiles": [
+    {
+     "path": "data/stage-rules/fa-6.json",
+     "sha256": "3c83d32c98ca6ed9e1b89f20c7a630c6c26684e4a127ac3067f4dc097aa6b4a1"
+    },
+    {
+     "path": "data/stage-rules/levels/e462ca1d3a56137b9bd2255df71187ff721360f9e55a764fb65797644856be23.json",
+     "sha256": "e462ca1d3a56137b9bd2255df71187ff721360f9e55a764fb65797644856be23"
+    },
+    {
+     "path": ".cache/arkpedia/original-level-blobs/d0a6060692d8f926e2748826ba1ecc91ace4002a.json",
+     "sha256": "bb4bb57c045479550e0c1aa3844ce4cb7de5052b11e1267c720a14c2e7b62652"
+    }
+   ]
+  },
+  "validation": {
+   "smoke": {
+    "seconds": 10,
+    "spawned": 2,
+    "errors": 0
+   },
+   "waveSchedule": {
+    "id": "fa-6",
+    "seconds": 213.4,
+    "spawned": 108,
+    "expected": 108,
+    "reason": "cleared",
+    "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+   }
+  },
+  "changed": [
+   "enemies"
+  ]
+ }
+}

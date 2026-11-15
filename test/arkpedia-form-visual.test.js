@@ -9,6 +9,17 @@ let fake, BattleActor;
 before(async()=>{fake=installFakePixi();({BattleActor}=await import('../public/arkpedia/battle-actor.js'));});
 after(()=>fake.restore());
 
+test('a reviewed enemy mode switches idle, movement and attack clips on one shared skeleton', () => {
+  const entry = { anims: { idle: 'Idle_A', move: { loop: 'Move_A' }, attack: { loop: 'Attack_A' } },
+    animations: { Idle_A: 1, Move_A: 1, Attack_A: 1, Idle_B: 1, Move_B: 1, Attack_B: 1 } };
+  const a = new BattleActor({ animations: Object.keys(entry.animations).map(name => ({ name })) }, entry);
+  const original = structuredClone(entry.anims);
+  a.setRegularVisual({ clip: 'Idle_B', move: 'Move_B', attack: 'Attack_B', loop: true });
+  assert.equal(a.current, 'Idle_B'); a.setBase('move'); assert.equal(a.current, 'Move_B');
+  assert.equal(a.roles.attack.loop, 'Attack_B'); assert.deepEqual(entry.anims, original);
+  a.setRegularVisual(null); assert.equal(a.current, 'Move_A'); a.destroy();
+});
+
 test('literal form alias speed scales the transition and its clock without restarting across frames',()=>{
   const entry={anims:{idle:'Idle',attack:{loop:'Attack'}},
     animations:{Idle:1,Attack:1,Skill_End:.8},hits:{Attack:[.3]}};

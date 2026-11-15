@@ -1,1104 +1,1208 @@
 {
- "code": "4-5",
- "name": "Bureaucracy",
- "description": "Condition:\nThe HP of all melee Operators is halved.",
- "battle": {
-  "max_life": 3,
-  "unit_limit": 8,
-  "initial_dp": 10,
-  "max_dp": 99,
-  "dp_per_second": 1,
-  "dp_recovery_interval_seconds": 1
- },
- "mapTags": [],
- "mapTagSource": null,
- "geometry": {
-  "slug": "4-5",
-  "rows": 8,
-  "cols": 11,
-  "tileLegend": [
-   {
-    "key": "tile_forbidden",
-    "height": "high",
-    "walkable": false,
-    "deployable": "none",
-    "flyable": true
-   },
-   {
-    "key": "tile_wall",
-    "height": "high",
-    "walkable": false,
-    "deployable": "ranged",
-    "flyable": true
-   },
-   {
-    "key": "tile_fence",
-    "height": "low",
-    "walkable": true,
-    "deployable": "melee",
-    "flyable": true
-   },
-   {
-    "key": "tile_road",
-    "height": "low",
-    "walkable": true,
-    "deployable": "melee",
-    "flyable": true
-   },
-   {
-    "key": "tile_start",
-    "height": "low",
-    "walkable": true,
-    "deployable": "none",
-    "flyable": true
-   },
-   {
-    "key": "tile_end",
-    "height": "low",
-    "walkable": true,
-    "deployable": "none",
-    "flyable": true
-   }
-  ],
-  "tileGrid": [
-   [
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0
-   ],
-   [
-    0,
-    1,
-    1,
-    2,
-    2,
-    1,
-    3,
-    3,
-    3,
-    3,
-    0
-   ],
-   [
-    0,
-    3,
-    3,
-    3,
-    3,
-    3,
-    3,
-    1,
-    1,
-    3,
-    4
-   ],
-   [
-    5,
-    3,
-    1,
-    2,
-    2,
-    1,
-    3,
-    0,
-    0,
-    3,
-    0
-   ],
-   [
-    5,
-    3,
-    1,
-    2,
-    2,
-    1,
-    3,
-    0,
-    0,
-    3,
-    0
-   ],
-   [
-    0,
-    3,
-    3,
-    3,
-    3,
-    3,
-    3,
-    1,
-    1,
-    3,
-    4
-   ],
-   [
-    0,
-    1,
-    1,
-    2,
-    2,
-    1,
-    3,
-    3,
-    3,
-    3,
-    0
-   ],
-   [
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0
-   ]
-  ],
-  "routes": [
-   {
-    "motion": "walk",
-    "start": {
-     "row": 5,
-     "col": 10
-    },
-    "end": {
-     "row": 4,
-     "col": 0
-    },
-    "checkpoints": [
-     {
-      "type": "move",
-      "position": {
-       "row": 5,
-       "col": 9
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 6,
-       "col": 9
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 6,
-       "col": 6
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 5,
-       "col": 6
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 5,
-       "col": 1
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 4,
-       "col": 1
-      }
-     }
-    ],
-    "waits": []
-   },
-   {
-    "motion": "walk",
-    "start": {
-     "row": 2,
-     "col": 10
-    },
-    "end": {
-     "row": 3,
-     "col": 0
-    },
-    "checkpoints": [
-     {
-      "type": "move",
-      "position": {
-       "row": 2,
-       "col": 9
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 1,
-       "col": 9
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 1,
-       "col": 6
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 2,
-       "col": 6
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 2,
-       "col": 1
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 3,
-       "col": 1
-      }
-     }
-    ],
-    "waits": []
-   },
-   {
-    "motion": null,
-    "placeholder": true,
-    "start": null,
-    "end": null,
-    "checkpoints": [],
-    "waits": []
-   }
-  ],
-  "waves": [
-   {
-    "index": 0,
-    "duration": 173,
-    "pre_delay": 0,
-    "post_delay": 0,
-    "max_wait_for_next_wave": null,
-    "spawns": [
-     {
-      "enemy": "Rabid Hound Pro",
-      "enemy_id": "enemy_1000_gopro_3",
-      "count": 2,
-      "time": 6,
-      "interval": 15,
-      "route": 0,
-      "fragment": 0
-     },
-     {
-      "enemy": "Dual Swordsman Leader",
-      "enemy_id": "enemy_1014_rogue_2",
-      "count": 3,
-      "time": 15,
-      "interval": 10,
-      "route": 1,
-      "fragment": 0
-     },
-     {
-      "enemy": "Rabid Hound Pro",
-      "enemy_id": "enemy_1000_gopro_3",
-      "count": 2,
-      "time": 36,
-      "interval": 12,
-      "route": 0,
-      "fragment": 0
-     },
-     {
-      "enemy": "Rabid Hound Pro",
-      "enemy_id": "enemy_1000_gopro_3",
-      "count": 2,
-      "time": 36,
-      "interval": 12,
-      "route": 0,
-      "fragment": 0
-     },
-     {
-      "enemy": "Dual Swordsman Leader",
-      "enemy_id": "enemy_1014_rogue_2",
-      "count": 1,
-      "time": 49,
-      "route": 1,
-      "fragment": 0
-     },
-     {
-      "enemy": "Sarkaz Greatswordsman",
-      "enemy_id": "enemy_1010_demon",
-      "count": 1,
-      "time": 55,
-      "route": 1,
-      "fragment": 0
-     },
-     {
-      "enemy": "Dual Swordsman Leader",
-      "enemy_id": "enemy_1014_rogue_2",
-      "count": 2,
-      "time": 46,
-      "interval": 7,
-      "route": 0,
-      "fragment": 0
-     },
-     {
-      "enemy": "Arts Guard",
-      "enemy_id": "enemy_1031_mrogue",
-      "count": 2,
-      "time": 71,
-      "interval": 7,
-      "route": 0,
-      "fragment": 0
-     },
-     {
-      "enemy": "Arts Guard",
-      "enemy_id": "enemy_1031_mrogue",
-      "count": 2,
-      "time": 71,
-      "interval": 7,
-      "route": 1,
-      "fragment": 0
-     },
-     {
-      "enemy": "Dual Swordsman Leader",
-      "enemy_id": "enemy_1014_rogue_2",
-      "count": 5,
-      "time": 103,
-      "interval": 9,
-      "route": 0,
-      "fragment": 1
-     },
-     {
-      "enemy": "Dual Swordsman Leader",
-      "enemy_id": "enemy_1014_rogue_2",
-      "count": 5,
-      "time": 103,
-      "interval": 9,
-      "route": 0,
-      "fragment": 1
-     },
-     {
-      "enemy": "Butcher",
-      "enemy_id": "enemy_1034_laxe",
-      "count": 3,
-      "time": 107,
-      "interval": 15,
-      "route": 1,
-      "fragment": 1
-     },
-     {
-      "enemy": "Arts Guard",
-      "enemy_id": "enemy_1031_mrogue",
-      "count": 3,
-      "time": 145,
-      "interval": 6,
-      "route": 0,
-      "fragment": 1
-     },
-     {
-      "enemy": "Arts Guard",
-      "enemy_id": "enemy_1031_mrogue",
-      "count": 3,
-      "time": 151,
-      "interval": 11,
-      "route": 1,
-      "fragment": 1
-     },
-     {
-      "enemy": "Sarkaz Crossbowman",
-      "enemy_id": "enemy_1012_dcross",
-      "count": 2,
-      "time": 155,
-      "interval": 16,
-      "route": 1,
-      "fragment": 1
-     },
-     {
-      "enemy": "Sarkaz Crossbowman",
-      "enemy_id": "enemy_1012_dcross",
-      "count": 2,
-      "time": 141,
-      "interval": 16,
-      "route": 0,
-      "fragment": 1
-     }
-    ]
-   }
-  ],
-  "spawnTiles": [
-   {
-    "key": "tile_start",
-    "row": 2,
-    "col": 10,
-    "routes": [
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1
-    ]
-   },
-   {
-    "key": "tile_start",
-    "row": 5,
-    "col": 10,
-    "routes": [
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0
-    ]
-   }
-  ],
-  "objectiveTiles": [
-   {
-    "key": "tile_end",
-    "row": 3,
-    "col": 0,
-    "routes": [
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1
-    ]
-   },
-   {
-    "key": "tile_end",
-    "row": 4,
-    "col": 0,
-    "routes": [
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0,
-     0
-    ]
-   }
-  ],
-  "enemyConfigurations": [
-   {
-    "enemy_id": "enemy_1000_gopro_3",
-    "slug": "rabid_hound_pro",
-    "name": "Rabid Hound Pro",
-    "database_level": 0
-   },
-   {
-    "enemy_id": "enemy_1010_demon",
-    "slug": "sarkaz_greatswordsman",
-    "name": "Sarkaz Greatswordsman",
-    "database_level": 0
-   },
-   {
-    "enemy_id": "enemy_1012_dcross",
-    "slug": "sarkaz_crossbowman",
-    "name": "Sarkaz Crossbowman",
-    "database_level": 0
-   },
-   {
-    "enemy_id": "enemy_1014_rogue_2",
-    "slug": "dual_swordsman_leader",
-    "name": "Dual Swordsman Leader",
-    "database_level": 0
-   },
-   {
-    "enemy_id": "enemy_1031_mrogue",
-    "slug": "arts_guard",
-    "name": "Arts Guard",
-    "database_level": 0
-   },
-   {
-    "enemy_id": "enemy_1034_laxe",
-    "slug": "butcher",
-    "name": "Butcher",
-    "database_level": 0
-   }
-  ],
-  "suppliedUnits": {
-   "fixed_squad": [],
-   "deployable_tokens": []
+  "code": "4-5",
+  "name": "Bureaucracy",
+  "description": "Condition:\nThe HP of all melee Operators is halved.",
+  "battle": {
+    "max_life": 1,
+    "unit_limit": 8,
+    "initial_dp": 10,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1,
+    "max_play_time": -1
   },
-  "hasConditionalSpawns": false
- },
- "devices": [],
- "pathing": {
-  "schemaVersion": 1,
-  "syntheticRoutes": [],
-  "producer": "Arkpedia stage browser / buildPlaybackPaths",
-  "stage": "4-5",
-  "geometryHash": "61c944377a2e18d82337c96a7bf51fbcfbfcc8bb889a9858da6a413d760e3d21",
-  "moveScale": 0.65,
-  "paths": {
-   "0": {
-    "points": [
-     [
-      10,
-      5
-     ],
-     [
-      9,
-      5
-     ],
-     [
-      9,
-      6
-     ],
-     [
-      8,
-      6
-     ],
-     [
-      7,
-      6
-     ],
-     [
-      6,
-      6
-     ],
-     [
-      6,
-      5
-     ],
-     [
-      5,
-      5
-     ],
-     [
-      4,
-      5
-     ],
-     [
-      3,
-      5
-     ],
-     [
-      2,
-      5
-     ],
-     [
-      1,
-      5
-     ],
-     [
-      1,
-      4
-     ],
-     [
-      0,
-      4
-     ]
+  "mapTags": [],
+  "mapTagSource": null,
+  "geometry": {
+    "slug": "4-5",
+    "rows": 8,
+    "cols": 11,
+    "tileLegend": [
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      },
+      {
+        "key": "tile_fence",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_start",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      }
     ],
-    "distances": [
-     0,
-     1,
-     2,
-     3,
-     4,
-     5,
-     6,
-     7,
-     8,
-     9,
-     10,
-     11,
-     12,
-     13
+    "tileGrid": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        2,
+        2,
+        1,
+        3,
+        3,
+        3,
+        3,
+        0
+      ],
+      [
+        0,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        1,
+        1,
+        3,
+        4
+      ],
+      [
+        5,
+        3,
+        1,
+        2,
+        2,
+        1,
+        3,
+        0,
+        0,
+        3,
+        0
+      ],
+      [
+        5,
+        3,
+        1,
+        2,
+        2,
+        1,
+        3,
+        0,
+        0,
+        3,
+        0
+      ],
+      [
+        0,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        1,
+        1,
+        3,
+        4
+      ],
+      [
+        0,
+        1,
+        1,
+        2,
+        2,
+        1,
+        3,
+        3,
+        3,
+        3,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
     ],
-    "length": 13,
-    "breaks": [],
-    "flying": false,
-    "holds": [],
-    "nodes": [
-     [
-      10,
-      5
-     ],
-     [
-      9,
-      5
-     ],
-     [
-      9,
-      6
-     ],
-     [
-      6,
-      6
-     ],
-     [
-      6,
-      5
-     ],
-     [
-      1,
-      5
-     ],
-     [
-      1,
-      4
-     ],
-     [
-      0,
-      4
-     ]
+    "routes": [
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 10
+        },
+        "end": {
+          "row": 4,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 1
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 10
+        },
+        "end": {
+          "row": 3,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 1
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": null,
+        "placeholder": true,
+        "start": null,
+        "end": null,
+        "checkpoints": [],
+        "waits": []
+      }
+    ],
+    "waves": [
+      {
+        "index": 0,
+        "duration": 173,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Rabid Hound Pro",
+            "enemy_id": "enemy_1000_gopro_3",
+            "count": 2,
+            "time": 6,
+            "interval": 15,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Dual Swordsman Leader",
+            "enemy_id": "enemy_1014_rogue_2",
+            "count": 3,
+            "time": 15,
+            "interval": 10,
+            "route": 1,
+            "fragment": 0
+          },
+          {
+            "enemy": "Rabid Hound Pro",
+            "enemy_id": "enemy_1000_gopro_3",
+            "count": 2,
+            "time": 36,
+            "interval": 12,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Rabid Hound Pro",
+            "enemy_id": "enemy_1000_gopro_3",
+            "count": 2,
+            "time": 36,
+            "interval": 12,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Dual Swordsman Leader",
+            "enemy_id": "enemy_1014_rogue_2",
+            "count": 1,
+            "time": 49,
+            "route": 1,
+            "fragment": 0
+          },
+          {
+            "enemy": "Sarkaz Greatswordsman",
+            "enemy_id": "enemy_1010_demon",
+            "count": 1,
+            "time": 55,
+            "route": 1,
+            "fragment": 0
+          },
+          {
+            "enemy": "Dual Swordsman Leader",
+            "enemy_id": "enemy_1014_rogue_2",
+            "count": 2,
+            "time": 46,
+            "interval": 7,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Arts Guard",
+            "enemy_id": "enemy_1031_mrogue",
+            "count": 2,
+            "time": 71,
+            "interval": 7,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Arts Guard",
+            "enemy_id": "enemy_1031_mrogue",
+            "count": 2,
+            "time": 71,
+            "interval": 7,
+            "route": 1,
+            "fragment": 0
+          },
+          {
+            "enemy": "Dual Swordsman Leader",
+            "enemy_id": "enemy_1014_rogue_2",
+            "count": 5,
+            "time": 103,
+            "interval": 9,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Dual Swordsman Leader",
+            "enemy_id": "enemy_1014_rogue_2",
+            "count": 5,
+            "time": 103,
+            "interval": 9,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Butcher",
+            "enemy_id": "enemy_1034_laxe",
+            "count": 3,
+            "time": 107,
+            "interval": 15,
+            "route": 1,
+            "fragment": 1
+          },
+          {
+            "enemy": "Arts Guard",
+            "enemy_id": "enemy_1031_mrogue",
+            "count": 3,
+            "time": 145,
+            "interval": 6,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Arts Guard",
+            "enemy_id": "enemy_1031_mrogue",
+            "count": 3,
+            "time": 151,
+            "interval": 11,
+            "route": 1,
+            "fragment": 1
+          },
+          {
+            "enemy": "Sarkaz Crossbowman",
+            "enemy_id": "enemy_1012_dcross",
+            "count": 2,
+            "time": 155,
+            "interval": 16,
+            "route": 1,
+            "fragment": 1
+          },
+          {
+            "enemy": "Sarkaz Crossbowman",
+            "enemy_id": "enemy_1012_dcross",
+            "count": 2,
+            "time": 141,
+            "interval": 16,
+            "route": 0,
+            "fragment": 1
+          }
+        ]
+      }
+    ],
+    "spawnTiles": [
+      {
+        "key": "tile_start",
+        "row": 2,
+        "col": 10,
+        "routes": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 5,
+        "col": 10,
+        "routes": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 3,
+        "col": 0,
+        "routes": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "key": "tile_end",
+        "row": 4,
+        "col": 0,
+        "routes": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_1000_gopro_3",
+        "slug": "rabid_hound_pro",
+        "name": "Rabid Hound Pro",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1010_demon",
+        "slug": "sarkaz_greatswordsman",
+        "name": "Sarkaz Greatswordsman",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1012_dcross",
+        "slug": "sarkaz_crossbowman",
+        "name": "Sarkaz Crossbowman",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1014_rogue_2",
+        "slug": "dual_swordsman_leader",
+        "name": "Dual Swordsman Leader",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1031_mrogue",
+        "slug": "arts_guard",
+        "name": "Arts Guard",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1034_laxe",
+        "slug": "butcher",
+        "name": "Butcher",
+        "database_level": 0
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [],
+      "deployable_tokens": []
+    },
+    "hasConditionalSpawns": false
+  },
+  "devices": [],
+  "pathing": {
+    "schemaVersion": 1,
+    "syntheticRoutes": [],
+    "producer": "Arkpedia stage browser / buildPlaybackPaths",
+    "stage": "4-5",
+    "geometryHash": "61c944377a2e18d82337c96a7bf51fbcfbfcc8bb889a9858da6a413d760e3d21",
+    "moveScale": 0.65,
+    "paths": {
+      "0": {
+        "points": [
+          [
+            10,
+            5
+          ],
+          [
+            9,
+            5
+          ],
+          [
+            9,
+            6
+          ],
+          [
+            8,
+            6
+          ],
+          [
+            7,
+            6
+          ],
+          [
+            6,
+            6
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            0,
+            4
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "length": 13,
+        "breaks": [],
+        "flying": false,
+        "holds": [],
+        "nodes": [
+          [
+            10,
+            5
+          ],
+          [
+            9,
+            5
+          ],
+          [
+            9,
+            6
+          ],
+          [
+            6,
+            6
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            0,
+            4
+          ]
+        ]
+      },
+      "1": {
+        "points": [
+          [
+            10,
+            2
+          ],
+          [
+            9,
+            2
+          ],
+          [
+            9,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            6,
+            1
+          ],
+          [
+            6,
+            2
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "length": 13,
+        "breaks": [],
+        "flying": false,
+        "holds": [],
+        "nodes": [
+          [
+            10,
+            2
+          ],
+          [
+            9,
+            2
+          ],
+          [
+            9,
+            1
+          ],
+          [
+            6,
+            1
+          ],
+          [
+            6,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            0,
+            3
+          ]
+        ]
+      }
+    }
+  },
+  "art": null,
+  "gates": null,
+  "fixedSquad": null,
+  "enemies": {
+    "enemy_1000_gopro_3": {
+      "key": "enemy_1000_gopro_3",
+      "prefabKey": "enemy_1000_gopro_3",
+      "name": "Rabid Hound Pro",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 3300.0000000000005,
+        "atk": 407.00000000000006,
+        "def": 0,
+        "res": 20,
+        "moveSpeed": 1.9,
+        "bat": 1.4,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 0,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "infection"
+      ]
+    },
+    "enemy_1014_rogue_2": {
+      "key": "enemy_1014_rogue_2",
+      "prefabKey": "enemy_1014_rogue_2",
+      "name": "Dual Swordsman Leader",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 3300.0000000000005,
+        "atk": 495.00000000000006,
+        "def": 132,
+        "res": 0,
+        "moveSpeed": 1.1,
+        "bat": 1.2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1010_demon": {
+      "key": "enemy_1010_demon",
+      "prefabKey": "enemy_1010_demon",
+      "name": "Sarkaz Greatswordsman",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 8250,
+        "atk": 660,
+        "def": 253.00000000000003,
+        "res": 50,
+        "moveSpeed": 0.85,
+        "bat": 2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 2,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "sarkaz"
+      ]
+    },
+    "enemy_1031_mrogue": {
+      "key": "enemy_1031_mrogue",
+      "prefabKey": "enemy_1031_mrogue",
+      "name": "Arts Guard",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 4400,
+        "atk": 385.00000000000006,
+        "def": 220.00000000000003,
+        "res": 50,
+        "moveSpeed": 0.75,
+        "bat": 2.5,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "arts",
+        "dmgTypes": [
+          "arts"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1034_laxe": {
+      "key": "enemy_1034_laxe",
+      "prefabKey": "enemy_1034_laxe",
+      "name": "Butcher",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 9900,
+        "atk": 935.0000000000001,
+        "def": 253.00000000000003,
+        "res": 30,
+        "moveSpeed": 0.7,
+        "bat": 3.5,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 3,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1012_dcross": {
+      "key": "enemy_1012_dcross",
+      "prefabKey": "enemy_1012_dcross",
+      "name": "Sarkaz Crossbowman",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 6600.000000000001,
+        "atk": 495.00000000000006,
+        "def": 220.00000000000003,
+        "res": 50,
+        "moveSpeed": 0.8,
+        "bat": 3,
+        "aspd": 100,
+        "rangeRadius": 2.2,
+        "rawRangeRadius": 2.2,
+        "blockCnt": 1,
+        "massLevel": 2,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "sarkaz"
+      ]
+    }
+  },
+  "rules": {
+    "variant": "challenge_mode",
+    "source": {
+      "repository": "Kengxxiao/ArknightsGameData",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "path": "zh_CN/gamedata/levels/obt/main/level_main_04-05.json",
+      "sha256": "5f73da07bac7da7c4c947fab1f48202f292315f3c0600f748c8a11894fe0c138",
+      "gitBlob": "cfe292daa066b07925215c549bb486207a6c0454",
+      "stageTable": {
+        "path": "zh_CN/gamedata/excel/stage_table.json",
+        "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+        "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+        "stageId": "main_04-05",
+        "levelId": "Obt/Main/level_main_04-05"
+      }
+    },
+    "battle": {
+      "max_play_time": -1,
+      "max_life": 1
+    },
+    "enemies": {
+      "atk": 1.1,
+      "def": 1.1,
+      "maxHp": 1.1
+    },
+    "enemyAdd": {},
+    "hiddenGroups": {},
+    "characterAttributes": [
+      {
+        "professionMask": 1023,
+        "buildableMask": 1,
+        "multipliers": {
+          "maxHp": 0.5
+        }
+      }
     ]
-   },
-   "1": {
-    "points": [
-     [
-      10,
-      2
-     ],
-     [
-      9,
-      2
-     ],
-     [
-      9,
-      1
-     ],
-     [
-      8,
-      1
-     ],
-     [
-      7,
-      1
-     ],
-     [
-      6,
-      1
-     ],
-     [
-      6,
-      2
-     ],
-     [
-      5,
-      2
-     ],
-     [
-      4,
-      2
-     ],
-     [
-      3,
-      2
-     ],
-     [
-      2,
-      2
-     ],
-     [
-      1,
-      2
-     ],
-     [
-      1,
-      3
-     ],
-     [
-      0,
-      3
-     ]
-    ],
-    "distances": [
-     0,
-     1,
-     2,
-     3,
-     4,
-     5,
-     6,
-     7,
-     8,
-     9,
-     10,
-     11,
-     12,
-     13
-    ],
-    "length": 13,
-    "breaks": [],
-    "flying": false,
-    "holds": [],
-    "nodes": [
-     [
-      10,
-      2
-     ],
-     [
-      9,
-      2
-     ],
-     [
-      9,
-      1
-     ],
-     [
-      6,
-      1
-     ],
-     [
-      6,
-      2
-     ],
-     [
-      1,
-      2
-     ],
-     [
-      1,
-      3
-     ],
-     [
-      0,
-      3
-     ]
+  },
+  "tokens": [],
+  "contentRuleRefresh": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/4-5_challenge_mode.json",
+          "sha256": "ed1e0d18f653cc5067416a30d42b882387317f61d226e7a0da8cdee38841df1b"
+        },
+        {
+          "path": "stage-geometry/4-5.json",
+          "sha256": "61c944377a2e18d82337c96a7bf51fbcfbfcc8bb889a9858da6a413d760e3d21"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        }
+      ],
+      "localFiles": [
+        {
+          "path": "data/stage-rules/4-5_challenge_mode.json",
+          "sha256": "257339552a8f8e379f3b8379c1d45cda17c5ce50555c79617d124e175e9919f1"
+        },
+        {
+          "path": "data/stage-rules/levels/ae744627817c73b01b5b5b9313431e07c390dd1c6bf4f0e8b5061fc3133a155b.json",
+          "sha256": "ae744627817c73b01b5b5b9313431e07c390dd1c6bf4f0e8b5061fc3133a155b"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/cfe292daa066b07925215c549bb486207a6c0454.json",
+          "sha256": "5f73da07bac7da7c4c947fab1f48202f292315f3c0600f748c8a11894fe0c138"
+        }
+      ]
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 10,
+        "spawned": 1,
+        "errors": 0
+      },
+      "waveSchedule": {
+        "id": "4-5_challenge_mode",
+        "seconds": 199.7,
+        "spawned": 40,
+        "expected": 40,
+        "dynamicSpawns": 0,
+        "reason": "cleared",
+        "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+      },
+      "browserStartup": {
+        "id": "4-5_challenge_mode",
+        "seconds": 16.53333333333333,
+        "errors": [],
+        "units": 2,
+        "canvas": true,
+        "scope": "Mobile landscape browser startup and canvas runtime; not a fidelity approval"
+      }
+    },
+    "changed": [
+      "rules",
+      "battle",
+      "enemies",
+      "tokens"
     ]
-   }
   }
- },
- "art": null,
- "gates": null,
- "fixedSquad": null,
- "enemies": {
-  "enemy_1000_gopro_3": {
-   "key": "enemy_1000_gopro_3",
-   "prefabKey": "enemy_1000_gopro_3",
-   "name": "Rabid Hound Pro",
-   "level": 0,
-   "rank": "NORMAL",
-   "applyWay": "MELEE",
-   "stats": {
-    "maxHp": 3000,
-    "atk": 370,
-    "def": 0,
-    "res": 20,
-    "moveSpeed": 1.9,
-    "bat": 1.4,
-    "aspd": 100,
-    "rangeRadius": 0,
-    "rawRangeRadius": 0,
-    "blockCnt": 1,
-    "massLevel": 0,
-    "lpr": 1,
-    "hpRecoveryPerSec": 0,
-    "elementRes": 0,
-    "elementDmgRes": 0,
-    "hitRatePhys": 0,
-    "hitRateArts": 0,
-    "dmgType": "phys",
-    "dmgTypes": [
-     "phys"
-    ],
-    "motion": "WALK",
-    "immunities": {
-     "stun": false,
-     "silence": false,
-     "sleep": false,
-     "frozen": false,
-     "levitate": false
-    },
-    "otherImmunities": [],
-    "tauntLevel": 0
-   },
-   "abilities": [],
-   "talents": {
-    "bb": {},
-    "bbStr": {},
-    "groups": {}
-   },
-   "skills": [],
-   "notCountInTotal": false,
-   "tags": [
-    "infection"
-   ]
-  },
-  "enemy_1014_rogue_2": {
-   "key": "enemy_1014_rogue_2",
-   "prefabKey": "enemy_1014_rogue_2",
-   "name": "Dual Swordsman Leader",
-   "level": 0,
-   "rank": "NORMAL",
-   "applyWay": "MELEE",
-   "stats": {
-    "maxHp": 3000,
-    "atk": 450,
-    "def": 120,
-    "res": 0,
-    "moveSpeed": 1.1,
-    "bat": 1.2,
-    "aspd": 100,
-    "rangeRadius": 0,
-    "rawRangeRadius": 0,
-    "blockCnt": 1,
-    "massLevel": 1,
-    "lpr": 1,
-    "hpRecoveryPerSec": 0,
-    "elementRes": 0,
-    "elementDmgRes": 0,
-    "hitRatePhys": 0,
-    "hitRateArts": 0,
-    "dmgType": "phys",
-    "dmgTypes": [
-     "phys"
-    ],
-    "motion": "WALK",
-    "immunities": {
-     "stun": false,
-     "silence": false,
-     "sleep": false,
-     "frozen": false,
-     "levitate": false
-    },
-    "otherImmunities": [],
-    "tauntLevel": 0
-   },
-   "abilities": [],
-   "talents": {
-    "bb": {},
-    "bbStr": {},
-    "groups": {}
-   },
-   "skills": [],
-   "notCountInTotal": false,
-   "tags": []
-  },
-  "enemy_1010_demon": {
-   "key": "enemy_1010_demon",
-   "prefabKey": "enemy_1010_demon",
-   "name": "Sarkaz Greatswordsman",
-   "level": 0,
-   "rank": "ELITE",
-   "applyWay": "MELEE",
-   "stats": {
-    "maxHp": 7500,
-    "atk": 600,
-    "def": 230,
-    "res": 50,
-    "moveSpeed": 0.85,
-    "bat": 2,
-    "aspd": 100,
-    "rangeRadius": 0,
-    "rawRangeRadius": 0,
-    "blockCnt": 1,
-    "massLevel": 2,
-    "lpr": 1,
-    "hpRecoveryPerSec": 0,
-    "elementRes": 0,
-    "elementDmgRes": 0,
-    "hitRatePhys": 0,
-    "hitRateArts": 0,
-    "dmgType": "phys",
-    "dmgTypes": [
-     "phys"
-    ],
-    "motion": "WALK",
-    "immunities": {
-     "stun": false,
-     "silence": false,
-     "sleep": false,
-     "frozen": false,
-     "levitate": false
-    },
-    "otherImmunities": [],
-    "tauntLevel": 0
-   },
-   "abilities": [],
-   "talents": {
-    "bb": {},
-    "bbStr": {},
-    "groups": {}
-   },
-   "skills": [],
-   "notCountInTotal": false,
-   "tags": [
-    "sarkaz"
-   ]
-  },
-  "enemy_1031_mrogue": {
-   "key": "enemy_1031_mrogue",
-   "prefabKey": "enemy_1031_mrogue",
-   "name": "Arts Guard",
-   "level": 0,
-   "rank": "NORMAL",
-   "applyWay": "MELEE",
-   "stats": {
-    "maxHp": 4000,
-    "atk": 350,
-    "def": 200,
-    "res": 50,
-    "moveSpeed": 0.75,
-    "bat": 2.5,
-    "aspd": 100,
-    "rangeRadius": 0,
-    "rawRangeRadius": 0,
-    "blockCnt": 1,
-    "massLevel": 1,
-    "lpr": 1,
-    "hpRecoveryPerSec": 0,
-    "elementRes": 0,
-    "elementDmgRes": 0,
-    "hitRatePhys": 0,
-    "hitRateArts": 0,
-    "dmgType": "arts",
-    "dmgTypes": [
-     "arts"
-    ],
-    "motion": "WALK",
-    "immunities": {
-     "stun": false,
-     "silence": false,
-     "sleep": false,
-     "frozen": false,
-     "levitate": false
-    },
-    "otherImmunities": [],
-    "tauntLevel": 0
-   },
-   "abilities": [],
-   "talents": {
-    "bb": {},
-    "bbStr": {},
-    "groups": {}
-   },
-   "skills": [],
-   "notCountInTotal": false,
-   "tags": []
-  },
-  "enemy_1034_laxe": {
-   "key": "enemy_1034_laxe",
-   "prefabKey": "enemy_1034_laxe",
-   "name": "Butcher",
-   "level": 0,
-   "rank": "ELITE",
-   "applyWay": "MELEE",
-   "stats": {
-    "maxHp": 9000,
-    "atk": 850,
-    "def": 230,
-    "res": 30,
-    "moveSpeed": 0.7,
-    "bat": 3.5,
-    "aspd": 100,
-    "rangeRadius": 0,
-    "rawRangeRadius": 0,
-    "blockCnt": 1,
-    "massLevel": 3,
-    "lpr": 1,
-    "hpRecoveryPerSec": 0,
-    "elementRes": 0,
-    "elementDmgRes": 0,
-    "hitRatePhys": 0,
-    "hitRateArts": 0,
-    "dmgType": "phys",
-    "dmgTypes": [
-     "phys"
-    ],
-    "motion": "WALK",
-    "immunities": {
-     "stun": false,
-     "silence": false,
-     "sleep": false,
-     "frozen": false,
-     "levitate": false
-    },
-    "otherImmunities": [],
-    "tauntLevel": 0
-   },
-   "abilities": [],
-   "talents": {
-    "bb": {},
-    "bbStr": {},
-    "groups": {}
-   },
-   "skills": [],
-   "notCountInTotal": false,
-   "tags": []
-  },
-  "enemy_1012_dcross": {
-   "key": "enemy_1012_dcross",
-   "prefabKey": "enemy_1012_dcross",
-   "name": "Sarkaz Crossbowman",
-   "level": 0,
-   "rank": "ELITE",
-   "applyWay": "RANGED",
-   "stats": {
-    "maxHp": 6000,
-    "atk": 450,
-    "def": 200,
-    "res": 50,
-    "moveSpeed": 0.8,
-    "bat": 3,
-    "aspd": 100,
-    "rangeRadius": 2.2,
-    "rawRangeRadius": 2.2,
-    "blockCnt": 1,
-    "massLevel": 2,
-    "lpr": 1,
-    "hpRecoveryPerSec": 0,
-    "elementRes": 0,
-    "elementDmgRes": 0,
-    "hitRatePhys": 0,
-    "hitRateArts": 0,
-    "dmgType": "phys",
-    "dmgTypes": [
-     "phys"
-    ],
-    "motion": "WALK",
-    "immunities": {
-     "stun": false,
-     "silence": false,
-     "sleep": false,
-     "frozen": false,
-     "levitate": false
-    },
-    "otherImmunities": [],
-    "tauntLevel": 0
-   },
-   "abilities": [],
-   "talents": {
-    "bb": {},
-    "bbStr": {},
-    "groups": {}
-   },
-   "skills": [],
-   "notCountInTotal": false,
-   "tags": [
-    "sarkaz"
-   ]
-  }
- }
 }

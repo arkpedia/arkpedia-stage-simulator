@@ -5,11 +5,12 @@
 import { readFileSync } from 'node:fs';
 import index from '../../data/arkpedia-stages.json' with { type: 'json' };
 import snapshot from '../../data/arkpedia-mvp.json' with { type: 'json' };
+import {enemyModelKey} from '../../shared/arkpedia/facing.js';
 
 const stages = [];
 for (const entry of index.stages.filter(s => s.data)) {
   const stage = JSON.parse(readFileSync(new URL(`../../data/${entry.data}`, import.meta.url), 'utf8'));
-  const missing = Object.keys(stage.enemies ?? {}).filter(id => !snapshot.sd.models[`enemy/${id}/default/default`]);
+  const missing = Object.keys(stage.enemies ?? {}).filter(id => !snapshot.sd.models[enemyModelKey(id,stage.enemies[id])]);
   if (missing.length) stages.push({ id: entry.id, testOnly: !!entry.testOnly, missing });
 }
 const unique = [...new Set(stages.flatMap(s => s.missing))];

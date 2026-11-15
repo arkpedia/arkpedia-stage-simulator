@@ -133,6 +133,7 @@ export function customizeThornsKit({ battle: b, id, def, unit: u, kit }) {
   kit.skill.id = s.id; kit.skill.name = s.name;
 }
 export function installThorns({ battle: b, unit: u, def }) {
+  if (!THORNS_OPERATORS[def.charId]) return;
   if (def.charId !== ID) return;
   u.mem.thornsAttackUntil = -Infinity; u.mem.thornsAttackControlEpoch = u.attackControlEpoch;
   u.mem.thornsIdleAt = b.time; u.mem.thornsCounterReadyAt = b.time; u.mem.thornsCounterToken = null;

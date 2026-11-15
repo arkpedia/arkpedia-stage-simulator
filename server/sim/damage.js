@@ -53,22 +53,28 @@ import { MIN_DAMAGE_RATIO, ELEMENT, ELEMENT_ORDER, PALSY_MAX } from './constants
 import { BOSS_HIT_LIMIT } from '../../shared/constants.js';
 import { evadesGround } from './targeting.js';
 
-// The native damage_resistance[fly][phy_and_mag] is Sanctuary with a
-// per-damage source predicate. Ordinary Sanctuary is already in target stats;
+// Native flying-source and frontal protection are Sanctuary with per-damage
+// source predicates. Ordinary Sanctuary is already in target stats;
 // replace only that strongest channel, before flat resistance/shields. Never
 // temporarily mutate target stats or a DamageInfo shared by multiple targets.
-export function flyingSanctuaryRatio(buffs, source, type) {
-  if (!source?.isFlying || !['phys', 'arts'].includes(type)) return 1;
+export function sourceSanctuaryRatio(buffs, source, type, target = null) {
+  if (!source || !['phys', 'arts'].includes(type)) return 1;
   const key = type === 'phys' ? 'physTakenMul' : 'artsTakenMul';
   let ordinary = 1, conditional = 1;
   for (const buff of buffs) {
     if (buff.status !== 'sanctuary') continue;
     if (Number.isFinite(buff.mods?.[key])) ordinary = Math.min(ordinary, buff.mods[key]);
-    if (Number.isFinite(buff.data?.flyingSourceSanctuary))
+    if (source.isFlying && Number.isFinite(buff.data?.flyingSourceSanctuary))
       conditional = Math.min(conditional, Math.max(0, 1 - buff.data.flyingSourceSanctuary));
+    // Native CheckIfSourceGridPosFaceTargetGridPos: same-column sources
+    // never qualify, even when their continuous positions differ.
+    if (target && Number.isFinite(buff.data?.frontSourceSanctuary)
+      && (Math.round(source.x) - Math.round(target.x)) * target.mem.nativeFacing > 0)
+      conditional = Math.min(conditional, Math.max(0, 1 - buff.data.frontSourceSanctuary));
   }
   return ordinary > 0 ? Math.min(ordinary, conditional) / ordinary : 1;
 }
+export const flyingSanctuaryRatio = sourceSanctuaryRatio;
 
 const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
 
@@ -102,6 +108,9 @@ export function makeDamageInfo(d = {}) {
     isAttack: !!d.isAttack,
     applyWay: ['melee', 'ranged'].includes(d.applyWay) ? d.applyWay : 'none',
     isProjectile: !!d.isProjectile,
+    // Native classification only. This does not bypass shields, fatal hooks,
+    // invulnerability or the still-unrecovered execution cancellation masks.
+    instantKillLike: d.instantKillLike === true,
     // Source environment selectors use an explicit damage flag; sourceless or
     // periodic damage alone does not establish that classification.
     isEnvironment: !!d.isEnvironment,
@@ -109,6 +118,9 @@ export function makeDamageInfo(d = {}) {
     tags: d.tags ?? [],
     cancel: false,
     noSp: !!d.noSp,
+    // Native NoSourceDamage._damageWithoutModify: already resolved HP damage.
+    // Protection, hit-count targets, shields, HP floors and receipts still apply.
+    unmodified: d.unmodified === true && type === 'true' && d.sourceless === true,
     // A source-owned undeadable modifier for this receipt only (Saga).
     // Applied after shields; it never protects unrelated damage or HP loss.
     hpFloor: Number.isFinite(d.hpFloor) ? Math.max(0, d.hpFloor) : 0,
@@ -300,6 +312,7 @@ export function dealDamage(battle, source, target, dmgIn) {
   if (!target || !target.alive || target.removed || target.hidden || !target.deployed) return 0;
   const targetLife = target.deploySeq;
   const dmg = dmgIn && dmgIn._norm ? dmgIn : makeDamageInfo(dmgIn);
+  const originalAmount = dmg.amount;
   if (dmg.type === 'element') return applyElement(battle, source, target, dmg);
   // 无来源 (dmg.sourceless, element bursts): hooks see no source — nothing keyed on "damage dealt by X" (ATK-up vs a
   // tag, 伤害提升 items / bonds / modules, reflect, "受到来自…的伤害") can recognise it; `credit` names the unit that still
@@ -374,43 +387,47 @@ export function dealDamage(battle, source, target, dmgIn) {
   }
   // 无来源 damage (element bursts) takes nothing from its source's stats; the source still gets the credit below
   const ss = source && source.s && !dmg.sourceless ? source.s : null;
-  let final = mitigate(dmg.amount, type, ts, {
-    defIgnorePct: dmg.defIgnorePct + (ss ? ss.defIgnorePct : 0),
-    defIgnoreFlat: dmg.defIgnoreFlat + (ss ? ss.defIgnoreFlat : 0),
-    resIgnorePct: dmg.resIgnorePct + (ss ? ss.resIgnorePct : 0),
-    resIgnoreFlat: dmg.resIgnoreFlat + (ss ? ss.resIgnoreFlat : 0),
-    elementalRes: type === 'elemental' ? (target.def?.epDamageResistance ?? 0) : 0,
-  });
-  // An explicit EnsureDmgOrHeal floor (Aciddrop) follows DEF/RES mitigation,
-  // before outgoing/incoming multipliers. Ordinary attacks keep their usual floor.
-  if (Number.isFinite(dmg.minimumAmount) && dmg.minimumAmount > 0)
-    final = Math.max(final, dmg.minimumAmount);
-  // 脆弱 / "受到的伤害±" (dmgTakenMul) scale 物理、法术、真实 only; 元素伤害 takes 元素脆弱 alone (header)
-  let mul = dmg.mul * (type === 'elemental' ? 1 : ts.dmgTakenMul);
-  if (ss) mul *= ss.dmgDealtMul * (type === 'phys' ? ss.physDealtMul : type === 'arts' ? ss.artsDealtMul : 1);
-  // Per-recipient conditional output multipliers (e.g. Umiri's "Ave Mujica members deal more damage to
-  // sluggish/feared enemies"): each fn(source, target, dmg) returns a factor, evaluated per damage instance.
-  if (ss && battle._dealtMultipliers?.size) for (const f of battle._dealtMultipliers.values()) {
-    const m = f(source, target, dmg); if (Number.isFinite(m) && m > 0) mul *= m;
+  let final = originalAmount;
+  if (!dmg.unmodified) {
+    final = mitigate(dmg.amount, type, ts, {
+      defIgnorePct: dmg.defIgnorePct + (ss ? ss.defIgnorePct : 0),
+      defIgnoreFlat: dmg.defIgnoreFlat + (ss ? ss.defIgnoreFlat : 0),
+      resIgnorePct: dmg.resIgnorePct + (ss ? ss.resIgnorePct : 0),
+      resIgnoreFlat: dmg.resIgnoreFlat + (ss ? ss.resIgnoreFlat : 0),
+      elementalRes: type === 'elemental' ? (target.def?.epDamageResistance ?? 0) : 0,
+    });
+    // An explicit EnsureDmgOrHeal floor (Aciddrop) follows DEF/RES mitigation,
+    // before outgoing/incoming multipliers. Ordinary attacks keep their usual floor.
+    if (Number.isFinite(dmg.minimumAmount) && dmg.minimumAmount > 0)
+      final = Math.max(final, dmg.minimumAmount);
+    // 脆弱 / "受到的伤害±" (dmgTakenMul) scale 物理、法术、真实 only; 元素伤害 takes 元素脆弱 alone (header)
+    let mul = dmg.mul * (type === 'elemental' ? 1 : ts.dmgTakenMul);
+    if (ss) mul *= ss.dmgDealtMul * (type === 'phys' ? ss.physDealtMul : type === 'arts' ? ss.artsDealtMul : 1);
+    // Per-recipient conditional output multipliers (e.g. Umiri's "Ave Mujica members deal more damage to
+    // sluggish/feared enemies"): each fn(source, target, dmg) returns a factor, evaluated per damage instance.
+    if (ss && battle._dealtMultipliers?.size) for (const f of battle._dealtMultipliers.values()) {
+      const m = f(source, target, dmg); if (Number.isFinite(m) && m > 0) mul *= m;
+    }
+    mul *= type === 'phys' ? ts.physTakenMul : type === 'arts' ? ts.artsTakenMul : type === 'elemental' ? ts.elementalTakenMul : ts.trueTakenMul;
+    mul *= sourceSanctuaryRatio(target.buffs, hs, type, target);
+    final *= mul;
+    // Fixed damage resistance is a final HP-damage cut, before shields. It is
+    // opt-in (Friston-3); element gauge accumulation and HP loss bypass it.
+    final = Math.max(0, final - (ts.flatDamageResistance ?? 0));
+    if (!(final > 0) || !Number.isFinite(final)) final = 0;
+    // Opt-in source modifiers such as Rose Salt defer a share of the fully
+    // mitigated Physical/Arts amount. HP loss and element gauges bypass this
+    // path; dodge and cancellation have already resolved, shields have not.
+    if (battle._hooks.damageFinal) {
+      const ctx = { source: hs, target, dmg, credit: source, amount: final };
+      battle.emit('damageFinal', ctx);
+      // Recipient cancellation does not poison a shared DamageInfo used for
+      // subsequent targets of the same area attack.
+      if (ctx.cancel || dmg.cancel || !retainsDamageLife(target, targetLife)) return 0;
+      final = Number.isFinite(ctx.amount) ? Math.max(0, ctx.amount) : 0;
+    }
   }
-  mul *= type === 'phys' ? ts.physTakenMul : type === 'arts' ? ts.artsTakenMul : type === 'elemental' ? ts.elementalTakenMul : ts.trueTakenMul;
-  mul *= flyingSanctuaryRatio(target.buffs, hs, type);
-  final *= mul;
-  // Fixed damage resistance is a final HP-damage cut, before shields. It is
-  // opt-in (Friston-3); element gauge accumulation and HP loss bypass it.
-  final = Math.max(0, final - (ts.flatDamageResistance ?? 0));
   if (!(final > 0) || !Number.isFinite(final)) final = 0;
-  // Opt-in source modifiers such as Rose Salt defer a share of the fully
-  // mitigated Physical/Arts amount. HP loss and element gauges bypass this
-  // path; dodge and cancellation have already resolved, shields have not.
-  if (battle._hooks.damageFinal) {
-    const ctx = { source: hs, target, dmg, credit: source, amount: final };
-    battle.emit('damageFinal', ctx);
-    // Recipient cancellation does not poison a shared DamageInfo used for
-    // subsequent targets of the same area attack.
-    if (ctx.cancel || dmg.cancel || !retainsDamageLife(target, targetLife)) return 0;
-    final = Number.isFinite(ctx.amount) ? Math.max(0, ctx.amount) : 0;
-  }
   // 限伤: a leader's hit of ≥ BOSS_HIT_LIMIT in a boss / hidden battle is cancelled before it reaches shields / HP — what
   // ran before it (the attack, its SP, `hit` hook effects, separate element 损伤) stays; nothing after it happens
   if (final > 0 && leaderHitCancelled(battle, target, final)) return 0;
@@ -771,5 +788,10 @@ export function heal(battle, source, target, amount, opts = {}) {
   // modifiers/listeners must not process regeneration or change its amount.
   if (opts.regen && battle._hooks.regenerated)
     battle.emit('regenerated', Object.freeze({ source, target, amount: amt, actual, opts }));
+  // Observe a settled ordinary healing modifier without treating regeneration
+  // as one. A listener may consume a fully healed rescue objective.
+  if (!skipModifierEvent && target.alive && target.deployed && !target.removed
+    && target.deploySeq === targetLife && battle._hooks.healed)
+    battle.emit('healed', Object.freeze({ source, target, amount: amt, actual, opts }));
   return actual;
 }

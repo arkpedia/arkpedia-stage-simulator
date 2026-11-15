@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "enemy": "enemy_1531_bbrain",
+  "scope": "Independent damage-share talent and reusable zero-delta wave release; full boss remains unsupported.",
+  "sourceHashes": {
+    "shared/arkpedia/enemy-awaken-features.js": "2cbadd4a6bec4afb4b05f5dfe12fa9531b3a77fda3ae114e98387dcdcffc4737",
+    "server/sim/content/arkpedia-enemy-damage-share.js": "c460e2a80b1c513d621a27801ed1a9a2eefb3c26d96be1ef31766c452ed5887a",
+    "server/sim/content/arkpedia-stage-waves.js": "c118068bd22a78d93ef617fa6b5438f60bb946d42505d1b31f1a10b955cbf8d2",
+    "server/sim/damage.js": "fc3e0a1ad244b030b9399aee5e8e340fae6a0220606f9fb08157c3700bf3f577",
+    "test/arkpedia-enemy-awaken.test.js": "19146adae12425ef870369dbdcfa61de773f4d66377fe41ad4b646056ac484c0",
+    "test/arkpedia-stage-waves.test.js": "00a46561b559f68443f52e56b27847192e352a17727674e73510503a42887b36",
+    "data/arkpedia-enemy-native-abilities.json": "2bb3f1921102f707545fda83411a9e381da835835e4334c18fa173cc093fc4ad",
+    "data/arkpedia-awaken-animations.json": "5f2be553669713eecd3295b73e9ed546cdb04ca222650b52a9640a620aeed061"
+  },
+  "validation": {
+    "focusedDamageShareTests": 5,
+    "waveTests": 28,
+    "combinedTests": 160,
+    "combinedLog": "/tmp/awaken-component-broad-tests.log"
+  },
+  "coverage": {
+    "supportedEnemies": 659,
+    "availableStages": 905
+  },
+  "limitations": [
+    "Full boss phase and attack composition remains blocked",
+    "Native aura and hook ordering is not frame certified",
+    "Execution classification does not implement native cancellation masks",
+    "Wave release does not implement all-managed transfer or nonzero wave deltas"
+  ]
+}

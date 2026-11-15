@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { CASTER_EXPANSION_OPERATORS } from '../../../shared/arkpedia/caster-expansion-operators.js';
 import { acquireTargets, effectiveProfile, resolveHit } from '../ai.js';
 import { canTargetEnemy } from '../targeting.js';
 
@@ -101,6 +102,7 @@ function puddingLaunch(battle, unit, profile, target, info) {
 }
 
 export function customizeCasterExpansionKit({ id, def, kit }) {
+  if (!CASTER_EXPANSION_OPERATORS[id]) return;
   if (!['char_328_cammou', 'char_469_indigo', 'char_4004_pudd'].includes(id) || !def.skill) return;
   const skill = def.skill, bb = skill.bb;
   kit.install = null;
@@ -166,6 +168,7 @@ function startIndigoAura(battle, unit) {
 }
 
 export function installCasterExpansion({ battle, unit, def }) {
+  if (!CASTER_EXPANSION_OPERATORS[def.charId]) return;
   if (def.charId === 'char_328_cammou') {
     unit.trait.funnelTarget = null; unit.trait.funnelScale = def.traitBb.init_atk_scale ?? .2;
   } else if (def.charId === 'char_469_indigo') {

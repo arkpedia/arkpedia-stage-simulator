@@ -1,0 +1,324 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-14",
+  "scope": "Historical checkpoint: bounded plain weighted main-wave groups and terminal negative-one closing-delay sentinel. Simulator seed reproducibility, not client RNG or mode continuation parity.",
+  "sourceFiles": [
+    {
+      "path": "shared/arkpedia/stage-conditional.js",
+      "sha256": "be0f62823796b83b91bedb963c27c4863d77f619dd76c54993a8a7486a19ceee"
+    },
+    {
+      "path": "tools/arkpedia/stage-waves.mjs",
+      "sha256": "5ffee2993d5ca01aa3701fa4e5791383eedbb19f2790e7542782a8fd281ae631"
+    },
+    {
+      "path": "tools/arkpedia/build-stage.mjs",
+      "sha256": "c11f33e00ff9d6983bd89c323c2290ee81107028a84a4eb630676cdfe1d58e72"
+    },
+    {
+      "path": "tools/arkpedia/content-inventory.mjs",
+      "sha256": "267b719dd76881c08f5075ea811c91d6091cbdbdd94d82812e5c137be336a11c"
+    },
+    {
+      "path": "server/sim/content/arkpedia-stage-random.js",
+      "sha256": "01e0d61f7468ec6ff0504c1d7619ca3e8b2b51fc34bfeb8c1907291158d3e41f"
+    },
+    {
+      "path": "server/sim/content/arkpedia-stage-waves.js",
+      "sha256": "926e7470362660c32155ef903e421499940113ca6fca113d73147534f38a06a6"
+    },
+    {
+      "path": "server/sim/arkpedia.js",
+      "sha256": "1fcd9218086f72f7423a9d007a6cad728d8453fab00469926a8941ee82fd5e57"
+    },
+    {
+      "path": "test/arkpedia-stage-waves.test.js",
+      "sha256": "b396fbe24a7f1c33bb668e5f7737a49f35af37e1e2655483b2ad33755eab91c3"
+    },
+    {
+      "path": "test/arkpedia-stage-conditional.test.js",
+      "sha256": "65648ddd931e0ca51e8a43292465594fce1fcc46d5df668961462a7e303d5bf4"
+    },
+    {
+      "path": "tools/arkpedia/review-stage-random.mjs",
+      "sha256": "0d153cae5efc6927cb2410a60be78112aec9979ffbae8267192fd816533e3536"
+    },
+    {
+      "path": "docs/STAGE-RANDOM-GROUPS-REVIEW.md",
+      "sha256": "5e9344d5b08616039d1488fbe96d9c8ce14ef27b42741d62408c6f7a6a387311"
+    }
+  ],
+  "checks": {
+    "focusedTests": {
+      "log": {
+        "path": "/tmp/shared-stage-final-tests.log",
+        "sha256": "415b2f6bf9fc05b02d65f4c0180be1d0f9244c79ec2ee6fe5d01fc44d86fc41c"
+      },
+      "passed": 74,
+      "failed": 0
+    },
+    "allStageSmoke": {
+      "scope": "10-second constructor/runtime smoke for every available compiled stage; not a playable-clear or fidelity certificate",
+      "available": 827,
+      "completed": 827,
+      "failures": [],
+      "uniqueComponentsRead": 5606,
+      "cache": {
+        "cachedBytes": 12278045,
+        "cachedObjects": 5606,
+        "pending": 0
+      }
+    },
+    "inventory": {
+      "path": "data/arkpedia-content-inventory.json",
+      "sha256": "8870737793d99a763f36b0e8c1b11099cf2d0b48e6d7ff2e9bcd66af256b3141"
+    },
+    "browser": [
+      {
+        "id": "isw-du_level_obt_roguelike_ro1_level_rogue1_t-1",
+        "mobile": false,
+        "state": {
+          "choices": [
+            {
+              "wave": 0,
+              "fragment": 0,
+              "group": "g1",
+              "action": 0,
+              "enemy": "enemy_1047_sagent_2"
+            },
+            {
+              "wave": 0,
+              "fragment": 1,
+              "group": "g1",
+              "action": 1,
+              "enemy": "enemy_2001_duckmi"
+            }
+          ],
+          "total": 7,
+          "expected": 7,
+          "unresolved": false,
+          "errors": []
+        },
+        "restart": {
+          "choices": [
+            {
+              "wave": 0,
+              "fragment": 0,
+              "group": "g1",
+              "action": 0,
+              "enemy": "enemy_1047_sagent_2"
+            },
+            {
+              "wave": 0,
+              "fragment": 1,
+              "group": "g1",
+              "action": 1,
+              "enemy": "enemy_2001_duckmi"
+            }
+          ],
+          "total": 7,
+          "expected": 7,
+          "unresolved": false,
+          "errors": []
+        },
+        "errors": []
+      },
+      {
+        "id": "isw-du_level_obt_roguelike_ro1_level_rogue1_t-2",
+        "mobile": false,
+        "state": {
+          "choices": [
+            {
+              "wave": 0,
+              "fragment": 3,
+              "group": "g1",
+              "action": 0,
+              "enemy": "enemy_2001_duckmi"
+            }
+          ],
+          "total": 77,
+          "expected": 77,
+          "unresolved": false,
+          "errors": []
+        },
+        "restart": {
+          "choices": [
+            {
+              "wave": 0,
+              "fragment": 3,
+              "group": "g1",
+              "action": 0,
+              "enemy": "enemy_2001_duckmi"
+            }
+          ],
+          "total": 77,
+          "expected": 77,
+          "unresolved": false,
+          "errors": []
+        },
+        "errors": []
+      },
+      {
+        "id": "isw-du_level_obt_roguelike_ro1_level_rogue1_t-4",
+        "mobile": false,
+        "state": {
+          "choices": [
+            {
+              "wave": 0,
+              "fragment": 3,
+              "group": "g1",
+              "action": 0,
+              "enemy": "enemy_2002_bearmi"
+            }
+          ],
+          "total": 58,
+          "expected": 58,
+          "unresolved": false,
+          "errors": []
+        },
+        "restart": {
+          "choices": [
+            {
+              "wave": 0,
+              "fragment": 3,
+              "group": "g1",
+              "action": 0,
+              "enemy": "enemy_2002_bearmi"
+            }
+          ],
+          "total": 58,
+          "expected": 58,
+          "unresolved": false,
+          "errors": []
+        },
+        "errors": []
+      },
+      {
+        "id": "isw-du_level_obt_roguelike_ro1_level_rogue1_t-1",
+        "mobile": true,
+        "state": {
+          "choices": [
+            {
+              "wave": 0,
+              "fragment": 0,
+              "group": "g1",
+              "action": 0,
+              "enemy": "enemy_1047_sagent_2"
+            },
+            {
+              "wave": 0,
+              "fragment": 1,
+              "group": "g1",
+              "action": 0,
+              "enemy": "enemy_2001_duckmi"
+            }
+          ],
+          "total": 7,
+          "expected": 7,
+          "unresolved": false,
+          "errors": []
+        },
+        "restart": {
+          "choices": [
+            {
+              "wave": 0,
+              "fragment": 0,
+              "group": "g1",
+              "action": 1,
+              "enemy": "enemy_1047_sagent_2"
+            },
+            {
+              "wave": 0,
+              "fragment": 1,
+              "group": "g1",
+              "action": 1,
+              "enemy": "enemy_2001_duckmi"
+            }
+          ],
+          "total": 7,
+          "expected": 7,
+          "unresolved": false,
+          "errors": []
+        },
+        "errors": []
+      },
+      {
+        "id": "isw-du_level_obt_roguelike_ro1_level_rogue1_t-2",
+        "mobile": true,
+        "state": {
+          "choices": [
+            {
+              "wave": 0,
+              "fragment": 3,
+              "group": "g1",
+              "action": 0,
+              "enemy": "enemy_2001_duckmi"
+            }
+          ],
+          "total": 77,
+          "expected": 77,
+          "unresolved": false,
+          "errors": []
+        },
+        "restart": {
+          "choices": [
+            {
+              "wave": 0,
+              "fragment": 3,
+              "group": "g1",
+              "action": 1,
+              "enemy": "enemy_2001_duckmi"
+            }
+          ],
+          "total": 77,
+          "expected": 77,
+          "unresolved": false,
+          "errors": []
+        },
+        "errors": []
+      },
+      {
+        "id": "isw-du_level_obt_roguelike_ro1_level_rogue1_t-4",
+        "mobile": true,
+        "state": {
+          "choices": [
+            {
+              "wave": 0,
+              "fragment": 3,
+              "group": "g1",
+              "action": 0,
+              "enemy": "enemy_2002_bearmi"
+            }
+          ],
+          "total": 58,
+          "expected": 58,
+          "unresolved": false,
+          "errors": []
+        },
+        "restart": {
+          "choices": [
+            {
+              "wave": 0,
+              "fragment": 3,
+              "group": "g1",
+              "action": 0,
+              "enemy": "enemy_2002_bearmi"
+            }
+          ],
+          "total": 58,
+          "expected": 58,
+          "unresolved": false,
+          "errors": []
+        },
+        "errors": []
+      }
+    ],
+    "secondarySource": {
+      "repository": "wfrfred/ArkBattle",
+      "commit": "097db62efa5d4d5a86bdc5268f5f426d6610dd8e",
+      "path": "docs/research/cases/30-scheduler-action-data-fields.md",
+      "gitBlob": "d2a9411034246abbe941f92e967e4cf1979a33a7",
+      "limit": "Public native research; binary extraction not independently rerun."
+    }
+  }
+}

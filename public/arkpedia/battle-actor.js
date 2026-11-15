@@ -44,7 +44,7 @@ export class BattleActor extends SpineActor {
     // An opted-in source ability may repeat the same literal clip. Its stable
     // per-ability identity restarts that clip once, never on every render frame.
     const playId = typeof visual?.playId === 'string' ? visual.playId : '';
-    const key = visual ? `${visual.clip}|${!!visual.loop}|${visual.idle || ''}|${visual.attack || ''}|${visual.die || ''}|${playId}|${visual.replace === true}` : null;
+    const key = visual ? `${visual.clip}|${!!visual.loop}|${visual.idle || ''}|${visual.move || ''}|${visual.attack || ''}|${visual.die || ''}|${playId}|${visual.replace === true}` : null;
     if (key === this.regularVisualKey) {
       const previousSpeed = this.regularVisualSpeed ?? 1;
       this.regularVisualSpeed = speed;
@@ -67,6 +67,7 @@ export class BattleActor extends SpineActor {
     // Missing clips never borrow another operator's form or manufacture a pose.
     const roles = visual.loop ? {
       idle: this.has(visual.clip) ? visual.clip : this.baseRoles.idle,
+      ...(this.has(visual.move) ? { move: { loop: visual.move } } : {}),
       ...(this.has(visual.attack) ? { attack: { loop: visual.attack } } : {}),
       ...(this.has(visual.die) ? { die: visual.die } : {}),
       skill: null,

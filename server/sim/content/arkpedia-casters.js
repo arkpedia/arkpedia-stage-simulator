@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { CASTER_OPERATORS } from '../../../shared/arkpedia/caster-operators.js';
 // Source: Global game tables at 57010cb5b2afea112cae57daa756b58676ba6850.
 // Original Android client 26-09-23-17-49-43_b9cc4a charpack checksums:
 // Haze 1ccaed7fde488d852ec6c2f77bb09257; Gitano 76347092b59fdd986b604542862b2a01;
@@ -6,6 +7,7 @@
 
 /** Customize before _setupUnit; installCaster runs afterwards, before _deploy. */
 export function customizeCasterKit({ id, def, kit }) {
+  if (!CASTER_OPERATORS[id]) return;
   const skill = def.skill;
   if (!skill) return;
   const bb = skill.bb;
@@ -34,6 +36,7 @@ export function customizeCasterKit({ id, def, kit }) {
 
 /** Talent hooks and ordinary attack geometry; ownership cleans hooks on retreat. */
 export function installCaster({ battle, unit, def }) {
+  if (!CASTER_OPERATORS[def.charId]) return;
   const id = unit.defId;
   const talent = def.talents[0]?.bb;
   if (id === "char_141_nights" && talent) {

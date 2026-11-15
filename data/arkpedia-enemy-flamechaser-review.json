@@ -1,0 +1,272 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-14",
+  "scope": "Historical Flamechaser Soldier checkpoint. Source-gated shared mechanics and diagnostic browser forms; not native controller/frame or playable-clear parity. Inherited rebirth/block-release ordering and animation action-lock timing remain assumptions.",
+  "sourceFiles": {
+    "shared/arkpedia/enemy-flamechaser-features.js": "55f483c335e74b335590f64d18e8c03e4b430a1e5a36b773600bbfb63fb1486f",
+    "server/sim/content/arkpedia-enemy-flamechaser.js": "2cf40851f98b8ebe001edf10772cae56e5541828dafc7cc59e358c610f1df713",
+    "server/sim/content/arkpedia-stage-reeds.js": "e9a6fc99b5f34660fb55d3318784b11f8ec0a35793f42431d8ec89a4348006b8",
+    "server/sim/content/enemies.js": "b986515b85e77ace7fc332c34a1b95609f1bc324fbd6b368b328199a114ad430",
+    "shared/arkpedia/enemy-features.js": "075ffd9a4c853f0ee68a0660d32176e28f6e1e441e9c28ba7f359afef95f697e",
+    "server/sim/content/arkpedia-enemy-features.js": "1b57faf31dcbfb56d3d9b67b8595dfed3e78bac0f0c576cf8bba392463b32446",
+    "tools/arkpedia/extract-enemy-native-abilities.py": "2e0d71e36d660b2dd917102a262d53d7dfbadd3e57460a12589ad50623c4b448",
+    "tools/arkpedia/enemy-artwork.mjs": "40ef81b8c86765c4b492ece22acb62df3d4d5e0e77063538fd8843cc34be19f9",
+    "scripts/arkpedia-local-assets.mjs": "2c07a7cbed3f0b3b63440d20b86b1a3f3afbb782f44128ca79ef0b5548a4f098",
+    "scripts/start-arkpedia.mjs": "a0fc5105cd0da6df03af5b4e629fe028d1e7d5b1e21f9946ba4cf68947a8f201",
+    "shared/arkpedia/model-entry.js": "77677a787c2ab17ba634fde7d0fe1cd02e1599e8b5f29d9c78b41609180900e2",
+    "data/arkpedia-flamechaser-animations.json": "871cfafd876708f59b15e3c9d7389b48bc536cc543bc7b2898409f37082eacac",
+    "data/arkpedia-enemy-native-abilities.json": "855f148c812c1ef2c1a91a79ba8b6ce3b7097f87815844baf3dc5f35ab87f1a2",
+    "data/arkpedia-enemy-support.json": "79e091347266d6866728724ac1c63ee5b6aed4a81980d92125355e1679b55b8d",
+    "data/arkpedia-enemy-artwork.json": "c2891185a60f7da933ce4298f9f4e9dc0932ded428e02574d69f8325ccfa468e",
+    "test/arkpedia-enemy-flamechaser.test.js": "b88f7382e028e30105a7bcc22ec1bae7a9f80a4bd4e3a2531bfbd93edfa557f9",
+    "test/arkpedia-enemy-artwork.test.js": "ae06c9791246877d800a5c70dd85e39e345c49db8d94739fcad3c8c2fb5c1971",
+    "test/arkpedia-local-assets.test.js": "582a7a28869b8c6b38b35337555b5b578977422d8620c39ffc42304003ba3e0f",
+    "test/content/enemies_bosses.test.js": "fbcd64e8112efd3b8de17b0b66c258b299b14e77c2c27eac90a9dee064bc59ce",
+    "tools/arkpedia/review-flamechasers.mjs": "7a5ce75788ce1ed624539880b69ae4c5336da353b6d5875e6f3242f6f6c46c7b",
+    "docs/ENEMY-FLAMECHASER-REVIEW.md": "5afd38743233ee76bcb3480eeac030ea96f7faa709a718e2daadc3f6a1924db4"
+  },
+  "checks": {
+    "tests": {
+      "passed": 281,
+      "log": "/tmp/flamechaser-final-tests.log"
+    },
+    "lifecycleRegressions": {
+      "passed": 80,
+      "log": "/tmp/flamechaser-lifecycle-tests.log"
+    },
+    "localModelLoading": {
+      "passed": 12,
+      "log": "/tmp/flamechaser-local-model-tests.log"
+    },
+    "legacySource": {
+      "passed": 14,
+      "log": "/tmp/flamechaser-legacy-source-tests.log"
+    },
+    "stageSmoke": {
+      "passed": 832,
+      "seconds": 10,
+      "log": "/tmp/flamechaser-all-stage-smoke.log"
+    },
+    "source": {
+      "log": "/tmp/flamechaser-source-check.log"
+    },
+    "operatorLibrary": {
+      "log": "/tmp/flamechaser-operator-library-check.log"
+    },
+    "browser": {
+      "scope": "Original stage loading with diagnostic spawning, ignition, knockout, revival and final death; not a playable clear",
+      "results": [
+        {
+          "mobile": false,
+          "id": "enemy_1288_duskls",
+          "stage": "FC-2",
+          "originalMaxHp": 5000,
+          "reeds": 11,
+          "mire": 12,
+          "first": {
+            "hp": 5,
+            "killed": 0,
+            "clip": "Die"
+          },
+          "ember": {
+            "alive": true,
+            "hp": 5,
+            "form": "husk",
+            "clip": "Idle_2",
+            "noAttack": true
+          },
+          "revived": {
+            "hp": 5000,
+            "maxHp": 5000,
+            "form": "revived",
+            "hitCount": false,
+            "noAttack": false
+          },
+          "finallyDead": true,
+          "killed": 1,
+          "errors": []
+        },
+        {
+          "mobile": false,
+          "id": "enemy_1288_duskls_2",
+          "stage": "FC-EX-1",
+          "originalMaxHp": 6000,
+          "reeds": 0,
+          "mire": 25,
+          "first": {
+            "hp": 5,
+            "killed": 0,
+            "clip": "Die"
+          },
+          "ember": {
+            "alive": true,
+            "hp": 5,
+            "form": "husk",
+            "clip": "Idle_2",
+            "noAttack": true
+          },
+          "revived": {
+            "hp": 6000,
+            "maxHp": 6000,
+            "form": "revived",
+            "hitCount": false,
+            "noAttack": false
+          },
+          "finallyDead": true,
+          "killed": 1,
+          "errors": []
+        },
+        {
+          "mobile": true,
+          "id": "enemy_1288_duskls",
+          "stage": "FC-2",
+          "originalMaxHp": 5000,
+          "reeds": 11,
+          "mire": 12,
+          "first": {
+            "hp": 5,
+            "killed": 0,
+            "clip": "Die"
+          },
+          "ember": {
+            "alive": true,
+            "hp": 5,
+            "form": "husk",
+            "clip": "Idle_2",
+            "noAttack": true
+          },
+          "revived": {
+            "hp": 5000,
+            "maxHp": 5000,
+            "form": "revived",
+            "hitCount": false,
+            "noAttack": false
+          },
+          "finallyDead": true,
+          "killed": 1,
+          "errors": []
+        },
+        {
+          "mobile": true,
+          "id": "enemy_1288_duskls_2",
+          "stage": "FC-EX-1",
+          "originalMaxHp": 6000,
+          "reeds": 0,
+          "mire": 25,
+          "first": {
+            "hp": 5,
+            "killed": 0,
+            "clip": "Die"
+          },
+          "ember": {
+            "alive": true,
+            "hp": 5,
+            "form": "husk",
+            "clip": "Idle_2",
+            "noAttack": true
+          },
+          "revived": {
+            "hp": 6000,
+            "maxHp": 6000,
+            "form": "revived",
+            "hitCount": false,
+            "noAttack": false
+          },
+          "finallyDead": true,
+          "killed": 1,
+          "errors": []
+        }
+      ]
+    },
+    "artworkBrowser": {
+      "scope": "Chromium clip decoding/finite poses and idle body rendering; no native combat/frame/pixel parity claim",
+      "browser": "Chrome/156.0.8078.79",
+      "results": [
+        {
+          "viewport": "desktop",
+          "models": [
+            {
+              "id": "enemy_1288_duskls",
+              "version": "3.8.99",
+              "clips": 11,
+              "width": 637.7653350830078,
+              "height": 453.7549133300781
+            },
+            {
+              "id": "enemy_1288_duskls_2",
+              "version": "3.8.99",
+              "clips": 11,
+              "width": 637.7653350830078,
+              "height": 453.7549133300781
+            }
+          ],
+          "errors": [],
+          "failures": []
+        },
+        {
+          "viewport": "mobile",
+          "models": [
+            {
+              "id": "enemy_1288_duskls",
+              "version": "3.8.99",
+              "clips": 11,
+              "width": 637.7653350830078,
+              "height": 453.7549133300781
+            },
+            {
+              "id": "enemy_1288_duskls_2",
+              "version": "3.8.99",
+              "clips": 11,
+              "width": 637.7653350830078,
+              "height": 453.7549133300781
+            }
+          ],
+          "errors": [],
+          "failures": []
+        }
+      ]
+    },
+    "runtimeFootprint": {
+      "ids": [
+        "char_123_fang",
+        "char_124_kroos"
+      ],
+      "adapters": 24,
+      "common": {
+        "modules": 471,
+        "bytes": 4685876,
+        "sha256": "9dc432c55c11e8afab9ac2aef9e32da13459e043566811f8d08040ef2931384f"
+      },
+      "selected": {
+        "modules": 508,
+        "bytes": 8408464,
+        "sha256": "b76987e497a88d9bfccdaeb61c047a7d407daffe41d7a5d9f8759c9eba16c825"
+      },
+      "eager": {
+        "modules": 1228,
+        "bytes": 95945650,
+        "sha256": "28c56ba8189f53230973c0bd7c830fb799b38f7f853fd20a0cd3bc1a52a72be1"
+      }
+    },
+    "sdTests": {
+      "passed": 93,
+      "log": "/tmp/flamechaser-sd-tests.log"
+    },
+    "sdValidation": {
+      "models": 3694,
+      "log": "/tmp/flamechaser-sd-validate.log"
+    }
+  },
+  "counts": {
+    "supportedEnemies": 633,
+    "totalEnemies": 2163,
+    "loadableStages": 832,
+    "totalStages": 3892,
+    "enemyArtwork": 421
+  },
+  "artworkCommit": "0b685d559dcc43cee3dbbcb1c676b639160a25e2",
+  "secondaryReferences": [
+    "https://prts.wiki/w/深池逐火战士",
+    "https://arknights.wiki.gg/wiki/Dublinn_Flamechaser_Soldier"
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-15",
+  "scope": "Shared predefined-operator favor threshold lookup; no per-stage behavior branches.",
+  "sourceFiles": {
+    "tools/arkpedia/stage-predefined-operators.mjs": "f43553686b1cd3851da02d96732dcfc2872f09866cd91e129dc68e33f68fc617",
+    "tools/arkpedia/review-stage-predefined.mjs": "b84cff5163d36f92d4b6576650774b8bbbfc5b59debac2358b2e37a3de42b350",
+    "test/arkpedia-predefined-operators.test.js": "8d2c11b11a10296456ef92dfc4cddd31a47661680fc1d4e87387263f2db68796",
+    "data/arkpedia-favor-source.json": "7a07a19507560ebb8524c670c57f6ff50eeded0e8b1410367fb390fbef3133f4",
+    "docs/STAGE-PREDEFINED-TRUST-REVIEW.md": "35acaf355ceefd79a08f60df9c05dcc288d21a279635f87fd02e37e35aa5f667",
+    "data/arkpedia-library.json": "6ea10c699a159e67288bc4a4d1010c079a59feb1019b97d52b0fa9c6eb859d0d"
+  },
+  "coverage": {
+    "availableStages": 863,
+    "stageTarget": 3892,
+    "enemies": 644,
+    "enemyTarget": 2163
+  },
+  "unlockedStages": [
+    {
+      "id": "gt-1",
+      "points": [
+        15
+      ]
+    },
+    {
+      "id": "gt-3",
+      "points": [
+        15
+      ]
+    },
+    {
+      "id": "mn-tr-1",
+      "points": [
+        30,
+        30,
+        30,
+        30,
+        30
+      ]
+    },
+    {
+      "id": "of-1",
+      "points": [
+        10,
+        10
+      ]
+    },
+    {
+      "id": "tr-17",
+      "points": [
+        30,
+        30,
+        30,
+        30,
+        30
+      ]
+    },
+    {
+      "id": "tr-s-1",
+      "points": [
+        100,
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    {
+      "id": "tw-4",
+      "points": [
+        15
+      ]
+    },
+    {
+      "id": "tw-tr-1",
+      "points": [
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30
+      ]
+    }
+  ],
+  "checks": {
+    "regressions": {
+      "path": "/tmp/predefined-trust-regressions.log",
+      "sha256": "b717ac7413e9e6e0ac30dfed7fae06809b83eed4a4b16273a5c91a79e38f5acc"
+    },
+    "stageSmoke": {
+      "path": "/tmp/predefined-trust-all-stage-smoke.log",
+      "sha256": "2882c66169b23c46300fee8d8e2db4d6fe1dddea68ce549ecbba06ec0d266335"
+    },
+    "browser": {
+      "path": ".cache/arkpedia/predefined-trust-review/results.json",
+      "sha256": "c39677238dd2b5fd7566c98631c072fcf0ae2ce0b9f629b4e21a278506327579"
+    },
+    "operatorLibrary": {
+      "path": "/tmp/predefined-trust-operator-library.log",
+      "sha256": "8bc7729b884f04f13bd8d288d3f0d4deb1e503d3ff00e292b5f0c2507c53c18c"
+    }
+  },
+  "regressionTestsPassed": 37,
+  "stageSmokePassed": 863,
+  "stageSmokeSeconds": 10,
+  "browserCasesPassed": 6,
+  "limitations": [
+    "Threshold contract is supported by source data and public declarations, not an executable native method body.",
+    "Browser review uses simplified geometry and actor markers; original artwork is not certified."
+  ]
+}

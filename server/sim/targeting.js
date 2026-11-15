@@ -14,10 +14,11 @@
 // An enemy's area effects select allies with areaSelectable, its buff auras with auraSelectable (no 隐匿 ally, the one
 // blocking the source included — GitHub #97; 迷彩 is not checked — DESIGN §22.12).
 
-import { COLS, ROWS } from './constants.js';
+import { COLS, ROWS, ALLY_COLLIDER_RADIUS } from './constants.js';
 import { normDir, rotateOffset } from './dir.js';
 import { bodyDist } from './body.js';
 import {explicitBlockMode} from './block-mode.js';
+export const characterLikeTarget = unit => !!unit && (unit.kind !== 'device' || unit.profile?.characterLikeDevice === true);
 
 /**
  * Build the absolute tile-key list of a grid for a unit standing at (r,c) facing `dir` ('UP'|'RIGHT'|'DOWN'|'LEFT';
@@ -77,6 +78,7 @@ export function enemyStealthed(e) {
 
 /** Can `attacker` (ally) target enemy `e` at all (ignoring range)? */
 export function canTargetEnemy(attacker, e, profile) {
+  if (e.side === 'neutral') return false;
   if (e.profile?.friendly) return false;
   if (!e.alive || e.hidden || !e.deployed) return false;
   const f = e.s.flags;
@@ -84,10 +86,10 @@ export function canTargetEnemy(attacker, e, profile) {
   // (Entelechia S3 Heart Candles). No general invulnerability/stealth bypass.
   const ignoreTargetFree = typeof profile?.ignoreTargetFree === 'function'
     && profile.ignoreTargetFree(attacker, e) === true;
-  if ((f.untargetable && !ignoreTargetFree) || (f.sleep && !(profile && profile.hitSleep))) return false;
+  if (((f.untargetable || f.targetFree && attacker?.side !== e.side) && !ignoreTargetFree) || (f.sleep && !(profile && profile.hitSleep))) return false;
   if (f.stealth && enemyStealthed(e) && !profile?.ignoreStealth) return false;
   if (typeof profile?.canTarget === 'function' && !profile.canTarget(attacker, e)) return false;
-  if (e.mem?.stageUnitDevice?.pillar && Math.max(Math.abs((attacker.tileR ?? 0) - e.tileR), Math.abs((attacker.tileC ?? 0) - e.tileC)) > 1) return false;
+  if (e.mem?.stageUnitDevice?.pillar && Math.abs((attacker.tileR ?? 0) - e.tileR) + Math.abs((attacker.tileC ?? 0) - e.tileC) !== 1) return false;
   if (e.isFlying && !(profile && profile.canHitFly)) return false;
   if (profile && profile.groundOnly && e.isFlying) return false;
   return true;
@@ -97,7 +99,7 @@ export function canTargetEnemy(attacker, e, profile) {
  * Can enemy `e` target ally `a`? `ranged` = the attack is a ranged (non-blocked) one. A stealthed ally (隐匿, the
  * 排气格栅 tile) is a target only for the enemy it blocks — PRTS 作战机制 §隐匿 "我方干员并不会因为阻挡而解除隐匿" and 索敌的
  * 概念 "敌人会在自身被干员阻挡情况下强行无视对方可选性发动攻击" (the term text "不阻挡时…" is the short form; 异常效果:
- * "隐匿与'阻挡时解除'没有直接关系"). Devices are never targets (阻隔工事: obstacles nobody can select; “双眼皮”: 迷彩 and
+ * "隐匿与'阻挡时解除'没有直接关系"). Devices require an explicit enemy-targetable building profile (阻隔工事: obstacles nobody can select; “双眼皮”: 迷彩 and
  * off the enemy paths — PRTS). 迷彩 (flag `camou`, term ba.camou "不阻挡时不成为敌方普通攻击的目标") works the same way:
  * PRTS 异常效果 gives both anomalies the note "与'阻挡时解除'没有直接关系" — for this target selection (an attack, a skill
  * pick, a cast condition, a normal attack on every ally in range: PRTS 选择器 "所有触发选择器通常不无视迷彩"); an area
@@ -105,9 +107,9 @@ export function canTargetEnemy(attacker, e, profile) {
  * never a target of a ground enemy (evadesGround).
  */
 export function canTargetAlly(e, a, ranged) {
-  if (!a.alive || !a.deployed || a.hidden || a.kind === 'device') return false;
+  if (!a.alive || !a.deployed || a.hidden || a.kind === 'device' && !a.profile?.enemyTargetableDevice) return false;
   const f = a.s.flags;
-  if (f.untargetable || f.sleep) return false;
+  if (f.untargetable || f.targetFree && e?.side !== a.side || f.sleep) return false;
   // A revealed unit (Technical Scout's anti-invisibility aura) is targetable even while camouflaged/stealthed.
   if (ranged && (f.stealth || f.camou) && e.blockedBy !== a) {
     const reveal = e.profile?.revealRange;
@@ -115,6 +117,21 @@ export function canTargetAlly(e, a, ranged) {
   }
   if (f.liftoff && evadesGround(e, a)) return false;
   return true;
+}
+
+/** Ordinary enemy attack candidates, shared by attack execution and combat-state abilities. */
+export function enemyAttackTargets(b, e, radius) {
+  const reach = radius > 0 ? radius + ALLY_COLLIDER_RADIUS : 0;
+  let targets = [];
+  if (e.blockedBy) {
+    const bl = e.blockedBy;
+    if (radius > 0) {
+      targets = b.alliesInRadius(e.x, e.y, reach, null).filter(a => a === bl || canTargetAlly(e, a, true));
+      if (!targets.includes(bl) && bl.alive) targets.push(bl);
+    } else if (bl.alive && bl.deployed) targets = [bl];
+  } else if (radius > 0) targets = b.alliesInRadius(e.x, e.y, reach, null).filter(a => canTargetAlly(e, a, true));
+  const own = e.profile?.canTarget;
+  return typeof own === 'function' ? targets.filter(a => own(a)) : targets;
 }
 
 /**
@@ -152,9 +169,9 @@ export function areaSelectable(src, a) {
  * apply 对地规避: a ground enemy's aura still reaches an airborne 起飞 ally [ASSUMED, DESIGN §21.20 / §21.22].
  */
 export function auraSelectable(src, a) {
-  if (!a || !a.alive || !a.deployed || a.hidden || a.kind === 'device') return false;
+  if (!a || !a.alive || !a.deployed || a.hidden || a.kind === 'device' && !a.profile?.enemyTargetableDevice) return false;
   const f = a.s.flags;
-  if (f.untargetable || f.sleep || f.stealth) return false;
+  if (f.untargetable || f.targetFree && src?.side !== a.side || f.sleep || f.stealth) return false;
   return true;
 }
 
@@ -233,12 +250,17 @@ export function sortAllyTargets(enemy, cands) {
   const priority = enemy.profile?.targetPriority;
   const named = enemy.profile?.priorityNames ?? [];
   const namedScore = (u) => named.some(n => String(u.def?.raw?.name ?? '').includes(n)) ? 0 : 1;
+  const tagScore = u => u.tags?.has(enemy.profile.priorityTag) ? 0 : 1;
+  const buffScore = u => u.findBuff(enemy.profile.priorityBuff) ? 1 : 0;
   const special = priority === 'lowestDef' ? (a, b) => a.s.def - b.s.def
     : priority === 'lowestHp' ? (a, b) => a.hp / a.s.maxHp - b.hp / b.s.maxHp
-    : priority === 'named' ? (a, b) => namedScore(a) - namedScore(b) : null;
+    : priority === 'named' ? (a, b) => namedScore(a) - namedScore(b)
+    : priority === 'tag' ? (a, b) => tagScore(a) - tagScore(b)
+    : priority === 'withoutBuff' ? (a, b) => buffScore(a) - buffScore(b)
+    : priority === 'withBuff' ? (a, b) => buffScore(b) - buffScore(a) : null;
   cands.sort((a, b) => {
     const ba = enemy.blockedBy === a ? 0 : 1, bb = enemy.blockedBy === b ? 0 : 1;
-    return ba - bb || (special ? special(a, b) : 0) || aggroCmp(a, b);
+    return ba - bb || (special ? special(a, b) : 0) || aggroCmp(a, b, enemy.profile?.sameTauntPriority);
   });
   return cands;
 }
@@ -247,8 +269,9 @@ export function sortAllyTargets(enemy, cands) {
  * 仇恨值 order of two allies for an enemy (negative ⇒ `a` first): higher taunt level, then the latest deployed
  * (`aggroSeq`). The tie-break after an enemy's special priority (优先攻击防御力最高的… — PRTS 索敌: 特殊优先级 → 仇恨值).
  */
-export function aggroCmp(a, b) {
+export function aggroCmp(a, b, sameTauntPriority = null) {
   const ta = a.s.taunt || 0, tb = b.s.taunt || 0;
   if (ta !== tb) return tb - ta;
+  if (sameTauntPriority) { const compared = sameTauntPriority(a, b); if (compared) return compared; }
   return (b.aggroSeq || b.deploySeq) - (a.aggroSeq || a.deploySeq);
 }

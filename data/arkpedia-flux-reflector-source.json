@@ -1,0 +1,68 @@
+{
+ "schemaVersion": 1,
+ "device": "trap_063_magicturn",
+ "source": {
+  "repository": "Kengxxiao/ArknightsGameData",
+  "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+  "resourceVersion": "26-09-22-07-47-20_6c71fa"
+ },
+ "mesh": {
+  "bundle": "arts/maps/common/trap/s_music_mirror/s_music_turn.ab",
+  "bytes": 23451,
+  "md5": "a3df189a0fb8462e2bbea7c4a3d1c45d",
+  "sha256": "1373d87862c204bf457f1a07fbbf4c2cdf6999999c8fb3f24bbdc0742174eaf8",
+  "cab": "CAB-f08b651ccb23d714d73dfcbe3052321f",
+  "pathId": "1994333063697885962",
+  "nativeTransform": {
+   "rotation": [
+    0,
+    0.7071067690849304,
+    -0.7071067690849304,
+    0
+   ],
+   "scale": [
+    0.009999999776482582,
+    0.009999999776482582,
+    0.009999999776482582
+   ],
+   "position": [
+    0,
+    0,
+    0.2199999988079071
+   ]
+  },
+  "review": "At the native unrotated UP orientation, the original mesh opens toward +row and +column."
+ },
+ "preview": {
+  "repository": "arkpedia/arkpedia-image-assets",
+  "commit": "72fee1df8b490b0e357d934560a6c31a5b433f43",
+  "path": "stages-images/le-ex-4.webp",
+  "sha256": "d672d18ab50138bf036817735c5595b524a5a77c0644c1aebcbcce171d0159cc",
+  "review": "Original LE-EX-4 preview shows the LEFT-facing reflector at row 2, column 5 opening left/up, and the RIGHT-facing reflector at row 4, column 3 opening right/down. Directions and positions match the original level receipt."
+ },
+ "corroboration": {
+  "url": "https://prts.wiki/w/L-7_%E2%80%9C%E5%9B%9E%E9%9F%B3%E5%A3%81%E2%80%9D",
+  "retrieved": "2026-11-14",
+  "statement": "Flux matching the device shape enters one end and exits the other; no skill.",
+  "responseSha256": "203ef75b53af4e0882a72d756bcc23556848b66fe8075dd2c38a7e61975df9cc"
+ },
+ "ports": {
+  "UP": [
+   "UP",
+   "RIGHT"
+  ],
+  "RIGHT": [
+   "RIGHT",
+   "DOWN"
+  ],
+  "DOWN": [
+   "DOWN",
+   "LEFT"
+  ],
+  "LEFT": [
+   "LEFT",
+   "UP"
+  ]
+ },
+ "limits": "Geometry and original-level preview review; no native compiled route-controller or frame comparison. Original mesh/effects are not yet shipped by the simulator."
+}

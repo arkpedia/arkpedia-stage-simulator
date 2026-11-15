@@ -8,10 +8,13 @@ import { assertRegularEnemies } from "../../shared/arkpedia/enemies.js";
 import { compileEnemy, indexEnemyDatabase } from "../../shared/arkpedia/enemy-records.js";
 import { compileReviewedOperators, operatorChannel } from "./operator-source.mjs";
 import { writeJSONAtomic } from "./write-json.mjs";
+import { buildOperatorLibrary, publishOperatorLibrary } from './operator-library.mjs';
 import { isDeepStrictEqual } from "node:util";
 import { verifyAphrissaArtwork, APHRISSA_TOKEN } from "./aphrissa-artwork.mjs";
 import { APHRISSA_PREPARED_ROOTS } from "../../public/arkpedia/aphrissa-roots.js";
 import { compileBuffTemplate } from "../../shared/arkpedia/behavior.js";
+import { mergeEnemyArtwork } from './enemy-artwork.mjs';
+import { mergeDeviceArtwork } from './device-artwork.mjs';
 const cache = new URL("../../.cache/arkpedia/", import.meta.url);
 await mkdir(cache, { recursive: true });
 const paths = {
@@ -121,6 +124,11 @@ const candidateThumpy = process.argv.includes('--review-candidate-thumpy');
 const candidateTanya = process.argv.includes('--review-candidate-tanya');
 if ([!!candidateGeneric,candidateHadiya,candidateAphrissa,candidateMakoto,candidateYukari,candidateAegis,candidateSkybox,candidateBotany,candidateTaraxa,candidateJu,candidateTurdus,candidateRecon,candidateKoromaru,candidateGallus,candidateMcnist,candidatePedro,candidateTmslot,candidateThumpy,candidateClosur,candidateReckpr,candidateBranch,candidateVarkis,candidateSnhunt,candidateKichi,candidateCairn,candidateTanya].filter(Boolean).length>1) throw Error('Review one candidate snapshot at a time');
 const ids = Object.keys(REGULAR_OPERATORS);
+// Enemy body additions survive snapshot rebuilds without duplicating SD files.
+Object.assign(models, mergeEnemyArtwork(models, JSON.parse(await readFile(
+  new URL('../../data/arkpedia-enemy-artwork.json', import.meta.url)))));
+Object.assign(models, mergeDeviceArtwork(models, JSON.parse(await readFile(
+  new URL('../../data/arkpedia-device-artwork.json', import.meta.url)))));
 if (ids.includes('char_4179_monstr')) {
   const review = JSON.parse(await readFile(new URL('../../data/arkpedia-mon3tr-runtime-review.json', import.meta.url)));
   for (const [name, key] of [['prefabs', 'sourceFoundationSha256'], ['device-art', 'deviceArtworkSha256']]) {
@@ -1559,3 +1567,5 @@ await writeJSONAtomic(
 console.log(
   `Built ${stage.code}: ${ids.length} operators, ${Object.keys(enemyRecords).length} enemies; SD ${sdCommit}`,
 );
+if (!process.argv.some(arg => arg.startsWith('--review-candidate-')))
+  await publishOperatorLibrary(buildOperatorLibrary(output), new URL('../..', import.meta.url).pathname);

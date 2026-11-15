@@ -180,6 +180,7 @@ function installPhonor(b, u, def) {
 }
 
 export function installRobotExpansion({ battle, unit, def }) {
+  if (!ROBOT_EXPANSION_OPERATORS[def.charId]) return;
   if (def.charId === 'char_4077_palico') {
     unit.mem.palicoBombs = 0; unit.mem.palicoNeedsBegin = true;
     battle.on('tick', () => {

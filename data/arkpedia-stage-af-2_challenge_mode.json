@@ -1,0 +1,1920 @@
+{
+ "code": "AF-2",
+ "name": "Deities Overlooking the Doorway",
+ "description": "Conditions: Enemies have greatly increased ATK.\nStage available from 7/29 10:00 A.M. to 8/12 3:59 A.M.",
+ "battle": {
+  "max_life": 1,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "rules": {
+  "variant": "challenge_mode",
+  "source": {
+   "repository": "Kengxxiao/ArknightsGameData",
+   "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+   "path": "zh_CN/gamedata/levels/activities/act6d5/level_act6d5_02.json",
+   "sha256": "f18b68ab9211b728cd340953da9cb00cd64badf5538b05c42219d4d4b3c4d22c",
+   "gitBlob": "60637af99399ed134e81eae2e47b3f0872ecb0d7",
+   "stageTable": {
+    "path": "zh_CN/gamedata/excel/stage_table.json",
+    "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+    "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+    "stageId": "act6d5_02",
+    "levelId": "Activities/ACT6D5/level_act6d5_02"
+   }
+  },
+  "battle": {
+   "max_life": 1
+  },
+  "enemies": {
+   "atk": 1.6,
+   "def": 1.1,
+   "maxHp": 1.2
+  },
+  "enemyAdd": {},
+  "hiddenGroups": {}
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "af-2",
+  "rows": 8,
+  "cols": 11,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_grass",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_forbidden",
+    "height": "low",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    2,
+    3,
+    4,
+    4,
+    4,
+    4,
+    4,
+    3,
+    2,
+    0
+   ],
+   [
+    0,
+    2,
+    5,
+    5,
+    5,
+    5,
+    5,
+    5,
+    5,
+    2,
+    0
+   ],
+   [
+    0,
+    5,
+    5,
+    4,
+    6,
+    3,
+    2,
+    5,
+    5,
+    5,
+    0
+   ],
+   [
+    0,
+    5,
+    5,
+    4,
+    1,
+    2,
+    0,
+    2,
+    5,
+    5,
+    0
+   ],
+   [
+    1,
+    4,
+    5,
+    0,
+    0,
+    0,
+    2,
+    2,
+    5,
+    5,
+    7
+   ],
+   [
+    1,
+    4,
+    0,
+    2,
+    0,
+    0,
+    0,
+    2,
+    0,
+    5,
+    7
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 0
+    },
+    "end": {
+     "row": 6,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 8
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 0
+    },
+    "end": {
+     "row": 5,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 9
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 4
+    },
+    "end": {
+     "row": 5,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 8
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 5
+    },
+    "end": {
+     "row": 6,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 9
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 4
+    },
+    "end": {
+     "row": 5,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 8
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 5
+    },
+    "end": {
+     "row": 6,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 9
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 4
+    },
+    "end": {
+     "row": 6,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 7
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 15
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 15
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 2,
+      "seconds": 15
+     }
+    ]
+   },
+   null,
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 4
+    },
+    "end": {
+     "row": 5,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 8
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 20
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 5
+    },
+    "end": {
+     "row": 6,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 9
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 20
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 4
+    },
+    "end": {
+     "row": 6,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 7
+      }
+     }
+    ],
+    "waits": []
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 199,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Hound Pro",
+      "enemy_id": "enemy_1000_gopro_2",
+      "count": 2,
+      "time": 8,
+      "interval": 5,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Hound Pro",
+      "enemy_id": "enemy_1000_gopro_2",
+      "count": 2,
+      "time": 16,
+      "interval": 5,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Hound Pro",
+      "enemy_id": "enemy_1000_gopro_2",
+      "count": 1,
+      "time": 21,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dual Swordsman",
+      "enemy_id": "enemy_1014_rogue",
+      "count": 1,
+      "time": 37,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "Dual Swordsman",
+      "enemy_id": "enemy_1014_rogue",
+      "count": 1,
+      "time": 37,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Invisible Crossbowman",
+      "enemy_id": "enemy_1019_jshoot",
+      "count": 1,
+      "time": 39,
+      "route": 2,
+      "fragment": 2
+     },
+     {
+      "enemy": "Invisible Crossbowman",
+      "enemy_id": "enemy_1019_jshoot",
+      "count": 1,
+      "time": 39,
+      "route": 3,
+      "fragment": 2
+     },
+     {
+      "enemy": "Dual Swordsman",
+      "enemy_id": "enemy_1014_rogue",
+      "count": 1,
+      "time": 53,
+      "route": 0,
+      "fragment": 3
+     },
+     {
+      "enemy": "Dual Swordsman",
+      "enemy_id": "enemy_1014_rogue",
+      "count": 1,
+      "time": 53,
+      "route": 1,
+      "fragment": 3
+     },
+     {
+      "enemy": "Invisible Crossbowman",
+      "enemy_id": "enemy_1019_jshoot",
+      "count": 1,
+      "time": 62,
+      "route": 2,
+      "fragment": 3
+     },
+     {
+      "enemy": "Invisible Crossbowman",
+      "enemy_id": "enemy_1019_jshoot",
+      "count": 1,
+      "time": 62,
+      "route": 3,
+      "fragment": 3
+     },
+     {
+      "enemy": "Hound Pro",
+      "enemy_id": "enemy_1000_gopro_2",
+      "count": 2,
+      "time": 73,
+      "interval": 3,
+      "route": 0,
+      "fragment": 4
+     },
+     {
+      "enemy": "Hound Pro",
+      "enemy_id": "enemy_1000_gopro_2",
+      "count": 2,
+      "time": 73,
+      "interval": 3,
+      "route": 1,
+      "fragment": 4
+     },
+     {
+      "enemy": "Invisible Crossbowman",
+      "enemy_id": "enemy_1019_jshoot",
+      "count": 2,
+      "time": 79,
+      "interval": 17,
+      "route": 4,
+      "fragment": 4
+     },
+     {
+      "enemy": "Invisible Crossbowman",
+      "enemy_id": "enemy_1019_jshoot",
+      "count": 2,
+      "time": 79,
+      "interval": 17,
+      "route": 5,
+      "fragment": 4
+     },
+     {
+      "enemy": "Dual Swordsman",
+      "enemy_id": "enemy_1014_rogue",
+      "count": 2,
+      "time": 82,
+      "interval": 3,
+      "route": 0,
+      "fragment": 4
+     },
+     {
+      "enemy": "Dual Swordsman",
+      "enemy_id": "enemy_1014_rogue",
+      "count": 2,
+      "time": 82,
+      "interval": 3,
+      "route": 1,
+      "fragment": 4
+     },
+     {
+      "enemy": "Technical Scout",
+      "enemy_id": "enemy_1020_obsv",
+      "count": 1,
+      "time": 118,
+      "route": 6,
+      "fragment": 5
+     },
+     {
+      "enemy": "Invisible Caster",
+      "enemy_id": "enemy_1023_jmage",
+      "count": 2,
+      "time": 111,
+      "interval": 30,
+      "route": 8,
+      "fragment": 5
+     },
+     {
+      "enemy": "Invisible Caster",
+      "enemy_id": "enemy_1023_jmage",
+      "count": 2,
+      "time": 111,
+      "interval": 30,
+      "route": 9,
+      "fragment": 5
+     },
+     {
+      "enemy": "Hound Pro",
+      "enemy_id": "enemy_1000_gopro_2",
+      "count": 2,
+      "time": 120,
+      "interval": 5,
+      "route": 0,
+      "fragment": 5
+     },
+     {
+      "enemy": "Hound Pro",
+      "enemy_id": "enemy_1000_gopro_2",
+      "count": 2,
+      "time": 120,
+      "interval": 5,
+      "route": 1,
+      "fragment": 5
+     },
+     {
+      "enemy": "Dual Swordsman",
+      "enemy_id": "enemy_1014_rogue",
+      "count": 2,
+      "time": 138,
+      "interval": 3,
+      "route": 0,
+      "fragment": 5
+     },
+     {
+      "enemy": "Dual Swordsman",
+      "enemy_id": "enemy_1014_rogue",
+      "count": 2,
+      "time": 138,
+      "interval": 3,
+      "route": 1,
+      "fragment": 5
+     },
+     {
+      "enemy": "Invisible Crossbowman",
+      "enemy_id": "enemy_1019_jshoot",
+      "count": 2,
+      "time": 125,
+      "interval": 28,
+      "route": 4,
+      "fragment": 5
+     },
+     {
+      "enemy": "Invisible Crossbowman",
+      "enemy_id": "enemy_1019_jshoot",
+      "count": 2,
+      "time": 125,
+      "interval": 28,
+      "route": 5,
+      "fragment": 5
+     },
+     {
+      "enemy": "Veteran Logger",
+      "enemy_id": "enemy_1033_handax_2",
+      "count": 1,
+      "time": 165,
+      "route": 0,
+      "fragment": 6
+     },
+     {
+      "enemy": "Veteran Logger",
+      "enemy_id": "enemy_1033_handax_2",
+      "count": 1,
+      "time": 165,
+      "route": 1,
+      "fragment": 6
+     },
+     {
+      "enemy": "Technical Scout",
+      "enemy_id": "enemy_1020_obsv",
+      "count": 1,
+      "time": 177,
+      "route": 10,
+      "fragment": 6
+     },
+     {
+      "enemy": "Invisible Crossbowman",
+      "enemy_id": "enemy_1019_jshoot",
+      "count": 2,
+      "time": 186,
+      "interval": 3,
+      "route": 4,
+      "fragment": 6
+     },
+     {
+      "enemy": "Invisible Caster",
+      "enemy_id": "enemy_1023_jmage",
+      "count": 2,
+      "time": 196,
+      "interval": 3,
+      "route": 5,
+      "fragment": 6
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 0,
+    "col": 4,
+    "routes": [
+     2,
+     2,
+     4,
+     8,
+     4,
+     4
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 0,
+    "col": 5,
+    "routes": [
+     3,
+     3,
+     5,
+     9,
+     5,
+     5
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 4,
+    "col": 4,
+    "routes": [
+     6,
+     10
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 5,
+    "col": 0,
+    "routes": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 6,
+    "col": 0,
+    "routes": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 5,
+    "col": 10,
+    "routes": [
+     1,
+     1,
+     2,
+     1,
+     2,
+     1,
+     4,
+     1,
+     8,
+     1,
+     1,
+     4,
+     1,
+     4
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 6,
+    "col": 10,
+    "routes": [
+     0,
+     0,
+     0,
+     3,
+     0,
+     3,
+     0,
+     5,
+     0,
+     6,
+     9,
+     0,
+     0,
+     5,
+     0,
+     10,
+     5
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1000_gopro_2",
+    "slug": "hound_pro",
+    "name": "Hound Pro",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1014_rogue",
+    "slug": "dual_swordsman",
+    "name": "Dual Swordsman",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1019_jshoot",
+    "slug": "invisible_crossbowman",
+    "name": "Invisible Crossbowman",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1020_obsv",
+    "slug": "technical_scout",
+    "name": "Technical Scout",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1023_jmage",
+    "slug": "invisible_caster",
+    "name": "Invisible Caster",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1033_handax_2",
+    "slug": "veteran_logger",
+    "name": "Veteran Logger",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false,
+  "source": "cn"
+ },
+ "terrain": [],
+ "conditionalHandled": false,
+ "devices": [
+  {
+   "col": 4,
+   "description": null,
+   "hidden": false,
+   "key": "trap_005_sensor",
+   "kind": "device",
+   "name": "Detector",
+   "row": 3,
+   "instance": {
+    "level": 60,
+    "skillLevel": 1
+   }
+  }
+ ],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   8,
+   9,
+   10
+  ],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "AF-2",
+  "geometryHash": "4ff81df2cbad38a2a815210df31ba1525c583135d7e0f6f60409ebc595333e42",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      0,
+      6
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      10,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "1": {
+    "points": [
+     [
+      0,
+      5
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      9,
+      3
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      10,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "2": {
+    "points": [
+     [
+      4,
+      0
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      10,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "3": {
+    "points": [
+     [
+      5,
+      0
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      10,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "4": {
+    "points": [
+     [
+      4,
+      0
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      10,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "5": {
+    "points": [
+     [
+      5,
+      0
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      10,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "6": {
+    "points": [
+     [
+      4,
+      4
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      10,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "8": {
+    "points": [
+     [
+      4,
+      0
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      10,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "9": {
+    "points": [
+     [
+      5,
+      0
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      10,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "10": {
+    "points": [
+     [
+      4,
+      4
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      10,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1000_gopro_2": {
+   "key": "enemy_1000_gopro_2",
+   "prefabKey": "enemy_1000_gopro_2",
+   "name": "Hound Pro",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2040,
+    "atk": 416,
+    "def": 0,
+    "res": 20,
+    "moveSpeed": 1.9,
+    "bat": 1.4,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1014_rogue": {
+   "key": "enemy_1014_rogue",
+   "prefabKey": "enemy_1014_rogue",
+   "name": "Dual Swordsman",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2400,
+    "atk": 560,
+    "def": 110.00000000000001,
+    "res": 0,
+    "moveSpeed": 1.1,
+    "bat": 1.2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1019_jshoot": {
+   "key": "enemy_1019_jshoot",
+   "prefabKey": "enemy_1019_jshoot",
+   "name": "Invisible Crossbowman",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 2160,
+    "atk": 416,
+    "def": 110.00000000000001,
+    "res": 20,
+    "moveSpeed": 0.9,
+    "bat": 2.7,
+    "aspd": 100,
+    "rangeRadius": 2.2,
+    "rawRangeRadius": 2.2,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "<$ba.invisible>Invisible</>",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1023_jmage": {
+   "key": "enemy_1023_jmage",
+   "prefabKey": "enemy_1023_jmage",
+   "name": "Invisible Caster",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 2640,
+    "atk": 560,
+    "def": 88,
+    "res": 50,
+    "moveSpeed": 0.8,
+    "bat": 4,
+    "aspd": 100,
+    "rangeRadius": 2,
+    "rawRangeRadius": 2,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "<$ba.invisible>Invisible</>",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1020_obsv": {
+   "key": "enemy_1020_obsv",
+   "prefabKey": "enemy_1020_obsv",
+   "name": "Technical Scout",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 8400,
+    "atk": 432,
+    "def": 110.00000000000001,
+    "res": 20,
+    "moveSpeed": 1,
+    "bat": 2.5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Reveals <$ba.invisible>invisible</> allied units in its surroundings",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "antiinvi.range_radius": 3.3
+    },
+    "bbStr": {},
+    "groups": {
+     "antiinvi": [
+      "range_radius"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1033_handax_2": {
+   "key": "enemy_1033_handax_2",
+   "prefabKey": "enemy_1033_handax_2",
+   "name": "Veteran Logger",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 14400,
+    "atk": 1360,
+    "def": 110.00000000000001,
+    "res": 30,
+    "moveSpeed": 0.75,
+    "bat": 3.3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ },
+ "contentAddition": {
+  "schemaVersion": 1,
+  "source": {
+   "repository": "arkpedia/arkpedia-data",
+   "commit": "66232ee06377d791fb130248d680764c286e5c99",
+   "files": [
+    {
+     "path": "stages/af-2_challenge_mode.json",
+     "sha256": "53adcd36f446be88ee9d6273885bee6804fbc496114300aef8bee9b5399a8eba"
+    },
+    {
+     "path": "stage-geometry/af-2.json",
+     "sha256": "4ff81df2cbad38a2a815210df31ba1525c583135d7e0f6f60409ebc595333e42"
+    },
+    {
+     "path": "stage-devices.json",
+     "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+    }
+   ],
+   "localFiles": [
+    {
+     "path": "data/stage-rules/af-2_challenge_mode.json",
+     "sha256": "609e5ae23857e7f8147d95518e0c561af3804502cf9186dfed5ac22640180173"
+    },
+    {
+     "path": "data/stage-rules/levels/6f359e3c4dc49072af092ff2ec0f54e05ee7bc44812f8819ef4bdf42d0d4d623.json",
+     "sha256": "6f359e3c4dc49072af092ff2ec0f54e05ee7bc44812f8819ef4bdf42d0d4d623"
+    },
+    {
+     "path": ".cache/arkpedia/original-level-blobs/60637af99399ed134e81eae2e47b3f0872ecb0d7.json",
+     "sha256": "f18b68ab9211b728cd340953da9cb00cd64badf5538b05c42219d4d4b3c4d22c"
+    },
+    {
+     "path": "data/arkpedia-device-source.json",
+     "sha256": "f9623a01f452afca937832c49269aa3b7b64d3bda9822d1ae16dde6f56b63f1d"
+    },
+    {
+     "path": "data/arkpedia-device-native-source.json",
+     "sha256": "5cf42ec7ab1d2702e623f225436a22e97475707fd7b249e008f889325da368d2"
+    },
+    {
+     "path": ".cache/arkpedia/original-level-blobs/60637af99399ed134e81eae2e47b3f0872ecb0d7.json",
+     "sha256": "f18b68ab9211b728cd340953da9cb00cd64badf5538b05c42219d4d4b3c4d22c"
+    }
+   ]
+  },
+  "dependencies": {
+   "enemies": [
+    "enemy_1000_gopro_2",
+    "enemy_1014_rogue",
+    "enemy_1019_jshoot",
+    "enemy_1020_obsv",
+    "enemy_1023_jmage",
+    "enemy_1033_handax_2"
+   ],
+   "devices": [
+    "Detector"
+   ],
+   "tokens": []
+  },
+  "validation": {
+   "smoke": {
+    "seconds": 10,
+    "spawned": 1,
+    "errors": 0
+   },
+   "publicReview": "pending",
+   "waveSchedule": {
+    "id": "af-2_challenge_mode",
+    "seconds": 217.93333333333334,
+    "spawned": 49,
+    "expected": 49,
+    "reason": "cleared",
+    "remaining": 0,
+    "limit": 300,
+    "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval; PL-2 retains the documented legacy 300-second limit and times out with surviving walkers"
+   },
+   "browser": {
+    "id": "af-2_challenge_mode",
+    "seconds": 20,
+    "errors": [],
+    "units": 4,
+    "canvas": true,
+    "scope": "Actual mobile-size browser stage load, battle start and 600 simulation ticks; not a playable clear"
+   }
+  }
+ }
+}

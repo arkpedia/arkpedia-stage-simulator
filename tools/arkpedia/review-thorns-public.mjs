@@ -24,7 +24,7 @@ try{
    if(r.url().startsWith(origin)&&path==='/arkpedia/app.js')return r.respond({status:200,contentType:'text/javascript',body:app+hook});
    if(r.url().startsWith(origin)&&path==='/data/arkpedia-mvp.json')return r.respond({status:200,contentType:'application/json',body:JSON.stringify(data)});
    return r.continue();});
-  await page.goto(origin+'/arkpedia/',{waitUntil:'domcontentloaded',timeout:60000});await page.waitForSelector('.roster-item.chosen');
+  await page.goto(origin+'/arkpedia/?snapshot=1',{waitUntil:'domcontentloaded',timeout:60000});await page.waitForSelector('.roster-item.chosen');
   const selected=await page.$$eval('.roster-item.chosen',es=>es.map(e=>e.dataset.id));
   for(const id of selected){await page.click(`.roster-item[data-id="${id}"]`);await page.click('#toggle');}
   for(const [id,name] of [[ID,'Thorns'],[ALLY,data.operators[ALLY].name]]){await page.$eval('#roster-search',e=>{e.value='';e.dispatchEvent(new Event('input',{bubbles:true}));});await page.type('#roster-search',name);await page.click(`.roster-item[data-id="${id}"]`);await page.click('#toggle');}

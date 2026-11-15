@@ -109,6 +109,7 @@ export function customizeBlacknightKit({ battle: b, id, def, unit: u, kit }) {
 }
 export function installBlacknight({ battle: b, unit: u, def }) {
   if (def.charId !== ID) return;
+  u.mem.regularSummonFactory = createSlumberfoot;
   b.on('deploy', ({ unit }) => {
     if (unit !== u) return;
     const state = b.regularSummons?.get(`summon:${ID}`);

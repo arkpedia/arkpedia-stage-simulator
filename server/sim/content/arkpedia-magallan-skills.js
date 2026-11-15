@@ -115,4 +115,7 @@ export function customizeMagallanKit({ battle, id, unit, kit }) {
   prepared.record.token.arkpedia = { ...unit.def.raw.arkpedia };
   Object.assign(kit, prepared.kit);
 }
-export function installMagallan({ unit }) { unit.mem.magallanController?.install(); }
+export function installMagallan({ unit, def }) {
+  if (def.charId !== MAGALLAN_ID) return;
+  unit.mem.magallanController?.install();
+}

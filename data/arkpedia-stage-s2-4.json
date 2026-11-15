@@ -1,1146 +1,1240 @@
 {
- "code": "S2-4",
- "name": "Blockade-2",
- "description": "The battlefield is even more complicated now. Think carefully before deploying the Roadblocks.\n<Roadblock> Deploy it to block the enemy's advance",
- "battle": {
-  "max_life": 5,
-  "unit_limit": 8,
-  "initial_dp": 10,
-  "max_dp": 99,
-  "dp_per_second": 1,
-  "dp_recovery_interval_seconds": 1
- },
- "mapTags": [],
- "mapTagSource": null,
- "geometry": {
-  "slug": "s2-4",
-  "rows": 8,
-  "cols": 9,
-  "tileLegend": [
-   {
-    "key": "tile_forbidden",
-    "height": "high",
-    "walkable": false,
-    "deployable": "none",
-    "flyable": true
-   },
-   {
-    "key": "tile_end",
-    "height": "low",
-    "walkable": true,
-    "deployable": "none",
-    "flyable": true
-   },
-   {
-    "key": "tile_wall",
-    "height": "high",
-    "walkable": false,
-    "deployable": "ranged",
-    "flyable": true
-   },
-   {
-    "key": "tile_road",
-    "height": "low",
-    "walkable": true,
-    "deployable": "melee",
-    "flyable": true
-   },
-   {
-    "key": "tile_rcm_crate",
-    "height": "low",
-    "walkable": true,
-    "deployable": "melee",
-    "flyable": true
-   },
-   {
-    "key": "tile_start",
-    "height": "low",
-    "walkable": true,
-    "deployable": "none",
-    "flyable": true
-   }
-  ],
-  "tileGrid": [
-   [
-    0,
-    0,
-    0,
-    0,
-    1,
-    0,
-    0,
-    0,
-    0
-   ],
-   [
-    0,
-    2,
-    3,
-    3,
-    3,
-    3,
-    3,
-    2,
-    0
-   ],
-   [
-    0,
-    3,
-    3,
-    2,
-    3,
-    2,
-    3,
-    3,
-    0
-   ],
-   [
-    0,
-    4,
-    2,
-    3,
-    3,
-    3,
-    2,
-    3,
-    0
-   ],
-   [
-    0,
-    3,
-    3,
-    3,
-    3,
-    3,
-    3,
-    3,
-    0
-   ],
-   [
-    0,
-    3,
-    2,
-    0,
-    2,
-    0,
-    2,
-    4,
-    0
-   ],
-   [
-    5,
-    3,
-    3,
-    3,
-    3,
-    3,
-    3,
-    3,
-    5
-   ],
-   [
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0
-   ]
-  ],
-  "routes": [
-   {
-    "motion": "walk",
-    "start": {
-     "row": 6,
-     "col": 8
-    },
-    "end": {
-     "row": 0,
-     "col": 4
-    },
-    "checkpoints": [
-     {
-      "type": "move",
-      "position": {
-       "row": 6,
-       "col": 7
+  "code": "S2-4",
+  "name": "Blockade-2",
+  "description": "The battlefield is even more complicated now. Think carefully before deploying the Roadblocks.\n<Roadblock> Deploy it to block the enemy's advance",
+  "battle": {
+    "max_life": 5,
+    "unit_limit": 8,
+    "initial_dp": 10,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1,
+    "max_play_time": -1
+  },
+  "mapTags": [],
+  "mapTagSource": null,
+  "geometry": {
+    "slug": "s2-4",
+    "rows": 8,
+    "cols": 9,
+    "tileLegend": [
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_rcm_crate",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_start",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
       }
-     }
     ],
-    "waits": []
-   },
-   {
-    "motion": "walk",
-    "start": {
-     "row": 6,
-     "col": 8
-    },
-    "end": {
-     "row": 0,
-     "col": 4
-    },
-    "checkpoints": [
-     {
-      "type": "move",
-      "position": {
-       "row": 6,
-       "col": 7
+    "tileGrid": [
+      [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        2,
+        3,
+        3,
+        3,
+        3,
+        3,
+        2,
+        0
+      ],
+      [
+        0,
+        3,
+        3,
+        2,
+        3,
+        2,
+        3,
+        3,
+        0
+      ],
+      [
+        0,
+        4,
+        2,
+        3,
+        3,
+        3,
+        2,
+        3,
+        0
+      ],
+      [
+        0,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        0
+      ],
+      [
+        0,
+        3,
+        2,
+        0,
+        2,
+        0,
+        2,
+        4,
+        0
+      ],
+      [
+        5,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        5
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "routes": [
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 8
+        },
+        "end": {
+          "row": 0,
+          "col": 4
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 7
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 8
+        },
+        "end": {
+          "row": 0,
+          "col": 4
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 7
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 40
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 8
+        },
+        "end": {
+          "row": 0,
+          "col": 4
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 7
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 12
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 0
+        },
+        "end": {
+          "row": 0,
+          "col": 4
+        },
+        "checkpoints": [],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 8
+        },
+        "end": {
+          "row": 0,
+          "col": 4
+        },
+        "checkpoints": [],
+        "waits": []
       }
-     }
     ],
-    "waits": [
-     {
-      "type": "wait_for_seconds",
-      "after_checkpoint": 0,
-      "seconds": 40
-     }
-    ]
-   },
-   {
-    "motion": "walk",
-    "start": {
-     "row": 6,
-     "col": 8
-    },
-    "end": {
-     "row": 0,
-     "col": 4
-    },
-    "checkpoints": [
-     {
-      "type": "move",
-      "position": {
-       "row": 6,
-       "col": 7
+    "waves": [
+      {
+        "index": 0,
+        "duration": 144,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Heavy Defender",
+            "enemy_id": "enemy_1006_shield",
+            "count": 1,
+            "time": 0,
+            "route": 1,
+            "fragment": 0
+          },
+          {
+            "enemy": "Heavy Defender",
+            "enemy_id": "enemy_1006_shield",
+            "count": 2,
+            "time": 45,
+            "interval": 20,
+            "route": 2,
+            "fragment": 0
+          },
+          {
+            "enemy": "Soldier",
+            "enemy_id": "enemy_1002_nsabr",
+            "count": 2,
+            "time": 9,
+            "interval": 7,
+            "route": 3,
+            "fragment": 0
+          },
+          {
+            "enemy": "Soldier",
+            "enemy_id": "enemy_1002_nsabr",
+            "count": 2,
+            "time": 26,
+            "interval": 7,
+            "route": 3,
+            "fragment": 0
+          },
+          {
+            "enemy": "Dual Swordsman",
+            "enemy_id": "enemy_1014_rogue",
+            "count": 2,
+            "time": 41,
+            "interval": 7,
+            "route": 3,
+            "fragment": 0
+          },
+          {
+            "enemy": "Cocktail Thrower",
+            "enemy_id": "enemy_1028_mocock",
+            "count": 3,
+            "time": 48,
+            "interval": 23,
+            "route": 3,
+            "fragment": 0
+          },
+          {
+            "enemy": "Dual Swordsman",
+            "enemy_id": "enemy_1014_rogue",
+            "count": 2,
+            "time": 84,
+            "interval": 4,
+            "route": 3,
+            "fragment": 0
+          },
+          {
+            "enemy": "Hound Pro",
+            "enemy_id": "enemy_1000_gopro_2",
+            "count": 2,
+            "time": 117,
+            "interval": 4,
+            "route": 3,
+            "fragment": 1
+          },
+          {
+            "enemy": "Logger",
+            "enemy_id": "enemy_1033_handax",
+            "count": 1,
+            "time": 123,
+            "route": 3,
+            "fragment": 1
+          },
+          {
+            "enemy": "Hound Pro",
+            "enemy_id": "enemy_1000_gopro_2",
+            "count": 1,
+            "time": 135,
+            "route": 3,
+            "fragment": 1
+          },
+          {
+            "enemy": "Logger",
+            "enemy_id": "enemy_1033_handax",
+            "count": 1,
+            "time": 144,
+            "route": 3,
+            "fragment": 1
+          },
+          {
+            "enemy": "Hound Pro",
+            "enemy_id": "enemy_1000_gopro_2",
+            "count": 2,
+            "time": 117,
+            "interval": 4,
+            "route": 4,
+            "fragment": 1
+          },
+          {
+            "enemy": "Heavy Defender",
+            "enemy_id": "enemy_1006_shield",
+            "count": 1,
+            "time": 123,
+            "route": 4,
+            "fragment": 1
+          },
+          {
+            "enemy": "Hound Pro",
+            "enemy_id": "enemy_1000_gopro_2",
+            "count": 1,
+            "time": 135,
+            "route": 4,
+            "fragment": 1
+          },
+          {
+            "enemy": "Cocktail Thrower",
+            "enemy_id": "enemy_1028_mocock",
+            "count": 1,
+            "time": 144,
+            "route": 4,
+            "fragment": 1
+          }
+        ]
       }
-     }
     ],
-    "waits": [
-     {
-      "type": "wait_for_seconds",
-      "after_checkpoint": 0,
-      "seconds": 12
-     }
-    ]
-   },
-   {
-    "motion": "walk",
-    "start": {
-     "row": 6,
-     "col": 0
+    "spawnTiles": [
+      {
+        "key": "tile_start",
+        "row": 6,
+        "col": 0,
+        "routes": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 6,
+        "col": 8,
+        "routes": [
+          0,
+          1,
+          2,
+          4,
+          4,
+          4,
+          4
+        ]
+      }
+    ],
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 0,
+        "col": 4,
+        "routes": [
+          0,
+          1,
+          2,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          4,
+          4,
+          4,
+          4
+        ]
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_1000_gopro_2",
+        "slug": "hound_pro",
+        "name": "Hound Pro",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1002_nsabr",
+        "slug": "soldier",
+        "name": "Soldier",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1006_shield",
+        "slug": "heavy_defender",
+        "name": "Heavy Defender",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1014_rogue",
+        "slug": "dual_swordsman",
+        "name": "Dual Swordsman",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1028_mocock",
+        "slug": "cocktail_thrower",
+        "name": "Cocktail Thrower",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1033_handax",
+        "slug": "logger",
+        "name": "Logger",
+        "database_level": 0
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [],
+      "deployable_tokens": [
+        {
+          "unit": "Roadblock",
+          "unit_id": "trap_001_crate",
+          "count": 6,
+          "level": 1,
+          "elite": 0,
+          "potential": 0,
+          "skill_index": 0,
+          "skill_level": 1
+        }
+      ]
     },
-    "end": {
-     "row": 0,
-     "col": 4
-    },
-    "checkpoints": [],
-    "waits": []
-   },
-   {
-    "motion": "walk",
-    "start": {
-     "row": 6,
-     "col": 8
-    },
-    "end": {
-     "row": 0,
-     "col": 4
-    },
-    "checkpoints": [],
-    "waits": []
-   }
-  ],
-  "waves": [
-   {
-    "index": 0,
-    "duration": 144,
-    "pre_delay": 0,
-    "post_delay": 0,
-    "max_wait_for_next_wave": null,
-    "spawns": [
-     {
-      "enemy": "Heavy Defender",
-      "enemy_id": "enemy_1006_shield",
-      "count": 1,
-      "time": 0,
-      "route": 1,
-      "fragment": 0
-     },
-     {
-      "enemy": "Heavy Defender",
-      "enemy_id": "enemy_1006_shield",
-      "count": 2,
-      "time": 45,
-      "interval": 20,
-      "route": 2,
-      "fragment": 0
-     },
-     {
-      "enemy": "Soldier",
-      "enemy_id": "enemy_1002_nsabr",
-      "count": 2,
-      "time": 9,
-      "interval": 7,
-      "route": 3,
-      "fragment": 0
-     },
-     {
-      "enemy": "Soldier",
-      "enemy_id": "enemy_1002_nsabr",
-      "count": 2,
-      "time": 26,
-      "interval": 7,
-      "route": 3,
-      "fragment": 0
-     },
-     {
-      "enemy": "Dual Swordsman",
-      "enemy_id": "enemy_1014_rogue",
-      "count": 2,
-      "time": 41,
-      "interval": 7,
-      "route": 3,
-      "fragment": 0
-     },
-     {
-      "enemy": "Cocktail Thrower",
-      "enemy_id": "enemy_1028_mocock",
-      "count": 3,
-      "time": 48,
-      "interval": 23,
-      "route": 3,
-      "fragment": 0
-     },
-     {
-      "enemy": "Dual Swordsman",
-      "enemy_id": "enemy_1014_rogue",
-      "count": 2,
-      "time": 84,
-      "interval": 4,
-      "route": 3,
-      "fragment": 0
-     },
-     {
-      "enemy": "Hound Pro",
-      "enemy_id": "enemy_1000_gopro_2",
-      "count": 2,
-      "time": 117,
-      "interval": 4,
-      "route": 3,
-      "fragment": 1
-     },
-     {
-      "enemy": "Logger",
-      "enemy_id": "enemy_1033_handax",
-      "count": 1,
-      "time": 123,
-      "route": 3,
-      "fragment": 1
-     },
-     {
-      "enemy": "Hound Pro",
-      "enemy_id": "enemy_1000_gopro_2",
-      "count": 1,
-      "time": 135,
-      "route": 3,
-      "fragment": 1
-     },
-     {
-      "enemy": "Logger",
-      "enemy_id": "enemy_1033_handax",
-      "count": 1,
-      "time": 144,
-      "route": 3,
-      "fragment": 1
-     },
-     {
-      "enemy": "Hound Pro",
-      "enemy_id": "enemy_1000_gopro_2",
-      "count": 2,
-      "time": 117,
-      "interval": 4,
-      "route": 4,
-      "fragment": 1
-     },
-     {
-      "enemy": "Heavy Defender",
-      "enemy_id": "enemy_1006_shield",
-      "count": 1,
-      "time": 123,
-      "route": 4,
-      "fragment": 1
-     },
-     {
-      "enemy": "Hound Pro",
-      "enemy_id": "enemy_1000_gopro_2",
-      "count": 1,
-      "time": 135,
-      "route": 4,
-      "fragment": 1
-     },
-     {
-      "enemy": "Cocktail Thrower",
-      "enemy_id": "enemy_1028_mocock",
-      "count": 1,
-      "time": 144,
-      "route": 4,
-      "fragment": 1
-     }
-    ]
-   }
-  ],
-  "spawnTiles": [
-   {
-    "key": "tile_start",
-    "row": 6,
-    "col": 0,
-    "routes": [
-     3,
-     3,
-     3,
-     3,
-     3,
-     3,
-     3,
-     3,
-     3
-    ]
-   },
-   {
-    "key": "tile_start",
-    "row": 6,
-    "col": 8,
-    "routes": [
-     0,
-     1,
-     2,
-     4,
-     4,
-     4,
-     4
-    ]
-   }
-  ],
-  "objectiveTiles": [
-   {
-    "key": "tile_end",
-    "row": 0,
-    "col": 4,
-    "routes": [
-     0,
-     1,
-     2,
-     3,
-     3,
-     3,
-     3,
-     3,
-     3,
-     3,
-     3,
-     3,
-     4,
-     4,
-     4,
-     4
-    ]
-   }
-  ],
-  "enemyConfigurations": [
-   {
-    "enemy_id": "enemy_1000_gopro_2",
-    "slug": "hound_pro",
-    "name": "Hound Pro",
-    "database_level": 0
-   },
-   {
-    "enemy_id": "enemy_1002_nsabr",
-    "slug": "soldier",
-    "name": "Soldier",
-    "database_level": 0
-   },
-   {
-    "enemy_id": "enemy_1006_shield",
-    "slug": "heavy_defender",
-    "name": "Heavy Defender",
-    "database_level": 0
-   },
-   {
-    "enemy_id": "enemy_1014_rogue",
-    "slug": "dual_swordsman",
-    "name": "Dual Swordsman",
-    "database_level": 0
-   },
-   {
-    "enemy_id": "enemy_1028_mocock",
-    "slug": "cocktail_thrower",
-    "name": "Cocktail Thrower",
-    "database_level": 0
-   },
-   {
-    "enemy_id": "enemy_1033_handax",
-    "slug": "logger",
-    "name": "Logger",
-    "database_level": 0
-   }
-  ],
-  "suppliedUnits": {
-   "fixed_squad": [],
-   "deployable_tokens": [
+    "hasConditionalSpawns": false
+  },
+  "devices": [],
+  "tokens": [
     {
-     "unit": "Roadblock",
-     "unit_id": "trap_001_crate",
-     "count": 6,
-     "level": 1,
-     "elite": 0,
-     "potential": 0,
-     "skill_index": 0,
-     "skill_level": 1
+      "unitId": "trap_001_crate",
+      "name": "Roadblock",
+      "count": 6,
+      "kind": "obstacle",
+      "hp": 100,
+      "def": 0,
+      "res": 0,
+      "block": 3,
+      "taunt": 0,
+      "cost": 5,
+      "cooldown": 5,
+      "refundRatio": 0.5,
+      "blockRadiusSquare": 0.20000000298023224,
+      "range": [],
+      "groundBuildOnly": true,
+      "supplyCard": true,
+      "obstacle": "crate",
+      "description": "Changes enemy routes and blocks up to three enemies. Enemies can destroy it when blocked. Retreat to clear the tile.",
+      "position": "NONE",
+      "behavior": "roadblock"
     }
-   ]
+  ],
+  "pathing": {
+    "schemaVersion": 1,
+    "syntheticRoutes": [],
+    "producer": "Arkpedia stage browser / buildPlaybackPaths",
+    "stage": "S2-4",
+    "geometryHash": "136404d9fd0c162457fdb12b4466e45153acbf9dd3b6c3607305c3df71cd6c7a",
+    "moveScale": 0.65,
+    "paths": {
+      "1": {
+        "points": [
+          [
+            8,
+            6
+          ],
+          [
+            7,
+            6
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            0
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6.414213562373095,
+          7.414213562373095,
+          8.414213562373096,
+          9.414213562373096
+        ],
+        "length": 9.414213562373096,
+        "breaks": [],
+        "flying": false,
+        "holds": [
+          {
+            "at": 1,
+            "seconds": 40,
+            "point": [
+              7,
+              6
+            ],
+            "tunnel": false
+          }
+        ],
+        "nodes": [
+          [
+            8,
+            6
+          ],
+          [
+            7,
+            6
+          ],
+          [
+            4,
+            0
+          ]
+        ]
+      },
+      "2": {
+        "points": [
+          [
+            8,
+            6
+          ],
+          [
+            7,
+            6
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            0
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6.414213562373095,
+          7.414213562373095,
+          8.414213562373096,
+          9.414213562373096
+        ],
+        "length": 9.414213562373096,
+        "breaks": [],
+        "flying": false,
+        "holds": [
+          {
+            "at": 1,
+            "seconds": 12,
+            "point": [
+              7,
+              6
+            ],
+            "tunnel": false
+          }
+        ],
+        "nodes": [
+          [
+            8,
+            6
+          ],
+          [
+            7,
+            6
+          ],
+          [
+            4,
+            0
+          ]
+        ]
+      },
+      "3": {
+        "points": [
+          [
+            0,
+            6
+          ],
+          [
+            1,
+            6
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            0
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6.414213562373095,
+          7.414213562373095,
+          8.414213562373096,
+          9.414213562373096
+        ],
+        "length": 9.414213562373096,
+        "breaks": [],
+        "flying": false,
+        "holds": [],
+        "nodes": [
+          [
+            0,
+            6
+          ],
+          [
+            4,
+            0
+          ]
+        ]
+      },
+      "4": {
+        "points": [
+          [
+            8,
+            6
+          ],
+          [
+            7,
+            6
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            0
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6.414213562373095,
+          7.414213562373095,
+          8.414213562373096,
+          9.414213562373096
+        ],
+        "length": 9.414213562373096,
+        "breaks": [],
+        "flying": false,
+        "holds": [],
+        "nodes": [
+          [
+            8,
+            6
+          ],
+          [
+            4,
+            0
+          ]
+        ]
+      }
+    }
   },
-  "hasConditionalSpawns": false
- },
- "devices": [],
- "tokens": [
-  {
-   "unitId": "trap_001_crate",
-   "name": "Roadblock",
-   "count": 6,
-   "cost": 5,
-   "hp": 100,
-   "block": 3,
-   "position": "NONE",
-   "behavior": "roadblock",
-   "obstacle": "crate"
-  }
- ],
- "pathing": {
-  "schemaVersion": 1,
-  "syntheticRoutes": [],
-  "producer": "Arkpedia stage browser / buildPlaybackPaths",
-  "stage": "S2-4",
-  "geometryHash": "136404d9fd0c162457fdb12b4466e45153acbf9dd3b6c3607305c3df71cd6c7a",
-  "moveScale": 0.65,
-  "paths": {
-   "1": {
-    "points": [
-     [
-      8,
-      6
-     ],
-     [
-      7,
-      6
-     ],
-     [
-      7,
-      5
-     ],
-     [
-      7,
-      4
-     ],
-     [
-      6,
-      4
-     ],
-     [
-      5,
-      4
-     ],
-     [
-      4,
-      3
-     ],
-     [
-      4,
-      2
-     ],
-     [
-      4,
-      1
-     ],
-     [
-      4,
-      0
-     ]
-    ],
-    "distances": [
-     0,
-     1,
-     2,
-     3,
-     4,
-     5,
-     6.414213562373095,
-     7.414213562373095,
-     8.414213562373096,
-     9.414213562373096
-    ],
-    "length": 9.414213562373096,
-    "breaks": [],
-    "flying": false,
-    "holds": [
-     {
-      "at": 1,
-      "seconds": 40,
-      "point": [
-       7,
-       6
+  "art": null,
+  "gates": null,
+  "fixedSquad": [],
+  "enemies": {
+    "enemy_1006_shield": {
+      "key": "enemy_1006_shield",
+      "prefabKey": "enemy_1006_shield",
+      "name": "Heavy Defender",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 6000,
+        "atk": 600,
+        "def": 800,
+        "res": 0,
+        "moveSpeed": 0.75,
+        "bat": 2.6,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 3,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1002_nsabr": {
+      "key": "enemy_1002_nsabr",
+      "prefabKey": "enemy_1002_nsabr",
+      "name": "Soldier",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 1650,
+        "atk": 200,
+        "def": 100,
+        "res": 0,
+        "moveSpeed": 1.1,
+        "bat": 2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1014_rogue": {
+      "key": "enemy_1014_rogue",
+      "prefabKey": "enemy_1014_rogue",
+      "name": "Dual Swordsman",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 2000,
+        "atk": 350,
+        "def": 100,
+        "res": 0,
+        "moveSpeed": 1.1,
+        "bat": 1.2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1028_mocock": {
+      "key": "enemy_1028_mocock",
+      "prefabKey": "enemy_1028_mocock",
+      "name": "Cocktail Thrower",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 1550,
+        "atk": 180,
+        "def": 50,
+        "res": 0,
+        "moveSpeed": 1,
+        "bat": 2.7,
+        "aspd": 100,
+        "rangeRadius": 1.75,
+        "rawRangeRadius": 1.75,
+        "blockCnt": 1,
+        "massLevel": 0,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1000_gopro_2": {
+      "key": "enemy_1000_gopro_2",
+      "prefabKey": "enemy_1000_gopro_2",
+      "name": "Hound Pro",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 1700,
+        "atk": 260,
+        "def": 0,
+        "res": 20,
+        "moveSpeed": 1.9,
+        "bat": 1.4,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 0,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "infection"
+      ]
+    },
+    "enemy_1033_handax": {
+      "key": "enemy_1033_handax",
+      "prefabKey": "enemy_1033_handax",
+      "name": "Logger",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 8000,
+        "atk": 750,
+        "def": 80,
+        "res": 30,
+        "moveSpeed": 0.75,
+        "bat": 3.3,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 3,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    }
+  },
+  "rules": {
+    "variant": null,
+    "source": {
+      "repository": "Kengxxiao/ArknightsGameData",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "path": "zh_CN/gamedata/levels/obt/main/level_sub_02-04.json",
+      "sha256": "99e57c929ef574366ed97ad152432b9a7ebea664b76074552f309014e1a44940",
+      "gitBlob": "cc1dfeb085a77e515f4dc3b2bf1b49ede03bab9b",
+      "stageTable": {
+        "path": "zh_CN/gamedata/excel/stage_table.json",
+        "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+        "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+        "stageId": "sub_02-04",
+        "levelId": "Obt/Main/level_sub_02-04"
+      }
+    },
+    "battle": {
+      "max_play_time": -1
+    },
+    "enemies": {},
+    "enemyAdd": {},
+    "hiddenGroups": {}
+  },
+  "contentRuleRefresh": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/s2-4.json",
+          "sha256": "af5403256878b2f4e3e474306cef6ef032e7cb0eb9622332ed2af2f7f94e3c1a"
+        },
+        {
+          "path": "stage-geometry/s2-4.json",
+          "sha256": "136404d9fd0c162457fdb12b4466e45153acbf9dd3b6c3607305c3df71cd6c7a"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        }
       ],
-      "tunnel": false
-     }
-    ],
-    "nodes": [
-     [
-      8,
-      6
-     ],
-     [
-      7,
-      6
-     ],
-     [
-      4,
-      0
-     ]
+      "localFiles": [
+        {
+          "path": "data/stage-rules/s2-4.json",
+          "sha256": "29a916cabb35f500ebd8e612e2ebcfec0b7db03ef777f9636dc728a119407661"
+        },
+        {
+          "path": "data/stage-rules/levels/300489ca971348ab637d0277e1ac2165abfc491fb4bb73deaa284d33e09a2359.json",
+          "sha256": "300489ca971348ab637d0277e1ac2165abfc491fb4bb73deaa284d33e09a2359"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/cc1dfeb085a77e515f4dc3b2bf1b49ede03bab9b.json",
+          "sha256": "99e57c929ef574366ed97ad152432b9a7ebea664b76074552f309014e1a44940"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/cc1dfeb085a77e515f4dc3b2bf1b49ede03bab9b.json",
+          "sha256": "99e57c929ef574366ed97ad152432b9a7ebea664b76074552f309014e1a44940"
+        },
+        {
+          "path": "data/arkpedia-device-source.json",
+          "sha256": "64515531475bbde6c454f96b0a2c797edffc6f986c27d504539602d979b6fb7a"
+        },
+        {
+          "path": "data/arkpedia-device-native-source.json",
+          "sha256": "7340512aaf1e3ddeff9a9c6fb77a6b92e64513e9abc1951e89b780ccb10bd09c"
+        }
+      ]
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 10,
+        "spawned": 2,
+        "errors": 0
+      }
+    },
+    "changed": [
+      "rules",
+      "battle",
+      "tokens"
     ]
-   },
-   "2": {
-    "points": [
-     [
-      8,
-      6
-     ],
-     [
-      7,
-      6
-     ],
-     [
-      7,
-      5
-     ],
-     [
-      7,
-      4
-     ],
-     [
-      6,
-      4
-     ],
-     [
-      5,
-      4
-     ],
-     [
-      4,
-      3
-     ],
-     [
-      4,
-      2
-     ],
-     [
-      4,
-      1
-     ],
-     [
-      4,
-      0
-     ]
-    ],
-    "distances": [
-     0,
-     1,
-     2,
-     3,
-     4,
-     5,
-     6.414213562373095,
-     7.414213562373095,
-     8.414213562373096,
-     9.414213562373096
-    ],
-    "length": 9.414213562373096,
-    "breaks": [],
-    "flying": false,
-    "holds": [
-     {
-      "at": 1,
-      "seconds": 12,
-      "point": [
-       7,
-       6
-      ],
-      "tunnel": false
-     }
-    ],
-    "nodes": [
-     [
-      8,
-      6
-     ],
-     [
-      7,
-      6
-     ],
-     [
-      4,
-      0
-     ]
-    ]
-   },
-   "3": {
-    "points": [
-     [
-      0,
-      6
-     ],
-     [
-      1,
-      6
-     ],
-     [
-      1,
-      5
-     ],
-     [
-      1,
-      4
-     ],
-     [
-      2,
-      4
-     ],
-     [
-      3,
-      4
-     ],
-     [
-      4,
-      3
-     ],
-     [
-      4,
-      2
-     ],
-     [
-      4,
-      1
-     ],
-     [
-      4,
-      0
-     ]
-    ],
-    "distances": [
-     0,
-     1,
-     2,
-     3,
-     4,
-     5,
-     6.414213562373095,
-     7.414213562373095,
-     8.414213562373096,
-     9.414213562373096
-    ],
-    "length": 9.414213562373096,
-    "breaks": [],
-    "flying": false,
-    "holds": [],
-    "nodes": [
-     [
-      0,
-      6
-     ],
-     [
-      4,
-      0
-     ]
-    ]
-   },
-   "4": {
-    "points": [
-     [
-      8,
-      6
-     ],
-     [
-      7,
-      6
-     ],
-     [
-      7,
-      5
-     ],
-     [
-      7,
-      4
-     ],
-     [
-      6,
-      4
-     ],
-     [
-      5,
-      4
-     ],
-     [
-      4,
-      3
-     ],
-     [
-      4,
-      2
-     ],
-     [
-      4,
-      1
-     ],
-     [
-      4,
-      0
-     ]
-    ],
-    "distances": [
-     0,
-     1,
-     2,
-     3,
-     4,
-     5,
-     6.414213562373095,
-     7.414213562373095,
-     8.414213562373096,
-     9.414213562373096
-    ],
-    "length": 9.414213562373096,
-    "breaks": [],
-    "flying": false,
-    "holds": [],
-    "nodes": [
-     [
-      8,
-      6
-     ],
-     [
-      4,
-      0
-     ]
-    ]
-   }
   }
- },
- "art": null,
- "gates": null,
- "fixedSquad": [],
- "enemies": {
-  "enemy_1006_shield": {
-   "key": "enemy_1006_shield",
-   "prefabKey": "enemy_1006_shield",
-   "name": "Heavy Defender",
-   "level": 0,
-   "rank": "ELITE",
-   "applyWay": "MELEE",
-   "stats": {
-    "maxHp": 6000,
-    "atk": 600,
-    "def": 800,
-    "res": 0,
-    "moveSpeed": 0.75,
-    "bat": 2.6,
-    "aspd": 100,
-    "rangeRadius": 0,
-    "rawRangeRadius": 0,
-    "blockCnt": 1,
-    "massLevel": 3,
-    "lpr": 1,
-    "hpRecoveryPerSec": 0,
-    "elementRes": 0,
-    "elementDmgRes": 0,
-    "hitRatePhys": 0,
-    "hitRateArts": 0,
-    "dmgType": "phys",
-    "dmgTypes": [
-     "phys"
-    ],
-    "motion": "WALK",
-    "immunities": {
-     "stun": false,
-     "silence": false,
-     "sleep": false,
-     "frozen": false,
-     "levitate": false
-    },
-    "otherImmunities": [],
-    "tauntLevel": 0
-   },
-   "abilities": [],
-   "talents": {
-    "bb": {},
-    "bbStr": {},
-    "groups": {}
-   },
-   "skills": [],
-   "notCountInTotal": false,
-   "tags": []
-  },
-  "enemy_1002_nsabr": {
-   "key": "enemy_1002_nsabr",
-   "prefabKey": "enemy_1002_nsabr",
-   "name": "Soldier",
-   "level": 0,
-   "rank": "NORMAL",
-   "applyWay": "MELEE",
-   "stats": {
-    "maxHp": 1650,
-    "atk": 200,
-    "def": 100,
-    "res": 0,
-    "moveSpeed": 1.1,
-    "bat": 2,
-    "aspd": 100,
-    "rangeRadius": 0,
-    "rawRangeRadius": 0,
-    "blockCnt": 1,
-    "massLevel": 1,
-    "lpr": 1,
-    "hpRecoveryPerSec": 0,
-    "elementRes": 0,
-    "elementDmgRes": 0,
-    "hitRatePhys": 0,
-    "hitRateArts": 0,
-    "dmgType": "phys",
-    "dmgTypes": [
-     "phys"
-    ],
-    "motion": "WALK",
-    "immunities": {
-     "stun": false,
-     "silence": false,
-     "sleep": false,
-     "frozen": false,
-     "levitate": false
-    },
-    "otherImmunities": [],
-    "tauntLevel": 0
-   },
-   "abilities": [],
-   "talents": {
-    "bb": {},
-    "bbStr": {},
-    "groups": {}
-   },
-   "skills": [],
-   "notCountInTotal": false,
-   "tags": []
-  },
-  "enemy_1014_rogue": {
-   "key": "enemy_1014_rogue",
-   "prefabKey": "enemy_1014_rogue",
-   "name": "Dual Swordsman",
-   "level": 0,
-   "rank": "NORMAL",
-   "applyWay": "MELEE",
-   "stats": {
-    "maxHp": 2000,
-    "atk": 350,
-    "def": 100,
-    "res": 0,
-    "moveSpeed": 1.1,
-    "bat": 1.2,
-    "aspd": 100,
-    "rangeRadius": 0,
-    "rawRangeRadius": 0,
-    "blockCnt": 1,
-    "massLevel": 1,
-    "lpr": 1,
-    "hpRecoveryPerSec": 0,
-    "elementRes": 0,
-    "elementDmgRes": 0,
-    "hitRatePhys": 0,
-    "hitRateArts": 0,
-    "dmgType": "phys",
-    "dmgTypes": [
-     "phys"
-    ],
-    "motion": "WALK",
-    "immunities": {
-     "stun": false,
-     "silence": false,
-     "sleep": false,
-     "frozen": false,
-     "levitate": false
-    },
-    "otherImmunities": [],
-    "tauntLevel": 0
-   },
-   "abilities": [],
-   "talents": {
-    "bb": {},
-    "bbStr": {},
-    "groups": {}
-   },
-   "skills": [],
-   "notCountInTotal": false,
-   "tags": []
-  },
-  "enemy_1028_mocock": {
-   "key": "enemy_1028_mocock",
-   "prefabKey": "enemy_1028_mocock",
-   "name": "Cocktail Thrower",
-   "level": 0,
-   "rank": "NORMAL",
-   "applyWay": "RANGED",
-   "stats": {
-    "maxHp": 1550,
-    "atk": 180,
-    "def": 50,
-    "res": 0,
-    "moveSpeed": 1,
-    "bat": 2.7,
-    "aspd": 100,
-    "rangeRadius": 1.75,
-    "rawRangeRadius": 1.75,
-    "blockCnt": 1,
-    "massLevel": 0,
-    "lpr": 1,
-    "hpRecoveryPerSec": 0,
-    "elementRes": 0,
-    "elementDmgRes": 0,
-    "hitRatePhys": 0,
-    "hitRateArts": 0,
-    "dmgType": "phys",
-    "dmgTypes": [
-     "phys"
-    ],
-    "motion": "WALK",
-    "immunities": {
-     "stun": false,
-     "silence": false,
-     "sleep": false,
-     "frozen": false,
-     "levitate": false
-    },
-    "otherImmunities": [],
-    "tauntLevel": 0
-   },
-   "abilities": [],
-   "talents": {
-    "bb": {},
-    "bbStr": {},
-    "groups": {}
-   },
-   "skills": [],
-   "notCountInTotal": false,
-   "tags": []
-  },
-  "enemy_1000_gopro_2": {
-   "key": "enemy_1000_gopro_2",
-   "prefabKey": "enemy_1000_gopro_2",
-   "name": "Hound Pro",
-   "level": 0,
-   "rank": "NORMAL",
-   "applyWay": "MELEE",
-   "stats": {
-    "maxHp": 1700,
-    "atk": 260,
-    "def": 0,
-    "res": 20,
-    "moveSpeed": 1.9,
-    "bat": 1.4,
-    "aspd": 100,
-    "rangeRadius": 0,
-    "rawRangeRadius": 0,
-    "blockCnt": 1,
-    "massLevel": 0,
-    "lpr": 1,
-    "hpRecoveryPerSec": 0,
-    "elementRes": 0,
-    "elementDmgRes": 0,
-    "hitRatePhys": 0,
-    "hitRateArts": 0,
-    "dmgType": "phys",
-    "dmgTypes": [
-     "phys"
-    ],
-    "motion": "WALK",
-    "immunities": {
-     "stun": false,
-     "silence": false,
-     "sleep": false,
-     "frozen": false,
-     "levitate": false
-    },
-    "otherImmunities": [],
-    "tauntLevel": 0
-   },
-   "abilities": [],
-   "talents": {
-    "bb": {},
-    "bbStr": {},
-    "groups": {}
-   },
-   "skills": [],
-   "notCountInTotal": false,
-   "tags": [
-    "infection"
-   ]
-  },
-  "enemy_1033_handax": {
-   "key": "enemy_1033_handax",
-   "prefabKey": "enemy_1033_handax",
-   "name": "Logger",
-   "level": 0,
-   "rank": "ELITE",
-   "applyWay": "MELEE",
-   "stats": {
-    "maxHp": 8000,
-    "atk": 750,
-    "def": 80,
-    "res": 30,
-    "moveSpeed": 0.75,
-    "bat": 3.3,
-    "aspd": 100,
-    "rangeRadius": 0,
-    "rawRangeRadius": 0,
-    "blockCnt": 1,
-    "massLevel": 3,
-    "lpr": 1,
-    "hpRecoveryPerSec": 0,
-    "elementRes": 0,
-    "elementDmgRes": 0,
-    "hitRatePhys": 0,
-    "hitRateArts": 0,
-    "dmgType": "phys",
-    "dmgTypes": [
-     "phys"
-    ],
-    "motion": "WALK",
-    "immunities": {
-     "stun": false,
-     "silence": false,
-     "sleep": false,
-     "frozen": false,
-     "levitate": false
-    },
-    "otherImmunities": [],
-    "tauntLevel": 0
-   },
-   "abilities": [],
-   "talents": {
-    "bb": {},
-    "bbStr": {},
-    "groups": {}
-   },
-   "skills": [],
-   "notCountInTotal": false,
-   "tags": []
-  }
- }
 }

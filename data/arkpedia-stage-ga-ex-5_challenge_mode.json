@@ -1,0 +1,3006 @@
+{
+  "code": "GA-EX-5",
+  "name": "Baumkuchen",
+  "description": "Condition:\nLuscious Snack Carts deal increased Arts Damage when exploding",
+  "battle": {
+    "max_life": 1,
+    "unit_limit": 8,
+    "initial_dp": 18,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1,
+    "max_play_time": -1
+  },
+  "rules": {
+    "variant": "challenge_mode",
+    "source": {
+      "repository": "Kengxxiao/ArknightsGameData",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "path": "zh_CN/gamedata/levels/activities/act16side/level_act16side_ex05.json",
+      "sha256": "1c7a1023f2a68d2251aa8f34d062e34f7c3d8cc857432e727a17618022a79d14",
+      "gitBlob": "261194f1516858d3ee2d08d5ff88b1a077756603",
+      "stageTable": {
+        "path": "zh_CN/gamedata/excel/stage_table.json",
+        "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+        "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+        "stageId": "act16side_ex05",
+        "levelId": "Activities/act16side/level_act16side_ex05"
+      }
+    },
+    "battle": {
+      "max_play_time": -1,
+      "max_life": 1
+    },
+    "enemies": {
+      "atk": 1.1,
+      "def": 1.1,
+      "maxHp": 1.1
+    },
+    "enemyAdd": {},
+    "hiddenGroups": {},
+    "enemyTalentAddScoped": {
+      "enemy_1218_bomscr_2": {
+        "boom.attack@s2mode_boom_atk": 350
+      }
+    }
+  },
+  "mapTags": [],
+  "mapTagSource": null,
+  "geometry": {
+    "slug": "ga-ex-5",
+    "rows": 7,
+    "cols": 11,
+    "tileLegend": [
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_floor",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      },
+      {
+        "key": "tile_start",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      }
+    ],
+    "tileGrid": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        2,
+        0,
+        3,
+        3,
+        3,
+        0,
+        3,
+        3,
+        3,
+        0
+      ],
+      [
+        0,
+        3,
+        4,
+        3,
+        0,
+        3,
+        4,
+        3,
+        0,
+        3,
+        0
+      ],
+      [
+        0,
+        3,
+        3,
+        3,
+        0,
+        3,
+        3,
+        3,
+        0,
+        3,
+        0
+      ],
+      [
+        0,
+        4,
+        4,
+        3,
+        4,
+        3,
+        4,
+        3,
+        4,
+        3,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        2,
+        0,
+        2,
+        0,
+        2,
+        0,
+        2,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        5,
+        0,
+        5,
+        0,
+        5,
+        0,
+        5,
+        0
+      ]
+    ],
+    "routes": [
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 5
+        },
+        "end": {
+          "row": 1,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 1
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 150
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 3
+        },
+        "end": {
+          "row": 1,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 1
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 150
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 4
+        },
+        "end": {
+          "row": 1,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 1
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 150
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 9
+        },
+        "end": {
+          "row": 1,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 1
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 100
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 8
+        },
+        "end": {
+          "row": 1,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 1
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 100
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 7
+        },
+        "end": {
+          "row": 1,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 1
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 100
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 9
+        },
+        "end": {
+          "row": 1,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 1
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 3
+        },
+        "end": {
+          "row": 1,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 1
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 5
+        },
+        "end": {
+          "row": 1,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 1
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 8
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 7
+        },
+        "end": {
+          "row": 1,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 1
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 8
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 9
+        },
+        "end": {
+          "row": 1,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 1
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 12
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 7
+        },
+        "end": {
+          "row": 1,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 1
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 12
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 5
+        },
+        "end": {
+          "row": 1,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 1
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 12
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 3
+        },
+        "end": {
+          "row": 1,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 1
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 12
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 3
+        },
+        "end": {
+          "row": 1,
+          "col": 0
+        },
+        "checkpoints": [],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 20
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 5
+        },
+        "end": {
+          "row": 1,
+          "col": 0
+        },
+        "checkpoints": [],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 30
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 7
+        },
+        "end": {
+          "row": 1,
+          "col": 0
+        },
+        "checkpoints": [],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 15
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 9
+        },
+        "end": {
+          "row": 1,
+          "col": 0
+        },
+        "checkpoints": [],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 25
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 9
+        },
+        "end": {
+          "row": 1,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 9
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 10
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 7
+        },
+        "end": {
+          "row": 1,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 7
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 5
+        },
+        "end": {
+          "row": 1,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 5
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 3
+        },
+        "end": {
+          "row": 1,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 3
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 10
+          }
+        ]
+      }
+    ],
+    "waves": [
+      {
+        "index": 0,
+        "duration": 157,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Luscious Snack Cart",
+            "enemy_id": "enemy_1218_bomscr_2",
+            "count": 1,
+            "time": 0,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Luscious Snack Cart",
+            "enemy_id": "enemy_1218_bomscr_2",
+            "count": 1,
+            "time": 0,
+            "route": 1,
+            "fragment": 0
+          },
+          {
+            "enemy": "Luscious Snack Cart",
+            "enemy_id": "enemy_1218_bomscr_2",
+            "count": 1,
+            "time": 0,
+            "route": 2,
+            "fragment": 0
+          },
+          {
+            "enemy": "Luscious Snack Cart",
+            "enemy_id": "enemy_1218_bomscr_2",
+            "count": 1,
+            "time": 0,
+            "route": 3,
+            "fragment": 0
+          },
+          {
+            "enemy": "Luscious Snack Cart",
+            "enemy_id": "enemy_1218_bomscr_2",
+            "count": 1,
+            "time": 0,
+            "route": 4,
+            "fragment": 0
+          },
+          {
+            "enemy": "Luscious Snack Cart",
+            "enemy_id": "enemy_1218_bomscr_2",
+            "count": 1,
+            "time": 0,
+            "route": 5,
+            "fragment": 0
+          },
+          {
+            "enemy": "Pathfinder Legionarius Prefect",
+            "enemy_id": "enemy_1212_mtrfol_2",
+            "count": 5,
+            "time": 3,
+            "interval": 15,
+            "route": 6,
+            "fragment": 0
+          },
+          {
+            "enemy": "Pathfinder Legionarius Prefect",
+            "enemy_id": "enemy_1212_mtrfol_2",
+            "count": 3,
+            "time": 12,
+            "interval": 15,
+            "route": 7,
+            "fragment": 0
+          },
+          {
+            "enemy": "Pathfinder Artifex Prefect",
+            "enemy_id": "enemy_1214_mtrmgc_2",
+            "count": 1,
+            "time": 25,
+            "route": 8,
+            "fragment": 0
+          },
+          {
+            "enemy": "Pathfinder Artifex Prefect",
+            "enemy_id": "enemy_1214_mtrmgc_2",
+            "count": 1,
+            "time": 25,
+            "route": 9,
+            "fragment": 0
+          },
+          {
+            "enemy": "Luscious Snack Cart",
+            "enemy_id": "enemy_1218_bomscr_2",
+            "count": 1,
+            "time": 72,
+            "route": 10,
+            "fragment": 0
+          },
+          {
+            "enemy": "Luscious Snack Cart",
+            "enemy_id": "enemy_1218_bomscr_2",
+            "count": 1,
+            "time": 72,
+            "route": 11,
+            "fragment": 0
+          },
+          {
+            "enemy": "Luscious Snack Cart",
+            "enemy_id": "enemy_1218_bomscr_2",
+            "count": 1,
+            "time": 72,
+            "route": 12,
+            "fragment": 0
+          },
+          {
+            "enemy": "Luscious Snack Cart",
+            "enemy_id": "enemy_1218_bomscr_2",
+            "count": 1,
+            "time": 72,
+            "route": 13,
+            "fragment": 0
+          },
+          {
+            "enemy": "Pathfinder Legionarius Prefect",
+            "enemy_id": "enemy_1212_mtrfol_2",
+            "count": 3,
+            "time": 85,
+            "interval": 15,
+            "route": 7,
+            "fragment": 1
+          },
+          {
+            "enemy": "Pathfinder Legionarius Prefect",
+            "enemy_id": "enemy_1212_mtrfol_2",
+            "count": 3,
+            "time": 85,
+            "interval": 15,
+            "route": 6,
+            "fragment": 1
+          },
+          {
+            "enemy": "Pathfinder Artifex Prefect",
+            "enemy_id": "enemy_1214_mtrmgc_2",
+            "count": 1,
+            "time": 107,
+            "route": 8,
+            "fragment": 1
+          },
+          {
+            "enemy": "Pathfinder Artifex Prefect",
+            "enemy_id": "enemy_1214_mtrmgc_2",
+            "count": 1,
+            "time": 107,
+            "route": 9,
+            "fragment": 1
+          },
+          {
+            "enemy": "Pathfinder Veles Prefect",
+            "enemy_id": "enemy_1215_ptrarc_2",
+            "count": 1,
+            "time": 137,
+            "route": 14,
+            "fragment": 1
+          },
+          {
+            "enemy": "Pathfinder Veles Prefect",
+            "enemy_id": "enemy_1215_ptrarc_2",
+            "count": 1,
+            "time": 137,
+            "route": 15,
+            "fragment": 1
+          },
+          {
+            "enemy": "Pathfinder Veles Prefect",
+            "enemy_id": "enemy_1215_ptrarc_2",
+            "count": 1,
+            "time": 117,
+            "route": 16,
+            "fragment": 1
+          },
+          {
+            "enemy": "Pathfinder Veles Prefect",
+            "enemy_id": "enemy_1215_ptrarc_2",
+            "count": 1,
+            "time": 117,
+            "route": 17,
+            "fragment": 1
+          },
+          {
+            "enemy": "Renowned Pathfinder Dessert Vendor",
+            "enemy_id": "enemy_1217_rescar_2",
+            "count": 1,
+            "time": 157,
+            "route": 18,
+            "fragment": 1
+          },
+          {
+            "enemy": "Pathfinder Artifex Prefect",
+            "enemy_id": "enemy_1214_mtrmgc_2",
+            "count": 1,
+            "time": 157,
+            "route": 19,
+            "fragment": 1
+          },
+          {
+            "enemy": "Pathfinder Artifex Prefect",
+            "enemy_id": "enemy_1214_mtrmgc_2",
+            "count": 1,
+            "time": 157,
+            "route": 20,
+            "fragment": 1
+          },
+          {
+            "enemy": "Renowned Pathfinder Dessert Vendor",
+            "enemy_id": "enemy_1217_rescar_2",
+            "count": 1,
+            "time": 157,
+            "route": 21,
+            "fragment": 1
+          }
+        ]
+      }
+    ],
+    "spawnTiles": [
+      {
+        "key": "tile_start",
+        "row": 6,
+        "col": 3,
+        "routes": [
+          7,
+          13,
+          7,
+          21
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 6,
+        "col": 5,
+        "routes": [
+          8,
+          12,
+          8,
+          20
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 6,
+        "col": 7,
+        "routes": [
+          9,
+          11,
+          9,
+          19
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 6,
+        "col": 9,
+        "routes": [
+          6,
+          10,
+          6,
+          18
+        ]
+      }
+    ],
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 1,
+        "col": 0,
+        "routes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          7,
+          6,
+          8,
+          9,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ]
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_1212_mtrfol_2",
+        "slug": "pathfinder_legionarius_prefect",
+        "name": "Pathfinder Legionarius Prefect",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1214_mtrmgc_2",
+        "slug": "pathfinder_artifex_prefect",
+        "name": "Pathfinder Artifex Prefect",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1215_ptrarc_2",
+        "slug": "pathfinder_veles_prefect",
+        "name": "Pathfinder Veles Prefect",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1217_rescar_2",
+        "slug": "renowned_pathfinder_dessert_vendor",
+        "name": "Renowned Pathfinder Dessert Vendor",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1218_bomscr_2",
+        "slug": "luscious_snack_cart",
+        "name": "Luscious Snack Cart",
+        "database_level": 0
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [],
+      "deployable_tokens": []
+    },
+    "hasConditionalSpawns": false
+  },
+  "terrain": [],
+  "conditionalHandled": false,
+  "devices": [
+    {
+      "col": 4,
+      "description": "Less likely to be attacked, and restores 75 HP per second",
+      "hidden": false,
+      "key": "trap_057_wpnsts",
+      "kind": "device",
+      "name": "'Gelato Stop'",
+      "row": 2,
+      "alias": "trap_057_wpnsts#2",
+      "instance": {
+        "level": 1,
+        "skillLevel": 1,
+        "skillIndex": 0
+      }
+    },
+    {
+      "col": 8,
+      "description": "Less likely to be attacked, and restores 75 HP per second",
+      "hidden": false,
+      "key": "trap_057_wpnsts",
+      "kind": "device",
+      "name": "'Gelato Stop'",
+      "row": 2,
+      "alias": "trap_057_wpnsts#1",
+      "instance": {
+        "level": 1,
+        "skillLevel": 1,
+        "skillIndex": 0
+      }
+    }
+  ],
+  "tokens": [],
+  "pathing": {
+    "schemaVersion": 1,
+    "syntheticRoutes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21
+    ],
+    "producer": "Arkpedia stage browser / buildPlaybackPaths",
+    "stage": "GA-EX-5",
+    "geometryHash": "69507547b9931f08a0531511ed792d3a0a2f3562b23bd207dafa7e5ace77a550",
+    "moveScale": 0.65,
+    "paths": {
+      "0": {
+        "points": [
+          [
+            5,
+            2
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "1": {
+        "points": [
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "2": {
+        "points": [
+          [
+            4,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "3": {
+        "points": [
+          [
+            9,
+            2
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            7,
+            3
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "4": {
+        "points": [
+          [
+            8,
+            1
+          ],
+          [
+            7,
+            3
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "5": {
+        "points": [
+          [
+            7,
+            2
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "6": {
+        "points": [
+          [
+            9,
+            6
+          ],
+          [
+            9,
+            1
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            7,
+            3
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "7": {
+        "points": [
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "8": {
+        "points": [
+          [
+            5,
+            6
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "9": {
+        "points": [
+          [
+            7,
+            6
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            7,
+            3
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "10": {
+        "points": [
+          [
+            9,
+            6
+          ],
+          [
+            9,
+            5
+          ],
+          [
+            9,
+            1
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            7,
+            3
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "11": {
+        "points": [
+          [
+            7,
+            6
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            7,
+            3
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "12": {
+        "points": [
+          [
+            5,
+            6
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "13": {
+        "points": [
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "14": {
+        "points": [
+          [
+            3,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "15": {
+        "points": [
+          [
+            5,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "16": {
+        "points": [
+          [
+            7,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "17": {
+        "points": [
+          [
+            9,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "18": {
+        "points": [
+          [
+            9,
+            6
+          ],
+          [
+            9,
+            5
+          ],
+          [
+            9,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "19": {
+        "points": [
+          [
+            7,
+            6
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            7,
+            3
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "20": {
+        "points": [
+          [
+            5,
+            6
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "21": {
+        "points": [
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      }
+    }
+  },
+  "art": null,
+  "gates": null,
+  "fixedSquad": null,
+  "enemies": {
+    "enemy_1218_bomscr_2": {
+      "key": "enemy_1218_bomscr_2",
+      "prefabKey": "enemy_1218_bomscr_2",
+      "name": "Luscious Snack Cart",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 4180,
+        "atk": 330,
+        "def": 220.00000000000003,
+        "res": 20,
+        "moveSpeed": 1.6,
+        "bat": 1,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "arts",
+        "dmgTypes": [
+          "arts"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Detonates when blocked, inflicting Arts damage and <$ba.dt.burning>Burn damage</> to all nearby targets",
+          "format": "SILENCE"
+        },
+        {
+          "text": "Explosion deals a large amount of Arts damage to nearby 'Gelato Stops'",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "boom.attack@s2mode_ep_fire_damage": 350,
+          "boom.attack@s2mode_boom_atk_totrap": 7500,
+          "boom.attack@s2mode_boom_atk": 900
+        },
+        "bbStr": {},
+        "groups": {
+          "boom": [
+            "attack@s2mode_boom_atk",
+            "attack@s2mode_boom_atk_totrap",
+            "attack@s2mode_ep_fire_damage"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "machine"
+      ]
+    },
+    "enemy_1212_mtrfol_2": {
+      "key": "enemy_1212_mtrfol_2",
+      "prefabKey": "enemy_1212_mtrfol_2",
+      "name": "Pathfinder Legionarius Prefect",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 5280,
+        "atk": 440.00000000000006,
+        "def": 220.00000000000003,
+        "res": 0,
+        "moveSpeed": 1.1,
+        "bat": 2.5,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1214_mtrmgc_2": {
+      "key": "enemy_1214_mtrmgc_2",
+      "prefabKey": "enemy_1214_mtrmgc_2",
+      "name": "Pathfinder Artifex Prefect",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 8250,
+        "atk": 423.50000000000006,
+        "def": 275,
+        "res": 50,
+        "moveSpeed": 0.8,
+        "bat": 2.6,
+        "aspd": 100,
+        "rangeRadius": 1.8,
+        "rawRangeRadius": 1.8,
+        "blockCnt": 1,
+        "massLevel": 2,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "arts",
+        "dmgTypes": [
+          "arts"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "While this unit is holding Ammo, attacks inflict <$ba.dt.burning>Burn damage</>. Ammo capacity: 1",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "shotbuff.attack@headshot_ep_damage_ratio": 1.5,
+          "shotbuff.attack@headshot_sp": -1
+        },
+        "bbStr": {},
+        "groups": {
+          "shotbuff": [
+            "attack@headshot_ep_damage_ratio",
+            "attack@headshot_sp"
+          ]
+        }
+      },
+      "skills": [],
+      "sp": {
+        "type": "INCREASE_WITH_TIME",
+        "maxSp": 1,
+        "initSp": 1,
+        "increment": 0
+      },
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1215_ptrarc_2": {
+      "key": "enemy_1215_ptrarc_2",
+      "prefabKey": "enemy_1215_ptrarc_2",
+      "name": "Pathfinder Veles Prefect",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 8800,
+        "atk": 495.00000000000006,
+        "def": 275,
+        "res": 0,
+        "moveSpeed": 0.8,
+        "bat": 2,
+        "aspd": 100,
+        "rangeRadius": 2,
+        "rawRangeRadius": 2,
+        "blockCnt": 1,
+        "massLevel": 2,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Able to land directly onto the battlefield.",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Prioritizes attacking 'Gelato Stops'. Deals additional Arts Damage to 'Gelato Stops'.",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "shottrap.attack@trapdamage": 1200
+        },
+        "bbStr": {},
+        "groups": {
+          "shottrap": [
+            "attack@trapdamage"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1217_rescar_2": {
+      "key": "enemy_1217_rescar_2",
+      "prefabKey": "enemy_1217_rescar_2",
+      "name": "Renowned Pathfinder Dessert Vendor",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 24750.000000000004,
+        "atk": 660,
+        "def": 715.0000000000001,
+        "res": 30,
+        "moveSpeed": 0.6,
+        "bat": 5,
+        "aspd": 100,
+        "rangeRadius": 2,
+        "rawRangeRadius": 2,
+        "blockCnt": 1,
+        "massLevel": 5,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "While this unit is holding Ammo, periodically summons a <Luscious Snack Cart>. Ammo capacity: 3",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Deals significantly increased damage to enemies blocking this unit",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "shotbuff.attack@combat_atk_scale": 2.5
+        },
+        "bbStr": {},
+        "groups": {
+          "shotbuff": [
+            "attack@combat_atk_scale"
+          ]
+        }
+      },
+      "skills": [
+        {
+          "prefabKey": "BornCar",
+          "priority": 1,
+          "cooldown": 10,
+          "initCooldown": 5,
+          "spCost": 1,
+          "bb": {},
+          "bbStr": {}
+        }
+      ],
+      "sp": {
+        "type": "INCREASE_WITH_TIME",
+        "maxSp": 3,
+        "initSp": 3,
+        "increment": 0
+      },
+      "notCountInTotal": false,
+      "tags": [
+        "machine"
+      ]
+    }
+  },
+  "contentAddition": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/ga-ex-5_challenge_mode.json",
+          "sha256": "bd564ce140fcaa1b9b09cbdcce2d2fa073e5594d00e8f18287c283b0d2484a5e"
+        },
+        {
+          "path": "stage-geometry/ga-ex-5.json",
+          "sha256": "69507547b9931f08a0531511ed792d3a0a2f3562b23bd207dafa7e5ace77a550"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        }
+      ],
+      "localFiles": [
+        {
+          "path": "data/stage-rules/ga-ex-5_challenge_mode.json",
+          "sha256": "350780fd1a69c01fd9f7ed3d76469f874d22fd4321bd7b36d000713b2927b094"
+        },
+        {
+          "path": "data/stage-rules/levels/8d1366afe35ef00635eb33c703995e1b6f4650f5765cfac5890f81259a3e38c8.json",
+          "sha256": "8d1366afe35ef00635eb33c703995e1b6f4650f5765cfac5890f81259a3e38c8"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/261194f1516858d3ee2d08d5ff88b1a077756603.json",
+          "sha256": "1c7a1023f2a68d2251aa8f34d062e34f7c3d8cc857432e727a17618022a79d14"
+        },
+        {
+          "path": "data/arkpedia-device-source.json",
+          "sha256": "643469064e2537c8e38d8ea43d343c45494eceb57147a41967a5ed2d05eb4210"
+        },
+        {
+          "path": "data/arkpedia-device-native-source.json",
+          "sha256": "6eb7ecfe8ea9eb1f1e810f56c8304ffbbf0636aa744ffca3d0ad529ac11f6a9c"
+        },
+        {
+          "path": "data/arkpedia-enemy-records.json",
+          "sha256": "b75ba11f79473268f8408b28df67165101997fbf8ec8bdcfaa6f68354111b3a8"
+        },
+        {
+          "path": "data/arkpedia-enemy-support.json",
+          "sha256": "4251226f0cefcc26872308c5882e5ce25c12f93bd2f894a3307efafc3ca8efcb"
+        },
+        {
+          "path": "data/arkpedia-enemy-native-abilities.json",
+          "sha256": "b38fd179f48aa3b293623d7792834132fe1edd29859abc1d42720e6ac465b92d"
+        },
+        {
+          "path": "data/arkpedia-snack-animations.json",
+          "sha256": "b148315cdfb30499bca571cc3030e9915b88b53e2c7135fe73e18a4764329b9b"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/261194f1516858d3ee2d08d5ff88b1a077756603.json",
+          "sha256": "1c7a1023f2a68d2251aa8f34d062e34f7c3d8cc857432e727a17618022a79d14"
+        }
+      ]
+    },
+    "dependencies": {
+      "enemies": [
+        "enemy_1212_mtrfol_2",
+        "enemy_1214_mtrmgc_2",
+        "enemy_1215_ptrarc_2",
+        "enemy_1217_rescar_2",
+        "enemy_1218_bomscr_2"
+      ],
+      "devices": [
+        "'Gelato Stop'"
+      ],
+      "tokens": []
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 5.8,
+        "spawned": 7,
+        "errors": 0
+      },
+      "publicReview": "pending",
+      "waveSchedule": {
+        "id": "ga-ex-5_challenge_mode",
+        "seconds": 223.33333333333334,
+        "spawned": 45,
+        "expected": 36,
+        "dynamicSpawns": 9,
+        "reason": "cleared",
+        "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+      },
+      "browserStartup": {
+        "id": "ga-ex-5_challenge_mode",
+        "seconds": 5.8,
+        "errors": [],
+        "units": 9,
+        "canvas": true,
+        "scope": "Mobile landscape browser startup and canvas runtime; not a fidelity approval"
+      }
+    }
+  }
+}

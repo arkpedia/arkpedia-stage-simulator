@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-15",
+  "scope": "Native conditional ammo-theft payload, shared external ammo consumption and original body gallery; no native effect/frame parity claim.",
+  "sources": [
+    {
+      "path": "shared/arkpedia/enemy-ammo-theft-features.js",
+      "sha256": "d23c046dc56ebda1bf2e04bcb93daaf5615a6e07e9880d341bbdf89ccd14d02f"
+    },
+    {
+      "path": "server/sim/content/arkpedia-enemy-ammo-theft.js",
+      "sha256": "410cd52913fe966b65c2a719e3cb1b97a5ada30719a33a2462a2105134ca05d0"
+    },
+    {
+      "path": "server/sim/content/arkpedia-enemy-projectiles.js",
+      "sha256": "ed1b51a993c95011d65121c53dbb6bd64701e4a04e8b463381bedae092c20481"
+    },
+    {
+      "path": "server/sim/skills.js",
+      "sha256": "ebfc599dafa04fb9071713556ae76d139bbb6a076aa3551306815fed56b48254"
+    },
+    {
+      "path": "server/sim/content/arkpedia-lemuen.js",
+      "sha256": "ea2e76f9bca9d1e0e43989087281699a02ded0396097fc5178529f270d1c8d3a"
+    },
+    {
+      "path": "server/sim/content/arkpedia-lemuen-resources.js",
+      "sha256": "c8f622100ee34522d8c70eefb5eac1f587a0f5317d4f200bc99462a9280b1eaf"
+    },
+    {
+      "path": "data/arkpedia-enemy-native-abilities.json",
+      "sha256": "c63d071cd3dad91603262f1f911756db0c51efdcdd13759424eb8c748452edee"
+    },
+    {
+      "path": "data/arkpedia-enemy-support.json",
+      "sha256": "3aed4fb0fb13e1b147ff999b86de9dadca418c6f23f741466861615888ae623d"
+    },
+    {
+      "path": "test/arkpedia-enemy-ammo-theft.test.js",
+      "sha256": "cac7f9265c66acf113b684c0e6a658751e6af10ea384dcb432a98a029950fb4e"
+    }
+  ],
+  "ids": [
+    "enemy_10084_hlegle",
+    "enemy_10084_hlegle_2"
+  ],
+  "validation": {
+    "focusedTests": 6,
+    "regressionTests": 148,
+    "stageSmokes": 905,
+    "browser": {
+      "scope": "Chromium clip decoding/finite poses and idle body rendering; no native combat/frame/pixel parity claim",
+      "browser": "Chrome/156.0.8078.79",
+      "results": [
+        {
+          "viewport": "desktop",
+          "models": [
+            {
+              "id": "enemy_10084_hlegle",
+              "version": "3.8.99",
+              "clips": 5,
+              "width": 267.6880912780762,
+              "height": 294.0234909057617
+            },
+            {
+              "id": "enemy_10084_hlegle_2",
+              "version": "3.8.99",
+              "clips": 5,
+              "width": 267.6880912780762,
+              "height": 294.0234909057617
+            }
+          ],
+          "errors": [],
+          "failures": []
+        },
+        {
+          "viewport": "mobile",
+          "models": [
+            {
+              "id": "enemy_10084_hlegle",
+              "version": "3.8.99",
+              "clips": 5,
+              "width": 267.6880912780762,
+              "height": 294.0234909057617
+            },
+            {
+              "id": "enemy_10084_hlegle_2",
+              "version": "3.8.99",
+              "clips": 5,
+              "width": 267.6880912780762,
+              "height": 294.0234909057617
+            }
+          ],
+          "errors": [],
+          "failures": []
+        }
+      ]
+    }
+  },
+  "coverage": {
+    "operators": 431,
+    "skills": 949,
+    "enemies": 680,
+    "enemyTotal": 2163,
+    "stages": 905,
+    "stageTotal": 3892
+  },
+  "assetCommit": "77f4b725617f8b430d97ab9bccf64587312006e4"
+}

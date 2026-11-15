@@ -2,6 +2,7 @@
 // Full owner/token source graphs: arkpedia-skadi-alter-prefabs.json. Runtime
 // clocks and DamageSplit's post-mitigation/pre-shield receipt are explicit
 // bounded mappings; serialized NORMAL is not treated as another attack.
+import { stageCardRespawnTime } from './arkpedia-stage-card-cost.js';
 import evidence from '../../../data/arkpedia-skadi-alter-prefabs.json' with { type: 'json' };
 import { bodyInKeys } from '../body.js';
 import { aggregateMods } from '../buffs.js';
@@ -160,6 +161,7 @@ export function customizeSkadiAlterKit({ battle: b, id, def, unit: u, kit }) {
 }
 export function installSkadiAlter({ battle: b, unit: u, def }) {
   if (def.charId !== ID) return;
+  u.mem.regularSummonFactory = createSkadiSeaborn;
   b.addBuff(u, { key: 'immune_to_encourage', persist: true, allowDead: true });
   b.addBuff(u, { key: 'skadi2_c[mark]', persist: true, allowDead: true });
   installShare(b);
@@ -192,7 +194,7 @@ export function createSkadiSeaborn(b, state, row, col) {
       }, { owner: t });
       battle.on('death', ({ unit }) => { if (unit !== t) return;
         t.mem.skadi2Damage?.();
-        state.stock = Math.min(1, state.stock + 1); state.readyAt = battle.time + r.stats.respawnTime;
+        state.stock = Math.min(1, state.stock + 1); state.readyAt = battle.time + stageCardRespawnTime(battle, r);
         sync(battle, u);
       }, { owner: t });
     } };

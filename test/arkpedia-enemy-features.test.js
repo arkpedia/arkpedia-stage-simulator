@@ -7,15 +7,19 @@ import { enemyStealthed, canTargetAlly, canTargetEnemy, sortAllyTargets } from '
 import { spawnAny, ENEMY_RECORDS } from './helpers/enemyHarness.js';
 import { makeBattle, chessRec } from './helpers/battleHarness.js';
 import { installEnemyFeatures } from '../server/sim/content/arkpedia-enemy-features.js';
+import supplyStage from '../data/arkpedia-stage-bh-6.json' with { type: 'json' };
+import { assertRegularEnemies } from '../shared/arkpedia/enemies.js';
 
 const enemy = (h, key) => h.b.units.find(u => u.side === 'enemy' && u.defId === key);
 const usedBy = id => Object.entries(support.enemies).filter(([, e]) => e.features?.includes(id)).map(([k]) => k);
 
-test('every registered feature is used by an enemy and approved for at least one', () => {
+test('every registered feature is used and approved by a catalogue or validated stage-local enemy', () => {
+  assertRegularEnemies({ stage: supplyStage, enemies: supplyStage.enemies });
+  const stageFeatures = new Set(Object.values(supplyStage.enemies).flatMap(recordFeatureIds));
   for (const id of Object.keys(ENEMY_FEATURES)) {
     const users = Object.entries(ENEMY_RECORDS.enemies).filter(([, e]) => Object.values(e.levels).some(r => recordFeatureIds(r).includes(id)));
-    assert.ok(users.length, `${id} is used`);
-    assert.ok(usedBy(id).length, `${id} clears at least one enemy`);
+    assert.ok(users.length || stageFeatures.has(id), `${id} is used`);
+    assert.ok(usedBy(id).length || stageFeatures.has(id), `${id} clears at least one enemy`);
   }
 });
 test('Flying unit: the record flies; a ground guard does not block it', () => {
@@ -37,7 +41,9 @@ for (const key of usedBy('ability:<$ba.invisible>Invisible</>')) test(`Invisible
   const h = spawnAny(key, { seconds: 0.1 }), e = () => enemy(h, key);
   assert.equal(enemyStealthed(e()), true, 'stealthed at spawn');
   h.runUntil(() => !e()?.alive || e().blockedBy, 120);
-  assert.ok(e().blockedBy, 'the guard blocks it'); h.run(0.1);
+  assert.ok(e().blockedBy, 'the guard blocks it');
+  // Check the blocked state itself: Crying Thief's next attack stuns the
+  // blocker, releases it and restores invisibility immediately.
   assert.equal(enemyStealthed(e()), false, 'blocking reveals it');
 });
 for (const key of usedBy('ability:Attacks two targets simultaneously.')) test(`Attacks two targets simultaneously (${key}): two ranged targets per attack`, () => {
@@ -46,7 +52,8 @@ for (const key of usedBy('ability:Attacks two targets simultaneously.')) test(`A
 });
 for (const key of ['enemy_1365_spnwiz', 'enemy_1104_lfkght']) test(`Reborn (${key}): the first knock-out starts a rebirth of the talent duration, then it stands up again`, () => {
   const r = ENEMY_RECORDS.enemies[key].levels[0], g = Object.keys(r.talents.groups).find(x => x.toLowerCase() === 'reborn');
-  const dur = r.talents.bb[`${g}.duration`], ratio = r.talents.bb[`${g}.hp_ratio`] ?? 1;
+  // Blade Knight's native rebirth component supplies 20%; it is not in the database blackboard.
+  const dur = r.talents.bb[`${g}.duration`], ratio = key === 'enemy_1104_lfkght' ? .2 : r.talents.bb[`${g}.hp_ratio`] ?? 1;
   const h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
   h.b.dealDamage(null, e, { amount: e.hp + 1, type: 'true', sourceless: true }); h.run(0.05);
   assert.equal(e.alive, true, 'the first knock-out is a rebirth'); assert.equal(e.s.flags.untargetable, true);
@@ -228,7 +235,7 @@ test('Yeti Caster: every third attack applies the reviewed 10 s Cold', () => {
     units: [{ chessId: guardRec.chessId, row: 9, col: 6 }], enemies: [{ key, time: 0, route: 0 }],
     content: 'none', autoFinish: false, timeLimit: 40, setup: battle => installEnemyFeatures(battle) });
   let attacks = 0; h.b.on('attack', c => { if (c.attacker?.defId === key) attacks++; });
-  h.runUntil(() => attacks >= 3, 30); h.run(0.1);
+  h.runUntil(() => attacks >= 3, 30); h.run(.3);
   assert.ok(attacks >= 3);
   const guard = h.b.units.find(u => u.side === 'ally');
   const cold = guard.buffs.find(b => b.status === 'cold');
@@ -276,7 +283,7 @@ test('Punisher: every third attack stuns the target area for four seconds', () =
     units: [{ chessId: guard.chessId, row: 9, col: 6 }], enemies: [{ key, time: 0, route: 0 }],
     content: 'none', autoFinish: false, timeLimit: 40, setup: battle => installEnemyFeatures(battle) });
   let attacks = 0; h.b.on('attack', c => { if (c.attacker?.defId === key) attacks++; });
-  h.runUntil(() => attacks >= 3, 30); h.run(0.1);
+  h.runUntil(() => attacks >= 3, 30); h.run(.3);
   const g = h.b.units.find(u => u.side === 'ally'), stun = g.buffs.find(b => b.status === 'stun');
   assert.ok(stun, 'the third attack stunned the area'); assert.equal(stun.duration, 4);
 });
@@ -347,9 +354,9 @@ test('Volleyball cart: attack stacks raise ATK and a negative status clears them
 });
 test('Sarkaz Grudgebearer: standby until injured, then combat-ready with two targets', () => {
   const key = 'enemy_1074_dbskar', h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
-  assert.ok(e.s.flags.stun, 'standby stun'); assert.ok(e.findBuff('ab:standby'));
-  h.b.dealDamage(null, e, { amount: e.s.maxHp * 0.01, type: 'true', sourceless: true }); h.run(0.1);
-  assert.ok(!e.s.flags.stun, 'standby ends'); assert.ok(e.findBuff('ab:standbySpeed')); assert.equal(e.profile.maxTargets, 2);
+  assert.ok(e.s.flags.disarm && e.s.flags.noMove && !e.s.flags.stun, 'standby disarm and temporary movement lock'); assert.ok(e.findBuff('ab:standby'));
+  h.b.dealDamage(null, e, { amount: e.s.maxHp * 0.01, type: 'true', sourceless: true }); h.run(0.21);
+  assert.ok(!e.s.flags.disarm && !e.s.flags.noMove, 'standby ends'); assert.ok(e.findBuff('ab:standbySpeed')); assert.equal(e.profile.maxTargets, 2);
 });
 test('Originium Colossus: the melee attack splashes the adjacent guard', () => {
   const key = 'enemy_10078_mprein', rec = ENEMY_RECORDS.enemies[key].levels[0];
@@ -413,9 +420,11 @@ test('Wither Vanguard: attacks become Arts only on toxic tiles', () => {
   ability.hitOut(road, { grid: { tile: () => ({ key: 'tile_road' }) } }, e);
   assert.equal(road.dmg.type, 'phys');
 });
-test('Active Originium Storm: the growing aura damages the guard', () => {
-  const key = 'enemy_1420_lrmm', h = spawnAny(key, { seconds: 0.1 }), guard = h.b.units.find(u => u.side === 'ally'), hp = guard.hp;
-  let storm = false; h.b.on('damaged', c => { if (c.source?.defId === key && c.dmg?.tags?.includes('storm')) storm = true; });
+test('Active Originium Storm: its aura deals sourceless environment damage', () => {
+  // Storms do not hold victory open; keep this isolated aura fixture running.
+  const key = 'enemy_1420_lrmm', h = spawnAny(key, { seconds: 0.1, autoFinish: false }), guard = h.b.units.find(u => u.side === 'ally'), hp = guard.hp;
+  const e = enemy(h, key); e.x = guard.x + .5; e.y = guard.y;
+  let storm = false; h.b.on('damaged', c => { if (c.source === null && c.dmg?.tags?.includes('pollution:storm') && c.dmg.isEnvironment && c.dmg.noSp) storm = true; });
   h.runUntil(() => storm, 25);
   assert.ok(storm, 'the storm hit the guard'); assert.ok(guard.hp < hp);
 });
@@ -556,14 +565,11 @@ test('Caustic Slug: the death blast hits a nearby guard', () => {
   h.b.autoFinish = false; e.x = guard.x + 1; e.y = guard.y; const hp = guard.hp;
   h.b.kill(e, null); h.run(0.1); assert.ok(guard.hp < hp, `${guard.hp} vs ${hp}`);
 });
-test('Profane Chimera: attacks become Arts while polluted or stormed', () => {
-  const key = 'enemy_1425_lrcmra', h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key), ability = e.mem.ab.list.find(a => a.hitOut);
-  const toxic = { dmg: { isAttack: true, type: 'phys' } };
-  ability.hitOut.call(ability, toxic, { grid: { tile: () => ({ key: 'tile_toxicroad' }) } }, e);
-  assert.equal(toxic.dmg.type, 'arts');
-  const clean = { dmg: { isAttack: true, type: 'phys' } };
-  ability.hitOut.call(ability, clean, { grid: { tile: () => ({ key: 'tile_road' }) } }, e);
-  assert.equal(clean.dmg.type, 'phys');
+test('Profane Chimera: pollution triggers a lasting Arts transformation', () => {
+  const key = 'enemy_1425_lrcmra', h = spawnAny(key, { seconds: .1, units: [] }), e = enemy(h, key);
+  h.b.addBuff(e, { key: 'ab:storm', duration: .6 }); h.run(2.5);
+  assert.equal(e.mem.ab.atkType, 'arts'); assert.equal(e.findBuff('ab:storm'), null);
+  assert.deepEqual(h.b.errors, []);
 });
 test('Rot Eater: the pollution aura damages a nearby guard', () => {
   const key = 'enemy_1266_nhapos', h = spawnAny(key, { seconds: 0.1 }), e = enemy(h, key), guard = h.b.units.find(u => u.side === 'ally');
@@ -666,9 +672,14 @@ test('Dublinn Companion Guard: the field slows a nearby ally', () => {
   h.run(1); const ally = h.b.units.find(u => u.side === 'ally');
   assert.ok(ally.buffs.some(x => String(x.key).startsWith('ab:guardField')), JSON.stringify(ally.buffs.map(x => x.key)));
 });
-test('Dublinn Flying Soldier: hovering sets the flying flag', () => {
-  const key = 'enemy_1171_durokt', h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
-  assert.equal(e.flying, true);
+test('both Dublinn hovering variants use the actual targeting, blocking and displacement state', () => {
+  for (const key of ['enemy_1171_durokt', 'enemy_1171_durokt_2']) {
+    const h = spawnAny(key, { seconds: 0.1 }), e = enemy(h, key);
+    assert.equal(e.isFlying, true); assert.equal(e.motion, 'WALK', 'hovering retains ground routing');
+    assert.equal(e.s.flags.unblockable, true); assert.equal(e.s.flags.noDisplace, true);
+    const guard = h.b.allyUnits[0]; e.x = guard.x; e.y = guard.y;
+    h.run(.2); assert.equal(e.blockedBy, null); assert.deepEqual(h.b.errors, []);
+  }
 });
 test('Worry-Free Cargo Helper: explodes next to the guard', () => {
   const key = 'enemy_10075_mpwrj', h = spawnAny(key, { seconds: 0.1 }), e = enemy(h, key), guard = h.b.units.find(u => u.side === 'ally');

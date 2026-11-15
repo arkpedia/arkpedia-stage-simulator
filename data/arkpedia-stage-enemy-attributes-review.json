@@ -1,0 +1,174 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-14",
+  "scope": "Original-level enemy attribute compilation and source Lancer delay/trigger-budget/first-hit scaling. Not native frame-order or normal-play clear certification.",
+  "sourceFiles": [
+    {
+      "path": "tools/arkpedia/stage-enemy-blackboards.mjs",
+      "sha256": "5fe6509feb1a5623e6a244e9d4cb1f291a0e63ef8accb58451030004550f0848"
+    },
+    {
+      "path": "tools/arkpedia/build-stage.mjs",
+      "sha256": "00ebe7b8a9d29b603f2de8ca312303f9397fa6c4fd7d20d1feb2d328ab954ef7"
+    },
+    {
+      "path": "tools/arkpedia/content-inventory.mjs",
+      "sha256": "56e4be484262a041497b1760f261ca1954686e8d5239c171a3676285d5356537"
+    },
+    {
+      "path": "shared/arkpedia/enemy-charge-features.js",
+      "sha256": "be1e1a76d49ae3aac27e7a894e7cdeccd5a257c615ef170a02dc25cc5c788ebd"
+    },
+    {
+      "path": "server/sim/content/arkpedia-enemy-charge.js",
+      "sha256": "264195304a821ed834be5bd8c7206e5368314a81c2ed03f36ac96a8baad7839b"
+    },
+    {
+      "path": "data/arkpedia-enemy-native-abilities.json",
+      "sha256": "277c63562c30554e4bd92258c4a879a18b30abfde448979c4fda824aa79047fc"
+    },
+    {
+      "path": "data/arkpedia-enemy-support.json",
+      "sha256": "ac1b7cecb66a54bb54838c74f8774020d5cc00d88a2ea89b9d718466b20fb845"
+    },
+    {
+      "path": "tools/arkpedia/review-stage-native-enemy-attributes.mjs",
+      "sha256": "eca3ec2bf1db78d8565161ee5bcdd9c9c1a7c32d037b73e79f99c4875ace241e"
+    },
+    {
+      "path": "test/arkpedia-lancer.test.js",
+      "sha256": "24269e87846f2b60e5d4327dda600992be91fc2c7a9be263e0ed65d0a9084139"
+    },
+    {
+      "path": "test/arkpedia-stage-enemy-blackboards.test.js",
+      "sha256": "f180d493db9e360c407f7297a4c8b7c953aa082de3b85df76031975be34787b1"
+    },
+    {
+      "path": "test/arkpedia-content-addition.test.js",
+      "sha256": "1396bf1f060d9e564f5e2f88a81f4e7991cddcb7f8fc2e9111b33a263cfbb12f"
+    }
+  ],
+  "addedStages": [
+    "dm-ex-3",
+    "dm-ex-3_challenge_mode",
+    "dm-ex-6",
+    "dm-ex-6_challenge_mode"
+  ],
+  "validation": {
+    "focusedTests": 30,
+    "enemyFeatureRegressions": 174,
+    "previousStagesPreserved": true,
+    "smoke": {
+      "available": 824,
+      "completed": 824,
+      "seconds": 10,
+      "failures": []
+    },
+    "browser": [
+      {
+        "mobile": false,
+        "stage": "dm-ex-3_challenge_mode",
+        "state": {
+          "code": "DM-EX-3 Rush · Arkpedia stage simulator",
+          "samples": [
+            {
+              "time": 170,
+              "stacks": 0,
+              "triggers": 340
+            },
+            {
+              "time": 170.5,
+              "stacks": 1,
+              "triggers": 341
+            },
+            {
+              "time": 182.5,
+              "stacks": 25,
+              "triggers": 365
+            },
+            {
+              "time": 184.5,
+              "stacks": 25,
+              "triggers": 365
+            }
+          ],
+          "alive": true,
+          "coefficient": 960,
+          "errors": []
+        },
+        "errors": []
+      },
+      {
+        "mobile": false,
+        "stage": "dm-ex-6",
+        "state": {
+          "code": "DM-EX-6 Convection · Arkpedia stage simulator",
+          "immunities": {
+            "stun": true,
+            "silence": true,
+            "sleep": true,
+            "frozen": true,
+            "levitate": false
+          },
+          "block": 1,
+          "errors": []
+        },
+        "errors": []
+      },
+      {
+        "mobile": true,
+        "stage": "dm-ex-3_challenge_mode",
+        "state": {
+          "code": "DM-EX-3 Rush · Arkpedia stage simulator",
+          "samples": [
+            {
+              "time": 170,
+              "stacks": 0,
+              "triggers": 340
+            },
+            {
+              "time": 170.5,
+              "stacks": 1,
+              "triggers": 341
+            },
+            {
+              "time": 182.5,
+              "stacks": 25,
+              "triggers": 365
+            },
+            {
+              "time": 184.5,
+              "stacks": 25,
+              "triggers": 365
+            }
+          ],
+          "alive": true,
+          "coefficient": 960,
+          "errors": []
+        },
+        "errors": []
+      },
+      {
+        "mobile": true,
+        "stage": "dm-ex-6",
+        "state": {
+          "code": "DM-EX-6 Convection · Arkpedia stage simulator",
+          "immunities": {
+            "stun": true,
+            "silence": true,
+            "sleep": true,
+            "frozen": true,
+            "levitate": false
+          },
+          "block": 1,
+          "errors": []
+        },
+        "errors": []
+      }
+    ]
+  },
+  "limits": [
+    "Lancer same-tick predelay expiry uses the documented simulator ordering.",
+    "Unsupported defined attributes and unknown ability parameters remain blocked."
+  ]
+}

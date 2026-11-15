@@ -157,7 +157,7 @@ function logosExecute(b, u, e) {
   // shield/fatal/HP-floor pipeline; instantKillLike cancellation masks remain
   // unrecovered and are explicitly recorded rather than bypassed with kill().
   b.dealDamage(u, e, { amount: bb['attack@kill_damage'], type: 'true', sourceless: true,
-    canDodge: false, isAttack: true, isSkill: true, attackId: info.attackId, tags: ['logos:execution'] });
+    canDodge: false, isAttack: true, isSkill: true, instantKillLike: true, attackId: info.attackId, tags: ['logos:execution'] });
   if (e.alive) return;
   logosTalentShot(b, u, info);
   const target = b.rng.pick(b.enemiesInKeys(u.rangeKeys, u, { canHitFly: true }));

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { GUARD_EXPANSION_OPERATORS } from '../../../shared/arkpedia/guard-expansion-operators.js';
 import { acquireTargets, performAttack, resolveHit } from '../ai.js';
 import { absoluteRangeKeys, sortEnemyTargets } from '../targeting.js';
 import { COLS } from '../constants.js';
@@ -8,6 +9,7 @@ const enemiesInSkill = (b, u, skill, profile = {}) => b.enemiesInKeys(
   { ...u.profile, ...profile });
 
 export function customizeGuardExpansionKit({ id, def, kit }) {
+  if (!GUARD_EXPANSION_OPERATORS[id]) return;
   const skill = def.skill;
   if (!skill) return;
   const bb = skill.bb;
@@ -157,6 +159,7 @@ export function customizeGuardExpansionKit({ id, def, kit }) {
 }
 
 export function installGuardExpansion({ battle, unit, def }) {
+  if (!GUARD_EXPANSION_OPERATORS[def.charId]) return;
   const id = def.charId, talent = def.talents[0];
   if (id === 'char_137_brownb') {
     // Client's two visual punches divide one mitigated damage value. This uses

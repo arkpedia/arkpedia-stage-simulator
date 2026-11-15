@@ -114,7 +114,8 @@ export function customizeTinmanKit({ battle: b, id, def, unit: u, kit }) {
     onEnd: () => { u.mem.tinmanCast = null; u.mem.regularFormVisual = null; } };
 }
 export function installTinman({ battle: b, def }) {
-  if (def.charId !== ID || b._tinmanDamageHook) return;
+  if (def.charId !== ID) return;
+  if (b._tinmanDamageHook) return;
   b._tinmanDamageHook = true;
   // Original talent matches BUFF damage irrespective of its source. All fields
   // share one highest modifier; ordinary attacks and instant bursts bypass it.

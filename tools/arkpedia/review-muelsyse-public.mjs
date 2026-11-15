@@ -56,7 +56,7 @@ try {
       if (r.url().startsWith(origin) && url.pathname === '/data/arkpedia-mvp.json') return r.respond({ status: 200, contentType: 'application/json', body: JSON.stringify(data) });
       return r.continue();
     });
-    await page.goto(origin + '/arkpedia/', { waitUntil: 'domcontentloaded' });
+    await page.goto(origin + '/arkpedia/?snapshot=1', { waitUntil: 'domcontentloaded' });
     await page.waitForSelector('.roster-item.chosen');
     assert.ok(await page.$(`.roster-item[data-id="${ID}"]`));
     for (const id of await page.$$eval('.roster-item.chosen', es => es.map(e => e.dataset.id))) {

@@ -48,6 +48,7 @@ export function customizeFrostKit({ battle: b, id, def, unit: u, kit }) {
 }
 export function installFrost({ battle: b, unit: u, def }) {
   if (def.charId !== ID) return;
+  u.mem.regularSummonFactory = createFrostMat;
   b.on('tick', () => syncStock(b, u), { owner: u });
   b.on('death', ({ unit }) => { if (unit === u) b.removeBuff(u, 'frost:stock-full'); }, { owner: u });
 }

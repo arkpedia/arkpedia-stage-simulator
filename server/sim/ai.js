@@ -26,7 +26,7 @@
 // both re-plan the route when released (恐惧 outranks 诱导).
 
 import { ATTACK_PAUSE, ALLY_COLLIDER_RADIUS, MOVE_SCALE, PROJECTILE_SPEEDS, PROJECTILE_SPEED, BOOMERANG_RETURN_SPEED, COLS, CHAIN_RADIUS } from './constants.js';
-import { sortEnemyTargets, sortAllyTargets, canTargetEnemy, canTargetAlly, tileKeyOf } from './targeting.js';
+import { sortEnemyTargets, sortAllyTargets, canTargetEnemy, canTargetAlly, enemyAttackTargets, tileKeyOf, characterLikeTarget } from './targeting.js';
 import { reduceElement } from './damage.js';
 import { straightClear } from './grid.js';
 import { moveFeared, endFear } from './fear.js';
@@ -147,7 +147,7 @@ export function acquireTargets(b, u, prof) {
         if (!t || seen.has(t) || !t.alive || !t.deployed || t.hidden) return false;
         seen.add(t);
         if (t.side === 'enemy') return canTargetEnemy(u, t, prof);
-        if (t.side !== 'ally' || t.kind === 'device') return false;
+        if (t.side !== 'ally' || !characterLikeTarget(t)) return false;
         const flags = t.s.flags;
         // A reviewed healing ability may select its own heal-free summon.
         // This recipient predicate never relaxes isolation or other no-heal
@@ -462,7 +462,7 @@ function doHeal(b, u, prof, t) {
       let best = null, bd = Infinity;
       for (const a of b.alliesInRadius(prev.x, prev.y, 2.5, null)) {
         // 禁疗 / noHeal units are no heal target for the bounces either (as injuredAlliesInKeys; 史尔特尔's 余烬, GitHub #52)
-        if (seen.has(a.id) || a.hp >= a.s.maxHp || a.kind === 'device' || a.s.flags.noHeal || (a.profile && a.profile.noHeal)) continue;
+        if (seen.has(a.id) || a.hp >= a.s.maxHp || !characterLikeTarget(a) || a.s.flags.noHeal || (a.profile && a.profile.noHeal)) continue;
         const d = a.hpRatio;
         if (d < bd) { bd = d; best = a; }
       }
@@ -487,12 +487,17 @@ function doHeal(b, u, prof, t) {
  * rect (e.g. h07_01's extra fly route along row 6) could never be reached because positions are clamped to the rect
  * every tick — the enemy would hover at the border forever instead of finishing its route.
  */
-export function compileRoute(route, rect = null) {
+export function compileRoute(route, rect = null, clock = null) {
   const legs = [];
   const cr = (r) => (rect ? Math.max(rect.r0, Math.min(rect.r1, r)) : r);
   const cc = (c) => (rect ? Math.max(rect.c0, Math.min(rect.c1, c)) : c);
   for (const cp of route.checkpoints || []) {
     if (cp.type === 'MOVE') legs.push({ t: 'move', r: cr(cp.pos[0]), c: cc(cp.pos[1]) });
+    else if (cp.type === 'WAIT_UNTIL') {
+      const origin = ['battle', 'absolute'].includes(cp.clock) ? 0 : ['wave', 'fragment'].includes(cp.clock) ? clock?.[cp.clock] : undefined;
+      if (!Number.isFinite(origin) || !Number.isFinite(cp.time) || cp.time < 0) throw Error('Missing or invalid route clock snapshot');
+      legs.push({ t: 'deadline', time: origin + cp.time });
+    }
     else if (cp.type === 'WAIT') legs.push({ t: 'wait', time: Number.isFinite(cp.time) ? Math.max(0, cp.time) : 0 });
     else if (cp.type === 'DISAPPEAR') legs.push({ t: 'disappear' });
     else if (cp.type === 'APPEAR') legs.push({ t: 'appear', r: cr(cp.pos[0]), c: cc(cp.pos[1]) });
@@ -612,6 +617,7 @@ export function remainingDistance(b, e) {
 export function updateEnemy(b, e, dt) {
   const R = e.route;
   if (!e.alive) return;
+  if (b.regularDisplacement?.update(e, dt)) return;
   // hidden (teleporting) enemies only advance wait legs
   const stunned = e.s.flags.stun;
   if (e.atkCd > 0 && !stunned && !e.hidden) e.atkCd = Math.max(0, e.atkCd - dt);
@@ -705,6 +711,14 @@ function advanceRoute(b, e, dt, R, standing = false) {
   while (budget > 1e-9 && guard-- > 0 && e.alive) {
     const leg = R.legs[R.legIdx];
     if (!leg) { b.leak(e); return; }
+    if (leg.t === 'deadline') {
+      // Absolute deadline: blocking, control or a later scheduler wave never
+      // restarts this wait. The tick's remaining movement budget stays bounded.
+      const left = Math.max(0, leg.time - (b.time + dt - budget));
+      const use = Math.min(budget, left); budget -= use; e.moving = false;
+      if (left <= use + 1e-9) { R.legIdx++; R.pts = null; }
+      continue;
+    }
     if (leg.t === 'wait') {
       if (R.waitLeft == null) R.waitLeft = leg.time;
       const use = Math.min(budget, R.waitLeft);
@@ -802,7 +816,7 @@ function enemyAttack(b, e) {
   const def = e.def;
   if (e.profile && e.profile.noAttack) return false;
   const dmgType = (e.profile && e.profile.dmgType) || def.dmgType;
-  if (dmgType === 'none' || e.s.atk <= 0) return false;
+  if (dmgType === 'none' || e.s.atk <= 0 && !e.profile?.allowZeroAtkAttack) return false;
   if (e.s.flags.fear || e.s.flags.disarm) return false;
   if (e.s.flags.tremble && e.blockedBy) return false; // 战栗: 被阻挡后无法进行普通攻击
   if (dmgType === 'heal') { if (e.atkCd <= 0) enemyHeal(b, e, e.base.rangeRadius); return false; }
@@ -821,17 +835,7 @@ function enemyAttack(b, e) {
     if (e.blockedBy || radius <= 0 || !(e.atkCd <= attackStand(e, STAND).wind + 1e-9)) return false;
     return b.alliesInRadius(e.x, e.y, reach, null).some((a) => canTargetAlly(e, a, true) && (!own || own(a)));
   }
-  let targets = [];
-  if (e.blockedBy) {
-    const bl = e.blockedBy;
-    if (radius > 0) {
-      targets = b.alliesInRadius(e.x, e.y, reach, null).filter((a) => a === bl || canTargetAlly(e, a, true));
-      if (!targets.includes(bl) && bl.alive) targets.push(bl);
-    } else if (bl.alive && bl.deployed) targets = [bl];
-  } else if (radius > 0) {
-    targets = b.alliesInRadius(e.x, e.y, reach, null).filter((a) => canTargetAlly(e, a, true));
-  }
-  if (own && targets.length) targets = targets.filter((a) => own(a));
+  let targets = enemyAttackTargets(b, e, radius);
   if (targets.length > 1) sortAllyTargets(e, targets);
   if (!targets.length) return false;
   // 麻痹 (ba.palsy): each stack interrupts one normal attack
@@ -866,7 +870,8 @@ function enemyAttack(b, e) {
   // the content's 'attack' handler deals its damage
   const deferred = !!(e.profile && e.profile.deferHit);
   for (const t of targets) {
-    b._ev(['atk', e.id, t.id, deferred ? (e.profile.shot || 'none') : rangedShot ? 'enemy' : 'none']);
+    b._ev(['atk', e.id, t.id, deferred ? (e.profile.shot || 'none') : rangedShot ? 'enemy' : 'none',
+      ...(e.profile?.attackVisual ? [e.profile.attackVisual] : [])]);
     if (deferred) continue;
     const hit = (tt) => {
       if (!tt || !tt.alive || !e.alive && !rangedShot) return;

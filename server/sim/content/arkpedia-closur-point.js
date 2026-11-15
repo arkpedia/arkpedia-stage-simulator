@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Selected command-center lifecycle only; owner combat/skills stay unregistered.
+import { stageCardRespawnTime } from './arkpedia-stage-card-cost.js';
 import e from '../../../data/arkpedia-native-operators/char_4228_closur.json' with { type: 'json' };
 import { CLOSUR_ID as ID, CLOSUR_TOKEN_ID as TOKEN, selectedClosurBuild, selectedClosurToken } from './arkpedia-closur-source.js';
 import { normalizeChess, normSpType } from '../simdata.js';
@@ -80,7 +81,7 @@ export class ClosurPointController {
     }, { owner: t }), b.on('death', ({ unit }) => {
       if (unit === t) { state.generation++; state.mode = 'removed'; if (this.point === state) this.mark(); }
     }, { owner: t })];
-    this.readyAt = b.time + this.record.stats.respawnTime; this.warm(state); return t;
+    this.readyAt = b.time + stageCardRespawnTime(this.b, this.record); this.warm(state); return t;
   }
   current(state) { return this.valid() && this.point === state && present(state.unit); }
   model(state) { return e.models[TOKEN][state.unit.dir === 'UP' ? 'Back' : 'Front']; }

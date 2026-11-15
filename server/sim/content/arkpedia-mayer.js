@@ -125,6 +125,7 @@ export function customizeMayerKit({ battle: b, id, def, unit: u, kit }) {
 }
 export function installMayer({ battle: b, unit: u, def }) {
   if (def.charId !== ID) return;
+  u.mem.regularSummonFactory = createMayerRobotter;
   const sync = () => syncAuras(b, u);
   b.every(b.dt, sync, { owner: u });
   b.on('deploy', sync, { owner: u });

@@ -1,0 +1,1133 @@
+{
+ "code": "CB-2",
+ "name": "7:15P.M.",
+ "description": "New to the road? Keep a safe distance. \n<Command Terminal> Life Points will be deducted by 1 when destroyed.",
+ "battle": {
+  "max_life": 10,
+  "unit_limit": 8,
+  "initial_dp": 1,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1,
+  "max_play_time": -1
+ },
+ "rules": {
+  "variant": null,
+  "source": {
+   "repository": "Kengxxiao/ArknightsGameData",
+   "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+   "path": "zh_CN/gamedata/levels/activities/act5d0/level_act5d0_02.json",
+   "sha256": "63b94057152a4f66bd6c48ebd907d277ff8db3d769657fd63cfa7b1dd5dd51a0",
+   "gitBlob": "46853c93d2df22413442c9bb04076bbdc0e332aa",
+   "stageTable": {
+    "path": "zh_CN/gamedata/excel/stage_table.json",
+    "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+    "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+    "stageId": "act5d0_02",
+    "levelId": "Activities/ACT5D0/level_act5d0_02"
+   }
+  },
+  "battle": {
+   "max_play_time": -1
+  },
+  "enemies": {},
+  "enemyAdd": {},
+  "hiddenGroups": {}
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "cb-2",
+  "rows": 8,
+  "cols": 11,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    1,
+    1,
+    1,
+    1,
+    2,
+    3,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    1,
+    1,
+    0,
+    4,
+    4,
+    1,
+    2,
+    0,
+    0
+   ],
+   [
+    5,
+    1,
+    1,
+    1,
+    4,
+    4,
+    0,
+    1,
+    1,
+    2,
+    3
+   ],
+   [
+    5,
+    1,
+    1,
+    1,
+    4,
+    4,
+    1,
+    1,
+    1,
+    2,
+    3
+   ],
+   [
+    0,
+    4,
+    1,
+    1,
+    0,
+    4,
+    4,
+    1,
+    2,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    1,
+    1,
+    1,
+    1,
+    2,
+    3,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": null,
+    "placeholder": true,
+    "start": null,
+    "end": null,
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 7
+    },
+    "end": {
+     "row": 3,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 2
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 20
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 8
+    },
+    "end": {
+     "row": 4,
+     "col": 0
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 8
+    },
+    "end": {
+     "row": 3,
+     "col": 0
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 10
+    },
+    "end": {
+     "row": 4,
+     "col": 0
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 8
+    },
+    "end": {
+     "row": 4,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 7
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 3,
+     "col": 10
+    },
+    "end": {
+     "row": 3,
+     "col": 0
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 8
+    },
+    "end": {
+     "row": 4,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 7
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 8
+    },
+    "end": {
+     "row": 4,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 7
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 2,
+      "seconds": 5
+     }
+    ]
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 171,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Marksman",
+      "enemy_id": "enemy_1057_gansho",
+      "count": 1,
+      "time": 0,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Hound",
+      "enemy_id": "enemy_1000_gopro",
+      "count": 3,
+      "time": 7,
+      "interval": 11,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Hound",
+      "enemy_id": "enemy_1000_gopro",
+      "count": 2,
+      "time": 18,
+      "interval": 20,
+      "route": 3,
+      "fragment": 1
+     },
+     {
+      "enemy": "Sicilian",
+      "enemy_id": "enemy_1055_ganman",
+      "count": 1,
+      "time": 32,
+      "route": 4,
+      "fragment": 1
+     },
+     {
+      "enemy": "Marksman",
+      "enemy_id": "enemy_1057_gansho",
+      "count": 2,
+      "time": 65,
+      "interval": 25,
+      "route": 5,
+      "fragment": 2
+     },
+     {
+      "enemy": "Sicilian",
+      "enemy_id": "enemy_1055_ganman",
+      "count": 4,
+      "time": 68,
+      "interval": 12,
+      "route": 4,
+      "fragment": 2
+     },
+     {
+      "enemy": "Sicilian",
+      "enemy_id": "enemy_1055_ganman",
+      "count": 2,
+      "time": 76,
+      "interval": 13,
+      "route": 6,
+      "fragment": 2
+     },
+     {
+      "enemy": "Marksman",
+      "enemy_id": "enemy_1057_gansho",
+      "count": 3,
+      "time": 135,
+      "interval": 18,
+      "route": 7,
+      "fragment": 3
+     },
+     {
+      "enemy": "Marksman",
+      "enemy_id": "enemy_1057_gansho",
+      "count": 3,
+      "time": 121,
+      "interval": 19,
+      "route": 8,
+      "fragment": 3
+     },
+     {
+      "enemy": "Sicilian",
+      "enemy_id": "enemy_1055_ganman",
+      "count": 3,
+      "time": 136,
+      "interval": 17,
+      "route": 4,
+      "fragment": 3
+     },
+     {
+      "enemy": "Sicilian",
+      "enemy_id": "enemy_1055_ganman",
+      "count": 2,
+      "time": 138,
+      "interval": 20,
+      "route": 6,
+      "fragment": 3
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 8,
+    "routes": [
+     3,
+     5,
+     7
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 3,
+    "col": 10,
+    "routes": [
+     6,
+     6
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 4,
+    "col": 10,
+    "routes": [
+     4,
+     4,
+     4
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 6,
+    "col": 8,
+    "routes": [
+     2,
+     8
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 3,
+    "col": 0,
+    "routes": [
+     1,
+     1,
+     3,
+     6,
+     6
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 4,
+    "col": 0,
+    "routes": [
+     2,
+     4,
+     5,
+     4,
+     7,
+     8,
+     4
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1000_gopro",
+    "slug": "hound",
+    "name": "Hound",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1055_ganman",
+    "slug": "sicilian",
+    "name": "Sicilian",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1057_gansho",
+    "slug": "marksman",
+    "name": "Marksman",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "terrain": [],
+ "conditionalHandled": false,
+ "devices": [
+  {
+   "col": 6,
+   "description": "When destroyed, deduct 1 Life Point.",
+   "hidden": false,
+   "key": "trap_008_farm",
+   "kind": "device",
+   "name": "Command Terminal",
+   "row": 4,
+   "instance": {
+    "level": 1,
+    "skillLevel": 1
+   }
+  }
+ ],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8
+  ],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "CB-2",
+  "geometryHash": "7d8639df6737f54013dad057de20c470409b3ae9bce8ff2ef56e4c0bdb1e2655",
+  "moveScale": 0.65,
+  "paths": {
+   "1": {
+    "points": [
+     [
+      7,
+      3
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "2": {
+    "points": [
+     [
+      8,
+      6
+     ],
+     [
+      0,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "3": {
+    "points": [
+     [
+      8,
+      1
+     ],
+     [
+      0,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "4": {
+    "points": [
+     [
+      10,
+      4
+     ],
+     [
+      0,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "5": {
+    "points": [
+     [
+      8,
+      1
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      0,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "6": {
+    "points": [
+     [
+      10,
+      3
+     ],
+     [
+      0,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "7": {
+    "points": [
+     [
+      8,
+      1
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      0,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "8": {
+    "points": [
+     [
+      8,
+      6
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      7,
+      6
+     ],
+     [
+      0,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1057_gansho": {
+   "key": "enemy_1057_gansho",
+   "prefabKey": "enemy_1057_gansho",
+   "name": "Marksman",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 3000,
+    "atk": 180,
+    "def": 150,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 3,
+    "aspd": 100,
+    "rangeRadius": 1.7,
+    "rawRangeRadius": 1.7,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Shoots 3 times in a row",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Prioritizes attacking the Command Terminal",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1000_gopro": {
+   "key": "enemy_1000_gopro",
+   "prefabKey": "enemy_1000_gopro",
+   "name": "Hound",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 820,
+    "atk": 190,
+    "def": 0,
+    "res": 20,
+    "moveSpeed": 1.9,
+    "bat": 1.4,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1055_ganman": {
+   "key": "enemy_1055_ganman",
+   "prefabKey": "enemy_1055_ganman",
+   "name": "Sicilian",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2700,
+    "atk": 250,
+    "def": 100,
+    "res": 10,
+    "moveSpeed": 1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ },
+ "contentAddition": {
+  "schemaVersion": 1,
+  "source": {
+   "repository": "arkpedia/arkpedia-data",
+   "commit": "66232ee06377d791fb130248d680764c286e5c99",
+   "files": [
+    {
+     "path": "stages/cb-2.json",
+     "sha256": "ae51bb7e50a0c798131ff5e50d2bd1e2c123880e74fc8867f3ba792bf14ec2e5"
+    },
+    {
+     "path": "stage-geometry/cb-2.json",
+     "sha256": "7d8639df6737f54013dad057de20c470409b3ae9bce8ff2ef56e4c0bdb1e2655"
+    },
+    {
+     "path": "stage-devices.json",
+     "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+    }
+   ],
+   "localFiles": [
+    {
+     "path": "data/stage-rules/cb-2.json",
+     "sha256": "1dd5f8e7d0df5fb8bef282504f2a8c5290bbf4ee1c80829f534b51ad2b060af8"
+    },
+    {
+     "path": "data/stage-rules/levels/f377e9d31d7cb7adcfddf54238d8a8a9e952095b1f5ee81ba18a0a05b84b03e0.json",
+     "sha256": "f377e9d31d7cb7adcfddf54238d8a8a9e952095b1f5ee81ba18a0a05b84b03e0"
+    },
+    {
+     "path": ".cache/arkpedia/original-level-blobs/46853c93d2df22413442c9bb04076bbdc0e332aa.json",
+     "sha256": "63b94057152a4f66bd6c48ebd907d277ff8db3d769657fd63cfa7b1dd5dd51a0"
+    },
+    {
+     "path": "data/arkpedia-device-source.json",
+     "sha256": "9b94dde6f62691e1f00bb8986862febbc4044baef4f6e62bff76acc6b94c3f35"
+    },
+    {
+     "path": "data/arkpedia-device-native-source.json",
+     "sha256": "eb38af9b9e72dda2f54792d9b57ced49802f1a57224e5e4633b193930547f4e0"
+    },
+    {
+     "path": ".cache/arkpedia/original-level-blobs/46853c93d2df22413442c9bb04076bbdc0e332aa.json",
+     "sha256": "63b94057152a4f66bd6c48ebd907d277ff8db3d769657fd63cfa7b1dd5dd51a0"
+    }
+   ]
+  },
+  "dependencies": {
+   "enemies": [
+    "enemy_1000_gopro",
+    "enemy_1055_ganman",
+    "enemy_1057_gansho"
+   ],
+   "devices": [
+    "Command Terminal"
+   ],
+   "tokens": []
+  },
+  "validation": {
+   "smoke": {
+    "seconds": 10,
+    "spawned": 2,
+    "errors": 0
+   },
+   "publicReview": "pending",
+   "waveSchedule": {
+    "id": "cb-2",
+    "seconds": 190.36666666666667,
+    "spawned": 26,
+    "expected": 26,
+    "reason": "cleared",
+    "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+   },
+   "browser": {
+    "id": "cb-2",
+    "seconds": 20,
+    "errors": [],
+    "units": 5,
+    "canvas": true,
+    "scope": "Actual mobile-size browser stage load, battle start and 600 simulation ticks; not a playable clear"
+   },
+   "deviceInteraction": {
+    "id": "cb-2",
+    "before": {
+     "dp": 99,
+     "state": "ready",
+     "limit": 8
+    },
+    "after": {
+     "dp": 79,
+     "state": "active",
+     "cost": 20,
+     "kind": "terminal",
+     "limit": 9
+    },
+    "end": {
+     "state": "active",
+     "sp": 0,
+     "alive": true,
+     "errors": [],
+     "slots": 0
+    },
+    "scope": "Real tile click and activation UI after native SP charging; enemies held stationary and disarmed to isolate interaction, raised life; not a playable clear"
+   }
+  }
+ }
+}

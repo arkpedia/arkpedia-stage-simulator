@@ -422,7 +422,7 @@ test('F3 review 2: a debuff a ground enemy put on 蒂比 before she took off kee
     const up = h.b.time;
     h.run(4);
     assert.ok(u.s.flags.liftoff && u.findBuff(k.buff), `${k.key}: still airborne with the debuff`);
-    const air = h.hooksOf('damaged').filter((c) => c.target === u && c.source === e && tAt(c) > up + 1e-6);
+    const air = h.hooksOf('damaged').filter((c) => c.target === u && (c.source === e || k.key === LSLIME && c.source === null && c.dmg.tags.includes('pompeiiBurn')) && tAt(c) > up + 1e-6);
     assert.ok(air.filter((c) => !c.dmg.isAttack).length >= 3, `${k.key}: its ticks land while airborne: ${air.length}`);
     assert.deepEqual(air.filter((c) => c.dmg.isAttack).map((c) => Math.round(c.amount)), [], `${k.key}: no new attack on her`);
     done(h);

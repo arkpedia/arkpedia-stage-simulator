@@ -79,7 +79,7 @@ try {
       if (mobile) await page.touchscreen.touchEnd(); else await page.mouse.up();
       await page.waitForFunction(id => akkordReview.battle.bench[id].unit?.alive, {}, id);
     };
-    await page.goto(origin + '/arkpedia/', { waitUntil: 'domcontentloaded' });
+    await page.goto(origin + '/arkpedia/?snapshot=1', { waitUntil: 'domcontentloaded' });
     await page.waitForSelector('.roster-item.chosen');
     for (const id of await page.$$eval('.roster-item.chosen', es => es.map(e => e.dataset.id))) {
       await page.click(`.roster-item[data-id="${id}"]`); await page.click('#toggle');

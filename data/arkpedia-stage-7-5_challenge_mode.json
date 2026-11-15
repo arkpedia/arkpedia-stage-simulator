@@ -3,12 +3,13 @@
  "name": "Side by Side-2",
  "description": "Condition:\nThe DP Cost of Ranged units is doubled.",
  "battle": {
-  "max_life": 3,
+  "max_life": 1,
   "unit_limit": 8,
   "initial_dp": 10,
   "max_dp": 99,
   "dp_per_second": 1,
-  "dp_recovery_interval_seconds": 1
+  "dp_recovery_interval_seconds": 1,
+  "max_play_time": -1
  },
  "mapTags": [],
  "mapTagSource": null,
@@ -1026,8 +1027,8 @@
    "rank": "NORMAL",
    "applyWay": "MELEE",
    "stats": {
-    "maxHp": 2900,
-    "atk": 350,
+    "maxHp": 3045,
+    "atk": 402.49999999999994,
     "def": 150,
     "res": 20,
     "moveSpeed": 1.9,
@@ -1078,8 +1079,8 @@
    "rank": "NORMAL",
    "applyWay": "MELEE",
    "stats": {
-    "maxHp": 3300,
-    "atk": 300,
+    "maxHp": 3465,
+    "atk": 345,
     "def": 300,
     "res": 20,
     "moveSpeed": 1.1,
@@ -1139,8 +1140,8 @@
    "rank": "NORMAL",
    "applyWay": "RANGED",
    "stats": {
-    "maxHp": 3000,
-    "atk": 340,
+    "maxHp": 3150,
+    "atk": 390.99999999999994,
     "def": 300,
     "res": 20,
     "moveSpeed": 0.9,
@@ -1194,8 +1195,8 @@
    "rank": "NORMAL",
    "applyWay": "RANGED",
    "stats": {
-    "maxHp": 4000,
-    "atk": 390,
+    "maxHp": 4200,
+    "atk": 448.49999999999994,
     "def": 300,
     "res": 20,
     "moveSpeed": 0.9,
@@ -1249,8 +1250,8 @@
    "rank": "NORMAL",
    "applyWay": "MELEE",
    "stats": {
-    "maxHp": 3800,
-    "atk": 420,
+    "maxHp": 3990,
+    "atk": 482.99999999999994,
     "def": 150,
     "res": 20,
     "moveSpeed": 1.9,
@@ -1301,8 +1302,8 @@
    "rank": "NORMAL",
    "applyWay": "MELEE",
    "stats": {
-    "maxHp": 4500,
-    "atk": 330,
+    "maxHp": 4725,
+    "atk": 379.49999999999994,
     "def": 350,
     "res": 20,
     "moveSpeed": 1.1,
@@ -1354,5 +1355,102 @@
    "notCountInTotal": false,
    "tags": []
   }
+ },
+ "rules": {
+  "variant": "challenge_mode",
+  "source": {
+   "repository": "Kengxxiao/ArknightsGameData",
+   "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+   "path": "zh_CN/gamedata/levels/obt/main/level_main_07-04.json",
+   "sha256": "4e916bc24a9db774c98b9d421cc35a06ba19e519423bdd4b10a89af7019c5e3e",
+   "gitBlob": "df1292feb804afebf000130e9707429aaac326c4",
+   "stageTable": {
+    "path": "zh_CN/gamedata/excel/stage_table.json",
+    "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+    "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+    "stageId": "main_07-04",
+    "levelId": "Obt/Main/level_main_07-04"
+   }
+  },
+  "battle": {
+   "max_play_time": -1,
+   "max_life": 1
+  },
+  "enemies": {
+   "atk": 1.15,
+   "def": 1,
+   "maxHp": 1.05
+  },
+  "enemyAdd": {},
+  "hiddenGroups": {},
+  "allyCards": [
+   {
+    "attribute": "cost",
+    "professionMask": 1023,
+    "buildableMask": 2,
+    "scale": 2
+   }
+  ]
+ },
+ "tokens": [],
+ "contentRuleRefresh": {
+  "schemaVersion": 1,
+  "source": {
+   "repository": "arkpedia/arkpedia-data",
+   "commit": "66232ee06377d791fb130248d680764c286e5c99",
+   "files": [
+    {
+     "path": "stages/7-5_challenge_mode.json",
+     "sha256": "8ffdd2fe5bde413b8a8079c932909292592598a9ea5a6e11de887172c8be516c"
+    },
+    {
+     "path": "stage-geometry/7-5.json",
+     "sha256": "ef9b36b252ed2b99e8d6a3b6d37461e7f81f8452a8e3e45cba6183726d72ec98"
+    },
+    {
+     "path": "stage-devices.json",
+     "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+    }
+   ],
+   "localFiles": [
+    {
+     "path": "data/stage-rules/7-5_challenge_mode.json",
+     "sha256": "3a6e5208ebc6b6fb6b1bc8fd34a5d6c00b5956980b2dd3c88f41f270e8332c74"
+    },
+    {
+     "path": "data/stage-rules/levels/59901dbae6f34ebf08f544a44b556f72adfa3c3751b7385bd27b36f368818428.json",
+     "sha256": "59901dbae6f34ebf08f544a44b556f72adfa3c3751b7385bd27b36f368818428"
+    }
+   ]
+  },
+  "validation": {
+   "smoke": {
+    "seconds": 10,
+    "spawned": 0,
+    "errors": 0
+   },
+   "waveSchedule": {
+    "id": "7-5_challenge_mode",
+    "seconds": 217.86666666666667,
+    "spawned": 70,
+    "expected": 70,
+    "reason": "cleared",
+    "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+   },
+   "browser": {
+    "id": "7-5_challenge_mode",
+    "seconds": 20,
+    "errors": [],
+    "units": 2,
+    "canvas": true,
+    "scope": "Browser startup and 600 simulation ticks; not full gameplay or visual fidelity approval"
+   }
+  },
+  "changed": [
+   "rules",
+   "battle",
+   "enemies",
+   "tokens"
+  ]
  }
 }

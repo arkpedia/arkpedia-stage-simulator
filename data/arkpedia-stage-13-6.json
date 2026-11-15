@@ -8,7 +8,8 @@
   "initial_dp": 10,
   "max_dp": 99,
   "dp_per_second": 1,
-  "dp_recovery_interval_seconds": 1
+  "dp_recovery_interval_seconds": 1,
+  "max_play_time": -1
  },
  "mapTags": [],
  "mapTagSource": null,
@@ -3388,7 +3389,7 @@
    ],
    "talents": {
     "bb": {
-     "DamageUp.scale_ratio": 0.2,
+     "DamageUp.scale_ratio": 0,
      "Summon.cnt": 1,
      "DamageUp.add_on": 1,
      "vampire.heal_scale": 2.2
@@ -3622,5 +3623,85 @@
     "sarkaz"
    ]
   }
+ },
+ "rules": {
+  "variant": null,
+  "source": {
+   "repository": "Kengxxiao/ArknightsGameData",
+   "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+   "path": "zh_CN/gamedata/levels/obt/main/level_main_13-05.json",
+   "sha256": "9cec9f8ef98e58b36c1420ff63f693631b71c13424caa769384c9e3cb6048d00",
+   "gitBlob": "2ea95c469d55149a7ec42bedac755783ce87e34d",
+   "stageTable": {
+    "path": "zh_CN/gamedata/excel/stage_table.json",
+    "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+    "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+    "stageId": "main_13-05",
+    "levelId": "Obt/Main/level_main_13-05"
+   }
+  },
+  "battle": {
+   "max_play_time": -1
+  },
+  "enemies": {},
+  "enemyAdd": {},
+  "hiddenGroups": {}
+ },
+ "tokens": [],
+ "contentRuleRefresh": {
+  "schemaVersion": 1,
+  "source": {
+   "repository": "arkpedia/arkpedia-data",
+   "commit": "66232ee06377d791fb130248d680764c286e5c99",
+   "files": [
+    {
+     "path": "stages/13-6.json",
+     "sha256": "4370eac5804cb4eadcf9568d4c2c82accc58c83663a5d932f981ae7212e69147"
+    },
+    {
+     "path": "stage-geometry/13-6.json",
+     "sha256": "c702dc661de1bbf49a5e0fe118216b51c0af09b0c7483060885f283162bd3288"
+    },
+    {
+     "path": "stage-devices.json",
+     "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+    }
+   ],
+   "localFiles": [
+    {
+     "path": "data/stage-rules/13-6.json",
+     "sha256": "49cc293b41edf7217166d1fbf818e1f745768d57fd50f9fb5a5f2992ded4e5be"
+    },
+    {
+     "path": "data/stage-rules/levels/d0d8838eb4b8eb08de7c02c0d04ce965a331bbdddbc5fdcc23b108b778c42497.json",
+     "sha256": "d0d8838eb4b8eb08de7c02c0d04ce965a331bbdddbc5fdcc23b108b778c42497"
+    },
+    {
+     "path": ".cache/arkpedia/original-level-blobs/2ea95c469d55149a7ec42bedac755783ce87e34d.json",
+     "sha256": "9cec9f8ef98e58b36c1420ff63f693631b71c13424caa769384c9e3cb6048d00"
+    }
+   ]
+  },
+  "validation": {
+   "smoke": {
+    "seconds": 10,
+    "spawned": 2,
+    "errors": 0
+   },
+   "waveSchedule": {
+    "id": "13-6",
+    "seconds": 188.23333333333332,
+    "spawned": 31,
+    "expected": 31,
+    "reason": "cleared",
+    "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+   }
+  },
+  "changed": [
+   "rules",
+   "battle",
+   "enemies",
+   "tokens"
+  ]
  }
 }

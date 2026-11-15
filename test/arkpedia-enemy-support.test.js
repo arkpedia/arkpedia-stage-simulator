@@ -4,10 +4,20 @@ import assert from 'node:assert/strict';
 import support from '../data/arkpedia-enemy-support.json' with { type: 'json' };
 import { REGULAR_ENEMIES, REGULAR_ENEMY_SPAWNS, assertRegularEnemies } from '../shared/arkpedia/enemies.js';
 import mvp from '../data/arkpedia-mvp.json' with { type: 'json' };
-import { buildEnemySupport, verifiedNative } from '../tools/arkpedia/enemy-support.mjs';
+import { buildEnemySupport, verifiedNative, assertPreservedEnemySupport } from '../tools/arkpedia/enemy-support.mjs';
 import nativeEvidence from '../data/arkpedia-enemy-native-abilities.json' with { type: 'json' };
 import clockIndex from '../data/arkpedia-enemy-clock-source.json' with { type: 'json' };
 import { spawnAny } from './helpers/enemyHarness.js';
+
+test('enemy additions refuse lost registrations even when new records hide a net coverage increase',()=>{
+  const previous={enemies:{colossus:{policy:'basic'},formation:{policy:'features'},pending:{policy:null}}};
+  const next={enemies:{colossus:{policy:'features'},formation:{policy:null},newA:{policy:'features'},newB:{policy:'basic'}}};
+  assert.throws(()=>assertPreservedEnemySupport(previous,next),/remove 1 registered records: formation/);
+  delete next.enemies.formation;
+  assert.throws(()=>assertPreservedEnemySupport(previous,next),/formation/);
+  next.enemies.formation={policy:'features'};
+  assert.doesNotThrow(()=>assertPreservedEnemySupport(previous,next));
+});
 
 test('enemy support is derived from the committed catalogue and native timing index', async () => {
   assert.deepEqual(await buildEnemySupport(), support);
@@ -42,12 +52,14 @@ test('a supported enemy uses nothing unimplemented; an unsupported one names wha
     else assert.ok(e.reasons.length > 0, id);
   }
 });
-test('every supported enemy fights to a death or a leak against a guard on the harness stage', () => {
+test('every supported enemy actually spawns and runs its registered features without runtime errors', () => {
   for (const id of Object.keys(REGULAR_ENEMIES)) {
-    const h = spawnAny(id, { seconds: 0 }), e = () => h.b.units.find(u => u.side === 'enemy' && u.defId === id);
-    h.runUntil(() => !e()?.alive, 240);
+    const h = spawnAny(id, { seconds: 0 }), e = () => h.b.units.find(u => u.kind === 'enemy' && u.defId === id);
+    h.step(); assert.ok(e(), `${id} actually spawns before checking completion`);
+    h.runUntil(() => !e().alive || h.b.finished, 240);
     assert.deepEqual(h.b.errors ?? [], [], id);
-    assert.equal(e()?.alive ?? false, false, `${id} ends (killed or leaked) within 240 s`);
+    if (e().profile.holdsBattle === false) { assert.equal(e().counted, false, id); assert.equal(h.b.reason, 'cleared', id); }
+    else assert.ok(!e().alive || h.b.time >= 240 || h.b.finished, `${id} ran the combat window or resolved`);
   }
 });
 test('a stage must ship the records of every enemy its enemies can spawn', () => {

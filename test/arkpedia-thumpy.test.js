@@ -92,6 +92,8 @@ test('Thumpy external force attacks and malformed selected inputs cannot bypass 
  const f=make(),t=enemy(f);assert.equal(f.b.forceAttack(f.u,[t]),false);assert.equal(f.attacks.length,0);assert.throws(()=>make({contract:{}}));
  for(const mutate of[d=>d.stats.atk++,d=>d.skill.bb.atk++,d=>d.skill.spCost++,d=>d.rangeGrid.push([1,0])])assert.throws(()=>make({mutate}));
 });
-for(const[location,x,y,distance]of[['front',5.4,5,1.7],['behind',4.6,5,.44],['near',5.1,5,.44]])test(`Thumpy S1 ${location} push retains radial direction and native one-level reduction`,()=>{
- const f=make(),t=enemy(f,{x,y}),moves=[];f.b.on('enemyDisplaced',c=>{if(c.unit===t)moves.push(c);});advance(f.b,.1);cast(f);until(f,()=>moves.length>0,3);near(moves[0].distance,distance);assert.equal(moves[0].to.x>moves[0].from.x,x>=5);
+for(const[location,x,y,distance]of[['front',5.4,5,1.698333333333],['behind',4.6,5,.441566666667],['near',5.1,5,.441566666667]])test(`Thumpy S1 ${location} push retains radial direction and native one-level reduction`,()=>{
+ const f=make(),t=enemy(f,{x,y}),moves=[];f.b.on('enemyDisplaced',c=>{if(c.unit===t)moves.push(c);});advance(f.b,.1);cast(f);until(f,()=>moves.length>0,3);
+ assert.ok(t.mem.regularShift);f.b.addBuff(f.u,{key:'qa:one-shot',flags:{disarm:true}});until(f,()=>!t.mem.regularShift,2);
+ near(moves.reduce((sum,m)=>sum+m.distance,0),distance);assert.equal(moves[0].to.x>moves[0].from.x,x>=5);
 });

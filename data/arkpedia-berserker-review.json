@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-15",
+  "scope": "Icefield Berserker source admission using shared combat primitives; source wave execution and body decode checks, not pixel/frame parity.",
+  "sources": [
+    {
+      "path": "shared/arkpedia/enemy-icefield-features.js",
+      "sha256": "4af103c58f3d8ef384039614f8068d5378b2990485d1c0730fbf994329c6a0b7"
+    },
+    {
+      "path": "shared/arkpedia/enemy-features.js",
+      "sha256": "336306314d5ff78d153e3dc8f8f70de30fb00d355adcca9f5805c42a28f8de25"
+    },
+    {
+      "path": "data/arkpedia-enemy-native-abilities.json",
+      "sha256": "ce66660d4d93c370a30ca6d09e673a39b41fdf7a9a29999d8b31eaae21e858c2"
+    },
+    {
+      "path": "data/arkpedia-enemy-support.json",
+      "sha256": "21af82510fb20891c8b034b28c3a640a9fb4acfa58a8ec6e84ff1add62534299"
+    },
+    {
+      "path": "test/arkpedia-icefield.test.js",
+      "sha256": "ad883bc314bfec2d423f71d2020568d684ad47cacc4b178717bd26de283f1c6d"
+    }
+  ],
+  "ids": [
+    "enemy_1193_krgbsk",
+    "enemy_1193_krgbsk_2"
+  ],
+  "validation": {
+    "regressionTests": 182,
+    "additionalFullWaveTest": 1,
+    "stageSmokes": 907,
+    "browser": {
+      "scope": "Chromium clip decoding/finite poses and idle body rendering; no native combat/frame/pixel parity claim",
+      "browser": "Chrome/156.0.8078.79",
+      "results": [
+        {
+          "viewport": "desktop",
+          "models": [
+            {
+              "id": "enemy_1193_krgbsk",
+              "version": "3.8.99",
+              "clips": 5,
+              "width": 597.6263885498047,
+              "height": 409.35356521606445
+            },
+            {
+              "id": "enemy_1193_krgbsk_2",
+              "version": "3.8.99",
+              "clips": 5,
+              "width": 597.6263885498047,
+              "height": 409.35356521606445
+            }
+          ],
+          "errors": [],
+          "failures": []
+        },
+        {
+          "viewport": "mobile",
+          "models": [
+            {
+              "id": "enemy_1193_krgbsk",
+              "version": "3.8.99",
+              "clips": 5,
+              "width": 597.6263885498047,
+              "height": 409.35356521606445
+            },
+            {
+              "id": "enemy_1193_krgbsk_2",
+              "version": "3.8.99",
+              "clips": 5,
+              "width": 597.6263885498047,
+              "height": 409.35356521606445
+            }
+          ],
+          "errors": [],
+          "failures": []
+        }
+      ]
+    }
+  },
+  "coverage": {
+    "operators": 431,
+    "skills": 949,
+    "enemies": 682,
+    "enemyTotal": 2163,
+    "stages": 907,
+    "stageTotal": 3892
+  },
+  "unlockedStages": [
+    "bi-ex-6",
+    "bi-ex-6_challenge_mode"
+  ],
+  "assetCommit": "340022c33bb2fe6e6d430c3a753d1c7f89538b8a"
+}

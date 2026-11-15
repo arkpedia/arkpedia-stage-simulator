@@ -1,0 +1,1794 @@
+{
+  "code": "S5-7",
+  "name": "Hover-1",
+  "description": "A large number of unmanned enemy drones have appeared on this operation. Please take charge of the anti-air defense.\n<Jammer> Stops nearby enemy drones from firing, greatly reduces their speed, and prevents them from activating special abilities.",
+  "battle": {
+    "max_life": 3,
+    "unit_limit": 8,
+    "initial_dp": 10,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1,
+    "max_play_time": -1
+  },
+  "rules": {
+    "variant": null,
+    "source": {
+      "repository": "Kengxxiao/ArknightsGameData",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "path": "zh_CN/gamedata/levels/obt/main/level_sub_05-4-1.json",
+      "sha256": "42f3dafdc36644da07155b56134ecac830d62bfd5f941b45cdf32b5003dc0a69",
+      "gitBlob": "c29066bf8c234e05611a181ba3db44024ffbd3d3",
+      "stageTable": {
+        "path": "zh_CN/gamedata/excel/stage_table.json",
+        "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+        "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+        "stageId": "sub_05-4-1",
+        "levelId": "Obt/Main/level_sub_05-4-1"
+      }
+    },
+    "battle": {
+      "max_play_time": -1
+    },
+    "enemies": {},
+    "enemyAdd": {},
+    "hiddenGroups": {}
+  },
+  "mapTags": [],
+  "mapTagSource": null,
+  "geometry": {
+    "slug": "s5-7",
+    "rows": 8,
+    "cols": 12,
+    "tileLegend": [
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_start",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_floor",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_flystart",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      }
+    ],
+    "tileGrid": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        2,
+        3,
+        3,
+        3,
+        3,
+        2,
+        3,
+        3,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        3,
+        3,
+        3,
+        0,
+        4,
+        3,
+        3,
+        4,
+        0,
+        0
+      ],
+      [
+        1,
+        2,
+        3,
+        3,
+        0,
+        4,
+        0,
+        4,
+        3,
+        3,
+        0,
+        0
+      ],
+      [
+        1,
+        2,
+        3,
+        3,
+        4,
+        0,
+        4,
+        0,
+        3,
+        3,
+        2,
+        5
+      ],
+      [
+        0,
+        0,
+        0,
+        3,
+        3,
+        4,
+        0,
+        3,
+        3,
+        3,
+        2,
+        5
+      ],
+      [
+        6,
+        0,
+        0,
+        3,
+        3,
+        2,
+        3,
+        3,
+        3,
+        4,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "routes": [
+      {
+        "motion": "fly",
+        "start": {
+          "row": 2,
+          "col": 4
+        },
+        "end": {
+          "row": 5,
+          "col": 11
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 4
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 120
+          }
+        ]
+      },
+      {
+        "motion": "fly",
+        "start": {
+          "row": 5,
+          "col": 7
+        },
+        "end": {
+          "row": 4,
+          "col": 11
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 7
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 120
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 0
+        },
+        "end": {
+          "row": 4,
+          "col": 11
+        },
+        "checkpoints": [],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 4,
+          "col": 0
+        },
+        "end": {
+          "row": 5,
+          "col": 11
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 3
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 0
+        },
+        "end": {
+          "row": 4,
+          "col": 11
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 8
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "fly",
+        "start": {
+          "row": 6,
+          "col": 0
+        },
+        "end": {
+          "row": 5,
+          "col": 11
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 9
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 3
+          }
+        ]
+      },
+      {
+        "motion": "fly",
+        "start": {
+          "row": 6,
+          "col": 0
+        },
+        "end": {
+          "row": 5,
+          "col": 11
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 9
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "fly",
+        "start": {
+          "row": 4,
+          "col": 0
+        },
+        "end": {
+          "row": 5,
+          "col": 11
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 1
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 10
+          }
+        ]
+      },
+      {
+        "motion": "fly",
+        "start": {
+          "row": 3,
+          "col": 0
+        },
+        "end": {
+          "row": 4,
+          "col": 11
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 1
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 12
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 4,
+          "col": 0
+        },
+        "end": {
+          "row": 5,
+          "col": 11
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 4
+            }
+          }
+        ],
+        "waits": []
+      }
+    ],
+    "waves": [
+      {
+        "index": 0,
+        "duration": 148,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Frost",
+            "enemy_id": "enemy_1042_frostd",
+            "count": 1,
+            "time": 0,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Frost",
+            "enemy_id": "enemy_1042_frostd",
+            "count": 1,
+            "time": 0,
+            "route": 1,
+            "fragment": 0
+          },
+          {
+            "enemy": "Originium Slug β",
+            "enemy_id": "enemy_1007_slime_3",
+            "count": 1,
+            "time": 4,
+            "route": 2,
+            "fragment": 1
+          },
+          {
+            "enemy": "Originium Slug β",
+            "enemy_id": "enemy_1007_slime_3",
+            "count": 2,
+            "time": 7,
+            "interval": 3,
+            "route": 2,
+            "fragment": 1
+          },
+          {
+            "enemy": "Originium Slug β",
+            "enemy_id": "enemy_1007_slime_3",
+            "count": 2,
+            "time": 11,
+            "interval": 3,
+            "route": 3,
+            "fragment": 1
+          },
+          {
+            "enemy": "Originium Slug β",
+            "enemy_id": "enemy_1007_slime_3",
+            "count": 2,
+            "time": 17,
+            "interval": 3,
+            "route": 3,
+            "fragment": 1
+          },
+          {
+            "enemy": "Originium Slug β",
+            "enemy_id": "enemy_1007_slime_3",
+            "count": 2,
+            "time": 26,
+            "interval": 3,
+            "route": 3,
+            "fragment": 1
+          },
+          {
+            "enemy": "Originium Slug β",
+            "enemy_id": "enemy_1007_slime_3",
+            "count": 2,
+            "time": 30,
+            "interval": 3,
+            "route": 3,
+            "fragment": 1
+          },
+          {
+            "enemy": "Originium Slug β",
+            "enemy_id": "enemy_1007_slime_3",
+            "count": 2,
+            "time": 20,
+            "interval": 3,
+            "route": 4,
+            "fragment": 1
+          },
+          {
+            "enemy": "Originium Slug β",
+            "enemy_id": "enemy_1007_slime_3",
+            "count": 2,
+            "time": 26,
+            "interval": 3,
+            "route": 4,
+            "fragment": 1
+          },
+          {
+            "enemy": "Originium Slug β",
+            "enemy_id": "enemy_1007_slime_3",
+            "count": 2,
+            "time": 33,
+            "interval": 3,
+            "route": 4,
+            "fragment": 1
+          },
+          {
+            "enemy": "Possessed Soldier",
+            "enemy_id": "enemy_1043_zomsbr",
+            "count": 4,
+            "time": 49,
+            "interval": 8,
+            "route": 3,
+            "fragment": 2
+          },
+          {
+            "enemy": "Possessed Soldier",
+            "enemy_id": "enemy_1043_zomsbr",
+            "count": 4,
+            "time": 49,
+            "interval": 8,
+            "route": 4,
+            "fragment": 2
+          },
+          {
+            "enemy": "Possessed Soldier",
+            "enemy_id": "enemy_1043_zomsbr",
+            "count": 1,
+            "time": 76,
+            "route": 3,
+            "fragment": 2
+          },
+          {
+            "enemy": "Possessed Soldier",
+            "enemy_id": "enemy_1043_zomsbr",
+            "count": 1,
+            "time": 76,
+            "route": 2,
+            "fragment": 2
+          },
+          {
+            "enemy": "Arts Master A1",
+            "enemy_id": "enemy_1041_lazerd",
+            "count": 1,
+            "time": 94,
+            "route": 5,
+            "fragment": 3
+          },
+          {
+            "enemy": "Arts Master A1",
+            "enemy_id": "enemy_1041_lazerd",
+            "count": 2,
+            "time": 101,
+            "interval": 3,
+            "route": 6,
+            "fragment": 3
+          },
+          {
+            "enemy": "Arts Master A1",
+            "enemy_id": "enemy_1041_lazerd",
+            "count": 2,
+            "time": 109,
+            "interval": 3,
+            "route": 6,
+            "fragment": 3
+          },
+          {
+            "enemy": "Arts Master A1",
+            "enemy_id": "enemy_1041_lazerd",
+            "count": 2,
+            "time": 121,
+            "interval": 3,
+            "route": 6,
+            "fragment": 3
+          },
+          {
+            "enemy": "Arts Master A1",
+            "enemy_id": "enemy_1041_lazerd",
+            "count": 2,
+            "time": 131,
+            "interval": 3,
+            "route": 6,
+            "fragment": 3
+          },
+          {
+            "enemy": "Arts Master A1",
+            "enemy_id": "enemy_1041_lazerd",
+            "count": 3,
+            "time": 141,
+            "interval": 3,
+            "route": 6,
+            "fragment": 3
+          },
+          {
+            "enemy": "Bombtail-G",
+            "enemy_id": "enemy_1040_bombd_2",
+            "count": 2,
+            "time": 122,
+            "interval": 25,
+            "route": 7,
+            "fragment": 3
+          },
+          {
+            "enemy": "Bombtail-G",
+            "enemy_id": "enemy_1040_bombd_2",
+            "count": 2,
+            "time": 123,
+            "interval": 25,
+            "route": 8,
+            "fragment": 3
+          },
+          {
+            "enemy": "Possessed Soldier",
+            "enemy_id": "enemy_1043_zomsbr",
+            "count": 4,
+            "time": 94,
+            "interval": 8,
+            "route": 9,
+            "fragment": 3
+          },
+          {
+            "enemy": "Possessed Soldier",
+            "enemy_id": "enemy_1043_zomsbr",
+            "count": 4,
+            "time": 94,
+            "interval": 8,
+            "route": 2,
+            "fragment": 3
+          },
+          {
+            "enemy": "Possessed Soldier",
+            "enemy_id": "enemy_1043_zomsbr",
+            "count": 2,
+            "time": 126,
+            "interval": 15,
+            "route": 9,
+            "fragment": 3
+          },
+          {
+            "enemy": "Possessed Soldier",
+            "enemy_id": "enemy_1043_zomsbr",
+            "count": 2,
+            "time": 131,
+            "interval": 15,
+            "route": 2,
+            "fragment": 3
+          }
+        ]
+      }
+    ],
+    "spawnTiles": [
+      {
+        "key": "tile_start",
+        "row": 1,
+        "col": 0,
+        "routes": [
+          2,
+          2,
+          4,
+          4,
+          4,
+          4,
+          2,
+          2,
+          2
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 3,
+        "col": 0,
+        "routes": [
+          8
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 4,
+        "col": 0,
+        "routes": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          7,
+          9,
+          9
+        ]
+      },
+      {
+        "key": "tile_flystart",
+        "row": 6,
+        "col": 0,
+        "routes": [
+          5,
+          6,
+          6,
+          6,
+          6,
+          6
+        ]
+      }
+    ],
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 4,
+        "col": 11,
+        "routes": [
+          1,
+          2,
+          2,
+          4,
+          4,
+          4,
+          4,
+          2,
+          8,
+          2,
+          2
+        ]
+      },
+      {
+        "key": "tile_end",
+        "row": 5,
+        "col": 11,
+        "routes": [
+          0,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          5,
+          6,
+          6,
+          6,
+          6,
+          6,
+          7,
+          9,
+          9
+        ]
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_1007_slime_3",
+        "slug": "originium_slug_enemy_1007_slime_3",
+        "name": "Originium Slug β",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1040_bombd_2",
+        "slug": "bombtail_g",
+        "name": "Bombtail-G",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1041_lazerd",
+        "slug": "arts_master_a1",
+        "name": "Arts Master A1",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1042_frostd",
+        "slug": "frost",
+        "name": "Frost",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1043_zomsbr",
+        "slug": "possessed_soldier",
+        "name": "Possessed Soldier",
+        "database_level": 0
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [],
+      "deployable_tokens": [
+        {
+          "unit": "Jammer",
+          "unit_id": "trap_006_antidr",
+          "count": 1,
+          "level": 10,
+          "elite": 0,
+          "potential": 0,
+          "skill_index": 0,
+          "skill_level": 1
+        }
+      ]
+    },
+    "hasConditionalSpawns": false
+  },
+  "terrain": [],
+  "conditionalHandled": false,
+  "devices": [],
+  "tokens": [
+    {
+      "unitId": "trap_006_antidr",
+      "name": "Jammer",
+      "count": 1,
+      "kind": "jammer",
+      "supplyCard": true,
+      "hp": 1000,
+      "cost": 40,
+      "cooldown": 5,
+      "refundRatio": 0.5,
+      "taunt": 1,
+      "rangedBuildOnly": true,
+      "moveMul": 0.5,
+      "range": [
+        [
+          3,
+          0
+        ],
+        [
+          2,
+          -1
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          1,
+          -2
+        ],
+        [
+          1,
+          -1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          0,
+          -3
+        ],
+        [
+          0,
+          -2
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          -1,
+          -2
+        ],
+        [
+          -1,
+          -1
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          -1,
+          2
+        ],
+        [
+          -2,
+          -1
+        ],
+        [
+          -2,
+          0
+        ],
+        [
+          -2,
+          1
+        ],
+        [
+          -3,
+          0
+        ]
+      ],
+      "description": "Drones in range cannot attack or use silenceable abilities and move at half speed. Enemies prioritize this device. Cannot be healed.",
+      "def": 0,
+      "block": 3,
+      "position": "NONE",
+      "behavior": "range-supply"
+    }
+  ],
+  "pathing": {
+    "schemaVersion": 1,
+    "syntheticRoutes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "producer": "Arkpedia stage browser / buildPlaybackPaths",
+    "stage": "S5-7",
+    "geometryHash": "7d45e3f2645ab4b800b3aa29c21dc9d12477f1d340f29649ce995f9a56a7adb7",
+    "moveScale": 0.65,
+    "paths": {
+      "0": {
+        "points": [
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            11,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "1": {
+        "points": [
+          [
+            7,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            11,
+            4
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "2": {
+        "points": [
+          [
+            0,
+            1
+          ],
+          [
+            11,
+            4
+          ]
+        ],
+        "distances": [
+          0,
+          1
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "3": {
+        "points": [
+          [
+            0,
+            4
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            11,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "4": {
+        "points": [
+          [
+            0,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            11,
+            4
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "5": {
+        "points": [
+          [
+            0,
+            6
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            4,
+            6
+          ],
+          [
+            6,
+            1
+          ],
+          [
+            8,
+            6
+          ],
+          [
+            9,
+            1
+          ],
+          [
+            11,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "6": {
+        "points": [
+          [
+            0,
+            6
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            4,
+            6
+          ],
+          [
+            6,
+            1
+          ],
+          [
+            8,
+            6
+          ],
+          [
+            9,
+            1
+          ],
+          [
+            11,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "7": {
+        "points": [
+          [
+            0,
+            4
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            11,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "8": {
+        "points": [
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            11,
+            4
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "9": {
+        "points": [
+          [
+            0,
+            4
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            11,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      }
+    }
+  },
+  "art": null,
+  "gates": null,
+  "fixedSquad": null,
+  "enemies": {
+    "enemy_1042_frostd": {
+      "key": "enemy_1042_frostd",
+      "prefabKey": "enemy_1042_frostd",
+      "name": "Frost",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "NONE",
+      "stats": {
+        "maxHp": 6500,
+        "atk": 100,
+        "def": 600,
+        "res": 30,
+        "moveSpeed": 0.9,
+        "bat": 1,
+        "aspd": 100,
+        "rangeRadius": 2.5,
+        "rawRangeRadius": 2.5,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "none",
+        "dmgTypes": [
+          "none"
+        ],
+        "motion": "FLY",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Flying unit.",
+          "format": "NORMAL"
+        },
+        {
+          "text": "All friendly units within range have reduced ASPD",
+          "format": "SILENCE"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "atkSpeedDown.attack_speed": -0.5,
+          "defup.range_radius": 2.5
+        },
+        "bbStr": {},
+        "groups": {
+          "atkSpeedDown": [
+            "attack_speed"
+          ],
+          "defup": [
+            "range_radius"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "drone"
+      ]
+    },
+    "enemy_1007_slime_3": {
+      "key": "enemy_1007_slime_3",
+      "prefabKey": "enemy_1007_slime_3",
+      "name": "Originium Slug β",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 1550,
+        "atk": 240,
+        "def": 0,
+        "res": 0,
+        "moveSpeed": 1,
+        "bat": 1.7,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 0,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "infection"
+      ]
+    },
+    "enemy_1043_zomsbr": {
+      "key": "enemy_1043_zomsbr",
+      "prefabKey": "enemy_1043_zomsbr",
+      "name": "Possessed Soldier",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 2500,
+        "atk": 250,
+        "def": 100,
+        "res": 30,
+        "moveSpeed": 0.9,
+        "bat": 1.8,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 2.5,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 80,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Regenerates HP over time.",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "mutant"
+      ]
+    },
+    "enemy_1041_lazerd": {
+      "key": "enemy_1041_lazerd",
+      "prefabKey": "enemy_1041_lazerd",
+      "name": "Arts Master A1",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 2700,
+        "atk": 220,
+        "def": 100,
+        "res": 65,
+        "moveSpeed": 1.5,
+        "bat": 2.15,
+        "aspd": 100,
+        "rangeRadius": 1.8,
+        "rawRangeRadius": 1.8,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "arts",
+        "dmgTypes": [
+          "arts"
+        ],
+        "motion": "FLY",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Flying unit.",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "drone"
+      ]
+    },
+    "enemy_1040_bombd_2": {
+      "key": "enemy_1040_bombd_2",
+      "prefabKey": "enemy_1040_bombd_2",
+      "name": "Bombtail-G",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 6000,
+        "atk": 1500,
+        "def": 220,
+        "res": 30,
+        "moveSpeed": 0.6,
+        "bat": 5,
+        "aspd": 100,
+        "rangeRadius": 2,
+        "rawRangeRadius": 2,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "FLY",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Flying unit.",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Can launch a warhead to deal AoE physical damage",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Gains significantly increased Movement Speed after launching warhead",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [
+        {
+          "prefabKey": "boomb",
+          "priority": 0,
+          "cooldown": 1,
+          "initCooldown": 1,
+          "spCost": 0,
+          "bb": {
+            "move_speed": 2
+          },
+          "bbStr": {}
+        }
+      ],
+      "notCountInTotal": false,
+      "tags": [
+        "drone"
+      ]
+    }
+  },
+  "contentAddition": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/s5-7.json",
+          "sha256": "5bc4403d27af8b5fc29ad2f150ea00431debe035df9138bdfc391263ba250d7f"
+        },
+        {
+          "path": "stage-geometry/s5-7.json",
+          "sha256": "7d45e3f2645ab4b800b3aa29c21dc9d12477f1d340f29649ce995f9a56a7adb7"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        }
+      ],
+      "localFiles": [
+        {
+          "path": "data/stage-rules/s5-7.json",
+          "sha256": "d330e39b216b06c0170e54ec5be815eae8b6981da7449910c692d2fa4ddea303"
+        },
+        {
+          "path": "data/stage-rules/levels/27d6ef9f925bc293af81ecb2fbc5b2e36c27cd17c5693f2962d2b9a0263d0349.json",
+          "sha256": "27d6ef9f925bc293af81ecb2fbc5b2e36c27cd17c5693f2962d2b9a0263d0349"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/c29066bf8c234e05611a181ba3db44024ffbd3d3.json",
+          "sha256": "42f3dafdc36644da07155b56134ecac830d62bfd5f941b45cdf32b5003dc0a69"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/c29066bf8c234e05611a181ba3db44024ffbd3d3.json",
+          "sha256": "42f3dafdc36644da07155b56134ecac830d62bfd5f941b45cdf32b5003dc0a69"
+        }
+      ]
+    },
+    "dependencies": {
+      "enemies": [
+        "enemy_1007_slime_3",
+        "enemy_1040_bombd_2",
+        "enemy_1041_lazerd",
+        "enemy_1042_frostd",
+        "enemy_1043_zomsbr"
+      ],
+      "devices": [],
+      "tokens": [
+        "trap_006_antidr"
+      ]
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 10,
+        "spawned": 4,
+        "errors": 0
+      },
+      "publicReview": "pending",
+      "waveSchedule": {
+        "id": "s5-7",
+        "seconds": 178.93333333333334,
+        "spawned": 57,
+        "expected": 57,
+        "dynamicSpawns": 0,
+        "reason": "cleared",
+        "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+      },
+      "browserStartup": {
+        "id": "s5-7",
+        "seconds": 20,
+        "errors": [],
+        "units": 8,
+        "canvas": true,
+        "scope": "Mobile landscape browser startup and canvas runtime; not a fidelity approval"
+      }
+    }
+  },
+  "contentRuleRefresh": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/s5-7.json",
+          "sha256": "5bc4403d27af8b5fc29ad2f150ea00431debe035df9138bdfc391263ba250d7f"
+        },
+        {
+          "path": "stage-geometry/s5-7.json",
+          "sha256": "7d45e3f2645ab4b800b3aa29c21dc9d12477f1d340f29649ce995f9a56a7adb7"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        }
+      ],
+      "localFiles": [
+        {
+          "path": "data/stage-rules/s5-7.json",
+          "sha256": "d330e39b216b06c0170e54ec5be815eae8b6981da7449910c692d2fa4ddea303"
+        },
+        {
+          "path": "data/stage-rules/levels/27d6ef9f925bc293af81ecb2fbc5b2e36c27cd17c5693f2962d2b9a0263d0349.json",
+          "sha256": "27d6ef9f925bc293af81ecb2fbc5b2e36c27cd17c5693f2962d2b9a0263d0349"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/c29066bf8c234e05611a181ba3db44024ffbd3d3.json",
+          "sha256": "42f3dafdc36644da07155b56134ecac830d62bfd5f941b45cdf32b5003dc0a69"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/c29066bf8c234e05611a181ba3db44024ffbd3d3.json",
+          "sha256": "42f3dafdc36644da07155b56134ecac830d62bfd5f941b45cdf32b5003dc0a69"
+        },
+        {
+          "path": "data/arkpedia-device-source.json",
+          "sha256": "64515531475bbde6c454f96b0a2c797edffc6f986c27d504539602d979b6fb7a"
+        },
+        {
+          "path": "data/arkpedia-device-native-source.json",
+          "sha256": "7340512aaf1e3ddeff9a9c6fb77a6b92e64513e9abc1951e89b780ccb10bd09c"
+        }
+      ]
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 10,
+        "spawned": 4,
+        "errors": 0
+      }
+    },
+    "changed": [
+      "tokens"
+    ]
+  }
+}

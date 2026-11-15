@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import data from '../data/arkpedia-mvp.json' with { type: 'json' };
 import evidence from '../data/arkpedia-muelsyse-prefabs.json' with { type: 'json' };
 import { StandardBattle } from '../server/sim/arkpedia.js';
+import { operatorServicesFor } from '../server/sim/content/arkpedia-operator-runtime.js';
 import { normalizeChess } from '../server/sim/simdata.js';
 import { defaultBuild } from '../shared/arkpedia/loadout.js';
 import { MUELSYSE_ID as ID, selectedMuelsyseBuild } from '../server/sim/content/arkpedia-muelsyse.js';
@@ -23,6 +24,9 @@ function make({ elite = 2, potential = 1, install = true } = {}) {
     rangeGrid: r.rangeGrid, skill: { ...r.source, ...r.source.spData, skillId: build.skillId } };
   b.data.raw.chess[ID] = raw;
   b.bench[ID] = { build, deployments: 0, unit: null, readyAt: 0, lastCost: 0 };
+  // This diagnostic adds a source-only owner after construction. Rebind its
+  // services just as normal construction does for the complete selected roster.
+  b.operatorServices = operatorServicesFor(Object.keys(b.bench));
   const baseline = Object.fromEntries(Object.keys(b.bench).map(id => [id, b.cost(id)]));
   const state = install ? installMuelsyseSquad(b, { contract: CONTRACT }) : null;
   b.getPlayer('arkpedia').dp = 99;

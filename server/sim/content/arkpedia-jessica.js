@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Original graphs/ranks/facings: arkpedia-jessica-prefabs.json. Native body/face,
 // selector12, event4 counters and hit/stop dispatch use documented local clocks.
+import { stageCardRespawnTime } from './arkpedia-stage-card-cost.js';
 import evidence from '../../../data/arkpedia-jessica-prefabs.json' with { type: 'json' };
 import { resolveHit } from '../ai.js';
 import { absoluteRangeKeys, canTargetEnemy } from '../targeting.js';
@@ -141,6 +142,7 @@ export function customizeJessicaKit({battle:b,id,def,unit:u,kit}) {
 }
 export function installJessica({battle:b,unit:u,def}) {
   if(def.charId!==ID)return;
+  u.mem.regularSummonFactory = createJessicaShield;
   const aura=new Set(),key=`jessica:def:${u.id}`;
   const sync=()=>{
     const t=live(u)&&own(b,u),keys=t?absoluteRangeKeys(grid('b-1'),u.tileR,u.tileC,u.dir):[];
@@ -193,7 +195,7 @@ export function createJessicaShield(b,state,row,col) {
         if(talent&&b.rng()<talent.bb.prob)u.skill.gainSp(talent.bb.sp,'jessica-shield');
       },{owner:t});
       battle.on('death',({unit})=>{if(unit!==t)return;
-        state.stock=Math.min(1,state.stock+1);state.readyAt=b.time+r.stats.respawnTime;
+        state.stock=Math.min(1,state.stock+1);state.readyAt=b.time+stageCardRespawnTime(b, r);
         if(live(u)){direction(b,u,t.mem.jessicaOldDirection);u.mem.jessicaSync?.();}
       },{owner:t});
     }}});

@@ -1,0 +1,3449 @@
+{
+ "code": "OF-EX3",
+ "name": "Interview Time",
+ "description": "Condition:\nEnemies have significantly higher ASPD.",
+ "battle": {
+  "max_life": 1,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1,
+  "max_play_time": -1
+ },
+ "rules": {
+  "variant": "challenge_mode",
+  "source": {
+   "repository": "Kengxxiao/ArknightsGameData",
+   "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+   "path": "zh_CN/gamedata/levels/activities/act3d0/level_act3d0_ex03.json",
+   "sha256": "3894b2a1ae0868ad9f7f25494b84d347a7fa2dcab4adb65c860b5ed1abc91d52",
+   "gitBlob": "55235dfdb68549fffc6c336cfc04f982456f512f",
+   "stageTable": {
+    "path": "zh_CN/gamedata/excel/stage_table.json",
+    "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+    "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+    "stageId": "a003_ex03",
+    "levelId": "Activities/ACT3D0/level_act3d0_ex03"
+   }
+  },
+  "battle": {
+   "max_play_time": -1,
+   "max_life": 1
+  },
+  "enemies": {
+   "atk": 1.1,
+   "def": 1,
+   "maxHp": 1.2,
+   "aspd": 2
+  },
+  "enemyAdd": {},
+  "hiddenGroups": {}
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "of-ex3",
+  "rows": 8,
+  "cols": 12,
+  "tileLegend": [
+   {
+    "key": "tile_deepwater",
+    "height": "low",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_telin",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_grass",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_telout",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    1,
+    2,
+    1,
+    2,
+    1,
+    3,
+    0,
+    0,
+    4,
+    2,
+    5
+   ],
+   [
+    6,
+    2,
+    0,
+    4,
+    1,
+    0,
+    0,
+    2,
+    1,
+    2,
+    1,
+    0
+   ],
+   [
+    0,
+    1,
+    0,
+    0,
+    2,
+    1,
+    0,
+    1,
+    4,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    2,
+    1,
+    2,
+    7,
+    2,
+    4,
+    2,
+    1,
+    2,
+    8,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    1,
+    0,
+    1,
+    4,
+    0,
+    0,
+    1,
+    0,
+    0
+   ],
+   [
+    6,
+    2,
+    1,
+    2,
+    0,
+    2,
+    1,
+    2,
+    1,
+    2,
+    4,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 0
+    },
+    "end": {
+     "row": 1,
+     "col": 11
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 10
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 6
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 0
+    },
+    "end": {
+     "row": 1,
+     "col": 11
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 10
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 0
+    },
+    "end": {
+     "row": 1,
+     "col": 11
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 10
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 2
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 0
+    },
+    "end": {
+     "row": 1,
+     "col": 11
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 10
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 15
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 2,
+      "seconds": 5
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 6,
+      "seconds": 5
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 12,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 0
+    },
+    "end": {
+     "row": 1,
+     "col": 11
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 10
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 15
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 2,
+      "seconds": 10
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 6,
+      "seconds": 10
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 9,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 0
+    },
+    "end": {
+     "row": 1,
+     "col": 11
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 10
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 0
+    },
+    "end": {
+     "row": 1,
+     "col": 11
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 6
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 4,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 10
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 3
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 2,
+      "seconds": 10
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 0
+    },
+    "end": {
+     "row": 1,
+     "col": 11
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 6
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 4,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 10
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 2,
+      "seconds": 10
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 0
+    },
+    "end": {
+     "row": 1,
+     "col": 11
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 10
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": null,
+    "placeholder": true,
+    "start": null,
+    "end": null,
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 0
+    },
+    "end": {
+     "row": 1,
+     "col": 11
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 6
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 4,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 10
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 20
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 3,
+      "seconds": 10
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 0
+    },
+    "end": {
+     "row": 1,
+     "col": 11
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 10
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 15
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 7,
+      "seconds": 10
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 0
+    },
+    "end": {
+     "row": 1,
+     "col": 11
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 10
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 3
+     }
+    ]
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 221,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Infantry Leader",
+      "enemy_id": "enemy_1046_agent_2",
+      "count": 1,
+      "time": 3,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Infantry Leader",
+      "enemy_id": "enemy_1046_agent_2",
+      "count": 1,
+      "time": 12,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Infantry Leader",
+      "enemy_id": "enemy_1046_agent_2",
+      "count": 1,
+      "time": 15,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Infantry Leader",
+      "enemy_id": "enemy_1046_agent_2",
+      "count": 1,
+      "time": 18,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Infantry Leader",
+      "enemy_id": "enemy_1046_agent_2",
+      "count": 1,
+      "time": 21,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Rockbreaker Leader",
+      "enemy_id": "enemy_1048_hirman_2",
+      "count": 1,
+      "time": 34,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Rockbreaker Leader",
+      "enemy_id": "enemy_1048_hirman_2",
+      "count": 1,
+      "time": 43,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Sniper Leader",
+      "enemy_id": "enemy_1047_sagent_2",
+      "count": 1,
+      "time": 55,
+      "route": 3,
+      "fragment": 2
+     },
+     {
+      "enemy": "Sniper Leader",
+      "enemy_id": "enemy_1047_sagent_2",
+      "count": 1,
+      "time": 55,
+      "route": 4,
+      "fragment": 2
+     },
+     {
+      "enemy": "Ergate",
+      "enemy_id": "enemy_1053_norgst",
+      "count": 1,
+      "time": 73,
+      "route": 5,
+      "fragment": 3
+     },
+     {
+      "enemy": "Ergate",
+      "enemy_id": "enemy_1053_norgst",
+      "count": 2,
+      "time": 80,
+      "interval": 3,
+      "route": 1,
+      "fragment": 3
+     },
+     {
+      "enemy": "Ergate",
+      "enemy_id": "enemy_1053_norgst",
+      "count": 2,
+      "time": 87,
+      "interval": 3,
+      "route": 1,
+      "fragment": 3
+     },
+     {
+      "enemy": "Infantry Leader",
+      "enemy_id": "enemy_1046_agent_2",
+      "count": 1,
+      "time": 78,
+      "route": 6,
+      "fragment": 3
+     },
+     {
+      "enemy": "Infantry Leader",
+      "enemy_id": "enemy_1046_agent_2",
+      "count": 2,
+      "time": 84,
+      "interval": 3,
+      "route": 7,
+      "fragment": 3
+     },
+     {
+      "enemy": "Agent Leader",
+      "enemy_id": "enemy_1049_eagent_2",
+      "count": 1,
+      "time": 110,
+      "route": 5,
+      "fragment": 4
+     },
+     {
+      "enemy": "Agent Leader",
+      "enemy_id": "enemy_1049_eagent_2",
+      "count": 2,
+      "time": 119,
+      "interval": 3,
+      "route": 1,
+      "fragment": 4
+     },
+     {
+      "enemy": "Agent Leader",
+      "enemy_id": "enemy_1049_eagent_2",
+      "count": 2,
+      "time": 127,
+      "interval": 5,
+      "route": 1,
+      "fragment": 4
+     },
+     {
+      "enemy": "Infantry Leader",
+      "enemy_id": "enemy_1046_agent_2",
+      "count": 3,
+      "time": 105,
+      "interval": 5,
+      "route": 8,
+      "fragment": 4
+     },
+     {
+      "enemy": "Sniper Leader",
+      "enemy_id": "enemy_1047_sagent_2",
+      "count": 1,
+      "time": 158,
+      "route": 10,
+      "fragment": 5
+     },
+     {
+      "enemy": "Ergate",
+      "enemy_id": "enemy_1053_norgst",
+      "count": 3,
+      "time": 163,
+      "interval": 3,
+      "route": 8,
+      "fragment": 5
+     },
+     {
+      "enemy": "Ergate Leader",
+      "enemy_id": "enemy_1053_norgst_2",
+      "count": 3,
+      "time": 180,
+      "interval": 4,
+      "route": 8,
+      "fragment": 5
+     },
+     {
+      "enemy": "Sniper Leader",
+      "enemy_id": "enemy_1047_sagent_2",
+      "count": 1,
+      "time": 155,
+      "route": 11,
+      "fragment": 5
+     },
+     {
+      "enemy": "Rockbreaker Leader",
+      "enemy_id": "enemy_1048_hirman_2",
+      "count": 1,
+      "time": 198,
+      "route": 12,
+      "fragment": 6
+     },
+     {
+      "enemy": "Rockbreaker Leader",
+      "enemy_id": "enemy_1048_hirman_2",
+      "count": 1,
+      "time": 205,
+      "route": 1,
+      "fragment": 6
+     },
+     {
+      "enemy": "Infantry Leader",
+      "enemy_id": "enemy_1046_agent_2",
+      "count": 3,
+      "time": 194,
+      "interval": 4,
+      "route": 8,
+      "fragment": 6
+     },
+     {
+      "enemy": "Infantry Leader",
+      "enemy_id": "enemy_1046_agent_2",
+      "count": 3,
+      "time": 213,
+      "interval": 4,
+      "route": 8,
+      "fragment": 6
+     },
+     {
+      "enemy": "Agent Leader",
+      "enemy_id": "enemy_1049_eagent_2",
+      "count": 1,
+      "time": 213,
+      "route": 7,
+      "fragment": 6
+     },
+     {
+      "enemy": "Agent Leader",
+      "enemy_id": "enemy_1049_eagent_2",
+      "count": 1,
+      "time": 218,
+      "route": 7,
+      "fragment": 6
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 2,
+    "col": 0,
+    "routes": [
+     4,
+     6,
+     7,
+     10,
+     7,
+     7
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 6,
+    "col": 0,
+    "routes": [
+     0,
+     1,
+     1,
+     1,
+     1,
+     2,
+     1,
+     3,
+     5,
+     1,
+     1,
+     5,
+     1,
+     1,
+     8,
+     8,
+     8,
+     11,
+     12,
+     1,
+     8,
+     8
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 1,
+    "col": 11,
+    "routes": [
+     0,
+     1,
+     1,
+     1,
+     1,
+     2,
+     1,
+     3,
+     4,
+     5,
+     1,
+     1,
+     6,
+     7,
+     5,
+     1,
+     1,
+     8,
+     10,
+     8,
+     8,
+     11,
+     12,
+     1,
+     8,
+     8,
+     7,
+     7
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1046_agent_2",
+    "slug": "infantry_leader",
+    "name": "Infantry Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1047_sagent_2",
+    "slug": "sniper_leader",
+    "name": "Sniper Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1048_hirman_2",
+    "slug": "rockbreaker_leader",
+    "name": "Rockbreaker Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1049_eagent_2",
+    "slug": "agent_leader",
+    "name": "Agent Leader",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1053_norgst",
+    "slug": "ergate",
+    "name": "Ergate",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1053_norgst_2",
+    "slug": "ergate_leader",
+    "name": "Ergate Leader",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "terrain": [],
+ "conditionalHandled": false,
+ "devices": [],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   10,
+   11,
+   12
+  ],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "OF-EX3",
+  "geometryHash": "330fa9e943d641e20c0401a21d086668d8fbe63625d32b26e9aa5a35783710c5",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      0,
+      6
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      10,
+      2
+     ],
+     [
+      10,
+      1
+     ],
+     [
+      11,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "1": {
+    "points": [
+     [
+      0,
+      6
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      10,
+      2
+     ],
+     [
+      10,
+      1
+     ],
+     [
+      11,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "2": {
+    "points": [
+     [
+      0,
+      6
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      10,
+      2
+     ],
+     [
+      10,
+      1
+     ],
+     [
+      11,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "3": {
+    "points": [
+     [
+      0,
+      6
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      10,
+      2
+     ],
+     [
+      10,
+      1
+     ],
+     [
+      11,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "4": {
+    "points": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      10,
+      2
+     ],
+     [
+      10,
+      1
+     ],
+     [
+      11,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "5": {
+    "points": [
+     [
+      0,
+      6
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      10,
+      2
+     ],
+     [
+      10,
+      1
+     ],
+     [
+      11,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "6": {
+    "points": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      10,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      10,
+      2
+     ],
+     [
+      10,
+      1
+     ],
+     [
+      11,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "7": {
+    "points": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      10,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      10,
+      2
+     ],
+     [
+      10,
+      1
+     ],
+     [
+      11,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "8": {
+    "points": [
+     [
+      0,
+      6
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      10,
+      2
+     ],
+     [
+      10,
+      1
+     ],
+     [
+      11,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "10": {
+    "points": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      10,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      10,
+      2
+     ],
+     [
+      10,
+      1
+     ],
+     [
+      11,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "11": {
+    "points": [
+     [
+      0,
+      6
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      10,
+      2
+     ],
+     [
+      10,
+      1
+     ],
+     [
+      11,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "12": {
+    "points": [
+     [
+      0,
+      6
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      3,
+      6
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      10,
+      2
+     ],
+     [
+      10,
+      1
+     ],
+     [
+      11,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16
+    ],
+    "breaks": [],
+    "holds": []
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1046_agent_2": {
+   "key": "enemy_1046_agent_2",
+   "prefabKey": "enemy_1046_agent_2",
+   "name": "Infantry Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 4440,
+    "atk": 363.00000000000006,
+    "def": 100,
+    "res": 40,
+    "moveSpeed": 1.1,
+    "bat": 2,
+    "aspd": 200,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1048_hirman_2": {
+   "key": "enemy_1048_hirman_2",
+   "prefabKey": "enemy_1048_hirman_2",
+   "name": "Rockbreaker Leader",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 15600,
+    "atk": 990.0000000000001,
+    "def": 100,
+    "res": 40,
+    "moveSpeed": 0.75,
+    "bat": 3.3,
+    "aspd": 200,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": true,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Gains greatly increased RES when blocked",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "MagicResistance.magic_resistance": 50
+    },
+    "bbStr": {},
+    "groups": {
+     "MagicResistance": [
+      "magic_resistance"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1047_sagent_2": {
+   "key": "enemy_1047_sagent_2",
+   "prefabKey": "enemy_1047_sagent_2",
+   "name": "Sniper Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 4800,
+    "atk": 220.00000000000003,
+    "def": 150,
+    "res": 10,
+    "moveSpeed": 0.8,
+    "bat": 4,
+    "aspd": 200,
+    "rangeRadius": 4,
+    "rawRangeRadius": 4,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "After two attacks, the next attack <$ba.stun>Stuns</> its target",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [
+    {
+     "prefabKey": "stunattack",
+     "priority": 1,
+     "cooldown": 1,
+     "initCooldown": 1,
+     "spCost": 2,
+     "bb": {
+      "stun": 15
+     },
+     "bbStr": {}
+    }
+   ],
+   "sp": {
+    "type": "INCREASE_WHEN_ATTACK",
+    "maxSp": 2,
+    "initSp": 0,
+    "increment": 1
+   },
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1053_norgst": {
+   "key": "enemy_1053_norgst",
+   "prefabKey": "enemy_1053_norgst",
+   "name": "Ergate",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "NONE",
+   "stats": {
+    "maxHp": 2760,
+    "atk": 110.00000000000001,
+    "def": 120,
+    "res": 40,
+    "moveSpeed": 1.2,
+    "bat": 1,
+    "aspd": 200,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "none",
+    "dmgTypes": [
+     "none"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Cannot be blocked.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1049_eagent_2": {
+   "key": "enemy_1049_eagent_2",
+   "prefabKey": "enemy_1049_eagent_2",
+   "name": "Agent Leader",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 10800,
+    "atk": 385.00000000000006,
+    "def": 230,
+    "res": 50,
+    "moveSpeed": 0.9,
+    "bat": 2,
+    "aspd": 200,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Attacks temporarily reduce allied units' Block",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "ReduceBlockCnt.duration": 10,
+     "ReduceBlockCnt.block_cnt": -1
+    },
+    "bbStr": {},
+    "groups": {
+     "ReduceBlockCnt": [
+      "block_cnt",
+      "duration"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1053_norgst_2": {
+   "key": "enemy_1053_norgst_2",
+   "prefabKey": "enemy_1053_norgst_2",
+   "name": "Ergate Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "NONE",
+   "stats": {
+    "maxHp": 4560,
+    "atk": 110.00000000000001,
+    "def": 260,
+    "res": 45,
+    "moveSpeed": 1.2,
+    "bat": 1,
+    "aspd": 200,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "none",
+    "dmgTypes": [
+     "none"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Cannot be blocked.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ },
+ "contentAddition": {
+  "schemaVersion": 1,
+  "source": {
+   "repository": "arkpedia/arkpedia-data",
+   "commit": "66232ee06377d791fb130248d680764c286e5c99",
+   "files": [
+    {
+     "path": "stages/of-ex3_challenge_mode.json",
+     "sha256": "e0a13f6dec4a81ff9ec165213a93f277be93ee2f9eae703650b9b913f9011330"
+    },
+    {
+     "path": "stage-geometry/of-ex3.json",
+     "sha256": "330fa9e943d641e20c0401a21d086668d8fbe63625d32b26e9aa5a35783710c5"
+    },
+    {
+     "path": "stage-devices.json",
+     "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+    }
+   ],
+   "localFiles": [
+    {
+     "path": "data/stage-rules/of-ex3_challenge_mode.json",
+     "sha256": "eab395e4c14378b1c2f64d3648cb885411c41c4fe9d54621f2b4f52243cbaedb"
+    },
+    {
+     "path": "data/stage-rules/levels/1b4ac5f1b4b245f61dc10ea35fd25963cf5e12803189d8e89fab4f107fd56569.json",
+     "sha256": "1b4ac5f1b4b245f61dc10ea35fd25963cf5e12803189d8e89fab4f107fd56569"
+    }
+   ]
+  },
+  "dependencies": {
+   "enemies": [
+    "enemy_1046_agent_2",
+    "enemy_1047_sagent_2",
+    "enemy_1048_hirman_2",
+    "enemy_1049_eagent_2",
+    "enemy_1053_norgst",
+    "enemy_1053_norgst_2"
+   ],
+   "devices": [],
+   "tokens": []
+  },
+  "validation": {
+   "smoke": {
+    "seconds": 10,
+    "spawned": 1,
+    "errors": 0
+   },
+   "publicReview": "pending",
+   "waveSchedule": {
+    "id": "of-ex3_challenge_mode",
+    "seconds": 274.76666666666665,
+    "spawned": 43,
+    "expected": 43,
+    "reason": "cleared",
+    "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+   },
+   "browser": {
+    "id": "of-ex3_challenge_mode",
+    "seconds": 10,
+    "errors": [],
+    "units": 1,
+    "canvas": true,
+    "scope": "Headless Chromium, mobile landscape 1440x900: preparation, battle start, canvas and short runtime without page or simulation errors. Original art and full clear not certified."
+   }
+  }
+ }
+}

@@ -1,0 +1,1456 @@
+{
+  "code": "CB-EX3",
+  "name": "Cabin in the Woods",
+  "description": "Every so often, one encounters a piece of postmodern architectural art while wandering through the slums or some other random place, perhaps a symbol of rapture in the concrete jungle.\n<Portable Supply Station>Grants additional skill points to a character or to the Command Terminal.",
+  "battle": {
+    "max_life": 3,
+    "unit_limit": 8,
+    "initial_dp": 10,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1,
+    "max_play_time": -1
+  },
+  "rules": {
+    "variant": null,
+    "source": {
+      "repository": "Kengxxiao/ArknightsGameData",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "path": "zh_CN/gamedata/levels/activities/act5d0/level_act5d0_ex03.json",
+      "sha256": "2dda99525608fd18ba4da27b1899e542485058e3cdf71237b4c02ee04b5822a3",
+      "gitBlob": "5b3480de9da77a7e8a111b665c3d0086f45dbc51",
+      "stageTable": {
+        "path": "zh_CN/gamedata/excel/stage_table.json",
+        "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+        "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+        "stageId": "act5d0_ex03",
+        "levelId": "Activities/ACT5D0/level_act5d0_ex03"
+      }
+    },
+    "battle": {
+      "max_play_time": -1
+    },
+    "enemies": {},
+    "enemyAdd": {},
+    "hiddenGroups": {}
+  },
+  "mapTags": [],
+  "mapTagSource": null,
+  "geometry": {
+    "slug": "cb-ex3",
+    "rows": 8,
+    "cols": 11,
+    "tileLegend": [
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_floor",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_start",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      }
+    ],
+    "tileGrid": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        2,
+        2,
+        2,
+        2,
+        2,
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        2,
+        1,
+        0,
+        1,
+        2,
+        1,
+        1,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        2,
+        1,
+        0,
+        1,
+        2,
+        1,
+        1,
+        0
+      ],
+      [
+        3,
+        2,
+        2,
+        4,
+        2,
+        2,
+        2,
+        4,
+        2,
+        2,
+        5
+      ],
+      [
+        0,
+        3,
+        2,
+        2,
+        0,
+        1,
+        0,
+        2,
+        2,
+        5,
+        0
+      ],
+      [
+        0,
+        1,
+        3,
+        2,
+        2,
+        2,
+        2,
+        2,
+        5,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "routes": [
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 9
+        },
+        "end": {
+          "row": 5,
+          "col": 1
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 3
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 3
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 9
+        },
+        "end": {
+          "row": 5,
+          "col": 1
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 3
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 8
+        },
+        "end": {
+          "row": 6,
+          "col": 2
+        },
+        "checkpoints": [],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 4,
+          "col": 10
+        },
+        "end": {
+          "row": 4,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 3
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 4,
+          "col": 10
+        },
+        "end": {
+          "row": 4,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 3
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 10
+          }
+        ]
+      }
+    ],
+    "waves": [
+      {
+        "index": 0,
+        "duration": 169,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Hound Pro",
+            "enemy_id": "enemy_1000_gopro_2",
+            "count": 1,
+            "time": 8,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Hound Pro",
+            "enemy_id": "enemy_1000_gopro_2",
+            "count": 1,
+            "time": 17,
+            "route": 1,
+            "fragment": 0
+          },
+          {
+            "enemy": "Authorized Caster",
+            "enemy_id": "enemy_1051_norwiz",
+            "count": 1,
+            "time": 20,
+            "route": 1,
+            "fragment": 0
+          },
+          {
+            "enemy": "Hound Pro",
+            "enemy_id": "enemy_1000_gopro_2",
+            "count": 1,
+            "time": 30,
+            "route": 2,
+            "fragment": 1
+          },
+          {
+            "enemy": "Hound Pro",
+            "enemy_id": "enemy_1000_gopro_2",
+            "count": 1,
+            "time": 39,
+            "route": 2,
+            "fragment": 1
+          },
+          {
+            "enemy": "Elite Sicilian",
+            "enemy_id": "enemy_1055_ganman_2",
+            "count": 1,
+            "time": 45,
+            "route": 2,
+            "fragment": 1
+          },
+          {
+            "enemy": "Authorized Caster",
+            "enemy_id": "enemy_1051_norwiz",
+            "count": 1,
+            "time": 36,
+            "route": 1,
+            "fragment": 1
+          },
+          {
+            "enemy": "Hound Pro",
+            "enemy_id": "enemy_1000_gopro_2",
+            "count": 1,
+            "time": 48,
+            "route": 3,
+            "fragment": 2
+          },
+          {
+            "enemy": "Hound Pro",
+            "enemy_id": "enemy_1000_gopro_2",
+            "count": 1,
+            "time": 57,
+            "route": 3,
+            "fragment": 2
+          },
+          {
+            "enemy": "Fanatic",
+            "enemy_id": "enemy_1059_buster",
+            "count": 1,
+            "time": 63,
+            "route": 4,
+            "fragment": 2
+          },
+          {
+            "enemy": "Elite Sicilian",
+            "enemy_id": "enemy_1055_ganman_2",
+            "count": 2,
+            "time": 60,
+            "interval": 10,
+            "route": 2,
+            "fragment": 2
+          },
+          {
+            "enemy": "Authorized Caster",
+            "enemy_id": "enemy_1051_norwiz",
+            "count": 2,
+            "time": 60,
+            "interval": 10,
+            "route": 1,
+            "fragment": 2
+          },
+          {
+            "enemy": "Elite Sicilian",
+            "enemy_id": "enemy_1055_ganman_2",
+            "count": 1,
+            "time": 78,
+            "route": 2,
+            "fragment": 3
+          },
+          {
+            "enemy": "Elite Brawler",
+            "enemy_id": "enemy_1056_ganwar_2",
+            "count": 1,
+            "time": 87,
+            "route": 2,
+            "fragment": 3
+          },
+          {
+            "enemy": "Authorized Caster Leader",
+            "enemy_id": "enemy_1051_norwiz_2",
+            "count": 1,
+            "time": 84,
+            "route": 1,
+            "fragment": 3
+          },
+          {
+            "enemy": "Elite Sicilian",
+            "enemy_id": "enemy_1055_ganman_2",
+            "count": 2,
+            "time": 100,
+            "interval": 4,
+            "route": 2,
+            "fragment": 4
+          },
+          {
+            "enemy": "Elite Brawler",
+            "enemy_id": "enemy_1056_ganwar_2",
+            "count": 2,
+            "time": 114,
+            "interval": 7,
+            "route": 2,
+            "fragment": 4
+          },
+          {
+            "enemy": "Authorized Caster Leader",
+            "enemy_id": "enemy_1051_norwiz_2",
+            "count": 1,
+            "time": 103,
+            "route": 1,
+            "fragment": 4
+          },
+          {
+            "enemy": "Authorized Caster",
+            "enemy_id": "enemy_1051_norwiz",
+            "count": 2,
+            "time": 112,
+            "interval": 6,
+            "route": 1,
+            "fragment": 4
+          },
+          {
+            "enemy": "Desperate Fanatic",
+            "enemy_id": "enemy_1059_buster_2",
+            "count": 1,
+            "time": 104,
+            "route": 4,
+            "fragment": 4
+          },
+          {
+            "enemy": "Elite Sicilian",
+            "enemy_id": "enemy_1055_ganman_2",
+            "count": 4,
+            "time": 139,
+            "interval": 6,
+            "route": 2,
+            "fragment": 5
+          },
+          {
+            "enemy": "Elite Brawler",
+            "enemy_id": "enemy_1056_ganwar_2",
+            "count": 2,
+            "time": 163,
+            "interval": 6,
+            "route": 2,
+            "fragment": 5
+          },
+          {
+            "enemy": "Desperate Fanatic",
+            "enemy_id": "enemy_1059_buster_2",
+            "count": 2,
+            "time": 143,
+            "interval": 12,
+            "route": 3,
+            "fragment": 5
+          },
+          {
+            "enemy": "Authorized Caster",
+            "enemy_id": "enemy_1051_norwiz",
+            "count": 4,
+            "time": 141,
+            "interval": 7,
+            "route": 1,
+            "fragment": 5
+          }
+        ]
+      }
+    ],
+    "spawnTiles": [
+      {
+        "key": "tile_start",
+        "row": 4,
+        "col": 10,
+        "routes": [
+          3,
+          3,
+          4,
+          4,
+          3
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 5,
+        "col": 9,
+        "routes": [
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 6,
+        "col": 8,
+        "routes": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ]
+      }
+    ],
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 4,
+        "col": 0,
+        "routes": [
+          3,
+          3,
+          4,
+          4,
+          3
+        ]
+      },
+      {
+        "key": "tile_end",
+        "row": 5,
+        "col": 1,
+        "routes": [
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "key": "tile_end",
+        "row": 6,
+        "col": 2,
+        "routes": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ]
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_1000_gopro_2",
+        "slug": "hound_pro",
+        "name": "Hound Pro",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1051_norwiz",
+        "slug": "authorized_caster",
+        "name": "Authorized Caster",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1051_norwiz_2",
+        "slug": "authorized_caster_leader",
+        "name": "Authorized Caster Leader",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1055_ganman_2",
+        "slug": "elite_sicilian",
+        "name": "Elite Sicilian",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1056_ganwar_2",
+        "slug": "elite_brawler",
+        "name": "Elite Brawler",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1059_buster",
+        "slug": "fanatic",
+        "name": "Fanatic",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1059_buster_2",
+        "slug": "desperate_fanatic",
+        "name": "Desperate Fanatic",
+        "database_level": 0
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [],
+      "deployable_tokens": [
+        {
+          "unit": "Portable Supply Station",
+          "unit_id": "trap_009_battery",
+          "count": 1,
+          "level": 1,
+          "elite": 0,
+          "potential": 0,
+          "skill_index": -1,
+          "skill_level": 1
+        }
+      ]
+    },
+    "hasConditionalSpawns": false
+  },
+  "terrain": [],
+  "conditionalHandled": false,
+  "devices": [],
+  "tokens": [
+    {
+      "unitId": "trap_009_battery",
+      "name": "Portable Supply Station",
+      "count": 1,
+      "kind": "battery",
+      "supplyCard": true,
+      "hp": 10,
+      "cost": 10,
+      "cooldown": 5,
+      "refundRatio": 0.5,
+      "taunt": 0,
+      "anyBuildOnly": true,
+      "chooseFacing": true,
+      "interval": 4,
+      "sp": 3,
+      "range": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "description": "Restores 3 SP every 4 seconds to each eligible allied unit in front. Skill SP restrictions still apply.",
+      "def": 0,
+      "block": 0,
+      "position": "NONE",
+      "behavior": "range-supply"
+    }
+  ],
+  "pathing": {
+    "schemaVersion": 1,
+    "syntheticRoutes": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "producer": "Arkpedia stage browser / buildPlaybackPaths",
+    "stage": "CB-EX3",
+    "geometryHash": "e9f13c17519fd4c9ceb9d2ff68409e070c8ac03e912578764aa336eabd90e442",
+    "moveScale": 0.65,
+    "paths": {
+      "0": {
+        "points": [
+          [
+            9,
+            5
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            1,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "1": {
+        "points": [
+          [
+            9,
+            5
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            1,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "2": {
+        "points": [
+          [
+            8,
+            6
+          ],
+          [
+            2,
+            6
+          ]
+        ],
+        "distances": [
+          0,
+          1
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "3": {
+        "points": [
+          [
+            10,
+            4
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            0,
+            4
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "4": {
+        "points": [
+          [
+            10,
+            4
+          ],
+          [
+            9,
+            4
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            0,
+            4
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "breaks": [],
+        "holds": []
+      }
+    }
+  },
+  "art": null,
+  "gates": null,
+  "fixedSquad": null,
+  "enemies": {
+    "enemy_1000_gopro_2": {
+      "key": "enemy_1000_gopro_2",
+      "prefabKey": "enemy_1000_gopro_2",
+      "name": "Hound Pro",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 1700,
+        "atk": 260,
+        "def": 0,
+        "res": 20,
+        "moveSpeed": 1.9,
+        "bat": 1.4,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 0,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "infection"
+      ]
+    },
+    "enemy_1051_norwiz": {
+      "key": "enemy_1051_norwiz",
+      "prefabKey": "enemy_1051_norwiz",
+      "name": "Authorized Caster",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 3000,
+        "atk": 320,
+        "def": 100,
+        "res": 50,
+        "moveSpeed": 0.8,
+        "bat": 4,
+        "aspd": 100,
+        "rangeRadius": 1.8,
+        "rawRangeRadius": 1.8,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "arts",
+        "dmgTypes": [
+          "arts"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1055_ganman_2": {
+      "key": "enemy_1055_ganman_2",
+      "prefabKey": "enemy_1055_ganman_2",
+      "name": "Elite Sicilian",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 3800,
+        "atk": 350,
+        "def": 160,
+        "res": 10,
+        "moveSpeed": 1,
+        "bat": 2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1059_buster": {
+      "key": "enemy_1059_buster",
+      "prefabKey": "enemy_1059_buster",
+      "name": "Fanatic",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 9000,
+        "atk": 700,
+        "def": 500,
+        "res": 0,
+        "moveSpeed": 0.8,
+        "bat": 5,
+        "aspd": 100,
+        "rangeRadius": 1.3,
+        "rawRangeRadius": 1.3,
+        "blockCnt": 1,
+        "massLevel": 2,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Prioritizes attacking the Command Terminal",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "atkup.atk_scale": 1.5
+        },
+        "bbStr": {},
+        "groups": {
+          "atkup": [
+            "atk_scale"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1051_norwiz_2": {
+      "key": "enemy_1051_norwiz_2",
+      "prefabKey": "enemy_1051_norwiz_2",
+      "name": "Authorized Caster Leader",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 4000,
+        "atk": 350,
+        "def": 200,
+        "res": 50,
+        "moveSpeed": 0.8,
+        "bat": 4,
+        "aspd": 100,
+        "rangeRadius": 1.8,
+        "rawRangeRadius": 1.8,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "arts",
+        "dmgTypes": [
+          "arts"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1056_ganwar_2": {
+      "key": "enemy_1056_ganwar_2",
+      "prefabKey": "enemy_1056_ganwar_2",
+      "name": "Elite Brawler",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 4200,
+        "atk": 380,
+        "def": 300,
+        "res": 0,
+        "moveSpeed": 0.95,
+        "bat": 0.4,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1059_buster_2": {
+      "key": "enemy_1059_buster_2",
+      "prefabKey": "enemy_1059_buster_2",
+      "name": "Desperate Fanatic",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 13000,
+        "atk": 800,
+        "def": 600,
+        "res": 0,
+        "moveSpeed": 0.8,
+        "bat": 5,
+        "aspd": 100,
+        "rangeRadius": 1.3,
+        "rawRangeRadius": 1.3,
+        "blockCnt": 1,
+        "massLevel": 2,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Prioritizes attacking the Command Terminal",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "atkup.atk_scale": 1.8
+        },
+        "bbStr": {},
+        "groups": {
+          "atkup": [
+            "atk_scale"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    }
+  },
+  "contentAddition": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/cb-ex3.json",
+          "sha256": "f9c3487990a23699a73f45ddafeb0035391fceb249583d823c455fb222803274"
+        },
+        {
+          "path": "stage-geometry/cb-ex3.json",
+          "sha256": "e9f13c17519fd4c9ceb9d2ff68409e070c8ac03e912578764aa336eabd90e442"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        }
+      ],
+      "localFiles": [
+        {
+          "path": "data/stage-rules/cb-ex3.json",
+          "sha256": "fac874b669b5dd3e353c1cb3ef81f5010fbe00bca8bc16169d7d4165b3ec218b"
+        },
+        {
+          "path": "data/stage-rules/levels/11a72ac9fbf675faf5a77816468c687bcef16e4671b58ea1308c511fbb762223.json",
+          "sha256": "11a72ac9fbf675faf5a77816468c687bcef16e4671b58ea1308c511fbb762223"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/5b3480de9da77a7e8a111b665c3d0086f45dbc51.json",
+          "sha256": "2dda99525608fd18ba4da27b1899e542485058e3cdf71237b4c02ee04b5822a3"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/5b3480de9da77a7e8a111b665c3d0086f45dbc51.json",
+          "sha256": "2dda99525608fd18ba4da27b1899e542485058e3cdf71237b4c02ee04b5822a3"
+        }
+      ]
+    },
+    "dependencies": {
+      "enemies": [
+        "enemy_1000_gopro_2",
+        "enemy_1051_norwiz",
+        "enemy_1051_norwiz_2",
+        "enemy_1055_ganman_2",
+        "enemy_1056_ganwar_2",
+        "enemy_1059_buster",
+        "enemy_1059_buster_2"
+      ],
+      "devices": [],
+      "tokens": [
+        "trap_009_battery"
+      ]
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 10,
+        "spawned": 1,
+        "errors": 0
+      },
+      "publicReview": "pending",
+      "waveSchedule": {
+        "id": "cb-ex3",
+        "seconds": 185.8,
+        "spawned": 37,
+        "expected": 37,
+        "dynamicSpawns": 0,
+        "reason": "cleared",
+        "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+      },
+      "browserStartup": {
+        "id": "cb-ex3",
+        "seconds": 20,
+        "errors": [],
+        "units": 2,
+        "canvas": true,
+        "scope": "Mobile landscape browser startup and canvas runtime; not a fidelity approval"
+      }
+    }
+  },
+  "contentRuleRefresh": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/cb-ex3.json",
+          "sha256": "f9c3487990a23699a73f45ddafeb0035391fceb249583d823c455fb222803274"
+        },
+        {
+          "path": "stage-geometry/cb-ex3.json",
+          "sha256": "e9f13c17519fd4c9ceb9d2ff68409e070c8ac03e912578764aa336eabd90e442"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        }
+      ],
+      "localFiles": [
+        {
+          "path": "data/stage-rules/cb-ex3.json",
+          "sha256": "fac874b669b5dd3e353c1cb3ef81f5010fbe00bca8bc16169d7d4165b3ec218b"
+        },
+        {
+          "path": "data/stage-rules/levels/11a72ac9fbf675faf5a77816468c687bcef16e4671b58ea1308c511fbb762223.json",
+          "sha256": "11a72ac9fbf675faf5a77816468c687bcef16e4671b58ea1308c511fbb762223"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/5b3480de9da77a7e8a111b665c3d0086f45dbc51.json",
+          "sha256": "2dda99525608fd18ba4da27b1899e542485058e3cdf71237b4c02ee04b5822a3"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/5b3480de9da77a7e8a111b665c3d0086f45dbc51.json",
+          "sha256": "2dda99525608fd18ba4da27b1899e542485058e3cdf71237b4c02ee04b5822a3"
+        },
+        {
+          "path": "data/arkpedia-device-source.json",
+          "sha256": "64515531475bbde6c454f96b0a2c797edffc6f986c27d504539602d979b6fb7a"
+        },
+        {
+          "path": "data/arkpedia-device-native-source.json",
+          "sha256": "7340512aaf1e3ddeff9a9c6fb77a6b92e64513e9abc1951e89b780ccb10bd09c"
+        }
+      ]
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 10,
+        "spawned": 1,
+        "errors": 0
+      }
+    },
+    "changed": [
+      "tokens"
+    ]
+  }
+}

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { stageSummonCost, stageCardRespawnTime } from './arkpedia-stage-card-cost.js';
 import { canSpendDp } from './arkpedia-dp-budget.js';
 // Opt-in native-source device diagnostic. Public approval and owner skills are separate.
 import evidence from '../../../data/arkpedia-stainless-prefabs.json' with { type: 'json' };
@@ -90,7 +91,7 @@ export class StainlessDeviceDeck {
     if (!allowed.includes(build)) return this.index === 2 ? 'Choose a melee tile.' : 'Choose a deployable tile.';
     if (b.unitAt(row, col)) return 'Tile is occupied.';
     if (b.tileReservation(row, col) || b.downOn(row, col)) return 'Tile is reserved for an operator return.';
-    if (!canSpendDp(b, this.u.ownerId, this.record.stats.cost)) return 'Not enough DP.';
+    if (!canSpendDp(b, this.u.ownerId, stageSummonCost(this.b, this.record))) return 'Not enough DP.';
     return null;
   }
   place(row, col, dir = 'RIGHT') {
@@ -118,8 +119,8 @@ export class StainlessDeviceDeck {
     state = { unit: t, seq: t.deploySeq, recipients: new Map(), bornAt: b.time + this.model(t).durations.Start,
       bleedAt: b.time + 1, phase: null, cooldownAt: b.time };
     this.devices.set(t, state); this.visual(t, 'Start');
-    this.stock--; this.u.player.dp -= this.record.stats.cost;
-    this.readyAt = b.time + this.record.stats.respawnTime;
+    this.stock--; this.u.player.dp -= stageSummonCost(this.b, this.record);
+    this.readyAt = b.time + stageCardRespawnTime(this.b, this.record);
     this.syncAura(state); return t;
   }
   model(t) {
@@ -247,7 +248,7 @@ export class StainlessDeviceDeck {
   }
   retreat(t) {
     if (!this.devices.has(t) || !present(t)) throw Error('Device is not deployed.');
-    this.b.addDp(this.u.ownerId, Math.floor(this.record.stats.cost * this.state.config.refundRatio));
+    this.b.addDp(this.u.ownerId, Math.floor(stageSummonCost(this.b, this.record) * this.state.config.refundRatio));
     this.b._remove(t, 'retreat', null, true);
   }
   removed(t) {
@@ -260,7 +261,7 @@ export class StainlessDeviceDeck {
       && new Set(absoluteRangeKeys(grid(talent.rangeId), this.u.tileR, this.u.tileC, this.u.dir)).has(t.tileR * 21 + t.tileC)
       && this.b.rng() < this.core.record.recycle.prob) {
       this.recharge(this.core.record.recycle.cnt);
-      this.readyAt = this.b.time + this.record.stats.respawnTime;
+      this.readyAt = this.b.time + stageCardRespawnTime(this.b, this.record);
     }
   }
   install() {

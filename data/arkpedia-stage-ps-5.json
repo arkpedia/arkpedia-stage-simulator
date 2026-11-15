@@ -1,0 +1,2034 @@
+{
+ "code": "PS-5",
+ "name": "Competition",
+ "description": "Watch out! They run fast and go boom!",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "rules": {
+  "variant": null,
+  "source": {
+   "repository": "Kengxxiao/ArknightsGameData",
+   "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+   "path": "zh_CN/gamedata/levels/activities/act9mini/level_act9mini_05.json",
+   "sha256": "ec7f9f2fe01af37e681d5380b17a9a6b1689fe28a54e5e5d22749a82731bbf54",
+   "gitBlob": "b03cabbfd94723e22cbc0c2cd8d06f71261203c8",
+   "stageTable": {
+    "path": "zh_CN/gamedata/excel/stage_table.json",
+    "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+    "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+    "stageId": "act9mini_05",
+    "levelId": "Activities/act9mini/level_act9mini_05"
+   }
+  },
+  "battle": {},
+  "enemies": {},
+  "enemyAdd": {},
+  "hiddenGroups": {
+   "hidden_fstar": false
+  }
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "ps-5",
+  "rows": 7,
+  "cols": 12,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_flystart",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    1,
+    2,
+    3,
+    3,
+    3,
+    2,
+    3,
+    3,
+    3,
+    3,
+    4,
+    0
+   ],
+   [
+    0,
+    2,
+    0,
+    4,
+    4,
+    5,
+    4,
+    3,
+    4,
+    3,
+    4,
+    0
+   ],
+   [
+    0,
+    2,
+    4,
+    3,
+    6,
+    0,
+    6,
+    3,
+    4,
+    3,
+    4,
+    0
+   ],
+   [
+    0,
+    2,
+    4,
+    3,
+    0,
+    5,
+    4,
+    0,
+    0,
+    3,
+    4,
+    0
+   ],
+   [
+    1,
+    2,
+    3,
+    3,
+    3,
+    2,
+    3,
+    3,
+    3,
+    3,
+    4,
+    0
+   ],
+   [
+    0,
+    5,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   null,
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 5
+    },
+    "end": {
+     "row": 3,
+     "col": 6
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 9
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 35
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 5
+    },
+    "end": {
+     "row": 3,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 55
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 1
+    },
+    "end": {
+     "row": 3,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 3
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 65
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 1
+    },
+    "end": {
+     "row": 3,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 3
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": -1,
+      "seconds": 75
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 5
+    },
+    "end": {
+     "row": 3,
+     "col": 6
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 9
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 3
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 5
+    },
+    "end": {
+     "row": 3,
+     "col": 6
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 9
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 5,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 6
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 7
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 5
+    },
+    "end": {
+     "row": 3,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 3
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 5
+    },
+    "end": {
+     "row": 3,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 1
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 6
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 7
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 1
+    },
+    "end": {
+     "row": 3,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 3
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 1
+    },
+    "end": {
+     "row": 3,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 3
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 5
+    },
+    "end": {
+     "row": 3,
+     "col": 6
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 9
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 5
+    },
+    "end": {
+     "row": 3,
+     "col": 4
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ]
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 227,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Tactical Hound Pro",
+      "enemy_id": "enemy_1140_merhd_2",
+      "count": 1,
+      "time": 3,
+      "route": 5,
+      "fragment": 1
+     },
+     {
+      "enemy": "Tactical Hound Pro",
+      "enemy_id": "enemy_1140_merhd_2",
+      "count": 3,
+      "time": 16,
+      "interval": 10,
+      "route": 6,
+      "fragment": 1
+     },
+     {
+      "enemy": "Tactical Hound Pro",
+      "enemy_id": "enemy_1140_merhd_2",
+      "count": 3,
+      "time": 17,
+      "interval": 10,
+      "route": 6,
+      "fragment": 1
+     },
+     {
+      "enemy": "Bombtail",
+      "enemy_id": "enemy_1040_bombd",
+      "count": 1,
+      "time": 20,
+      "route": 7,
+      "fragment": 1
+     },
+     {
+      "enemy": "Tactical Hound Pro",
+      "enemy_id": "enemy_1140_merhd_2",
+      "count": 1,
+      "time": 45,
+      "route": 8,
+      "fragment": 2
+     },
+     {
+      "enemy": "Tactical Hound Pro",
+      "enemy_id": "enemy_1140_merhd_2",
+      "count": 3,
+      "time": 58,
+      "interval": 10,
+      "route": 9,
+      "fragment": 2
+     },
+     {
+      "enemy": "Tactical Hound Pro",
+      "enemy_id": "enemy_1140_merhd_2",
+      "count": 3,
+      "time": 59,
+      "interval": 10,
+      "route": 9,
+      "fragment": 2
+     },
+     {
+      "enemy": "Bombtail",
+      "enemy_id": "enemy_1040_bombd",
+      "count": 1,
+      "time": 62,
+      "route": 10,
+      "fragment": 2
+     },
+     {
+      "enemy": "Anti-Armor Infantry Leader",
+      "enemy_id": "enemy_1143_merrpg_2",
+      "count": 1,
+      "time": 92,
+      "route": 11,
+      "fragment": 3
+     },
+     {
+      "enemy": "Sarkaz Lancer",
+      "enemy_id": "enemy_1072_dlancer",
+      "count": 1,
+      "time": 100,
+      "route": 12,
+      "fragment": 4
+     },
+     {
+      "enemy": "Tactical Hound Pro",
+      "enemy_id": "enemy_1140_merhd_2",
+      "count": 1,
+      "time": 100,
+      "route": 9,
+      "fragment": 4
+     },
+     {
+      "enemy": "Tactical Hound Pro",
+      "enemy_id": "enemy_1140_merhd_2",
+      "count": 3,
+      "time": 113,
+      "interval": 10,
+      "route": 9,
+      "fragment": 4
+     },
+     {
+      "enemy": "Tactical Hound Pro",
+      "enemy_id": "enemy_1140_merhd_2",
+      "count": 3,
+      "time": 114,
+      "interval": 10,
+      "route": 9,
+      "fragment": 4
+     },
+     {
+      "enemy": "Bombtail",
+      "enemy_id": "enemy_1040_bombd",
+      "count": 1,
+      "time": 117,
+      "route": 7,
+      "fragment": 4
+     },
+     {
+      "enemy": "Anti-Armor Infantry Leader",
+      "enemy_id": "enemy_1143_merrpg_2",
+      "count": 1,
+      "time": 147,
+      "route": 13,
+      "fragment": 5
+     },
+     {
+      "enemy": "Anti-Armor Infantry Leader",
+      "enemy_id": "enemy_1143_merrpg_2",
+      "count": 1,
+      "time": 147,
+      "route": 14,
+      "fragment": 5
+     },
+     {
+      "enemy": "Tactical Hound Pro",
+      "enemy_id": "enemy_1140_merhd_2",
+      "count": 3,
+      "time": 168,
+      "interval": 10,
+      "route": 9,
+      "fragment": 6
+     },
+     {
+      "enemy": "Tactical Hound Pro",
+      "enemy_id": "enemy_1140_merhd_2",
+      "count": 3,
+      "time": 169,
+      "interval": 10,
+      "route": 9,
+      "fragment": 6
+     },
+     {
+      "enemy": "Tactical Hound Pro",
+      "enemy_id": "enemy_1140_merhd_2",
+      "count": 3,
+      "time": 165,
+      "interval": 10,
+      "route": 6,
+      "fragment": 6
+     },
+     {
+      "enemy": "Tactical Hound Pro",
+      "enemy_id": "enemy_1140_merhd_2",
+      "count": 3,
+      "time": 166,
+      "interval": 10,
+      "route": 6,
+      "fragment": 6
+     },
+     {
+      "enemy": "Bombtail-G",
+      "enemy_id": "enemy_1040_bombd_2",
+      "count": 2,
+      "time": 214,
+      "interval": 13,
+      "route": 7,
+      "fragment": 7
+     },
+     {
+      "enemy": "Bombtail-G",
+      "enemy_id": "enemy_1040_bombd_2",
+      "count": 2,
+      "time": 214,
+      "interval": 13,
+      "route": 10,
+      "fragment": 7
+     },
+     {
+      "enemy": "Sarkaz Lancer",
+      "enemy_id": "enemy_1072_dlancer",
+      "count": 1,
+      "time": 200,
+      "route": 12,
+      "fragment": 7
+     },
+     {
+      "enemy": "Anti-Armor Infantry Leader",
+      "enemy_id": "enemy_1143_merrpg_2",
+      "count": 1,
+      "time": 197,
+      "route": 13,
+      "fragment": 7
+     },
+     {
+      "enemy": "Anti-Armor Infantry Leader",
+      "enemy_id": "enemy_1143_merrpg_2",
+      "count": 1,
+      "time": 197,
+      "route": 14,
+      "fragment": 7
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_flystart",
+    "row": 1,
+    "col": 0,
+    "routes": [
+     10,
+     10
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 2,
+    "col": 5,
+    "routes": [
+     8,
+     9,
+     9,
+     9,
+     9,
+     9,
+     14,
+     9,
+     9,
+     14
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 4,
+    "col": 5,
+    "routes": [
+     5,
+     6,
+     6,
+     13,
+     6,
+     6,
+     13
+    ]
+   },
+   {
+    "key": "tile_flystart",
+    "row": 5,
+    "col": 0,
+    "routes": [
+     7,
+     7,
+     7
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 6,
+    "col": 1,
+    "routes": [
+     11,
+     12,
+     12
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 3,
+    "col": 4,
+    "routes": [
+     2,
+     3,
+     4,
+     8,
+     9,
+     9,
+     11,
+     12,
+     9,
+     9,
+     9,
+     14,
+     9,
+     9,
+     12,
+     14
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 3,
+    "col": 6,
+    "routes": [
+     1,
+     5,
+     6,
+     6,
+     7,
+     10,
+     7,
+     13,
+     6,
+     6,
+     7,
+     10,
+     13
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1040_bombd",
+    "slug": "bombtail",
+    "name": "Bombtail",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1040_bombd_2",
+    "slug": "bombtail_g",
+    "name": "Bombtail-G",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1072_dlancer",
+    "slug": "sarkaz_lancer",
+    "name": "Sarkaz Lancer",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1140_merhd_2",
+    "slug": "tactical_hound_pro",
+    "name": "Tactical Hound Pro",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1143_merrpg_2",
+    "slug": "anti_armor_infantry_leader",
+    "name": "Anti-Armor Infantry Leader",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false,
+  "source": "cn",
+  "hiddenGroupsMerged": 0
+ },
+ "terrain": [],
+ "conditionalHandled": false,
+ "devices": [],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14
+  ],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "PS-5",
+  "geometryHash": "5cc947fb91bf2b2ade6855809553c08373bb05365071c91cdb33ca3c094fd9dc",
+  "moveScale": 0.65,
+  "paths": {
+   "5": {
+    "points": [
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      6,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "6": {
+    "points": [
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      6,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "7": {
+    "points": [
+     [
+      0,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      10,
+      5
+     ],
+     [
+      10,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "8": {
+    "points": [
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      4,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "9": {
+    "points": [
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      4,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "10": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      10,
+      1
+     ],
+     [
+      10,
+      3
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      6,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "11": {
+    "points": [
+     [
+      1,
+      6
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      4,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "12": {
+    "points": [
+     [
+      1,
+      6
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      4,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "13": {
+    "points": [
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      6,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "14": {
+    "points": [
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      4,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1140_merhd_2": {
+   "key": "enemy_1140_merhd_2",
+   "prefabKey": "enemy_1140_merhd_2",
+   "name": "Tactical Hound Pro",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3500,
+    "atk": 380,
+    "def": 0,
+    "res": 30,
+    "moveSpeed": 1.9,
+    "bat": 1.5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1040_bombd": {
+   "key": "enemy_1040_bombd",
+   "prefabKey": "enemy_1040_bombd",
+   "name": "Bombtail",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 4000,
+    "atk": 800,
+    "def": 150,
+    "res": 30,
+    "moveSpeed": 0.6,
+    "bat": 5,
+    "aspd": 100,
+    "rangeRadius": 2,
+    "rawRangeRadius": 2,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "FLY",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Flying unit.",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Can launch a warhead to deal AoE physical damage",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Gains significantly increased Movement Speed after launching warhead",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [
+    {
+     "prefabKey": "boomb",
+     "priority": 0,
+     "cooldown": 1,
+     "initCooldown": 1,
+     "spCost": 0,
+     "bb": {
+      "move_speed": 2
+     },
+     "bbStr": {}
+    }
+   ],
+   "notCountInTotal": false,
+   "tags": [
+    "drone"
+   ]
+  },
+  "enemy_1143_merrpg_2": {
+   "key": "enemy_1143_merrpg_2",
+   "prefabKey": "enemy_1143_merrpg_2",
+   "name": "Anti-Armor Infantry Leader",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "ALL",
+   "stats": {
+    "maxHp": 4800,
+    "atk": 750,
+    "def": 50,
+    "res": 40,
+    "moveSpeed": 0.9,
+    "bat": 2.6,
+    "aspd": 100,
+    "rangeRadius": 4,
+    "rawRangeRadius": 4,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Can fire a super long-range grenade, dealing AoE Physical damage",
+     "format": "NORMAL"
+    },
+    {
+     "text": "After firing, significantly increases Movement Speed and can only perform melee attacks",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "Combat.attack@atk_scale": 2,
+     "MoveSpeedUp.move_speed": 2
+    },
+    "bbStr": {},
+    "groups": {
+     "Combat": [
+      "attack@atk_scale"
+     ],
+     "MoveSpeedUp": [
+      "move_speed"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1072_dlancer": {
+   "key": "enemy_1072_dlancer",
+   "prefabKey": "enemy_1072_dlancer",
+   "name": "Sarkaz Lancer",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 6000,
+    "atk": 450,
+    "def": 150,
+    "res": 40,
+    "moveSpeed": 0.25,
+    "bat": 4,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Gradually accelerates when moving, and deals additional damage on the first attack after being blocked based upon Movement Speed.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "rush.dlancer_t[trigger].move_speed": 0.5,
+     "rush.dlancer_t[trigger].interval": 0.5,
+     "rush.dlancer_t[trigger].trig_cnt": 25,
+     "firstattack.atk_scale": 600
+    },
+    "bbStr": {},
+    "groups": {
+     "rush": [
+      "dlancer_t[trigger].interval",
+      "dlancer_t[trigger].move_speed",
+      "dlancer_t[trigger].trig_cnt"
+     ],
+     "firstattack": [
+      "atk_scale"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "sarkaz"
+   ]
+  },
+  "enemy_1040_bombd_2": {
+   "key": "enemy_1040_bombd_2",
+   "prefabKey": "enemy_1040_bombd_2",
+   "name": "Bombtail-G",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 6000,
+    "atk": 1500,
+    "def": 220,
+    "res": 30,
+    "moveSpeed": 0.6,
+    "bat": 5,
+    "aspd": 100,
+    "rangeRadius": 2,
+    "rawRangeRadius": 2,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "FLY",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Flying unit.",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Can launch a warhead to deal AoE physical damage",
+     "format": "NORMAL"
+    },
+    {
+     "text": "Gains significantly increased Movement Speed after launching warhead",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [
+    {
+     "prefabKey": "boomb",
+     "priority": 0,
+     "cooldown": 1,
+     "initCooldown": 1,
+     "spCost": 0,
+     "bb": {
+      "move_speed": 2
+     },
+     "bbStr": {}
+    }
+   ],
+   "notCountInTotal": false,
+   "tags": [
+    "drone"
+   ]
+  }
+ },
+ "contentAddition": {
+  "schemaVersion": 1,
+  "source": {
+   "repository": "arkpedia/arkpedia-data",
+   "commit": "66232ee06377d791fb130248d680764c286e5c99",
+   "files": [
+    {
+     "path": "stages/ps-5.json",
+     "sha256": "c3bc979c01570c1220c715333f8b5cd371da8013a1567ac2bb65b011338a8659"
+    },
+    {
+     "path": "stage-geometry/ps-5.json",
+     "sha256": "1818d4d5923b73fa4e64128f23831b39bb6aebde103f25146f73f3601960ccb3"
+    },
+    {
+     "path": "stage-devices.json",
+     "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+    },
+    {
+     "path": "stage-conditional/ps-5.json",
+     "sha256": "4a61379e517e0344e551b9a485f27d1f55776b6de8ad15ae57f51aaeee3bf8d6"
+    }
+   ],
+   "localFiles": [
+    {
+     "path": "data/stage-rules/ps-5.json",
+     "sha256": "d3e4967a59c585566af6a510157786b854122688e0d4206c838c2dbb3e54251e"
+    },
+    {
+     "path": "data/stage-rules/levels/a30667f28cad2a69827879ae33082b29f1b24327c1428dc59670191ad7e2f1d3.json",
+     "sha256": "a30667f28cad2a69827879ae33082b29f1b24327c1428dc59670191ad7e2f1d3"
+    },
+    {
+     "path": ".cache/arkpedia/original-level-blobs/b03cabbfd94723e22cbc0c2cd8d06f71261203c8.json",
+     "sha256": "ec7f9f2fe01af37e681d5380b17a9a6b1689fe28a54e5e5d22749a82731bbf54"
+    }
+   ]
+  },
+  "dependencies": {
+   "enemies": [
+    "enemy_1040_bombd",
+    "enemy_1040_bombd_2",
+    "enemy_1072_dlancer",
+    "enemy_1140_merhd_2",
+    "enemy_1143_merrpg_2"
+   ],
+   "devices": [],
+   "tokens": []
+  },
+  "validation": {
+   "smoke": {
+    "seconds": 10,
+    "spawned": 1,
+    "errors": 0
+   },
+   "publicReview": "pending",
+   "waveSchedule": {
+    "id": "ps-5",
+    "seconds": 268.0333333333333,
+    "spawned": 47,
+    "expected": 47,
+    "dynamicSpawns": 0,
+    "reason": "cleared",
+    "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+   }
+  }
+ }
+}

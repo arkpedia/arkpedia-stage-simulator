@@ -1,0 +1,2089 @@
+{
+  "code": "TW-8",
+  "name": "Sinking Moonlight",
+  "description": "Even knowing the truth, none of them will stop. Only the determination of death can push back this primal rage.\n<'Gramophone'>Both allied and enemy units will fight for control over this device; When activated, deals Arts damage to enemies and heals allies",
+  "battle": {
+    "max_life": 3,
+    "unit_limit": 9,
+    "initial_dp": 10,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1,
+    "max_play_time": -1
+  },
+  "rules": {
+    "variant": null,
+    "source": {
+      "repository": "Kengxxiao/ArknightsGameData",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "path": "zh_CN/gamedata/levels/activities/act11d0/level_act11d0_08.json",
+      "sha256": "085ab2a969b2e66de3a8d1c70bc5472f8e1e70e2e240f0b89ee689a99e688b90",
+      "gitBlob": "9926d9a1dcb39b336c9af848392b786ea3042384",
+      "stageTable": {
+        "path": "zh_CN/gamedata/excel/stage_table.json",
+        "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+        "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+        "stageId": "act11d0_08",
+        "levelId": "Activities/ACT11D0/level_act11d0_08"
+      }
+    },
+    "battle": {
+      "max_play_time": -1
+    },
+    "enemies": {},
+    "enemyAdd": {},
+    "hiddenGroups": {}
+  },
+  "mapTags": [],
+  "mapTagSource": null,
+  "geometry": {
+    "slug": "tw-8",
+    "rows": 8,
+    "cols": 12,
+    "tileLegend": [
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_start",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_floor",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      }
+    ],
+    "tileGrid": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        2,
+        2,
+        2,
+        3,
+        2,
+        3,
+        2,
+        3,
+        2,
+        2,
+        1
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        4,
+        4,
+        0,
+        3,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        5,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        0,
+        0,
+        3,
+        5
+      ],
+      [
+        0,
+        0,
+        4,
+        0,
+        3,
+        4,
+        4,
+        3,
+        0,
+        4,
+        3,
+        0
+      ],
+      [
+        0,
+        4,
+        4,
+        0,
+        3,
+        4,
+        4,
+        3,
+        0,
+        4,
+        3,
+        0
+      ],
+      [
+        0,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        2,
+        0
+      ],
+      [
+        0,
+        5,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ]
+    ],
+    "routes": [
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 0
+        },
+        "end": {
+          "row": 3,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 4
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 3
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 11
+        },
+        "end": {
+          "row": 3,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 10
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 7
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 3
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 11
+        },
+        "end": {
+          "row": 3,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 7
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 0
+        },
+        "end": {
+          "row": 3,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 7
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 11
+        },
+        "end": {
+          "row": 3,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 7
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 3
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 0
+        },
+        "end": {
+          "row": 3,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 7
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 7,
+          "col": 10
+        },
+        "end": {
+          "row": 3,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 10
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 4
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 3
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 7,
+          "col": 10
+        },
+        "end": {
+          "row": 3,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 10
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 4
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 0
+        },
+        "end": {
+          "row": 7,
+          "col": 1
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 1
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 5
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 2,
+            "seconds": 5
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 3,
+            "seconds": 5
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 4,
+            "seconds": 5
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 5,
+            "seconds": 5
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 6,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": null,
+        "placeholder": true,
+        "start": null,
+        "end": null,
+        "checkpoints": [],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 0
+        },
+        "end": {
+          "row": 7,
+          "col": 1
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 1
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 11
+        },
+        "end": {
+          "row": 3,
+          "col": 11
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 10
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 10
+            }
+          }
+        ],
+        "waits": []
+      }
+    ],
+    "waves": [
+      {
+        "index": 0,
+        "duration": 252,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Mudrock Colossus",
+            "enemy_id": "enemy_1092_mdgint",
+            "count": 1,
+            "time": 3,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Leithanian Rebel",
+            "enemy_id": "enemy_1086_ltsodr",
+            "count": 1,
+            "time": 9,
+            "route": 1,
+            "fragment": 1
+          },
+          {
+            "enemy": "Leithanian Rebel",
+            "enemy_id": "enemy_1086_ltsodr",
+            "count": 2,
+            "time": 16,
+            "interval": 5,
+            "route": 2,
+            "fragment": 1
+          },
+          {
+            "enemy": "Leithanian Rebel",
+            "enemy_id": "enemy_1086_ltsodr",
+            "count": 1,
+            "time": 28,
+            "route": 3,
+            "fragment": 2
+          },
+          {
+            "enemy": "Leithanian Rebel",
+            "enemy_id": "enemy_1086_ltsodr",
+            "count": 2,
+            "time": 34,
+            "interval": 3,
+            "route": 3,
+            "fragment": 2
+          },
+          {
+            "enemy": "Leithanian Whisperer",
+            "enemy_id": "enemy_1088_ltsmer",
+            "count": 1,
+            "time": 40,
+            "route": 4,
+            "fragment": 2
+          },
+          {
+            "enemy": "Leithanian Rebel",
+            "enemy_id": "enemy_1086_ltsodr",
+            "count": 3,
+            "time": 47,
+            "interval": 3,
+            "route": 2,
+            "fragment": 3
+          },
+          {
+            "enemy": "Leithanian Whisperer",
+            "enemy_id": "enemy_1088_ltsmer",
+            "count": 1,
+            "time": 54,
+            "route": 3,
+            "fragment": 3
+          },
+          {
+            "enemy": "Leithanian Rebel",
+            "enemy_id": "enemy_1086_ltsodr",
+            "count": 3,
+            "time": 64,
+            "interval": 4,
+            "route": 5,
+            "fragment": 3
+          },
+          {
+            "enemy": "Leithanian Rebel",
+            "enemy_id": "enemy_1086_ltsodr",
+            "count": 1,
+            "time": 81,
+            "route": 6,
+            "fragment": 4
+          },
+          {
+            "enemy": "Leithanian Rebel",
+            "enemy_id": "enemy_1086_ltsodr",
+            "count": 2,
+            "time": 88,
+            "interval": 5,
+            "route": 7,
+            "fragment": 4
+          },
+          {
+            "enemy": "Leithanian Whisperer",
+            "enemy_id": "enemy_1088_ltsmer",
+            "count": 1,
+            "time": 87,
+            "route": 2,
+            "fragment": 4
+          },
+          {
+            "enemy": "Leithanian Whisperer",
+            "enemy_id": "enemy_1088_ltsmer",
+            "count": 1,
+            "time": 92,
+            "route": 5,
+            "fragment": 4
+          },
+          {
+            "enemy": "Mudrock Zealot",
+            "enemy_id": "enemy_1091_mdhmmr",
+            "count": 1,
+            "time": 99,
+            "route": 6,
+            "fragment": 5
+          },
+          {
+            "enemy": "Mudrock Zealot",
+            "enemy_id": "enemy_1091_mdhmmr",
+            "count": 1,
+            "time": 112,
+            "route": 7,
+            "fragment": 5
+          },
+          {
+            "enemy": "Leithanian Rebel",
+            "enemy_id": "enemy_1086_ltsodr",
+            "count": 2,
+            "time": 128,
+            "interval": 6,
+            "route": 2,
+            "fragment": 5
+          },
+          {
+            "enemy": "Leithanian Whisperer",
+            "enemy_id": "enemy_1088_ltsmer",
+            "count": 1,
+            "time": 122,
+            "route": 2,
+            "fragment": 5
+          },
+          {
+            "enemy": "Leithanian Rebel",
+            "enemy_id": "enemy_1086_ltsodr",
+            "count": 3,
+            "time": 143,
+            "interval": 5,
+            "route": 5,
+            "fragment": 6
+          },
+          {
+            "enemy": "Mudrock",
+            "enemy_id": "enemy_1511_mdrock",
+            "count": 1,
+            "time": 156,
+            "route": 8,
+            "fragment": 7
+          },
+          {
+            "enemy": "Mudrock Zealot",
+            "enemy_id": "enemy_1091_mdhmmr",
+            "count": 1,
+            "time": 157,
+            "route": 7,
+            "fragment": 7
+          },
+          {
+            "enemy": "Mudrock Zealot",
+            "enemy_id": "enemy_1091_mdhmmr",
+            "count": 1,
+            "time": 171,
+            "route": 7,
+            "fragment": 7
+          },
+          {
+            "enemy": "Mudrock Matterllurgist",
+            "enemy_id": "enemy_1090_mdsnpr",
+            "count": 1,
+            "time": 173,
+            "route": 5,
+            "fragment": 7
+          },
+          {
+            "enemy": "Mudrock Matterllurgist",
+            "enemy_id": "enemy_1090_mdsnpr",
+            "count": 1,
+            "time": 183,
+            "route": 7,
+            "fragment": 7
+          },
+          {
+            "enemy": "Mudrock Zealot",
+            "enemy_id": "enemy_1091_mdhmmr",
+            "count": 2,
+            "time": 191,
+            "interval": 10,
+            "route": 7,
+            "fragment": 7
+          },
+          {
+            "enemy": "Mudrock Matterllurgist",
+            "enemy_id": "enemy_1090_mdsnpr",
+            "count": 2,
+            "time": 213,
+            "interval": 10,
+            "route": 5,
+            "fragment": 7
+          },
+          {
+            "enemy": "Mudrock Zealot",
+            "enemy_id": "enemy_1091_mdhmmr",
+            "count": 1,
+            "time": 234,
+            "route": 5,
+            "fragment": 7
+          },
+          {
+            "enemy": "Mudrock Matterllurgist",
+            "enemy_id": "enemy_1090_mdsnpr",
+            "count": 2,
+            "time": 245,
+            "interval": 7,
+            "route": 7,
+            "fragment": 7
+          },
+          {
+            "enemy": "Mudrock Colossus",
+            "enemy_id": "enemy_1092_mdgint",
+            "count": 1,
+            "time": 203,
+            "route": 11,
+            "fragment": 7
+          }
+        ]
+      }
+    ],
+    "spawnTiles": [
+      {
+        "key": "tile_start",
+        "row": 1,
+        "col": 0,
+        "routes": [
+          0,
+          3,
+          3,
+          3,
+          5,
+          5,
+          5,
+          8,
+          10,
+          5,
+          5,
+          5
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 1,
+        "col": 11,
+        "routes": [
+          1,
+          2,
+          4,
+          2,
+          2,
+          2,
+          2,
+          11
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 7,
+        "col": 10,
+        "routes": [
+          6,
+          7,
+          6,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7
+        ]
+      }
+    ],
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 3,
+        "col": 0,
+        "routes": [
+          0,
+          1,
+          2,
+          3,
+          3,
+          4,
+          2,
+          3,
+          5,
+          6,
+          7,
+          2,
+          5,
+          6,
+          7,
+          2,
+          2,
+          5,
+          7,
+          7,
+          5,
+          7,
+          7,
+          5,
+          5,
+          7
+        ]
+      },
+      {
+        "key": "tile_end",
+        "row": 3,
+        "col": 11,
+        "routes": [
+          11
+        ]
+      },
+      {
+        "key": "tile_end",
+        "row": 7,
+        "col": 1,
+        "routes": [
+          8,
+          10
+        ]
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_1086_ltsodr",
+        "slug": "leithanian_rebel",
+        "name": "Leithanian Rebel",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1088_ltsmer",
+        "slug": "leithanian_whisperer",
+        "name": "Leithanian Whisperer",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1090_mdsnpr",
+        "slug": "mudrock_matterllurgist",
+        "name": "Mudrock Matterllurgist",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1091_mdhmmr",
+        "slug": "mudrock_zealot",
+        "name": "Mudrock Zealot",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1092_mdgint",
+        "slug": "mudrock_colossus",
+        "name": "Mudrock Colossus",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1511_mdrock",
+        "slug": "mudrock",
+        "name": "Mudrock",
+        "database_level": 0
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [],
+      "deployable_tokens": []
+    },
+    "hasConditionalSpawns": false
+  },
+  "terrain": [],
+  "conditionalHandled": false,
+  "devices": [
+    {
+      "col": 3,
+      "description": "Attacks the enemy with the highest Max HP first",
+      "hidden": false,
+      "key": "trap_014_tower",
+      "kind": "device",
+      "name": "L-44 'Gramophone'",
+      "row": 5,
+      "alias": "trap_014_tower#1",
+      "instance": {
+        "level": 1,
+        "skillLevel": 1
+      }
+    },
+    {
+      "col": 3,
+      "description": "Attacks the enemy with the highest Max HP first",
+      "hidden": false,
+      "key": "trap_014_tower",
+      "kind": "device",
+      "name": "L-44 'Gramophone'",
+      "row": 4,
+      "alias": "trap_014_tower#2",
+      "instance": {
+        "level": 1,
+        "skillLevel": 1
+      }
+    },
+    {
+      "col": 8,
+      "description": "Attacks the enemy with the highest Max HP first",
+      "hidden": false,
+      "key": "trap_014_tower",
+      "kind": "device",
+      "name": "L-44 'Gramophone'",
+      "row": 5,
+      "alias": "trap_014_tower#3",
+      "instance": {
+        "level": 1,
+        "skillLevel": 1
+      }
+    },
+    {
+      "col": 8,
+      "description": "Attacks the enemy with the highest Max HP first",
+      "hidden": false,
+      "key": "trap_014_tower",
+      "kind": "device",
+      "name": "L-44 'Gramophone'",
+      "row": 4,
+      "alias": "trap_014_tower#4",
+      "instance": {
+        "level": 1,
+        "skillLevel": 1
+      }
+    }
+  ],
+  "tokens": [],
+  "pathing": {
+    "schemaVersion": 1,
+    "syntheticRoutes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      11
+    ],
+    "producer": "Arkpedia stage browser / buildPlaybackPaths",
+    "stage": "TW-8",
+    "geometryHash": "45290608730b51d482c7ce31a7837f54bad82e897d6ede1031c309d330b6a2c8",
+    "moveScale": 0.65,
+    "paths": {
+      "0": {
+        "points": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            7,
+            6
+          ],
+          [
+            4,
+            6
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "1": {
+        "points": [
+          [
+            11,
+            1
+          ],
+          [
+            10,
+            1
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            7,
+            3
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "2": {
+        "points": [
+          [
+            11,
+            1
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            7,
+            3
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "3": {
+        "points": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            7,
+            3
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "4": {
+        "points": [
+          [
+            11,
+            1
+          ],
+          [
+            9,
+            1
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            7,
+            3
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "5": {
+        "points": [
+          [
+            0,
+            1
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            7,
+            3
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "6": {
+        "points": [
+          [
+            10,
+            7
+          ],
+          [
+            10,
+            6
+          ],
+          [
+            4,
+            6
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "7": {
+        "points": [
+          [
+            10,
+            7
+          ],
+          [
+            10,
+            6
+          ],
+          [
+            4,
+            6
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "8": {
+        "points": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            7,
+            6
+          ],
+          [
+            4,
+            6
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            7,
+            3
+          ],
+          [
+            7,
+            6
+          ],
+          [
+            1,
+            6
+          ],
+          [
+            1,
+            7
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "11": {
+        "points": [
+          [
+            11,
+            1
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            7,
+            6
+          ],
+          [
+            10,
+            6
+          ],
+          [
+            10,
+            3
+          ],
+          [
+            11,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "breaks": [],
+        "holds": []
+      }
+    }
+  },
+  "art": null,
+  "gates": null,
+  "fixedSquad": null,
+  "enemies": {
+    "enemy_1092_mdgint": {
+      "key": "enemy_1092_mdgint",
+      "prefabKey": "enemy_1092_mdgint",
+      "name": "Mudrock Colossus",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 100000,
+        "atk": 3000,
+        "def": 700,
+        "res": 30,
+        "moveSpeed": 0.4,
+        "bat": 7,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 5,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "originiumartscraft"
+      ]
+    },
+    "enemy_1086_ltsodr": {
+      "key": "enemy_1086_ltsodr",
+      "prefabKey": "enemy_1086_ltsodr",
+      "name": "Leithanian Rebel",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 3000,
+        "atk": 130,
+        "def": 130,
+        "res": 20,
+        "moveSpeed": 1.1,
+        "bat": 2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "arts",
+        "dmgTypes": [
+          "arts"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1088_ltsmer": {
+      "key": "enemy_1088_ltsmer",
+      "prefabKey": "enemy_1088_ltsmer",
+      "name": "Leithanian Whisperer",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 6000,
+        "atk": 300,
+        "def": 200,
+        "res": 50,
+        "moveSpeed": 0.85,
+        "bat": 3,
+        "aspd": 100,
+        "rangeRadius": 3.5,
+        "rawRangeRadius": 3.5,
+        "blockCnt": 1,
+        "massLevel": 3,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "arts",
+        "dmgTypes": [
+          "arts"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": true,
+          "silence": true,
+          "sleep": false,
+          "frozen": true,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Continuously casts at the nearest non-enemy controlled 'Gramophone' within attack range to attempt to seize control of it.",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [
+        {
+          "prefabKey": "charge",
+          "priority": 0,
+          "cooldown": 15,
+          "initCooldown": 5,
+          "spCost": 0,
+          "bb": {
+            "hit_duration": 25,
+            "sp": -2,
+            "duration": 25
+          },
+          "bbStr": {}
+        }
+      ],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1091_mdhmmr": {
+      "key": "enemy_1091_mdhmmr",
+      "prefabKey": "enemy_1091_mdhmmr",
+      "name": "Mudrock Zealot",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 10000,
+        "atk": 900,
+        "def": 800,
+        "res": 30,
+        "moveSpeed": 0.8,
+        "bat": 3.5,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 3,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Has a Barrier that absorbs Arts damage.",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Max HP and ASPD significantly increases while the Barrier persists.",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "shield.dynamic": 2000,
+          "shield.max_hp": 0.5,
+          "shield.attack_speed": 50
+        },
+        "bbStr": {},
+        "groups": {
+          "shield": [
+            "attack_speed",
+            "dynamic",
+            "max_hp"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "sarkaz"
+      ]
+    },
+    "enemy_1511_mdrock": {
+      "key": "enemy_1511_mdrock",
+      "prefabKey": "enemy_1511_mdrock",
+      "name": "Mudrock",
+      "level": 0,
+      "rank": "BOSS",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 45000,
+        "atk": 800,
+        "def": 1000,
+        "res": 30,
+        "moveSpeed": 0.6,
+        "bat": 4.5,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 6,
+        "lpr": 2,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": true,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Every attack permanently increases ATK, stacking up to 6 times",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Has a Barrier that absorbs Arts damage; while the Barrier persists, this unit has significantly increased Max HP and ASPD.",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Barrier periodically refreshes.",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Can use a skill to automatically seize control of the nearest non-enemy controlled 'Gramophone'",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "charge.attack@enemy_mdrock_s_1[charge].atk": 0.6,
+          "shield.dynamic": 5500,
+          "shield.max_hp": 0.5,
+          "shield.attack_speed": 50
+        },
+        "bbStr": {},
+        "groups": {
+          "charge": [
+            "attack@enemy_mdrock_s_1[charge].atk"
+          ],
+          "shield": [
+            "attack_speed",
+            "dynamic",
+            "max_hp"
+          ]
+        }
+      },
+      "skills": [
+        {
+          "prefabKey": "RefreshShield",
+          "priority": 1,
+          "cooldown": 17,
+          "initCooldown": 17,
+          "spCost": 0,
+          "bb": {
+            "dynamic": 5500,
+            "max_hp": 0.5,
+            "attack_speed": 50
+          },
+          "bbStr": {}
+        },
+        {
+          "prefabKey": "occupy",
+          "priority": 0,
+          "cooldown": 35,
+          "initCooldown": 35,
+          "spCost": 0,
+          "bb": {
+            "sp": -1
+          },
+          "bbStr": {}
+        }
+      ],
+      "notCountInTotal": false,
+      "tags": [
+        "sarkaz"
+      ]
+    },
+    "enemy_1090_mdsnpr": {
+      "key": "enemy_1090_mdsnpr",
+      "prefabKey": "enemy_1090_mdsnpr",
+      "name": "Mudrock Matterllurgist",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 7000,
+        "atk": 400,
+        "def": 400,
+        "res": 30,
+        "moveSpeed": 0.8,
+        "bat": 2.6,
+        "aspd": 100,
+        "rangeRadius": 2.5,
+        "rawRangeRadius": 2.5,
+        "blockCnt": 1,
+        "massLevel": 3,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Prioritizes attacking units that are vying for control of a 'Gramophone.'",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "sarkaz"
+      ]
+    }
+  },
+  "contentAddition": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/tw-8.json",
+          "sha256": "497e37b85e5b0dbd99fed35ba4e33313196dbbc20e1cb4199d98defe0a6fd4ce"
+        },
+        {
+          "path": "stage-geometry/tw-8.json",
+          "sha256": "45290608730b51d482c7ce31a7837f54bad82e897d6ede1031c309d330b6a2c8"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        }
+      ],
+      "localFiles": [
+        {
+          "path": "data/stage-rules/tw-8.json",
+          "sha256": "84cc6738ed70679b5397f8d297016a4e9597d9ee0ec93035f0814e337af0faf3"
+        },
+        {
+          "path": "data/stage-rules/levels/4513f766193e5bf42425ec1d6cd1218e7648f19c03c0181a67f2a05044c1dc4e.json",
+          "sha256": "4513f766193e5bf42425ec1d6cd1218e7648f19c03c0181a67f2a05044c1dc4e"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/9926d9a1dcb39b336c9af848392b786ea3042384.json",
+          "sha256": "085ab2a969b2e66de3a8d1c70bc5472f8e1e70e2e240f0b89ee689a99e688b90"
+        },
+        {
+          "path": "data/arkpedia-device-source.json",
+          "sha256": "da24a8d4ea37b0f01e7fafccea15133b7f14ff237a3adf168df38826e1691908"
+        },
+        {
+          "path": "data/arkpedia-device-native-source.json",
+          "sha256": "e5c240a52b37e343ef67d711a39f808ecc29faff4a12f172841c207cbab9bd83"
+        },
+        {
+          "path": "data/arkpedia-gramophone-animations.json",
+          "sha256": "94ec11d995d54647f1286e467afd30ee0ed78ba903526a72d5e042e0f7a19ff3"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/9926d9a1dcb39b336c9af848392b786ea3042384.json",
+          "sha256": "085ab2a969b2e66de3a8d1c70bc5472f8e1e70e2e240f0b89ee689a99e688b90"
+        }
+      ]
+    },
+    "dependencies": {
+      "enemies": [
+        "enemy_1086_ltsodr",
+        "enemy_1088_ltsmer",
+        "enemy_1090_mdsnpr",
+        "enemy_1091_mdhmmr",
+        "enemy_1092_mdgint",
+        "enemy_1511_mdrock"
+      ],
+      "devices": [
+        "L-44 'Gramophone'"
+      ],
+      "tokens": []
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 10,
+        "spawned": 6,
+        "errors": 0
+      },
+      "publicReview": "pending",
+      "waveSchedule": {
+        "id": "tw-8",
+        "seconds": 278.93333333333334,
+        "spawned": 41,
+        "expected": 41,
+        "dynamicSpawns": 0,
+        "reason": "cleared",
+        "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+      },
+      "browserStartup": {
+        "id": "tw-8",
+        "seconds": 20,
+        "errors": [],
+        "units": 7,
+        "canvas": true,
+        "scope": "Mobile landscape browser startup and canvas runtime; not a fidelity approval"
+      },
+      "browserInteraction": {
+        "id": "tw-8",
+        "sp": 0,
+        "control": "enemy",
+        "faction": "enemy",
+        "bossHp": 67500,
+        "barrier": 16500,
+        "errors": [],
+        "status": "0 / 100 SP · Enemy control · Switching",
+        "scope": "Mobile browser: controlled Mudrock spawn on TW-8, native-timed global capture, refreshed barrier and real Gramophone tile selection/inspector. Not a playable clear or native visual parity approval."
+      }
+    }
+  }
+}

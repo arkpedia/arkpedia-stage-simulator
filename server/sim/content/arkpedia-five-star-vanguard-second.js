@@ -145,8 +145,9 @@ export function customizeFiveStarVanguardSecondKit({ battle: b, id, def, unit: u
 }
 
 export function installFiveStarVanguardSecond({ battle: b, unit: u, def }) {
+  if (!FIVE_STAR_VANGUARD_SECOND_OPERATORS[def.charId]) return;
   const id = def.charId, talent = def.talents[0]?.bb;
-  if (!FIVE_STAR_VANGUARD_SECOND_OPERATORS[id] || !talent) return;
+  if (!talent) return;
   if (id === G) {
     const key = `grani:dodge:${u.id}`;
     const sync = () => {

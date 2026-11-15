@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-15",
+  "scope": "Parameterized Burdenbeast Supplier facing, frontal Sanctuary, ordinary attacks and environment-trigger dispatch; cooperative environment remains blocked.",
+  "sourceFiles": {
+    "shared/arkpedia/enemy-burdenbeast-features.js": "6dc389d0a1f3a53a6116ee06acee5c2126d71d2410db6d2810f567c8adea630b",
+    "shared/arkpedia/enemy-directional-features.js": "9e509c052bc957f0a47b75feba8c37805e35d5873e4ca2c41d7b4bfeb1e42b4e",
+    "server/sim/content/arkpedia-enemy-burdenbeast.js": "8e68e7d015de8872233b1e172e4e52275e8e8b6c6b91ed2fa734202402e3a316",
+    "server/sim/content/arkpedia-enemy-directional.js": "748e0d3eead4d194fd3b876a2d92602f04b686189c16acf5f73c26c6dd81ea07",
+    "server/sim/content/arkpedia-enemy-features.js": "98e039b28452d89f2ad00594fac4bd776cf29b2240ed435f098f39c8c1e0483c",
+    "server/sim/content/arkpedia-stage-environments.js": "df4e70547be0d7f527145e43b3da653e131528254b22a5efa0498a6c8ab68c2b",
+    "tools/arkpedia/extract-enemy-native-abilities.py": "0a90f53fc86b92882325abb20cf2d34efade869c52b506392127fa5579165851",
+    "data/arkpedia-enemy-native-abilities.json": "ffa8d78472d32e1fae66c8e197febdbdebaba3d3973e4f0b52660833804e4284",
+    "data/arkpedia-burdenbeast-animations.json": "bf9babcb6a3a8c650195470b8aa512d8caecdcaa951557fb85dd2136486fd978",
+    "data/arkpedia-enemy-support.json": "36f37deaa3cd098617ac9df90243a1015f95fbb0c340a98dd5bb8f5114f12d1d",
+    "data/arkpedia-enemy-artwork.json": "b8b790ee6ede1b535f37963413f77ed14c4b2dacc168651109ca39882b47255b",
+    "test/arkpedia-enemy-burdenbeast.test.js": "4d959e7f5ce7155ccfef1f244a4f144d593e1dcdc480f050dc6279bfdef87f17",
+    "docs/ENEMY-BURDENBEAST-SUPPLIER-REVIEW.md": "985654b9a7fe023c502dd7963d3fea0ec97028ed9c256090ccfefc99cfbaefd8"
+  },
+  "checks": {
+    "regressions": {
+      "path": "/tmp/murino-enemy-regressions.log",
+      "sha256": "b3ddc21977784c9c52a93d0fa6f1177f87911e6bfa9281def592ae1299026def"
+    },
+    "focused": {
+      "path": "/tmp/murino-feature-tests.log",
+      "sha256": "d501f2f5dc8555f537da4d9bbda9c84b579b16f72601ab2892e7338dd969c2ce"
+    },
+    "source": {
+      "path": "/tmp/murino-source-check.log",
+      "sha256": "f8719635b2ddabae390a159becc05db573de8e4bc034a6d43ac0817b6767d5f6"
+    },
+    "allStages": {
+      "path": "/tmp/murino-all-stage-smoke.log",
+      "sha256": "2882c66169b23c46300fee8d8e2db4d6fe1dddea68ce549ecbba06ec0d266335"
+    },
+    "artwork": {
+      "path": ".cache/arkpedia/murino-artwork-review/review.json",
+      "sha256": "76403ff9bc002959b1923046e482376ea2202a56e1175dc722b4ff54e615638e"
+    },
+    "sdTests": {
+      "path": "/tmp/murino-sd-tests.log",
+      "sha256": "d74d128de95ce75a7e57577590b0e8517810e0c0a9433da68ff451252c54a1c7"
+    },
+    "sdManifest": {
+      "path": "/tmp/murino-sd-validate.log",
+      "sha256": "a1ca8927b2318ca892fcaa45bed190a569521d1e71cc35d4107a3fa4f5b9f4ea"
+    }
+  },
+  "coverage": {
+    "enemies": 646,
+    "enemyTarget": 2163,
+    "availableStages": 863,
+    "stageTarget": 3892,
+    "artworkModels": 432
+  },
+  "regressionTestsPassed": 631,
+  "stageSmokePassed": 863,
+  "stageSmokeSeconds": 10,
+  "assetCommit": "cafe7348a501fa27eaff5bd600a8544033389308",
+  "sdTestsPassed": 93,
+  "sdCompleteModels": 3705,
+  "browserViewports": 2,
+  "browserClipsPerViewport": 10,
+  "remaining": [
+    "Cooperative environment gameplay and reward controller",
+    "Native particle/audio presentation",
+    "Native frame/pixel parity; ordinary melee retains shared engine scheduling"
+  ]
+}

@@ -3,7 +3,7 @@
  "name": "Sent From Above",
  "description": "Conditions: The deployment cost of ranged Operators is tripled.\nStage available from 7/29 10:00 A.M. to 8/12 3:59 A.M.",
  "battle": {
-  "max_life": 5,
+  "max_life": 1,
   "unit_limit": 8,
   "initial_dp": 10,
   "max_dp": 99,
@@ -1370,9 +1370,9 @@
    "rank": "NORMAL",
    "applyWay": "MELEE",
    "stats": {
-    "maxHp": 1450,
-    "atk": 220,
-    "def": 100,
+    "maxHp": 1595.0000000000002,
+    "atk": 264,
+    "def": 110.00000000000001,
     "res": 0,
     "moveSpeed": 1,
     "bat": 1.9,
@@ -1425,9 +1425,9 @@
    "rank": "NORMAL",
    "applyWay": "RANGED",
    "stats": {
-    "maxHp": 1550,
-    "atk": 220,
-    "def": 50,
+    "maxHp": 1705.0000000000002,
+    "atk": 264,
+    "def": 55.00000000000001,
     "res": 0,
     "moveSpeed": 0.9,
     "bat": 3,
@@ -1482,9 +1482,9 @@
    "rank": "NORMAL",
    "applyWay": "MELEE",
    "stats": {
-    "maxHp": 2300,
-    "atk": 300,
-    "def": 150,
+    "maxHp": 2530,
+    "atk": 360,
+    "def": 165,
     "res": 0,
     "moveSpeed": 1,
     "bat": 1.9,
@@ -1529,5 +1529,99 @@
    "notCountInTotal": false,
    "tags": []
   }
+ },
+ "rules": {
+  "variant": "challenge_mode",
+  "source": {
+   "repository": "Kengxxiao/ArknightsGameData",
+   "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+   "path": "zh_CN/gamedata/levels/activities/act6d5/level_act6d5_01.json",
+   "sha256": "50b76f89cf185c494bbfbefd6dda8285a37f119b08805c438c760993d802ffc7",
+   "gitBlob": "8c2d1eb997e15061ad1979c4a2f29b39d3ac92f5",
+   "stageTable": {
+    "path": "zh_CN/gamedata/excel/stage_table.json",
+    "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+    "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+    "stageId": "act6d5_01",
+    "levelId": "Activities/ACT6D5/level_act6d5_01"
+   }
+  },
+  "battle": {
+   "max_life": 1
+  },
+  "enemies": {
+   "atk": 1.2,
+   "def": 1.1,
+   "maxHp": 1.1
+  },
+  "enemyAdd": {},
+  "hiddenGroups": {},
+  "allyCards": [
+   {
+    "attribute": "cost",
+    "professionMask": 1023,
+    "buildableMask": 2,
+    "scale": 3
+   }
+  ]
+ },
+ "contentRuleRefresh": {
+  "schemaVersion": 1,
+  "source": {
+   "repository": "arkpedia/arkpedia-data",
+   "commit": "66232ee06377d791fb130248d680764c286e5c99",
+   "files": [
+    {
+     "path": "stages/af-1_challenge_mode.json",
+     "sha256": "3c0a4437d2215b9c28b30aaab4c1b455d835ef83b6b1fcde7ead0a6945e75e65"
+    },
+    {
+     "path": "stage-geometry/af-1.json",
+     "sha256": "04faa7f771ede75cca1f594fecd015f7d107d6d7777fa5b329e78a6b95ae691f"
+    },
+    {
+     "path": "stage-devices.json",
+     "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+    }
+   ],
+   "localFiles": [
+    {
+     "path": "data/stage-rules/af-1_challenge_mode.json",
+     "sha256": "b674107ee83586c94a1fb7b68a6535a816cda10a55164e4b4b953340989d74c2"
+    },
+    {
+     "path": "data/stage-rules/levels/49e9245031e86b6e9c5b9f500bcd1b10c885be13e97179f34da3459cbf6479b3.json",
+     "sha256": "49e9245031e86b6e9c5b9f500bcd1b10c885be13e97179f34da3459cbf6479b3"
+    }
+   ]
+  },
+  "validation": {
+   "smoke": {
+    "seconds": 10,
+    "spawned": 1,
+    "errors": 0
+   },
+   "waveSchedule": {
+    "id": "af-1_challenge_mode",
+    "seconds": 184.06666666666666,
+    "spawned": 52,
+    "expected": 52,
+    "reason": "cleared",
+    "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+   },
+   "browser": {
+    "id": "af-1_challenge_mode",
+    "seconds": 15.966666666666667,
+    "errors": [],
+    "units": 1,
+    "canvas": true,
+    "scope": "Browser startup and 600 simulation ticks; not full gameplay or visual fidelity approval"
+   }
+  },
+  "changed": [
+   "rules",
+   "battle",
+   "enemies"
+  ]
  }
 }

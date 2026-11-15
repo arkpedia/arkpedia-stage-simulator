@@ -1,0 +1,1974 @@
+{
+  "code": "CB-6",
+  "name": "10:26P.M.",
+  "description": "Things that are truly excellent will always shine forth, even if stripped of the other trappings normally around it - for example, the discerning gentleman's armament of choice - an empty wine bottle. \n<Portable Supply Station>Grants additional skill points to a character or to the Command Terminal.",
+  "battle": {
+    "max_life": 3,
+    "unit_limit": 8,
+    "initial_dp": 10,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1,
+    "max_play_time": -1
+  },
+  "rules": {
+    "variant": null,
+    "source": {
+      "repository": "Kengxxiao/ArknightsGameData",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "path": "zh_CN/gamedata/levels/activities/act5d0/level_act5d0_06.json",
+      "sha256": "73c64c6b790848a868a635d7f22944c31d1b0649d28c3eb4556d51ed76fc8e68",
+      "gitBlob": "97837508682c0c5ae9a6ed4aa5723e3a59b515ff",
+      "stageTable": {
+        "path": "zh_CN/gamedata/excel/stage_table.json",
+        "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+        "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+        "stageId": "act5d0_06",
+        "levelId": "Activities/ACT5D0/level_act5d0_06"
+      }
+    },
+    "battle": {
+      "max_play_time": -1
+    },
+    "enemies": {},
+    "enemyAdd": {},
+    "hiddenGroups": {}
+  },
+  "mapTags": [],
+  "mapTagSource": null,
+  "geometry": {
+    "slug": "cb-6",
+    "rows": 8,
+    "cols": 12,
+    "tileLegend": [
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      },
+      {
+        "key": "tile_start",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_floor",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      }
+    ],
+    "tileGrid": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        2,
+        1,
+        1,
+        2,
+        1,
+        2,
+        2,
+        2,
+        0
+      ],
+      [
+        2,
+        3,
+        3,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        0
+      ],
+      [
+        2,
+        3,
+        3,
+        1,
+        4,
+        4,
+        1,
+        4,
+        4,
+        1,
+        4,
+        0
+      ],
+      [
+        2,
+        3,
+        3,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        1,
+        4,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        1,
+        1,
+        4,
+        4,
+        4,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        1,
+        1,
+        4,
+        4,
+        4,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        5,
+        0,
+        5,
+        0
+      ]
+    ],
+    "routes": [
+      {
+        "motion": "walk",
+        "start": {
+          "row": 4,
+          "col": 0
+        },
+        "end": {
+          "row": 7,
+          "col": 8
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 8
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 0
+        },
+        "end": {
+          "row": 7,
+          "col": 8
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 8
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 0
+        },
+        "end": {
+          "row": 7,
+          "col": 10
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 10
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 0
+        },
+        "end": {
+          "row": 7,
+          "col": 10
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 10
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 3
+        },
+        "end": {
+          "row": 7,
+          "col": 8
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 8
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 9
+        },
+        "end": {
+          "row": 7,
+          "col": 8
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 8
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 15
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 6
+        },
+        "end": {
+          "row": 7,
+          "col": 10
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 10
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 10
+        },
+        "end": {
+          "row": 7,
+          "col": 10
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 10
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 10
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 10
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 10
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 10
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 10
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 10
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 10
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 9
+        },
+        "end": {
+          "row": 7,
+          "col": 10
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 10
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 15
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 8
+        },
+        "end": {
+          "row": 7,
+          "col": 8
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 10
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 10
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 10
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 10
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 8
+            }
+          }
+        ],
+        "waits": []
+      }
+    ],
+    "waves": [
+      {
+        "index": 0,
+        "duration": 182,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Sicilian",
+            "enemy_id": "enemy_1055_ganman",
+            "count": 1,
+            "time": 11,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Sicilian",
+            "enemy_id": "enemy_1055_ganman",
+            "count": 1,
+            "time": 15,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Sicilian",
+            "enemy_id": "enemy_1055_ganman",
+            "count": 1,
+            "time": 16,
+            "route": 1,
+            "fragment": 0
+          },
+          {
+            "enemy": "Sicilian",
+            "enemy_id": "enemy_1055_ganman",
+            "count": 2,
+            "time": 28,
+            "interval": 5,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Sicilian",
+            "enemy_id": "enemy_1055_ganman",
+            "count": 1,
+            "time": 29,
+            "route": 1,
+            "fragment": 1
+          },
+          {
+            "enemy": "Sicilian",
+            "enemy_id": "enemy_1055_ganman",
+            "count": 2,
+            "time": 27,
+            "interval": 4,
+            "route": 3,
+            "fragment": 1
+          },
+          {
+            "enemy": "Sicilian",
+            "enemy_id": "enemy_1055_ganman",
+            "count": 1,
+            "time": 32,
+            "route": 2,
+            "fragment": 1
+          },
+          {
+            "enemy": "Sicilian",
+            "enemy_id": "enemy_1055_ganman",
+            "count": 1,
+            "time": 48,
+            "route": 0,
+            "fragment": 2
+          },
+          {
+            "enemy": "Sicilian",
+            "enemy_id": "enemy_1055_ganman",
+            "count": 1,
+            "time": 49,
+            "route": 1,
+            "fragment": 2
+          },
+          {
+            "enemy": "Brawler",
+            "enemy_id": "enemy_1056_ganwar",
+            "count": 1,
+            "time": 54,
+            "route": 4,
+            "fragment": 2
+          },
+          {
+            "enemy": "Sicilian",
+            "enemy_id": "enemy_1055_ganman",
+            "count": 1,
+            "time": 52,
+            "route": 3,
+            "fragment": 2
+          },
+          {
+            "enemy": "Sicilian",
+            "enemy_id": "enemy_1055_ganman",
+            "count": 1,
+            "time": 53,
+            "route": 2,
+            "fragment": 2
+          },
+          {
+            "enemy": "Sicilian",
+            "enemy_id": "enemy_1055_ganman",
+            "count": 1,
+            "time": 69,
+            "route": 3,
+            "fragment": 3
+          },
+          {
+            "enemy": "Sicilian",
+            "enemy_id": "enemy_1055_ganman",
+            "count": 1,
+            "time": 70,
+            "route": 2,
+            "fragment": 3
+          },
+          {
+            "enemy": "Authorized Caster",
+            "enemy_id": "enemy_1051_norwiz",
+            "count": 1,
+            "time": 74,
+            "route": 5,
+            "fragment": 3
+          },
+          {
+            "enemy": "Brawler",
+            "enemy_id": "enemy_1056_ganwar",
+            "count": 1,
+            "time": 82,
+            "route": 6,
+            "fragment": 3
+          },
+          {
+            "enemy": "Bully",
+            "enemy_id": "enemy_1058_traink",
+            "count": 1,
+            "time": 90,
+            "route": 7,
+            "fragment": 4
+          },
+          {
+            "enemy": "Authorized Caster",
+            "enemy_id": "enemy_1051_norwiz",
+            "count": 1,
+            "time": 96,
+            "route": 8,
+            "fragment": 5
+          },
+          {
+            "enemy": "Sicilian",
+            "enemy_id": "enemy_1055_ganman",
+            "count": 2,
+            "time": 114,
+            "interval": 8,
+            "route": 0,
+            "fragment": 5
+          },
+          {
+            "enemy": "Sicilian",
+            "enemy_id": "enemy_1055_ganman",
+            "count": 2,
+            "time": 114,
+            "interval": 8,
+            "route": 3,
+            "fragment": 5
+          },
+          {
+            "enemy": "Brawler",
+            "enemy_id": "enemy_1056_ganwar",
+            "count": 1,
+            "time": 132,
+            "route": 4,
+            "fragment": 5
+          },
+          {
+            "enemy": "Brawler",
+            "enemy_id": "enemy_1056_ganwar",
+            "count": 1,
+            "time": 135,
+            "route": 6,
+            "fragment": 5
+          },
+          {
+            "enemy": "Authorized Caster",
+            "enemy_id": "enemy_1051_norwiz",
+            "count": 1,
+            "time": 129,
+            "route": 5,
+            "fragment": 5
+          },
+          {
+            "enemy": "Bully",
+            "enemy_id": "enemy_1058_traink",
+            "count": 1,
+            "time": 143,
+            "route": 9,
+            "fragment": 6
+          },
+          {
+            "enemy": "Authorized Caster",
+            "enemy_id": "enemy_1051_norwiz",
+            "count": 1,
+            "time": 147,
+            "route": 8,
+            "fragment": 6
+          },
+          {
+            "enemy": "Sicilian",
+            "enemy_id": "enemy_1055_ganman",
+            "count": 2,
+            "time": 162,
+            "interval": 8,
+            "route": 0,
+            "fragment": 7
+          },
+          {
+            "enemy": "Sicilian",
+            "enemy_id": "enemy_1055_ganman",
+            "count": 2,
+            "time": 163,
+            "interval": 8,
+            "route": 1,
+            "fragment": 7
+          },
+          {
+            "enemy": "Sicilian",
+            "enemy_id": "enemy_1055_ganman",
+            "count": 2,
+            "time": 166,
+            "interval": 8,
+            "route": 3,
+            "fragment": 7
+          },
+          {
+            "enemy": "Sicilian",
+            "enemy_id": "enemy_1055_ganman",
+            "count": 2,
+            "time": 167,
+            "interval": 8,
+            "route": 2,
+            "fragment": 7
+          },
+          {
+            "enemy": "Brawler",
+            "enemy_id": "enemy_1056_ganwar",
+            "count": 2,
+            "time": 168,
+            "interval": 8,
+            "route": 4,
+            "fragment": 7
+          },
+          {
+            "enemy": "Brawler",
+            "enemy_id": "enemy_1056_ganwar",
+            "count": 2,
+            "time": 174,
+            "interval": 8,
+            "route": 6,
+            "fragment": 7
+          },
+          {
+            "enemy": "Authorized Caster",
+            "enemy_id": "enemy_1051_norwiz",
+            "count": 2,
+            "time": 164,
+            "interval": 12,
+            "route": 1,
+            "fragment": 7
+          },
+          {
+            "enemy": "Authorized Caster",
+            "enemy_id": "enemy_1051_norwiz",
+            "count": 2,
+            "time": 168,
+            "interval": 12,
+            "route": 2,
+            "fragment": 7
+          }
+        ]
+      }
+    ],
+    "spawnTiles": [
+      {
+        "key": "tile_start",
+        "row": 1,
+        "col": 3,
+        "routes": [
+          4,
+          4,
+          4
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 1,
+        "col": 6,
+        "routes": [
+          6,
+          6,
+          6
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 1,
+        "col": 8,
+        "routes": [
+          9
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 1,
+        "col": 9,
+        "routes": [
+          5,
+          8,
+          5,
+          8
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 1,
+        "col": 10,
+        "routes": [
+          7
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 2,
+        "col": 0,
+        "routes": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 3,
+        "col": 0,
+        "routes": [
+          1,
+          1,
+          2,
+          1,
+          2,
+          1,
+          2,
+          2,
+          1,
+          2,
+          1,
+          2
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 4,
+        "col": 0,
+        "routes": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 7,
+        "col": 8,
+        "routes": [
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          4,
+          5,
+          0,
+          4,
+          5,
+          9,
+          0,
+          1,
+          4,
+          1
+        ]
+      },
+      {
+        "key": "tile_end",
+        "row": 7,
+        "col": 10,
+        "routes": [
+          2,
+          3,
+          3,
+          2,
+          3,
+          2,
+          3,
+          2,
+          6,
+          7,
+          8,
+          3,
+          6,
+          8,
+          3,
+          2,
+          6,
+          2
+        ]
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_1051_norwiz",
+        "slug": "authorized_caster",
+        "name": "Authorized Caster",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1055_ganman",
+        "slug": "sicilian",
+        "name": "Sicilian",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1056_ganwar",
+        "slug": "brawler",
+        "name": "Brawler",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1058_traink",
+        "slug": "bully",
+        "name": "Bully",
+        "database_level": 0
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [],
+      "deployable_tokens": [
+        {
+          "unit": "Portable Supply Station",
+          "unit_id": "trap_009_battery",
+          "count": 1,
+          "level": 1,
+          "elite": 0,
+          "potential": 0,
+          "skill_index": -1,
+          "skill_level": 1
+        }
+      ]
+    },
+    "hasConditionalSpawns": false
+  },
+  "terrain": [],
+  "conditionalHandled": false,
+  "devices": [],
+  "tokens": [
+    {
+      "unitId": "trap_009_battery",
+      "name": "Portable Supply Station",
+      "count": 1,
+      "kind": "battery",
+      "supplyCard": true,
+      "hp": 10,
+      "cost": 10,
+      "cooldown": 5,
+      "refundRatio": 0.5,
+      "taunt": 0,
+      "anyBuildOnly": true,
+      "chooseFacing": true,
+      "interval": 4,
+      "sp": 3,
+      "range": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "description": "Restores 3 SP every 4 seconds to each eligible allied unit in front. Skill SP restrictions still apply.",
+      "def": 0,
+      "block": 0,
+      "position": "NONE",
+      "behavior": "range-supply"
+    }
+  ],
+  "pathing": {
+    "schemaVersion": 1,
+    "syntheticRoutes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "producer": "Arkpedia stage browser / buildPlaybackPaths",
+    "stage": "CB-6",
+    "geometryHash": "031ae4854648c9a820ba62ce0272bf8a93ef54e5d1b690954ea2d0a63f4f07ad",
+    "moveScale": 0.65,
+    "paths": {
+      "0": {
+        "points": [
+          [
+            0,
+            4
+          ],
+          [
+            8,
+            4
+          ],
+          [
+            8,
+            7
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "1": {
+        "points": [
+          [
+            0,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            8,
+            4
+          ],
+          [
+            8,
+            7
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "2": {
+        "points": [
+          [
+            0,
+            3
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            10,
+            2
+          ],
+          [
+            10,
+            7
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "3": {
+        "points": [
+          [
+            0,
+            2
+          ],
+          [
+            10,
+            2
+          ],
+          [
+            10,
+            7
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "4": {
+        "points": [
+          [
+            3,
+            1
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            8,
+            4
+          ],
+          [
+            8,
+            7
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "5": {
+        "points": [
+          [
+            9,
+            1
+          ],
+          [
+            9,
+            2
+          ],
+          [
+            8,
+            2
+          ],
+          [
+            8,
+            7
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "6": {
+        "points": [
+          [
+            6,
+            1
+          ],
+          [
+            6,
+            2
+          ],
+          [
+            10,
+            2
+          ],
+          [
+            10,
+            7
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "7": {
+        "points": [
+          [
+            10,
+            1
+          ],
+          [
+            10,
+            5
+          ],
+          [
+            8,
+            5
+          ],
+          [
+            8,
+            2
+          ],
+          [
+            10,
+            2
+          ],
+          [
+            10,
+            5
+          ],
+          [
+            8,
+            5
+          ],
+          [
+            8,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            8,
+            4
+          ],
+          [
+            8,
+            5
+          ],
+          [
+            10,
+            5
+          ],
+          [
+            10,
+            2
+          ],
+          [
+            8,
+            2
+          ],
+          [
+            8,
+            5
+          ],
+          [
+            10,
+            5
+          ],
+          [
+            10,
+            2
+          ],
+          [
+            8,
+            2
+          ],
+          [
+            8,
+            5
+          ],
+          [
+            10,
+            5
+          ],
+          [
+            10,
+            7
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "8": {
+        "points": [
+          [
+            9,
+            1
+          ],
+          [
+            9,
+            2
+          ],
+          [
+            10,
+            2
+          ],
+          [
+            10,
+            7
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "9": {
+        "points": [
+          [
+            8,
+            1
+          ],
+          [
+            8,
+            5
+          ],
+          [
+            10,
+            5
+          ],
+          [
+            10,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            8,
+            4
+          ],
+          [
+            8,
+            5
+          ],
+          [
+            10,
+            5
+          ],
+          [
+            10,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            8,
+            4
+          ],
+          [
+            8,
+            7
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "breaks": [],
+        "holds": []
+      }
+    }
+  },
+  "art": null,
+  "gates": null,
+  "fixedSquad": null,
+  "enemies": {
+    "enemy_1055_ganman": {
+      "key": "enemy_1055_ganman",
+      "prefabKey": "enemy_1055_ganman",
+      "name": "Sicilian",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 2700,
+        "atk": 250,
+        "def": 100,
+        "res": 10,
+        "moveSpeed": 1,
+        "bat": 2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1056_ganwar": {
+      "key": "enemy_1056_ganwar",
+      "prefabKey": "enemy_1056_ganwar",
+      "name": "Brawler",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 3200,
+        "atk": 290,
+        "def": 250,
+        "res": 0,
+        "moveSpeed": 0.95,
+        "bat": 0.4,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1051_norwiz": {
+      "key": "enemy_1051_norwiz",
+      "prefabKey": "enemy_1051_norwiz",
+      "name": "Authorized Caster",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 3000,
+        "atk": 320,
+        "def": 100,
+        "res": 50,
+        "moveSpeed": 0.8,
+        "bat": 4,
+        "aspd": 100,
+        "rangeRadius": 1.8,
+        "rawRangeRadius": 1.8,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "arts",
+        "dmgTypes": [
+          "arts"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1058_traink": {
+      "key": "enemy_1058_traink",
+      "prefabKey": "enemy_1058_traink",
+      "name": "Bully",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 16000,
+        "atk": 800,
+        "def": 800,
+        "res": 20,
+        "moveSpeed": 1.2,
+        "bat": 3.5,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 4,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Can only be blocked by Operators with 3 or more Block",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    }
+  },
+  "contentAddition": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/cb-6.json",
+          "sha256": "2ff1f085d7bb42d754c9252b1c5f3841def6aaab60e0a499174cd4c6e6e791c4"
+        },
+        {
+          "path": "stage-geometry/cb-6.json",
+          "sha256": "031ae4854648c9a820ba62ce0272bf8a93ef54e5d1b690954ea2d0a63f4f07ad"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        }
+      ],
+      "localFiles": [
+        {
+          "path": "data/stage-rules/cb-6.json",
+          "sha256": "649e390185d0f5100df0095b17fda315cebc9aa8847763eaacd16df7dbc4bfcc"
+        },
+        {
+          "path": "data/stage-rules/levels/c6aac8dbfee29fb0e27c4efc1f563c2105a31b7715012b67d42f500e5fa33385.json",
+          "sha256": "c6aac8dbfee29fb0e27c4efc1f563c2105a31b7715012b67d42f500e5fa33385"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/97837508682c0c5ae9a6ed4aa5723e3a59b515ff.json",
+          "sha256": "73c64c6b790848a868a635d7f22944c31d1b0649d28c3eb4556d51ed76fc8e68"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/97837508682c0c5ae9a6ed4aa5723e3a59b515ff.json",
+          "sha256": "73c64c6b790848a868a635d7f22944c31d1b0649d28c3eb4556d51ed76fc8e68"
+        }
+      ]
+    },
+    "dependencies": {
+      "enemies": [
+        "enemy_1051_norwiz",
+        "enemy_1055_ganman",
+        "enemy_1056_ganwar",
+        "enemy_1058_traink"
+      ],
+      "devices": [],
+      "tokens": [
+        "trap_009_battery"
+      ]
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 10,
+        "spawned": 0,
+        "errors": 0
+      },
+      "publicReview": "pending",
+      "waveSchedule": {
+        "id": "cb-6",
+        "seconds": 209.33333333333334,
+        "spawned": 45,
+        "expected": 45,
+        "dynamicSpawns": 0,
+        "reason": "cleared",
+        "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+      },
+      "browserStartup": {
+        "id": "cb-6",
+        "seconds": 20,
+        "errors": [],
+        "units": 3,
+        "canvas": true,
+        "scope": "Mobile landscape browser startup and canvas runtime; not a fidelity approval"
+      },
+      "supplyCardInteraction": {
+        "id": "cb-6",
+        "dir": "LEFT",
+        "stock": 0,
+        "dp": 89,
+        "errors": [],
+        "status": "Supplies SP · Facing left",
+        "scope": "Mobile landscape browser: actual supply-card selection, map placement, shared facing picker and deployed station inspector. Controlled DP and tile setup; not a playable clear or native visual parity approval."
+      }
+    }
+  },
+  "contentRuleRefresh": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/cb-6.json",
+          "sha256": "2ff1f085d7bb42d754c9252b1c5f3841def6aaab60e0a499174cd4c6e6e791c4"
+        },
+        {
+          "path": "stage-geometry/cb-6.json",
+          "sha256": "031ae4854648c9a820ba62ce0272bf8a93ef54e5d1b690954ea2d0a63f4f07ad"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        }
+      ],
+      "localFiles": [
+        {
+          "path": "data/stage-rules/cb-6.json",
+          "sha256": "649e390185d0f5100df0095b17fda315cebc9aa8847763eaacd16df7dbc4bfcc"
+        },
+        {
+          "path": "data/stage-rules/levels/c6aac8dbfee29fb0e27c4efc1f563c2105a31b7715012b67d42f500e5fa33385.json",
+          "sha256": "c6aac8dbfee29fb0e27c4efc1f563c2105a31b7715012b67d42f500e5fa33385"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/97837508682c0c5ae9a6ed4aa5723e3a59b515ff.json",
+          "sha256": "73c64c6b790848a868a635d7f22944c31d1b0649d28c3eb4556d51ed76fc8e68"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/97837508682c0c5ae9a6ed4aa5723e3a59b515ff.json",
+          "sha256": "73c64c6b790848a868a635d7f22944c31d1b0649d28c3eb4556d51ed76fc8e68"
+        },
+        {
+          "path": "data/arkpedia-device-source.json",
+          "sha256": "64515531475bbde6c454f96b0a2c797edffc6f986c27d504539602d979b6fb7a"
+        },
+        {
+          "path": "data/arkpedia-device-native-source.json",
+          "sha256": "7340512aaf1e3ddeff9a9c6fb77a6b92e64513e9abc1951e89b780ccb10bd09c"
+        }
+      ]
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 10,
+        "spawned": 0,
+        "errors": 0
+      }
+    },
+    "changed": [
+      "tokens"
+    ]
+  }
+}

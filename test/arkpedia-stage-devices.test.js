@@ -2,6 +2,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { pulseTiles, artilleryTiles, STAGE_DEVICES } from '../shared/arkpedia/stage-devices.js';
+import { altarSelectorReviewed, altarSelectsUnit } from '../shared/arkpedia/stage-altar.js';
+import native from '../data/arkpedia-device-native-source.json' with { type: 'json' };
 import { StandardBattle } from '../server/sim/arkpedia.js';
 import { defaultBuild } from '../shared/arkpedia/loadout.js';
 import { readFileSync } from 'node:fs';
@@ -9,8 +11,12 @@ import stage from '../data/arkpedia-stage-7-8.json' with { type: 'json' };
 import mvp from '../data/arkpedia-mvp.json' with { type: 'json' };
 const data = { ...mvp, stage, enemies: { ...mvp.enemies, ...stage.enemies } };
 
-test('the Originium Altar pulse covers its own cross and the reviewed damage', () => {
-  assert.deepEqual(pulseTiles(3, 1), [[3, 1], [2, 1], [4, 1], [3, 0], [3, 2]]);
+test('the Originium Altar pulse covers the original 13-tile diamond and the reviewed damage', () => {
+  const tiles = pulseTiles(3, 1);
+  assert.equal(tiles.length, 13);
+  assert.ok(tiles.some(([r, c]) => r === 1 && c === 1));
+  assert.ok(tiles.some(([r, c]) => r === 2 && c === 2));
+  assert.ok(!tiles.some(([r, c]) => r === 1 && c === 2));
   assert.equal(STAGE_DEVICES['Originium Altar'].pulse.damage, 500);
   assert.equal(STAGE_DEVICES['Originium Altar'].pulse.spCost, 7);
 });
@@ -56,9 +62,10 @@ test('the EP14 controller drains pollution tiles', () => {
   const stage = JSON.parse(readFileSync(new URL('../data/arkpedia-stage-14-2.json', import.meta.url)));
   const data = { ...mvp, stage, enemies: { ...mvp.enemies, ...stage.enemies } };
   const battle = new StandardBattle(data, { operators: Object.values(data.operators).slice(0, 5).map(defaultBuild) });
-  const enemy = battle.spawnEnemy(Object.keys(stage.enemies)[0], { pos: [2, 1] });
+  const enemy = battle.spawnEnemy('enemy_1007_slime', { pos: [2, 1] });
   const hp = enemy.hp;
-  battle._tickMvpStageDevices(1.01);
+  battle.addBuff(enemy, { key: 'hold', flags: { noMove: true } });
+  for (let n = 0; n < 34; n++) battle.step();
   assert.ok(enemy.findBuff('device:pollution'));
   assert.ok(hp - enemy.hp >= 50 - 1e-6);
 });
@@ -99,4 +106,21 @@ test('static roadblocks are destructible without a DP reward', () => {
   const cap = battle.flags.dpMax;
   battle.dealDamage(null, device, { amount: 99999, type: 'true', sourceless: true, ignoreSelect: true });
   assert.equal(battle.flags.dpMax, cap);
+});
+
+
+test('altar selector excludes stage objects while retaining character-like summons and targetable devices', () => {
+  assert.equal(altarSelectorReviewed(), true);
+  const changed = structuredClone(native);
+  changed.prefabs.sktok_ore.components.find(c => '_targetCategory' in c.data).data._targetCategory = 3;
+  assert.equal(altarSelectorReviewed(changed), false);
+  for (const kind of ['op', 'enemy', 'token']) assert.equal(altarSelectsUnit({ kind }), true);
+  assert.equal(altarSelectsUnit({ kind: 'device' }), false);
+  assert.equal(altarSelectsUnit({ kind: 'device', profile: { enemyTargetableDevice: true } }), true);
+  assert.equal(altarSelectsUnit({ kind: 'device', mem: { regularSummonCard: {} } }), true);
+  const battle = new StandardBattle(data, { operators: [defaultBuild(data.operators.char_123_fang)] });
+  const device = battle.spawnDevice('test-mine', 3, 1, { hp: 100, blockCnt: 0, obstacle: false });
+  assert.ok(device); battle._tickMvpStageDevices(7.01); assert.equal(device.hp, 100);
+  device.profile.enemyTargetableDevice = true;
+  battle._tickMvpStageDevices(7.01); assert.equal(device.alive, false);
 });

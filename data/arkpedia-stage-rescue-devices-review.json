@@ -1,0 +1,353 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-14",
+  "scope": "Historical Dying Fowlbeast checkpoint: source-gated device, ordinary healing, regeneration, hostile target-free selection and rescue counter. Specialized operator interactions, native frame parity, artwork and run rewards are not certified.",
+  "sourceFiles": [
+    {
+      "path": "server/sim/Battle.js",
+      "sha256": "3cca336d803e5c77d6783b26f7762bc0541746b8edfd39dce7c9e98192a7aeed"
+    },
+    {
+      "path": "server/sim/ai.js",
+      "sha256": "dfc75644e63768b9264de0e7fca106dac9a469e81095c088d305c4acb9c97d17"
+    },
+    {
+      "path": "server/sim/buffs.js",
+      "sha256": "e0fa01d3128874533f2be500b34a7fc8900d0f7fb8d5543bee8db8e5ea89e66f"
+    },
+    {
+      "path": "server/sim/targeting.js",
+      "sha256": "c49d3d7113f5ad0b94fd4721035f37a6c1aa82d682bd236c1ef8eef8bc3fd1fe"
+    },
+    {
+      "path": "server/sim/damage.js",
+      "sha256": "952ec2bcee338b847347255423c19825082356f7f1e25647bf66a1637f426bff"
+    },
+    {
+      "path": "server/sim/content/arkpedia-stage-reward-devices.js",
+      "sha256": "510dacedec57cff364b6d1379554ef51b950b046275ca0f25eae85a4d251f5c2"
+    },
+    {
+      "path": "shared/arkpedia/stage-rescue-devices.js",
+      "sha256": "b9699ccc94120dbb6767282d315de58525aefda2d353eef0edc3d1636212888d"
+    },
+    {
+      "path": "shared/arkpedia/stage-reward-devices.js",
+      "sha256": "e34e44ceeea189f306f1db9a3f3c097cf1f79d9d61ccff8b422a018a0f0771f7"
+    },
+    {
+      "path": "shared/arkpedia/stage-outcomes.js",
+      "sha256": "9b7b128473e4e535c73415dbfa51c08fd7e7e3ee724c336e1ae00b4a8703b85a"
+    },
+    {
+      "path": "shared/arkpedia/stage-devices.js",
+      "sha256": "b56ba59347fa0856224590f94be88ca64872bed7a8f4db44964a74a64f8b0ba0"
+    },
+    {
+      "path": "data/arkpedia-device-native-source.json",
+      "sha256": "a98d3ad2e1291c5cd0e6f444e9d86427e3a1a717aae7971e10c7107b1f56af39"
+    },
+    {
+      "path": "data/arkpedia-device-source.json",
+      "sha256": "a0f8c8955325d232cd0c877ace3f7016c6232cf3a13165e8bcf1e4267add082e"
+    },
+    {
+      "path": "tools/arkpedia/extract-device-native-source.py",
+      "sha256": "abda7e3b411e4e2fa59d9459f0b6cf134ddb652d08772a383ba2f5c0561ba48b"
+    },
+    {
+      "path": "tools/arkpedia/stage-device-source.mjs",
+      "sha256": "8a6b7ddcd4123725b9e72d31aa94d4650d2f4c856b9a8ea2a903816222409efa"
+    },
+    {
+      "path": "test/arkpedia-stage-reward-devices.test.js",
+      "sha256": "d1a4bcda5f91eb63fcbd8b81f71402eeee9ef0a573406fc403c225cebed46d4c"
+    },
+    {
+      "path": "tools/arkpedia/review-stage-outcomes.mjs",
+      "sha256": "14a952b61e644869e0cfbf72e12b55b6d15e18636bfabef4d709d2d98306b23c"
+    },
+    {
+      "path": "docs/STAGE-RESCUE-DEVICES-REVIEW.md",
+      "sha256": "a1728e3b2db7dbded66b7fac2f8880fd33b2e5645b1b0424875f59a99ef959bf"
+    }
+  ],
+  "checks": {
+    "integrationTests": {
+      "passed": 67,
+      "failed": 0,
+      "log": {
+        "path": "/tmp/fowl-final-tests.log",
+        "sha256": "9db651a4e60b7b9207d5be85bb49852fd9b4b59df827b496715dc5dbf665af30"
+      }
+    },
+    "targetingAndHealers": {
+      "passed": 25,
+      "failed": 0,
+      "log": {
+        "path": "/tmp/fowl-targeting-tests.log",
+        "sha256": "f0651fec072aed5d7d3568beebd90da2552808b6d6031457a56a1c400c6e9da5"
+      }
+    },
+    "allStageSmoke": {
+      "scope": "10-second constructor/runtime smoke for every available compiled stage; not a playable-clear or fidelity certificate",
+      "available": 827,
+      "completed": 827,
+      "failures": [],
+      "uniqueComponentsRead": 5606,
+      "cache": {
+        "cachedBytes": 12278115,
+        "cachedObjects": 5606,
+        "pending": 0
+      }
+    },
+    "browser": [
+      {
+        "mobile": false,
+        "scope": "controlled supported-enemy fixtures in the public result UI",
+        "state": {
+          "outcomes": {
+            "counters": {
+              "rogue_thief_reach_exit": 1,
+              "trap_758_skzmbx": 1,
+              "killed": 2,
+              "trap_757_skzbox": 1,
+              "trap_759_skzwyx": 1,
+              "rogue_first_step": 1
+            },
+            "events": [
+              {
+                "key": "rogue_thief_reach_exit",
+                "value": 1,
+                "time": 0,
+                "enemy": "enemy_2069_skzbox",
+                "instance": 1
+              },
+              {
+                "key": "trap_758_skzmbx",
+                "value": 1,
+                "time": 0,
+                "enemy": "enemy_2069_skzbox",
+                "instance": 2
+              },
+              {
+                "key": "killed",
+                "value": 1,
+                "time": 0,
+                "enemy": "enemy_2091_skzgds",
+                "instance": 3
+              },
+              {
+                "key": "killed",
+                "value": 1,
+                "time": 0,
+                "enemy": "enemy_2070_skzfbx",
+                "instance": 4
+              },
+              {
+                "key": "trap_757_skzbox",
+                "value": 1,
+                "time": 0,
+                "enemy": "trap_757_skzbox",
+                "instance": 5
+              },
+              {
+                "key": "trap_759_skzwyx",
+                "value": 1,
+                "time": 0,
+                "enemy": "trap_759_skzwyx",
+                "instance": 6
+              },
+              {
+                "key": "rogue_first_step",
+                "value": 1,
+                "time": 0,
+                "enemy": "enemy_2067_skzcy",
+                "instance": 8,
+                "operator": "char_123_fang",
+                "operatorInstance": 7,
+                "operatorName": "Fang"
+              }
+            ]
+          },
+          "removed": "char_123_fang",
+          "hover": [
+            {
+              "airborne": true,
+              "speed": 0.35
+            },
+            {
+              "airborne": false,
+              "speed": 0.7
+            }
+          ],
+          "rescue": {
+            "initialHp": 1,
+            "side": "ally",
+            "total": 15,
+            "restored": 5999,
+            "alive": false,
+            "finalTotal": 15
+          },
+          "placementError": "This operator has been removed from the squad for this battle.",
+          "errors": []
+        },
+        "summaries": [
+          "Treasure Chests opened: 1. Run rewards are not applied by the stage simulator.",
+          "Fowlbeasts rescued: 1. Run rewards are not applied by the stage simulator.",
+          "Lost Contraptions defeated: 1. Run rewards are not applied by the stage simulator.",
+          "Ingot theft events: 1. The run applies the ingot loss after this stage.",
+          "Windows defeated: 1. Prosperity becomes available in the run after this stage.",
+          "Lost Hovercraft defeated: 1. Run rewards are not applied by the stage simulator.",
+          "Operators removed by Portal: Fang. Return timing belongs to the run."
+        ],
+        "panel": {
+          "top": 116.015625,
+          "bottom": 783.96875,
+          "height": 900,
+          "scroll": 666,
+          "visible": 666
+        },
+        "errors": []
+      },
+      {
+        "mobile": true,
+        "scope": "controlled supported-enemy fixtures in the public result UI",
+        "state": {
+          "outcomes": {
+            "counters": {
+              "rogue_thief_reach_exit": 1,
+              "trap_758_skzmbx": 1,
+              "killed": 2,
+              "trap_757_skzbox": 1,
+              "trap_759_skzwyx": 1,
+              "rogue_first_step": 1
+            },
+            "events": [
+              {
+                "key": "rogue_thief_reach_exit",
+                "value": 1,
+                "time": 0,
+                "enemy": "enemy_2069_skzbox",
+                "instance": 1
+              },
+              {
+                "key": "trap_758_skzmbx",
+                "value": 1,
+                "time": 0,
+                "enemy": "enemy_2069_skzbox",
+                "instance": 2
+              },
+              {
+                "key": "killed",
+                "value": 1,
+                "time": 0,
+                "enemy": "enemy_2091_skzgds",
+                "instance": 3
+              },
+              {
+                "key": "killed",
+                "value": 1,
+                "time": 0,
+                "enemy": "enemy_2070_skzfbx",
+                "instance": 4
+              },
+              {
+                "key": "trap_757_skzbox",
+                "value": 1,
+                "time": 0,
+                "enemy": "trap_757_skzbox",
+                "instance": 5
+              },
+              {
+                "key": "trap_759_skzwyx",
+                "value": 1,
+                "time": 0,
+                "enemy": "trap_759_skzwyx",
+                "instance": 6
+              },
+              {
+                "key": "rogue_first_step",
+                "value": 1,
+                "time": 0,
+                "enemy": "enemy_2067_skzcy",
+                "instance": 8,
+                "operator": "char_123_fang",
+                "operatorInstance": 7,
+                "operatorName": "Fang"
+              }
+            ]
+          },
+          "removed": "char_123_fang",
+          "hover": [
+            {
+              "airborne": true,
+              "speed": 0.35
+            },
+            {
+              "airborne": false,
+              "speed": 0.7
+            }
+          ],
+          "rescue": {
+            "initialHp": 1,
+            "side": "ally",
+            "total": 15,
+            "restored": 5999,
+            "alive": false,
+            "finalTotal": 15
+          },
+          "placementError": "This operator has been removed from the squad for this battle.",
+          "errors": []
+        },
+        "summaries": [
+          "Treasure Chests opened: 1. Run rewards are not applied by the stage simulator.",
+          "Fowlbeasts rescued: 1. Run rewards are not applied by the stage simulator.",
+          "Lost Contraptions defeated: 1. Run rewards are not applied by the stage simulator.",
+          "Ingot theft events: 1. The run applies the ingot loss after this stage.",
+          "Windows defeated: 1. Prosperity becomes available in the run after this stage.",
+          "Lost Hovercraft defeated: 1. Run rewards are not applied by the stage simulator.",
+          "Operators removed by Portal: Fang. Return timing belongs to the run."
+        ],
+        "panel": {
+          "top": 12,
+          "bottom": 408,
+          "height": 420,
+          "scroll": 666,
+          "visible": 394
+        },
+        "errors": []
+      }
+    ],
+    "inventory": {
+      "path": "data/arkpedia-content-inventory.json",
+      "sha256": "99b6e17bb811630f536e39d3f7f1268174de346eb299f5537feee284a8169a6c"
+    },
+    "runtimeFootprint": {
+      "ids": [
+        "char_123_fang",
+        "char_124_kroos"
+      ],
+      "adapters": 24,
+      "common": {
+        "modules": 455,
+        "bytes": 4519177,
+        "sha256": "79e79d42c6805f61540351e87c8e6261f39c3c3eba5a3bffdacda6fb48d78ba5"
+      },
+      "selected": {
+        "modules": 492,
+        "bytes": 8241765,
+        "sha256": "695b706be6a0328087364391b15a46f138a4e73e1ebd69e1b379774e8e9d4c1e"
+      },
+      "eager": {
+        "modules": 1212,
+        "bytes": 95778951,
+        "sha256": "8c2bafb4530f7bba5e9dc05047df01497ccafe1d7f463be6326ca915a58b987d"
+      }
+    },
+    "sourceCheck": {
+      "path": "/tmp/fowl-source-check.log",
+      "sha256": "f8719635b2ddabae390a159becc05db573de8e4bc034a6d43ac0817b6767d5f6"
+    }
+  }
+}

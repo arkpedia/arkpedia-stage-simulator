@@ -495,12 +495,30 @@ def _text_bytes(text_asset):
 
 
 def merge_alpha(rgb, alpha):
-    """RGBA page of a split texture: RGB of the main texture (premultiplied: the client's Spine material has
-    _StraightAlphaInput 0) and A from its [alpha] texture; RGB is clamped to A (block-compression bleed)."""
+    """Preserve embedded alpha or use the separate alpha page of a premultiplied texture.
+    The client's Spine material has _StraightAlphaInput 0; clamp compression bleed to A."""
     from PIL import Image, ImageChops
     r, g, b = rgb.convert('RGB').split()
-    a = alpha.convert('L').resize(rgb.size) if alpha is not None else Image.new('L', rgb.size, 255)
+    if alpha is not None:
+        a = alpha.convert('L').resize(rgb.size)
+    else:
+        a = rgb.getchannel('A') if 'A' in rgb.getbands() else Image.new('L', rgb.size, 255)
     return Image.merge('RGBA', tuple(ImageChops.darker(ch, a) for ch in (r, g, b)) + (a,))
+
+
+def material_alpha_ref(material):
+    """An assigned secondary texture may be disabled by the native material."""
+    props = material['m_SavedProperties']
+    enabled = dict(props['m_Floats']).get('_UseAlphaTex', 0)
+    if enabled not in (0, 1):
+        raise ValueError('Unsupported native alpha texture switch')
+    keywords = set(material.get('m_ValidKeywords', material.get('m_ShaderKeywords', '').split()))
+    if ('_USEALPHATEX_ON' in keywords and not enabled) or ('_USEALPHATEX_OFF' in keywords and enabled):
+        raise ValueError('Native alpha texture keyword disagrees with material switch')
+    ref = dict(props['m_TexEnvs']).get('_AlphaTex', {}).get('m_Texture')
+    if enabled and (not ref or not ref.get('m_PathID')):
+        raise ValueError('Enabled native alpha texture is missing')
+    return ref if enabled else None
 
 
 def normalize_atlas(text, sizes):
@@ -538,10 +556,12 @@ def normalize_atlas(text, sizes):
     return '\n'.join(out)
 
 
-def write_enemy_spine(objects, sda, eid, out_root, manifest, log):
-    """Write one enemy model (skeleton, atlas, merged pages) of a SkeletonDataAsset typetree; returns the file count."""
+def write_enemy_spine(objects, sda, eid, out_root, manifest, log, kind='enemy'):
+    """Write one original body with shared atlas/alpha transforms; returns the file count."""
+    if kind not in ('enemy', 'device'):
+        raise ValueError('Unknown single-body model kind')
     get = lambda pptr: objects.get(pptr['m_PathID']) if pptr and not pptr.get('m_FileID') else None  # noqa: E731
-    sub = f'{ENEMY_SPINE_SUB}/{eid}'
+    sub = f'spine/{kind}/{eid}'
     out_dir = Path(out_root) / sub
     out_dir.mkdir(parents=True, exist_ok=True)
     files = {}
@@ -565,8 +585,9 @@ def write_enemy_spine(objects, sda, eid, out_root, manifest, log):
             mo = get(mref)
             if mo is None:
                 continue
-            texs = dict(mo.read_typetree()['m_SavedProperties']['m_TexEnvs'])
-            main, alpha = get(texs.get('_MainTex', {}).get('m_Texture')), get(texs.get('_AlphaTex', {}).get('m_Texture'))
+            material = mo.read_typetree()
+            texs = dict(material['m_SavedProperties']['m_TexEnvs'])
+            main, alpha = get(texs.get('_MainTex', {}).get('m_Texture')), get(material_alpha_ref(material))
             if main is None:
                 continue
             mt = main.read()

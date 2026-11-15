@@ -49,6 +49,7 @@ export function customizeRobinKit({ battle: b, id, def, unit: u, kit }) {
 }
 export function installRobin({ battle: b, unit: u, def }) {
   if (def.charId !== ID) return;
+  u.mem.regularSummonFactory = createRobinClip;
   // RechargeToken refreshes initial stock on each new deployment; installSummoner
   // owns that source action. This adapter only gates SP while total stock is full.
   b.on('tick', () => syncStock(b, u), { owner: u });

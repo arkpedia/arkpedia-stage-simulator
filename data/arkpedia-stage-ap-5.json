@@ -1,0 +1,1457 @@
+{
+  "code": "AP-5",
+  "name": "Refinery Security",
+  "description": "Defend against enemies in a hostile environment.\n<Poison Haze> Operators lose HP constantly",
+  "battle": {
+    "max_life": 3,
+    "unit_limit": 8,
+    "initial_dp": 30,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1,
+    "max_play_time": -1
+  },
+  "rules": {
+    "variant": null,
+    "source": {
+      "repository": "Kengxxiao/ArknightsGameData",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "path": "zh_CN/gamedata/levels/obt/weekly/level_weekly_toxic_5.json",
+      "sha256": "6074733f2d02fd2c8b681f4beb906149639e281b4757fa9589d57db19a64f8d1",
+      "gitBlob": "4013648680b7a31a20a60650663ea9a43e928916",
+      "stageTable": {
+        "path": "zh_CN/gamedata/excel/stage_table.json",
+        "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+        "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+        "stageId": "wk_toxic_5",
+        "levelId": "Obt/Weekly/level_weekly_toxic_5"
+      }
+    },
+    "battle": {
+      "max_play_time": -1
+    },
+    "enemies": {},
+    "enemyAdd": {},
+    "hiddenGroups": {}
+  },
+  "mapTags": [],
+  "mapTagSource": null,
+  "geometry": {
+    "slug": "ap-5",
+    "rows": 8,
+    "cols": 10,
+    "tileLegend": [
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_floor",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_start",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      }
+    ],
+    "tileGrid": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        1,
+        2,
+        3,
+        2,
+        3,
+        2,
+        4
+      ],
+      [
+        5,
+        2,
+        3,
+        2,
+        3,
+        2,
+        3,
+        2,
+        3,
+        4
+      ],
+      [
+        5,
+        3,
+        2,
+        3,
+        2,
+        3,
+        1,
+        1,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        1,
+        3,
+        2,
+        1,
+        1,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        1,
+        2,
+        3,
+        1,
+        3,
+        3,
+        4
+      ],
+      [
+        4,
+        2,
+        2,
+        0,
+        3,
+        2,
+        1,
+        2,
+        3,
+        5
+      ],
+      [
+        0,
+        0,
+        5,
+        0,
+        4,
+        4,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "routes": [
+      {
+        "motion": null,
+        "placeholder": true,
+        "start": null,
+        "end": null,
+        "checkpoints": [],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 9
+        },
+        "end": {
+          "row": 6,
+          "col": 9
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 7
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 25
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 9
+        },
+        "end": {
+          "row": 3,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 5
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 9
+        },
+        "end": {
+          "row": 2,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 4
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 9
+        },
+        "end": {
+          "row": 6,
+          "col": 9
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 7
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 20
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 7,
+          "col": 4
+        },
+        "end": {
+          "row": 2,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 4
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 7,
+          "col": 5
+        },
+        "end": {
+          "row": 3,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 5
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 0
+        },
+        "end": {
+          "row": 7,
+          "col": 2
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 2
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 15
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 9
+        },
+        "end": {
+          "row": 6,
+          "col": 9
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 8
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 1,
+            "seconds": 5
+          }
+        ]
+      }
+    ],
+    "waves": [
+      {
+        "index": 0,
+        "duration": 208,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Mortar Gunner Leader",
+            "enemy_id": "enemy_1024_mortar_2",
+            "count": 1,
+            "time": 0,
+            "route": 1,
+            "fragment": 0
+          },
+          {
+            "enemy": "Dual Swordsman Leader",
+            "enemy_id": "enemy_1014_rogue_2",
+            "count": 1,
+            "time": 8,
+            "route": 2,
+            "fragment": 1
+          },
+          {
+            "enemy": "Dual Swordsman Leader",
+            "enemy_id": "enemy_1014_rogue_2",
+            "count": 1,
+            "time": 20,
+            "route": 2,
+            "fragment": 1
+          },
+          {
+            "enemy": "Dual Swordsman Leader",
+            "enemy_id": "enemy_1014_rogue_2",
+            "count": 1,
+            "time": 30,
+            "route": 2,
+            "fragment": 1
+          },
+          {
+            "enemy": "Dual Swordsman Leader",
+            "enemy_id": "enemy_1014_rogue_2",
+            "count": 1,
+            "time": 48,
+            "route": 3,
+            "fragment": 2
+          },
+          {
+            "enemy": "Dual Swordsman Leader",
+            "enemy_id": "enemy_1014_rogue_2",
+            "count": 1,
+            "time": 58,
+            "route": 3,
+            "fragment": 2
+          },
+          {
+            "enemy": "Dual Swordsman Leader",
+            "enemy_id": "enemy_1014_rogue_2",
+            "count": 1,
+            "time": 67,
+            "route": 3,
+            "fragment": 2
+          },
+          {
+            "enemy": "Dual Swordsman Leader",
+            "enemy_id": "enemy_1014_rogue_2",
+            "count": 3,
+            "time": 50,
+            "interval": 9,
+            "route": 2,
+            "fragment": 2
+          },
+          {
+            "enemy": "Mortar Gunner Leader",
+            "enemy_id": "enemy_1024_mortar_2",
+            "count": 1,
+            "time": 65,
+            "route": 4,
+            "fragment": 2
+          },
+          {
+            "enemy": "Sarkaz Greatswordsman",
+            "enemy_id": "enemy_1010_demon",
+            "count": 2,
+            "time": 81,
+            "interval": 8,
+            "route": 5,
+            "fragment": 3
+          },
+          {
+            "enemy": "Sarkaz Greatswordsman",
+            "enemy_id": "enemy_1010_demon",
+            "count": 2,
+            "time": 90,
+            "interval": 8,
+            "route": 2,
+            "fragment": 3
+          },
+          {
+            "enemy": "Dual Swordsman Leader",
+            "enemy_id": "enemy_1014_rogue_2",
+            "count": 4,
+            "time": 119,
+            "interval": 7,
+            "route": 5,
+            "fragment": 4
+          },
+          {
+            "enemy": "Dual Swordsman Leader",
+            "enemy_id": "enemy_1014_rogue_2",
+            "count": 4,
+            "time": 119,
+            "interval": 7,
+            "route": 6,
+            "fragment": 4
+          },
+          {
+            "enemy": "Dual Swordsman Leader",
+            "enemy_id": "enemy_1014_rogue_2",
+            "count": 4,
+            "time": 119,
+            "interval": 7,
+            "route": 2,
+            "fragment": 4
+          },
+          {
+            "enemy": "Dual Swordsman Leader",
+            "enemy_id": "enemy_1014_rogue_2",
+            "count": 4,
+            "time": 119,
+            "interval": 7,
+            "route": 3,
+            "fragment": 4
+          },
+          {
+            "enemy": "Mortar Gunner Leader",
+            "enemy_id": "enemy_1024_mortar_2",
+            "count": 1,
+            "time": 166,
+            "route": 7,
+            "fragment": 5
+          },
+          {
+            "enemy": "Mortar Gunner Leader",
+            "enemy_id": "enemy_1024_mortar_2",
+            "count": 1,
+            "time": 196,
+            "route": 8,
+            "fragment": 5
+          },
+          {
+            "enemy": "Sarkaz Crossbowman",
+            "enemy_id": "enemy_1012_dcross",
+            "count": 3,
+            "time": 159,
+            "interval": 22,
+            "route": 2,
+            "fragment": 5
+          },
+          {
+            "enemy": "Sarkaz Greatswordsman",
+            "enemy_id": "enemy_1010_demon",
+            "count": 3,
+            "time": 159,
+            "interval": 22,
+            "route": 5,
+            "fragment": 5
+          },
+          {
+            "enemy": "Sarkaz Crossbowman",
+            "enemy_id": "enemy_1012_dcross",
+            "count": 3,
+            "time": 164,
+            "interval": 22,
+            "route": 5,
+            "fragment": 5
+          },
+          {
+            "enemy": "Senior Caster Leader",
+            "enemy_id": "enemy_1018_aoemag_2",
+            "count": 1,
+            "time": 191,
+            "route": 3,
+            "fragment": 5
+          }
+        ]
+      }
+    ],
+    "spawnTiles": [
+      {
+        "key": "tile_start",
+        "row": 1,
+        "col": 9,
+        "routes": [
+          3,
+          3,
+          3,
+          3,
+          3
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 2,
+        "col": 9,
+        "routes": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 5,
+        "col": 9,
+        "routes": [
+          1,
+          4,
+          8
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 6,
+        "col": 0,
+        "routes": [
+          7
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 7,
+        "col": 4,
+        "routes": [
+          5,
+          5,
+          5,
+          5
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 7,
+        "col": 5,
+        "routes": [
+          6
+        ]
+      }
+    ],
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 2,
+        "col": 0,
+        "routes": [
+          3,
+          3,
+          3,
+          5,
+          5,
+          3,
+          5,
+          5,
+          3
+        ]
+      },
+      {
+        "key": "tile_end",
+        "row": 3,
+        "col": 0,
+        "routes": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          6,
+          2,
+          2
+        ]
+      },
+      {
+        "key": "tile_end",
+        "row": 6,
+        "col": 9,
+        "routes": [
+          1,
+          4,
+          8
+        ]
+      },
+      {
+        "key": "tile_end",
+        "row": 7,
+        "col": 2,
+        "routes": [
+          7
+        ]
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_1010_demon",
+        "slug": "sarkaz_greatswordsman",
+        "name": "Sarkaz Greatswordsman",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1012_dcross",
+        "slug": "sarkaz_crossbowman",
+        "name": "Sarkaz Crossbowman",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1014_rogue_2",
+        "slug": "dual_swordsman_leader",
+        "name": "Dual Swordsman Leader",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1018_aoemag_2",
+        "slug": "senior_caster_leader",
+        "name": "Senior Caster Leader",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1024_mortar_2",
+        "slug": "mortar_gunner_leader",
+        "name": "Mortar Gunner Leader",
+        "database_level": 0,
+        "overrides": {
+          "atk": 500,
+          "hp": 3800
+        }
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [],
+      "deployable_tokens": []
+    },
+    "hasConditionalSpawns": false
+  },
+  "terrain": [],
+  "conditionalHandled": false,
+  "devices": [],
+  "tokens": [],
+  "pathing": {
+    "schemaVersion": 1,
+    "syntheticRoutes": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "producer": "Arkpedia stage browser / buildPlaybackPaths",
+    "stage": "AP-5",
+    "geometryHash": "e9d59cbb51958d1f4a118730bb076630327682021b1b1e2459b4ab567ae828e1",
+    "moveScale": 0.65,
+    "paths": {
+      "1": {
+        "points": [
+          [
+            9,
+            5
+          ],
+          [
+            8,
+            5
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            7,
+            6
+          ],
+          [
+            9,
+            6
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "2": {
+        "points": [
+          [
+            9,
+            2
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "3": {
+        "points": [
+          [
+            9,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            0,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "4": {
+        "points": [
+          [
+            9,
+            5
+          ],
+          [
+            8,
+            5
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            7,
+            6
+          ],
+          [
+            9,
+            6
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "5": {
+        "points": [
+          [
+            4,
+            7
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            0,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "6": {
+        "points": [
+          [
+            5,
+            7
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "7": {
+        "points": [
+          [
+            0,
+            6
+          ],
+          [
+            1,
+            6
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            2,
+            7
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "8": {
+        "points": [
+          [
+            9,
+            5
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            7,
+            6
+          ],
+          [
+            8,
+            6
+          ],
+          [
+            9,
+            6
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      }
+    }
+  },
+  "art": null,
+  "gates": null,
+  "fixedSquad": null,
+  "enemies": {
+    "enemy_1024_mortar_2": {
+      "key": "enemy_1024_mortar_2",
+      "prefabKey": "enemy_1024_mortar_2",
+      "name": "Mortar Gunner Leader",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 3800,
+        "atk": 500,
+        "def": 150,
+        "res": 0,
+        "moveSpeed": 0.8,
+        "bat": 4.5,
+        "aspd": 100,
+        "rangeRadius": 7,
+        "rawRangeRadius": 7,
+        "blockCnt": 1,
+        "massLevel": 2,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Capable of extremely long ranged-attacks",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Shells deal area damage to target and any allied units in the surrounding 8 tiles",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1014_rogue_2": {
+      "key": "enemy_1014_rogue_2",
+      "prefabKey": "enemy_1014_rogue_2",
+      "name": "Dual Swordsman Leader",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 3000,
+        "atk": 450,
+        "def": 120,
+        "res": 0,
+        "moveSpeed": 1.1,
+        "bat": 1.2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1010_demon": {
+      "key": "enemy_1010_demon",
+      "prefabKey": "enemy_1010_demon",
+      "name": "Sarkaz Greatswordsman",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 7500,
+        "atk": 600,
+        "def": 230,
+        "res": 50,
+        "moveSpeed": 0.85,
+        "bat": 2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 2,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "sarkaz"
+      ]
+    },
+    "enemy_1012_dcross": {
+      "key": "enemy_1012_dcross",
+      "prefabKey": "enemy_1012_dcross",
+      "name": "Sarkaz Crossbowman",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 6000,
+        "atk": 450,
+        "def": 200,
+        "res": 50,
+        "moveSpeed": 0.8,
+        "bat": 3,
+        "aspd": 100,
+        "rangeRadius": 2.2,
+        "rawRangeRadius": 2.2,
+        "blockCnt": 1,
+        "massLevel": 2,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "sarkaz"
+      ]
+    },
+    "enemy_1018_aoemag_2": {
+      "key": "enemy_1018_aoemag_2",
+      "prefabKey": "enemy_1018_aoemag_2",
+      "name": "Senior Caster Leader",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 13500,
+        "atk": 380,
+        "def": 160,
+        "res": 50,
+        "moveSpeed": 0.7,
+        "bat": 3.8,
+        "aspd": 100,
+        "rangeRadius": 2.2,
+        "rawRangeRadius": 2.2,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "arts",
+        "dmgTypes": [
+          "arts"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Deals area damage to Operators on the four cardinal tiles next to the primary target.",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    }
+  },
+  "contentAddition": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/ap-5.json",
+          "sha256": "b0bedbe5a0688828127416d01ddbe6573fc9632bc97796ababed703fc230d6df"
+        },
+        {
+          "path": "stage-geometry/ap-5.json",
+          "sha256": "e9d59cbb51958d1f4a118730bb076630327682021b1b1e2459b4ab567ae828e1"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        }
+      ],
+      "localFiles": [
+        {
+          "path": "data/stage-rules/ap-5.json",
+          "sha256": "12ae605eb58643fca6973c1bb4674672c229b2eb1c3acc0fa707334a420dc62c"
+        }
+      ]
+    },
+    "dependencies": {
+      "enemies": [
+        "enemy_1010_demon",
+        "enemy_1012_dcross",
+        "enemy_1014_rogue_2",
+        "enemy_1018_aoemag_2",
+        "enemy_1024_mortar_2"
+      ],
+      "devices": [],
+      "tokens": []
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 10,
+        "spawned": 2,
+        "errors": 0
+      },
+      "publicReview": "pending",
+      "waveSchedule": {
+        "id": "ap-5",
+        "seconds": 225.33333333333334,
+        "spawned": 43,
+        "expected": 43,
+        "reason": "cleared",
+        "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+      },
+      "browser": {
+        "date": "2026-11-13",
+        "engine": "Chromium",
+        "seconds": 10,
+        "errors": 0,
+        "canvas": true,
+        "scope": "Load/runtime smoke; external image assets unavailable"
+      }
+    }
+  },
+  "environment": [
+    {
+      "kind": "periodic_damage",
+      "damage": 25,
+      "interval": 0.5
+    }
+  ],
+  "contentRuleRefresh": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/ap-5.json",
+          "sha256": "b0bedbe5a0688828127416d01ddbe6573fc9632bc97796ababed703fc230d6df"
+        },
+        {
+          "path": "stage-geometry/ap-5.json",
+          "sha256": "e9d59cbb51958d1f4a118730bb076630327682021b1b1e2459b4ab567ae828e1"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        }
+      ],
+      "localFiles": [
+        {
+          "path": "data/stage-rules/ap-5.json",
+          "sha256": "12ae605eb58643fca6973c1bb4674672c229b2eb1c3acc0fa707334a420dc62c"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/4013648680b7a31a20a60650663ea9a43e928916.json",
+          "sha256": "6074733f2d02fd2c8b681f4beb906149639e281b4757fa9589d57db19a64f8d1"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/4013648680b7a31a20a60650663ea9a43e928916.json",
+          "sha256": "6074733f2d02fd2c8b681f4beb906149639e281b4757fa9589d57db19a64f8d1"
+        },
+        {
+          "path": "data/arkpedia-environment-native-source.json",
+          "sha256": "f85082fa9b085a473e1424de3d2c6d0097ced0297de0636a62baf60789d76de2"
+        }
+      ]
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 10,
+        "spawned": 2,
+        "errors": 0
+      },
+      "waveSchedule": {
+        "id": "ap-5",
+        "seconds": 225.33333333333334,
+        "spawned": 43,
+        "expected": 43,
+        "dynamicSpawns": 0,
+        "reason": "cleared",
+        "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+      },
+      "browserStartup": {
+        "id": "ap-5",
+        "seconds": 20,
+        "errors": [],
+        "units": 2,
+        "canvas": true,
+        "scope": "Mobile landscape browser startup and canvas runtime; not a fidelity approval"
+      }
+    },
+    "changed": [
+      "environment"
+    ]
+  }
+}

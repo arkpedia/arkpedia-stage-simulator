@@ -1,0 +1,1311 @@
+{
+ "code": "OF-F2",
+ "name": "Drifting, Falling",
+ "description": "Beware of the true dangers that conceal themselves among the crowds.",
+ "battle": {
+  "max_life": 5,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1,
+  "max_play_time": -1
+ },
+ "rules": {
+  "variant": null,
+  "source": {
+   "repository": "Kengxxiao/ArknightsGameData",
+   "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+   "path": "zh_CN/gamedata/levels/activities/act3d0/level_act3d0_f02.json",
+   "sha256": "df3b52b121539a308140ea62970a5a688b5179cb1fca9c0f71e30fcb6ba8f050",
+   "gitBlob": "a83c6209888c136d8883f17d63fd8eb1abf7a7bb",
+   "stageTable": {
+    "path": "zh_CN/gamedata/excel/stage_table.json",
+    "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+    "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+    "stageId": "a003_f02",
+    "levelId": "Activities/ACT3D0/level_act3d0_f02"
+   }
+  },
+  "battle": {
+   "max_play_time": -1
+  },
+  "enemies": {},
+  "enemyAdd": {},
+  "hiddenGroups": {}
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "of-f2",
+  "rows": 8,
+  "cols": 11,
+  "tileLegend": [
+   {
+    "key": "tile_deepwater",
+    "height": "low",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_telin",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_telout",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    1,
+    2,
+    2,
+    2,
+    2,
+    3,
+    3,
+    3,
+    3,
+    3,
+    1
+   ],
+   [
+    1,
+    2,
+    2,
+    2,
+    2,
+    3,
+    3,
+    3,
+    4,
+    5,
+    5
+   ],
+   [
+    0,
+    0,
+    0,
+    4,
+    4,
+    3,
+    2,
+    3,
+    4,
+    4,
+    5
+   ],
+   [
+    5,
+    4,
+    3,
+    6,
+    0,
+    7,
+    3,
+    2,
+    3,
+    3,
+    5
+   ],
+   [
+    5,
+    3,
+    3,
+    3,
+    0,
+    0,
+    4,
+    3,
+    3,
+    3,
+    8
+   ],
+   [
+    1,
+    3,
+    5,
+    4,
+    0,
+    0,
+    0,
+    4,
+    3,
+    3,
+    8
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 0
+    },
+    "end": {
+     "row": 6,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 8
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 5,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 8
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 0
+    },
+    "end": {
+     "row": 6,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 3
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 8
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 3
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 10
+    },
+    "end": {
+     "row": 5,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 7
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 7
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 2,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": null,
+    "placeholder": true,
+    "start": null,
+    "end": null,
+    "checkpoints": [],
+    "waits": []
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 181,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 1,
+      "time": 8,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 2,
+      "time": 12,
+      "interval": 1,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 3,
+      "time": 18,
+      "interval": 1,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 2,
+      "time": 18,
+      "interval": 1,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Infantry",
+      "enemy_id": "enemy_1046_agent",
+      "count": 1,
+      "time": 28,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "Infantry",
+      "enemy_id": "enemy_1046_agent",
+      "count": 1,
+      "time": 30,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Infantry",
+      "enemy_id": "enemy_1046_agent",
+      "count": 1,
+      "time": 34,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Infantry",
+      "enemy_id": "enemy_1046_agent",
+      "count": 1,
+      "time": 34,
+      "route": 0,
+      "fragment": 2
+     },
+     {
+      "enemy": "Sniper",
+      "enemy_id": "enemy_1047_sagent",
+      "count": 1,
+      "time": 37,
+      "route": 2,
+      "fragment": 2
+     },
+     {
+      "enemy": "Sniper",
+      "enemy_id": "enemy_1047_sagent",
+      "count": 1,
+      "time": 37,
+      "route": 3,
+      "fragment": 2
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 3,
+      "time": 50,
+      "interval": 1,
+      "route": 0,
+      "fragment": 3
+     },
+     {
+      "enemy": "Infantry",
+      "enemy_id": "enemy_1046_agent",
+      "count": 2,
+      "time": 50,
+      "interval": 3,
+      "route": 1,
+      "fragment": 3
+     },
+     {
+      "enemy": "Infantry",
+      "enemy_id": "enemy_1046_agent",
+      "count": 2,
+      "time": 59,
+      "interval": 3,
+      "route": 0,
+      "fragment": 3
+     },
+     {
+      "enemy": "Originium Slug β",
+      "enemy_id": "enemy_1007_slime_3",
+      "count": 3,
+      "time": 59,
+      "interval": 1,
+      "route": 1,
+      "fragment": 3
+     },
+     {
+      "enemy": "Sniper",
+      "enemy_id": "enemy_1047_sagent",
+      "count": 1,
+      "time": 59,
+      "route": 2,
+      "fragment": 3
+     },
+     {
+      "enemy": "Sniper",
+      "enemy_id": "enemy_1047_sagent",
+      "count": 1,
+      "time": 59,
+      "route": 3,
+      "fragment": 3
+     },
+     {
+      "enemy": "Infantry",
+      "enemy_id": "enemy_1046_agent",
+      "count": 2,
+      "time": 77,
+      "interval": 3,
+      "route": 0,
+      "fragment": 4
+     },
+     {
+      "enemy": "Infantry",
+      "enemy_id": "enemy_1046_agent",
+      "count": 2,
+      "time": 77,
+      "interval": 3,
+      "route": 1,
+      "fragment": 4
+     },
+     {
+      "enemy": "Infantry",
+      "enemy_id": "enemy_1046_agent",
+      "count": 2,
+      "time": 86,
+      "interval": 3,
+      "route": 0,
+      "fragment": 4
+     },
+     {
+      "enemy": "Infantry",
+      "enemy_id": "enemy_1046_agent",
+      "count": 2,
+      "time": 86,
+      "interval": 3,
+      "route": 1,
+      "fragment": 4
+     },
+     {
+      "enemy": "Sniper",
+      "enemy_id": "enemy_1047_sagent",
+      "count": 1,
+      "time": 86,
+      "route": 2,
+      "fragment": 4
+     },
+     {
+      "enemy": "Sniper",
+      "enemy_id": "enemy_1047_sagent",
+      "count": 1,
+      "time": 86,
+      "route": 3,
+      "fragment": 4
+     },
+     {
+      "enemy": "Infantry",
+      "enemy_id": "enemy_1046_agent",
+      "count": 1,
+      "time": 104,
+      "route": 0,
+      "fragment": 5
+     },
+     {
+      "enemy": "Infantry",
+      "enemy_id": "enemy_1046_agent",
+      "count": 1,
+      "time": 104,
+      "route": 1,
+      "fragment": 5
+     },
+     {
+      "enemy": "Infantry",
+      "enemy_id": "enemy_1046_agent",
+      "count": 2,
+      "time": 110,
+      "interval": 3,
+      "route": 0,
+      "fragment": 5
+     },
+     {
+      "enemy": "Infantry",
+      "enemy_id": "enemy_1046_agent",
+      "count": 2,
+      "time": 110,
+      "interval": 3,
+      "route": 1,
+      "fragment": 5
+     },
+     {
+      "enemy": "Sniper",
+      "enemy_id": "enemy_1047_sagent",
+      "count": 1,
+      "time": 113,
+      "route": 2,
+      "fragment": 5
+     },
+     {
+      "enemy": "Sniper",
+      "enemy_id": "enemy_1047_sagent",
+      "count": 1,
+      "time": 113,
+      "route": 3,
+      "fragment": 5
+     },
+     {
+      "enemy": "Sniper",
+      "enemy_id": "enemy_1047_sagent",
+      "count": 2,
+      "time": 132,
+      "interval": 15,
+      "route": 2,
+      "fragment": 6
+     },
+     {
+      "enemy": "Sniper",
+      "enemy_id": "enemy_1047_sagent",
+      "count": 2,
+      "time": 132,
+      "interval": 15,
+      "route": 3,
+      "fragment": 6
+     },
+     {
+      "enemy": "Rockbreaker",
+      "enemy_id": "enemy_1048_hirman",
+      "count": 1,
+      "time": 142,
+      "route": 0,
+      "fragment": 6
+     },
+     {
+      "enemy": "Rockbreaker",
+      "enemy_id": "enemy_1048_hirman",
+      "count": 1,
+      "time": 142,
+      "route": 1,
+      "fragment": 6
+     },
+     {
+      "enemy": "Sniper",
+      "enemy_id": "enemy_1047_sagent",
+      "count": 1,
+      "time": 166,
+      "route": 2,
+      "fragment": 7
+     },
+     {
+      "enemy": "Rockbreaker",
+      "enemy_id": "enemy_1048_hirman",
+      "count": 1,
+      "time": 169,
+      "route": 0,
+      "fragment": 7
+     },
+     {
+      "enemy": "Sniper",
+      "enemy_id": "enemy_1047_sagent",
+      "count": 1,
+      "time": 166,
+      "route": 3,
+      "fragment": 7
+     },
+     {
+      "enemy": "Rockbreaker",
+      "enemy_id": "enemy_1048_hirman",
+      "count": 1,
+      "time": 169,
+      "route": 1,
+      "fragment": 7
+     },
+     {
+      "enemy": "Infantry",
+      "enemy_id": "enemy_1046_agent",
+      "count": 2,
+      "time": 178,
+      "interval": 3,
+      "route": 0,
+      "fragment": 7
+     },
+     {
+      "enemy": "Infantry",
+      "enemy_id": "enemy_1046_agent",
+      "count": 2,
+      "time": 178,
+      "interval": 3,
+      "route": 1,
+      "fragment": 7
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 0,
+    "routes": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 10,
+    "routes": [
+     3,
+     3,
+     3,
+     3,
+     3,
+     3
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 2,
+    "col": 0,
+    "routes": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 6,
+    "col": 0,
+    "routes": [
+     2,
+     2,
+     2,
+     2,
+     2,
+     2
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 5,
+    "col": 10,
+    "routes": [
+     1,
+     1,
+     1,
+     1,
+     3,
+     1,
+     1,
+     3,
+     1,
+     1,
+     3,
+     1,
+     1,
+     3,
+     3,
+     1,
+     3,
+     1,
+     1
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 6,
+    "col": 10,
+    "routes": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     2,
+     0,
+     0,
+     2,
+     0,
+     0,
+     2,
+     0,
+     0,
+     2,
+     2,
+     0,
+     2,
+     0,
+     0
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1007_slime_3",
+    "slug": "originium_slug_enemy_1007_slime_3",
+    "name": "Originium Slug β",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1046_agent",
+    "slug": "infantry",
+    "name": "Infantry",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1047_sagent",
+    "slug": "sniper",
+    "name": "Sniper",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1048_hirman",
+    "slug": "rockbreaker_enemy_1048_hirman",
+    "name": "Rockbreaker",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "terrain": [],
+ "conditionalHandled": false,
+ "devices": [],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [
+   0,
+   1,
+   2,
+   3
+  ],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "OF-F2",
+  "geometryHash": "51bd502afd819d497e37214fb854b8de3f67dfbd0ff62b022fedcc10cd83c161",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      0,
+      2
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      10,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "1": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      10,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "2": {
+    "points": [
+     [
+      0,
+      6
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      10,
+      6
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "3": {
+    "points": [
+     [
+      10,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      7,
+      3
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      10,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1007_slime_3": {
+   "key": "enemy_1007_slime_3",
+   "prefabKey": "enemy_1007_slime_3",
+   "name": "Originium Slug β",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 1550,
+    "atk": 240,
+    "def": 0,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 1.7,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1046_agent": {
+   "key": "enemy_1046_agent",
+   "prefabKey": "enemy_1046_agent",
+   "name": "Infantry",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2500,
+    "atk": 280,
+    "def": 85,
+    "res": 40,
+    "moveSpeed": 1.1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1047_sagent": {
+   "key": "enemy_1047_sagent",
+   "prefabKey": "enemy_1047_sagent",
+   "name": "Sniper",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 3000,
+    "atk": 150,
+    "def": 100,
+    "res": 10,
+    "moveSpeed": 0.8,
+    "bat": 4,
+    "aspd": 100,
+    "rangeRadius": 3.5,
+    "rawRangeRadius": 3.5,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "After two attacks, the next attack <$ba.stun>Stuns</> its target",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [
+    {
+     "prefabKey": "stunattack",
+     "priority": 0,
+     "cooldown": 0,
+     "initCooldown": 0,
+     "spCost": 2,
+     "bb": {
+      "stun": 5
+     },
+     "bbStr": {}
+    }
+   ],
+   "sp": {
+    "type": "INCREASE_WHEN_ATTACK",
+    "maxSp": 2,
+    "initSp": 0,
+    "increment": 1
+   },
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1048_hirman": {
+   "key": "enemy_1048_hirman",
+   "prefabKey": "enemy_1048_hirman",
+   "name": "Rockbreaker",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 10000,
+    "atk": 750,
+    "def": 100,
+    "res": 40,
+    "moveSpeed": 0.75,
+    "bat": 3.3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 3,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": true,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Gains increased RES when blocked",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "MagicResistance.magic_resistance": 40
+    },
+    "bbStr": {},
+    "groups": {
+     "MagicResistance": [
+      "magic_resistance"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ },
+ "contentAddition": {
+  "schemaVersion": 1,
+  "source": {
+   "repository": "arkpedia/arkpedia-data",
+   "commit": "66232ee06377d791fb130248d680764c286e5c99",
+   "files": [
+    {
+     "path": "stages/of-f2.json",
+     "sha256": "ae29a4a59c10ac558a944b2a221899e3315ac511aeec4f466e408e6bd6feaf16"
+    },
+    {
+     "path": "stage-geometry/of-f2.json",
+     "sha256": "51bd502afd819d497e37214fb854b8de3f67dfbd0ff62b022fedcc10cd83c161"
+    },
+    {
+     "path": "stage-devices.json",
+     "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+    }
+   ],
+   "localFiles": [
+    {
+     "path": "data/stage-rules/of-f2.json",
+     "sha256": "3b103c4f9553f06629b9610baad701b6102e3607eaf69d29f14eea9e231f0e32"
+    },
+    {
+     "path": "data/stage-rules/levels/9ee9aa2cc0ebead2423b0c21af1d5a94fb84c808f41f7ca6e07071e913fc251f.json",
+     "sha256": "9ee9aa2cc0ebead2423b0c21af1d5a94fb84c808f41f7ca6e07071e913fc251f"
+    }
+   ]
+  },
+  "dependencies": {
+   "enemies": [
+    "enemy_1007_slime_3",
+    "enemy_1046_agent",
+    "enemy_1047_sagent",
+    "enemy_1048_hirman"
+   ],
+   "devices": [],
+   "tokens": []
+  },
+  "validation": {
+   "smoke": {
+    "seconds": 10,
+    "spawned": 1,
+    "errors": 0
+   },
+   "publicReview": "pending",
+   "waveSchedule": {
+    "id": "of-f2",
+    "seconds": 199.76666666666665,
+    "spawned": 58,
+    "expected": 58,
+    "reason": "cleared",
+    "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+   },
+   "browser": {
+    "id": "of-f2",
+    "seconds": 10,
+    "errors": [],
+    "units": 1,
+    "canvas": true,
+    "scope": "Headless Chromium, mobile landscape 1440x900: preparation, battle start, canvas and short runtime without page or simulation errors. Original art and full clear not certified."
+   }
+  }
+ }
+}

@@ -1,0 +1,119 @@
+{
+  "scope": "Source-gated preplaced mine behavior and altar category correction; not native frame/visual certification",
+  "stages": [
+    "s7-1",
+    "s7-2",
+    "mn-ex-6",
+    "mn-ex-6_challenge_mode",
+    "sv-6_act10d5_06",
+    "sv-6_challenge_mode"
+  ],
+  "sources": {
+    "shared/arkpedia/stage-mines.js": "a8b4b1d97652fc003e081747393bc8e0107aa4e02e45ca28f7d67de1b5870f6a",
+    "shared/arkpedia/stage-altar.js": "6844ce2574646ccaecd17e42d31e8f6c5c23c00b1bd97921eb251d4c30f5ba53",
+    "server/sim/content/arkpedia-stage-mines.js": "e88bd639457bdac1cccdc3acf00c40a5ac22ac37bb703d9c440f49620f5ed126",
+    "tools/arkpedia/stage-device-instances.mjs": "9151fe17001533a694964fcb27f38d583b746649bc92b17c4ce9c070aa8a486c",
+    "test/arkpedia-stage-mines.test.js": "5109bb15e843e606270f124d8ae72633336658c470a780a32def14b1918c52ce",
+    "test/arkpedia-stage-devices.test.js": "442f866bf892bc1fa2356c58a891bc0d1568b2c1fecc56071a5699626462d044"
+  },
+  "checks": {
+    "relatedTests": 25,
+    "mineAndAltarFinalTests": 15,
+    "browserCases": 21,
+    "browserMines": [
+      {
+        "id": "s7-1",
+        "mobile": false,
+        "options": 3892,
+        "componentRequests": 26,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true,
+        "mines": {
+          "count": 2,
+          "hpBefore": 100,
+          "used": true,
+          "damage": 3000,
+          "stockBefore": 10,
+          "stockAfter": 10,
+          "errors": []
+        }
+      },
+      {
+        "id": "s7-2",
+        "mobile": false,
+        "options": 3892,
+        "componentRequests": 30,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true,
+        "mines": {
+          "count": 1,
+          "hpBefore": 100,
+          "used": true,
+          "damage": 3000,
+          "stockBefore": 10,
+          "stockAfter": 10,
+          "errors": []
+        }
+      },
+      {
+        "id": "s7-1",
+        "mobile": true,
+        "options": 3892,
+        "componentRequests": 26,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true,
+        "mines": {
+          "count": 2,
+          "hpBefore": 100,
+          "used": true,
+          "damage": 3000,
+          "stockBefore": 10,
+          "stockAfter": 10,
+          "errors": []
+        }
+      },
+      {
+        "id": "s7-2",
+        "mobile": true,
+        "options": 3892,
+        "componentRequests": 30,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true,
+        "mines": {
+          "count": 1,
+          "hpBefore": 100,
+          "used": true,
+          "damage": 3000,
+          "stockBefore": 10,
+          "stockAfter": 10,
+          "errors": []
+        }
+      }
+    ],
+    "librarySmoke": {
+      "available": 799,
+      "completed": 799,
+      "failures": []
+    }
+  },
+  "limitations": [
+    "Altar cast timing retains existing approximation; native 0.6 second predelay pending",
+    "Mine native visual mode timer, VFX and collider boundaries not certified"
+  ]
+}

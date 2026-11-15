@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-15",
+  "scope": "R-11 and R-11a Assault Power Armor combat modes and original shared artwork",
+  "sourceFiles": {
+    "shared/arkpedia/enemy-power-armor-features.js": "b2830670eef5320019ad697e57f26f6dd32cf1c6fafead41c0cf481d1b7deaa9",
+    "shared/arkpedia/enemy-features.js": "46291769104789ae82fb1e077c647ca350def20e009f786c71abf4450c16151f",
+    "server/sim/content/arkpedia-enemy-projectiles.js": "68b5ec9cadebdd90a17a8b758b81878a644499f273a903d0ef7984f1c09ebc2d",
+    "server/sim/content/arkpedia-enemy-features.js": "7546d48e61957fc0c62c1ed40e45a2cfb19d153a26543cefd117d59938ec318c",
+    "server/sim/ai.js": "d8a2e0dde56b5696070c8e9069b54cb4c6d20f7dd44845ba62a1bcfece0ca77b",
+    "tools/arkpedia/extract-enemy-native-abilities.py": "3769eee1b87c5d4cf4dbda904d27f8d07cee28d69b23d6523558950de02a0357",
+    "data/arkpedia-enemy-native-abilities.json": "9c3d145f7848e02244c859b70012efac3e0204c8bbe7bca3bc53ac0fade488e8",
+    "data/arkpedia-power-armor-animations.json": "56bf9c484446569397551948a1482c3b0a2ab035c8e28f743dae6f850dcc8053",
+    "data/arkpedia-enemy-support.json": "6d404d9e6d8794c20b9c3dc61d92640006bdfd803eb0ccc732248c7e97cbd21a",
+    "data/arkpedia-enemy-artwork.json": "bddaa520fba388b44f8817d3cad8e91163189d6c941d7f3b89045ca4f1fdca26",
+    "test/arkpedia-enemy-power-armor.test.js": "2f6dc3c5e2727747a227ac39143a8196522d8054cbf441cd5faa50b631605c3e",
+    "docs/ENEMY-POWER-ARMOR-REVIEW.md": "689b67c3a019643c407febfee089f6596717a9653aee932df781bcc1af1cde52"
+  },
+  "checks": [
+    {
+      "path": "/tmp/power-armor-tests.log",
+      "sha256": "3ae1ebd8008ce11d09a9bcc90c7d0f36ce73a453128a23cd6f9cfebccc610cf1"
+    },
+    {
+      "path": "/tmp/power-armor-regressions.log",
+      "sha256": "259909a8f3d276e45ef6140f94509e9960d80603c8062fb79faacdbb041fb655"
+    },
+    {
+      "path": "/tmp/power-armor-source-check.log",
+      "sha256": "f8719635b2ddabae390a159becc05db573de8e4bc034a6d43ac0817b6767d5f6"
+    },
+    {
+      "path": "/tmp/power-armor-library-check.log",
+      "sha256": "9f2a99e0716fc004fb3ef5a32a03877fc49a1f701d06571ba1e114c292844de3"
+    },
+    {
+      "path": "/tmp/power-armor-all-stage-smoke.log",
+      "sha256": "9f7bef5d6c749bd0b9486d73804ca15c12abc562610c8ab59c0b5a502bce4ab5"
+    },
+    {
+      "path": "/tmp/power-armor-sd-tests.log",
+      "sha256": "8100958126364bb83d0080aa8328b85d50fea5120ebd74ff42ce0ab4484df702"
+    },
+    {
+      "path": "/tmp/power-armor-sd-validate.log",
+      "sha256": "c2c792f5481b55a0025094abc0e18bcaf81c4c23408878e3cc06702dabdc21b2"
+    },
+    {
+      "path": ".cache/arkpedia/power-armor-artwork-review/review.json",
+      "sha256": "6b297f282a68bd5bf845c14c30ec592d3542973de3da471c4859f554a0541058"
+    }
+  ],
+  "validation": {
+    "focusedTests": 6,
+    "regressionTests": 382,
+    "stageSmoke": {
+      "completed": 882,
+      "failures": 0,
+      "seconds": 10
+    },
+    "gallery": {
+      "models": 2,
+      "clips": 18,
+      "viewports": [
+        "desktop",
+        "touch"
+      ]
+    }
+  },
+  "coverage": {
+    "supportedEnemies": 648,
+    "totalEnemies": 2163,
+    "availableStages": 882,
+    "totalCombatStages": 3892,
+    "additionalLoadableStages": 0
+  },
+  "artwork": {
+    "commit": "0eec0ea50a2bf575147ee54581db916c09d0d685",
+    "models": 434,
+    "completeStoreModels": 3707,
+    "storeTests": 93
+  },
+  "limitations": [
+    "Dormant device activation and supporting engineers remain separate blockers",
+    "Native frame timing, projectile particles and audio not certified",
+    "Gallery validates assets rather than battle fidelity"
+  ]
+}

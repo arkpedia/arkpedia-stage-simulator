@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Original owner/token graphs, byte bindings and dispatcher limits are retained
 // together in data/arkpedia-kaltsit-prefabs.json.
+import { stageCardRespawnTime } from './arkpedia-stage-card-cost.js';
 import evidence from '../../../data/arkpedia-kaltsit-prefabs.json' with { type: 'json' };
 import { bodyInKeys } from '../body.js';
 import { absoluteRangeKeys } from '../targeting.js';
@@ -136,6 +137,7 @@ export function customizeKaltsitKit({ battle: b, id, def, unit: u, kit }) {
 
 export function installKaltsit({ battle: b, unit: u, def }) {
   if (def.charId !== OWNER) return;
+  u.mem.regularSummonFactory = createKaltsitMon3tr;
   b.every(b.dt, () => syncOwner(b, u), { owner: u });
   // Native SP condition explicitly delays the first check by .1s. Membership
   // changes do not restart this owner clock; every failed check clears SP.
@@ -200,7 +202,7 @@ export function createKaltsitMon3tr(b, state, row, col, dir) {
         if (unit !== t) return;
         t.mem.kaltsitTrueMode = null;
         state.stock = Math.min(1, state.stock + 1);
-        state.readyAt = battle.time + state.record.stats.respawnTime;
+        state.readyAt = battle.time + stageCardRespawnTime(battle, state.record);
         deathBlast(battle, t, reason);
       }, { owner: t });
     },

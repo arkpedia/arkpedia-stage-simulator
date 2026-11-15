@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { stageSummonCost, stageCardRespawnTime } from './arkpedia-stage-card-cost.js';
 import { canSpendDp } from './arkpedia-dp-budget.js';
 // Native normal Reconstruction card and lifetime, composed with selected skill adapters.
 import evidence from '../../../data/arkpedia-mon3tr-prefabs.json' with { type: 'json' };
@@ -118,7 +119,7 @@ export class ReconstructionDeck {
     const tile = b.grid.tile(row, col);
     if (tile.height !== 'LOW' || !['MELEE', 'ALL'].includes(tile.build) || b.grid.isObstacle(row, col)) return 'Choose a low-ground deployment tile.';
     if (b.unitAt(row, col) || b.tileReservation(row, col) || b.downOn(row, col)) return 'Tile is occupied or reserved.';
-    if (!canSpendDp(b, this.u.ownerId, this.record.stats.cost)) return 'Not enough DP.';
+    if (!canSpendDp(b, this.u.ownerId, stageSummonCost(this.b, this.record))) return 'Not enough DP.';
     return null;
   }
   visual(s, clip, loop = false) {
@@ -128,7 +129,7 @@ export class ReconstructionDeck {
   }
   place(row, col) {
     const error = this.placementError(row, col); if (error) throw Error(error);
-    const b = this.b, paid = this.record.stats.cost;
+    const b = this.b, paid = stageSummonCost(this.b, this.record);
     this.placing = true; this.stock = 0; b.addDp(this.u.ownerId, -paid);
     let unit, point;
     try {
@@ -174,7 +175,7 @@ export class ReconstructionDeck {
     if (this.point === s) this.point = null;
     const attached = this.core.reconstructions.get(s.unit);
     if (attached?.seq === s.seq) { this.b.off(attached.guard); this.core.reconstructions.delete(s.unit); }
-    if (!this.stopped && this.core.valid()) { this.stock = 1; this.readyAt = this.b.time + this.record.stats.respawnTime; }
+    if (!this.stopped && this.core.valid()) { this.stock = 1; this.readyAt = this.b.time + stageCardRespawnTime(this.b, this.record); }
     syncAuras(this.b);
     if (remove && present(s.unit)) {
       s.unit.mem.regularDeathVisual = { hide: true };
@@ -184,7 +185,7 @@ export class ReconstructionDeck {
   retreat(token) {
     if (!canDeployInViewport(this.b.viewport) || this.b.finished || token !== this.point?.unit || !this.valid(this.point))
       throw Error('Select the current Reconstruction in fullscreen.');
-    this.b.addDp(this.u.ownerId, Math.floor(this.record.stats.cost * .5));
+    this.b.addDp(this.u.ownerId, Math.floor(stageSummonCost(this.b, this.record) * .5));
     this.finish(this.point, { remove: true, reason: 'withdrawal' }); return true;
   }
   install() {

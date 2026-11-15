@@ -292,4 +292,7 @@ export function customizeBlazeIgnitingKit({battle:b,id,unit:u,kit}){
     {contract:[BLAZE_IGNITING_S1_CONTRACT,BLAZE_IGNITING_S2_CONTRACT,BLAZE_IGNITING_S3_CONTRACT][index]});
   Object.assign(kit,prepared.kit);u.mem.blazeIgnitingController=prepared.controller;
 }
-export function installBlazeIgniting({unit:u}){u.mem.blazeIgnitingController?.install();}
+export function installBlazeIgniting({ unit: u, def }) {
+  if (def.charId !== ID) return;
+  u.mem.blazeIgnitingController?.install();
+}

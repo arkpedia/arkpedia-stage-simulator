@@ -166,7 +166,8 @@ test('S2 Begin holds attacks, then original range and immutable invisible projec
   assert.equal(outgoing(receipts, u).length, 1); const p = b.projectiles.list[0]; assert.ok(p);
   near(p.speed, 10); near(p.maxAge, 5); assert.equal(p.target, null); near(p.tx, 7); assert.equal(p.visual, 'none');
   near(e.x, 7); e.x = 8; b._buildEnemyIndex(); advance(b, .07); near(p.tx, 7);
-  advance(b, .3); assert.ok(e.x < 7); assert.ok(e.x >= 5.5 - 1e-6);
+  advance(b, .3); assert.ok(e.x < 8); assert.ok(e.mem.regularShift, 'pull proceeds over its force duration');
+  advance(b, .8); assert.ok(e.x < 7); assert.ok(e.x >= 5.5 - 1e-6);
   u.skill.end(); assert.equal(u.mem.regularFormVisual.clip, 'Skill_2_End'); advance(b, .5); assert.equal(u.mem.regularFormVisual, null);
 });
 for (const mode of ['own', 'other', 'blocking', 'air', 'invisible', 'immune', 'heavy', 'dead', 'retreat', 'skill-end', 'block-late'])

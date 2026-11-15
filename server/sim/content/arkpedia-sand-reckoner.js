@@ -95,6 +95,7 @@ export function customizeSandReckonerKit({ battle: b, id, def, unit: u, kit }) {
 
 export function installSandReckoner({ battle: b, unit: u, def }) {
   if (def.charId !== ID) return;
+  u.mem.regularSummonFactory = createClockworkFowlbeast;
   installMachineBonus(b, u, def.talents[0].bb.damage_scale);
   b.every(b.dt, () => sync(b, u), { owner: u });
   b.on('deploy', () => { if (live(u)) sync(b, u); }, { owner: u });

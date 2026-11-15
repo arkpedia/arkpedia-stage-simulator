@@ -41,6 +41,7 @@
 //   is deployed; deployed operators are not deck cards.
 // - Moving the Eye with its card costs no DP (its cost is refunded).
 // - S3's line strike hits every enemy in the 3-1 grid of the striker's facing.
+import { stageSummonCost, stageCardBaseCost } from './arkpedia-stage-card-cost.js';
 import evidence from '../../../data/arkpedia-native-operators/char_1045_svash2.json' with {type: 'json'};
 import review from '../../../data/arkpedia-svash2-runtime-review.json' with {type: 'json'};
 import {selectedCNSourceBuild} from './arkpedia-selected-cn-source.js';
@@ -104,7 +105,7 @@ export class Svash2Owner {
   // Deck cards: operators not on the field, the summon cards, and the Eye.
   cardCost(id) {
     const {b} = this;
-    if (id.startsWith('summon:')) return b.regularSummons.get(id)?.record.stats.cost ?? Infinity;
+    if (id.startsWith('summon:')) return stageSummonCost(b, b.regularSummons.get(id)?.record);
     return b.cost(id);
   }
   deck() {
@@ -114,7 +115,7 @@ export class Svash2Owner {
     const summons = [...(b.regularSummons?.keys() ?? [])].filter(k => k !== CARD);
     const ids = [...ops, ...summons];
     const rows = ids.map((id, i) => ({id, i, cost: this.cardCost(id), eye: false}));
-    rows.push({id: CARD, i: Infinity, cost: this.deckState.record.stats.cost, eye: true});
+    rows.push({id: CARD, i: Infinity, cost: stageSummonCost(b, this.deckState.record), eye: true});
     rows.sort((p, q) => p.cost - q.cost || (p.eye - q.eye) || p.i - q.i);
     return rows.map(r => r.id);
   }
@@ -235,7 +236,7 @@ export class Svash2Owner {
     b.regularSvash2Swapped = true;
     const cards = (this.deck() ?? []).filter(id => !id.startsWith('summon:') && id !== ID);
     if (cards.length < 2) return;
-    const base = id => b.bench[id].baseCost ?? b.data.getChess(id).stats.cost;
+    const base = id => b.bench[id].baseCost ?? stageCardBaseCost(b, b.data.getChess(id));
     const top = list => list.reduce((x, y) => base(y) > base(x) ? y : x, list[0]);
     const high = top(cards.filter(id => PREFERRED.has(this.profession(id)))) ?? top(cards);
     const rest = cards.filter(id => id !== high), low = rest.reduce((x, y) => base(y) < base(x) ? y : x, rest[0]);

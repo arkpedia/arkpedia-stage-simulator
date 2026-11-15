@@ -180,7 +180,9 @@ test('Enforcer collision template is highland-only: a raised wall stuns while a 
 test('Enforcer S2 deals no damage, pushes all source ground targets, stuns direct victims and complete-path brush contacts',()=>{
   const{b,deploy}=make(ENF,{skill:1}),u=deploy(),direct=enemy(b,{col:4}),brush=enemy(b,{col:6.2,row:3.2}),air=enemy(b,{col:4,fly:true});
   const brushX=brush.x;cast(b,u);advance(b,.5);near(direct.hp,100000);near(brush.hp,100000);near(air.hp,100000);
-  assert.ok(direct.s.flags.stun);assert.ok(brush.s.flags.stun);near(brush.x,brushX);assert.equal(Boolean(air.s.flags.stun),false);assert.ok(u.s.flags.disarm);
+  assert.ok(direct.s.flags.stun);assert.equal(Boolean(brush.s.flags.stun),false,'brush contact waits for actual travel');
+  assert.ok(u.s.flags.disarm);advance(b,.5);
+  assert.ok(brush.s.flags.stun);near(brush.x,brushX);assert.equal(Boolean(air.s.flags.stun),false);
   advance(b,.8);assert.equal(Boolean(u.s.flags.disarm),false);
 });
 test('FEater Physical Dodge follows promotion and potential and never dodges Arts',()=>{

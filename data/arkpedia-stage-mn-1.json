@@ -1,0 +1,1446 @@
+{
+  "code": "MN-1",
+  "name": "Ellen Select Technology Co.",
+  "description": "Always providing you the latest products in tech! Build your life, together with Ellen Select! Ellen Select Technology Co., the companion of the era. Multiple drone models at 5% off for a limited time only, please visit the official website! \n<Originium Jetstream>Continuously generates currents of airflow. Operators deployed downstream/upstream will deal increased/decreased damage; Enemies moving downstream/upstream will have increased/decreased Movement Speed.",
+  "battle": {
+    "max_life": 3,
+    "unit_limit": 8,
+    "initial_dp": 10,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1,
+    "max_play_time": -1
+  },
+  "rules": {
+    "variant": null,
+    "source": {
+      "repository": "Kengxxiao/ArknightsGameData",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "path": "zh_CN/gamedata/levels/activities/act13d5/level_act13d5_01.json",
+      "sha256": "25ffe43ddba3906fcc5a43f4c0c89677a579b17e4c68a4aaf4e3ec2cc13df61e",
+      "gitBlob": "ac3ef8248791ac359df99d2c55ad57db7bc7e8fc",
+      "stageTable": {
+        "path": "zh_CN/gamedata/excel/stage_table.json",
+        "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+        "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+        "stageId": "act13d5_01",
+        "levelId": "Activities/ACT13D5/level_act13d5_01"
+      }
+    },
+    "battle": {
+      "max_play_time": -1
+    },
+    "enemies": {},
+    "enemyAdd": {},
+    "hiddenGroups": {}
+  },
+  "mapTags": [],
+  "mapTagSource": null,
+  "geometry": {
+    "slug": "mn-1",
+    "rows": 7,
+    "cols": 11,
+    "tileLegend": [
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_floor",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_start",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      }
+    ],
+    "tileGrid": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      [
+        2,
+        3,
+        3,
+        3,
+        0,
+        2,
+        0,
+        3,
+        3,
+        4,
+        5
+      ],
+      [
+        0,
+        1,
+        1,
+        3,
+        0,
+        3,
+        0,
+        3,
+        1,
+        1,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        3,
+        0,
+        3,
+        0,
+        3,
+        1,
+        1,
+        0
+      ],
+      [
+        5,
+        4,
+        3,
+        3,
+        0,
+        4,
+        0,
+        3,
+        3,
+        3,
+        2
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        5,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "routes": [
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 0
+        },
+        "end": {
+          "row": 2,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 3
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 10
+        },
+        "end": {
+          "row": 5,
+          "col": 10
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 7
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 3
+          }
+        ]
+      },
+      {
+        "motion": null,
+        "placeholder": true,
+        "start": null,
+        "end": null,
+        "checkpoints": [],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 10
+        },
+        "end": {
+          "row": 5,
+          "col": 10
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 7
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 5
+        },
+        "end": {
+          "row": 2,
+          "col": 5
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 5
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 10
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 5
+        },
+        "end": {
+          "row": 2,
+          "col": 5
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 5
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 5
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 5,
+          "col": 0
+        },
+        "end": {
+          "row": 2,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 3
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 6
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 5
+        },
+        "end": {
+          "row": 2,
+          "col": 5
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 5
+            }
+          }
+        ],
+        "waits": []
+      }
+    ],
+    "waves": [
+      {
+        "index": 0,
+        "duration": 169,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Originium Slug",
+            "enemy_id": "enemy_1007_slime",
+            "count": 2,
+            "time": 3,
+            "interval": 2,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Originium Slug",
+            "enemy_id": "enemy_1007_slime",
+            "count": 2,
+            "time": 10,
+            "interval": 1,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Originium Slug",
+            "enemy_id": "enemy_1007_slime",
+            "count": 2,
+            "time": 16,
+            "interval": 2,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Originium Slug",
+            "enemy_id": "enemy_1007_slime",
+            "count": 2,
+            "time": 22,
+            "interval": 1,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Originium Slug",
+            "enemy_id": "enemy_1007_slime",
+            "count": 3,
+            "time": 35,
+            "interval": 2,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Originium Slug α",
+            "enemy_id": "enemy_1007_slime_2",
+            "count": 2,
+            "time": 43,
+            "interval": 1,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Originium Slug",
+            "enemy_id": "enemy_1007_slime",
+            "count": 3,
+            "time": 51,
+            "interval": 2,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Originium Slug α",
+            "enemy_id": "enemy_1007_slime_2",
+            "count": 2,
+            "time": 60,
+            "interval": 1,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Nameless Independent Knight",
+            "enemy_id": "enemy_1099_nbkght",
+            "count": 1,
+            "time": 29,
+            "route": 1,
+            "fragment": 1
+          },
+          {
+            "enemy": "Nameless Independent Knight",
+            "enemy_id": "enemy_1099_nbkght",
+            "count": 1,
+            "time": 43,
+            "route": 3,
+            "fragment": 1
+          },
+          {
+            "enemy": "Nameless Independent Knight",
+            "enemy_id": "enemy_1099_nbkght",
+            "count": 1,
+            "time": 50,
+            "route": 3,
+            "fragment": 1
+          },
+          {
+            "enemy": "Nameless Independent Knight",
+            "enemy_id": "enemy_1099_nbkght",
+            "count": 2,
+            "time": 63,
+            "interval": 5,
+            "route": 3,
+            "fragment": 1
+          },
+          {
+            "enemy": "Training Gloompincer",
+            "enemy_id": "enemy_1100_scorpn",
+            "count": 1,
+            "time": 72,
+            "route": 4,
+            "fragment": 2
+          },
+          {
+            "enemy": "Originium Slug α",
+            "enemy_id": "enemy_1007_slime_2",
+            "count": 2,
+            "time": 91,
+            "interval": 2,
+            "route": 0,
+            "fragment": 3
+          },
+          {
+            "enemy": "Originium Slug α",
+            "enemy_id": "enemy_1007_slime_2",
+            "count": 2,
+            "time": 97,
+            "interval": 1,
+            "route": 0,
+            "fragment": 3
+          },
+          {
+            "enemy": "Originium Slug α",
+            "enemy_id": "enemy_1007_slime_2",
+            "count": 2,
+            "time": 104,
+            "interval": 2,
+            "route": 0,
+            "fragment": 3
+          },
+          {
+            "enemy": "Originium Slug α",
+            "enemy_id": "enemy_1007_slime_2",
+            "count": 2,
+            "time": 110,
+            "interval": 1,
+            "route": 0,
+            "fragment": 3
+          },
+          {
+            "enemy": "Training Gloompincer",
+            "enemy_id": "enemy_1100_scorpn",
+            "count": 2,
+            "time": 100,
+            "interval": 13,
+            "route": 5,
+            "fragment": 3
+          },
+          {
+            "enemy": "Nameless Independent Knight",
+            "enemy_id": "enemy_1099_nbkght",
+            "count": 1,
+            "time": 85,
+            "route": 1,
+            "fragment": 3
+          },
+          {
+            "enemy": "Nameless Independent Knight",
+            "enemy_id": "enemy_1099_nbkght",
+            "count": 1,
+            "time": 94,
+            "route": 3,
+            "fragment": 3
+          },
+          {
+            "enemy": "Nameless Independent Knight",
+            "enemy_id": "enemy_1099_nbkght",
+            "count": 1,
+            "time": 101,
+            "route": 3,
+            "fragment": 3
+          },
+          {
+            "enemy": "Nameless Independent Knight",
+            "enemy_id": "enemy_1099_nbkght",
+            "count": 2,
+            "time": 114,
+            "interval": 5,
+            "route": 3,
+            "fragment": 3
+          },
+          {
+            "enemy": "Originium Slug α",
+            "enemy_id": "enemy_1007_slime_2",
+            "count": 2,
+            "time": 130,
+            "interval": 1,
+            "route": 0,
+            "fragment": 4
+          },
+          {
+            "enemy": "Originium Slug α",
+            "enemy_id": "enemy_1007_slime_2",
+            "count": 2,
+            "time": 138,
+            "interval": 1,
+            "route": 0,
+            "fragment": 4
+          },
+          {
+            "enemy": "Training Gloompincer",
+            "enemy_id": "enemy_1100_scorpn",
+            "count": 1,
+            "time": 147,
+            "route": 6,
+            "fragment": 4
+          },
+          {
+            "enemy": "Training Gloompincer",
+            "enemy_id": "enemy_1100_scorpn",
+            "count": 1,
+            "time": 167,
+            "route": 6,
+            "fragment": 4
+          },
+          {
+            "enemy": "Training Gloompincer",
+            "enemy_id": "enemy_1100_scorpn",
+            "count": 2,
+            "time": 127,
+            "interval": 10,
+            "route": 5,
+            "fragment": 4
+          },
+          {
+            "enemy": "Training Gloompincer",
+            "enemy_id": "enemy_1100_scorpn",
+            "count": 2,
+            "time": 152,
+            "interval": 5,
+            "route": 7,
+            "fragment": 4
+          },
+          {
+            "enemy": "Nameless Independent Knight",
+            "enemy_id": "enemy_1099_nbkght",
+            "count": 2,
+            "time": 131,
+            "interval": 3,
+            "route": 3,
+            "fragment": 4
+          },
+          {
+            "enemy": "Nameless Independent Knight",
+            "enemy_id": "enemy_1099_nbkght",
+            "count": 2,
+            "time": 146,
+            "interval": 3,
+            "route": 3,
+            "fragment": 4
+          },
+          {
+            "enemy": "Nameless Independent Knight",
+            "enemy_id": "enemy_1099_nbkght",
+            "count": 3,
+            "time": 161,
+            "interval": 4,
+            "route": 3,
+            "fragment": 4
+          }
+        ]
+      }
+    ],
+    "spawnTiles": [
+      {
+        "key": "tile_start",
+        "row": 2,
+        "col": 10,
+        "routes": [
+          1,
+          3,
+          3,
+          3,
+          1,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 5,
+        "col": 0,
+        "routes": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          6,
+          6
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 6,
+        "col": 5,
+        "routes": [
+          4,
+          5,
+          5,
+          7
+        ]
+      }
+    ],
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 2,
+        "col": 0,
+        "routes": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          6,
+          6
+        ]
+      },
+      {
+        "key": "tile_end",
+        "row": 2,
+        "col": 5,
+        "routes": [
+          4,
+          5,
+          5,
+          7
+        ]
+      },
+      {
+        "key": "tile_end",
+        "row": 5,
+        "col": 10,
+        "routes": [
+          1,
+          3,
+          3,
+          3,
+          1,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ]
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_1007_slime",
+        "slug": "originium_slug_enemy_1007_slime",
+        "name": "Originium Slug",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1007_slime_2",
+        "slug": "originium_slug_enemy_1007_slime_2",
+        "name": "Originium Slug α",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1099_nbkght",
+        "slug": "nameless_independent_knight",
+        "name": "Nameless Independent Knight",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1100_scorpn",
+        "slug": "training_gloompincer",
+        "name": "Training Gloompincer",
+        "database_level": 0
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [],
+      "deployable_tokens": []
+    },
+    "hasConditionalSpawns": false
+  },
+  "terrain": [],
+  "conditionalHandled": false,
+  "devices": [
+    {
+      "col": 5,
+      "description": null,
+      "hidden": false,
+      "key": "trap_013_blower",
+      "kind": "device",
+      "name": "Originium Flow Generator",
+      "row": 1,
+      "alias": "trap_013_blower#1",
+      "instance": {
+        "level": 1,
+        "skillLevel": 1,
+        "direction": "UP"
+      }
+    },
+    {
+      "col": 6,
+      "description": null,
+      "hidden": false,
+      "key": "trap_013_blower",
+      "kind": "device",
+      "name": "Originium Flow Generator",
+      "row": 3,
+      "alias": "trap_013_blower#3",
+      "instance": {
+        "level": 1,
+        "skillLevel": 1,
+        "direction": "RIGHT"
+      }
+    },
+    {
+      "col": 6,
+      "description": null,
+      "hidden": false,
+      "key": "trap_013_blower",
+      "kind": "device",
+      "name": "Originium Flow Generator",
+      "row": 4,
+      "alias": "trap_013_blower#4",
+      "instance": {
+        "level": 1,
+        "skillLevel": 1,
+        "direction": "RIGHT"
+      }
+    },
+    {
+      "col": 4,
+      "description": null,
+      "hidden": false,
+      "key": "trap_013_blower",
+      "kind": "device",
+      "name": "Originium Flow Generator",
+      "row": 3,
+      "alias": "trap_013_blower#7",
+      "instance": {
+        "level": 1,
+        "skillLevel": 1,
+        "direction": "LEFT"
+      }
+    },
+    {
+      "col": 4,
+      "description": null,
+      "hidden": false,
+      "key": "trap_013_blower",
+      "kind": "device",
+      "name": "Originium Flow Generator",
+      "row": 4,
+      "alias": "trap_013_blower#8",
+      "instance": {
+        "level": 1,
+        "skillLevel": 1,
+        "direction": "LEFT"
+      }
+    }
+  ],
+  "tokens": [],
+  "pathing": {
+    "schemaVersion": 1,
+    "syntheticRoutes": [
+      0,
+      1,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "producer": "Arkpedia stage browser / buildPlaybackPaths",
+    "stage": "MN-1",
+    "geometryHash": "9c4c768ebe141270b4a9afd3f58bd800923a9cef9d72f723368375f42d31987c",
+    "moveScale": 0.65,
+    "paths": {
+      "0": {
+        "points": [
+          [
+            0,
+            5
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            0,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "1": {
+        "points": [
+          [
+            10,
+            2
+          ],
+          [
+            9,
+            2
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            10,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "3": {
+        "points": [
+          [
+            10,
+            2
+          ],
+          [
+            9,
+            2
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            10,
+            5
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "4": {
+        "points": [
+          [
+            5,
+            6
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            5,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "5": {
+        "points": [
+          [
+            5,
+            6
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            5,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "6": {
+        "points": [
+          [
+            0,
+            5
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            0,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "7": {
+        "points": [
+          [
+            5,
+            6
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            5,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      }
+    }
+  },
+  "art": null,
+  "gates": null,
+  "fixedSquad": null,
+  "enemies": {
+    "enemy_1007_slime": {
+      "key": "enemy_1007_slime",
+      "prefabKey": "enemy_1007_slime",
+      "name": "Originium Slug",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 550,
+        "atk": 130,
+        "def": 0,
+        "res": 0,
+        "moveSpeed": 1,
+        "bat": 1.7,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 0,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "infection"
+      ]
+    },
+    "enemy_1099_nbkght": {
+      "key": "enemy_1099_nbkght",
+      "prefabKey": "enemy_1099_nbkght",
+      "name": "Nameless Independent Knight",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 2800,
+        "atk": 280,
+        "def": 150,
+        "res": 0,
+        "moveSpeed": 1.1,
+        "bat": 2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1007_slime_2": {
+      "key": "enemy_1007_slime_2",
+      "prefabKey": "enemy_1007_slime_2",
+      "name": "Originium Slug α",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 1050,
+        "atk": 185,
+        "def": 0,
+        "res": 0,
+        "moveSpeed": 1,
+        "bat": 1.7,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 0,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "infection"
+      ]
+    },
+    "enemy_1100_scorpn": {
+      "key": "enemy_1100_scorpn",
+      "prefabKey": "enemy_1100_scorpn",
+      "name": "Training Gloompincer",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 2000,
+        "atk": 380,
+        "def": 450,
+        "res": 30,
+        "moveSpeed": 1,
+        "bat": 2.5,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 0,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "infection"
+      ]
+    }
+  },
+  "contentAddition": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/mn-1.json",
+          "sha256": "766f3b473de3d55c99a7480c7e8d2bed1a1584a2beafc0ee816caff7e0e0db46"
+        },
+        {
+          "path": "stage-geometry/mn-1.json",
+          "sha256": "9c4c768ebe141270b4a9afd3f58bd800923a9cef9d72f723368375f42d31987c"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        }
+      ],
+      "localFiles": [
+        {
+          "path": "data/stage-rules/mn-1.json",
+          "sha256": "a1db6498aab56322ca158f93f6e20d84acc529e033cf4d2f7c35c383fc1956ae"
+        },
+        {
+          "path": "data/stage-rules/levels/ccb99db49dc755e72875be7bb864aa0c7e7623f3a1cb98b501b1d7bf1c460876.json",
+          "sha256": "ccb99db49dc755e72875be7bb864aa0c7e7623f3a1cb98b501b1d7bf1c460876"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/ac3ef8248791ac359df99d2c55ad57db7bc7e8fc.json",
+          "sha256": "25ffe43ddba3906fcc5a43f4c0c89677a579b17e4c68a4aaf4e3ec2cc13df61e"
+        },
+        {
+          "path": "data/arkpedia-device-source.json",
+          "sha256": "589876c694836e6156390379373e5018d8e44fb136b5a07ffc1965e8646fe471"
+        },
+        {
+          "path": "data/arkpedia-device-native-source.json",
+          "sha256": "232401d42b535d4a146e6daa8bbd47e4e19e900fb9c6b7d2773019da0190d040"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/ac3ef8248791ac359df99d2c55ad57db7bc7e8fc.json",
+          "sha256": "25ffe43ddba3906fcc5a43f4c0c89677a579b17e4c68a4aaf4e3ec2cc13df61e"
+        }
+      ]
+    },
+    "dependencies": {
+      "enemies": [
+        "enemy_1007_slime",
+        "enemy_1007_slime_2",
+        "enemy_1099_nbkght",
+        "enemy_1100_scorpn"
+      ],
+      "devices": [
+        "Originium Flow Generator"
+      ],
+      "tokens": []
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 10,
+        "spawned": 2,
+        "errors": 0
+      },
+      "publicReview": "pending",
+      "waveSchedule": {
+        "id": "mn-1",
+        "seconds": 181.6,
+        "spawned": 56,
+        "expected": 56,
+        "dynamicSpawns": 0,
+        "reason": "cleared",
+        "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+      },
+      "browserStartup": {
+        "id": "mn-1",
+        "seconds": 20,
+        "errors": [],
+        "units": 11,
+        "canvas": true,
+        "scope": "Mobile landscape browser startup and canvas runtime; not a fidelity approval"
+      },
+      "browserInteraction": {
+        "id": "mn-1",
+        "atk": 325,
+        "dp": 89.06666666666666,
+        "alive": false,
+        "errors": [],
+        "status": "Unavailable",
+        "before": {
+          "atk": 422.5,
+          "base": 325,
+          "dp": 89.06666666666666
+        },
+        "scope": "Mobile browser: real Flow Generator tile selection, operator tailwind ATK, Retreat button and immediate aura cleanup. Controlled deployment, not a playable clear or native visual parity approval."
+      }
+    }
+  }
+}

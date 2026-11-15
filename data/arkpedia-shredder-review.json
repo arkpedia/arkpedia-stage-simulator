@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-14",
+  "scope": "Source-gated shared combat and terrain behavior, not native frame/pixel parity.",
+  "sources": [
+    {
+      "path": "shared/arkpedia/enemy-shredder-features.js",
+      "sha256": "596a25e7b579357bb71c913b019478a771cee257c80d75ef3304b607f18e66f7"
+    },
+    {
+      "path": "server/sim/content/arkpedia-enemy-shredders.js",
+      "sha256": "62fd24ea9f90aae095d517410f09aa5cfadaa9488def9bc886ea4fc7266dba53"
+    },
+    {
+      "path": "server/sim/content/arkpedia-stage-scenery.js",
+      "sha256": "a2861f0ee90abdb5ad358ae35ff6436ecec418d18d0661355d9920c9b48d0e30"
+    },
+    {
+      "path": "data/arkpedia-shredder-animations.json",
+      "sha256": "04416474acaf5be9846e2bbd1037a3864267e2d39f61a9b867e62f4bc7abee45"
+    },
+    {
+      "path": "data/arkpedia-enemy-native-abilities.json",
+      "sha256": "277c63562c30554e4bd92258c4a879a18b30abfde448979c4fda824aa79047fc"
+    },
+    {
+      "path": "data/arkpedia-device-native-source.json",
+      "sha256": "22010755532c2a00a4b9b8f02fd8efd973613dfd94fb027258b6f0369b53e8a8"
+    }
+  ],
+  "assetCommit": "8798bd65eccce4ccc977aded7ad1bfadfa59849a",
+  "validation": {
+    "targetedTests": 26,
+    "sharedAssetTests": 93,
+    "browser": [
+      {
+        "mobile": false,
+        "state": {
+          "selected": {
+            "row": 2,
+            "col": 3
+          },
+          "attacks": 4,
+          "broken": 1,
+          "tile": {
+            "glyph": "E",
+            "key": "tile_wooden_wall",
+            "height": "HIGH",
+            "build": "NONE",
+            "pass": "FLY",
+            "terrain": null,
+            "special": "end"
+          },
+          "occupied": false,
+          "errors": []
+        },
+        "errors": []
+      },
+      {
+        "mobile": true,
+        "state": {
+          "selected": {
+            "row": 2,
+            "col": 3
+          },
+          "attacks": 4,
+          "broken": 1,
+          "tile": {
+            "glyph": "E",
+            "key": "tile_wooden_wall",
+            "height": "HIGH",
+            "build": "NONE",
+            "pass": "FLY",
+            "terrain": null,
+            "special": "end"
+          },
+          "occupied": false,
+          "errors": []
+        },
+        "errors": []
+      }
+    ],
+    "art": {
+      "scope": "Chromium clip decoding/finite poses and idle body rendering; no native combat/frame/pixel parity claim",
+      "browser": "Chrome/156.0.8078.79",
+      "results": [
+        {
+          "viewport": "desktop",
+          "models": [
+            {
+              "id": "enemy_1097_cclmbjk",
+              "version": "3.8.99",
+              "clips": 7,
+              "width": 713.2193603515625,
+              "height": 453.6106972694397
+            },
+            {
+              "id": "enemy_1097_cclmbjk_2",
+              "version": "3.8.99",
+              "clips": 7,
+              "width": 713.2193603515625,
+              "height": 453.6106972694397
+            }
+          ],
+          "errors": [],
+          "failures": []
+        },
+        {
+          "viewport": "mobile",
+          "models": [
+            {
+              "id": "enemy_1097_cclmbjk",
+              "version": "3.8.99",
+              "clips": 7,
+              "width": 713.2193603515625,
+              "height": 453.6106972694397
+            },
+            {
+              "id": "enemy_1097_cclmbjk_2",
+              "version": "3.8.99",
+              "clips": 7,
+              "width": 713.2193603515625,
+              "height": 453.6106972694397
+            }
+          ],
+          "errors": [],
+          "failures": []
+        }
+      ]
+    },
+    "smoke": {
+      "scope": "10-second constructor/runtime smoke for every available compiled stage; not a playable-clear or fidelity certificate",
+      "available": 814,
+      "completed": 814,
+      "failures": [],
+      "uniqueComponentsRead": 5517,
+      "cache": {
+        "cachedBytes": 12117990,
+        "cachedObjects": 5517,
+        "pending": 0
+      }
+    }
+  }
+}

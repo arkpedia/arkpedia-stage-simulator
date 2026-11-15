@@ -31,7 +31,7 @@ function enemy(b, { r = 3, c = 5, fly = false, def = 300, res = 0, infection = f
   Object.assign(e.base, { maxHp: 100000, atk: 0, def, res, moveSpeed: 0 });
   e.def = { ...e.def, immune: new Set(e.def.immune) };
   e.markDirty(); void e.s; e.hp = 100000;
-  if (fly) e.motion = 'FLY'; if (infection) e.tags.add('infection');
+  if (fly) e.motion = 'FLY'; if (infection) e.tags.add('infection'); else e.tags.delete('infection');
   b.addBuff(e, { key: 'test:quiet', flags: { disarm: true } }); b._buildEnemyIndex(); return e;
 }
 function move(b, e, r, c) { Object.assign(e, { x:c, y:r, tileR:r, tileC:c }); b._enemiesDirty = true; b._buildEnemyIndex(); }

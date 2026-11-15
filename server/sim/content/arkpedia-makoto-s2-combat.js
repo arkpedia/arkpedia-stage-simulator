@@ -109,7 +109,7 @@ export class MakotoSkillTwoCombat {
     if(!t.buffs.some(buff=>(buff.status??buff.key)==='fear')||!(t.hp<this.u.s.atk*this.record.bb['attack@kill_atk_scale']))return;
     e.executing=true;this.executingTargets.add(t);
     try{this.b.dealDamage(this.u,t,{amount:this.record.bb['attack@kill_damage'],type:'true',sourceless:true,canDodge:false,isAttack:true,
-      isSkill:false,isProjectile:false,applyWay:'none',tags:['makoto:s2-execution']});}
+      isSkill:false,isProjectile:false,instantKillLike:true,applyWay:'none',tags:['makoto:s2-execution']});}
     finally{try{this.drop(e);}finally{this.executingTargets.delete(t);}}
   }
   syncAura(){if(this.syncing)return;this.syncing=true;

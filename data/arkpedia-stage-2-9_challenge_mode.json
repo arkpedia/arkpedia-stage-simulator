@@ -3,12 +3,13 @@
  "name": "Cubiculum Obscurum",
  "description": "Condition:\nThe HP of enemy units is increased significantly.",
  "battle": {
-  "max_life": 3,
+  "max_life": 1,
   "unit_limit": 8,
   "initial_dp": 10,
   "max_dp": 99,
   "dp_per_second": 1,
-  "dp_recovery_interval_seconds": 1
+  "dp_recovery_interval_seconds": 1,
+  "max_play_time": -1
  },
  "mapTags": [],
  "mapTagSource": null,
@@ -2120,9 +2121,9 @@
    "rank": "NORMAL",
    "applyWay": "NONE",
    "stats": {
-    "maxHp": 800,
+    "maxHp": 1600,
     "atk": 0,
-    "def": 50,
+    "def": 55.00000000000001,
     "res": 0,
     "moveSpeed": 0.9,
     "bat": 2.3,
@@ -2177,9 +2178,9 @@
    "rank": "NORMAL",
    "applyWay": "MELEE",
    "stats": {
-    "maxHp": 1450,
-    "atk": 220,
-    "def": 100,
+    "maxHp": 2900,
+    "atk": 264,
+    "def": 110.00000000000001,
     "res": 0,
     "moveSpeed": 1,
     "bat": 1.9,
@@ -2232,9 +2233,9 @@
    "rank": "NORMAL",
    "applyWay": "NONE",
    "stats": {
-    "maxHp": 4000,
+    "maxHp": 8000,
     "atk": 0,
-    "def": 150,
+    "def": 165,
     "res": 20,
     "moveSpeed": 0.8,
     "bat": 2,
@@ -2301,9 +2302,9 @@
    "rank": "NORMAL",
    "applyWay": "RANGED",
    "stats": {
-    "maxHp": 1550,
-    "atk": 220,
-    "def": 50,
+    "maxHp": 3100,
+    "atk": 264,
+    "def": 55.00000000000001,
     "res": 0,
     "moveSpeed": 0.9,
     "bat": 3,
@@ -2358,9 +2359,9 @@
    "rank": "NORMAL",
    "applyWay": "MELEE",
    "stats": {
-    "maxHp": 2300,
-    "atk": 300,
-    "def": 150,
+    "maxHp": 4600,
+    "atk": 360,
+    "def": 165,
     "res": 0,
     "moveSpeed": 1,
     "bat": 1.9,
@@ -2405,5 +2406,94 @@
    "notCountInTotal": false,
    "tags": []
   }
+ },
+ "rules": {
+  "variant": "challenge_mode",
+  "source": {
+   "repository": "Kengxxiao/ArknightsGameData",
+   "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+   "path": "zh_CN/gamedata/levels/obt/main/level_main_02-09.json",
+   "sha256": "f4cb68b8281b6888fd1c4c46cefaecf03b4b5dd6b34a606b26f93c0a6f2fd8a8",
+   "gitBlob": "eb677c6852b889a4d694330174ea0e9b0d6aaaef",
+   "stageTable": {
+    "path": "zh_CN/gamedata/excel/stage_table.json",
+    "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+    "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+    "stageId": "main_02-09",
+    "levelId": "Obt/Main/level_main_02-09"
+   }
+  },
+  "battle": {
+   "max_play_time": -1,
+   "max_life": 1
+  },
+  "enemies": {
+   "atk": 1.2,
+   "def": 1.1,
+   "maxHp": 2
+  },
+  "enemyAdd": {},
+  "hiddenGroups": {}
+ },
+ "tokens": [],
+ "contentRuleRefresh": {
+  "schemaVersion": 1,
+  "source": {
+   "repository": "arkpedia/arkpedia-data",
+   "commit": "66232ee06377d791fb130248d680764c286e5c99",
+   "files": [
+    {
+     "path": "stages/2-9_challenge_mode.json",
+     "sha256": "d4cb5622ac633e7a72e97966105b2bd35eb353f7a7351694aa268f068c5bf30e"
+    },
+    {
+     "path": "stage-geometry/2-9.json",
+     "sha256": "737de582195f0f19cefe443bddbc5b9fbd5d28ad9f6617efec6b4284703fde6f"
+    },
+    {
+     "path": "stage-devices.json",
+     "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+    }
+   ],
+   "localFiles": [
+    {
+     "path": "data/stage-rules/2-9_challenge_mode.json",
+     "sha256": "41f92d256946354fb463a5d5791f324465412340bc7e0558280857b3da6cf0da"
+    },
+    {
+     "path": "data/stage-rules/levels/32c2378b70ca65ace127201e2d960cf5c1383761b4b167fb5947540e6aabfd85.json",
+     "sha256": "32c2378b70ca65ace127201e2d960cf5c1383761b4b167fb5947540e6aabfd85"
+    }
+   ]
+  },
+  "validation": {
+   "smoke": {
+    "seconds": 10,
+    "spawned": 0,
+    "errors": 0
+   },
+   "waveSchedule": {
+    "id": "2-9_challenge_mode",
+    "seconds": 255.63333333333333,
+    "spawned": 52,
+    "expected": 52,
+    "reason": "cleared",
+    "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+   },
+   "browser": {
+    "id": "2-9_challenge_mode",
+    "seconds": 18.566666666666666,
+    "errors": [],
+    "units": 3,
+    "canvas": true,
+    "scope": "Browser startup and 600 simulation ticks; not full gameplay or visual fidelity approval"
+   }
+  },
+  "changed": [
+   "rules",
+   "battle",
+   "enemies",
+   "tokens"
+  ]
  }
 }

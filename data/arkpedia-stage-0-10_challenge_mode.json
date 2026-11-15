@@ -1,1122 +1,1226 @@
 {
- "code": "0-10",
- "name": "Dilemma",
- "description": "Condition:\nThe DEF of all ally units is halved.",
- "battle": {
-  "max_life": 10,
-  "unit_limit": 8,
-  "initial_dp": 10,
-  "max_dp": 99,
-  "dp_per_second": 1,
-  "dp_recovery_interval_seconds": 1
- },
- "mapTags": [],
- "mapTagSource": null,
- "geometry": {
-  "slug": "0-10",
-  "rows": 9,
-  "cols": 13,
-  "tileLegend": [
-   {
-    "key": "tile_empty",
-    "height": "low",
-    "walkable": false,
-    "deployable": "none",
-    "flyable": true
-   },
-   {
-    "key": "tile_empty",
-    "height": "low",
-    "walkable": true,
-    "deployable": "none",
-    "flyable": true
-   },
-   {
-    "key": "tile_forbidden",
-    "height": "high",
-    "walkable": false,
-    "deployable": "none",
-    "flyable": true
-   },
-   {
-    "key": "tile_start",
-    "height": "low",
-    "walkable": true,
-    "deployable": "none",
-    "flyable": true
-   },
-   {
-    "key": "tile_road",
-    "height": "low",
-    "walkable": true,
-    "deployable": "melee",
-    "flyable": true
-   },
-   {
-    "key": "tile_wall",
-    "height": "high",
-    "walkable": false,
-    "deployable": "ranged",
-    "flyable": true
-   },
-   {
-    "key": "tile_end",
-    "height": "low",
-    "walkable": true,
-    "deployable": "none",
-    "flyable": true
-   },
-   {
-    "key": "tile_flystart",
-    "height": "high",
-    "walkable": false,
-    "deployable": "none",
-    "flyable": true
-   }
-  ],
-  "tileGrid": [
-   [
-    0,
-    0,
-    1,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0
-   ],
-   [
-    0,
-    2,
-    3,
-    2,
-    2,
-    2,
-    2,
-    2,
-    2,
-    2,
-    2,
-    2,
-    0
-   ],
-   [
-    0,
-    2,
-    4,
-    4,
-    4,
-    4,
-    4,
-    2,
-    2,
-    2,
-    2,
-    2,
-    0
-   ],
-   [
-    0,
-    2,
-    4,
-    4,
-    5,
-    5,
-    4,
-    2,
-    4,
-    4,
-    4,
-    2,
-    0
-   ],
-   [
-    1,
-    3,
-    4,
-    4,
-    4,
-    4,
-    4,
-    4,
-    4,
-    5,
-    4,
-    6,
-    1
-   ],
-   [
-    0,
-    2,
-    4,
-    4,
-    4,
-    5,
-    2,
-    2,
-    5,
-    5,
-    5,
-    2,
-    0
-   ],
-   [
-    0,
-    7,
-    5,
-    5,
-    5,
-    5,
-    2,
-    2,
-    2,
-    2,
-    2,
-    2,
-    0
-   ],
-   [
-    0,
-    2,
-    2,
-    2,
-    2,
-    2,
-    2,
-    2,
-    2,
-    2,
-    2,
-    2,
-    0
-   ],
-   [
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0
-   ]
-  ],
-  "routes": [
-   {
-    "motion": null,
-    "placeholder": true,
-    "start": null,
-    "end": null,
-    "checkpoints": [],
-    "waits": []
-   },
-   {
-    "motion": "walk",
-    "start": {
-     "row": 4,
-     "col": 0
-    },
-    "end": {
-     "row": 4,
-     "col": 12
-    },
-    "checkpoints": [
-     {
-      "type": "move",
-      "position": {
-       "row": 4,
-       "col": 8
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 3,
-       "col": 8
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 3,
-       "col": 10
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 4,
-       "col": 10
-      }
-     }
-    ],
-    "waits": []
-   },
-   {
-    "motion": "walk",
-    "start": {
-     "row": 1,
-     "col": 2
-    },
-    "end": {
-     "row": 4,
-     "col": 12
-    },
-    "checkpoints": [
-     {
-      "type": "move",
-      "position": {
-       "row": 2,
-       "col": 2
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 2,
-       "col": 6
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 4,
-       "col": 6
-      }
-     }
-    ],
-    "waits": [
-     {
-      "type": "wait_for_seconds",
-      "after_checkpoint": 0,
-      "seconds": 12
-     }
-    ]
-   },
-   {
-    "motion": "fly",
-    "start": {
-     "row": 6,
-     "col": 0
-    },
-    "end": {
-     "row": 4,
-     "col": 12
-    },
-    "checkpoints": [
-     {
-      "type": "move",
-      "position": {
-       "row": 6,
-       "col": 1
-      }
-     },
-     {
-      "type": "move",
-      "position": {
-       "row": 4,
-       "col": 11
-      }
-     }
-    ],
-    "waits": []
-   }
-  ],
-  "waves": [
-   {
-    "index": 0,
-    "duration": 113.6,
-    "pre_delay": 0,
-    "post_delay": 0,
-    "max_wait_for_next_wave": null,
-    "spawns": [
-     {
-      "enemy": "Hound",
-      "enemy_id": "enemy_1000_gopro",
-      "count": 1,
-      "time": 3,
-      "route": 1,
-      "fragment": 1
-     },
-     {
-      "enemy": "Hound",
-      "enemy_id": "enemy_1000_gopro",
-      "count": 2,
-      "time": 9,
-      "interval": 2,
-      "route": 1,
-      "fragment": 1
-     },
-     {
-      "enemy": "Hound",
-      "enemy_id": "enemy_1000_gopro",
-      "count": 2,
-      "time": 14,
-      "interval": 1,
-      "route": 1,
-      "fragment": 2
-     },
-     {
-      "enemy": "Hound",
-      "enemy_id": "enemy_1000_gopro",
-      "count": 2,
-      "time": 20,
-      "interval": 2,
-      "route": 1,
-      "fragment": 2
-     },
-     {
-      "enemy": "Hound",
-      "enemy_id": "enemy_1000_gopro",
-      "count": 2,
-      "time": 27,
-      "interval": 2,
-      "route": 1,
-      "fragment": 2
-     },
-     {
-      "enemy": "Hound",
-      "enemy_id": "enemy_1000_gopro",
-      "count": 2,
-      "time": 33,
-      "interval": 2,
-      "route": 1,
-      "fragment": 2
-     },
-     {
-      "enemy": "Hound",
-      "enemy_id": "enemy_1000_gopro",
-      "count": 1,
-      "time": 48,
-      "route": 1,
-      "fragment": 3
-     },
-     {
-      "enemy": "Hound",
-      "enemy_id": "enemy_1000_gopro",
-      "count": 2,
-      "time": 55,
-      "interval": 2,
-      "route": 1,
-      "fragment": 3
-     },
-     {
-      "enemy": "Rioter",
-      "enemy_id": "enemy_1027_mob",
-      "count": 2,
-      "time": 63,
-      "interval": 2,
-      "route": 1,
-      "fragment": 3
-     },
-     {
-      "enemy": "Junkman",
-      "enemy_id": "enemy_1030_wteeth",
-      "count": 1,
-      "time": 49,
-      "route": 2,
-      "fragment": 3
-     },
-     {
-      "enemy": "Originium Slug",
-      "enemy_id": "enemy_1007_slime",
-      "count": 3,
-      "time": 80,
-      "interval": 0.8,
-      "route": 1,
-      "fragment": 4
-     },
-     {
-      "enemy": "Rioter",
-      "enemy_id": "enemy_1027_mob",
-      "count": 3,
-      "time": 86,
-      "interval": 10,
-      "route": 1,
-      "fragment": 4
-     },
-     {
-      "enemy": "Originium Slug",
-      "enemy_id": "enemy_1007_slime",
-      "count": 3,
-      "time": 92,
-      "interval": 0.8,
-      "route": 1,
-      "fragment": 4
-     },
-     {
-      "enemy": "Originium Slug",
-      "enemy_id": "enemy_1007_slime",
-      "count": 3,
-      "time": 102,
-      "interval": 0.8,
-      "route": 1,
-      "fragment": 4
-     },
-     {
-      "enemy": "Originium Slug",
-      "enemy_id": "enemy_1007_slime",
-      "count": 3,
-      "time": 112,
-      "interval": 0.8,
-      "route": 1,
-      "fragment": 4
-     },
-     {
-      "enemy": "Junkman",
-      "enemy_id": "enemy_1030_wteeth",
-      "count": 1,
-      "time": 87,
-      "route": 2,
-      "fragment": 4
-     },
-     {
-      "enemy": "Monster",
-      "enemy_id": "enemy_1005_yokai",
-      "count": 2,
-      "time": 85,
-      "interval": 14,
-      "route": 3,
-      "fragment": 4
-     }
-    ]
-   }
-  ],
-  "spawnTiles": [
-   {
-    "key": "tile_start",
-    "row": 1,
-    "col": 2,
-    "routes": [
-     2,
-     2
-    ]
-   },
-   {
-    "key": "tile_start",
-    "row": 4,
-    "col": 1,
-    "routes": []
-   },
-   {
-    "key": "tile_flystart",
-    "row": 6,
-    "col": 1,
-    "routes": []
-   }
-  ],
-  "objectiveTiles": [
-   {
-    "key": "tile_end",
-    "row": 4,
-    "col": 11,
-    "routes": []
-   }
-  ],
-  "enemyConfigurations": [
-   {
-    "enemy_id": "enemy_1000_gopro",
-    "slug": "hound",
-    "name": "Hound",
-    "database_level": 0
-   },
-   {
-    "enemy_id": "enemy_1005_yokai",
-    "slug": "monster",
-    "name": "Monster",
-    "database_level": 0
-   },
-   {
-    "enemy_id": "enemy_1007_slime",
-    "slug": "originium_slug_enemy_1007_slime",
-    "name": "Originium Slug",
-    "database_level": 0
-   },
-   {
-    "enemy_id": "enemy_1027_mob",
-    "slug": "rioter",
-    "name": "Rioter",
-    "database_level": 0
-   },
-   {
-    "enemy_id": "enemy_1030_wteeth",
-    "slug": "junkman",
-    "name": "Junkman",
-    "database_level": 0
-   }
-  ],
-  "suppliedUnits": {
-   "fixed_squad": [],
-   "deployable_tokens": []
+  "code": "0-10",
+  "name": "Dilemma",
+  "description": "Condition:\nThe DEF of all ally units is halved.",
+  "battle": {
+    "max_life": 1,
+    "unit_limit": 8,
+    "initial_dp": 10,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1,
+    "max_play_time": -1
   },
-  "hasConditionalSpawns": false
- },
- "devices": [],
- "pathing": {
-  "schemaVersion": 1,
-  "syntheticRoutes": [],
-  "producer": "Arkpedia stage browser / buildPlaybackPaths",
-  "stage": "0-10",
-  "geometryHash": "ba152bea53d038e5e6b1c96f63c10c6a8a27b5ae4a30d9000f8aef2a0e8b69cc",
-  "moveScale": 0.65,
-  "paths": {
-   "1": {
-    "points": [
-     [
-      0,
-      4
-     ],
-     [
-      1,
-      4
-     ],
-     [
-      2,
-      4
-     ],
-     [
-      3,
-      4
-     ],
-     [
-      4,
-      4
-     ],
-     [
-      5,
-      4
-     ],
-     [
-      6,
-      4
-     ],
-     [
-      7,
-      4
-     ],
-     [
-      8,
-      4
-     ],
-     [
-      8,
-      3
-     ],
-     [
-      9,
-      3
-     ],
-     [
-      10,
-      3
-     ],
-     [
-      10,
-      4
-     ],
-     [
-      11,
-      4
-     ],
-     [
-      12,
-      4
-     ]
+  "mapTags": [],
+  "mapTagSource": null,
+  "geometry": {
+    "slug": "0-10",
+    "rows": 9,
+    "cols": 13,
+    "tileLegend": [
+      {
+        "key": "tile_empty",
+        "height": "low",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_empty",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_start",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_flystart",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      }
     ],
-    "distances": [
-     0,
-     1,
-     2,
-     3,
-     4,
-     5,
-     6,
-     7,
-     8,
-     9,
-     10,
-     11,
-     12,
-     13,
-     14
-    ],
-    "length": 14,
-    "breaks": [],
-    "flying": false,
-    "holds": [],
-    "nodes": [
-     [
-      0,
-      4
-     ],
-     [
-      8,
-      4
-     ],
-     [
-      8,
-      3
-     ],
-     [
-      10,
-      3
-     ],
-     [
-      10,
-      4
-     ],
-     [
-      12,
-      4
-     ]
-    ]
-   },
-   "2": {
-    "points": [
-     [
-      2,
-      1
-     ],
-     [
-      2,
-      2
-     ],
-     [
-      3,
-      2
-     ],
-     [
-      4,
-      2
-     ],
-     [
-      5,
-      2
-     ],
-     [
-      6,
-      2
-     ],
-     [
-      6,
-      3
-     ],
-     [
-      6,
-      4
-     ],
-     [
-      7,
-      4
-     ],
-     [
-      8,
-      4
-     ],
-     [
-      8,
-      3
-     ],
-     [
-      9,
-      3
-     ],
-     [
-      10,
-      3
-     ],
-     [
-      10,
-      4
-     ],
-     [
-      11,
-      4
-     ],
-     [
-      12,
-      4
-     ]
-    ],
-    "distances": [
-     0,
-     1,
-     2,
-     3,
-     4,
-     5,
-     6,
-     7,
-     8,
-     9,
-     10,
-     11,
-     12,
-     13,
-     14,
-     15
-    ],
-    "length": 15,
-    "breaks": [],
-    "flying": false,
-    "holds": [
-     {
-      "at": 1,
-      "seconds": 12,
-      "point": [
-       2,
-       2
+    "tileGrid": [
+      [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
       ],
-      "tunnel": false
-     }
+      [
+        0,
+        2,
+        3,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        0
+      ],
+      [
+        0,
+        2,
+        4,
+        4,
+        4,
+        4,
+        4,
+        2,
+        2,
+        2,
+        2,
+        2,
+        0
+      ],
+      [
+        0,
+        2,
+        4,
+        4,
+        5,
+        5,
+        4,
+        2,
+        4,
+        4,
+        4,
+        2,
+        0
+      ],
+      [
+        1,
+        3,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        5,
+        4,
+        6,
+        1
+      ],
+      [
+        0,
+        2,
+        4,
+        4,
+        4,
+        5,
+        2,
+        2,
+        5,
+        5,
+        5,
+        2,
+        0
+      ],
+      [
+        0,
+        7,
+        5,
+        5,
+        5,
+        5,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        0
+      ],
+      [
+        0,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
     ],
-    "nodes": [
-     [
-      2,
-      1
-     ],
-     [
-      2,
-      2
-     ],
-     [
-      6,
-      2
-     ],
-     [
-      6,
-      4
-     ],
-     [
-      12,
-      4
-     ]
-    ]
-   },
-   "3": {
-    "points": [
-     [
-      0,
-      6
-     ],
-     [
-      1,
-      6
-     ],
-     [
-      11,
-      4
-     ],
-     [
-      12,
-      4
-     ]
+    "routes": [
+      {
+        "motion": null,
+        "placeholder": true,
+        "start": null,
+        "end": null,
+        "checkpoints": [],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 4,
+          "col": 0
+        },
+        "end": {
+          "row": 4,
+          "col": 12
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 10
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 10
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 2
+        },
+        "end": {
+          "row": 4,
+          "col": 12
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 6
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 12
+          }
+        ]
+      },
+      {
+        "motion": "fly",
+        "start": {
+          "row": 6,
+          "col": 0
+        },
+        "end": {
+          "row": 4,
+          "col": 12
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 11
+            }
+          }
+        ],
+        "waits": []
+      }
     ],
-    "distances": [
-     0,
-     1,
-     11.19803902718557,
-     12.19803902718557
+    "waves": [
+      {
+        "index": 0,
+        "duration": 113.6,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Hound",
+            "enemy_id": "enemy_1000_gopro",
+            "count": 1,
+            "time": 3,
+            "route": 1,
+            "fragment": 1
+          },
+          {
+            "enemy": "Hound",
+            "enemy_id": "enemy_1000_gopro",
+            "count": 2,
+            "time": 9,
+            "interval": 2,
+            "route": 1,
+            "fragment": 1
+          },
+          {
+            "enemy": "Hound",
+            "enemy_id": "enemy_1000_gopro",
+            "count": 2,
+            "time": 14,
+            "interval": 1,
+            "route": 1,
+            "fragment": 2
+          },
+          {
+            "enemy": "Hound",
+            "enemy_id": "enemy_1000_gopro",
+            "count": 2,
+            "time": 20,
+            "interval": 2,
+            "route": 1,
+            "fragment": 2
+          },
+          {
+            "enemy": "Hound",
+            "enemy_id": "enemy_1000_gopro",
+            "count": 2,
+            "time": 27,
+            "interval": 2,
+            "route": 1,
+            "fragment": 2
+          },
+          {
+            "enemy": "Hound",
+            "enemy_id": "enemy_1000_gopro",
+            "count": 2,
+            "time": 33,
+            "interval": 2,
+            "route": 1,
+            "fragment": 2
+          },
+          {
+            "enemy": "Hound",
+            "enemy_id": "enemy_1000_gopro",
+            "count": 1,
+            "time": 48,
+            "route": 1,
+            "fragment": 3
+          },
+          {
+            "enemy": "Hound",
+            "enemy_id": "enemy_1000_gopro",
+            "count": 2,
+            "time": 55,
+            "interval": 2,
+            "route": 1,
+            "fragment": 3
+          },
+          {
+            "enemy": "Rioter",
+            "enemy_id": "enemy_1027_mob",
+            "count": 2,
+            "time": 63,
+            "interval": 2,
+            "route": 1,
+            "fragment": 3
+          },
+          {
+            "enemy": "Junkman",
+            "enemy_id": "enemy_1030_wteeth",
+            "count": 1,
+            "time": 49,
+            "route": 2,
+            "fragment": 3
+          },
+          {
+            "enemy": "Originium Slug",
+            "enemy_id": "enemy_1007_slime",
+            "count": 3,
+            "time": 80,
+            "interval": 0.8,
+            "route": 1,
+            "fragment": 4
+          },
+          {
+            "enemy": "Rioter",
+            "enemy_id": "enemy_1027_mob",
+            "count": 3,
+            "time": 86,
+            "interval": 10,
+            "route": 1,
+            "fragment": 4
+          },
+          {
+            "enemy": "Originium Slug",
+            "enemy_id": "enemy_1007_slime",
+            "count": 3,
+            "time": 92,
+            "interval": 0.8,
+            "route": 1,
+            "fragment": 4
+          },
+          {
+            "enemy": "Originium Slug",
+            "enemy_id": "enemy_1007_slime",
+            "count": 3,
+            "time": 102,
+            "interval": 0.8,
+            "route": 1,
+            "fragment": 4
+          },
+          {
+            "enemy": "Originium Slug",
+            "enemy_id": "enemy_1007_slime",
+            "count": 3,
+            "time": 112,
+            "interval": 0.8,
+            "route": 1,
+            "fragment": 4
+          },
+          {
+            "enemy": "Junkman",
+            "enemy_id": "enemy_1030_wteeth",
+            "count": 1,
+            "time": 87,
+            "route": 2,
+            "fragment": 4
+          },
+          {
+            "enemy": "Monster",
+            "enemy_id": "enemy_1005_yokai",
+            "count": 2,
+            "time": 85,
+            "interval": 14,
+            "route": 3,
+            "fragment": 4
+          }
+        ]
+      }
     ],
-    "length": 12.19803902718557,
-    "breaks": [],
-    "flying": true,
-    "holds": [],
-    "nodes": [
-     [
-      0,
-      6
-     ],
-     [
-      1,
-      6
-     ],
-     [
-      11,
-      4
-     ],
-     [
-      12,
-      4
-     ]
-    ]
-   }
-  }
- },
- "art": null,
- "gates": null,
- "fixedSquad": null,
- "enemies": {
-  "enemy_1000_gopro": {
-   "key": "enemy_1000_gopro",
-   "prefabKey": "enemy_1000_gopro",
-   "name": "Hound",
-   "level": 0,
-   "rank": "NORMAL",
-   "applyWay": "MELEE",
-   "stats": {
-    "maxHp": 820,
-    "atk": 190,
-    "def": 0,
-    "res": 20,
-    "moveSpeed": 1.9,
-    "bat": 1.4,
-    "aspd": 100,
-    "rangeRadius": 0,
-    "rawRangeRadius": 0,
-    "blockCnt": 1,
-    "massLevel": 0,
-    "lpr": 1,
-    "hpRecoveryPerSec": 0,
-    "elementRes": 0,
-    "elementDmgRes": 0,
-    "hitRatePhys": 0,
-    "hitRateArts": 0,
-    "dmgType": "phys",
-    "dmgTypes": [
-     "phys"
+    "spawnTiles": [
+      {
+        "key": "tile_start",
+        "row": 1,
+        "col": 2,
+        "routes": [
+          2,
+          2
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 4,
+        "col": 1,
+        "routes": []
+      },
+      {
+        "key": "tile_flystart",
+        "row": 6,
+        "col": 1,
+        "routes": []
+      }
     ],
-    "motion": "WALK",
-    "immunities": {
-     "stun": false,
-     "silence": false,
-     "sleep": false,
-     "frozen": false,
-     "levitate": false
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 4,
+        "col": 11,
+        "routes": []
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_1000_gopro",
+        "slug": "hound",
+        "name": "Hound",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1005_yokai",
+        "slug": "monster",
+        "name": "Monster",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1007_slime",
+        "slug": "originium_slug_enemy_1007_slime",
+        "name": "Originium Slug",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1027_mob",
+        "slug": "rioter",
+        "name": "Rioter",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1030_wteeth",
+        "slug": "junkman",
+        "name": "Junkman",
+        "database_level": 0
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [],
+      "deployable_tokens": []
     },
-    "otherImmunities": [],
-    "tauntLevel": 0
-   },
-   "abilities": [],
-   "talents": {
-    "bb": {},
-    "bbStr": {},
-    "groups": {}
-   },
-   "skills": [],
-   "notCountInTotal": false,
-   "tags": [
-    "infection"
-   ]
+    "hasConditionalSpawns": false
   },
-  "enemy_1030_wteeth": {
-   "key": "enemy_1030_wteeth",
-   "prefabKey": "enemy_1030_wteeth",
-   "name": "Junkman",
-   "level": 0,
-   "rank": "NORMAL",
-   "applyWay": "MELEE",
-   "stats": {
-    "maxHp": 5000,
-    "atk": 500,
-    "def": 50,
-    "res": 20,
-    "moveSpeed": 0.8,
-    "bat": 3,
-    "aspd": 100,
-    "rangeRadius": 0,
-    "rawRangeRadius": 0,
-    "blockCnt": 1,
-    "massLevel": 2,
-    "lpr": 1,
-    "hpRecoveryPerSec": 0,
-    "elementRes": 0,
-    "elementDmgRes": 0,
-    "hitRatePhys": 0,
-    "hitRateArts": 0,
-    "dmgType": "phys",
-    "dmgTypes": [
-     "phys"
-    ],
-    "motion": "WALK",
-    "immunities": {
-     "stun": false,
-     "silence": false,
-     "sleep": false,
-     "frozen": false,
-     "levitate": false
-    },
-    "otherImmunities": [],
-    "tauntLevel": 0
-   },
-   "abilities": [],
-   "talents": {
-    "bb": {},
-    "bbStr": {},
-    "groups": {}
-   },
-   "skills": [],
-   "notCountInTotal": false,
-   "tags": []
-  },
-  "enemy_1027_mob": {
-   "key": "enemy_1027_mob",
-   "prefabKey": "enemy_1027_mob",
-   "name": "Rioter",
-   "level": 0,
-   "rank": "NORMAL",
-   "applyWay": "MELEE",
-   "stats": {
-    "maxHp": 1700,
-    "atk": 250,
-    "def": 50,
-    "res": 0,
-    "moveSpeed": 1.1,
-    "bat": 2,
-    "aspd": 100,
-    "rangeRadius": 0,
-    "rawRangeRadius": 0,
-    "blockCnt": 1,
-    "massLevel": 0,
-    "lpr": 1,
-    "hpRecoveryPerSec": 0,
-    "elementRes": 0,
-    "elementDmgRes": 0,
-    "hitRatePhys": 0,
-    "hitRateArts": 0,
-    "dmgType": "phys",
-    "dmgTypes": [
-     "phys"
-    ],
-    "motion": "WALK",
-    "immunities": {
-     "stun": false,
-     "silence": false,
-     "sleep": false,
-     "frozen": false,
-     "levitate": false
-    },
-    "otherImmunities": [],
-    "tauntLevel": 0
-   },
-   "abilities": [],
-   "talents": {
-    "bb": {},
-    "bbStr": {},
-    "groups": {}
-   },
-   "skills": [],
-   "notCountInTotal": false,
-   "tags": []
-  },
-  "enemy_1007_slime": {
-   "key": "enemy_1007_slime",
-   "prefabKey": "enemy_1007_slime",
-   "name": "Originium Slug",
-   "level": 0,
-   "rank": "NORMAL",
-   "applyWay": "MELEE",
-   "stats": {
-    "maxHp": 550,
-    "atk": 130,
-    "def": 0,
-    "res": 0,
-    "moveSpeed": 1,
-    "bat": 1.7,
-    "aspd": 100,
-    "rangeRadius": 0,
-    "rawRangeRadius": 0,
-    "blockCnt": 1,
-    "massLevel": 0,
-    "lpr": 1,
-    "hpRecoveryPerSec": 0,
-    "elementRes": 0,
-    "elementDmgRes": 0,
-    "hitRatePhys": 0,
-    "hitRateArts": 0,
-    "dmgType": "phys",
-    "dmgTypes": [
-     "phys"
-    ],
-    "motion": "WALK",
-    "immunities": {
-     "stun": false,
-     "silence": false,
-     "sleep": false,
-     "frozen": false,
-     "levitate": false
-    },
-    "otherImmunities": [],
-    "tauntLevel": 0
-   },
-   "abilities": [],
-   "talents": {
-    "bb": {},
-    "bbStr": {},
-    "groups": {}
-   },
-   "skills": [],
-   "notCountInTotal": false,
-   "tags": [
-    "infection"
-   ]
-  },
-  "enemy_1005_yokai": {
-   "key": "enemy_1005_yokai",
-   "prefabKey": "enemy_1005_yokai",
-   "name": "Monster",
-   "level": 0,
-   "rank": "NORMAL",
-   "applyWay": "NONE",
-   "stats": {
-    "maxHp": 800,
-    "atk": 0,
-    "def": 50,
-    "res": 0,
-    "moveSpeed": 0.9,
-    "bat": 2.3,
-    "aspd": 100,
-    "rangeRadius": 0,
-    "rawRangeRadius": 0,
-    "blockCnt": 1,
-    "massLevel": 0,
-    "lpr": 1,
-    "hpRecoveryPerSec": 0,
-    "elementRes": 0,
-    "elementDmgRes": 0,
-    "hitRatePhys": 0,
-    "hitRateArts": 0,
-    "dmgType": "none",
-    "dmgTypes": [
-     "none"
-    ],
-    "motion": "FLY",
-    "immunities": {
-     "stun": false,
-     "silence": false,
-     "sleep": false,
-     "frozen": false,
-     "levitate": false
-    },
-    "otherImmunities": [],
-    "tauntLevel": 0
-   },
-   "abilities": [
-    {
-     "text": "Flying unit.",
-     "format": "NORMAL"
+  "devices": [],
+  "pathing": {
+    "schemaVersion": 1,
+    "syntheticRoutes": [],
+    "producer": "Arkpedia stage browser / buildPlaybackPaths",
+    "stage": "0-10",
+    "geometryHash": "ba152bea53d038e5e6b1c96f63c10c6a8a27b5ae4a30d9000f8aef2a0e8b69cc",
+    "moveScale": 0.65,
+    "paths": {
+      "1": {
+        "points": [
+          [
+            0,
+            4
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            8,
+            4
+          ],
+          [
+            8,
+            3
+          ],
+          [
+            9,
+            3
+          ],
+          [
+            10,
+            3
+          ],
+          [
+            10,
+            4
+          ],
+          [
+            11,
+            4
+          ],
+          [
+            12,
+            4
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "length": 14,
+        "breaks": [],
+        "flying": false,
+        "holds": [],
+        "nodes": [
+          [
+            0,
+            4
+          ],
+          [
+            8,
+            4
+          ],
+          [
+            8,
+            3
+          ],
+          [
+            10,
+            3
+          ],
+          [
+            10,
+            4
+          ],
+          [
+            12,
+            4
+          ]
+        ]
+      },
+      "2": {
+        "points": [
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            6,
+            2
+          ],
+          [
+            6,
+            3
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            8,
+            4
+          ],
+          [
+            8,
+            3
+          ],
+          [
+            9,
+            3
+          ],
+          [
+            10,
+            3
+          ],
+          [
+            10,
+            4
+          ],
+          [
+            11,
+            4
+          ],
+          [
+            12,
+            4
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "length": 15,
+        "breaks": [],
+        "flying": false,
+        "holds": [
+          {
+            "at": 1,
+            "seconds": 12,
+            "point": [
+              2,
+              2
+            ],
+            "tunnel": false
+          }
+        ],
+        "nodes": [
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            6,
+            2
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            12,
+            4
+          ]
+        ]
+      },
+      "3": {
+        "points": [
+          [
+            0,
+            6
+          ],
+          [
+            1,
+            6
+          ],
+          [
+            11,
+            4
+          ],
+          [
+            12,
+            4
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          11.19803902718557,
+          12.19803902718557
+        ],
+        "length": 12.19803902718557,
+        "breaks": [],
+        "flying": true,
+        "holds": [],
+        "nodes": [
+          [
+            0,
+            6
+          ],
+          [
+            1,
+            6
+          ],
+          [
+            11,
+            4
+          ],
+          [
+            12,
+            4
+          ]
+        ]
+      }
     }
-   ],
-   "talents": {
-    "bb": {},
-    "bbStr": {},
-    "groups": {}
-   },
-   "skills": [],
-   "notCountInTotal": false,
-   "tags": [
-    "drone"
-   ]
+  },
+  "art": null,
+  "gates": null,
+  "fixedSquad": null,
+  "enemies": {
+    "enemy_1000_gopro": {
+      "key": "enemy_1000_gopro",
+      "prefabKey": "enemy_1000_gopro",
+      "name": "Hound",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 984,
+        "atk": 228,
+        "def": 0,
+        "res": 20,
+        "moveSpeed": 1.9,
+        "bat": 1.4,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 0,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "infection"
+      ]
+    },
+    "enemy_1030_wteeth": {
+      "key": "enemy_1030_wteeth",
+      "prefabKey": "enemy_1030_wteeth",
+      "name": "Junkman",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 6000,
+        "atk": 600,
+        "def": 60,
+        "res": 20,
+        "moveSpeed": 0.8,
+        "bat": 3,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 2,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1027_mob": {
+      "key": "enemy_1027_mob",
+      "prefabKey": "enemy_1027_mob",
+      "name": "Rioter",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 2040,
+        "atk": 300,
+        "def": 60,
+        "res": 0,
+        "moveSpeed": 1.1,
+        "bat": 2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 0,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1007_slime": {
+      "key": "enemy_1007_slime",
+      "prefabKey": "enemy_1007_slime",
+      "name": "Originium Slug",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 660,
+        "atk": 156,
+        "def": 0,
+        "res": 0,
+        "moveSpeed": 1,
+        "bat": 1.7,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 0,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "infection"
+      ]
+    },
+    "enemy_1005_yokai": {
+      "key": "enemy_1005_yokai",
+      "prefabKey": "enemy_1005_yokai",
+      "name": "Monster",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "NONE",
+      "stats": {
+        "maxHp": 960,
+        "atk": 0,
+        "def": 60,
+        "res": 0,
+        "moveSpeed": 0.9,
+        "bat": 2.3,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 0,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "none",
+        "dmgTypes": [
+          "none"
+        ],
+        "motion": "FLY",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Flying unit.",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "drone"
+      ]
+    }
+  },
+  "rules": {
+    "variant": "challenge_mode",
+    "source": {
+      "repository": "Kengxxiao/ArknightsGameData",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "path": "zh_CN/gamedata/levels/obt/main/level_main_00-10.json",
+      "sha256": "db2f6da6361e666e12bf803d657ba6599fc38a5aaabc1043bb4b7d1d50ebb407",
+      "gitBlob": "bb4c8f7924595025915bd8eda11fb0c1e4d9e4a1",
+      "stageTable": {
+        "path": "zh_CN/gamedata/excel/stage_table.json",
+        "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+        "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+        "stageId": "main_00-10",
+        "levelId": "Obt/Main/level_main_00-10"
+      }
+    },
+    "battle": {
+      "max_play_time": -1,
+      "max_life": 1
+    },
+    "enemies": {
+      "atk": 1.2,
+      "def": 1.2,
+      "maxHp": 1.2
+    },
+    "enemyAdd": {},
+    "hiddenGroups": {},
+    "characterAttributes": [
+      {
+        "professionMask": 1023,
+        "buildableMask": 3,
+        "multipliers": {
+          "def": 0.5
+        }
+      }
+    ]
+  },
+  "tokens": [],
+  "contentRuleRefresh": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/0-10_challenge_mode.json",
+          "sha256": "3806ee181503d2510bf926eff663a65139aaa7592d7e9ef8c7bb91dc6d72e4c3"
+        },
+        {
+          "path": "stage-geometry/0-10.json",
+          "sha256": "ba152bea53d038e5e6b1c96f63c10c6a8a27b5ae4a30d9000f8aef2a0e8b69cc"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        }
+      ],
+      "localFiles": [
+        {
+          "path": "data/stage-rules/0-10_challenge_mode.json",
+          "sha256": "80222e2e0015d94e7807b518a049e04abe5134a69372c4ae7b125f3725d27583"
+        },
+        {
+          "path": "data/stage-rules/levels/205cdf6abb580b27c550789150882a86dbf65b98d75b71ab63d0cd83099f98c9.json",
+          "sha256": "205cdf6abb580b27c550789150882a86dbf65b98d75b71ab63d0cd83099f98c9"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/bb4c8f7924595025915bd8eda11fb0c1e4d9e4a1.json",
+          "sha256": "db2f6da6361e666e12bf803d657ba6599fc38a5aaabc1043bb4b7d1d50ebb407"
+        }
+      ]
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 10,
+        "spawned": 2,
+        "errors": 0
+      },
+      "waveSchedule": {
+        "id": "0-10_challenge_mode",
+        "seconds": 135.16666666666666,
+        "spawned": 35,
+        "expected": 35,
+        "dynamicSpawns": 0,
+        "reason": "cleared",
+        "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+      },
+      "browserStartup": {
+        "id": "0-10_challenge_mode",
+        "seconds": 14.366666666666667,
+        "errors": [],
+        "units": 4,
+        "canvas": true,
+        "scope": "Mobile landscape browser startup and canvas runtime; not a fidelity approval"
+      }
+    },
+    "changed": [
+      "rules",
+      "battle",
+      "enemies",
+      "tokens"
+    ]
   }
- }
 }

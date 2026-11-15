@@ -1,0 +1,457 @@
+{
+ "code": "VEC-SP01",
+ "name": "Top of the Jungle",
+ "description": "Use your tail to steady yourself! Falling just a bit slower means victory.",
+ "battle": {
+  "max_life": 1,
+  "unit_limit": 6,
+  "initial_dp": 5,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1,
+  "max_play_time": -1
+ },
+ "rules": {
+  "variant": null,
+  "source": {
+   "repository": "Kengxxiao/ArknightsGameData",
+   "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+   "path": "zh_CN/gamedata/levels/activities/act1vecb/level_act1vecb_sp01.json",
+   "sha256": "02fc3d04567c7cac5406959064aafdc5f2a91acecd6b9e39a98d4596faef142c",
+   "gitBlob": "73b363fc6d58c9333700d58585f2b804cee318ea",
+   "stageTable": {
+    "path": "zh_CN/gamedata/excel/stage_table.json",
+    "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+    "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+    "stageId": "act1vecb_sp01",
+    "levelId": "Activities/ACT1VECB/level_act1vecb_sp01"
+   }
+  },
+  "battle": {
+   "max_play_time": -1
+  },
+  "enemies": {
+   "maxHp": 2.5
+  },
+  "enemyAdd": {},
+  "hiddenGroups": {}
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "vec-sp01_act1vecb_sp01",
+  "rows": 6,
+  "cols": 7,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_healing",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true,
+    "blackboard": {
+     "HP_RECOVERY_PER_SEC_BY_MAX_HP_RATIO": 0.03
+    }
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_infection",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true,
+    "blackboard": {
+     "atk": 0.5,
+     "attack_speed": 50,
+     "damage": 50,
+     "duration": 300
+    }
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    1,
+    1,
+    2,
+    1,
+    1,
+    0
+   ],
+   [
+    0,
+    1,
+    3,
+    3,
+    3,
+    1,
+    0
+   ],
+   [
+    0,
+    1,
+    0,
+    4,
+    0,
+    1,
+    0
+   ],
+   [
+    0,
+    1,
+    0,
+    0,
+    0,
+    1,
+    0
+   ],
+   [
+    0,
+    5,
+    0,
+    0,
+    0,
+    6,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 5
+    },
+    "end": {
+     "row": 5,
+     "col": 1
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ]
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 0,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Tiacauh Champion",
+      "enemy_id": "enemy_1098_cchmpn_2",
+      "count": 1,
+      "time": 0,
+      "route": 0,
+      "fragment": 0
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 5,
+    "col": 5,
+    "routes": [
+     0
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 5,
+    "col": 1,
+    "routes": [
+     0
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1098_cchmpn_2",
+    "slug": "tiacauh_champion",
+    "name": "Tiacauh Champion",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "terrain": [
+  {
+   "row": 3,
+   "col": 3,
+   "kind": "infection",
+   "damage": 50,
+   "atk": 0.5,
+   "aspd": 50,
+   "duration": 300
+  }
+ ],
+ "conditionalHandled": false,
+ "devices": [],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [
+   0
+  ],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "VEC-SP01",
+  "geometryHash": "1db0395e85d23292c4d1fce56afe4078b5e8a90897796dfb28b85f8ab78d7006",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1098_cchmpn_2": {
+   "key": "enemy_1098_cchmpn_2",
+   "prefabKey": "enemy_1098_cchmpn_2",
+   "name": "Tiacauh Champion",
+   "level": 0,
+   "rank": "ELITE",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 40000,
+    "atk": 1000,
+    "def": 1100,
+    "res": 10,
+    "moveSpeed": 0.8,
+    "bat": 4,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 5,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": true,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "When blocked, this unit will only receive damage from the unit blocking it, and the DEF of both units is decreased.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "duel.cchmpn_t_buff_self.def": -0.7,
+     "duel.cchmpn_t_buff_self.taunt_level": -1,
+     "duel.cchmpn_t_buff_self.damage_scale": 0,
+     "duel.cchmpn_t_buff_blocker.def": -0.7
+    },
+    "bbStr": {},
+    "groups": {
+     "duel": [
+      "cchmpn_t_buff_blocker.def",
+      "cchmpn_t_buff_self.damage_scale",
+      "cchmpn_t_buff_self.def",
+      "cchmpn_t_buff_self.taunt_level"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ },
+ "contentAddition": {
+  "schemaVersion": 1,
+  "source": {
+   "repository": "arkpedia/arkpedia-data",
+   "commit": "66232ee06377d791fb130248d680764c286e5c99",
+   "files": [
+    {
+     "path": "stages/vec-sp01_act1vecb_sp01.json",
+     "sha256": "aef201eadccb74f13793550f2d3cbdaf45ee925c2e340d64f5b1639833a2da70"
+    },
+    {
+     "path": "stage-geometry/vec-sp01_act1vecb_sp01.json",
+     "sha256": "1db0395e85d23292c4d1fce56afe4078b5e8a90897796dfb28b85f8ab78d7006"
+    },
+    {
+     "path": "stage-devices.json",
+     "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+    }
+   ],
+   "localFiles": [
+    {
+     "path": "data/stage-rules/vec-sp01_act1vecb_sp01.json",
+     "sha256": "c74354432c96727e95a67b061508060011d0f311238bae15dc330f00e104ede4"
+    },
+    {
+     "path": "data/stage-rules/levels/72c524a4e7d0514bfa9b24f13613354db63971ccd75e56b8dff3bb70b91fba69.json",
+     "sha256": "72c524a4e7d0514bfa9b24f13613354db63971ccd75e56b8dff3bb70b91fba69"
+    }
+   ]
+  },
+  "dependencies": {
+   "enemies": [
+    "enemy_1098_cchmpn_2"
+   ],
+   "devices": [],
+   "tokens": []
+  },
+  "validation": {
+   "smoke": {
+    "seconds": 10,
+    "spawned": 1,
+    "errors": 0
+   },
+   "publicReview": "pending",
+   "waveSchedule": {
+    "id": "vec-sp01_act1vecb_sp01",
+    "seconds": 23.1,
+    "spawned": 1,
+    "expected": 1,
+    "reason": "cleared",
+    "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+   },
+   "browser": {
+    "id": "vec-sp01_act1vecb_sp01",
+    "seconds": 10,
+    "errors": [],
+    "units": 1,
+    "canvas": true,
+    "scope": "Headless Chromium, mobile landscape 1440x900: preparation, battle start, canvas and short runtime without page or simulation errors. Original art and full clear not certified."
+   }
+  }
+ }
+}

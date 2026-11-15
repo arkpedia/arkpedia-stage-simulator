@@ -1,0 +1,1708 @@
+{
+  "code": "S5-6",
+  "name": "Panic-2",
+  "description": "Defense Crushers are enemy elite units specialized in defense. Their attacks can also stun our melee units. Take advantage of their slow moving speed to counter them. \n<Turrets> periodically fire bolts, dealing Physical damage to our units.",
+  "battle": {
+    "max_life": 3,
+    "unit_limit": 8,
+    "initial_dp": 10,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1,
+    "max_play_time": -1
+  },
+  "rules": {
+    "variant": null,
+    "source": {
+      "repository": "Kengxxiao/ArknightsGameData",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "path": "zh_CN/gamedata/levels/obt/main/level_sub_05-3-2.json",
+      "sha256": "95c5fc86e37a43e37789ac19d5e8a8939289dba9ee6d4222bc638e0dc4c25881",
+      "gitBlob": "6619240b18e97034a17383b52b49334d241a09e6",
+      "stageTable": {
+        "path": "zh_CN/gamedata/excel/stage_table.json",
+        "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+        "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+        "stageId": "sub_05-3-2",
+        "levelId": "Obt/Main/level_sub_05-3-2"
+      }
+    },
+    "battle": {
+      "max_play_time": -1
+    },
+    "enemies": {},
+    "enemyAdd": {},
+    "hiddenGroups": {}
+  },
+  "mapTags": [],
+  "mapTagSource": null,
+  "geometry": {
+    "slug": "s5-6",
+    "rows": 8,
+    "cols": 10,
+    "tileLegend": [
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_start",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_floor",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      }
+    ],
+    "tileGrid": [
+      [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        2,
+        0,
+        3,
+        2,
+        2,
+        3,
+        3,
+        3,
+        4
+      ],
+      [
+        0,
+        2,
+        0,
+        3,
+        0,
+        0,
+        3,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        3,
+        3,
+        5,
+        3,
+        3,
+        5,
+        2,
+        2,
+        0
+      ],
+      [
+        0,
+        0,
+        2,
+        3,
+        0,
+        0,
+        3,
+        3,
+        3,
+        4
+      ],
+      [
+        0,
+        0,
+        2,
+        3,
+        2,
+        2,
+        3,
+        2,
+        0,
+        0
+      ],
+      [
+        1,
+        3,
+        3,
+        5,
+        3,
+        3,
+        3,
+        2,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        4,
+        0,
+        0,
+        0
+      ]
+    ],
+    "routes": [
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 0
+        },
+        "end": {
+          "row": 4,
+          "col": 9
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 6
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 0,
+          "col": 3
+        },
+        "end": {
+          "row": 1,
+          "col": 9
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 6
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 0
+        },
+        "end": {
+          "row": 7,
+          "col": 6
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 6
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 0
+        },
+        "end": {
+          "row": 4,
+          "col": 9
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 6
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 15
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 0
+        },
+        "end": {
+          "row": 7,
+          "col": 6
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 6
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 21
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 0,
+          "col": 3
+        },
+        "end": {
+          "row": 1,
+          "col": 9
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 3
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 6
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 15
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 0
+        },
+        "end": {
+          "row": 7,
+          "col": 6
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 6
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 18
+          }
+        ]
+      },
+      {
+        "motion": null,
+        "placeholder": true,
+        "start": null,
+        "end": null,
+        "checkpoints": [],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 0
+        },
+        "end": {
+          "row": 4,
+          "col": 9
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 6
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 6
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 25
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 0
+        },
+        "end": {
+          "row": 7,
+          "col": 6
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 6
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 20
+          }
+        ]
+      }
+    ],
+    "waves": [
+      {
+        "index": 0,
+        "duration": 196,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Spec Ops Soldier",
+            "enemy_id": "enemy_1037_lunsbr",
+            "count": 2,
+            "time": 6,
+            "interval": 9,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Spec Ops Soldier",
+            "enemy_id": "enemy_1037_lunsbr",
+            "count": 1,
+            "time": 12,
+            "route": 1,
+            "fragment": 0
+          },
+          {
+            "enemy": "Spec Ops Soldier",
+            "enemy_id": "enemy_1037_lunsbr",
+            "count": 1,
+            "time": 21,
+            "route": 2,
+            "fragment": 0
+          },
+          {
+            "enemy": "Spec Ops Soldier",
+            "enemy_id": "enemy_1037_lunsbr",
+            "count": 1,
+            "time": 34,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Spec Ops Soldier",
+            "enemy_id": "enemy_1037_lunsbr",
+            "count": 1,
+            "time": 34,
+            "route": 1,
+            "fragment": 1
+          },
+          {
+            "enemy": "Spec Ops Soldier",
+            "enemy_id": "enemy_1037_lunsbr",
+            "count": 1,
+            "time": 38,
+            "route": 2,
+            "fragment": 1
+          },
+          {
+            "enemy": "Possessed Soldier",
+            "enemy_id": "enemy_1043_zomsbr",
+            "count": 1,
+            "time": 51,
+            "route": 0,
+            "fragment": 2
+          },
+          {
+            "enemy": "Possessed Soldier",
+            "enemy_id": "enemy_1043_zomsbr",
+            "count": 1,
+            "time": 51,
+            "route": 1,
+            "fragment": 2
+          },
+          {
+            "enemy": "Possessed Soldier",
+            "enemy_id": "enemy_1043_zomsbr",
+            "count": 1,
+            "time": 57,
+            "route": 2,
+            "fragment": 2
+          },
+          {
+            "enemy": "Spec Ops Soldier",
+            "enemy_id": "enemy_1037_lunsbr",
+            "count": 1,
+            "time": 55,
+            "route": 0,
+            "fragment": 2
+          },
+          {
+            "enemy": "Spec Ops Soldier",
+            "enemy_id": "enemy_1037_lunsbr",
+            "count": 1,
+            "time": 55,
+            "route": 1,
+            "fragment": 2
+          },
+          {
+            "enemy": "Spec Ops Soldier",
+            "enemy_id": "enemy_1037_lunsbr",
+            "count": 1,
+            "time": 59,
+            "route": 2,
+            "fragment": 2
+          },
+          {
+            "enemy": "Possessed Soldier",
+            "enemy_id": "enemy_1043_zomsbr",
+            "count": 1,
+            "time": 72,
+            "route": 3,
+            "fragment": 3
+          },
+          {
+            "enemy": "Possessed Soldier",
+            "enemy_id": "enemy_1043_zomsbr",
+            "count": 1,
+            "time": 72,
+            "route": 4,
+            "fragment": 3
+          },
+          {
+            "enemy": "Possessed Soldier",
+            "enemy_id": "enemy_1043_zomsbr",
+            "count": 1,
+            "time": 72,
+            "route": 5,
+            "fragment": 3
+          },
+          {
+            "enemy": "Spec Ops Caster",
+            "enemy_id": "enemy_1038_lunmag",
+            "count": 1,
+            "time": 76,
+            "route": 0,
+            "fragment": 3
+          },
+          {
+            "enemy": "Spec Ops Caster",
+            "enemy_id": "enemy_1038_lunmag",
+            "count": 1,
+            "time": 76,
+            "route": 1,
+            "fragment": 3
+          },
+          {
+            "enemy": "Spec Ops Caster",
+            "enemy_id": "enemy_1038_lunmag",
+            "count": 1,
+            "time": 78,
+            "route": 2,
+            "fragment": 3
+          },
+          {
+            "enemy": "Possessed Soldier",
+            "enemy_id": "enemy_1043_zomsbr",
+            "count": 1,
+            "time": 90,
+            "route": 0,
+            "fragment": 3
+          },
+          {
+            "enemy": "Possessed Soldier",
+            "enemy_id": "enemy_1043_zomsbr",
+            "count": 1,
+            "time": 90,
+            "route": 1,
+            "fragment": 3
+          },
+          {
+            "enemy": "Possessed Soldier",
+            "enemy_id": "enemy_1043_zomsbr",
+            "count": 1,
+            "time": 96,
+            "route": 2,
+            "fragment": 3
+          },
+          {
+            "enemy": "Possessed Junkman",
+            "enemy_id": "enemy_1044_zomstr",
+            "count": 1,
+            "time": 111,
+            "route": 3,
+            "fragment": 4
+          },
+          {
+            "enemy": "Possessed Junkman",
+            "enemy_id": "enemy_1044_zomstr",
+            "count": 1,
+            "time": 111,
+            "route": 5,
+            "fragment": 4
+          },
+          {
+            "enemy": "Possessed Junkman",
+            "enemy_id": "enemy_1044_zomstr",
+            "count": 1,
+            "time": 111,
+            "route": 6,
+            "fragment": 4
+          },
+          {
+            "enemy": "Possessed Soldier",
+            "enemy_id": "enemy_1043_zomsbr",
+            "count": 1,
+            "time": 115,
+            "route": 0,
+            "fragment": 4
+          },
+          {
+            "enemy": "Possessed Soldier",
+            "enemy_id": "enemy_1043_zomsbr",
+            "count": 1,
+            "time": 115,
+            "route": 1,
+            "fragment": 4
+          },
+          {
+            "enemy": "Possessed Soldier",
+            "enemy_id": "enemy_1043_zomsbr",
+            "count": 1,
+            "time": 117,
+            "route": 2,
+            "fragment": 4
+          },
+          {
+            "enemy": "Defense Crusher",
+            "enemy_id": "enemy_1045_hammer",
+            "count": 1,
+            "time": 140,
+            "route": 8,
+            "fragment": 5
+          },
+          {
+            "enemy": "Possessed Soldier",
+            "enemy_id": "enemy_1043_zomsbr",
+            "count": 2,
+            "time": 144,
+            "interval": 2,
+            "route": 2,
+            "fragment": 5
+          },
+          {
+            "enemy": "Possessed Soldier",
+            "enemy_id": "enemy_1043_zomsbr",
+            "count": 2,
+            "time": 148,
+            "interval": 2,
+            "route": 1,
+            "fragment": 5
+          },
+          {
+            "enemy": "Spec Ops Caster",
+            "enemy_id": "enemy_1038_lunmag",
+            "count": 1,
+            "time": 154,
+            "route": 2,
+            "fragment": 5
+          },
+          {
+            "enemy": "Spec Ops Caster",
+            "enemy_id": "enemy_1038_lunmag",
+            "count": 1,
+            "time": 158,
+            "route": 1,
+            "fragment": 5
+          },
+          {
+            "enemy": "Possessed Junkman",
+            "enemy_id": "enemy_1044_zomstr",
+            "count": 1,
+            "time": 160,
+            "route": 2,
+            "fragment": 5
+          },
+          {
+            "enemy": "Possessed Junkman",
+            "enemy_id": "enemy_1044_zomstr",
+            "count": 1,
+            "time": 164,
+            "route": 1,
+            "fragment": 5
+          },
+          {
+            "enemy": "Defense Crusher",
+            "enemy_id": "enemy_1045_hammer",
+            "count": 1,
+            "time": 182,
+            "route": 9,
+            "fragment": 6
+          },
+          {
+            "enemy": "Spec Ops Caster",
+            "enemy_id": "enemy_1038_lunmag",
+            "count": 1,
+            "time": 191,
+            "route": 2,
+            "fragment": 6
+          },
+          {
+            "enemy": "Spec Ops Caster",
+            "enemy_id": "enemy_1038_lunmag",
+            "count": 1,
+            "time": 191,
+            "route": 0,
+            "fragment": 6
+          },
+          {
+            "enemy": "Spec Ops Caster",
+            "enemy_id": "enemy_1038_lunmag",
+            "count": 1,
+            "time": 196,
+            "route": 1,
+            "fragment": 6
+          }
+        ]
+      }
+    ],
+    "spawnTiles": [
+      {
+        "key": "tile_start",
+        "row": 0,
+        "col": 3,
+        "routes": [
+          1,
+          1,
+          1,
+          1,
+          5,
+          1,
+          1,
+          5,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 3,
+        "col": 0,
+        "routes": [
+          2,
+          2,
+          2,
+          2,
+          4,
+          2,
+          2,
+          6,
+          2,
+          2,
+          2,
+          2,
+          9,
+          2
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 6,
+        "col": 0,
+        "routes": [
+          0,
+          0,
+          0,
+          0,
+          3,
+          0,
+          0,
+          3,
+          0,
+          8,
+          0
+        ]
+      }
+    ],
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 1,
+        "col": 9,
+        "routes": [
+          1,
+          1,
+          1,
+          1,
+          5,
+          1,
+          1,
+          5,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "key": "tile_end",
+        "row": 4,
+        "col": 9,
+        "routes": [
+          0,
+          0,
+          0,
+          0,
+          3,
+          0,
+          0,
+          3,
+          0,
+          8,
+          0
+        ]
+      },
+      {
+        "key": "tile_end",
+        "row": 7,
+        "col": 6,
+        "routes": [
+          2,
+          2,
+          2,
+          2,
+          4,
+          2,
+          2,
+          6,
+          2,
+          2,
+          2,
+          2,
+          9,
+          2
+        ]
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_1037_lunsbr",
+        "slug": "spec_ops_soldier",
+        "name": "Spec Ops Soldier",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1038_lunmag",
+        "slug": "spec_ops_caster",
+        "name": "Spec Ops Caster",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1043_zomsbr",
+        "slug": "possessed_soldier",
+        "name": "Possessed Soldier",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1044_zomstr",
+        "slug": "possessed_junkman",
+        "name": "Possessed Junkman",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1045_hammer",
+        "slug": "defense_crusher",
+        "name": "Defense Crusher",
+        "database_level": 0
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [],
+      "deployable_tokens": []
+    },
+    "hasConditionalSpawns": false
+  },
+  "terrain": [],
+  "conditionalHandled": false,
+  "devices": [
+    {
+      "col": 8,
+      "description": null,
+      "hidden": false,
+      "key": "trap_007_ballis",
+      "kind": "device",
+      "name": "Turret",
+      "row": 6,
+      "alias": null,
+      "instance": {
+        "level": 6,
+        "skillLevel": 1,
+        "direction": "LEFT"
+      }
+    },
+    {
+      "col": 1,
+      "description": null,
+      "hidden": false,
+      "key": "trap_007_ballis",
+      "kind": "device",
+      "name": "Turret",
+      "row": 4,
+      "alias": null,
+      "instance": {
+        "level": 6,
+        "skillLevel": 1,
+        "direction": "RIGHT"
+      }
+    },
+    {
+      "col": 2,
+      "description": null,
+      "hidden": false,
+      "key": "trap_007_ballis",
+      "kind": "device",
+      "name": "Turret",
+      "row": 1,
+      "alias": null,
+      "instance": {
+        "level": 6,
+        "skillLevel": 1,
+        "direction": "RIGHT"
+      }
+    }
+  ],
+  "tokens": [],
+  "pathing": {
+    "schemaVersion": 1,
+    "syntheticRoutes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      8,
+      9
+    ],
+    "producer": "Arkpedia stage browser / buildPlaybackPaths",
+    "stage": "S5-6",
+    "geometryHash": "d9ef70c36634fc9f149011b186426e6f8364e03861142c7c5902201672ab180e",
+    "moveScale": 0.65,
+    "paths": {
+      "0": {
+        "points": [
+          [
+            0,
+            6
+          ],
+          [
+            6,
+            6
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            9,
+            4
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "1": {
+        "points": [
+          [
+            3,
+            0
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            6,
+            3
+          ],
+          [
+            6,
+            1
+          ],
+          [
+            9,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "2": {
+        "points": [
+          [
+            0,
+            3
+          ],
+          [
+            6,
+            3
+          ],
+          [
+            6,
+            7
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "3": {
+        "points": [
+          [
+            0,
+            6
+          ],
+          [
+            1,
+            6
+          ],
+          [
+            6,
+            6
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            9,
+            4
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "4": {
+        "points": [
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            6,
+            3
+          ],
+          [
+            6,
+            7
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "5": {
+        "points": [
+          [
+            3,
+            0
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            6,
+            3
+          ],
+          [
+            6,
+            1
+          ],
+          [
+            9,
+            1
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "6": {
+        "points": [
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            6,
+            3
+          ],
+          [
+            6,
+            7
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "8": {
+        "points": [
+          [
+            0,
+            6
+          ],
+          [
+            1,
+            6
+          ],
+          [
+            6,
+            6
+          ],
+          [
+            6,
+            4
+          ],
+          [
+            9,
+            4
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "9": {
+        "points": [
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            6,
+            3
+          ],
+          [
+            6,
+            7
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      }
+    }
+  },
+  "art": null,
+  "gates": null,
+  "fixedSquad": null,
+  "enemies": {
+    "enemy_1037_lunsbr": {
+      "key": "enemy_1037_lunsbr",
+      "prefabKey": "enemy_1037_lunsbr",
+      "name": "Spec Ops Soldier",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 3200,
+        "atk": 350,
+        "def": 50,
+        "res": 0,
+        "moveSpeed": 1.1,
+        "bat": 2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1043_zomsbr": {
+      "key": "enemy_1043_zomsbr",
+      "prefabKey": "enemy_1043_zomsbr",
+      "name": "Possessed Soldier",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 2500,
+        "atk": 250,
+        "def": 100,
+        "res": 30,
+        "moveSpeed": 0.9,
+        "bat": 1.8,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 2.5,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 80,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Regenerates HP over time.",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "mutant"
+      ]
+    },
+    "enemy_1038_lunmag": {
+      "key": "enemy_1038_lunmag",
+      "prefabKey": "enemy_1038_lunmag",
+      "name": "Spec Ops Caster",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 4000,
+        "atk": 400,
+        "def": 250,
+        "res": 50,
+        "moveSpeed": 0.8,
+        "bat": 4,
+        "aspd": 100,
+        "rangeRadius": 2,
+        "rawRangeRadius": 2,
+        "blockCnt": 1,
+        "massLevel": 2,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "arts",
+        "dmgTypes": [
+          "arts"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1044_zomstr": {
+      "key": "enemy_1044_zomstr",
+      "prefabKey": "enemy_1044_zomstr",
+      "name": "Possessed Junkman",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 6000,
+        "atk": 500,
+        "def": 130,
+        "res": 30,
+        "moveSpeed": 0.65,
+        "bat": 3,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 2.5,
+        "blockCnt": 1,
+        "massLevel": 2,
+        "lpr": 1,
+        "hpRecoveryPerSec": 200,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Regenerates HP over time.",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "mutant"
+      ]
+    },
+    "enemy_1045_hammer": {
+      "key": "enemy_1045_hammer",
+      "prefabKey": "enemy_1045_hammer",
+      "name": "Defense Crusher",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 10000,
+        "atk": 1000,
+        "def": 1000,
+        "res": 0,
+        "moveSpeed": 0.5,
+        "bat": 3.5,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 2.5,
+        "blockCnt": 1,
+        "massLevel": 4,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "After two attacks, the next attack <$ba.stun>Stuns</> its target",
+          "format": "SILENCE"
+        }
+      ],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [
+        {
+          "prefabKey": "stuncombat",
+          "priority": 0,
+          "cooldown": 1,
+          "initCooldown": 1,
+          "spCost": 2,
+          "bb": {
+            "stun": 7
+          },
+          "bbStr": {}
+        }
+      ],
+      "sp": {
+        "type": "INCREASE_WHEN_ATTACK",
+        "maxSp": 2,
+        "initSp": 0,
+        "increment": 1
+      },
+      "notCountInTotal": false,
+      "tags": []
+    }
+  },
+  "contentAddition": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/s5-6.json",
+          "sha256": "b611f5b6684bd3817c6c4c7c68458b1c7af98f0d240f3f5d61c85a39264b5312"
+        },
+        {
+          "path": "stage-geometry/s5-6.json",
+          "sha256": "d9ef70c36634fc9f149011b186426e6f8364e03861142c7c5902201672ab180e"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        }
+      ],
+      "localFiles": [
+        {
+          "path": "data/stage-rules/s5-6.json",
+          "sha256": "cd5223981a9f9c20b7db1990b05e658acb538ea82361941f8786754f1c8e59cc"
+        },
+        {
+          "path": "data/stage-rules/levels/f7d18c434e274e7be88f95f8fc04a16ff08811392003c05f44f1d7d351e3756d.json",
+          "sha256": "f7d18c434e274e7be88f95f8fc04a16ff08811392003c05f44f1d7d351e3756d"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/6619240b18e97034a17383b52b49334d241a09e6.json",
+          "sha256": "95c5fc86e37a43e37789ac19d5e8a8939289dba9ee6d4222bc638e0dc4c25881"
+        },
+        {
+          "path": "data/arkpedia-device-source.json",
+          "sha256": "9435d65821a1c76fa90e1d033339cf95585c8203e865e78e50b78c235b76c56d"
+        },
+        {
+          "path": "data/arkpedia-device-native-source.json",
+          "sha256": "ab97b997b09d25d232da323763fc6d5292fe5cefa8f6f66a3771a35b248dbc71"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/6619240b18e97034a17383b52b49334d241a09e6.json",
+          "sha256": "95c5fc86e37a43e37789ac19d5e8a8939289dba9ee6d4222bc638e0dc4c25881"
+        }
+      ]
+    },
+    "dependencies": {
+      "enemies": [
+        "enemy_1037_lunsbr",
+        "enemy_1038_lunmag",
+        "enemy_1043_zomsbr",
+        "enemy_1044_zomstr",
+        "enemy_1045_hammer"
+      ],
+      "devices": [
+        "Turret"
+      ],
+      "tokens": []
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 10,
+        "spawned": 4,
+        "errors": 0
+      },
+      "publicReview": "pending",
+      "waveSchedule": {
+        "id": "s5-6",
+        "seconds": 217.16666666666666,
+        "spawned": 41,
+        "expected": 41,
+        "dynamicSpawns": 0,
+        "reason": "cleared",
+        "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+      },
+      "browserStartup": {
+        "id": "s5-6",
+        "seconds": 20,
+        "errors": [],
+        "units": 6,
+        "canvas": true,
+        "scope": "Mobile landscape browser startup and canvas runtime; not a fidelity approval"
+      }
+    }
+  }
+}

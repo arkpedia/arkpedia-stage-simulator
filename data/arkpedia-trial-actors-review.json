@@ -1,0 +1,426 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-14",
+  "scope": "Shared player/fixed squad selection with source-owned actors, not module/favor interpolation or native frame certification.",
+  "sources": [
+    {
+      "path": "tools/arkpedia/stage-predefined-operators.mjs",
+      "sha256": "f08aecf52014090a195d643f1c90555a3f7ad6af263035fda95715b02ed6b584"
+    },
+    {
+      "path": "tools/arkpedia/stage-waves.mjs",
+      "sha256": "4a6e5d20e754a6699a3aab6377d40197f9434b275963b09c84e444009595af67"
+    },
+    {
+      "path": "shared/arkpedia/stage-roster.js",
+      "sha256": "e9d4ce7be0579cc69b5a274a6675ea1ab2043f1c3899ecbd29d41214c81d7ef3"
+    },
+    {
+      "path": "shared/arkpedia/operator-library.js",
+      "sha256": "9759d113db02dffab5d4831d5cf38498a8281482ef35a448d7f78a7acbeb3e06"
+    }
+  ],
+  "validation": {
+    "tests": 23,
+    "browser": [
+      {
+        "id": "tr-4",
+        "mobile": false,
+        "initial": {
+          "bench": [
+            "char_123_fang",
+            "char_192_falco"
+          ],
+          "hidden": [
+            "char_123_fang",
+            "char_192_falco"
+          ],
+          "actors": []
+        },
+        "seconds": 10.933333333333334,
+        "activated": [
+          "char_123_fang",
+          "char_192_falco"
+        ],
+        "hidden": [],
+        "actors": [],
+        "errors": []
+      },
+      {
+        "id": "tr-6",
+        "mobile": false,
+        "initial": {
+          "bench": [
+            "char_122_beagle",
+            "char_009_12fce",
+            "char_501_durin"
+          ],
+          "hidden": [
+            "char_122_beagle",
+            "char_009_12fce"
+          ],
+          "actors": [
+            "char_501_durin"
+          ]
+        },
+        "seconds": 20.933333333333334,
+        "activated": [
+          "char_122_beagle",
+          "char_009_12fce",
+          "char_501_durin"
+        ],
+        "hidden": [],
+        "actors": [
+          "char_501_durin"
+        ],
+        "errors": []
+      },
+      {
+        "id": "1-11",
+        "mobile": false,
+        "initial": {
+          "bench": [
+            "char_210_stward",
+            "char_235_jesica",
+            "char_123_fang",
+            "char_192_falco",
+            "char_121_lava",
+            "char_120_hibisc",
+            "char_208_melan",
+            "char_122_beagle",
+            "char_212_ansel",
+            "char_503_rang",
+            "char_500_noirc",
+            "char_502_nblade",
+            "char_211_adnach"
+          ],
+          "hidden": [
+            "char_211_adnach"
+          ],
+          "actors": []
+        },
+        "seconds": 3.033333333333333,
+        "activated": [
+          "char_211_adnach"
+        ],
+        "hidden": [],
+        "actors": [
+          "char_211_adnach"
+        ],
+        "errors": []
+      },
+      {
+        "id": "cb-3",
+        "mobile": false,
+        "initial": {
+          "bench": [
+            "char_123_fang",
+            "char_208_melan",
+            "char_122_beagle",
+            "char_124_kroos",
+            "char_120_hibisc",
+            "char_213_mostma",
+            "char_325_bison"
+          ],
+          "hidden": [],
+          "actors": [
+            "trap_008_farm",
+            "char_213_mostma",
+            "char_325_bison"
+          ]
+        },
+        "seconds": 0,
+        "activated": [
+          "char_213_mostma",
+          "char_325_bison"
+        ],
+        "hidden": [],
+        "actors": [
+          "trap_008_farm",
+          "char_213_mostma",
+          "char_325_bison"
+        ],
+        "errors": []
+      },
+      {
+        "id": "of-6",
+        "mobile": false,
+        "initial": {
+          "bench": [
+            "char_123_fang",
+            "char_208_melan",
+            "char_122_beagle",
+            "char_124_kroos",
+            "char_120_hibisc",
+            "char_340_shwaz"
+          ],
+          "hidden": [],
+          "actors": [
+            "char_340_shwaz"
+          ]
+        },
+        "seconds": 0,
+        "activated": [
+          "char_340_shwaz"
+        ],
+        "hidden": [],
+        "actors": [
+          "char_340_shwaz"
+        ],
+        "errors": []
+      },
+      {
+        "id": "11-3",
+        "mobile": false,
+        "initial": {
+          "bench": [
+            "char_123_fang",
+            "char_208_melan",
+            "char_122_beagle",
+            "char_124_kroos",
+            "char_120_hibisc",
+            "char_4045_heidi"
+          ],
+          "hidden": [],
+          "actors": [
+            "char_4045_heidi"
+          ]
+        },
+        "seconds": 0,
+        "activated": [
+          "char_4045_heidi"
+        ],
+        "hidden": [],
+        "actors": [
+          "char_4045_heidi"
+        ],
+        "errors": []
+      },
+      {
+        "id": "tw-s-1",
+        "mobile": false,
+        "initial": {
+          "bench": [
+            "char_123_fang",
+            "char_208_melan",
+            "char_122_beagle",
+            "char_124_kroos",
+            "char_120_hibisc"
+          ],
+          "hidden": [],
+          "actors": []
+        },
+        "seconds": 0,
+        "activated": [],
+        "hidden": [],
+        "actors": [],
+        "errors": []
+      },
+      {
+        "id": "tr-4",
+        "mobile": true,
+        "initial": {
+          "bench": [
+            "char_123_fang",
+            "char_192_falco"
+          ],
+          "hidden": [
+            "char_123_fang",
+            "char_192_falco"
+          ],
+          "actors": []
+        },
+        "seconds": 10.933333333333334,
+        "activated": [
+          "char_123_fang",
+          "char_192_falco"
+        ],
+        "hidden": [],
+        "actors": [],
+        "errors": []
+      },
+      {
+        "id": "tr-6",
+        "mobile": true,
+        "initial": {
+          "bench": [
+            "char_122_beagle",
+            "char_009_12fce",
+            "char_501_durin"
+          ],
+          "hidden": [
+            "char_122_beagle",
+            "char_009_12fce"
+          ],
+          "actors": [
+            "char_501_durin"
+          ]
+        },
+        "seconds": 20.933333333333334,
+        "activated": [
+          "char_122_beagle",
+          "char_009_12fce",
+          "char_501_durin"
+        ],
+        "hidden": [],
+        "actors": [
+          "char_501_durin"
+        ],
+        "errors": []
+      },
+      {
+        "id": "1-11",
+        "mobile": true,
+        "initial": {
+          "bench": [
+            "char_210_stward",
+            "char_235_jesica",
+            "char_123_fang",
+            "char_192_falco",
+            "char_121_lava",
+            "char_120_hibisc",
+            "char_208_melan",
+            "char_122_beagle",
+            "char_212_ansel",
+            "char_503_rang",
+            "char_500_noirc",
+            "char_502_nblade",
+            "char_211_adnach"
+          ],
+          "hidden": [
+            "char_211_adnach"
+          ],
+          "actors": []
+        },
+        "seconds": 3.033333333333333,
+        "activated": [
+          "char_211_adnach"
+        ],
+        "hidden": [],
+        "actors": [
+          "char_211_adnach"
+        ],
+        "errors": []
+      },
+      {
+        "id": "cb-3",
+        "mobile": true,
+        "initial": {
+          "bench": [
+            "char_123_fang",
+            "char_208_melan",
+            "char_122_beagle",
+            "char_124_kroos",
+            "char_120_hibisc",
+            "char_213_mostma",
+            "char_325_bison"
+          ],
+          "hidden": [],
+          "actors": [
+            "trap_008_farm",
+            "char_213_mostma",
+            "char_325_bison"
+          ]
+        },
+        "seconds": 0,
+        "activated": [
+          "char_213_mostma",
+          "char_325_bison"
+        ],
+        "hidden": [],
+        "actors": [
+          "trap_008_farm",
+          "char_213_mostma",
+          "char_325_bison"
+        ],
+        "errors": []
+      },
+      {
+        "id": "of-6",
+        "mobile": true,
+        "initial": {
+          "bench": [
+            "char_123_fang",
+            "char_208_melan",
+            "char_122_beagle",
+            "char_124_kroos",
+            "char_120_hibisc",
+            "char_340_shwaz"
+          ],
+          "hidden": [],
+          "actors": [
+            "char_340_shwaz"
+          ]
+        },
+        "seconds": 0,
+        "activated": [
+          "char_340_shwaz"
+        ],
+        "hidden": [],
+        "actors": [
+          "char_340_shwaz"
+        ],
+        "errors": []
+      },
+      {
+        "id": "11-3",
+        "mobile": true,
+        "initial": {
+          "bench": [
+            "char_123_fang",
+            "char_208_melan",
+            "char_122_beagle",
+            "char_124_kroos",
+            "char_120_hibisc",
+            "char_4045_heidi"
+          ],
+          "hidden": [],
+          "actors": [
+            "char_4045_heidi"
+          ]
+        },
+        "seconds": 0,
+        "activated": [
+          "char_4045_heidi"
+        ],
+        "hidden": [],
+        "actors": [
+          "char_4045_heidi"
+        ],
+        "errors": []
+      },
+      {
+        "id": "tw-s-1",
+        "mobile": true,
+        "initial": {
+          "bench": [
+            "char_123_fang",
+            "char_208_melan",
+            "char_122_beagle",
+            "char_124_kroos",
+            "char_120_hibisc"
+          ],
+          "hidden": [],
+          "actors": []
+        },
+        "seconds": 0,
+        "activated": [],
+        "hidden": [],
+        "actors": [],
+        "errors": []
+      }
+    ],
+    "smoke": {
+      "scope": "10-second constructor/runtime smoke for every available compiled stage; not a playable-clear or fidelity certificate",
+      "available": 820,
+      "completed": 820,
+      "failures": [],
+      "uniqueComponentsRead": 5550,
+      "cache": {
+        "cachedBytes": 12214769,
+        "cachedObjects": 5550,
+        "pending": 0
+      }
+    }
+  }
+}

@@ -1,1257 +1,1352 @@
 {
- "code": "R8-10",
- "name": "Silent Butcher",
- "description": "The Empire of Ursus has lost many elites throughout its many wars, but is always able to cultivate more. Just as an empire should. \n<Roadblock> Deploy to block the enemy's route.\n<Ursus Civilian> Life Points will be deducted by 1 when killed by an enemy.",
- "battle": {
-  "max_life": 3,
-  "unit_limit": 8,
-  "initial_dp": 10,
-  "max_dp": 99,
-  "dp_per_second": 1,
-  "dp_recovery_interval_seconds": 1
- },
- "mapTags": [],
- "mapTagSource": null,
- "geometry": {
-  "slug": "r8-10",
-  "rows": 7,
-  "cols": 9,
-  "tileLegend": [
-   {
-    "key": "tile_forbidden",
-    "height": "high",
-    "walkable": false,
-    "deployable": "none",
-    "flyable": true
-   },
-   {
-    "key": "tile_start",
-    "height": "low",
-    "walkable": true,
-    "deployable": "none",
-    "flyable": true
-   },
-   {
-    "key": "tile_floor",
-    "height": "low",
-    "walkable": true,
-    "deployable": "none",
-    "flyable": true
-   },
-   {
-    "key": "tile_road",
-    "height": "low",
-    "walkable": true,
-    "deployable": "melee",
-    "flyable": true
-   },
-   {
-    "key": "tile_end",
-    "height": "low",
-    "walkable": true,
-    "deployable": "none",
-    "flyable": true
-   },
-   {
-    "key": "tile_wall",
-    "height": "high",
-    "walkable": false,
-    "deployable": "ranged",
-    "flyable": true
-   }
-  ],
-  "tileGrid": [
-   [
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0
-   ],
-   [
-    1,
-    2,
-    3,
-    3,
-    3,
-    3,
-    3,
-    3,
-    0
-   ],
-   [
-    0,
-    3,
-    0,
-    3,
-    0,
-    3,
-    0,
-    2,
-    4
-   ],
-   [
-    1,
-    2,
-    5,
-    3,
-    3,
-    3,
-    5,
-    3,
-    0
-   ],
-   [
-    0,
-    3,
-    5,
-    3,
-    5,
-    3,
-    5,
-    2,
-    1
-   ],
-   [
-    0,
-    3,
-    3,
-    2,
-    5,
-    3,
-    3,
-    3,
-    0
-   ],
-   [
-    0,
-    0,
-    0,
-    1,
-    0,
-    0,
-    0,
-    0,
-    0
-   ]
-  ],
-  "routes": [
-   {
-    "motion": "walk",
-    "start": {
-     "row": 1,
-     "col": 0
-    },
-    "end": {
-     "row": 2,
-     "col": 8
-    },
-    "checkpoints": [],
-    "waits": []
-   },
-   {
-    "motion": "walk",
-    "start": {
-     "row": 3,
-     "col": 0
-    },
-    "end": {
-     "row": 2,
-     "col": 8
-    },
-    "checkpoints": [],
-    "waits": []
-   },
-   {
-    "motion": "walk",
-    "start": {
-     "row": 4,
-     "col": 8
-    },
-    "end": {
-     "row": 2,
-     "col": 8
-    },
-    "checkpoints": [],
-    "waits": []
-   },
-   {
-    "motion": "walk",
-    "start": {
-     "row": 6,
-     "col": 3
-    },
-    "end": {
-     "row": 2,
-     "col": 8
-    },
-    "checkpoints": [
-     {
-      "type": "move",
-      "position": {
-       "row": 5,
-       "col": 3
+  "code": "R8-10",
+  "name": "Silent Butcher",
+  "description": "The Empire of Ursus has lost many elites throughout its many wars, but is always able to cultivate more. Just as an empire should. \n<Roadblock> Deploy to block the enemy's route.\n<Ursus Civilian> Life Points will be deducted by 1 when killed by an enemy.",
+  "battle": {
+    "max_life": 3,
+    "unit_limit": 8,
+    "initial_dp": 10,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1,
+    "max_play_time": -1
+  },
+  "mapTags": [],
+  "mapTagSource": null,
+  "geometry": {
+    "slug": "r8-10",
+    "rows": 7,
+    "cols": 9,
+    "tileLegend": [
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_start",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_floor",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
       }
-     }
     ],
-    "waits": []
-   }
-  ],
-  "waves": [
-   {
-    "index": 0,
-    "duration": 175,
-    "pre_delay": 0,
-    "post_delay": 0,
-    "max_wait_for_next_wave": null,
-    "spawns": [
-     {
-      "enemy": "Ursus Civilian",
-      "enemy_id": "enemy_3001_upeopl",
-      "count": 1,
-      "time": 2,
-      "route": 0,
-      "fragment": 0
-     },
-     {
-      "enemy": "Infected Patrol Captain",
-      "enemy_id": "enemy_1107_uoffcr",
-      "count": 1,
-      "time": 7,
-      "route": 1,
-      "fragment": 0
-     },
-     {
-      "enemy": "Infected Patrol Captain",
-      "enemy_id": "enemy_1107_uoffcr",
-      "count": 1,
-      "time": 8,
-      "route": 1,
-      "fragment": 0
-     },
-     {
-      "enemy": "Infected Patrol Captain",
-      "enemy_id": "enemy_1107_uoffcr",
-      "count": 1,
-      "time": 20,
-      "route": 2,
-      "fragment": 0
-     },
-     {
-      "enemy": "Infected Patrol Captain",
-      "enemy_id": "enemy_1107_uoffcr",
-      "count": 1,
-      "time": 21,
-      "route": 2,
-      "fragment": 0
-     },
-     {
-      "enemy": "Infected Patrol Captain",
-      "enemy_id": "enemy_1107_uoffcr",
-      "count": 1,
-      "time": 30,
-      "route": 1,
-      "fragment": 0
-     },
-     {
-      "enemy": "Infected Patrol Captain",
-      "enemy_id": "enemy_1107_uoffcr",
-      "count": 1,
-      "time": 31,
-      "route": 1,
-      "fragment": 0
-     },
-     {
-      "enemy": "Ursus Civilian",
-      "enemy_id": "enemy_3001_upeopl",
-      "count": 1,
-      "time": 54,
-      "route": 0,
-      "fragment": 1
-     },
-     {
-      "enemy": "Ursus Raider",
-      "enemy_id": "enemy_1111_ucommd",
-      "count": 1,
-      "time": 51,
-      "route": 2,
-      "fragment": 1
-     },
-     {
-      "enemy": "Infected Patrol Captain",
-      "enemy_id": "enemy_1107_uoffcr",
-      "count": 1,
-      "time": 57,
-      "route": 1,
-      "fragment": 1
-     },
-     {
-      "enemy": "Infected Patrol Captain",
-      "enemy_id": "enemy_1107_uoffcr",
-      "count": 1,
-      "time": 58,
-      "route": 1,
-      "fragment": 1
-     },
-     {
-      "enemy": "Infected Patrol Captain",
-      "enemy_id": "enemy_1107_uoffcr",
-      "count": 1,
-      "time": 61,
-      "route": 2,
-      "fragment": 1
-     },
-     {
-      "enemy": "Infected Patrol Captain",
-      "enemy_id": "enemy_1107_uoffcr",
-      "count": 1,
-      "time": 62,
-      "route": 2,
-      "fragment": 1
-     },
-     {
-      "enemy": "Ursus Raider",
-      "enemy_id": "enemy_1111_ucommd",
-      "count": 1,
-      "time": 76,
-      "route": 2,
-      "fragment": 1
-     },
-     {
-      "enemy": "Ursus Civilian",
-      "enemy_id": "enemy_3001_upeopl",
-      "count": 1,
-      "time": 88,
-      "route": 0,
-      "fragment": 2
-     },
-     {
-      "enemy": "Infected Patrol Captain",
-      "enemy_id": "enemy_1107_uoffcr",
-      "count": 1,
-      "time": 91,
-      "route": 1,
-      "fragment": 2
-     },
-     {
-      "enemy": "Infected Patrol Captain",
-      "enemy_id": "enemy_1107_uoffcr",
-      "count": 1,
-      "time": 92,
-      "route": 1,
-      "fragment": 2
-     },
-     {
-      "enemy": "Infected Patrol Captain",
-      "enemy_id": "enemy_1107_uoffcr",
-      "count": 1,
-      "time": 96,
-      "route": 2,
-      "fragment": 2
-     },
-     {
-      "enemy": "Infected Patrol Captain",
-      "enemy_id": "enemy_1107_uoffcr",
-      "count": 1,
-      "time": 97,
-      "route": 2,
-      "fragment": 2
-     },
-     {
-      "enemy": "Ursus Raider",
-      "enemy_id": "enemy_1111_ucommd",
-      "count": 1,
-      "time": 101,
-      "route": 2,
-      "fragment": 2
-     },
-     {
-      "enemy": "Infected Patrol Captain",
-      "enemy_id": "enemy_1107_uoffcr",
-      "count": 1,
-      "time": 106,
-      "route": 1,
-      "fragment": 2
-     },
-     {
-      "enemy": "Infected Patrol Captain",
-      "enemy_id": "enemy_1107_uoffcr",
-      "count": 1,
-      "time": 107,
-      "route": 1,
-      "fragment": 2
-     },
-     {
-      "enemy": "Ursus Civilian",
-      "enemy_id": "enemy_3001_upeopl",
-      "count": 1,
-      "time": 119,
-      "route": 0,
-      "fragment": 3
-     },
-     {
-      "enemy": "Infected Patrol Captain",
-      "enemy_id": "enemy_1107_uoffcr",
-      "count": 1,
-      "time": 122,
-      "route": 1,
-      "fragment": 3
-     },
-     {
-      "enemy": "Infected Patrol Captain",
-      "enemy_id": "enemy_1107_uoffcr",
-      "count": 1,
-      "time": 123,
-      "route": 1,
-      "fragment": 3
-     },
-     {
-      "enemy": "Imperial Striker",
-      "enemy_id": "enemy_1113_empace",
-      "count": 1,
-      "time": 110,
-      "route": 3,
-      "fragment": 3
-     },
-     {
-      "enemy": "Infected Patrol Captain",
-      "enemy_id": "enemy_1107_uoffcr",
-      "count": 1,
-      "time": 124,
-      "route": 2,
-      "fragment": 3
-     },
-     {
-      "enemy": "Infected Patrol Captain",
-      "enemy_id": "enemy_1107_uoffcr",
-      "count": 1,
-      "time": 125,
-      "route": 2,
-      "fragment": 3
-     },
-     {
-      "enemy": "Ursus Raider",
-      "enemy_id": "enemy_1111_ucommd",
-      "count": 1,
-      "time": 112,
-      "route": 2,
-      "fragment": 3
-     },
-     {
-      "enemy": "Infected Patrol Captain",
-      "enemy_id": "enemy_1107_uoffcr",
-      "count": 1,
-      "time": 130,
-      "route": 2,
-      "fragment": 3
-     },
-     {
-      "enemy": "Infected Patrol Captain",
-      "enemy_id": "enemy_1107_uoffcr",
-      "count": 1,
-      "time": 131,
-      "route": 2,
-      "fragment": 3
-     },
-     {
-      "enemy": "Ursus Raider",
-      "enemy_id": "enemy_1111_ucommd",
-      "count": 1,
-      "time": 137,
-      "route": 2,
-      "fragment": 3
-     },
-     {
-      "enemy": "Infected Patrol Captain",
-      "enemy_id": "enemy_1107_uoffcr",
-      "count": 1,
-      "time": 137,
-      "route": 1,
-      "fragment": 3
-     },
-     {
-      "enemy": "Infected Patrol Captain",
-      "enemy_id": "enemy_1107_uoffcr",
-      "count": 1,
-      "time": 138,
-      "route": 1,
-      "fragment": 3
-     },
-     {
-      "enemy": "Imperial Striker",
-      "enemy_id": "enemy_1113_empace",
-      "count": 1,
-      "time": 142,
-      "route": 3,
-      "fragment": 3
-     },
-     {
-      "enemy": "Ursus Civilian",
-      "enemy_id": "enemy_3001_upeopl",
-      "count": 1,
-      "time": 156,
-      "route": 0,
-      "fragment": 4
-     },
-     {
-      "enemy": "Imperial Striker",
-      "enemy_id": "enemy_1113_empace",
-      "count": 1,
-      "time": 157,
-      "route": 3,
-      "fragment": 4
-     },
-     {
-      "enemy": "Infected Patrol Captain",
-      "enemy_id": "enemy_1107_uoffcr",
-      "count": 2,
-      "time": 159,
-      "interval": 1,
-      "route": 1,
-      "fragment": 4
-     },
-     {
-      "enemy": "Infected Patrol Captain",
-      "enemy_id": "enemy_1107_uoffcr",
-      "count": 2,
-      "time": 174,
-      "interval": 1,
-      "route": 1,
-      "fragment": 4
-     },
-     {
-      "enemy": "Ursus Raider",
-      "enemy_id": "enemy_1111_ucommd",
-      "count": 1,
-      "time": 167,
-      "route": 2,
-      "fragment": 4
-     },
-     {
-      "enemy": "Ursus Raider",
-      "enemy_id": "enemy_1111_ucommd",
-      "count": 1,
-      "time": 172,
-      "route": 2,
-      "fragment": 4
-     }
-    ]
-   }
-  ],
-  "spawnTiles": [
-   {
-    "key": "tile_start",
-    "row": 1,
-    "col": 0,
+    "tileGrid": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        2,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        0
+      ],
+      [
+        0,
+        3,
+        0,
+        3,
+        0,
+        3,
+        0,
+        2,
+        4
+      ],
+      [
+        1,
+        2,
+        5,
+        3,
+        3,
+        3,
+        5,
+        3,
+        0
+      ],
+      [
+        0,
+        3,
+        5,
+        3,
+        5,
+        3,
+        5,
+        2,
+        1
+      ],
+      [
+        0,
+        3,
+        3,
+        2,
+        5,
+        3,
+        3,
+        3,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
     "routes": [
-     0,
-     0,
-     0,
-     0,
-     0
-    ]
-   },
-   {
-    "key": "tile_start",
-    "row": 3,
-    "col": 0,
-    "routes": [
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1,
-     1
-    ]
-   },
-   {
-    "key": "tile_start",
-    "row": 4,
-    "col": 8,
-    "routes": [
-     2,
-     2,
-     2,
-     2,
-     2,
-     2,
-     2,
-     2,
-     2,
-     2,
-     2,
-     2,
-     2,
-     2,
-     2,
-     2,
-     2
-    ]
-   },
-   {
-    "key": "tile_start",
-    "row": 6,
-    "col": 3,
-    "routes": [
-     3,
-     3,
-     3
-    ]
-   }
-  ],
-  "objectiveTiles": [
-   {
-    "key": "tile_end",
-    "row": 2,
-    "col": 8,
-    "routes": [
-     0,
-     1,
-     1,
-     2,
-     2,
-     1,
-     1,
-     0,
-     2,
-     1,
-     1,
-     2,
-     2,
-     2,
-     0,
-     1,
-     1,
-     2,
-     2,
-     2,
-     1,
-     1,
-     0,
-     1,
-     1,
-     3,
-     2,
-     2,
-     2,
-     2,
-     2,
-     2,
-     1,
-     1,
-     3,
-     0,
-     3,
-     1,
-     1,
-     2,
-     2
-    ]
-   }
-  ],
-  "enemyConfigurations": [
-   {
-    "enemy_id": "enemy_1107_uoffcr",
-    "slug": "infected_patrol_captain",
-    "name": "Infected Patrol Captain",
-    "database_level": 0
-   },
-   {
-    "enemy_id": "enemy_1111_ucommd",
-    "slug": "ursus_raider",
-    "name": "Ursus Raider",
-    "database_level": 0
-   },
-   {
-    "enemy_id": "enemy_1113_empace",
-    "slug": "imperial_striker",
-    "name": "Imperial Striker",
-    "database_level": 0
-   },
-   {
-    "enemy_id": "enemy_3001_upeopl",
-    "slug": "ursus_civilian",
-    "name": "Ursus Civilian",
-    "database_level": 0
-   }
-  ],
-  "suppliedUnits": {
-   "fixed_squad": [],
-   "deployable_tokens": [
-    {
-     "unit": "Roadblock",
-     "unit_id": "trap_001_crate",
-     "count": 5,
-     "level": 1,
-     "elite": 0,
-     "potential": 0,
-     "skill_index": -1,
-     "skill_level": 1
-    }
-   ]
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 0
+        },
+        "end": {
+          "row": 2,
+          "col": 8
+        },
+        "checkpoints": [],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 0
+        },
+        "end": {
+          "row": 2,
+          "col": 8
+        },
+        "checkpoints": [],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 4,
+          "col": 8
+        },
+        "end": {
+          "row": 2,
+          "col": 8
+        },
+        "checkpoints": [],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 6,
+          "col": 3
+        },
+        "end": {
+          "row": 2,
+          "col": 8
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 3
+            }
+          }
+        ],
+        "waits": []
+      }
+    ],
+    "waves": [
+      {
+        "index": 0,
+        "duration": 175,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Ursus Civilian",
+            "enemy_id": "enemy_3001_upeopl",
+            "count": 1,
+            "time": 2,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Infected Patrol Captain",
+            "enemy_id": "enemy_1107_uoffcr",
+            "count": 1,
+            "time": 7,
+            "route": 1,
+            "fragment": 0
+          },
+          {
+            "enemy": "Infected Patrol Captain",
+            "enemy_id": "enemy_1107_uoffcr",
+            "count": 1,
+            "time": 8,
+            "route": 1,
+            "fragment": 0
+          },
+          {
+            "enemy": "Infected Patrol Captain",
+            "enemy_id": "enemy_1107_uoffcr",
+            "count": 1,
+            "time": 20,
+            "route": 2,
+            "fragment": 0
+          },
+          {
+            "enemy": "Infected Patrol Captain",
+            "enemy_id": "enemy_1107_uoffcr",
+            "count": 1,
+            "time": 21,
+            "route": 2,
+            "fragment": 0
+          },
+          {
+            "enemy": "Infected Patrol Captain",
+            "enemy_id": "enemy_1107_uoffcr",
+            "count": 1,
+            "time": 30,
+            "route": 1,
+            "fragment": 0
+          },
+          {
+            "enemy": "Infected Patrol Captain",
+            "enemy_id": "enemy_1107_uoffcr",
+            "count": 1,
+            "time": 31,
+            "route": 1,
+            "fragment": 0
+          },
+          {
+            "enemy": "Ursus Civilian",
+            "enemy_id": "enemy_3001_upeopl",
+            "count": 1,
+            "time": 54,
+            "route": 0,
+            "fragment": 1
+          },
+          {
+            "enemy": "Ursus Raider",
+            "enemy_id": "enemy_1111_ucommd",
+            "count": 1,
+            "time": 51,
+            "route": 2,
+            "fragment": 1
+          },
+          {
+            "enemy": "Infected Patrol Captain",
+            "enemy_id": "enemy_1107_uoffcr",
+            "count": 1,
+            "time": 57,
+            "route": 1,
+            "fragment": 1
+          },
+          {
+            "enemy": "Infected Patrol Captain",
+            "enemy_id": "enemy_1107_uoffcr",
+            "count": 1,
+            "time": 58,
+            "route": 1,
+            "fragment": 1
+          },
+          {
+            "enemy": "Infected Patrol Captain",
+            "enemy_id": "enemy_1107_uoffcr",
+            "count": 1,
+            "time": 61,
+            "route": 2,
+            "fragment": 1
+          },
+          {
+            "enemy": "Infected Patrol Captain",
+            "enemy_id": "enemy_1107_uoffcr",
+            "count": 1,
+            "time": 62,
+            "route": 2,
+            "fragment": 1
+          },
+          {
+            "enemy": "Ursus Raider",
+            "enemy_id": "enemy_1111_ucommd",
+            "count": 1,
+            "time": 76,
+            "route": 2,
+            "fragment": 1
+          },
+          {
+            "enemy": "Ursus Civilian",
+            "enemy_id": "enemy_3001_upeopl",
+            "count": 1,
+            "time": 88,
+            "route": 0,
+            "fragment": 2
+          },
+          {
+            "enemy": "Infected Patrol Captain",
+            "enemy_id": "enemy_1107_uoffcr",
+            "count": 1,
+            "time": 91,
+            "route": 1,
+            "fragment": 2
+          },
+          {
+            "enemy": "Infected Patrol Captain",
+            "enemy_id": "enemy_1107_uoffcr",
+            "count": 1,
+            "time": 92,
+            "route": 1,
+            "fragment": 2
+          },
+          {
+            "enemy": "Infected Patrol Captain",
+            "enemy_id": "enemy_1107_uoffcr",
+            "count": 1,
+            "time": 96,
+            "route": 2,
+            "fragment": 2
+          },
+          {
+            "enemy": "Infected Patrol Captain",
+            "enemy_id": "enemy_1107_uoffcr",
+            "count": 1,
+            "time": 97,
+            "route": 2,
+            "fragment": 2
+          },
+          {
+            "enemy": "Ursus Raider",
+            "enemy_id": "enemy_1111_ucommd",
+            "count": 1,
+            "time": 101,
+            "route": 2,
+            "fragment": 2
+          },
+          {
+            "enemy": "Infected Patrol Captain",
+            "enemy_id": "enemy_1107_uoffcr",
+            "count": 1,
+            "time": 106,
+            "route": 1,
+            "fragment": 2
+          },
+          {
+            "enemy": "Infected Patrol Captain",
+            "enemy_id": "enemy_1107_uoffcr",
+            "count": 1,
+            "time": 107,
+            "route": 1,
+            "fragment": 2
+          },
+          {
+            "enemy": "Ursus Civilian",
+            "enemy_id": "enemy_3001_upeopl",
+            "count": 1,
+            "time": 119,
+            "route": 0,
+            "fragment": 3
+          },
+          {
+            "enemy": "Infected Patrol Captain",
+            "enemy_id": "enemy_1107_uoffcr",
+            "count": 1,
+            "time": 122,
+            "route": 1,
+            "fragment": 3
+          },
+          {
+            "enemy": "Infected Patrol Captain",
+            "enemy_id": "enemy_1107_uoffcr",
+            "count": 1,
+            "time": 123,
+            "route": 1,
+            "fragment": 3
+          },
+          {
+            "enemy": "Imperial Striker",
+            "enemy_id": "enemy_1113_empace",
+            "count": 1,
+            "time": 110,
+            "route": 3,
+            "fragment": 3
+          },
+          {
+            "enemy": "Infected Patrol Captain",
+            "enemy_id": "enemy_1107_uoffcr",
+            "count": 1,
+            "time": 124,
+            "route": 2,
+            "fragment": 3
+          },
+          {
+            "enemy": "Infected Patrol Captain",
+            "enemy_id": "enemy_1107_uoffcr",
+            "count": 1,
+            "time": 125,
+            "route": 2,
+            "fragment": 3
+          },
+          {
+            "enemy": "Ursus Raider",
+            "enemy_id": "enemy_1111_ucommd",
+            "count": 1,
+            "time": 112,
+            "route": 2,
+            "fragment": 3
+          },
+          {
+            "enemy": "Infected Patrol Captain",
+            "enemy_id": "enemy_1107_uoffcr",
+            "count": 1,
+            "time": 130,
+            "route": 2,
+            "fragment": 3
+          },
+          {
+            "enemy": "Infected Patrol Captain",
+            "enemy_id": "enemy_1107_uoffcr",
+            "count": 1,
+            "time": 131,
+            "route": 2,
+            "fragment": 3
+          },
+          {
+            "enemy": "Ursus Raider",
+            "enemy_id": "enemy_1111_ucommd",
+            "count": 1,
+            "time": 137,
+            "route": 2,
+            "fragment": 3
+          },
+          {
+            "enemy": "Infected Patrol Captain",
+            "enemy_id": "enemy_1107_uoffcr",
+            "count": 1,
+            "time": 137,
+            "route": 1,
+            "fragment": 3
+          },
+          {
+            "enemy": "Infected Patrol Captain",
+            "enemy_id": "enemy_1107_uoffcr",
+            "count": 1,
+            "time": 138,
+            "route": 1,
+            "fragment": 3
+          },
+          {
+            "enemy": "Imperial Striker",
+            "enemy_id": "enemy_1113_empace",
+            "count": 1,
+            "time": 142,
+            "route": 3,
+            "fragment": 3
+          },
+          {
+            "enemy": "Ursus Civilian",
+            "enemy_id": "enemy_3001_upeopl",
+            "count": 1,
+            "time": 156,
+            "route": 0,
+            "fragment": 4
+          },
+          {
+            "enemy": "Imperial Striker",
+            "enemy_id": "enemy_1113_empace",
+            "count": 1,
+            "time": 157,
+            "route": 3,
+            "fragment": 4
+          },
+          {
+            "enemy": "Infected Patrol Captain",
+            "enemy_id": "enemy_1107_uoffcr",
+            "count": 2,
+            "time": 159,
+            "interval": 1,
+            "route": 1,
+            "fragment": 4
+          },
+          {
+            "enemy": "Infected Patrol Captain",
+            "enemy_id": "enemy_1107_uoffcr",
+            "count": 2,
+            "time": 174,
+            "interval": 1,
+            "route": 1,
+            "fragment": 4
+          },
+          {
+            "enemy": "Ursus Raider",
+            "enemy_id": "enemy_1111_ucommd",
+            "count": 1,
+            "time": 167,
+            "route": 2,
+            "fragment": 4
+          },
+          {
+            "enemy": "Ursus Raider",
+            "enemy_id": "enemy_1111_ucommd",
+            "count": 1,
+            "time": 172,
+            "route": 2,
+            "fragment": 4
+          }
+        ]
+      }
+    ],
+    "spawnTiles": [
+      {
+        "key": "tile_start",
+        "row": 1,
+        "col": 0,
+        "routes": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 3,
+        "col": 0,
+        "routes": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 4,
+        "col": 8,
+        "routes": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 6,
+        "col": 3,
+        "routes": [
+          3,
+          3,
+          3
+        ]
+      }
+    ],
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 2,
+        "col": 8,
+        "routes": [
+          0,
+          1,
+          1,
+          2,
+          2,
+          1,
+          1,
+          0,
+          2,
+          1,
+          1,
+          2,
+          2,
+          2,
+          0,
+          1,
+          1,
+          2,
+          2,
+          2,
+          1,
+          1,
+          0,
+          1,
+          1,
+          3,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          1,
+          1,
+          3,
+          0,
+          3,
+          1,
+          1,
+          2,
+          2
+        ]
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_1107_uoffcr",
+        "slug": "infected_patrol_captain",
+        "name": "Infected Patrol Captain",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1111_ucommd",
+        "slug": "ursus_raider",
+        "name": "Ursus Raider",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1113_empace",
+        "slug": "imperial_striker",
+        "name": "Imperial Striker",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_3001_upeopl",
+        "slug": "ursus_civilian",
+        "name": "Ursus Civilian",
+        "database_level": 0
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [],
+      "deployable_tokens": [
+        {
+          "unit": "Roadblock",
+          "unit_id": "trap_001_crate",
+          "count": 5,
+          "level": 1,
+          "elite": 0,
+          "potential": 0,
+          "skill_index": -1,
+          "skill_level": 1
+        }
+      ]
+    },
+    "hasConditionalSpawns": false
   },
-  "hasConditionalSpawns": false
- },
- "devices": [],
- "tokens": [
-  {
-   "unitId": "trap_001_crate",
-   "name": "Roadblock",
-   "count": 5,
-   "cost": 5,
-   "hp": 100,
-   "block": 3,
-   "position": "NONE",
-   "behavior": "roadblock",
-   "obstacle": "crate"
+  "devices": [],
+  "tokens": [
+    {
+      "unitId": "trap_001_crate",
+      "name": "Roadblock",
+      "count": 5,
+      "kind": "obstacle",
+      "hp": 100,
+      "def": 0,
+      "res": 0,
+      "block": 3,
+      "taunt": 0,
+      "cost": 5,
+      "cooldown": 5,
+      "refundRatio": 0.5,
+      "blockRadiusSquare": 0.20000000298023224,
+      "range": [],
+      "groundBuildOnly": true,
+      "supplyCard": true,
+      "obstacle": "crate",
+      "description": "Changes enemy routes and blocks up to three enemies. Enemies can destroy it when blocked. Retreat to clear the tile.",
+      "position": "NONE",
+      "behavior": "roadblock"
+    }
+  ],
+  "pathing": {
+    "schemaVersion": 1,
+    "syntheticRoutes": [],
+    "producer": "Arkpedia stage browser / buildPlaybackPaths",
+    "stage": "R8-10",
+    "geometryHash": "c4fe6fd23c6c42a89e31a55eed481e60898e3b90f30f475d5794c018f4015e54",
+    "moveScale": 0.65,
+    "paths": {
+      "0": {
+        "points": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            6,
+            1
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            8,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "length": 9,
+        "breaks": [],
+        "flying": false,
+        "holds": [],
+        "nodes": [
+          [
+            0,
+            1
+          ],
+          [
+            8,
+            2
+          ]
+        ]
+      },
+      "1": {
+        "points": [
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            6,
+            1
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            8,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "length": 11,
+        "breaks": [],
+        "flying": false,
+        "holds": [],
+        "nodes": [
+          [
+            0,
+            3
+          ],
+          [
+            8,
+            2
+          ]
+        ]
+      },
+      "2": {
+        "points": [
+          [
+            8,
+            4
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            7,
+            3
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            8,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "length": 4,
+        "breaks": [],
+        "flying": false,
+        "holds": [],
+        "nodes": [
+          [
+            8,
+            4
+          ],
+          [
+            8,
+            2
+          ]
+        ]
+      },
+      "3": {
+        "points": [
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            6,
+            1
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            8,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "length": 11,
+        "breaks": [],
+        "flying": false,
+        "holds": [],
+        "nodes": [
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            8,
+            2
+          ]
+        ]
+      }
+    }
+  },
+  "art": null,
+  "gates": null,
+  "fixedSquad": [],
+  "enemies": {
+    "enemy_3001_upeopl": {
+      "key": "enemy_3001_upeopl",
+      "prefabKey": "enemy_3001_upeopl",
+      "name": "Ursus Civilian",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "NONE",
+      "stats": {
+        "maxHp": 3500,
+        "atk": 0,
+        "def": 50,
+        "res": 0,
+        "moveSpeed": 0.65,
+        "bat": 1,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 0,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "none",
+        "dmgTypes": [
+          "none"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Does not deplete Life Points when spared, but will deplete a Life Point upon dying",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Does not count towards the defeated enemies counter",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "dead.value": -1
+        },
+        "bbStr": {},
+        "groups": {
+          "dead": [
+            "value"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1107_uoffcr": {
+      "key": "enemy_1107_uoffcr",
+      "prefabKey": "enemy_1107_uoffcr",
+      "name": "Infected Patrol Captain",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 3300,
+        "atk": 330,
+        "def": 150,
+        "res": 20,
+        "moveSpeed": 1.1,
+        "bat": 2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Can use long-ranged weapons to attack <Ursus Civilians> and <Talulah, the Fighter>",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1111_ucommd": {
+      "key": "enemy_1111_ucommd",
+      "prefabKey": "enemy_1111_ucommd",
+      "name": "Ursus Raider",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 7500,
+        "atk": 550,
+        "def": 500,
+        "res": 50,
+        "moveSpeed": 1.5,
+        "bat": 2.2,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 2,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Can only be blocked by units with at least 2 Block",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Can use long-ranged weapons to attack <Ursus Civilians> and <Talulah, the Fighter>",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1113_empace": {
+      "key": "enemy_1113_empace",
+      "prefabKey": "enemy_1113_empace",
+      "name": "Imperial Striker",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "ALL",
+      "stats": {
+        "maxHp": 12000,
+        "atk": 900,
+        "def": 800,
+        "res": 50,
+        "moveSpeed": 0.7,
+        "bat": 4.5,
+        "aspd": 100,
+        "rangeRadius": 1.5,
+        "rawRangeRadius": 1.5,
+        "blockCnt": 1,
+        "massLevel": 4,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Gains significantly increased ATK when HP is under 50%",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "atkup.atk": 1
+        },
+        "bbStr": {},
+        "groups": {
+          "atkup": [
+            "atk"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    }
+  },
+  "rules": {
+    "variant": null,
+    "source": {
+      "repository": "Kengxxiao/ArknightsGameData",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "path": "zh_CN/gamedata/levels/obt/main/level_main_08-11.json",
+      "sha256": "20e7d2aaa9d08bd79a8819f37d6a71c911ab6ec519bf4cb5056610a4ea8252d1",
+      "gitBlob": "7eace6e4fa89ce9542f5cf8fd810af1e26a18d4b",
+      "stageTable": {
+        "path": "zh_CN/gamedata/excel/stage_table.json",
+        "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+        "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+        "stageId": "main_08-11",
+        "levelId": "Obt/Main/level_main_08-11"
+      }
+    },
+    "battle": {
+      "max_play_time": -1
+    },
+    "enemies": {},
+    "enemyAdd": {},
+    "hiddenGroups": {}
+  },
+  "contentRuleRefresh": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/r8-10.json",
+          "sha256": "158ce6493d35142169d8658d5246ea90bbbc9c31e1524fcfdad4e6fb2c297c63"
+        },
+        {
+          "path": "stage-geometry/r8-10.json",
+          "sha256": "c4fe6fd23c6c42a89e31a55eed481e60898e3b90f30f475d5794c018f4015e54"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        }
+      ],
+      "localFiles": [
+        {
+          "path": "data/stage-rules/r8-10.json",
+          "sha256": "9a5eb366ce969f29580204b762fb5e512b7789b1e8ac2c4f0c2a8688ec6e475c"
+        },
+        {
+          "path": "data/stage-rules/levels/79c3aa73df880143a07a7cae7ae54bb04aaa573dc203af3e2be33290048aac8a.json",
+          "sha256": "79c3aa73df880143a07a7cae7ae54bb04aaa573dc203af3e2be33290048aac8a"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/7eace6e4fa89ce9542f5cf8fd810af1e26a18d4b.json",
+          "sha256": "20e7d2aaa9d08bd79a8819f37d6a71c911ab6ec519bf4cb5056610a4ea8252d1"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/7eace6e4fa89ce9542f5cf8fd810af1e26a18d4b.json",
+          "sha256": "20e7d2aaa9d08bd79a8819f37d6a71c911ab6ec519bf4cb5056610a4ea8252d1"
+        },
+        {
+          "path": "data/arkpedia-device-source.json",
+          "sha256": "64515531475bbde6c454f96b0a2c797edffc6f986c27d504539602d979b6fb7a"
+        },
+        {
+          "path": "data/arkpedia-device-native-source.json",
+          "sha256": "7340512aaf1e3ddeff9a9c6fb77a6b92e64513e9abc1951e89b780ccb10bd09c"
+        }
+      ]
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 10,
+        "spawned": 3,
+        "errors": 0
+      }
+    },
+    "changed": [
+      "rules",
+      "battle",
+      "tokens"
+    ],
+    "deviceRefresh": true
   }
- ],
- "pathing": {
-  "schemaVersion": 1,
-  "syntheticRoutes": [],
-  "producer": "Arkpedia stage browser / buildPlaybackPaths",
-  "stage": "R8-10",
-  "geometryHash": "c4fe6fd23c6c42a89e31a55eed481e60898e3b90f30f475d5794c018f4015e54",
-  "moveScale": 0.65,
-  "paths": {
-   "0": {
-    "points": [
-     [
-      0,
-      1
-     ],
-     [
-      1,
-      1
-     ],
-     [
-      2,
-      1
-     ],
-     [
-      3,
-      1
-     ],
-     [
-      4,
-      1
-     ],
-     [
-      5,
-      1
-     ],
-     [
-      6,
-      1
-     ],
-     [
-      7,
-      1
-     ],
-     [
-      7,
-      2
-     ],
-     [
-      8,
-      2
-     ]
-    ],
-    "distances": [
-     0,
-     1,
-     2,
-     3,
-     4,
-     5,
-     6,
-     7,
-     8,
-     9
-    ],
-    "length": 9,
-    "breaks": [],
-    "flying": false,
-    "holds": [],
-    "nodes": [
-     [
-      0,
-      1
-     ],
-     [
-      8,
-      2
-     ]
-    ]
-   },
-   "1": {
-    "points": [
-     [
-      0,
-      3
-     ],
-     [
-      1,
-      3
-     ],
-     [
-      1,
-      2
-     ],
-     [
-      1,
-      1
-     ],
-     [
-      2,
-      1
-     ],
-     [
-      3,
-      1
-     ],
-     [
-      4,
-      1
-     ],
-     [
-      5,
-      1
-     ],
-     [
-      6,
-      1
-     ],
-     [
-      7,
-      1
-     ],
-     [
-      7,
-      2
-     ],
-     [
-      8,
-      2
-     ]
-    ],
-    "distances": [
-     0,
-     1,
-     2,
-     3,
-     4,
-     5,
-     6,
-     7,
-     8,
-     9,
-     10,
-     11
-    ],
-    "length": 11,
-    "breaks": [],
-    "flying": false,
-    "holds": [],
-    "nodes": [
-     [
-      0,
-      3
-     ],
-     [
-      8,
-      2
-     ]
-    ]
-   },
-   "2": {
-    "points": [
-     [
-      8,
-      4
-     ],
-     [
-      7,
-      4
-     ],
-     [
-      7,
-      3
-     ],
-     [
-      7,
-      2
-     ],
-     [
-      8,
-      2
-     ]
-    ],
-    "distances": [
-     0,
-     1,
-     2,
-     3,
-     4
-    ],
-    "length": 4,
-    "breaks": [],
-    "flying": false,
-    "holds": [],
-    "nodes": [
-     [
-      8,
-      4
-     ],
-     [
-      8,
-      2
-     ]
-    ]
-   },
-   "3": {
-    "points": [
-     [
-      3,
-      6
-     ],
-     [
-      3,
-      5
-     ],
-     [
-      3,
-      4
-     ],
-     [
-      3,
-      3
-     ],
-     [
-      4,
-      3
-     ],
-     [
-      5,
-      3
-     ],
-     [
-      5,
-      2
-     ],
-     [
-      5,
-      1
-     ],
-     [
-      6,
-      1
-     ],
-     [
-      7,
-      1
-     ],
-     [
-      7,
-      2
-     ],
-     [
-      8,
-      2
-     ]
-    ],
-    "distances": [
-     0,
-     1,
-     2,
-     3,
-     4,
-     5,
-     6,
-     7,
-     8,
-     9,
-     10,
-     11
-    ],
-    "length": 11,
-    "breaks": [],
-    "flying": false,
-    "holds": [],
-    "nodes": [
-     [
-      3,
-      6
-     ],
-     [
-      3,
-      5
-     ],
-     [
-      8,
-      2
-     ]
-    ]
-   }
-  }
- },
- "art": null,
- "gates": null,
- "fixedSquad": [],
- "enemies": {
-  "enemy_3001_upeopl": {
-   "key": "enemy_3001_upeopl",
-   "prefabKey": "enemy_3001_upeopl",
-   "name": "Ursus Civilian",
-   "level": 0,
-   "rank": "NORMAL",
-   "applyWay": "NONE",
-   "stats": {
-    "maxHp": 3500,
-    "atk": 0,
-    "def": 50,
-    "res": 0,
-    "moveSpeed": 0.65,
-    "bat": 1,
-    "aspd": 100,
-    "rangeRadius": 0,
-    "rawRangeRadius": 0,
-    "blockCnt": 1,
-    "massLevel": 1,
-    "lpr": 0,
-    "hpRecoveryPerSec": 0,
-    "elementRes": 0,
-    "elementDmgRes": 0,
-    "hitRatePhys": 0,
-    "hitRateArts": 0,
-    "dmgType": "none",
-    "dmgTypes": [
-     "none"
-    ],
-    "motion": "WALK",
-    "immunities": {
-     "stun": false,
-     "silence": false,
-     "sleep": false,
-     "frozen": false,
-     "levitate": false
-    },
-    "otherImmunities": [],
-    "tauntLevel": 0
-   },
-   "abilities": [
-    {
-     "text": "Does not deplete Life Points when spared, but will deplete a Life Point upon dying",
-     "format": "NORMAL"
-    },
-    {
-     "text": "Does not count towards the defeated enemies counter",
-     "format": "NORMAL"
-    }
-   ],
-   "talents": {
-    "bb": {
-     "dead.value": -1
-    },
-    "bbStr": {},
-    "groups": {
-     "dead": [
-      "value"
-     ]
-    }
-   },
-   "skills": [],
-   "notCountInTotal": false,
-   "tags": []
-  },
-  "enemy_1107_uoffcr": {
-   "key": "enemy_1107_uoffcr",
-   "prefabKey": "enemy_1107_uoffcr",
-   "name": "Infected Patrol Captain",
-   "level": 0,
-   "rank": "NORMAL",
-   "applyWay": "MELEE",
-   "stats": {
-    "maxHp": 3300,
-    "atk": 330,
-    "def": 150,
-    "res": 20,
-    "moveSpeed": 1.1,
-    "bat": 2,
-    "aspd": 100,
-    "rangeRadius": 0,
-    "rawRangeRadius": 0,
-    "blockCnt": 1,
-    "massLevel": 1,
-    "lpr": 1,
-    "hpRecoveryPerSec": 0,
-    "elementRes": 0,
-    "elementDmgRes": 0,
-    "hitRatePhys": 0,
-    "hitRateArts": 0,
-    "dmgType": "phys",
-    "dmgTypes": [
-     "phys"
-    ],
-    "motion": "WALK",
-    "immunities": {
-     "stun": false,
-     "silence": false,
-     "sleep": false,
-     "frozen": false,
-     "levitate": false
-    },
-    "otherImmunities": [],
-    "tauntLevel": 0
-   },
-   "abilities": [
-    {
-     "text": "Can use long-ranged weapons to attack <Ursus Civilians> and <Talulah, the Fighter>",
-     "format": "NORMAL"
-    }
-   ],
-   "talents": {
-    "bb": {},
-    "bbStr": {},
-    "groups": {}
-   },
-   "skills": [],
-   "notCountInTotal": false,
-   "tags": []
-  },
-  "enemy_1111_ucommd": {
-   "key": "enemy_1111_ucommd",
-   "prefabKey": "enemy_1111_ucommd",
-   "name": "Ursus Raider",
-   "level": 0,
-   "rank": "ELITE",
-   "applyWay": "MELEE",
-   "stats": {
-    "maxHp": 7500,
-    "atk": 550,
-    "def": 500,
-    "res": 50,
-    "moveSpeed": 1.5,
-    "bat": 2.2,
-    "aspd": 100,
-    "rangeRadius": 0,
-    "rawRangeRadius": 0,
-    "blockCnt": 1,
-    "massLevel": 2,
-    "lpr": 1,
-    "hpRecoveryPerSec": 0,
-    "elementRes": 0,
-    "elementDmgRes": 0,
-    "hitRatePhys": 0,
-    "hitRateArts": 0,
-    "dmgType": "phys",
-    "dmgTypes": [
-     "phys"
-    ],
-    "motion": "WALK",
-    "immunities": {
-     "stun": false,
-     "silence": false,
-     "sleep": false,
-     "frozen": false,
-     "levitate": false
-    },
-    "otherImmunities": [],
-    "tauntLevel": 0
-   },
-   "abilities": [
-    {
-     "text": "Can only be blocked by units with at least 2 Block",
-     "format": "NORMAL"
-    },
-    {
-     "text": "Can use long-ranged weapons to attack <Ursus Civilians> and <Talulah, the Fighter>",
-     "format": "NORMAL"
-    }
-   ],
-   "talents": {
-    "bb": {},
-    "bbStr": {},
-    "groups": {}
-   },
-   "skills": [],
-   "notCountInTotal": false,
-   "tags": []
-  },
-  "enemy_1113_empace": {
-   "key": "enemy_1113_empace",
-   "prefabKey": "enemy_1113_empace",
-   "name": "Imperial Striker",
-   "level": 0,
-   "rank": "ELITE",
-   "applyWay": "ALL",
-   "stats": {
-    "maxHp": 12000,
-    "atk": 900,
-    "def": 800,
-    "res": 50,
-    "moveSpeed": 0.7,
-    "bat": 4.5,
-    "aspd": 100,
-    "rangeRadius": 1.5,
-    "rawRangeRadius": 1.5,
-    "blockCnt": 1,
-    "massLevel": 4,
-    "lpr": 1,
-    "hpRecoveryPerSec": 0,
-    "elementRes": 0,
-    "elementDmgRes": 0,
-    "hitRatePhys": 0,
-    "hitRateArts": 0,
-    "dmgType": "phys",
-    "dmgTypes": [
-     "phys"
-    ],
-    "motion": "WALK",
-    "immunities": {
-     "stun": false,
-     "silence": false,
-     "sleep": false,
-     "frozen": false,
-     "levitate": false
-    },
-    "otherImmunities": [],
-    "tauntLevel": 0
-   },
-   "abilities": [
-    {
-     "text": "Gains significantly increased ATK when HP is under 50%",
-     "format": "NORMAL"
-    }
-   ],
-   "talents": {
-    "bb": {
-     "atkup.atk": 1
-    },
-    "bbStr": {},
-    "groups": {
-     "atkup": [
-      "atk"
-     ]
-    }
-   },
-   "skills": [],
-   "notCountInTotal": false,
-   "tags": []
-  }
- }
 }

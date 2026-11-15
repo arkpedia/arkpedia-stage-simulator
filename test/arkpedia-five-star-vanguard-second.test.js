@@ -147,7 +147,8 @@ test('Wild Mane source in-hand filter excludes deployed and cooling Guard cards,
 
 test('Wild Mane S2 uses source release and facing-direction push with weight and behind-force penalties',()=>{
  const{b,deploy}=make(W,{skill:1}),u=deploy(),e=enemy(b,8,2),atk=u.s.atk;cast(b,u);near(u.s.atk,atk*1.8);const start=e.x;b.forceAttack(u,[e]);advance(b,.4);near(e.hp,100000);advance(b,.2);assert.ok(e.hp<100000);assert.ok(e.x>start);
- const behind=enemy(b,6.8,2);assert.equal(b._checkBlock(behind),true);const x=behind.x,probe=enemy(b,6.8,3),before=probe.x;b.push(probe,1,{from:{x:u.x,y:3},dir:{x:1,y:0}});const expected=before-probe.x;b.forceAttack(u,[behind]);advance(b,.6);assert.ok(behind.hp<100000);near(x-behind.x,expected);
+ const behind=enemy(b,6.8,2);assert.equal(b._checkBlock(behind),true);const x=behind.x,probe=enemy(b,6.8,3),before=probe.x;b.push(probe,1,{from:{x:u.x,y:3},dir:{x:1,y:0}});b.forceAttack(u,[behind]);advance(b,.6);assert.ok(behind.hp<100000);
+ while(behind.mem.regularShift||probe.mem.regularShift)b.step();near(x-behind.x,before-probe.x);
  advance(b,20);near(u.s.atk,atk);assert.equal(u.skill.active,false);
 });
 

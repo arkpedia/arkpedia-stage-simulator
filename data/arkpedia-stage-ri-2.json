@@ -1,0 +1,2531 @@
+{
+ "code": "RI-2",
+ "name": "Thick Versus Thin",
+ "description": "Competition is one of the timeless inevitabilities of gathering sentient creatures in one place.\n<Giant Mushroom>Increases the DEF of neighboring allied units",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1,
+  "max_play_time": -1
+ },
+ "rules": {
+  "variant": null,
+  "source": {
+   "repository": "Kengxxiao/ArknightsGameData",
+   "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+   "path": "zh_CN/gamedata/levels/activities/act12d0/level_act12d0_02.json",
+   "sha256": "0654af79da8d8af94d29da775ab9a7fc5d8215aee00e362fcbb7ac5589962a16",
+   "gitBlob": "52560e934c58c44b90f73442161e911932540138",
+   "stageTable": {
+    "path": "zh_CN/gamedata/excel/stage_table.json",
+    "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+    "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+    "stageId": "act12d0_02",
+    "levelId": "Activities/ACT12D0/level_act12d0_02"
+   }
+  },
+  "battle": {
+   "max_play_time": -1
+  },
+  "enemies": {},
+  "enemyAdd": {},
+  "hiddenGroups": {}
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "ri-2",
+  "rows": 8,
+  "cols": 12,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wooden_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_grass",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    3
+   ],
+   [
+    0,
+    1,
+    2,
+    2,
+    1,
+    1,
+    2,
+    2,
+    2,
+    2,
+    3,
+    0
+   ],
+   [
+    0,
+    2,
+    2,
+    1,
+    4,
+    1,
+    5,
+    4,
+    1,
+    1,
+    0,
+    0
+   ],
+   [
+    0,
+    5,
+    6,
+    1,
+    0,
+    6,
+    2,
+    0,
+    1,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    7,
+    5,
+    2,
+    2,
+    2,
+    2,
+    1,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    5,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    7,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 1
+    },
+    "end": {
+     "row": 2,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 6
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 1
+    },
+    "end": {
+     "row": 1,
+     "col": 11
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 6
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 1
+    },
+    "end": {
+     "row": 1,
+     "col": 11
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 6
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 6
+    },
+    "end": {
+     "row": 2,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 6
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10
+     }
+    ]
+   },
+   {
+    "motion": null,
+    "placeholder": true,
+    "start": null,
+    "end": null,
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 1
+    },
+    "end": {
+     "row": 1,
+     "col": 11
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 3
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 1
+    },
+    "end": {
+     "row": 1,
+     "col": 11
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 3
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 6
+    },
+    "end": {
+     "row": 2,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 6
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 3
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 1
+    },
+    "end": {
+     "row": 2,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 6
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 3
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 1
+    },
+    "end": {
+     "row": 1,
+     "col": 11
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 3
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 3
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 1
+    },
+    "end": {
+     "row": 2,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 6
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_current_fragment_time",
+      "after_checkpoint": 0,
+      "seconds": 20
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 1
+    },
+    "end": {
+     "row": 1,
+     "col": 11
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 3
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_current_fragment_time",
+      "after_checkpoint": 0,
+      "seconds": 20
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 1
+    },
+    "end": {
+     "row": 1,
+     "col": 11
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 3
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_current_fragment_time",
+      "after_checkpoint": 0,
+      "seconds": 15
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 1
+    },
+    "end": {
+     "row": 2,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 6
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_current_fragment_time",
+      "after_checkpoint": 0,
+      "seconds": 15
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 7,
+     "col": 6
+    },
+    "end": {
+     "row": 2,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 6
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 1
+    },
+    "end": {
+     "row": 2,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 6
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_current_fragment_time",
+      "after_checkpoint": 0,
+      "seconds": 38
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 1
+    },
+    "end": {
+     "row": 1,
+     "col": 11
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 3
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_current_fragment_time",
+      "after_checkpoint": 0,
+      "seconds": 38
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 1
+    },
+    "end": {
+     "row": 1,
+     "col": 11
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 3
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_current_fragment_time",
+      "after_checkpoint": 0,
+      "seconds": 35
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 1
+    },
+    "end": {
+     "row": 2,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 6
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_current_fragment_time",
+      "after_checkpoint": 0,
+      "seconds": 35
+     }
+    ]
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 178,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Hound",
+      "enemy_id": "enemy_1000_gopro",
+      "count": 1,
+      "time": 6,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Hound",
+      "enemy_id": "enemy_1000_gopro",
+      "count": 2,
+      "time": 18,
+      "interval": 2,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Tiacauh Warrior",
+      "enemy_id": "enemy_1093_ccsbr",
+      "count": 1,
+      "time": 14,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Tiacauh Warrior",
+      "enemy_id": "enemy_1093_ccsbr",
+      "count": 1,
+      "time": 35,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Tiacauh Warrior",
+      "enemy_id": "enemy_1093_ccsbr",
+      "count": 2,
+      "time": 52,
+      "interval": 3,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Tiacauh Impaler",
+      "enemy_id": "enemy_1094_ccspm",
+      "count": 1,
+      "time": 22,
+      "route": 3,
+      "fragment": 0
+     },
+     {
+      "enemy": "Tiacauh Warrior",
+      "enemy_id": "enemy_1093_ccsbr",
+      "count": 1,
+      "time": 42,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Tiacauh Warrior",
+      "enemy_id": "enemy_1093_ccsbr",
+      "count": 1,
+      "time": 52,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Tiacauh Impaler",
+      "enemy_id": "enemy_1094_ccspm",
+      "count": 1,
+      "time": 65,
+      "route": 5,
+      "fragment": 1
+     },
+     {
+      "enemy": "Tiacauh Warrior",
+      "enemy_id": "enemy_1093_ccsbr",
+      "count": 1,
+      "time": 72,
+      "route": 6,
+      "fragment": 1
+     },
+     {
+      "enemy": "Tiacauh Impaler",
+      "enemy_id": "enemy_1094_ccspm",
+      "count": 1,
+      "time": 74,
+      "route": 7,
+      "fragment": 1
+     },
+     {
+      "enemy": "Tiacauh Warrior",
+      "enemy_id": "enemy_1093_ccsbr",
+      "count": 1,
+      "time": 74,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Tiacauh Warrior",
+      "enemy_id": "enemy_1093_ccsbr",
+      "count": 2,
+      "time": 85,
+      "interval": 10,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Tiacauh Warrior",
+      "enemy_id": "enemy_1093_ccsbr",
+      "count": 1,
+      "time": 89,
+      "route": 6,
+      "fragment": 1
+     },
+     {
+      "enemy": "Tiacauh Impaler",
+      "enemy_id": "enemy_1094_ccspm",
+      "count": 2,
+      "time": 97,
+      "interval": 15,
+      "route": 8,
+      "fragment": 1
+     },
+     {
+      "enemy": "Tiacauh Impaler",
+      "enemy_id": "enemy_1094_ccspm",
+      "count": 1,
+      "time": 97,
+      "route": 9,
+      "fragment": 1
+     },
+     {
+      "enemy": "Tiacauh Warrior",
+      "enemy_id": "enemy_1093_ccsbr",
+      "count": 1,
+      "time": 110,
+      "route": 6,
+      "fragment": 1
+     },
+     {
+      "enemy": "Tiacauh Warrior",
+      "enemy_id": "enemy_1093_ccsbr",
+      "count": 1,
+      "time": 110,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Tiacauh Impaler",
+      "enemy_id": "enemy_1094_ccspm",
+      "count": 1,
+      "time": 112,
+      "route": 9,
+      "fragment": 1
+     },
+     {
+      "enemy": "Tiacauh Impaler",
+      "enemy_id": "enemy_1094_ccspm",
+      "count": 1,
+      "time": 112,
+      "route": 7,
+      "fragment": 1
+     },
+     {
+      "enemy": "Tiacauh Impaler",
+      "enemy_id": "enemy_1094_ccspm",
+      "count": 2,
+      "time": 129,
+      "interval": 8,
+      "route": 7,
+      "fragment": 2
+     },
+     {
+      "enemy": "Tiacauh Impaler",
+      "enemy_id": "enemy_1094_ccspm",
+      "count": 1,
+      "time": 127,
+      "route": 10,
+      "fragment": 2
+     },
+     {
+      "enemy": "Tiacauh Impaler",
+      "enemy_id": "enemy_1094_ccspm",
+      "count": 1,
+      "time": 127,
+      "route": 11,
+      "fragment": 2
+     },
+     {
+      "enemy": "Tiacauh Impaler",
+      "enemy_id": "enemy_1094_ccspm",
+      "count": 1,
+      "time": 127,
+      "route": 12,
+      "fragment": 2
+     },
+     {
+      "enemy": "Tiacauh Impaler",
+      "enemy_id": "enemy_1094_ccspm",
+      "count": 1,
+      "time": 127,
+      "route": 13,
+      "fragment": 2
+     },
+     {
+      "enemy": "Tiacauh Warrior",
+      "enemy_id": "enemy_1093_ccsbr",
+      "count": 2,
+      "time": 145,
+      "interval": 6,
+      "route": 6,
+      "fragment": 3
+     },
+     {
+      "enemy": "Tiacauh Impaler",
+      "enemy_id": "enemy_1094_ccspm",
+      "count": 1,
+      "time": 159,
+      "route": 14,
+      "fragment": 3
+     },
+     {
+      "enemy": "Tiacauh Warrior",
+      "enemy_id": "enemy_1093_ccsbr",
+      "count": 2,
+      "time": 166,
+      "interval": 6,
+      "route": 6,
+      "fragment": 3
+     },
+     {
+      "enemy": "Tiacauh Impaler",
+      "enemy_id": "enemy_1094_ccspm",
+      "count": 2,
+      "time": 170,
+      "interval": 8,
+      "route": 14,
+      "fragment": 3
+     },
+     {
+      "enemy": "Tiacauh Warrior",
+      "enemy_id": "enemy_1093_ccsbr",
+      "count": 1,
+      "time": 165,
+      "route": 0,
+      "fragment": 3
+     },
+     {
+      "enemy": "Tiacauh Impaler",
+      "enemy_id": "enemy_1094_ccspm",
+      "count": 1,
+      "time": 169,
+      "route": 15,
+      "fragment": 3
+     },
+     {
+      "enemy": "Tiacauh Impaler",
+      "enemy_id": "enemy_1094_ccspm",
+      "count": 1,
+      "time": 169,
+      "route": 16,
+      "fragment": 3
+     },
+     {
+      "enemy": "Tiacauh Impaler",
+      "enemy_id": "enemy_1094_ccspm",
+      "count": 1,
+      "time": 169,
+      "route": 17,
+      "fragment": 3
+     },
+     {
+      "enemy": "Tiacauh Impaler",
+      "enemy_id": "enemy_1094_ccspm",
+      "count": 1,
+      "time": 169,
+      "route": 18,
+      "fragment": 3
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 5,
+    "col": 1,
+    "routes": [
+     0,
+     0,
+     1,
+     2,
+     2,
+     0,
+     0,
+     5,
+     6,
+     0,
+     0,
+     6,
+     8,
+     9,
+     6,
+     0,
+     9,
+     10,
+     11,
+     12,
+     13,
+     6,
+     6,
+     0,
+     15,
+     16,
+     17,
+     18
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 7,
+    "col": 6,
+    "routes": [
+     3,
+     7,
+     7,
+     7,
+     14,
+     14
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 1,
+    "col": 11,
+    "routes": [
+     1,
+     2,
+     2,
+     5,
+     6,
+     6,
+     9,
+     6,
+     9,
+     11,
+     12,
+     6,
+     6,
+     16,
+     17
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 2,
+    "col": 10,
+    "routes": [
+     0,
+     0,
+     3,
+     0,
+     0,
+     7,
+     0,
+     0,
+     8,
+     0,
+     7,
+     7,
+     10,
+     13,
+     14,
+     14,
+     0,
+     15,
+     18
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1000_gopro",
+    "slug": "hound",
+    "name": "Hound",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1093_ccsbr",
+    "slug": "tiacauh_warrior",
+    "name": "Tiacauh Warrior",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1094_ccspm",
+    "slug": "tiacauh_impaler",
+    "name": "Tiacauh Impaler",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "terrain": [],
+ "conditionalHandled": false,
+ "devices": [
+  {
+   "col": 4,
+   "description": "Increases the DEF of adjacent allied operators",
+   "hidden": false,
+   "key": "trap_015_tree",
+   "kind": "device",
+   "name": "Giant Mushroom",
+   "row": 3,
+   "alias": "trap_015_tree#1",
+   "instance": {
+    "level": 1,
+    "skillLevel": 1
+   }
+  },
+  {
+   "col": 7,
+   "description": "Increases the DEF of adjacent allied operators",
+   "hidden": false,
+   "key": "trap_015_tree",
+   "kind": "device",
+   "name": "Giant Mushroom",
+   "row": 3,
+   "alias": "trap_015_tree#2",
+   "instance": {
+    "level": 1,
+    "skillLevel": 1
+   }
+  }
+ ],
+ "tokens": [],
+ "pathing": {
+  "schemaVersion": 1,
+  "syntheticRoutes": [
+   0,
+   1,
+   2,
+   3,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18
+  ],
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "RI-2",
+  "geometryHash": "dc2e0a3232dae42cb6c314fe0e45c32c46f48c533e7a56af315b970d45473e8d",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      1,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "1": {
+    "points": [
+     [
+      1,
+      5
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      11,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "2": {
+    "points": [
+     [
+      1,
+      5
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      11,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "3": {
+    "points": [
+     [
+      6,
+      7
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "5": {
+    "points": [
+     [
+      1,
+      5
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      11,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "6": {
+    "points": [
+     [
+      1,
+      5
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      11,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "7": {
+    "points": [
+     [
+      6,
+      7
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "8": {
+    "points": [
+     [
+      1,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "9": {
+    "points": [
+     [
+      1,
+      5
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      11,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "10": {
+    "points": [
+     [
+      1,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "11": {
+    "points": [
+     [
+      1,
+      5
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      11,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "12": {
+    "points": [
+     [
+      1,
+      5
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      11,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "13": {
+    "points": [
+     [
+      1,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "14": {
+    "points": [
+     [
+      6,
+      7
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "15": {
+    "points": [
+     [
+      1,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "16": {
+    "points": [
+     [
+      1,
+      5
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      11,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "17": {
+    "points": [
+     [
+      1,
+      5
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      11,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "breaks": [],
+    "holds": []
+   },
+   "18": {
+    "points": [
+     [
+      1,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "breaks": [],
+    "holds": []
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1000_gopro": {
+   "key": "enemy_1000_gopro",
+   "prefabKey": "enemy_1000_gopro",
+   "name": "Hound",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 820,
+    "atk": 190,
+    "def": 0,
+    "res": 20,
+    "moveSpeed": 1.9,
+    "bat": 1.4,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1093_ccsbr": {
+   "key": "enemy_1093_ccsbr",
+   "prefabKey": "enemy_1093_ccsbr",
+   "name": "Tiacauh Warrior",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2600,
+    "atk": 290,
+    "def": 60,
+    "res": 10,
+    "moveSpeed": 0.8,
+    "bat": 1.8,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": true,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Gains DEF when blocked.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "Def.def": 130
+    },
+    "bbStr": {},
+    "groups": {
+     "Def": [
+      "def"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1094_ccspm": {
+   "key": "enemy_1094_ccspm",
+   "prefabKey": "enemy_1094_ccspm",
+   "name": "Tiacauh Impaler",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 2800,
+    "atk": 240,
+    "def": 100,
+    "res": 10,
+    "moveSpeed": 0.8,
+    "bat": 1.3,
+    "aspd": 100,
+    "rangeRadius": 1.4,
+    "rawRangeRadius": 1.4,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ },
+ "contentAddition": {
+  "schemaVersion": 1,
+  "source": {
+   "repository": "arkpedia/arkpedia-data",
+   "commit": "66232ee06377d791fb130248d680764c286e5c99",
+   "files": [
+    {
+     "path": "stages/ri-2.json",
+     "sha256": "3d76a2dedee82bd72aa8050aff0f2ecbaf32e8ea84502b6f66e23acf52a26ba5"
+    },
+    {
+     "path": "stage-geometry/ri-2.json",
+     "sha256": "dc2e0a3232dae42cb6c314fe0e45c32c46f48c533e7a56af315b970d45473e8d"
+    },
+    {
+     "path": "stage-devices.json",
+     "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+    }
+   ],
+   "localFiles": [
+    {
+     "path": "data/stage-rules/ri-2.json",
+     "sha256": "b0ad02c05f7bc1043fba2d82d592c9f25ce4aed3769da561cd07d96180414c61"
+    },
+    {
+     "path": "data/stage-rules/levels/16bebf69ff66bce6b7a8d22852e5ee5d0f6de0fb868ce19417f6b3cb5e3983a8.json",
+     "sha256": "16bebf69ff66bce6b7a8d22852e5ee5d0f6de0fb868ce19417f6b3cb5e3983a8"
+    },
+    {
+     "path": ".cache/arkpedia/original-level-blobs/52560e934c58c44b90f73442161e911932540138.json",
+     "sha256": "0654af79da8d8af94d29da775ab9a7fc5d8215aee00e362fcbb7ac5589962a16"
+    },
+    {
+     "path": "data/arkpedia-device-source.json",
+     "sha256": "64515531475bbde6c454f96b0a2c797edffc6f986c27d504539602d979b6fb7a"
+    },
+    {
+     "path": "data/arkpedia-device-native-source.json",
+     "sha256": "7340512aaf1e3ddeff9a9c6fb77a6b92e64513e9abc1951e89b780ccb10bd09c"
+    },
+    {
+     "path": ".cache/arkpedia/original-level-blobs/52560e934c58c44b90f73442161e911932540138.json",
+     "sha256": "0654af79da8d8af94d29da775ab9a7fc5d8215aee00e362fcbb7ac5589962a16"
+    }
+   ]
+  },
+  "dependencies": {
+   "enemies": [
+    "enemy_1000_gopro",
+    "enemy_1093_ccsbr",
+    "enemy_1094_ccspm"
+   ],
+   "devices": [
+    "Giant Mushroom"
+   ],
+   "tokens": []
+  },
+  "validation": {
+   "smoke": {
+    "seconds": 10,
+    "spawned": 1,
+    "errors": 0
+   },
+   "publicReview": "pending",
+   "waveSchedule": {
+    "id": "ri-2",
+    "seconds": 198.93333333333334,
+    "spawned": 42,
+    "expected": 42,
+    "dynamicSpawns": 0,
+    "reason": "cleared",
+    "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+   },
+   "browserStartup": {
+    "id": "ri-2",
+    "seconds": 20,
+    "errors": [],
+    "units": 5,
+    "canvas": true,
+    "scope": "Mobile landscape browser startup and canvas runtime; not a fidelity approval"
+   },
+   "sceneryInteraction": {
+    "id": "ri-2",
+    "alive": true,
+    "obstacle": false,
+    "dp": 89.1,
+    "defDelta": 150,
+    "status": "Natural cover active",
+    "buttonHidden": true,
+    "errors": [],
+    "scope": "Mobile landscape browser: actual scenery selection and inspector; Roadblock retreat button and route cleanup; Mushroom cover on a controlled adjacent operator deployment. Not a playable clear or native visual parity approval."
+   }
+  }
+ }
+}

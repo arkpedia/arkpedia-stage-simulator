@@ -196,6 +196,7 @@ export function customizeGuardSixStarFourthKit({ battle: b, id, def, unit: u, ki
   kit.skill.id = s.id; kit.skill.name = s.name;
 }
 export function installGuardSixStarFourth({ battle: b, unit: u, def }) {
+  if (!GUARD_SIX_STAR_FOURTH_OPERATORS[def.charId]) return;
   if (def.charId !== ID) return;
   u.mem.qiubaiStacks = 0; u.mem.qiubaiField = null; u.mem.qiubaiCasting = null;
   b.on('tick', () => slowField(b, u), { owner: u });

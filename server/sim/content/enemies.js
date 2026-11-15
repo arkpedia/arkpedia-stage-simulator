@@ -1,4 +1,5 @@
 // server/sim/content/enemies.js — enemy special types (特训敌人) and individual enemy abilities (DESIGN §7).
+import { oneShotSelfFear } from './arkpedia-enemy-hp-buff.js';
 //
 // Battle side: install(battle) registers ONE set of global dispatch hooks per battle (ensureInstalled — idempotent,
 // bosses.js calls it too) and attaches an ability list to every spawned enemy whose key has a kit in KITS.
@@ -13,6 +14,7 @@
 //   non-element) · hitIn(c,…) ('hit' on e, late: after every other hit handler) · hitOut(c,…) ('hit' from e, early) ·
 //   (`c.source` is null for 无来源 damage — element bursts; target-side reactions that must still fire, e.g. damage
 //   sharing, read `c.source || c.credit`, `credit` naming the unit that filled the gauge) ·
+//   output(c,…) (after enemy damage resolves, non-element; used by damage-driven stacks) ·
 //   before(c,…) (beforeAttack of e) · attack(c,…) · blocked(c,…) · killed(c,…) (return true = revived; the kill is then
 //   hidden from later 'kill' handlers) · death(c,…) · status(c,…) (statusApplied on e) · burst(c,…) (elementBurst on e)
 //   · tick(b,e,a,dt) every `iv` s (every tick when iv is 0) · skill: `cd`/`left`(=icd)/`cond`/`fire` (cooldown runs
@@ -92,9 +94,25 @@
 //   hidden tabs (shared/protocol.js fxForm).
 // Custom hook: 'lpLoss' {amount, reason, source} — leader "扣除目标生命" effects; also summed into result.lpLoss.
 
+import { standbyRevive, sentinelAlarm } from './arkpedia-enemy-sarkaz-alarm.js';
+import { corruptionZone, withererCorruption } from './arkpedia-corruption.js';
+import { profaneChimera } from './arkpedia-enemy-chimera.js';
+import { stormAura } from './arkpedia-enemy-storm.js';
+import { yetiColdAttack } from './arkpedia-enemy-yeti.js';
+import { pompeii } from './arkpedia-enemy-pompeii.js';
+import { pulseCharged, pulseCaster } from './arkpedia-enemy-pulse.js';
+import { blockedDuel } from './arkpedia-enemy-duel.js';
+import { deathAreaDebuff, deathAreaBuff } from './arkpedia-enemy-death-area.js';
 import { TICK, MOVE_SCALE, ELEMENT, ATTACK_PAUSE, PROJECTILE_SPEEDS, ALLY_COLLIDER_RADIUS, COLS } from '../constants.js';
 import { canTargetAlly, sortAllyTargets, aggroCmp, enemyStealthed, areaSelectable, auraSelectable } from '../targeting.js';
 import { mitigate, periodicDamage } from '../damage.js';
+import { projectileBoxAttack, projectileCircleAttack, projectileSingleAttack, projectileBurstAttack, delayedAreaAttack, taggedProjectileAttack } from './arkpedia-enemy-projectiles.js';
+import { ammoSummoner, blockedCartBlast } from './arkpedia-enemy-snack.js';
+import { ammoAttack } from './arkpedia-enemy-ammo.js';
+import { stackingDamageRamp } from './arkpedia-enemy-damage-ramp.js';
+import { lancerCharge } from './arkpedia-enemy-charge.js';
+import { chargedStatusProjectile } from './arkpedia-enemy-charged-projectile.js';
+import { layeredBarrier } from './arkpedia-enemy-barriers.js';
 
 // ---------------------------------------------------------------------------------------------------------------
 // constants (numbers that exist nowhere in the data)
@@ -118,8 +136,6 @@ const BOOM_RADIUS = 1.25;
 /** 萨卡兹枯朽战车 秽蚀轰击: radius of the 【污染秽蚀】 it leaves at its target (PRTS 萨卡兹枯朽战车 技能 "在目标位置生成半径1.7，
  *  持续10s的【污染秽蚀】" — the skill blackboard's range_radius 2.2 is its trigger range; the zone's radius is in no table). */
 const TANK_ZONE_RADIUS = 1.7;
-/** 【污染秽蚀】 ticks once per second; "同名效果不叠加": a unit inside several zones takes one tick per second. */
-const POLLUTION_INTERVAL = 1;
 /** "数个目标" of 假想敌：骨刺 while stealthed [ASSUMED]. */
 const ACBUNN_TARGETS = 3;
 /**
@@ -164,7 +180,6 @@ const SHELL_FLIGHT = 3, SHELL_RADIUS = 1.2;
 const GRAB_RADIUS_SCALE = 2.5, GRAB_MAX_PREY = 3, GRAB_DELAY = 0.5;
 /** 孽罪奇美拉 污染模式 aura (PRTS 天赋 "自身半径1.2范围内的所有单位…每0.5秒受到50真实持续伤害（同类效果取最高）"): radius,
  *  damage period (s). */
-const CHIMERA_AURA_RADIUS = 1.2, CHIMERA_AURA_EVERY = 0.5;
 /** 自行炮 Cannon (PRTS 高准度伦蒂尼姆城防自行炮 技能 "以攻击范围内生命上限最高的我方单位为中心，生成9格的炮击区域，6s内每0.5s对炮击
  *  区域中生命比例最高的我方单位进行攻击…(最多进行10次攻击)"): shot interval (s), shot cap; 3 shots 1 s apart [ASSUMED] until
  *  0.1.1. 备注: during the skill animation 失衡免疫 + 晕眩 / 冻结 / 浮空 / 沉睡免疫 — held over the bombardment [ASSUMED length]. */
@@ -190,9 +205,6 @@ const UACANN_ZONE_SCALE = 1.5;
 /** 烹泉 / 沏虹 死亡爆炸 radius (PRTS 天赋 "死亡爆炸（爆炸半径1.25，造成攻击力100%法术溅射伤害并施加15s【烹泉减益】…）"; until
  *  0.1.3 the attack range, 2). */
 const TEA_BOOM_RADIUS = 1.25;
-/** “庞贝”'s self-blast while blocked (PRTS 天赋 "对<固定半径>半径1.4范围内的所有我方单位造成1000预计算的无途径法术溅射伤害（不可
- *  对空）"; the blackboard has only the damage and the 10 s; until 0.1.3: radius 1 [ASSUMED]). */
-const POMPEII_BLAST_RADIUS = 1.4;
 /** “巨大的丑东西” first form: its unblocked ranged attack (PRTS 天赋 "未被阻挡时，可对半径2.5范围内的1名非飞行的我方单位进行远程攻击，
  *  对目标及其周围8格内的所有我方单位造成攻击力100%的物理伤害" — the data's attack radius is 0, so it had no ranged attack until
  *  0.1.3) and its self-destruct ("首次被击倒后进行持续10s的重生…：重生开始的2.17s后进行自爆，对半径3.0范围内所有我方单位造成攻击力
@@ -249,7 +261,12 @@ function installDispatch(b, scope, kits) {
   b.on('damaged', (c) => onDamaged(b, c), { priority: 50 });
   b.on('beforeAttack', (c) => onBeforeAttack(b, c), { priority: 50 });
   b.on('attack', (c) => { if (c.attacker && c.attacker.side === 'enemy') dispatch(b, c.attacker, 'attack', c); }, { priority: 50 });
+  b.on('enemyStandbyWake', c => { if (c.unit?.side === 'enemy') dispatch(b, c.unit, 'wake', c); });
+  b.on('stagePulse', c => { if (c.unit?.side === 'enemy') dispatch(b, c.unit, 'pulse', c); });
   b.on('blocked', (c) => dispatch(b, c.enemy, 'blocked', c), { priority: 50 });
+  b.on('unblocked', (c) => {
+    for (const enemy of c.enemy ? [c.enemy] : c.enemies ?? []) dispatch(b, enemy, 'unblocked', c);
+  }, { priority: 50 });
   b.on('kill', (c) => onKill(b, c), { priority: 1000 });
   b.on('death', (c) => onDeath(b, c), { priority: 50 });
   b.on('beforeStatus', (c) => {
@@ -258,6 +275,7 @@ function installDispatch(b, scope, kits) {
     if (ab.immune && ab.immune.has(c.status)) c.cancel = true;
   }, { priority: 50 });
   b.on('statusApplied', (c) => { if (c.target && c.target.side === 'enemy') dispatch(b, c.target, 'status', c); }, { priority: 50 });
+  b.on('enemyUnbalanced', ({ enemy }) => dispatch(b, enemy, 'status', { target: enemy, status: 'unbalanced' }), { priority: 50 });
   b.on('heal', (c) => {
     // 逐腐兽 bleeding ends when the target receives healing (natural regeneration excluded)
     if (c.amount > 0 && c.target && c.target.side === 'ally' && !(c.opts && c.opts.regen) && c.target.findBuff('ab:bleed')) b.removeBuff(c.target, 'ab:bleed');
@@ -280,8 +298,71 @@ export function installFeatureDispatch(b) {
 
 /** The shared 重生 ability for data-driven features (see reborn() below). */
 export function rebornAbility(params) { return reborn(params); }
+export function huskAbility(params) { return husk(params); }
+/** Enter an already-attached hit-count form without a knockout/rebirth. Native
+ * summon actions can select this form immediately; no synthetic kill is emitted. */
+export function enterEnemyHusk(b, e) {
+  if (!e?.alive) return false;
+  const ability = e.mem.ab?.list.find(a => typeof a.enterHusk === 'function');
+  return ability ? ability.enterHusk(b, e, ability) : false;
+}
 /** Shared ability builders for data-driven features (each documented at its definition below). */
 export const featureAbilities = Object.freeze({
+  ammoAttack,
+  ammoSummoner,
+  blockedCartBlast,
+  taggedProjectile: taggedProjectileAttack,
+  layeredBarrier,
+  projectileBurst: projectileBurstAttack,
+  buildingAttack: ({ scale }) => [
+    { spawn(_b, e) { e.profile.deferHit = true; e.profile.shot = 'none'; e.profile.targetPriority = 'tag'; e.profile.priorityTag = 'building'; },
+      attack(c, b, e) { for (const target of c.targets) b.dealDamage(e, target, { amount: e.s.atk,
+        type: 'phys', isAttack: true, attackId: b._attackSeq, applyWay: 'melee', tags: ['buildingAttack'] }); } },
+    { sil: true, hitOut(c) { if (c.dmg.isAttack && c.target?.tags.has('building')) c.dmg.amount *= scale; } },
+  ],
+  // Reviewed regular-stage admission reuses the tested single-use cast.
+  bombtail: (_params, ab) => kitBombd(ab),
+  oneiros: (params, ab) => kitDroneBomb(ab, { skillKey: 'bomb', type: 'arts', cold: true, ...params }),
+  chargedMeleeStun: params => chargedMeleeStun(params),
+  runWhenHit: ({ bonus }) => runWhenHit(bonus),
+  damageStatDecay,
+  projectileBoxAttack,
+  imperialShell: () => kitShell(),
+  axeRamp: params => [projectileSingleAttack({ speed: 10, lifetime: 5, type: 'phys', noAir: true, meleeWhenBlocked: true, visual: 'axe' }), stackingDamageRamp(params)],
+  blockedDuel,
+  deathAreaBuff,
+  secondaryAreaAttack: ({ scale, shape, radius, type, tag }) => ({
+    hitOut(c, b, e) {
+      if (!c.dmg.isAttack || !c.target) return;
+      const target = c.target;
+      b.fx('explode', { x: target.x, y: target.y, r: radius, kind: tag, tiles: shape });
+      for (const unit of areaAlliesInTiles(b, e, target.tileR, target.tileC, shape, radius)) {
+        if (unit === target || unit.isFlying) continue;
+        b.dealDamage(e, unit, { amount: e.s.atk * scale, type, isSkill: true, canDodge: false,
+          applyWay: 'melee', tags: [tag] });
+      }
+    },
+  }),
+  teapot: ({ aspd, duration }) => [
+    projectileCircleAttack({ speed: 5, lifetime: 10, radius: TEA_SPLASH_RADIUS, type: 'arts', noAir: true, visual: 'artsSplash' }),
+    deathAreaDebuff({ radius: TEA_BOOM_RADIUS, aspd, duration }),
+  ],
+  lancerCharge,
+  chargedStatusProjectile,
+  ordinaryAttackStatus: ({ status, duration, stealthRestore }) => [nthAttackStatus(1, status, duration, false, 2), {
+    spawn(_b, e) {
+      if (stealthRestore != null) for (const buff of e.buffs) if (buff.flags?.stealth)
+        buff.data = { ...buff.data, stealthRestore };
+    },
+  }],
+  blockReductionOnHit: ({ amount, duration }) => ({
+    sil: true,
+    dealt(c, b, e) {
+      if (!c.target?.alive) return;
+      b.addBuff(c.target, { key: 'ab:agentBlock', source: e, duration, refresh: 'extend',
+        mods: { blockCnt: amount }, visible: true });
+    },
+  }),
   // Punisher: every Nth attack stuns every ally in the 3×3 area around each target for the reviewed duration.
   stunAttack: ({ every, duration }) => ({
     sil: true,
@@ -294,7 +375,7 @@ export const featureAbilities = Object.freeze({
     },
   }),
   // Yeti Caster: every Nth attack applies the reviewed Cold status to every target of that attack.
-  coldAttack: ({ every, duration }) => nthAttackStatus(every, 'cold', duration),
+  coldAttack: yetiColdAttack,
   // atkup: a flat ATK percentage below the hp_ratio threshold, or a damage multiplier against Frozen targets.
   atkup: ({ scale, ratio, atkPct }) => scale != null
     ? { hitOut(c, b, e) { if (c.dmg.isAttack && c.target?.s.flags.freeze) c.dmg.amount *= scale; } }
@@ -346,7 +427,20 @@ export const featureAbilities = Object.freeze({
   }),
   moveSpeedBonus: ({ mul }) => ({ spawn(b, e) { b.addBuff(e, { key: 'ab:moveSpeed', persist: true, visible: true, mods: { moveMul: mul } }); } }),
   // Dublinn Flying Soldier: airborne.
-  hover: () => ({ spawn(b, e) { e.flying = true; } }),
+  hover: ({ dropOnControl = false, fallStun = 0, passiveAir = false, groundSpeed = 0, groundVisual = null } = {}) => ({ spawn(b, e) {
+    // Regular-stage features must use the same airborne state as targeting,
+    // blocking and displacement. `e.flying` alone is not read by those systems.
+    e.flying = true; setFloat(b, e, true);
+    if (passiveAir) e.profile.noAttack = true;
+  }, status(c, b, e, a) {
+    if (!dropOnControl || a.grounded || !['stun', 'freeze', 'sleep', 'levitate', 'groundBound'].includes(c.status)) return;
+    a.grounded = true; e.flying = false; setFloat(b, e, false);
+    if (groundVisual) e.mem.regularFormVisual = { ...groundVisual };
+    e.profile.melee = true;
+    if (passiveAir) e.profile.noAttack = false;
+    if (groundSpeed) b.addBuff(e, { key: 'ab:groundSpeed', persist: true, mods: { moveFlat: groundSpeed } });
+    if (fallStun > 0) b.applyStatus(e, 'stun', { duration: fallStun, source: null });
+  } }),
   // Decode Basis: transforms after 4 physical, 4 Arts or a block.
   decodeBasis: (modes) => {
     const transform = (b, e, a, mode) => {
@@ -375,10 +469,9 @@ export const featureAbilities = Object.freeze({
   }) : ({
     tick(b, e) { for (const u of b.enemies) if (u.alive) b.addBuff(u, { key: `ab:strength:${e.id}`, duration: 0.7, visible: true, mods: { atkPct: p.atkPct, defFlat: p.defFlat } }); },
   }),
-  // Pulse-charged Sarkaz: the altar pulse does nothing; its own normal attacks are Arts.
-  pulseCharged: () => ({
-    spawn(b, e) { e.profile.pulseImmune = true; e.profile.dmgType = 'arts'; },
-  }),
+  pulseCharged,
+  pulseCaster,
+  pompeii,
   // Artificer: expose artillery charge progress for a future device.
   artilleryCharge: () => ({
     spawn(b, e, a) { a.next = b.time + 1; },
@@ -579,18 +672,12 @@ export const featureAbilities = Object.freeze({
     },
     tick(b, e) { pollution(b, e, e.x, e.y, radius, 1.2, low, high); },
   }),
-  // Profane Chimera: on polluted/stormed tiles it pollutes around itself and attacks Arts.
-  profaneChimera: ({ damage, spRatio }) => ({
-    polluted(b, e) { return ((b.grid.tile(e.tileR, e.tileC)?.key ?? '').includes('toxic') || !!e.findBuff?.('ab:storm')); },
-    hitOut(c, b, e) { if (c.dmg.isAttack && this.polluted(b, e)) c.dmg.type = 'arts'; },
-    tick(b, e, a) { if (this.polluted(b, e)) pollution(b, e, e.x, e.y, 1.1, 1.2, damage, damage); },
-  }),
+  profaneChimera,
   // Caustic Slug: physical death blast, pollution and a storm damage boost when consumed.
   causticSlug: ({ scale }) => ({
     death(c, b, e) {
       for (const u of b.alliesInRadius(e.x, e.y, 1.5)) hurt(b, e, u, e.s.atk * scale, 'phys', { tags: ['boom'] });
-      pollution(b, e, e.x, e.y, 1.5, 8, 50, 25);
-      if (e.findBuff?.('ab:storm')) for (const o of b.enemies) for (const ab of o.mem?.ab?.list ?? []) if (ab.storm) ab.boost = (ab.boost ?? 0) + 1;
+      if (!e.mem.suppressOriginiumTile) pollution(b, e, e.x, e.y, 1.5, 8, 50, 25);
     },
   }),
   // Chalice of Regret: mirror a fraction of nearby ground-enemy damage onto itself.
@@ -621,9 +708,7 @@ export const featureAbilities = Object.freeze({
   // Ursus patrol: prioritize allies whose record name matches the reviewed names.
   namedPriority: ({ names }) => ({ spawn(b, e) { e.profile.targetPriority = 'named'; e.profile.priorityNames = names; } }),
   // Witherer: leave the reviewed pollution zone on death.
-  pollutedDie: ({ range, life, low, high }) => ({
-    death(c, b, e) { pollution(b, e, e.x, e.y, range, life, low, high); },
-  }),
+  pollutedDie: withererCorruption,
   // Rotchaser: reuse the legacy bleed ability.
   bleedFeature: ({ bb }) => bleed({ t: bb }),
   // Sarkaz Caster: every attack is a 0.35x Arts lasso that stuns for 20 s.
@@ -707,22 +792,7 @@ export const featureAbilities = Object.freeze({
         b.addBuff(u, { key: `ab:strength:${e.id}`, duration: 0.7, visible: true, mods: { atkPct, defFlat } });
     },
   }),
-  // Active Originium Storm: every second the storm grows and damages the allies inside it.
-  stormAura: ({ damage, damageStep, maxDamage, radius, radiusStep, maxRadius, spRatio }) => ({
-    storm: true,
-    spawn(b, e, a) { a.t = 0; a.r = radius; a.d = damage; a.boost = 0; },
-    tick(b, e, a, dt) {
-      a.t += dt;
-      if (a.t < 1) return;
-      a.t -= 1;
-      a.r = Math.min(maxRadius, a.r + radiusStep);
-      a.d = Math.min(maxDamage, a.d + damageStep + (a.boost ?? 0) * damageStep);
-      for (const u of b.alliesInRadius(e.x, e.y, a.r)) {
-        hurt(b, e, u, a.d, 'arts', { tags: ['storm'] });
-        b.addBuff(u, { key: 'ab:storm', duration: 1.2, visible: true, mods: { spRecoveryMul: 1 + spRatio } });
-      }
-    },
-  }),
+  stormAura,
   // Wither Vanguard: on a toxic tile its ordinary attack becomes Arts.
   pollutionArts: () => ({
     hitOut(c, b, e) {
@@ -758,24 +828,8 @@ export const featureAbilities = Object.freeze({
   targetPriority: ({ priority }) => ({ spawn(b, e) { e.profile.targetPriority = priority; } }),
   // Originium Colossus: the normal melee attack also hits allies within the standard one-tile splash radius.
   splashMelee: () => splashAttack({ unblocked: false, radius: 1, fxKind: 'splash' }),
-  // Standby revive: a stun-flag standby buff until the first injury (or the unmove timer), then a move-speed buff.
-  standbyRevive: ({ ratio, speed, unmove, targets }) => {
-    const awake = (b, e, a) => {
-      if (a.done) return;
-      a.done = true;
-      b.removeBuff(e, 'ab:standby');
-      b.addBuff(e, { key: 'ab:standbySpeed', persist: true, visible: true, mods: { moveMul: speed } });
-    };
-    return {
-      spawn(b, e, a) {
-        a.done = false; a.t0 = b.time;
-        if (targets > 1) e.profile.maxTargets = targets;
-        b.addBuff(e, { key: 'ab:standby', persist: true, visible: true, flags: { stun: true } });
-      },
-      taken(c, b, e, a) { if (!a.done && e.hpRatio < ratio) awake(b, e, a); },
-      tick(b, e, a) { if (!a.done && unmove > 0 && b.time - a.t0 >= unmove) awake(b, e, a); },
-    };
-  },
+  standbyRevive,
+  sentinelAlarm,
   // Volleyball cart: keep an ATK-stack buff; each attack adds one stack up to max, negative statuses clear it.
   atkUpStacks: ({ atk, max }) => ({
     spawn(b, e, a) {
@@ -817,15 +871,7 @@ export const featureAbilities = Object.freeze({
   timedStatBuff: ({ def, res, duration }) => ({
     spawn(b, e) { b.addBuff(e, { key: 'ab:timedStat', duration, refresh: 'replace', mods: { defFlat: def, resFlat: res }, visible: true }); },
   }),
-  // Sankta SelfFear: the reviewed self-fear + movement multiplier, reused from the legacy helper's semantics.
-  selfFear: ({ fear, moveSpeed, duration }) => ({
-    taken(c, b, e, a) {
-      if (a.done || !(e.hpRatio < 0.5)) return;
-      a.done = true;
-      if (fear > 0) b.applyStatus(e, 'fear', { duration: fear, source: e });
-      if (moveSpeed > 0 && duration > 0) b.addBuff(e, { key: 'ab:fearRun', duration, mods: { moveMul: moveSpeed }, flags: { unblockable: true } });
-    },
-  }),
+  selfFear: oneShotSelfFear,
   // Tiacauh: flat DEF while the enemy is blocked, and the reviewed melee multiplier.
   blockedDef: ({ def }) => ({
     spawn(b, e, a) { a.on = false; },
@@ -837,6 +883,16 @@ export const featureAbilities = Object.freeze({
       else b.removeBuff(e, 'ab:blockedDef');
     },
   }),
+  blockedRes: ({ res }) => {
+    const sync = (b, e) => {
+      const active = !!e.blockedBy?.alive && e.blockedBy.deployed && !e.s.flags.silence;
+      const buff = e.findBuff('ab:blockedRes');
+      if (active && !buff) b.addBuff(e, { key: 'ab:blockedRes', persist: true, visible: true, mods: { resFlat: res } });
+      else if (!active && buff) b.removeBuff(e, buff);
+    };
+    const changed = (_c, b, e) => sync(b, e);
+    return { spawn: sync, tick: sync, blocked: changed, unblocked: changed, hitIn: changed };
+  },
   meleeAttackScale: ({ scale }) => ({
     hitOut(c, b, e) { if (c.dmg.isAttack && e.blockedBy && scale > 0) c.dmg.amount *= scale; },
   }),
@@ -1036,7 +1092,7 @@ const num = (v, d) => (typeof v === 'number' && Number.isFinite(v) ? v : d);
 export function T(ab, ...keys) { for (const k of keys) { const v = ab.t[k]; if (typeof v === 'number' && Number.isFinite(v)) return v; } return undefined; }
 
 export function silenced(e) { return !!e.s.flags.silence; }
-export function canCast(e, sil) { return e.alive && !e.hidden && !e.s.flags.stun && !(sil && e.s.flags.silence); }
+export function canCast(e, sil) { return e.alive && !e.hidden && !e.s.flags.stun && !e.mem.regularShift && !(sil && e.s.flags.silence); }
 
 // ---------------------------------------------------------------------------------------------------------------
 // global dispatchers
@@ -1076,6 +1132,7 @@ function onDamaged(b, c) {
   const { source: s, target: t, dmg } = c;
   if (!dmg || dmg.type === 'element') return;
   if (t && t.side === 'enemy' && t.mem.ab) dispatch(b, t, 'taken', c);
+  if (s && s.side === 'enemy' && s.mem.ab) dispatch(b, s, 'output', c);
   if (s && s.side === 'enemy' && s.mem.ab && dmg.isAttack && t && t.side === 'ally') dispatch(b, s, 'dealt', c);
 }
 
@@ -1093,7 +1150,7 @@ function onKill(b, c) {
 function onDeath(b, c) {
   const u = c.unit;
   const st = stOf(b);
-  if (u && u.side === 'enemy' && u.mem.ab) dispatch(b, u, 'death', c);
+  if (u && u.kind === 'enemy' && u.mem.ab) dispatch(b, u, 'death', c);
   if (st.deathWatch.size) for (const w of [...st.deathWatch]) { if (!w.alive) { st.deathWatch.delete(w); continue; } dispatch(b, w, 'otherDeath', c); }
 }
 
@@ -1111,7 +1168,7 @@ function onBurst(b, c) {
 }
 
 function onTick(b, dt) {
-  const list = b.enemies;
+  const list = b.neutralUnits.length ? [...b.enemies, ...b.neutralUnits] : b.enemies;
   const n = list.length;
   for (let i = 0; i < n; i++) {
     const e = list[i];
@@ -1166,7 +1223,7 @@ export function hurt(b, src, tgt, amount, type = 'phys', { canDodge = false, tag
 /** Allies whose tile is within `n` of (r, c): 'plus' = Manhattan (周围四格), 'box' = Chebyshev (周围8格). */
 export function alliesInTiles(b, r, c, shape = 'plus', n = 1) {
   const out = [];
-  for (const a of b.allies()) {
+  for (const a of b.allies(null, { includeTargetableDevices: true })) {
     if (a.hidden) continue;
     const dr = Math.abs(a.tileR - r), dc = Math.abs(a.tileC - c);
     if (shape === 'plus' ? dr + dc <= n : Math.max(dr, dc) <= n) out.push(a);
@@ -1181,7 +1238,7 @@ export function targetsNear(b, e, r, { ranged = true, x = e.x, y = e.y } = {}) {
 
 /** Every targetable ally on the field. */
 export function allTargets(b, e) {
-  return b.allies().filter((a) => canTargetAlly(e, a, true));
+  return b.allies(null, { includeTargetableDevices: true }).filter((a) => canTargetAlly(e, a, true));
 }
 
 /**
@@ -1202,7 +1259,7 @@ export function areaAlliesInTiles(b, src, r, c, shape = 'plus', n = 1) {
 
 /** Every ally on the field a whole-field ability of `src` selects ("对场上所有我方单位…": 【大潮】, 【斥退】 …). */
 export function fieldAllies(b, src) {
-  return b.allies().filter((a) => areaSelectable(src, a));
+  return b.allies(null, { includeTargetableDevices: true }).filter((a) => areaSelectable(src, a));
 }
 
 /**
@@ -1254,6 +1311,7 @@ export function remainingRoute(e) {
     if (L.final) { end = [L.r, L.c]; break; }
     if (L.t === 'move') steps.push({ t: 'move', p: [L.r, L.c] });
     else if (L.t === 'wait') steps.push({ t: 'wait', s: i === R.legIdx && R.waitLeft != null ? R.waitLeft : L.time });
+    else if (L.t === 'deadline') steps.push({ t: 'WAIT_UNTIL', s: L.time, clock: 'absolute' });
     else if (L.t === 'disappear') steps.push({ t: 'disappear' });
     else if (L.t === 'appear') steps.push({ t: 'appear', p: [L.r, L.c] });
   }
@@ -1494,13 +1552,28 @@ const resist = (immune = []) => ({
 const immuneTo = (...keys) => ({ spawn(b, e, a, ab) { ab.immune = new Set([...(ab.immune || []), ...keys]); } });
 
 /** Every Nth attack: status on the targets ("攻击2次后，下一次攻击会晕眩目标"). */
-const nthAttackStatus = (n, key, dur, sil = true) => ({
+const nthAttackStatus = (n, key, dur, sil = true, sourceStatusResistable) => ({
   sil,
   spawn(b, e, a) { a.n = 0; },
   attack(c, b, e, a) {
     a.n++;
     if (a.n % n) return;
-    for (const t of c.targets) if (t.alive && dur > 0) b.applyStatus(t, key, { duration: dur, source: e });
+    for (const t of c.targets) if (t.alive && dur > 0) b.applyStatus(t, key, { duration: dur, source: e,
+      ...(sourceStatusResistable != null ? { sourceStatusResistable } : {}) });
+  },
+});
+/** Defense Crusher: normal attacks charge two SP; the following eligible
+ * melee attack spends it. Silence blocks the skill, not ordinary SP recovery.
+ * Only completed attack actions reach this hook; control pauses spend nothing. */
+const chargedMeleeStun = ({ duration, cooldown, initialCooldown }) => ({
+  spawn(b, _e, a) { a.charge = 0; a.readyAt = b.time + initialCooldown; },
+  attack(c, b, e, a) {
+    if (a.charge >= 2 && b.time + 1e-9 >= a.readyAt && !e.s.flags.silence) {
+      a.charge = 0;
+      a.readyAt = b.time + cooldown;
+      const target = c.targets?.[0];
+      if (target?.alive) b.applyStatus(target, 'stun', { duration, source: e });
+    } else a.charge = Math.min(2, a.charge + 1);
   },
 });
 /** Every Nth attack deals ×scale (+ optional element). */
@@ -1803,7 +1876,7 @@ function artsBarrier(amount, { key = 'ab:artsBarrier', whileUp = null } = {}) {
  * fx (setForm): 'ember' {id, hits, dur, form: 'husk'} at the knock-out, 'revive' {id, form: 'revived'} when it stands
  * up (the renderer switches the model's clip set: render/units.js FORMS).
  */
-function husk({ hits, delay, stealthy = true, unblock = false, onHusk = null, key = 'ab:ember' }) {
+function husk({ hits, delay, stealthy = true, unblock = false, onHusk = null, onRevive = null, key = 'ab:ember' }) {
   const revive = (b, e, a) => {
     if (!e.alive || a.state !== 'husk') return;
     a.state = null;
@@ -1818,23 +1891,22 @@ function husk({ hits, delay, stealthy = true, unblock = false, onHusk = null, ke
     if (e.route) e.route.pts = null;
     e.atkCd = 0;
     setForm(b, e, 'revived', 'revive');
+    if (onRevive) onRevive(b, e, a);
   };
-  return {
-    killed(c, b, e, a) {
-      // an HP loss (流失 bypasses 无敌) during the 1 s 重生 cannot cut it short
-      if (a.state === 'husk' && b.time < a.rebornUntil) { e.hp = e.s.maxHp; return true; }
-      if (a.state === 'husk' || !(hits > 0) || !(delay > 0)) return false;   // the husk's knock-out is the real death
+  const enter = (b, e, a, rebirth) => {
+      if (a.state === 'husk' || !(hits > 0) || !(delay > 0)) return false;
+      const transition = rebirth ? HUSK_REBIRTH : 0;
       a.state = 'husk';
-      a.rebornUntil = b.time + HUSK_REBIRTH;
+      a.rebornUntil = b.time + transition;
       a.noAtk = e.profile.noAttack;
       a.max = a.max ?? e.base.maxHp;
-      rebirthCleanse(b, e);
+      if (rebirth) rebirthCleanse(b, e);
       e.profile.noAttack = true;
       e.lastAttackAt = -Infinity;                         // the snapshot shows no attack of the fallen warrior
       setHits(e, hits);
       hitCount(b, e, true);
       b.addBuff(e, { key, visible: true, persist: true, flags: { disarm: true, ...(stealthy ? { stealth: true } : {}), ...(unblock ? { unblockable: true } : {}) } });
-      b.addBuff(e, { key: `${key}:reborn`, duration: HUSK_REBIRTH, flags: { invulnerable: true, untargetable: true, unblockable: true, noMove: true, noDisplace: true } });
+      if (rebirth) b.addBuff(e, { key: `${key}:reborn`, duration: transition, flags: { invulnerable: true, untargetable: true, unblockable: true, noMove: true, noDisplace: true } });
       // the 重生's 无法阻挡 ends a block at once (as applyStatus does for a status): a warrior knocked out while blocked
       // leaves an ember whose 隐匿 is switched off until STEALTH_RESTORE (3) s after that block ended
       // (Battle._stealthSwitch) — ~2 s after the 1 s 重生, which stays 无敌 + untargetable — so ranged operators and
@@ -1843,10 +1915,18 @@ function husk({ hits, delay, stealthy = true, unblock = false, onHusk = null, ke
       // block-end switch (PRTS documents neither the order of 重生 vs that switch nor whether it survives the 重生)
       b._unblock(e);
       if (e.route) e.route.pts = null;
-      setForm(b, e, 'husk', 'ember', { hits, dur: HUSK_REBIRTH + delay });
-      b.after(HUSK_REBIRTH, () => { if (e.alive && a.state === 'husk') { rebirthCooldowns(e); if (onHusk) onHusk(b, e); } }, { owner: e });
-      b.after(HUSK_REBIRTH + delay, () => revive(b, e, a), { owner: e });
+      setForm(b, e, 'husk', 'ember', { hits, dur: transition + delay });
+      const started = () => { if (e.alive && a.state === 'husk') { rebirthCooldowns(e); if (onHusk) onHusk(b, e); } };
+      if (rebirth) b.after(transition, started, { owner: e }); else started();
+      b.after(transition + delay, () => revive(b, e, a), { owner: e });
       return true;
+  };
+  return {
+    enterHusk(b, e, a) { return enter(b, e, a, false); },
+    killed(c, b, e, a) {
+      // an HP loss (流失 bypasses 无敌) during the 1 s 重生 cannot cut it short
+      if (a.state === 'husk' && b.time < a.rebornUntil) { e.hp = e.s.maxHp; return true; }
+      return enter(b, e, a, true); // a husk's knockout remains the real death
     },
   };
 }
@@ -1916,14 +1996,7 @@ function bleed(ab) {
  * her low tile: `low`); a unit inside several zones takes one tick per second (`mem.pollutedAt`: the last tick it took).
  */
 function pollution(b, src, x, y, r, life, low, high) {
-  zone(b, { x, y, r, life, iv: POLLUTION_INTERVAL, kind: 'pollution', tick(units) {
-    for (const u of units) {
-      const v = u.ground ? low : high;
-      if (!(v > 0) || b.time - (u.mem.pollutedAt ?? -Infinity) < POLLUTION_INTERVAL - 1e-6) continue;
-      u.mem.pollutedAt = b.time;
-      hurt(b, src, u, v, 'true', { tags: ['pollution'], ignoreSelect: true });
-    }
-  } });
+  corruptionZone(b, src, x, y, r, life, low, high);
 }
 
 /**
@@ -1988,13 +2061,8 @@ const kitSelfFear = (ab) => [selfFear(ab)];
  *  生命"); blocking it lifts the 隐匿, so its blocker (and every operator in range) can beat it — also during the 3 s
  *  after a block ends, the warrior's own block that the knock-out releases included (Battle._stealthSwitch). */
 const kitEmber = (ab) => [husk({ hits: T(ab, 'Revive[Trigger].prop_max_hp'), delay: T(ab, 'Revive[Trigger].interval') })];
-const kitPolluted = (ab) => [{
-  death(c, b, e) {
-    if (c.reason !== 'killed') return;
-    pollution(b, e, e.x, e.y, T(ab, 'PollutedDie.projectile_range') ?? 1, T(ab, 'PollutedDie.projectile_life_time') ?? 0,
-      T(ab, 'PollutedDie.polluted_damage_low') ?? 0, T(ab, 'PollutedDie.polluted_damage_high') ?? 0);
-  },
-}];
+const kitPolluted = ab => [withererCorruption({ life: T(ab, 'PollutedDie.projectile_life_time') ?? 0,
+  low: T(ab, 'PollutedDie.polluted_damage_low') ?? 0, high: T(ab, 'PollutedDie.polluted_damage_high') ?? 0 })];
 
 function kitPhalanx(ab, e) {
   const def = T(ab, 'auraDefup.def') ?? 0;
@@ -2050,34 +2118,8 @@ function infectionArts() {
 }
 
 function kitChimera(ab) {
-  const dmg = T(ab, 'OrigAura.damage') ?? 0, spr = T(ab, 'OrigAura.sp_recover_ratio') ?? 0;
-  const activate = (b, e, a) => {
-    if (a.on || !onTerrain(b, e, 'infection')) return;
-    a.on = true;
-    e.mem.ab.atkType = 'arts';
-    b.fx('telegraph', { x: e.x, y: e.y, r: CHIMERA_AURA_RADIUS, kind: 'chimera', id: e.id });
-  };
-  return [{
-    hitOut(c, b, e, a) { if (c.dmg.isAttack && !a.on) { activate(b, e, a); if (a.on) c.dmg.type = 'arts'; } },
-    iv: 0.25,
-    tick(b, e, a) {
-      activate(b, e, a);
-      if (!a.on) return;
-      a.acc = (a.acc ?? 0) + 0.25;
-      const pulse = a.acc >= CHIMERA_AURA_EVERY - 1e-9;
-      if (pulse) a.acc -= CHIMERA_AURA_EVERY;
-      for (const u of b.alliesInRadius(e.x, e.y, CHIMERA_AURA_RADIUS)) {
-        auraBuff(b, u, 'ab:originium', 0.25, { spRecoveryMul: Math.max(0, 1 + spr) }, null, true);
-        // PRTS "持续视为受到源石污染区影响…每0.5秒受到50真实持续伤害": a damage instance (受击回复, the 重装 trigger), not a
-        // 流失 — 无来源 like the 源石污染区 terrain it stands for [ASSUMED], the chimera keeps the credit; "同类效果取最高": one
-        // tick per unit per period however many chimeras reach it (`mem.chimeraAt`; every chimera's is 50). A terrain
-        // effect, not an area selection: 隐匿 allies inside are reached too ("所有单位" [ASSUMED], DESIGN §22.12)
-        if (!pulse || !(dmg > 0) || b.time - (u.mem.chimeraAt ?? -Infinity) < CHIMERA_AURA_EVERY - 1e-6) continue;
-        u.mem.chimeraAt = b.time;
-        b.dealDamage(e, u, { ...periodicDamage(dmg), tags: ['dot', 'pollution'] });
-      }
-    },
-  }];
+  return [profaneChimera({ damage: T(ab, 'OrigAura.damage') ?? 0,
+    spRatio: T(ab, 'OrigAura.sp_recover_ratio') ?? 0, atkFlat: T(ab, 'AtkBoost.atk') ?? 0 })];
 }
 
 function kitNazg(ab, e) {
@@ -2387,21 +2429,7 @@ function kitHolyGuard(ab) {
 function kitRush(ab) {
   const ms = T(ab, 'rush.dlancer_t[trigger].move_speed') ?? 0, iv = T(ab, 'rush.dlancer_t[trigger].interval') ?? 0.5;
   const max = T(ab, 'rush.dlancer_t[trigger].trig_cnt') ?? 0, first = T(ab, 'firstattack.atk_scale') ?? 0;
-  return [{
-    iv,
-    spawn(b, e, a) { a.n = 0; },
-    tick(b, e, a) {
-      if (!e.moving || e.blockedBy || a.n >= max) return;
-      a.n++;
-      b.addBuff(e, { key: 'ab:rush', mods: { moveMul: 1 + ms * a.n }, persist: true });
-    },
-    blocked(c, b, e, a) { a.charge = a.n; },
-    hitOut(c, b, e, a) {
-      if (!c.dmg.isAttack || !(a.charge > 0) || !(max > 0)) return;
-      c.dmg.amount *= 1 + (first / 100) * (a.charge / max); // 被阻挡后的首次攻击: extra damage from the built-up speed
-    },
-    attack(c, b, e, a) { if (a.charge > 0) { a.charge = 0; a.n = 0; b.removeBuff(e, 'ab:rush'); } },
-  }];
+  return [lancerCharge({ increase: ms, interval: iv, limit: max, damagePerSpeed: first })];
 }
 
 /**
@@ -2425,12 +2453,19 @@ function kitFirstAoe(ab) {
 
 function kitDefDecay(ab) {
   const max = T(ab, 'def_reduce.max_stack_cnt') ?? 0, def = T(ab, 'def_reduce.def') ?? 0, res = T(ab, 'def_reduce.magic_resistance') ?? 0;
-  return [{
+  return [damageStatDecay({ maxStacks: max, defTotal: def, resTotal: res })];
+}
+function damageStatDecay({ maxStacks: max, defTotal: def, resTotal: res, minStacks = 2 }) {
+  return {
     taken(c, b, e) {
       if (!(max > 0)) return;
-      b.addBuff(e, { key: 'ab:defDecay', refresh: 'stack', stacks: 1, maxStacks: max, persist: true, mods: { defFlat: def / max, resFlat: res / max } });
+      // Native _useOneAsMinCnt=false: the first count is recorded, but the
+      // numeric modifier starts at two counts and includes both stacks.
+      const active = (e.findBuff('ab:defDecay')?.stacks ?? 0) + 1 >= minStacks;
+      b.addBuff(e, { key: 'ab:defDecay', refresh: 'stack', stacks: 1, maxStacks: max, persist: true,
+        mods: { defFlat: active ? def / max : 0, resFlat: active ? res / max : 0 } });
     },
-  }];
+  };
 }
 
 function kitExposeOnHit(ab) {
@@ -2608,16 +2643,23 @@ function kitRoar(ab) {
  * before the clip ends — the client would draw the bomb back for a frame); an interrupted cast does not use up the one
  * trigger (`_maxTriggerTime` 1 — the bomb is still on the drone); a stun after the release does not stop the cast end.
  */
-function kitBombd(ab) {
-  const s = ab.sk.boomb;
+function kitBombd(ab) { return kitDroneBomb(ab); }
+// Oneiros shares the 8/30 s Attack event, 0.667 s post-delay and speed-5
+// 3x3 projectile. Its source cast supplies Arts + e2c_cold and no speed buff.
+function kitDroneBomb(ab, { skillKey = 'boomb', type = 'phys', cold = false, rangeScale = 1 } = {}) {
+  const s = ab.sk[skillKey];
   const ms = (s && s.bb.move_speed) || 0;
-  const reach = (e) => e.base.rangeRadius || 2;
+  const reach = (e) => (e.base.rangeRadius || 2) * rangeScale;
   const land = (b, e, atk, t, x, y) => {
     const r = t ? t.tileR : Math.round(y), c = t ? t.tileC : Math.round(x);
     b.fx('explode', { x, y, r: BOMB_REACH + 0.5, kind: 'bomb', tiles: 'box' });
-    if (t) hurt(b, e, t, atk, 'phys');
+    const hit = u => {
+      hurt(b, e, u, atk, type, u === t ? {} : { tags: ['splash'] });
+      if (cold && u.alive) b.applyStatus(u, 'cold', { duration: s.bb.freeze, source: e });
+    };
+    if (t) hit(t);
     // the splash on the 8 tiles is an area selection ("伤害无视迷彩", no 无视无法选择): no unblocking 隐匿 ally
-    for (const u of areaAlliesInTiles(b, e, r, c, 'box', BOMB_REACH)) if (u !== t) hurt(b, e, u, atk, 'phys', { tags: ['splash'] });
+    for (const u of areaAlliesInTiles(b, e, r, c, 'box', BOMB_REACH)) if (u !== t) hit(u);
   };
   // the end of the cast (bomb_s): 移速最终提升至200%; it flies on
   const finish = (b, e) => {
@@ -2671,20 +2713,8 @@ function kitBombd(ab) {
  * pause, 'atk' event of kind 'mortar'); the damage is the shell's (ai.js `profile.deferHit`).
  */
 function kitShell() {
-  return [{
-    spawn(b, e) { e.profile.deferHit = true; e.profile.shot = 'mortar'; },
-    attack(c, b, e) {
-      const atk = e.s.atk * (e.profile.atkScale ?? 1);
-      for (const t of c.targets) {
-        const x = t.x, y = t.y;
-        b.fx('bombardShell', { x, y, id: e.id, r: SHELL_RADIUS, t: SHELL_FLIGHT });
-        b.after(SHELL_FLIGHT, () => {
-          b.fx('bombard', { x, y, r: SHELL_RADIUS, kind: 'emppnt' });
-          for (const u of areaAllies(b, e, x, y, SHELL_RADIUS)) hurt(b, null, u, atk, 'phys', { isSkill: false, tags: ['shell'] });
-        });
-      }
-    },
-  }];
+  return [delayedAreaAttack({ delay: SHELL_FLIGHT, radius: SHELL_RADIUS, type: 'phys',
+    priorityBuff: 'mark_neutral[effect]', staticBody: true })];
 }
 
 function kitIgnitable(ab) {
@@ -2744,21 +2774,10 @@ function kitDekght(ab) {
  * 伤害, can be dodged like the attack itself; the blast (法术溅射伤害) cannot.
  */
 function kitTeapot(ab) {
-  return kitDeathSpawn([splashAttack({ unblocked: false, radius: TEA_SPLASH_RADIUS, noAir: true, dodge: true, fxKind: 'artsSplash' }), {
-    sil: true,
-    death(c, b, e) {
-      if (c.reason !== 'killed') return;
-      const aspd = T(ab, 'DeadBoom.attack_speed') ?? 0, dur = T(ab, 'DeadBoom.duration') ?? 0;
-      const r = TEA_BOOM_RADIUS, atk = e.s.atk, x = e.x, y = e.y;
-      // an area selection (no 无视无法选择 note): an airborne 起飞 ally and an unblocking 隐匿 one are skipped, flyers too
-      b.fx('explode', { x, y, r, kind: 'teaBoom', id: e.id });
-      for (const u of areaAllies(b, e, x, y, r)) {
-        if (u.isFlying) continue;
-        hurt(b, null, u, atk, 'arts', { tags: ['teaBoom'] });
-        if (u.alive && dur > 0 && aspd) b.addBuff(u, { key: `ab:teaBoom:${e.id}`, duration: dur, refresh: 'replace', mods: { aspd }, visible: true });
-      }
-    },
-  }])(ab);
+  return kitDeathSpawn([splashAttack({ unblocked: false, radius: TEA_SPLASH_RADIUS, noAir: true, dodge: true, fxKind: 'artsSplash' }),
+    deathAreaDebuff({ radius: TEA_BOOM_RADIUS, aspd: T(ab, 'DeadBoom.attack_speed') ?? 0,
+      duration: T(ab, 'DeadBoom.duration') ?? 0 }),
+  ])(ab);
 }
 
 function kitNucleus(ab) {
@@ -2772,30 +2791,11 @@ function kitNucleus(ab) {
 
 function kitLeaderMisc(key, ab, e) {
   switch (key) {
-    case 'enemy_1050_lslime': {
-      const dot = { dmg: T(ab, 'dot.damage') ?? 0, iv: T(ab, 'dot.interval') ?? 1, dur: T(ab, 'dot.duration') ?? 0 };
-      return [maxTargets(4), lowHpBuff(T(ab, 'selfbuff.hp_ratio') ?? 0.5, { aspd: T(ab, 'selfbuff.attack_speed') ?? 0 }), {
-        dealt(c, b, e2) {
-          if (!(dot.dur > 0)) return;
-          b.addBuff(c.target, { key: 'ab:burnDot', duration: dot.dur, refresh: 'replace', interval: dot.iv, visible: true,
-            onTick: ({ battle, unit }) => battle.dealDamage(e2, unit, { amount: dot.dmg, type: 'arts', canDodge: false, ignoreSelect: true, tags: ['enemyAbility'] }) });
-        },
-      }, {
-        // 被阻挡时会进行自爆 — PRTS “庞贝” 天赋: "被阻挡时，每10秒（受晕眩/无法行动/沉睡/冻结/浮空影响时暂停计时，解除阻挡时重置计时）对
-        // 半径1.4范围内的所有我方单位造成1000预计算的无途径法术溅射伤害（不可对空）": the clock runs only while it is blocked and can
-        // act, and restarts at 0 on every new block (until 0.1.3: a fixed 10 s clock from its spawn, radius 1, flyers hit)
-        iv: 0,
-        tick(b, e2, a, dt) {
-          if (!e2.blockedBy) { a.held = 0; return; }
-          if (!e2.canAct) return;
-          a.held = (a.held || 0) + dt;
-          if (a.held + 1e-9 < (T(ab, 'rangedamage.interval') ?? 10)) return;
-          a.held = 0;
-          b.fx('explode', { x: e2.x, y: e2.y, r: POMPEII_BLAST_RADIUS, kind: 'selfBlast' });
-          for (const u of areaAllies(b, e2, e2.x, e2.y, POMPEII_BLAST_RADIUS)) if (!u.isFlying) hurt(b, e2, u, T(ab, 'rangedamage.attack@damage') ?? 0, 'arts', { tags: ['splash'] });
-        },
-      }];
-    }
+    case 'enemy_1050_lslime': return pompeii({
+      burnDamage: T(ab, 'dot.damage'), burnInterval: T(ab, 'dot.interval'), burnDuration: T(ab, 'dot.duration'),
+      blastDamage: T(ab, 'rangedamage.attack@damage'), blastInterval: T(ab, 'rangedamage.interval'),
+      hpRatio: T(ab, 'selfbuff.hp_ratio'), aspd: T(ab, 'selfbuff.attack_speed'),
+    });
     case 'enemy_1500_skulsr': {
       // PRTS 碎骨 天赋: "不会攻击飞行单位"; below half HP ATK +50 %; "未被阻挡时发射榴弹对目标及其周围八格的我方单位造成相当于攻击力
       // 26%的物理伤害，并令其在5秒内防御力下降50%" ("榴弹对主目标造成物理普通伤害，对溅射目标造成物理溅射伤害，可溅射飞行单位") — the
@@ -2947,14 +2947,8 @@ function kitLeaderMisc(key, ab, e) {
       }, { cond: (b, e2) => !!e2.blockedBy })];
     }
     case 'enemy_2005_axetro':
-      return [{
-        attack(c, b, e2, a) {
-          a.last = b.time;
-          b.addBuff(e2, { key: 'ab:axeStack', refresh: 'stack', stacks: 1, maxStacks: T(ab, 'atkup.max_stack_cnt') ?? 1, persist: true, mods: { atkPct: T(ab, 'atkup.atk') ?? 0, aspd: T(ab, 'atkup.attack_speed') ?? 0 } });
-        },
-        iv: 0.5,
-        tick(b, e2, a) { if (a.last != null && b.time - a.last >= (T(ab, 'checker.delay') ?? 4)) { a.last = null; b.removeBuff(e2, 'ab:axeStack'); } },
-      }];
+      return featureAbilities.axeRamp({ atkPct: T(ab, 'atkup.atk') ?? 0, aspd: T(ab, 'atkup.attack_speed') ?? 0,
+        maxStacks: T(ab, 'atkup.max_stack_cnt') ?? 1, resetAfter: T(ab, 'checker.delay') ?? 4 });
     case 'enemy_2008_flking': {
       // 使全战场我方所有单位攻击力、防御力减半 (text; the blackboard's atkdown.atk_scale is not the halving),
       // 部署费用回复速度减半，再部署时间加倍; 周期性地添加正比于自身最大生命值的伤害防护屏障. The halving is a map effect

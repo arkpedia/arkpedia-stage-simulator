@@ -1,0 +1,1474 @@
+{
+  "code": "VEC-SP04",
+  "name": "Unending Drone",
+  "description": "Perhaps there might still be a way to avoid battle, but for now, there is no choice but to eliminate them.",
+  "battle": {
+    "max_life": 1,
+    "unit_limit": 6,
+    "initial_dp": 30,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1
+  },
+  "rules": {
+    "variant": null,
+    "source": {
+      "repository": "Kengxxiao/ArknightsGameData",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "path": "zh_CN/gamedata/levels/activities/act2break/level_act2break_sp04.json",
+      "sha256": "83581eb20a43740fad19c5aa3ce529e06f66976f87c64413ab74678816d156f2"
+    },
+    "battle": {},
+    "enemies": {},
+    "enemyAdd": {},
+    "hiddenGroups": {}
+  },
+  "mapTags": [],
+  "mapTagSource": null,
+  "geometry": {
+    "slug": "vec-sp04_act2break_sp04",
+    "rows": 7,
+    "cols": 9,
+    "tileLegend": [
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_flystart",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_hole",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      }
+    ],
+    "tileGrid": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        3,
+        0
+      ],
+      [
+        1,
+        2,
+        2,
+        0,
+        4,
+        3,
+        2,
+        3,
+        0
+      ],
+      [
+        1,
+        2,
+        2,
+        4,
+        4,
+        4,
+        2,
+        2,
+        5
+      ],
+      [
+        1,
+        2,
+        2,
+        0,
+        4,
+        3,
+        2,
+        3,
+        0
+      ],
+      [
+        1,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        3,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "routes": [
+      {
+        "motion": "fly",
+        "start": {
+          "row": 3,
+          "col": 3
+        },
+        "end": {
+          "row": 3,
+          "col": 8
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 4
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 30
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 30
+          }
+        ]
+      },
+      {
+        "motion": "fly",
+        "start": {
+          "row": 5,
+          "col": 0
+        },
+        "end": {
+          "row": 3,
+          "col": 8
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 5
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 20
+          }
+        ]
+      },
+      {
+        "motion": "fly",
+        "start": {
+          "row": 4,
+          "col": 0
+        },
+        "end": {
+          "row": 3,
+          "col": 8
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 5
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 22
+          }
+        ]
+      },
+      {
+        "motion": "fly",
+        "start": {
+          "row": 3,
+          "col": 0
+        },
+        "end": {
+          "row": 3,
+          "col": 8
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 2
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 24
+          }
+        ]
+      },
+      {
+        "motion": "fly",
+        "start": {
+          "row": 2,
+          "col": 0
+        },
+        "end": {
+          "row": 3,
+          "col": 8
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 5
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 26
+          }
+        ]
+      },
+      {
+        "motion": "fly",
+        "start": {
+          "row": 1,
+          "col": 0
+        },
+        "end": {
+          "row": 3,
+          "col": 8
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 5
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 28
+          }
+        ]
+      },
+      {
+        "motion": "fly",
+        "start": {
+          "row": 4,
+          "col": 0
+        },
+        "end": {
+          "row": 3,
+          "col": 8
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 5
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 30
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 1,
+            "seconds": 10
+          }
+        ]
+      },
+      {
+        "motion": "fly",
+        "start": {
+          "row": 2,
+          "col": 0
+        },
+        "end": {
+          "row": 3,
+          "col": 8
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 5
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 30
+          },
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 1,
+            "seconds": 18
+          }
+        ]
+      },
+      {
+        "motion": "fly",
+        "start": {
+          "row": 5,
+          "col": 0
+        },
+        "end": {
+          "row": 3,
+          "col": 8
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 5,
+              "col": 5
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 25
+          }
+        ]
+      },
+      {
+        "motion": "fly",
+        "start": {
+          "row": 4,
+          "col": 0
+        },
+        "end": {
+          "row": 3,
+          "col": 8
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 5
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 25
+          }
+        ]
+      },
+      {
+        "motion": "fly",
+        "start": {
+          "row": 3,
+          "col": 0
+        },
+        "end": {
+          "row": 3,
+          "col": 8
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 1
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 23
+          }
+        ]
+      },
+      {
+        "motion": "fly",
+        "start": {
+          "row": 2,
+          "col": 0
+        },
+        "end": {
+          "row": 3,
+          "col": 8
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 5
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 25
+          }
+        ]
+      },
+      {
+        "motion": "fly",
+        "start": {
+          "row": 1,
+          "col": 0
+        },
+        "end": {
+          "row": 3,
+          "col": 8
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 1
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 5
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 25
+          }
+        ]
+      }
+    ],
+    "waves": [
+      {
+        "index": 0,
+        "duration": 45,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Defender-4",
+            "enemy_id": "enemy_1017_defdrn",
+            "count": 1,
+            "time": 0,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Monster Mk II",
+            "enemy_id": "enemy_1005_yokai_2",
+            "count": 1,
+            "time": 6,
+            "route": 1,
+            "fragment": 1
+          },
+          {
+            "enemy": "Monster Mk II",
+            "enemy_id": "enemy_1005_yokai_2",
+            "count": 1,
+            "time": 6,
+            "route": 2,
+            "fragment": 1
+          },
+          {
+            "enemy": "Monster Mk II",
+            "enemy_id": "enemy_1005_yokai_2",
+            "count": 1,
+            "time": 6,
+            "route": 3,
+            "fragment": 1
+          },
+          {
+            "enemy": "Monster Mk II",
+            "enemy_id": "enemy_1005_yokai_2",
+            "count": 1,
+            "time": 6,
+            "route": 4,
+            "fragment": 1
+          },
+          {
+            "enemy": "Monster Mk II",
+            "enemy_id": "enemy_1005_yokai_2",
+            "count": 1,
+            "time": 6,
+            "route": 5,
+            "fragment": 1
+          },
+          {
+            "enemy": "Bombtail-G",
+            "enemy_id": "enemy_1040_bombd_2",
+            "count": 1,
+            "time": 9,
+            "route": 6,
+            "fragment": 2
+          },
+          {
+            "enemy": "Bombtail-G",
+            "enemy_id": "enemy_1040_bombd_2",
+            "count": 1,
+            "time": 9,
+            "route": 7,
+            "fragment": 2
+          },
+          {
+            "enemy": "Monster Mk II",
+            "enemy_id": "enemy_1005_yokai_2",
+            "count": 1,
+            "time": 45,
+            "route": 8,
+            "fragment": 3
+          },
+          {
+            "enemy": "Monster Mk II",
+            "enemy_id": "enemy_1005_yokai_2",
+            "count": 1,
+            "time": 45,
+            "route": 9,
+            "fragment": 3
+          },
+          {
+            "enemy": "Defender-4",
+            "enemy_id": "enemy_1017_defdrn",
+            "count": 1,
+            "time": 45,
+            "route": 10,
+            "fragment": 3
+          },
+          {
+            "enemy": "Monster Mk II",
+            "enemy_id": "enemy_1005_yokai_2",
+            "count": 1,
+            "time": 45,
+            "route": 11,
+            "fragment": 3
+          },
+          {
+            "enemy": "Monster Mk II",
+            "enemy_id": "enemy_1005_yokai_2",
+            "count": 1,
+            "time": 45,
+            "route": 12,
+            "fragment": 3
+          }
+        ]
+      }
+    ],
+    "spawnTiles": [
+      {
+        "key": "tile_flystart",
+        "row": 1,
+        "col": 0,
+        "routes": [
+          5,
+          12
+        ]
+      },
+      {
+        "key": "tile_flystart",
+        "row": 2,
+        "col": 0,
+        "routes": [
+          4,
+          7,
+          11
+        ]
+      },
+      {
+        "key": "tile_flystart",
+        "row": 3,
+        "col": 0,
+        "routes": [
+          3,
+          10
+        ]
+      },
+      {
+        "key": "tile_flystart",
+        "row": 4,
+        "col": 0,
+        "routes": [
+          2,
+          6,
+          9
+        ]
+      },
+      {
+        "key": "tile_flystart",
+        "row": 5,
+        "col": 0,
+        "routes": [
+          1,
+          8
+        ]
+      }
+    ],
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 3,
+        "col": 8,
+        "routes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ]
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_1005_yokai_2",
+        "slug": "monster_mk_ii",
+        "name": "Monster Mk II",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1017_defdrn",
+        "slug": "defender_4",
+        "name": "Defender-4",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1040_bombd_2",
+        "slug": "bombtail_g",
+        "name": "Bombtail-G",
+        "database_level": 0
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [],
+      "deployable_tokens": []
+    },
+    "hasConditionalSpawns": false
+  },
+  "terrain": [],
+  "conditionalHandled": false,
+  "devices": [],
+  "tokens": [],
+  "pathing": {
+    "schemaVersion": 1,
+    "syntheticRoutes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "producer": "Arkpedia stage browser / buildPlaybackPaths",
+    "stage": "VEC-SP04",
+    "geometryHash": "1a6e9507f8fd1ee9389305eaf4792499275438427f91d4bad03b45ee874a4910",
+    "moveScale": 0.65,
+    "paths": {
+      "0": {
+        "points": [
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            8,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "1": {
+        "points": [
+          [
+            0,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            8,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "2": {
+        "points": [
+          [
+            0,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            8,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "3": {
+        "points": [
+          [
+            0,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            8,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "4": {
+        "points": [
+          [
+            0,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            8,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "5": {
+        "points": [
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            8,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "6": {
+        "points": [
+          [
+            0,
+            4
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            8,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "7": {
+        "points": [
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            8,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "8": {
+        "points": [
+          [
+            0,
+            5
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            8,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "9": {
+        "points": [
+          [
+            0,
+            4
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            5,
+            4
+          ],
+          [
+            8,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "10": {
+        "points": [
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            8,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "11": {
+        "points": [
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            8,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "12": {
+        "points": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            8,
+            3
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      }
+    }
+  },
+  "art": null,
+  "gates": null,
+  "fixedSquad": null,
+  "enemies": {
+    "enemy_1017_defdrn": {
+      "key": "enemy_1017_defdrn",
+      "prefabKey": "enemy_1017_defdrn",
+      "name": "Defender-4",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "NONE",
+      "stats": {
+        "maxHp": 4000,
+        "atk": 0,
+        "def": 150,
+        "res": 20,
+        "moveSpeed": 0.8,
+        "bat": 2,
+        "aspd": 100,
+        "rangeRadius": 2.5,
+        "rawRangeRadius": 2.5,
+        "blockCnt": 1,
+        "massLevel": 0,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "none",
+        "dmgTypes": [
+          "none"
+        ],
+        "motion": "FLY",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Flying unit.",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Increases the DEF of surrounding enemy units",
+          "format": "SILENCE"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "defup.def": 300,
+          "defup.range_radius": 2.5
+        },
+        "bbStr": {},
+        "groups": {
+          "defup": [
+            "def",
+            "range_radius"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "drone"
+      ]
+    },
+    "enemy_1005_yokai_2": {
+      "key": "enemy_1005_yokai_2",
+      "prefabKey": "enemy_1005_yokai_2",
+      "name": "Monster Mk II",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 1550,
+        "atk": 220,
+        "def": 50,
+        "res": 0,
+        "moveSpeed": 0.9,
+        "bat": 3,
+        "aspd": 100,
+        "rangeRadius": 2,
+        "rawRangeRadius": 2,
+        "blockCnt": 1,
+        "massLevel": 0,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "FLY",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Flying unit.",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "drone"
+      ]
+    },
+    "enemy_1040_bombd_2": {
+      "key": "enemy_1040_bombd_2",
+      "prefabKey": "enemy_1040_bombd_2",
+      "name": "Bombtail-G",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 6000,
+        "atk": 1500,
+        "def": 220,
+        "res": 30,
+        "moveSpeed": 0.6,
+        "bat": 5,
+        "aspd": 100,
+        "rangeRadius": 2,
+        "rawRangeRadius": 2,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "FLY",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Flying unit.",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Can launch a warhead to deal AoE physical damage",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Gains significantly increased Movement Speed after launching warhead",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [
+        {
+          "prefabKey": "boomb",
+          "priority": 0,
+          "cooldown": 1,
+          "initCooldown": 1,
+          "spCost": 0,
+          "bb": {
+            "move_speed": 2
+          },
+          "bbStr": {}
+        }
+      ],
+      "notCountInTotal": false,
+      "tags": [
+        "drone"
+      ]
+    }
+  },
+  "contentAddition": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/vec-sp04_act2break_sp04.json",
+          "sha256": "04a2a439fdc2201fb02987ae0e7480d2b8d1e1f8d4037d9d1f666da5d9be6b7d"
+        },
+        {
+          "path": "stage-geometry/vec-sp04_act2break_sp04.json",
+          "sha256": "1a6e9507f8fd1ee9389305eaf4792499275438427f91d4bad03b45ee874a4910"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        }
+      ],
+      "localFiles": [
+        {
+          "path": "data/stage-rules/vec-sp04_act2break_sp04.json",
+          "sha256": "081ca28d66408557266edc528709f639cbc7051c36de8f2c9f4304dcda158cf1"
+        }
+      ]
+    },
+    "dependencies": {
+      "enemies": [
+        "enemy_1005_yokai_2",
+        "enemy_1017_defdrn",
+        "enemy_1040_bombd_2"
+      ],
+      "devices": [],
+      "tokens": []
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 9.633333333333333,
+        "spawned": 8,
+        "errors": 0
+      },
+      "publicReview": "pending",
+      "browser": {
+        "date": "2026-11-13",
+        "engine": "Chromium",
+        "seconds": 9.633333333333333,
+        "errors": 0,
+        "canvas": true,
+        "scope": "Load/runtime smoke; external image assets unavailable"
+      },
+      "waveSchedule": {
+        "id": "vec-sp04_act2break_sp04",
+        "seconds": 60.4,
+        "spawned": 13,
+        "expected": 13,
+        "reason": "cleared",
+        "scope": "No-deployment route/wave sweep with raised life and time limits; not a playable clear or fidelity approval"
+      }
+    }
+  }
+}

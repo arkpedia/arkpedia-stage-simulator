@@ -48,6 +48,10 @@ export class LemuenAmmunition {
     if (this.removed || !this.active || !Number.isInteger(count) || count <= 0) return false;
     this.current += count; return true;
   }
+  consumeExternal(count) {
+    if (this.removed || !this.active || !Number.isInteger(count) || count <= 0) return false;
+    this.current = Math.max(0, this.current - count); return true;
+  }
   end() { this.active = false; this.current = 0; this.accepted.clear(); }
   remove() { this.removed = true; this.end(); this.bonuses.clear(); }
 }

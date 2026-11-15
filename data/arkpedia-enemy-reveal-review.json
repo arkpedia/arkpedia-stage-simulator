@@ -1,0 +1,211 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-14",
+  "scope": "Historical Rover visibility aura, Mire immunity, body artwork and empty activation branch checkpoint. Smoke checks do not certify playable clears, native frame order, complete operator fidelity or unimplemented Mire controllers.",
+  "sourceFiles": [
+    {
+      "path": "shared/arkpedia/enemy-reveal-features.js",
+      "sha256": "fdbd36144d009a9a9914ae0ac7b916723a035a9676fc04a098bdfd66408c2475"
+    },
+    {
+      "path": "shared/arkpedia/enemy-features.js",
+      "sha256": "e215325340b6feece0457d69bd112b2351f0519be2686e90b07d33425b1197a5"
+    },
+    {
+      "path": "server/sim/content/arkpedia-enemy-reveal.js",
+      "sha256": "50427a2996c80a78c1f4272336d4ae4788d6d3ffbccd4dc5134a5911ebc019b0"
+    },
+    {
+      "path": "server/sim/content/arkpedia-enemy-features.js",
+      "sha256": "fc2d396e074d0cac7cf94dd76b23bc148f3cb44a30411a3c3c3bc7390d988b76"
+    },
+    {
+      "path": "server/sim/buffs.js",
+      "sha256": "250178e42152b3b156ebb98ce93a502e0c3f81b8e6efb96a6288d1e7b84fc28d"
+    },
+    {
+      "path": "server/sim/content/devices.js",
+      "sha256": "62e7429b2c94d5fce88d2b53392ca1664396d9a5abda6373f7e15a285df53a3b"
+    },
+    {
+      "path": "data/arkpedia-enemy-native-abilities.json",
+      "sha256": "8c5ffff53746ee2a0444af61a97533118ca6560ad4fa0c79d6e17ffef50181c0"
+    },
+    {
+      "path": "data/arkpedia-enemy-support.json",
+      "sha256": "f04c16bb184c764e783fe85b1c423cbd5890e3161638864a982bd03bb78218c9"
+    },
+    {
+      "path": "data/arkpedia-regular-enemies.json",
+      "sha256": "f9ff49748af54f015a4e495b9d602109a5f57e706ed3190635296e8a6d56154e"
+    },
+    {
+      "path": "tools/arkpedia/extract-enemy-native-abilities.py",
+      "sha256": "d086c00fe7130a87ef85816cfd9d8b44441d3085bdd204b2fb032a0d00fd041b"
+    },
+    {
+      "path": "test/arkpedia-enemy-reveal.test.js",
+      "sha256": "8e4e31f05743b98afcc4dc45621239dd634f45f7606f1bb8d2e8658ce23410a5"
+    },
+    {
+      "path": "docs/ENEMY-REVEAL-AURA-REVIEW.md",
+      "sha256": "a74dd8ed41cf31d8cda7702e2724c5cdbc0f32d0ee40ad90632ee0e90fbd22d8"
+    },
+    {
+      "path": "tools/arkpedia/stage-branch-noops.mjs",
+      "sha256": "98c9681a21a98432df1423e3db0125e62b86f362393cf89ee1f9f6f98e5ce152"
+    },
+    {
+      "path": "tools/arkpedia/stage-waves.mjs",
+      "sha256": "5aaadc0f75284ef1a64f84ae0042d8c10b22a56c91e8f203a8b891da6b4282d1"
+    },
+    {
+      "path": "tools/arkpedia/content-inventory.mjs",
+      "sha256": "7e35a3f5206d681d5ed3cf07718b50f81a4829d2cbb2adc15eed1857b527288e"
+    },
+    {
+      "path": "test/arkpedia-stage-candidate-closure.test.js",
+      "sha256": "9a3aa114952ed68be5e0d6c4c25fc9cd0e718a7bb4a94183b33ec477e9eee732"
+    },
+    {
+      "path": "test/arkpedia-stage-branches.test.js",
+      "sha256": "68612d4f2cac5fb443b383f4a04d1f5807aab83cf9f73f0e9443b241cd7c73ad"
+    },
+    {
+      "path": "data/arkpedia-empty-activation-reference.json",
+      "sha256": "b73017cd6b53b433491f5d19ddea7d700f8cb6149b850a2a126fc73dad49a813"
+    },
+    {
+      "path": "data/arkpedia-enemy-artwork.json",
+      "sha256": "5c65556047a5b9cc5010ea9934ca1e23a023b2555aa8d91f60e875da5577b2be"
+    }
+  ],
+  "checks": {
+    "integration": {
+      "passed": 99,
+      "log": {
+        "path": "/tmp/rover-integration-tests.log",
+        "sha256": "6f153f534eee2641c01687376d2c00f494741a2d87ead3387f49fb74529f9ab0"
+      }
+    },
+    "registry": {
+      "passed": 181,
+      "log": {
+        "path": "/tmp/rover-registry-tests.log",
+        "sha256": "35e25f69a4e45810f7d21d6b173676c9a998ea2de9cc2a7c3328692cb0ace956"
+      }
+    },
+    "emptyActivations": {
+      "passed": 30,
+      "log": {
+        "path": "/tmp/empty-branch-tests.log",
+        "sha256": "c928c6c5bb88688670ca688ab579a1c669c19d7a7aae04b692ed47931820a4f4"
+      }
+    },
+    "sd": {
+      "passed": 93,
+      "log": {
+        "path": "/tmp/rover-sd-tests.log",
+        "sha256": "e2c161ece08e68354ac780e45a97b2454dd424da4fa8aeded2f720dd703af4b4"
+      }
+    },
+    "stageSmoke": {
+      "path": "/tmp/empty-branch-all-stage-smoke.log",
+      "sha256": "8b738ac3f6aacf66c268ac7408605c085d86678e98836e0e7d729cc436a8a336"
+    },
+    "source": {
+      "path": "/tmp/rover-source-check.log",
+      "sha256": "f8719635b2ddabae390a159becc05db573de8e4bc034a6d43ac0817b6767d5f6"
+    },
+    "sdValidation": {
+      "path": "/tmp/rover-sd-validate.log",
+      "sha256": "1e992f0d1f8d98d690a5220fd4d6f3cb2dffe8acb81fcd424de657486aaf6a55"
+    },
+    "browser": {
+      "scope": "Chromium clip decoding/finite poses and idle body rendering; no native combat/frame/pixel parity claim",
+      "browser": "Chrome/156.0.8078.79",
+      "results": [
+        {
+          "viewport": "desktop",
+          "models": [
+            {
+              "id": "enemy_1291_dusrch",
+              "version": "3.8.99",
+              "clips": 5,
+              "width": 532.0651397705078,
+              "height": 411.3925872221589
+            },
+            {
+              "id": "enemy_1291_dusrch_2",
+              "version": "3.8.99",
+              "clips": 5,
+              "width": 532.0651397705078,
+              "height": 411.3925872221589
+            }
+          ],
+          "errors": [],
+          "failures": []
+        },
+        {
+          "viewport": "mobile",
+          "models": [
+            {
+              "id": "enemy_1291_dusrch",
+              "version": "3.8.99",
+              "clips": 5,
+              "width": 532.0651397705078,
+              "height": 411.3925872221589
+            },
+            {
+              "id": "enemy_1291_dusrch_2",
+              "version": "3.8.99",
+              "clips": 5,
+              "width": 532.0651397705078,
+              "height": 411.3925872221589
+            }
+          ],
+          "errors": [],
+          "failures": []
+        }
+      ]
+    },
+    "footprint": {
+      "ids": [
+        "char_123_fang",
+        "char_124_kroos"
+      ],
+      "adapters": 24,
+      "common": {
+        "modules": 459,
+        "bytes": 4553868,
+        "sha256": "c246b7a25baea017897122eb77b5e3454b6646a3929d13b5c78e7fe190c3c1ac"
+      },
+      "selected": {
+        "modules": 496,
+        "bytes": 8276456,
+        "sha256": "0ee7cb24e120f2f2baa767d42d7b92b01c1b9600023e715f70801f84ca9af33d"
+      },
+      "eager": {
+        "modules": 1216,
+        "bytes": 95813642,
+        "sha256": "61462e1fbbf0ff0a30affe9076b17224ad2cc2f373557f1e8221f40da393d6c5"
+      }
+    }
+  },
+  "counts": {
+    "supportedEnemies": 627,
+    "totalEnemies": 2163,
+    "loadableStages": 827,
+    "totalStages": 3892,
+    "smokedStages": 827,
+    "enemyArtwork": 415
+  },
+  "artworkCommit": {
+    "sha": "4e7508d411438d582c07fe7dfdbeb75c54f2972d",
+    "local": true
+  },
+  "enumSource": {
+    "path": ".cache/arkpedia/cn-native-source/status-enums-dump.cs",
+    "sha256": "0cd60676fa4f3f47bcc5d1b9e3296a28d96d537974956b841050bdc515b2fdb4"
+  }
+}

@@ -185,3 +185,16 @@ test('actual redeployment owns a fresh entrance, selected SP and full twenty-sec
   near(u.s.atk, u.base.atk); advance(f.b, 19.9); assert.equal(fresh.talents.talent2Applied, false);
   advance(f.b, .2); assert.equal(fresh.talents.talent2Applied, true);
 });
+
+test('external ammo theft stays synchronized with all Lemuen controllers and ends an exhausted activation', () => {
+  for (const skill of [1, 2, 3]) {
+    const f = make({ skill }); advance(f.b, 21); enemy(f);
+    if (skill === 1) { f.u.skill.setSpTotal(f.u.skill.spCost); advance(f.b, f.b.dt); } else cast(f);
+    const sk = f.u.skill, ammo = f.u.mem.lemuenAmmunition, before = ammo.current;
+    let events = 0; f.b.on('ammoUsed', () => events++);
+    assert.equal(sk.consumeAmmo(1), 1); assert.equal(ammo.current, before - 1); assert.equal(sk.ammoLeft, ammo.current);
+    assert.equal(events, 0); advance(f.b, 1); assert.equal(sk.ammoLeft, ammo.current);
+    assert.ok(sk.consumeAmmo(1000) > 0); assert.equal(sk.active, false); assert.equal(ammo.active, false);
+    assert.equal(ammo.current, 0); assert.equal(sk.consumeAmmo(1), 0); assert.deepEqual(f.b.errors, []);
+  }
+});

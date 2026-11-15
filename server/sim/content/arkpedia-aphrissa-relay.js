@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Held relay lifecycle with the original literal S1 permanence check.
+import { stageSummonCost, stageCardRespawnTime } from './arkpedia-stage-card-cost.js';
 import {selectedAphrissaRelay} from './arkpedia-aphrissa-relay-source.js';
 import {APHRISSA_ID as ID, APHRISSA_RELAY_ID as TOKEN, selectedAphrissaInputs,
   aphrissaNativeInputs} from './arkpedia-aphrissa-source.js';
@@ -103,7 +104,7 @@ class AphrissaRelay {
     if (!['LOW', 'HIGH'].includes(tile.height) || !['MELEE', 'RANGED', 'ALL'].includes(tile.build)
       || b.grid.isObstacle(row, col)) return 'Choose a deployable tile.';
     if (b.unitAt(row, col) || b.tileReservation(row, col) || b.downOn(row, col)) return 'Tile is occupied or reserved.';
-    if (!canSpendDp(b, this.u.ownerId, this.record.stats.cost)) return 'Not enough DP.';
+    if (!canSpendDp(b, this.u.ownerId, stageSummonCost(this.b, this.record))) return 'Not enough DP.';
     return null;
   }
   visual(s, clip, loop = false) {
@@ -125,7 +126,7 @@ class AphrissaRelay {
     const error = this.placementError(row, col);
     if (error) throw Error(error);
     if (!['UP', 'DOWN', 'LEFT', 'RIGHT'].includes(dir)) throw Error('Choose a facing direction.');
-    const b = this.b, paid = this.record.stats.cost, generation = this.generation;
+    const b = this.b, paid = stageSummonCost(this.b, this.record), generation = this.generation;
     const card = this.cards.find(card => card.unit === null && due(b, card.readyAt));
     const previousReady = card.readyAt;
     this.placing = true; card.unit = CLAIMED;
@@ -167,7 +168,7 @@ class AphrissaRelay {
     s.finished = true;
     if (this.points.get(s.unit) === s) this.points.delete(s.unit);
     if (this.valid() && this.cards.includes(s.card) && s.card.unit === s.unit) {
-      s.card.unit = null; s.card.readyAt = this.b.time + this.record.stats.respawnTime;
+      s.card.unit = null; s.card.readyAt = this.b.time + stageCardRespawnTime(this.b, this.record);
     }
     if (remove && present(s.unit) && s.unit.deploySeq === s.seq)
       this.b._remove(s.unit, `aphrissa-relay-${reason}`, null, true);
@@ -177,7 +178,7 @@ class AphrissaRelay {
       || this.mutating || this.points.get(token)?.seq !== token.deploySeq
       || !this.own().includes(token)) throw Error('Select the current relay in fullscreen.');
     // Same integer refund policy as StandardBattle; native token ratio is 0.5.
-    this.b.addDp(this.u.ownerId, Math.floor(this.record.stats.cost * this.record.deployment.refundRatio));
+    this.b.addDp(this.u.ownerId, Math.floor(stageSummonCost(this.b, this.record) * this.record.deployment.refundRatio));
     this.finish(this.points.get(token), {remove: true, reason: 'withdrawal'});
     return true;
   }

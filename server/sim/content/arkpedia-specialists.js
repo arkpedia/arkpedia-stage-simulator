@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { SPECIALIST_OPERATORS } from '../../../shared/arkpedia/specialist-operators.js';
 import { absoluteRangeKeys } from '../targeting.js';
 import { resolveHit } from '../ai.js';
 
 export function customizeSpecialistKit({ id, def, kit }) {
+  if (!SPECIALIST_OPERATORS[id]) return;
   const skill = def.skill;
   if (!skill) return;
   const bb = skill.bb;
@@ -90,6 +92,7 @@ export function customizeSpecialistKit({ id, def, kit }) {
 }
 
 export function installSpecialist({ battle, unit, def }) {
+  if (!SPECIALIST_OPERATORS[def.charId]) return;
   const id = def.charId, talent = def.talents[0]?.bb;
   if (id === 'char_237_gravel') {
     // Original Attack has additionalTimes=1 AND splitDamage=1. Independent

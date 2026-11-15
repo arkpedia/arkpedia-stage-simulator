@@ -531,3 +531,19 @@ test('a deploy-time passive fires the skill animation window; a deploy-timed ski
   assert.deepEqual(t.eventsOf('skill').map((e) => e[2]), [1, 0], 'and the skill ended');
   assert.equal(tx.skill.ready, false, 'one charge per deployment');
 });
+
+test('external ammo consumption validates counts, preserves recovery allowance and optionally emits one event', () => {
+  const h = makeBattle({ defs: { chess: { external_ammo: chessRec({ id: 'external_ammo', skill: { spCost: 1, initSp: 1 } }) } },
+    units: [{ chessId: 'external_ammo', row: 10, col: 4 }], kits: { external_ammo: () => ({
+      skill: { kind: 'ammo', ammo: 3, trigger: 'NEVER' } }) } });
+  h.b.start(); const sk = h.unit('external_ammo').skill, counts = [], events = [];
+  sk.spec.onAmmoConsume = c => counts.push(c.count); h.b.on('ammoUsed', c => events.push(c.left));
+  assert.equal(sk.consumeAmmo(1), 0); assert.equal(sk.activate('fixture'), true);
+  for (const n of [NaN, Infinity, -1, 0, .5]) assert.equal(sk.consumeAmmo(n), 0);
+  assert.equal(sk.consumeAmmo(1.9), 1); assert.equal(sk.ammoLeft, 2); assert.deepEqual(events, []);
+  assert.equal(sk.replenishAmmo(3), 3); assert.equal(sk.ammoReplenishmentLeft, 0);
+  assert.equal(sk.consumeAmmo(2, { triggerEvent: true }), 2); assert.deepEqual(events, [3]);
+  assert.equal(sk.ammoReplenishmentLeft, 0); assert.equal(sk.consumeAmmo(9), 3);
+  assert.equal(sk.active, false); assert.deepEqual(counts, [1, 2, 3]);
+  assert.equal(sk.consumeAmmo(1), 0); assert.deepEqual(h.b.errors, []);
+});

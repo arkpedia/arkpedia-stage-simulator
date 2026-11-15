@@ -6,6 +6,8 @@ import records from '../../data/arkpedia-enemy-records.json' with { type: 'json'
 import support from '../../data/arkpedia-enemy-support.json' with { type: 'json' };
 import { makeBattle, chessRec } from './battleHarness.js';
 import { installEnemyFeatures } from '../../server/sim/content/arkpedia-enemy-features.js';
+import { enemyRuntimeRecord } from '../../shared/arkpedia/enemy-features.js';
+import { RegularDisplacement } from '../../server/sim/regular-displacement.js';
 
 export const ENEMY_RECORDS = records;
 export function enemyRecord(key, level = 0) {
@@ -30,11 +32,12 @@ export function spawnAny(key, opts = {}) {
   const guard = chessRec({ id: 'test_enemy_harness_guard', profession: 'WARRIOR', stats: { atk: 400, maxHp: 1e6, def: 300 }, skill: null });
   const route = opts.route ?? (record.stats.motion === 'FLY' ? 2 : 0);
   const h = makeBattle({
-    defs: { enemies: { ...spawnedRecords(key), [key]: record }, chess: { [guard.chessId]: guard } },
+    defs: { enemies: Object.fromEntries(Object.entries({ ...spawnedRecords(key), [key]: record })
+      .map(([id, row]) => [id, enemyRuntimeRecord(row)])), chess: { [guard.chessId]: guard } },
     units: opts.units ?? [{ chessId: guard.chessId, row: 9, col: 6 }],
     enemies: [{ key, time: 0, route }],
-    content: opts.content ?? 'none', timeLimit: opts.timeLimit ?? 600, seed: opts.seed ?? 1,
-    setup: b => installEnemyFeatures(b),
+    content: opts.content ?? 'none', timeLimit: opts.timeLimit ?? 600, seed: opts.seed ?? 1, autoFinish: opts.autoFinish,
+    setup: b => { b.regularDisplacement = new RegularDisplacement(b); installEnemyFeatures(b); },
   });
   if (opts.seconds) h.run(opts.seconds);
   return h;

@@ -3,12 +3,13 @@
  "name": "The Treasure of the Kazimierz Mortica",
  "description": "Condition:\nThe deployment cost of ranged Operators is tripled.",
  "battle": {
-  "max_life": 3,
+  "max_life": 1,
   "unit_limit": 8,
   "initial_dp": 10,
   "max_dp": 99,
   "dp_per_second": 1,
-  "dp_recovery_interval_seconds": 1
+  "dp_recovery_interval_seconds": 1,
+  "max_play_time": -1
  },
  "mapTags": [],
  "mapTagSource": null,
@@ -2104,7 +2105,7 @@
    "applyWay": "MELEE",
    "stats": {
     "maxHp": 1050,
-    "atk": 185,
+    "atk": 203.50000000000003,
     "def": 0,
     "res": 0,
     "moveSpeed": 1,
@@ -2156,7 +2157,7 @@
    "applyWay": "MELEE",
    "stats": {
     "maxHp": 2050,
-    "atk": 240,
+    "atk": 264,
     "def": 0,
     "res": 0,
     "moveSpeed": 1,
@@ -2208,7 +2209,7 @@
    "applyWay": "MELEE",
    "stats": {
     "maxHp": 1700,
-    "atk": 260,
+    "atk": 286,
     "def": 0,
     "res": 20,
     "moveSpeed": 1.9,
@@ -2260,7 +2261,7 @@
    "applyWay": "MELEE",
    "stats": {
     "maxHp": 3000,
-    "atk": 370,
+    "atk": 407.00000000000006,
     "def": 0,
     "res": 20,
     "moveSpeed": 1.9,
@@ -2312,7 +2313,7 @@
    "applyWay": "MELEE",
    "stats": {
     "maxHp": 2750,
-    "atk": 300,
+    "atk": 330,
     "def": 130,
     "res": 0,
     "moveSpeed": 1.1,
@@ -2362,7 +2363,7 @@
    "applyWay": "RANGED",
    "stats": {
     "maxHp": 2080,
-    "atk": 180,
+    "atk": 198.00000000000003,
     "def": 80,
     "res": 0,
     "moveSpeed": 1,
@@ -2416,5 +2417,100 @@
     "infection"
    ]
   }
+ },
+ "rules": {
+  "variant": "challenge_mode",
+  "source": {
+   "repository": "Kengxxiao/ArknightsGameData",
+   "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+   "path": "zh_CN/gamedata/levels/activities/a001/level_a001_ex04.json",
+   "sha256": "7deb884061251a158651975d4a63386f6e0cc930f226e833682125ce4fe08f22",
+   "gitBlob": "967d8ae3ca29c284c6a0c71d1931edc3fbd00cf1",
+   "stageTable": {
+    "path": "zh_CN/gamedata/excel/stage_table.json",
+    "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+    "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+    "stageId": "a001_ex04",
+    "levelId": "Activities/A001/level_a001_ex04"
+   }
+  },
+  "battle": {
+   "max_play_time": -1,
+   "max_life": 1
+  },
+  "enemies": {
+   "atk": 1.1,
+   "def": 1,
+   "maxHp": 1
+  },
+  "enemyAdd": {},
+  "hiddenGroups": {},
+  "allyCards": [
+   {
+    "attribute": "cost",
+    "professionMask": 1023,
+    "buildableMask": 2,
+    "scale": 3
+   }
+  ]
+ },
+ "contentRuleRefresh": {
+  "schemaVersion": 1,
+  "source": {
+   "repository": "arkpedia/arkpedia-data",
+   "commit": "66232ee06377d791fb130248d680764c286e5c99",
+   "files": [
+    {
+     "path": "stages/gt-hx-1_challenge_mode.json",
+     "sha256": "a427ec3f754e34d2c020a84790b6ccb363b3c413722b5a8edd331844db3d6e40"
+    },
+    {
+     "path": "stage-geometry/gt-hx-1.json",
+     "sha256": "74704fe6167a0b142cd276ff323825ecc1610235d62a8d2ccff057b1175278a1"
+    },
+    {
+     "path": "stage-devices.json",
+     "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+    }
+   ],
+   "localFiles": [
+    {
+     "path": "data/stage-rules/gt-hx-1_challenge_mode.json",
+     "sha256": "cd53ad626a00d7db7bbf6c0e643a90e3a142eb0c54702b05d7d085a1cebb2a89"
+    },
+    {
+     "path": "data/stage-rules/levels/1ccd1d819314f22d2b667c6a4be853365c5ef64a4dd021839409e228fc3ac548.json",
+     "sha256": "1ccd1d819314f22d2b667c6a4be853365c5ef64a4dd021839409e228fc3ac548"
+    }
+   ]
+  },
+  "validation": {
+   "smoke": {
+    "seconds": 10,
+    "spawned": 3,
+    "errors": 0
+   },
+   "waveSchedule": {
+    "id": "gt-hx-1_challenge_mode",
+    "seconds": 193.6,
+    "spawned": 100,
+    "expected": 100,
+    "reason": "cleared",
+    "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+   },
+   "browser": {
+    "id": "gt-hx-1_challenge_mode",
+    "seconds": 20,
+    "errors": [],
+    "units": 8,
+    "canvas": true,
+    "scope": "Browser startup and 600 simulation ticks; not full gameplay or visual fidelity approval"
+   }
+  },
+  "changed": [
+   "rules",
+   "battle",
+   "enemies"
+  ]
  }
 }

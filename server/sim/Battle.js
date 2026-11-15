@@ -33,7 +33,7 @@ import {explicitBlockMode} from './block-mode.js';
 import { Unit } from './units.js';
 import { makeBuff, STATUS, RESIST_STATUSES } from './buffs.js';
 import { dealDamage as pipeDamage, heal as pipeHeal, applyHpLoss, makeDamageInfo, reduceElement, palsyBuff, elementView, leaderHitCancelled } from './damage.js';
-import { absoluteRangeKeys, canTargetEnemy, extendedGrid, evadesGround, enemyStealthed, stealthOffKey } from './targeting.js';
+import { absoluteRangeKeys, canTargetEnemy, extendedGrid, evadesGround, enemyStealthed, stealthOffKey, characterLikeTarget } from './targeting.js';
 import { bodyKeys, bodyInKeys, bodyInRadius } from './body.js';
 import { normDir, mirrorDir, localOrder, localBefore } from './dir.js';
 import { ProjectileSystem } from './projectiles.js';
@@ -131,6 +131,7 @@ export class Battle {
     this.units = [];
     /** @type {Unit[]} alive enemies (compacted each tick) */
     this.enemies = [];
+    this.neutralUnits = [];
     /** @type {Unit[]} every ally unit (ops, tokens, devices; dead included) */
     this.allyUnits = [];
     this._hooks = Object.create(null);
@@ -328,6 +329,21 @@ export class Battle {
     return u;
   }
 
+  /** Capturable stage devices change targeting side without a spawn, death,
+   * wave credit or deployment-slot transaction. The occupied tile stays owned. */
+  changeDeviceSide(unit, side) {
+    if (!unit || unit.kind !== 'device' || unit.ownerId != null || !['ally', 'enemy'].includes(side))
+      throw Error('Side changes require an unowned stage device');
+    if (unit.side === side) return;
+    this.releaseBlocked(unit); this._unblock(unit);
+    this.allyUnits = this.allyUnits.filter(u => u !== unit);
+    this.enemies = this.enemies.filter(u => u !== unit);
+    unit.side = side; unit.counted = false; unit.lpr = 0; unit.mem.noLeak = true;
+    unit.spawnSeq ??= ++this._spawnSeq;
+    (side === 'ally' ? this.allyUnits : this.enemies).push(unit);
+    this._buildEnemyIndex();
+  }
+
   /** Resolve kit/profile/skill for a unit (called by content/index.js; safe to call again). */
   _setupUnit(u, kit = null) {
     if (!kit) {
@@ -433,7 +449,7 @@ export class Battle {
       this._phase('enemies', () => {
         // enemies spawned by hooks during this loop start moving next tick (a leak hook that spawns an enemy which
         // leaks at once would otherwise loop forever inside a single tick)
-        const list = this.enemies;
+        const list = this.neutralUnits.length ? [...this.enemies, ...this.neutralUnits] : this.enemies;
         for (let i = 0, n = list.length; i < n && !this._endReq; i++) {
           const e = list[i];
           if (!e.alive) continue;
@@ -441,7 +457,7 @@ export class Battle {
             // Enemy-targetable placed tokens own their combat controller.
             // They charge normally, but never route, block, attack as enemies
             // or touch the objective merely because their target side is red.
-            if (e.kind === 'token') { if (e.skill && e.deployed) e.skill.tick(dt); }
+            if (e.kind === 'token' || e.kind === 'device') { if (e.skill && e.deployed) e.skill.tick(dt); }
             else updateEnemy(this, e, dt);
           } catch (err) { this._internalError('updateEnemy', err); }
           this._clampPos(e);
@@ -508,9 +524,12 @@ export class Battle {
     // §5.5) — never merely because it emptied: the h07_04 pair leader (official route: no wait) can walk into the
     // objective, and the field then idles while another field may still empty the pool or the overtime drain ends it.
     const poolHolds = !!this.sharedBoss && (this.kind === 'boss' || this.kind === 'hidden');
-    if (this.autoFinish && !poolHolds && !this._pending.length && !this.enemies.some((e) => e.alive && e.kind !== 'token') && this.started) {
+    if (this.autoFinish && !poolHolds && !this._pending.length && !this.enemies.some((e) => e.alive && e.kind !== 'token' && e.kind !== 'device' && e.profile.holdsBattle !== false) && this.started) {
       if (!this._hasPendingEnemySchedules()) { this._finish('cleared'); return; }
     }
+    // A source objective deadline is a failed objective, not simulated enemy
+    // escapes. Normal clearance above wins if the last enemy dies on this tick.
+    if (this.stageDeadline && this.time >= this.stageDeadline.endAt - 1e-9) { this._finish('deadline'); return; }
     if (this.time >= this.timeLimit - 1e-9) { this._timeout(); return; }
     if (this.time >= MAX_BATTLE_TIME) { this._timeout(); return; }
   }
@@ -531,6 +550,7 @@ export class Battle {
     }
     this.unspawned = [];
     for (const p of this._pending) {
+      if (p.execute) continue; // Scheduled content actions are not enemy totals.
       if (p.precounted) {
         this.total--;
         const pp = this._pp(p.ownerPlayerId ?? this._ownerForTile(p.pos ?? this._routeFor(p.routeIndex, p.route)?.start));
@@ -754,7 +774,7 @@ export class Battle {
         mods: s.mods ?? null, sourcePlayerId: s.sourcePlayerId ?? null, bounty: s.bounty ?? null, tag: s.tag ?? null,
         ownerPlayerId: s.ownerPlayerId ?? null, pos: s.pos ?? null, seq: ++this._spawnSeq, countInTotal: s.countInTotal,
       };
-      p.counted = p.countInTotal ?? (!(def && def.notCountInTotal) && p.tag !== 'boss' && p.tag !== 'part');
+      p.counted = def?.side !== 'neutral' && (p.countInTotal ?? (!(def && def.notCountInTotal) && p.tag !== 'boss' && p.tag !== 'part'));
       if (precount && p.counted) {
         this.total++;
         const owner = p.ownerPlayerId ?? this._ownerForTile(p.pos ?? this._routeFor(p.routeIndex, p.route)?.start);
@@ -770,7 +790,8 @@ export class Battle {
     const now = this.time + 1e-9;
     while (this._pending.length && this._pending[0].time <= now) {
       const p = this._pending.shift();
-      this._safe(() => this.spawnEnemy(p.enemyKey, { ...p, _precounted: p.precounted }), 'spawnEnemy');
+      if (p.execute) this._safe(p.execute, 'scheduledAction');
+      else this._safe(() => this.spawnEnemy(p.enemyKey, { ...p, _precounted: p.precounted }), 'spawnEnemy');
     }
   }
 
@@ -800,7 +821,10 @@ export class Battle {
    * sourcePlayerId, ownerPlayerId, bounty:{coins,ownerPlayerId}, countInTotal }
    */
   spawnEnemy(enemyKey, opts = {}) {
-    if (this.enemies.length >= MAX_ALIVE_ENEMIES && this.aliveEnemies().length >= MAX_ALIVE_ENEMIES) {
+    if (opts.initialHpRatio != null && (!Number.isFinite(opts.initialHpRatio) || opts.initialHpRatio <= 0 || opts.initialHpRatio > 1))
+      throw Error('Invalid initial enemy HP ratio');
+    if (this.enemies.length + this.neutralUnits.length >= MAX_ALIVE_ENEMIES
+      && this.aliveEnemies().length + this.neutralUnits.filter(u => u.alive).length >= MAX_ALIVE_ENEMIES) {
       this._handlerError('spawnEnemy', null, new Error(`more than ${MAX_ALIVE_ENEMIES} living enemies; spawn of ${enemyKey} refused`));
       return null;
     }
@@ -831,7 +855,8 @@ export class Battle {
     const m0 = opts.mods || {};
     const m = { hpMul: mm(m0.hpMul, true), atkMul: mm(m0.atkMul), defMul: mm(m0.defMul), resMul: mm(m0.resMul), speedMul: mm(m0.speedMul) };
     const e = new Unit({
-      id: ++this._idSeq, side: 'enemy', kind: 'enemy', def, defId: def.key ?? enemyKey, name: def.name,
+      id: ++this._idSeq, side: def.side ?? 'enemy', kind: 'enemy', def, defId: def.key ?? enemyKey, name: def.name,
+      tags: def.tags ?? [],
       x: start[1], y: start[0], motion: def.motion,
       base: {
         maxHp: def.maxHp * (m.hpMul ?? 1), atk: def.atk * (m.atkMul ?? 1), def: def.def * (m.defMul ?? 1), res: def.res * (m.resMul ?? 1),
@@ -859,12 +884,14 @@ export class Battle {
     // every enemy profile starts with the same fields (stable object shapes keep the hot loop's property reads fast);
     // `dmgType` null = the data's (content may arm a data-unarmed enemy: ai.js enemyAttack)
     e.profile = { noAttack: def.dmgType === 'none', maxTargets: 1, atkScale: 1, dmgType: null };
-    e.route = { legs: route ? compileRoute(route, this.rect) : [], legIdx: 0, pts: null, ptIdx: 0, suffix: null, version: -1, waitLeft: null };
+    if (e.side === 'neutral') e.profile.holdsBattle = false;
+    e.routeClock = opts.routeClock ? Object.freeze({ ...opts.routeClock }) : null;
+    e.route = { legs: route ? compileRoute(route, this.rect, e.routeClock) : [], legIdx: 0, pts: null, ptIdx: 0, suffix: null, version: -1, waitLeft: null };
     if (!e.route.legs.length) {
       const end = this.grid.specialTiles('end')[0];
       if (end) e.route.legs.push({ t: 'move', r: end[0], c: end[1], final: true });
     }
-    e.counted = opts.countInTotal ?? (!def.notCountInTotal && e.tag !== 'boss' && e.tag !== 'part');
+    e.counted = e.side !== 'neutral' && (opts.countInTotal ?? (!def.notCountInTotal && e.tag !== 'boss' && e.tag !== 'part'));
     if (e.counted && !opts._precounted) {
       this.total++;
       const pp = this._pp(e.ownerId);
@@ -874,9 +901,9 @@ export class Battle {
       e.isBoss = true;
       if (this.sharedBoss) { e.bossPool = this.sharedBoss; this._syncBossHp(e); }
     }
-    e.hp = e.bossPool ? e.hp : e.s.maxHp;
+    e.hp = e.bossPool ? e.hp : e.s.maxHp * (opts.initialHpRatio ?? 1);
     this.units.push(e);
-    this.enemies.push(e);
+    (e.side === 'neutral' ? this.neutralUnits : this.enemies).push(e);
     this._ev(['spawn', unitInfo(e)]);
     if (this._hooks.deploy) this.emit('deploy', { unit: e, initial: false });
     if (this._hooks.enemySpawn) this.emit('enemySpawn', { enemy: e });
@@ -1019,7 +1046,7 @@ export class Battle {
       if (unit.kind === 'device' && unit.obstacle) this.grid.setObstacle(unit.tileR, unit.tileC, false, unit.obstacleKind);
     } else {
       unit.removed = true;
-      if (unit.kind === 'token') {
+      if (unit.kind === 'token' || unit.kind === 'device') {
         const k = unit.tileR * COLS + unit.tileC;
         if (this._occ[k] === unit) this._occ[k] = null;
       }
@@ -1140,7 +1167,7 @@ export class Battle {
 
   /** Leak: an enemy reached its goal. */  /** Leak: an enemy reached its goal. */
   leak(e) {
-    if (!e || !e.alive || e.side !== 'enemy') return;
+    if (!e || !e.alive || e.side !== 'enemy' || e.profile?.cannotExit) return;
     if (e.profile?.friendly) {
       // A friendly civilian reaching the objective raises the reviewed max DP instead of costing life.
       if (e.profile.civilianDp > 0) this.flags.dpMax += e.profile.civilianDp;
@@ -1179,6 +1206,7 @@ export class Battle {
    * ties → the first in row-then-column scan order.
    */
   _checkBlock(e) {
+    if (e.mem.regularShift) return false;
     if (e.blockedBy || e.hidden || !e.alive) return !!e.blockedBy;
     if (this.identityLocks?.size && !e.profile?.revealed && (e.profile?.spy || e.profile?.friendly)) return false;
     const f = e.s.flags;
@@ -1194,7 +1222,7 @@ export class Battle {
         const o = this._occ[r * COLS + c];
         if (!o || !this._blockerFor(o, e, w)) continue;
         // BLOCK_RADIUS_SCALE (e.g. Kal'tsit·Esperanta's talent) widens the radius by (1 + scale)
-        const r2 = (o.kind === 'device' ? BLOCK_RADIUS_SQ.device : fly ? BLOCK_RADIUS_SQ.fly : BLOCK_RADIUS_SQ.ground)
+        const r2 = (o.kind === 'device' ? o.profile?.blockRadiusSquare ?? BLOCK_RADIUS_SQ.device : fly ? BLOCK_RADIUS_SQ.fly : BLOCK_RADIUS_SQ.ground)
           * (o.kind === 'device' ? 1 : (1 + (o.s.blockRadiusScale ?? 0)) ** 2);
         // a diagonal neighbour's centre is ≥ √0.5 away: out of reach of an unscaled ground (and device) radius
         if (!fly && r !== r0 && c !== c0 && r2 <= 0.5) continue;
@@ -1334,6 +1362,14 @@ export class Battle {
             old.shieldSourceSides = buff.shieldSourceSides;
           }
           unit.markDirty();
+          return accepted(old);
+        case 'addTime':
+          // Native EXTEND_TIME retains the original instance, source and modifiers.
+          // Only finite input durations add time; an infinite input is not an upgrade.
+          if (Number.isFinite(buff.duration)) {
+            old.timeLeft += buff.duration;
+            old.duration += buff.duration;
+          }
           return accepted(old);
         case 'extend':
           old.timeLeft = Math.max(old.timeLeft, buff.duration);
@@ -1755,7 +1791,7 @@ export class Battle {
     if (!keys) return out;
     const set = keys instanceof Set ? keys : (healer && healer.rangeKeys === keys && healer.rangeKeySet ? healer.rangeKeySet : new Set(keys));
     for (const a of this.allyUnits) {
-      if (!a.alive || !a.deployed || a.hidden || a.kind === 'device') continue;
+      if (!a.alive || !a.deployed || a.hidden || !characterLikeTarget(a)) continue;
       if (!set.has(a.tileR * COLS + a.tileC)) continue;
       if (a !== healer && (a.s.flags.noHeal || (a.profile && a.profile.noHeal))) continue;
       const injured = a.hp < a.s.maxHp - 1e-6;
@@ -1788,7 +1824,7 @@ export class Battle {
   /** Allies inside `unit`'s current range (for auras) — not the 孤立 ones ("无法被同阵营选中": 炎佑), `unit` aside. */
   alliesInGrid(unit) {
     const set = unit.rangeKeySet || new Set(unit.rangeKeys || []);
-    return this.allyUnits.filter((a) => a.alive && a.deployed && !a.hidden && a.kind !== 'device' && set.has(a.tileR * COLS + a.tileC) && this.allySelectable(a, unit));
+    return this.allyUnits.filter((a) => a.alive && a.deployed && !a.hidden && characterLikeTarget(a) && set.has(a.tileR * COLS + a.tileC) && this.allySelectable(a, unit));
   }
 
   /**
@@ -1815,7 +1851,7 @@ export class Battle {
     const out = [];
     const r2 = r * r + 1e-9;
     for (const e of this.enemies) {
-      if (!e.alive || e.hidden) continue;
+      if (!e.alive || e.hidden || e.side === 'neutral') continue;
       if (e.hitArea && !centre) { if (bodyInRadius(e, x, y, r)) out.push(e); continue; }
       const dx = e.x - x, dy = e.y - y;
       if (dx * dx + dy * dy <= r2) out.push(e);
@@ -1845,7 +1881,7 @@ export class Battle {
   }
 
   /**
-   * Every deployed ally within `r` of (x, y) — no selection rule: an enemy's area effect selects among them with
+   * Every deployed ally within `r` of (x, y), including enemy-targetable buildings — no selection rule: an enemy's area effect selects among them with
    * targeting.js areaSelectable (content/enemies.js areaAllies: no 隐匿 ally, the blocker included, GitHub #97; DESIGN §22.12).
    */
   alliesInRadius(x, y, r, ownerId = null, { includeDevices = false } = {}) {
@@ -1853,7 +1889,7 @@ export class Battle {
     const r2 = r * r + 1e-9;
     for (const a of this.allyUnits) {
       if (!a.alive || !a.deployed || a.hidden) continue;
-      if (!includeDevices && a.kind === 'device') continue;
+      if (!includeDevices && a.kind === 'device' && !a.profile?.enemyTargetableDevice) continue;
       if (ownerId != null && a.ownerId !== ownerId) continue;
       const dx = a.x - x, dy = a.y - y;
       if (dx * dx + dy * dy <= r2) out.push(a);
@@ -1862,8 +1898,10 @@ export class Battle {
   }
 
   /** Alive deployed allies (ops + tokens), optionally of one player. */
-  allies(ownerId = null) {
-    return this.allyUnits.filter((a) => a.alive && a.deployed && a.kind !== 'device' && (ownerId == null || a.ownerId === ownerId));
+  allies(ownerId = null, { includeTargetableDevices = false } = {}) {
+    return this.allyUnits.filter((a) => a.alive && a.deployed
+      && (characterLikeTarget(a) || includeTargetableDevices && a.profile?.enemyTargetableDevice)
+      && (ownerId == null || a.ownerId === ownerId));
   }
 
   aliveEnemies() { return this.enemies.filter((e) => e.alive); }
@@ -2007,8 +2045,8 @@ export class Battle {
    * the tile impassable.
    */
   spawnDevice(key, row, col, opts = {}) {
-    // Devices are ally-side units on a field tile: never outside the rect, never on top of a living unit or of a
-    // knocked-out operator (downOn).
+    // Devices default to ally side; original enemy-side devices use the same
+    // placed-body account. Never outside the rect or on an occupied/down tile.
     if (!Number.isInteger(row) || !Number.isInteger(col) || !this.grid.inRect(row, col)) return null;
     const occ = this._occ[row * COLS + col];
     if (occ && occ.alive) return null;
@@ -2021,10 +2059,12 @@ export class Battle {
       stats: { maxHp: hp > 0 ? hp : 100, atk: Math.max(0, fin(opts.atk, 0)), def: Math.max(0, fin(opts.def, 0)), res: Math.min(100, Math.max(0, fin(opts.res, 0))), aspd: aspd > 0 ? aspd : 100, bat: bat > 0 ? bat : 1, blockCnt: Math.max(0, fin(opts.blockCnt, 99)), cost: 0, respawnTime: 0, spRecovery: 0, tauntLevel: -1, massLevel: 0, hpRecoveryPerSec: 0 },
       rangeGrid: [[0, 0]], skill: null, talents: [], spine: key, avatar: key,
     };
-    const u = this._makeAlly(null, def, 'device', row, col, opts.dir != null ? { dir: opts.dir } : {});
+    if (opts.side != null && !['ally', 'enemy'].includes(opts.side)) throw Error('Invalid device side');
+    const u = this._makePlacedUnit(null, def, 'device', row, col, opts.dir != null ? { dir: opts.dir } : {}, opts.side ?? 'ally');
     u.ownerId = null;
     u.kit = {};
     u.profile = { noAttack: true, maxTargets: 0 };
+    if (Number.isFinite(opts.blockRadiusSquare) && opts.blockRadiusSquare > 0) u.profile.blockRadiusSquare = opts.blockRadiusSquare;
     u.skill = new SkillRuntime(this, u, null, null, {});
     u.obstacle = !!opts.obstacle;
     u.obstacleKind = opts.obstacleKind === 'block' ? 'block' : 'crate';
@@ -2039,6 +2079,7 @@ export class Battle {
     u.rangeKeys = [];
     this._occ[row * COLS + col] = u;
     if (u.obstacle) this.grid.setObstacle(row, col, true, u.obstacleKind);
+    if (typeof opts.initialize === 'function') opts.initialize(u);
     this._ev(['spawn', unitInfo(u)]);
     if (this._hooks.deploy) this.emit('deploy', { unit: u, initial: !this.started });
     return u;
@@ -2166,11 +2207,12 @@ export class Battle {
    * 而改变推动的方向或削减力度" — the < 0.25 tile rule still applies). `inward` = a radial push towards `from` (薄绿 S2's "拖拽", PRTS 备注 "实际为
    * 反方向（指向薄绿方向）的推开"), never nearer than PULL_STOP_RADIUS to its centre [ASSUMED: "至面前"]. `effect` = a 特效
    * push (PRTS 推与拉: one frame less of travel than a 弹道 push — constants.js PUSH_TILES_EFFECT / PUSH_EFFECT_SKILLS).
-   * Returns the tiles moved.
+   * Legacy battles return tiles moved. Regular stages integrate the force over
+   * time and return acceptance; onTravel/onCollision report the actual path.
    */
   push(e, force, { from = null, dir = null, fixed = false, fixedAngle = false, inward = false,
-    effect = false, directionalReduction = 2, onFall = null } = {}) {
-    if (!this._displaceable(e)) return 0;
+    effect = false, directionalReduction = 2, onFall = null, onTravel = null, onCollision = null } = {}) {
+    if (!(this.regularDisplacement ? this.regularDisplacement.canForce(e) : this._displaceable(e))) return 0;
     let level = this.forceLevel(e, force);
     const fx0 = fin(from?.x, e.x), fy0 = fin(from?.y, e.y);
     const vx = e.x - fx0, vy = e.y - fy0, d = Math.hypot(vx, vy);
@@ -2188,6 +2230,8 @@ export class Battle {
     else return 0;
     let dist = pushTiles(level, effect);
     if (inward && !(dl > 0)) { ux = -ux; uy = -uy; dist = Math.min(dist, Math.max(0, d - PULL_STOP_RADIUS)); }
+    if (this.regularDisplacement) return this.regularDisplacement.push(e, level, { x: ux, y: uy },
+      { from, inward: inward && !(dl > 0), effect, onFall, onTravel, onCollision });
     return this.displace(e, { x: ux, y: uy }, dist, { onFall });
   }
 
@@ -2195,9 +2239,11 @@ export class Battle {
    * Pull enemy `e` with 力度 `force` towards the point `to` (PRTS 推与拉 §拉力 / §捕网): 受力等级 ≥ 0 — all the way, until it
    * is within `stop` tiles of `center` (急停; `center` defaults to `to`, `stop` to PULL_STOP_RADIUS) or reaches `to`;
    * −1 — PULL_WEAK_SHARE of its starting distance to `to`; −2 — PULL_CRAWL tiles; ≤ −3 — nothing. `pullToFront` aims at
-   * the official 拉力起点 in front of an operator. Returns the tiles moved.
+   * the official 拉力起点 in front of an operator. Legacy battles return tiles moved;
+   * regular stages return acceptance and integrate the pull over its duration.
    */
   pull(e, force, { to, center = null, stop = PULL_STOP_RADIUS } = {}) {
+    if (this.regularDisplacement) return this.regularDisplacement.pull(e, force, { to, center, stop });
     const plan = this.planPull(e, force, { to, center, stop });
     return plan ? this.displace(e, plan.direction, plan.distance) : 0;
   }
@@ -2279,7 +2325,9 @@ export class Battle {
       if (e.motion !== 'FLY' && typeof onFall === 'function' && this.grid.inRect(r, c)
         && this.grid.tile(r, c).key === 'tile_hole') {
         e.x = nx; e.y = ny; moved += s;
+        e.mem.deathByFall = true;
         this._safe(() => onFall(e), 'displace.onFall', e);
+        if (e.alive) delete e.mem.deathByFall;
         break;
       }
       const ok = e.motion === 'FLY' ? this.grid.inRect(r, c) : this.grid.groundPassable(r, c);
@@ -2522,6 +2570,7 @@ export class Battle {
   _compactEnemies() {
     if (!this._enemiesDirty) return;
     this.enemies = this.enemies.filter((e) => e.alive);
+    this.neutralUnits = this.neutralUnits.filter((e) => e.alive);
     this._enemiesDirty = false;
   }
 

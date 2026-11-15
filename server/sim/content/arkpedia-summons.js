@@ -1,181 +1,18 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-import { canSpendDp } from './arkpedia-dp-budget.js';
 import evidence from '../../../data/arkpedia-summon-prefabs.json' with { type: 'json' };
-import { REGULAR_SUMMONS, summonCardId, summonUnitId, summonRecordFor } from '../../../shared/arkpedia/summons.js';
-import { canDeployInViewport } from '../../../shared/arkpedia/squad.js';
+import { REGULAR_SUMMONS, summonCardId, summonRecordFor } from '../../../shared/arkpedia/summons.js';
 import { createMetalCrab, customizeBeanstalk, installBeanstalk } from './arkpedia-tacticians.js';
 import { installShamareDoll } from './arkpedia-five-star-support-third.js';
 import { installNightingaleCage } from './arkpedia-six-star-medic.js';
 import { installSilenceDrone } from './arkpedia-five-star-medic-fourth.js';
-import { createPhantomClone } from './arkpedia-phantom.js';
-import { createKaltsitMon3tr } from './arkpedia-kaltsit.js';
-import { createSceneBuggyCam } from './arkpedia-scene.js';
-import { createClockworkFowlbeast } from './arkpedia-sand-reckoner.js';
-import { createWolfpack } from './arkpedia-vigil.js';
-import { createSandbeast } from './arkpedia-ray.js';
-import { rayPlacementKeys } from './arkpedia-ray-combat.js';
-import { createSlumberfoot } from './arkpedia-blacknight.js';
-import { createWindflitBattery } from './arkpedia-windflit.js';
-import { createCatherineDevice } from './arkpedia-catherine.js';
-import { createAlannaDevice } from './arkpedia-alanna.js';
-import { createMayerRobotter } from './arkpedia-mayer.js';
-import { createFrostMat } from './arkpedia-frost.js';
-import { createSkadiSeaborn } from './arkpedia-skadi-alter.js';
-import { createTypewriter } from './arkpedia-pozemka.js';
-import { createDorothyResonator } from './arkpedia-dorothy.js';
-import { createRobinClip } from './arkpedia-robin.js';
-import { createWulfeniteMine } from './arkpedia-wulfenite.js';
-import { createWeedyCannon } from './arkpedia-weedy.js';
-import { createJessicaShield } from './arkpedia-jessica.js';
 import { installSilenceParadigmaticDrone } from './arkpedia-silence-paradigmatic.js';
-import { createWangStone, wangPlacementAllowsEnemy } from './arkpedia-wang.js';
-import { createRadianTower } from './arkpedia-radian.js';
-import { createNastiDevice } from './arkpedia-nasti.js';
 
-const live = unit => unit?.alive && unit.deployed;
-const ownTokens = (battle, owner) => battle.allyUnits.filter(token =>
-  (token.kind === 'token' || token.kind === 'device' && token.mem.regularSummonCard)
-  && token.ownerUnit === owner && live(token));
-const cardState = (battle, key) => battle.regularSummons?.get(key);
-
-export function regularSummonCards(battle) {
-  return [...(battle.regularSummons?.values() ?? [])].map(state => ({
-    ...state, available: live(state.owner) && state.stock > 0
-      && (!state.config.requiresActiveSkill || state.owner.skill.active),
-    deployed: state.deck?.own ? state.deck.own().length : ownTokens(battle, state.owner).length,
-    cost: state.record.stats.cost,
-  }));
-}
-
-export function summonPlacementError(battle, key, row, col) {
-  const state = cardState(battle, key);
-  if (state?.deck?.placementError) return state.deck.placementError(row, col);
-  if (!canDeployInViewport(battle.viewport)) return 'Open the fullscreen workspace to deploy.';
-  if (battle.finished) return 'Battle has ended.';
-  if (!state || !live(state.owner)) return 'Deploy the summoner first.';
-  if (state.config.requiresActiveSkill && !state.owner.skill.active) return 'Activate the summoner skill first.';
-  if (state.stock <= 0) return 'No summons remaining.';
-  if (state.readyAt > battle.time + 1e-9) return 'Summon is still redeploying.';
-  if (ownTokens(battle, state.owner).length >= state.record.stats.maxDeployCount)
-    return 'Summon deployment limit reached.';
-  if (battle.deployedSlots() + state.config.deploymentSlotCost > battle.unitLimit)
-    return 'Deployment limit reached.';
-  if (!Number.isInteger(row) || !Number.isInteger(col) || !battle.grid.inRect(row, col))
-    return 'Select a tile on the map.';
-  const placementRange = state.ownerId === 'char_4117_ray' ? rayPlacementKeys(state.owner) : state.owner.rangeKeySet;
-  if (state.config.limitByHostAttackRange && !placementRange.has(row * 21 + col))
-    return "Choose a tile inside the summoner's attack range.";
-  if (state.config.adjacentToHost && Math.abs(row - state.owner.tileR) + Math.abs(col - state.owner.tileC) !== 1)
-    return 'Choose a tile next to the summoner.';
-  const tile = battle.grid.tile(row, col);
-  if (tile.build !== 'ALL' && tile.build !== state.record.position
-    && !(state.record.position === 'ALL' && ['MELEE', 'RANGED'].includes(tile.build)))
-    return state.record.position === 'ALL' ? 'Choose a deployable tile.'
-      : state.record.position === 'RANGED' ? 'Choose a high-ground tile.' : 'Choose a melee tile.';
-  if (battle.allyUnits.some(unit => live(unit) && unit.tileR === row && unit.tileC === col))
-    return 'Tile is occupied.';
-  if (state.config.excludeWalkingEnemy && !(state.ownerId === 'char_2027_wang' && wangPlacementAllowsEnemy(battle, state.owner, row, col)) && battle.enemies.some(enemy => live(enemy)
-    && enemy.motion !== 'FLY' && Math.round(enemy.x) === col && Math.round(enemy.y) === row))
-    return 'Choose a tile without a ground enemy.';
-  if (!canSpendDp(battle, state.owner.ownerId, state.record.stats.cost)) return 'Not enough DP.';
-  return null;
-}
-
-export function deployRegularSummon(battle, key, row, col, dir = 'RIGHT') {
-  const error = summonPlacementError(battle, key, row, col);
-  if (error) throw Error(error);
-  if (!['UP', 'DOWN', 'LEFT', 'RIGHT'].includes(dir)) throw Error('Choose a facing direction.');
-  const state = cardState(battle, key);
-  if (state.deck?.place) return state.deck.place(row, col, dir);
-  const source = evidence.tokens[state.record.id];
-  // Ela's source-fed deck owns its charge/cooldown transaction and lifecycle.
-  if (state.ownerId === 'char_4123_ela') {
-    const deck = state.owner.mem.elaController?.deck;
-    if (!deck || deck.state !== state) throw Error('Missing current Ela mine deck.');
-    return deck.place(row, col);
-  }
-  const token = state.ownerId === 'char_2027_wang' ? createWangStone(battle, state, row, col)
-    : state.ownerId === 'char_4195_radian' ? createRadianTower(battle, state, row, col, dir)
-    : state.ownerId === 'char_4212_nasti' ? createNastiDevice(battle, state, row, col, dir)
-    : state.ownerId === 'char_250_phatom' ? createPhantomClone(battle, state, row, col, dir)
-    : state.ownerId === 'char_1034_jesca2' ? createJessicaShield(battle, state, row, col)
-    : state.ownerId === 'char_400_weedy' ? createWeedyCannon(battle, state, row, col, dir)
-    : state.ownerId === 'char_003_kalts' ? createKaltsitMon3tr(battle, state, row, col, dir)
-    : state.ownerId === 'char_336_folivo' ? createSceneBuggyCam(battle, state, row, col, dir)
-    : state.ownerId === 'char_4140_lasher' ? createClockworkFowlbeast(battle, state, row, col, dir)
-    : state.ownerId === 'char_427_vigil' ? createWolfpack(battle, state, row, col)
-    : state.ownerId === 'char_4117_ray' ? createSandbeast(battle, state, row, col)
-    : state.ownerId === 'char_476_blkngt' ? createSlumberfoot(battle, state, row, col)
-    : state.ownerId === 'char_433_windft' ? createWindflitBattery(battle, state, row, col, dir)
-    : state.ownerId === 'char_4162_cathy' ? createCatherineDevice(battle, state, row, col, dir)
-    : state.ownerId === 'char_4178_alanna' ? createAlannaDevice(battle, state, row, col, dir)
-    : state.ownerId === 'char_242_otter' ? createMayerRobotter(battle, state, row, col)
-    : state.ownerId === 'char_458_rfrost' ? createFrostMat(battle, state, row, col)
-    : state.ownerId === 'char_1012_skadi2' ? createSkadiSeaborn(battle, state, row, col)
-    : state.ownerId === 'char_4055_bgsnow' ? createTypewriter(battle, state, row, col, dir)
-    : state.ownerId === 'char_4048_doroth' ? createDorothyResonator(battle, state, row, col)
-    : state.ownerId === 'char_451_robin' ? createRobinClip(battle, state, row, col)
-    : state.ownerId === 'char_4171_wulfen' ? createWulfeniteMine(battle, state, row, col)
-    : state.config.tacticalPoint ? createMetalCrab(battle, state, row, col)
-    : battle.spawnToken(state.owner, state.record.id, row, col, {
-    dir, def: state.record, kit: { skill: null, trait: { attack: 'melee',
-      dmgType: 'phys', projectile: 'none', canHitFly: false,
-      ...(state.config.noAttack ? { canAttack: () => false }
-        : { windup: source.model.hits[state.config.attackClip][0] }) },
-      install: (battle, unit) => {
-        if (state.config.healFree) battle.addBuff(unit, { key: 'summon:heal-free',
-          flags: { healFree: true }, persist: true, allowDead: true });
-      },
-    },
-  });
-  if (!token) throw Error('Summon placement failed.');
-  token.deploymentSlotCost = state.config.deploymentSlotCost;
-  token.mem.regularSummonCard = key;
-  battle.getPlayer(state.owner.ownerId).dp -= state.record.stats.cost;
-  state.stock--;
-  // Phantom's original ON_FINISH token recharge starts the independent clock
-  // when the clone is removed. Existing consumable-token clocks stay unchanged.
-  if (state.ownerId !== 'char_250_phatom' && !state.config.rechargeOnFinish)
-    state.readyAt = battle.time + state.record.stats.respawnTime;
-  // The original Tentacle has no facing picker: its attack ability turns toward
-  // the selected target; the one-tile source range is independent of direction.
-  if (!state.config.chooseFacing && !state.config.fixedRotation) battle.on('beforeAttack', ctx => {
-    if (ctx.attacker === token && ctx.targets[0])
-      token.dir = ctx.targets[0].x < token.x ? 'LEFT' : 'RIGHT';
-  }, { owner: token });
-  if (state.ownerId === 'char_179_cgbird') installNightingaleCage(battle, token, state);
-  if (state.ownerId === 'char_108_silent') installSilenceDrone(battle, token, state);
-  if (state.ownerId === 'char_1031_slent2') installSilenceParadigmaticDrone(battle, token, state);
-  if (state.ownerId === 'char_484_robrta') installModeler(battle, token, state);
-  if (state.ownerId === 'char_254_vodfox') {
-    installShamareDoll(battle, token, state);
-    battle.removeBuff(state.owner, 'shamare:stock-full');
-  }
-  state.syncSkill?.();
-  return token;
-}
-
-export function selectedRegularSummon(battle, key) {
-  if (key?.startsWith('summon:')) return cardState(battle, key) ?? null;
-  if (!key?.startsWith('token:')) return null;
-  const unit = battle.units.find(token => token.mem.regularSummonCard
-    && summonUnitId(token) === key && live(token));
-  const state = unit && cardState(battle, unit.mem.regularSummonCard);
-  return state ? { ...state, unit } : null;
-}
-
-export function retreatRegularSummon(battle, key) {
-  if (!canDeployInViewport(battle.viewport) || battle.finished) throw Error('Battle workspace is inactive.');
-  const state = selectedRegularSummon(battle, key), token = state?.unit;
-  if (!live(token)) throw Error('Summon is not deployed.');
-  if (state.deck?.retreat) { state.deck.retreat(token); return; }
-  if (token.mem.metalCrabRest) { token.mem.metalCrabRest(); return; }
-  battle.addDp(token.ownerId, Math.floor(state.record.stats.cost * state.config.refundRatio));
-  battle.retreat(token, { permanent: true });
-}
+import { liveSummonUnit as live, ownedSummons as ownTokens, summonCardState as cardState } from './arkpedia-summon-deck.js';
+export { regularSummonCards, summonPlacementError, deployRegularSummon, selectedRegularSummon, retreatRegularSummon } from './arkpedia-summon-deck.js';
 
 /** Before setup; suppress inferred own-ATK/DEF/regeneration from S1. */
 export function customizeSummonerKit({ id, def, unit, kit }) {
+  if (!REGULAR_SUMMONS[id]) return;
   if (id === 'char_484_robrta') { customizeRoberta({ id, def, unit, kit }); return; }
   if (id === 'char_452_bstalk') { customizeBeanstalk({ id, def, unit, kit }); return; }
   if (id !== 'char_110_deepcl') return;
@@ -210,6 +47,7 @@ export function customizeSummonerKit({ id, def, unit, kit }) {
 /** After setup, before deployment. The original owner-finish ability removes
  * all owned Tentacles. Stock is charged afresh on a new owner deployment. */
 export function installSummoner({ battle, unit, def }) {
+  if (!REGULAR_SUMMONS[def.charId]) return;
   if (def.id === 'char_4123_ela') return; // Installed by the reviewed Ela controller.
   const config = REGULAR_SUMMONS[def.id];
   if (!config || config.skillId && def.skill?.id !== config.skillId
@@ -223,6 +61,16 @@ export function installSummoner({ battle, unit, def }) {
     record, stock: config.additiveBornStock ? previous?.stock ?? 0 : 0,
     readyAt: def.id === 'char_250_phatom' || config.preserveCooldown ? previous?.readyAt ?? battle.time : battle.time, unit: null,
     syncSkill: () => unit.mem.summonSkillSync?.(battle),
+    sourceToken: evidence.tokens[record.id],
+    createToken: config.tacticalPoint ? createMetalCrab : null,
+    installToken: def.id === 'char_179_cgbird' ? installNightingaleCage
+      : def.id === 'char_108_silent' ? installSilenceDrone
+      : def.id === 'char_1031_slent2' ? installSilenceParadigmaticDrone
+      : def.id === 'char_484_robrta' ? installModeler
+      : def.id === 'char_254_vodfox' ? (b, token, state) => {
+        installShamareDoll(b, token, state);
+        b.removeBuff(state.owner, 'shamare:stock-full');
+      } : null,
   };
   battle.regularSummons.set(key, state);
   if (def.id === 'char_254_vodfox') unit.mem.shamareState = state;

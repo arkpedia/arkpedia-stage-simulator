@@ -1,0 +1,2301 @@
+{
+  "code": "GA-EX-7",
+  "name": "Apple Pie",
+  "description": "Condition: \nMore enemies will appear.",
+  "battle": {
+    "max_life": 1,
+    "unit_limit": 8,
+    "initial_dp": 24,
+    "max_dp": 99,
+    "dp_per_second": 1,
+    "dp_recovery_interval_seconds": 1,
+    "max_play_time": -1
+  },
+  "rules": {
+    "variant": "challenge_mode",
+    "source": {
+      "repository": "Kengxxiao/ArknightsGameData",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "path": "zh_CN/gamedata/levels/activities/act16side/level_act16side_ex07.json",
+      "sha256": "25b89b8eaac3b9f41a938f25634763e270aec0842277f49b5bba790aef041c5f",
+      "gitBlob": "ec44884721ae8a7e980611eb47ffe8df662aece7",
+      "stageTable": {
+        "path": "zh_CN/gamedata/excel/stage_table.json",
+        "gitBlob": "02bb142f3c4a8ee547c9dac78e6552e0d9f8d9b0",
+        "sha256": "fb5761231abe236ba1ce9a0a73ddf5bdda9e0540795d9f3c53a0de026cbd2ce5",
+        "stageId": "act16side_ex07",
+        "levelId": "Activities/act16side/level_act16side_ex07"
+      }
+    },
+    "battle": {
+      "max_play_time": -1,
+      "max_life": 1
+    },
+    "enemies": {
+      "atk": 1.1,
+      "def": 1,
+      "maxHp": 1.15
+    },
+    "enemyAdd": {},
+    "hiddenGroups": {
+      "raid": true
+    }
+  },
+  "mapTags": [],
+  "mapTagSource": null,
+  "geometry": {
+    "slug": "ga-ex-7",
+    "rows": 8,
+    "cols": 12,
+    "tileLegend": [
+      {
+        "key": "tile_forbidden",
+        "height": "high",
+        "walkable": false,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_wall",
+        "height": "high",
+        "walkable": false,
+        "deployable": "ranged",
+        "flyable": true
+      },
+      {
+        "key": "tile_road",
+        "height": "low",
+        "walkable": true,
+        "deployable": "melee",
+        "flyable": true
+      },
+      {
+        "key": "tile_floor",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_end",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      },
+      {
+        "key": "tile_start",
+        "height": "low",
+        "walkable": true,
+        "deployable": "none",
+        "flyable": true
+      }
+    ],
+    "tileGrid": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        3,
+        0
+      ],
+      [
+        4,
+        2,
+        2,
+        1,
+        0,
+        1,
+        1,
+        0,
+        2,
+        0,
+        3,
+        5
+      ],
+      [
+        0,
+        1,
+        1,
+        1,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        3,
+        5
+      ],
+      [
+        0,
+        0,
+        0,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        3,
+        0
+      ],
+      [
+        0,
+        1,
+        2,
+        2,
+        1,
+        0,
+        1,
+        2,
+        2,
+        0,
+        3,
+        0
+      ],
+      [
+        4,
+        2,
+        2,
+        1,
+        1,
+        1,
+        1,
+        0,
+        2,
+        2,
+        3,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        5,
+        0
+      ]
+    ],
+    "routes": [
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 9
+        },
+        "end": {
+          "row": 6,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 2
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 120
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 1,
+          "col": 9
+        },
+        "end": {
+          "row": 2,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 1
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 240
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 2,
+          "col": 11
+        },
+        "end": {
+          "row": 2,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 10
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 8
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 1,
+              "col": 2
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 2,
+              "col": 1
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 7,
+          "col": 10
+        },
+        "end": {
+          "row": 6,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 9
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 2
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 21
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 11
+        },
+        "end": {
+          "row": 6,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 10
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 2
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 24
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 4,
+          "col": 5
+        },
+        "end": {
+          "row": 6,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 2
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 15
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 4
+        },
+        "end": {
+          "row": 6,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 2
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 15
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 4,
+          "col": 6
+        },
+        "end": {
+          "row": 6,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 2
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 15
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 5
+        },
+        "end": {
+          "row": 6,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 2
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 15
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 11
+        },
+        "end": {
+          "row": 6,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 10
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 2
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 90
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 4,
+          "col": 6
+        },
+        "end": {
+          "row": 6,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 2
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 15
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 7,
+          "col": 10
+        },
+        "end": {
+          "row": 6,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 7
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 2
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 4,
+          "col": 4
+        },
+        "end": {
+          "row": 6,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 2
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 15
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 6
+        },
+        "end": {
+          "row": 6,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 4,
+              "col": 4
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 2
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": -1,
+            "seconds": 15
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 11
+        },
+        "end": {
+          "row": 6,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 2
+            }
+          }
+        ],
+        "waits": []
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 11
+        },
+        "end": {
+          "row": 6,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 10
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 2
+            }
+          }
+        ],
+        "waits": [
+          {
+            "type": "wait_for_seconds",
+            "after_checkpoint": 0,
+            "seconds": 60
+          }
+        ]
+      },
+      {
+        "motion": "walk",
+        "start": {
+          "row": 3,
+          "col": 11
+        },
+        "end": {
+          "row": 6,
+          "col": 0
+        },
+        "checkpoints": [
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 10
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 3,
+              "col": 5
+            }
+          },
+          {
+            "type": "move",
+            "position": {
+              "row": 6,
+              "col": 2
+            }
+          }
+        ],
+        "waits": []
+      }
+    ],
+    "waves": [
+      {
+        "index": 0,
+        "duration": 259,
+        "pre_delay": 0,
+        "post_delay": 0,
+        "max_wait_for_next_wave": null,
+        "spawns": [
+          {
+            "enemy": "Renowned Pathfinder Dessert Vendor",
+            "enemy_id": "enemy_1217_rescar_2",
+            "count": 1,
+            "time": 3,
+            "route": 0,
+            "fragment": 0
+          },
+          {
+            "enemy": "Renowned Pathfinder Dessert Vendor",
+            "enemy_id": "enemy_1217_rescar_2",
+            "count": 1,
+            "time": 3,
+            "route": 1,
+            "fragment": 0
+          },
+          {
+            "enemy": "Pathfinder Sagittarius Prefect",
+            "enemy_id": "enemy_1213_mtrsnp_2",
+            "count": 1,
+            "time": 39,
+            "route": 2,
+            "fragment": 1
+          },
+          {
+            "enemy": "Pathfinder Legionarius Prefect",
+            "enemy_id": "enemy_1212_mtrfol_2",
+            "count": 1,
+            "time": 51,
+            "route": 3,
+            "fragment": 2
+          },
+          {
+            "enemy": "Pathfinder Legionarius Prefect",
+            "enemy_id": "enemy_1212_mtrfol_2",
+            "count": 1,
+            "time": 51,
+            "route": 4,
+            "fragment": 2
+          },
+          {
+            "enemy": "Pathfinder Sagittarius Prefect",
+            "enemy_id": "enemy_1213_mtrsnp_2",
+            "count": 2,
+            "time": 57,
+            "interval": 24,
+            "route": 2,
+            "fragment": 2
+          },
+          {
+            "enemy": "Pathfinder Veles",
+            "enemy_id": "enemy_1215_ptrarc",
+            "count": 1,
+            "time": 102,
+            "route": 5,
+            "fragment": 3
+          },
+          {
+            "enemy": "Pathfinder Veles",
+            "enemy_id": "enemy_1215_ptrarc",
+            "count": 1,
+            "time": 102,
+            "route": 6,
+            "fragment": 3
+          },
+          {
+            "enemy": "Pathfinder Sagittarius Prefect",
+            "enemy_id": "enemy_1213_mtrsnp_2",
+            "count": 2,
+            "time": 108,
+            "interval": 18,
+            "route": 2,
+            "fragment": 3
+          },
+          {
+            "enemy": "Renowned Pathfinder Dessert Vendor",
+            "enemy_id": "enemy_1217_rescar_2",
+            "count": 1,
+            "time": 141,
+            "route": 9,
+            "fragment": 4
+          },
+          {
+            "enemy": "Pathfinder Veles",
+            "enemy_id": "enemy_1215_ptrarc",
+            "count": 2,
+            "time": 153,
+            "interval": 36,
+            "route": 5,
+            "fragment": 5
+          },
+          {
+            "enemy": "Pathfinder Veles",
+            "enemy_id": "enemy_1215_ptrarc",
+            "count": 2,
+            "time": 153,
+            "interval": 36,
+            "route": 6,
+            "fragment": 5
+          },
+          {
+            "enemy": "Pathfinder Veles",
+            "enemy_id": "enemy_1215_ptrarc",
+            "count": 2,
+            "time": 153,
+            "interval": 36,
+            "route": 8,
+            "fragment": 5
+          },
+          {
+            "enemy": "Pathfinder Veles",
+            "enemy_id": "enemy_1215_ptrarc",
+            "count": 1,
+            "time": 189,
+            "route": 10,
+            "fragment": 5
+          },
+          {
+            "enemy": "Pathfinder Legionarius Prefect",
+            "enemy_id": "enemy_1212_mtrfol_2",
+            "count": 2,
+            "time": 153,
+            "interval": 18,
+            "route": 11,
+            "fragment": 5
+          },
+          {
+            "enemy": "Pathfinder Legionarius Prefect",
+            "enemy_id": "enemy_1212_mtrfol_2",
+            "count": 2,
+            "time": 156,
+            "interval": 18,
+            "route": 14,
+            "fragment": 5
+          },
+          {
+            "enemy": "Pathfinder Sagittarius Prefect",
+            "enemy_id": "enemy_1213_mtrsnp_2",
+            "count": 3,
+            "time": 153,
+            "interval": 18,
+            "route": 2,
+            "fragment": 5
+          },
+          {
+            "enemy": "Pathfinder Ballistarius Prefect",
+            "enemy_id": "enemy_1216_cansld_2",
+            "count": 1,
+            "time": 189,
+            "route": 15,
+            "fragment": 5
+          },
+          {
+            "enemy": "Pathfinder Sagittarius Prefect",
+            "enemy_id": "enemy_1213_mtrsnp_2",
+            "count": 2,
+            "time": 222,
+            "interval": 18,
+            "route": 2,
+            "fragment": 6
+          },
+          {
+            "enemy": "Pathfinder Legionarius Prefect",
+            "enemy_id": "enemy_1212_mtrfol_2",
+            "count": 2,
+            "time": 234,
+            "interval": 3,
+            "route": 11,
+            "fragment": 6
+          },
+          {
+            "enemy": "Pathfinder Veles",
+            "enemy_id": "enemy_1215_ptrarc",
+            "count": 1,
+            "time": 102,
+            "route": 9,
+            "fragment": 3,
+            "source": "wave"
+          },
+          {
+            "enemy": "Pathfinder Veles",
+            "enemy_id": "enemy_1215_ptrarc",
+            "count": 1,
+            "time": 102,
+            "route": 10,
+            "fragment": 3,
+            "source": "wave"
+          },
+          {
+            "enemy": "Pathfinder Veles",
+            "enemy_id": "enemy_1215_ptrarc",
+            "count": 1,
+            "time": 153,
+            "route": 13,
+            "fragment": 5,
+            "source": "wave"
+          },
+          {
+            "enemy": "Pathfinder Veles",
+            "enemy_id": "enemy_1215_ptrarc",
+            "count": 1,
+            "time": 189,
+            "route": 18,
+            "fragment": 5,
+            "source": "wave"
+          },
+          {
+            "enemy": "Pathfinder Veles",
+            "enemy_id": "enemy_1215_ptrarc",
+            "count": 1,
+            "time": 189,
+            "route": 19,
+            "fragment": 5,
+            "source": "wave"
+          },
+          {
+            "enemy": "Pathfinder Ballistarius Prefect",
+            "enemy_id": "enemy_1216_cansld_2",
+            "count": 1,
+            "time": 259,
+            "route": 25,
+            "fragment": 6,
+            "source": "wave"
+          },
+          {
+            "enemy": "Pathfinder Veles",
+            "enemy_id": "enemy_1215_ptrarc",
+            "count": 1,
+            "time": 234,
+            "route": 26,
+            "fragment": 6,
+            "source": "wave"
+          },
+          {
+            "enemy": "Pathfinder Veles",
+            "enemy_id": "enemy_1215_ptrarc",
+            "count": 1,
+            "time": 234,
+            "route": 27,
+            "fragment": 6,
+            "source": "wave"
+          },
+          {
+            "enemy": "Pathfinder Veles",
+            "enemy_id": "enemy_1215_ptrarc",
+            "count": 1,
+            "time": 234,
+            "route": 28,
+            "fragment": 6,
+            "source": "wave"
+          },
+          {
+            "enemy": "Pathfinder Veles",
+            "enemy_id": "enemy_1215_ptrarc",
+            "count": 1,
+            "time": 234,
+            "route": 29,
+            "fragment": 6,
+            "source": "wave"
+          },
+          {
+            "enemy": "Pathfinder Veles",
+            "enemy_id": "enemy_1215_ptrarc",
+            "count": 1,
+            "time": 234,
+            "route": 30,
+            "fragment": 6,
+            "source": "wave"
+          },
+          {
+            "enemy": "Pathfinder Veles",
+            "enemy_id": "enemy_1215_ptrarc",
+            "count": 1,
+            "time": 234,
+            "route": 31,
+            "fragment": 6,
+            "source": "wave"
+          }
+        ]
+      }
+    ],
+    "spawnTiles": [
+      {
+        "key": "tile_start",
+        "row": 2,
+        "col": 11,
+        "routes": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 3,
+        "col": 11,
+        "routes": [
+          4,
+          9,
+          14,
+          15,
+          16
+        ]
+      },
+      {
+        "key": "tile_start",
+        "row": 7,
+        "col": 10,
+        "routes": [
+          3,
+          11,
+          11
+        ]
+      }
+    ],
+    "objectiveTiles": [
+      {
+        "key": "tile_end",
+        "row": 2,
+        "col": 0,
+        "routes": [
+          1,
+          2,
+          2,
+          2,
+          2,
+          2
+        ]
+      },
+      {
+        "key": "tile_end",
+        "row": 6,
+        "col": 0,
+        "routes": [
+          0,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          5,
+          10,
+          6,
+          8,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          11,
+          16,
+          5,
+          10,
+          6,
+          8,
+          12,
+          13
+        ]
+      }
+    ],
+    "enemyConfigurations": [
+      {
+        "enemy_id": "enemy_1212_mtrfol_2",
+        "slug": "pathfinder_legionarius_prefect",
+        "name": "Pathfinder Legionarius Prefect",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1213_mtrsnp_2",
+        "slug": "pathfinder_sagittarius_prefect",
+        "name": "Pathfinder Sagittarius Prefect",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1215_ptrarc",
+        "slug": "pathfinder_veles",
+        "name": "Pathfinder Veles",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1216_cansld_2",
+        "slug": "pathfinder_ballistarius_prefect",
+        "name": "Pathfinder Ballistarius Prefect",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1217_rescar_2",
+        "slug": "renowned_pathfinder_dessert_vendor",
+        "name": "Renowned Pathfinder Dessert Vendor",
+        "database_level": 0
+      },
+      {
+        "enemy_id": "enemy_1218_bomscr_2",
+        "slug": "luscious_snack_cart",
+        "name": "Luscious Snack Cart",
+        "database_level": 0
+      }
+    ],
+    "suppliedUnits": {
+      "fixed_squad": [],
+      "deployable_tokens": []
+    },
+    "hasConditionalSpawns": false,
+    "hiddenGroupsMerged": 12
+  },
+  "terrain": [],
+  "conditionalHandled": false,
+  "devices": [
+    {
+      "col": 5,
+      "description": "Less likely to be attacked, and restores 75 HP per second",
+      "hidden": false,
+      "key": "trap_057_wpnsts",
+      "kind": "device",
+      "name": "'Gelato Stop'",
+      "row": 5,
+      "instance": {
+        "level": 1,
+        "skillLevel": 1,
+        "skillIndex": 0
+      }
+    },
+    {
+      "col": 4,
+      "description": "Less likely to be attacked, and restores 75 HP per second",
+      "hidden": false,
+      "key": "trap_057_wpnsts",
+      "kind": "device",
+      "name": "'Gelato Stop'",
+      "row": 2,
+      "instance": {
+        "level": 1,
+        "skillLevel": 1,
+        "skillIndex": 1
+      }
+    },
+    {
+      "col": 2,
+      "description": "Less likely to be attacked, and restores 75 HP per second",
+      "hidden": false,
+      "key": "trap_057_wpnsts",
+      "kind": "device",
+      "name": "'Gelato Stop'",
+      "row": 4,
+      "instance": {
+        "level": 1,
+        "skillLevel": 1,
+        "skillIndex": 0
+      }
+    },
+    {
+      "col": 9,
+      "description": "Less likely to be attacked, and restores 75 HP per second",
+      "hidden": false,
+      "key": "trap_057_wpnsts",
+      "kind": "device",
+      "name": "'Gelato Stop'",
+      "row": 5,
+      "instance": {
+        "level": 1,
+        "skillLevel": 1,
+        "skillIndex": 1
+      }
+    },
+    {
+      "col": 9,
+      "description": "Less likely to be attacked, and restores 75 HP per second",
+      "hidden": false,
+      "key": "trap_057_wpnsts",
+      "kind": "device",
+      "name": "'Gelato Stop'",
+      "row": 2,
+      "instance": {
+        "level": 1,
+        "skillLevel": 1,
+        "skillIndex": 1
+      }
+    }
+  ],
+  "tokens": [],
+  "pathing": {
+    "schemaVersion": 1,
+    "syntheticRoutes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      8,
+      9,
+      10,
+      11,
+      13,
+      14,
+      15
+    ],
+    "producer": "Arkpedia stage browser / buildPlaybackPaths",
+    "stage": "GA-EX-7",
+    "geometryHash": "b85648c48bdab75fa2d49930ef5d90ac5e257a95470ede451705e5ee5683e9b0",
+    "moveScale": 0.65,
+    "paths": {
+      "0": {
+        "points": [
+          [
+            9,
+            3
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            0,
+            6
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "1": {
+        "points": [
+          [
+            9,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            0,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "2": {
+        "points": [
+          [
+            11,
+            2
+          ],
+          [
+            10,
+            2
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            0,
+            2
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "3": {
+        "points": [
+          [
+            10,
+            7
+          ],
+          [
+            9,
+            6
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            0,
+            6
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "4": {
+        "points": [
+          [
+            11,
+            3
+          ],
+          [
+            10,
+            3
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            0,
+            6
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "5": {
+        "points": [
+          [
+            5,
+            4
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            0,
+            6
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "6": {
+        "points": [
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            0,
+            6
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "8": {
+        "points": [
+          [
+            5,
+            3
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            0,
+            6
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "9": {
+        "points": [
+          [
+            11,
+            3
+          ],
+          [
+            10,
+            3
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            0,
+            6
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "10": {
+        "points": [
+          [
+            6,
+            4
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            0,
+            6
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "11": {
+        "points": [
+          [
+            10,
+            7
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            0,
+            6
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "13": {
+        "points": [
+          [
+            6,
+            3
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            0,
+            6
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "14": {
+        "points": [
+          [
+            11,
+            3
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            0,
+            6
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "breaks": [],
+        "holds": []
+      },
+      "15": {
+        "points": [
+          [
+            11,
+            3
+          ],
+          [
+            10,
+            3
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            0,
+            6
+          ]
+        ],
+        "distances": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "breaks": [],
+        "holds": []
+      }
+    }
+  },
+  "art": null,
+  "gates": null,
+  "fixedSquad": null,
+  "enemies": {
+    "enemy_1217_rescar_2": {
+      "key": "enemy_1217_rescar_2",
+      "prefabKey": "enemy_1217_rescar_2",
+      "name": "Renowned Pathfinder Dessert Vendor",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 25874.999999999996,
+        "atk": 660,
+        "def": 650,
+        "res": 30,
+        "moveSpeed": 0.6,
+        "bat": 5,
+        "aspd": 100,
+        "rangeRadius": 2,
+        "rawRangeRadius": 2,
+        "blockCnt": 1,
+        "massLevel": 5,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "While this unit is holding Ammo, periodically summons a <Luscious Snack Cart>. Ammo capacity: 3",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Deals significantly increased damage to enemies blocking this unit",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "shotbuff.attack@combat_atk_scale": 2.5
+        },
+        "bbStr": {},
+        "groups": {
+          "shotbuff": [
+            "attack@combat_atk_scale"
+          ]
+        }
+      },
+      "skills": [
+        {
+          "prefabKey": "BornCar",
+          "priority": 1,
+          "cooldown": 10,
+          "initCooldown": 5,
+          "spCost": 1,
+          "bb": {},
+          "bbStr": {}
+        }
+      ],
+      "sp": {
+        "type": "INCREASE_WITH_TIME",
+        "maxSp": 3,
+        "initSp": 3,
+        "increment": 0
+      },
+      "notCountInTotal": false,
+      "tags": [
+        "machine"
+      ]
+    },
+    "enemy_1218_bomscr_2": {
+      "key": "enemy_1218_bomscr_2",
+      "prefabKey": "enemy_1218_bomscr_2",
+      "name": "Luscious Snack Cart",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 4370,
+        "atk": 330,
+        "def": 200,
+        "res": 20,
+        "moveSpeed": 1.6,
+        "bat": 1,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "arts",
+        "dmgTypes": [
+          "arts"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Detonates when blocked, inflicting Arts damage and <$ba.dt.burning>Burn damage</> to all nearby targets",
+          "format": "SILENCE"
+        },
+        {
+          "text": "Explosion deals a large amount of Arts damage to nearby 'Gelato Stops'",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "boom.attack@s2mode_ep_fire_damage": 350,
+          "boom.attack@s2mode_boom_atk_totrap": 7500,
+          "boom.attack@s2mode_boom_atk": 550
+        },
+        "bbStr": {},
+        "groups": {
+          "boom": [
+            "attack@s2mode_boom_atk",
+            "attack@s2mode_boom_atk_totrap",
+            "attack@s2mode_ep_fire_damage"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": [
+        "machine"
+      ]
+    },
+    "enemy_1213_mtrsnp_2": {
+      "key": "enemy_1213_mtrsnp_2",
+      "prefabKey": "enemy_1213_mtrsnp_2",
+      "name": "Pathfinder Sagittarius Prefect",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 6324.999999999999,
+        "atk": 385.00000000000006,
+        "def": 100,
+        "res": 0,
+        "moveSpeed": 0.9,
+        "bat": 3,
+        "aspd": 100,
+        "rangeRadius": 2,
+        "rawRangeRadius": 2,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "While this unit is holding Ammo, ATK increases. Ammo capacity: 1",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "shotbuff.attack@headshot_atk_scale": 2,
+          "shotbuff.attack@headshot_sp": -1
+        },
+        "bbStr": {},
+        "groups": {
+          "shotbuff": [
+            "attack@headshot_atk_scale",
+            "attack@headshot_sp"
+          ]
+        }
+      },
+      "skills": [],
+      "sp": {
+        "type": "INCREASE_WITH_TIME",
+        "maxSp": 1,
+        "initSp": 1,
+        "increment": 0
+      },
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1212_mtrfol_2": {
+      "key": "enemy_1212_mtrfol_2",
+      "prefabKey": "enemy_1212_mtrfol_2",
+      "name": "Pathfinder Legionarius Prefect",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "MELEE",
+      "stats": {
+        "maxHp": 5520,
+        "atk": 440.00000000000006,
+        "def": 200,
+        "res": 0,
+        "moveSpeed": 1.1,
+        "bat": 2.5,
+        "aspd": 100,
+        "rangeRadius": 0,
+        "rawRangeRadius": 0,
+        "blockCnt": 1,
+        "massLevel": 1,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [],
+      "talents": {
+        "bb": {},
+        "bbStr": {},
+        "groups": {}
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1215_ptrarc": {
+      "key": "enemy_1215_ptrarc",
+      "prefabKey": "enemy_1215_ptrarc",
+      "name": "Pathfinder Veles",
+      "level": 0,
+      "rank": "NORMAL",
+      "applyWay": "RANGED",
+      "stats": {
+        "maxHp": 6899.999999999999,
+        "atk": 418.00000000000006,
+        "def": 200,
+        "res": 0,
+        "moveSpeed": 0.8,
+        "bat": 2,
+        "aspd": 100,
+        "rangeRadius": 2,
+        "rawRangeRadius": 2,
+        "blockCnt": 1,
+        "massLevel": 2,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "Able to land directly onto the battlefield.",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Prioritizes attacking 'Gelato Stops'. Deals additional Arts Damage to 'Gelato Stops'.",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "shottrap.attack@trapdamage": 1000
+        },
+        "bbStr": {},
+        "groups": {
+          "shottrap": [
+            "attack@trapdamage"
+          ]
+        }
+      },
+      "skills": [],
+      "notCountInTotal": false,
+      "tags": []
+    },
+    "enemy_1216_cansld_2": {
+      "key": "enemy_1216_cansld_2",
+      "prefabKey": "enemy_1216_cansld_2",
+      "name": "Pathfinder Ballistarius Prefect",
+      "level": 0,
+      "rank": "ELITE",
+      "applyWay": "ALL",
+      "stats": {
+        "maxHp": 20700,
+        "atk": 1100,
+        "def": 1500,
+        "res": 0,
+        "moveSpeed": 0.6,
+        "bat": 4.5,
+        "aspd": 100,
+        "rangeRadius": 2.5,
+        "rawRangeRadius": 2.5,
+        "blockCnt": 1,
+        "massLevel": 4,
+        "lpr": 1,
+        "hpRecoveryPerSec": 0,
+        "elementRes": 0,
+        "elementDmgRes": 0,
+        "hitRatePhys": 0,
+        "hitRateArts": 0,
+        "dmgType": "phys",
+        "dmgTypes": [
+          "phys"
+        ],
+        "motion": "WALK",
+        "immunities": {
+          "stun": false,
+          "silence": false,
+          "sleep": false,
+          "frozen": false,
+          "levitate": false
+        },
+        "otherImmunities": [],
+        "tauntLevel": 0
+      },
+      "abilities": [
+        {
+          "text": "While this unit is holding Ammo, attacks become long-ranged and deal Splash Damage. Ammo capacity: 2",
+          "format": "NORMAL"
+        },
+        {
+          "text": "Deals additional Arts damage to 'Gelato Stops'",
+          "format": "NORMAL"
+        }
+      ],
+      "talents": {
+        "bb": {
+          "shotbuff.attack@headshot_atk_scale": 1.25,
+          "shotbuff.attack@headshot_sp": -1,
+          "shotbuff.attack@headshot_trapdamage": 3000
+        },
+        "bbStr": {},
+        "groups": {
+          "shotbuff": [
+            "attack@headshot_atk_scale",
+            "attack@headshot_sp",
+            "attack@headshot_trapdamage"
+          ]
+        }
+      },
+      "skills": [],
+      "sp": {
+        "type": "INCREASE_WITH_TIME",
+        "maxSp": 2,
+        "initSp": 2,
+        "increment": 0
+      },
+      "notCountInTotal": false,
+      "tags": []
+    }
+  },
+  "contentAddition": {
+    "schemaVersion": 1,
+    "source": {
+      "repository": "arkpedia/arkpedia-data",
+      "commit": "66232ee06377d791fb130248d680764c286e5c99",
+      "files": [
+        {
+          "path": "stages/ga-ex-7_challenge_mode.json",
+          "sha256": "7799dac5c8800d87b61fc13de3b306ecb532bba912ead30fbb48c13922b4dec7"
+        },
+        {
+          "path": "stage-geometry/ga-ex-7.json",
+          "sha256": "0488e8c6778aeb3d1fda104f7b10bbef5c2c3f9163a102c5b2a84831c064df25"
+        },
+        {
+          "path": "stage-devices.json",
+          "sha256": "ce327e4670a1e37ede4c0e0b269225ea549699f9b8a40158f08cb875e01ea274"
+        },
+        {
+          "path": "stage-conditional/ga-ex-7.json",
+          "sha256": "1c28673ee0ce75f6215a712a2816cf28275d7c1c2aaadd043f576b9669d144e9"
+        }
+      ],
+      "localFiles": [
+        {
+          "path": "data/stage-rules/ga-ex-7_challenge_mode.json",
+          "sha256": "64e463ef3fec695fbb4b2d41472ebcc3b0c7b70a036fd5effaa1fbdaac24096e"
+        },
+        {
+          "path": "data/stage-rules/levels/dd4e9dca2fe2675815e3ea2cab4de04879e1f04294b02ca30c97b003bc0cd0b6.json",
+          "sha256": "dd4e9dca2fe2675815e3ea2cab4de04879e1f04294b02ca30c97b003bc0cd0b6"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/ec44884721ae8a7e980611eb47ffe8df662aece7.json",
+          "sha256": "25b89b8eaac3b9f41a938f25634763e270aec0842277f49b5bba790aef041c5f"
+        },
+        {
+          "path": "data/arkpedia-device-source.json",
+          "sha256": "643469064e2537c8e38d8ea43d343c45494eceb57147a41967a5ed2d05eb4210"
+        },
+        {
+          "path": "data/arkpedia-device-native-source.json",
+          "sha256": "6eb7ecfe8ea9eb1f1e810f56c8304ffbbf0636aa744ffca3d0ad529ac11f6a9c"
+        },
+        {
+          "path": "data/arkpedia-enemy-records.json",
+          "sha256": "b75ba11f79473268f8408b28df67165101997fbf8ec8bdcfaa6f68354111b3a8"
+        },
+        {
+          "path": "data/arkpedia-enemy-support.json",
+          "sha256": "4251226f0cefcc26872308c5882e5ce25c12f93bd2f894a3307efafc3ca8efcb"
+        },
+        {
+          "path": "data/arkpedia-enemy-native-abilities.json",
+          "sha256": "b38fd179f48aa3b293623d7792834132fe1edd29859abc1d42720e6ac465b92d"
+        },
+        {
+          "path": "data/arkpedia-snack-animations.json",
+          "sha256": "b148315cdfb30499bca571cc3030e9915b88b53e2c7135fe73e18a4764329b9b"
+        },
+        {
+          "path": ".cache/arkpedia/original-level-blobs/ec44884721ae8a7e980611eb47ffe8df662aece7.json",
+          "sha256": "25b89b8eaac3b9f41a938f25634763e270aec0842277f49b5bba790aef041c5f"
+        }
+      ]
+    },
+    "dependencies": {
+      "enemies": [
+        "enemy_1212_mtrfol_2",
+        "enemy_1213_mtrsnp_2",
+        "enemy_1215_ptrarc",
+        "enemy_1216_cansld_2",
+        "enemy_1217_rescar_2",
+        "enemy_1218_bomscr_2"
+      ],
+      "devices": [
+        "'Gelato Stop'"
+      ],
+      "tokens": []
+    },
+    "validation": {
+      "smoke": {
+        "seconds": 10,
+        "spawned": 7,
+        "errors": 0
+      },
+      "publicReview": "pending",
+      "waveSchedule": {
+        "id": "ga-ex-7_challenge_mode",
+        "seconds": 288.3,
+        "spawned": 53,
+        "expected": 43,
+        "dynamicSpawns": 10,
+        "reason": "cleared",
+        "scope": "No-deployment route/wave sweep with raised life only, using the compiled stage time limit; not a playable clear or fidelity approval"
+      },
+      "browserStartup": {
+        "id": "ga-ex-7_challenge_mode",
+        "seconds": 16.3,
+        "errors": [],
+        "units": 9,
+        "canvas": true,
+        "scope": "Mobile landscape browser startup and canvas runtime; not a fidelity approval"
+      }
+    }
+  }
+}

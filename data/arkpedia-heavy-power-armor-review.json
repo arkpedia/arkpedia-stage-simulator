@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-15",
+  "scope": "Shared heavy armour punch, four dormant devices, route waits/tunnels and lazy original body artwork; behavioral checkpoint, not native frame parity",
+  "sourceFiles": {
+    "shared/arkpedia/enemy-heavy-power-armor.js": "0a5fa2e7819d5a996b11d305963c91bd0752900e596b2afa4056afbef3092170",
+    "server/sim/content/arkpedia-enemy-heavy-power-armor.js": "d3fa6eadaf2590d0a017ab690f3eaed32f970acb5321b2aecf7902666d1ecb1e",
+    "shared/arkpedia/stage-power-armor.js": "5362257cf9c69203f4d71205bc9a75308830f27efce8acfdbb1febff2036ee1e",
+    "server/sim/content/arkpedia-stage-power-armor.js": "2d89c10cce1cc4d6d509d9b51b754948219c3a8816ed15d271aaee18ad2013ce",
+    "tools/arkpedia/stage-device-instances.mjs": "1884c3d58ae43d92928aa79d26a04f69c1caeb448768d914d319d68397a42f25",
+    "tools/arkpedia/stage-branches.mjs": "e38f003ef7c17d7acc24577563596c011a0cae2a55813825ae37223eb8e4916b",
+    "tools/arkpedia/stage-waves.mjs": "13c9d462e09c7581604815e6a9ea5ea237c99dd56addae429bbbcc38a138bcb2",
+    "tools/arkpedia/stage-library.mjs": "b117ce6a89fcb27cbf965155fa37e14d07ba90aa4474cb9acb421285ba37b9dd",
+    "shared/arkpedia/stage-path.js": "25a5580f6ff63972944139ef4c127562bf296bad2da7a1d248f52399be7d319b",
+    "shared/arkpedia/facing.js": "dd1695b3184cc54339864567ed09e15a86add110ed0de958adad0eaad8c8ff0d",
+    "shared/arkpedia/operator-library.js": "09e17f2274f34d8d45bcd04e83d323002e6892f9b8a8e9448a69e90af394e7a1",
+    "tools/arkpedia/body-artwork.mjs": "3e36af45b7e66c11a4ff94907f73e85b81ef951b9c57dec0eb03dd312de9db9f",
+    "tools/arkpedia/device-artwork.mjs": "71aa4f29222aeef175f23519b710ed759fa09207ab485f0da71c0b39e4b43d77",
+    "tools/arkpedia/extract-native-device-models.py": "4925f1becadabc91141a03e521e8a0872a682cfb6e22b1fbf0eda8056cdec97e",
+    "data/arkpedia-heavy-power-armor-animations.json": "74b156308913b1c988926145a1b3de42e2cb933ac22cc3a9544be4a789f9734d",
+    "data/arkpedia-enemy-native-abilities.json": "a7f10e38bdf58378a732cbd2817516eedb81563abe3ca8b7606236bef9ffe7e6",
+    "data/arkpedia-device-native-source.json": "70e37af03c03e932d84224829f2f01481744391a22fac09bc2d8549ceba17d77",
+    "data/arkpedia-enemy-support.json": "88c493b7ba7494c1f13bd8de817d33b95950e4f0bbf58f5806b501458298a24d",
+    "data/arkpedia-enemy-artwork.json": "2db4662a1283730dcc4d174b909f5b401d5095d093cf18feecc6f0a486d1a42e",
+    "data/arkpedia-device-artwork.json": "9b64de4b55b3d4709513f6e97e1f796eab73e085356e375ddd56090e63b58756",
+    "docs/STAGE-POWER-ARMOR-REVIEW.md": "12f921e1d5104770face2b822b52fff9146fdc97384ea877367f167634238fb1"
+  },
+  "checks": [
+    {
+      "path": "/tmp/power-armor-heavy-broad-tests.log",
+      "sha256": "fd31500d31595c1be78e7968eb51d025dcf12f03bca134e8a194d92436fd7b55"
+    },
+    {
+      "path": "/tmp/power-armor-heavy-device-tests.log",
+      "sha256": "129cc19bfac20508a93dbc346bbb2a7ad43d9cfd4448bdbc0e1cfa451c6e00be"
+    },
+    {
+      "path": "/tmp/power-armor-route-tests.log",
+      "sha256": "d3ea10a71bbe91c43cf1576f4dc9c1b4c31676b9402283ef5c8dc2875b0feec1"
+    },
+    {
+      "path": "/tmp/power-armor-device-client-tests.log",
+      "sha256": "7d964f604086156bcbfefbb3f0e04c29c9078e4d088b2a7a5b3539c1ec875250"
+    },
+    {
+      "path": "/tmp/power-armor-device-graph-tests.log",
+      "sha256": "8e215b203941f1e0ad7be7bd5da8ccaeae1979c34f72732f0742396889635d52"
+    },
+    {
+      "path": "/tmp/power-armor-heavy-stage-smoke-final.log",
+      "sha256": "a1ea21cf69acf2a4e2ec5181d6f474731b239779f22fa1ee8499677b23be909e"
+    },
+    {
+      "path": "/tmp/power-armor-heavy-support-check.log",
+      "sha256": "f8719635b2ddabae390a159becc05db573de8e4bc034a6d43ac0817b6767d5f6"
+    },
+    {
+      "path": "/tmp/power-armor-device-library-check.log",
+      "sha256": "150fed1ba74d3d73bdf1a3968912f645a44276a50fbcddbb7d13b69b95415095"
+    },
+    {
+      "path": "/tmp/power-armor-device-sd-tests.log",
+      "sha256": "659ece9946aba0b4b8a8a93de43483f17759298465da2bbead849417b38e77c4"
+    },
+    {
+      "path": "/tmp/power-armor-device-sd-validation.log",
+      "sha256": "ec512a9e53505d333055dac08691efb26a3be4015da73b521c4ab6b80519d7e0"
+    },
+    {
+      "path": "/tmp/power-armor-heavy-art-browser.log",
+      "sha256": "fe57a9ce467da3e4144d54eabd74b881be5ff2a5ccc26e496f6dd3ea81337f41"
+    },
+    {
+      "path": "/tmp/power-armor-device-art-browser.log",
+      "sha256": "0e3eabb49efac09ed0e1a4a0b6198dc847efba86eabb6e69062b7956c7ef3b19"
+    },
+    {
+      "path": "/tmp/power-armor-device-stage-browser.log",
+      "sha256": "fbe73098a7619177e870f3e1c28c8f4bd75effab05604a469f8263713851dd4b"
+    }
+  ],
+  "coverage": {
+    "operators": 431,
+    "skills": 949,
+    "supportedEnemies": 658,
+    "totalEnemies": 2163,
+    "loadableStages": 902,
+    "totalCombatStages": 3892,
+    "enemyModels": 444,
+    "deviceModels": 4
+  },
+  "sharedAssets": {
+    "heavyCommit": "4e32ed39583d10f71a5ba4340a6380aa57b99adb",
+    "deviceCommit": "69513ddee3411a7bd8f7296080581b28efecd39c",
+    "completeModels": 3721,
+    "tests": 94,
+    "publication": "Local immutable commits; no remote push"
+  },
+  "browser": [
+    {
+      "path": ".cache/arkpedia/heavy-power-armor-art-review/review.json",
+      "sha256": "cc8b39466e9b7effc57db1bbd0466c3a0ce97b23711c4d9db4282bdcdbd97c94"
+    },
+    {
+      "path": ".cache/arkpedia/power-armor-device-art-review/review.json",
+      "sha256": "95b7eb9f31d3ba33c7b8ba92810a6bab1139c7325a1ca3624315ed986ead3ed2"
+    },
+    {
+      "path": ".cache/arkpedia/power-armor-device-stage-review/results.json",
+      "sha256": "696bb0848a14f9c49c68003b1ce81ea58e56290c72dd1d8437c500d009800da6"
+    }
+  ]
+}

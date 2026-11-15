@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Ordinary-stage skills use pinned Global blackboards and the original client selectors.
+import { stageCardBaseCost } from './arkpedia-stage-card-cost.js';
 import { MEDIC_OPERATORS } from '../../../shared/arkpedia/medic-operators.js';
 import { bodyInKeys } from '../body.js';
 
@@ -97,6 +98,6 @@ export function installMedicSquad({ battle, records }) {
     if (ctx.opts.regen || ctx.target.side !== 'ally' || ctx.target.kind !== 'op') return;
     const record = records[ctx.target.defId];
     // Check the selected build's potential-adjusted DP cost, not redeploy inflation.
-    if (record && record.stats.cost <= talent.cost) ctx.amount *= talent.heal_scale;
+    if (record && stageCardBaseCost(battle, record) <= talent.cost) ctx.amount *= talent.heal_scale;
   });
 }

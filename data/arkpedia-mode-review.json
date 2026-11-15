@@ -1,0 +1,233 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-14",
+  "scope": "Individual-stage Integrated Strategies numerical settings; not full runs, collectible effects or client-frame certification.",
+  "manifest": {
+    "path": "data/arkpedia-library.json",
+    "sha256": "e40628475fa4754658250c9f7d4d233878f3b136fa0bebd542ad85d867bc4a88"
+  },
+  "sourceFiles": [
+    {
+      "path": "shared/arkpedia/stage-mode-rules.js",
+      "sha256": "0b714f64758cdc713ce89901b8798d7c2600afe9875fa41edc8175d6a426c7e6"
+    },
+    {
+      "path": "tools/arkpedia/stage-mode-rules.mjs",
+      "sha256": "bac57cec52c68c3dd68953d5e18ca012c56640dc294f590dd0ea120b7fb56903"
+    },
+    {
+      "path": "public/arkpedia/app.js",
+      "sha256": "407203504d434f56b64d1eb4ca8d643bc79515b03784b567c2fb7d8172621d72"
+    },
+    {
+      "path": "test/arkpedia-stage-mode-rules.test.js",
+      "sha256": "30415d1b480701e692e97089ef87253945ddb483456fb7daf87e5bedb0b45db3"
+    },
+    {
+      "path": "tools/arkpedia/review-stage-mode.mjs",
+      "sha256": "1f83ebdefb635d2f8f0215334a66c151d644135cc8a373ce2ccc5c955f7ef473"
+    }
+  ],
+  "validation": {
+    "focusedTests": 34,
+    "smoke": {
+      "scope": "10-second constructor/runtime smoke for every available compiled stage; not a playable-clear or fidelity certificate",
+      "available": 776,
+      "completed": 776,
+      "failures": [],
+      "uniqueComponentsRead": 5264,
+      "cache": {
+        "cachedBytes": 11424148,
+        "cachedObjects": 5264,
+        "pending": 0
+      }
+    },
+    "modeBrowser": [
+      {
+        "mobile": false,
+        "rules": {
+          "life": 9,
+          "initialDp": 23,
+          "deploymentLimit": 4,
+          "dpRate": 0,
+          "enemyHp": 2,
+          "enemyAtk": 1.5,
+          "enemyDef": 0.5
+        },
+        "life": 9,
+        "dp": 23,
+        "unitLimit": 4,
+        "spawned": true,
+        "errors": [],
+        "restartPreservedRules": true
+      },
+      {
+        "mobile": true,
+        "rules": {
+          "life": 9,
+          "initialDp": 23,
+          "deploymentLimit": 4,
+          "dpRate": 0,
+          "enemyHp": 2,
+          "enemyAtk": 1.5,
+          "enemyDef": 0.5
+        },
+        "life": 9,
+        "dp": 23,
+        "unitLimit": 4,
+        "spawned": true,
+        "errors": [],
+        "restartPreservedRules": true
+      }
+    ],
+    "generalBrowser": [
+      {
+        "id": "0-1",
+        "mobile": false,
+        "options": 3892,
+        "componentRequests": 9,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true
+      },
+      {
+        "id": "0-4_challenge_mode",
+        "mobile": false,
+        "options": 3892,
+        "componentRequests": 11,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 2,
+        "canvas": true,
+        "originalWaveProgram": true
+      },
+      {
+        "id": "3-6_challenge_mode",
+        "mobile": false,
+        "options": 3892,
+        "componentRequests": 15,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true,
+        "waveGate": {
+          "heldWave": 1,
+          "blockedFutureSpawns": 19,
+          "releasedWave": 2,
+          "errors": []
+        }
+      },
+      {
+        "id": "bw-8_challenge_mode",
+        "mobile": false,
+        "options": 3892,
+        "componentRequests": 29,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true
+      },
+      {
+        "id": "ps-3_challenge_mode",
+        "mobile": false,
+        "options": 3892,
+        "componentRequests": 15,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true
+      },
+      {
+        "id": "0-6_challenge_mode",
+        "mobile": false,
+        "blockedBeforeComponentFetch": true
+      },
+      {
+        "id": "0-1",
+        "mobile": true,
+        "options": 3892,
+        "componentRequests": 9,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true
+      },
+      {
+        "id": "0-4_challenge_mode",
+        "mobile": true,
+        "options": 3892,
+        "componentRequests": 11,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 2,
+        "canvas": true,
+        "originalWaveProgram": true
+      },
+      {
+        "id": "3-6_challenge_mode",
+        "mobile": true,
+        "options": 3892,
+        "componentRequests": 15,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true,
+        "waveGate": {
+          "heldWave": 1,
+          "blockedFutureSpawns": 19,
+          "releasedWave": 2,
+          "errors": []
+        }
+      },
+      {
+        "id": "bw-8_challenge_mode",
+        "mobile": true,
+        "options": 3892,
+        "componentRequests": 29,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true
+      },
+      {
+        "id": "ps-3_challenge_mode",
+        "mobile": true,
+        "options": 3892,
+        "componentRequests": 15,
+        "seconds": 10,
+        "errors": [],
+        "devices": 0,
+        "restriction": 0,
+        "canvas": true,
+        "originalWaveProgram": true
+      },
+      {
+        "id": "0-6_challenge_mode",
+        "mobile": true,
+        "blockedBeforeComponentFetch": true
+      },
+      {
+        "homeFixture": true,
+        "initialDp": 99,
+        "waves": 0
+      }
+    ]
+  }
+}

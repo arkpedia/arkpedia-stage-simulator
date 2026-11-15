@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "mergePolicy": "Keep every primary Global record unchanged; add only absent IDs from the pinned CN supplement. Behavior admission is separate.",
+  "primary": {
+    "channel": "global",
+    "repository": "Kengxxiao/ArknightsGameData_YoStar",
+    "commit": "57010cb5b2afea112cae57daa756b58676ba6850",
+    "files": {
+      "enemy_database": {
+        "path": "en_US/gamedata/levels/enemydata/enemy_database.json",
+        "bytes": 10273791,
+        "sha256": "962642b9ec347d5a749e8519ec61c0f9fa6ea26abeefc954b52e1c88d6a49a0a"
+      },
+      "enemy_handbook_table": {
+        "path": "en_US/gamedata/excel/enemy_handbook_table.json",
+        "bytes": 1434065,
+        "sha256": "f1a074d2795ae897807ff15dafee6346e06defe9e339a46873d38ee83cf61e8b"
+      }
+    }
+  },
+  "supplements": [
+    {
+      "channel": "cn",
+      "repository": "Kengxxiao/ArknightsGameData",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "files": {
+        "enemy_database": {
+          "path": "zh_CN/gamedata/levels/enemydata/enemy_database.json",
+          "bytes": 15022043,
+          "sha256": "f8dd03997d0e3eae65cc4b77bcb6b5ef198488504f738defc31cad5e13c3680c",
+          "gitBlob": "f0ad695007d629c7abd9d3cfa15d45be7f3fb835"
+        },
+        "enemy_handbook_table": {
+          "path": "zh_CN/gamedata/excel/enemy_handbook_table.json",
+          "bytes": 1827828,
+          "sha256": "a1f649002cdb4ea485356aab918ce401b5852adbc31b6e47fca95e1db8f4c43d",
+          "gitBlob": "15f02483562dccde8f964eb983068b6f5d686220"
+        }
+      }
+    }
+  ]
+}

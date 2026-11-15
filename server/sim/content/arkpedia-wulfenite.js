@@ -48,6 +48,7 @@ export function customizeWulfeniteKit({ battle: b, id, def, unit: u, kit }) {
 }
 export function installWulfenite({ battle: b, unit: u, def }) {
   if (def.charId !== ID) return;
+  u.mem.regularSummonFactory = createWulfeniteMine;
   b.on('tick', () => syncStock(b, u), { owner: u });
   b.on('death', ({ unit }) => { if (unit === u) b.removeBuff(u, 'wulfenite:stock-full'); }, { owner: u });
 }

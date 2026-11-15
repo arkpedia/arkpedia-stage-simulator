@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { stageSummonCost, stageCardRespawnTime } from './arkpedia-stage-card-cost.js';
 import { canSpendDp } from './arkpedia-dp-budget.js';
 // Source S2 lure controller; public registration and review remain separate.
 import evidence from '../../../data/arkpedia-tragodia-prefabs.json' with { type: 'json' };
@@ -109,7 +110,7 @@ export class TragodiaLureDeck {
     const tile = b.grid.tile(row, col);
     if (tile.height !== 'LOW' || !['MELEE', 'ALL'].includes(tile.build) || b.grid.isObstacle(row, col)) return 'Choose a low-ground deployment tile.';
     if (b.unitAt(row, col) || b.tileReservation(row, col) || b.downOn(row, col)) return 'Tile is occupied.';
-    if (!canSpendDp(b, this.u.ownerId, this.record.stats.cost)) return 'Not enough DP.';
+    if (!canSpendDp(b, this.u.ownerId, stageSummonCost(this.b, this.record))) return 'Not enough DP.';
     return null;
   }
   visual(s, clip, loop = false) {
@@ -119,7 +120,7 @@ export class TragodiaLureDeck {
   }
   place(row, col) {
     const error = this.placementError(row, col); if (error) throw Error(error);
-    const b = this.b, paid = this.record.stats.cost;
+    const b = this.b, paid = stageSummonCost(this.b, this.record);
     this.placing = true; this.stock = 0; b.addDp(this.u.ownerId, -paid);
     let s;
     try {
@@ -248,7 +249,7 @@ export class TragodiaLureDeck {
       const recipients = detonate ? b.enemies.filter(t => live(t) && canTargetEnemy(s.unit, t, selectable)
         && (!t.s.flags.camou || !!t.blockedBy) && bodyInKeys(t, keys)).map(t => ({ t, seq: t.deploySeq })) : [];
       for (const t of [...s.targets.keys()]) this.dropTarget(s, t);
-      if (this.point === s) { this.point = null; this.readyAt = b.time + this.record.stats.respawnTime; }
+      if (this.point === s) { this.point = null; this.readyAt = b.time + stageCardRespawnTime(this.b, this.record); }
       if (!this.stopped && this.core.valid()) this.stock = 1;
       s.unit.mem.regularDeathVisual = {hide:true}; // Completed End or immediate withdrawal has no separate Die artwork.
       if (remove && present(s.unit)) b._remove(s.unit, `tragodia-lure-${reason}`, null, true);

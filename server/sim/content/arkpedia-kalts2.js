@@ -38,6 +38,7 @@
 // - In flight she is hidden, untargetable and cannot act; a marker follows
 //   her path. The anchor takes no deployment slot.
 // - Kalts2S3ApplyPunishBuff (S3 interrupt) has no data body and is not modelled.
+import { stageSummonCost } from './arkpedia-stage-card-cost.js';
 import evidence from '../../../data/arkpedia-native-operators/char_1052_kalts2.json' with {type: 'json'};
 import review from '../../../data/arkpedia-kalts2-runtime-review.json' with {type: 'json'};
 import {selectedCNSourceBuild} from './arkpedia-selected-cn-source.js';
@@ -180,7 +181,7 @@ export class Kalts2Owner {
     if (!['RANGED', 'ALL'].includes(b.grid.tile(r, c).build)) return 'Choose a high-ground tile.';
     if (b.unitAt(r, c) || b.tileReservation(r, c) || b.downOn(r, c)) return 'Tile is occupied.';
     if (this.rangeKeys().has(r * COLS + c)) return "Choose a tile outside Kal'tsit - Esperanta's attack range.";
-    if (!canSpendDp(b, u.ownerId, state.record.stats.cost)) return 'Not enough DP.';
+    if (!canSpendDp(b, u.ownerId, stageSummonCost(b, state.record))) return 'Not enough DP.';
     return null;
   }
   placeAnchor(r, c, dir = 'RIGHT') {
@@ -193,7 +194,7 @@ export class Kalts2Owner {
       }}});
     if (!t) throw Error('Tactical anchor placement failed.');
     t.deploymentSlotCost = 0; t.mem.regularSummonCard = state.key;
-    b.getPlayer(u.ownerId).dp -= state.record.stats.cost;
+    b.getPlayer(u.ownerId).dp -= stageSummonCost(b, state.record);
     this.anchor = t; this.anchorGranted = false;
     this.depart(t);
     return t;
