@@ -34,6 +34,8 @@ bundles = {r['path']: r for r in source['bundles']}
 # Component object names whose content a reviewed feature reads.
 OBJECTS = ['DefDown', 'enhance', 'Blink', 'enemy_1220_dzoms', 'enemy_1220_dzoms_2', 'enemy_1221_dzomg', 'enemy_1221_dzomg_2', 'ColdAttack', 'StunAttack', 'StormAura', 'Lasso', 'blink', 'dmg_res', 'buff_to_blocker', 'Boomb']
 SCOPED_OBJECTS = {
+    'enemy_1263_durbus': ['enemy_1263_durbus','Default','Combat','Bus','Selector'],
+    'enemy_1263_durbus_2': ['enemy_1263_durbus_2','Default','Combat','Bus','Selector'],
     'enemy_1410_mmelee': ['enemy_1410_mmelee','Default','Combat','PhysicalEvade'],
     'enemy_1410_mmelee_2': ['enemy_1410_mmelee_2','Default','Combat','PhysicalEvade'],
     'enemy_1516_jakill': ['enemy_1516_jakill','Default','R','Combat','Attack','Trigger','Reborn','Enhance','Liberty','LibertyOthersAbility','Selector','IronSandStorm','ArmorPiercing'],
@@ -401,6 +403,8 @@ for bundle in sorted(wanted):
         # Explicit per-prefab sibling scopes avoid copying extraction branches
         # when a new family uses attack hooks or companion target selectors.
         sibling_names = {
+            'enemy_1263_durbus': {'Bus','Selector','Combat'},
+            'enemy_1263_durbus_2': {'Bus','Selector','Combat'},
             'enemy_1410_mmelee': {'PhysicalEvade','Combat'},
             'enemy_1410_mmelee_2': {'PhysicalEvade','Combat'},
             'enemy_1516_jakill': {'Default','R','Combat','Attack','Trigger','Reborn','Enhance','Liberty','LibertyOthersAbility','Selector','IronSandStorm','ArmorPiercing'},
@@ -481,6 +485,22 @@ for bundle in sorted(wanted):
                 seen.add(ref); sibling = canonical(exact(obj.read_typetree()))
                 rows.append({'pathId': ref, 'objectName': go['m_Name'], 'referenced': True,
                              'sha256': hashlib.sha256(sibling.encode()).hexdigest(), 'originalJson': sibling})
+        # Geometry scopes complement MonoBehaviour sibling scopes. A family's
+        # contact contract can retain its original colliders without a new branch.
+        geometry_names = {
+            'enemy_1263_durbus': {'Selector'},
+            'enemy_1263_durbus_2': {'Selector'},
+        }.get(path.rsplit('/', 1)[-1].removesuffix('.prefab'), set())
+        for r in list(rows):
+            if r['objectName'] not in geometry_names: continue
+            d = json.loads(r['originalJson'])
+            go = by[int(d['m_GameObject']['m_PathID'])].read_typetree()
+            for component in go['m_Component']:
+                ref = str(component['component']['m_PathID']); obj = by[int(ref)]
+                if ref in seen or obj.type.name not in ('CircleCollider2D', 'BoxCollider2D', 'Transform'): continue
+                seen.add(ref); original = canonical(exact(obj.read_typetree()))
+                rows.append({'pathId': ref, 'objectName': go['m_Name'], 'referenced': True,
+                             'sha256': hashlib.sha256(original.encode()).hexdigest(), 'originalJson': original})
         for r in rows: used_templates.update(template_keys(json.loads(r['originalJson'])))
 templates, todo = {}, sorted(used_templates)
 while todo:

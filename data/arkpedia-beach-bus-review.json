@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "scope": "Native carrier contracts and local passenger suspension/release/accounting review. No compiled-client ordering or frame/pixel parity certificate.",
+  "enemies": [
+    "enemy_1263_durbus",
+    "enemy_1263_durbus_2"
+  ],
+  "sources": {
+    "data/arkpedia-enemy-native-abilities.json": "5415b27c9581920430a03bfbbd486b70fe247597506968fc9ff23b4412130717",
+    "shared/arkpedia/enemy-beach-bus-features.js": "2769ee5b1447bc03c4dd2a7e0970ee18ab6b3ca961b8be4be02c3965328f87d3",
+    "server/sim/content/arkpedia-enemy-passengers.js": "faa2cbb2c9744a0f5ac3879fb9317718982c085921cf46f2bfe2d60b16b4f629",
+    "server/sim/content/enemies.js": "8785e512fac1f5ff756fbdec98d7ce8f093974082f0754e2472065cd2a191bea",
+    "tools/arkpedia/extract-enemy-native-abilities.py": "9674ed13e7cada86057f8147d450db7c0998b64f70c4119cccd0e65360111bd8"
+  },
+  "tests": {
+    "focused": 9,
+    "combined": 229,
+    "stageSmoke": {
+      "passed": 959,
+      "seconds": 10
+    }
+  },
+  "artwork": {
+    "scope": "Chromium clip decoding/finite poses and idle body rendering; no native combat/frame/pixel parity claim",
+    "browser": "Chrome/156.0.8078.79",
+    "results": [
+      {
+        "viewport": "desktop",
+        "models": [
+          {
+            "id": "enemy_1263_durbus",
+            "version": "3.8.84",
+            "clips": 5,
+            "width": 651.6056823730469,
+            "height": 458.53408229351044
+          },
+          {
+            "id": "enemy_1263_durbus_2",
+            "version": "3.8.84",
+            "clips": 5,
+            "width": 651.6056823730469,
+            "height": 458.53408229351044
+          }
+        ],
+        "errors": [],
+        "failures": []
+      },
+      {
+        "viewport": "mobile",
+        "models": [
+          {
+            "id": "enemy_1263_durbus",
+            "version": "3.8.84",
+            "clips": 5,
+            "width": 651.6056823730469,
+            "height": 458.53408229351044
+          },
+          {
+            "id": "enemy_1263_durbus_2",
+            "version": "3.8.84",
+            "clips": 5,
+            "width": 651.6056823730469,
+            "height": 458.53408229351044
+          }
+        ],
+        "errors": [],
+        "failures": []
+      }
+    ]
+  },
+  "coverage": {
+    "enemies": 706,
+    "totalEnemies": 2163,
+    "stages": 959,
+    "totalStages": 3892
+  }
+}

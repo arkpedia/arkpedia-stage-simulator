@@ -275,6 +275,7 @@ function installDispatch(b, scope, kits) {
     if (ab.immune && ab.immune.has(c.status)) c.cancel = true;
   }, { priority: 50 });
   b.on('statusApplied', (c) => { if (c.target && c.target.side === 'enemy') dispatch(b, c.target, 'status', c); }, { priority: 50 });
+  b.on('enemyHidden', ({ enemy, hidden }) => { if (hidden) dispatch(b, enemy, 'status', { target: enemy, status: 'hidden' }); }, { priority: 50 });
   b.on('enemyUnbalanced', ({ enemy }) => dispatch(b, enemy, 'status', { target: enemy, status: 'unbalanced' }), { priority: 50 });
   b.on('heal', (c) => {
     // 逐腐兽 bleeding ends when the target receives healing (natural regeneration excluded)

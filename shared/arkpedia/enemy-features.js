@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { isBeachBus, BEACH_BUS_FEATURE } from './enemy-beach-bus-features.js';
 import { FLYING_BOOTS_FEATURE } from './enemy-flying-boots-features.js';
 import { isJesselton, jesseltonNative, jesseltonExplains, JESSELTON_ABILITY } from './enemy-jesselton-features.js';
 import { isPrisonerLeader, prisonerLeaderNative, PRISONER_LEADER_ABILITY, PRISONER_SPEED_AURA } from './enemy-prisoner-leaders-features.js';
@@ -376,6 +377,7 @@ const NATIVE_ONLY_FEATURES = Object.freeze({
 });
 
 export const ENEMY_FEATURES = Object.freeze({
+  'talent:Bus': BEACH_BUS_FEATURE,
   'talent:PhysicalEvade': FLYING_BOOTS_FEATURE,
   'ability:Spawns an <@eb.key>Excrescent Carapace</> at its location when defeated.': DEPOSITOR_FEATURE,
   'ability:Prioritizes attacking Imprisonment Devices': SNIPER_PRISONER_PRIORITY,
@@ -895,11 +897,11 @@ export const ENEMY_FEATURES = Object.freeze({
   // 1320: a three-Block gate and a first-attack splash.
   'ability:Can only be blocked by Operators with 3 or more Block': {
     covers: (r, nat) => r.abilities.some(a => a.text === 'Can only be blocked by Operators with 3 or more Block')
-      && (!['enemy_1058_traink', 'enemy_1058_traink_2'].includes(r.prefabKey)
+      && (!(['enemy_1058_traink', 'enemy_1058_traink_2'].includes(r.prefabKey) || isBeachBus(r))
         || nat[r.prefabKey]?.[0]?._blockVolume === 3),
-    ability: r => ['enemy_1058_traink', 'enemy_1058_traink_2'].includes(r.prefabKey)
+    ability: r => (['enemy_1058_traink', 'enemy_1058_traink_2'].includes(r.prefabKey) || isBeachBus(r))
       ? { kind: 'blockWeight', params: () => ({ n: 3 }) }
-      : { kind: 'requiredBlock', params: () => ({ block: 3 }) }, note: 'Bully occupies three slots; other reviewed gate-only enemies require a blocker with 3 Block',
+      : { kind: 'requiredBlock', params: () => ({ block: 3 }) }, note: 'Bully and beach buggies occupy three slots; other reviewed gate-only enemies require a blocker with 3 Block',
     explains: /^Can only be blocked by Operators with 3 or more Block$/ },
   'ability:First attack deals Splash damage': { covers: r => r.abilities.some(a => a.text === 'First attack deals Splash damage') && r.skills.some(s => s.prefabKey === 'AOEAttack'),
     ability: { kind: 'firstSplash', params: r => ({ scale: r.talents.bb['AOEAttack.atk_scale'] ?? 1.5 }) },
