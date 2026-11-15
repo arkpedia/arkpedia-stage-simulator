@@ -34,6 +34,8 @@ bundles = {r['path']: r for r in source['bundles']}
 # Component object names whose content a reviewed feature reads.
 OBJECTS = ['DefDown', 'enhance', 'Blink', 'enemy_1220_dzoms', 'enemy_1220_dzoms_2', 'enemy_1221_dzomg', 'enemy_1221_dzomg_2', 'ColdAttack', 'StunAttack', 'StormAura', 'Lasso', 'blink', 'dmg_res', 'buff_to_blocker', 'Boomb']
 SCOPED_OBJECTS = {
+    'enemy_1178_dscorp': ['enemy_1178_dscorp','Mode','NightBuff','Passive','Combat'],
+    'enemy_1178_dscorp_2': ['enemy_1178_dscorp_2','Mode','NightBuff','Combat'],
     'enemy_5010_catrdg': ['enemy_5010_catrdg','Default','Crash'],
     'enemy_10069_ftlsj': ['enemy_10069_ftlsj','Default','Combat'],
     'enemy_10069_ftlsj_2': ['enemy_10069_ftlsj_2','Default','Combat'],
@@ -445,6 +447,8 @@ for bundle in sorted(wanted):
         # Explicit per-prefab sibling scopes avoid copying extraction branches
         # when a new family uses attack hooks or companion target selectors.
         sibling_names = {
+            'enemy_1178_dscorp': {'NightBuff','Combat'},
+            'enemy_1178_dscorp_2': {'NightBuff','Combat'},
             'enemy_5010_catrdg': {'Crash'},
             'enemy_10069_ftlsj': {'Combat'},
             'enemy_10069_ftlsj_2': {'Combat'},

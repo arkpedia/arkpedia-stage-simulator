@@ -2,6 +2,7 @@
 // Fixed import paths only. Register a reusable kind once, then reference it from
 // compiled enemy plans. No source predicates or native evidence ship here.
 export const ENEMY_RUNTIME_INDEX=Object.freeze([
+  {key:'arkpedia-enemy-environment-stats',load:()=>import('./arkpedia-enemy-environment-stats.js'),exports:{environmentStatBonus:'environmentStatBonus'}},
   {key:'arkpedia-enemy-contact-program',load:()=>import('./arkpedia-enemy-contact-program.js'),exports:{contactBuffProgram:'contactBuffProgram'}},
   {key:'arkpedia-enemy-melee-sequence',load:()=>import('./arkpedia-enemy-melee-sequence.js'),exports:{animatedMeleeAttack:'animatedMeleeAttack'}},
   {key:'arkpedia-enemy-inspiration',load:()=>import('./arkpedia-enemy-inspiration.js'),exports:{strengthAura:'strengthAura',inspiredTargets:'inspiredTargets',statMarkerAura:'statMarkerAura',markerStatBonus:'markerStatBonus'}},

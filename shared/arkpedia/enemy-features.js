@@ -1,3 +1,4 @@
+import {NIGHT_CRAWLER_FEATURES} from './enemy-night-crawler-features.js';
 import {WEAKSAUCE_FEATURE} from './enemy-weaksauce-features.js';
 import {TREE_SHIELD_FEATURES} from './enemy-tree-shield-features.js';
 import {SIEGEBREAKER_FEATURES} from './enemy-siegebreaker-features.js';
@@ -391,6 +392,7 @@ const HATEDRINKER_TEXT = 'Gains increased ATK for each Reborn Creation on the ba
 // picked up by the Altar Keeper, not by its own code).
 const NATIVE_ONLY_FEATURES = Object.freeze({
   enemy_1364_spnaxe:'native:flayerAttackMode',enemy_1364_spnaxe_2:'native:flayerAttackMode',
+  enemy_1178_dscorp:['native:nightCrawlerLog'],
   enemy_10069_ftlsj:['native:treeShieldBody','native:treeShieldMelee'], enemy_10069_ftlsj_2:['native:treeShieldBody','native:treeShieldMelee'],
   enemy_1083_sotiab:['native:siegebreakerLanding','native:siegebreakerMelee'], enemy_1083_sotiab_2:['native:siegebreakerLanding','native:siegebreakerMelee'],
   enemy_10091_hlsttu: ['native:saintBody','native:saintAttack'], enemy_10091_hlsttu_2: ['native:saintBody','native:saintAttack'], enemy_10091_hlsttu_3: ['native:saintBody','native:saintAttack'],
@@ -406,6 +408,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...FLAYER_FEATURES,
   ...SAINT_STATUE_FEATURES,
   ...SIEGEBREAKER_FEATURES,
+  ...NIGHT_CRAWLER_FEATURES,
   'ability:-':WEAKSAUCE_FEATURE,
   ...TREE_SHIELD_FEATURES,
   ...SURFING_INSTRUCTOR_FEATURES,
