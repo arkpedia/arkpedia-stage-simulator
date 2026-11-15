@@ -34,6 +34,7 @@ bundles = {r['path']: r for r in source['bundles']}
 # Component object names whose content a reviewed feature reads.
 OBJECTS = ['DefDown', 'enhance', 'Blink', 'enemy_1220_dzoms', 'enemy_1220_dzoms_2', 'enemy_1221_dzomg', 'enemy_1221_dzomg_2', 'ColdAttack', 'StunAttack', 'StormAura', 'Lasso', 'blink', 'dmg_res', 'buff_to_blocker', 'Boomb']
 SCOPED_OBJECTS = {
+    'enemy_2009_csaudc': ['enemy_2009_csaudc','Default','Combat'],
     'enemy_10052_cjshld': ['enemy_10052_cjshld','Default','Combat','Ability0'],
     'enemy_10052_cjshld_2': ['enemy_10052_cjshld_2','Default','Combat','Ability0'],
     'enemy_10019_sgmum': ['enemy_10019_sgmum','Default','Combat','hit_ad','hit_ap'],
@@ -407,6 +408,7 @@ for bundle in sorted(wanted):
         # Explicit per-prefab sibling scopes avoid copying extraction branches
         # when a new family uses attack hooks or companion target selectors.
         sibling_names = {
+            'enemy_2009_csaudc': {'Combat'},
             'enemy_10019_sgmum': {'hit_ad','hit_ap','Combat'},
             'enemy_10019_sgmum_2': {'hit_ad','hit_ap','Combat'},
             'enemy_1263_durbus': {'Bus','Selector','Combat'},

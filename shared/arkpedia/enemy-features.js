@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import {isDerisiveAudience,derisiveAudienceNative} from './enemy-ordinary-element-features.js';
 import { BEJEWELED_FEATURES } from './enemy-bejeweled-features.js';
 import { isBeachBus, BEACH_BUS_FEATURE } from './enemy-beach-bus-features.js';
 import { FLYING_BOOTS_FEATURE } from './enemy-flying-boots-features.js';
@@ -1082,10 +1083,14 @@ export const ENEMY_FEATURES = Object.freeze({
   'talent:Def': { covers: r => sig(r, 'Def', ['def']) && r.abilities.some(a => a.text.startsWith('Gains DEF when blocked')),
     ability: { kind: 'blockedDef', params: r => ({ def: r.talents.bb['Def.def'] }) },
     note: 'flat DEF while blocked', explains: text => text.startsWith('Gains DEF when blocked') },
-  'talent:combat': { covers: r => sig(r, 'combat', ['attack@ccwitch_rage_attack.atk_scale'])
-      && r.abilities.some(a => /deals (high )?Physical damage with melee attacks/.test(a.text)),
-    ability: { kind: 'meleeAttackScale', params: r => ({ scale: r.talents.bb['combat.attack@ccwitch_rage_attack.atk_scale'] }) },
-    note: 'melee attack ×scale', explains: text => /deals (high )?Physical damage with melee attacks/.test(text) },
+  'talent:combat': { covers: (r,n) => isDerisiveAudience(r) ? derisiveAudienceNative(r,n)
+      : sig(r, 'combat', ['attack@ccwitch_rage_attack.atk_scale'])
+        && r.abilities.some(a => /deals (high )?Physical damage with melee attacks/.test(a.text)),
+    ability: r => isDerisiveAudience(r) ? {kind:'elementOnHit',params:r=>({element:'neural',ratio:r.talents.bb['combat.attack@ep_damage_ratio']})}
+      : { kind: 'meleeAttackScale', params: r => ({ scale: r.talents.bb['combat.attack@ccwitch_rage_attack.atk_scale'] }) },
+    note: 'Reviewed ordinary melee scale or elemental blackboard binding', explains: (text,r) => isDerisiveAudience(r)
+      ? text === 'Attacks inflict additional <$ba.dt.neural>Nervous Impairment</>'
+      : /deals (high )?Physical damage with melee attacks/.test(text) },
   // Reborn-Creation auras. Hatedrinker buffs itself per creation; the ASV buffs the creations and makes their
   // attacks add Necrosis. Both read the bloodsucker marker from E10.
   [`ability:${MIRE_IMMUNITY}`]: { covers: swampRoverNative, trait: { flags: { mireImmune: true } }, note: 'source mire immunity marker' },
