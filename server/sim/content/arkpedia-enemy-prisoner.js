@@ -20,7 +20,11 @@ export function sniperPrisoner(p) {
     return { clip: `${e.moving ? 'Move' : 'Idle'}${suffix}`, idle: `Idle${suffix}`, move: `Move${suffix}`, die: `Die${suffix}`, replace: true };
   };
   return { ...sequence,
-    confine(b, e, a) { if (!e.alive || !a.free) return; a.n = 0; a.listenerAt = Infinity; setMode(b, e, a, 0); },
+    confine(b, e, a) {
+      if (!e.alive || !a.free) return;
+      sequence.cancel(b, e, a); a.n = 0; a.listenerAt = Infinity; setMode(b, e, a, 0);
+      e.atkCd = e.s.interval;
+    },
     liberate(b, e, a) { if (e.alive && !a.free) setMode(b, e, a, 2); },
     spawn(b, e, a) {
       sequence.spawn(b, e, a); a.n = 0; a.listenerAt = Infinity; setMode(b, e, a, 0);

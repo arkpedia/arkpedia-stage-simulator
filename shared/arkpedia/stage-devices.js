@@ -49,6 +49,8 @@ export const STAGE_DEVICES = Object.freeze({
   'Mieszko Coil': Object.freeze({ keys: Object.freeze(['trap_019_electric']), staticLevelReview: true, electricCoil: true }),
   "'Gelato Stop'": Object.freeze({ keys: Object.freeze(['trap_057_wpnsts']), staticLevelReview: true,
     capturable: true, skillIndices: Object.freeze([0, 1]), dynamicTile: Object.freeze({ pass: 'FLY', build: 'NONE' }) }),
+  'Imprisonment Device': Object.freeze({ keys: Object.freeze(['trap_025_prison']), staticLevelReview: true,
+    manual: true, directional: true, maxLevel: 30, dynamicTile: Object.freeze({ pass: 'FLY', build: 'NONE' }) }),
   'Stun Generator': Object.freeze({ keys: Object.freeze(['trap_002_emp']), staticLevelReview: true,
     manual: true }),
   'Detector': Object.freeze({ keys: Object.freeze(['trap_005_sensor']), staticLevelReview: true,

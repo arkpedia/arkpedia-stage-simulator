@@ -2,6 +2,7 @@
 /** Presentation for reviewed native result counters. Add a descriptor alongside
  * a new outcome feature; the result panel does not need enemy-specific code. */
 const OUTCOMES = Object.freeze([
+  { key: 'prison', label: 'Prisoners reconfined', note: '' },
   { key: 'dsshell_overlapped', label: 'Deployments on Carapaces', note: '' },
   { key: 'locate_on_tile_mire', label: 'Allied entries onto Mire', note: '' },
   { key: 'trap_757_skzbox', label: 'Treasure Chests opened',

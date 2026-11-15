@@ -25,6 +25,134 @@
   }
  },
  "devices": {
+  "trap_025_prison": {
+   "name": "禁锢装置",
+   "description": null,
+   "sortIndex": 503,
+   "spTargetType": "NONE",
+   "spTargetId": null,
+   "canUseGeneralPotentialItem": true,
+   "canUseActivityPotentialItem": false,
+   "potentialItemId": null,
+   "activityPotentialItemId": null,
+   "classicPotentialItemId": null,
+   "nationId": null,
+   "groupId": null,
+   "teamId": null,
+   "mainPower": {
+    "nationId": null,
+    "groupId": null,
+    "teamId": null
+   },
+   "subPower": null,
+   "displayNumber": null,
+   "appellation": "Prison Device",
+   "position": "NONE",
+   "tagList": null,
+   "itemUsage": null,
+   "itemDesc": null,
+   "itemObtainApproach": null,
+   "isNotObtainable": false,
+   "isSpChar": false,
+   "maxPotentialLevel": 0,
+   "rarity": "TIER_1",
+   "profession": "TRAP",
+   "subProfessionId": "notchar2",
+   "trait": null,
+   "phases": [
+    {
+     "characterPrefabKey": "trap_025_prison",
+     "rangeId": "3-15",
+     "maxLevel": 30,
+     "attributesKeyFrames": [
+      {
+       "level": 1,
+       "data": {
+        "maxHp": 2000,
+        "atk": 0,
+        "def": 0,
+        "magicResistance": 0,
+        "cost": 5,
+        "blockCnt": 0,
+        "moveSpeed": 1,
+        "attackSpeed": 100,
+        "baseAttackTime": 1,
+        "respawnTime": 7,
+        "hpRecoveryPerSec": 0,
+        "spRecoveryPerSec": 1,
+        "maxDeployCount": 1,
+        "maxDeckStackCnt": 0,
+        "tauntLevel": 0,
+        "massLevel": 0,
+        "baseForceLevel": 0,
+        "stunImmune": false,
+        "silenceImmune": false,
+        "sleepImmune": false,
+        "frozenImmune": false,
+        "levitateImmune": false,
+        "disarmedCombatImmune": false,
+        "fearedImmune": false,
+        "palsyImmune": false,
+        "attractImmune": false,
+        "teleportImmune": false,
+        "groundBoundImmune": false
+       }
+      },
+      {
+       "level": 30,
+       "data": {
+        "maxHp": 2000,
+        "atk": 0,
+        "def": 0,
+        "magicResistance": 0,
+        "cost": 5,
+        "blockCnt": 0,
+        "moveSpeed": 1,
+        "attackSpeed": 100,
+        "baseAttackTime": 1,
+        "respawnTime": 7,
+        "hpRecoveryPerSec": 0,
+        "spRecoveryPerSec": 1,
+        "maxDeployCount": 1,
+        "maxDeckStackCnt": 0,
+        "tauntLevel": 0,
+        "massLevel": 0,
+        "baseForceLevel": 0,
+        "stunImmune": false,
+        "silenceImmune": false,
+        "sleepImmune": false,
+        "frozenImmune": false,
+        "levitateImmune": false,
+        "disarmedCombatImmune": false,
+        "fearedImmune": false,
+        "palsyImmune": false,
+        "attractImmune": false,
+        "teleportImmune": false,
+        "groundBoundImmune": false
+       }
+      }
+     ],
+     "evolveCost": null
+    }
+   ],
+   "skills": [
+    {
+     "skillId": "sktok_prison",
+     "overridePrefabKey": null,
+     "overrideTokenKey": null,
+     "levelUpCostCond": [],
+     "unlockCond": {
+      "phase": "PHASE_0",
+      "level": 1
+     }
+    }
+   ],
+   "displayTokenDict": null,
+   "talents": null,
+   "potentialRanks": [],
+   "favorKeyFrames": null,
+   "allSkillLvlup": []
+  },
   "trap_156_dsshell": {
    "name": "赘生甲壳",
    "description": null,
@@ -5135,6 +5263,42 @@
   }
  },
  "skills": {
+  "sktok_prison": {
+   "skillId": "sktok_prison",
+   "iconId": null,
+   "hidden": false,
+   "levels": [
+    {
+     "name": "启动禁锢！",
+     "rangeId": "3-15",
+     "description": "消耗<@ba.vup>{cost}</>点部署费用，使范围内目标<$ba.stun>晕眩</><@ba.vup>{stun}</>秒，并立即进入禁锢状态（不会重置禁锢状态敌人的攻击计数）",
+     "skillType": "MANUAL",
+     "durationType": "NONE",
+     "spData": {
+      "spType": "INCREASE_WITH_TIME",
+      "levelUpCost": null,
+      "maxChargeTime": 1,
+      "spCost": 25,
+      "initSp": 0,
+      "increment": 1
+     },
+     "prefabId": "sktok_prison",
+     "duration": 0,
+     "blackboard": [
+      {
+       "key": "stun",
+       "value": 2,
+       "valueStr": null
+      },
+      {
+       "key": "cost",
+       "value": 5,
+       "valueStr": null
+      }
+     ]
+    }
+   ]
+  },
   "sktok_dsshell": {
    "skillId": "sktok_dsshell",
    "iconId": "sktok_dsshell",
@@ -6397,6 +6561,84 @@
   }
  },
  "ranges": {
+  "3-15": {
+   "id": "3-15",
+   "direction": 1,
+   "grids": [
+    {
+     "row": 2,
+     "col": 0
+    },
+    {
+     "row": 2,
+     "col": 1
+    },
+    {
+     "row": 2,
+     "col": 2
+    },
+    {
+     "row": 1,
+     "col": 0
+    },
+    {
+     "row": 1,
+     "col": 1
+    },
+    {
+     "row": 1,
+     "col": 2
+    },
+    {
+     "row": 1,
+     "col": 3
+    },
+    {
+     "row": 0,
+     "col": 0
+    },
+    {
+     "row": 0,
+     "col": 1
+    },
+    {
+     "row": 0,
+     "col": 2
+    },
+    {
+     "row": 0,
+     "col": 3
+    },
+    {
+     "row": -1,
+     "col": 0
+    },
+    {
+     "row": -1,
+     "col": 1
+    },
+    {
+     "row": -1,
+     "col": 2
+    },
+    {
+     "row": -1,
+     "col": 3
+    },
+    {
+     "row": -2,
+     "col": 0
+    },
+    {
+     "row": -2,
+     "col": 1
+    },
+    {
+     "row": -2,
+     "col": 2
+    }
+   ]
+  },
   "x-5": {
    "id": "x-5",
    "direction": 1,

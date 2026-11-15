@@ -27,7 +27,8 @@ export const DEVICE_FAMILIES = {
   flowGeneratorDefinition: { module: 'stage-flow-generators', variants: keySet([''], { ...standard, skillLevel: [1, 2], direction }) },
   gramophoneDefinition: { module: 'stage-gramophones', variants: keySet([''], { ...standard, skillLevel: [1, 2, 3] }) },
   manualDeviceDefinition: { module: 'stage-manual-devices', keyed: true,
-    variants: keySet(['trap_002_emp', 'trap_005_sensor', 'trap_008_farm'], { level: levels(90), skillLevel: [1] }) },
+    variants: { ...keySet(['trap_002_emp', 'trap_005_sensor', 'trap_008_farm'], { level: levels(90), skillLevel: [1] }),
+      ...keySet(['trap_025_prison'], { ...standard, direction }) } },
   powerArmorDeviceDefinition: { module: 'stage-power-armor', keyed: true,
     variants: keySet(['trap_075_bgarmn', 'trap_076_bgarms', 'trap_077_rmtarmn', 'trap_078_rmtarms'], standard, ['branchId', 'actionIndex']) },
   rewardDeviceDefinition: { module: 'stage-reward-devices', keyed: true, variants: {

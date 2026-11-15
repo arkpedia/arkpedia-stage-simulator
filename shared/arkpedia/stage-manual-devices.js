@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { imprisonmentNativeReviewed } from './stage-imprisonment.js';
 import native from '../../data/arkpedia-device-native-source.json' with { type: 'json' };
 import tables from '../../data/arkpedia-device-source.json' with { type: 'json' };
 const rows = (key, evidence) => (evidence.prefabs[key]?.components ?? []).map(c => c.data);
@@ -41,6 +42,7 @@ function terminalReviewed(evidence) {
     && leave._modeIndex === 0 && !leave._loadModeFromBlackboard && leave._restoreDefault;
 }
 export function manualDeviceNativeReviewed(key, evidence = native) {
+  if (key === 'trap_025_prison') return imprisonmentNativeReviewed(evidence);
   if (key === 'trap_008_farm') return !!terminalReviewed(evidence);
   if (!['trap_002_emp', 'trap_005_sensor'].includes(key)) return false;
   const device = rows(key, evidence), root = device.find(c => '_modes' in c), mode = device.find(c => '_tileOptions' in c);
@@ -83,21 +85,34 @@ export function manualDeviceDefinition(key, instance) {
   if (!manualDeviceNativeReviewed(key) || !instance || !Number.isSafeInteger(instance.level)
     || instance.level < 1 || instance.level > 90 || instance.skillLevel !== 1)
     throw Error(`Missing or unsupported manual device instance: ${key}`);
+  if (key === 'trap_025_prison' && (instance.level > 30 || !['UP', 'RIGHT', 'DOWN', 'LEFT'].includes(instance.direction)))
+    throw Error('Unsupported Imprisonment Device direction or level');
   const record = tables.devices[key], skill = tables.skills[record.skills[0].skillId].levels[0];
   const [first, last] = [record.phases[0].attributesKeyFrames[0], record.phases[0].attributesKeyFrames.at(-1)];
   const fraction = Math.min(1, Math.max(0, (instance.level - first.level) / (last.level - first.level)));
   const bb = Object.fromEntries(skill.blackboard.map(x => [x.key, x.value]));
   const stat = key => Math.round(first.data[key] + (last.data[key] - first.data[key]) * fraction);
-  const kind = { trap_002_emp: 'blast', trap_005_sensor: 'reveal', trap_008_farm: 'terminal' }[key];
+  const kind = { trap_002_emp: 'blast', trap_005_sensor: 'reveal', trap_008_farm: 'terminal', trap_025_prison: 'prison' }[key];
   const result = { kind, position: record.position, spCost: skill.spData.spCost,
     initSp: skill.spData.initSp, spPerSecond: skill.spData.increment, dpCost: bb.cost ?? 0,
     range: tables.ranges[skill.rangeId]?.grids.map(p => [p.row, p.col]) ?? [], duration: skill.duration,
+    ...(kind === 'prison' ? { stats: { hp: stat('maxHp'), def: stat('def'), res: stat('magicResistance'), block: 0,
+      spRecovery: stat('spRecoveryPerSec') },
+      taunt: stat('tauntLevel'), stun: bb.stun, finish: Math.fround(4.17), direction: instance.direction, immune: ['stun', 'frozen'] } : {}),
     ...(kind === 'terminal' ? { permanent: true, stats: { hp: stat('maxHp'), def: stat('def'), res: stat('magicResistance') },
       taunt: stat('tauntLevel'), slots: bb.value, mods: { defPct: bb.def, resFlat: bb.magic_resistance, hpRegen: bb.hp_recovery_per_sec },
       lifeDelta: record.talents[0].candidates[0].blackboard.find(p => p.key === 'value').value } : {}),
     ...(kind === 'blast' ? { damage: stat('atk'),
       stun: bb.stun, release: .75, finish: 1.5 } : {}) };
-  result.description = kind === 'blast'
+  if (kind === 'prison') {
+    if (skill.skillType !== 'MANUAL' || skill.spData.spCost !== 25 || skill.spData.initSp !== 0
+      || skill.spData.increment !== 1 || skill.duration !== 0 || skill.rangeId !== '3-15'
+      || !Object.is(bb.cost, 5) || !Object.is(bb.stun, 2)) throw Error('Changed Imprisonment Device skill');
+    result.range = result.range.map(([r, c]) => instance.direction === 'UP' ? [c, -r]
+      : instance.direction === 'DOWN' ? [-c, r] : instance.direction === 'LEFT' ? [-r, -c] : [r, c])
+      .map(pair => pair.map(value => value || 0));
+  }
+  result.description = kind === 'prison' ? `Spend ${result.dpCost} DP to stun enemies in range for ${result.stun} seconds and reconfine liberated prisoners. Already-confined attack counts are preserved.` : kind === 'blast'
     ? `Spend ${result.dpCost} DP to deal ${result.damage} Arts damage and stun nearby ground enemies for ${result.stun} seconds. This device is consumed after activation.`
     : kind === 'reveal' ? `Reveal invisible enemies in range for ${result.duration} seconds. Recharges after the effect ends.`
       : `Spend ${result.dpCost} DP to permanently add ${result.slots} deployment slot, increase this terminal's DEF and RES, and restore ${result.mods.hpRegen} HP per second. Lose ${-result.lifeDelta} life point if it is destroyed.`;

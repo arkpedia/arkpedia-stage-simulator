@@ -86,7 +86,7 @@ export function validateStaticDeviceInstances(devices, level, instances = {}) {
     if (instanced) instances[`${d.key}:${d.row}:${d.col}`] = { level: p.inst.level, skillLevel: p.mainSkillLvl,
       ...(spec.mimic || spec.powerArmor ? { branchId } : {}),
       ...(spec.powerArmor ? { actionIndex } : {}),
-      ...(spec.turret || spec.flowGenerator || spec.magicCircuit ? { direction: originalDeviceDirection(p.direction) } : {}),
+      ...(spec.directional || spec.turret || spec.flowGenerator || spec.magicCircuit ? { direction: originalDeviceDirection(p.direction) } : {}),
       ...(spec.capturable ? { skillIndex: p.skillIndex } : {}) };
   }
   for (const p of all) if (reviewed.some(d => d.key === p.inst?.characterKey)

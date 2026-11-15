@@ -1693,6 +1693,13 @@ const selfFear = (ab) => ({
 /** Prisoners (禁锢 → 解放). */
 function prisoner(ab, { freeAll = false } = {}) {
   const t = (k) => T(ab, k) ?? 0;
+  const confine = (b, e, a) => {
+    if (!e.alive || !a.free) return;
+    a.n = 0; a.free = false; b.removeBuff(e, 'ab:liberty');
+    b.addBuff(e, { key: 'ab:confined', persist: true, visible: true,
+      mods: { aspd: t('confinement.attack_speed'), defFlat: t('confinement.def') } });
+    e.atkCd = e.s.interval;
+  };
   const liberate = (b, e, a) => {
     if (a.free || !e.alive) return;
     a.free = true;
@@ -1707,7 +1714,7 @@ function prisoner(ab, { freeAll = false } = {}) {
     }
   };
   return {
-    liberate,
+    liberate, confine,
     spawn(b, e, a) {
       a.n = 0; a.free = false;
       b.addBuff(e, { key: 'ab:confined', persist: true, visible: true, mods: { aspd: t('confinement.attack_speed'), defFlat: t('confinement.def') } });
