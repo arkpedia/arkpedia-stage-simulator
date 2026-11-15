@@ -40,7 +40,8 @@ SCOPED_OBJECTS = {
     'enemy_1078_sotisc_2': ['enemy_1078_sotisc_2','Default','Strength'],
     'enemy_1082_soticn': ['enemy_1082_soticn','Default','Strength'],
     'enemy_1082_soticn_2': ['enemy_1082_soticn_2','Default','Strength'],
-    'enemy_1083_sotiab': ['enemy_1083_sotiab','Default','Strength'],
+    'enemy_1083_sotiab': ['enemy_1083_sotiab','Default','Strength','Combat'],
+    'enemy_1083_sotiab_2': ['enemy_1083_sotiab_2','Default','Strength','Combat'],
 
     'enemy_10095_crgst':['enemy_10095_crgst','Default','Combat','unblockable','check'],
     'enemy_10095_crgst_2':['enemy_10095_crgst_2','Default','Combat','unblockable','check'],
@@ -435,7 +436,8 @@ for bundle in sorted(wanted):
             'enemy_1078_sotisc_2': {'Strength'},
             'enemy_1082_soticn': {'Strength'},
             'enemy_1082_soticn_2': {'Strength'},
-            'enemy_1083_sotiab': {'Strength'},
+            'enemy_1083_sotiab': {'Strength','Combat'},
+            'enemy_1083_sotiab_2': {'Strength','Combat'},
 
             'enemy_10095_crgst': {'unblockable','check'},
             'enemy_10095_crgst_2': {'unblockable','check'},

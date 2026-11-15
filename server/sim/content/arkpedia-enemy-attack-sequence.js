@@ -44,3 +44,11 @@ export function ordinaryEnemyAttackSequence(select, fire) {
     death(_c, b, e, a) { finish(b, e, a); },
   };
 }
+
+/** Shared data contract for adapters driven by native animation markers. */
+export function validateEnemyAttackAnimation(animation){
+  if(!animation||typeof animation.clip!=='string'||!animation.clip||!Number.isFinite(animation.duration)||animation.duration<=0
+    ||!Array.isArray(animation.releases)||!animation.releases.length||animation.releases.length>64
+    ||animation.releases.some((t,i)=>!Number.isFinite(t)||t<0||t>animation.duration||i>0&&t<=animation.releases[i-1]))
+    throw Error('Invalid enemy attack animation');
+}

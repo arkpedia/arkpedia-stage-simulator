@@ -1,3 +1,4 @@
+import {SIEGEBREAKER_FEATURES} from './enemy-siegebreaker-features.js';
 import {isNativeInspiration,inspirationNative,nativeInspirationAbility} from './enemy-inspiration-features.js';
 // SPDX-License-Identifier: GPL-3.0-or-later
 import {ZEALOUS_EXTRA_FEATURES} from './enemy-zealous-extra-features.js';
@@ -388,6 +389,7 @@ const HATEDRINKER_TEXT = 'Gains increased ATK for each Reborn Creation on the ba
 // picked up by the Altar Keeper, not by its own code).
 const NATIVE_ONLY_FEATURES = Object.freeze({
   enemy_1364_spnaxe:'native:flayerAttackMode',enemy_1364_spnaxe_2:'native:flayerAttackMode',
+  enemy_1083_sotiab:['native:siegebreakerLanding','native:siegebreakerMelee'], enemy_1083_sotiab_2:['native:siegebreakerLanding','native:siegebreakerMelee'],
   enemy_10091_hlsttu: ['native:saintBody','native:saintAttack'], enemy_10091_hlsttu_2: ['native:saintBody','native:saintAttack'], enemy_10091_hlsttu_3: ['native:saintBody','native:saintAttack'],
   enemy_2035_sybox: 'native:loggedChest', enemy_2059_smbox: 'native:loggedChest',
   enemy_1189_krgaxe: 'native:icefieldWarrior', enemy_1189_krgaxe_2: 'native:icefieldWarrior',
@@ -400,6 +402,7 @@ const NATIVE_ONLY_FEATURES = Object.freeze({
 export const ENEMY_FEATURES = Object.freeze({
   ...FLAYER_FEATURES,
   ...SAINT_STATUE_FEATURES,
+  ...SIEGEBREAKER_FEATURES,
   ...SURFING_INSTRUCTOR_FEATURES,
   'native:loggedChest': LOGGED_CHEST_FEATURE,
   ...BEJEWELED_FEATURES,
@@ -1000,7 +1003,7 @@ export const ENEMY_FEATURES = Object.freeze({
   'talent:strength': { covers: (r,n) => (!isNativeInspiration(r)||inspirationNative(r,n))&&((sig(r, 'strength', ['atk', 'def'])
       && r.abilities.some(a => a.text === 'Increases the ATK and DEF of enemy units when on the battlefield.'))
       || (sig(r, 'strength', ['move_speed']) && r.abilities.some(a => a.text === 'When Inspired, gains Movement Speed.'))
-      || (sig(r, 'strength', ['atk']) && r.abilities.some(a => a.text === 'When Inspired, gains greatly increased ATK.'))
+      || (sig(r, 'strength', ['atk']) && r.abilities.some(a => (a.text === 'When Inspired, gains greatly increased ATK.' || r.prefabKey==='enemy_1083_sotiab_2'&&a.text==='When Inspired, gains massively increased ATK.')))
       || (sig(r, 'strength', ['attack_speed']) && r.abilities.some(a => a.text === 'When Inspired, gains greatly increased ASPD.'))),
     ability: r=>isNativeInspiration(r)?nativeInspirationAbility(r):({ kind: 'strengthAura', params: r => sig(r, 'strength', ['move_speed'])
       ? { mode: 'inspired', move: r.talents.bb['strength.move_speed'] }
@@ -1012,7 +1015,7 @@ export const ENEMY_FEATURES = Object.freeze({
     note: 'all living enemies +atk%/+def while the Herald lives, or Inspired movement/ATK/ASPD',
     explains: text => text === 'Increases the ATK and DEF of enemy units when on the battlefield.'
       || text === 'When Inspired, gains Movement Speed.'
-      || text === 'When Inspired, gains greatly increased ATK.'
+      || text === 'When Inspired, gains greatly increased ATK.' || text === 'When Inspired, gains massively increased ATK.'
       || text === 'When Inspired, gains greatly increased ASPD.' },
   'ability:Able to land directly onto the battlefield.': {
     covers: r => r.abilities.some(a => a.text === 'Able to land directly onto the battlefield.'),

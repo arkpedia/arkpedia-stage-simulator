@@ -6,7 +6,7 @@ const action=(name,params={})=>({$type:`Torappu.Battle.Action.Nodes+${name}, Ass
 const contains=key=>action('CheckContainsBuff',{_targetType:'BUFF_OWNER',_buffKeys:[key],isAND:true,
  _loadFromBlackboard:false,_checkBuffSource:false,_buffSourceType:'BUFF_SOURCE',_checkSourceHost:false});
 const producers=['enemy_1080_sotidp','enemy_1080_sotidp_2'];
-const receiverTypes={enemy_1078_sotisc:'move_speed',enemy_1078_sotisc_2:'move_speed',enemy_1082_soticn:'atk_speed',enemy_1082_soticn_2:'atk_speed',enemy_1083_sotiab:'atk'};
+const receiverTypes={enemy_1078_sotisc:'move_speed',enemy_1078_sotisc_2:'move_speed',enemy_1082_soticn:'atk_speed',enemy_1082_soticn_2:'atk_speed',enemy_1083_sotiab:'atk',enemy_1083_sotiab_2:'atk'};
 export const isNativeInspiration=r=>producers.includes(r.prefabKey)||Object.hasOwn(receiverTypes,r.prefabKey);
 const nativeBinding=(n,c)=>n.$siblings(c).some(v=>fields(v,{m_Script:{m_FileID:1,m_PathID:c.m_Script?.m_PathID==='-5793748974791823428'?'-7555088068958382215':'-2726233351382997147'},m_Enabled:1,
  ...(c.m_Script?.m_PathID==='-5793748974791823428'?{_isSilenceable:0}:{}),
@@ -35,7 +35,7 @@ export function inspirationNative(r,n){
     enableAdvancedOptions:0,ignoreTargetFree:0,ignoreAllyTargetFree:0,ignoreMotionMode:0,ignoreTargetSide:0,
     excludeSomeAbnormalFlags:0,containSomeAbnormalFlags:0,professionMask:0,checkUnitType:0,unitTypeMask:0});
  }
- const type=receiverTypes[r.prefabKey],bb=type==='atk_speed'?'attack_speed':type,expected=type==='atk_speed'?50:type==='atk' ? .5 : .3;
+ const type=receiverTypes[r.prefabKey],bb=type==='atk_speed'?'attack_speed':type,expected=type==='atk_speed'?50:type==='atk' ? (r.prefabKey==='enemy_1083_sotiab_2'?.8:.5) : .3;
  if(!same(r.talents.bb,{[`strength.${bb}`]:expected})||!same(r.talents.groups.strength,[bb])
   ||c.m_Script?.m_PathID!=='3800760148018415462'||c._buffs.length!==2)return false;
  for(const[index,end]of['start','finish'].entries()){

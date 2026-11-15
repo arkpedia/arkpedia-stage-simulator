@@ -22,13 +22,13 @@ test('every producer and stat receiver retains its native marker, stack, binding
 });
 for(const compiled of[false,true])test(`Heralds reach all stat receivers and extra-target consumers (${compiled?'compiled':'raw'})`,()=>{
  const h=fixture(compiled),f=h.spawn(fighter),m=h.spawn(mortar),s=h.spawn(siege),a=h.spawn(archer);
- h.run(.3);assert.equal(f.findBuff(marker),null);const source=h.spawn(herald);
+ h.run(1.6);assert.equal(f.findBuff(marker),null);const source=h.spawn(herald);
  assert.ok(f.findBuff(marker));h.run(.1);assert.equal(f.findBuff('enemy_talent_strength[move_speed]'),null);h.run(.2);
  close(f.s.moveSpeed,f.base.moveSpeed*1.3);close(m.s.aspd,m.base.aspd+50);close(s.s.atk,s.base.atk*1.6);
  assert.equal(a.profile.maxTargets,2);assert.ok(source.findBuff(marker));assert.deepEqual(h.b.errors,[]);
 });
 test('two Heralds stack their stat grants while one marker and one receiver bonus survive a source death',()=>{
- const h=fixture(),u=h.spawn(siege),a=h.spawn(herald),b=h.spawn(leader);h.run(.3);
+ const h=fixture(),u=h.spawn(siege);h.run(1.6);const a=h.spawn(herald),b=h.spawn(leader);h.run(.3);
  close(u.s.atk,u.base.atk*1.7);assert.equal(u.buffs.filter(v=>v.key===`${marker}[attribute]`).length,2);
  assert.equal(u.buffs.filter(v=>v.key===marker).length,1);assert.equal(u.buffs.filter(v=>v.key==='enemy_talent_strength[atk]').length,1);
  h.b.kill(a);close(u.s.atk,u.base.atk*1.6);assert.ok(u.findBuff(marker));assert.equal(u.findBuff(marker).source,b);
@@ -51,7 +51,7 @@ test('a hidden source retains its global aura; isolated or hidden recipients rel
  assert.deepEqual(h.b.errors,[]);
 });
 test('a rejected marker does not create a receiver bonus merely because the stat grant succeeded',()=>{
- const h=fixture(),u=h.spawn(siege);h.b.on('beforeBuff',c=>{if(c.unit===u&&c.buff.key===marker)c.cancel=true;});
+ const h=fixture(),u=h.spawn(siege);h.run(1.6);h.b.on('beforeBuff',c=>{if(c.unit===u&&c.buff.key===marker)c.cancel=true;});
  h.spawn(herald);h.run(.4);assert.equal(u.findBuff(marker),null);assert.equal(u.findBuff('enemy_talent_strength[atk]'),null);
  close(u.s.atk,u.base.atk*1.1);assert.deepEqual(h.b.errors,[]);
 });

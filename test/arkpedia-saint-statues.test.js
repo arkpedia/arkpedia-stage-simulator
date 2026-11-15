@@ -128,5 +128,5 @@ test('the shared timed-projectile adapter rejects malformed release timelines be
   {clip:'Attack',duration:1,releases:[]},{clip:'Attack',duration:1,releases:[NaN]},
   {clip:'Attack',duration:1,releases:[1.1]},{clip:'Attack',duration:1,releases:[.5,.4]},
   {clip:'Attack',duration:Infinity,releases:[.4]},
- ])assert.throws(()=>animatedProjectileAttack({type:'arts',speed:10,lifetime:10,animation}),/Invalid projectile attack animation/);
+ ])assert.throws(()=>animatedProjectileAttack({type:'arts',speed:10,lifetime:10,animation}),/Invalid enemy attack animation/);
 });
