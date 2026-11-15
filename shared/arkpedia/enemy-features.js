@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { FLYING_BOOTS_FEATURE } from './enemy-flying-boots-features.js';
 import { isJesselton, jesseltonNative, jesseltonExplains, JESSELTON_ABILITY } from './enemy-jesselton-features.js';
 import { isPrisonerLeader, prisonerLeaderNative, PRISONER_LEADER_ABILITY, PRISONER_SPEED_AURA } from './enemy-prisoner-leaders-features.js';
 import { isSelfFearEnemy, selfFearNative } from './enemy-self-fear.js';
@@ -375,6 +376,7 @@ const NATIVE_ONLY_FEATURES = Object.freeze({
 });
 
 export const ENEMY_FEATURES = Object.freeze({
+  'talent:PhysicalEvade': FLYING_BOOTS_FEATURE,
   'ability:Spawns an <@eb.key>Excrescent Carapace</> at its location when defeated.': DEPOSITOR_FEATURE,
   'ability:Prioritizes attacking Imprisonment Devices': SNIPER_PRISONER_PRIORITY,
   ...DEVOUR_FEATURES,

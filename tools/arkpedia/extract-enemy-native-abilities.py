@@ -34,6 +34,8 @@ bundles = {r['path']: r for r in source['bundles']}
 # Component object names whose content a reviewed feature reads.
 OBJECTS = ['DefDown', 'enhance', 'Blink', 'enemy_1220_dzoms', 'enemy_1220_dzoms_2', 'enemy_1221_dzomg', 'enemy_1221_dzomg_2', 'ColdAttack', 'StunAttack', 'StormAura', 'Lasso', 'blink', 'dmg_res', 'buff_to_blocker', 'Boomb']
 SCOPED_OBJECTS = {
+    'enemy_1410_mmelee': ['enemy_1410_mmelee','Default','Combat','PhysicalEvade'],
+    'enemy_1410_mmelee_2': ['enemy_1410_mmelee_2','Default','Combat','PhysicalEvade'],
     'enemy_1516_jakill': ['enemy_1516_jakill','Default','R','Combat','Attack','Trigger','Reborn','Enhance','Liberty','LibertyOthersAbility','Selector','IronSandStorm','ArmorPiercing'],
     'enemy_1120_vofwiz': ['enemy_1120_vofwiz', 'Default', 'R', 'L', 'Combat', 'Attack', 'Trigger', 'Confinement', 'Liberty', 'AtkSpeedUp'],
     'enemy_1120_vofwiz_2': ['enemy_1120_vofwiz_2', 'Default', 'R', 'L', 'Combat', 'Attack', 'Trigger', 'Confinement', 'Liberty', 'AtkSpeedUp'],
@@ -399,6 +401,8 @@ for bundle in sorted(wanted):
         # Explicit per-prefab sibling scopes avoid copying extraction branches
         # when a new family uses attack hooks or companion target selectors.
         sibling_names = {
+            'enemy_1410_mmelee': {'PhysicalEvade','Combat'},
+            'enemy_1410_mmelee_2': {'PhysicalEvade','Combat'},
             'enemy_1516_jakill': {'Default','R','Combat','Attack','Trigger','Reborn','Enhance','Liberty','LibertyOthersAbility','Selector','IronSandStorm','ArmorPiercing'},
             'enemy_1120_vofwiz': {'Combat','Attack','Trigger','Confinement','Liberty','AtkSpeedUp','R','L'},
             'enemy_1120_vofwiz_2': {'Combat','Attack','Trigger','Confinement','Liberty','AtkSpeedUp','R','L'},

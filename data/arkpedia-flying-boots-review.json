@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "scope": "Native passive and local enemy rope-reaction review. Chain construction/contact controller is separate and remains unimplemented; no compiled-client or frame/pixel parity certificate.",
+  "enemies": [
+    "enemy_1410_mmelee",
+    "enemy_1410_mmelee_2"
+  ],
+  "sources": {
+    "data/arkpedia-enemy-native-abilities.json": "025dee3a213b7568bb2966312f44ffa8e20793c4a258994a9d0fce8baba5c9a8",
+    "shared/arkpedia/enemy-flying-boots-features.js": "92283cc49f562289fa340e0b0086dcda98781d6d1c61adaca5a089c6e871d279",
+    "server/sim/content/arkpedia-enemy-rope-reactions.js": "2d3ca7cb81ee1be9f8e21324df3e240153169f2aafdaafdbbc3b185c2ea7a393"
+  },
+  "tests": {
+    "focused": 5,
+    "combined": 186,
+    "stageSmoke": {
+      "passed": 956,
+      "seconds": 10
+    }
+  },
+  "artwork": {
+    "scope": "Chromium clip decoding/finite poses and idle body rendering; no native combat/frame/pixel parity claim",
+    "browser": "Chrome/156.0.8078.79",
+    "results": [
+      {
+        "viewport": "desktop",
+        "models": [
+          {
+            "id": "enemy_1410_mmelee",
+            "version": "3.8.99",
+            "clips": 5,
+            "width": 485.00880432128906,
+            "height": 393.8027763366699
+          },
+          {
+            "id": "enemy_1410_mmelee_2",
+            "version": "3.8.99",
+            "clips": 5,
+            "width": 485.00880432128906,
+            "height": 393.8027763366699
+          }
+        ],
+        "errors": [],
+        "failures": []
+      },
+      {
+        "viewport": "mobile",
+        "models": [
+          {
+            "id": "enemy_1410_mmelee",
+            "version": "3.8.99",
+            "clips": 5,
+            "width": 485.00880432128906,
+            "height": 393.8027763366699
+          },
+          {
+            "id": "enemy_1410_mmelee_2",
+            "version": "3.8.99",
+            "clips": 5,
+            "width": 485.00880432128906,
+            "height": 393.8027763366699
+          }
+        ],
+        "errors": [],
+        "failures": []
+      }
+    ]
+  },
+  "coverage": {
+    "enemies": 704,
+    "totalEnemies": 2163,
+    "stages": 956,
+    "totalStages": 3892
+  }
+}

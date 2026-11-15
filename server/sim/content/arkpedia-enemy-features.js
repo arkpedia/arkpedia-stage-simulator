@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { ropeBreakableDodge } from './arkpedia-enemy-rope-reactions.js';
 import { jesselton } from './arkpedia-enemy-jesselton.js';
 import { sniperPrisoner, nativePrisoner, prisonerAttackSpeedAura } from './arkpedia-enemy-prisoner.js';
 import { depositor } from './arkpedia-enemy-depositor.js';
@@ -57,6 +58,7 @@ import { reedsStealth } from './arkpedia-enemy-reeds.js';
 import { mireWalker } from './arkpedia-enemy-mire.js';
 
 const ABILITIES = Object.freeze({
+  ropeBreakableDodge,
   epochMark, dreadkazBirth, witherCasterChannel,
   ammoTheftAttack,
   globalEnemyStatDebuff,
