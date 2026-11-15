@@ -82,7 +82,7 @@ export async function prepareStageBranches({ root, rules, compiledRules, geometr
   const inactiveInstances = {};
   validateStaticDeviceInstances(inactiveDevices, { ...level, predefines: { ...level.predefines,
     tokenInsts: inactive.map(p => ({ ...p, hidden: false })) } }, inactiveInstances);
-  const bindings = devices.filter(d => d.key==='trap_758_skzmbx'||POWER_ARMOR_DEVICE_KEYS.includes(d.key))
+  const bindings = devices.filter(d => d.key==='trap_758_skzmbx'||d.key==='trap_086_larva'||POWER_ARMOR_DEVICE_KEYS.includes(d.key))
     .map(d => instances[`${d.key}:${d.row}:${d.col}`]?.branchId)
     .concat(Object.values(inactiveInstances).map(i => i.branchId));
   const compiled=compileStageBranches(level, geometry, conditional, bindings);
@@ -91,6 +91,10 @@ export async function prepareStageBranches({ root, rules, compiledRules, geometr
     const action=branch?.spawns.find(a=>a.order===instance.actionIndex),route=compiled.geometry.routes[action?.routeIndex];
     if(branch?.spawns.length!==1||!action||action.count!==1||action.offset!==0||route.start.row!==d.row||route.start.col!==d.col)
       throw Error('Unsupported Power Armor branch binding');
+  }
+  for (const d of devices.filter(d=>d.key==='trap_086_larva')) {
+    const instance=instances[`${d.key}:${d.row}:${d.col}`], branch=compiled.branches[instance.branchId];
+    if (!branch?.spawns.some(a=>a.order===instance.actionIndex)) throw Error('Missing Twigs branch action');
   }
   return { ...compiled, sources: [source] };
 }

@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-15",
+  "scope": "Two Wither Tank variants, charged projectile account and shared moving pollution fields; original bodies, not native effect or frame parity.",
+  "sources": [
+    {
+      "path": "shared/arkpedia/enemy-wither-tank-features.js",
+      "sha256": "a55bbcf5e688a24097b1086581bae4b76eda2b98ce081d4be73866f29a3fb009"
+    },
+    {
+      "path": "server/sim/content/arkpedia-enemy-wither-tank.js",
+      "sha256": "059b913827681363c433a9697d74a83f2ab1c95b7f88c7c6e6d73d192dcd0bc8"
+    },
+    {
+      "path": "data/arkpedia-wither-tank-animations.json",
+      "sha256": "21da0e5825be53e17e3eb65cfbcfff748bcfd48f348c003c985057a72f166a45"
+    },
+    {
+      "path": "test/arkpedia-wither-tank.test.js",
+      "sha256": "6fd60f6bf270a7c0ad879697bbbf0197105d4e16650232d5efddf81da27c5f0e"
+    }
+  ],
+  "ids": [
+    "enemy_1272_nhtank",
+    "enemy_1272_nhtank_2"
+  ],
+  "validation": {
+    "focusedTests": 6,
+    "initialCombinedTests": 216,
+    "stageSmokes": 912,
+    "browser": {
+      "scope": "Chromium clip decoding/finite poses and idle body rendering; no native combat/frame/pixel parity claim",
+      "browser": "Chrome/156.0.8078.79",
+      "results": [
+        {
+          "viewport": "desktop",
+          "models": [
+            {
+              "id": "enemy_1272_nhtank",
+              "version": "3.8.99",
+              "clips": 6,
+              "width": 408.903076171875,
+              "height": 331.91954708099365
+            },
+            {
+              "id": "enemy_1272_nhtank_2",
+              "version": "3.8.99",
+              "clips": 6,
+              "width": 408.903076171875,
+              "height": 331.91954708099365
+            }
+          ],
+          "errors": [],
+          "failures": []
+        },
+        {
+          "viewport": "mobile",
+          "models": [
+            {
+              "id": "enemy_1272_nhtank",
+              "version": "3.8.99",
+              "clips": 6,
+              "width": 408.903076171875,
+              "height": 331.91954708099365
+            },
+            {
+              "id": "enemy_1272_nhtank_2",
+              "version": "3.8.99",
+              "clips": 6,
+              "width": 408.903076171875,
+              "height": 331.91954708099365
+            }
+          ],
+          "errors": [],
+          "failures": []
+        }
+      ]
+    }
+  },
+  "assetCommit": "e9993b6ace40cf54bb60e6d09fd17300d1eeba23",
+  "limits": [
+    "Existing enemy stance model does not certify first-windup frame parity.",
+    "Blackboard radius/lifetime and carrier contact behavior are explicit local mappings."
+  ]
+}

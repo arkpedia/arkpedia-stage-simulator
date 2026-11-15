@@ -1,6 +1,7 @@
 import { stageEnemyKey } from '../../shared/arkpedia/stage-rules.js';
 import { readStageOutcomes } from './content/arkpedia-stage-outcomes.js';
 import { StagePowerArmor } from './content/arkpedia-stage-power-armor.js';
+import { StageTwigs } from './content/arkpedia-stage-twigs.js';
 import { StageRewardDevices } from './content/arkpedia-stage-reward-devices.js';
 import { StageGramophones } from './content/arkpedia-stage-gramophones.js';
 import { StageMagicCircuit } from './content/arkpedia-stage-magic-circuit.js';
@@ -317,6 +318,7 @@ export class StandardBattle extends Battle {
     this.stageScenery = new StageScenery(this, data.stage.devices ?? [], data.stage.geometry);
     this.stageBranches = new StageBranchScheduler(this, data.stage.waveProgram?.branches, data.stage.rules);
     this.stagePowerArmor = new StagePowerArmor(this, (data.stage.devices ?? []).filter(d => stageDeviceSpec(d)?.powerArmor));
+    this.stageTwigs = new StageTwigs(this, (data.stage.devices ?? []).filter(d => stageDeviceSpec(d)?.twigs));
     this.stageRewardDevices = new StageRewardDevices(this, (data.stage.devices ?? []).filter(d => stageDeviceSpec(d)?.reward));
     installPredefinedMines(this, data.stage.devices ?? []);
     this._installHighTide(data.stage.tide);
@@ -363,6 +365,7 @@ export class StandardBattle extends Battle {
     this.viewport = viewport;
   }
   activateStagePredefined(key) {
+    if (this.stageTwigs?.activate(key)) return;
     if (this.stageRewardDevices?.activate(key)) return;
     const entry = this.stagePredefined.get(key);
     if (!entry) throw Error(`Unknown predefined operator: ${key}`);

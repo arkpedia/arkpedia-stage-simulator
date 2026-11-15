@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import native from '../../data/arkpedia-device-native-source.json' with { type: 'json' };
 import tables from '../../data/arkpedia-device-source.json' with { type: 'json' };
+import clocks from '../../data/arkpedia-twigs-animations.json' with { type: 'json' };
 import { sameOutcomeValue as same, emptyOutcomeAttributes } from './enemy-outcome-contracts.js';
 const fields = (v, x) => !!v && Object.entries(x).every(([k, wanted]) => same(v[k], wanted));
 const zero = r => r?.m_FileID === 0 && r.m_PathID === '0';
@@ -10,6 +11,10 @@ export function twigsNativeReviewed(n = native) {
   const find = (list, name, field) => list.find(c => c.object === name && field in c.data)?.data;
   const root = find(rows, TWIGS, '_modes'), dark = find(rows, 'DarkMode', '_attack');
   const attack = find(rows, 'Attack', '_activeBuffs'), selector = find(rows, 'AoeSelector', '_postFilter');
+  const area = find(rows, 'AoeSelector', 'm_Radius'), auraArea = find(skill, 'Trigger', 'm_Radius');
+  if (![area, auraArea].every(c => c?.m_Radius === Math.fround(1.1) && same(c.m_Offset, { x: 0, y: 0 }))
+    || clocks.durations.Attack_A !== 1 || !same(clocks.events.Attack_A, [
+      { time: Math.fround(1 / 3), name: 'OnAttack', int: 0, float: 0, string: '' }])) return false;
   if (!fields(root, { _sideType: 2, _category: 1, _occupiedRemainingCharacterCnt: 0, _withdrawable: 0,
     _rewriteTileOptions: 0, _motionMode: 0, _isInfinity: 0, _customInitHpRatio: 0, _commonAbilities: [] })
     || root._modes.length !== 2 || !zero(root._traitAbility) || !zero(dark?._combat) || dark._generalAbilities.length
@@ -65,7 +70,8 @@ export function twigsDefinition(instance) {
     throw Error('Changed Twigs That Crave source');
   return { kind: 'twigs', hp: 40000, def: 0, res: 10, block: 0, taunt: -1, side: 'enemy',
     immune: ['stun', 'silence', 'sleep', 'frozen', 'levitate'],
-    range: tables.ranges['x-5'].grids.map(p => [p.row, p.col]), threshold: .5, interval: 4, element: 250,
+    range: tables.ranges['x-5'].grids.map(p => [p.row, p.col]), radius: Math.fround(1.1), threshold: .5, interval: 4, element: 250,
+    animation: { clip: 'Attack_A', release: clocks.events.Attack_A[0].time, duration: clocks.durations.Attack_A },
     branchId: instance.branchId, actionIndex: instance.actionIndex,
     pollutionLow: instance.pollutionLow, pollutionHigh: instance.pollutionHigh };
 }

@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import { isSelfFearEnemy, selfFearNative } from './enemy-self-fear.js';
+import { WITHER_TANK_FEATURES } from './enemy-wither-tank-features.js';
+import { rotEaterNative } from './enemy-rot-eater-features.js';
 import { WITHER_CASTER_FEATURE } from './enemy-wither-caster-features.js';
 import { PRAYER_FEATURE } from './enemy-prayer-features.js';
 import { AMMO_THEFT_FEATURE } from './enemy-ammo-theft-features.js';
@@ -365,6 +367,7 @@ const NATIVE_ONLY_FEATURES = Object.freeze({
 });
 
 export const ENEMY_FEATURES = Object.freeze({
+  ...WITHER_TANK_FEATURES,
   'talent:DamageOrBullet': AMMO_THEFT_FEATURE,
   'skill:Roar': PRAYER_FEATURE,
   'skill:Heallarva': WITHER_CASTER_FEATURE,
@@ -722,8 +725,7 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => text === 'Attacks deal Arts damage. Can pick up and retain up to 3 Soul Maelstroms.'
       || text === 'When carrying a Soul Maelstrom, expends all Soul Maelstroms to deal continuous Arts damage to the target and all your units in a line.' },
   // Rot Eater: scales with the defeated count and emits a pollution aura.
-  'talent:PollutedArea': { covers: r => sig(r, 'PollutedArea', ['Polluted_damage_high', 'Polluted_damage_low', 'guaranteed_percentage', 'max_percentage', 'range_Radius'])
-      && r.abilities.some(a => a.text === 'Releases Corruption, causing your nearby units to continuously lose HP'),
+  'talent:PollutedArea': { covers: rotEaterNative,
     ability: { kind: 'rotEater', params: r => ({ low: r.talents.bb['PollutedArea.Polluted_damage_low'], high: r.talents.bb['PollutedArea.Polluted_damage_high'],
       radius: r.talents.bb['PollutedArea.range_Radius'], guaranteed: r.talents.bb['PollutedArea.guaranteed_percentage'], max: r.talents.bb['PollutedArea.max_percentage'] }) },
     note: 'defeated-count stat scaling and a pollution aura',

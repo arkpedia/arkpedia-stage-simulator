@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { compileTwigsInstance } from './stage-twigs.mjs';
 import { stageDeviceSpec } from '../../shared/arkpedia/stage-devices.js';
 import { readOriginalLevel } from './original-level.mjs';
 import { readFile } from 'node:fs/promises';
@@ -62,6 +63,10 @@ export function validateStaticDeviceInstances(devices, level, instances = {}) {
     if (matching.length !== 1) throw Error(`Missing or ambiguous original device instance: ${d.key}`);
     const p = matching[0];
     const spec = stageDeviceSpec(d), instanced = spec.powerArmor || spec.reward || spec.magicCircuit || spec.manual || spec.capturable || spec.electricCoil || spec.turret || spec.flowGenerator || spec.gramophone || spec.demolition || spec.scenery || spec.mine;
+    if (spec.twigs) {
+      instances[`${d.key}:${d.row}:${d.col}`] = compileTwigsInstance(p, level);
+      continue;
+    }
     const bb = p.overrideSkillBlackboard;
     const branchRow=Array.isArray(bb)?bb.find(row=>row.key==='branch_id'):null;
     const branchId=(spec.mimic||spec.powerArmor)&&Array.isArray(bb)&&bb.length===(spec.powerArmor?2:1)
@@ -103,7 +108,7 @@ export async function prepareStageDeviceInstances({ root, rules, compiledRules, 
     const path = 'data/arkpedia-flux-reflector-source.json', bytes = await readFile(join(root, path));
     sources.push({ path, sha256: createHash('sha256').update(bytes).digest('hex') });
   }
-  if (devices.some(d => stageDeviceSpec(d)?.powerArmor || stageDeviceSpec(d)?.reward || stageDeviceSpec(d)?.magicCircuit || stageDeviceSpec(d)?.manual || stageDeviceSpec(d)?.capturable || stageDeviceSpec(d)?.electricCoil || stageDeviceSpec(d)?.turret || stageDeviceSpec(d)?.flowGenerator || stageDeviceSpec(d)?.gramophone || stageDeviceSpec(d)?.demolition || stageDeviceSpec(d)?.scenery || stageDeviceSpec(d)?.mine)) {
+  if (devices.some(d => stageDeviceSpec(d)?.twigs || stageDeviceSpec(d)?.powerArmor || stageDeviceSpec(d)?.reward || stageDeviceSpec(d)?.magicCircuit || stageDeviceSpec(d)?.manual || stageDeviceSpec(d)?.capturable || stageDeviceSpec(d)?.electricCoil || stageDeviceSpec(d)?.turret || stageDeviceSpec(d)?.flowGenerator || stageDeviceSpec(d)?.gramophone || stageDeviceSpec(d)?.demolition || stageDeviceSpec(d)?.scenery || stageDeviceSpec(d)?.mine)) {
     const path = 'data/arkpedia-device-native-source.json', bytes = await readFile(join(root, path));
     sources.push({ path, sha256: createHash('sha256').update(bytes).digest('hex') });
   }
@@ -113,6 +118,10 @@ export async function prepareStageDeviceInstances({ root, rules, compiledRules, 
   }
   if (devices.some(d => stageDeviceSpec({ ...d, hidden: false })?.powerArmor)) {
     const path = 'data/arkpedia-dormant-power-armor-animations.json', bytes = await readFile(join(root, path));
+    sources.push({ path, sha256: createHash('sha256').update(bytes).digest('hex') });
+  }
+  if (devices.some(d => stageDeviceSpec(d)?.twigs)) {
+    const path = 'data/arkpedia-twigs-animations.json', bytes = await readFile(join(root, path));
     sources.push({ path, sha256: createHash('sha256').update(bytes).digest('hex') });
   }
   return { devices: selected.devices, sources };

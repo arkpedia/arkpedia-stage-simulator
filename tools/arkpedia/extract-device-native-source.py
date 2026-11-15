@@ -49,11 +49,11 @@ for path, group, keys in [
             for ref in data['m_Component']:
                 obj = by[ref['component']['m_PathID']]
                 value = obj.read_typetree()
-                if obj.type.name == 'MonoBehaviour' or (group == 'projectiles' or key in ('trap_012_mine', 'sktok_mine')) and obj.type.name in ('BoxCollider2D', 'CircleCollider2D'):
+                if obj.type.name == 'MonoBehaviour' or (group == 'projectiles' or key in ('trap_012_mine', 'sktok_mine', 'trap_086_larva', 'sktok_larva')) and obj.type.name in ('BoxCollider2D', 'CircleCollider2D'):
                     value = exact(value)
                     components.append({'pathId': str(obj.path_id), 'object': data['m_Name'], 'data': value, 'sha256': digest(value)})
                 elif obj.type.name == 'Transform':
-                    if group == 'projectiles' or key in ('trap_012_mine', 'sktok_mine'):
+                    if group == 'projectiles' or key in ('trap_012_mine', 'sktok_mine', 'trap_086_larva', 'sktok_larva'):
                         retained = exact(value)
                         components.append({'pathId': str(obj.path_id), 'object': data['m_Name'], 'data': retained, 'sha256': digest(retained)})
                     for child in value['m_Children']:

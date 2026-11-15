@@ -1,5 +1,8 @@
 # Twigs That Crave preparation
 
+Historical preparation checkpoint; completed runtime integration is reviewed in
+[STAGE-TWIGS-REVIEW.md](STAGE-TWIGS-REVIEW.md).
+
 The pinned device and skill prefabs are retained alongside their character,
 skill, range and buff-template records. `stage-twigs.js` prepares the static
 configuration and checks the pollution, permanent low-HP mode, elemental attack,

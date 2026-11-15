@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-15",
+  "scope": "Twigs stage controller, managed branch release and corrected Rot Eater scaling; source records and original body review, not original-client frame parity.",
+  "sources": [
+    {
+      "path": "shared/arkpedia/stage-twigs.js",
+      "sha256": "3d2d6cc34877837ff52883618632bb1e05accc74846a093a157a743a707d8825"
+    },
+    {
+      "path": "tools/arkpedia/stage-twigs.mjs",
+      "sha256": "7ceb40330a6bb6fd9a462a1ec387ad492fe625c3fe48f1a523b7dd4432a41282"
+    },
+    {
+      "path": "server/sim/content/arkpedia-stage-twigs.js",
+      "sha256": "9ba0a72e7029a21ee282aad73d575d1047929e980bf11e8478b0e6b2c42b0624"
+    },
+    {
+      "path": "server/sim/content/arkpedia-enemy-rot-eater.js",
+      "sha256": "744afebb9d70aafcc49c995d7f5825b6275bf3f33cad3d425a1cb0364ff19f11"
+    },
+    {
+      "path": "shared/arkpedia/enemy-rot-eater-features.js",
+      "sha256": "89ace85ab80131ce101b5be0751301a93c4166a82fb3f52444ae3cb45926d9b4"
+    },
+    {
+      "path": "data/arkpedia-twigs-animations.json",
+      "sha256": "e6e14e5384862ea61d9a248e0573068eb776e255d78f620622efeb34ce198b14"
+    },
+    {
+      "path": "test/arkpedia-stage-twigs.test.js",
+      "sha256": "650c69579204f7c05b5b753155ee4f334ecb0960835220d31552714235623cbc"
+    },
+    {
+      "path": "test/arkpedia-rot-eater.test.js",
+      "sha256": "ae12a565c3ced2a49fe6b8be4fda19b6b9c2aca5b70ab1f08c494ba3fcec3df1"
+    }
+  ],
+  "validation": {
+    "initialCombinedTests": 231,
+    "finalFocusedTests": 9,
+    "stageSmokes": 911,
+    "browser": {
+      "scope": "Chromium clip decoding/finite poses and idle body rendering; no native combat/frame/pixel parity claim",
+      "browser": "Chrome/156.0.8078.79",
+      "results": [
+        {
+          "viewport": "desktop",
+          "models": [
+            {
+              "id": "trap_086_larva",
+              "version": "3.8.99",
+              "clips": 4,
+              "width": 356.00001525878906,
+              "height": 551.5381774902344
+            }
+          ],
+          "errors": [],
+          "failures": []
+        },
+        {
+          "viewport": "mobile",
+          "models": [
+            {
+              "id": "trap_086_larva",
+              "version": "3.8.99",
+              "clips": 4,
+              "width": 356.00001525878906,
+              "height": 551.5381774902344
+            }
+          ],
+          "errors": [],
+          "failures": []
+        }
+      ]
+    }
+  },
+  "assetCommit": "bce01c64ca89fac6d95662610f99ab207c6e75f9",
+  "limits": [
+    "Resolved-count progress includes leaked enemies.",
+    "Conflicting duplicate original blackboard key remains rejected.",
+    "Native particles/audio and compiled-method ordering unverified."
+  ]
+}

@@ -510,3 +510,18 @@ removable persistent producers. Forty-five combined checks pass. Across 148
 cached placements, 147 validate and one conflicts on a repeated damage key.
 Public device registration remains gated on mode/progress/death-route runtime
 and visual integration. See STAGE-TWIGS-PREPARATION.md.
+
+2026-11-15 — Twigs runtime checkpoint: shared device loading, original circular
+footprint and animation event, permanent low-HP mode, scheduled activation,
+managed death branch and progress-triggered release are implemented. Rot Eater
+birth scaling now uses the resolved counted-enemy fraction and a removable
+pollution field. Controlled 11-7/11-8 runs verify children hold victory without
+counter credit. Compilation reaches 911 stages. The conflicting duplicate-key
+placement remains refused. See STAGE-TWIGS-REVIEW.md.
+
+2026-11-15 — Wither Tank checkpoint: two native-gated variants share charged
+ranged attacks, blocked double-damage rams and independently owned moving
+pollution fields. Six focused tests and the initial 216-test combined suite pass;
+all 912 compiled stages pass smoke checks. Controlled 11-9 completion passes.
+Enemy admission reaches 688/2,163. Original bodies pass twelve desktop/mobile
+clip checks. See ENEMY-WITHER-TANK-REVIEW.md.
