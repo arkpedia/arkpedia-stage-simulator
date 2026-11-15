@@ -1,13 +1,6 @@
+import { deviceRuntimeFor } from './content/arkpedia-device-runtime.js';
 import { stageEnemyKey } from '../../shared/arkpedia/stage-rules.js';
 import { readStageOutcomes } from './content/arkpedia-stage-outcomes.js';
-import { StagePowerArmor } from './content/arkpedia-stage-power-armor.js';
-import { StageTwigs } from './content/arkpedia-stage-twigs.js';
-import { StageRewardDevices } from './content/arkpedia-stage-reward-devices.js';
-import { StageGramophones } from './content/arkpedia-stage-gramophones.js';
-import { StageMagicCircuit } from './content/arkpedia-stage-magic-circuit.js';
-import { StageFlowGenerators } from './content/arkpedia-stage-flow-generators.js';
-import { StageTurrets } from './content/arkpedia-stage-turrets.js';
-import { ElectricCoils } from './content/arkpedia-stage-electric-coils.js';
 import { spawnWitheredAltar } from './content/arkpedia-stage-withered-altars.js';
 import { altarSelectsUnit } from '../../shared/arkpedia/device-runtime.js';
 import { installStageWorker } from './content/arkpedia-stage-workers.js';
@@ -15,8 +8,6 @@ import { installStageMine, installPredefinedMines } from './content/arkpedia-sta
 import { installRangeSupply } from './content/arkpedia-stage-range-supplies.js';
 import { startStunToken } from './content/arkpedia-stage-supply-tokens.js';
 import { installNativeStageRules } from './content/arkpedia-stage-native-rules.js';
-import { ManualStageDevices } from './content/arkpedia-stage-manual-devices.js';
-import { CapturableStageDevices } from './content/arkpedia-stage-capturable-devices.js';
 import { stageDeviceAttributes } from '../../shared/arkpedia/stage-character-attributes.js';
 import { registerOriginiumPollution } from './content/arkpedia-originium-pollution.js';
 // SPDX-License-Identifier: GPL-3.0-or-later
@@ -49,9 +40,7 @@ import { catalogueFor, recordFor, fixedSquadBuilds } from '../../shared/arkpedia
 import { REGULAR_OPERATORS } from '../../shared/arkpedia/operators.js';
 import { assertRegularEnemies } from '../../shared/arkpedia/enemies.js';
 import { installEnemyFeatures,enemyRuntimeFor } from './content/arkpedia-enemy-runtime.js';
-import { StageDemolition } from './content/arkpedia-stage-demolition.js';
-import { StageScenery, sealsStageRoute } from './content/arkpedia-stage-scenery.js';
-import { StageCarapaces } from './content/arkpedia-stage-carapaces.js';
+import { sealsStageRoute } from './content/arkpedia-stage-route-blocking.js';
 import { StageReeds } from './content/arkpedia-stage-reeds.js';
 import { StageMire } from './content/arkpedia-stage-mire.js';
 import { StageWater } from './content/arkpedia-stage-water.js';
@@ -192,7 +181,7 @@ export function stageAdapter(source) {
 }
 
 export class StandardBattle extends Battle {
-  constructor(data, selection, { seed = 1, operatorRuntime = null, enemyRuntime = null } = {}) {
+  constructor(data, selection, { seed = 1, operatorRuntime = null, enemyRuntime = null, deviceRuntime = null } = {}) {
     data = applyStageModeRules(data, selection?.modeRules);
     const waveProgram = resolveStageRandomWaves(data.stage.waveProgram, seed);
     if (waveProgram !== data.stage.waveProgram) data = { ...data, stage: { ...data.stage, waveProgram } };
@@ -200,6 +189,8 @@ export class StandardBattle extends Battle {
     assertRegularEnemies(data);
     enemyRuntime=enemyRuntimeFor(enemyRuntime);
     enemyRuntime.assertPrepared(data.enemies);
+    deviceRuntime=deviceRuntimeFor(deviceRuntime);
+    deviceRuntime.assertPrepared(data.stage);
     const predefined = data.stage.waveProgram?.predefined?.entries;
     const fixed = stageUsesFixedSquad(data.stage)
       ? predefined ? predefined.filter(e => e.kind === 'card').map(e => e.build) : fixedSquadBuilds(data) : null;
@@ -264,6 +255,7 @@ export class StandardBattle extends Battle {
     });
     this.operatorRuntime = operatorRuntime;
     this.enemyRuntime = enemyRuntime;
+    this.deviceRuntime = deviceRuntime;
     this.operatorServices = services;
     this.regularDisplacement = new RegularDisplacement(this);
     this.stageForbiddenTiles = new Set(forbiddenStageTiles(data.stage).map(p => `${p.row},${p.col}`));
@@ -311,21 +303,21 @@ export class StandardBattle extends Battle {
     this.mvpStageTokens = new Map((data.stage.tokens ?? []).map(t => [t.unitId, t.count]));
     if (this.mvpStageDevices.length) this.on('tick', ({ dt }) => this._tickMvpStageDevices(dt));
     this._installUnitStageDevices(data.stage.devices ?? []);
-    this.manualStageDevices = new ManualStageDevices(this, data.stage.devices ?? []);
-    this.capturableStageDevices = new CapturableStageDevices(this, data.stage.devices ?? []);
-    this.electricCoils = new ElectricCoils(this, data.stage.devices ?? []);
-    this.stageTurrets = new StageTurrets(this, data.stage.devices ?? []);
-    this.stageMagicCircuit = new StageMagicCircuit(this, data.stage.devices ?? [], data.stage.geometry);
+    this.manualStageDevices = deviceRuntime.create('manual', this, data.stage);
+    this.capturableStageDevices = deviceRuntime.create('capturable', this, data.stage);
+    this.electricCoils = deviceRuntime.create('coils', this, data.stage);
+    this.stageTurrets = deviceRuntime.create('turrets', this, data.stage);
+    this.stageMagicCircuit = deviceRuntime.create('magicCircuit', this, data.stage);
     installStageEnvironments(this, data.stage.environment);
-    this.stageFlowGenerators = new StageFlowGenerators(this, data.stage.devices ?? []);
-    this.stageGramophones = new StageGramophones(this, data.stage.devices ?? []);
-    this.stageDemolition = new StageDemolition(this);
-    this.stageCarapaces = new StageCarapaces(this, data.stage.devices ?? []);
-    this.stageScenery = new StageScenery(this, data.stage.devices ?? [], data.stage.geometry);
+    this.stageFlowGenerators = deviceRuntime.create('flow', this, data.stage);
+    this.stageGramophones = deviceRuntime.create('gramophones', this, data.stage);
+    this.stageDemolition = deviceRuntime.create('demolition', this, data.stage);
+    this.stageCarapaces = deviceRuntime.create('carapaces', this, data.stage);
+    this.stageScenery = deviceRuntime.create('scenery', this, data.stage);
     this.stageBranches = new StageBranchScheduler(this, data.stage.waveProgram?.branches, data.stage.rules);
-    this.stagePowerArmor = new StagePowerArmor(this, (data.stage.devices ?? []).filter(d => stageDeviceSpec(d)?.powerArmor));
-    this.stageTwigs = new StageTwigs(this, (data.stage.devices ?? []).filter(d => stageDeviceSpec(d)?.twigs));
-    this.stageRewardDevices = new StageRewardDevices(this, (data.stage.devices ?? []).filter(d => stageDeviceSpec(d)?.reward));
+    this.stagePowerArmor = deviceRuntime.create('powerArmor', this, data.stage);
+    this.stageTwigs = deviceRuntime.create('twigs', this, data.stage);
+    this.stageRewardDevices = deviceRuntime.create('rewards', this, data.stage);
     installPredefinedMines(this, data.stage.devices ?? []);
     this._installHighTide(data.stage.tide);
     this._installDeepWater(data.stage.deepWater);

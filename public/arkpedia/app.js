@@ -34,16 +34,17 @@ const escape = (s) =>
       ],
   );
 const app = document.querySelector("#app");
-let StandardBattle, prepareRegularOperatorRuntime, operatorRuntime, prepareRegularEnemyRuntime, enemyRuntime, regularSummonCards, selectedRegularSummon,
+let StandardBattle, prepareRegularOperatorRuntime, operatorRuntime, prepareRegularEnemyRuntime, enemyRuntime, prepareRegularDeviceRuntime, deviceRuntime, regularSummonCards, selectedRegularSummon,
   summonPlacementError, deployRegularSummon, retreatRegularSummon;
 async function loadBattleRuntime() {
-  const [engine, summons, runtime, enemies] = await Promise.all([
+  const [engine, summons, runtime, enemies, devices] = await Promise.all([
     import('/sim/arkpedia.js'), import('/sim/content/arkpedia-summon-deck.js'),
-    import('/sim/content/arkpedia-operator-runtime.js'), import('/sim/content/arkpedia-enemy-runtime.js'),
+    import('/sim/content/arkpedia-operator-runtime.js'), import('/sim/content/arkpedia-enemy-runtime.js'), import('/sim/content/arkpedia-device-runtime.js'),
   ]);
   ({ StandardBattle } = engine);
   ({ prepareRegularOperatorRuntime } = runtime);
   ({ prepareRegularEnemyRuntime } = enemies);
+  ({ prepareRegularDeviceRuntime } = devices);
   ({ regularSummonCards, selectedRegularSummon, summonPlacementError, deployRegularSummon, retreatRegularSummon } = summons);
 }
 let renderer,
@@ -382,8 +383,8 @@ async function start() {
     if (data.stage.mode) selection.modeRules = validateStageModeRules(data.stage, Object.fromEntries(
       [...document.querySelectorAll('[data-mode-rule]')].map(input => [input.dataset.modeRule, input.value === '' ? NaN : Number(input.value)])));
     const battleIds = await operatorLibrary.prepareBattle(selection);
-    const [operators, enemies] = await Promise.all([prepareRegularOperatorRuntime(battleIds), prepareRegularEnemyRuntime(data.enemies)]);
-    operatorRuntime = operators; enemyRuntime = enemies.runtime;
+    const [operators, enemies, devices] = await Promise.all([prepareRegularOperatorRuntime(battleIds), prepareRegularEnemyRuntime(data.enemies), prepareRegularDeviceRuntime(data.stage)]);
+    operatorRuntime = operators; enemyRuntime = enemies.runtime; deviceRuntime = devices;
     data.enemies = enemies.records;
     // Never gate the battle on optional chibi downloads: start the simulation now, let the
     // skeletons stream in behind it. A missing/slow chibi uses a visible marker
@@ -392,7 +393,7 @@ async function start() {
     void operatorLibrary.ensureModels(battleIds).then(() => {
       if (!loadingRenderer.destroyed) return loadingRenderer.preload(battleIds, () => {});
     }).catch((error) => console.error('chibi preload failed', error));
-    battle = new StandardBattle(data, selection, { seed: Date.now(), operatorRuntime, enemyRuntime });
+    battle = new StandardBattle(data, selection, { seed: Date.now(), operatorRuntime, enemyRuntime, deviceRuntime });
     metrics = createBattleMetrics(battle);
     selectedToken = null;
     speed = 1;
@@ -585,7 +586,7 @@ function restart() {
   workspace.querySelector("#deployment").innerHTML = "";
   damagePanel.close();
   metrics.dispose();
-  battle = new StandardBattle(data, selection, { seed: Date.now(), operatorRuntime, enemyRuntime });
+  battle = new StandardBattle(data, selection, { seed: Date.now(), operatorRuntime, enemyRuntime, deviceRuntime });
   metrics = createBattleMetrics(battle);
   battle.setViewport(landscapeRequired ? "preview" : viewport);
   paused = true;
