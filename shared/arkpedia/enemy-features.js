@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import { isSelfFearEnemy, selfFearNative } from './enemy-self-fear.js';
+import { STEAM_TANK_FEATURE } from './enemy-steam-tank-features.js';
 import { WITHER_TANK_FEATURES } from './enemy-wither-tank-features.js';
 import { rotEaterNative } from './enemy-rot-eater-features.js';
 import { WITHER_CASTER_FEATURE } from './enemy-wither-caster-features.js';
@@ -367,6 +368,7 @@ const NATIVE_ONLY_FEATURES = Object.freeze({
 });
 
 export const ENEMY_FEATURES = Object.freeze({
+  'skill:Cannon': STEAM_TANK_FEATURE,
   ...WITHER_TANK_FEATURES,
   'talent:DamageOrBullet': AMMO_THEFT_FEATURE,
   'skill:Roar': PRAYER_FEATURE,

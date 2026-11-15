@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { steamTank } from './arkpedia-enemy-steam-tank.js';
 import { witherTank } from './arkpedia-enemy-wither-tank.js';
 import { rotEater } from './arkpedia-enemy-rot-eater.js';
 import { witherCasterChannel } from './arkpedia-enemy-wither-caster.js';
@@ -106,7 +107,7 @@ const ABILITIES = Object.freeze({
   }),
   reborn: params => rebornAbility(params),
   ...featureAbilities,
-  rotEater, witherTank,
+  rotEater, witherTank, steamTank,
   // 持续损失生命: `amount` HP every second, sourceless.
   periodicLoss: ({ amount }) => ({ iv: 1, tick(b, e) { if (amount > 0) b.dealDamage(null, e, periodicDamage(amount)); } }),
   swim: ({ atk }) => ({

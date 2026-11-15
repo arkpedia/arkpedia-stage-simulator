@@ -525,3 +525,11 @@ pollution fields. Six focused tests and the initial 216-test combined suite pass
 all 912 compiled stages pass smoke checks. Controlled 11-9 completion passes.
 Enemy admission reaches 688/2,163. Original bodies pass twelve desktop/mobile
 clip checks. See ENEMY-WITHER-TANK-REVIEW.md.
+
+2026-11-15 — Steam Tank checkpoint: two native-gated variants compose the shared
+timed cast with a bounded sampling projectile. Highest-max-HP input, fixed x-4
+footprint, highest-current-HP-ratio samples and delayed Arts receipts are covered.
+Seven focused and the initial 208 combined tests pass; all 918 available stages
+pass smoke checks and controlled 11-18 completion passes. Admission reaches
+690/2,163 enemies. Twelve original body clips pass desktop/mobile checks.
+See ENEMY-STEAM-TANK-REVIEW.md.

@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-15",
+  "scope": "Steam Tank pair, bounded sampling projectile and delayed Arts receipts; original body review, not original-client frame or effect parity.",
+  "sources": [
+    {
+      "path": "shared/arkpedia/enemy-steam-tank-features.js",
+      "sha256": "03db5a173e57160402ff4548b9bc652fbcf2b402fbf7037f0a8e88cfc8f7cffd"
+    },
+    {
+      "path": "server/sim/content/arkpedia-enemy-steam-tank.js",
+      "sha256": "82a3ade130a8ba247659e2281b98210545fc2cc9108246697f247f65779505dc"
+    },
+    {
+      "path": "server/sim/content/arkpedia-sampling-projectile.js",
+      "sha256": "f78a6d3d0da2103bdee51c842ec3d4c586a83f459627c8aabf072c3d9bdbf7b2"
+    },
+    {
+      "path": "data/arkpedia-steam-tank-animations.json",
+      "sha256": "430162c8051f6c83a21393e235fb36ff28696f5d306f05d56848129db861acc3"
+    },
+    {
+      "path": "test/arkpedia-steam-tank.test.js",
+      "sha256": "39ad8b4ce9fb2048487e6198868cac858226ea2ef67c2b3521ce13ded9295517"
+    }
+  ],
+  "validation": {
+    "focusedTests": 7,
+    "initialCombinedTests": 208,
+    "stageSmokes": 918,
+    "controlledStage": "11-18",
+    "browser": {
+      "scope": "Chromium clip decoding/finite poses and idle body rendering; no native combat/frame/pixel parity claim",
+      "browser": "Chrome/156.0.8078.79",
+      "results": [
+        {
+          "viewport": "desktop",
+          "models": [
+            {
+              "id": "enemy_1273_stmgun",
+              "version": "3.8.99",
+              "clips": 6,
+              "width": 601.9999847412109,
+              "height": 463.2220230102539
+            },
+            {
+              "id": "enemy_1273_stmgun_2",
+              "version": "3.8.99",
+              "clips": 6,
+              "width": 601.9999847412109,
+              "height": 463.2220230102539
+            }
+          ],
+          "errors": [],
+          "failures": []
+        },
+        {
+          "viewport": "mobile",
+          "models": [
+            {
+              "id": "enemy_1273_stmgun",
+              "version": "3.8.99",
+              "clips": 6,
+              "width": 601.9999847412109,
+              "height": 463.2220230102539
+            },
+            {
+              "id": "enemy_1273_stmgun_2",
+              "version": "3.8.99",
+              "clips": 6,
+              "width": 601.9999847412109,
+              "height": 463.2220230102539
+            }
+          ],
+          "errors": [],
+          "failures": []
+        }
+      ]
+    }
+  },
+  "assetCommit": "263857d78c9dbe513adb095b316153b87044ac08",
+  "limits": [
+    "Record-radius projection, destination timing and occupancy are local mappings.",
+    "Simultaneous-source delayed-hit ordering and payload survival across source death are not compiled-method proof."
+  ]
+}
