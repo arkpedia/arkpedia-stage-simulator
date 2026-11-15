@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { epochGuard } from './arkpedia-enemy-epoch-guard.js';
 import { theresis } from './arkpedia-enemy-theresis.js';
 import { steamTank } from './arkpedia-enemy-steam-tank.js';
 import { witherTank } from './arkpedia-enemy-wither-tank.js';
@@ -108,7 +109,7 @@ const ABILITIES = Object.freeze({
   }),
   reborn: params => rebornAbility(params),
   ...featureAbilities,
-  rotEater, witherTank, steamTank, theresis,
+  rotEater, witherTank, steamTank, theresis, epochGuard,
   // 持续损失生命: `amount` HP every second, sourceless.
   periodicLoss: ({ amount }) => ({ iv: 1, tick(b, e) { if (amount > 0) b.dealDamage(null, e, periodicDamage(amount)); } }),
   swim: ({ atk }) => ({

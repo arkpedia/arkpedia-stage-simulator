@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import { isSelfFearEnemy, selfFearNative } from './enemy-self-fear.js';
+import { EPOCH_GUARD_FEATURE } from './enemy-epoch-guard-features.js';
 import { THERESIS_FEATURE } from './enemy-theresis-features.js';
 import { STEAM_TANK_FEATURE } from './enemy-steam-tank-features.js';
 import { WITHER_TANK_FEATURES } from './enemy-wither-tank-features.js';
@@ -369,6 +370,7 @@ const NATIVE_ONLY_FEATURES = Object.freeze({
 });
 
 export const ENEMY_FEATURES = Object.freeze({
+  'ability:Attacks hit 2 times when on a Mark of Epoch.': EPOCH_GUARD_FEATURE,
   'skill:InfiniteAttack': THERESIS_FEATURE,
   'skill:Cannon': STEAM_TANK_FEATURE,
   ...WITHER_TANK_FEATURES,

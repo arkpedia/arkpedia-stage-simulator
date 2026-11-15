@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "scope": "Checkpoint of retained source, behavioral regressions, and original body rendering; not original-client parity.",
+  "enemy": "enemy_2064_skzwdd",
+  "sources": {
+    "data/arkpedia-enemy-native-abilities.json": "05bd14c05ec808584e7e2bc0a2a0f48fff0f2a818ab688b227def68947b61b2d",
+    "data/arkpedia-epoch-guard-animations.json": "afc3141a498a6a0d6f57805f22f21065f4b8430d4e9898f332dcbaf9b5eec399",
+    "shared/arkpedia/enemy-epoch-guard-features.js": "12fbfde518628782e24d6e70a0c525ab7f454a5d71a57c2e7e153ce1538440eb",
+    "server/sim/content/arkpedia-enemy-epoch-guard.js": "d07b296f38dbd5f4e0d88b0944c081c0caa3d0218078156f6919fdc6a4a0f9be",
+    "server/sim/content/arkpedia-enemy-melee-sequence.js": "ae09ac24ccdd2b7da451fbe668806075823e8aceafb93f2681b4e95798a1e3fd",
+    "server/sim/content/arkpedia-tile-buff-field.js": "c96e9d83631660dc8eb685c7763b4f6cd92936f77eb3264b68136632736526c4"
+  },
+  "tests": {
+    "focused": 6,
+    "combined": 239,
+    "stageSmoke": {
+      "passed": 919,
+      "seconds": 10
+    }
+  },
+  "artwork": {
+    "scope": "Chromium clip decoding/finite poses and idle body rendering; no native combat/frame/pixel parity claim",
+    "browser": "Chrome/156.0.8078.79",
+    "results": [
+      {
+        "viewport": "desktop",
+        "models": [
+          {
+            "id": "enemy_2064_skzwdd",
+            "version": "3.8.99",
+            "clips": 6,
+            "width": 483.50469970703125,
+            "height": 515.3926620483398
+          }
+        ],
+        "errors": [],
+        "failures": []
+      },
+      {
+        "viewport": "mobile",
+        "models": [
+          {
+            "id": "enemy_2064_skzwdd",
+            "version": "3.8.99",
+            "clips": 6,
+            "width": 483.50469970703125,
+            "height": 515.3926620483398
+          }
+        ],
+        "errors": [],
+        "failures": []
+      }
+    ]
+  }
+}

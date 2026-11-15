@@ -17,6 +17,9 @@ export class TileBuffField {
   add(owner, tiles, parameters) {
     this.sources.set(owner, { tiles, parameters }); this.rebuild(); this.refresh(true);
   }
+  has(unit) {
+    return !!(unit.alive && unit.deployed && this.contacts.get(unit)?.life === unit.deploySeq);
+  }
   rebuild() {
     this.tiles.clear();
     for (const [source, entry] of this.sources) for (const [row, col] of entry.tiles) {
