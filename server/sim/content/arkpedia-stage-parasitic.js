@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-import { remainingRoute, spawnChildren } from './enemies.js';
+import { remainingRoute, spawnChildren } from './arkpedia-enemy-spawn.js';
 
 /** Original level-owned host keys avoid copying a parasite talent into every
  * enemy adapter. A released summon keeps the defeated body's remaining route. */

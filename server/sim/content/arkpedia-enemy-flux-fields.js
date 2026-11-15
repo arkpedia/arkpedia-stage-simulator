@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-import { spawnChildren } from './enemies.js';
+import { spawnChildren } from './arkpedia-enemy-spawn.js';
 import { auraSelectable, absoluteRangeKeys } from '../targeting.js';
 import { bodyInKeys } from '../body.js';
 import { FLUX_CUTOFF_RANGE as cross } from '../../../shared/arkpedia/enemy-flux-ranges.js';

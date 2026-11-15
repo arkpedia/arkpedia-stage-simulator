@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import {timedEnemyCasts} from './arkpedia-enemy-timed-casts.js';
 import {projectileSingleAttack} from './arkpedia-enemy-projectiles.js';
-import {spawnChildren} from './enemies.js';
+import {spawnChildren} from './arkpedia-enemy-spawn.js';
 
 export function gertrude(p){
  const shot=projectileSingleAttack({speed:p.speed,lifetime:p.lifetime,type:'arts'});

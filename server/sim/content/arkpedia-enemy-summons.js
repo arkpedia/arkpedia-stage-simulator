@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-import { remainingRoute, spawnChildren } from './enemies.js';
+import { remainingRoute, spawnChildren } from './arkpedia-enemy-spawn.js';
 
 /** Ground summons cannot appear in obstacles. Resolve a blocked origin to the
  * nearest passable tile; equal-distance ties use row/column order. */

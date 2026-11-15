@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Node compatibility for existing raw snapshots and synchronous tooling.
 import { enemyFeature,recordFeatureIds,enemyRuntimeRecord } from '../../../shared/arkpedia/enemy-features.js';
-import { installFeatureDispatch,attach,abOf } from './enemies.js';
+import { installFeatureDispatch,attach,abOf } from './arkpedia-enemy-ability-runtime.js';
 export { enemyRuntimeRecord };
 export function applyLegacyEnemyFeatures(battle,e,factoryFor){
   const record=e.def?.raw;

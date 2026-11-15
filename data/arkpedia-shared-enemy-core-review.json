@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 1,
+  "scope": "Separate shared enemy dispatch, effects, spawning and Active Originium contact from legacy catalogs; preserve existing helper identity and battle-local state. Browser bytes cover simulation/shared JavaScript responses only, excluding data, artwork and other app scripts.",
+  "sourceSha256": {
+    "server/sim/arkpedia.js": "4f23166504f1ca476927704286f96dc07096574d888645176b0ba109daccba6c",
+    "server/sim/content/arkpedia-enemy-death-conversion.js": "33ada530d857d908615978a419321b3c2ca424e0fdcd40fde9a5a83e22076599",
+    "server/sim/content/arkpedia-enemy-flux-fields.js": "5f15e86b852468fe7f4465c1611f22273af133ddcf927084cb56152217ec9156",
+    "server/sim/content/arkpedia-enemy-gertrude.js": "ac3d4a41423bdd8b6ea1871794a721e46802be61a2764ba1126d32d2fa736a07",
+    "server/sim/content/arkpedia-enemy-plan.js": "2041d7c055c1602acd71b40416d4d5e464102985779816eb968fe2379c7399a1",
+    "server/sim/content/arkpedia-enemy-runtime-legacy.js": "7b807b6679a45b219498b6d9b27f6a7fb41b30b6b28ce1c3d17e5de4abf84688",
+    "server/sim/content/arkpedia-enemy-snack.js": "3221ff246841f38e135c7d0264dfae9991cd5f57bfcc3d8cd50f5223b63f9e5b",
+    "server/sim/content/arkpedia-enemy-summons.js": "e967e1effc7d6e857b89b4b427db60083cf969b52ef9a3efb34a61e5d36b8176",
+    "server/sim/content/arkpedia-stage-parasitic.js": "b05af7a2c6bb77aa6b6f363a05b716b3ae76a328e1855367173634a47aa69333",
+    "server/sim/content/arkpedia-stage-terrain.js": "91b22e093f98678ba017397f72337b06c6419e4a68251499f8f3c481109dce73",
+    "server/sim/content/devices.js": "e685bc3d0915a4e330973cd673cfea24b0d4865fae46dd81496576bff51d7e0e",
+    "server/sim/content/enemies.js": "fba6dcd3a76a96bd697373937dae66b04d37ecfc110c5278a896e41323557f3d",
+    "server/sim/content/arkpedia-enemy-ability-runtime.js": "334a13caf235cf7cdff089e559664cad2cee31e475d23eb6be713258c34b9177",
+    "server/sim/content/arkpedia-enemy-effects.js": "b83ca5a4bddd0cb20eb89e62136555e18fd2121f1aef44c27a5c58daea789cdd",
+    "server/sim/content/arkpedia-enemy-spawn.js": "09df30fa750c3dc61887dc341f29b14ee6b00b5fdcb7d72f092c297819856453",
+    "server/sim/content/terrain-infection.js": "3709719b59cdce49473764cd79e1284a12537731deb6e3534d53dde9c299c534",
+    "test/arkpedia-shared-enemy-core.test.js": "e7269b72b72be2ef83d8b2ba084d72b5fc3017cba2fdf612efc1453940c5c92a"
+  },
+  "browserMeasurements": [
+    {
+      "stage": "0-1",
+      "beforeRequests": 371,
+      "afterRequests": 356,
+      "beforeBytes": 555073,
+      "afterBytes": 449806,
+      "errors": [],
+      "restartErrors": []
+    },
+    {
+      "stage": "mb-8",
+      "beforeRequests": 375,
+      "afterRequests": 378,
+      "beforeBytes": 561899,
+      "afterBytes": 554203,
+      "errors": [],
+      "restartErrors": []
+    },
+    {
+      "stage": "tw-3",
+      "beforeRequests": 375,
+      "afterRequests": 361,
+      "beforeBytes": 560410,
+      "afterBytes": 457969,
+      "errors": [],
+      "restartErrors": []
+    }
+  ],
+  "publicBrowserApi": {
+    "before": {
+      "time": 0,
+      "life": 20,
+      "total": 11,
+      "hooks": [
+        "death",
+        "enemyHidden",
+        "enemySpawn",
+        "damaged"
+      ],
+      "enemyRuntime": {
+        "loaded": [],
+        "pending": 0
+      },
+      "deviceRuntime": {
+        "loaded": [],
+        "pending": 0
+      }
+    },
+    "after": {
+      "time": 0,
+      "life": 20,
+      "total": 11,
+      "hooks": [
+        "death",
+        "enemyHidden",
+        "enemySpawn",
+        "damaged"
+      ],
+      "enemyRuntime": {
+        "loaded": [],
+        "pending": 0
+      },
+      "deviceRuntime": {
+        "loaded": [],
+        "pending": 0
+      }
+    },
+    "sameClass": true,
+    "stageIsPublicBattle": true,
+    "kits": 129,
+    "domains": [
+      "tokens",
+      "devices",
+      "enemies",
+      "bosses",
+      "bonds",
+      "garrisons",
+      "items",
+      "bands",
+      "choices"
+    ],
+    "fullEnemyHooks": 2,
+    "errors": []
+  },
+  "validation": {
+    "focusedTests": 40,
+    "focusedFailures": 0,
+    "fullSimulationContentTests": 1805,
+    "passed": 1800,
+    "skipped": 3,
+    "failures": 2,
+    "knownBaselineFailures": "The same two Chimera pollution tests recorded before this extraction in arkpedia-combat-core-loading-review.json.",
+    "stageSmoke": {
+      "available": 969,
+      "completed": 969,
+      "failures": 0,
+      "secondsPerStage": 10
+    }
+  },
+  "limits": [
+    "A smoke check is not a full clear or fidelity certificate.",
+    "Selected legacy factories may still import the legacy enemy catalog."
+  ]
+}

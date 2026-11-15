@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import { enemyAmmo } from './arkpedia-enemy-ammo.js';
 import { projectileSingleAttack } from './arkpedia-enemy-projectiles.js';
-import { remainingRoute, spawnChildren } from './enemies.js';
+import { remainingRoute, spawnChildren } from './arkpedia-enemy-spawn.js';
 import { areaSelectable } from '../targeting.js';
 
 export function ammoSummoner({ max, initial, cooldown, initialCooldown, child, meleeScale, windup, castTime }) {

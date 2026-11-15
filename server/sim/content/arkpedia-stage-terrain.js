@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-import { touchInfection } from './devices.js';
+import { touchInfection } from './terrain-infection.js';
 
 /** Explicit level terrain, independent of the full-mode device installation. */
 export function installStageTerrain(battle, tiles = []) {

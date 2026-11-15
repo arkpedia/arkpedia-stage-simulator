@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-import { enterEnemyHusk, remainingRoute, spawnChildren } from './enemies.js';
+import {enterEnemyHusk} from './arkpedia-enemy-ability-runtime.js';
+import {remainingRoute,spawnChildren} from './arkpedia-enemy-spawn.js';
 
 /** A global death-conversion aura. One native buff key has one current owner;
  * detaching another emitter must not remove it or duplicate the summon. */

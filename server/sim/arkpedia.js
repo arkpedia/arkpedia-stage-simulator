@@ -31,7 +31,7 @@ import { SkillRuntime } from './skills.js';
 import { applyStageModeRules } from '../../shared/arkpedia/stage-mode-rules.js';
 import { DataSource } from './simdata.js';
 import { genericKit } from './content/generic.js';
-import { elem } from './content/enemies.js';
+import { elem } from './content/arkpedia-enemy-effects.js';
 import { regularDpMinimum, canSpendDp, spendDp, regularDpRecoveryForStep } from './content/arkpedia-dp-budget.js';
 import { regularModelKey } from '../../shared/arkpedia/facing.js';
 import { selectedRegularSummon } from './content/arkpedia-summon-deck.js';

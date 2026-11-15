@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import { validateEnemyRuntimePlan,decodeEnemyRuntimeParameters } from '../../../shared/arkpedia/enemy-runtime-plan.js';
-import { installFeatureDispatch,attach,abOf } from './enemies.js';
+import { installFeatureDispatch,attach,abOf } from './arkpedia-enemy-ability-runtime.js';
 /** Resolve every implementation before applying traits. Parameters belong to
  * each spawned unit; a factory must never mutate the shared definition plan. */
 export function applyCompiledEnemyFeatures(b,e,plan,factoryFor){
