@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "scope": "Two logged chest enemy families at three database levels, with shared body/outcome components. Birth timing uses an explicit local mapping; no compiled native frame or pixel parity certificate.",
+  "sources": {
+    "shared/arkpedia/enemy-logged-chest-features.js": "dd3c28852321b3f52fd32fc02a9066d2c597fb34d093547fa23654e52ca609ad",
+    "server/sim/content/arkpedia-enemy-passive-body.js": "d16eb1368c52ab71442c5f9978f1863e6686065f1bb77558283196a291dbc9d3",
+    "data/arkpedia-is-chests-animations.json": "d64ad1c9ae2df909fa294c5eeffbd93857b912fba186e14b18f1e7d69a962319",
+    "test/arkpedia-enemy-logged-chests.test.js": "00d33ed5dadc8db6876dab80bd9b1f432db4061ad3787e85c38b801e28f40728",
+    "data/arkpedia-enemy-native-abilities.json": "623c7ca9f30f7da385945373f6107991a784c415ecb9e544fbd91f6a2c811a46"
+  },
+  "assetCommit": "93916fa84799f597bc451781e34d55009d9e50af",
+  "artwork": {
+    "scope": "Chromium clip decoding/finite poses and idle body rendering; no native combat/frame/pixel parity claim",
+    "browser": "Chrome/156.0.8078.79",
+    "results": [
+      {
+        "viewport": "desktop",
+        "models": [
+          {
+            "id": "enemy_2035_sybox",
+            "version": "3.8.99",
+            "clips": 6,
+            "width": 327.46087646484375,
+            "height": 304.51130294799805
+          },
+          {
+            "id": "enemy_2059_smbox",
+            "version": "3.8.99",
+            "clips": 6,
+            "width": 358.62205505371094,
+            "height": 359.80150604248047
+          }
+        ],
+        "errors": [],
+        "failures": []
+      },
+      {
+        "viewport": "mobile",
+        "models": [
+          {
+            "id": "enemy_2035_sybox",
+            "version": "3.8.99",
+            "clips": 6,
+            "width": 327.46087646484375,
+            "height": 304.51130294799805
+          },
+          {
+            "id": "enemy_2059_smbox",
+            "version": "3.8.99",
+            "clips": 6,
+            "width": 358.62205505371094,
+            "height": 359.80150604248047
+          }
+        ],
+        "errors": [],
+        "failures": []
+      }
+    ]
+  },
+  "browser": {
+    "scope": "Controlled browser fixture injects two precompiled definitions into 0-1 to verify one lazy adapter, birth and result counters; not an original-stage playthrough.",
+    "before": {
+      "loaded": [],
+      "pending": 0
+    },
+    "after": {
+      "loaded": [
+        "arkpedia-enemy-passive-body"
+      ],
+      "pending": 0
+    },
+    "birth": [
+      {
+        "id": "enemy_2035_sybox",
+        "clip": "Start",
+        "invulnerable": true
+      },
+      {
+        "id": "enemy_2059_smbox",
+        "clip": "Start",
+        "invulnerable": true
+      }
+    ],
+    "live": [
+      {
+        "id": "enemy_2035_sybox",
+        "birthOver": true,
+        "immunities": [
+          "stun",
+          "frozen",
+          "silence"
+        ]
+      },
+      {
+        "id": "enemy_2059_smbox",
+        "birthOver": true,
+        "immunities": [
+          "stun",
+          "frozen",
+          "silence"
+        ]
+      }
+    ],
+    "outcomes": {
+      "counters": {
+        "trap_068_badbox": 1,
+        "trap_110_smbbox": 1
+      },
+      "events": [
+        {
+          "key": "trap_068_badbox",
+          "value": 1,
+          "time": 2,
+          "enemy": "enemy_2035_sybox",
+          "instance": 1
+        },
+        {
+          "key": "trap_110_smbbox",
+          "value": 1,
+          "time": 2,
+          "enemy": "enemy_2059_smbox",
+          "instance": 2
+        }
+      ]
+    },
+    "errors": [],
+    "pageErrors": []
+  },
+  "tests": {
+    "combinedPassed": 207,
+    "log": "/tmp/is-chests-integration-tests.log",
+    "finalChestLog": "/tmp/is-chests-final-tests.log",
+    "availableStageSmoke": 960
+  }
+}

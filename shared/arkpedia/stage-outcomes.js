@@ -5,6 +5,8 @@ const OUTCOMES = Object.freeze([
   { key: 'prison', label: 'Prisoners reconfined', note: '' },
   { key: 'dsshell_overlapped', label: 'Deployments on Carapaces', note: '' },
   { key: 'locate_on_tile_mire', label: 'Allied entries onto Mire', note: '' },
+  { key: 'trap_068_badbox', label: 'Chest Seaborns defeated', note: 'Recorded for the run.' },
+  { key: 'trap_110_smbbox', label: 'Testaceous Vinecreeps defeated', note: 'Recorded for the run.' },
   { key: 'trap_757_skzbox', label: 'Treasure Chests opened',
     note: 'Run rewards are not applied by the stage simulator.' },
   { key: 'trap_759_skzwyx', label: 'Fowlbeasts rescued',

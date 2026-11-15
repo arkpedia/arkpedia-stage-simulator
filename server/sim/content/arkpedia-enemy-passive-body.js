@@ -1,0 +1,23 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+import {stageOutcomeCounter} from './arkpedia-stage-outcomes.js';
+/** Shared birth-phase mapping: the source delay holds movement, targeting and
+ * attacks while its original Start clip plays. This follows the existing image
+ * birth mapping; it is not a claim about compiled native frame ordering. */
+export function passiveEnemyBody({immunities=[],birthDelay=0,birthDuration=birthDelay,birthClip='Start',attackAnim}){
+  return {
+    spawn(b,e,a){
+      e.def={...e.def,immune:new Set([...e.def.immune,...immunities]),...(attackAnim?{attackAnim}: {})};
+      if(!(birthDelay>0))return;
+      a.visual=`passiveBirth:${e.id}:${e.deploySeq}`;a.visualEnd=b.time+birthDuration;
+      e.mem.regularFormVisual={clip:birthClip,loop:false,speed:1,playId:a.visual};
+      b.addBuff(e,{key:'ab:passiveBirth',duration:birthDelay,flags:{noMove:true,disarm:true,unblockable:true,untargetable:true,invulnerable:true}});
+    },
+    tick(b,e,a){
+      if(a.visual&&b.time+1e-9>=a.visualEnd){
+        if(e.mem.regularFormVisual?.playId===a.visual)e.mem.regularFormVisual=null;
+        a.visual=null;
+      }
+    },
+  };
+}
+export const loggedEnemyBody=p=>[passiveEnemyBody(p),stageOutcomeCounter({killedKey:p.killedKey})];

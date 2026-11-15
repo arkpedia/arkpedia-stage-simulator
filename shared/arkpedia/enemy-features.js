@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import {LOGGED_CHEST_FEATURE} from './enemy-logged-chest-features.js';
 import {isDerisiveAudience,derisiveAudienceNative} from './enemy-ordinary-element-features.js';
 import { BEJEWELED_FEATURES } from './enemy-bejeweled-features.js';
 import { isBeachBus, BEACH_BUS_FEATURE } from './enemy-beach-bus-features.js';
@@ -379,6 +380,7 @@ const HATEDRINKER_TEXT = 'Gains increased ATK for each Reborn Creation on the ba
 // component. These explicit keys keep the support gate honest without inventing a behaviour for a prop (the Beacon is
 // picked up by the Altar Keeper, not by its own code).
 const NATIVE_ONLY_FEATURES = Object.freeze({
+  enemy_2035_sybox: 'native:loggedChest', enemy_2059_smbox: 'native:loggedChest',
   enemy_1189_krgaxe: 'native:icefieldWarrior', enemy_1189_krgaxe_2: 'native:icefieldWarrior',
   enemy_1112_emppnt: 'native:imperialShell', enemy_1112_emppnt_2: 'native:imperialShell',
   enemy_1421_lrchld: 'native:beacon', enemy_1421_lrchld_2: 'native:beacon',
@@ -387,6 +389,7 @@ const NATIVE_ONLY_FEATURES = Object.freeze({
 });
 
 export const ENEMY_FEATURES = Object.freeze({
+  'native:loggedChest': LOGGED_CHEST_FEATURE,
   ...BEJEWELED_FEATURES,
   'ability:More likely to be attacked': { covers: r => r.stats.tauntLevel > 0, note: 'record taunt level participates in ordinary priority' },
   'talent:Bus': BEACH_BUS_FEATURE,
