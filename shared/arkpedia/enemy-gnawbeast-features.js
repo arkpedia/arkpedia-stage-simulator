@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import {nativeBuffProgram,nativeBuffProgramSupported} from './native-buff-programs.js';
 import clocks from '../../data/arkpedia-gnawbeasts-animations.json' with {type:'json'};
 import {sameOutcomeValue as same,emptyOutcomeAttributes as empty} from './enemy-outcome-contracts.js';
 const ids=['enemy_1335_bldrat','enemy_1335_bldrat_2'];
@@ -56,14 +57,13 @@ export function gnawbeastNative(r,n){
   return animator?._animations.some(a=>a.animKey==='Attack'&&a.animName==='Attack'&&a.speed===1&&!a.loop)
     &&n.$ref(animator._skeleton)?.skeletonDataAsset.m_PathID===clock.source.skeletonDataPathId
     &&clock.durations.Attack===Math.fround(31/30)
-    &&same(clock.events.Attack,[{time:Math.fround(13/30),name:'OnAttack',int:0,float:0,string:''}])&&bleedTemplates(n);
+    &&same(clock.events.Attack,[{time:Math.fround(13/30),name:'OnAttack',int:0,float:0,string:''}])&&bleedTemplates(n)&&nativeBuffProgramSupported('bldrat_t_1[blood]',n);
 }
 const feature={matchesRecord:isGnawbeast,covers:gnawbeastNative};
 export const GNAWBEAST_FEATURES={
   'ability:Inflicts Bleed on allied Operators after several attacks':feature,
-  'skill:BloodHit':{...feature,nativeClaim:()=>({wrappers:1}),ability:{kind:'chargedMeleePeriodicLoss',params:r=>({
-    initialSp:r.sp.initSp,maxSp:r.sp.maxSp,increment:r.sp.increment,cost:r.skills[0].spCost,key:'blood_dec',
-    amount:r.skills[0].bb.blood_value,duration:r.skills[0].bb.blood_duration,interval:1,firstDelay:Math.fround(.1),
-    excludedProfessions:['TOKEN','TRAP'],silenceBlocksSpend:false,effectSilenceable:true,
+  'skill:BloodHit':{...feature,nativeClaim:()=>({wrappers:1}),ability:{kind:'chargedMeleeBuffProgram',params:r=>({
+    initialSp:r.sp.initSp,maxSp:r.sp.maxSp,increment:r.sp.increment,cost:r.skills[0].spCost,
+    program:nativeBuffProgram('bldrat_t_1[blood]'),blackboard:{...r.skills[0].bb},silenceBlocksSpend:false,
     attackAnim:{dur:clocks.enemies[r.prefabKey].durations.Attack,hit:clocks.enemies[r.prefabKey].events.Attack[0].time}})}},
 };

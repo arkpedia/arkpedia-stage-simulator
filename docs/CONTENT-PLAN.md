@@ -10,6 +10,13 @@ carried state are outside this implementation scope (owner decision, 2026-11-14)
 
 ## Architecture update
 
+Native buff templates now compile into bounded data programs, with shared
+predicates, child effects and explicit owner/source/target bindings. Gnawbeast
+bleed and Zealous Extra release use that path. Programs share component-store
+objects and load with selected stages; the source compiler stays outside the
+browser. `NATIVE-BUFF-PROGRAMS.md` describes atomic additions and the retained
+source-template audit. Admission remains a separate complete-mechanic check.
+
 Security Service danger scaling is now a shared source-driven component; its
 card/deployment mode remains gated. See `STAGE-DANGER-REVIEW.md`. Assault Power
 Armor reuses the projectile and targeting systems; see

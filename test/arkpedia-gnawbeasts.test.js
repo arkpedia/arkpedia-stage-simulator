@@ -12,8 +12,15 @@ import {isHpLoss} from '../server/sim/damage.js';
 import {SkillRuntime} from '../server/sim/skills.js';
 import {makeBattle,chessRec} from './helpers/battleHarness.js';
 const ids=['enemy_1335_bldrat','enemy_1335_bldrat_2'];
-function fixture(id=ids[0],{automatic=false}={}){
+function fixture(id=ids[0],{automatic=false,legacy=false}={}){
   const record=withCompiledEnemyRuntime(records.enemies[id].levels[0]);
+  if(legacy){
+    const entry=record.runtimeFeatures.entries.find(e=>e.ability?.kind==='chargedMeleeBuffProgram');
+    entry.ability={kind:'chargedMeleePeriodicLoss',params:{initialSp:0,maxSp:1,increment:1,cost:1,
+      key:'blood_dec',amount:record.skills[0].bb.blood_value,duration:5,interval:1,firstDelay:Math.fround(.1),
+      excludedProfessions:['TOKEN','TRAP'],silenceBlocksSpend:false,effectSilenceable:true,
+      attackAnim:entry.ability.params.attackAnim}};
+  }
   const op=chessRec({id:'bleed_target',stats:{maxHp:100000,atk:0,def:0},skill:null});
   const h=makeBattle({content:'none',autoFinish:false,timeLimit:60,defs:{enemies:{[id]:record},chess:{[op.chessId]:op}},
     units:[{chessId:op.chessId,row:10,col:6}],setup:installEnemyFeatures});
@@ -99,4 +106,14 @@ test('native admission refuses altered charge, attack, silence, target and perio
     else evidence.templates.blood_dec.eventToActions.ON_BUFF_TRIGGER[0]._skipModifierEvent=false;
     assert.equal(gnawbeastNative(row,nativeComponents(evidence,id)),false,mutation);
   }
+});
+
+for(const id of ids)test(`${id}: old pinned periodic-loss plans match the new program through refresh and source death`,()=>{
+  const results=[];
+  for(const legacy of[true,false]){
+    const h=fixture(id,{legacy});h.fire();h.fire();h.run(.4);
+    h.fire();h.fire();h.b.kill(h.e);h.run(5.5);
+    results.push({pulses:h.pulses,hp:h.target.hp,remaining:h.target.findBuff('blood_dec'),errors:h.b.errors});
+  }
+  assert.deepEqual(results[1],results[0]);
 });

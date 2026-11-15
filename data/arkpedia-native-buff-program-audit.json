@@ -1,0 +1,3886 @@
+{
+  "schemaVersion": 1,
+  "scope": "Only retained native templates/prefabs, not the complete game corpus. Refusals report the first compiler blocker per template. Compilability never grants enemy or stage admission.",
+  "source": {
+    "data/arkpedia-enemy-native-abilities.json": "2e2702688699f5b2449f8c2062c0a8637a7ee567a18a039b8f546f035c5131d9",
+    "data/arkpedia-enemy-support.json": "f45754173e40b9b35ed50003b4d553e1d25543051e3517099ec9f47310acdde5",
+    "shared/arkpedia/behavior.js": "88b4616bf16a17e2a29153b48ae04e0a4f7b2bcebc28214bce3e98c104cef712",
+    "shared/arkpedia/behavior-native-compiler.js": "89c3f4110d1c8a1f37c0fce794aadf0efe87756d93408f3224a116aad07cc2b0",
+    "shared/arkpedia/behavior-program.js": "f908848a62b2c23e0e8c97194b8d6f6a1f54b6f020042ffa0c3bb35bf593bc6e"
+  },
+  "retainedPrefabs": 351,
+  "templates": 220,
+  "compiled": 6,
+  "refused": 214,
+  "results": [
+    {
+      "key": "Dark_Effect_x_4",
+      "consumers": [
+        "enemy_2088_skzdwz"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action IsCharacterOrTokenOrTrap"
+    },
+    {
+      "key": "always_face_to_target",
+      "consumers": [
+        "enemy_2081_skztxs"
+      ],
+      "unsupportedConsumers": [
+        "enemy_2081_skztxs"
+      ],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action FaceToTarget"
+    },
+    {
+      "key": "apply_damage[magic][ignore_sp]",
+      "consumers": [
+        "enemy_1241_ltmage",
+        "enemy_1241_ltmage_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action AdvancedApplyDamage"
+    },
+    {
+      "key": "apply_damage[magic][on_trigger]",
+      "consumers": [
+        "enemy_1245_ltseal"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action AdvancedApplyDamage"
+    },
+    {
+      "key": "apply_damage[physical][ignore_sp]",
+      "consumers": [
+        "enemy_1239_ltbow",
+        "enemy_1239_ltbow_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action AdvancedApplyDamage"
+    },
+    {
+      "key": "bldrat_t_1[blood]",
+      "consumers": [
+        "enemy_1335_bldrat",
+        "enemy_1335_bldrat_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": true,
+      "programSha256": "4764a93a58b8b3dff6a162ac805726a8a286a5b119bf5a363a5b4d450766c2c4",
+      "bytes": 549,
+      "templateCount": 2,
+      "requiredBlackboard": [
+        "blood_duration",
+        "blood_value"
+      ]
+    },
+    {
+      "key": "blood_dec",
+      "consumers": [
+        "enemy_1335_bldrat",
+        "enemy_1335_bldrat_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": true,
+      "programSha256": "555a508b4386484eff369b342222218f4cbd2716a374b6823b2db7e193f100b1",
+      "bytes": 133,
+      "templateCount": 1,
+      "requiredBlackboard": [
+        "blood_value"
+      ]
+    },
+    {
+      "key": "bsthmr_range",
+      "consumers": [
+        "enemy_1076_bsthmr",
+        "enemy_1076_bsthmr_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_BUFF_FINISH"
+    },
+    {
+      "key": "cooperate_die_to_trigger_bonus",
+      "consumers": [
+        "enemy_4007_murino"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_OWNER_FINISH"
+    },
+    {
+      "key": "cooperate_die_to_trigger_bonus_2",
+      "consumers": [
+        "enemy_4007_murino_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_OWNER_FINISH"
+    },
+    {
+      "key": "damage_resistance",
+      "consumers": [
+        "enemy_1220_dzoms",
+        "enemy_1220_dzoms_2",
+        "enemy_1221_dzomg",
+        "enemy_1221_dzomg_2",
+        "enemy_1253_lysytc",
+        "enemy_1253_lysytc_2",
+        "enemy_1262_durplc",
+        "enemy_1262_durplc_2",
+        "enemy_5050_dqomg"
+      ],
+      "unsupportedConsumers": [
+        "enemy_5050_dqomg"
+      ],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_TAKE_DAMAGE"
+    },
+    {
+      "key": "damage_scale[out]",
+      "consumers": [
+        "enemy_1509_mousek"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_OUTPUT_DAMAGE"
+    },
+    {
+      "key": "deathrattle_sum[walk_only]",
+      "consumers": [
+        "enemy_1133_harchn",
+        "enemy_1133_harchn_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_OWNER_KILLED"
+    },
+    {
+      "key": "dlancer_t[trigger]",
+      "consumers": [
+        "enemy_1072_dlancer",
+        "enemy_1072_dlancer_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: create buff"
+    },
+    {
+      "key": "dlancer_t_atk",
+      "consumers": [
+        "enemy_1072_dlancer",
+        "enemy_1072_dlancer_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_BUFF_FINISH"
+    },
+    {
+      "key": "dlancer_t_listener[a]",
+      "consumers": [
+        "enemy_1072_dlancer",
+        "enemy_1072_dlancer_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: abnormal flag"
+    },
+    {
+      "key": "dlancer_t_listener[b]",
+      "consumers": [
+        "enemy_1072_dlancer",
+        "enemy_1072_dlancer_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: abnormal flag"
+    },
+    {
+      "key": "dlancer_t_listener[c]",
+      "consumers": [
+        "enemy_1072_dlancer",
+        "enemy_1072_dlancer_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action CheckBlocked"
+    },
+    {
+      "key": "dscout_cancel_undead",
+      "consumers": [
+        "enemy_1073_dscout_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action FinishBuffsById"
+    },
+    {
+      "key": "dscout_t[buff]",
+      "consumers": [
+        "enemy_1073_dscout",
+        "enemy_1073_dscout_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action SwitchMode"
+    },
+    {
+      "key": "dsshel_t_1",
+      "consumers": [
+        "enemy_1434_dsshel"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_OWNER_KILLED"
+    },
+    {
+      "key": "e2c_frozen_atkscale",
+      "consumers": [
+        "enemy_1193_krgbsk",
+        "enemy_1193_krgbsk_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_CALCULATE_DAMAGE"
+    },
+    {
+      "key": "ememy_duflm_die",
+      "consumers": [
+        "enemy_1290_duflm",
+        "enemy_1290_duflm_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_OWNER_KILLED"
+    },
+    {
+      "key": "empty",
+      "consumers": [
+        "enemy_10019_sgmum",
+        "enemy_10019_sgmum_2",
+        "enemy_1004_mslime",
+        "enemy_1004_mslime_2",
+        "enemy_10052_cjshld",
+        "enemy_10052_cjshld_2",
+        "enemy_10083_hlbird",
+        "enemy_10083_hlbird_2",
+        "enemy_10084_hlegle",
+        "enemy_10084_hlegle_2",
+        "enemy_10085_hllevi",
+        "enemy_10085_hllevi_2",
+        "enemy_10086_hltigr",
+        "enemy_10086_hltigr_2",
+        "enemy_10091_hlsttu",
+        "enemy_10091_hlsttu_2",
+        "enemy_10092_hlslp",
+        "enemy_10095_crgst",
+        "enemy_10095_crgst_2",
+        "enemy_10134_pycspy",
+        "enemy_10134_pycspy_2",
+        "enemy_1022_dmage",
+        "enemy_1022_dmage_2",
+        "enemy_1045_hammer",
+        "enemy_1045_hammer_2",
+        "enemy_1047_sagent",
+        "enemy_1047_sagent_2",
+        "enemy_1048_hirman",
+        "enemy_1048_hirman_2",
+        "enemy_1049_eagent",
+        "enemy_1049_eagent_2",
+        "enemy_1050_lslime",
+        "enemy_1058_traink",
+        "enemy_1058_traink_2",
+        "enemy_1060_emouse",
+        "enemy_1060_emouse_2",
+        "enemy_1068_snmage",
+        "enemy_1068_snmage_2",
+        "enemy_1070_iced",
+        "enemy_1072_dlancer",
+        "enemy_1072_dlancer_2",
+        "enemy_1073_dscout_2",
+        "enemy_1074_dbskar",
+        "enemy_1074_dbskar_2",
+        "enemy_1075_dmgswd",
+        "enemy_1075_dmgswd_2",
+        "enemy_1084_sotidm",
+        "enemy_1084_sotidm_2",
+        "enemy_1084_sotidm_3",
+        "enemy_1085_sotiwz",
+        "enemy_1085_sotiwz_2",
+        "enemy_1085_sotiwz_3",
+        "enemy_1088_ltsmer",
+        "enemy_1088_ltsmer_2",
+        "enemy_1089_ltlntc",
+        "enemy_1089_ltlntc_2",
+        "enemy_1091_mdhmmr",
+        "enemy_1091_mdhmmr_2",
+        "enemy_1095_ccripr",
+        "enemy_1095_ccripr_2",
+        "enemy_1098_cchmpn",
+        "enemy_1098_cchmpn_2",
+        "enemy_1103_wdkght",
+        "enemy_1103_wdkght_2",
+        "enemy_1103_wdkght_3",
+        "enemy_1106_byokai",
+        "enemy_1112_emppnt",
+        "enemy_1112_emppnt_2",
+        "enemy_1117_liiprr",
+        "enemy_1117_liiprr_2",
+        "enemy_1120_vofwiz",
+        "enemy_1120_vofwiz_2",
+        "enemy_1121_lifbos",
+        "enemy_1121_lifbos_2",
+        "enemy_1143_merrpg",
+        "enemy_1143_merrpg_2",
+        "enemy_1145_atkspd",
+        "enemy_1145_atkspd_2",
+        "enemy_1171_durokt",
+        "enemy_1171_durokt_2",
+        "enemy_1187_krghd",
+        "enemy_1187_krghd_2",
+        "enemy_1188_krgdrn",
+        "enemy_1188_krgdrn_2",
+        "enemy_1192_krgscr",
+        "enemy_1192_krgscr_2",
+        "enemy_1193_krgbsk",
+        "enemy_1193_krgbsk_2",
+        "enemy_1194_krgmtr",
+        "enemy_1194_krgmtr_2",
+        "enemy_1203_sfhu",
+        "enemy_1203_sfhu_2",
+        "enemy_1207_sfji",
+        "enemy_1207_sfji_2",
+        "enemy_1209_sfden",
+        "enemy_1209_sfden_2",
+        "enemy_1218_bomscr",
+        "enemy_1218_bomscr_2",
+        "enemy_1219_mtrbty",
+        "enemy_1219_mtrbty_2",
+        "enemy_1220_dzoms",
+        "enemy_1220_dzoms_2",
+        "enemy_1221_dzomg",
+        "enemy_1221_dzomg_2",
+        "enemy_1230_dsbudr_3",
+        "enemy_1231_dsrunr_3",
+        "enemy_1232_dssalr_3",
+        "enemy_1233_dsshtr_3",
+        "enemy_1234_dsubrl_3",
+        "enemy_1235_dsbskr_3",
+        "enemy_1240_ltgint",
+        "enemy_1240_ltgint_2",
+        "enemy_1242_ltsmag",
+        "enemy_1242_ltsmag_2",
+        "enemy_1245_ltseal",
+        "enemy_1250_lyengs",
+        "enemy_1250_lyengs_2",
+        "enemy_1251_lysyta",
+        "enemy_1251_lysyta_2",
+        "enemy_1252_lysytb",
+        "enemy_1252_lysytb_2",
+        "enemy_1253_lysytc",
+        "enemy_1253_lysytc_2",
+        "enemy_1255_lybgpa",
+        "enemy_1255_lybgpa_2",
+        "enemy_1256_lyacpa",
+        "enemy_1256_lyacpa_2",
+        "enemy_1257_lydrty",
+        "enemy_1263_durbus",
+        "enemy_1263_durbus_2",
+        "enemy_1264_durgrd",
+        "enemy_1264_durgrd_2",
+        "enemy_1266_nhapos",
+        "enemy_1271_nhkodo",
+        "enemy_1271_nhkodo_2",
+        "enemy_1272_nhtank",
+        "enemy_1272_nhtank_2",
+        "enemy_1273_stmgun",
+        "enemy_1273_stmgun_2",
+        "enemy_1276_telex",
+        "enemy_1286_dumcy",
+        "enemy_1286_dumcy_2",
+        "enemy_1287_ducrb",
+        "enemy_1287_ducrb_2",
+        "enemy_1288_duskls",
+        "enemy_1288_duskls_2",
+        "enemy_1291_dusrch",
+        "enemy_1291_dusrch_2",
+        "enemy_1292_duskld",
+        "enemy_1292_duskld_2",
+        "enemy_1294_duchns",
+        "enemy_1329_cbshld",
+        "enemy_1329_cbshld_2",
+        "enemy_1362_dfat",
+        "enemy_1362_dfat_2",
+        "enemy_1364_spnaxe",
+        "enemy_1364_spnaxe_2",
+        "enemy_1410_mmelee",
+        "enemy_1410_mmelee_2",
+        "enemy_1419_mmcike",
+        "enemy_1420_lrmm",
+        "enemy_1421_lrchld",
+        "enemy_1425_lrcmra",
+        "enemy_1425_lrcmra_2",
+        "enemy_1442_dsgun",
+        "enemy_15006_dqkrgm",
+        "enemy_1500_skulsr",
+        "enemy_1502_crowns",
+        "enemy_15043_dqrckm",
+        "enemy_15094_dqgent",
+        "enemy_1509_mousek",
+        "enemy_1511_mdrock",
+        "enemy_1513_dekght",
+        "enemy_1513_dekght_2",
+        "enemy_1514_smephi",
+        "enemy_1516_jakill",
+        "enemy_1518_dusk",
+        "enemy_1525_blkswb",
+        "enemy_1529_dsdevr_2",
+        "enemy_1531_bbrain",
+        "enemy_1536_ncrmcr",
+        "enemy_1586_suiy",
+        "enemy_19065_aktstn",
+        "enemy_2001_duckmi",
+        "enemy_2003_rockman",
+        "enemy_2005_axetro",
+        "enemy_2016_csphtm",
+        "enemy_2034_sythef",
+        "enemy_2046_smwar",
+        "enemy_2052_smgia",
+        "enemy_2053_smgia2",
+        "enemy_2058_smlion",
+        "enemy_2060_smshdw",
+        "enemy_2061_smhond",
+        "enemy_2064_skzwdd",
+        "enemy_2065_skzjs",
+        "enemy_2067_skzcy",
+        "enemy_2069_skzbox",
+        "enemy_2070_skzfbx",
+        "enemy_2073_skzrck",
+        "enemy_2081_skztxs",
+        "enemy_2085_skzjxd",
+        "enemy_2088_skzdwz",
+        "enemy_2091_skzgds",
+        "enemy_2132_dyfake",
+        "enemy_2138_shdbjg",
+        "enemy_2139_shdbj2",
+        "enemy_4048_mubarn",
+        "enemy_4048_mubarn_2",
+        "enemy_5012_mstntd",
+        "enemy_5013_daikis",
+        "enemy_5018_tethfd",
+        "enemy_5021_tmagfd",
+        "enemy_5028_dqlime_2",
+        "enemy_5042_dqkght_2",
+        "enemy_5043_dqgscr",
+        "enemy_5047_dqripr",
+        "enemy_5049_dqat",
+        "enemy_5050_dqomg",
+        "enemy_5072_izdmge",
+        "enemy_6002_trswlf",
+        "enemy_6003_trsslm",
+        "enemy_6019_escort",
+        "enemy_7028_xbscp",
+        "enemy_7028_xbscp_2",
+        "enemy_7096_xb2deero_2",
+        "enemy_7097_xb2bullo_2",
+        "enemy_7098_xb2crabo_2",
+        "enemy_7099_xb2birdo_2",
+        "enemy_7100_xb2crab2o_2",
+        "enemy_7101_xb2motho_2",
+        "enemy_7102_xb2chpyo_2",
+        "enemy_7103_xb2strcho_2",
+        "enemy_7104_xb2firyo_2",
+        "enemy_7105_xb2cbrb1o_2",
+        "enemy_7106_xb2deer2o_2",
+        "enemy_7107_xb2bull1o_2"
+      ],
+      "unsupportedConsumers": [
+        "enemy_10092_hlslp",
+        "enemy_10134_pycspy",
+        "enemy_10134_pycspy_2",
+        "enemy_1145_atkspd",
+        "enemy_1145_atkspd_2",
+        "enemy_1194_krgmtr",
+        "enemy_1194_krgmtr_2",
+        "enemy_1230_dsbudr_3",
+        "enemy_1231_dsrunr_3",
+        "enemy_1232_dssalr_3",
+        "enemy_1233_dsshtr_3",
+        "enemy_1234_dsubrl_3",
+        "enemy_1235_dsbskr_3",
+        "enemy_1419_mmcike",
+        "enemy_1442_dsgun",
+        "enemy_15006_dqkrgm",
+        "enemy_15043_dqrckm",
+        "enemy_15094_dqgent",
+        "enemy_1514_smephi",
+        "enemy_1518_dusk",
+        "enemy_1525_blkswb",
+        "enemy_1529_dsdevr_2",
+        "enemy_1531_bbrain",
+        "enemy_1536_ncrmcr",
+        "enemy_1586_suiy",
+        "enemy_19065_aktstn",
+        "enemy_2003_rockman",
+        "enemy_2016_csphtm",
+        "enemy_2052_smgia",
+        "enemy_2053_smgia2",
+        "enemy_2058_smlion",
+        "enemy_2073_skzrck",
+        "enemy_2081_skztxs",
+        "enemy_2132_dyfake",
+        "enemy_2138_shdbjg",
+        "enemy_2139_shdbj2",
+        "enemy_4048_mubarn",
+        "enemy_4048_mubarn_2",
+        "enemy_5012_mstntd",
+        "enemy_5021_tmagfd",
+        "enemy_5043_dqgscr",
+        "enemy_5049_dqat",
+        "enemy_5050_dqomg",
+        "enemy_5072_izdmge",
+        "enemy_6002_trswlf",
+        "enemy_6003_trsslm",
+        "enemy_6019_escort",
+        "enemy_7028_xbscp",
+        "enemy_7028_xbscp_2"
+      ],
+      "compiled": true,
+      "programSha256": "ee05dbd538d549817176bc24821a2c975a6da082065fdcbcaa1bf94275a4bdce",
+      "bytes": 72,
+      "templateCount": 1,
+      "requiredBlackboard": []
+    },
+    {
+      "key": "enemy_axetro_t",
+      "consumers": [
+        "enemy_2005_axetro"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: create buff"
+    },
+    {
+      "key": "enemy_axetro_t[checker]",
+      "consumers": [
+        "enemy_2005_axetro"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action FinishBuffsById"
+    },
+    {
+      "key": "enemy_bbrain[aoe_when_finish]",
+      "consumers": [
+        "enemy_1531_bbrain"
+      ],
+      "unsupportedConsumers": [
+        "enemy_1531_bbrain"
+      ],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_BUFF_FINISH"
+    },
+    {
+      "key": "enemy_bbrain[blink_eff]",
+      "consumers": [
+        "enemy_1531_bbrain"
+      ],
+      "unsupportedConsumers": [
+        "enemy_1531_bbrain"
+      ],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: limited override"
+    },
+    {
+      "key": "enemy_bbrain[buff_mark]",
+      "consumers": [
+        "enemy_1531_bbrain"
+      ],
+      "unsupportedConsumers": [
+        "enemy_1531_bbrain"
+      ],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action CreateBuffUseTargetAsSource"
+    },
+    {
+      "key": "enemy_bbrain[damage_split]",
+      "consumers": [
+        "enemy_1531_bbrain"
+      ],
+      "unsupportedConsumers": [
+        "enemy_1531_bbrain"
+      ],
+      "compiled": false,
+      "reason": "Unsupported behaviour template metadata"
+    },
+    {
+      "key": "enemy_bbrain_c[log_killed]",
+      "consumers": [
+        "enemy_1531_bbrain"
+      ],
+      "unsupportedConsumers": [
+        "enemy_1531_bbrain"
+      ],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_OWNER_KILLED"
+    },
+    {
+      "key": "enemy_bbrain_reborn",
+      "consumers": [
+        "enemy_1531_bbrain"
+      ],
+      "unsupportedConsumers": [
+        "enemy_1531_bbrain"
+      ],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action InterruptEnemyAbility"
+    },
+    {
+      "key": "enemy_bigstorm[dmg]",
+      "consumers": [
+        "enemy_1420_lrmm"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action AssignBuffBlackboardFromOthers"
+    },
+    {
+      "key": "enemy_bigstorm[killLrboom]",
+      "consumers": [
+        "enemy_1420_lrmm"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action AssignBuffBlackboard"
+    },
+    {
+      "key": "enemy_bigstorm[traceStorm]",
+      "consumers": [
+        "enemy_1420_lrmm"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action TriggerAbility"
+    },
+    {
+      "key": "enemy_bloodsucker_block_cnt[control]",
+      "consumers": [
+        "enemy_1220_dzoms",
+        "enemy_1220_dzoms_2",
+        "enemy_1221_dzomg",
+        "enemy_1221_dzomg_2",
+        "enemy_5050_dqomg"
+      ],
+      "unsupportedConsumers": [
+        "enemy_5050_dqomg"
+      ],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: lifetime"
+    },
+    {
+      "key": "enemy_bomscr_boom_and_killself",
+      "consumers": [
+        "enemy_1218_bomscr",
+        "enemy_1218_bomscr_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action CreateEffect"
+    },
+    {
+      "key": "enemy_bomscr_boom_damage",
+      "consumers": [
+        "enemy_1218_bomscr",
+        "enemy_1218_bomscr_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: predicate CheckFilterTag"
+    },
+    {
+      "key": "enemy_bomscr_boom_switch_mode",
+      "consumers": [
+        "enemy_1218_bomscr",
+        "enemy_1218_bomscr_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: binding"
+    },
+    {
+      "key": "enemy_cansld_log",
+      "consumers": [
+        "enemy_1216_cansld",
+        "enemy_1216_cansld_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_APPLIED_MODIFIER"
+    },
+    {
+      "key": "enemy_cbjedi_bleed",
+      "consumers": [
+        "enemy_1328_cbjedi",
+        "enemy_1328_cbjedi_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: predicate CheckEnemyUnbalanced"
+    },
+    {
+      "key": "enemy_cbshld_t",
+      "consumers": [
+        "enemy_1329_cbshld",
+        "enemy_1329_cbshld_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_TAKE_DAMAGE"
+    },
+    {
+      "key": "enemy_cchmpn_t",
+      "consumers": [
+        "enemy_1098_cchmpn",
+        "enemy_1098_cchmpn_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_TAKE_DAMAGE"
+    },
+    {
+      "key": "enemy_confinement",
+      "consumers": [
+        "enemy_1117_liiprr",
+        "enemy_1117_liiprr_2",
+        "enemy_1120_vofwiz",
+        "enemy_1120_vofwiz_2",
+        "enemy_1121_lifbos",
+        "enemy_1121_lifbos_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action CreateBuffs"
+    },
+    {
+      "key": "enemy_confinement[atk_cnt]",
+      "consumers": [
+        "enemy_1117_liiprr",
+        "enemy_1117_liiprr_2",
+        "enemy_1120_vofwiz",
+        "enemy_1120_vofwiz_2",
+        "enemy_1121_lifbos",
+        "enemy_1121_lifbos_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_BEFORE_ATTACK"
+    },
+    {
+      "key": "enemy_crgst[blockee]",
+      "consumers": [
+        "enemy_10095_crgst",
+        "enemy_10095_crgst_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": true,
+      "programSha256": "ee1ede588e07698b61deb5472e739683aa1a70a75391ac0e43a504af3ed6e6a0",
+      "bytes": 150,
+      "templateCount": 1,
+      "requiredBlackboard": []
+    },
+    {
+      "key": "enemy_crgst[blocker]",
+      "consumers": [
+        "enemy_10095_crgst",
+        "enemy_10095_crgst_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": true,
+      "programSha256": "823e7f234c562f81904fad38b665eaff1294eeb60c9f053949acb1343d128001",
+      "bytes": 547,
+      "templateCount": 2,
+      "requiredBlackboard": []
+    },
+    {
+      "key": "enemy_dead_spawn",
+      "consumers": [
+        "enemy_1205_sfpin",
+        "enemy_1205_sfpin_2",
+        "enemy_1209_sfden",
+        "enemy_1209_sfden_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_OWNER_KILLED"
+    },
+    {
+      "key": "enemy_dead_spawn[sfji]",
+      "consumers": [
+        "enemy_1207_sfji",
+        "enemy_1207_sfji_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_OWNER_KILLED"
+    },
+    {
+      "key": "enemy_dekght[aoe]",
+      "consumers": [
+        "enemy_1513_dekght"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_BUFF_FINISH"
+    },
+    {
+      "key": "enemy_dekght[trigger_rage]",
+      "consumers": [
+        "enemy_1513_dekght",
+        "enemy_1513_dekght_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_BUFF_FINISH"
+    },
+    {
+      "key": "enemy_dekght_2[aoe]",
+      "consumers": [
+        "enemy_1513_dekght_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action IfTarget"
+    },
+    {
+      "key": "enemy_dfello_summon[dseed]",
+      "consumers": [
+        "enemy_1364_spnaxe",
+        "enemy_1364_spnaxe_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_OWNER_KILLED"
+    },
+    {
+      "key": "enemy_dsdevr_activate_remains",
+      "consumers": [
+        "enemy_1230_dsbudr_3",
+        "enemy_1231_dsrunr_3",
+        "enemy_1232_dssalr_3",
+        "enemy_1233_dsshtr_3",
+        "enemy_1234_dsubrl_3",
+        "enemy_1235_dsbskr_3"
+      ],
+      "unsupportedConsumers": [
+        "enemy_1230_dsbudr_3",
+        "enemy_1231_dsrunr_3",
+        "enemy_1232_dssalr_3",
+        "enemy_1233_dsshtr_3",
+        "enemy_1234_dsubrl_3",
+        "enemy_1235_dsbskr_3"
+      ],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_OWNER_KILLED_BY_MAIN_TARGET"
+    },
+    {
+      "key": "enemy_duchns_boom",
+      "consumers": [
+        "enemy_1294_duchns"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_OWNER_KILLED"
+    },
+    {
+      "key": "enemy_duchns_kill_source",
+      "consumers": [
+        "enemy_1294_duchns"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_BUFF_FINISH"
+    },
+    {
+      "key": "enemy_duchns_pericdic_damage",
+      "consumers": [
+        "enemy_1294_duchns"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action DamageViaMaxHpRatio"
+    },
+    {
+      "key": "enemy_duckmi_t",
+      "consumers": [
+        "enemy_2001_duckmi"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_TAKE_DAMAGE"
+    },
+    {
+      "key": "enemy_ducrb_checker",
+      "consumers": [
+        "enemy_1287_ducrb",
+        "enemy_1287_ducrb_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action CheckContainsDerviedBuff"
+    },
+    {
+      "key": "enemy_dumcy_checker",
+      "consumers": [
+        "enemy_1286_dumcy",
+        "enemy_1286_dumcy_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action CheckContainsDerviedBuff"
+    },
+    {
+      "key": "enemy_durcar_hit_blocker",
+      "consumers": [],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: predicate CheckEnemyId"
+    },
+    {
+      "key": "enemy_durcar_hit_blocker[suicide]",
+      "consumers": [],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_BUFF_FINISH"
+    },
+    {
+      "key": "enemy_durokt[fly]",
+      "consumers": [
+        "enemy_1171_durokt",
+        "enemy_1171_durokt_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action ChangeMotionMode"
+    },
+    {
+      "key": "enemy_duskld_anim_trigger",
+      "consumers": [
+        "enemy_1292_duskld",
+        "enemy_1292_duskld_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action TriggerEnemySkill"
+    },
+    {
+      "key": "enemy_duskld_ep_damage",
+      "consumers": [
+        "enemy_1292_duskld",
+        "enemy_1292_duskld_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_CALCULATE_DAMAGE"
+    },
+    {
+      "key": "enemy_duskld_revive_listener",
+      "consumers": [
+        "enemy_1292_duskld",
+        "enemy_1292_duskld_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action SwitchToRebornState"
+    },
+    {
+      "key": "enemy_duskld_trigger_skill",
+      "consumers": [
+        "enemy_1292_duskld",
+        "enemy_1292_duskld_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action TriggerAbility"
+    },
+    {
+      "key": "enemy_duskls_anim_trigger",
+      "consumers": [
+        "enemy_1288_duskls",
+        "enemy_1288_duskls_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action TriggerEnemySkill"
+    },
+    {
+      "key": "enemy_duskls_ep_damage",
+      "consumers": [
+        "enemy_1288_duskls",
+        "enemy_1288_duskls_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_CALCULATE_DAMAGE"
+    },
+    {
+      "key": "enemy_duskls_revive_listener",
+      "consumers": [
+        "enemy_1288_duskls",
+        "enemy_1288_duskls_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action SwitchToRebornState"
+    },
+    {
+      "key": "enemy_duskls_trigger_skill",
+      "consumers": [
+        "enemy_1288_duskls",
+        "enemy_1288_duskls_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action TriggerAbility"
+    },
+    {
+      "key": "enemy_duswrd_ignite",
+      "consumers": [
+        "enemy_1293_duswrd",
+        "enemy_1293_duswrd_2",
+        "enemy_1293_duswrd_3"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action SwitchDynamicBuffTileMode"
+    },
+    {
+      "key": "enemy_fake_t_apoptosis",
+      "consumers": [
+        "enemy_2088_skzdwz"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action CreateTileBindingGlobalBuff"
+    },
+    {
+      "key": "enemy_fixed_value_damage_to_trap",
+      "consumers": [
+        "enemy_1215_ptrarc",
+        "enemy_1215_ptrarc_2",
+        "enemy_1216_cansld",
+        "enemy_1216_cansld_2",
+        "enemy_1219_mtrbty",
+        "enemy_1219_mtrbty_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action CheckFilterTag"
+    },
+    {
+      "key": "enemy_hlslp[end_sleep]",
+      "consumers": [
+        "enemy_10092_hlslp"
+      ],
+      "unsupportedConsumers": [
+        "enemy_10092_hlslp"
+      ],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_TAKE_DAMAGE"
+    },
+    {
+      "key": "enemy_hlslp[end_sleep_core]",
+      "consumers": [
+        "enemy_10092_hlslp"
+      ],
+      "unsupportedConsumers": [
+        "enemy_10092_hlslp"
+      ],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action FinishBuffsById"
+    },
+    {
+      "key": "enemy_hlslp[end_sleep_delay]",
+      "consumers": [
+        "enemy_10092_hlslp"
+      ],
+      "unsupportedConsumers": [
+        "enemy_10092_hlslp"
+      ],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_BUFF_FINISH"
+    },
+    {
+      "key": "enemy_hlslp[heal_add_sp]",
+      "consumers": [
+        "enemy_10092_hlslp"
+      ],
+      "unsupportedConsumers": [
+        "enemy_10092_hlslp"
+      ],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_APPLYING_MODIFIER"
+    },
+    {
+      "key": "enemy_hlslp[heal_add_sp_core]",
+      "consumers": [
+        "enemy_10092_hlslp"
+      ],
+      "unsupportedConsumers": [
+        "enemy_10092_hlslp"
+      ],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action ModifySp"
+    },
+    {
+      "key": "enemy_hp_listener",
+      "consumers": [
+        "enemy_1073_dscout",
+        "enemy_1073_dscout_2",
+        "enemy_1074_dbskar",
+        "enemy_1074_dbskar_2",
+        "enemy_1075_dmgswd",
+        "enemy_1075_dmgswd_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action FilterByTargetHpRatio"
+    },
+    {
+      "key": "enemy_krgbsk_t[cold]",
+      "consumers": [
+        "enemy_1193_krgbsk",
+        "enemy_1193_krgbsk_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_CALCULATE_DAMAGE"
+    },
+    {
+      "key": "enemy_lfkght_s",
+      "consumers": [
+        "enemy_1104_lfkght",
+        "enemy_1104_lfkght_2",
+        "enemy_1104_lfkght_3"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_BUFF_FINISH"
+    },
+    {
+      "key": "enemy_liberty[warning]",
+      "consumers": [
+        "enemy_1117_liiprr",
+        "enemy_1117_liiprr_2",
+        "enemy_1120_vofwiz",
+        "enemy_1120_vofwiz_2",
+        "enemy_1121_lifbos",
+        "enemy_1121_lifbos_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: create buff"
+    },
+    {
+      "key": "enemy_liberty_force",
+      "consumers": [
+        "enemy_1121_lifbos",
+        "enemy_1121_lifbos_2",
+        "enemy_1516_jakill"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action FinishBuffsById"
+    },
+    {
+      "key": "enemy_liberty_listener[warning]",
+      "consumers": [
+        "enemy_1117_liiprr",
+        "enemy_1117_liiprr_2",
+        "enemy_1120_vofwiz",
+        "enemy_1120_vofwiz_2",
+        "enemy_1121_lifbos",
+        "enemy_1121_lifbos_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_BEFORE_ATTACK"
+    },
+    {
+      "key": "enemy_lrchld[finishFx]",
+      "consumers": [
+        "enemy_1421_lrchld"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action CreateBuffUseAbilitySelector"
+    },
+    {
+      "key": "enemy_lrchld[fx]",
+      "consumers": [
+        "enemy_1421_lrchld"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_OWNER_FINISH"
+    },
+    {
+      "key": "enemy_lrcmra[originum][dmg]",
+      "consumers": [
+        "enemy_1425_lrcmra",
+        "enemy_1425_lrcmra_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action AssignBuffBlackboardFromOthers"
+    },
+    {
+      "key": "enemy_lrcmra[switchMode]",
+      "consumers": [
+        "enemy_1425_lrcmra",
+        "enemy_1425_lrcmra_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_BUFF_FINISH"
+    },
+    {
+      "key": "enemy_lrcmra[switchMode][toOrig]",
+      "consumers": [
+        "enemy_1425_lrcmra",
+        "enemy_1425_lrcmra_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action TriggerEnemySkill"
+    },
+    {
+      "key": "enemy_lrmm[ctrl_radius]",
+      "consumers": [
+        "enemy_1420_lrmm"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action AssignBuffBlackboardFromOthers"
+    },
+    {
+      "key": "enemy_lrmm[stormCtrl]",
+      "consumers": [
+        "enemy_1420_lrmm"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action AssignAttributeToBB"
+    },
+    {
+      "key": "enemy_ltbow_t",
+      "consumers": [
+        "enemy_1239_ltbow",
+        "enemy_1239_ltbow_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: predicate CheckCharacterInMagicCircuit"
+    },
+    {
+      "key": "enemy_ltgint_t",
+      "consumers": [
+        "enemy_1240_ltgint",
+        "enemy_1240_ltgint_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_LEAVE_MAGICCIRCUIT"
+    },
+    {
+      "key": "enemy_ltholo_t",
+      "consumers": [
+        "enemy_1248_ltholo"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_LEAVE_MAGICCIRCUIT"
+    },
+    {
+      "key": "enemy_ltmage_t",
+      "consumers": [
+        "enemy_1241_ltmage",
+        "enemy_1241_ltmage_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action CreateEffect"
+    },
+    {
+      "key": "enemy_ltmob_t",
+      "consumers": [
+        "enemy_1238_ltmob",
+        "enemy_1238_ltmob_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: predicate CheckCharacterInMagicCircuit"
+    },
+    {
+      "key": "enemy_ltseal_t",
+      "consumers": [
+        "enemy_1245_ltseal"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action SetMagicCircuitLikeObstacleInRange"
+    },
+    {
+      "key": "enemy_ltseal_t[attack_effect]",
+      "consumers": [
+        "enemy_1245_ltseal"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: create buff"
+    },
+    {
+      "key": "enemy_ltseal_t[damage]",
+      "consumers": [
+        "enemy_1245_ltseal"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: create buff"
+    },
+    {
+      "key": "enemy_ltseal_t[has_character]",
+      "consumers": [
+        "enemy_1245_ltseal"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: predicate FilterByTargetHpRatio"
+    },
+    {
+      "key": "enemy_ltsmer_s_1[modify_sp]",
+      "consumers": [
+        "enemy_1088_ltsmer",
+        "enemy_1088_ltsmer_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action ModifySp"
+    },
+    {
+      "key": "enemy_lybgpa[keep_punch_mark]",
+      "consumers": [
+        "enemy_1255_lybgpa",
+        "enemy_1255_lybgpa_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action TriggerAbility"
+    },
+    {
+      "key": "enemy_lybgpa[release_from_blocker]",
+      "consumers": [
+        "enemy_1255_lybgpa",
+        "enemy_1255_lybgpa_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": true,
+      "programSha256": "cb716ee88a10f03a382b33b31c252a65b7a034e784ea084d402848871c5acb52",
+      "bytes": 178,
+      "templateCount": 1,
+      "requiredBlackboard": []
+    },
+    {
+      "key": "enemy_lydrty[buff_to_source]",
+      "consumers": [
+        "enemy_1257_lydrty"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: lifetime"
+    },
+    {
+      "key": "enemy_lyengs[interrupt_if_hp_full]",
+      "consumers": [
+        "enemy_1250_lyengs",
+        "enemy_1250_lyengs_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action FilterByTargetHpRatio"
+    },
+    {
+      "key": "enemy_lyengs[modify_hp]",
+      "consumers": [
+        "enemy_1250_lyengs",
+        "enemy_1250_lyengs_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action HealViaMaxHpRatio"
+    },
+    {
+      "key": "enemy_lysyta[sp_to_car]",
+      "consumers": [
+        "enemy_1251_lysyta",
+        "enemy_1251_lysyta_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_OWNER_KILLED_BY_MAIN_TARGET"
+    },
+    {
+      "key": "enemy_lysytb[sp_to_car]",
+      "consumers": [
+        "enemy_1252_lysytb",
+        "enemy_1252_lysytb_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_OWNER_KILLED_BY_MAIN_TARGET"
+    },
+    {
+      "key": "enemy_lysytc[sp_to_car]",
+      "consumers": [
+        "enemy_1253_lysytc",
+        "enemy_1253_lysytc_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_OWNER_KILLED_BY_MAIN_TARGET"
+    },
+    {
+      "key": "enemy_lysytc[toggle_damage_resistance]",
+      "consumers": [
+        "enemy_1253_lysytc",
+        "enemy_1253_lysytc_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_OWNER_BLOCKEE_CHANGED"
+    },
+    {
+      "key": "enemy_mainline14[origFx]",
+      "consumers": [
+        "enemy_1420_lrmm",
+        "enemy_1425_lrcmra",
+        "enemy_1425_lrcmra_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action FinishBuff"
+    },
+    {
+      "key": "enemy_mdhmmr_shield",
+      "consumers": [
+        "enemy_1091_mdhmmr",
+        "enemy_1091_mdhmmr_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_TAKE_DAMAGE"
+    },
+    {
+      "key": "enemy_mdhmmr_shield_end",
+      "consumers": [
+        "enemy_1091_mdhmmr",
+        "enemy_1091_mdhmmr_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_TAKE_DAMAGE"
+    },
+    {
+      "key": "enemy_mdrock_s_1",
+      "consumers": [
+        "enemy_1511_mdrock"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: lifetime"
+    },
+    {
+      "key": "enemy_mdrock_s_1[effect_a_creator]",
+      "consumers": [
+        "enemy_1511_mdrock"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: lifetime"
+    },
+    {
+      "key": "enemy_mdrock_s_1[effect_b_creator]",
+      "consumers": [
+        "enemy_1511_mdrock"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action FinishBuffsById"
+    },
+    {
+      "key": "enemy_mdrock_s_1[effect_c_creator]",
+      "consumers": [
+        "enemy_1511_mdrock"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action FinishBuffsById"
+    },
+    {
+      "key": "enemy_mdrock_s_1[persistent]",
+      "consumers": [
+        "enemy_1511_mdrock"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_BEFORE_ATTACK"
+    },
+    {
+      "key": "enemy_mdrock_s_2[shield][refresh]",
+      "consumers": [
+        "enemy_1511_mdrock"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action FinishBuffsById"
+    },
+    {
+      "key": "enemy_mdrock_s_2[shield_last]",
+      "consumers": [
+        "enemy_1511_mdrock"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_TAKE_DAMAGE"
+    },
+    {
+      "key": "enemy_mdrock_s_2[shield_normal]",
+      "consumers": [
+        "enemy_1511_mdrock"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_TAKE_DAMAGE"
+    },
+    {
+      "key": "enemy_melee_and_ranged_spmode_check",
+      "consumers": [
+        "enemy_1216_cansld",
+        "enemy_1216_cansld_2",
+        "enemy_1219_mtrbty",
+        "enemy_1219_mtrbty_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: predicate CheckBlocked"
+    },
+    {
+      "key": "enemy_mmelee_physical_evade",
+      "consumers": [
+        "enemy_1410_mmelee",
+        "enemy_1410_mmelee_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_TAKE_DAMAGE"
+    },
+    {
+      "key": "enemy_mmelee_touched_rope[continues]",
+      "consumers": [
+        "enemy_1410_mmelee",
+        "enemy_1410_mmelee_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action FinishBuffsById"
+    },
+    {
+      "key": "enemy_mubsbl_enhance",
+      "consumers": [
+        "enemy_4010_mubsbl",
+        "enemy_4010_mubsbl_2"
+      ],
+      "unsupportedConsumers": [
+        "enemy_4010_mubsbl",
+        "enemy_4010_mubsbl_2"
+      ],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_CALCULATE_DAMAGE"
+    },
+    {
+      "key": "enemy_murgby_enhance",
+      "consumers": [
+        "enemy_4009_murgby",
+        "enemy_4009_murgby_2"
+      ],
+      "unsupportedConsumers": [
+        "enemy_4009_murgby",
+        "enemy_4009_murgby_2"
+      ],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_CALCULATE_DAMAGE"
+    },
+    {
+      "key": "enemy_murino_direction_listener",
+      "consumers": [
+        "enemy_4007_murino",
+        "enemy_4007_murino_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action DisableEnemySwitchFaceByMove"
+    },
+    {
+      "key": "enemy_murino_t",
+      "consumers": [
+        "enemy_4007_murino",
+        "enemy_4007_murino_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_TAKE_DAMAGE"
+    },
+    {
+      "key": "enemy_ncrmcr_arson_trigger",
+      "consumers": [
+        "enemy_1536_ncrmcr"
+      ],
+      "unsupportedConsumers": [
+        "enemy_1536_ncrmcr"
+      ],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action TriggerEnemySkill"
+    },
+    {
+      "key": "enemy_ncrmcr_atk_scale",
+      "consumers": [
+        "enemy_1536_ncrmcr"
+      ],
+      "unsupportedConsumers": [
+        "enemy_1536_ncrmcr"
+      ],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_CALCULATE_DAMAGE"
+    },
+    {
+      "key": "enemy_ncrmcr_aura",
+      "consumers": [
+        "enemy_1536_ncrmcr"
+      ],
+      "unsupportedConsumers": [
+        "enemy_1536_ncrmcr"
+      ],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_OWNER_KILLED"
+    },
+    {
+      "key": "enemy_ncrmcr_sacrifice",
+      "consumers": [
+        "enemy_1536_ncrmcr"
+      ],
+      "unsupportedConsumers": [
+        "enemy_1536_ncrmcr"
+      ],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action EmitProjectile"
+    },
+    {
+      "key": "enemy_ncrmcr_sacrifice[hit_ncrmcr]",
+      "consumers": [
+        "enemy_1536_ncrmcr"
+      ],
+      "unsupportedConsumers": [
+        "enemy_1536_ncrmcr"
+      ],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action AssignAttributeAsDynamicVarToBB"
+    },
+    {
+      "key": "enemy_ncrmcr_sacrifice[trigger]",
+      "consumers": [
+        "enemy_1536_ncrmcr"
+      ],
+      "unsupportedConsumers": [
+        "enemy_1536_ncrmcr"
+      ],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action CreateBuffUseAbilitySelector"
+    },
+    {
+      "key": "enemy_ncrmcr_shield",
+      "consumers": [
+        "enemy_1536_ncrmcr"
+      ],
+      "unsupportedConsumers": [
+        "enemy_1536_ncrmcr"
+      ],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_TAKE_DAMAGE"
+    },
+    {
+      "key": "enemy_ncrmcr_shield_effect",
+      "consumers": [
+        "enemy_1536_ncrmcr"
+      ],
+      "unsupportedConsumers": [
+        "enemy_1536_ncrmcr"
+      ],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_BUFF_FINISH"
+    },
+    {
+      "key": "enemy_ncrmcr_skill_trigger",
+      "consumers": [
+        "enemy_1536_ncrmcr"
+      ],
+      "unsupportedConsumers": [
+        "enemy_1536_ncrmcr"
+      ],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action TriggerAbility"
+    },
+    {
+      "key": "enemy_nhapos_t[born]",
+      "consumers": [
+        "enemy_1266_nhapos"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action AttributeModifierWithLevelProgress"
+    },
+    {
+      "key": "enemy_nhkodo_t[devour]",
+      "consumers": [
+        "enemy_1271_nhkodo",
+        "enemy_1271_nhkodo_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: predicate IsCharacter"
+    },
+    {
+      "key": "enemy_nhkodo_t[devour_holder]",
+      "consumers": [
+        "enemy_1271_nhkodo",
+        "enemy_1271_nhkodo_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action CreateBuffUseTargetAsSource"
+    },
+    {
+      "key": "enemy_nhnrs_t[healtrap]",
+      "consumers": [
+        "enemy_1268_nhnrs",
+        "enemy_1268_nhnrs_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action HealViaMaxHpRatio"
+    },
+    {
+      "key": "enemy_nhtank_s_effect[buff]",
+      "consumers": [
+        "enemy_1272_nhtank",
+        "enemy_1272_nhtank_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: predicate CheckHasSp"
+    },
+    {
+      "key": "enemy_paki[blink]",
+      "consumers": [
+        "enemy_7011_paki"
+      ],
+      "unsupportedConsumers": [
+        "enemy_7011_paki"
+      ],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action CreateEffect"
+    },
+    {
+      "key": "enemy_rescar_skill[summon]",
+      "consumers": [
+        "enemy_1217_rescar",
+        "enemy_1217_rescar_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action SummonEnemiesFollowMyRoute"
+    },
+    {
+      "key": "enemy_sfden_invisible",
+      "consumers": [
+        "enemy_1209_sfden",
+        "enemy_1209_sfden_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: predicate CheckBlocked"
+    },
+    {
+      "key": "enemy_sfhu_atkspeed_dec[resist]",
+      "consumers": [
+        "enemy_1203_sfhu",
+        "enemy_1203_sfhu_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: create buff"
+    },
+    {
+      "key": "enemy_sfhu_atkspeed_dec[trig]",
+      "consumers": [
+        "enemy_1203_sfhu",
+        "enemy_1203_sfhu_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action FinishDerivedBuff"
+    },
+    {
+      "key": "enemy_sfpin_power_attack[real]",
+      "consumers": [
+        "enemy_1205_sfpin",
+        "enemy_1205_sfpin_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action ApplyCacheAtkDamageFromBuff"
+    },
+    {
+      "key": "enemy_sfpin_power_attack[resist]",
+      "consumers": [
+        "enemy_1205_sfpin",
+        "enemy_1205_sfpin_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: create buff"
+    },
+    {
+      "key": "enemy_sgmum[hit_ad]",
+      "consumers": [
+        "enemy_10019_sgmum",
+        "enemy_10019_sgmum_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_TAKE_DAMAGE"
+    },
+    {
+      "key": "enemy_sgmum[hit_ap]",
+      "consumers": [
+        "enemy_10019_sgmum",
+        "enemy_10019_sgmum_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_TAKE_DAMAGE"
+    },
+    {
+      "key": "enemy_skztxs_face_to",
+      "consumers": [
+        "enemy_2081_skztxs"
+      ],
+      "unsupportedConsumers": [
+        "enemy_2081_skztxs"
+      ],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: lifetime"
+    },
+    {
+      "key": "enemy_skztxs_s2_begin",
+      "consumers": [
+        "enemy_2081_skztxs"
+      ],
+      "unsupportedConsumers": [
+        "enemy_2081_skztxs"
+      ],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_BUFF_LATE_ENABLE"
+    },
+    {
+      "key": "enemy_smdeer_lasso_damage",
+      "consumers": [
+        "enemy_15069_dqdeer",
+        "enemy_2054_smdeer",
+        "enemy_9033_acdeer"
+      ],
+      "unsupportedConsumers": [
+        "enemy_15069_dqdeer",
+        "enemy_2054_smdeer",
+        "enemy_9033_acdeer"
+      ],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action AdvancedApplyDamage"
+    },
+    {
+      "key": "enemy_smedzi_blink[end_effect]",
+      "consumers": [
+        "enemy_2056_smedzi"
+      ],
+      "unsupportedConsumers": [
+        "enemy_2056_smedzi"
+      ],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_BUFF_FINISH"
+    },
+    {
+      "key": "enemy_smedzi_tile_pollute",
+      "consumers": [
+        "enemy_2056_smedzi"
+      ],
+      "unsupportedConsumers": [
+        "enemy_2056_smedzi"
+      ],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_BUFF_FINISH"
+    },
+    {
+      "key": "enemy_smtree_log",
+      "consumers": [
+        "enemy_2047_smtree"
+      ],
+      "unsupportedConsumers": [
+        "enemy_2047_smtree"
+      ],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action LogExtraBattleInfo"
+    },
+    {
+      "key": "enemy_spmode_check",
+      "consumers": [
+        "enemy_1213_mtrsnp",
+        "enemy_1213_mtrsnp_2",
+        "enemy_1214_mtrmgc",
+        "enemy_1214_mtrmgc_2",
+        "enemy_1216_cansld",
+        "enemy_1216_cansld_2",
+        "enemy_1219_mtrbty",
+        "enemy_1219_mtrbty_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_BEFORE_ATTACK"
+    },
+    {
+      "key": "enemy_spmode_sp_reduce",
+      "consumers": [
+        "enemy_1213_mtrsnp",
+        "enemy_1213_mtrsnp_2",
+        "enemy_1214_mtrmgc",
+        "enemy_1214_mtrmgc_2",
+        "enemy_1216_cansld",
+        "enemy_1216_cansld_2",
+        "enemy_1219_mtrbty",
+        "enemy_1219_mtrbty_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action ModifySp"
+    },
+    {
+      "key": "enemy_spnaxe_buffs2[mark]",
+      "consumers": [
+        "enemy_1364_spnaxe_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_OWNER_FINISH"
+    },
+    {
+      "key": "enemy_spnaxe_buffs[mark]",
+      "consumers": [
+        "enemy_1364_spnaxe"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_OWNER_FINISH"
+    },
+    {
+      "key": "enemy_stmgun_s[damage]",
+      "consumers": [
+        "enemy_1273_stmgun",
+        "enemy_1273_stmgun_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action AdvancedApplyDamage"
+    },
+    {
+      "key": "enemy_stormcoord[lock_hp]",
+      "consumers": [
+        "enemy_1421_lrchld"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_TAKE_DAMAGE"
+    },
+    {
+      "key": "enemy_sybox_t[logkilled]",
+      "consumers": [
+        "enemy_2035_sybox"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_OWNER_KILLED"
+    },
+    {
+      "key": "enemy_telex_t[kill]",
+      "consumers": [
+        "enemy_1276_telex"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action AlwaysNext"
+    },
+    {
+      "key": "enemy_wdkght_t",
+      "consumers": [
+        "enemy_1103_wdkght",
+        "enemy_1103_wdkght_2",
+        "enemy_1103_wdkght_3",
+        "enemy_5042_dqkght_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_OWNER_KILLED"
+    },
+    {
+      "key": "enemy_wdkght_t[switch_mode]",
+      "consumers": [
+        "enemy_1103_wdkght",
+        "enemy_1103_wdkght_2",
+        "enemy_1103_wdkght_3",
+        "enemy_5042_dqkght_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_BEFORE_ATTACK"
+    },
+    {
+      "key": "fear_buff",
+      "consumers": [],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action AddFearTargetTiles"
+    },
+    {
+      "key": "filtertag_enhance",
+      "consumers": [
+        "enemy_1059_buster",
+        "enemy_1059_buster_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_CALCULATE_DAMAGE"
+    },
+    {
+      "key": "fixed_value_damage_ontrigger[pure]",
+      "consumers": [
+        "enemy_1248_ltholo"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: fixed HP loss"
+    },
+    {
+      "key": "funlive_mstntd_death[audio]",
+      "consumers": [
+        "enemy_5012_mstntd"
+      ],
+      "unsupportedConsumers": [
+        "enemy_5012_mstntd"
+      ],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_BUFF_FINISH"
+    },
+    {
+      "key": "harchn[sum_token]",
+      "consumers": [
+        "enemy_1133_harchn",
+        "enemy_1133_harchn_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action SummonEnemiesFollowMyRoute"
+    },
+    {
+      "key": "hlbird_t[self_fear]",
+      "consumers": [
+        "enemy_10083_hlbird",
+        "enemy_10083_hlbird_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: limited override"
+    },
+    {
+      "key": "hlegle_a[steal]",
+      "consumers": [
+        "enemy_10084_hlegle",
+        "enemy_10084_hlegle_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: predicate AssignAmmoSkillRemainingCountToBB"
+    },
+    {
+      "key": "hlegle_t[self_fear]",
+      "consumers": [
+        "enemy_10084_hlegle",
+        "enemy_10084_hlegle_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: limited override"
+    },
+    {
+      "key": "hllevi_t[self_fear]",
+      "consumers": [
+        "enemy_10085_hllevi",
+        "enemy_10085_hllevi_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: limited override"
+    },
+    {
+      "key": "hlsttu_t[shield]",
+      "consumers": [
+        "enemy_10091_hlsttu",
+        "enemy_10091_hlsttu_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_TAKE_DAMAGE"
+    },
+    {
+      "key": "hlsttu_t[to_enemy]",
+      "consumers": [
+        "enemy_10091_hlsttu",
+        "enemy_10091_hlsttu_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action CheckUnitAlive"
+    },
+    {
+      "key": "hlsttu_t[trigger_shield]",
+      "consumers": [
+        "enemy_10091_hlsttu",
+        "enemy_10091_hlsttu_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action CreateBuffInRange"
+    },
+    {
+      "key": "hltigr_t[self_fear]",
+      "consumers": [
+        "enemy_10086_hltigr",
+        "enemy_10086_hltigr_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: limited override"
+    },
+    {
+      "key": "instant_damage_magic[buff]",
+      "consumers": [
+        "enemy_1509_mousek"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: fixed HP loss"
+    },
+    {
+      "key": "instant_damage_magic[splash]",
+      "consumers": [
+        "enemy_1050_lslime"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: fixed HP loss"
+    },
+    {
+      "key": "instant_damage_physical[splash]",
+      "consumers": [
+        "enemy_1509_mousek"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: fixed HP loss"
+    },
+    {
+      "key": "jakill_reborn",
+      "consumers": [
+        "enemy_1516_jakill"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action ModifySp"
+    },
+    {
+      "key": "jakill_skill_1_reborn_hit",
+      "consumers": [
+        "enemy_1516_jakill"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action CreateEffect"
+    },
+    {
+      "key": "jakill_trigger_ability",
+      "consumers": [
+        "enemy_1516_jakill"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action TriggerAbility"
+    },
+    {
+      "key": "lifbos_trigger_ability",
+      "consumers": [
+        "enemy_1121_lifbos",
+        "enemy_1121_lifbos_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action TriggerAbility"
+    },
+    {
+      "key": "lifbos_trigger_ability_once",
+      "consumers": [
+        "enemy_1121_lifbos",
+        "enemy_1121_lifbos_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: lifetime"
+    },
+    {
+      "key": "log_killed",
+      "consumers": [
+        "enemy_1105_tyokai",
+        "enemy_1105_tyokai_2",
+        "enemy_1106_byokai",
+        "enemy_1207_sfji_2",
+        "enemy_1219_mtrbty",
+        "enemy_1254_lypa_2",
+        "enemy_1255_lybgpa",
+        "enemy_1255_lybgpa_2",
+        "enemy_1256_lyacpa",
+        "enemy_1256_lyacpa_2",
+        "enemy_1257_lydrty",
+        "enemy_1433_dsbasi",
+        "enemy_1433_dsbasi_2",
+        "enemy_1434_dsshel",
+        "enemy_2001_duckmi",
+        "enemy_2034_sythef",
+        "enemy_2059_smbox",
+        "enemy_2069_skzbox",
+        "enemy_2070_skzfbx",
+        "enemy_2073_skzrck",
+        "enemy_2085_skzjxd",
+        "enemy_2091_skzgds"
+      ],
+      "unsupportedConsumers": [
+        "enemy_2073_skzrck"
+      ],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_OWNER_KILLED"
+    },
+    {
+      "key": "log_killed[filter_map_layer]",
+      "consumers": [
+        "enemy_1092_mdgint",
+        "enemy_1092_mdgint_2",
+        "enemy_5039_dqgint"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_OWNER_KILLED"
+    },
+    {
+      "key": "log_thief_reach_exit",
+      "consumers": [
+        "enemy_2069_skzbox",
+        "enemy_2070_skzfbx"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_OWNER_FINISH"
+    },
+    {
+      "key": "lslime_t_damage[self]",
+      "consumers": [
+        "enemy_1050_lslime"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action TriggerAbility"
+    },
+    {
+      "key": "modify_sp[ratio]",
+      "consumers": [
+        "enemy_1531_bbrain"
+      ],
+      "unsupportedConsumers": [
+        "enemy_1531_bbrain"
+      ],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action ModifySp"
+    },
+    {
+      "key": "mousek_shield",
+      "consumers": [
+        "enemy_1060_emouse",
+        "enemy_1060_emouse_2",
+        "enemy_1509_mousek"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_TAKE_DAMAGE"
+    },
+    {
+      "key": "mousek_shield_end",
+      "consumers": [
+        "enemy_1060_emouse",
+        "enemy_1060_emouse_2",
+        "enemy_1509_mousek"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_TAKE_DAMAGE"
+    },
+    {
+      "key": "periodic_damage_without_modify",
+      "consumers": [
+        "enemy_1089_ltlntc",
+        "enemy_1089_ltlntc_2",
+        "enemy_1328_cbjedi",
+        "enemy_1328_cbjedi_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported behaviour template metadata"
+    },
+    {
+      "key": "periodic_magic_damage",
+      "consumers": [
+        "enemy_1050_lslime"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action NoSourceDamage"
+    },
+    {
+      "key": "polluted_area",
+      "consumers": [
+        "enemy_1266_nhapos",
+        "enemy_1267_nhpbr",
+        "enemy_1267_nhpbr_2",
+        "enemy_1272_nhtank",
+        "enemy_1272_nhtank_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: predicate CheckHeightTypeOfCharacterRootTile"
+    },
+    {
+      "key": "projectile_on_killed",
+      "consumers": [
+        "enemy_1089_ltlntc",
+        "enemy_1089_ltlntc_2",
+        "enemy_1105_tyokai",
+        "enemy_1105_tyokai_2",
+        "enemy_1106_byokai",
+        "enemy_1203_sfhu",
+        "enemy_1203_sfhu_2",
+        "enemy_1267_nhpbr",
+        "enemy_1267_nhpbr_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_OWNER_KILLED"
+    },
+    {
+      "key": "skzcy_t[ban_card]",
+      "consumers": [
+        "enemy_2067_skzcy"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action CreateCardBuff"
+    },
+    {
+      "key": "skzcy_t[first_step]",
+      "consumers": [
+        "enemy_2067_skzcy"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_OWNER_KILLED"
+    },
+    {
+      "key": "skzfbx_m1_a[effect]",
+      "consumers": [
+        "enemy_2070_skzfbx"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action FinishBuffsById"
+    },
+    {
+      "key": "skzfbx_m1_a[fall_down]",
+      "consumers": [
+        "enemy_2070_skzfbx"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action ChangeMotionMode"
+    },
+    {
+      "key": "skzjs_t[born]",
+      "consumers": [
+        "enemy_2065_skzjs"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_OWNER_BORN"
+    },
+    {
+      "key": "skzjs_t[born_action]",
+      "consumers": [
+        "enemy_2065_skzjs"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_BUFF_FINISH"
+    },
+    {
+      "key": "skzjs_t[suicide]",
+      "consumers": [
+        "enemy_2065_skzjs"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_BUFF_FINISH"
+    },
+    {
+      "key": "skzjxd_a[back_listener]",
+      "consumers": [
+        "enemy_2085_skzjxd"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action CheckEnemyFaceAndMoveDir"
+    },
+    {
+      "key": "skzjxd_a[direction_listener]",
+      "consumers": [
+        "enemy_2085_skzjxd"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action FaceToLOrRViaMoreTargets"
+    },
+    {
+      "key": "skzjxd_a[face_listener]",
+      "consumers": [
+        "enemy_2085_skzjxd"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action CheckEnemyFaceAndMoveDir"
+    },
+    {
+      "key": "skzjxd_t[shield]",
+      "consumers": [
+        "enemy_2085_skzjxd"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_TAKE_DAMAGE"
+    },
+    {
+      "key": "skzjxd_t[show_trigger]",
+      "consumers": [
+        "enemy_2085_skzjxd"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action TriggerEnemySkill"
+    },
+    {
+      "key": "skzrck_a[delay_born_audio]",
+      "consumers": [
+        "enemy_2073_skzrck"
+      ],
+      "unsupportedConsumers": [
+        "enemy_2073_skzrck"
+      ],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_BUFF_FINISH"
+    },
+    {
+      "key": "skzwdd_a[multi_attack]",
+      "consumers": [
+        "enemy_2064_skzwdd"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: lifetime"
+    },
+    {
+      "key": "switch_mode_no_restore",
+      "consumers": [
+        "enemy_1271_nhkodo",
+        "enemy_1271_nhkodo_2",
+        "enemy_1536_ncrmcr"
+      ],
+      "unsupportedConsumers": [
+        "enemy_1536_ncrmcr"
+      ],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action SwitchMode"
+    },
+    {
+      "key": "switch_mode_restart_fsm_when_trigger",
+      "consumers": [
+        "enemy_1143_merrpg",
+        "enemy_1143_merrpg_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action SwitchMode"
+    },
+    {
+      "key": "tile_originum_t_1[dmg]",
+      "consumers": [],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action AssignBuffBlackboardFromOthers"
+    },
+    {
+      "key": "tower_t_3[be_enemy_instant]",
+      "consumers": [
+        "enemy_1089_ltlntc",
+        "enemy_1089_ltlntc_2",
+        "enemy_1511_mdrock"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action CheckFilterTag"
+    },
+    {
+      "key": "track_at_next_wave_when_buff_finish",
+      "consumers": [
+        "enemy_1531_bbrain",
+        "enemy_1536_ncrmcr"
+      ],
+      "unsupportedConsumers": [
+        "enemy_1531_bbrain",
+        "enemy_1536_ncrmcr"
+      ],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: event ON_BUFF_FINISH"
+    },
+    {
+      "key": "trap_lrcore[finishFx][core]",
+      "consumers": [
+        "enemy_1421_lrchld"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: action FinishBuffsById"
+    }
+  ],
+  "refusals": [
+    {
+      "reason": "Unsupported native behaviour: event ON_BUFF_FINISH",
+      "templates": [
+        "bsthmr_range",
+        "dlancer_t_atk",
+        "enemy_bbrain[aoe_when_finish]",
+        "enemy_dekght[aoe]",
+        "enemy_dekght[trigger_rage]",
+        "enemy_duchns_kill_source",
+        "enemy_durcar_hit_blocker[suicide]",
+        "enemy_hlslp[end_sleep_delay]",
+        "enemy_lfkght_s",
+        "enemy_lrcmra[switchMode]",
+        "enemy_ncrmcr_shield_effect",
+        "enemy_smedzi_blink[end_effect]",
+        "enemy_smedzi_tile_pollute",
+        "funlive_mstntd_death[audio]",
+        "skzjs_t[born_action]",
+        "skzjs_t[suicide]",
+        "skzrck_a[delay_born_audio]",
+        "track_at_next_wave_when_buff_finish"
+      ],
+      "consumers": [
+        "enemy_10092_hlslp",
+        "enemy_1072_dlancer",
+        "enemy_1072_dlancer_2",
+        "enemy_1076_bsthmr",
+        "enemy_1076_bsthmr_2",
+        "enemy_1104_lfkght",
+        "enemy_1104_lfkght_2",
+        "enemy_1104_lfkght_3",
+        "enemy_1294_duchns",
+        "enemy_1425_lrcmra",
+        "enemy_1425_lrcmra_2",
+        "enemy_1513_dekght",
+        "enemy_1513_dekght_2",
+        "enemy_1531_bbrain",
+        "enemy_1536_ncrmcr",
+        "enemy_2056_smedzi",
+        "enemy_2065_skzjs",
+        "enemy_2073_skzrck",
+        "enemy_5012_mstntd"
+      ],
+      "unsupportedConsumers": [
+        "enemy_10092_hlslp",
+        "enemy_1531_bbrain",
+        "enemy_1536_ncrmcr",
+        "enemy_2056_smedzi",
+        "enemy_2073_skzrck",
+        "enemy_5012_mstntd"
+      ]
+    },
+    {
+      "reason": "Unsupported native behaviour: event ON_OWNER_KILLED_BY_MAIN_TARGET",
+      "templates": [
+        "enemy_dsdevr_activate_remains",
+        "enemy_lysyta[sp_to_car]",
+        "enemy_lysytb[sp_to_car]",
+        "enemy_lysytc[sp_to_car]"
+      ],
+      "consumers": [
+        "enemy_1230_dsbudr_3",
+        "enemy_1231_dsrunr_3",
+        "enemy_1232_dssalr_3",
+        "enemy_1233_dsshtr_3",
+        "enemy_1234_dsubrl_3",
+        "enemy_1235_dsbskr_3",
+        "enemy_1251_lysyta",
+        "enemy_1251_lysyta_2",
+        "enemy_1252_lysytb",
+        "enemy_1252_lysytb_2",
+        "enemy_1253_lysytc",
+        "enemy_1253_lysytc_2"
+      ],
+      "unsupportedConsumers": [
+        "enemy_1230_dsbudr_3",
+        "enemy_1231_dsrunr_3",
+        "enemy_1232_dssalr_3",
+        "enemy_1233_dsshtr_3",
+        "enemy_1234_dsubrl_3",
+        "enemy_1235_dsbskr_3"
+      ]
+    },
+    {
+      "reason": "Unsupported native behaviour: event ON_CALCULATE_DAMAGE",
+      "templates": [
+        "e2c_frozen_atkscale",
+        "enemy_duskld_ep_damage",
+        "enemy_duskls_ep_damage",
+        "enemy_krgbsk_t[cold]",
+        "enemy_mubsbl_enhance",
+        "enemy_murgby_enhance",
+        "enemy_ncrmcr_atk_scale",
+        "filtertag_enhance"
+      ],
+      "consumers": [
+        "enemy_1059_buster",
+        "enemy_1059_buster_2",
+        "enemy_1193_krgbsk",
+        "enemy_1193_krgbsk_2",
+        "enemy_1288_duskls",
+        "enemy_1288_duskls_2",
+        "enemy_1292_duskld",
+        "enemy_1292_duskld_2",
+        "enemy_1536_ncrmcr",
+        "enemy_4009_murgby",
+        "enemy_4009_murgby_2",
+        "enemy_4010_mubsbl",
+        "enemy_4010_mubsbl_2"
+      ],
+      "unsupportedConsumers": [
+        "enemy_1536_ncrmcr",
+        "enemy_4009_murgby",
+        "enemy_4009_murgby_2",
+        "enemy_4010_mubsbl",
+        "enemy_4010_mubsbl_2"
+      ]
+    },
+    {
+      "reason": "Unsupported native behaviour: event ON_TAKE_DAMAGE",
+      "templates": [
+        "damage_resistance",
+        "enemy_cbshld_t",
+        "enemy_cchmpn_t",
+        "enemy_duckmi_t",
+        "enemy_hlslp[end_sleep]",
+        "enemy_mdhmmr_shield",
+        "enemy_mdhmmr_shield_end",
+        "enemy_mdrock_s_2[shield_last]",
+        "enemy_mdrock_s_2[shield_normal]",
+        "enemy_mmelee_physical_evade",
+        "enemy_murino_t",
+        "enemy_ncrmcr_shield",
+        "enemy_sgmum[hit_ad]",
+        "enemy_sgmum[hit_ap]",
+        "enemy_stormcoord[lock_hp]",
+        "hlsttu_t[shield]",
+        "mousek_shield",
+        "mousek_shield_end",
+        "skzjxd_t[shield]"
+      ],
+      "consumers": [
+        "enemy_10019_sgmum",
+        "enemy_10019_sgmum_2",
+        "enemy_10091_hlsttu",
+        "enemy_10091_hlsttu_2",
+        "enemy_10092_hlslp",
+        "enemy_1060_emouse",
+        "enemy_1060_emouse_2",
+        "enemy_1091_mdhmmr",
+        "enemy_1091_mdhmmr_2",
+        "enemy_1098_cchmpn",
+        "enemy_1098_cchmpn_2",
+        "enemy_1220_dzoms",
+        "enemy_1220_dzoms_2",
+        "enemy_1221_dzomg",
+        "enemy_1221_dzomg_2",
+        "enemy_1253_lysytc",
+        "enemy_1253_lysytc_2",
+        "enemy_1262_durplc",
+        "enemy_1262_durplc_2",
+        "enemy_1329_cbshld",
+        "enemy_1329_cbshld_2",
+        "enemy_1410_mmelee",
+        "enemy_1410_mmelee_2",
+        "enemy_1421_lrchld",
+        "enemy_1509_mousek",
+        "enemy_1511_mdrock",
+        "enemy_1536_ncrmcr",
+        "enemy_2001_duckmi",
+        "enemy_2085_skzjxd",
+        "enemy_4007_murino",
+        "enemy_4007_murino_2",
+        "enemy_5050_dqomg"
+      ],
+      "unsupportedConsumers": [
+        "enemy_10092_hlslp",
+        "enemy_1536_ncrmcr",
+        "enemy_5050_dqomg"
+      ]
+    },
+    {
+      "reason": "Unsupported native behaviour: event ON_OWNER_KILLED",
+      "templates": [
+        "deathrattle_sum[walk_only]",
+        "dsshel_t_1",
+        "ememy_duflm_die",
+        "enemy_bbrain_c[log_killed]",
+        "enemy_dead_spawn",
+        "enemy_dead_spawn[sfji]",
+        "enemy_dfello_summon[dseed]",
+        "enemy_duchns_boom",
+        "enemy_ncrmcr_aura",
+        "enemy_sybox_t[logkilled]",
+        "enemy_wdkght_t",
+        "log_killed",
+        "log_killed[filter_map_layer]",
+        "projectile_on_killed",
+        "skzcy_t[first_step]"
+      ],
+      "consumers": [
+        "enemy_1089_ltlntc",
+        "enemy_1089_ltlntc_2",
+        "enemy_1092_mdgint",
+        "enemy_1092_mdgint_2",
+        "enemy_1103_wdkght",
+        "enemy_1103_wdkght_2",
+        "enemy_1103_wdkght_3",
+        "enemy_1105_tyokai",
+        "enemy_1105_tyokai_2",
+        "enemy_1106_byokai",
+        "enemy_1133_harchn",
+        "enemy_1133_harchn_2",
+        "enemy_1203_sfhu",
+        "enemy_1203_sfhu_2",
+        "enemy_1205_sfpin",
+        "enemy_1205_sfpin_2",
+        "enemy_1207_sfji",
+        "enemy_1207_sfji_2",
+        "enemy_1209_sfden",
+        "enemy_1209_sfden_2",
+        "enemy_1219_mtrbty",
+        "enemy_1254_lypa_2",
+        "enemy_1255_lybgpa",
+        "enemy_1255_lybgpa_2",
+        "enemy_1256_lyacpa",
+        "enemy_1256_lyacpa_2",
+        "enemy_1257_lydrty",
+        "enemy_1267_nhpbr",
+        "enemy_1267_nhpbr_2",
+        "enemy_1290_duflm",
+        "enemy_1290_duflm_2",
+        "enemy_1294_duchns",
+        "enemy_1364_spnaxe",
+        "enemy_1364_spnaxe_2",
+        "enemy_1433_dsbasi",
+        "enemy_1433_dsbasi_2",
+        "enemy_1434_dsshel",
+        "enemy_1531_bbrain",
+        "enemy_1536_ncrmcr",
+        "enemy_2001_duckmi",
+        "enemy_2034_sythef",
+        "enemy_2035_sybox",
+        "enemy_2059_smbox",
+        "enemy_2067_skzcy",
+        "enemy_2069_skzbox",
+        "enemy_2070_skzfbx",
+        "enemy_2073_skzrck",
+        "enemy_2085_skzjxd",
+        "enemy_2091_skzgds",
+        "enemy_5039_dqgint",
+        "enemy_5042_dqkght_2"
+      ],
+      "unsupportedConsumers": [
+        "enemy_1531_bbrain",
+        "enemy_1536_ncrmcr",
+        "enemy_2073_skzrck"
+      ]
+    },
+    {
+      "reason": "Unsupported native behaviour: action AdvancedApplyDamage",
+      "templates": [
+        "apply_damage[magic][ignore_sp]",
+        "apply_damage[magic][on_trigger]",
+        "apply_damage[physical][ignore_sp]",
+        "enemy_smdeer_lasso_damage",
+        "enemy_stmgun_s[damage]"
+      ],
+      "consumers": [
+        "enemy_1239_ltbow",
+        "enemy_1239_ltbow_2",
+        "enemy_1241_ltmage",
+        "enemy_1241_ltmage_2",
+        "enemy_1245_ltseal",
+        "enemy_1273_stmgun",
+        "enemy_1273_stmgun_2",
+        "enemy_15069_dqdeer",
+        "enemy_2054_smdeer",
+        "enemy_9033_acdeer"
+      ],
+      "unsupportedConsumers": [
+        "enemy_15069_dqdeer",
+        "enemy_2054_smdeer",
+        "enemy_9033_acdeer"
+      ]
+    },
+    {
+      "reason": "Unsupported native behaviour: lifetime",
+      "templates": [
+        "enemy_bloodsucker_block_cnt[control]",
+        "enemy_lydrty[buff_to_source]",
+        "enemy_mdrock_s_1",
+        "enemy_mdrock_s_1[effect_a_creator]",
+        "enemy_skztxs_face_to",
+        "lifbos_trigger_ability_once",
+        "skzwdd_a[multi_attack]"
+      ],
+      "consumers": [
+        "enemy_1121_lifbos",
+        "enemy_1121_lifbos_2",
+        "enemy_1220_dzoms",
+        "enemy_1220_dzoms_2",
+        "enemy_1221_dzomg",
+        "enemy_1221_dzomg_2",
+        "enemy_1257_lydrty",
+        "enemy_1511_mdrock",
+        "enemy_2064_skzwdd",
+        "enemy_2081_skztxs",
+        "enemy_5050_dqomg"
+      ],
+      "unsupportedConsumers": [
+        "enemy_2081_skztxs",
+        "enemy_5050_dqomg"
+      ]
+    },
+    {
+      "reason": "Unsupported native behaviour: action ModifySp",
+      "templates": [
+        "enemy_hlslp[heal_add_sp_core]",
+        "enemy_ltsmer_s_1[modify_sp]",
+        "enemy_spmode_sp_reduce",
+        "jakill_reborn",
+        "modify_sp[ratio]"
+      ],
+      "consumers": [
+        "enemy_10092_hlslp",
+        "enemy_1088_ltsmer",
+        "enemy_1088_ltsmer_2",
+        "enemy_1213_mtrsnp",
+        "enemy_1213_mtrsnp_2",
+        "enemy_1214_mtrmgc",
+        "enemy_1214_mtrmgc_2",
+        "enemy_1216_cansld",
+        "enemy_1216_cansld_2",
+        "enemy_1219_mtrbty",
+        "enemy_1219_mtrbty_2",
+        "enemy_1516_jakill",
+        "enemy_1531_bbrain"
+      ],
+      "unsupportedConsumers": [
+        "enemy_10092_hlslp",
+        "enemy_1531_bbrain"
+      ]
+    },
+    {
+      "reason": "Unsupported native behaviour: action FinishBuffsById",
+      "templates": [
+        "dscout_cancel_undead",
+        "enemy_axetro_t[checker]",
+        "enemy_hlslp[end_sleep_core]",
+        "enemy_liberty_force",
+        "enemy_mdrock_s_1[effect_b_creator]",
+        "enemy_mdrock_s_1[effect_c_creator]",
+        "enemy_mdrock_s_2[shield][refresh]",
+        "enemy_mmelee_touched_rope[continues]",
+        "skzfbx_m1_a[effect]",
+        "trap_lrcore[finishFx][core]"
+      ],
+      "consumers": [
+        "enemy_10092_hlslp",
+        "enemy_1073_dscout_2",
+        "enemy_1121_lifbos",
+        "enemy_1121_lifbos_2",
+        "enemy_1410_mmelee",
+        "enemy_1410_mmelee_2",
+        "enemy_1421_lrchld",
+        "enemy_1511_mdrock",
+        "enemy_1516_jakill",
+        "enemy_2005_axetro",
+        "enemy_2070_skzfbx"
+      ],
+      "unsupportedConsumers": [
+        "enemy_10092_hlslp"
+      ]
+    },
+    {
+      "reason": "Unsupported native behaviour: action TriggerAbility",
+      "templates": [
+        "enemy_bigstorm[traceStorm]",
+        "enemy_duskld_trigger_skill",
+        "enemy_duskls_trigger_skill",
+        "enemy_lybgpa[keep_punch_mark]",
+        "enemy_ncrmcr_skill_trigger",
+        "jakill_trigger_ability",
+        "lifbos_trigger_ability",
+        "lslime_t_damage[self]"
+      ],
+      "consumers": [
+        "enemy_1050_lslime",
+        "enemy_1121_lifbos",
+        "enemy_1121_lifbos_2",
+        "enemy_1255_lybgpa",
+        "enemy_1255_lybgpa_2",
+        "enemy_1288_duskls",
+        "enemy_1288_duskls_2",
+        "enemy_1292_duskld",
+        "enemy_1292_duskld_2",
+        "enemy_1420_lrmm",
+        "enemy_1516_jakill",
+        "enemy_1536_ncrmcr"
+      ],
+      "unsupportedConsumers": [
+        "enemy_1536_ncrmcr"
+      ]
+    },
+    {
+      "reason": "Unsupported native behaviour: action TriggerEnemySkill",
+      "templates": [
+        "enemy_duskld_anim_trigger",
+        "enemy_duskls_anim_trigger",
+        "enemy_lrcmra[switchMode][toOrig]",
+        "enemy_ncrmcr_arson_trigger",
+        "skzjxd_t[show_trigger]"
+      ],
+      "consumers": [
+        "enemy_1288_duskls",
+        "enemy_1288_duskls_2",
+        "enemy_1292_duskld",
+        "enemy_1292_duskld_2",
+        "enemy_1425_lrcmra",
+        "enemy_1425_lrcmra_2",
+        "enemy_1536_ncrmcr",
+        "enemy_2085_skzjxd"
+      ],
+      "unsupportedConsumers": [
+        "enemy_1536_ncrmcr"
+      ]
+    },
+    {
+      "reason": "Unsupported native behaviour: limited override",
+      "templates": [
+        "enemy_bbrain[blink_eff]",
+        "hlbird_t[self_fear]",
+        "hlegle_t[self_fear]",
+        "hllevi_t[self_fear]",
+        "hltigr_t[self_fear]"
+      ],
+      "consumers": [
+        "enemy_10083_hlbird",
+        "enemy_10083_hlbird_2",
+        "enemy_10084_hlegle",
+        "enemy_10084_hlegle_2",
+        "enemy_10085_hllevi",
+        "enemy_10085_hllevi_2",
+        "enemy_10086_hltigr",
+        "enemy_10086_hltigr_2",
+        "enemy_1531_bbrain"
+      ],
+      "unsupportedConsumers": [
+        "enemy_1531_bbrain"
+      ]
+    },
+    {
+      "reason": "Unsupported native behaviour: action CreateEffect",
+      "templates": [
+        "enemy_bomscr_boom_and_killself",
+        "enemy_ltmage_t",
+        "enemy_paki[blink]",
+        "jakill_skill_1_reborn_hit"
+      ],
+      "consumers": [
+        "enemy_1218_bomscr",
+        "enemy_1218_bomscr_2",
+        "enemy_1241_ltmage",
+        "enemy_1241_ltmage_2",
+        "enemy_1516_jakill",
+        "enemy_7011_paki"
+      ],
+      "unsupportedConsumers": [
+        "enemy_7011_paki"
+      ]
+    },
+    {
+      "reason": "Unsupported native behaviour: action SwitchMode",
+      "templates": [
+        "dscout_t[buff]",
+        "switch_mode_no_restore",
+        "switch_mode_restart_fsm_when_trigger"
+      ],
+      "consumers": [
+        "enemy_1073_dscout",
+        "enemy_1073_dscout_2",
+        "enemy_1143_merrpg",
+        "enemy_1143_merrpg_2",
+        "enemy_1271_nhkodo",
+        "enemy_1271_nhkodo_2",
+        "enemy_1536_ncrmcr"
+      ],
+      "unsupportedConsumers": [
+        "enemy_1536_ncrmcr"
+      ]
+    },
+    {
+      "reason": "Unsupported behaviour template metadata",
+      "templates": [
+        "enemy_bbrain[damage_split]",
+        "periodic_damage_without_modify"
+      ],
+      "consumers": [
+        "enemy_1089_ltlntc",
+        "enemy_1089_ltlntc_2",
+        "enemy_1328_cbjedi",
+        "enemy_1328_cbjedi_2",
+        "enemy_1531_bbrain"
+      ],
+      "unsupportedConsumers": [
+        "enemy_1531_bbrain"
+      ]
+    },
+    {
+      "reason": "Unsupported native behaviour: action CreateBuffUseAbilitySelector",
+      "templates": [
+        "enemy_lrchld[finishFx]",
+        "enemy_ncrmcr_sacrifice[trigger]"
+      ],
+      "consumers": [
+        "enemy_1421_lrchld",
+        "enemy_1536_ncrmcr"
+      ],
+      "unsupportedConsumers": [
+        "enemy_1536_ncrmcr"
+      ]
+    },
+    {
+      "reason": "Unsupported native behaviour: action CreateBuffUseTargetAsSource",
+      "templates": [
+        "enemy_bbrain[buff_mark]",
+        "enemy_nhkodo_t[devour_holder]"
+      ],
+      "consumers": [
+        "enemy_1271_nhkodo",
+        "enemy_1271_nhkodo_2",
+        "enemy_1531_bbrain"
+      ],
+      "unsupportedConsumers": [
+        "enemy_1531_bbrain"
+      ]
+    },
+    {
+      "reason": "Unsupported native behaviour: action AssignAttributeAsDynamicVarToBB",
+      "templates": [
+        "enemy_ncrmcr_sacrifice[hit_ncrmcr]"
+      ],
+      "consumers": [
+        "enemy_1536_ncrmcr"
+      ],
+      "unsupportedConsumers": [
+        "enemy_1536_ncrmcr"
+      ]
+    },
+    {
+      "reason": "Unsupported native behaviour: action EmitProjectile",
+      "templates": [
+        "enemy_ncrmcr_sacrifice"
+      ],
+      "consumers": [
+        "enemy_1536_ncrmcr"
+      ],
+      "unsupportedConsumers": [
+        "enemy_1536_ncrmcr"
+      ]
+    },
+    {
+      "reason": "Unsupported native behaviour: action FaceToTarget",
+      "templates": [
+        "always_face_to_target"
+      ],
+      "consumers": [
+        "enemy_2081_skztxs"
+      ],
+      "unsupportedConsumers": [
+        "enemy_2081_skztxs"
+      ]
+    },
+    {
+      "reason": "Unsupported native behaviour: action InterruptEnemyAbility",
+      "templates": [
+        "enemy_bbrain_reborn"
+      ],
+      "consumers": [
+        "enemy_1531_bbrain"
+      ],
+      "unsupportedConsumers": [
+        "enemy_1531_bbrain"
+      ]
+    },
+    {
+      "reason": "Unsupported native behaviour: action LogExtraBattleInfo",
+      "templates": [
+        "enemy_smtree_log"
+      ],
+      "consumers": [
+        "enemy_2047_smtree"
+      ],
+      "unsupportedConsumers": [
+        "enemy_2047_smtree"
+      ]
+    },
+    {
+      "reason": "Unsupported native behaviour: event ON_APPLYING_MODIFIER",
+      "templates": [
+        "enemy_hlslp[heal_add_sp]"
+      ],
+      "consumers": [
+        "enemy_10092_hlslp"
+      ],
+      "unsupportedConsumers": [
+        "enemy_10092_hlslp"
+      ]
+    },
+    {
+      "reason": "Unsupported native behaviour: event ON_BUFF_LATE_ENABLE",
+      "templates": [
+        "enemy_skztxs_s2_begin"
+      ],
+      "consumers": [
+        "enemy_2081_skztxs"
+      ],
+      "unsupportedConsumers": [
+        "enemy_2081_skztxs"
+      ]
+    },
+    {
+      "reason": "Unsupported native behaviour: create buff",
+      "templates": [
+        "dlancer_t[trigger]",
+        "enemy_axetro_t",
+        "enemy_liberty[warning]",
+        "enemy_ltseal_t[attack_effect]",
+        "enemy_ltseal_t[damage]",
+        "enemy_sfhu_atkspeed_dec[resist]",
+        "enemy_sfpin_power_attack[resist]"
+      ],
+      "consumers": [
+        "enemy_1072_dlancer",
+        "enemy_1072_dlancer_2",
+        "enemy_1117_liiprr",
+        "enemy_1117_liiprr_2",
+        "enemy_1120_vofwiz",
+        "enemy_1120_vofwiz_2",
+        "enemy_1121_lifbos",
+        "enemy_1121_lifbos_2",
+        "enemy_1203_sfhu",
+        "enemy_1203_sfhu_2",
+        "enemy_1205_sfpin",
+        "enemy_1205_sfpin_2",
+        "enemy_1245_ltseal",
+        "enemy_2005_axetro"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: event ON_OWNER_FINISH",
+      "templates": [
+        "cooperate_die_to_trigger_bonus",
+        "cooperate_die_to_trigger_bonus_2",
+        "enemy_lrchld[fx]",
+        "enemy_spnaxe_buffs2[mark]",
+        "enemy_spnaxe_buffs[mark]",
+        "log_thief_reach_exit"
+      ],
+      "consumers": [
+        "enemy_1364_spnaxe",
+        "enemy_1364_spnaxe_2",
+        "enemy_1421_lrchld",
+        "enemy_2069_skzbox",
+        "enemy_2070_skzfbx",
+        "enemy_4007_murino",
+        "enemy_4007_murino_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: event ON_BEFORE_ATTACK",
+      "templates": [
+        "enemy_confinement[atk_cnt]",
+        "enemy_liberty_listener[warning]",
+        "enemy_mdrock_s_1[persistent]",
+        "enemy_spmode_check",
+        "enemy_wdkght_t[switch_mode]"
+      ],
+      "consumers": [
+        "enemy_1103_wdkght",
+        "enemy_1103_wdkght_2",
+        "enemy_1103_wdkght_3",
+        "enemy_1117_liiprr",
+        "enemy_1117_liiprr_2",
+        "enemy_1120_vofwiz",
+        "enemy_1120_vofwiz_2",
+        "enemy_1121_lifbos",
+        "enemy_1121_lifbos_2",
+        "enemy_1213_mtrsnp",
+        "enemy_1213_mtrsnp_2",
+        "enemy_1214_mtrmgc",
+        "enemy_1214_mtrmgc_2",
+        "enemy_1216_cansld",
+        "enemy_1216_cansld_2",
+        "enemy_1219_mtrbty",
+        "enemy_1219_mtrbty_2",
+        "enemy_1511_mdrock",
+        "enemy_5042_dqkght_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: action AssignBuffBlackboardFromOthers",
+      "templates": [
+        "enemy_bigstorm[dmg]",
+        "enemy_lrcmra[originum][dmg]",
+        "enemy_lrmm[ctrl_radius]",
+        "tile_originum_t_1[dmg]"
+      ],
+      "consumers": [
+        "enemy_1420_lrmm",
+        "enemy_1425_lrcmra",
+        "enemy_1425_lrcmra_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: fixed HP loss",
+      "templates": [
+        "fixed_value_damage_ontrigger[pure]",
+        "instant_damage_magic[buff]",
+        "instant_damage_magic[splash]",
+        "instant_damage_physical[splash]"
+      ],
+      "consumers": [
+        "enemy_1050_lslime",
+        "enemy_1248_ltholo",
+        "enemy_1509_mousek"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: abnormal flag",
+      "templates": [
+        "dlancer_t_listener[a]",
+        "dlancer_t_listener[b]"
+      ],
+      "consumers": [
+        "enemy_1072_dlancer",
+        "enemy_1072_dlancer_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: action ChangeMotionMode",
+      "templates": [
+        "enemy_durokt[fly]",
+        "skzfbx_m1_a[fall_down]"
+      ],
+      "consumers": [
+        "enemy_1171_durokt",
+        "enemy_1171_durokt_2",
+        "enemy_2070_skzfbx"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: action CheckContainsDerviedBuff",
+      "templates": [
+        "enemy_ducrb_checker",
+        "enemy_dumcy_checker"
+      ],
+      "consumers": [
+        "enemy_1286_dumcy",
+        "enemy_1286_dumcy_2",
+        "enemy_1287_ducrb",
+        "enemy_1287_ducrb_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: action CheckEnemyFaceAndMoveDir",
+      "templates": [
+        "skzjxd_a[back_listener]",
+        "skzjxd_a[face_listener]"
+      ],
+      "consumers": [
+        "enemy_2085_skzjxd"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: action CheckFilterTag",
+      "templates": [
+        "enemy_fixed_value_damage_to_trap",
+        "tower_t_3[be_enemy_instant]"
+      ],
+      "consumers": [
+        "enemy_1089_ltlntc",
+        "enemy_1089_ltlntc_2",
+        "enemy_1215_ptrarc",
+        "enemy_1215_ptrarc_2",
+        "enemy_1216_cansld",
+        "enemy_1216_cansld_2",
+        "enemy_1219_mtrbty",
+        "enemy_1219_mtrbty_2",
+        "enemy_1511_mdrock"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: action FilterByTargetHpRatio",
+      "templates": [
+        "enemy_hp_listener",
+        "enemy_lyengs[interrupt_if_hp_full]"
+      ],
+      "consumers": [
+        "enemy_1073_dscout",
+        "enemy_1073_dscout_2",
+        "enemy_1074_dbskar",
+        "enemy_1074_dbskar_2",
+        "enemy_1075_dmgswd",
+        "enemy_1075_dmgswd_2",
+        "enemy_1250_lyengs",
+        "enemy_1250_lyengs_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: action HealViaMaxHpRatio",
+      "templates": [
+        "enemy_lyengs[modify_hp]",
+        "enemy_nhnrs_t[healtrap]"
+      ],
+      "consumers": [
+        "enemy_1250_lyengs",
+        "enemy_1250_lyengs_2",
+        "enemy_1268_nhnrs",
+        "enemy_1268_nhnrs_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: action SummonEnemiesFollowMyRoute",
+      "templates": [
+        "enemy_rescar_skill[summon]",
+        "harchn[sum_token]"
+      ],
+      "consumers": [
+        "enemy_1133_harchn",
+        "enemy_1133_harchn_2",
+        "enemy_1217_rescar",
+        "enemy_1217_rescar_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: action SwitchToRebornState",
+      "templates": [
+        "enemy_duskld_revive_listener",
+        "enemy_duskls_revive_listener"
+      ],
+      "consumers": [
+        "enemy_1288_duskls",
+        "enemy_1288_duskls_2",
+        "enemy_1292_duskld",
+        "enemy_1292_duskld_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: event ON_LEAVE_MAGICCIRCUIT",
+      "templates": [
+        "enemy_ltgint_t",
+        "enemy_ltholo_t"
+      ],
+      "consumers": [
+        "enemy_1240_ltgint",
+        "enemy_1240_ltgint_2",
+        "enemy_1248_ltholo"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: predicate CheckBlocked",
+      "templates": [
+        "enemy_melee_and_ranged_spmode_check",
+        "enemy_sfden_invisible"
+      ],
+      "consumers": [
+        "enemy_1209_sfden",
+        "enemy_1209_sfden_2",
+        "enemy_1216_cansld",
+        "enemy_1216_cansld_2",
+        "enemy_1219_mtrbty",
+        "enemy_1219_mtrbty_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: predicate CheckCharacterInMagicCircuit",
+      "templates": [
+        "enemy_ltbow_t",
+        "enemy_ltmob_t"
+      ],
+      "consumers": [
+        "enemy_1238_ltmob",
+        "enemy_1238_ltmob_2",
+        "enemy_1239_ltbow",
+        "enemy_1239_ltbow_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: action AddFearTargetTiles",
+      "templates": [
+        "fear_buff"
+      ],
+      "consumers": [],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: action AlwaysNext",
+      "templates": [
+        "enemy_telex_t[kill]"
+      ],
+      "consumers": [
+        "enemy_1276_telex"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: action ApplyCacheAtkDamageFromBuff",
+      "templates": [
+        "enemy_sfpin_power_attack[real]"
+      ],
+      "consumers": [
+        "enemy_1205_sfpin",
+        "enemy_1205_sfpin_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: action AssignAttributeToBB",
+      "templates": [
+        "enemy_lrmm[stormCtrl]"
+      ],
+      "consumers": [
+        "enemy_1420_lrmm"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: action AssignBuffBlackboard",
+      "templates": [
+        "enemy_bigstorm[killLrboom]"
+      ],
+      "consumers": [
+        "enemy_1420_lrmm"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: action AttributeModifierWithLevelProgress",
+      "templates": [
+        "enemy_nhapos_t[born]"
+      ],
+      "consumers": [
+        "enemy_1266_nhapos"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: action CheckBlocked",
+      "templates": [
+        "dlancer_t_listener[c]"
+      ],
+      "consumers": [
+        "enemy_1072_dlancer",
+        "enemy_1072_dlancer_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: action CheckUnitAlive",
+      "templates": [
+        "hlsttu_t[to_enemy]"
+      ],
+      "consumers": [
+        "enemy_10091_hlsttu",
+        "enemy_10091_hlsttu_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: action CreateBuffInRange",
+      "templates": [
+        "hlsttu_t[trigger_shield]"
+      ],
+      "consumers": [
+        "enemy_10091_hlsttu",
+        "enemy_10091_hlsttu_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: action CreateBuffs",
+      "templates": [
+        "enemy_confinement"
+      ],
+      "consumers": [
+        "enemy_1117_liiprr",
+        "enemy_1117_liiprr_2",
+        "enemy_1120_vofwiz",
+        "enemy_1120_vofwiz_2",
+        "enemy_1121_lifbos",
+        "enemy_1121_lifbos_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: action CreateCardBuff",
+      "templates": [
+        "skzcy_t[ban_card]"
+      ],
+      "consumers": [
+        "enemy_2067_skzcy"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: action CreateTileBindingGlobalBuff",
+      "templates": [
+        "enemy_fake_t_apoptosis"
+      ],
+      "consumers": [
+        "enemy_2088_skzdwz"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: action DamageViaMaxHpRatio",
+      "templates": [
+        "enemy_duchns_pericdic_damage"
+      ],
+      "consumers": [
+        "enemy_1294_duchns"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: action DisableEnemySwitchFaceByMove",
+      "templates": [
+        "enemy_murino_direction_listener"
+      ],
+      "consumers": [
+        "enemy_4007_murino",
+        "enemy_4007_murino_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: action FaceToLOrRViaMoreTargets",
+      "templates": [
+        "skzjxd_a[direction_listener]"
+      ],
+      "consumers": [
+        "enemy_2085_skzjxd"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: action FinishBuff",
+      "templates": [
+        "enemy_mainline14[origFx]"
+      ],
+      "consumers": [
+        "enemy_1420_lrmm",
+        "enemy_1425_lrcmra",
+        "enemy_1425_lrcmra_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: action FinishDerivedBuff",
+      "templates": [
+        "enemy_sfhu_atkspeed_dec[trig]"
+      ],
+      "consumers": [
+        "enemy_1203_sfhu",
+        "enemy_1203_sfhu_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: action IfTarget",
+      "templates": [
+        "enemy_dekght_2[aoe]"
+      ],
+      "consumers": [
+        "enemy_1513_dekght_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: action IsCharacterOrTokenOrTrap",
+      "templates": [
+        "Dark_Effect_x_4"
+      ],
+      "consumers": [
+        "enemy_2088_skzdwz"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: action NoSourceDamage",
+      "templates": [
+        "periodic_magic_damage"
+      ],
+      "consumers": [
+        "enemy_1050_lslime"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: action SetMagicCircuitLikeObstacleInRange",
+      "templates": [
+        "enemy_ltseal_t"
+      ],
+      "consumers": [
+        "enemy_1245_ltseal"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: action SwitchDynamicBuffTileMode",
+      "templates": [
+        "enemy_duswrd_ignite"
+      ],
+      "consumers": [
+        "enemy_1293_duswrd",
+        "enemy_1293_duswrd_2",
+        "enemy_1293_duswrd_3"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: binding",
+      "templates": [
+        "enemy_bomscr_boom_switch_mode"
+      ],
+      "consumers": [
+        "enemy_1218_bomscr",
+        "enemy_1218_bomscr_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: event ON_APPLIED_MODIFIER",
+      "templates": [
+        "enemy_cansld_log"
+      ],
+      "consumers": [
+        "enemy_1216_cansld",
+        "enemy_1216_cansld_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: event ON_OUTPUT_DAMAGE",
+      "templates": [
+        "damage_scale[out]"
+      ],
+      "consumers": [
+        "enemy_1509_mousek"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: event ON_OWNER_BLOCKEE_CHANGED",
+      "templates": [
+        "enemy_lysytc[toggle_damage_resistance]"
+      ],
+      "consumers": [
+        "enemy_1253_lysytc",
+        "enemy_1253_lysytc_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: event ON_OWNER_BORN",
+      "templates": [
+        "skzjs_t[born]"
+      ],
+      "consumers": [
+        "enemy_2065_skzjs"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: predicate AssignAmmoSkillRemainingCountToBB",
+      "templates": [
+        "hlegle_a[steal]"
+      ],
+      "consumers": [
+        "enemy_10084_hlegle",
+        "enemy_10084_hlegle_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: predicate CheckEnemyId",
+      "templates": [
+        "enemy_durcar_hit_blocker"
+      ],
+      "consumers": [],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: predicate CheckEnemyUnbalanced",
+      "templates": [
+        "enemy_cbjedi_bleed"
+      ],
+      "consumers": [
+        "enemy_1328_cbjedi",
+        "enemy_1328_cbjedi_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: predicate CheckFilterTag",
+      "templates": [
+        "enemy_bomscr_boom_damage"
+      ],
+      "consumers": [
+        "enemy_1218_bomscr",
+        "enemy_1218_bomscr_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: predicate CheckHasSp",
+      "templates": [
+        "enemy_nhtank_s_effect[buff]"
+      ],
+      "consumers": [
+        "enemy_1272_nhtank",
+        "enemy_1272_nhtank_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: predicate CheckHeightTypeOfCharacterRootTile",
+      "templates": [
+        "polluted_area"
+      ],
+      "consumers": [
+        "enemy_1266_nhapos",
+        "enemy_1267_nhpbr",
+        "enemy_1267_nhpbr_2",
+        "enemy_1272_nhtank",
+        "enemy_1272_nhtank_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: predicate FilterByTargetHpRatio",
+      "templates": [
+        "enemy_ltseal_t[has_character]"
+      ],
+      "consumers": [
+        "enemy_1245_ltseal"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
+      "reason": "Unsupported native behaviour: predicate IsCharacter",
+      "templates": [
+        "enemy_nhkodo_t[devour]"
+      ],
+      "consumers": [
+        "enemy_1271_nhkodo",
+        "enemy_1271_nhkodo_2"
+      ],
+      "unsupportedConsumers": []
+    }
+  ]
+}

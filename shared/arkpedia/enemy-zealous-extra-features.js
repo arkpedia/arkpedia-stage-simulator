@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import {nativeBuffProgram,nativeBuffProgramSupported} from './native-buff-programs.js';
 import {sameOutcomeValue as same,emptyOutcomeAttributes as empty} from './enemy-outcome-contracts.js';
 const ids=['enemy_10095_crgst','enemy_10095_crgst_2'];
 const blocker='env_act43side[shooting]',blockee='enemy_crgst[unblockable]',checker='enemy_crgst[blocker]';
@@ -50,10 +51,10 @@ export function zealousExtraNative(r,n){
       _unmanagedBuffsWhenToggleOn:[],_buffsWhenToggleOff:[],_setToggleFalseOnDetached:1})
     &&fields(check,{m_Script:{m_FileID:1,m_PathID:'-4412927117579039591'},m_Enabled:1,_blockMinCnt:0,_blockMaxCnt:-1,_useBlockAsMin:1})
     &&check._buffsToBlockee.length===1&&empty(buff?.attributes)&&fields(buff,{...passive,buffKey:checker,templateKey:checker,
-      triggerLifeType:2,triggerInterval:Math.fround(.1),waitFirstTriggerInterval:0,firstTriggerInterval:-1})&&releaseTemplates(n);
+      triggerLifeType:2,triggerInterval:Math.fround(.1),waitFirstTriggerInterval:0,firstTriggerInterval:-1})&&releaseTemplates(n)&&nativeBuffProgramSupported(checker,n);
 }
 export const ZEALOUS_EXTRA_FEATURES={
   'ability:Can only be blocked by allied units inside the Filming Area':{matchesRecord:isZealousExtra,covers:zealousExtraNative,
     ability:{kind:'pairedBlockerBuffs',params:()=>({blockerBuffKey:blocker,blockeeBuffKey:blockee,
-      checkBuffKey:checker,interval:Math.fround(.1)})}},
+      checkBuffKey:checker,interval:Math.fround(.1),program:nativeBuffProgram(checker),blackboard:{}})}},
 };

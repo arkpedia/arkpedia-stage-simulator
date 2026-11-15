@@ -43,6 +43,11 @@ export function createEnemyRuntime(index=ENEMY_RUNTIME_INDEX,{legacy=null}={}){
     }
     return [...kinds];
   };
+  const validateRecords=records=>{
+    for(const record of Object.values(records))for(const entry of record.runtimeFeatures?.entries??[]){
+      if(entry.ability)factories.get(entry.ability.kind)?.validate?.(entry.ability.params);
+    }
+  };
   const runtime={
     async prepareKinds(kinds){
       const entries=new Set(kinds.map(kind=>{
@@ -50,9 +55,14 @@ export function createEnemyRuntime(index=ENEMY_RUNTIME_INDEX,{legacy=null}={}){
       }));
       await Promise.all([...entries].map(load));return runtime;
     },
-    prepare:records=>runtime.prepareKinds(kindsFor(records)),
+    prepare(records){
+      // Keep synchronous plan/dependency refusal before starting any imports.
+      const kinds=kindsFor(records);
+      return runtime.prepareKinds(kinds).then(()=>{validateRecords(records);return runtime;});
+    },
     assertPrepared(records){
       for(const kind of kindsFor(records))if(!factories.has(kind))throw Error(`Enemy runtime must be prepared: ${kind}`);
+      validateRecords(records);
     },
     record(record){
       const plan=record.runtimeFeatures;

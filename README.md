@@ -67,7 +67,8 @@ a short runtime smoke test of every available stage. The generated
 to guide implementation; counts overlap when a stage needs several capabilities.
 
 See [the loader plan](docs/STAGE-LOADER-PLAN.md) for architecture and remaining
-shared-mechanic work. Library availability describes current capability checks;
+shared-mechanic work. [Native buff programs](docs/NATIVE-BUFF-PROGRAMS.md) explain
+source compilation, reusable program components and the template audit. Library availability describes current capability checks;
 it does not certify complete game fidelity.
 
 The [wave scheduler review](docs/STAGE-WAVES-REVIEW.md) documents original

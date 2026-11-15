@@ -46,7 +46,15 @@ export function createStageLibraryLoader(fetchImpl = fetch, options = {}) {
       Promise.all(Object.entries(graph.enemies).map(async ([id, refs]) => {
         const [record, stats] = await Promise.all([component(refs.definition), component(refs.stats)]);
         if (record.key !== id) throw Error(`Stage enemy identity mismatch: ${id}`);
-        return [id, { ...record, stats }];
+        const runtimeFeatures=record.runtimeFeatures?{...record.runtimeFeatures,entries:await Promise.all(record.runtimeFeatures.entries.map(async entry=>{
+          const params=entry.ability?.params;
+          if(!params?.programComponent)return entry;
+          if(params.program)throw Error('Ambiguous stage behaviour program');
+          const {programComponent,...rest}=params;
+          const program=await component(programComponent);
+          return {...entry,ability:{...entry.ability,params:{...rest,program}}};
+        }))}:null;
+        return [id, { ...record, ...(runtimeFeatures?{runtimeFeatures}:{}), stats }];
       })),
       Promise.all(Object.entries(graph.operators ?? {}).map(async ([id, ref]) => {
         const record = await component(ref); if (record.id !== id) throw Error(`Stage operator identity mismatch: ${id}`);

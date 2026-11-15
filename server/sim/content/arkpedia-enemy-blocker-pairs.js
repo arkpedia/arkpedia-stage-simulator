@@ -1,9 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import {prepareBehaviorProgram,decodeBehaviorParameters} from '../../../shared/arkpedia/behavior-program.js';
 /** A source-owned paired-marker block condition and blocker-side polling
  * effect. Each relationship owns a separate checker instance and cleanup. */
-export function pairedBlockerBuffs({blockerBuffKey,blockeeBuffKey,checkBuffKey,interval}){
-  if([blockerBuffKey,blockeeBuffKey,checkBuffKey].some(k=>typeof k!=='string'||!k)||!Number.isFinite(interval)||interval<=0)
-    throw Error('Invalid paired blocker buffs');
+export function pairedBlockerBuffs({blockerBuffKey,blockeeBuffKey,checkBuffKey,interval,program,blackboard={}}){
+  validatePair({blockerBuffKey,blockeeBuffKey,checkBuffKey,interval});
+  const compiled=program===undefined?null:prepareBehaviorProgram(program);
+  compiled?.validateBlackboard(blackboard);
   const clear=(b,a)=>{
     const prior=a.binding;a.binding=null;
     if(prior)b.removeBuff(prior.blocker,prior.buff);
@@ -20,6 +22,7 @@ export function pairedBlockerBuffs({blockerBuffKey,blockeeBuffKey,checkBuffKey,i
       const check=({unit,buff})=>{
         if(a.binding?.buff!==buff)return;
         if(!e.alive||!e.deployed||e.deploySeq!==life||e.blockedBy!==unit){clear(b,a);return;}
+        if(compiled){compiled.run('ON_BUFF_TRIGGER',{battle:b,unit,source:e,blackboard});return;}
         if(e.findBuff(blockeeBuffKey)&&!unit.findBuff(blockerBuffKey))b._unblock(e);
       };
       const buff=b.addBuff(blocker,{key:checkBuffKey,source:e,refresh:'independent',maxStacks:Number.MAX_SAFE_INTEGER,
@@ -33,4 +36,17 @@ export function pairedBlockerBuffs({blockerBuffKey,blockeeBuffKey,checkBuffKey,i
     unblocked(_c,b,_e,a){clear(b,a);},
     death(_c,b,_e,a){clear(b,a);},
   };
+}
+
+pairedBlockerBuffs.validate=params=>{
+  if(Object.hasOwn(params,'programComponent'))throw Error('Unhydrated behaviour program component');
+  validatePair(params);
+  if(Object.hasOwn(params,'program'))prepareBehaviorProgram(params.program).validateBlackboard(params.blackboard??{});
+};
+
+pairedBlockerBuffs.decodeParameters=decodeBehaviorParameters;
+
+function validatePair({blockerBuffKey,blockeeBuffKey,checkBuffKey,interval}){
+  if([blockerBuffKey,blockeeBuffKey,checkBuffKey].some(k=>typeof k!=='string'||!k)||!Number.isFinite(interval)||interval<=0)
+    throw Error('Invalid paired blocker buffs');
 }

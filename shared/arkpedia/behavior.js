@@ -28,13 +28,19 @@ export function actionName(node) {
 
 /** Compile the whole template before any event can execute. Unknown fields,
  * events and nodes fail closed, including later nodes in a supported event. */
-export function compileBuffTemplate(template) {
+export function compileBuffTemplate(template, { dialect } = {}) {
   object(template, 'template');
   object(template.eventToActions, 'events');
   if (typeof template.templateKey !== 'string' || !template.templateKey ||
       template.effectKey !== '' || template.onEventPriority !== 'DEFAULT' ||
       Object.keys(template).sort().join(',') !== 'effectKey,eventToActions,onEventPriority,templateKey')
     throw Error('Unsupported behaviour template metadata');
+  // Dialects are trusted build-time compilers; ordinary browser consumers keep
+  // the original small operator dialect and import no native source registry.
+  if (dialect !== undefined) {
+    if (typeof dialect !== 'function') throw Error('Invalid behaviour dialect');
+    return dialect(template);
+  }
   const events = new Map();
   for (const [event, nodes] of Object.entries(template.eventToActions)) {
     if (!EVENTS.has(event) || !Array.isArray(nodes)) throw Error(`Unsupported behaviour event: ${event}`);

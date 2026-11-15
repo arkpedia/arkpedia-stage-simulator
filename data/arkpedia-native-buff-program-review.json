@@ -1,0 +1,433 @@
+{
+  "schemaVersion": 1,
+  "scope": "Expand the common buff-template frontend with a strict build-only native dialect, portable bounded programs, selected runtime execution and shared component publication. Migrate Gnawbeast bleed and Zealous Extra release while retaining old plan compatibility.",
+  "sourceSha256": {
+    "data/arkpedia-enemy-runtime-plan-report.json": "e09202a52aea09f14b9cad2bbea2d1fd497eab626b623d57a7b2ca4b26078011",
+    "data/arkpedia-library-report.json": "2925dbacbb61a55b825f1244adb154bdff4f542486dc3eb5c1878197993e67cb",
+    "data/arkpedia-library.json": "eddbd67f56a280f9786547ef2c87beec11bb2034b279c6bd49e1e76ad1d4b899",
+    "data/arkpedia-native-buff-program-audit.json": "e6d2b36c43a8aeeac986f66cedd56fcccb5ded1846a11683722ce272a7a920ad",
+    "data/arkpedia-stage-library/objects/4764a93a58b8b3dff6a162ac805726a8a286a5b119bf5a363a5b4d450766c2c4.json": "4764a93a58b8b3dff6a162ac805726a8a286a5b119bf5a363a5b4d450766c2c4",
+    "data/arkpedia-stage-library/objects/bac5d15444d405185adafc8e747a1f5967895b75d730974cc47d870ddaff7bca.json": "bac5d15444d405185adafc8e747a1f5967895b75d730974cc47d870ddaff7bca",
+    "data/arkpedia-stage-library/objects/fd3a45755ff0993aca4ce46929fd67e56e3eddc667711cf3718d1d482062e567.json": "fd3a45755ff0993aca4ce46929fd67e56e3eddc667711cf3718d1d482062e567",
+    "server/sim/content/arkpedia-enemy-blocker-pairs.js": "de40ed38afd2bcb3a2e6568717303d60c6e0a292dea2839c4310eed0a6a25f45",
+    "server/sim/content/arkpedia-enemy-charged-loss.js": "48259553cd86195282423d6ae61864a6c760735ca332602072add4fc13447f0d",
+    "server/sim/content/arkpedia-enemy-plan.js": "c21823659f571ec721d8989ae786bbbca717dda10525e80b40e032ae0fbcce6f",
+    "server/sim/content/arkpedia-enemy-runtime-index.js": "ae2a0504f12b1ab82a496fb377c0ba80b0236f7c1a0ae2c6895701dc2cfbf163",
+    "server/sim/content/arkpedia-enemy-runtime.js": "3f95f09e96d4a1c9a3a60866d100649f6d4a89f6150b31d9d8fb1d96be5d788e",
+    "shared/arkpedia/behavior-native-compiler.js": "89c3f4110d1c8a1f37c0fce794aadf0efe87756d93408f3224a116aad07cc2b0",
+    "shared/arkpedia/behavior-program.js": "f908848a62b2c23e0e8c97194b8d6f6a1f54b6f020042ffa0c3bb35bf593bc6e",
+    "shared/arkpedia/behavior.js": "88b4616bf16a17e2a29153b48ae04e0a4f7b2bcebc28214bce3e98c104cef712",
+    "shared/arkpedia/enemy-gnawbeast-features.js": "e4d73d7bcb5e405768aa6aa5dd64dc07d25c0e68c1aa9065ac1528b4419f003c",
+    "shared/arkpedia/enemy-zealous-extra-features.js": "9804a812fb3a1d24b5170bf8e53bba0805ddcd3c9b5bc68ed7721bcf9bc7e0c6",
+    "shared/arkpedia/native-buff-programs.js": "296020ee84efe2c7c08606a1232055f8a4702b9c2afc43b0a39df22d2fd33a4d",
+    "shared/arkpedia/stage-library.js": "a8dc9bc52ad20ba25d8da9a08d28863936500b715693dedbef2df29a2af798a1",
+    "test/arkpedia-gnawbeasts.test.js": "b3733567afe757111a2444f8796b8afd5646f992beba6fce7e7bd8f6c1c5bdc5",
+    "test/arkpedia-native-buff-audit.test.js": "7827cd7e51d848404050f8800861635402c43d25f860aba5cda702bf12567619",
+    "test/arkpedia-native-buff-program.test.js": "6e6c0a7ac439f2745b89079b1aada3ff44ae17208135bbdf7156bc92d6b1f0b3",
+    "tools/arkpedia/enemy-runtime-plans.mjs": "afa31040a1c1464d581b148be19911ed12f2276d4ed169c9429bd66831349e9c",
+    "tools/arkpedia/native-buff-programs.mjs": "21f77411283640f33df4e01086e6cdbc5554ad4bcc6b63ac6d401babacced5c2",
+    "tools/arkpedia/stage-library.mjs": "813149e84ed3672d861b56e92fffef8d8b5e4b6a3cfa7a29bf30e85c672df4f9"
+  },
+  "coverage": {
+    "enemies": 721,
+    "databaseLevels": 786,
+    "stages": 970,
+    "newAdmissionsFromCompilerMigration": 0
+  },
+  "programs": {
+    "nativeNodes": [
+      "CheckContainsBuff",
+      "CheckAbnormalFlag (silence)",
+      "CheckTargetProfession",
+      "IfNot",
+      "IfElse",
+      "CreateBuff (reviewed immediate/limited forms)",
+      "ReleaseFromBlocker",
+      "FixedValueDamage (reviewed sourced HP loss)"
+    ],
+    "limits": {
+      "templates": 64,
+      "nodes": 1024,
+      "depth": 16,
+      "expandedSynchronousSteps": 4096
+    },
+    "audit": {
+      "retainedTemplates": 220,
+      "retainedPrefabs": 351,
+      "compiled": 6,
+      "refused": 214,
+      "scope": "Retained source only; first refusal per template; not the entire game corpus or enemy admission."
+    },
+    "publishedBleedProgram": "4764a93a58b8b3dff6a162ac805726a8a286a5b119bf5a363a5b4d450766c2c4",
+    "variantValues": "Separate blood_value 20/30 and blood_duration 5; one identical graph.",
+    "publishedLibraryComponentBytes": 14712960,
+    "previousLibraryComponentBytes": 14712428
+  },
+  "validation": {
+    "focusedIntegration": {
+      "tests": 93,
+      "pass": 93,
+      "fail": 0,
+      "includes": "Both old/new Gnawbeast pinned-plan comparisons; all admitted raw/compiled database-level parity; portable validation, ownership, loader retries and deduplication; source gates and operator compiler regression."
+    },
+    "broadSimulationContent": {
+      "tests": 1806,
+      "pass": 1801,
+      "fail": 2,
+      "skipped": 3,
+      "baselineFailures": "Same two previously established Chimera pollution cases."
+    },
+    "stageSmoke": {
+      "scope": "10-second constructor/runtime smoke for every available compiled stage; not a playable-clear or fidelity certificate",
+      "available": 970,
+      "completed": 970,
+      "failures": [],
+      "uniqueComponentsRead": 6487,
+      "cache": {
+        "cachedBytes": 14712960,
+        "cachedObjects": 6487,
+        "pending": 0
+      }
+    }
+  },
+  "browser": {
+    "gnawbeastDesktop": [
+      {
+        "stage": "tg-s-1",
+        "beforeBattleRequests": 38,
+        "enemies": [
+          "enemy_1059_buster_2",
+          "enemy_1335_bldrat_2",
+          "enemy_1039_breakr_2",
+          "enemy_1062_rager",
+          "enemy_1062_rager_2",
+          "enemy_1104_lfkght"
+        ],
+        "loaded": {
+          "loaded": [
+            "arkpedia-enemy-basic-effects",
+            "arkpedia-enemy-charged-loss",
+            "arkpedia-enemy-builtins",
+            "arkpedia-enemy-stat-debuff-runtime"
+          ],
+          "pending": 0
+        },
+        "devices": {
+          "loaded": [],
+          "pending": 0
+        },
+        "errors": [],
+        "restart": {
+          "loaded": {
+            "loaded": [
+              "arkpedia-enemy-basic-effects",
+              "arkpedia-enemy-charged-loss",
+              "arkpedia-enemy-builtins",
+              "arkpedia-enemy-stat-debuff-runtime"
+            ],
+            "pending": 0
+          },
+          "devices": {
+            "loaded": [],
+            "pending": 0
+          },
+          "errors": []
+        },
+        "mechanics": {
+          "scope": "Controlled completed-attack fixture using the loaded TG-S-1 graph with main waves removed; not a stage clear.",
+          "variants": [
+            {
+              "id": "enemy_1335_bldrat",
+              "firstHasBleed": false,
+              "chargedHasBleed": true,
+              "pulses": [
+                {
+                  "time": 0.1,
+                  "amount": 20,
+                  "loss": true
+                },
+                {
+                  "time": 1.1,
+                  "amount": 20,
+                  "loss": true
+                },
+                {
+                  "time": 2.1,
+                  "amount": 20,
+                  "loss": true
+                },
+                {
+                  "time": 3.1,
+                  "amount": 20,
+                  "loss": true
+                },
+                {
+                  "time": 4.1,
+                  "amount": 20,
+                  "loss": true
+                }
+              ],
+              "expired": true
+            },
+            {
+              "id": "enemy_1335_bldrat_2",
+              "firstHasBleed": false,
+              "chargedHasBleed": true,
+              "pulses": [
+                {
+                  "time": 5.3,
+                  "amount": 30,
+                  "loss": true
+                },
+                {
+                  "time": 6.3,
+                  "amount": 30,
+                  "loss": true
+                },
+                {
+                  "time": 7.3,
+                  "amount": 30,
+                  "loss": true
+                },
+                {
+                  "time": 8.3,
+                  "amount": 30,
+                  "loss": true
+                },
+                {
+                  "time": 9.3,
+                  "amount": 30,
+                  "loss": true
+                }
+              ],
+              "expired": true
+            }
+          ],
+          "errors": [],
+          "loaded": {
+            "loaded": [
+              "arkpedia-enemy-basic-effects",
+              "arkpedia-enemy-charged-loss",
+              "arkpedia-enemy-builtins",
+              "arkpedia-enemy-stat-debuff-runtime"
+            ],
+            "pending": 0
+          }
+        },
+        "moduleRequests": 149,
+        "moduleBytes": 450193,
+        "sourceCompilerRequested": false
+      }
+    ],
+    "gnawbeastTouch": [
+      {
+        "stage": "tg-s-1",
+        "beforeBattleRequests": 38,
+        "enemies": [
+          "enemy_1059_buster_2",
+          "enemy_1335_bldrat_2",
+          "enemy_1039_breakr_2",
+          "enemy_1062_rager",
+          "enemy_1062_rager_2",
+          "enemy_1104_lfkght"
+        ],
+        "loaded": {
+          "loaded": [
+            "arkpedia-enemy-basic-effects",
+            "arkpedia-enemy-charged-loss",
+            "arkpedia-enemy-builtins",
+            "arkpedia-enemy-stat-debuff-runtime"
+          ],
+          "pending": 0
+        },
+        "devices": {
+          "loaded": [],
+          "pending": 0
+        },
+        "errors": [],
+        "restart": {
+          "loaded": {
+            "loaded": [
+              "arkpedia-enemy-basic-effects",
+              "arkpedia-enemy-charged-loss",
+              "arkpedia-enemy-builtins",
+              "arkpedia-enemy-stat-debuff-runtime"
+            ],
+            "pending": 0
+          },
+          "devices": {
+            "loaded": [],
+            "pending": 0
+          },
+          "errors": []
+        },
+        "mechanics": {
+          "scope": "Controlled completed-attack fixture using the loaded TG-S-1 graph with main waves removed; not a stage clear.",
+          "variants": [
+            {
+              "id": "enemy_1335_bldrat",
+              "firstHasBleed": false,
+              "chargedHasBleed": true,
+              "pulses": [
+                {
+                  "time": 0.1,
+                  "amount": 20,
+                  "loss": true
+                },
+                {
+                  "time": 1.1,
+                  "amount": 20,
+                  "loss": true
+                },
+                {
+                  "time": 2.1,
+                  "amount": 20,
+                  "loss": true
+                },
+                {
+                  "time": 3.1,
+                  "amount": 20,
+                  "loss": true
+                },
+                {
+                  "time": 4.1,
+                  "amount": 20,
+                  "loss": true
+                }
+              ],
+              "expired": true
+            },
+            {
+              "id": "enemy_1335_bldrat_2",
+              "firstHasBleed": false,
+              "chargedHasBleed": true,
+              "pulses": [
+                {
+                  "time": 5.3,
+                  "amount": 30,
+                  "loss": true
+                },
+                {
+                  "time": 6.3,
+                  "amount": 30,
+                  "loss": true
+                },
+                {
+                  "time": 7.3,
+                  "amount": 30,
+                  "loss": true
+                },
+                {
+                  "time": 8.3,
+                  "amount": 30,
+                  "loss": true
+                },
+                {
+                  "time": 9.3,
+                  "amount": 30,
+                  "loss": true
+                }
+              ],
+              "expired": true
+            }
+          ],
+          "errors": [],
+          "loaded": {
+            "loaded": [
+              "arkpedia-enemy-basic-effects",
+              "arkpedia-enemy-charged-loss",
+              "arkpedia-enemy-builtins",
+              "arkpedia-enemy-stat-debuff-runtime"
+            ],
+            "pending": 0
+          }
+        },
+        "moduleRequests": 149,
+        "moduleBytes": 450193,
+        "sourceCompilerRequested": false
+      }
+    ],
+    "blockerDesktop": {
+      "scope": "Controlled paired-marker fixture using the compiled 0-1 geometry, no main waves, and injected precompiled Extra records; not an original filming-stage playthrough.",
+      "viewport": "1440x900 desktop",
+      "stageLoadAndRestart": true,
+      "before": {
+        "loaded": [],
+        "pending": 0
+      },
+      "after": {
+        "loaded": [
+          "arkpedia-enemy-blocker-pairs"
+        ],
+        "pending": 0
+      },
+      "variants": [
+        {
+          "id": "enemy_10095_crgst",
+          "outside": false,
+          "inside": true,
+          "retained": true,
+          "released": true,
+          "remainingCheckers": 0,
+          "attacks": 0
+        },
+        {
+          "id": "enemy_10095_crgst_2",
+          "outside": false,
+          "inside": true,
+          "retained": true,
+          "released": true,
+          "remainingCheckers": 0,
+          "attacks": 0
+        }
+      ],
+      "errors": [],
+      "pageErrors": [],
+      "sourceCompilerRequested": false
+    },
+    "blockerTouch": {
+      "scope": "Controlled paired-marker fixture using the compiled 0-1 geometry, no main waves, and injected precompiled Extra records; not an original filming-stage playthrough.",
+      "viewport": "844x390 touch",
+      "stageLoadAndRestart": true,
+      "before": {
+        "loaded": [],
+        "pending": 0
+      },
+      "after": {
+        "loaded": [
+          "arkpedia-enemy-blocker-pairs"
+        ],
+        "pending": 0
+      },
+      "variants": [
+        {
+          "id": "enemy_10095_crgst",
+          "outside": false,
+          "inside": true,
+          "retained": true,
+          "released": true,
+          "remainingCheckers": 0,
+          "attacks": 0
+        },
+        {
+          "id": "enemy_10095_crgst_2",
+          "outside": false,
+          "inside": true,
+          "retained": true,
+          "released": true,
+          "remainingCheckers": 0,
+          "attacks": 0
+        }
+      ],
+      "errors": [],
+      "pageErrors": [],
+      "sourceCompilerRequested": false
+    }
+  },
+  "limits": [
+    "Native particles and exact Unity callback ordering are not certified.",
+    "Allowed program events must be wired by a reviewed transport; compiler support does not admit an enemy or environment.",
+    "Derived buffs, arbitrary damage modifiers, summons and environment controllers remain outside the initial dialect.",
+    "Browser mechanic fixtures isolate actors and do not certify a stage clear."
+  ]
+}

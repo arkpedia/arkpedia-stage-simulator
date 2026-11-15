@@ -20,7 +20,14 @@ export function packStage(id, stage, put) {
     ...(waveProgram ? { waveProgram: put(waveProgram) } : {}),
     enemies: Object.fromEntries(Object.entries(enemies).map(([key, source]) => {
       const { stats, ...record } = source.abilities && source.talents?.groups ? withCompiledEnemyRuntime(source) : source;
-      return [key, { definition: put(record), stats: put(stats) }];
+      // Native programs have independent identities: normal/elite variants
+      // share one graph while retaining their own blackboard and body stats.
+      const runtimeFeatures=record.runtimeFeatures?{...record.runtimeFeatures,entries:record.runtimeFeatures.entries.map(entry=>{
+        if(!entry.ability?.params?.program)return entry;
+        const {program,...params}=entry.ability.params;
+        return {...entry,ability:{...entry.ability,params:{...params,programComponent:put(program)}}};
+      })}:null;
+      return [key, { definition: put(runtimeFeatures?{...record,runtimeFeatures}:record), stats: put(stats) }];
     })),
     ...(Object.keys(operators).length ? { operators: Object.fromEntries(Object.entries(operators).map(([key, record]) => [key, put(record)])) } : {}) });
 }

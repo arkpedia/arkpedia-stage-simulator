@@ -8,6 +8,7 @@ export function applyCompiledEnemyFeatures(b,e,plan,factoryFor){
   const factories=plan.entries.map(entry=>{
     if(!entry.ability)return null;const make=factoryFor(entry.ability.kind);
     if(typeof make!=='function')throw Error(`Enemy runtime must be prepared: ${entry.ability.kind}`);
+    make.validate?.(entry.ability.params);
     return make;
   });
   const abilities=[];
@@ -15,7 +16,8 @@ export function applyCompiledEnemyFeatures(b,e,plan,factoryFor){
     if(entry.trait?.flags)b.addBuff(e,{key:`feature:${entry.id}`,persist:true,flags:{...entry.trait.flags}});
     if(entry.trait?.maxTargets)e.profile.maxTargets=Math.max(e.profile.maxTargets??1,entry.trait.maxTargets);
     if(entry.ability){
-      const made=factories[i](decodeEnemyRuntimeParameters(entry.ability.params),abOf(b,e));
+      const params=factories[i].decodeParameters?.(entry.ability.params)??decodeEnemyRuntimeParameters(entry.ability.params);
+      const made=factories[i](params,abOf(b,e));
       abilities.push(...(Array.isArray(made)?made:[made]));
     }
   }
