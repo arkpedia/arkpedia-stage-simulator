@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { isPrisonerLeader, prisonerLeaderNative, PRISONER_LEADER_ABILITY, PRISONER_SPEED_AURA } from './enemy-prisoner-leaders-features.js';
 import { isSelfFearEnemy, selfFearNative } from './enemy-self-fear.js';
 import { isSniperPrisoner, SNIPER_PRISONER_ABILITY, SNIPER_PRISONER_PRIORITY } from './enemy-prisoner-features.js';
 import { DEPOSITOR_FEATURE } from './enemy-depositor-features.js';
@@ -445,11 +446,19 @@ export const ENEMY_FEATURES = Object.freeze({
   // enemy stands up with `hp_ratio` of its max HP (full when absent) and `invincible` s of invulnerability.
   ...rebornFamily('Reborn'), ...rebornFamily('reborn'),
   // 禁锢 → 解放: starts imprisoned (ASPD/DEF from confinement), freed after `times` attacks with the liberty buffs.
-  'talent:confinement': { covers: r => CONFINEMENT_SIGS.some(p => sig(r, 'confinement', p)) && LIBERTY_SIGS.some(p => sig(r, 'liberty', p)),
-    ability: r => isSniperPrisoner(r) ? SNIPER_PRISONER_ABILITY : { kind: 'prisoner', params: () => ({ freeAll: false }) }, note: 'prisoner(): confined until times attacks, then liberty',
+  'talent:confinement': { covers: (r,n) => isPrisonerLeader(r) ? prisonerLeaderNative(r,n) : CONFINEMENT_SIGS.some(p => sig(r, 'confinement', p)) && LIBERTY_SIGS.some(p => sig(r, 'liberty', p)),
+    ability: r => isPrisonerLeader(r) ? PRISONER_LEADER_ABILITY : isSniperPrisoner(r) ? SNIPER_PRISONER_ABILITY : { kind: 'prisoner', params: () => ({ freeAll: false }) }, note: 'prisoner(): confined until times attacks, then liberty',
     explains: /^(Starts imprisoned\. When imprisoned, ASPD is reduced|Freed after a few attacks, gaining increased ATK)/ },
-  'talent:liberty': { covers: r => CONFINEMENT_SIGS.some(p => sig(r, 'confinement', p)) && LIBERTY_SIGS.some(p => sig(r, 'liberty', p)),
+  'talent:liberty': { covers: (r,n) => isPrisonerLeader(r) ? prisonerLeaderNative(r,n) : CONFINEMENT_SIGS.some(p => sig(r, 'confinement', p)) && LIBERTY_SIGS.some(p => sig(r, 'liberty', p)),
     note: 'the liberty buffs of the confinement feature' },
+  'talent:atkspeedup': { matchesRecord: isPrisonerLeader, covers: prisonerLeaderNative, ability: PRISONER_SPEED_AURA,
+    explains: /^All enemies gain (?:significantly )?increased ASPD when on the field$/, note: 'non-stacking same-side ASPD aura' },
+  'ability:Starts imprisoned. When imprisoned, does not attack but gains increased DEF': {
+    matchesRecord: isPrisonerLeader, covers: prisonerLeaderNative },
+  'ability:After being freed, attacks 2 enemies simultaneously and prioritizes attacking Imprisonment Devices': {
+    matchesRecord: isPrisonerLeader, covers: prisonerLeaderNative },
+  'ability:When freed for the first time, immediately frees all other enemies': {
+    matchesRecord: isPrisonerLeader, covers: prisonerLeaderNative, nativeClaim: () => ({ active: 1 }) },
   // 嘲讽: "More likely to be targeted by attacks" — taunt level +taunt_level.
   'talent:taunt': { covers: r => sig(r, 'taunt', ['taunt_level']), ability: { kind: 'taunt', params: r => ({ n: r.talents.bb['taunt.taunt_level'] }) },
     note: 'taunt level', explains: /^More likely to be targeted by attacks\.$/ },

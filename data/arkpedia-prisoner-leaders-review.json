@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "scope": "Native source contracts and local gameplay review; no compiled-client or frame/pixel parity certificate.",
+  "enemies": [
+    "enemy_1120_vofwiz",
+    "enemy_1120_vofwiz_2",
+    "enemy_1121_lifbos",
+    "enemy_1121_lifbos_2"
+  ],
+  "sources": {
+    "data/arkpedia-enemy-native-abilities.json": "99e740a7deac2fa557fd7af171209c00e64efd8412bc798db9d034a8e915fc56",
+    "data/arkpedia-prisoner-leaders-animations.json": "b6aa53a2abc12cb83f7c4b6bc7cc00bcc561a72e41d5b369ddb0d0a395b34ca8",
+    "shared/arkpedia/enemy-prisoner-contracts.js": "2d4ab92e89675d5742de865254a47b503de1ffa438818fc27b55d70c1097b70c",
+    "shared/arkpedia/enemy-prisoner-leaders-features.js": "16217a1900e669a2c333d1c3e163d71d8f9235e903e39a79c5ee7a94192fd423",
+    "server/sim/content/arkpedia-enemy-prisoner.js": "0335fe90257f14670b3579eab04599bb0b2183a8d13b8970551deade363efec2",
+    "server/sim/content/arkpedia-enemy-attack-sequence.js": "47443b488f205c0648dfbbdf1956da05451528bfa6488a78de8bd9986fc1948d"
+  },
+  "tests": {
+    "focused": 12,
+    "combined": 81,
+    "stageSmoke": {
+      "passed": 949,
+      "seconds": 10
+    }
+  },
+  "artwork": {
+    "scope": "Chromium clip decoding/finite poses and idle body rendering; no native combat/frame/pixel parity claim",
+    "browser": "Chrome/156.0.8078.79",
+    "results": [
+      {
+        "viewport": "desktop",
+        "models": [
+          {
+            "id": "enemy_1120_vofwiz",
+            "version": "3.8.99",
+            "clips": 13,
+            "width": 586.3480682373047,
+            "height": 522.4310193061829
+          },
+          {
+            "id": "enemy_1120_vofwiz_2",
+            "version": "3.8.99",
+            "clips": 13,
+            "width": 586.3480682373047,
+            "height": 522.3263325691223
+          },
+          {
+            "id": "enemy_1121_lifbos",
+            "version": "3.8.99",
+            "clips": 15,
+            "width": 450.3320770263672,
+            "height": 415.6185050010681
+          },
+          {
+            "id": "enemy_1121_lifbos_2",
+            "version": "3.8.99",
+            "clips": 15,
+            "width": 450.3320770263672,
+            "height": 415.11898946762085
+          }
+        ],
+        "errors": [],
+        "failures": []
+      },
+      {
+        "viewport": "mobile",
+        "models": [
+          {
+            "id": "enemy_1120_vofwiz",
+            "version": "3.8.99",
+            "clips": 13,
+            "width": 586.3480682373047,
+            "height": 522.4310193061829
+          },
+          {
+            "id": "enemy_1120_vofwiz_2",
+            "version": "3.8.99",
+            "clips": 13,
+            "width": 586.3480682373047,
+            "height": 522.3263325691223
+          },
+          {
+            "id": "enemy_1121_lifbos",
+            "version": "3.8.99",
+            "clips": 15,
+            "width": 450.3320770263672,
+            "height": 415.6185050010681
+          },
+          {
+            "id": "enemy_1121_lifbos_2",
+            "version": "3.8.99",
+            "clips": 15,
+            "width": 450.3320770263672,
+            "height": 415.11898946762085
+          }
+        ],
+        "errors": [],
+        "failures": []
+      }
+    ]
+  },
+  "coverage": {
+    "enemies": 701,
+    "totalEnemies": 2163,
+    "stages": 949,
+    "totalStages": 3892
+  }
+}

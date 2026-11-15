@@ -86,6 +86,7 @@ test('a real device attracts Sniper Prisoner fire ahead of a higher-taunt buildi
 test('forced reconfinement interrupts an Arts cast even when its owner is immune to the pulse stun', () => {
   const f = fixture(), e = f.spawn(sniper), a = e.mem.ab.list.find(a => a.confine);
   e.base.atk = 220; e.def.immune.add('stun'); e.markDirty(); a.liberate(f.b, e, a);
+  assert.equal(e.atkCd, e.s.interval); e.atkCd = 0;
   f.run(.2); assert.ok(a.cast); f.d.sp = 25; f.controller.activate(f.d.id);
   assert.equal(a.cast, null); assert.equal(a.free, false); assert.equal(!!e.s.flags.stun, false);
   const hp = f.d.unit.hp; f.run(1.2); assert.equal(f.d.unit.hp, hp); assert.deepEqual(f.b.errors, []);

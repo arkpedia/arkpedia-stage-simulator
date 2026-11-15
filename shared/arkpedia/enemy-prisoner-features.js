@@ -2,7 +2,7 @@
 import clocks from '../../data/arkpedia-sniper-prisoner-animations.json' with { type: 'json' };
 import { sameOutcomeValue as same, emptyOutcomeAttributes as empty } from './enemy-outcome-contracts.js';
 const fields = (v, expected) => !!v && Object.entries(expected).every(([k, x]) => same(v[k], x));
-const is = (v, type) => v?.$type === `Torappu.Battle.Action.Nodes+${type}, Assembly-CSharp`;
+import { prisonerCounterNative } from './enemy-prisoner-contracts.js';
 export const isSniperPrisoner = r => Object.hasOwn(clocks.enemies, r.prefabKey);
 export function sniperPrisonerNative(r, n) {
   const clock = clocks.enemies[r.prefabKey], root = n[r.prefabKey]?.[0];
@@ -40,28 +40,7 @@ export function sniperPrisonerNative(r, n) {
     || !same(liberty._buffs[0].attributes.attributeModifiers,
       [{ attributeType: 1, formulaItem: 1, value: 0, loadFromBlackboard: 1, fetchBaseValueFromSourceEntity: 0 }])
     || !empty(liberty._buffs[1].attributes) || liberty._buffs[1].buffKey !== 'enemy_liberty[state]') return false;
-  for (const key of ['enemy_confinement', 'enemy_confinement_final']) {
-    const buff = n.$buff(key);
-    if (!fields(buff, { buffKey: key, isSilenceable: false, lifeTimeType: 'INFINITY' })
-      || !same(buff.attributes.attributeModifiers, [{ attributeType: 'ATTACK_SPEED', formulaItem: 'ADDITION',
-        value: 0, loadFromBlackboard: true, fetchBaseValueFromSourceEntity: false }])) return false;
-  }
-  const init = n.$template('enemy_confinement')?.eventToActions.ON_BUFF_START;
-  const counter = n.$template('enemy_confinement[atk_cnt]')?.eventToActions.ON_BEFORE_ATTACK;
-  const warning = n.$template('enemy_liberty[warning]')?.eventToActions.ON_BUFF_TRIGGER;
-  const listener = n.$template('enemy_liberty_listener[warning]')?.eventToActions.ON_BEFORE_ATTACK;
-  if (init?.length !== 1 || !is(init[0], 'CreateBuffs') || !fields(init[0]._buffPair, { useBlackboard: true, count: 0 })
-    || !fields(init[0]._buffPair.buff, { buffKey: 'enemy_confinement[atk_cnt]', templateKey: 'enemy_confinement[atk_cnt]',
-      overrideType: 'STACK', maxStackCnt: -1, maxValidStackCnt: -1, lifeTimeType: 'INFINITY' })
-    || counter?.length !== 4 || !is(counter[0], 'CheckAbnormalFlag') || !fields(counter[0], { _abnormalFlag: 'PALSY', _isUnset: true })
-    || !is(counter[1], 'FinishBuff') || counter[1]._decCntIfStack !== true
-    || !fields(counter[2], { _buffKey: 'enemy_confinement[atk_cnt]', _stackCount: 1, _condType: 'EQUALS' })
-    || !is(counter[3], 'SwitchMode') || !fields(counter[3], { _modeIndex: 1, _restartFSM: false, _restoreDefault: false })
-    || warning?.length !== 1 || !is(warning[0], 'CreateBuff')
-    || warning[0]._buff.templateKey !== 'enemy_liberty_listener[warning]'
-    || listener?.length !== 2 || !is(listener[0], 'FinishBuffsById')
-    || !fields(listener[0], { _buffKey: 'enemy_confinement[atk_cnt]', _decCntIfStack: true })
-    || !is(listener[1], 'SwitchMode') || !fields(listener[1], { _modeIndex: 2, _restartFSM: false, _restoreDefault: false })) return false;
+  if (!prisonerCounterNative(n)) return false;
   for (const key of ['projectile_enemy_liiprr', 'projectile_enemy_liiprr_2']) {
     const parts = n.$projectile(key);
     if (!parts.some(c => c._speed === 5 && c._useSourceDirection === 0)

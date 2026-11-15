@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 /** Ordinary attacks retain the core attack receipt and cooldown while
- * resolving each original animation marker against one captured deployment.
+ * resolving each original animation marker against captured deployments.
  * Content supplies the melee or projectile release action. */
 export function ordinaryEnemyAttackSequence(select, fire) {
   const key = 'ab:ordinaryMeleeSequence';
@@ -16,7 +16,7 @@ export function ordinaryEnemyAttackSequence(select, fire) {
       const target = c.targets[0], animation = select(b, e, a);
       if (!target) return;
       a.priorNoAttack = e.profile.noAttack;
-      a.cast = { target, life: target.deploySeq, attackId: b._attackSeq, animation,
+      a.cast = { target, life: target.deploySeq, targets: c.targets.map(unit => ({ unit, life: unit.deploySeq })), attackId: b._attackSeq, animation,
         elapsed: 0, last: b.time, index: 0 };
       e.profile.noAttack = true; b.addBuff(e, { key, flags: { noMove: true } });
       e.mem.regularFormVisual = { clip: animation.clip, loop: false, speed: e.s.slowDownRate,
@@ -30,11 +30,11 @@ export function ordinaryEnemyAttackSequence(select, fire) {
       e.mem.regularFormVisual.speed = e.s.slowDownRate;
       while (a.cast === c && c.index < c.animation.releases.length
         && c.elapsed + 1e-7 >= c.animation.releases[c.index]) {
-        c.index++; const u = c.target;
-        if (u.alive && u.deployed && !u.hidden && u.deploySeq === c.life) {
-          fire(b, e, u, c);
+        c.index++;
+        for (const { unit: u, life } of c.targets) {
+          if (u.alive && u.deployed && !u.hidden && u.deploySeq === life) fire(b, e, u, c);
+          if (!e.alive) return;
         }
-        if (!e.alive) return;
       }
       if (a.cast !== c) return;
       e.skillAnimUntil = b.time + Math.max(0, c.animation.duration - c.elapsed) / Math.max(.001, e.s.slowDownRate);
