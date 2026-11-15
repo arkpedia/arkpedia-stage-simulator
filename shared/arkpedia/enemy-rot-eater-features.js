@@ -1,11 +1,14 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import { sameOutcomeValue as same, emptyOutcomeAttributes } from './enemy-outcome-contracts.js';
+import {corruptionDamageValue,nativeCorruptionTemplate} from './enemy-corruption-contracts.js';
 export function rotEaterNative(r, n) {
   if (r.prefabKey !== 'enemy_1266_nhapos' || r.skills.length || r.applyWay !== 'MELEE'
     || !same(r.talents.groups, { PollutedArea: ['Polluted_damage_high', 'Polluted_damage_low',
       'guaranteed_percentage', 'max_percentage', 'range_Radius'] })
     || ![.2, 1].includes(r.talents.bb['PollutedArea.guaranteed_percentage'])
-    || r.talents.bb['PollutedArea.max_percentage'] !== .8) return false;
+    || r.talents.bb['PollutedArea.max_percentage'] !== .8
+    || !['PollutedArea.Polluted_damage_low','PollutedArea.Polluted_damage_high'].every(key=>corruptionDamageValue(r.talents.bb[key]))
+    || !nativeCorruptionTemplate(n)) return false;
   const aura = n.PollutedArea?.find(c => '_buffs' in c), birth = aura?._passiveBuffs?.[0];
   if (aura?._buffs.length !== 1 || aura._removeBuffWhenTargetLeave !== 1 || aura._removeBuffWhenAbilityDetached !== 1
     || aura._buffs[0].templateKey !== 'polluted_area' || aura._buffs[0].triggerInterval !== 1

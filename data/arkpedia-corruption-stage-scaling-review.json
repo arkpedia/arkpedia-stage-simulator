@@ -1,0 +1,3364 @@
+{
+ "schemaVersion": 1,
+ "scope": "Reviewed existing pollution parameter scaling; browser load/restart and ten-second stage smoke, not original-client frame parity or stage clears.",
+ "sourceSha256": {
+  "shared/arkpedia/enemy-corruption-contracts.js": "f7670e7587af83148b543f95fc92b5fece0e5ccdab8b5f5b0616654f11382ea2",
+  "shared/arkpedia/enemy-rot-eater-features.js": "2207cc65641a749ee5f1e6c72dbf67d87048a29883af6fecb85a1539652ed461",
+  "shared/arkpedia/enemy-wither-tank-features.js": "68a9e273fde3100b918b7332b9cefac0e40e1f85e0773c27ec79452daa79369b",
+  "shared/arkpedia/enemy-features.js": "d3a274a41940bad5b6a66edd12bcf77f69961813ed8c128f493fcf0e249ac556",
+  "data/arkpedia-enemy-native-abilities.json": "43b99168fb596680350f7d1b25884a6d4a5c418890e77352c6c94aa8370d2a2d",
+  "data/arkpedia-library.json": "8c0cdb4828316504698219bf37d48036c0e3f53dd6c2253d12aa4124e8008f70"
+ },
+ "newlyAvailableStages": [
+  "11-12_adverse_environment",
+  "11-15_adverse_environment",
+  "11-7_adverse_environment",
+  "11-8_adverse_environment",
+  "h11-1_adverse_environment",
+  "h11-3_adverse_environment"
+ ],
+ "removedStages": [],
+ "summary": {
+  "enemiesSupported": 717,
+  "availableStagesBefore": 961,
+  "availableStagesAfter": 967,
+  "remainingCombatStages": 2925
+ },
+ "behavior": {
+  "lowGroundDamage": 100,
+  "highGroundDamage": 50,
+  "baseLowGroundDamage": 50,
+  "baseHighGroundDamage": 25,
+  "type": "True",
+  "hurtSpCredit": false,
+  "normalRecordsMutated": false,
+  "newRuntimeModules": 0
+ },
+ "tests": {
+  "integrationPassed": 28,
+  "allAvailableStageSmokes": 967,
+  "secondsPerSmoke": 10
+ },
+ "browser": [
+  {
+   "stage": "11-12_adverse_environment",
+   "beforeBattleRequests": 278,
+   "pollution": [
+    {
+     "kind": "rotEater",
+     "low": 100,
+     "high": 50
+    }
+   ],
+   "enemies": [
+    "enemy_1229_darmy",
+    "enemy_1274_stmram_2",
+    "enemy_1273_stmgun_2",
+    "enemy_1269_nhfly",
+    "enemy_1269_nhfly_2",
+    "enemy_1266_nhapos"
+   ],
+   "loaded": {
+    "loaded": [
+     "enemies",
+     "arkpedia-enemy-rot-eater",
+     "arkpedia-enemy-steam-tank"
+    ],
+    "pending": 0
+   },
+   "devices": {
+    "loaded": [
+     "twigs"
+    ],
+    "pending": 0
+   },
+   "errors": [],
+   "restart": {
+    "loaded": {
+     "loaded": [
+      "enemies",
+      "arkpedia-enemy-rot-eater",
+      "arkpedia-enemy-steam-tank"
+     ],
+     "pending": 0
+    },
+    "devices": {
+     "loaded": [
+      "twigs"
+     ],
+     "pending": 0
+    },
+    "errors": []
+   },
+   "requests": [
+    {
+     "url": "/shared/arkpedia/loadout.js",
+     "bytes": 3176
+    },
+    {
+     "url": "/shared/arkpedia/squad.js",
+     "bytes": 1686
+    },
+    {
+     "url": "/shared/arkpedia/battle-ui.js",
+     "bytes": 1345
+    },
+    {
+     "url": "/shared/arkpedia/skill-hud.js",
+     "bytes": 1893
+    },
+    {
+     "url": "/shared/arkpedia/placement.js",
+     "bytes": 846
+    },
+    {
+     "url": "/sim/targeting.js",
+     "bytes": 8003
+    },
+    {
+     "url": "/shared/arkpedia/battle-hud.js",
+     "bytes": 611
+    },
+    {
+     "url": "/shared/arkpedia/interface-assets.js",
+     "bytes": 599
+    },
+    {
+     "url": "/shared/arkpedia/stage-roster.js",
+     "bytes": 802
+    },
+    {
+     "url": "/shared/arkpedia/stage-card-rules.js",
+     "bytes": 722
+    },
+    {
+     "url": "/shared/arkpedia/stages.js",
+     "bytes": 2097
+    },
+    {
+     "url": "/shared/arkpedia/viewport.js",
+     "bytes": 328
+    },
+    {
+     "url": "/shared/arkpedia/summons.js",
+     "bytes": 6327
+    },
+    {
+     "url": "/shared/arkpedia/battle-metrics.js",
+     "bytes": 1030
+    },
+    {
+     "url": "/shared/arkpedia/stage-mode-rules.js",
+     "bytes": 1150
+    },
+    {
+     "url": "/shared/arkpedia/stage-outcomes.js",
+     "bytes": 1017
+    },
+    {
+     "url": "/shared/arkpedia/operator-library.js",
+     "bytes": 1708
+    },
+    {
+     "url": "/shared/arkpedia/operators.js",
+     "bytes": 5262
+    },
+    {
+     "url": "/shared/arkpedia/facing.js",
+     "bytes": 892
+    },
+    {
+     "url": "/shared/arkpedia/model-entry.js",
+     "bytes": 547
+    },
+    {
+     "url": "/shared/arkpedia/flux-reflector-ports.js",
+     "bytes": 332
+    },
+    {
+     "url": "/shared/direction.js",
+     "bytes": 2045
+    },
+    {
+     "url": "/shared/arkpedia/stage-tile-view.js",
+     "bytes": 514
+    },
+    {
+     "url": "/sim/constants.js",
+     "bytes": 7971
+    },
+    {
+     "url": "/sim/block-mode.js",
+     "bytes": 623
+    },
+    {
+     "url": "/sim/body.js",
+     "bytes": 2835
+    },
+    {
+     "url": "/shared/arkpedia/stage-library.js",
+     "bytes": 1401
+    },
+    {
+     "url": "/sim/dir.js",
+     "bytes": 110
+    },
+    {
+     "url": "/shared/arkpedia/component-store.js",
+     "bytes": 1193
+    },
+    {
+     "url": "/shared/loadoutRecord.js",
+     "bytes": 3855
+    },
+    {
+     "url": "/shared/arkpedia/medic-operators.js",
+     "bytes": 350
+    },
+    {
+     "url": "/shared/arkpedia/caster-operators.js",
+     "bytes": 414
+    },
+    {
+     "url": "/shared/arkpedia/guard-operators.js",
+     "bytes": 410
+    },
+    {
+     "url": "/shared/arkpedia/sniper-operators.js",
+     "bytes": 335
+    },
+    {
+     "url": "/shared/arkpedia/defender-operators.js",
+     "bytes": 432
+    },
+    {
+     "url": "/shared/arkpedia/advanced-sniper-operators.js",
+     "bytes": 424
+    },
+    {
+     "url": "/shared/arkpedia/vanguard-operators.js",
+     "bytes": 430
+    },
+    {
+     "url": "/shared/arkpedia/support-operators.js",
+     "bytes": 487
+    },
+    {
+     "url": "/shared/arkpedia/fixed-squad-operators.js",
+     "bytes": 477
+    },
+    {
+     "url": "/shared/arkpedia/specialist-operators.js",
+     "bytes": 375
+    },
+    {
+     "url": "/shared/arkpedia/robot-expansion-operators.js",
+     "bytes": 417
+    },
+    {
+     "url": "/shared/arkpedia/utility-operators.js",
+     "bytes": 623
+    },
+    {
+     "url": "/shared/arkpedia/guard-expansion-operators.js",
+     "bytes": 605
+    },
+    {
+     "url": "/shared/arkpedia/caster-expansion-operators.js",
+     "bytes": 360
+    },
+    {
+     "url": "/shared/arkpedia/support-expansion-operators.js",
+     "bytes": 508
+    },
+    {
+     "url": "/shared/arkpedia/sniper-expansion-operators.js",
+     "bytes": 324
+    },
+    {
+     "url": "/shared/arkpedia/five-star-guard-operators.js",
+     "bytes": 401
+    },
+    {
+     "url": "/shared/arkpedia/five-star-caster-operators.js",
+     "bytes": 423
+    },
+    {
+     "url": "/shared/arkpedia/five-star-vanguard-operators.js",
+     "bytes": 384
+    },
+    {
+     "url": "/shared/arkpedia/five-star-caster-expansion-operators.js",
+     "bytes": 388
+    },
+    {
+     "url": "/shared/arkpedia/five-star-support-expansion-operators.js",
+     "bytes": 403
+    },
+    {
+     "url": "/shared/arkpedia/five-star-guard-expansion-operators.js",
+     "bytes": 422
+    },
+    {
+     "url": "/shared/arkpedia/five-star-support-operators.js",
+     "bytes": 392
+    },
+    {
+     "url": "/shared/arkpedia/five-star-guard-third-operators.js",
+     "bytes": 372
+    },
+    {
+     "url": "/shared/arkpedia/five-star-sniper-operators.js",
+     "bytes": 413
+    },
+    {
+     "url": "/shared/arkpedia/five-star-support-third-operators.js",
+     "bytes": 391
+    },
+    {
+     "url": "/shared/arkpedia/five-star-caster-overload-operators.js",
+     "bytes": 432
+    },
+    {
+     "url": "/shared/arkpedia/five-star-guard-fourth-operators.js",
+     "bytes": 475
+    },
+    {
+     "url": "/shared/arkpedia/five-star-caster-utility-operators.js",
+     "bytes": 408
+    },
+    {
+     "url": "/shared/arkpedia/five-star-guard-fifth-operators.js",
+     "bytes": 369
+    },
+    {
+     "url": "/shared/arkpedia/five-star-medic-operators.js",
+     "bytes": 411
+    },
+    {
+     "url": "/shared/arkpedia/five-star-sniper-second-operators.js",
+     "bytes": 423
+    },
+    {
+     "url": "/shared/arkpedia/five-star-sniper-third-operators.js",
+     "bytes": 330
+    },
+    {
+     "url": "/shared/arkpedia/five-star-medic-second-operators.js",
+     "bytes": 380
+    },
+    {
+     "url": "/shared/arkpedia/five-star-medic-third-operators.js",
+     "bytes": 411
+    },
+    {
+     "url": "/shared/arkpedia/five-star-defender-operators.js",
+     "bytes": 388
+    },
+    {
+     "url": "/shared/arkpedia/five-star-guard-sixth-operators.js",
+     "bytes": 476
+    },
+    {
+     "url": "/shared/arkpedia/five-star-vanguard-second-operators.js",
+     "bytes": 484
+    },
+    {
+     "url": "/shared/arkpedia/five-star-defender-second-operators.js",
+     "bytes": 341
+    },
+    {
+     "url": "/shared/arkpedia/caster-next-operators.js",
+     "bytes": 481
+    },
+    {
+     "url": "/shared/arkpedia/defender-third-operators.js",
+     "bytes": 346
+    },
+    {
+     "url": "/shared/arkpedia/six-star-medic-operators.js",
+     "bytes": 380
+    },
+    {
+     "url": "/shared/arkpedia/defender-fourth-operators.js",
+     "bytes": 398
+    },
+    {
+     "url": "/shared/arkpedia/caster-second-operators.js",
+     "bytes": 398
+    },
+    {
+     "url": "/shared/arkpedia/five-star-medic-fourth-operators.js",
+     "bytes": 416
+    },
+    {
+     "url": "/shared/arkpedia/five-star-support-fourth-operators.js",
+     "bytes": 330
+    },
+    {
+     "url": "/shared/arkpedia/guard-six-star-operators.js",
+     "bytes": 456
+    },
+    {
+     "url": "/shared/arkpedia/five-star-vanguard-third-operators.js",
+     "bytes": 502
+    },
+    {
+     "url": "/shared/arkpedia/five-star-sniper-fourth-operators.js",
+     "bytes": 311
+    },
+    {
+     "url": "/shared/arkpedia/guard-six-star-second-operators.js",
+     "bytes": 425
+    },
+    {
+     "url": "/shared/arkpedia/support-aura-operators.js",
+     "bytes": 320
+    },
+    {
+     "url": "/shared/arkpedia/sniper-six-star-operators.js",
+     "bytes": 429
+    },
+    {
+     "url": "/shared/arkpedia/sniper-six-star-second-operators.js",
+     "bytes": 293
+    },
+    {
+     "url": "/shared/arkpedia/elemental-caster-operators.js",
+     "bytes": 472
+    },
+    {
+     "url": "/shared/arkpedia/blessing-expansion-operators.js",
+     "bytes": 441
+    },
+    {
+     "url": "/shared/arkpedia/caster-third-operators.js",
+     "bytes": 312
+    },
+    {
+     "url": "/shared/arkpedia/guard-six-star-third-operators.js",
+     "bytes": 504
+    },
+    {
+     "url": "/shared/arkpedia/ritualist-operators.js",
+     "bytes": 303
+    },
+    {
+     "url": "/shared/arkpedia/support-control-operators.js",
+     "bytes": 331
+    },
+    {
+     "url": "/shared/arkpedia/lucilla-operators.js",
+     "bytes": 245
+    },
+    {
+     "url": "/shared/arkpedia/thorns-operators.js",
+     "bytes": 348
+    },
+    {
+     "url": "/shared/arkpedia/hook-expansion-operators.js",
+     "bytes": 464
+    },
+    {
+     "url": "/shared/arkpedia/phantom-operators.js",
+     "bytes": 256
+    },
+    {
+     "url": "/shared/arkpedia/archetto-operators.js",
+     "bytes": 269
+    },
+    {
+     "url": "/shared/arkpedia/saria-operators.js",
+     "bytes": 305
+    },
+    {
+     "url": "/shared/arkpedia/guard-six-star-fourth-operators.js",
+     "bytes": 381
+    },
+    {
+     "url": "/shared/arkpedia/fartooth-operators.js",
+     "bytes": 379
+    },
+    {
+     "url": "/shared/arkpedia/bagpipe-operators.js",
+     "bytes": 313
+    },
+    {
+     "url": "/shared/arkpedia/puzzle-operators.js",
+     "bytes": 246
+    },
+    {
+     "url": "/shared/arkpedia/hoederer-operators.js",
+     "bytes": 301
+    },
+    {
+     "url": "/shared/arkpedia/mlynar-operators.js",
+     "bytes": 365
+    },
+    {
+     "url": "/shared/arkpedia/rosa-operators.js",
+     "bytes": 282
+    },
+    {
+     "url": "/shared/arkpedia/silence-paradigmatic-operators.js",
+     "bytes": 395
+    },
+    {
+     "url": "/shared/arkpedia/jieyun-operators.js",
+     "bytes": 295
+    },
+    {
+     "url": "/shared/arkpedia/w-operators.js",
+     "bytes": 314
+    },
+    {
+     "url": "/shared/arkpedia/eyja-alter-operators.js",
+     "bytes": 344
+    },
+    {
+     "url": "/shared/arkpedia/nian-operators.js",
+     "bytes": 278
+    },
+    {
+     "url": "/shared/arkpedia/radiant-knight-operators.js",
+     "bytes": 356
+    },
+    {
+     "url": "/shared/arkpedia/zuole-operators.js",
+     "bytes": 347
+    },
+    {
+     "url": "/shared/arkpedia/scene-operators.js",
+     "bytes": 234
+    },
+    {
+     "url": "/shared/arkpedia/bobbing-operators.js",
+     "bytes": 323
+    },
+    {
+     "url": "/shared/arkpedia/kaltsit-operators.js",
+     "bytes": 286
+    },
+    {
+     "url": "/shared/arkpedia/chilchuck-operators.js",
+     "bytes": 252
+    },
+    {
+     "url": "/shared/arkpedia/vigil-operators.js",
+     "bytes": 271
+    },
+    {
+     "url": "/shared/arkpedia/ray-operators.js",
+     "bytes": 270
+    },
+    {
+     "url": "/shared/arkpedia/coldshot-operators.js",
+     "bytes": 264
+    },
+    {
+     "url": "/shared/arkpedia/nymph-operators.js",
+     "bytes": 291
+    },
+    {
+     "url": "/shared/arkpedia/lemuen-operators.js",
+     "bytes": 316
+    },
+    {
+     "url": "/shared/arkpedia/wintim-operators.js",
+     "bytes": 417
+    },
+    {
+     "url": "/shared/arkpedia/tragodia-operators.js",
+     "bytes": 391
+    },
+    {
+     "url": "/shared/arkpedia/mon3tr-operators.js",
+     "bytes": 370
+    },
+    {
+     "url": "/shared/arkpedia/akkord-operators.js",
+     "bytes": 449
+    },
+    {
+     "url": "/shared/arkpedia/jcinta-operators.js",
+     "bytes": 473
+    },
+    {
+     "url": "/shared/arkpedia/varkis-operators.js",
+     "bytes": 451
+    },
+    {
+     "url": "/shared/arkpedia/snhunt-operators.js",
+     "bytes": 457
+    },
+    {
+     "url": "/shared/arkpedia/kichi-operators.js",
+     "bytes": 459
+    },
+    {
+     "url": "/shared/arkpedia/thumpy-operators.js",
+     "bytes": 409
+    },
+    {
+     "url": "/shared/arkpedia/cairn-operators.js",
+     "bytes": 437
+    },
+    {
+     "url": "/shared/arkpedia/tmslot-operators.js",
+     "bytes": 358
+    },
+    {
+     "url": "/shared/arkpedia/tanya-operators.js",
+     "bytes": 470
+    },
+    {
+     "url": "/shared/arkpedia/pedro-operators.js",
+     "bytes": 424
+    },
+    {
+     "url": "/shared/arkpedia/mcnist-operators.js",
+     "bytes": 343
+    },
+    {
+     "url": "/shared/arkpedia/gallus-operators.js",
+     "bytes": 337
+    },
+    {
+     "url": "/shared/arkpedia/koromaru-operators.js",
+     "bytes": 331
+    },
+    {
+     "url": "/shared/arkpedia/recon-operators.js",
+     "bytes": 415
+    },
+    {
+     "url": "/shared/arkpedia/ju-operators.js",
+     "bytes": 463
+    },
+    {
+     "url": "/shared/arkpedia/botany-operators.js",
+     "bytes": 461
+    },
+    {
+     "url": "/shared/arkpedia/aegis-operators.js",
+     "bytes": 443
+    },
+    {
+     "url": "/shared/arkpedia/makoto-operators.js",
+     "bytes": 407
+    },
+    {
+     "url": "/shared/arkpedia/taraxa-operators.js",
+     "bytes": 453
+    },
+    {
+     "url": "/shared/arkpedia/skybox-operators.js",
+     "bytes": 427
+    },
+    {
+     "url": "/shared/arkpedia/aphrissa-operators.js",
+     "bytes": 463
+    },
+    {
+     "url": "/shared/arkpedia/yukari-operators.js",
+     "bytes": 462
+    },
+    {
+     "url": "/shared/arkpedia/hadiya-operators.js",
+     "bytes": 446
+    },
+    {
+     "url": "/shared/arkpedia/amoris-operators.js",
+     "bytes": 362
+    },
+    {
+     "url": "/shared/arkpedia/oblvns-operators.js",
+     "bytes": 395
+    },
+    {
+     "url": "/shared/arkpedia/mortis-operators.js",
+     "bytes": 372
+    },
+    {
+     "url": "/shared/arkpedia/tmoris-operators.js",
+     "bytes": 486
+    },
+    {
+     "url": "/shared/arkpedia/dolris-operators.js",
+     "bytes": 492
+    },
+    {
+     "url": "/shared/arkpedia/makiri-operators.js",
+     "bytes": 429
+    },
+    {
+     "url": "/shared/arkpedia/headb2-operators.js",
+     "bytes": 364
+    },
+    {
+     "url": "/shared/arkpedia/halo2-operators.js",
+     "bytes": 383
+    },
+    {
+     "url": "/shared/arkpedia/flwr2-operators.js",
+     "bytes": 449
+    },
+    {
+     "url": "/shared/arkpedia/turdus-operators.js",
+     "bytes": 464
+    },
+    {
+     "url": "/shared/arkpedia/titi-operators.js",
+     "bytes": 505
+    },
+    {
+     "url": "/shared/arkpedia/catap2-operators.js",
+     "bytes": 374
+    },
+    {
+     "url": "/shared/arkpedia/chen3-operators.js",
+     "bytes": 374
+    },
+    {
+     "url": "/shared/arkpedia/hsgma2-operators.js",
+     "bytes": 407
+    },
+    {
+     "url": "/shared/arkpedia/leizi2-operators.js",
+     "bytes": 374
+    },
+    {
+     "url": "/shared/arkpedia/haruka-operators.js",
+     "bytes": 366
+    },
+    {
+     "url": "/shared/arkpedia/orchd2-operators.js",
+     "bytes": 428
+    },
+    {
+     "url": "/shared/arkpedia/veen-operators.js",
+     "bytes": 364
+    },
+    {
+     "url": "/shared/arkpedia/mantra-operators.js",
+     "bytes": 499
+    },
+    {
+     "url": "/shared/arkpedia/demetr-operators.js",
+     "bytes": 399
+    },
+    {
+     "url": "/shared/arkpedia/kalts2-operators.js",
+     "bytes": 422
+    },
+    {
+     "url": "/shared/arkpedia/sbell2-operators.js",
+     "bytes": 410
+    },
+    {
+     "url": "/shared/arkpedia/wang-operators.js",
+     "bytes": 384
+    },
+    {
+     "url": "/shared/arkpedia/aglna2-operators.js",
+     "bytes": 388
+    },
+    {
+     "url": "/shared/arkpedia/svash2-operators.js",
+     "bytes": 395
+    },
+    {
+     "url": "/shared/arkpedia/radian-operators.js",
+     "bytes": 499
+    },
+    {
+     "url": "/shared/arkpedia/nasti-operators.js",
+     "bytes": 362
+    },
+    {
+     "url": "/shared/arkpedia/closur-operators.js",
+     "bytes": 357
+    },
+    {
+     "url": "/shared/arkpedia/branch-operators.js",
+     "bytes": 441
+    },
+    {
+     "url": "/shared/arkpedia/necrass-operators.js",
+     "bytes": 463
+    },
+    {
+     "url": "/shared/arkpedia/liesel-operators.js",
+     "bytes": 469
+    },
+    {
+     "url": "/shared/arkpedia/reckpr-operators.js",
+     "bytes": 356
+    },
+    {
+     "url": "/shared/arkpedia/muelsyse-operators.js",
+     "bytes": 313
+    },
+    {
+     "url": "/shared/arkpedia/rmixer-operators.js",
+     "bytes": 326
+    },
+    {
+     "url": "/shared/arkpedia/narant-operators.js",
+     "bytes": 407
+    },
+    {
+     "url": "/shared/arkpedia/ela-operators.js",
+     "bytes": 285
+    },
+    {
+     "url": "/shared/arkpedia/marcil-operators.js",
+     "bytes": 337
+    },
+    {
+     "url": "/shared/arkpedia/fuze-operators.js",
+     "bytes": 251
+    },
+    {
+     "url": "/shared/arkpedia/rosmontis-operators.js",
+     "bytes": 310
+    },
+    {
+     "url": "/shared/arkpedia/wisadel-operators.js",
+     "bytes": 380
+    },
+    {
+     "url": "/shared/arkpedia/swire-alter-operators.js",
+     "bytes": 407
+    },
+    {
+     "url": "/shared/arkpedia/blacknight-operators.js",
+     "bytes": 244
+    },
+    {
+     "url": "/shared/arkpedia/christine-operators.js",
+     "bytes": 287
+    },
+    {
+     "url": "/shared/arkpedia/executor-reaper-operators.js",
+     "bytes": 322
+    },
+    {
+     "url": "/shared/arkpedia/philae-operators.js",
+     "bytes": 299
+    },
+    {
+     "url": "/shared/arkpedia/windflit-operators.js",
+     "bytes": 301
+    },
+    {
+     "url": "/shared/arkpedia/flametail-operators.js",
+     "bytes": 299
+    },
+    {
+     "url": "/shared/arkpedia/tinman-operators.js",
+     "bytes": 267
+    },
+    {
+     "url": "/shared/arkpedia/senshi-operators.js",
+     "bytes": 263
+    },
+    {
+     "url": "/shared/arkpedia/blemishine-operators.js",
+     "bytes": 316
+    },
+    {
+     "url": "/shared/arkpedia/tecno-operators.js",
+     "bytes": 257
+    },
+    {
+     "url": "/shared/arkpedia/catherine-operators.js",
+     "bytes": 282
+    },
+    {
+     "url": "/shared/arkpedia/saileach-operators.js",
+     "bytes": 398
+    },
+    {
+     "url": "/shared/arkpedia/alanna-operators.js",
+     "bytes": 305
+    },
+    {
+     "url": "/shared/arkpedia/spuria-operators.js",
+     "bytes": 305
+    },
+    {
+     "url": "/shared/arkpedia/surtr-operators.js",
+     "bytes": 347
+    },
+    {
+     "url": "/shared/arkpedia/mayer-operators.js",
+     "bytes": 269
+    },
+    {
+     "url": "/shared/arkpedia/fang-fire-sharpened-operators.js",
+     "bytes": 343
+    },
+    {
+     "url": "/shared/arkpedia/siege-operators.js",
+     "bytes": 291
+    },
+    {
+     "url": "/shared/arkpedia/firewatch-operators.js",
+     "bytes": 265
+    },
+    {
+     "url": "/shared/arkpedia/surfer-operators.js",
+     "bytes": 288
+    },
+    {
+     "url": "/shared/arkpedia/ash-operators.js",
+     "bytes": 286
+    },
+    {
+     "url": "/shared/arkpedia/melanite-operators.js",
+     "bytes": 277
+    },
+    {
+     "url": "/shared/arkpedia/vulpis-operators.js",
+     "bytes": 400
+    },
+    {
+     "url": "/shared/arkpedia/saga-operators.js",
+     "bytes": 379
+    },
+    {
+     "url": "/shared/arkpedia/chen-operators.js",
+     "bytes": 302
+    },
+    {
+     "url": "/shared/arkpedia/eunectes-operators.js",
+     "bytes": 347
+    },
+    {
+     "url": "/shared/arkpedia/bena-operators.js",
+     "bytes": 299
+    },
+    {
+     "url": "/shared/arkpedia/frost-operators.js",
+     "bytes": 272
+    },
+    {
+     "url": "/shared/arkpedia/kazemaru-operators.js",
+     "bytes": 277
+    },
+    {
+     "url": "/shared/arkpedia/robin-operators.js",
+     "bytes": 273
+    },
+    {
+     "url": "/shared/arkpedia/aak-operators.js",
+     "bytes": 319
+    },
+    {
+     "url": "/shared/arkpedia/tippi-operators.js",
+     "bytes": 289
+    },
+    {
+     "url": "/shared/arkpedia/wulfenite-operators.js",
+     "bytes": 285
+    },
+    {
+     "url": "/shared/arkpedia/lessing-operators.js",
+     "bytes": 340
+    },
+    {
+     "url": "/shared/arkpedia/penance-operators.js",
+     "bytes": 377
+    },
+    {
+     "url": "/shared/arkpedia/mudrock-operators.js",
+     "bytes": 359
+    },
+    {
+     "url": "/shared/arkpedia/fiammetta-operators.js",
+     "bytes": 293
+    },
+    {
+     "url": "/shared/arkpedia/blaze-operators.js",
+     "bytes": 432
+    },
+    {
+     "url": "/shared/arkpedia/gavial-invincible-operators.js",
+     "bytes": 392
+    },
+    {
+     "url": "/shared/arkpedia/horn-operators.js",
+     "bytes": 330
+    },
+    {
+     "url": "/shared/arkpedia/typhon-operators.js",
+     "bytes": 374
+    },
+    {
+     "url": "/shared/arkpedia/chongyue-operators.js",
+     "bytes": 320
+    },
+    {
+     "url": "/shared/arkpedia/degenbrecher-operators.js",
+     "bytes": 339
+    },
+    {
+     "url": "/shared/arkpedia/pepe-operators.js",
+     "bytes": 286
+    },
+    {
+     "url": "/shared/arkpedia/crownslayer-operators.js",
+     "bytes": 338
+    },
+    {
+     "url": "/shared/arkpedia/brigid-operators.js",
+     "bytes": 289
+    },
+    {
+     "url": "/shared/arkpedia/iana-operators.js",
+     "bytes": 303
+    },
+    {
+     "url": "/shared/arkpedia/lin-operators.js",
+     "bytes": 320
+    },
+    {
+     "url": "/shared/arkpedia/ebenholz-operators.js",
+     "bytes": 333
+    },
+    {
+     "url": "/shared/arkpedia/ulpianus-operators.js",
+     "bytes": 445
+    },
+    {
+     "url": "/shared/arkpedia/weedy-operators.js",
+     "bytes": 286
+    },
+    {
+     "url": "/shared/arkpedia/skadi-alter-operators.js",
+     "bytes": 366
+    },
+    {
+     "url": "/shared/arkpedia/vina-operators.js",
+     "bytes": 328
+    },
+    {
+     "url": "/shared/arkpedia/reed-alter-operators.js",
+     "bytes": 397
+    },
+    {
+     "url": "/shared/arkpedia/ines-operators.js",
+     "bytes": 341
+    },
+    {
+     "url": "/shared/arkpedia/jessica-operators.js",
+     "bytes": 320
+    },
+    {
+     "url": "/shared/arkpedia/virtuosa-operators.js",
+     "bytes": 301
+    },
+    {
+     "url": "/shared/arkpedia/amiya-medic-operators.js",
+     "bytes": 363
+    },
+    {
+     "url": "/shared/arkpedia/civilight-operators.js",
+     "bytes": 419
+    },
+    {
+     "url": "/shared/arkpedia/dorothy-operators.js",
+     "bytes": 341
+    },
+    {
+     "url": "/shared/arkpedia/pozemka-operators.js",
+     "bytes": 302
+    },
+    {
+     "url": "/shared/arkpedia/amiya-guard-operators.js",
+     "bytes": 324
+    },
+    {
+     "url": "/shared/arkpedia/sand-reckoner-operators.js",
+     "bytes": 267
+    },
+    {
+     "url": "/shared/arkpedia/entelechia-operators.js",
+     "bytes": 490
+    },
+    {
+     "url": "/shared/arkpedia/lappland-alter-operators.js",
+     "bytes": 368
+    },
+    {
+     "url": "/shared/arkpedia/thorns-lodestar-operators.js",
+     "bytes": 494
+    },
+    {
+     "url": "/shared/arkpedia/hoolheyak-operators.js",
+     "bytes": 320
+    },
+    {
+     "url": "/shared/arkpedia/goldenglow-operators.js",
+     "bytes": 382
+    },
+    {
+     "url": "/shared/arkpedia/exusiai-covenant-operators.js",
+     "bytes": 399
+    },
+    {
+     "url": "/shared/arkpedia/blaze-igniting-operators.js",
+     "bytes": 371
+    },
+    {
+     "url": "/shared/arkpedia/magallan-operators.js",
+     "bytes": 292
+    },
+    {
+     "url": "/shared/arkpedia/ling-operators.js",
+     "bytes": 307
+    },
+    {
+     "url": "/shared/arkpedia/shu-operators.js",
+     "bytes": 388
+    },
+    {
+     "url": "/shared/arkpedia/yu-operators.js",
+     "bytes": 475
+    },
+    {
+     "url": "/shared/arkpedia/stainless-operators.js",
+     "bytes": 328
+    },
+    {
+     "url": "/shared/arkpedia/mitm-operators.js",
+     "bytes": 286
+    },
+    {
+     "url": "/shared/arkpedia/specter-alter-operators.js",
+     "bytes": 357
+    },
+    {
+     "url": "/shared/arkpedia/lee-operators.js",
+     "bytes": 381
+    },
+    {
+     "url": "/shared/arkpedia/yato-alter-operators.js",
+     "bytes": 319
+    },
+    {
+     "url": "/shared/arkpedia/ascalon-operators.js",
+     "bytes": 382
+    },
+    {
+     "url": "/shared/arkpedia/gladiia-operators.js",
+     "bytes": 371
+    },
+    {
+     "url": "/shared/arkpedia/chen-alter-operators.js",
+     "bytes": 382
+    },
+    {
+     "url": "/shared/arkpedia/texas-alter-operators.js",
+     "bytes": 356
+    },
+    {
+     "url": "/shared/arkpedia/eyjafjalla-operators.js",
+     "bytes": 324
+    },
+    {
+     "url": "/shared/arkpedia/stage-art.js",
+     "bytes": 1208
+    },
+    {
+     "url": "/shared/arkpedia/irene-operators.js",
+     "bytes": 317
+    },
+    {
+     "url": "/shared/arkpedia/gnosis-operators.js",
+     "bytes": 384
+    },
+    {
+     "url": "/shared/arkpedia/five-star-specialist-expansion-operators.js",
+     "bytes": 293
+    },
+    {
+     "url": "/shared/arkpedia/regular-form-visual.js",
+     "bytes": 367
+    },
+    {
+     "url": "/shared/arkpedia/gates.js",
+     "bytes": 812
+    },
+    {
+     "url": "/shared/arkpedia/lighting.js",
+     "bytes": 366
+    },
+    {
+     "url": "/shared/arkpedia/particles.js",
+     "bytes": 3166
+    },
+    {
+     "url": "/shared/constants.js",
+     "bytes": 6588
+    },
+    {
+     "url": "/sim/arkpedia.js",
+     "bytes": 14780
+    },
+    {
+     "url": "/shared/arkpedia/device-runtime.js",
+     "bytes": 1374
+    },
+    {
+     "url": "/sim/content/arkpedia-device-runtime.js",
+     "bytes": 866
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-withered-altars.js",
+     "bytes": 757
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-outcomes.js",
+     "bytes": 1317
+    },
+    {
+     "url": "/shared/arkpedia/stage-rules.js",
+     "bytes": 6483
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-workers.js",
+     "bytes": 767
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-mines.js",
+     "bytes": 1186
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-range-supplies.js",
+     "bytes": 1022
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-supply-tokens.js",
+     "bytes": 633
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-native-rules.js",
+     "bytes": 1241
+    },
+    {
+     "url": "/shared/arkpedia/stage-character-attributes.js",
+     "bytes": 687
+    },
+    {
+     "url": "/sim/content/arkpedia-originium-pollution.js",
+     "bytes": 1139
+    },
+    {
+     "url": "/sim/content/arkpedia-operator-runtime.js",
+     "bytes": 1755
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-terrain.js",
+     "bytes": 528
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-environments.js",
+     "bytes": 1422
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-card-cost.js",
+     "bytes": 496
+    },
+    {
+     "url": "/shared/arkpedia/stage-deployment-tiles.js",
+     "bytes": 650
+    },
+    {
+     "url": "/sim/content/arkpedia-card-redeploy.js",
+     "bytes": 497
+    },
+    {
+     "url": "/sim/content/arkpedia-card-locks.js",
+     "bytes": 524
+    },
+    {
+     "url": "/sim/regular-displacement.js",
+     "bytes": 2338
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-waves.js",
+     "bytes": 3061
+    },
+    {
+     "url": "/sim/Battle.js",
+     "bytes": 51333
+    },
+    {
+     "url": "/shared/arkpedia/stage-path.js",
+     "bytes": 1356
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-branches.js",
+     "bytes": 1112
+    },
+    {
+     "url": "/sim/skills.js",
+     "bytes": 12877
+    },
+    {
+     "url": "/sim/simdata.js",
+     "bytes": 11326
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-random.js",
+     "bytes": 1264
+    },
+    {
+     "url": "/sim/content/generic.js",
+     "bytes": 8568
+    },
+    {
+     "url": "/sim/content/arkpedia-summon-deck.js",
+     "bytes": 2680
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-runtime.js",
+     "bytes": 1604
+    },
+    {
+     "url": "/sim/content/arkpedia-dp-budget.js",
+     "bytes": 527
+    },
+    {
+     "url": "/shared/arkpedia/enemies.js",
+     "bytes": 756
+    },
+    {
+     "url": "/shared/arkpedia/closur-enemy-compatibility.js",
+     "bytes": 599
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-route-blocking.js",
+     "bytes": 724
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-reeds.js",
+     "bytes": 1890
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-mire.js",
+     "bytes": 754
+    },
+    {
+     "url": "/shared/arkpedia/behavior.js",
+     "bytes": 1790
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-obstacles.js",
+     "bytes": 513
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-water.js",
+     "bytes": 953
+    },
+    {
+     "url": "/shared/arkpedia/stage-device-geometry.js",
+     "bytes": 392
+    },
+    {
+     "url": "/shared/arkpedia/magic-circuit-routing.js",
+     "bytes": 1288
+    },
+    {
+     "url": "/sim/content/arkpedia-device-runtime-index.js",
+     "bytes": 855
+    },
+    {
+     "url": "/sim/content/enemies.js",
+     "bytes": 83918
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-supply-account.js",
+     "bytes": 507
+    },
+    {
+     "url": "/shared/arkpedia/stage-environments.js",
+     "bytes": 2663
+    },
+    {
+     "url": "/shared/arkpedia/stage-reeds.js",
+     "bytes": 1092
+    },
+    {
+     "url": "/shared/arkpedia/stage-native-rules.js",
+     "bytes": 1848
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-auras.js",
+     "bytes": 670
+    },
+    {
+     "url": "/sim/ai.js",
+     "bytes": 16746
+    },
+    {
+     "url": "/sim/content/arkpedia-operator-service-index.js",
+     "bytes": 1144
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-danger.js",
+     "bytes": 1015
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-parasitic.js",
+     "bytes": 734
+    },
+    {
+     "url": "/sim/content/devices.js",
+     "bytes": 10693
+    },
+    {
+     "url": "/sim/content/arkpedia-operator-runtime-index.js",
+     "bytes": 19597
+    },
+    {
+     "url": "/sim/rng.js",
+     "bytes": 934
+    },
+    {
+     "url": "/sim/units.js",
+     "bytes": 5240
+    },
+    {
+     "url": "/sim/buffs.js",
+     "bytes": 7914
+    },
+    {
+     "url": "/sim/grid.js",
+     "bytes": 10508
+    },
+    {
+     "url": "/sim/projectiles.js",
+     "bytes": 3066
+    },
+    {
+     "url": "/sim/damage.js",
+     "bytes": 17110
+    },
+    {
+     "url": "/sim/movement-observer.js",
+     "bytes": 745
+    },
+    {
+     "url": "/sim/fear.js",
+     "bytes": 5020
+    },
+    {
+     "url": "/sim/snapshot.js",
+     "bytes": 2957
+    },
+    {
+     "url": "/sim/professions.js",
+     "bytes": 13451
+    },
+    {
+     "url": "/shared/arkpedia/enemy-runtime-plan.js",
+     "bytes": 1217
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-plan.js",
+     "bytes": 657
+    },
+    {
+     "url": "/sim/content/index.js",
+     "bytes": 4396
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-runtime-index.js",
+     "bytes": 3078
+    },
+    {
+     "url": "/shared/arkpedia/enemy-aliases.js",
+     "bytes": 1470
+    },
+    {
+     "url": "/sim/content/terrain-mire.js",
+     "bytes": 564
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-hp-buff.js",
+     "bytes": 503
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-sarkaz-alarm.js",
+     "bytes": 1335
+    },
+    {
+     "url": "/sim/content/arkpedia-corruption.js",
+     "bytes": 1217
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-storm.js",
+     "bytes": 1488
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-chimera.js",
+     "bytes": 991
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-yeti.js",
+     "bytes": 550
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-pompeii.js",
+     "bytes": 944
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-duel.js",
+     "bytes": 711
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-projectiles.js",
+     "bytes": 2826
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-pulse.js",
+     "bytes": 593
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-death-area.js",
+     "bytes": 885
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-snack.js",
+     "bytes": 1715
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-ammo.js",
+     "bytes": 1257
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-charged-projectile.js",
+     "bytes": 1143
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-barriers.js",
+     "bytes": 598
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-damage-ramp.js",
+     "bytes": 553
+    },
+    {
+     "url": "/shared/arkpedia/stage-danger.js",
+     "bytes": 2312
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-charge.js",
+     "bytes": 1037
+    },
+    {
+     "url": "/shared/arkpedia/stage-parasitic.js",
+     "bytes": 2342
+    },
+    {
+     "url": "/shared/arkpedia/enemy-supply-features.js",
+     "bytes": 1579
+    },
+    {
+     "url": "/shared/arkpedia/enemy-drone-features.js",
+     "bytes": 1294
+    },
+    {
+     "url": "/shared/arkpedia/enemy-outcome-contracts.js",
+     "bytes": 1013
+    },
+    {
+     "url": "/sim/content/kits/tier1.js",
+     "bytes": 19997
+    },
+    {
+     "url": "/sim/content/kits/tier2.js",
+     "bytes": 15242
+    },
+    {
+     "url": "/sim/content/kits/tier3.js",
+     "bytes": 30820
+    },
+    {
+     "url": "/sim/content/kits/tier6.js",
+     "bytes": 59477
+    },
+    {
+     "url": "/sim/content/kits/tier5.js",
+     "bytes": 45642
+    },
+    {
+     "url": "/sim/content/kits/tier4.js",
+     "bytes": 36359
+    },
+    {
+     "url": "/sim/content/items/battle.js",
+     "bytes": 16121
+    },
+    {
+     "url": "/sim/content/tokens.js",
+     "bytes": 29336
+    },
+    {
+     "url": "/sim/content/support/index.js",
+     "bytes": 7111
+    },
+    {
+     "url": "/sim/content/bands.js",
+     "bytes": 735
+    },
+    {
+     "url": "/sim/content/garrisons.js",
+     "bytes": 346
+    },
+    {
+     "url": "/sim/content/items.js",
+     "bytes": 438
+    },
+    {
+     "url": "/sim/content/bonds.js",
+     "bytes": 1151
+    },
+    {
+     "url": "/sim/content/choices.js",
+     "bytes": 8852
+    },
+    {
+     "url": "/sim/content/bosses.js",
+     "bytes": 23863
+    },
+    {
+     "url": "/sim/content/bands/battle.js",
+     "bytes": 4709
+    },
+    {
+     "url": "/sim/content/garrisons/battle.js",
+     "bytes": 7068
+    },
+    {
+     "url": "/sim/content/garrisons/meta.js",
+     "bytes": 6912
+    },
+    {
+     "url": "/sim/content/bands/meta.js",
+     "bytes": 7853
+    },
+    {
+     "url": "/sim/content/items/meta.js",
+     "bytes": 4678
+    },
+    {
+     "url": "/sim/content/bonds/core.js",
+     "bytes": 12359
+    },
+    {
+     "url": "/sim/content/bonds/addon.js",
+     "bytes": 534
+    },
+    {
+     "url": "/sim/content/support/meta.js",
+     "bytes": 1724
+    },
+    {
+     "url": "/sim/content/bonds/addon/battle.js",
+     "bytes": 11299
+    },
+    {
+     "url": "/sim/content/bonds/addon/meta.js",
+     "bytes": 2886
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-steam-tank.js",
+     "bytes": 1027
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-rot-eater.js",
+     "bytes": 632
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-twigs.js",
+     "bytes": 2099
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-timed-casts.js",
+     "bytes": 1071
+    },
+    {
+     "url": "/sim/content/arkpedia-sampling-projectile.js",
+     "bytes": 687
+    }
+   ]
+  },
+  {
+   "stage": "h11-1_adverse_environment",
+   "beforeBattleRequests": 278,
+   "pollution": [
+    {
+     "kind": "witherTank",
+     "low": 100,
+     "high": 50
+    }
+   ],
+   "enemies": [
+    "enemy_1275_dwlock_2",
+    "enemy_1267_nhpbr_2",
+    "enemy_1270_nhstlk_2",
+    "enemy_1271_nhkodo_2",
+    "enemy_1272_nhtank",
+    "enemy_1268_nhnrs_2"
+   ],
+   "loaded": {
+    "loaded": [
+     "enemies",
+     "arkpedia-enemy-wither-tank",
+     "arkpedia-enemy-wither-caster",
+     "arkpedia-enemy-devour"
+    ],
+    "pending": 0
+   },
+   "devices": {
+    "loaded": [],
+    "pending": 0
+   },
+   "errors": [],
+   "restart": {
+    "loaded": {
+     "loaded": [
+      "enemies",
+      "arkpedia-enemy-wither-tank",
+      "arkpedia-enemy-wither-caster",
+      "arkpedia-enemy-devour"
+     ],
+     "pending": 0
+    },
+    "devices": {
+     "loaded": [],
+     "pending": 0
+    },
+    "errors": []
+   },
+   "requests": [
+    {
+     "url": "/shared/arkpedia/loadout.js",
+     "bytes": 3176
+    },
+    {
+     "url": "/shared/arkpedia/squad.js",
+     "bytes": 1686
+    },
+    {
+     "url": "/shared/arkpedia/battle-ui.js",
+     "bytes": 1345
+    },
+    {
+     "url": "/shared/arkpedia/placement.js",
+     "bytes": 846
+    },
+    {
+     "url": "/shared/arkpedia/skill-hud.js",
+     "bytes": 1893
+    },
+    {
+     "url": "/shared/arkpedia/battle-hud.js",
+     "bytes": 611
+    },
+    {
+     "url": "/sim/targeting.js",
+     "bytes": 8003
+    },
+    {
+     "url": "/shared/arkpedia/interface-assets.js",
+     "bytes": 599
+    },
+    {
+     "url": "/shared/arkpedia/viewport.js",
+     "bytes": 328
+    },
+    {
+     "url": "/shared/arkpedia/stage-roster.js",
+     "bytes": 802
+    },
+    {
+     "url": "/shared/arkpedia/summons.js",
+     "bytes": 6327
+    },
+    {
+     "url": "/shared/arkpedia/stages.js",
+     "bytes": 2097
+    },
+    {
+     "url": "/shared/arkpedia/stage-card-rules.js",
+     "bytes": 722
+    },
+    {
+     "url": "/shared/arkpedia/battle-metrics.js",
+     "bytes": 1030
+    },
+    {
+     "url": "/shared/arkpedia/stage-mode-rules.js",
+     "bytes": 1150
+    },
+    {
+     "url": "/shared/arkpedia/operator-library.js",
+     "bytes": 1708
+    },
+    {
+     "url": "/shared/arkpedia/stage-outcomes.js",
+     "bytes": 1017
+    },
+    {
+     "url": "/shared/arkpedia/operators.js",
+     "bytes": 5262
+    },
+    {
+     "url": "/shared/arkpedia/facing.js",
+     "bytes": 892
+    },
+    {
+     "url": "/shared/arkpedia/model-entry.js",
+     "bytes": 547
+    },
+    {
+     "url": "/shared/direction.js",
+     "bytes": 2045
+    },
+    {
+     "url": "/shared/arkpedia/flux-reflector-ports.js",
+     "bytes": 332
+    },
+    {
+     "url": "/shared/arkpedia/stage-tile-view.js",
+     "bytes": 514
+    },
+    {
+     "url": "/sim/body.js",
+     "bytes": 2835
+    },
+    {
+     "url": "/sim/dir.js",
+     "bytes": 110
+    },
+    {
+     "url": "/sim/constants.js",
+     "bytes": 7971
+    },
+    {
+     "url": "/sim/block-mode.js",
+     "bytes": 623
+    },
+    {
+     "url": "/shared/loadoutRecord.js",
+     "bytes": 3855
+    },
+    {
+     "url": "/shared/arkpedia/component-store.js",
+     "bytes": 1193
+    },
+    {
+     "url": "/shared/arkpedia/stage-library.js",
+     "bytes": 1401
+    },
+    {
+     "url": "/shared/arkpedia/caster-operators.js",
+     "bytes": 414
+    },
+    {
+     "url": "/shared/arkpedia/guard-operators.js",
+     "bytes": 410
+    },
+    {
+     "url": "/shared/arkpedia/medic-operators.js",
+     "bytes": 350
+    },
+    {
+     "url": "/shared/arkpedia/sniper-operators.js",
+     "bytes": 335
+    },
+    {
+     "url": "/shared/arkpedia/vanguard-operators.js",
+     "bytes": 430
+    },
+    {
+     "url": "/shared/arkpedia/advanced-sniper-operators.js",
+     "bytes": 424
+    },
+    {
+     "url": "/shared/arkpedia/defender-operators.js",
+     "bytes": 432
+    },
+    {
+     "url": "/shared/arkpedia/fixed-squad-operators.js",
+     "bytes": 477
+    },
+    {
+     "url": "/shared/arkpedia/specialist-operators.js",
+     "bytes": 375
+    },
+    {
+     "url": "/shared/arkpedia/support-operators.js",
+     "bytes": 487
+    },
+    {
+     "url": "/shared/arkpedia/utility-operators.js",
+     "bytes": 623
+    },
+    {
+     "url": "/shared/arkpedia/robot-expansion-operators.js",
+     "bytes": 417
+    },
+    {
+     "url": "/shared/arkpedia/guard-expansion-operators.js",
+     "bytes": 605
+    },
+    {
+     "url": "/shared/arkpedia/caster-expansion-operators.js",
+     "bytes": 360
+    },
+    {
+     "url": "/shared/arkpedia/sniper-expansion-operators.js",
+     "bytes": 324
+    },
+    {
+     "url": "/shared/arkpedia/support-expansion-operators.js",
+     "bytes": 508
+    },
+    {
+     "url": "/shared/arkpedia/five-star-caster-operators.js",
+     "bytes": 423
+    },
+    {
+     "url": "/shared/arkpedia/five-star-vanguard-operators.js",
+     "bytes": 384
+    },
+    {
+     "url": "/shared/arkpedia/five-star-guard-expansion-operators.js",
+     "bytes": 422
+    },
+    {
+     "url": "/shared/arkpedia/five-star-support-operators.js",
+     "bytes": 392
+    },
+    {
+     "url": "/shared/arkpedia/five-star-caster-expansion-operators.js",
+     "bytes": 388
+    },
+    {
+     "url": "/shared/arkpedia/five-star-guard-operators.js",
+     "bytes": 401
+    },
+    {
+     "url": "/shared/arkpedia/five-star-support-expansion-operators.js",
+     "bytes": 403
+    },
+    {
+     "url": "/shared/arkpedia/five-star-guard-third-operators.js",
+     "bytes": 372
+    },
+    {
+     "url": "/shared/arkpedia/five-star-caster-overload-operators.js",
+     "bytes": 432
+    },
+    {
+     "url": "/shared/arkpedia/five-star-support-third-operators.js",
+     "bytes": 391
+    },
+    {
+     "url": "/shared/arkpedia/five-star-sniper-operators.js",
+     "bytes": 413
+    },
+    {
+     "url": "/shared/arkpedia/five-star-guard-fourth-operators.js",
+     "bytes": 475
+    },
+    {
+     "url": "/shared/arkpedia/five-star-caster-utility-operators.js",
+     "bytes": 408
+    },
+    {
+     "url": "/shared/arkpedia/five-star-guard-fifth-operators.js",
+     "bytes": 369
+    },
+    {
+     "url": "/shared/arkpedia/five-star-medic-operators.js",
+     "bytes": 411
+    },
+    {
+     "url": "/shared/arkpedia/five-star-sniper-second-operators.js",
+     "bytes": 423
+    },
+    {
+     "url": "/shared/arkpedia/five-star-medic-second-operators.js",
+     "bytes": 380
+    },
+    {
+     "url": "/shared/arkpedia/five-star-sniper-third-operators.js",
+     "bytes": 330
+    },
+    {
+     "url": "/shared/arkpedia/five-star-medic-third-operators.js",
+     "bytes": 411
+    },
+    {
+     "url": "/shared/arkpedia/five-star-defender-operators.js",
+     "bytes": 388
+    },
+    {
+     "url": "/shared/arkpedia/five-star-defender-second-operators.js",
+     "bytes": 341
+    },
+    {
+     "url": "/shared/arkpedia/five-star-guard-sixth-operators.js",
+     "bytes": 476
+    },
+    {
+     "url": "/shared/arkpedia/five-star-vanguard-second-operators.js",
+     "bytes": 484
+    },
+    {
+     "url": "/shared/arkpedia/caster-next-operators.js",
+     "bytes": 481
+    },
+    {
+     "url": "/shared/arkpedia/defender-third-operators.js",
+     "bytes": 346
+    },
+    {
+     "url": "/shared/arkpedia/six-star-medic-operators.js",
+     "bytes": 380
+    },
+    {
+     "url": "/shared/arkpedia/defender-fourth-operators.js",
+     "bytes": 398
+    },
+    {
+     "url": "/shared/arkpedia/caster-second-operators.js",
+     "bytes": 398
+    },
+    {
+     "url": "/shared/arkpedia/five-star-medic-fourth-operators.js",
+     "bytes": 416
+    },
+    {
+     "url": "/shared/arkpedia/five-star-vanguard-third-operators.js",
+     "bytes": 502
+    },
+    {
+     "url": "/shared/arkpedia/guard-six-star-operators.js",
+     "bytes": 456
+    },
+    {
+     "url": "/shared/arkpedia/five-star-sniper-fourth-operators.js",
+     "bytes": 311
+    },
+    {
+     "url": "/shared/arkpedia/five-star-support-fourth-operators.js",
+     "bytes": 330
+    },
+    {
+     "url": "/shared/arkpedia/support-aura-operators.js",
+     "bytes": 320
+    },
+    {
+     "url": "/shared/arkpedia/sniper-six-star-operators.js",
+     "bytes": 429
+    },
+    {
+     "url": "/shared/arkpedia/sniper-six-star-second-operators.js",
+     "bytes": 293
+    },
+    {
+     "url": "/shared/arkpedia/guard-six-star-second-operators.js",
+     "bytes": 425
+    },
+    {
+     "url": "/shared/arkpedia/caster-third-operators.js",
+     "bytes": 312
+    },
+    {
+     "url": "/shared/arkpedia/elemental-caster-operators.js",
+     "bytes": 472
+    },
+    {
+     "url": "/shared/arkpedia/support-control-operators.js",
+     "bytes": 331
+    },
+    {
+     "url": "/shared/arkpedia/blessing-expansion-operators.js",
+     "bytes": 441
+    },
+    {
+     "url": "/shared/arkpedia/guard-six-star-third-operators.js",
+     "bytes": 504
+    },
+    {
+     "url": "/shared/arkpedia/ritualist-operators.js",
+     "bytes": 303
+    },
+    {
+     "url": "/shared/arkpedia/guard-six-star-fourth-operators.js",
+     "bytes": 381
+    },
+    {
+     "url": "/shared/arkpedia/lucilla-operators.js",
+     "bytes": 245
+    },
+    {
+     "url": "/shared/arkpedia/hook-expansion-operators.js",
+     "bytes": 464
+    },
+    {
+     "url": "/shared/arkpedia/phantom-operators.js",
+     "bytes": 256
+    },
+    {
+     "url": "/shared/arkpedia/thorns-operators.js",
+     "bytes": 348
+    },
+    {
+     "url": "/shared/arkpedia/archetto-operators.js",
+     "bytes": 269
+    },
+    {
+     "url": "/shared/arkpedia/fartooth-operators.js",
+     "bytes": 379
+    },
+    {
+     "url": "/shared/arkpedia/saria-operators.js",
+     "bytes": 305
+    },
+    {
+     "url": "/shared/arkpedia/bagpipe-operators.js",
+     "bytes": 313
+    },
+    {
+     "url": "/shared/arkpedia/rosa-operators.js",
+     "bytes": 282
+    },
+    {
+     "url": "/shared/arkpedia/puzzle-operators.js",
+     "bytes": 246
+    },
+    {
+     "url": "/shared/arkpedia/hoederer-operators.js",
+     "bytes": 301
+    },
+    {
+     "url": "/shared/arkpedia/w-operators.js",
+     "bytes": 314
+    },
+    {
+     "url": "/shared/arkpedia/mlynar-operators.js",
+     "bytes": 365
+    },
+    {
+     "url": "/shared/arkpedia/silence-paradigmatic-operators.js",
+     "bytes": 395
+    },
+    {
+     "url": "/shared/arkpedia/eyja-alter-operators.js",
+     "bytes": 344
+    },
+    {
+     "url": "/shared/arkpedia/jieyun-operators.js",
+     "bytes": 295
+    },
+    {
+     "url": "/shared/arkpedia/radiant-knight-operators.js",
+     "bytes": 356
+    },
+    {
+     "url": "/shared/arkpedia/nian-operators.js",
+     "bytes": 278
+    },
+    {
+     "url": "/shared/arkpedia/kaltsit-operators.js",
+     "bytes": 286
+    },
+    {
+     "url": "/shared/arkpedia/zuole-operators.js",
+     "bytes": 347
+    },
+    {
+     "url": "/shared/arkpedia/bobbing-operators.js",
+     "bytes": 323
+    },
+    {
+     "url": "/shared/arkpedia/chilchuck-operators.js",
+     "bytes": 252
+    },
+    {
+     "url": "/shared/arkpedia/scene-operators.js",
+     "bytes": 234
+    },
+    {
+     "url": "/shared/arkpedia/vigil-operators.js",
+     "bytes": 271
+    },
+    {
+     "url": "/shared/arkpedia/ray-operators.js",
+     "bytes": 270
+    },
+    {
+     "url": "/shared/arkpedia/coldshot-operators.js",
+     "bytes": 264
+    },
+    {
+     "url": "/shared/arkpedia/nymph-operators.js",
+     "bytes": 291
+    },
+    {
+     "url": "/shared/arkpedia/wintim-operators.js",
+     "bytes": 417
+    },
+    {
+     "url": "/shared/arkpedia/lemuen-operators.js",
+     "bytes": 316
+    },
+    {
+     "url": "/shared/arkpedia/tragodia-operators.js",
+     "bytes": 391
+    },
+    {
+     "url": "/shared/arkpedia/mon3tr-operators.js",
+     "bytes": 370
+    },
+    {
+     "url": "/shared/arkpedia/akkord-operators.js",
+     "bytes": 449
+    },
+    {
+     "url": "/shared/arkpedia/jcinta-operators.js",
+     "bytes": 473
+    },
+    {
+     "url": "/shared/arkpedia/thumpy-operators.js",
+     "bytes": 409
+    },
+    {
+     "url": "/shared/arkpedia/varkis-operators.js",
+     "bytes": 451
+    },
+    {
+     "url": "/shared/arkpedia/snhunt-operators.js",
+     "bytes": 457
+    },
+    {
+     "url": "/shared/arkpedia/cairn-operators.js",
+     "bytes": 437
+    },
+    {
+     "url": "/shared/arkpedia/tanya-operators.js",
+     "bytes": 470
+    },
+    {
+     "url": "/shared/arkpedia/tmslot-operators.js",
+     "bytes": 358
+    },
+    {
+     "url": "/shared/arkpedia/pedro-operators.js",
+     "bytes": 424
+    },
+    {
+     "url": "/shared/arkpedia/kichi-operators.js",
+     "bytes": 459
+    },
+    {
+     "url": "/shared/arkpedia/mcnist-operators.js",
+     "bytes": 343
+    },
+    {
+     "url": "/shared/arkpedia/gallus-operators.js",
+     "bytes": 337
+    },
+    {
+     "url": "/shared/arkpedia/koromaru-operators.js",
+     "bytes": 331
+    },
+    {
+     "url": "/shared/arkpedia/ju-operators.js",
+     "bytes": 463
+    },
+    {
+     "url": "/shared/arkpedia/recon-operators.js",
+     "bytes": 415
+    },
+    {
+     "url": "/shared/arkpedia/botany-operators.js",
+     "bytes": 461
+    },
+    {
+     "url": "/shared/arkpedia/taraxa-operators.js",
+     "bytes": 453
+    },
+    {
+     "url": "/shared/arkpedia/makoto-operators.js",
+     "bytes": 407
+    },
+    {
+     "url": "/shared/arkpedia/aphrissa-operators.js",
+     "bytes": 463
+    },
+    {
+     "url": "/shared/arkpedia/skybox-operators.js",
+     "bytes": 427
+    },
+    {
+     "url": "/shared/arkpedia/aegis-operators.js",
+     "bytes": 443
+    },
+    {
+     "url": "/shared/arkpedia/yukari-operators.js",
+     "bytes": 462
+    },
+    {
+     "url": "/shared/arkpedia/hadiya-operators.js",
+     "bytes": 446
+    },
+    {
+     "url": "/shared/arkpedia/amoris-operators.js",
+     "bytes": 362
+    },
+    {
+     "url": "/shared/arkpedia/tmoris-operators.js",
+     "bytes": 486
+    },
+    {
+     "url": "/shared/arkpedia/mortis-operators.js",
+     "bytes": 372
+    },
+    {
+     "url": "/shared/arkpedia/oblvns-operators.js",
+     "bytes": 395
+    },
+    {
+     "url": "/shared/arkpedia/dolris-operators.js",
+     "bytes": 492
+    },
+    {
+     "url": "/shared/arkpedia/makiri-operators.js",
+     "bytes": 429
+    },
+    {
+     "url": "/shared/arkpedia/headb2-operators.js",
+     "bytes": 364
+    },
+    {
+     "url": "/shared/arkpedia/flwr2-operators.js",
+     "bytes": 449
+    },
+    {
+     "url": "/shared/arkpedia/halo2-operators.js",
+     "bytes": 383
+    },
+    {
+     "url": "/shared/arkpedia/turdus-operators.js",
+     "bytes": 464
+    },
+    {
+     "url": "/shared/arkpedia/titi-operators.js",
+     "bytes": 505
+    },
+    {
+     "url": "/shared/arkpedia/catap2-operators.js",
+     "bytes": 374
+    },
+    {
+     "url": "/shared/arkpedia/chen3-operators.js",
+     "bytes": 374
+    },
+    {
+     "url": "/shared/arkpedia/hsgma2-operators.js",
+     "bytes": 407
+    },
+    {
+     "url": "/shared/arkpedia/orchd2-operators.js",
+     "bytes": 428
+    },
+    {
+     "url": "/shared/arkpedia/leizi2-operators.js",
+     "bytes": 374
+    },
+    {
+     "url": "/shared/arkpedia/veen-operators.js",
+     "bytes": 364
+    },
+    {
+     "url": "/shared/arkpedia/haruka-operators.js",
+     "bytes": 366
+    },
+    {
+     "url": "/shared/arkpedia/demetr-operators.js",
+     "bytes": 399
+    },
+    {
+     "url": "/shared/arkpedia/mantra-operators.js",
+     "bytes": 499
+    },
+    {
+     "url": "/shared/arkpedia/wang-operators.js",
+     "bytes": 384
+    },
+    {
+     "url": "/shared/arkpedia/sbell2-operators.js",
+     "bytes": 410
+    },
+    {
+     "url": "/shared/arkpedia/aglna2-operators.js",
+     "bytes": 388
+    },
+    {
+     "url": "/shared/arkpedia/svash2-operators.js",
+     "bytes": 395
+    },
+    {
+     "url": "/shared/arkpedia/nasti-operators.js",
+     "bytes": 362
+    },
+    {
+     "url": "/shared/arkpedia/kalts2-operators.js",
+     "bytes": 422
+    },
+    {
+     "url": "/shared/arkpedia/reckpr-operators.js",
+     "bytes": 356
+    },
+    {
+     "url": "/shared/arkpedia/branch-operators.js",
+     "bytes": 441
+    },
+    {
+     "url": "/shared/arkpedia/radian-operators.js",
+     "bytes": 499
+    },
+    {
+     "url": "/shared/arkpedia/closur-operators.js",
+     "bytes": 357
+    },
+    {
+     "url": "/shared/arkpedia/liesel-operators.js",
+     "bytes": 469
+    },
+    {
+     "url": "/shared/arkpedia/necrass-operators.js",
+     "bytes": 463
+    },
+    {
+     "url": "/shared/arkpedia/muelsyse-operators.js",
+     "bytes": 313
+    },
+    {
+     "url": "/shared/arkpedia/marcil-operators.js",
+     "bytes": 337
+    },
+    {
+     "url": "/shared/arkpedia/rmixer-operators.js",
+     "bytes": 326
+    },
+    {
+     "url": "/shared/arkpedia/narant-operators.js",
+     "bytes": 407
+    },
+    {
+     "url": "/shared/arkpedia/ela-operators.js",
+     "bytes": 285
+    },
+    {
+     "url": "/shared/arkpedia/fuze-operators.js",
+     "bytes": 251
+    },
+    {
+     "url": "/shared/arkpedia/rosmontis-operators.js",
+     "bytes": 310
+    },
+    {
+     "url": "/shared/arkpedia/wisadel-operators.js",
+     "bytes": 380
+    },
+    {
+     "url": "/shared/arkpedia/swire-alter-operators.js",
+     "bytes": 407
+    },
+    {
+     "url": "/shared/arkpedia/blacknight-operators.js",
+     "bytes": 244
+    },
+    {
+     "url": "/shared/arkpedia/christine-operators.js",
+     "bytes": 287
+    },
+    {
+     "url": "/shared/arkpedia/executor-reaper-operators.js",
+     "bytes": 322
+    },
+    {
+     "url": "/shared/arkpedia/philae-operators.js",
+     "bytes": 299
+    },
+    {
+     "url": "/shared/arkpedia/windflit-operators.js",
+     "bytes": 301
+    },
+    {
+     "url": "/shared/arkpedia/blemishine-operators.js",
+     "bytes": 316
+    },
+    {
+     "url": "/shared/arkpedia/tecno-operators.js",
+     "bytes": 257
+    },
+    {
+     "url": "/shared/arkpedia/flametail-operators.js",
+     "bytes": 299
+    },
+    {
+     "url": "/shared/arkpedia/tinman-operators.js",
+     "bytes": 267
+    },
+    {
+     "url": "/shared/arkpedia/senshi-operators.js",
+     "bytes": 263
+    },
+    {
+     "url": "/shared/arkpedia/catherine-operators.js",
+     "bytes": 282
+    },
+    {
+     "url": "/shared/arkpedia/alanna-operators.js",
+     "bytes": 305
+    },
+    {
+     "url": "/shared/arkpedia/saileach-operators.js",
+     "bytes": 398
+    },
+    {
+     "url": "/shared/arkpedia/spuria-operators.js",
+     "bytes": 305
+    },
+    {
+     "url": "/shared/arkpedia/surtr-operators.js",
+     "bytes": 347
+    },
+    {
+     "url": "/shared/arkpedia/mayer-operators.js",
+     "bytes": 269
+    },
+    {
+     "url": "/shared/arkpedia/fang-fire-sharpened-operators.js",
+     "bytes": 343
+    },
+    {
+     "url": "/shared/arkpedia/siege-operators.js",
+     "bytes": 291
+    },
+    {
+     "url": "/shared/arkpedia/firewatch-operators.js",
+     "bytes": 265
+    },
+    {
+     "url": "/shared/arkpedia/melanite-operators.js",
+     "bytes": 277
+    },
+    {
+     "url": "/shared/arkpedia/surfer-operators.js",
+     "bytes": 288
+    },
+    {
+     "url": "/shared/arkpedia/ash-operators.js",
+     "bytes": 286
+    },
+    {
+     "url": "/shared/arkpedia/chen-operators.js",
+     "bytes": 302
+    },
+    {
+     "url": "/shared/arkpedia/vulpis-operators.js",
+     "bytes": 400
+    },
+    {
+     "url": "/shared/arkpedia/saga-operators.js",
+     "bytes": 379
+    },
+    {
+     "url": "/shared/arkpedia/eunectes-operators.js",
+     "bytes": 347
+    },
+    {
+     "url": "/shared/arkpedia/bena-operators.js",
+     "bytes": 299
+    },
+    {
+     "url": "/shared/arkpedia/kazemaru-operators.js",
+     "bytes": 277
+    },
+    {
+     "url": "/shared/arkpedia/frost-operators.js",
+     "bytes": 272
+    },
+    {
+     "url": "/shared/arkpedia/aak-operators.js",
+     "bytes": 319
+    },
+    {
+     "url": "/shared/arkpedia/robin-operators.js",
+     "bytes": 273
+    },
+    {
+     "url": "/shared/arkpedia/wulfenite-operators.js",
+     "bytes": 285
+    },
+    {
+     "url": "/shared/arkpedia/tippi-operators.js",
+     "bytes": 289
+    },
+    {
+     "url": "/shared/arkpedia/lessing-operators.js",
+     "bytes": 340
+    },
+    {
+     "url": "/shared/arkpedia/fiammetta-operators.js",
+     "bytes": 293
+    },
+    {
+     "url": "/shared/arkpedia/penance-operators.js",
+     "bytes": 377
+    },
+    {
+     "url": "/shared/arkpedia/mudrock-operators.js",
+     "bytes": 359
+    },
+    {
+     "url": "/shared/arkpedia/blaze-operators.js",
+     "bytes": 432
+    },
+    {
+     "url": "/shared/arkpedia/gavial-invincible-operators.js",
+     "bytes": 392
+    },
+    {
+     "url": "/shared/arkpedia/horn-operators.js",
+     "bytes": 330
+    },
+    {
+     "url": "/shared/arkpedia/typhon-operators.js",
+     "bytes": 374
+    },
+    {
+     "url": "/shared/arkpedia/degenbrecher-operators.js",
+     "bytes": 339
+    },
+    {
+     "url": "/shared/arkpedia/chongyue-operators.js",
+     "bytes": 320
+    },
+    {
+     "url": "/shared/arkpedia/crownslayer-operators.js",
+     "bytes": 338
+    },
+    {
+     "url": "/shared/arkpedia/pepe-operators.js",
+     "bytes": 286
+    },
+    {
+     "url": "/shared/arkpedia/iana-operators.js",
+     "bytes": 303
+    },
+    {
+     "url": "/shared/arkpedia/brigid-operators.js",
+     "bytes": 289
+    },
+    {
+     "url": "/shared/arkpedia/ebenholz-operators.js",
+     "bytes": 333
+    },
+    {
+     "url": "/shared/arkpedia/ulpianus-operators.js",
+     "bytes": 445
+    },
+    {
+     "url": "/shared/arkpedia/lin-operators.js",
+     "bytes": 320
+    },
+    {
+     "url": "/shared/arkpedia/weedy-operators.js",
+     "bytes": 286
+    },
+    {
+     "url": "/shared/arkpedia/vina-operators.js",
+     "bytes": 328
+    },
+    {
+     "url": "/shared/arkpedia/jessica-operators.js",
+     "bytes": 320
+    },
+    {
+     "url": "/shared/arkpedia/skadi-alter-operators.js",
+     "bytes": 366
+    },
+    {
+     "url": "/shared/arkpedia/ines-operators.js",
+     "bytes": 341
+    },
+    {
+     "url": "/shared/arkpedia/reed-alter-operators.js",
+     "bytes": 397
+    },
+    {
+     "url": "/shared/arkpedia/amiya-guard-operators.js",
+     "bytes": 324
+    },
+    {
+     "url": "/shared/arkpedia/pozemka-operators.js",
+     "bytes": 302
+    },
+    {
+     "url": "/shared/arkpedia/amiya-medic-operators.js",
+     "bytes": 363
+    },
+    {
+     "url": "/shared/arkpedia/sand-reckoner-operators.js",
+     "bytes": 267
+    },
+    {
+     "url": "/shared/arkpedia/entelechia-operators.js",
+     "bytes": 490
+    },
+    {
+     "url": "/shared/arkpedia/virtuosa-operators.js",
+     "bytes": 301
+    },
+    {
+     "url": "/shared/arkpedia/dorothy-operators.js",
+     "bytes": 341
+    },
+    {
+     "url": "/shared/arkpedia/civilight-operators.js",
+     "bytes": 419
+    },
+    {
+     "url": "/shared/arkpedia/hoolheyak-operators.js",
+     "bytes": 320
+    },
+    {
+     "url": "/shared/arkpedia/goldenglow-operators.js",
+     "bytes": 382
+    },
+    {
+     "url": "/shared/arkpedia/lappland-alter-operators.js",
+     "bytes": 368
+    },
+    {
+     "url": "/shared/arkpedia/thorns-lodestar-operators.js",
+     "bytes": 494
+    },
+    {
+     "url": "/shared/arkpedia/exusiai-covenant-operators.js",
+     "bytes": 399
+    },
+    {
+     "url": "/shared/arkpedia/blaze-igniting-operators.js",
+     "bytes": 371
+    },
+    {
+     "url": "/shared/arkpedia/ling-operators.js",
+     "bytes": 307
+    },
+    {
+     "url": "/shared/arkpedia/shu-operators.js",
+     "bytes": 388
+    },
+    {
+     "url": "/shared/arkpedia/magallan-operators.js",
+     "bytes": 292
+    },
+    {
+     "url": "/shared/arkpedia/yu-operators.js",
+     "bytes": 475
+    },
+    {
+     "url": "/shared/arkpedia/mitm-operators.js",
+     "bytes": 286
+    },
+    {
+     "url": "/shared/arkpedia/stainless-operators.js",
+     "bytes": 328
+    },
+    {
+     "url": "/shared/arkpedia/lee-operators.js",
+     "bytes": 381
+    },
+    {
+     "url": "/shared/arkpedia/yato-alter-operators.js",
+     "bytes": 319
+    },
+    {
+     "url": "/shared/arkpedia/specter-alter-operators.js",
+     "bytes": 357
+    },
+    {
+     "url": "/shared/arkpedia/ascalon-operators.js",
+     "bytes": 382
+    },
+    {
+     "url": "/shared/arkpedia/gladiia-operators.js",
+     "bytes": 371
+    },
+    {
+     "url": "/shared/arkpedia/chen-alter-operators.js",
+     "bytes": 382
+    },
+    {
+     "url": "/shared/arkpedia/regular-form-visual.js",
+     "bytes": 367
+    },
+    {
+     "url": "/shared/arkpedia/irene-operators.js",
+     "bytes": 317
+    },
+    {
+     "url": "/shared/arkpedia/texas-alter-operators.js",
+     "bytes": 356
+    },
+    {
+     "url": "/shared/arkpedia/gnosis-operators.js",
+     "bytes": 384
+    },
+    {
+     "url": "/shared/arkpedia/eyjafjalla-operators.js",
+     "bytes": 324
+    },
+    {
+     "url": "/shared/arkpedia/five-star-specialist-expansion-operators.js",
+     "bytes": 293
+    },
+    {
+     "url": "/shared/arkpedia/stage-art.js",
+     "bytes": 1208
+    },
+    {
+     "url": "/shared/arkpedia/lighting.js",
+     "bytes": 366
+    },
+    {
+     "url": "/shared/arkpedia/gates.js",
+     "bytes": 812
+    },
+    {
+     "url": "/shared/constants.js",
+     "bytes": 6588
+    },
+    {
+     "url": "/shared/arkpedia/particles.js",
+     "bytes": 3166
+    },
+    {
+     "url": "/sim/arkpedia.js",
+     "bytes": 14780
+    },
+    {
+     "url": "/shared/arkpedia/device-runtime.js",
+     "bytes": 1374
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-withered-altars.js",
+     "bytes": 757
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-outcomes.js",
+     "bytes": 1317
+    },
+    {
+     "url": "/sim/content/arkpedia-device-runtime.js",
+     "bytes": 866
+    },
+    {
+     "url": "/shared/arkpedia/stage-rules.js",
+     "bytes": 6483
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-workers.js",
+     "bytes": 767
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-mines.js",
+     "bytes": 1186
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-range-supplies.js",
+     "bytes": 1022
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-supply-tokens.js",
+     "bytes": 633
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-native-rules.js",
+     "bytes": 1241
+    },
+    {
+     "url": "/shared/arkpedia/stage-character-attributes.js",
+     "bytes": 687
+    },
+    {
+     "url": "/sim/content/arkpedia-originium-pollution.js",
+     "bytes": 1139
+    },
+    {
+     "url": "/sim/content/arkpedia-operator-runtime.js",
+     "bytes": 1755
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-terrain.js",
+     "bytes": 528
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-environments.js",
+     "bytes": 1422
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-card-cost.js",
+     "bytes": 496
+    },
+    {
+     "url": "/sim/content/arkpedia-card-locks.js",
+     "bytes": 524
+    },
+    {
+     "url": "/shared/arkpedia/stage-deployment-tiles.js",
+     "bytes": 650
+    },
+    {
+     "url": "/sim/content/arkpedia-card-redeploy.js",
+     "bytes": 497
+    },
+    {
+     "url": "/shared/arkpedia/stage-path.js",
+     "bytes": 1356
+    },
+    {
+     "url": "/sim/regular-displacement.js",
+     "bytes": 2338
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-waves.js",
+     "bytes": 3061
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-branches.js",
+     "bytes": 1112
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-random.js",
+     "bytes": 1264
+    },
+    {
+     "url": "/sim/simdata.js",
+     "bytes": 11326
+    },
+    {
+     "url": "/sim/skills.js",
+     "bytes": 12877
+    },
+    {
+     "url": "/sim/content/generic.js",
+     "bytes": 8568
+    },
+    {
+     "url": "/sim/content/arkpedia-dp-budget.js",
+     "bytes": 527
+    },
+    {
+     "url": "/sim/Battle.js",
+     "bytes": 51333
+    },
+    {
+     "url": "/shared/arkpedia/closur-enemy-compatibility.js",
+     "bytes": 599
+    },
+    {
+     "url": "/shared/arkpedia/enemies.js",
+     "bytes": 756
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-runtime.js",
+     "bytes": 1604
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-route-blocking.js",
+     "bytes": 724
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-mire.js",
+     "bytes": 754
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-water.js",
+     "bytes": 953
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-reeds.js",
+     "bytes": 1890
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-obstacles.js",
+     "bytes": 513
+    },
+    {
+     "url": "/sim/content/arkpedia-summon-deck.js",
+     "bytes": 2680
+    },
+    {
+     "url": "/shared/arkpedia/behavior.js",
+     "bytes": 1790
+    },
+    {
+     "url": "/sim/content/enemies.js",
+     "bytes": 83918
+    },
+    {
+     "url": "/shared/arkpedia/magic-circuit-routing.js",
+     "bytes": 1288
+    },
+    {
+     "url": "/sim/content/arkpedia-device-runtime-index.js",
+     "bytes": 855
+    },
+    {
+     "url": "/shared/arkpedia/stage-native-rules.js",
+     "bytes": 1848
+    },
+    {
+     "url": "/shared/arkpedia/stage-device-geometry.js",
+     "bytes": 392
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-supply-account.js",
+     "bytes": 507
+    },
+    {
+     "url": "/shared/arkpedia/stage-environments.js",
+     "bytes": 2663
+    },
+    {
+     "url": "/sim/content/arkpedia-operator-service-index.js",
+     "bytes": 1144
+    },
+    {
+     "url": "/shared/arkpedia/stage-reeds.js",
+     "bytes": 1092
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-auras.js",
+     "bytes": 670
+    },
+    {
+     "url": "/sim/content/arkpedia-operator-runtime-index.js",
+     "bytes": 19597
+    },
+    {
+     "url": "/sim/ai.js",
+     "bytes": 16746
+    },
+    {
+     "url": "/sim/rng.js",
+     "bytes": 934
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-danger.js",
+     "bytes": 1015
+    },
+    {
+     "url": "/sim/content/arkpedia-stage-parasitic.js",
+     "bytes": 734
+    },
+    {
+     "url": "/sim/content/devices.js",
+     "bytes": 10693
+    },
+    {
+     "url": "/sim/projectiles.js",
+     "bytes": 3066
+    },
+    {
+     "url": "/sim/grid.js",
+     "bytes": 10508
+    },
+    {
+     "url": "/sim/units.js",
+     "bytes": 5240
+    },
+    {
+     "url": "/sim/damage.js",
+     "bytes": 17110
+    },
+    {
+     "url": "/sim/fear.js",
+     "bytes": 5020
+    },
+    {
+     "url": "/sim/buffs.js",
+     "bytes": 7914
+    },
+    {
+     "url": "/sim/movement-observer.js",
+     "bytes": 745
+    },
+    {
+     "url": "/sim/snapshot.js",
+     "bytes": 2957
+    },
+    {
+     "url": "/sim/professions.js",
+     "bytes": 13451
+    },
+    {
+     "url": "/sim/content/index.js",
+     "bytes": 4396
+    },
+    {
+     "url": "/shared/arkpedia/enemy-aliases.js",
+     "bytes": 1470
+    },
+    {
+     "url": "/shared/arkpedia/enemy-runtime-plan.js",
+     "bytes": 1217
+    },
+    {
+     "url": "/sim/content/terrain-mire.js",
+     "bytes": 564
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-plan.js",
+     "bytes": 657
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-runtime-index.js",
+     "bytes": 3078
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-hp-buff.js",
+     "bytes": 503
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-sarkaz-alarm.js",
+     "bytes": 1335
+    },
+    {
+     "url": "/sim/content/arkpedia-corruption.js",
+     "bytes": 1217
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-chimera.js",
+     "bytes": 991
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-yeti.js",
+     "bytes": 550
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-storm.js",
+     "bytes": 1488
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-pompeii.js",
+     "bytes": 944
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-pulse.js",
+     "bytes": 593
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-duel.js",
+     "bytes": 711
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-death-area.js",
+     "bytes": 885
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-snack.js",
+     "bytes": 1715
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-ammo.js",
+     "bytes": 1257
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-damage-ramp.js",
+     "bytes": 553
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-projectiles.js",
+     "bytes": 2826
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-charge.js",
+     "bytes": 1037
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-charged-projectile.js",
+     "bytes": 1143
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-barriers.js",
+     "bytes": 598
+    },
+    {
+     "url": "/shared/arkpedia/stage-parasitic.js",
+     "bytes": 2342
+    },
+    {
+     "url": "/shared/arkpedia/stage-danger.js",
+     "bytes": 2312
+    },
+    {
+     "url": "/shared/arkpedia/enemy-supply-features.js",
+     "bytes": 1579
+    },
+    {
+     "url": "/shared/arkpedia/enemy-drone-features.js",
+     "bytes": 1294
+    },
+    {
+     "url": "/shared/arkpedia/enemy-outcome-contracts.js",
+     "bytes": 1013
+    },
+    {
+     "url": "/sim/content/kits/tier1.js",
+     "bytes": 19997
+    },
+    {
+     "url": "/sim/content/kits/tier2.js",
+     "bytes": 15242
+    },
+    {
+     "url": "/sim/content/kits/tier3.js",
+     "bytes": 30820
+    },
+    {
+     "url": "/sim/content/kits/tier6.js",
+     "bytes": 59477
+    },
+    {
+     "url": "/sim/content/kits/tier4.js",
+     "bytes": 36359
+    },
+    {
+     "url": "/sim/content/kits/tier5.js",
+     "bytes": 45642
+    },
+    {
+     "url": "/sim/content/tokens.js",
+     "bytes": 29336
+    },
+    {
+     "url": "/sim/content/items/battle.js",
+     "bytes": 16121
+    },
+    {
+     "url": "/sim/content/support/index.js",
+     "bytes": 7111
+    },
+    {
+     "url": "/sim/content/items.js",
+     "bytes": 438
+    },
+    {
+     "url": "/sim/content/bands.js",
+     "bytes": 735
+    },
+    {
+     "url": "/sim/content/garrisons.js",
+     "bytes": 346
+    },
+    {
+     "url": "/sim/content/bonds.js",
+     "bytes": 1151
+    },
+    {
+     "url": "/sim/content/choices.js",
+     "bytes": 8852
+    },
+    {
+     "url": "/sim/content/bosses.js",
+     "bytes": 23863
+    },
+    {
+     "url": "/sim/content/items/meta.js",
+     "bytes": 4678
+    },
+    {
+     "url": "/sim/content/bonds/addon.js",
+     "bytes": 534
+    },
+    {
+     "url": "/sim/content/bands/battle.js",
+     "bytes": 4709
+    },
+    {
+     "url": "/sim/content/bands/meta.js",
+     "bytes": 7853
+    },
+    {
+     "url": "/sim/content/garrisons/battle.js",
+     "bytes": 7068
+    },
+    {
+     "url": "/sim/content/support/meta.js",
+     "bytes": 1724
+    },
+    {
+     "url": "/sim/content/bonds/core.js",
+     "bytes": 12359
+    },
+    {
+     "url": "/sim/content/garrisons/meta.js",
+     "bytes": 6912
+    },
+    {
+     "url": "/sim/content/bonds/addon/battle.js",
+     "bytes": 11299
+    },
+    {
+     "url": "/sim/content/bonds/addon/meta.js",
+     "bytes": 2886
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-devour.js",
+     "bytes": 1396
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-wither-tank.js",
+     "bytes": 1306
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-wither-caster.js",
+     "bytes": 557
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-melee-sequence.js",
+     "bytes": 411
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-channel.js",
+     "bytes": 1192
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-links.js",
+     "bytes": 630
+    },
+    {
+     "url": "/sim/content/arkpedia-enemy-attack-sequence.js",
+     "bytes": 985
+    }
+   ]
+  }
+ ]
+}

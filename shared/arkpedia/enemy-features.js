@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import {SAINT_STATUE_FEATURES} from './enemy-saint-statue-features.js';
+import {corruptionDamageValue} from './enemy-corruption-contracts.js';
 import {SURFING_INSTRUCTOR_FEATURES} from './enemy-surfing-instructor-features.js';
 import {LOGGED_CHEST_FEATURE} from './enemy-logged-chest-features.js';
 import {isDerisiveAudience,derisiveAudienceNative} from './enemy-ordinary-element-features.js';
@@ -777,6 +778,7 @@ export const ENEMY_FEATURES = Object.freeze({
   // Rot Eater: scales with the defeated count and emits a pollution aura.
   'talent:PollutedArea': { covers: rotEaterNative,
     stageOverrides: { 'PollutedArea.guaranteed_percentage': value => value === 1 },
+    stageMultipliers: {'PollutedArea.Polluted_damage_low':corruptionDamageValue,'PollutedArea.Polluted_damage_high':corruptionDamageValue},
     ability: { kind: 'rotEater', params: r => ({ low: r.talents.bb['PollutedArea.Polluted_damage_low'], high: r.talents.bb['PollutedArea.Polluted_damage_high'],
       radius: r.talents.bb['PollutedArea.range_Radius'], guaranteed: r.talents.bb['PollutedArea.guaranteed_percentage'], max: r.talents.bb['PollutedArea.max_percentage'] }) },
     note: 'defeated-count stat scaling and a pollution aura',
