@@ -1,3 +1,4 @@
+import {FAMIGLIA_CROSSBOW_FEATURES} from './enemy-famiglia-crossbow-features.js';
 import {FAMIGLIA_BASIC_FEATURES,isFamigliaBasic,famigliaBasicNative} from './enemy-famiglia-basic-features.js';
 import {RADIOACTIVE_FEATURES,isRadioactiveSlug,radioactiveNative} from './enemy-radioactive-features.js';
 import {BLOCKER_FEATURES,isBlocker,blockerNative} from './enemy-blocker-features.js';
@@ -401,6 +402,7 @@ const HATEDRINKER_TEXT = 'Gains increased ATK for each Reborn Creation on the ba
 // component. These explicit keys keep the support gate honest without inventing a behaviour for a prop (the Beacon is
 // picked up by the Altar Keeper, not by its own code).
 const NATIVE_ONLY_FEATURES = Object.freeze({
+  enemy_1278_sgbow:'native:famigliaCrossbowLog',enemy_1278_sgbow_2:'native:famigliaCrossbowLog',
   enemy_1277_sgman:'native:famigliaBasicMelee',enemy_1277_sgman_2:'native:famigliaBasicMelee',enemy_1279_sgbdg:'native:famigliaBasicMelee',enemy_1279_sgbdg_2:'native:famigliaBasicMelee',
   enemy_1352_eslime:'native:radioactiveMelee',enemy_1352_eslime_2:'native:radioactiveMelee',
   enemy_1357_erob:['native:energyMeleeAttack'],enemy_1357_erob_2:['native:energyMeleeAttack'],
@@ -435,6 +437,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...BLOCKER_FEATURES,
   ...RADIOACTIVE_FEATURES,
   ...FAMIGLIA_BASIC_FEATURES,
+  ...FAMIGLIA_CROSSBOW_FEATURES,
   ...SILVERNWHITE_FEATURES,
   [`ability:${REDMARK_DESCRIPTION}`]:REDMARK_FEATURE,
   [`ability:${EXPLETIVE_DESCRIPTION}`]:EXPLETIVE_FEATURE,

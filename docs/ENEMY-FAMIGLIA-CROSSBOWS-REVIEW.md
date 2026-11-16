@@ -1,0 +1,11 @@
+# Famiglia Crossbowmen
+
+Both Famiglia Crossbowman variants reuse the shared compiled mode program and projectile component. The exact native checker polls every half-second, beginning after its first interval. The owner carrying `vgctrl_s[aura]` enters the Arts mode; its absence restores physical attacks. Silence does not disable this checker. Each cast captures its original mode, so conversion during windup does not change that shot. Released projectiles survive source death and a captured target becoming airborne; new target acquisition remains ground-only.
+
+The Arts mode owns an independent empty native marker. Leaving that mode removes its own marker. Removing the checker stops future polling but leaves the current mode and its general-ability marker intact. Death removes the owned marker while preserving independent foreign attachments. A separate removable native killed-log attachment records one result on killed removal, never leakage. The existing outcome component gains this optional attachment without changing its older parameter behavior.
+
+Admission validates both original packets, local bindings, native selectors and authored geometry, linear speed 10 and lifetime 5, the complete checker program, parent/log passives, empty mode marker, and source skeleton identity. The native Attack clip lasts 49/30 seconds, releasing at 18/30, with a maximum animation stretch of one. Both database ranges remain distinct (2 and 2.5); the authored selector collider is 2 for both prefabs.
+
+All 151 focused regressions pass, plus the ten-test family suite after adding the attachment-interrupted-by-death case. Desktop and touch fixtures check damage conversion, marker lifecycle, native killed results and selected module loading without downloading the source/compiler catalogues. Both original bodies render in both galleries; ten clips decode. Shared artwork validation covers 3,835 complete models. All 970 published stage graphs pass ten-second runtime smoke.
+
+Coverage reaches 760 of 2,163 enemy records and 825 database levels, using the existing 209 runtime kinds. Stage graphs remain pinned for the stages phase. Browser fixtures explicitly supply the aura marker; they do not certify the original Blood Debt controller, an original Il Siracusano stage clear, native effects or frame/pixel parity.

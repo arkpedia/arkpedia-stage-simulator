@@ -54,9 +54,11 @@ stagePresenceGauge.validate=validatePresence;
 export function readStageOutcomes(battle) {
   return { ...(battle.stageReeds ? { tileStates: battle.stageReeds.resultTiles() } : {}), counters: { ...battle.stageOutcomes?.counters }, events: (battle.stageOutcomes?.events ?? []).map(e => ({ ...e })) };
 }
-export function stageOutcomeCounter({ killedKey, exitKey, exitTile, immediateAttackType = null }) {
+export function stageOutcomeCounter(params) {
+  validateCounter(params);const {killedKey,exitKey,exitTile,immediateAttackType=null,buffKey}=params;
   return {
-    spawn(_battle, enemy) {
+    spawn(battle, enemy, state) {
+      if(buffKey&&enemy.alive&&enemy.deployed){state.life=enemy.deploySeq;state.buff=battle.addBuff(enemy,{key:buffKey,source:enemy,refresh:'independent',maxStacks:Infinity});if((!enemy.alive||!enemy.deployed||enemy.deploySeq!==state.life)&&state.buff){battle.removeBuff(enemy,state.buff);state.buff=null;}}
       if (immediateAttackType) { enemy.profile.deferHit = true; enemy.profile.shot = 'none'; }
     },
     attack(c, battle, enemy) {
@@ -68,8 +70,15 @@ export function stageOutcomeCounter({ killedKey, exitKey, exitTile, immediateAtt
     death(c, battle, enemy, state) {
     if (state.recorded) return;
     state.recorded = true;
+    const attached=!buffKey||state.buff&&enemy.buffs.includes(state.buff);if(state.buff)battle.removeBuff(enemy,state.buff);state.buff=null;
+    if(!attached||buffKey&&enemy.deploySeq!==state.life)return;
     if (c.reason === 'killed' && killedKey) recordStageOutcome(battle, enemy, killedKey);
     if (c.reason === 'leak' && exitKey && battle.grid.tile(enemy.tileR, enemy.tileC)?.key === exitTile)
       recordStageOutcome(battle, enemy, exitKey);
   } };
 }
+
+function validateCounter({buffKey}){
+ if(buffKey!==undefined&&(typeof buffKey!=='string'||!buffKey||buffKey.length>256))throw Error('Invalid stage outcome counter buff');
+}
+stageOutcomeCounter.validate=validateCounter;
