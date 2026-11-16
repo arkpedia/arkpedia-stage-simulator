@@ -2,6 +2,7 @@ import {plainHuiMingNative,HUI_MING_ABILITY,isHuiMingFury,HUI_MING_FURY_DESCRIPT
 import {FATHER_AGENIR_FEATURES,isFatherAgenir,fatherAgenirNative} from './enemy-father-agenir-features.js';
 import {FAMIGLIA_LIMO_FEATURES,FAMIGLIA_LIMO_DEATH,isFamigliaLimo,famigliaLimoNative,famigliaLimoChild,famigliaLimoExplains} from './enemy-famiglia-limo-features.js';
 import {FAMIGLIA_CASTER_FEATURES} from './enemy-famiglia-caster-features.js';
+import {RAPID_CROSSBOWMAN_FEATURES} from './enemy-rapid-crossbowman-features.js';
 import {FAMIGLIA_CAPO_FEATURES} from './enemy-famiglia-capo-features.js';
 import {FAMIGLIA_SILENCER_FEATURES,isFamigliaSilencer,famigliaSilencerNative,FAMIGLIA_SILENCER_STEALTH} from './enemy-famiglia-silencer-features.js';
 import {FAMIGLIA_CROSSBOW_FEATURES} from './enemy-famiglia-crossbow-features.js';
@@ -461,6 +462,7 @@ export const ENEMY_FEATURES = Object.freeze({
   'talent:boomtosame': { matchesRecord: isHuiMingBlaster, covers: huiMingNative },
   'talent:boomtodiff': { matchesRecord: isHuiMingBlaster, covers: huiMingNative },
   ...FAMIGLIA_CASTER_FEATURES,
+  ...RAPID_CROSSBOWMAN_FEATURES,
   ...FAMIGLIA_CAPO_FEATURES,
   ...FAMIGLIA_SILENCER_FEATURES,
   ...FAMIGLIA_CROSSBOW_FEATURES,

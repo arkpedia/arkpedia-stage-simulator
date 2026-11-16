@@ -2,6 +2,7 @@
 // Fixed import paths only. Register a reusable kind once, then reference it from
 // compiled enemy plans. No source predicates or native evidence ship here.
 export const ENEMY_RUNTIME_INDEX=Object.freeze([
+  {key:'arkpedia-enemy-straight-shot',load:()=>import('./arkpedia-enemy-straight-shot.js'),exports:{straightShot:'straightShot'}},
   {key:'arkpedia-hui-ming-charge',load:()=>import('./arkpedia-hui-ming-charge.js'),exports:{huiMingChargedShift:'huiMingChargedShift'}},
   {key:'arkpedia-hui-ming-blast',load:()=>import('./arkpedia-hui-ming-blast.js'),exports:{huiMingBlast:'huiMingBlast'}},
   {key:'arkpedia-hui-ming',load:()=>import('./arkpedia-hui-ming.js'),exports:{huiMingAttribute:'huiMingAttribute'}},

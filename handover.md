@@ -39,10 +39,10 @@ node tools/arkpedia/fetch-pinned-bundles.mjs 'battle/prefabs/[uc]projectiles.ab'
 
 ## Current coverage and verification
 
-- **785 / 2,163 enemy records admitted; 1,378 remain.**
-- **851 database levels**, **217 runtime kinds**.
+- **787 / 2,163 enemy records admitted; 1,376 remain.**
+- **853 database levels**, **218 runtime kinds**.
 - **970 published stage graphs** remain pinned for the stages phase. This is not a count of fully certified stage clears or the remaining stage backlog.
-- Asset repository: **3,860 complete models**; simulator original enemy artwork catalogue: 578 models.
+- Asset repository: **3,862 complete models**; simulator original enemy artwork catalogue: 580 models.
 - Latest Limo focused suite: **111 passing tests**, including raw/compiled combat equivalence across all 833 admitted levels.
 - After adding a real displaced-hole regression, the complete Limo family suite passed **14/14**. This last change added the existing `deathByFall` check to the new Limo controller; it did not change core displacement.
 - All 970 published stage graphs passed ten-second constructor/runtime smoke. These are **not original-stage clears**.
@@ -74,6 +74,7 @@ All listed commits were pushed. Their matching original models were published se
 | `5d685947` | Famiglia Limos pair: blocked before-zero death mode, original Soldier passengers, scheduler/route reuse, independent killed/direct-destruction results and original death clips. Coverage 768. |
 | Father Agenir batch | One magazine whose rounds buy permanent DEF stacks at arrival, global Skill mode under Asset Liquidation, start-only selected periodic SP link (`selectedSpLink`), silent `ModifySp`/empty `CreateEffect` lowering, CI skeleton-step fix, Chimera test update. Coverage 769. See `docs/ENEMY-FATHER-AGENIR-REVIEW.md`. |
 | Hui-Ming batch | Shared yin/yang attribute account (`arkpedia-hui-ming.js`), opt-in per-recipient `sourceAtkScale` damage event, fourteen Hui-Ming enemies: six plain, the Fury pair, the Stabby archers, the Blindey pair and the Smarty pair; live target-priority comparators and multi-pair block conditions; then the 'Smarty' pair's blast chain (`huiMingBlast`), the Hui-Ming tile controller and the 'Envy' pair. Coverage 785. Then Hui-Ming tiles wired into stage compilation and `StandardBattle` (`docs/STAGE-HUI-MING-TILES-REVIEW.md`). See `docs/ENEMY-HUI-MING-REVIEW.md`. |
+| Rapid Crossbowmen batch | Light and Heavy Rapid Crossbowmen (`enemy_1403_gunsho`, `_2`): reusable `straightShot` kind (unblocked, same row or column, global range, a burst of passer-by bolts that hit the first body), extractor follows `_selectorGroup`. Coverage 787. No stage became ready: their stages also need Barricades and other devices. See `docs/ENEMY-RAPID-CROSSBOWMEN-REVIEW.md`. |
 
 Earlier work in this same ongoing effort includes Paramilitary Axemen (`3b0ed249`), Blocker drones (`234b3744`), Radioactive Originium Slugs (`842c7462`), shared native energy programs (`321dedb7`), Paramilitary Snipers (`96a4121d`) and shared stage-result overload logging (`57caa46c`).
 
@@ -110,6 +111,10 @@ Earlier work in this same ongoing effort includes Paramilitary Axemen (`3b0ed249
 - The special mode installs an **immediate passive**. Do not substitute the retained Die_2 OnAttack artwork event for that installation.
 
 ## Likely next work, not yet implemented
+
+**How to pick the next family.** Rank unadmitted enemies by how many blocked stages list them (`data/arkpedia-content-inventory.json` blockers) and prefer families whose base and `_2` records share one mechanism. Only 108 blocked stages are blocked by enemies alone; most also need stage mechanics, so stages become ready mostly in the stages phase. Report the inventory's ready count per batch.
+
+**Straight Shot, next.** `enemy_1404_msnip` and `_2` (Heavy Crossbowman Ambusher/Hunter, about 54 blocked stages) use the same line filter with a different skill (`CrossAttack` with scripts `4156651312234227407`/`680305599797508032`: per the EN wiki, one Arts bolt that stuns for 5 s) plus an `Invisible` component they leave while shooting. Extend `skill:CrossAttack` by record and reuse `straightShotTargets`/`fireStraightBolt`. Mateo's guards (`enemy_1409_bdguad*`, `CrossBomb`: two grenades, 70% ATK in radius 1.1) and Captain Mateo (`enemy_1551_bolicp`) follow. Expose (`enemy_1402_tgshd*`, `enemy_1407_hummbd*`) applies `enemy_tgshd_exposed_mark`, which the selection already honours.
 
 Father Agenir (`enemy_1284_sgprst`) is done. The remaining Blood Debt actors are gated on material work described below: the Siracusan Civilian needs allied route actors, and the native controller belongs to the stages phase. Continue with other enemy families until one of those is taken up. `data/arkpedia-enemy-support.json` lists every unadmitted record with its missing reasons; 126 records have a single missing reason.
 
