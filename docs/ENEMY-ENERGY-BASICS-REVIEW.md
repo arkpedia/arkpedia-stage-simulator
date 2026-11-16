@@ -1,0 +1,13 @@
+# Blacksteel energy basics
+
+The Gangster, Thief and Defender pairs now share one on-demand native energy component. Every energy point contributes +10% additive ATK and +20% additive DEF, using the retained database buff. At capacity, the source overload adds 120 ASPD, multiplies final DEF by two and adds 30 RES for the record's duration. Finishing or removing that overload clears its energy. The Defender starts at 15/20 energy and loses one point on each native ten-second pulse; overload suppresses spending without restarting that pulse clock.
+
+`enemyEnergy(battle, actor)` reads a snapshot and `changeEnemyEnergy(battle, actor, integerDelta)` supplies the shared enemy/projectile/device boundary. Each live deployment owns its meter, stacked stat attachment, overload and eligibility marker. Rejected energy attachments roll back; a rejected overload can retry at full energy. Death and leakage remove only owned attachments and unregister the meter. Invalid values fail before mutation. Ordinary control and silence do not disable these source passives.
+
+The Thief's source mode has no attacks and remains unblockable during overload. Gangsters and Defenders compose the existing melee sequence with their original Attack clocks. No actor-ID branch was added to the runtime. The compiled plans share normal/elite component parameters, while selected stages load the energy and melee modules as needed.
+
+Admission checks exact talent/handbook shapes, the native energy/HUD binding, marker, overload/finish/decay components, both database modifier formulas and exact retained clear/decay action programs. PRTS's pinned Gangster revision also describes final DEF at 200% and energy clearing after the ten-second overload; this is secondary evidence, not compiled-method or frame-order proof.
+
+Twenty-eight initial actor/meter checks and 67 focused regressions pass. Desktop/touch fixtures verify initial energy, stack formulas, overload despite silence, expiry, Defender decay, the no-attack/unblockable Thief body, cleanup and selected-module loading. All six original bodies decode 28 clips and render in desktop/touch galleries. The broad suite has 1,801 passes, three skips and the same two known Chimera failures. All 970 published stages pass ten-second runtime smoke.
+
+Combat admission reaches 744 of 2,163 enemies, covering 809 database levels and 203 runtime kinds. Existing 970 stage graphs remain pinned until the stages phase. The fixtures supply explicit energy inputs; original battery/projectile controllers, the native HUD/particles and original-stage clears are not certified here.

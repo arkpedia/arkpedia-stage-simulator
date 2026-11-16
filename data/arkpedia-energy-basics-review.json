@@ -1,0 +1,690 @@
+{
+  "schemaVersion": 1,
+  "scope": "Blacksteel Gangster/Thief/Defender energy, source bodies and original artwork; explicit energy input fixtures, not original battery/controller stages or native HUD/frame parity.",
+  "sourceSha256": {
+    "shared/arkpedia/enemy-energy-features.js": "1c86e91ddd25a96d45e92c559e2d35f0a65fc06e69cd3db6e133a95cb7360c81",
+    "server/sim/content/arkpedia-enemy-energy.js": "ecedb1b3dcd0fe7de173fe1f45668c33117923279d3bc04952d3d581c9d96d81",
+    "data/arkpedia-energy-basics-animations.json": "53244542b0ec521da04fce4070ea09f113f1e48fd9c27a2ba454eef8913af882",
+    "data/arkpedia-enemy-native-abilities.json": "630cdef6ad0376bd1ff5e72c27d41b044c93acb0ecd05db74c7dd4522bedda68",
+    "data/arkpedia-enemy-support.json": "7be118954916a275f1511a75ae170921e786d82e0b0903241be4ebfeea23a36b",
+    "data/arkpedia-enemy-runtime-plan-report.json": "00a14f0327bcad0d155220003fa7fa2e80c703d5daa3c7b7369ebbc9d5b7493d",
+    "test/arkpedia-energy-basics.test.js": "f8696482c5c3d661cd1516a70bc24d5f892ad18a7684a900460e6f0e47d42611",
+    "test/arkpedia-native-energy.test.js": "835f5ec02f845767db1341c175968dbcdd451bd8a4677e7d783e807f0690e333"
+  },
+  "secondarySource": {
+    "url": "https://prts.wiki/index.php?title=%E5%8C%AA%E5%B8%AE%E6%B7%B7%E6%B7%B7&oldid=435796",
+    "revision": 435796,
+    "pageId": 59007,
+    "retrievedPinnedRevision": true,
+    "responseSha256": "a98df3daba59a801c009fb3b1f04ac35b77363edf8b276d7267ae7b6fad28fa7",
+    "excerpt": "|天赋=拥有0/10的{{特殊机制|能量}}，{{特殊机制|能量}}达到上限时进入{{color|green|'''过载'''}}状态<br/>{{color|green|'''【过载】'''}}：在10s内攻击速度+120、防御力最终提升至200%、法术抗性+30，持续时间结束后清空{{特殊机制|能量}}",
+    "scope": "Secondary explanation of duration, final DEF multiplier and clearing at overload finish; no compiled-method proof."
+  },
+  "tests": {
+    "initialActorAndMeter": 28,
+    "focusedRegressions": 67,
+    "broad": {
+      "tests": 1806,
+      "passed": 1801,
+      "skipped": 3,
+      "knownChimeraFailures": 2
+    },
+    "tenSecondStageSmokes": {
+      "available": 970,
+      "passed": 970,
+      "failed": 0
+    }
+  },
+  "browser": {
+    "desktop": {
+      "scope": "Controlled Blacksteel energy fixture; explicit energy input, source stack bonuses, overload, native decay and ordinary bodies; no original battery/controller fixture on compiled 0-1 geometry with no main waves; not an original-stage clear.",
+      "viewport": "1440x900 desktop",
+      "stageLoadAndRestart": true,
+      "before": {
+        "loaded": [],
+        "pending": 0
+      },
+      "after": {
+        "loaded": [
+          "arkpedia-enemy-melee-sequence",
+          "arkpedia-enemy-energy"
+        ],
+        "pending": 0
+      },
+      "variants": [
+        {
+          "id": "enemy_1353_esabr",
+          "initial": {
+            "count": 0,
+            "capacity": 10,
+            "overloaded": false
+          },
+          "blocked": true,
+          "afterDecay": null,
+          "full": {
+            "count": 10,
+            "capacity": 10,
+            "overloaded": true
+          },
+          "stats": {
+            "atk": 500,
+            "def": 600,
+            "aspd": 220,
+            "res": 30
+          },
+          "base": {
+            "atk": 250,
+            "def": 100,
+            "aspd": 100,
+            "res": 0
+          },
+          "stillFull": {
+            "count": 10,
+            "capacity": 10,
+            "overloaded": true
+          },
+          "finished": {
+            "count": 0,
+            "capacity": 10,
+            "overloaded": false
+          },
+          "afterDeath": null,
+          "afterLeak": null,
+          "attacks": 10
+        },
+        {
+          "id": "enemy_1353_esabr_2",
+          "initial": {
+            "count": 0,
+            "capacity": 10,
+            "overloaded": false
+          },
+          "blocked": true,
+          "afterDecay": null,
+          "full": {
+            "count": 10,
+            "capacity": 10,
+            "overloaded": true
+          },
+          "stats": {
+            "atk": 600,
+            "def": 900,
+            "aspd": 220,
+            "res": 30
+          },
+          "base": {
+            "atk": 300,
+            "def": 150,
+            "aspd": 100,
+            "res": 0
+          },
+          "stillFull": {
+            "count": 10,
+            "capacity": 10,
+            "overloaded": true
+          },
+          "finished": {
+            "count": 0,
+            "capacity": 10,
+            "overloaded": false
+          },
+          "afterDeath": null,
+          "afterLeak": null,
+          "attacks": 10
+        },
+        {
+          "id": "enemy_1354_eghost",
+          "initial": {
+            "count": 0,
+            "capacity": 5,
+            "overloaded": false
+          },
+          "blocked": false,
+          "afterDecay": null,
+          "full": {
+            "count": 5,
+            "capacity": 5,
+            "overloaded": true
+          },
+          "stats": {
+            "atk": 150,
+            "def": 480,
+            "aspd": 220,
+            "res": 40
+          },
+          "base": {
+            "atk": 100,
+            "def": 120,
+            "aspd": 100,
+            "res": 10
+          },
+          "stillFull": {
+            "count": 5,
+            "capacity": 5,
+            "overloaded": true
+          },
+          "finished": {
+            "count": 0,
+            "capacity": 5,
+            "overloaded": false
+          },
+          "afterDeath": null,
+          "afterLeak": null,
+          "attacks": 0
+        },
+        {
+          "id": "enemy_1354_eghost_2",
+          "initial": {
+            "count": 0,
+            "capacity": 5,
+            "overloaded": false
+          },
+          "blocked": false,
+          "afterDecay": null,
+          "full": {
+            "count": 5,
+            "capacity": 5,
+            "overloaded": true
+          },
+          "stats": {
+            "atk": 150,
+            "def": 720,
+            "aspd": 220,
+            "res": 40
+          },
+          "base": {
+            "atk": 100,
+            "def": 180,
+            "aspd": 100,
+            "res": 10
+          },
+          "stillFull": {
+            "count": 5,
+            "capacity": 5,
+            "overloaded": true
+          },
+          "finished": {
+            "count": 0,
+            "capacity": 5,
+            "overloaded": false
+          },
+          "afterDeath": null,
+          "afterLeak": null,
+          "attacks": 0
+        },
+        {
+          "id": "enemy_1358_esheld",
+          "initial": {
+            "count": 15,
+            "capacity": 20,
+            "overloaded": false
+          },
+          "blocked": true,
+          "afterDecay": {
+            "count": 14,
+            "capacity": 20,
+            "overloaded": false
+          },
+          "full": {
+            "count": 20,
+            "capacity": 20,
+            "overloaded": true
+          },
+          "stats": {
+            "atk": 900,
+            "def": 6000,
+            "aspd": 220,
+            "res": 30
+          },
+          "base": {
+            "atk": 300,
+            "def": 600,
+            "aspd": 100,
+            "res": 0
+          },
+          "stillFull": {
+            "count": 20,
+            "capacity": 20,
+            "overloaded": true
+          },
+          "finished": {
+            "count": 0,
+            "capacity": 20,
+            "overloaded": false
+          },
+          "afterDeath": null,
+          "afterLeak": null,
+          "attacks": 12
+        },
+        {
+          "id": "enemy_1358_esheld_2",
+          "initial": {
+            "count": 15,
+            "capacity": 20,
+            "overloaded": false
+          },
+          "blocked": true,
+          "afterDecay": {
+            "count": 14,
+            "capacity": 20,
+            "overloaded": false
+          },
+          "full": {
+            "count": 20,
+            "capacity": 20,
+            "overloaded": true
+          },
+          "stats": {
+            "atk": 1200,
+            "def": 7000,
+            "aspd": 220,
+            "res": 30
+          },
+          "base": {
+            "atk": 400,
+            "def": 700,
+            "aspd": 100,
+            "res": 0
+          },
+          "stillFull": {
+            "count": 20,
+            "capacity": 20,
+            "overloaded": true
+          },
+          "finished": {
+            "count": 0,
+            "capacity": 20,
+            "overloaded": false
+          },
+          "afterDeath": null,
+          "afterLeak": null,
+          "attacks": 12
+        }
+      ],
+      "errors": [],
+      "pageErrors": []
+    },
+    "touch": {
+      "scope": "Controlled Blacksteel energy fixture; explicit energy input, source stack bonuses, overload, native decay and ordinary bodies; no original battery/controller fixture on compiled 0-1 geometry with no main waves; not an original-stage clear.",
+      "viewport": "844x390 touch",
+      "stageLoadAndRestart": true,
+      "before": {
+        "loaded": [],
+        "pending": 0
+      },
+      "after": {
+        "loaded": [
+          "arkpedia-enemy-melee-sequence",
+          "arkpedia-enemy-energy"
+        ],
+        "pending": 0
+      },
+      "variants": [
+        {
+          "id": "enemy_1353_esabr",
+          "initial": {
+            "count": 0,
+            "capacity": 10,
+            "overloaded": false
+          },
+          "blocked": true,
+          "afterDecay": null,
+          "full": {
+            "count": 10,
+            "capacity": 10,
+            "overloaded": true
+          },
+          "stats": {
+            "atk": 500,
+            "def": 600,
+            "aspd": 220,
+            "res": 30
+          },
+          "base": {
+            "atk": 250,
+            "def": 100,
+            "aspd": 100,
+            "res": 0
+          },
+          "stillFull": {
+            "count": 10,
+            "capacity": 10,
+            "overloaded": true
+          },
+          "finished": {
+            "count": 0,
+            "capacity": 10,
+            "overloaded": false
+          },
+          "afterDeath": null,
+          "afterLeak": null,
+          "attacks": 10
+        },
+        {
+          "id": "enemy_1353_esabr_2",
+          "initial": {
+            "count": 0,
+            "capacity": 10,
+            "overloaded": false
+          },
+          "blocked": true,
+          "afterDecay": null,
+          "full": {
+            "count": 10,
+            "capacity": 10,
+            "overloaded": true
+          },
+          "stats": {
+            "atk": 600,
+            "def": 900,
+            "aspd": 220,
+            "res": 30
+          },
+          "base": {
+            "atk": 300,
+            "def": 150,
+            "aspd": 100,
+            "res": 0
+          },
+          "stillFull": {
+            "count": 10,
+            "capacity": 10,
+            "overloaded": true
+          },
+          "finished": {
+            "count": 0,
+            "capacity": 10,
+            "overloaded": false
+          },
+          "afterDeath": null,
+          "afterLeak": null,
+          "attacks": 10
+        },
+        {
+          "id": "enemy_1354_eghost",
+          "initial": {
+            "count": 0,
+            "capacity": 5,
+            "overloaded": false
+          },
+          "blocked": false,
+          "afterDecay": null,
+          "full": {
+            "count": 5,
+            "capacity": 5,
+            "overloaded": true
+          },
+          "stats": {
+            "atk": 150,
+            "def": 480,
+            "aspd": 220,
+            "res": 40
+          },
+          "base": {
+            "atk": 100,
+            "def": 120,
+            "aspd": 100,
+            "res": 10
+          },
+          "stillFull": {
+            "count": 5,
+            "capacity": 5,
+            "overloaded": true
+          },
+          "finished": {
+            "count": 0,
+            "capacity": 5,
+            "overloaded": false
+          },
+          "afterDeath": null,
+          "afterLeak": null,
+          "attacks": 0
+        },
+        {
+          "id": "enemy_1354_eghost_2",
+          "initial": {
+            "count": 0,
+            "capacity": 5,
+            "overloaded": false
+          },
+          "blocked": false,
+          "afterDecay": null,
+          "full": {
+            "count": 5,
+            "capacity": 5,
+            "overloaded": true
+          },
+          "stats": {
+            "atk": 150,
+            "def": 720,
+            "aspd": 220,
+            "res": 40
+          },
+          "base": {
+            "atk": 100,
+            "def": 180,
+            "aspd": 100,
+            "res": 10
+          },
+          "stillFull": {
+            "count": 5,
+            "capacity": 5,
+            "overloaded": true
+          },
+          "finished": {
+            "count": 0,
+            "capacity": 5,
+            "overloaded": false
+          },
+          "afterDeath": null,
+          "afterLeak": null,
+          "attacks": 0
+        },
+        {
+          "id": "enemy_1358_esheld",
+          "initial": {
+            "count": 15,
+            "capacity": 20,
+            "overloaded": false
+          },
+          "blocked": true,
+          "afterDecay": {
+            "count": 14,
+            "capacity": 20,
+            "overloaded": false
+          },
+          "full": {
+            "count": 20,
+            "capacity": 20,
+            "overloaded": true
+          },
+          "stats": {
+            "atk": 900,
+            "def": 6000,
+            "aspd": 220,
+            "res": 30
+          },
+          "base": {
+            "atk": 300,
+            "def": 600,
+            "aspd": 100,
+            "res": 0
+          },
+          "stillFull": {
+            "count": 20,
+            "capacity": 20,
+            "overloaded": true
+          },
+          "finished": {
+            "count": 0,
+            "capacity": 20,
+            "overloaded": false
+          },
+          "afterDeath": null,
+          "afterLeak": null,
+          "attacks": 12
+        },
+        {
+          "id": "enemy_1358_esheld_2",
+          "initial": {
+            "count": 15,
+            "capacity": 20,
+            "overloaded": false
+          },
+          "blocked": true,
+          "afterDecay": {
+            "count": 14,
+            "capacity": 20,
+            "overloaded": false
+          },
+          "full": {
+            "count": 20,
+            "capacity": 20,
+            "overloaded": true
+          },
+          "stats": {
+            "atk": 1200,
+            "def": 7000,
+            "aspd": 220,
+            "res": 30
+          },
+          "base": {
+            "atk": 400,
+            "def": 700,
+            "aspd": 100,
+            "res": 0
+          },
+          "stillFull": {
+            "count": 20,
+            "capacity": 20,
+            "overloaded": true
+          },
+          "finished": {
+            "count": 0,
+            "capacity": 20,
+            "overloaded": false
+          },
+          "afterDeath": null,
+          "afterLeak": null,
+          "attacks": 12
+        }
+      ],
+      "errors": [],
+      "pageErrors": []
+    }
+  },
+  "artwork": {
+    "commit": "655a6ea2c3f6a4aad37773f050efc93284374ef1",
+    "review": {
+      "scope": "Chromium clip decoding/finite poses and idle body rendering; no native combat/frame/pixel parity claim",
+      "browser": "Chrome/156.0.8078.79",
+      "results": [
+        {
+          "viewport": "desktop",
+          "models": [
+            {
+              "id": "enemy_1353_esabr",
+              "version": "3.8.99",
+              "clips": 5,
+              "width": 347.10545349121094,
+              "height": 344.4925193786621
+            },
+            {
+              "id": "enemy_1353_esabr_2",
+              "version": "3.8.99",
+              "clips": 5,
+              "width": 347.10545349121094,
+              "height": 344.4925193786621
+            },
+            {
+              "id": "enemy_1354_eghost",
+              "version": "3.8.99",
+              "clips": 4,
+              "width": 218.45680236816406,
+              "height": 345.2633892297745
+            },
+            {
+              "id": "enemy_1354_eghost_2",
+              "version": "3.8.99",
+              "clips": 4,
+              "width": 218.45680236816406,
+              "height": 345.2633892297745
+            },
+            {
+              "id": "enemy_1358_esheld",
+              "version": "3.8.99",
+              "clips": 5,
+              "width": 496.8461608886719,
+              "height": 418.5248428583145
+            },
+            {
+              "id": "enemy_1358_esheld_2",
+              "version": "3.8.99",
+              "clips": 5,
+              "width": 496.8461608886719,
+              "height": 418.5248428583145
+            }
+          ],
+          "errors": [],
+          "failures": []
+        },
+        {
+          "viewport": "mobile",
+          "models": [
+            {
+              "id": "enemy_1353_esabr",
+              "version": "3.8.99",
+              "clips": 5,
+              "width": 347.10545349121094,
+              "height": 344.4925193786621
+            },
+            {
+              "id": "enemy_1353_esabr_2",
+              "version": "3.8.99",
+              "clips": 5,
+              "width": 347.10545349121094,
+              "height": 344.4925193786621
+            },
+            {
+              "id": "enemy_1354_eghost",
+              "version": "3.8.99",
+              "clips": 4,
+              "width": 218.45680236816406,
+              "height": 345.2633892297745
+            },
+            {
+              "id": "enemy_1354_eghost_2",
+              "version": "3.8.99",
+              "clips": 4,
+              "width": 218.45680236816406,
+              "height": 345.2633892297745
+            },
+            {
+              "id": "enemy_1358_esheld",
+              "version": "3.8.99",
+              "clips": 5,
+              "width": 496.8461608886719,
+              "height": 418.5248428583145
+            },
+            {
+              "id": "enemy_1358_esheld_2",
+              "version": "3.8.99",
+              "clips": 5,
+              "width": 496.8461608886719,
+              "height": 418.5248428583145
+            }
+          ],
+          "errors": [],
+          "failures": []
+        }
+      ]
+    }
+  },
+  "coverage": {
+    "enemies": 744,
+    "totalEnemies": 2163,
+    "databaseLevels": 809,
+    "runtimeKinds": 203,
+    "publishedStages": 970
+  }
+}

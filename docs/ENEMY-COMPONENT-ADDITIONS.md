@@ -11,6 +11,7 @@ Enemy behavior is compiled from source-checked feature data. A stage loads enemy
 - `programmedProjectileModes`: one source-owned buff program selects among validated projectile modes; each cast captures its packet. A finite parent lifetime and validated tile offsets also cover ordinary scenario carriers. Optional native polling owns empty derived markers and removes them by attachment identity.
 - `environmentStatBonus`: an enemy-owned modifier enabled by a stage-provided condition bit.
 - `contactBuffProgram`: source-owned contact bindings that execute a portable native buff program.
+- `nativeEnergyMeter`: source capacity/initial stacks, shared additive modifiers, timed overload and optional decay; stage/device inputs use `changeEnemyEnergy`.
 - `stageOutcomeCounter`: native killed/exit result receipts, independent of progression or rewards.
 - `stagePresenceGauge`: a live native passive owns its signed presence count and optional body flags/modifiers together.
 

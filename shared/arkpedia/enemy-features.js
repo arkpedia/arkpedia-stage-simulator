@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import {ENERGY_FEATURES} from './enemy-energy-features.js';
 import {FUNLIVE_CASTER_FEATURES} from './enemy-funlive-caster-features.js';
 import {BLIGHT_ARCHER_FEATURES} from './enemy-blight-archer-features.js';
 import {NIGHT_ARCHER_FEATURES} from './enemy-night-archer-features.js';
@@ -397,6 +398,9 @@ const HATEDRINKER_TEXT = 'Gains increased ATK for each Reborn Creation on the ba
 // component. These explicit keys keep the support gate honest without inventing a behaviour for a prop (the Beacon is
 // picked up by the Altar Keeper, not by its own code).
 const NATIVE_ONLY_FEATURES = Object.freeze({
+  enemy_1353_esabr:['native:energyMeleeAttack'],enemy_1353_esabr_2:['native:energyMeleeAttack'],
+  enemy_1358_esheld:['native:energyMeleeAttack'],enemy_1358_esheld_2:['native:energyMeleeAttack'],
+  enemy_1354_eghost:['native:energyGhostBody'],enemy_1354_eghost_2:['native:energyGhostBody'],
   enemy_1364_spnaxe:'native:flayerAttackMode',enemy_1364_spnaxe_2:'native:flayerAttackMode',
   enemy_5021_tmagfd:['native:funliveCaster'],
   enemy_1179_aruarw:['native:nightArcherLog'],
@@ -420,6 +424,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...NIGHT_ARCHER_FEATURES,
   ...BLIGHT_ARCHER_FEATURES,
   ...FUNLIVE_CASTER_FEATURES,
+  ...ENERGY_FEATURES,
   ...SILVERNWHITE_FEATURES,
   [`ability:${REDMARK_DESCRIPTION}`]:REDMARK_FEATURE,
   [`ability:${EXPLETIVE_DESCRIPTION}`]:EXPLETIVE_FEATURE,

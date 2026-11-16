@@ -2,17 +2,17 @@
   "schemaVersion": 1,
   "scope": "Only retained native templates/prefabs, not the complete game corpus. Refusals report the first compiler blocker per template. Compilability never grants enemy or stage admission.",
   "source": {
-    "data/arkpedia-enemy-native-abilities.json": "9c2e683a1994d956182c8e039c10d258ee6020d2d6610ef0aa5da4b72ebc01bc",
-    "data/arkpedia-enemy-support.json": "270b9c3a1b091a38e7cf7b8929d248a89689aaec5733eb0496ee386a1f6351d4",
+    "data/arkpedia-enemy-native-abilities.json": "630cdef6ad0376bd1ff5e72c27d41b044c93acb0ecd05db74c7dd4522bedda68",
+    "data/arkpedia-enemy-support.json": "7be118954916a275f1511a75ae170921e786d82e0b0903241be4ebfeea23a36b",
     "shared/arkpedia/behavior.js": "88b4616bf16a17e2a29153b48ae04e0a4f7b2bcebc28214bce3e98c104cef712",
     "shared/arkpedia/behavior-native-compiler.js": "97dd9969ddb03e5c33246daf0bad1afde7e58f7e64c3ded3206c3f3442852550",
     "shared/arkpedia/behavior-program.js": "1b9c2b014bd61479b66a556d745b02a324fd22d41cec15fbe09c328185ee4f6f",
     "shared/arkpedia/environment-conditions.js": "acaeb57a0a36b3128be852a565f1cf3a82fdf89130ed349bc9b69467834778a7"
   },
-  "retainedPrefabs": 373,
-  "templates": 230,
+  "retainedPrefabs": 379,
+  "templates": 232,
   "compiled": 9,
-  "refused": 221,
+  "refused": 223,
   "results": [
     {
       "key": "Dark_Effect_x_4",
@@ -438,6 +438,12 @@
         "enemy_1294_duchns",
         "enemy_1329_cbshld",
         "enemy_1329_cbshld_2",
+        "enemy_1353_esabr",
+        "enemy_1353_esabr_2",
+        "enemy_1354_eghost",
+        "enemy_1354_eghost_2",
+        "enemy_1358_esheld",
+        "enemy_1358_esheld_2",
         "enemy_1362_dfat",
         "enemy_1362_dfat_2",
         "enemy_1364_spnaxe",
@@ -1120,6 +1126,30 @@
       "unsupportedConsumers": [],
       "compiled": false,
       "reason": "Unsupported native behaviour: action SwitchDynamicBuffTileMode"
+    },
+    {
+      "key": "enemy_esabr_clear_energy",
+      "consumers": [
+        "enemy_1353_esabr",
+        "enemy_1353_esabr_2",
+        "enemy_1354_eghost",
+        "enemy_1354_eghost_2",
+        "enemy_1358_esheld",
+        "enemy_1358_esheld_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: binding"
+    },
+    {
+      "key": "enemy_esheld_dec_energy[trigger]",
+      "consumers": [
+        "enemy_1358_esheld",
+        "enemy_1358_esheld_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": false,
+      "reason": "Unsupported native behaviour: binding"
     },
     {
       "key": "enemy_fake_t_apoptosis",
@@ -3469,6 +3499,25 @@
       "unsupportedConsumers": []
     },
     {
+      "reason": "Unsupported native behaviour: binding",
+      "templates": [
+        "enemy_bomscr_boom_switch_mode",
+        "enemy_esabr_clear_energy",
+        "enemy_esheld_dec_energy[trigger]"
+      ],
+      "consumers": [
+        "enemy_1218_bomscr",
+        "enemy_1218_bomscr_2",
+        "enemy_1353_esabr",
+        "enemy_1353_esabr_2",
+        "enemy_1354_eghost",
+        "enemy_1354_eghost_2",
+        "enemy_1358_esheld",
+        "enemy_1358_esheld_2"
+      ],
+      "unsupportedConsumers": []
+    },
+    {
       "reason": "Unsupported native behaviour: action ChangeMotionMode",
       "templates": [
         "enemy_durokt[fly]",
@@ -3892,17 +3941,6 @@
         "enemy_1293_duswrd",
         "enemy_1293_duswrd_2",
         "enemy_1293_duswrd_3"
-      ],
-      "unsupportedConsumers": []
-    },
-    {
-      "reason": "Unsupported native behaviour: binding",
-      "templates": [
-        "enemy_bomscr_boom_switch_mode"
-      ],
-      "consumers": [
-        "enemy_1218_bomscr",
-        "enemy_1218_bomscr_2"
       ],
       "unsupportedConsumers": []
     },

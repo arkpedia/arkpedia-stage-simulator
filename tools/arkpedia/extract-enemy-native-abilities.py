@@ -34,6 +34,13 @@ bundles = {r['path']: r for r in source['bundles']}
 # Component object names whose content a reviewed feature reads.
 OBJECTS = ['DefDown', 'enhance', 'Blink', 'enemy_1220_dzoms', 'enemy_1220_dzoms_2', 'enemy_1221_dzomg', 'enemy_1221_dzomg_2', 'ColdAttack', 'StunAttack', 'StormAura', 'Lasso', 'blink', 'dmg_res', 'buff_to_blocker', 'Boomb']
 SCOPED_OBJECTS = {
+    'enemy_1353_esabr': ['enemy_1353_esabr','Default','Combat','Ability0','over_energy','blacksteel_energy','dec_energy'],
+    'enemy_1353_esabr_2': ['enemy_1353_esabr_2','Default','Combat','Ability0','over_energy','blacksteel_energy','dec_energy'],
+    'enemy_1354_eghost': ['enemy_1354_eghost','Default','Combat','Ability0','over_energy','blacksteel_energy','dec_energy'],
+    'enemy_1354_eghost_2': ['enemy_1354_eghost_2','Default','Combat','Ability0','over_energy','blacksteel_energy','dec_energy'],
+    'enemy_1358_esheld': ['enemy_1358_esheld','Default','Combat','Ability0','over_energy','blacksteel_energy','dec_energy'],
+    'enemy_1358_esheld_2': ['enemy_1358_esheld_2','Default','Combat','Ability0','over_energy','blacksteel_energy','dec_energy'],
+
     'enemy_5021_tmagfd': ['enemy_5021_tmagfd','Default','Attack','Trigger','NpcEffect'],
     'enemy_1391_dhbow': ['enemy_1391_dhbow','MagicMode','PhyMode','Attack','Selector','Passive'],
     'enemy_1391_dhbow_2': ['enemy_1391_dhbow_2','MagicMode','PhyMode','Attack','Selector','Passive'],
@@ -445,6 +452,13 @@ for bundle in sorted(wanted):
         # Explicit per-prefab sibling scopes avoid copying extraction branches
         # when a new family uses attack hooks or companion target selectors.
         sibling_names = {
+            'enemy_1353_esabr': {'Combat','Ability0','over_energy','blacksteel_energy','dec_energy'},
+            'enemy_1353_esabr_2': {'Combat','Ability0','over_energy','blacksteel_energy','dec_energy'},
+            'enemy_1354_eghost': {'Combat','Ability0','over_energy','blacksteel_energy','dec_energy'},
+            'enemy_1354_eghost_2': {'Combat','Ability0','over_energy','blacksteel_energy','dec_energy'},
+            'enemy_1358_esheld': {'Combat','Ability0','over_energy','blacksteel_energy','dec_energy'},
+            'enemy_1358_esheld_2': {'Combat','Ability0','over_energy','blacksteel_energy','dec_energy'},
+
             'enemy_5021_tmagfd': {'Attack','Trigger','NpcEffect'},
             'enemy_1391_dhbow': {'Attack','Selector','Passive'},
             'enemy_1391_dhbow_2': {'Attack','Selector','Passive'},
@@ -669,7 +683,7 @@ result = {'schemaVersion': 1,
     'prefabs': {k: unique_components(v) for k, v in sorted(components.items())},
     'templates': dict(sorted(templates.items())),
     'ranges': {key: ranges[key] for key in ['x-5', 'x-4', '0-1']},
-    'buffDatabase': {key: buff_table[key] for key in ['enemy_confinement', 'enemy_confinement_final', 'disarmed_and_cant_use_skill', 'status_resistance[inf]', 'damage_resistance[inf]', 'fear']},
+    'buffDatabase': {key: buff_table[key] for key in ['enemy_confinement', 'enemy_confinement_final', 'disarmed_and_cant_use_skill', 'status_resistance[inf]', 'damage_resistance[inf]', 'fear', 'act28side_energy_buff', 'act28side_over_energy_buff']},
     'projectiles': {k: sorted(v, key=lambda r: int(r['pathId'])) for k, v in sorted(projectiles.items())}}
 text = json.dumps(result, ensure_ascii=False, indent=1) + '\n'
 if '--check' in sys.argv:
