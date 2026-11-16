@@ -48,6 +48,11 @@ test('starting one attribute finishes the other and leaves the transition marker
  h.b.removeBuff(h.e,'buff_yang');assert.equal(huiMingOf(h.e),null);assert.equal(h.e.findBuff('buff_yin_to_yang[effect]'),null);near(nextHit(h),h.atk);
  assert.throws(()=>setHuiMing(h.b,h.e,'sun'),/Invalid Hui-Ming attribute/);h.b.kill(h.e);assert.equal(setHuiMing(h.b,h.e,'yin'),null);assert.deepEqual(h.b.errors,[]);
 });
+test('a refused attribute start keeps the previous attribute, and the guard pair gates its taunt talent',()=>{
+ const h=fixture();const off=h.b.on('beforeBuff',c=>{if(c.unit===h.e&&c.buff.key==='buff_yin')c.cancel=true;});const result=setHuiMing(h.b,h.e,'yin');h.b.off(off);
+ assert.equal(result,null);assert.equal(huiMingOf(h.e),'yang');assert.ok(h.e.findBuff('buff_yang[effect]'));
+ const id=ids[4],n=nativeComponents(structuredClone(evidence),id);n.Taunt.find(v=>v._buffs)._buffs[0].attributes.attributeModifiers[0].attributeType=0;assert.equal(plainHuiMingNative(records.enemies[id].levels[0],n),false);
+});
 test('the pair scale is per recipient: a shared packet is not rewritten and other sources are untouched',()=>{
  const h=fixture();setHuiMing(h.b,h.guard,'yin');const packet={amount:100,type:'phys'},seen=[];h.b.on('damaged',c=>seen.push(c.amount));
  h.b.dealDamage(h.e,h.guard,packet);near(seen.at(-1),140);assert.equal(packet.amount,100);

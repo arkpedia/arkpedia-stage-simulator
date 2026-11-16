@@ -1,0 +1,355 @@
+{
+ "schemaVersion": 1,
+ "scope": "Shared Hui-Ming (yin/yang) attribute account on the units' own native marker buffs, an opt-in per-recipient source ATK scale in the damage pipeline, and six source-gated plain melee Hui-Ming enemies. Controlled fixtures only; no Hui-Ming tiles or devices, original-stage clear, effects/audio or frame/pixel parity.",
+ "sourceSha256": {
+  "server/sim/damage.js": "4fd9624b605d74cb240591dc035cb0a37089b8b89c0e662292f444d5e372bcd4",
+  "server/sim/content/arkpedia-hui-ming.js": "83036998983eb58ec4a4bd7bbd669972eb252b17e93c7cb1b8c48411dfe076ae",
+  "server/sim/content/arkpedia-enemy-runtime-index.js": "8af73447daf045537f0097c2db40dea011ebd6777ce2dcea07bda6b4e3b90ac7",
+  "shared/arkpedia/enemy-hui-ming-features.js": "0ef1f2f670622ea26c384f90333d0c4383b451dac7a1fc474dbbcfed71daa2cd",
+  "shared/arkpedia/enemy-features.js": "a57e7f84f3846900481844a920e28e4bf4b2bb6fa69c7fd3976e349a6c458e8f",
+  "tools/arkpedia/review-hui-ming.mjs": "1b21df9434c443d8eea35ffffee6e426d3cee8e0539f6a1bb6d4be97b4b59415",
+  "data/arkpedia-enemy-native-abilities.json": "dcb0a7864770065da6ffe9615748564049da621ff8467654154dde53fcb1f928",
+  "data/arkpedia-enemy-support.json": "468ad5d9285c17c1f32d6ef7e5a4d3a3067b71a9df346d010a84fc86c6a8c933",
+  "data/arkpedia-hui-ming-animations.json": "568135b9729894590c0a34058e738590bad6203cde03576d66862eaed2e18625",
+  "test/arkpedia-hui-ming.test.js": "b988112aff6be078301d8f3ceadc51d0fcc7bc3ecf61020104ba424cb6975412"
+ },
+ "tests": {
+  "family": 14,
+  "focusedRegressions": "see docs/ENEMY-HUI-MING-REVIEW.md",
+  "broad": {
+   "command": "node --test --test-concurrency=2 test/sim/*.test.js test/content/*.test.js",
+   "tests": 1807,
+   "passed": 1803,
+   "skipped": 3,
+   "todo": 1,
+   "failed": 0,
+   "note": "Measured before the final attribute-start reorder and taunt gate, which touch only the Hui-Ming module, its gate and its test."
+  }
+ },
+ "browser": {
+  "scope": "Controlled Hui-Ming fixture on the default compiled stage geometry: compiled records blocked by a deployed operator whose attribute is set through the shared account. No Hui-Ming tiles or devices, original-stage clear, effects/audio or frame/pixel parity.",
+  "browser": "Chrome/156.0.8078.80",
+  "results": [
+   {
+    "viewport": "1440x900 desktop",
+    "loaded": [
+     "arkpedia-hui-ming",
+     "enemies"
+    ],
+    "pending": 0,
+    "sourceCatalogueRequests": 0,
+    "pageErrors": [],
+    "result": {
+     "target": "char_123_fang",
+     "variants": [
+      {
+       "id": "enemy_1122_sphond",
+       "initial": "yang",
+       "marker": true,
+       "parents": true,
+       "blocked": true,
+       "plain": 1,
+       "model": "enemy/enemy_1122_sphond/default/default",
+       "actor": "BattleActor",
+       "same": 0.6,
+       "opposite": 1.4,
+       "guardMarker": true,
+       "errors": []
+      },
+      {
+       "id": "enemy_1122_sphond_2",
+       "initial": "yang",
+       "marker": true,
+       "parents": true,
+       "blocked": true,
+       "plain": 1,
+       "model": "enemy/enemy_1122_sphond_2/default/default",
+       "actor": "BattleActor",
+       "same": 0.6,
+       "opposite": 1.4,
+       "guardMarker": true,
+       "errors": []
+      },
+      {
+       "id": "enemy_1123_spsbr",
+       "initial": "yang",
+       "marker": true,
+       "parents": true,
+       "blocked": true,
+       "plain": 1,
+       "model": "enemy/enemy_1123_spsbr/default/default",
+       "actor": "BattleActor",
+       "same": 0.6,
+       "opposite": 1.4,
+       "guardMarker": true,
+       "errors": []
+      },
+      {
+       "id": "enemy_1123_spsbr_2",
+       "initial": "yang",
+       "marker": true,
+       "parents": true,
+       "blocked": true,
+       "plain": 1,
+       "model": "enemy/enemy_1123_spsbr_2/default/default",
+       "actor": "BattleActor",
+       "same": 0.6,
+       "opposite": 1.4,
+       "guardMarker": true,
+       "errors": []
+      },
+      {
+       "id": "enemy_1125_spshld",
+       "initial": "yang",
+       "marker": true,
+       "parents": true,
+       "blocked": true,
+       "plain": 1,
+       "model": "enemy/enemy_1125_spshld/default/default",
+       "actor": "BattleActor",
+       "same": 0.6,
+       "opposite": 1.4,
+       "guardMarker": true,
+       "errors": []
+      },
+      {
+       "id": "enemy_1125_spshld_2",
+       "initial": "yang",
+       "marker": true,
+       "parents": true,
+       "blocked": true,
+       "plain": 1,
+       "model": "enemy/enemy_1125_spshld_2/default/default",
+       "actor": "BattleActor",
+       "same": 0.6,
+       "opposite": 1.4,
+       "guardMarker": true,
+       "errors": []
+      }
+     ]
+    }
+   },
+   {
+    "viewport": "844x390 touch",
+    "loaded": [
+     "arkpedia-hui-ming",
+     "enemies"
+    ],
+    "pending": 0,
+    "sourceCatalogueRequests": 0,
+    "pageErrors": [],
+    "result": {
+     "target": "char_123_fang",
+     "variants": [
+      {
+       "id": "enemy_1122_sphond",
+       "initial": "yang",
+       "marker": true,
+       "parents": true,
+       "blocked": true,
+       "plain": 1,
+       "model": "enemy/enemy_1122_sphond/default/default",
+       "actor": "BattleActor",
+       "same": 0.6,
+       "opposite": 1.4,
+       "guardMarker": true,
+       "errors": []
+      },
+      {
+       "id": "enemy_1122_sphond_2",
+       "initial": "yang",
+       "marker": true,
+       "parents": true,
+       "blocked": true,
+       "plain": 1,
+       "model": "enemy/enemy_1122_sphond_2/default/default",
+       "actor": "BattleActor",
+       "same": 0.6,
+       "opposite": 1.4,
+       "guardMarker": true,
+       "errors": []
+      },
+      {
+       "id": "enemy_1123_spsbr",
+       "initial": "yang",
+       "marker": true,
+       "parents": true,
+       "blocked": true,
+       "plain": 1,
+       "model": "enemy/enemy_1123_spsbr/default/default",
+       "actor": "BattleActor",
+       "same": 0.6,
+       "opposite": 1.4,
+       "guardMarker": true,
+       "errors": []
+      },
+      {
+       "id": "enemy_1123_spsbr_2",
+       "initial": "yang",
+       "marker": true,
+       "parents": true,
+       "blocked": true,
+       "plain": 1,
+       "model": "enemy/enemy_1123_spsbr_2/default/default",
+       "actor": "BattleActor",
+       "same": 0.6,
+       "opposite": 1.4,
+       "guardMarker": true,
+       "errors": []
+      },
+      {
+       "id": "enemy_1125_spshld",
+       "initial": "yang",
+       "marker": true,
+       "parents": true,
+       "blocked": true,
+       "plain": 1,
+       "model": "enemy/enemy_1125_spshld/default/default",
+       "actor": "BattleActor",
+       "same": 0.6,
+       "opposite": 1.4,
+       "guardMarker": true,
+       "errors": []
+      },
+      {
+       "id": "enemy_1125_spshld_2",
+       "initial": "yang",
+       "marker": true,
+       "parents": true,
+       "blocked": true,
+       "plain": 1,
+       "model": "enemy/enemy_1125_spshld_2/default/default",
+       "actor": "BattleActor",
+       "same": 0.6,
+       "opposite": 1.4,
+       "guardMarker": true,
+       "errors": []
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "artwork": {
+  "scope": "Chromium clip decoding/finite poses and idle body rendering; no native combat/frame/pixel parity claim",
+  "browser": "Chrome/156.0.8078.80",
+  "results": [
+   {
+    "viewport": "desktop",
+    "models": [
+     {
+      "id": "enemy_1122_sphond",
+      "version": "3.8.99",
+      "clips": 6,
+      "width": 531.9011840820312,
+      "height": 229.74708366394043
+     },
+     {
+      "id": "enemy_1122_sphond_2",
+      "version": "3.8.99",
+      "clips": 6,
+      "width": 531.9011840820312,
+      "height": 229.74708366394043
+     },
+     {
+      "id": "enemy_1123_spsbr",
+      "version": "3.8.99",
+      "clips": 5,
+      "width": 426.5391387939453,
+      "height": 360.2292366027832
+     },
+     {
+      "id": "enemy_1123_spsbr_2",
+      "version": "3.8.99",
+      "clips": 5,
+      "width": 426.5391387939453,
+      "height": 360.2292366027832
+     },
+     {
+      "id": "enemy_1125_spshld",
+      "version": "3.8.99",
+      "clips": 5,
+      "width": 602.0984954833984,
+      "height": 439.8770503997803
+     },
+     {
+      "id": "enemy_1125_spshld_2",
+      "version": "3.8.99",
+      "clips": 5,
+      "width": 602.0984954833984,
+      "height": 442.00690269470215
+     }
+    ],
+    "errors": [],
+    "failures": []
+   },
+   {
+    "viewport": "mobile",
+    "models": [
+     {
+      "id": "enemy_1122_sphond",
+      "version": "3.8.99",
+      "clips": 6,
+      "width": 531.9011840820312,
+      "height": 229.74708366394043
+     },
+     {
+      "id": "enemy_1122_sphond_2",
+      "version": "3.8.99",
+      "clips": 6,
+      "width": 531.9011840820312,
+      "height": 229.74708366394043
+     },
+     {
+      "id": "enemy_1123_spsbr",
+      "version": "3.8.99",
+      "clips": 5,
+      "width": 426.5391387939453,
+      "height": 360.2292366027832
+     },
+     {
+      "id": "enemy_1123_spsbr_2",
+      "version": "3.8.99",
+      "clips": 5,
+      "width": 426.5391387939453,
+      "height": 360.2292366027832
+     },
+     {
+      "id": "enemy_1125_spshld",
+      "version": "3.8.99",
+      "clips": 5,
+      "width": 602.0984954833984,
+      "height": 439.8770503997803
+     },
+     {
+      "id": "enemy_1125_spshld_2",
+      "version": "3.8.99",
+      "clips": 5,
+      "width": 602.0984954833984,
+      "height": 442.00690269470215
+     }
+    ],
+    "errors": [],
+    "failures": []
+   }
+  ]
+ },
+ "assetCommit": "5adc1e14a97b463ab02734c6ad5dbb26191e2e2c",
+ "coverage": {
+  "enemies": 775,
+  "totalEnemies": 2163,
+  "databaseLevels": 841,
+  "runtimeKinds": 215,
+  "pinnedStageGraphs": 970
+ },
+ "stageSmoke": {
+  "stages": 970,
+  "passed": 970,
+  "scope": "Ten-second runtime smoke, not clears."
+ },
+ "boundaries": [
+  "Operator attributes are set explicitly in fixtures; Hui-Ming tiles and devices are stages-phase work.",
+  "ON_CALCULATE_DAMAGE read as the damage source's event; not established from method bodies.",
+  "Derived presentation marker removed with its attribute buff; native finish flag semantics not established."
+ ]
+}

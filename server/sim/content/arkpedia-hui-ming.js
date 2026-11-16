@@ -19,12 +19,14 @@ export function setHuiMing(b,unit,attribute,{source=unit}={}){
  if(!live(unit))return null;
  const current=unit.findBuff(HUI_MING[attribute]);if(current)return current;
  const life=unit.deploySeq,from=other[attribute],switched=!!unit.findBuff(HUI_MING[from]);
- if(switched)b.removeBuff(unit,HUI_MING[from]);
- if(!live(unit)||unit.deploySeq!==life)return null;
  let effect=null;
  const clear=()=>{const e=effect;effect=null;if(e&&unit.buffs.includes(e))b.removeBuff(unit,e);};
+ // The new attribute starts first; its start then finishes the opposite one.
+ // A refused start therefore leaves the previous attribute in place.
  const buff=b.addBuff(unit,{key:HUI_MING[attribute],source,visible:true,refresh:'keep',onRemove:clear,onExpire:clear,admit:u=>live(u)&&u.deploySeq===life});
  if(!buff||!unit.buffs.includes(buff))return null;
+ if(switched)b.removeBuff(unit,HUI_MING[from]);
+ if(!live(unit)||unit.deploySeq!==life||!unit.buffs.includes(buff))return null;
  effect=b.addBuff(unit,{key:switched?`buff_${from}_to_${attribute}[effect]`:`${HUI_MING[attribute]}[effect]`,source,refresh:'independent',maxStacks:Infinity});
  if(effect&&!unit.buffs.includes(buff))clear();
  return buff;

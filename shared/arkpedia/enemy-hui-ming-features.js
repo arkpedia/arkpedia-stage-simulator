@@ -52,6 +52,11 @@ export function plainHuiMingNative(r,n){
  if(!fields(root,{m_Script:{m_FileID:1,m_PathID:'-6629209555389654693'},_sideTypeIndex:1,_delayToBorn:0,_onlyDelayToBornOnTileStart:0,_idleWhenBorn:0,_canNotExit:0,_blockVolume:1,_specialBlockCondition:{_type:0,_buffKeyPairs:[],_filterTags:[]},_commonAbilities:[]})
   ||root._modes.length!==1||root._modes[0].m_FileID!==0||!mode||!zero(mode._attack)||!zero(mode._attackTrigger)||mode._generalAbilities.length||mode._combat.m_FileID!==0
   ||!ordinaryMeleePacketNative(n.$ref(mode._combat))||!huiMingAccountNative(n))return false;
+ // The guard pair's separate taunt talent: one permanent blackboard taunt-level addition and nothing else.
+ const taunt=n.Taunt?.find(v=>v._buffs),tb=taunt?._buffs?.[0];
+ if(guard?!(taunt&&taunt._buffs.length===1&&fields(taunt,{m_Script:{m_FileID:1,m_PathID:'3800760148018415462'},_selector:{m_FileID:0,m_PathID:'0'}})&&nativeUnscaledTalentBinding(n,taunt)
+   &&fields(tb,{buffKey:'spshld_t',templateKey:'empty',lifeTimeType:2,blackboard:[],overrideType:0,isSilenceable:0})
+   &&same(tb.attributes,{...noAttributes,attributeModifiers:[{attributeType:20,fetchBaseValueFromSourceEntity:0,formulaItem:0,loadFromBlackboard:1,value:0}]})):!!n.Taunt)return false;
  const [duration,release]=attack[r.prefabKey];
  return !!clock&&root._animator.m_FileID===0&&n.$ref(graphic?._skeleton)?.skeletonDataAsset?.m_PathID===clock.source.skeletonDataPathId
   &&graphic._animations.some(v=>v.animKey==='Attack'&&v.animName==='Attack'&&v.speed===1&&!v.loop)
