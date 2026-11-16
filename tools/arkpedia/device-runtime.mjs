@@ -2,13 +2,15 @@
 // Compile finite device configurations through the original native contracts.
 // Repeated outputs and invariant dimensions collapse to one runtime definition.
 import { readFile } from 'node:fs/promises';
-import { resolve, relative, dirname } from 'node:path';
+import { resolve, relative, dirname, sep } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
 import { writeJSONAtomic } from './write-json.mjs';
 import * as devices from '../../shared/arkpedia/stage-devices.js';
 import { PILLAR, RUINS } from '../../shared/arkpedia/stage-demolition.js';
 import native from '../../data/arkpedia-device-native-source.json' with { type: 'json' };
+// Digest keys use '/' on every OS, so Windows reproduces the committed digests.
+const repoPath = (from, to) => relative(from, to).split(sep).join('/');
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
 const levels = max => Array.from({ length: max }, (_, i) => i + 1);
@@ -87,11 +89,11 @@ export async function buildDeviceRuntime() {
     const bytes = await readFile(resolve(root, path)); sourceFiles.set(path, hash(bytes));
     if (path.endsWith('.json')) return;
     for (const match of bytes.toString().matchAll(/\b(?:import|export)\s+(?:[^'";]*?\s+from\s*)?["']([^"']+)["']/g))
-      if (match[1].startsWith('.')) await visit(relative(root, resolve(root, dirname(path), match[1])));
+      if (match[1].startsWith('.')) await visit(repoPath(root, resolve(root, dirname(path), match[1])));
   }
   for (const module of new Set(['stage-devices', 'stage-demolition', ...Object.values(DEVICE_FAMILIES).map(f => f.module)]))
     await visit(`shared/arkpedia/${module}.js`);
-  const compiler = relative(root, fileURLToPath(import.meta.url));
+  const compiler = repoPath(root, fileURLToPath(import.meta.url));
   sourceFiles.set(compiler, hash(await readFile(resolve(root, compiler))));
   return { schemaVersion: 1, sourceDigest: hash(JSON.stringify([...sourceFiles].sort())), families, values, specs,
     tokens: devices.STAGE_TOKEN_UNITS, pulse: devices.pulseTiles(0, 0), pillar: PILLAR, ruins: RUINS, stump };

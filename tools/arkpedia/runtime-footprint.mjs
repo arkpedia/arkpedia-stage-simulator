@@ -2,12 +2,14 @@
 // Source-byte audit, not a timing benchmark or compressed-transfer estimate.
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
-import { dirname, resolve, relative } from 'node:path';
+import { dirname, resolve, relative, sep } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { parseArgs } from 'node:util';
 import { OPERATOR_RUNTIME_INDEX } from '../../server/sim/content/arkpedia-operator-runtime-index.js';
 import { OPERATOR_SERVICE_INDEX } from '../../server/sim/content/arkpedia-operator-service-index.js';
 import { writeJSONAtomic } from './write-json.mjs';
+// Digest keys use '/' on every OS, so Windows reproduces the committed digests.
+const repoPath = (from, to) => relative(from, to).split(sep).join('/');
 const root = fileURLToPath(new URL('../../', import.meta.url));
 const digest = bytes => createHash('sha256').update(bytes).digest('hex');
 export async function runtimeFootprint(ids) {
@@ -17,7 +19,7 @@ export async function runtimeFootprint(ids) {
     if (!files.has(path)) {
       const bytes = await readFile(resolve(root, path)), source = bytes.toString('utf8');
       const dependencies = path.endsWith('.json') ? [] : [...source.matchAll(/\b(?:import|export)\s+(?:[^'";]*?\s+from\s*)?["']([^"']+)["']/g)]
-        .map(m => m[1]).filter(p => p.startsWith('.')).map(p => relative(root, resolve(root, dirname(path), p)));
+        .map(m => m[1]).filter(p => p.startsWith('.')).map(p => repoPath(root, resolve(root, dirname(path), p)));
       files.set(path, { path, bytes: bytes.length, sha256: digest(bytes), dependencies });
     }
     for (const dependency of files.get(path).dependencies) await visit(dependency, set);
