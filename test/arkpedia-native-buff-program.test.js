@@ -239,3 +239,28 @@ test('a disable event does not query the removed owner environment required only
  p.run('ON_BUFF_DISABLE',{battle,unit:owner,modeService:{get:()=>mode,set:(_u,index)=>mode=index}});
  assert.equal(mode,1);
 });
+
+test('native derived marker programs retain full pollute branches without admitting gameplay children',()=>{
+ const p=prepareBehaviorProgram(compile('enemy_dhbow_passive_check')),owner=unit(),calls=[];let polluted=true;
+ const battle={environmentConditions:{test:(name,u)=>{assert.equal(name,'act31SidePollute');assert.equal(u,owner);return polluted;}}};
+ const derivedService={create:key=>calls.push(key),clear:()=>calls.push('clear')};
+ p.run('ON_BUFF_TRIGGER',{battle,unit:owner,derivedService});assert.deepEqual(calls,['enemy_dhbow_passive_check[buff]']);
+ polluted=false;p.run('ON_BUFF_TRIGGER',{battle,unit:owner,derivedService});assert.equal(calls.at(-1),'clear');
+ for(const edit of[
+  t=>t.enemy_dhbow_passive_check.eventToActions.ON_BUFF_TRIGGER[0]._conditionNode._sourceType='BUFF_SOURCE',
+  t=>t.enemy_dhbow_passive_check.eventToActions.ON_BUFF_TRIGGER[0]._failNodes[0]._updateOverrideMap=false,
+  t=>t.enemy_dhbow_passive_check.eventToActions.ON_BUFF_TRIGGER[0]._succeedNodes[2]._buff.lifeTime=1,
+  t=>t.enemy_dhbow_passive_check.eventToActions.ON_BUFF_TRIGGER[0]._succeedNodes[2]._buff.isSilenceable=true,
+  t=>t.enemy_dhbow_passive_check.eventToActions.ON_BUFF_TRIGGER[0]._succeedNodes[2]._buff.attributes.attributeModifiers=[{}],
+  t=>t.empty.eventToActions.ON_BUFF_START=[{$type:'Torappu.Battle.Action.Nodes+ReleaseFromBlocker, Assembly-CSharp',_target:'BUFF_OWNER'}],
+ ]){const templates=structuredClone(evidence.templates);edit(templates);assert.throws(()=>compile('enemy_dhbow_passive_check',templates));}
+});
+test('named condition and derived marker services preflight before earlier combat effects',()=>{
+ const graph=action=>({schemaVersion:1,entry:'root',templates:{root:{events:{ON_BUFF_START:[{op:'loss',key:'loss'},action]}}}});
+ const owner=unit(),effects=[],battle={loseHp:()=>effects.push('loss')};
+ const derived=prepareBehaviorProgram(graph({op:'deriveMarker',key:'marker'}));
+ assert.throws(()=>derived.run('ON_BUFF_START',{battle,unit:owner,blackboard:{loss:1}}),/derived marker service/);
+ const named=prepareBehaviorProgram(graph({op:'when',condition:{op:'environmentCondition',who:'owner',condition:'act31SidePollute'},yes:[],no:[]}));
+ assert.throws(()=>named.run('ON_BUFF_START',{battle:{...battle,environmentConditions:{test:()=>8}},unit:owner,blackboard:{loss:1}}),/named stage environment condition/);
+ assert.deepEqual(effects,[]);
+});

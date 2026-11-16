@@ -6,11 +6,11 @@ const disableFlags=new Set(['silence','stun','freeze','levitate']);
 /** A common native buff owns mode selection; each ordinary cast captures its
  * projectile mode. Switching does not retarget an already released projectile. */
 export function programmedProjectileModes(params){
- const program=validate(params),{modes,initialMode,buffKey,disabledBy,groundOnly,blackboard={}}=params;
+ const program=validate(params),{modes,initialMode,buffKey,disabledBy,groundOnly,triggerInterval,blackboard={}}=params;
  const shots=modes.map(({animation,interruptOnDetach,...transport})=>projectileSingleAttack(transport));
  const sequence=ordinaryEnemyAttackSequence((_b,_e,a)=>({...modes[a.mode].animation,modeIndex:a.mode}),
   (b,e,target,cast)=>shots[cast.animation.modeIndex].attack({targets:[target],attackId:cast.attackId},b,e));
- const execute=(event,b,e,a)=>program.run(event,{battle:b,unit:e,target:e,source:e,blackboard,buffKey,modeService:a.modeService});
+ const execute=(event,b,e,a)=>program.run(event,{battle:b,unit:e,target:e,source:e,blackboard,buffKey,modeService:a.modeService,derivedService:a.derivedService});
  const sync=(b,e,a)=>{
   if(e.deploySeq!==a.life)return;
   const enabled=e.alive&&e.deployed&&!!a.parent&&e.buffs.includes(a.parent)&&!disabledBy.some(flag=>e.s.flags[flag]);
@@ -24,17 +24,23 @@ export function programmedProjectileModes(params){
    a.modeService={get:actor=>{if(actor!==e)throw Error('Unbound projectile mode owner');return a.mode;},
     set:(actor,index)=>{if(actor!==e||!modes[index])throw Error('Invalid projectile mode target');if(e.deploySeq!==a.life||index===a.mode)return;
      if(modes[a.mode].interruptOnDetach)sequence.cancel(b,e,a);a.mode=index;update();}};
-   update();
-   a.parent=b.addBuff(e,{key:buffKey,source:e,onRemove:()=>{a.ended=true;if(a.ready)sync(b,e,a);}});
+   update();a.markers=new Set();
+   a.derivedService={create:key=>{
+    if(e.deploySeq!==a.life||!a.enabled)return;
+    let attached;attached=b.addBuff(e,{key,source:e,onRemove:()=>a.markers.delete(attached)});
+    if(attached&&e.buffs.includes(attached))a.markers.add(attached);
+   },clear:()=>{for(const marker of [...a.markers])b.removeBuff(e,marker);a.markers.clear();}};
+   a.parent=b.addBuff(e,{key:buffKey,source:e,...(triggerInterval===undefined?{}:{interval:triggerInterval,onTick:()=>{sync(b,e,a);if(a.enabled)execute('ON_BUFF_TRIGGER',b,e,a);}}),onRemove:()=>{a.ended=true;if(a.ready)sync(b,e,a);a.derivedService.clear();}});
    a.ready=true;a.enabled=!!a.parent||a.ended;sync(b,e,a);
   },
   before(_c,b,e,a){sync(b,e,a);if(a.enabled)execute('ON_BEFORE_ATTACK',b,e,a);},
   tick(b,e,a,dt){sync(b,e,a);sequence.tick(b,e,a,dt);},
   status(c,b,e,a){sequence.status(c,b,e,a);sync(b,e,a);},
-  death(c,b,e,a){sequence.death(c,b,e,a);sync(b,e,a);},
+  death(c,b,e,a){sequence.death(c,b,e,a);sync(b,e,a);a.derivedService.clear();},
  };
 }
-function validate({program,programComponent,modes,initialMode,buffKey,disabledBy,groundOnly,blackboard={}}){
+function validate({program,programComponent,modes,initialMode,buffKey,disabledBy,groundOnly,triggerInterval,blackboard={}}){
+ if(triggerInterval!==undefined&&(!Number.isFinite(triggerInterval)||triggerInterval<=0))throw Error('Invalid mode program trigger clock');
  if(programComponent!==undefined)throw Error('Unhydrated behaviour program component');
  if(!Array.isArray(modes)||!modes.length||modes.length>64||!Number.isSafeInteger(initialMode)||!modes[initialMode]
   ||typeof groundOnly!=='boolean'||typeof buffKey!=='string'||!buffKey||!Array.isArray(disabledBy)||new Set(disabledBy).size!==disabledBy.length||disabledBy.some(k=>!disableFlags.has(k)))throw Error('Invalid programmed projectile modes');

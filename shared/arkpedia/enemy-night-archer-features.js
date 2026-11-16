@@ -4,18 +4,13 @@ import {sameOutcomeValue as same,emptyOutcomeAttributes as empty,nativeKillLog,p
 import {ordinaryProjectilePacketNative,ordinaryRangedSelectorNative,linearSingleProjectileNative} from './enemy-ordinary-projectile-contract.js';
 import {cosmeticMarkerHolder} from './enemy-cosmetic-marker-contract.js';
 import {compileNativeBuffProgram} from './behavior-native-compiler.js';
+import {ownerEnvironmentModeEvents} from './enemy-mode-program-contract.js';
 import {nativeBuffProgram} from './native-buff-programs.js';
 const ids=['enemy_1179_aruarw','enemy_1179_aruarw_2'],key='enemy_aruarw_check';
 const fields=(v,w)=>!!v&&Object.entries(w).every(([k,x])=>same(v[k],x));
 const isNightArcher=r=>ids.includes(r.prefabKey);
 export const NIGHT_ARCHER_DESCRIPTION='When in areas with no visibility, attacks deal Arts damage';
-const mode=index=>({op:'mode',who:'owner',index}),switchTo=index=>({op:'switchMode',who:'target',index});
-const when=(terms,yes)=>({op:'when',condition:{op:'all',terms},yes,no:[]});
-const expectedProgram={schemaVersion:1,entry:key,templates:{[key]:{events:{
- ON_BEFORE_ATTACK:[{op:'when',condition:{op:'environmentMask',who:'owner',mask:8},
-  yes:[when([{op:'silenced',who:'owner',unset:true},mode(1)],[switchTo(0)])],no:[when([mode(0)],[switchTo(1)])]}],
- ON_BUFF_DISABLE:[when([mode(0)],[switchTo(1)])],
-}}}};
+const expectedProgram={schemaVersion:1,entry:key,templates:{[key]:{events:ownerEnvironmentModeEvents({op:'environmentMask',who:'owner',mask:8})}}};
 function modeProgram(n){try{return same(compileNativeBuffProgram(key,k=>n.$template(k)),expectedProgram);}catch{return false;}}
 export function nightArcherNative(r,n){
  if(!isNightArcher(r)||r.level!==0||r.applyWay!=='RANGED'||r.stats.dmgType!=='phys'||r.stats.motion!=='WALK'||r.notCountInTotal||r.stats.rangeRadius!==2

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Portable, bounded combat programs. No source templates or executable code.
-import {environmentConditionMask,singleEnvironmentCondition} from './environment-conditions.js';
+import {environmentConditionMask,environmentCondition,singleEnvironmentCondition} from './environment-conditions.js';
 import {decodeEnemyRuntimeParameters} from './enemy-runtime-plan.js';
 const EVENTS=new Set(['ON_BUFF_START','ON_BUFF_TRIGGER','ON_AFTER_OUTPUT_DAMAGE','ON_BEFORE_ATTACK','ON_BUFF_DISABLE']);
 const BINDINGS=new Set(['owner','source','target']);
@@ -21,7 +21,7 @@ export function prepareBehaviorProgram(input){
   const keys=Object.keys(input.templates);if(!keys.length||keys.length>64)fail('template count');
   let count=0;const required=new Map(),optional=new Set(),edges=new Map(),modeBindings=new Set(),modeIndices=new Set(),eventRequirements=new Map();
   let currentTemplate,currentEvent;
-  const requirements=()=>{if(!eventRequirements.has(currentEvent))eventRequirements.set(currentEvent,{modes:new Set(),environment:new Set()});return eventRequirements.get(currentEvent);};
+  const requirements=()=>{if(!eventRequirements.has(currentEvent))eventRequirements.set(currentEvent,{modes:new Set(),environment:new Set(),namedEnvironment:new Map(),derived:false});return eventRequirements.get(currentEvent);};
   const modeIndex=n=>{if(!Number.isSafeInteger(n)||n<0||n>63)fail('mode index');modeIndices.add(n);};
   const rootBinding=who=>{binding(who);if(currentTemplate!==input.entry)fail('mode/environment child binding');};
   const operand=(key,positive=false)=>{string(key);required.set(key,positive||required.get(key)||false);};
@@ -33,6 +33,8 @@ export function prepareBehaviorProgram(input){
         case 'when':fields(n,'op condition yes no');condition(n.condition,depth+1);visit(n.yes,refs,depth+1);visit(n.no,refs,depth+1);break;
         case 'release':fields(n,'op who');binding(n.who);break;
         case 'switchMode':fields(n,'op who index');rootBinding(n.who);modeIndex(n.index);modeBindings.add(n.who);requirements().modes.add(n.who);break;
+        case 'deriveMarker':fields(n,'op key');rootBinding('owner');string(n.key);requirements().derived=true;break;
+        case 'clearDerivedMarkers':fields(n,'op');rootBinding('owner');requirements().derived=true;break;
         case 'kill':fields(n,'op who');if(n.who!=='source')fail('kill binding');break;
         case 'damage':fields(n,'op type scaleKey defaultScale');if(!['phys','arts','true'].includes(n.type))fail('damage type');string(n.scaleKey);finite(n.defaultScale);optional.add(n.scaleKey);break;
         case 'loss':fields(n,'op key');operand(n.key);break;
@@ -49,6 +51,7 @@ export function prepareBehaviorProgram(input){
     if(!object(n)||++count>1024||depth>16)fail('condition budget');
     switch(n.op){
       case 'mode':fields(n,'op who index');rootBinding(n.who);modeIndex(n.index);modeBindings.add(n.who);requirements().modes.add(n.who);break;
+      case 'environmentCondition':fields(n,'op who condition');rootBinding(n.who);if(n.condition!=='act31SidePollute')fail('named environment');requirements().namedEnvironment.set(n.who,n.condition);break;
       case 'environmentMask':fields(n,'op who mask');rootBinding(n.who);if(!singleEnvironmentCondition(n.mask))fail('environment mask');requirements().environment.add(n.who);break;
       case 'all':fields(n,'op terms');if(!Array.isArray(n.terms)||!n.terms.length)fail('terms');n.terms.forEach(x=>condition(x,depth+1));break;
       case 'not':fields(n,'op value');condition(n.value,depth+1);break;
@@ -100,6 +103,7 @@ export function prepareBehaviorProgram(input){
     const u=c[n.who];
     switch(n.op){
       case 'mode':return c.modeService.get(u)===n.index;
+      case 'environmentCondition':return environmentCondition(c.battle,u,n.condition);
       case 'environmentMask':return (environmentConditionMask(c.battle,u)&n.mask)!==0;
       case 'all':return n.terms.every(x=>predicate(x,c));
       case 'not':return !predicate(n.value,c);
@@ -111,6 +115,8 @@ export function prepareBehaviorProgram(input){
   const runNodes=(nodes,c)=>{
     for(const n of nodes){
       if(n.op==='when'){runNodes(predicate(n.condition,c)?n.yes:n.no,c);continue;}
+      if(n.op==='deriveMarker'){c.derivedService.create(n.key);continue;}
+      if(n.op==='clearDerivedMarkers'){c.derivedService.clear();continue;}
       if(n.op==='switchMode'){c.modeService.set(c[n.who],n.index);continue;}
       if(n.op==='release'){const u=c[n.who];if(u?.alive&&u.deployed)c.battle._unblock(u);continue;}
       if(n.op==='loss'){if(c.target?.alive&&c.target.deployed)c.battle.loseHp(c.target,c.blackboard[n.key],{source:c.source,tags:[c.buffKey,'dot']});continue;}
@@ -128,18 +134,20 @@ export function prepareBehaviorProgram(input){
     }
   };
   const prepared=Object.freeze({graph,requiredBlackboard:Object.freeze([...required.keys()]),requiredModeIndices:Object.freeze([...modeIndices].sort((a,b)=>a-b)),requiredModeBindings:Object.freeze([...modeBindings]),validateBlackboard,
-    run(event,{battle,unit,source=unit,target=unit,blackboard={},buffKey=graph.entry,damageMissable=true,modeService=null}){
+    run(event,{battle,unit,source=unit,target=unit,blackboard={},buffKey=graph.entry,damageMissable=true,modeService=null,derivedService=null}){
       if(!EVENTS.has(event))fail('event');
       const bb=validateBlackboard(blackboard);
       if(!battle||!unit||!source)fail('owner/source');
       if(typeof damageMissable!=='boolean')fail('missability');
-      const context={battle,owner:unit,source,target,blackboard:bb,buffKey,damageMissable,modeService,sourceLife:source.deploySeq,targetLife:target?.deploySeq};
+      const context={battle,owner:unit,source,target,blackboard:bb,buffKey,damageMissable,modeService,derivedService,sourceLife:source.deploySeq,targetLife:target?.deploySeq};
       const needs=eventRequirements.get(event);
       if(needs?.modes.size){
         if(!modeService||typeof modeService.get!=='function'||typeof modeService.set!=='function')fail('mode service');
         for(const who of needs.modes){const actor=context[who],index=actor&&modeService.get(actor);if(!actor||!Number.isSafeInteger(index)||index<0||index>63)fail('current mode');}
       }
       for(const who of needs?.environment??[]){if(!context[who])fail('environment owner');environmentConditionMask(battle,context[who]);}
+      for(const[who,condition]of needs?.namedEnvironment??[]){if(!context[who])fail('environment owner');environmentCondition(battle,context[who],condition);}
+      if(needs?.derived&&(!derivedService||typeof derivedService.create!=='function'||typeof derivedService.clear!=='function'))fail('derived marker service');
       runNodes(graph.templates[graph.entry].events[event]??[],context);
     }});
   cache.set(input,prepared);cache.set(graph,prepared);return prepared;

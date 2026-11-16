@@ -1,0 +1,11 @@
+# Blight Archers
+
+Both Blight Archer variants reuse the Night Archers' on-demand projectile-mode component. Their exact native program consumes the owner's Act31 Side Blighted-area condition, chooses physical/Arts at attack boundaries and polls its derived marker every native 0.1 seconds. This condition is distinct from darkness and Originium pollution.
+
+The shared compiler now supports the bounded native pollution-area predicate and parent-owned empty derived markers. Child fields are checked exhaustively; gameplay attributes, foreign owners, changed lifetime/parent ownership and nonempty child templates are refused. Service validation runs before effects. Derived attachments are tracked by identity, so leaving the area, finishing the parent, death and leakage clean only that parent's markers. Rejected attachments retry on a later pulse; separate actors share program data without sharing state.
+
+Unlike the Night Archer parent, this retained native passive is not silenceable. Its program's explicit silence guard prevents entry from physical into Arts; it does not reset an existing Arts mode while the owner remains on Blighted ground. Leaving the area still selects physical. Mode changes honor the source interrupt-on-detach action; released projectiles survive source death. Original particle effects and compiled native callback/frame ordering are not certified.
+
+Ninety-one focused regressions pass, plus fifteen lifecycle/audit checks including independent owners, rejected attachments, death and leakage. Desktop and touch fixtures verify physical/Arts packets, source silence scope, marker polling and cleanup, and selected loading without source catalogues or the build-time compiler. The broad suite has 1,801 passes, three skips and the same two known Chimera failures. Both original body models decode ten clips and render in desktop/touch galleries. The different source model bytes retain separate artwork records.
+
+Combat admission reaches 737 of 2,163 enemies, covering 802 database levels with 202 runtime kinds. The 970 published stage graphs remain pinned for the stages phase. The controlled Blighted-area provider does not certify the original pollution controller or original-stage clears.

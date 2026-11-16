@@ -29,6 +29,9 @@ export function compileNativeBuffProgram(entry,templateFor){
       case 'CheckRootTileAdvBuildableMask':
         exact(node,{$type:type('CheckRootTileAdvBuildableMask'),_ownerType:'BUFF_OWNER',_buildableMask:'NIGHT'},'night condition');
         return{op:'environmentMask',who:'owner',mask:8};
+      case 'Act31SideCheckInPolluteArea':
+        exact(node,{$type:type('Act31SideCheckInPolluteArea'),_sourceType:'BUFF_OWNER'},'pollute condition');
+        return{op:'environmentCondition',who:'owner',condition:'act31SidePollute'};
       case 'CheckUnitCurrentMode':
         if(!Number.isSafeInteger(node._checkCurModeIndex)||node._checkCurModeIndex<0||node._checkCurModeIndex>63)fail('mode index');
         exact(node,{$type:type('CheckUnitCurrentMode'),_targetType:node._targetType,_checkCurModeIndex:node._checkCurModeIndex,_loadCurModeBbKey:''},'current mode');
@@ -42,7 +45,7 @@ export function compileNativeBuffProgram(entry,templateFor){
       default:fail(`predicate ${actionName(node)}`);
     }
   };
-  const childBuff=(buff,depth)=>{
+  const childBuff=(buff,depth,marker=false)=>{
     if(!buff)fail('child buff');
     const immediate=buff.lifeTimeType==='IMMEDIATELY';
     if(!immediate&&buff.lifeTimeType!=='LIMITED')fail('lifetime');
@@ -61,7 +64,8 @@ export function compileNativeBuffProgram(entry,templateFor){
     text(buff.buffKey);text(buff.templateKey);
     if(!immediate){text(buff.durationKey);finite(buff.lifeTime,Number.MIN_VALUE);finite(buff.triggerInterval,Number.MIN_VALUE);
       finite(buff.firstTriggerInterval,0);if(buff.firstTriggerInterval>buff.triggerInterval||!Number.isSafeInteger(buff.triggerCnt)||buff.triggerCnt<0)fail('clock');}
-    compile(buff.templateKey,depth+1);
+    if(marker)compileBuffTemplate(templateFor(buff.templateKey),{dialect:t=>{if(Object.keys(t.eventToActions).length)fail('marker gameplay');return{};}});
+    else compile(buff.templateKey,depth+1);
     return{key:buff.buffKey,template:buff.templateKey,clock:immediate?null:{duration:buff.durationKey,interval:buff.triggerInterval,firstDelay:buff.firstTriggerInterval}};
   };
   const sequence=(nodes,depth)=>{
@@ -70,7 +74,7 @@ export function compileNativeBuffProgram(entry,templateFor){
     const guards=[],actions=[];let actionSeen=false;
     for(const node of nodes){
       if(++budget>1024)fail('node budget');const name=actionName(node);
-      if(['CheckContainsBuff','CheckAbnormalFlag','CheckTargetProfession','CheckRootTileAdvBuildableMask','CheckUnitCurrentMode'].includes(name)){
+      if(['CheckContainsBuff','CheckAbnormalFlag','CheckTargetProfession','CheckRootTileAdvBuildableMask','CheckUnitCurrentMode','Act31SideCheckInPolluteArea'].includes(name)){
         if(actionSeen)fail('predicate after effect');guards.push(predicate(node));continue;
       }
       if(name==='IfNot'){
@@ -105,6 +109,20 @@ export function compileNativeBuffProgram(entry,templateFor){
         exact(node,{$type:type(name),_targetType:'TARGET',_killSource:true,_noSource:false,_withdrawIfRallyPoint:false,
           _resultIfInRallyPointMode:false,_skipReborn:false,_noReason:false,_markReachExit:false,_switchState:false},'source kill');
         actions.push({op:'kill',who:'source'});
+      }else if(name==='FinishDerivedBuff'){
+        exact(node,{$type:type(name),_updateOverrideMap:true},'finish derived markers');
+        actions.push({op:'clearDerivedMarkers'});
+      }else if(name==='CreateBuff'&&node._isDerivedBuff===true){
+        exact(node,{$type:type(name),_buff:node._buff,_buffOwner:'BUFF_OWNER',_isDerivedBuff:true,_finishDerivedBuffIfParentFinish:true},'derived marker');
+        const b=node._buff;
+        // Reuse the exhaustive ordinary child field contract after normalizing
+        // only its empty attributes and lifetime. The actual marker has no
+        // gameplay template, clock, stats, flags or blackboard.
+        if(!b||b.templateKey!=='empty'||b.lifeTimeType!=='INFINITY'||b.lifeTime!==0||b.durationKey!==null||b.triggerCnt!==0||b.triggerInterval!==-1||b.firstTriggerInterval!==-1
+          ||!same(b.attributes,Object.fromEntries(Object.keys(emptyAttributes).map(k=>[k,null]))))fail('derived marker fields');
+        const normalized={...b,attributes:emptyAttributes,lifeTimeType:'IMMEDIATELY'};
+        childBuff(normalized,depth,true);
+        actions.push({op:'deriveMarker',key:text(b.buffKey)});
       }else if(name==='CreateBuff'){
         exact(node,{$type:type(name),_buff:node._buff,_buffOwner:node._buffOwner,_isDerivedBuff:false,_finishDerivedBuffIfParentFinish:false},'create buff');
         actions.push({op:'create',who:binding(node._buffOwner),...childBuff(node._buff,depth)});

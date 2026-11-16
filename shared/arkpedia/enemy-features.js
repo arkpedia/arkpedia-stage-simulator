@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import {BLIGHT_ARCHER_FEATURES} from './enemy-blight-archer-features.js';
 import {NIGHT_ARCHER_FEATURES} from './enemy-night-archer-features.js';
 import {SILVERNWHITE_FEATURES} from './enemy-silvernwhite-features.js';
 import {REDMARK_FEATURE,REDMARK_DESCRIPTION} from './enemy-redmark-features.js';
@@ -415,6 +416,7 @@ export const ENEMY_FEATURES = Object.freeze({
   ...SAINT_STATUE_FEATURES,
   ...SIEGEBREAKER_FEATURES,
   ...NIGHT_ARCHER_FEATURES,
+  ...BLIGHT_ARCHER_FEATURES,
   ...SILVERNWHITE_FEATURES,
   [`ability:${REDMARK_DESCRIPTION}`]:REDMARK_FEATURE,
   [`ability:${EXPLETIVE_DESCRIPTION}`]:EXPLETIVE_FEATURE,

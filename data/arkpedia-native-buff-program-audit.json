@@ -2,16 +2,16 @@
   "schemaVersion": 1,
   "scope": "Only retained native templates/prefabs, not the complete game corpus. Refusals report the first compiler blocker per template. Compilability never grants enemy or stage admission.",
   "source": {
-    "data/arkpedia-enemy-native-abilities.json": "4c066e3e08ed202d6291ecb4c797ac31608e7082c543fa73fd00daef5616fe0e",
-    "data/arkpedia-enemy-support.json": "392f4efe378015cef6f3b60fdf30b2851e0623a0f0bb9c2b4824bd4791e6b256",
+    "data/arkpedia-enemy-native-abilities.json": "f405310eb6912524211cbcb605b89599c4229aae6f01d7d9b2b703775ece063b",
+    "data/arkpedia-enemy-support.json": "c3751da87da07eedd451273897f01d1e6af658023f066a35807621d18056ecb0",
     "shared/arkpedia/behavior.js": "88b4616bf16a17e2a29153b48ae04e0a4f7b2bcebc28214bce3e98c104cef712",
-    "shared/arkpedia/behavior-native-compiler.js": "7126462b9bc24ab7aadc12f0390fb7e168462035a20f1579ee32108b92913a49",
-    "shared/arkpedia/behavior-program.js": "aa8fee4423e08ea670b7729bf8485727ba26e37b62fd9ab94a1fe98ac55126fe",
-    "shared/arkpedia/environment-conditions.js": "b0d16739dec4a04e585152dde5fe50128003df29e7b2b51d7adb60db3e494b76"
+    "shared/arkpedia/behavior-native-compiler.js": "97dd9969ddb03e5c33246daf0bad1afde7e58f7e64c3ded3206c3f3442852550",
+    "shared/arkpedia/behavior-program.js": "1b9c2b014bd61479b66a556d745b02a324fd22d41cec15fbe09c328185ee4f6f",
+    "shared/arkpedia/environment-conditions.js": "acaeb57a0a36b3128be852a565f1cf3a82fdf89130ed349bc9b69467834778a7"
   },
-  "retainedPrefabs": 371,
-  "templates": 229,
-  "compiled": 8,
+  "retainedPrefabs": 373,
+  "templates": 230,
+  "compiled": 9,
   "refused": 221,
   "results": [
     {
@@ -177,7 +177,7 @@
       ],
       "unsupportedConsumers": [],
       "compiled": false,
-      "reason": "Unsupported native behaviour: create buff"
+      "reason": "Unsupported native behaviour: derived marker"
     },
     {
       "key": "dlancer_t_atk",
@@ -442,6 +442,8 @@
         "enemy_1362_dfat_2",
         "enemy_1364_spnaxe",
         "enemy_1364_spnaxe_2",
+        "enemy_1391_dhbow",
+        "enemy_1391_dhbow_2",
         "enemy_1410_mmelee",
         "enemy_1410_mmelee_2",
         "enemy_1419_mmcike",
@@ -600,7 +602,7 @@
       ],
       "unsupportedConsumers": [],
       "compiled": false,
-      "reason": "Unsupported native behaviour: create buff"
+      "reason": "Unsupported native behaviour: derived marker"
     },
     {
       "key": "enemy_axetro_t[checker]",
@@ -914,6 +916,19 @@
       "unsupportedConsumers": [],
       "compiled": false,
       "reason": "Unsupported native behaviour: event ON_OWNER_KILLED"
+    },
+    {
+      "key": "enemy_dhbow_passive_check",
+      "consumers": [
+        "enemy_1391_dhbow",
+        "enemy_1391_dhbow_2"
+      ],
+      "unsupportedConsumers": [],
+      "compiled": true,
+      "programSha256": "e46dc2ee9e19cbe20d84c53765ea4e0476537cfe77552ac90298ecfaf8533cc3",
+      "bytes": 1152,
+      "templateCount": 1,
+      "requiredBlackboard": []
     },
     {
       "key": "enemy_dsdevr_activate_remains",
@@ -1232,7 +1247,7 @@
       ],
       "unsupportedConsumers": [],
       "compiled": false,
-      "reason": "Unsupported native behaviour: create buff"
+      "reason": "Unsupported native behaviour: derived marker"
     },
     {
       "key": "enemy_liberty_force",
@@ -1390,7 +1405,7 @@
       ],
       "unsupportedConsumers": [],
       "compiled": false,
-      "reason": "Unsupported native behaviour: create buff"
+      "reason": "Unsupported native behaviour: derived marker"
     },
     {
       "key": "enemy_ltseal_t[damage]",
@@ -1399,7 +1414,7 @@
       ],
       "unsupportedConsumers": [],
       "compiled": false,
-      "reason": "Unsupported native behaviour: create buff"
+      "reason": "Unsupported native behaviour: derived marker"
     },
     {
       "key": "enemy_ltseal_t[has_character]",
@@ -1880,7 +1895,7 @@
       ],
       "unsupportedConsumers": [],
       "compiled": false,
-      "reason": "Unsupported native behaviour: create buff"
+      "reason": "Unsupported native behaviour: derived marker"
     },
     {
       "key": "enemy_sfhu_atkspeed_dec[trig]",
@@ -1890,7 +1905,7 @@
       ],
       "unsupportedConsumers": [],
       "compiled": false,
-      "reason": "Unsupported native behaviour: action FinishDerivedBuff"
+      "reason": "Unsupported native behaviour: derived marker"
     },
     {
       "key": "enemy_sfpin_power_attack[real]",
@@ -1910,7 +1925,7 @@
       ],
       "unsupportedConsumers": [],
       "compiled": false,
-      "reason": "Unsupported native behaviour: create buff"
+      "reason": "Unsupported native behaviour: derived marker"
     },
     {
       "key": "enemy_sgmum[hit_ad]",
@@ -2107,7 +2122,7 @@
       ],
       "unsupportedConsumers": [],
       "compiled": false,
-      "reason": "Unsupported native behaviour: create buff"
+      "reason": "Unsupported native behaviour: derived marker"
     },
     {
       "key": "enemy_strength_talent_start_listener[atk_speed]",
@@ -2117,7 +2132,7 @@
       ],
       "unsupportedConsumers": [],
       "compiled": false,
-      "reason": "Unsupported native behaviour: create buff"
+      "reason": "Unsupported native behaviour: derived marker"
     },
     {
       "key": "enemy_strength_talent_start_listener[move_speed]",
@@ -2127,7 +2142,7 @@
       ],
       "unsupportedConsumers": [],
       "compiled": false,
-      "reason": "Unsupported native behaviour: create buff"
+      "reason": "Unsupported native behaviour: derived marker"
     },
     {
       "key": "enemy_sybox_t[logkilled]",
@@ -3346,7 +3361,7 @@
       ]
     },
     {
-      "reason": "Unsupported native behaviour: create buff",
+      "reason": "Unsupported native behaviour: derived marker",
       "templates": [
         "dlancer_t[trigger]",
         "enemy_axetro_t",
@@ -3354,6 +3369,7 @@
         "enemy_ltseal_t[attack_effect]",
         "enemy_ltseal_t[damage]",
         "enemy_sfhu_atkspeed_dec[resist]",
+        "enemy_sfhu_atkspeed_dec[trig]",
         "enemy_sfpin_power_attack[resist]",
         "enemy_strength_talent_start_listener[atk]",
         "enemy_strength_talent_start_listener[atk_speed]",
@@ -3815,17 +3831,6 @@
         "enemy_1420_lrmm",
         "enemy_1425_lrcmra",
         "enemy_1425_lrcmra_2"
-      ],
-      "unsupportedConsumers": []
-    },
-    {
-      "reason": "Unsupported native behaviour: action FinishDerivedBuff",
-      "templates": [
-        "enemy_sfhu_atkspeed_dec[trig]"
-      ],
-      "consumers": [
-        "enemy_1203_sfhu",
-        "enemy_1203_sfhu_2"
       ],
       "unsupportedConsumers": []
     },
